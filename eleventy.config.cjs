@@ -47,6 +47,36 @@ module.exports = function (eleventyConfig) {
     if (v.includes("promising") || v.includes("hint")) return "hint";
     return "bad";
   });
+  eleventyConfig.addFilter("publishedCount", (items = []) => items.length);
+  eleventyConfig.addFilter("totalSyllabusDays", (syllabus = {}) => {
+    return (syllabus.blocks || []).reduce((total, block) => total + (block.days || []).length, 0);
+  });
+  eleventyConfig.addFilter("publishedUrlForDay", (items = [], day) => {
+    const match = items.find((item) => Number(item.data?.day) === Number(day));
+    return match?.url || "";
+  });
+  eleventyConfig.addFilter("nextSyllabusDay", (syllabus = {}, items = []) => {
+    const published = new Set(items.map((item) => Number(item.data?.day)));
+    for (const block of syllabus.blocks || []) {
+      for (const day of block.days || []) {
+        if (!published.has(Number(day.day))) return { ...day, block: block.title, block_id: block.id };
+      }
+    }
+    return null;
+  });
+  eleventyConfig.addFilter("upcomingSyllabusDays", (syllabus = {}, items = [], count = 5) => {
+    const published = new Set(items.map((item) => Number(item.data?.day)));
+    const upcoming = [];
+    for (const block of syllabus.blocks || []) {
+      for (const day of block.days || []) {
+        if (!published.has(Number(day.day))) {
+          upcoming.push({ ...day, block: block.title, block_id: block.id });
+          if (upcoming.length >= Number(count)) return upcoming;
+        }
+      }
+    }
+    return upcoming;
+  });
   eleventyConfig.addFilter("json", (value) => JSON.stringify(value));
 
   eleventyConfig.addShortcode("statusChip", (label) => {

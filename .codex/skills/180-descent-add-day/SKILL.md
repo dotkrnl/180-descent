@@ -9,7 +9,7 @@ Use this skill when the user provides a new day page for this repository.
 
 ## First Files To Read
 
-1. `../SYLLABUS.md`
+1. `src/_data/syllabus.yaml`
 2. The supplied day HTML file
 3. `src/_data/future-links.yaml`
 4. Existing nearby day files in `src/days/`
@@ -22,7 +22,7 @@ Read the syllabus entry for the target day plus the immediately previous and nex
 
 ## Workflow
 
-1. Identify day number, title, block, entry analogy, model, debate, and frontier from `../SYLLABUS.md`.
+1. Identify day number, title, block, entry analogy, model, debate, and frontier from `src/_data/syllabus.yaml`.
 2. Convert the supplied HTML into `src/days/day-###-slug.md` with the canonical front matter.
 3. Review the lesson text:
    - preserve the teaching arc and voice
