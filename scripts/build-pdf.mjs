@@ -1,10 +1,11 @@
-import { mkdir, copyFile, mkdtemp, rm } from "node:fs/promises";
+import { mkdir, copyFile, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createReadStream } from "node:fs";
 import { execFile } from "node:child_process";
 import http from "node:http";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { chromium } from "playwright";
 
 const execFileAsync = promisify(execFile);
@@ -43,8 +44,15 @@ try {
   }, publicBaseUrl);
   await page.evaluate(() => document.fonts.ready);
   await page.emulateMedia({ media: "print" });
+  const blocks = await page.evaluate(() => {
+    return [...document.querySelectorAll(".block-divider")].map((divider) => ({
+      id: divider.querySelector(".print-dest")?.id || "",
+      title: divider.querySelector("h1")?.textContent?.trim() || ""
+    })).filter((block) => block.id && block.title);
+  });
   const draftDir = await mkdtemp(path.join(tmpdir(), "180-descent-pdf-"));
   const draftPath = path.join(draftDir, "draft.pdf");
+  const unstampedPath = path.join(draftDir, "unstamped.pdf");
   try {
     await renderPdf(page, draftPath);
     const tocPages = await extractTocPages(draftPath);
@@ -57,7 +65,8 @@ try {
         marker.remove();
       }
     }, tocPages);
-    await renderPdf(page, "dist/downloads/180-descent.pdf");
+    await renderPdf(page, unstampedPath);
+    await stampRunningMatter(unstampedPath, "dist/downloads/180-descent.pdf", { blocks, tocPages });
   } finally {
     await rm(draftDir, { recursive: true, force: true });
   }
@@ -81,6 +90,67 @@ async function extractTocPages(pdfPath) {
     if (!(marker.key in pages)) pages[marker.key] = marker.page;
   }
   return pages;
+}
+
+async function stampRunningMatter(inputPath, outputPath, { blocks, tocPages }) {
+  const pdf = await PDFDocument.load(await readFile(inputPath));
+  const regular = await pdf.embedFont(StandardFonts.Helvetica);
+  const pages = pdf.getPages();
+  const blockRanges = blocks
+    .map((block) => ({ ...block, page: Number(tocPages[block.id]) }))
+    .filter((block) => Number.isFinite(block.page))
+    .sort((a, b) => a.page - b.page);
+  const excludedPages = new Set([
+    1,
+    2,
+    ...blockRanges.map((block) => block.page)
+  ]);
+
+  for (const [index, pdfPage] of pages.entries()) {
+    const pageNumber = index + 1;
+    if (excludedPages.has(pageNumber)) continue;
+
+    const { width, height } = pdfPage.getSize();
+    const sectionTitle = sectionTitleForPage(pageNumber, blockRanges);
+    const pageText = String(pageNumber);
+    const color = rgb(0.38, 0.46, 0.49);
+    const headerSize = 6.6;
+    const footerSize = 7.2;
+    const left = 39.6;
+    const right = width - 39.6;
+
+    pdfPage.drawText("The 180-Day Descent", {
+      x: left,
+      y: height - 24,
+      size: headerSize,
+      font: regular,
+      color
+    });
+    pdfPage.drawText(sectionTitle, {
+      x: right - regular.widthOfTextAtSize(sectionTitle, headerSize),
+      y: height - 24,
+      size: headerSize,
+      font: regular,
+      color
+    });
+    pdfPage.drawText(pageText, {
+      x: right - regular.widthOfTextAtSize(pageText, footerSize),
+      y: 22,
+      size: footerSize,
+      font: regular,
+      color
+    });
+  }
+
+  await writeFile(outputPath, await pdf.save({ useObjectStreams: false }));
+}
+
+function sectionTitleForPage(pageNumber, blockRanges) {
+  let title = "Introduction";
+  for (const block of blockRanges) {
+    if (pageNumber > block.page) title = block.title;
+  }
+  return title;
 }
 
 async function ghostscriptPageMarkers(pdfPath) {

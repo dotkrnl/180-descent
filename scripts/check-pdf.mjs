@@ -53,6 +53,8 @@ for (const pattern of [
 }
 
 const blockMatch = frontMatter.match(/BLOCK I · FOUNDATIONS OF KNOWLEDGE & REASONING\s+(\d+)/);
+const introMatch = frontMatter.match(/Introduction\s+(\d+)/);
+const dayOneMatch = frontMatter.match(/DAY 1\s+What Is Knowledge\?\s+(\d+)/);
 if (blockMatch) {
   for (const pageNumber of [1, Number(blockMatch[1])]) {
     const box = await extractPageBoundingBox("_site/downloads/180-descent.pdf", pageNumber);
@@ -63,6 +65,36 @@ if (blockMatch) {
   }
 } else {
   console.error("PDF TOC is missing the Block I page number needed for full-bleed validation");
+  failures++;
+}
+
+if (introMatch && dayOneMatch) {
+  const introPage = Number(introMatch[1]);
+  const dayOnePage = Number(dayOneMatch[1]);
+  for (const [pageNumber, section] of [
+    [introPage, "Introduction"],
+    [dayOnePage, "Foundations of Knowledge & Reasoning"]
+  ]) {
+    const pageText = await extractPdfPageText("_site/downloads/180-descent.pdf", pageNumber);
+    if (!new RegExp(`The 180-Day Descent\\s+${escapeRegExp(section)}`).test(pageText)) {
+      console.error(`PDF page ${pageNumber} is missing its running header`);
+      failures++;
+    }
+    if (!new RegExp(`\\n\\s*${pageNumber}\\s*$`).test(pageText)) {
+      console.error(`PDF page ${pageNumber} is missing its right-aligned footer page number`);
+      failures++;
+    }
+  }
+
+  for (const pageNumber of [2, Number(blockMatch?.[1])].filter(Boolean)) {
+    const pageText = await extractPdfPageText("_site/downloads/180-descent.pdf", pageNumber);
+    if (/The 180-Day Descent\s+Foundations of Knowledge & Reasoning/.test(pageText) || new RegExp(`\\n\\s*${pageNumber}\\s*$`).test(pageText)) {
+      console.error(`PDF page ${pageNumber} should not have running header/footer text`);
+      failures++;
+    }
+  }
+} else {
+  console.error("PDF TOC is missing page numbers needed for running-header validation");
   failures++;
 }
 
@@ -79,6 +111,22 @@ async function extractPdfText(pdfPath) {
     "-",
     pdfPath
   ], { maxBuffer: 8 * 1024 * 1024 });
+  return stdout;
+}
+
+async function extractPdfPageText(pdfPath, pageNumber) {
+  const { stdout } = await execFileAsync("gs", [
+    "-q",
+    "-dSAFER",
+    "-dBATCH",
+    "-dNOPAUSE",
+    "-sDEVICE=txtwrite",
+    `-dFirstPage=${pageNumber}`,
+    `-dLastPage=${pageNumber}`,
+    "-o",
+    "-",
+    pdfPath
+  ], { maxBuffer: 1024 * 1024 });
   return stdout;
 }
 
@@ -100,4 +148,8 @@ async function extractPageBoundingBox(pdfPath, pageNumber) {
 
 function isFullPageBox([left, bottom, right, top]) {
   return left <= 1 && bottom <= 1 && right >= 431 && top >= 647;
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
