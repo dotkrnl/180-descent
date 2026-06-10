@@ -2,10 +2,10 @@
 layout: layouts/page.njk
 permalink: /zh/downloads/
 locale: zh
-title: Downloads
-subtitle: The same source rendered for the browser, ebook readers, and print.
-eyebrow: Formats
-description: Download EPUB and PDF editions.
+title: 下载
+subtitle: 同一源文件，分别渲染为浏览器、电子阅读器与印刷品三种形态。
+eyebrow: 格式
+description: 下载 EPUB 与 PDF 版本。
 alternate_url: /downloads/
 ---
 

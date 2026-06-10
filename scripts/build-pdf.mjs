@@ -5,7 +5,7 @@ import http from "node:http";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { PDFDocument, PDFName, StandardFonts, rgb } from "pdf-lib";
 import { chromium } from "playwright";
 
 const execFileAsync = promisify(execFile);
@@ -137,6 +137,8 @@ async function stampRunningMatter(inputPath, outputPath, { blocks, tocPages, boo
   ]);
 
   for (const [index, pdfPage] of pages.entries()) {
+    pdfPage.node.delete(PDFName.of("Annots"));
+
     const pageNumber = index + 1;
     if (excludedPages.has(pageNumber)) continue;
 

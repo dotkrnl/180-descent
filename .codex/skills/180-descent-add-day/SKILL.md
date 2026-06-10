@@ -58,4 +58,22 @@ rtk npm run check
 - Updated asset credits if images or fonts were added
 - Passing site, EPUB, PDF, link, content, and EPUB structural checks
 
+## Chinese Edition Workflow
+
+After completing the English day file and passing all checks, mirror the work into the Chinese edition:
+
+1. Create `src/zh/days/day-###-slug.md` as a translation of the English day file.
+2. Use Kimi CLI for Chinese translation, instructing it to produce text that is **优雅，文艺，读起来令人愉悦** while remaining technically precise.
+3. Review the Kimi output for correctness, terminology consistency, and preservation of all YAML front matter keys, indentation, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JavaScript hooks, Nunjucks syntax, front matter structure, and permalink paths.
+4. Update `src/_data/syllabus_zh.yaml` with the Chinese title, entry, model, debate, and frontier for the new day.
+5. Run the zh-specific build and checks:
+
+   ```sh
+   rtk npm run build
+   rtk npm run check
+   ```
+
+6. Inspect the built zh website, EPUB, and PDF outputs before committing.
+7. Commit the Chinese edition in the same batch or a follow-up batch with a conventional message, usually `feat: add day ### zh lesson`.
+
 Do not edit generated files in `_site/` or `dist/`; they are build outputs.

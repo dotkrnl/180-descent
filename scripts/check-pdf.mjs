@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { PDFDocument, PDFName } from "pdf-lib";
 
 const execFileAsync = promisify(execFile);
 
@@ -13,9 +14,15 @@ const pdfFiles = [
 for (const file of pdfFiles) {
   const data = await readFile(file);
   const text = data.toString("latin1");
+  const annotationCount = await countPdfAnnotations(data);
 
   if (!text.startsWith("%PDF-")) {
     console.error(`${file} does not start with a PDF header`);
+    failures++;
+  }
+
+  if (annotationCount > 0) {
+    console.error(`${file} contains ${annotationCount} PDF annotation(s); PDF output must be non-interactive`);
     failures++;
   }
 
@@ -119,6 +126,15 @@ async function extractPdfText(pdfPath) {
     pdfPath
   ], { maxBuffer: 8 * 1024 * 1024 });
   return stdout;
+}
+
+async function countPdfAnnotations(data) {
+  const pdf = await PDFDocument.load(data);
+  let count = 0;
+  for (const page of pdf.getPages()) {
+    count += page.node.lookup(PDFName.of("Annots"))?.size?.() ?? 0;
+  }
+  return count;
 }
 
 async function extractPdfPageText(pdfPath, pageNumber) {

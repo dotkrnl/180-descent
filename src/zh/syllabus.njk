@@ -2,10 +2,10 @@
 layout: layouts/page.njk
 permalink: /zh/syllabus/
 locale: zh
-title: Syllabus
-subtitle: A dependency-ordered map from foundations to the frontier.
-eyebrow: The map
-description: The complete 180-day course map, with published lessons linked as they arrive.
+title: 课程表
+subtitle: 一张按依赖关系排序的地图，从根基到前沿。
+eyebrow: 地图
+description: 完整的 180 天课程地图，已发布的课程将在上线时链接。
 alternate_url: /syllabus/
 ---
 
@@ -14,32 +14,32 @@ alternate_url: /syllabus/
 {% set nextDay = syllabus_zh | nextSyllabusDay(collections.zhDays) %}
 {% set upcoming = syllabus_zh | upcomingSyllabusDays(collections.zhDays, 6) %}
 
-<p class="lede">The syllabus is the book's route through the world: not a shelf of unrelated topics, but a sequence of descents where each day gives the next one firmer ground. It begins by asking how belief earns trust, then moves through mathematics, physics, chemistry, life, medicine, mind, artificial intelligence, economics, societies, ethics, and the future.</p>
+<p class="lede">课程表是这本书穿越世界的路线：不是一堆互不相关的主题搁在架子上，而是一连串的下潜，每一天都为下一天提供更坚实的地面。它始于追问信念如何挣得信任，然后走过数学、物理、化学、生命、医学、心智、人工智能、经济学、社会、伦理与未来。</p>
 
-<p>Every lesson keeps the same internal shape: an accessible entry point, a core model, a live debate, and a walk toward recent research. The frontier is treated with discipline. Claims are marked as established, promising hints, or contested hype; the goal is not to make novelty feel certain, but to show how evidence changes its weight.</p>
+<p>每一课保持同样的内在形状：一个平易近人的入口、一个核心模型、一场尚在进行的辩论，以及一段走向新近研究的旅程。前沿被以纪律对待。主张被标记为已确立、有望的线索，或争议/炒作；目标不是让新奇感显得确定，而是展示证据如何改变它的分量。</p>
 
-<div class="syllabus-progress" aria-label="Syllabus progress">
+<div class="syllabus-progress" aria-label="课程进度">
   <div>
-    <p class="progress-label">Published now</p>
-    <p class="progress-number">{{ publishedCount }} of {{ totalDays }} days</p>
+    <p class="progress-label">已发布</p>
+    <p class="progress-number">{{ publishedCount }} / {{ totalDays }} 天</p>
   </div>
   {% if nextDay %}
   <div>
-    <p class="progress-label">Next descent</p>
-    <p class="progress-next">Day {{ nextDay.day | padDay }} · {{ nextDay.title }}</p>
+    <p class="progress-label">下一次下潜</p>
+    <p class="progress-next">第 {{ nextDay.day | padDay }} 日 · {{ nextDay.title }}</p>
   </div>
   {% endif %}
 </div>
 
-<nav class="syllabus-block-nav" aria-label="Syllabus blocks">
+<nav class="syllabus-block-nav" aria-label="课程模块">
 {% for block in syllabus_zh.blocks %}
-  <a href="#block-{{ block.id | lower }}">Block {{ block.id }}</a>
+  <a href="#block-{{ block.id | lower }}">模块 {{ block.id }}</a>
 {% endfor %}
 </nav>
 
 {% for block in syllabus_zh.blocks %}
 <section class="syllabus-block" id="block-{{ block.id | lower }}">
-  <p class="sec-eyebrow">Block {{ block.id }} · Days {{ block.start_day }}-{{ block.end_day }}</p>
+  <p class="sec-eyebrow">模块 {{ block.id }} · 第 {{ block.start_day }}–{{ block.end_day }} 日</p>
   <h2>{{ block.title }}</h2>
   <p>{{ block.summary }}</p>
 
@@ -47,7 +47,7 @@ alternate_url: /syllabus/
   {% for day in block.days %}
     {% set published = collections.zhDays | publishedItemForDay(day.day) %}
     <article class="day-card syllabus-card{% if published %} is-published{% endif %}">
-      <p class="card-kicker">Day {{ day.day | padDay }} / {{ book.total_days }}{% if not published %} · Planned{% endif %}</p>
+      <p class="card-kicker">第 {{ day.day | padDay }} 日 / {{ book.total_days }}{% if not published %} · 计划中{% endif %}</p>
       <h3>
       {% if published %}
         <a href="{{ published.url }}">{{ published.data.title }}</a>
@@ -65,17 +65,17 @@ alternate_url: /syllabus/
 {% endfor %}
 
 <section class="next-summary" aria-labelledby="what-comes-next">
-  <p class="sec-eyebrow">Continuation</p>
-  <h2 id="what-comes-next">What Comes Next</h2>
+  <p class="sec-eyebrow">续篇</p>
+  <h2 id="what-comes-next">接下来是什么</h2>
   {% if nextDay %}
-  <p>The book has published through Day {{ publishedCount | padDay }}. The next lesson is <strong>Day {{ nextDay.day | padDay }}: {{ nextDay.title }}</strong>, in Block {{ nextDay.block_id }}. It continues the opening toolkit by sharpening the difference between valid inference, strong evidence, and persuasive error.</p>
+  <p>本书已发布至第 {{ publishedCount | padDay }} 日。下一课是<strong>第 {{ nextDay.day | padDay }} 日：{{ nextDay.title }}</strong>，位于模块 {{ nextDay.block_id }}。它延续开篇工具箱，将有效推理、强证据与有说服力的错误之间的区别打磨得更加锋利。</p>
   <ol class="upcoming-list">
   {% for day in upcoming %}
-    <li><span class="upcoming-day">Day {{ day.day | padDay }} · </span><span>{{ day.title }}</span></li>
+    <li><span class="upcoming-day">第 {{ day.day | padDay }} 日 · </span><span>{{ day.title }}</span></li>
   {% endfor %}
   </ol>
-  <p>After these opening moves, the course turns from how we know to the formal languages of knowledge: probability, information, systems, mathematics, and computation. Those tools become the launch rail for the later descents into physical law, living systems, minds, institutions, and the research frontier.</p>
+  <p>这些开篇动作之后，课程将从「我们如何知道」转向知识的正式语言：概率、信息、系统、数学与计算。这些工具将成为后续下潜的发射轨——进入物理定律、生命系统、心智、制度与研究前沿。</p>
   {% else %}
-  <p>All 180 descents have been published. The next work is maintenance: tightening links, refreshing frontier claims, and keeping the evidence labels current as the research record changes.</p>
+  <p>全部 180 次下潜已发布。接下来的工作是维护：收紧链接，刷新前沿主张，并在研究记录变化时保持证据标签的时效性。</p>
   {% endif %}
 </section>

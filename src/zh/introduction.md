@@ -2,31 +2,31 @@
 layout: layouts/page.njk
 permalink: /zh/introduction/
 locale: zh
-title: Introduction
-subtitle: How to read a map that descends from foundations to the frontier.
-eyebrow: The 180-day map
-description: Introduction to The 180-Day Descent.
+title: 引言
+subtitle: 如何阅读一张从根基沉降到前沿的地图。
+eyebrow: 一百八十日地图
+description: 《一百八十日下潜》引言。
 alternate_url: /introduction/
 ---
 
-This book began with a hunger rather than a credential: deep curiosity, learning for its own sake, and the wish to become at home in the world without pretending the world is small. The intended reader is a curious generalist: strong in some places, full of gaps in others, unwilling to choose between foundations and the frontier. The promise is not mastery in 180 days. It is orientation: a map of the major structures that make reality, life, mind, technology, society, and the future intelligible.
+这本书始于一种饥饿，而非一张文凭：深不见底的好奇心，为求知而求知，以及一种愿望——想要在世间安身立命，却不必假装世界很小。预期的读者是一位好奇的通才：某些地方扎实，另一些地方布满空白，不愿在根基与前沿之间二选一。承诺并非一百八十天精通一切，而是「定向」：一张地图，标出使现实、生命、心智、技术、社会与未来变得可理解的主要结构。
 
-The sequence begins with a constraint. The frontier is only useful if the instruments of belief are calibrated first. So the course does not open with cosmology, artificial intelligence, or medicine. It opens with knowledge itself: what counts as a reason, why true belief can still be luck, how science separates testable claims from protective stories, and how probability lets a mind live without certainty. Only then does the descent widen into mathematics, physics, chemistry, biology, medicine, neuroscience, AI, economics, civilization, ethics, and the forces now bending the future.
+序列始于一条约束。只有当信念的仪器先被校准，前沿才有用处。因此，课程不以宇宙学、人工智能或医学开篇。它以知识本身开篇：什么才算理由，为何真信念仍可能只是运气，科学如何把可检验的断言与自我保护的故事分开，以及概率如何让心智在不具确定性的情况下生活。唯有如此，下潜才向数学、物理、化学、生物、医学、神经科学、人工智能、经济学、文明、伦理，以及正在弯折未来的力量展开。
 
-Each day is built to work even when time is uneven. It starts with a puzzle, story, image, analogy, or thought experiment; builds a mental model; names the live debate; then walks as far toward recent, trustworthy research as the evidence allows. The spirit is close to a very short introduction, but with a steeper internal slope: begin as if the reader is smart but new here, then descend until the ground becomes genuinely current and contested.
+每一天的设计都考虑到时间并不宽裕。它从一个谜题、故事、图像、类比或思想实验开始；建立一个心智模型；点明一场尚在进行的辩论；然后沿着证据所能允许的边界，走向新近、可靠的研究。气质接近一本极短的导论，但内部坡度更陡：开篇时假设读者聪明却初来乍到，然后一路下沉，直到地面真正变得既前沿又充满争议。
 
-The order matters. This is not a cabinet of 180 interesting facts. It is dependency-ordered: epistemology before statistics, statistics before experiments, mathematics before physics, thermodynamics before life, evolution before mind, and computation before modern AI. The arc makes room for deeper foundations where compression would be dishonest, and for sustained descents into frontier controversies such as the Hubble tension, origin-of-life physics, mammalian epigenetic inheritance, consciousness theories, AGI and alignment, and the deep history of inequality.
+顺序很重要。这不是一只陈列一百八十件趣闻的橱柜。它是按依赖关系排序的：认识论先于统计学，统计学先于实验，数学先于物理，热力学先于生命，进化先于心智，计算先于现代人工智能。弧线在压缩会不诚实的地方为更深的根基留出空间，也在前沿争议处持续下潜——诸如哈勃张力、生命起源物理、哺乳动物表观遗传继承、意识理论、通用人工智能与对齐，以及不平等的深层历史。
 
-Five threads run through the whole course:
+五条线索贯穿整门课程：
 
-- **Information**, because every discipline eventually asks what is signal, what is noise, and what can be transmitted or inferred.
-- **Energy**, because the physical cost of order returns in thermodynamics, life, economics, climate, and computation.
-- **Evolution**, because selection is not just a biological mechanism; it is a pattern for knowledge, culture, technology, and institutions.
-- **Emergence**, because many of the most important objects in the map are collective: temperature, cells, markets, minds, societies.
-- **Computation**, because formal procedure becomes a language for mathematics, physics, brains, and machines.
+- **信息**，因为每一门学科最终都会问：什么是信号，什么是噪声，什么可以被传递或推断。
+- **能量**，因为秩序的物理成本在热力学、生命、经济学、气候与计算中反复现身。
+- **进化**，因为选择不只是生物机制；它是知识、文化、技术与制度的模式。
+- **涌现**，因为地图上许多最重要的对象是集体性的：温度、细胞、市场、心智、社会。
+- **计算**，因为形式程序成为数学、物理、大脑与机器的语言。
 
-The hype filter is part of the method. Frontier claims are marked as **established**, **promising hint**, or **contested/hype**. Physics and cosmology claims need datasets and error bars. Medical, AI, and social-science claims need replication, incentives, measurement, and humility. A result can be exciting and still not carry much weight. A failed claim can still be useful if it teaches us how science corrects itself. Recent does not mean reliable; peer-reviewed does not mean settled; beautiful does not mean true.
+「炒作过滤器」是方法的一部分。前沿主张被标记为**已确立**、**有望的线索**，或**争议/炒作**。物理与宇宙学主张需要数据集与误差棒。医学、人工智能与社会科学主张需要重复验证、激励机制、测量与谦逊。一个结果可以令人兴奋，却未必分量很重。一个失败的主张若教会我们科学如何自我纠正，仍有价值。新近不等于可靠；同行评议不等于定论；优美不等于真实。
 
-The first two days set the tone. Day 1 asks why a stopped clock can give you a true, justified belief without giving you knowledge. Day 2 scales that worry up from a single mind to science as an institution: if induction cannot prove the future will resemble the past, what makes scientific claims trustworthy at all?
+头两天定下基调。第 1 天问：一座停了的钟为何能给你一个真且正当的信念，却不给你知识。第 2 天将这一忧虑从单个心智放大到科学作为一个制度：如果归纳无法证明未来会相似于过去，科学断言凭什么值得信任？
 
-That is the descent: not a catalog of facts, but a course in how facts earn their keep.
+这就是下潜：不是事实的目录，而是一门关于「事实如何挣得它们的立足之地」的课程。

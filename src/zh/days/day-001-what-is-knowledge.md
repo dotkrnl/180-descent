@@ -3,26 +3,26 @@ layout: layouts/day.njk
 tags: zhDay
 locale: zh
 day: 1
-title: "What Is Knowledge?"
-summary: "A stopped clock exposes why justified true belief is not enough for knowledge."
-block: Foundations of Knowledge & Reasoning
+title: "知识是什么？"
+summary: "一座停走的时钟揭示了，为何仅有确证的真信念并不足以构成知识。"
+block: 知识与推理的根基
 slug: what-is-knowledge
 day_path: 001-what-is-knowledge
 source_file: ../day-01-what-is-knowledge.html
 threads:
-  - information
-  - computation
-  - emergence
+  - 信息
+  - 计算
+  - 涌现
 permalink: /zh/days/001-what-is-knowledge/
 ---
 <header class="hero wrap">
-<p class="eyebrow">Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 01 / 180</span></p>
-<h1>What Is Knowledge?</h1>
-<p class="sub">You looked at the clock. You were right. Did you <em>know</em>?</p>
+<p class="eyebrow">模块一 · 知识与推理的根基 · <span class="daymark">第 01 天 / 180</span></p>
+<h1>知识是什么？</h1>
+<p class="sub">你看了时钟。你是对的。但这算<em>知道</em>吗？</p>
 
 <figure class="hero-clock">
 <div class="clockwrap">
-<svg viewBox="0 0 240 240" role="img" aria-label="An analog clock showing 9:12, which has secretly stopped.">
+<svg viewBox="0 0 240 240" role="img" aria-label="一座模拟时钟显示 9:12，它已在暗中停走。">
 <defs>
 <radialGradient id="face" cx="50%" cy="42%" r="70%">
 <stop offset="0%" stop-color="var(--raised)"></stop>
@@ -31,98 +31,98 @@ permalink: /zh/days/001-what-is-knowledge/
 </defs>
 <circle cx="120" cy="120" r="108" fill="url(#face)" stroke="var(--line-strong)" stroke-width="2"></circle>
 <circle cx="120" cy="120" r="100" fill="none" stroke="var(--line)" stroke-width="1"></circle>
-<!-- ticks -->
+<!-- 刻度 -->
 <g id="ticks" stroke="var(--ink-faint)"></g>
-<!-- 12 / 3 / 6 / 9 numerals -->
+<!-- 12 / 3 / 6 / 9 数字 -->
 <g fill="var(--ink-soft)" font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="middle">
 <text x="120" y="34">12</text>
 <text x="208" y="125">3</text>
 <text x="120" y="216">6</text>
 <text x="33" y="125">9</text>
 </g>
-<!-- hour hand 9:12 (276deg) -->
+<!-- 时针 9:12 (276度) -->
 <line x1="120" y1="120" x2="68.3" y2="114.6" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"></line>
-<!-- minute hand 12 min (72deg) -->
+<!-- 分针 12 分 (72度) -->
 <line x1="120" y1="120" x2="194.2" y2="95.9" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"></line>
-<!-- frozen second hand -->
+<!-- 停走的秒针 -->
 <line x1="120" y1="120" x2="150" y2="180" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"></line>
 <circle cx="120" cy="120" r="5.5" fill="var(--ink)"></circle>
 <circle cx="120" cy="120" r="2" fill="var(--accent)"></circle>
 </svg>
 </div>
-<span class="stopped-tag">● stopped 12 h ago — but right, for this one minute</span>
+<span class="stopped-tag">● 已在 12 小时前停走——但就在这一分钟，它恰好正确</span>
 </figure>
 
-<p class="lede"><span class="drop">I</span>t is 9:12 in the morning and you are late. You glance up at the great station clock as you rush past, read <strong>9:12</strong>, and think: <em>fine — three minutes to spare.</em> You are right. It really is 9:12. And yet the clock you trusted died at 9:12 exactly twelve hours ago, somewhere in the small hours, and has hung there frozen ever since. You consulted a broken instrument at the single instant in the day it happened to be correct.</p>
+<p class="lede"><span class="drop">早</span>上九点十二分，你快要迟到了。你匆匆路过时抬头瞥了一眼车站的大钟，读出<strong>9:12</strong>，心想：<em>还好——还有三分钟富余。</em>你没错，此刻确实是 9:12。然而，你所信赖的那座钟恰好在十二小时前的凌晨时分便已停在 9:12，从此凝固不动。你在一天之中唯一正确的那个瞬间，请教了一件坏掉的仪器。</p>
 
-<p>Your belief was <strong>true</strong>. It rested on a perfectly sensible <strong>reason</strong> — clocks tell the time, and you have trusted a thousand of them without incident. You <strong>believed</strong> it sincerely. So: did you <em>know</em> it was 9:12? Asked carefully, almost everyone says no. Something is missing. Saying exactly what has consumed philosophers for sixty years — and, as we'll see, the better part of a thousand.</p>
+<p>你的信念是<strong>真的</strong>。它建立在一条完全合理的<strong>理由</strong>之上——时钟就是用来报时的，而你此前已安然无恙地信赖过上千座钟。你发自内心地<strong>相信</strong>它。那么：你<em>知道</em>此刻是 9:12 吗？仔细一问，几乎所有人都会说不知道。某种东西缺失了。而要精确地说出那是什么，哲学家们已经耗费了六十年——并且，如我们将看到的，几乎耗费了上千年。</p>
 </header><div class="wrap">
 
 <div class="whereblock">
-<p class="label">◆ Where we are</p>
-<p>This is the first descent, so there is nothing behind us yet — the log is blank. Instead we plant seeds. The machinery introduced today (belief as something that comes in <em>degrees</em>; updating on evidence; minds as inference engines) is the epistemic toolkit the entire course will lean on. Watch for it to resurface on <a href="/zh/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> (how science decides what counts at all), <strong>Day 4</strong> (probability as the logic of partial belief), <strong>Day 7</strong> (information), <strong>Day 119</strong> (the predictive brain), and <strong>Day 149</strong> (when famous results evaporate). The five threads we'll trace across all 180 days — <em>information, energy, evolution, emergence, computation</em> — all have a quiet first appearance right here.</p>
+<p class="label">◆ 我们身在何处</p>
+<p>这是第一次下潜，因此身后尚无来路——日志一片空白。相反，我们今天播下种子。今日引入的这套机制（信念以<em>程度</em>呈现；根据证据更新；心智作为推理引擎）是整个课程赖以支撑的认识论工具箱。留意它将在<a href="/zh/days/002-scientific-method-and-demarcation/"><strong>第 2 天</strong></a>（科学如何判定什么才算数）、<strong>第 4 天</strong>（概率作为部分信念的逻辑）、<strong>第 7 天</strong>（信息）、<strong>第 119 天</strong>（预测性大脑）以及<strong>第 149 天</strong>（著名成果如何蒸发）中重新浮现。我们将贯穿全部 180 天的五条线索——<em>信息、能量、演化、涌现、计算</em>——都在此处悄然首演。</p>
 </div>
 
 <section>
-<p class="sec-eyebrow">The model</p>
-<h2>The three-legged stool</h2>
-<p>For roughly twenty-three centuries, Western philosophy carried around a tidy answer to "what is knowledge?" To <em class="term">know</em> that something is the case, you needed three things at once:</p>
-<p><strong>(1) you believe it</strong> — you can't know what you don't even hold to be true. <strong>(2) it's true</strong> — you can't <em>know</em> a falsehood; people who said "I knew the Earth was flat" merely <em>believed</em> it, confidently and wrongly. <strong>(3) you're justified</strong> — you have good reason, because a lucky guess that lands isn't knowledge either. The gambler who "just had a feeling" the long-shot would win, and won, did not <em>know</em> it would.</p>
-<p>Knowledge, on this view, is <em class="term">justified true belief</em> — JTB, a three-legged stool. Kick away any leg and it topples. The picture is usually traced to Plato, who in the <em>Theaetetus</em> floats the idea that knowledge is "true judgement with an account." There's a delicious irony here, much enjoyed by historians: in that very dialogue Socrates then dismantles the definition, so Plato arguably never endorsed the thing named after him. As one scholar put it, it is almost as if a distinguished critic created a tradition in the very act of destroying it.</p>
-<p>Still, the rough consensus held. The stool seemed stable. And then a 35-year-old philosopher who, the story goes, hadn't published much and rather needed to, wrote three pages.</p>
+<p class="sec-eyebrow">模型</p>
+<h2>三条腿的凳子</h2>
+<p>大约二十三个世纪以来，西方哲学一直随身携带一个关于“知识是什么？”的整洁答案。要<em class="term">知道</em>某事为真，你需要同时具备三点：</p>
+<p><strong>（1）你相信它</strong>——你无法知道你甚至不认为真的东西。<strong>（2）它是真的</strong>——你不能<em>知道</em>一个假命题；那些说“我就知道地球是平的”的人，只是<em>相信</em>它，自信且错误地相信。<strong>（3）你有确证</strong>——你有好的理由，因为仅凭运气猜中也不算知识。那个对冷门胜出“就是有种感觉”的赌徒，即便赢了，也并未<em>知道</em>它会赢。</p>
+<p>依此观点，知识即<em class="term">确证的真信念</em>——JTB，一条三条腿的凳子。踢掉任何一条腿，它都会倒塌。这一图景通常追溯至柏拉图，他在<em>《泰阿泰德篇》</em>中提出，知识是“带有说理的真判断”。这里有一种美妙的反讽，历史学家们乐此不疲：正是在那篇对话中，苏格拉底随后拆解了这个定义，因此柏拉图可以说从未真正认可过那项以他命名的学说。正如一位学者所言，这就像一位杰出的批评家在摧毁某个传统的瞬间，竟又创造了它。</p>
+<p>尽管如此，这一粗略的共识还是维系了下来。凳子看似稳固。然后，一位时年三十五岁的哲学家——据传说，他此前发表不多，又颇有些发表的需要——写了三页纸。</p>
 </section>
 
 <section>
-<p class="sec-eyebrow">The grenade</p>
-<h2>Gettier's three pages</h2>
-<p>In 1963, Edmund Gettier published a paper in the journal <em>Analysis</em> with the cheekily plain title <em>"Is Justified True Belief Knowledge?"</em>. It runs barely three pages. It has since been cited in <strong>thousands</strong> of scholarly works and spawned entire subfields. Few documents in modern philosophy have done more damage per word.</p>
-<p>Gettier's move was devastatingly simple. He built little stories in which all three legs of the stool are firmly in place — belief, truth, justification — and yet you'd never say the person <em>knows</em>. Here is his first case, lightly modernized:</p>
-<blockquote>Smith and Jones both apply for a job. The boss tells Smith, "Jones will get it." Smith has also, idly, counted the coins in Jones's pocket: ten. So Smith forms a justified belief: <em>the person who gets the job has ten coins in their pocket.</em></blockquote>
-<p>Now the twist. The boss was wrong (or changed her mind): <strong>Smith</strong> gets the job, not Jones. And — entirely unknown to Smith — Smith happens to have <strong>ten coins</strong> in his own pocket too. Look at his belief, "the person who gets the job has ten coins": it's <strong>true</strong> (the winner, Smith, does have ten coins), it's <strong>justified</strong> (excellent evidence — the boss's word, a literal coin count), and it's sincerely <strong>believed</strong>. JTB, all three legs. Yet Smith plainly doesn't <em>know</em> it. He was tracking <em>Jones</em> and arrived at the right answer about the wrong man.</p>
-<p>That is the anatomy of a <em class="term">Gettier case</em>: your justification runs <em>through a falsehood</em> ("Jones will get the job"), and the belief is rescued into truth by an unrelated <em>coincidence</em> ("Smith also has ten coins"). The reason and the truth never actually touch. The stopped clock is the same skeleton in cleaner clothes: your reason (the clock) is broken, and the truth (it's 9:12) arrives by luck.</p>
+<p class="sec-eyebrow">手榴弹</p>
+<h2>盖梯尔的三页纸</h2>
+<p>1963 年，埃德蒙·盖梯尔在期刊 <em>Analysis</em> 上发表了一篇论文，标题直白得近乎俏皮：<em>“确证的真信念算是知识吗？”</em>。全文仅三页。此后它被引用了<strong>数千</strong>次，并催生了整整几个子领域。现代哲学中，鲜有文献以每字计造成了更大的破坏。</p>
+<p>盖梯尔的招数简单得令人崩溃。他构造了一些小故事，其中凳子的三条腿都稳稳在握——信念、真值、确证——但你绝不会说那个人<em>知道</em>。以下是他第一个案例的轻度现代化版本：</p>
+<blockquote>史密斯与琼斯申请同一份工作。老板告诉史密斯：“琼斯会得到这个职位。”史密斯还闲来无事数了琼斯口袋里的硬币：十枚。于是史密斯形成了一个确证的信念：<em>得到这份工作的人口袋里有十枚硬币。</em></blockquote>
+<p>现在出现转折。老板错了（或者改变了主意）：得到工作的是<strong>史密斯</strong>，而非琼斯。而且——史密斯本人完全不知情——他自己的口袋里恰好也有<strong>十枚硬币</strong>。来看他的信念，“得到这份工作的人口袋里有十枚硬币”：它是<strong>真的</strong>（获胜者史密斯确实有十枚硬币），它是<strong>确证的</strong>（绝佳的证据——老板的话，实打实的硬币清点），而且他是真诚地<strong>相信</strong>的。JTB，三条腿齐全。然而史密斯显然并不<em>知道</em>这一点。他追踪的是<em>琼斯</em>，却就错了的人得出了对的答案。</p>
+<p>这便是<em class="term">盖梯尔案例</em>的解剖结构：你的确证<em>经由一个假命题</em>运行（“琼斯会得到这份工作”），而你的信念被一桩无关的<em>巧合</em>（“史密斯也有十枚硬币”）救入了真理之境。理由与真值从未真正相遇。停走的时钟只是同一副骨架穿了更干净的外衣：你的理由（那座钟）是坏的，而真值（此刻是 9:12）全凭运气降临。</p>
 
 <div class="aside">
-<p class="h">A twist older than its name</p>
-<p>Gettier wasn't first. Bertrand Russell had the stopped-clock case in <em>Human Knowledge: Its Scope and Limits</em> (1948). Go back further and the problem is downright ancient: around <strong>770&nbsp;CE</strong> the Buddhist logician <strong>Dharmottara</strong> described a traveler who sees what looks like smoke over a hill, infers fire, and is right that there's fire — except the "smoke" was a swarm of insects. Same skeleton, twelve centuries early. In 14th-century India, <strong>Gaṅgeśa</strong> built a whole causal theory of knowing to handle such cases. The "Gettier problem" is one of philosophy's great instances of <em>convergent discovery</em> — the kind of thing minds keep tripping over independently, which is itself a hint that something real is there.</p>
+<p class="h">比名字更古老的转折</p>
+<p>盖梯尔并非首创。伯特兰·罗素在<em>《人类的知识：其范围与限度》</em>（1948）中就已提出停钟案例。再往前追溯，这个问题堪称古老：大约在<strong>公元&nbsp;770&nbsp;年</strong>，佛教逻辑学家<strong>法称</strong>描述了一位旅人，他看到山丘上仿佛有烟，推断有火，而且确实有火——只不过那“烟”其实是一群昆虫。同一副骨架，早了十二个世纪。十四世纪的印度，<strong>甘格沙</strong>为处理此类案例建立了一整套因果知识理论。“盖梯尔问题”是哲学中<em>趋同发现</em>的绝佳实例——那种心灵会独立地一再绊倒的东西，而它本身就在暗示：那里有某种真实的东西。</p>
 </div>
 </section>
 
 <!-- ===================== INTERACTIVE 1 ===================== -->
 <div class="panel web-only">
-<p class="ptitle">Interactive · build it and break it</p>
-<h4>The Gettier Machine</h4>
-<p class="pnote">Flip the three classic conditions on and off. The center of the diagram lights up when all three overlap — that's <em>justified true belief</em>. Then try the red switch, <strong>Luck</strong>, with all three on: watch JTB stay satisfied while knowledge slips away. Or load a famous scenario.</p>
+<p class="ptitle">交互演示 · 搭建与拆毁</p>
+<h4>盖梯尔机器</h4>
+<p class="pnote">切换三个经典条件。当三者重叠时，图表中央亮起——那便是<em>确证的真信念</em>。然后试着打开红色开关<strong>运气</strong>，看着 JTB 依旧满足，知识却悄然溜走。或者载入一个经典情境。</p>
 
 <div class="gm-grid">
 <div>
 <div class="switches">
 <button class="swbtn" id="sw-b" role="switch" aria-checked="true">
-<span class="knob"></span><span class="lab"><b>Belief</b><span>You sincerely hold it</span></span>
+<span class="knob"></span><span class="lab"><b>信念</b><span>你真心持守它</span></span>
 </button>
 <button class="swbtn" id="sw-t" role="switch" aria-checked="true">
-<span class="knob"></span><span class="lab"><b>Truth</b><span>It is in fact the case</span></span>
+<span class="knob"></span><span class="lab"><b>真值</b><span>事实正是如此</span></span>
 </button>
 <button class="swbtn" id="sw-j" role="switch" aria-checked="true">
-<span class="knob"></span><span class="lab"><b>Justification</b><span>You have good reason</span></span>
+<span class="knob"></span><span class="lab"><b>确证</b><span>你有充分理由</span></span>
 </button>
 <button class="swbtn luck" id="sw-l" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><b>Luck (the Gettier twist)</b><span>Reason misfires; truth arrives by coincidence</span></span>
+<span class="knob"></span><span class="lab"><b>运气（盖梯尔转折）</b><span>理由失灵；真值偶然而至</span></span>
 </button>
 </div>
 <div class="presets">
-<p class="h">Load a scenario</p>
+<p class="h">载入情境</p>
 <div class="pbtns">
-<button class="pbtn" data-preset="clock">Stopped clock</button>
-<button class="pbtn" data-preset="coins">Smith &amp; the coins</button>
-<button class="pbtn" data-preset="guess">A lucky guess</button>
-<button class="pbtn" data-preset="false">A confident error</button>
-<button class="pbtn" data-preset="know">Plain knowing</button>
+<button class="pbtn" data-preset="clock">停走的钟</button>
+<button class="pbtn" data-preset="coins">史密斯与硬币</button>
+<button class="pbtn" data-preset="guess">幸运的猜测</button>
+<button class="pbtn" data-preset="false">自信的错误</button>
+<button class="pbtn" data-preset="know">平常的认知</button>
 </div>
 </div>
 </div>
 
 <div class="venn-box">
-<svg viewBox="0 0 400 330" role="img" aria-label="Three overlapping circles for Belief, Truth and Justification.">
+<svg viewBox="0 0 400 330" role="img" aria-label="三个交叠的圆，分别代表信念、真值与确证。">
 <defs>
 <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
 <rect width="8" height="8" fill="color-mix(in srgb,var(--contested) 18%,transparent)"></rect>
@@ -132,9 +132,9 @@ permalink: /zh/days/001-what-is-knowledge/
 <circle id="c-b" cx="200" cy="118" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
 <circle id="c-t" cx="150" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
 <circle id="c-j" cx="250" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<text x="200" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">BELIEF</text>
-<text x="96" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">TRUE</text>
-<text x="305" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">JUSTIFIED</text>
+<text x="200" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">信念</text>
+<text x="96" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">真值</text>
+<text x="305" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">确证</text>
 <!-- center badge -->
 <circle id="center-mark" cx="200" cy="178" r="30" fill="none" stroke="none"></circle>
 <text id="center-label" x="200" y="183" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" font-weight="600" fill="var(--ink)" opacity="0"></text>
@@ -149,60 +149,60 @@ permalink: /zh/days/001-what-is-knowledge/
 </div>
 </div>
 <div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h4>The Gettier Machine</h4>
-<p class="pnote">Key cases:</p>
+<p class="ptitle">参考表格</p>
+<h4>盖梯尔机器</h4>
+<p class="pnote">关键案例：</p>
 <table class="alt-table">
-<thead><tr><th>Case</th><th>Belief</th><th>Truth</th><th>Justification</th><th>Luck</th><th>Verdict</th></tr></thead>
+<thead><tr><th>案例</th><th>信念</th><th>真值</th><th>确证</th><th>运气</th><th>裁决</th></tr></thead>
 <tbody>
-<tr><td>Plain knowing</td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td><td>Knowledge on the classic view</td></tr>
-<tr><td>Stopped clock</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Not knowledge: truth arrives by coincidence</td></tr>
-<tr><td>Lucky guess</td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td><td>Not knowledge: no justification</td></tr>
-<tr><td>Confident error</td><td>Yes</td><td>No</td><td>Yes</td><td>No</td><td>Not knowledge: the claim is false</td></tr>
+<tr><td>平常的认知</td><td>是</td><td>是</td><td>是</td><td>否</td><td>依经典观点，属于知识</td></tr>
+<tr><td>停走的钟</td><td>是</td><td>是</td><td>是</td><td>是</td><td>非知识：真值纯属巧合降临</td></tr>
+<tr><td>幸运的猜测</td><td>是</td><td>是</td><td>否</td><td>是</td><td>非知识：缺乏确证</td></tr>
+<tr><td>自信的错误</td><td>是</td><td>否</td><td>是</td><td>否</td><td>非知识：命题为假</td></tr>
 </tbody>
 </table>
 </div>
 
 <section>
-<p class="sec-eyebrow">The patch wars</p>
-<h2>The hunt for the fourth leg</h2>
-<p>The obvious response to Gettier was: add a fourth condition that screens out the luck. For decades, epistemologists tried — and each tidy fix met a nastier counterexample. It became a minor blood sport.</p>
-<p><strong>No false lemmas.</strong> First idea: knowledge can't be reasoned <em>through</em> a falsehood. Smith's belief leaned on "Jones will get the job," which was false; ban that and you're safe. Clean — until Alvin Goldman's <strong>fake-barn country</strong> (1976). You're driving through a region where, as a prank, every "barn" is a flat movie-set façade — except one. You happen to glance at the single real barn and think "a barn." Your belief is true, justified, and rests on <em>no</em> false premise. Yet you don't know it's a barn: you could so easily have been fooled by a façade a hundred meters either way.</p>
-<p><strong>Track the truth.</strong> So maybe knowledge is about how your belief behaves across <em>nearby possibilities</em>. Robert Nozick (1981) proposed <em class="term">sensitivity</em>: you know <em>p</em> only if, <em>were p false, you wouldn't believe it.</em> Elegant — but it produces strange verdicts in edge cases. Ernest Sosa (1999) flipped it into <em class="term">safety</em>: in all the nearby ways things could have gone, you wouldn't have been wrong. The stopped clock fails safety hard (a minute either side and you're mistaken); a working clock passes. Fake-barn-you fails safety too.</p>
-<p>Then Linda Zagzebski (1994) delivered the gut-punch with a kind of <strong>recipe</strong> for defeating <em>any</em> such fix. Take a belief that's justified but could still be false (which justification, being fallible, always allows). Arrange for the justification to misfire so the belief is false — then arrange, by luck, for it to be true after all. As long as your fourth condition stops short of demanding that the justification <em>guarantee</em> the truth, luck can always wedge back in. The patch wars may be structurally unwinnable.</p>
+<p class="sec-eyebrow">补丁战</p>
+<h2>寻找第四条腿</h2>
+<p>面对盖梯尔，最自然的回应是：添上第四条条件，把运气筛除。几十年来，认识论家们孜孜以求——而每一次整洁的修补都撞上一个更刁钻的反例。这几乎成了一场血腥的小型竞技。</p>
+<p><strong>无假引理。</strong>最初的想法是：知识不能经由一个假命题推理得出。史密斯的信念倚赖于“琼斯会得到这份工作”，而这是假的；禁绝它，你便安全了。干净利落——直到阿尔文·戈德曼提出<strong>假谷仓之国</strong>（1976）。你驾车穿过一片区域，那里有人恶作剧，把每一座“谷仓”都做成平板电影布景——除了一座例外。你恰好瞥见了那座真谷仓，心想“那是座谷仓”。你的信念为真、确证充分，且<em>不</em>依赖任何假前提。然而你并不<em>知道</em>那是谷仓：你本可以如此轻易地在百米之外被布景板愚弄。</p>
+<p><strong>追踪真值。</strong>那么，也许知识关乎你的信念在<em>邻近的可能世界</em>中如何表现。罗伯特·诺齐克（1981）提出了<em class="term">敏感性</em>：你<em>知道</em>命题<em>p</em>，仅当<em>若 p 为假，你便不会相信它。</em>优雅——却在边缘情形中产出古怪的裁决。欧内斯特·索萨（1999）将其翻转为<em class="term">安全性</em>：在所有邻近的可能展开中，你都不会出错。停走的钟在安全性上惨败（早一分钟或晚一分钟你便错了）；运转正常的钟则通过。假谷仓前的你同样未能通过安全测试。</p>
+<p>随后，琳达·扎格泽布斯基（1994）以一种<strong>配方</strong>式的论证给了所有此类修补以致命一击——足以击溃<em>任何</em>同类方案。取一个已确证但仍可能为假的信念（而确证，既然是可错的，总允许这种可能）。安排确证失灵，使信念为假——再借运气安排，让它终究为真。只要你的第四条条件没有走到要求确证<em>保证</em>真值那一步，运气就总能楔回缝隙。补丁战或许在结构上便不可能获胜。</p>
 
-<h3>Two ways to stop fighting</h3>
-<p><strong>Declare knowledge a primitive.</strong> Timothy Williamson, in <em>Knowledge and Its Limits</em> (2000), made a radical move: stop trying to build knowledge out of simpler parts. Maybe it has no analysis. On his <em class="term">knowledge-first</em> view, knowing is a basic mental state — the most general <em>factive</em> one — and we should explain belief, evidence, and justification <em>in terms of knowledge</em>, not the other way around. You can't define <em>hydrogen</em> or <em>John F. Kennedy</em> into simpler concepts; perhaps knowledge is bedrock too. Sixty years of failed definitions start to look less like a puzzle and more like a clue.</p>
-<p><strong>Make it about competence.</strong> The other escape is <em class="term">virtue epistemology</em> (Sosa again). Knowledge is <em>apt</em> belief — a belief that is true <em>because of</em> the knower's skill, not by accident. Picture an archer. A bullseye is a good shot only if the arrow hit center <em>because</em> the archer aimed well — not because a gust blew a bad shot onto the target. The Gettiered believer is exactly that archer: the wind knocked the arrow off course, then a second gust knocked it back onto the bull. Accurate, yes. Skillful, no. <em>Apt</em>, no. That, says Sosa, is why luck-based hits aren't knowledge.</p>
+<h3>两种止战之道</h3>
+<p><strong>宣布知识为原初概念。</strong>蒂莫西·威廉森在<em>Knowledge and Its Limits</em>（2000）中迈出了激进的一步：停止试图用更简单的零件拼凑知识。也许它根本无从分析。在他的<em class="term">知识优先</em>视域中，知道是一种基本的心灵状态——最普遍的<em>事实性</em>状态——而我们应当用知识去解释信念、证据与确证，而非反其道而行。你无法把<em>氢</em>或<em>约翰·F·肯尼迪</em>拆解成更简单的概念；也许知识同样是基石。六十年来失败的定义，看起来不再像一个谜题，而更像一条线索。</p>
+<p><strong>诉诸能力。</strong>另一条出路是<em class="term">德性认识论</em>（又是索萨）。知识是<em>适切</em>的信念——因其认知者的技艺而为真，非凭偶然。想象一位弓箭手。一箭中的，仅当箭矢命中靶心<em>是因为</em>射手瞄准精妙——而非一阵风把劣射吹回了靶心。盖梯尔化的认知者正是那位弓箭手：第一阵风将箭吹离靶心，第二阵风又把它吹了回来。准确，是的。精巧，不。<em>适切</em>，不。索萨说，这便是运气之击不算知识的缘由。</p>
 </section>
 
 <section>
-<p class="sec-eyebrow">The debate</p>
-<h2>What makes a belief justified at all?</h2>
-<p>Step back from "is it knowledge?" to the humbler leg: what makes a belief <em>justified</em> in the first place? Push on any justification and you fall into a regress. It's 9:12 because the clock says so. Trust the clock because clocks are reliable. Believe <em>that</em> because… and now you're sliding. The ancient skeptics mapped the trap precisely. Every chain of justification, they argued, ends in one of three uncomfortable places — the <em class="term">Agrippan trilemma</em>: it goes on <strong>forever</strong>, or it loops back in a <strong>circle</strong>, or it stops at some <strong>arbitrary</strong> point you simply declare.</p>
-<p>Three modern schools each pick which horn to grab — and a fourth changes the subject entirely.</p>
+<p class="sec-eyebrow">辩论</p>
+<h2>信念究竟何以确证？</h2>
+<p>从“这是知识吗？”退后一步，回到那条更谦卑的凳腿：信念最初是如何被<em>确证</em>的？追问任何确证，你都会陷入回溯。现在是 9:12，因为钟这么显示。信赖钟，因为钟是可靠的。相信<em>那一点</em>，又因为……于是你滑向了深渊。古代怀疑论者精准地绘出了陷阱。每一条确证之链，他们论证道，终结于三种令人不安的处所之一——<em class="term">阿格里帕三难困境</em>：它永远<strong>延续</strong>下去，或绕回一个<strong>循环</strong>，或止于某个你干脆宣称的<strong>武断</strong>之点。</p>
+<p>三个现代学派各自选择抓住哪一只角——而第四个学派彻底换了话题。</p>
 </section>
 
 <!-- ===================== VISUAL 2 ===================== -->
 <div class="panel tri">
-<p class="ptitle">Diagram · the regress problem</p>
-<h4>Agrippa's Trilemma — three bad endings, four escapes</h4>
-<p class="pnote">Why is your belief justified? Every honest answer to "…and why <em>that</em>?" eventually hits one of three walls.</p>
+<p class="ptitle">图示 · 回溯难题</p>
+<h4>阿格里帕三难困境——三种糟糕的终点，四种逃逸之路</h4>
+<p class="pnote">你的信念为何确证？对“……那又为何？”的每一个诚实回答，终将撞上三面高墙之一。</p>
 <div class="tri-svg print-hide">
-<svg viewBox="0 0 640 300" role="img" aria-label="A belief justified by a reason, justified by another reason, branching into infinite regress, a circle, and an arbitrary stop.">
+<svg viewBox="0 0 640 300" role="img" aria-label="一个信念被一条理由确证，又被另一条理由确证，分岔为无穷回溯、循环与武断止步。">
 <!-- nodes -->
 <g font-family="IBM Plex Mono,monospace" font-size="12.5">
 <rect x="20" y="120" width="150" height="58" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
-<text x="95" y="145" text-anchor="middle" fill="var(--ink)">belief:</text>
-<text x="95" y="162" text-anchor="middle" fill="var(--ink-soft)">"it's 9:12"</text>
+<text x="95" y="145" text-anchor="middle" fill="var(--ink)">信念：</text>
+<text x="95" y="162" text-anchor="middle" fill="var(--ink-soft)">"现在是 9:12"</text>
 
 <rect x="215" y="120" width="150" height="58" rx="9" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
-<text x="290" y="145" text-anchor="middle" fill="var(--ink)">because…</text>
-<text x="290" y="162" text-anchor="middle" fill="var(--ink-soft)">"the clock"</text>
+<text x="290" y="145" text-anchor="middle" fill="var(--ink)">因为……</text>
+<text x="290" y="162" text-anchor="middle" fill="var(--ink-soft)">"那座钟"</text>
 
 <rect x="410" y="120" width="150" height="58" rx="9" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
-<text x="485" y="145" text-anchor="middle" fill="var(--ink)">because…</text>
-<text x="485" y="162" text-anchor="middle" fill="var(--ink-soft)">"…and why that?"</text>
+<text x="485" y="145" text-anchor="middle" fill="var(--ink)">因为……</text>
+<text x="485" y="162" text-anchor="middle" fill="var(--ink-soft)">"……那又为何？"</text>
 </g>
 <!-- arrows -->
 <g stroke="var(--ink-faint)" stroke-width="1.6" fill="none" marker-end="url(#arr)">
@@ -221,84 +221,84 @@ permalink: /zh/days/001-what-is-knowledge/
 </g>
 <!-- regress -->
 <g font-family="IBM Plex Mono,monospace" font-size="12">
-<text x="470" y="40" fill="var(--brass)">∞  forever</text>
+<text x="470" y="40" fill="var(--brass)">∞  无穷</text>
 <text x="470" y="22" fill="var(--ink-faint)" font-size="20" letter-spacing="3">· · ·</text>
 </g>
 <!-- circle -->
 <g>
 <circle cx="470" cy="255" r="20" fill="none" stroke="var(--brass)" stroke-width="1.6" stroke-dasharray="3 4"></circle>
-<text x="470" y="290" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)">↻ a circle</text>
+<text x="470" y="290" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)">↻ 循环</text>
 </g>
 <!-- wall -->
 <g>
 <rect x="455" y="216" width="60" height="40" rx="3" fill="color-mix(in srgb,var(--brass) 18%,transparent)" stroke="var(--brass)" stroke-width="1.4"></rect>
-<text x="485" y="240" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink)">stop.</text>
-<text x="378" y="285" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)">▮ arbitrary halt</text>
+<text x="485" y="240" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink)">止步。</text>
+<text x="378" y="285" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)">▮ 武断止步</text>
 </g>
 </svg>
 </div>
 <div class="tri-print epub-only print-only">
-<p><strong>Reason chain:</strong> belief: "it's 9:12" -> because "the clock" -> because "...and why that?"</p>
+<p><strong>推理链条：</strong>信念："现在是 9:12" → 因为 "那座钟" → 因为 "……那又为何？"</p>
 <ol>
-<li><strong>Infinite regress:</strong> every reason needs another reason forever.</li>
-<li><strong>Circle:</strong> the chain loops back to something it already used.</li>
-<li><strong>Arbitrary halt:</strong> the chain simply stops at a basic commitment.</li>
+<li><strong>无穷回溯：</strong>每一个理由都需要另一个理由，永无止境。</li>
+<li><strong>循环：</strong>链条绕回自身，回到已经用过的某一点。</li>
+<li><strong>武断止步：</strong>链条干脆停在某处基本承诺上，不再追问。</li>
 </ol>
 </div>
 <div class="tri-key">
-<div class="k"><b>Foundationalism</b> — bites the third bullet: some beliefs are <em>basic</em> and need no further support (raw experience, simple logic). The chain stops, but not arbitrarily.</div>
-<div class="k"><b>Coherentism</b> — embraces the circle, but makes it virtuous: no belief stands alone; a belief is justified by how well it hangs together with the whole web. (A first taste of <em>systems thinking</em>, Day 9.)</div>
-<div class="k"><b>Infinitism</b> — the brave minority: accepts that justification is an endless chain of reasons, never bottoming out.</div>
-<div class="k"><b>Reliabilism</b> — changes the question. A belief is justified if it was <em>produced by a reliable process</em> — good vision, sound memory — whether or not you can recite a defense. This is <em>externalism</em>: justification can be a fact about your wiring, not a story in your head.</div>
+<div class="k"><b>基础主义</b> —— 咬住第三颗子弹：有些信念是<em>基本的</em>，无需进一步支撑（原初经验、简单逻辑）。链条就此停住，却非武断。</div>
+<div class="k"><b>融贯主义</b> —— 拥抱循环，却使之成为一种美德：没有信念孤立存在；一个信念的确证取决于它与整个信念网络契合得有多好。（这是<em>系统思维</em>的先声，第 9 日。）</div>
+<div class="k"><b>无穷主义</b> —— 勇敢的少数派：接受确证是一条永无尽头的理由之链，从不触底。</div>
+<div class="k"><b>可靠主义</b> —— 改换问题。一个信念是确证的，只要它由<em>可靠的过程</em>产生——良好的视觉、健全的记忆——无论你是否能背诵出一套辩护。这是<em>外在主义</em>：确证可以是你认知机制的事实，而非你头脑中的故事。</div>
 </div>
 </div>
 
 <section>
-<p>That internal/external split matters more than it looks. The <strong>internalist</strong> says justification must be something you can access by reflection — reasons available "from the inside." The <strong>externalist</strong> (reliabilism's home) says what matters is that your belief was, in fact, produced in a truth-conducive way, accessible or not. Hold that tension in mind: it is exactly where the old armchair questions collide with the new science of how brains actually form beliefs.</p>
+<p>内在与外在的分裂，其重要性远超表象。<strong>内在主义者</strong>主张，确证必须是你经由反思即可触及的东西——“从内部”可得的理由。<strong>外在主义者</strong>（可靠主义的大本营）则认为，重要的是你的信念事实上以趋向真理的方式产生，无论你是否能够触及。请将这一张力存于心中：这正是旧日的扶手椅问题与关于大脑如何真正形成信念的新科学正面相撞之处。</p>
 </section>
 
 <section class="frontier">
-<p class="sec-eyebrow">The frontier · 2026</p>
-<h2>Three live edges — and the hype filter</h2>
-<p>Every day in this course ends at the research frontier, with each claim tagged for how much weight it can bear. Knowledge sits at a fascinating junction right now: philosophers, psychologists, and neuroscientists are all circling the same questions from different sides.</p>
+<p class="sec-eyebrow">前沿 · 2026</p>
+<h2>三条活跃前沿——以及炒作过滤器</h2>
+<p>本课程的每一天都在研究前沿收束，每一项主张都标注着它能承载多少重量。知识正处在一个迷人的交汇点上：哲学家、心理学家与神经科学家正从不同方向环绕着同一组问题。</p>
 
 <div class="claim">
 <div class="ctop">
-<span class="cnum">Edge 01</span>
-<span class="chip bad" data-print="superseded"><i></i>Original claim · superseded</span>
-<span class="chip ok" data-print="established"><i></i>Replication · established</span>
+<span class="cnum">前沿 01</span>
+<span class="chip bad" data-print="superseded"><i></i>原初主张 · 已被取代</span>
+<span class="chip ok" data-print="established"><i></i>复制研究 · 已确立</span>
 </div>
-<h3>Are "knowledge" intuitions universal — or just Western?</h3>
-<p>When the discipline runs on "asked carefully, almost everyone says no," a natural worry is: <em>which</em> everyone? In 2001, the founding study of <em class="term">experimental philosophy</em> — Weinberg, Nichols &amp; Stich — reported that the Gettier intuition varies by culture, with East-Asian participants supposedly more willing to grant the lucky believer "knowledge." If true, it was a bombshell: philosophy's whole method of consulting intuitions looked parochial.</p>
-<p>The bombshell did not survive contact with replication. In <strong>"Gettier Across Cultures"</strong> (<em>Noûs</em>, 2017), Machery, Stich, Rose and colleagues tested Brazil, India, Japan, and the United States with cases taken near-verbatim — and found the <em>opposite</em>: in <strong>every</strong> group, people robustly refused to call the Gettiered belief knowledge. A separate replication (Kim &amp; Yuan) failed to reproduce the original cross-cultural gap even with a far larger East-Asian sample. The current best reading is that there may be a <strong>universal core "folk epistemology"</strong> that recoils from luck-based knowing. The deeper lesson is one we'll meet at industrial scale on <strong>Day 149</strong>: the splashiest finding is often the one careful re-testing quietly walks back.</p>
+<h3>“知识”直觉是普世的——抑或仅仅是西方的？</h3>
+<p>当整个学科的运行逻辑是“若仔细追问，几乎所有人都会说不”时，一个自然的忧虑是：<em>哪些</em>人？2001 年，<em class="term">实验哲学</em>的开山之作——Weinberg、Nichols 与 Stich——报告称盖梯尔直觉因文化而异，据说东亚参与者更愿意将“知识”的头衔授予那位幸运的认知者。若属实，这将是一枚重磅炸弹：哲学赖以运作的直觉咨询法，看起来竟是褊狭的。</p>
+<p>这枚炸弹没能经受住复制的检验。在<strong>“Gettier Across Cultures”</strong>（<em>Noûs</em>, 2017）中，Machery、Stich、Rose 及其同事以近乎逐字转录的案例测试了巴西、印度、日本与美国——却发现了<em>相反的</em>结果：在<strong>每一组</strong>人群中，人们都坚决拒绝将盖梯尔化的信念称为知识。另一项独立复制（Kim & Yuan）甚至以更大的东亚样本也未能复现最初的文化差异。当前最可信的解读是，可能存在一个<strong>普世的核心“民间认识论”</strong>，它本能地排斥基于运气的认知。更深层的教训，我们将在<strong>第 149 天</strong>以工业规模遇见：最耸动的发现，往往正是被审慎的复现悄然收回的那一个。</p>
 </div>
 
 <div class="claim">
 <div class="ctop">
-<span class="cnum">Edge 02</span>
-<span class="chip ok" data-print="established"><i></i>Normative framework · established</span>
-<span class="chip hint" data-print="contested"><i></i>"Replaces belief" · contested</span>
+<span class="cnum">前沿 02</span>
+<span class="chip ok" data-print="established"><i></i>规范性框架 · 已确立</span>
+<span class="chip hint" data-print="contested"><i></i>“取代信念” · 尚有争议</span>
 </div>
-<h3>Belief by the dial, not the switch: Bayesian epistemology</h3>
-<p>Maybe the all-or-nothing picture of belief was the wrong starting point. <em class="term">Bayesian epistemology</em> says your real epistemic states are <em class="term">credences</em> — degrees of confidence on a scale from 0 to 1. Rationality then needs just two rules: your credences must obey the laws of probability (<em>coherence</em>), and you must revise them by <em>conditionalization</em> as evidence comes in.</p>
-<p>Why obey? The <strong>Dutch book theorem</strong> (Ramsey, 1926; de Finetti, 1937) supplies a startlingly concrete answer: if your credences break the probability laws, a clever bookmaker can offer you a set of bets you'll each accept as fair, but which together guarantee you lose money <em>no matter what happens</em>. Incoherent confidence isn't merely untidy — it's exploitable. The dial below lets you feel the trap close. What's still <em>contested</em> is whether graded credence <em>replaces</em> ordinary yes/no belief or merely sits beside it. (The lottery paradox bites here: you're 99.9% sure your ticket loses — but do you flat-out <em>believe</em> it loses?) We pick this thread up properly on <strong>Day 4</strong>.</p>
+<h3>以刻度盘而非开关来度量信念：贝叶斯认识论</h3>
+<p>也许全有或全无的信念图景从一开始就是错的。<em class="term">贝叶斯认识论</em>主张，你真正的认识论状态是<em class="term">置信度</em>——从 0 到 1 的连续信心刻度。理性化随后只需要两条规则：你的置信度必须服从概率法则（<em>融贯性</em>），且你必须随着证据到来以<em>条件化</em>方式修正它们。</p>
+<p>为何应当服从？<strong>荷兰赌定理</strong>（Ramsey, 1926; de Finetti, 1937）提供了一个惊人具体的答案：如果你的置信度违背概率法则，一位精明的博彩商便能提供一组你各自视为公平的赌约，但它们合在一起将<em>无论发生什么都保证你输钱</em>。不融贯的信心不仅是凌乱——它是可被利用的。下方的刻度盘让你亲身体会陷阱如何收紧。仍属<em>争议</em>的是，分级的置信度究竟是<em>取代</em>了日常的是/否信念，还是仅仅与之并置。（彩票悖论在此咬人：你有 99.9% 的把握自己的彩票会输——但你真的<em>相信</em>它会输吗？）我们将在<strong>第 4 天</strong>正式拾起这条线索。</p>
 </div>
 </section>
 
 <!-- ===================== INTERACTIVE 3 ===================== -->
 <div class="panel web-only">
-<p class="ptitle">Interactive · feel the trap</p>
-<h4>The Credence Dial &amp; the Dutch Book</h4>
-<p class="pnote">Set your confidence that the next card is <strong>red</strong> (S) and that it's <strong>not red</strong> (¬S). The two should sum to exactly 1. Push them out of line and watch a bookie turn your incoherence into a guaranteed profit — at your expense.</p>
+<p class="ptitle">交互演示 · 感受陷阱</p>
+<h4>置信度刻度盘与荷兰赌</h4>
+<p class="pnote">设定你对下一张牌为<strong>红色</strong>（S）以及<strong>非红色</strong>（¬S）的置信度。两者之和应当恰好为 1。将它们推离一致，看着博彩商将你的不融贯转化为稳赚不赔的利润——以你的损失为代价。</p>
 
 <div class="cred-controls">
 <div class="slider-row">
-<label>Credence in S — "next card is red" <span class="val" id="vS">0.50</span></label>
-<input type="range" id="rS" min="0" max="100" value="50" aria-label="Credence in S">
+<label>对 S 的置信度——“下一张牌是红色” <span class="val" id="vS">0.50</span></label>
+<input type="range" id="rS" min="0" max="100" value="50" aria-label="对 S 的置信度">
 </div>
 <div class="slider-row">
-<label>Credence in ¬S — "next card is not red" <span class="val" id="vN">0.50</span></label>
-<input type="range" id="rN" min="0" max="100" value="50" aria-label="Credence in not S">
+<label>对 ¬S 的置信度——“下一张牌不是红色” <span class="val" id="vN">0.50</span></label>
+<input type="range" id="rN" min="0" max="100" value="50" aria-label="对 ¬S 的置信度">
 </div>
 
 <div>
@@ -307,26 +307,26 @@ permalink: /zh/days/001-what-is-knowledge/
 <div class="seg n" id="segN" style="width:50%"></div>
 <div class="one-line"></div>
 </div>
-<div class="sum-readout"><span>0</span><span id="sumtxt">sum = 1.00 ✓</span><span>2</span></div>
+<div class="sum-readout"><span>0</span><span id="sumtxt">总和 = 1.00 ✓</span><span>2</span></div>
 </div>
 
 <div class="ledger coherent" id="ledger">
-<p class="lh" id="ledgerH">Coherent</p>
-<p id="ledgerBody" style="margin:0;">Your confidences sum to 1. No book of fair-looking bets can guarantee you a loss. This is the bare minimum probability asks of a rational mind.</p>
+<p class="lh" id="ledgerH">融贯</p>
+<p id="ledgerBody" style="margin:0;">你的置信度之和为 1。没有一套看起来公平的赌约能保证让你亏损。这是概率对一个理性心灵提出的最低要求。</p>
 </div>
-<button class="snap" id="snapBtn">↳ Snap ¬S to 1 − S (make it coherent)</button>
+<button class="snap" id="snapBtn">↳ 将 ¬S 对齐至 1 − S（恢复融贯）</button>
 </div>
 </div>
 <div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h4>The Credence Dial and the Dutch Book</h4>
-<p>If your credence in <em>S</em> and your credence in <em>not-S</em> sum to 1.00, the pair is coherent. If they sum above 1.00, you will overpay for bets where exactly one can win. If they sum below 1.00, a bookie can reverse the bets and still guarantee a profit.</p>
+<p class="ptitle">参考表格</p>
+<h4>置信度刻度盘与荷兰赌</h4>
+<p>若你对<em>S</em>的置信度与对<em>非-S</em>的置信度之和为 1.00，则这对置信度是融贯的。若总和大于 1.00，你会为两场不可能同时获胜的赌约过度付费。若总和小于 1.00，博彩商可以反向购买赌约，依然保证获利。</p>
 <table class="alt-table">
-<thead><tr><th>Credence in S</th><th>Credence in not-S</th><th>Sum</th><th>Result</th></tr></thead>
+<thead><tr><th>对 S 的置信度</th><th>对 非-S 的置信度</th><th>总和</th><th>结果</th></tr></thead>
 <tbody>
-<tr><td>0.50</td><td>0.50</td><td class="num">1.00</td><td>Coherent</td></tr>
-<tr><td>0.70</td><td>0.60</td><td class="num">1.30</td><td>Guaranteed 0.30 loss if you buy both $1 bets</td></tr>
-<tr><td>0.30</td><td>0.40</td><td class="num">0.70</td><td>Guaranteed 0.30 loss if the bookie buys both bets from you</td></tr>
+<tr><td>0.50</td><td>0.50</td><td class="num">1.00</td><td>融贯</td></tr>
+<tr><td>0.70</td><td>0.60</td><td class="num">1.30</td><td>若你同时购买两场 1 美元赌约，必定损失 0.30</td></tr>
+<tr><td>0.30</td><td>0.40</td><td class="num">0.70</td><td>若博彩商同时从你手中购入两场赌约，必定损失 0.30</td></tr>
 </tbody>
 </table>
 </div>
@@ -334,71 +334,71 @@ permalink: /zh/days/001-what-is-knowledge/
 <section class="frontier">
 <div class="claim">
 <div class="ctop">
-<span class="cnum">Edge 03</span>
-<span class="chip hint" data-print="promising"><i></i>Predictive coding · promising</span>
-<span class="chip bad" data-print="contested"><i></i>Grand "Free Energy" theory · contested</span>
+<span class="cnum">前沿 03</span>
+<span class="chip hint" data-print="promising"><i></i>预测编码 · 前景可期</span>
+<span class="chip bad" data-print="contested"><i></i>宏大“自由能”理论 · 争议重重</span>
 </div>
-<h3>Where do beliefs come from? The brain as a prediction machine</h3>
-<p>Philosophy asks what justifies a belief; neuroscience now asks how a lump of tissue forms one. A fast-growing program answers: the brain is not a passive sponge soaking up the world — it is a relentless <em class="term">prediction machine</em>. On the <em class="term">predictive-processing</em> view (Andy Clark, <em>Behavioral and Brain Sciences</em>, 2013; Jakob Hohwy, 2013), the brain constantly generates a model of its surroundings, predicts the sensory signals it expects, and forwards only the <em>prediction errors</em> — the surprises — up the hierarchy. Perception becomes the brain's best running guess, reined in by error; in Anil Seth's memorable phrase, a "controlled hallucination." Belief-updating starts to look like <strong>Bayesian inference rendered in neurons</strong> — the so-called "Bayesian brain," tying Edge 02 to wetware.</p>
-<p>Karl Friston pushes the idea to its limit with the <em class="term">Free Energy Principle</em> (<em>Nature Reviews Neuroscience</em>, 2010): living systems persist precisely by minimizing a quantity — "free energy," an information-theoretic cousin of <em>surprise</em> — that knits perception, action, and even biological self-organization into one framework. The honest labels matter here. Predictive coding genuinely explains real perceptual phenomena and is a serious, productive research program — <strong>promising</strong>. But the <em>grand</em> Free Energy Principle, as a single law for all of mind and life, is widely criticized as so general it is hard to <em>falsify</em> — closer to a framework than a tested theory, and so <strong>contested</strong>. We'll return to it for perception (<strong>Day 119</strong>) and consciousness (<strong>Days 123–126</strong>) — and notice already how its "free energy" rhymes with the thermodynamics we'll meet on <strong>Days 33 and 83–85</strong>. <em>Information, energy, computation, emergence</em> — four of our five threads, braided into one neuron's quiet arithmetic.</p>
+<h3>信念从何而来？作为预测机器的大脑</h3>
+<p>哲学追问什么确证了一个信念；神经科学如今追问一团组织如何形成一个信念。一个快速成长的纲领回答：大脑并非被动吸纳世界的海绵——它是一台不知疲倦的<em class="term">预测机器</em>。依<em class="term">预测加工</em>观点（Andy Clark, <em>Behavioral and Brain Sciences</em>, 2013; Jakob Hohwy, 2013），大脑不断生成周遭环境的模型，预测它期望接收的感觉信号，并仅将<em>预测误差</em>——意外——向上传递。感知由此成为大脑持续运转的最佳猜测，被误差约束；用 Anil Seth 那令人难忘的话来说，一场“受控的幻觉”。信念更新开始看起来像是<strong>神经元中实现的贝叶斯推理</strong>——即所谓的“贝叶斯大脑”，将前沿 02 与湿件联结起来。</p>
+<p>Karl Friston 以<em class="term">自由能原理</em>（<em>Nature Reviews Neuroscience</em>, 2010）将这一观念推向极致：生命系统之所以能持存，恰恰在于最小化一个量——“自由能”，<em>惊讶</em>的信息论近亲——它将感知、行动乃至生物自组织编织进同一框架。诚实的标签在此处至关重要。预测编码确实解释了真实的感知现象，是一个严肃而多产的研究纲领——<strong>前景可期</strong>。但<em>宏大的</em>自由能原理，作为统摄心灵与生命的单一法则，被广泛批评为过于笼统而难以<em>证伪</em>——更接近一个框架而非经检验的理论，因而<strong>争议重重</strong>。我们将在感知（<strong>第 119 天</strong>）与意识（<strong>第 123–126 天</strong>）中重返它——并且已然注意到，它的“自由能”与我们将在<strong>第 33 天和第 83–85 天</strong>遇见的热力学如何遥相呼应。<em>信息、能量、计算、涌现</em>——我们五条线索中的四条，织入一枚神经元静谧的运算之中。</p>
 </div>
 </section>
 
 <section>
-<p class="sec-eyebrow">Open questions</p>
-<h2>What's genuinely unsettled</h2>
-<p>Sixty years on, the honest answer to "what is knowledge?" includes a healthy list of things nobody has nailed down:</p>
+<p class="sec-eyebrow">悬而未决的问题</p>
+<h2>真正尚未落定</h2>
+<p>六十年过去，对“知识是什么？”的诚实回答里，还躺着一长串无人能钉死的事项：</p>
 <ul>
-<li><strong>Can knowledge be analyzed at all?</strong> Or was Williamson right that it's bedrock — a primitive we explain other things <em>with</em>, not <em>from</em>?</li>
-<li><strong>Internal or external?</strong> Does being justified require reasons you can access by reflection, or just wiring that tends to produce truths?</li>
-<li><strong>One currency or two?</strong> Is rational belief fundamentally graded (credence), all-or-nothing, or both somehow reconciled?</li>
-<li><strong>Is there really a universal human epistemology</strong> — and if so, did <em>evolution</em> install the instinct that luck-based "knowing" doesn't count? (A thread for <strong>Day 74</strong>.)</li>
-<li><strong>Is the brain <em>literally</em> Bayesian</strong>, or is "the brain does inference" just a useful way of describing it from outside?</li>
-<li><strong>And the question that will haunt the AI block:</strong> when a system like the one that drafted this page outputs a true, well-supported claim, does it <em>know</em> anything — or is it the ultimate Gettier case, right for reasons that have nothing to do with the truth? (<strong>Days 138–145</strong>.)</li>
+<li><strong>知识究竟可否被分析？</strong>还是威廉森说得对，它是基石——一个我们用之去解释其他事物、而非从中派生出来的原初概念？</li>
+<li><strong>内在还是外在？</strong>确证是否要求你能经由反思触及的理由，抑或只需那些倾向于产出真值的认知机制？</li>
+<li><strong>一种货币还是两种？</strong>理性信念在根本上是分级的（置信度）、全有或全无的，抑或二者以某种方式调和？</li>
+<li><strong>是否真的存在一种普世的人类认识论</strong>——若有，是否是<em>演化</em>植入了那种“基于运气的认知不算数”的本能？（留待<strong>第 74 天</strong>的线索。）</li>
+<li><strong>大脑<em>字面意义上</em>就是贝叶斯的吗</strong>，还是说“大脑在做推理”仅仅是一种从外部描述它的有用方式？</li>
+<li><strong>而那个将萦绕 AI 板块的问题：</strong>当像起草这一页的系统输出一个为真且证据充分的断言时，它是否<em>知道</em>任何东西——抑或它是终极的盖梯尔案例，正确的原因与真值毫无关联？（<strong>第 138–145 天</strong>。）</li>
 </ul>
 </section>
 
 <div class="recap">
-<p class="h">◆ The day in three sentences</p>
+<p class="h">◆ 一日三句话</p>
 <dl>
-<div><dt>Big idea</dt><dd>For 2,300 years knowledge looked like justified true belief — until Gettier showed in three pages that you can hold all three and still not know, because your reasons and the truth can meet by luck rather than by connection.</dd></div>
-<div><dt>Best analogy</dt><dd>The stopped clock that's right twice a day — and the archer whose arrow is blown off target, then blown back onto the bullseye: accurate, but not <em>apt</em>.</dd></div>
-<div><dt>Live controversy</dt><dd>Whether the fix is a fourth condition (and which), whether knowledge is unanalyzable bedrock, and whether "belief" should give way to graded, Bayesian credence — with a real scientific frontier in the claim that the brain is a prediction machine.</dd></div>
+<div><dt>核心洞见</dt><dd>两千三百年来，知识看上去就像确证的真信念——直到盖梯尔用三页纸证明，你可以三者俱备却仍不算知道，因为你的理由与真值可能因运气而非关联相遇。</dd></div>
+<div><dt>最佳隐喻</dt><dd>那座一天只对两次的停钟——以及那位弓箭手，箭被吹离靶心，又被吹回正中：准确，却不<em>适切</em>。</dd></div>
+<div><dt>悬置争议</dt><dd>修补方案是否为第四条件（以及是哪一个）；知识是否是不可分析的基石；“信念”是否应当让位于分级的贝叶斯置信度——而“大脑是一台预测机器”这一断言，正构成一条真正的科学前沿。</dd></div>
 </dl>
-<p class="threads"><b>Threads today ›</b> information (credence &amp; the Bayesian brain) · energy (Friston's free energy) · computation (mind as inference engine) — with light first touches of emergence and evolution.</p>
+<p class="threads"><b>今日线索 ›</b> 信息（置信度与贝叶斯大脑）· 能量（Friston 的自由能）· 计算（心灵作为推理引擎）——并轻触涌现与演化。</p>
 </div>
 
 <div class="tomorrow">
-<p class="h">Tomorrow <span class="arrow">→</span> Day 02</p>
-<h3><a href="/zh/days/002-scientific-method-and-demarcation/">The Scientific Method &amp; Demarcation</a></h3>
-<p>Today we asked when a <em>single</em> belief counts as knowledge. Tomorrow we scale the question up to an entire institution: how does science decide which claims even get to enter the arena? Popper's demand that a real theory be <em>falsifiable</em>, Kuhn's paradigm shifts, Lakatos's research programmes — and the modern replication crisis as the demarcation line tested under live fire. Bring today's calibration instinct; you'll need it.</p>
+<p class="h">明日 <span class="arrow">→</span> 第 02 日</p>
+<h3><a href="/zh/days/002-scientific-method-and-demarcation/">科学方法与划界问题</a></h3>
+<p>今天我们追问，单个信念何时算得上知识。明天我们将问题放大至一整座机构：科学如何裁定哪些断言才有资格进入竞技场？波普尔要求真正的理论必须<em>可证伪</em>，库恩的范式转移，拉卡托斯的研究纲领——以及现代复制危机，作为划界线在实战火力下的试炼。带上今日调校好的直觉；你会用得着。</p>
 </div>
 
 <hr class="div">
 
 <section class="sources">
-<p class="sec-eyebrow">Sources</p>
-<h2>Sources &amp; further reading</h2>
+<p class="sec-eyebrow">来源</p>
+<h2>来源与延伸阅读</h2>
 <ol>
 <li>Gettier, E. L. (1963). "Is Justified True Belief Knowledge?" <em>Analysis</em> 23(6): 121–123. <span class="meta">doi:10.1093/analys/23.6.121.</span> <a href="https://doi.org/10.1093/analys/23.6.121">doi.org/10.1093/analys/23.6.121</a></li>
-<li>Ichikawa, J. J. &amp; Steup, M. "The Analysis of Knowledge." <em>Stanford Encyclopedia of Philosophy</em> (rev. 2018). <a href="https://plato.stanford.edu/entries/knowledge-analysis/">plato.stanford.edu/entries/knowledge-analysis</a> <span class="meta">— JTB, the Gettier cases, safety/sensitivity, and the knowledge-first turn.</span></li>
-<li>"Gettier problem." <em>Wikipedia</em> (accessed 2026). <a href="https://en.wikipedia.org/wiki/Gettier_problem">en.wikipedia.org/wiki/Gettier_problem</a> <span class="meta">— precedents in Russell (1948), Dharmottara (~770 CE), and Gaṅgeśa (14th c.).</span></li>
-<li>Russell, B. (1948). <em>Human Knowledge: Its Scope and Limits.</em> London: Allen &amp; Unwin. <span class="meta">— the stopped-clock case (pp. ~170–171).</span></li>
-<li>Goldman, A. (1976). "Discrimination and Perceptual Knowledge." <em>Journal of Philosophy</em> 73(20): 771–791. <span class="meta">— the fake-barn case; reliabilism.</span></li>
-<li>Nozick, R. (1981). <em>Philosophical Explanations.</em> Harvard University Press. <span class="meta">— truth-tracking / sensitivity.</span></li>
-<li>Sosa, E. (1999). "How to Defeat Opposition to Moore." <em>Philosophical Perspectives</em> 13: 141–153. <span class="meta">— the safety condition.</span> See also Sosa (2007), <em>A Virtue Epistemology</em> (apt belief).</li>
-<li>Zagzebski, L. (1994). "The Inescapability of Gettier Problems." <em>The Philosophical Quarterly</em> 44(174): 65–73. <span class="meta">— the recipe defeating any luck-excluding fix.</span></li>
-<li>Williamson, T. (2000). <em>Knowledge and Its Limits.</em> Oxford University Press. <a href="https://en.wikipedia.org/wiki/Knowledge_and_Its_Limits">overview</a> <span class="meta">— knowledge-first epistemology; knowledge as the most general factive mental state.</span></li>
-<li>Weinberg, J. M., Nichols, S. &amp; Stich, S. (2001). "Normativity and Epistemic Intuitions." <em>Philosophical Topics</em> 29(1–2): 429–460. <span class="meta">— the founding (later contested) cross-cultural x-phi study.</span></li>
+<li>Ichikawa, J. J. &amp; Steup, M. "The Analysis of Knowledge." <em>Stanford Encyclopedia of Philosophy</em> (rev. 2018). <a href="https://plato.stanford.edu/entries/knowledge-analysis/">plato.stanford.edu/entries/knowledge-analysis</a> <span class="meta">—— JTB、盖梯尔案例、安全性/敏感性，以及知识优先转向。</span></li>
+<li>"Gettier problem." <em>Wikipedia</em> (accessed 2026). <a href="https://en.wikipedia.org/wiki/Gettier_problem">en.wikipedia.org/wiki/Gettier_problem</a> <span class="meta">—— Russell（1948）、法称（约公元 770 年）与甘格沙（14 世纪）的先例。</span></li>
+<li>Russell, B. (1948). <em>Human Knowledge: Its Scope and Limits.</em> London: Allen &amp; Unwin. <span class="meta">—— 停钟案例（第 ~170–171 页）。</span></li>
+<li>Goldman, A. (1976). "Discrimination and Perceptual Knowledge." <em>Journal of Philosophy</em> 73(20): 771–791. <span class="meta">—— 假谷仓案例；可靠主义。</span></li>
+<li>Nozick, R. (1981). <em>Philosophical Explanations.</em> Harvard University Press. <span class="meta">—— 真值追踪 / 敏感性。</span></li>
+<li>Sosa, E. (1999). "How to Defeat Opposition to Moore." <em>Philosophical Perspectives</em> 13: 141–153. <span class="meta">—— 安全性条件。</span> 参见 Sosa (2007), <em>A Virtue Epistemology</em>（适切信念）。</li>
+<li>Zagzebski, L. (1994). "The Inescapability of Gettier Problems." <em>The Philosophical Quarterly</em> 44(174): 65–73. <span class="meta">—— 击溃任何排除运气的修补方案的配方。</span></li>
+<li>Williamson, T. (2000). <em>Knowledge and Its Limits.</em> Oxford University Press. <a href="https://en.wikipedia.org/wiki/Knowledge_and_Its_Limits">overview</a> <span class="meta">—— 知识优先认识论；知识作为最普遍的事实性心灵状态。</span></li>
+<li>Weinberg, J. M., Nichols, S. &amp; Stich, S. (2001). "Normativity and Epistemic Intuitions." <em>Philosophical Topics</em> 29(1–2): 429–460. <span class="meta">—— 奠基性的跨文化实验哲学研究（后来受到争议）。</span></li>
 <li>Machery, E., Stich, S., Rose, D., Chatterjee, A., Karasawa, K., Struchiner, N., Sirker, S., Usui, N. &amp; Hashimoto, T. (2017). "Gettier Across Cultures." <em>Noûs</em> 51(3): 645–664. <span class="meta">doi:10.1111/nous.12110.</span> <a href="https://doi.org/10.1111/nous.12110">doi.org/10.1111/nous.12110</a></li>
 <li>Kim, M. &amp; Yuan, Y. (2015). "No cross-cultural differences in the Gettier car case intuition: A replication study of Weinberg et al. 2001." <em>Episteme</em>. <a href="https://philpapers.org/rec/KIMNCD">philpapers.org/rec/KIMNCD</a></li>
-<li>Weisberg, J. "Bayesian Epistemology." <em>Stanford Encyclopedia of Philosophy.</em> <a href="https://plato.stanford.edu/entries/epistemology-bayesian/">plato.stanford.edu/entries/epistemology-bayesian</a> <span class="meta">— credences, conditionalization, and the Dutch book argument (Ramsey 1926; de Finetti 1937).</span></li>
-<li>Clark, A. (2013). "Whatever next? Predictive brains, situated agents, and the future of cognitive science." <em>Behavioral and Brain Sciences</em> 36(3): 181–204. See also Clark, <em>Surfing Uncertainty</em> (OUP, 2016).</li>
+<li>Weisberg, J. "Bayesian Epistemology." <em>Stanford Encyclopedia of Philosophy.</em> <a href="https://plato.stanford.edu/entries/epistemology-bayesian/">plato.stanford.edu/entries/epistemology-bayesian</a> <span class="meta">—— 置信度、条件化，以及荷兰赌论证（Ramsey 1926; de Finetti 1937）。</span></li>
+<li>Clark, A. (2013). "Whatever next? Predictive brains, situated agents, and the future of cognitive science." <em>Behavioral and Brain Sciences</em> 36(3): 181–204. 参见 Clark, <em>Surfing Uncertainty</em> (OUP, 2016)。</li>
 <li>Friston, K. (2010). "The free-energy principle: a unified brain theory?" <em>Nature Reviews Neuroscience</em> 11(2): 127–138. <span class="meta">doi:10.1038/nrn2787.</span> <a href="https://doi.org/10.1038/nrn2787">doi.org/10.1038/nrn2787</a></li>
 <li>Hohwy, J. (2013). <em>The Predictive Mind.</em> Oxford University Press.</li>
 </ol>
 </section>
 
-<p class="endcap">End of Day 01 · <span class="gleam">179 descents remain</span></p>
+<p class="endcap">第 01 日终 · <span class="gleam">尚有 179 段下降待续</span></p>
 
 </div>
