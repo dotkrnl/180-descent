@@ -69,6 +69,7 @@ async function pageToXhtml(htmlPath, title, selfHref) {
   const html = await readFile(htmlPath, "utf8");
   const $ = cheerio.load(html, { decodeEntities: true });
   $("script,.site-topbar,.site-footer,.download-strip,.web-only,.print-hide,.print-only:not(.epub-only)").remove();
+  $(".epub-only .ptitle").remove();
   $(".epub-only").removeClass("epub-only print-only format-alt").addClass("epub-alt");
   $("svg").attr("xmlns", "http://www.w3.org/2000/svg");
   $("a[href]").each((_, a) => {
@@ -110,7 +111,23 @@ async function epubCss() {
     .replaceAll("@media print", "@media amzn-mobi")
     .replaceAll(".epub-only,.print-only,.format-alt{display:none;}", ".print-only{display:none;}.epub-alt{display:block;}")
     .replaceAll(".site-topbar,.site-footer,.download-strip,.web-only,.epub-only{display:none!important;}", ".site-topbar,.site-footer,.download-strip,.web-only,.print-only{display:none!important;}")
-    + "\nbody{font-size:1em;} .web-only,.print-only{display:none!important;} .epub-alt{display:block!important;}\n";
+    + `
+body{font-size:1em;}
+.web-only,.print-only{display:none!important;}
+.epub-alt{display:block!important;}
+.epub-alt>.ptitle{display:none!important;}
+.bartrack{background:#f7f7f2!important;border:1px solid #9c9588!important;}
+.barfill{display:block!important;min-height:1.1em!important;}
+.barfill.orig{background:#2f7d52!important;}
+.barfill.rep{background:#a23c34!important;}
+.barfill.mid{background:#a9792b!important;}
+@media (prefers-color-scheme: dark){
+  .bartrack{background:#101820!important;border-color:#6d7a70!important;}
+  .barfill.orig{background:#63c98d!important;}
+  .barfill.rep{background:#e07168!important;}
+  .barfill.mid{background:#d8ac5a!important;}
+}
+`;
 }
 
 function navDocument(items, meta) {

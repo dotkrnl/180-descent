@@ -41,6 +41,10 @@ for (const name of xmlFiles) {
     console.error(`EPUB contains print-hidden content in ${name}`);
     failures++;
   }
+  if (/Reference table/.test(text)) {
+    console.error(`EPUB contains generic fallback label in ${name}`);
+    failures++;
+  }
   const namedEntities = text.match(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)[A-Za-z][A-Za-z0-9]+;/g);
   if (namedEntities) {
     console.error(`EPUB contains XML-unsafe named entities in ${name}: ${[...new Set(namedEntities)].join(", ")}`);
