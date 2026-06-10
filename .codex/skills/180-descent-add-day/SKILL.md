@@ -64,16 +64,30 @@ After completing the English day file and passing all checks, mirror the work in
 
 1. Create `src/zh/days/day-###-slug.md` as a translation of the English day file.
 2. Use Kimi CLI for Chinese translation, instructing it to produce text that is **优雅，文艺，读起来令人愉悦** while remaining technically precise.
-3. Review the Kimi output for correctness, terminology consistency, and preservation of all YAML front matter keys, indentation, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JavaScript hooks, Nunjucks syntax, front matter structure, and permalink paths.
-4. Update `src/_data/syllabus_zh.yaml` with the Chinese title, entry, model, debate, and frontier for the new day.
-5. Run the zh-specific build and checks:
+3. Manually review the Kimi output for correctness, terminology consistency, and preservation of all YAML front matter keys, indentation, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JavaScript hooks, Nunjucks syntax, front matter structure, and permalink paths. Do not treat Kimi output as final.
+4. Run a GLM consistency and language refinement pass with opencode using the Zhipu AI Coding Plan model:
+
+   ```sh
+   rtk opencode run -m zhipuai-coding-plan/glm-5.1 "Review the Chinese edition changes for translation correctness, terminology consistency, remaining English that should be Chinese, and elegant but technically precise wording. Do not edit files; return concise actionable findings with file:line, current phrase, recommended replacement, and rationale."
+   ```
+
+5. Manually review GLM's findings, apply only the corrections that are technically and stylistically sound, and reject suggestions that would damage citations, code hooks, front matter, ids, URLs, or intended technical meaning.
+6. Maintain these Chinese terminology conventions unless the user explicitly changes them:
+   - book/course "descent" -> `深入`, not `下潜`
+   - "deep dive" syllabus blocks -> `专题深入`
+   - JTB -> `被证成的真信念`
+   - scientific replication -> `复现`, `重复实验`, or `可重复性`; use `复制` only for biological/molecular copying
+   - day references -> `第 N 日`
+   - hype filter -> `炒作过滤器`; evidence labels may use `争议/炒作`
+7. Update `src/_data/syllabus_zh.yaml` with the Chinese title, entry, model, debate, and frontier for the new day.
+8. Run the zh-specific build and checks:
 
    ```sh
    rtk npm run build
    rtk npm run check
    ```
 
-6. Inspect the built zh website, EPUB, and PDF outputs before committing.
-7. Commit the Chinese edition in the same batch or a follow-up batch with a conventional message, usually `feat: add day ### zh lesson`.
+9. Inspect the built zh website, EPUB, and PDF outputs before committing.
+10. Commit the Chinese edition in the same batch or a follow-up batch with a conventional message, usually `feat: add day ### zh lesson`.
 
 Do not edit generated files in `_site/` or `dist/`; they are build outputs.
