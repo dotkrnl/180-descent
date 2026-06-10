@@ -3,24 +3,58 @@ layout: layouts/print-base.njk
 permalink: /print/
 title: Print Edition
 ---
-<section class="wrap wide page-hero">
+{% set intro = collections.introduction[0] %}
+
+<section class="wrap wide page-hero print-cover">
   <p class="eyebrow">{{ book.subtitle }}</p>
   <h1>{{ book.title }}</h1>
   <p class="sub">By {{ book.authors }}</p>
 </section>
 
-<section class="wrap wide">
+<nav class="wrap wide print-toc" id="toc" aria-label="Table of contents">
   <p class="sec-eyebrow">Contents</p>
   <ol>
+    {% if intro %}
+      <li><a href="#intro">Introduction</a></li>
+    {% endif %}
     {% for day in collections.days %}
-      <li>Day {{ day.data.day }}: {{ day.data.title }}</li>
+      {% set previousBlock = "" %}
+      {% if not loop.first %}
+        {% set previousBlock = collections.days[loop.index0 - 1].data.block %}
+      {% endif %}
+      {% if loop.first or day.data.block != previousBlock %}
+        {% set blockNo = collections.days | blockOrdinal(loop.index0) %}
+        <li class="toc-block"><a href="#block-{{ blockNo }}">Block {{ blockNo | roman }}: {{ day.data.block }}</a></li>
+      {% endif %}
+      <li><a href="#day-{{ day.data.day | padDay }}">Day {{ day.data.day }}: {{ day.data.title }}</a></li>
     {% endfor %}
   </ol>
-</section>
+</nav>
+
+{% if intro %}
+  <article class="wrap wide print-intro" id="intro" data-print-title="Introduction">
+    <p class="eyebrow">{{ intro.data.eyebrow or "Introduction" }}</p>
+    <h1>{{ intro.data.title }}</h1>
+    {% if intro.data.subtitle %}<p class="sub">{{ intro.data.subtitle }}</p>{% endif %}
+    {{ intro.templateContent | safe }}
+  </article>
+{% endif %}
 
 {% for day in collections.days %}
-  <article class="lesson-print">
+  {% set previousBlock = "" %}
+  {% if not loop.first %}
+    {% set previousBlock = collections.days[loop.index0 - 1].data.block %}
+  {% endif %}
+  {% if loop.first or day.data.block != previousBlock %}
+    {% set blockNo = collections.days | blockOrdinal(loop.index0) %}
+    <section class="block-divider" id="block-{{ blockNo }}" data-print-title="Block {{ blockNo | roman }}">
+      <div class="block-divider-inner">
+        <p>Block {{ blockNo | roman }}</p>
+        <h1>{{ day.data.block }}</h1>
+      </div>
+    </section>
+  {% endif %}
+  <article class="lesson-print" id="day-{{ day.data.day | padDay }}" data-day-path="{{ day.data.day_path }}" data-print-title="Day {{ day.data.day }} · {{ day.data.title }}" data-print-block="{{ day.data.block }}">
     {{ day.templateContent | safe }}
   </article>
 {% endfor %}
-

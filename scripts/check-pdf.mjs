@@ -9,7 +9,12 @@ if (!text.startsWith("%PDF-")) {
   failures++;
 }
 
-for (const pattern of [/127\.0\.0\.1/, /localhost/i]) {
+for (const pattern of [
+  /127\.0\.0\.1/,
+  /localhost/i,
+  /https:\/\/180-descent\.pages\.dev\/days\//,
+  /https:\/\/180-descent\.pages\.dev\/introduction\//
+]) {
   if (pattern.test(text)) {
     console.error(`PDF contains local development link matching ${pattern}`);
     failures++;

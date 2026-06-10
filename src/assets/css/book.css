@@ -249,15 +249,24 @@ hr.div{border:none;border-top:1px solid var(--line);margin:3rem 0;}
   .vc-row .who{display:block;margin-bottom:.2rem;}
 }
 
-@page{size:6in 9in;margin:.62in .55in .7in;}
+@page{size:6in 9in;margin:.78in .55in .86in;}
 @media print{
   :root{--paper:#fff;--raised:#fff;--ink:#111;--ink-soft:#333;--ink-faint:#666;--line:#ddd;--line-strong:#bbb;--shadow:none;}
   body{font-size:10.2pt;line-height:1.46;background:#fff;color:#111;}
   .site-topbar,.site-footer,.download-strip,.web-only,.epub-only,.print-hide{display:none!important;}
   .print-only,.format-alt{display:block!important;}
+  .print-cover{break-after:page;page-break-after:always;}
+  .print-toc{break-before:page;break-after:page;page-break-before:always;page-break-after:always;}
+  .print-toc ol{margin:.2in 0 0;padding-left:.22in;font-size:11pt;line-height:1.7;}
+  .print-toc .toc-block{margin-top:.12in;font-family:"IBM Plex Mono",monospace;font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:#555;}
+  .print-intro{break-before:page;break-after:page;page-break-before:always;page-break-after:always;}
+  .block-divider{break-before:page;break-after:page;page-break-before:always;page-break-after:always;margin:0;min-height:7.36in;background:var(--accent-deep);color:#fff;display:flex;align-items:center;padding:0 .27in;overflow:hidden;}
+  .block-divider-inner{max-width:4.2in;}
+  .block-divider p{font-family:"IBM Plex Mono",monospace;font-size:9pt;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);margin:0 0 .18in;}
+  .block-divider h1{font-size:29pt;line-height:1.05;color:#fff;margin:0;}
   .wrap,.wide{max-width:none;padding:0;}
   header.hero,.page-hero{padding:0 0 .25in;break-after:auto;}
-  .hero-clock,.hero-sun{max-width:2.45in;margin:.14in auto;}
+  .hero-clock,.hero-sun{max-width:2.45in;margin:.26in auto;}
   .lede{font-size:1.06em;line-height:1.55;}
   .lede .drop{font-size:3em;}
   h1{font-size:23pt;line-height:1.05;}
@@ -267,10 +276,13 @@ hr.div{border:none;border-top:1px solid var(--line);margin:3rem 0;}
   .sec-eyebrow{break-after:avoid;}
   .whereblock,.aside,.panel,.format-alt,.recap,.tomorrow,figure,blockquote,table{break-inside:avoid;page-break-inside:avoid;}
   .whereblock,.aside,.panel,.format-alt,.recap,.tomorrow{box-shadow:none;border-radius:0;}
-  .whereblock{background:transparent;border:0!important;padding:.08in 0;margin:.14in 0;}
+  .whereblock{background:transparent;border:0!important;padding:.08in 0;margin:.18in 0;}
   .aside,.tomorrow{background:transparent;border:0!important;padding:.08in 0;}
-  .format-alt{background:#fff;border:1px solid #ddd!important;padding:.16in .2in;margin:.18in 0;}
-  .panel{padding:.18in .22in;margin:.18in 0;border-color:#ddd;}
+  .format-alt{background:#fff;border:1px solid #ddd!important;padding:.18in .22in;margin:.28in 0;}
+  .format-alt .ptitle,.format-alt .pnote{display:none!important;}
+  .format-alt h4{font-size:12.5pt;margin:0 0 .12in;}
+  figure,.oscviz,.reptable,.alt-table,.tri-print{margin-top:.24in;margin-bottom:.24in;}
+  .panel{padding:.18in .22in;margin:.24in 0;border-color:#ddd;}
   .claim .ctop{gap:.04in .12in;align-items:baseline;margin-bottom:.05in;}
   .chip{display:inline;padding:0;border:0!important;border-radius:0;background:transparent!important;font-size:0;line-height:1.2;letter-spacing:0;white-space:normal;color:#444!important;}
   .chip::before{content:"[" attr(data-print) "]";font-size:6.1pt;letter-spacing:.04em;}
@@ -284,11 +296,13 @@ hr.div{border:none;border-top:1px solid var(--line);margin:3rem 0;}
   .tri-key{grid-template-columns:1fr 1fr;gap:.12in .2in;margin-top:.12in;}
   .tri-key .k{font-size:.9em;break-inside:avoid;page-break-inside:avoid;}
   .recap{background:transparent;color:#111;border:0!important;padding:.1in 0;}
+  .recap .h{margin-bottom:.16in;}
   .recap strong{color:#111;}
   .recap dt,.threads,.threads b{color:#333;}
   .threads{border-top:1px solid #ddd;}
   .sources a{color:#111;border-bottom:0;}
-  .print-document .lesson-print{break-before:page;}
+  .print-document .lesson-print{break-before:page;page-break-before:always;}
+  .print-document .block-divider + .lesson-print{break-before:auto;page-break-before:auto;}
   .print-document .lesson-print:first-child{break-before:auto;}
 }
 

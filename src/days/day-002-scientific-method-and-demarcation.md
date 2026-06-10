@@ -137,8 +137,8 @@ permalink: /days/002-scientific-method-and-demarcation/
 </div>
 </div>
 <div class="format-alt epub-only print-only">
-<p class="ptitle">Static version</p>
-<h4>The Demarcation Lab, as a comparison table</h4>
+<p class="ptitle">Reference table</p>
+<h4>The Demarcation Lab</h4>
 <table class="alt-table">
 <thead><tr><th>Claim</th><th>Popper</th><th>Kuhn</th><th>Lakatos</th><th>Cluster view</th></tr></thead>
 <tbody>
@@ -353,7 +353,7 @@ permalink: /days/002-scientific-method-and-demarcation/
 <hr class="div">
 
 <section class="sources">
-<p class="sec-eyebrow">Receipts</p>
+<p class="sec-eyebrow">Sources</p>
 <h2>Sources &amp; further reading</h2>
 <ol>
 <li>Hume, D. (1739–40). <em>A Treatise of Human Nature</em>, Book I, Part iii. And (1748) <em>An Enquiry Concerning Human Understanding</em>, §IV–V. <span class="meta">— the problem of induction; the sunrise passage. See</span> <a href="https://plato.stanford.edu/entries/induction-problem/">Stanford Encyclopedia of Philosophy, "The Problem of Induction"</a> <span class="meta">(rev. 2018).</span></li>

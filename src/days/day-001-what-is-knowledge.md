@@ -148,9 +148,9 @@ permalink: /days/001-what-is-knowledge/
 </div>
 </div>
 <div class="format-alt epub-only print-only">
-<p class="ptitle">Static version</p>
-<h4>The Gettier Machine, as a table</h4>
-<p class="pnote">The live website lets you flip these conditions. In ebook and print form, the key cases are:</p>
+<p class="ptitle">Reference table</p>
+<h4>The Gettier Machine</h4>
+<p class="pnote">Key cases:</p>
 <table class="alt-table">
 <thead><tr><th>Case</th><th>Belief</th><th>Truth</th><th>Justification</th><th>Luck</th><th>Verdict</th></tr></thead>
 <tbody>
@@ -317,7 +317,7 @@ permalink: /days/001-what-is-knowledge/
 </div>
 </div>
 <div class="format-alt epub-only print-only">
-<p class="ptitle">Static version</p>
+<p class="ptitle">Reference table</p>
 <h4>The Credence Dial and the Dutch Book</h4>
 <p>If your credence in <em>S</em> and your credence in <em>not-S</em> sum to 1.00, the pair is coherent. If they sum above 1.00, you will overpay for bets where exactly one can win. If they sum below 1.00, a bookie can reverse the bets and still guarantee a profit.</p>
 <table class="alt-table">
@@ -376,7 +376,7 @@ permalink: /days/001-what-is-knowledge/
 <hr class="div">
 
 <section class="sources">
-<p class="sec-eyebrow">Receipts</p>
+<p class="sec-eyebrow">Sources</p>
 <h2>Sources &amp; further reading</h2>
 <ol>
 <li>Gettier, E. L. (1963). "Is Justified True Belief Knowledge?" <em>Analysis</em> 23(6): 121–123. <span class="meta">doi:10.1093/analys/23.6.121.</span> <a href="https://doi.org/10.1093/analys/23.6.121">doi.org/10.1093/analys/23.6.121</a></li>

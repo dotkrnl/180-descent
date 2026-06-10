@@ -16,13 +16,23 @@ try {
   await page.goto(`${server.url}/print/`, { waitUntil: "networkidle" });
   await page.evaluate((baseUrl) => {
     const localOrigin = window.location.origin;
+    const dayAnchors = new Map(
+      [...document.querySelectorAll(".lesson-print[data-day-path]")]
+        .map((article) => [`/days/${article.dataset.dayPath}/`, article.id])
+    );
     for (const anchor of document.querySelectorAll("a[href]")) {
       const href = anchor.getAttribute("href");
       if (!href || href.startsWith("#")) continue;
 
       const url = new URL(href, window.location.href);
       if (url.origin === localOrigin) {
-        anchor.setAttribute("href", `${baseUrl}${url.pathname}${url.search}${url.hash}`);
+        if (url.pathname === "/introduction/") {
+          anchor.setAttribute("href", "#intro");
+        } else if (dayAnchors.has(url.pathname)) {
+          anchor.setAttribute("href", `#${dayAnchors.get(url.pathname)}`);
+        } else {
+          anchor.setAttribute("href", `${baseUrl}${url.pathname}${url.search}${url.hash}`);
+        }
       }
     }
   }, publicBaseUrl);
@@ -30,12 +40,38 @@ try {
   await page.emulateMedia({ media: "print" });
   await page.pdf({
     path: "dist/downloads/180-descent.pdf",
+    displayHeaderFooter: true,
+    headerTemplate: pdfHeaderTemplate(),
+    footerTemplate: pdfFooterTemplate(),
+    margin: { top: "0.78in", right: "0.55in", bottom: "0.86in", left: "0.55in" },
     printBackground: true,
     preferCSSPageSize: true
   });
 } finally {
   await browser.close();
   await server.close();
+}
+
+function pdfHeaderTemplate() {
+  return `
+    <style>
+      .pdf-header{box-sizing:border-box;width:100%;padding:0 0.55in;font:7px "IBM Plex Mono",monospace;color:#66757b;display:flex;justify-content:space-between;letter-spacing:.08em;text-transform:uppercase;}
+    </style>
+    <div class="pdf-header">
+      <span>The 180-Day Descent</span>
+      <span>Foundations of Knowledge &amp; Reasoning</span>
+    </div>`;
+}
+
+function pdfFooterTemplate() {
+  return `
+    <style>
+      .pdf-footer{box-sizing:border-box;width:100%;padding:0 0.55in;font:7px "IBM Plex Mono",monospace;color:#66757b;display:flex;justify-content:space-between;letter-spacing:.08em;text-transform:uppercase;}
+    </style>
+    <div class="pdf-footer">
+      <span>Where we are: Block I</span>
+      <span>Page <span class="pageNumber"></span> / <span class="totalPages"></span></span>
+    </div>`;
 }
 await copyFile("dist/downloads/180-descent.pdf", "_site/downloads/180-descent.pdf");
 

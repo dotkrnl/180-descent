@@ -31,6 +31,12 @@ for (const file of dayFiles) {
     console.error(`${file} references remote Google Fonts`);
     failures++;
   }
+  for (const phrase of ["Static version", "live website lets", "as a table", "Receipts"]) {
+    if (parsed.content.includes(phrase)) {
+      console.error(`${file} contains print-unfriendly phrase: ${phrase}`);
+      failures++;
+    }
+  }
   const $ = cheerio.load(parsed.content);
   const webPanels = $(".panel.web-only").length;
   const staticAlternates = $(".format-alt.print-only").length;
