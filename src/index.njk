@@ -19,22 +19,20 @@ description: Browse and download The 180-Day Descent.
     <article class="download-card">
       <p class="card-kicker">Offline</p>
       <h2><a href="{{ book.downloads.epub }}">Download EPUB</a></h2>
-      <p>Portable ebook edition with no-JS interactive fallbacks for reader compatibility.</p>
     </article>
     <article class="download-card">
       <p class="card-kicker">Print</p>
       <h2><a href="{{ book.downloads.pdf }}">Download PDF</a></h2>
-      <p>6 by 9 inch print edition with static alternatives replacing live controls.</p>
     </article>
   </div>
 </section>
 
 <section class="wrap wide">
-  <p class="sec-eyebrow">Available descents</p>
+  <p class="sec-eyebrow">Latest descents</p>
   <div class="toc-grid">
-    {% for item in collections.days %}
+    {% for item in collections.days | latestDays(10) %}
       {% include "components/day-card.njk" %}
     {% endfor %}
   </div>
+  <p class="all-days-link"><a href="/syllabus/">View the full syllabus</a></p>
 </section>
-

@@ -13,7 +13,7 @@ The sequence begins with a constraint. The frontier is only useful if the instru
 
 Each day is built to work even when time is uneven. It starts with a puzzle, story, image, analogy, or thought experiment; builds a mental model; names the live debate; then walks as far toward recent, trustworthy research as the evidence allows. The spirit is close to a very short introduction, but with a steeper internal slope: begin as if the reader is smart but new here, then descend until the ground becomes genuinely current and contested.
 
-The order matters. This is not a cabinet of 180 interesting facts. It is dependency-ordered: epistemology before statistics, statistics before experiments, mathematics before physics, thermodynamics before life, evolution before mind, and computation before modern AI. The extra room of 180 days, rather than 90, is spent in two ways: deeper foundations where compression would be dishonest, and sustained descents into frontier controversies such as the Hubble tension, origin-of-life physics, mammalian epigenetic inheritance, consciousness theories, AGI and alignment, and the deep history of inequality.
+The order matters. This is not a cabinet of 180 interesting facts. It is dependency-ordered: epistemology before statistics, statistics before experiments, mathematics before physics, thermodynamics before life, evolution before mind, and computation before modern AI. The arc makes room for deeper foundations where compression would be dishonest, and for sustained descents into frontier controversies such as the Hubble tension, origin-of-life physics, mammalian epigenetic inheritance, consciousness theories, AGI and alignment, and the deep history of inequality.
 
 Five threads run through the whole course:
 

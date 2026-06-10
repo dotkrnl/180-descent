@@ -55,6 +55,14 @@ module.exports = function (eleventyConfig) {
     const match = items.find((item) => Number(item.data?.day) === Number(day));
     return match?.url || "";
   });
+  eleventyConfig.addFilter("publishedItemForDay", (items = [], day) => {
+    return items.find((item) => Number(item.data?.day) === Number(day)) || null;
+  });
+  eleventyConfig.addFilter("latestDays", (items = [], count = 10) => {
+    return [...items]
+      .sort((a, b) => Number(b.data?.day || 0) - Number(a.data?.day || 0))
+      .slice(0, Number(count));
+  });
   eleventyConfig.addFilter("nextSyllabusDay", (syllabus = {}, items = []) => {
     const published = new Set(items.map((item) => Number(item.data?.day)));
     for (const block of syllabus.blocks || []) {

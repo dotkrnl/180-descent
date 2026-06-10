@@ -43,39 +43,20 @@ description: The complete 180-day course map, with published lessons linked as t
 
   <div class="syllabus-days">
   {% for day in block.days %}
-    {% set href = collections.days | publishedUrlForDay(day.day) %}
-    <details class="syllabus-day{% if href %} is-published{% endif %}"{% if href %} open{% endif %}>
-      <summary>
-        <span class="syllabus-day-num">Day {{ day.day | padDay }}</span>
-        <span class="syllabus-day-title">{{ day.title }}</span>
-        <span class="syllabus-status">{% if href %}Published{% else %}Planned{% endif %}</span>
-      </summary>
-      {% if href %}
-      <p class="published-link"><a href="{{ href }}">Read the published lesson</a></p>
-      {% endif %}
-      {% if day.entry %}
-      <dl class="syllabus-brief">
-        <div>
-          <dt>Entry</dt>
-          <dd>{{ day.entry }}</dd>
-        </div>
-        <div>
-          <dt>Model</dt>
-          <dd>{{ day.model }}</dd>
-        </div>
-        <div>
-          <dt>Debate</dt>
-          <dd>{{ day.debate }}</dd>
-        </div>
-        <div>
-          <dt>Frontier</dt>
-          <dd>{{ day.frontier }}</dd>
-        </div>
-      </dl>
+    {% set published = collections.days | publishedItemForDay(day.day) %}
+    <article class="day-card syllabus-card{% if published %} is-published{% endif %}">
+      <p class="card-kicker">Day {{ day.day | padDay }} / {{ book.total_days }}{% if not published %} · Planned{% endif %}</p>
+      <h3>
+      {% if published %}
+        <a href="{{ published.url }}">{{ published.data.title }}</a>
       {% else %}
-      <p>{{ day.note }}</p>
+        {{ day.title }}
       {% endif %}
-    </details>
+      </h3>
+      {% if published %}
+      <p>{{ published.data.summary }}</p>
+      {% endif %}
+    </article>
   {% endfor %}
   </div>
 </section>
