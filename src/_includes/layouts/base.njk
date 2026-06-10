@@ -23,14 +23,14 @@
     <header class="site-topbar">
       <div class="topbar-row">
         <a class="course" href="{{ "/zh/" if isZh else "/" }}"><span class="dot"></span>{{ uiTitle }}</a>
-        <nav class="topnav" aria-label="Primary">
-          <a href="{{ "/zh/introduction/" if isZh else "/introduction/" }}">{{ "导言" if isZh else "Intro" }}</a>
+        <nav class="topnav" aria-label="{{ "主导航" if isZh else "Primary" }}">
+          <a href="{{ "/zh/introduction/" if isZh else "/introduction/" }}">{{ "引言" if isZh else "Intro" }}</a>
           <a href="{{ "/zh/syllabus/" if isZh else "/syllabus/" }}">{{ "课程图谱" if isZh else "Syllabus" }}</a>
           <a href="{{ "/zh/downloads/" if isZh else "/downloads/" }}">{{ "下载" if isZh else "Downloads" }}</a>
         </nav>
         <div class="top-actions">
-          <a class="toggle" href="{{ languageUrl }}" aria-label="{{ "Switch to English" if isZh else "切换到中文" }}">{{ "EN" if isZh else "中文" }}</a>
-          <button class="toggle" id="themeBtn" type="button" aria-label="Toggle light or dark theme">{{ "主题" if isZh else "Theme" }}</button>
+          <a class="toggle" href="{{ languageUrl }}" aria-label="{{ "切换到英文" if isZh else "切换到中文" }}">{{ "EN" if isZh else "中文" }}</a>
+          <button class="toggle" id="themeBtn" type="button" aria-label="{{ "切换明暗主题" if isZh else "Toggle light or dark theme" }}">{{ "主题" if isZh else "Theme" }}</button>
         </div>
       </div>
     </header>
