@@ -250,13 +250,16 @@ hr.div{border:none;border-top:1px solid var(--line);margin:3rem 0;}
 }
 
 @page{size:6in 9in;margin:.78in .55in .86in;}
+@page cover{size:6in 9in;margin:0;}
+@page block{size:6in 9in;margin:0;}
 @media print{
   :root{--paper:#fff;--raised:#fff;--ink:#111;--ink-soft:#333;--ink-faint:#666;--line:#ddd;--line-strong:#bbb;--shadow:none;}
   body{font-size:10.2pt;line-height:1.46;background:#fff;color:#111;}
   .site-topbar,.site-footer,.download-strip,.web-only,.epub-only,.print-hide{display:none!important;}
   .print-only,.format-alt{display:block!important;}
-  .print-cover,.block-divider{break-before:page;break-after:page;page-break-before:always;page-break-after:always;box-sizing:border-box;margin:-.78in -.55in -.86in;min-height:9in;background:var(--accent-deep);color:#fff;display:flex;align-items:center;padding:.78in .82in .86in;overflow:hidden;}
-  .print-cover{break-before:auto;page-break-before:auto;flex-direction:column;justify-content:center;align-items:flex-start;}
+  .print-cover,.block-divider{box-sizing:border-box;width:6in;height:9in;min-height:9in;max-height:9in;margin:0;background:var(--accent-deep);color:#fff;display:flex;align-items:center;padding:.78in .82in .86in;overflow:hidden;}
+  .print-cover{page:cover;break-before:auto;break-after:page;page-break-before:auto;page-break-after:always;flex-direction:column;justify-content:center;align-items:flex-start;}
+  .block-divider{page:block;break-before:page;break-after:page;page-break-before:always;page-break-after:always;}
   .print-cover .eyebrow,.block-divider p{font-family:"IBM Plex Mono",monospace;font-size:9pt;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);margin:0 0 .18in;}
   .print-cover h1,.block-divider h1{font-size:29pt;line-height:1.05;color:#fff;margin:0;max-width:4.3in;}
   .print-cover .sub{font-family:"Fraunces",serif;font-style:italic;font-size:14pt;color:rgba(255,255,255,.78);margin:.24in 0 0;}

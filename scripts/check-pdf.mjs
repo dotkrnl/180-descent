@@ -52,6 +52,20 @@ for (const pattern of [
   }
 }
 
+const blockMatch = frontMatter.match(/BLOCK I · FOUNDATIONS OF KNOWLEDGE & REASONING\s+(\d+)/);
+if (blockMatch) {
+  for (const pageNumber of [1, Number(blockMatch[1])]) {
+    const box = await extractPageBoundingBox("_site/downloads/180-descent.pdf", pageNumber);
+    if (!isFullPageBox(box)) {
+      console.error(`PDF page ${pageNumber} is not painted to the full 6x9 page bounds: ${box.join(" ")}`);
+      failures++;
+    }
+  }
+} else {
+  console.error("PDF TOC is missing the Block I page number needed for full-bleed validation");
+  failures++;
+}
+
 if (failures) process.exit(1);
 
 async function extractPdfText(pdfPath) {
@@ -66,4 +80,24 @@ async function extractPdfText(pdfPath) {
     pdfPath
   ], { maxBuffer: 8 * 1024 * 1024 });
   return stdout;
+}
+
+async function extractPageBoundingBox(pdfPath, pageNumber) {
+  const { stdout, stderr } = await execFileAsync("gs", [
+    "-q",
+    "-dSAFER",
+    "-dBATCH",
+    "-dNOPAUSE",
+    "-sDEVICE=bbox",
+    `-dFirstPage=${pageNumber}`,
+    `-dLastPage=${pageNumber}`,
+    pdfPath
+  ], { maxBuffer: 1024 * 1024 });
+  const match = `${stdout}\n${stderr}`.match(/%%HiResBoundingBox:\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)/);
+  if (!match) return [Infinity, Infinity, -Infinity, -Infinity];
+  return match.slice(1).map(Number);
+}
+
+function isFullPageBox([left, bottom, right, top]) {
+  return left <= 1 && bottom <= 1 && right >= 431 && top >= 647;
 }
