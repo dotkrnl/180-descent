@@ -259,7 +259,7 @@ permalink: /zh/days/001-what-is-knowledge/
 
 <section class="frontier">
 <p class="sec-eyebrow">前沿 · 2026</p>
-<h2>三条活跃前沿——以及热度过滤器</h2>
+<h2>三条活跃前沿——以及炒作过滤器</h2>
 <p>本课程的每一天都在研究前沿收束，每一项主张都标注着它能承载多少重量。知识正处在一个迷人的交汇点上：哲学家、心理学家与神经科学家正从不同方向环绕着同一组问题。</p>
 
 <div class="claim">
