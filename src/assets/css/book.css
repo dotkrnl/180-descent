@@ -252,18 +252,35 @@ hr.div{border:none;border-top:1px solid var(--line);margin:3rem 0;}
 @page{size:6in 9in;margin:.62in .55in .7in;}
 @media print{
   :root{--paper:#fff;--raised:#fff;--ink:#111;--ink-soft:#333;--ink-faint:#666;--line:#ddd;--line-strong:#bbb;--shadow:none;}
-  body{font-size:10.5pt;line-height:1.5;background:#fff;color:#111;}
-  .site-topbar,.site-footer,.download-strip,.web-only,.epub-only{display:none!important;}
+  body{font-size:10.2pt;line-height:1.46;background:#fff;color:#111;}
+  .site-topbar,.site-footer,.download-strip,.web-only,.epub-only,.print-hide{display:none!important;}
   .print-only,.format-alt{display:block!important;}
   .wrap,.wide{max-width:none;padding:0;}
   header.hero,.page-hero{padding:0 0 .25in;break-after:auto;}
-  .hero-clock,.hero-sun{max-width:2.9in;margin:.18in auto;}
-  h1{font-size:25pt;line-height:1.05;}
-  h2{font-size:17pt;break-after:avoid;}
+  .hero-clock,.hero-sun{max-width:2.45in;margin:.14in auto;}
+  .lede{font-size:1.06em;line-height:1.55;}
+  .lede .drop{font-size:3em;}
+  h1{font-size:23pt;line-height:1.05;}
+  h2{font-size:16pt;break-after:avoid;}
   h3{font-size:13pt;break-after:avoid;}
-  section,.claim,.aside,.panel,.format-alt,.recap,.tomorrow{break-inside:avoid;}
-  .recap{background:#f2f2f2;color:#111;border:1px solid #ddd;}
+  p,li{orphans:2;widows:2;}
+  .sec-eyebrow{break-after:avoid;}
+  .whereblock,.aside,.panel,.format-alt,.recap,.tomorrow,figure,blockquote,table{break-inside:avoid;page-break-inside:avoid;}
+  .whereblock,.aside,.panel,.format-alt,.recap,.tomorrow{box-shadow:none;border-radius:0;}
+  .whereblock{background:transparent;border:0!important;padding:.08in 0;margin:.14in 0;}
+  .aside,.format-alt,.tomorrow{background:transparent;border:0!important;padding:.08in 0;}
+  .panel{padding:.18in .22in;margin:.18in 0;border-color:#ddd;}
+  .tri svg{display:none!important;}
+  .tri-print{border-left:2px solid var(--accent);padding-left:.14in;margin:.1in 0 .14in;font-size:.94em;}
+  .tri-print p{margin:0 0 .07in;}
+  .tri-print ol{margin:0;padding-left:.2in;}
+  .tri-print li{margin:.03in 0;}
+  .tri-key{grid-template-columns:1fr 1fr;gap:.12in .2in;margin-top:.12in;}
+  .tri-key .k{font-size:.9em;break-inside:avoid;page-break-inside:avoid;}
+  .recap{background:transparent;color:#111;border:0!important;padding:.1in 0;}
   .recap strong{color:#111;}
+  .recap dt,.threads,.threads b{color:#333;}
+  .threads{border-top:1px solid #ddd;}
   .sources a{color:#111;border-bottom:0;}
   .print-document .lesson-print{break-before:page;}
   .print-document .lesson-print:first-child{break-before:auto;}

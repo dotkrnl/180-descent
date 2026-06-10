@@ -187,6 +187,7 @@ permalink: /days/001-what-is-knowledge/
 <p class="ptitle">Diagram · the regress problem</p>
 <h4>Agrippa's Trilemma — three bad endings, four escapes</h4>
 <p class="pnote">Why is your belief justified? Every honest answer to "…and why <em>that</em>?" eventually hits one of three walls.</p>
+<div class="tri-svg print-hide">
 <svg viewBox="0 0 640 300" role="img" aria-label="A belief justified by a reason, justified by another reason, branching into infinite regress, a circle, and an arbitrary stop.">
 <!-- nodes -->
 <g font-family="IBM Plex Mono,monospace" font-size="12.5">
@@ -234,6 +235,15 @@ permalink: /days/001-what-is-knowledge/
 <text x="378" y="285" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)">▮ arbitrary halt</text>
 </g>
 </svg>
+</div>
+<div class="tri-print print-only">
+<p><strong>Reason chain:</strong> belief: "it's 9:12" -> because "the clock" -> because "...and why that?"</p>
+<ol>
+<li><strong>Infinite regress:</strong> every reason needs another reason forever.</li>
+<li><strong>Circle:</strong> the chain loops back to something it already used.</li>
+<li><strong>Arbitrary halt:</strong> the chain simply stops at a basic commitment.</li>
+</ol>
+</div>
 <div class="tri-key">
 <div class="k"><b>Foundationalism</b> — bites the third bullet: some beliefs are <em>basic</em> and need no further support (raw experience, simple logic). The chain stops, but not arbitrarily.</div>
 <div class="k"><b>Coherentism</b> — embraces the circle, but makes it virtuous: no belief stands alone; a belief is justified by how well it hangs together with the whole web. (A first taste of <em>systems thinking</em>, Day 9.)</div>
