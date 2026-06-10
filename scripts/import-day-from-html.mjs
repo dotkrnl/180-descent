@@ -58,10 +58,15 @@ const frontmatter = [
 ].join("\n");
 
 await mkdir("src/days", { recursive: true });
-await writeFile(path.join("src/days", `day-${dayPath}.md`), frontmatter + content("root").html().trim() + "\n");
+await writeFile(path.join("src/days", `day-${dayPath}.md`), frontmatter + normalizeHtmlBlockIndent(content("root").html().trim()) + "\n");
 
 function escapeYaml(value) {
   return String(value).replaceAll("\\", "\\\\").replaceAll('"', '\\"');
+}
+
+function normalizeHtmlBlockIndent(value) {
+  const [front, ...rest] = value.split("\n");
+  return [front, ...rest.map((line) => line.replace(/^[ \t]+(?=<)/, ""))].join("\n");
 }
 
 function gettierFallback() {
@@ -116,4 +121,3 @@ function demarcationFallback() {
   </table>
 </div>`;
 }
-
