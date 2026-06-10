@@ -195,11 +195,9 @@ permalink: /zh/days/001-what-is-knowledge/
 <rect x="20" y="120" width="150" height="58" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
 <text x="95" y="145" text-anchor="middle" fill="var(--ink)">信念：</text>
 <text x="95" y="162" text-anchor="middle" fill="var(--ink-soft)">"现在是 9:12"</text>
-
 <rect x="215" y="120" width="150" height="58" rx="9" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
 <text x="290" y="145" text-anchor="middle" fill="var(--ink)">因为……</text>
 <text x="290" y="162" text-anchor="middle" fill="var(--ink-soft)">"那座钟"</text>
-
 <rect x="410" y="120" width="150" height="58" rx="9" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
 <text x="485" y="145" text-anchor="middle" fill="var(--ink)">因为……</text>
 <text x="485" y="162" text-anchor="middle" fill="var(--ink-soft)">"……那又为何？"</text>
