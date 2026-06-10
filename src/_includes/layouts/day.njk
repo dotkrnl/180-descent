@@ -1,6 +1,38 @@
 ---
 layout: layouts/base.njk
 ---
+{% set previousDay = collections.days | previousPublishedDay(day) %}
+{% set nextDay = collections.days | nextPublishedDay(day) %}
+{% macro dayNav(position) %}
+<nav class="lesson-nav lesson-nav-{{ position }} wrap wide" aria-label="Day navigation">
+  {% if previousDay %}
+  <a class="lesson-nav-card" href="{{ previousDay.url }}">
+    <span>Previous</span>
+    <strong>Day {{ previousDay.data.day | padDay }} · {{ previousDay.data.title }}</strong>
+  </a>
+  {% else %}
+  <span class="lesson-nav-card is-disabled">
+    <span>Previous</span>
+    <strong>Start of the book</strong>
+  </span>
+  {% endif %}
+  <a class="lesson-nav-card is-syllabus" href="/syllabus/">
+    <span>Map</span>
+    <strong>Full syllabus</strong>
+  </a>
+  {% if nextDay %}
+  <a class="lesson-nav-card" href="{{ nextDay.url }}">
+    <span>Next</span>
+    <strong>Day {{ nextDay.data.day | padDay }} · {{ nextDay.data.title }}</strong>
+  </a>
+  {% else %}
+  <span class="lesson-nav-card is-disabled">
+    <span>Next</span>
+    <strong>Not published yet</strong>
+  </span>
+  {% endif %}
+</nav>
+{% endmacro %}
 <article class="lesson" data-day="{{ day }}">
   <div class="download-strip">
     <div class="wrap wide">
@@ -9,6 +41,7 @@ layout: layouts/base.njk
       <a href="{{ book.downloads.pdf }}">PDF</a>
     </div>
   </div>
+  {{ dayNav("top") }}
   {{ content | safe }}
+  {{ dayNav("bottom") }}
 </article>
-

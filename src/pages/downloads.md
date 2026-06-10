@@ -7,7 +7,7 @@ eyebrow: Formats
 description: Download EPUB and PDF editions.
 ---
 
-<div class="download-grid">
+<div class="download-grid downloads-list">
   <article class="download-card">
     <p class="card-kicker">EPUB</p>
     <h2><a href="{{ book.downloads.epub }}">180-descent.epub</a></h2>

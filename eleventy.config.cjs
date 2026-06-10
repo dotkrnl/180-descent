@@ -63,6 +63,16 @@ module.exports = function (eleventyConfig) {
       .sort((a, b) => Number(b.data?.day || 0) - Number(a.data?.day || 0))
       .slice(0, Number(count));
   });
+  eleventyConfig.addFilter("previousPublishedDay", (items = [], day) => {
+    const sorted = [...items].sort((a, b) => Number(a.data?.day || 0) - Number(b.data?.day || 0));
+    const index = sorted.findIndex((item) => Number(item.data?.day) === Number(day));
+    return index > 0 ? sorted[index - 1] : null;
+  });
+  eleventyConfig.addFilter("nextPublishedDay", (items = [], day) => {
+    const sorted = [...items].sort((a, b) => Number(a.data?.day || 0) - Number(b.data?.day || 0));
+    const index = sorted.findIndex((item) => Number(item.data?.day) === Number(day));
+    return index >= 0 && index < sorted.length - 1 ? sorted[index + 1] : null;
+  });
   eleventyConfig.addFilter("nextSyllabusDay", (syllabus = {}, items = []) => {
     const published = new Set(items.map((item) => Number(item.data?.day)));
     for (const block of syllabus.blocks || []) {
