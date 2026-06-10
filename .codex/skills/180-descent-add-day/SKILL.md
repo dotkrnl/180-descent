@@ -38,6 +38,7 @@ Read the syllabus entry for the target day plus the immediately previous and nex
    - live web UI
    - no-JS EPUB fallback
    - static PDF fallback
+   Prefer semantic HTML/CSS diagrams with print/EPUB fallbacks over raw inline SVG when layout can be expressed with normal boxes and text.
 6. Prefer existing components and CSS classes before inventing new ones.
 7. Add copyright-safe local assets only when they improve readability.
 8. Run:
@@ -64,7 +65,7 @@ After completing the English day file and passing all checks, mirror the work in
 
 1. Create `src/zh/days/day-###-slug.md` as a translation of the English day file.
 2. Use Kimi CLI for Chinese translation, instructing it to produce text that is **优雅，文艺，读起来令人愉悦** while remaining technically precise.
-3. Manually review the Kimi output for correctness, terminology consistency, and preservation of all YAML front matter keys, indentation, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JavaScript hooks, Nunjucks syntax, front matter structure, and permalink paths. Do not treat Kimi output as final.
+3. Manually review the Kimi output for correctness, idiomatic Chinese, terminology consistency, and preservation of all YAML front matter keys, indentation, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JavaScript hooks, Nunjucks syntax, front matter structure, and permalink paths. Do not treat Kimi output as final.
 4. Run a GLM consistency and language refinement pass with opencode using the Zhipu AI Coding Plan model:
 
    ```sh
@@ -75,10 +76,13 @@ After completing the English day file and passing all checks, mirror the work in
 6. Maintain these Chinese terminology conventions unless the user explicitly changes them:
    - book/course "descent" -> `深入`, not `下潜`
    - "deep dive" syllabus blocks -> `专题深入`
-   - JTB -> `被证成的真信念`
+   - JTB -> `有正当理由的真信念`; prefer `正当理由` or `理由` in running prose, and avoid `证成` unless explicitly discussing the technical term
    - scientific replication -> `复现`, `重复实验`, or `可重复性`; use `复制` only for biological/molecular copying
    - day references -> `第 N 日`
    - hype filter -> `炒作过滤器`; evidence labels may use `争议/炒作`
+   - use Chinese corner quotes `「」` for quoted speech, thoughts, propositions, slogans, and translated terms in Chinese prose; keep italics for book/journal titles, foreign terms, or true emphasis, not as a substitute for quotation marks
+   - insert spaces between Chinese text and Latin letters, acronyms, Arabic numerals, percentages, and units where source typography permits, for example `2026 年`, `GLM 5.1`, `100 项`, `95% 置信区间`
+   - avoid literal metaphors and stiff calques from machine translation; prefer natural, elegant Chinese that remains technically exact
 7. Update `src/_data/syllabus_zh.yaml` with the Chinese title, entry, model, debate, and frontier for the new day.
 8. Run the zh-specific build and checks:
 

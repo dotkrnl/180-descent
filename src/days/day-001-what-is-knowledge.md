@@ -187,52 +187,19 @@ permalink: /days/001-what-is-knowledge/
 <p class="ptitle">Diagram · the regress problem</p>
 <h4>Agrippa's Trilemma — three bad endings, four escapes</h4>
 <p class="pnote">Why is your belief justified? Every honest answer to "…and why <em>that</em>?" eventually hits one of three walls.</p>
-<div class="tri-svg print-hide">
-<svg viewBox="0 0 640 300" role="img" aria-label="A belief justified by a reason, justified by another reason, branching into infinite regress, a circle, and an arbitrary stop.">
-<!-- nodes -->
-<g font-family="IBM Plex Mono,monospace" font-size="12.5">
-<rect x="20" y="120" width="150" height="58" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
-<text x="95" y="145" text-anchor="middle" fill="var(--ink)">belief:</text>
-<text x="95" y="162" text-anchor="middle" fill="var(--ink-soft)">"it's 9:12"</text>
-<rect x="215" y="120" width="150" height="58" rx="9" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
-<text x="290" y="145" text-anchor="middle" fill="var(--ink)">because…</text>
-<text x="290" y="162" text-anchor="middle" fill="var(--ink-soft)">"the clock"</text>
-<rect x="410" y="120" width="150" height="58" rx="9" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
-<text x="485" y="145" text-anchor="middle" fill="var(--ink)">because…</text>
-<text x="485" y="162" text-anchor="middle" fill="var(--ink-soft)">"…and why that?"</text>
-</g>
-<!-- arrows -->
-<g stroke="var(--ink-faint)" stroke-width="1.6" fill="none" marker-end="url(#arr)">
-<line x1="170" y1="149" x2="212" y2="149"></line>
-<line x1="365" y1="149" x2="407" y2="149"></line>
-</g>
-<defs>
-<marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--ink-faint)"></path></marker>
-<marker id="arrA" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--brass)"></path></marker>
-</defs>
-<!-- three forks from last node -->
-<g stroke="var(--brass)" stroke-width="1.6" fill="none" marker-end="url(#arrA)">
-<path d="M560,135 C600,120 600,60 560,46"></path>           <!-- to regress -->
-<path d="M560,170 C610,200 560,250 500,250"></path>          <!-- to circle -->
-<path d="M485,178 L485,214"></path>                          <!-- to wall -->
-</g>
-<!-- regress -->
-<g font-family="IBM Plex Mono,monospace" font-size="12">
-<text x="470" y="40" fill="var(--brass)">∞  forever</text>
-<text x="470" y="22" fill="var(--ink-faint)" font-size="20" letter-spacing="3">· · ·</text>
-</g>
-<!-- circle -->
-<g>
-<circle cx="470" cy="255" r="20" fill="none" stroke="var(--brass)" stroke-width="1.6" stroke-dasharray="3 4"></circle>
-<text x="470" y="290" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)">↻ a circle</text>
-</g>
-<!-- wall -->
-<g>
-<rect x="455" y="216" width="60" height="40" rx="3" fill="color-mix(in srgb,var(--brass) 18%,transparent)" stroke="var(--brass)" stroke-width="1.4"></rect>
-<text x="485" y="240" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink)">stop.</text>
-<text x="378" y="285" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)">▮ arbitrary halt</text>
-</g>
-</svg>
+<div class="regress-map print-hide" role="img" aria-label="A chain of reasons ending in infinite regress, a circle, or an arbitrary halt.">
+<div class="regress-chain">
+<div class="rnode strong"><b>Belief</b><span>"it is 9:12"</span></div>
+<div class="rstep" aria-hidden="true">-></div>
+<div class="rnode"><b>Reason</b><span>"the clock says so"</span></div>
+<div class="rstep" aria-hidden="true">-></div>
+<div class="rnode"><b>Further reason</b><span>"the clock is reliable"</span></div>
+</div>
+<div class="regress-outcomes">
+<article class="routcome"><span>∞</span><b>Infinite regress</b><p>Every reason asks for another reason.</p></article>
+<article class="routcome"><span>↻</span><b>Circle</b><p>The chain returns to a claim it already used.</p></article>
+<article class="routcome"><span>▮</span><b>Arbitrary halt</b><p>The chain simply stops at a basic commitment.</p></article>
+</div>
 </div>
 <div class="tri-print epub-only print-only">
 <p><strong>Reason chain:</strong> belief: "it's 9:12" -> because "the clock" -> because "...and why that?"</p>

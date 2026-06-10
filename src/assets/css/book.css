@@ -53,6 +53,9 @@
 }
 *{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%;}
+html[lang^="zh"]{
+  text-autospace: normal;
+}
 body{
   margin:0;
   background:var(--paper);
@@ -154,6 +157,18 @@ blockquote .src{display:block;font-family:"IBM Plex Mono",monospace;font-style:n
 .vstate.no{color:var(--contested);}
 .vexpl{font-size:.92em;color:var(--ink-soft);margin:.4rem 0 0;min-height:2.6em;}
 .story{font-size:.88em;color:var(--ink-faint);margin:.55rem 0 0;font-style:italic;}
+.regress-map{display:grid;gap:1rem;margin-top:1rem;}
+.regress-chain{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);gap:.55rem;align-items:stretch;}
+.rnode{border:1px solid var(--line-strong);border-radius:10px;background:var(--paper);padding:.75rem .8rem;min-height:4.6rem;display:flex;flex-direction:column;justify-content:center;gap:.25rem;text-align:center;}
+.rnode.strong{border-color:var(--accent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 38%,transparent);}
+.rnode b{font-family:"Fraunces",serif;font-size:1.04rem;line-height:1.1;}
+.rnode span{font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--ink-soft);line-height:1.35;overflow-wrap:anywhere;}
+.rstep{display:flex;align-items:center;justify-content:center;color:var(--ink-faint);font-size:1.45rem;font-family:"IBM Plex Mono",monospace;}
+.regress-outcomes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;}
+.routcome{border:1px solid color-mix(in srgb,var(--brass) 48%,var(--line));background:color-mix(in srgb,var(--brass) 8%,transparent);border-radius:10px;padding:.75rem .8rem;min-height:7rem;}
+.routcome span{font-family:"IBM Plex Mono",monospace;color:var(--brass);font-size:1.25rem;font-weight:700;}
+.routcome b{display:block;margin:.25rem 0;font-family:"Fraunces",serif;line-height:1.18;}
+.routcome p{margin:0;font-size:.88em;color:var(--ink-soft);line-height:1.45;}
 .tri-key{display:grid;grid-template-columns:1fr;gap:.6rem;margin-top:1.1rem;}
 @media(min-width:560px){.tri-key{grid-template-columns:1fr 1fr;}}
 .tri-key .k{font-size:.9em;border-left:2px solid var(--accent);padding-left:.7rem;}
@@ -276,6 +291,34 @@ hr.div{border:none;border-top:1px solid var(--line);margin:3rem 0;}
 .site-footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--ink-soft);font-size:.9rem;}
 .footer-grid{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
 
+html[lang^="zh"] .wrap>p,
+html[lang^="zh"] .wrap section>p,
+html[lang^="zh"] .wrap section li,
+html[lang^="zh"] .whereblock p,
+html[lang^="zh"] .aside p,
+html[lang^="zh"] .format-alt p,
+html[lang^="zh"] .tomorrow p,
+html[lang^="zh"] .sources li,
+html[lang^="zh"] .recap dd,
+html[lang^="zh"] blockquote{
+  text-align:justify;
+  text-justify:inter-ideograph;
+}
+html[lang^="zh"] .topbar-row,
+html[lang^="zh"] .download-strip,
+html[lang^="zh"] .panel,
+html[lang^="zh"] .download-card p,
+html[lang^="zh"] .day-card p,
+html[lang^="zh"] .lesson-nav-card,
+html[lang^="zh"] .toc-row,
+html[lang^="zh"] .card-kicker,
+html[lang^="zh"] .ptitle,
+html[lang^="zh"] .pnote,
+html[lang^="zh"] .routcome p,
+html[lang^="zh"] .rnode{
+  text-align:initial;
+}
+
 @media(max-width:720px){
   .topbar-row{align-items:flex-start;flex-direction:column;gap:.5rem;}
   .topnav{font-size:.68rem;}
@@ -290,6 +333,12 @@ hr.div{border:none;border-top:1px solid var(--line);margin:3rem 0;}
   .lesson-nav-card.is-syllabus{text-align:left;}
   .day-card{grid-template-columns:1fr;gap:.2rem;}
   .day-card .card-kicker,.day-card h2,.day-card h3,.day-card p:not(.card-kicker){grid-column:1;grid-row:auto;}
+}
+
+@media(max-width:760px){
+  .regress-chain{grid-template-columns:1fr;}
+  .rstep{font-size:1.2rem;min-height:1.1rem;transform:rotate(90deg);}
+  .regress-outcomes{grid-template-columns:1fr;}
 }
 
 @page{size:6in 9in;margin:.78in .55in .86in;}
