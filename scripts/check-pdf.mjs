@@ -4,24 +4,31 @@ import { promisify } from "node:util";
 
 const execFileAsync = promisify(execFile);
 
-const data = await readFile("_site/downloads/180-descent.pdf");
-const text = data.toString("latin1");
 let failures = 0;
+const pdfFiles = [
+  "_site/downloads/180-descent.pdf",
+  "_site/downloads/180-descent-zh.pdf"
+];
 
-if (!text.startsWith("%PDF-")) {
-  console.error("PDF does not start with a PDF header");
-  failures++;
-}
+for (const file of pdfFiles) {
+  const data = await readFile(file);
+  const text = data.toString("latin1");
 
-for (const pattern of [
-  /127\.0\.0\.1/,
-  /localhost/i,
-  /https:\/\/180-descent\.pages\.dev\/days\//,
-  /https:\/\/180-descent\.pages\.dev\/introduction\//
-]) {
-  if (pattern.test(text)) {
-    console.error(`PDF contains local development link matching ${pattern}`);
+  if (!text.startsWith("%PDF-")) {
+    console.error(`${file} does not start with a PDF header`);
     failures++;
+  }
+
+  for (const pattern of [
+    /127\.0\.0\.1/,
+    /localhost/i,
+    /https:\/\/180-descent\.pages\.dev\/(?:zh\/)?days\//,
+    /https:\/\/180-descent\.pages\.dev\/(?:zh\/)?introduction\//
+  ]) {
+    if (pattern.test(text)) {
+      console.error(`${file} contains forbidden PDF link matching ${pattern}`);
+      failures++;
+    }
   }
 }
 

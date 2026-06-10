@@ -4,8 +4,6 @@ import os from "node:os";
 import path from "node:path";
 import JSZip from "jszip";
 
-const data = await readFile("_site/downloads/180-descent.epub");
-const zip = await JSZip.loadAsync(data);
 const required = [
   "mimetype",
   "META-INF/container.xml",
@@ -17,58 +15,68 @@ const required = [
 ];
 
 let failures = 0;
-for (const file of required) {
-  if (!zip.file(file)) {
-    console.error(`EPUB missing ${file}`);
-    failures++;
+const editions = [
+  "_site/downloads/180-descent.epub",
+  "_site/downloads/180-descent-zh.epub"
+];
+
+for (const edition of editions) {
+  const data = await readFile(edition);
+  const zip = await JSZip.loadAsync(data);
+
+  for (const file of required) {
+    if (!zip.file(file)) {
+      console.error(`${edition} missing ${file}`);
+      failures++;
+    }
   }
+
+  const xmlFiles = Object.keys(zip.files).filter((file) => /\.(xhtml|opf|xml)$/i.test(file));
+  const xmlTemp = await mkdtemp(path.join(os.tmpdir(), "180-epub-xml-"));
+
+  for (const name of xmlFiles) {
+    const text = await zip.file(name).async("string");
+    if (/<script\b/i.test(text)) {
+      console.error(`${edition} contains script tag in ${name}`);
+      failures++;
+    }
+    if (/web-only/.test(text)) {
+      console.error(`${edition} contains web-only content in ${name}`);
+      failures++;
+    }
+    if (/print-hide/.test(text)) {
+      console.error(`${edition} contains print-hidden content in ${name}`);
+      failures++;
+    }
+    if (/Reference table/.test(text)) {
+      console.error(`${edition} contains generic fallback label in ${name}`);
+      failures++;
+    }
+    const namedEntities = text.match(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)[A-Za-z][A-Za-z0-9]+;/g);
+    if (namedEntities) {
+      console.error(`${edition} contains XML-unsafe named entities in ${name}: ${[...new Set(namedEntities)].join(", ")}`);
+      failures++;
+    }
+    const orphanSvgTags = [...text.matchAll(/<(rect|path|line|circle|text|g|defs|marker|linearGradient|radialGradient|stop)\b/gi)]
+      .filter((match) => !isInsideSvg(text, match.index || 0))
+      .map((match) => match[1]);
+    if (orphanSvgTags.length) {
+      console.error(`${edition} contains SVG child tags outside <svg> in ${name}: ${[...new Set(orphanSvgTags)].join(", ")}`);
+      failures++;
+    }
+
+    const tempPath = path.join(xmlTemp, name.replaceAll("/", "__"));
+    await writeFile(tempPath, text);
+    const parsed = spawnSync("xmllint", ["--noout", tempPath], { encoding: "utf8" });
+    if (parsed.status !== 0) {
+      console.error(`${edition} XML parse failed in ${name}`);
+      if (parsed.stderr) console.error(parsed.stderr.trim());
+      failures++;
+    }
+  }
+
+  await rm(xmlTemp, { recursive: true, force: true });
 }
-
-const xmlFiles = Object.keys(zip.files).filter((file) => /\.(xhtml|opf|xml)$/i.test(file));
-const xmlTemp = await mkdtemp(path.join(os.tmpdir(), "180-epub-xml-"));
-
-for (const name of xmlFiles) {
-  const text = await zip.file(name).async("string");
-  if (/<script\b/i.test(text)) {
-    console.error(`EPUB contains script tag in ${name}`);
-    failures++;
-  }
-  if (/web-only/.test(text)) {
-    console.error(`EPUB contains web-only content in ${name}`);
-    failures++;
-  }
-  if (/print-hide/.test(text)) {
-    console.error(`EPUB contains print-hidden content in ${name}`);
-    failures++;
-  }
-  if (/Reference table/.test(text)) {
-    console.error(`EPUB contains generic fallback label in ${name}`);
-    failures++;
-  }
-  const namedEntities = text.match(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)[A-Za-z][A-Za-z0-9]+;/g);
-  if (namedEntities) {
-    console.error(`EPUB contains XML-unsafe named entities in ${name}: ${[...new Set(namedEntities)].join(", ")}`);
-    failures++;
-  }
-  const orphanSvgTags = [...text.matchAll(/<(rect|path|line|circle|text|g|defs|marker|linearGradient|radialGradient|stop)\b/gi)]
-    .filter((match) => !isInsideSvg(text, match.index || 0))
-    .map((match) => match[1]);
-  if (orphanSvgTags.length) {
-    console.error(`EPUB contains SVG child tags outside <svg> in ${name}: ${[...new Set(orphanSvgTags)].join(", ")}`);
-    failures++;
-  }
-
-  const tempPath = path.join(xmlTemp, name.replaceAll("/", "__"));
-  await writeFile(tempPath, text);
-  const parsed = spawnSync("xmllint", ["--noout", tempPath], { encoding: "utf8" });
-  if (parsed.status !== 0) {
-    console.error(`EPUB XML parse failed in ${name}`);
-    if (parsed.stderr) console.error(parsed.stderr.trim());
-    failures++;
-  }
-}
-
-await rm(xmlTemp, { recursive: true, force: true });
 
 if (failures) process.exit(1);
 

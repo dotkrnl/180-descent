@@ -1,34 +1,37 @@
 ---
 layout: layouts/base.njk
 ---
-{% set previousDay = collections.days | previousPublishedDay(day) %}
-{% set nextDay = collections.days | nextPublishedDay(day) %}
+{% set isZh = locale == "zh" %}
+{% set dayCollection = collections.zhDays if isZh else collections.days %}
+{% set previousDay = dayCollection | previousPublishedDay(day) %}
+{% set nextDay = dayCollection | nextPublishedDay(day) %}
+{% set downloads = book.zh.downloads if isZh else book.downloads %}
 {% macro dayNav(position) %}
 <nav class="lesson-nav lesson-nav-{{ position }} wrap wide" aria-label="Day navigation">
   {% if previousDay %}
   <a class="lesson-nav-card" href="{{ previousDay.url }}">
-    <span>Previous</span>
-    <strong>Day {{ previousDay.data.day | padDay }} · {{ previousDay.data.title }}</strong>
+    <span>{{ "上一篇" if isZh else "Previous" }}</span>
+    <strong>{{ "第" if isZh else "Day " }}{{ previousDay.data.day | padDay }}{{ "日" if isZh else "" }} · {{ previousDay.data.title }}</strong>
   </a>
   {% else %}
   <span class="lesson-nav-card is-disabled">
-    <span>Previous</span>
-    <strong>Start of the book</strong>
+    <span>{{ "上一篇" if isZh else "Previous" }}</span>
+    <strong>{{ "全书起点" if isZh else "Start of the book" }}</strong>
   </span>
   {% endif %}
-  <a class="lesson-nav-card is-syllabus" href="/syllabus/">
-    <span>Map</span>
-    <strong>Full syllabus</strong>
+  <a class="lesson-nav-card is-syllabus" href="{{ "/zh/syllabus/" if isZh else "/syllabus/" }}">
+    <span>{{ "地图" if isZh else "Map" }}</span>
+    <strong>{{ "完整课程图谱" if isZh else "Full syllabus" }}</strong>
   </a>
   {% if nextDay %}
   <a class="lesson-nav-card" href="{{ nextDay.url }}">
-    <span>Next</span>
-    <strong>Day {{ nextDay.data.day | padDay }} · {{ nextDay.data.title }}</strong>
+    <span>{{ "下一篇" if isZh else "Next" }}</span>
+    <strong>{{ "第" if isZh else "Day " }}{{ nextDay.data.day | padDay }}{{ "日" if isZh else "" }} · {{ nextDay.data.title }}</strong>
   </a>
   {% else %}
   <span class="lesson-nav-card is-disabled">
-    <span>Next</span>
-    <strong>Not published yet</strong>
+    <span>{{ "下一篇" if isZh else "Next" }}</span>
+    <strong>{{ "尚未发布" if isZh else "Not published yet" }}</strong>
   </span>
   {% endif %}
 </nav>
@@ -36,9 +39,9 @@ layout: layouts/base.njk
 <article class="lesson" data-day="{{ day }}">
   <div class="download-strip">
     <div class="wrap wide">
-      <span>Download the book:</span>
-      <a href="{{ book.downloads.epub }}">EPUB</a>
-      <a href="{{ book.downloads.pdf }}">PDF</a>
+      <span>{{ "下载本书：" if isZh else "Download the book:" }}</span>
+      <a href="{{ downloads.epub }}">EPUB</a>
+      <a href="{{ downloads.pdf }}">PDF</a>
     </div>
   </div>
   {{ dayNav("top") }}

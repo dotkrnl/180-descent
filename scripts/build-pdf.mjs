@@ -13,18 +13,47 @@ const execFileAsync = promisify(execFile);
 await mkdir("_site/downloads", { recursive: true });
 await mkdir("dist/downloads", { recursive: true });
 
-const browser = await chromium.launch({ headless: true });
-const page = await browser.newPage({ viewport: { width: 900, height: 1350 } });
 const server = await serveSite("_site");
 const publicBaseUrl = (process.env.SITE_URL || "https://180-descent.pages.dev").replace(/\/+$/, "");
+const editions = [
+  {
+    route: "/print/",
+    output: "180-descent.pdf",
+    dayBasePath: "/days/",
+    introPath: "/introduction/",
+    bookTitle: "The 180-Day Descent",
+    introTitle: "Introduction"
+  },
+  {
+    route: "/zh/print/",
+    output: "180-descent-zh.pdf",
+    dayBasePath: "/zh/days/",
+    introPath: "/zh/introduction/",
+    bookTitle: "180 Descent",
+    introTitle: "Chinese Edition",
+    blockTitle: "Lessons"
+  }
+];
+const browser = await chromium.launch({ headless: true });
 
 try {
-  await page.goto(`${server.url}/print/`, { waitUntil: "networkidle" });
-  await page.evaluate((baseUrl) => {
+  for (const edition of editions) {
+    await buildEdition(edition);
+  }
+} finally {
+  await browser.close();
+  await server.close();
+}
+
+async function buildEdition(edition) {
+  const page = await browser.newPage({ viewport: { width: 900, height: 1350 } });
+  try {
+    await page.goto(`${server.url}${edition.route}`, { waitUntil: "networkidle" });
+    await page.evaluate(({ baseUrl, dayBasePath, introPath }) => {
     const localOrigin = window.location.origin;
     const dayAnchors = new Map(
       [...document.querySelectorAll(".lesson-print[data-day-path]")]
-        .map((article) => [`/days/${article.dataset.dayPath}/`, article.id])
+        .map((article) => [`${dayBasePath}${article.dataset.dayPath}/`, article.id])
     );
     for (const anchor of document.querySelectorAll("a[href]")) {
       const href = anchor.getAttribute("href");
@@ -32,7 +61,7 @@ try {
 
       const url = new URL(href, window.location.href);
       if (url.origin === localOrigin) {
-        if (url.pathname === "/introduction/") {
+        if (url.pathname === introPath) {
           anchor.setAttribute("href", "#intro");
         } else if (dayAnchors.has(url.pathname)) {
           anchor.setAttribute("href", `#${dayAnchors.get(url.pathname)}`);
@@ -41,22 +70,22 @@ try {
         }
       }
     }
-  }, publicBaseUrl);
-  await page.evaluate(() => document.fonts.ready);
-  await page.emulateMedia({ media: "print" });
-  const blocks = await page.evaluate(() => {
+    }, { baseUrl: publicBaseUrl, dayBasePath: edition.dayBasePath, introPath: edition.introPath });
+    await page.evaluate(() => document.fonts.ready);
+    await page.emulateMedia({ media: "print" });
+    const blocks = await page.evaluate(() => {
     return [...document.querySelectorAll(".block-divider")].map((divider) => ({
       id: divider.querySelector(".print-dest")?.id || "",
       title: divider.querySelector("h1")?.textContent?.trim() || ""
     })).filter((block) => block.id && block.title);
-  });
-  const draftDir = await mkdtemp(path.join(tmpdir(), "180-descent-pdf-"));
-  const draftPath = path.join(draftDir, "draft.pdf");
-  const unstampedPath = path.join(draftDir, "unstamped.pdf");
-  try {
-    await renderPdf(page, draftPath);
-    const tocPages = await extractTocPages(draftPath);
-    await page.evaluate((pages) => {
+    });
+    const draftDir = await mkdtemp(path.join(tmpdir(), "180-descent-pdf-"));
+    const draftPath = path.join(draftDir, "draft.pdf");
+    const unstampedPath = path.join(draftDir, "unstamped.pdf");
+    try {
+      await renderPdf(page, draftPath);
+      const tocPages = await extractTocPages(draftPath);
+      await page.evaluate((pages) => {
       for (const [key, pageNumber] of Object.entries(pages)) {
         const target = document.querySelector(`[data-toc-page-for="${CSS.escape(key)}"]`);
         if (target) target.textContent = String(pageNumber);
@@ -64,15 +93,16 @@ try {
       for (const marker of document.querySelectorAll(".print-page-marker")) {
         marker.remove();
       }
-    }, tocPages);
-    await renderPdf(page, unstampedPath);
-    await stampRunningMatter(unstampedPath, "dist/downloads/180-descent.pdf", { blocks, tocPages });
+      }, tocPages);
+      await renderPdf(page, unstampedPath);
+      await stampRunningMatter(unstampedPath, `dist/downloads/${edition.output}`, { ...edition, blocks, tocPages });
+      await copyFile(`dist/downloads/${edition.output}`, `_site/downloads/${edition.output}`);
+    } finally {
+      await rm(draftDir, { recursive: true, force: true });
+    }
   } finally {
-    await rm(draftDir, { recursive: true, force: true });
+    await page.close();
   }
-} finally {
-  await browser.close();
-  await server.close();
 }
 
 async function renderPdf(page, outputPath) {
@@ -92,12 +122,12 @@ async function extractTocPages(pdfPath) {
   return pages;
 }
 
-async function stampRunningMatter(inputPath, outputPath, { blocks, tocPages }) {
+async function stampRunningMatter(inputPath, outputPath, { blocks, tocPages, bookTitle, introTitle, blockTitle }) {
   const pdf = await PDFDocument.load(await readFile(inputPath));
   const regular = await pdf.embedFont(StandardFonts.Helvetica);
   const pages = pdf.getPages();
   const blockRanges = blocks
-    .map((block) => ({ ...block, page: Number(tocPages[block.id]) }))
+    .map((block) => ({ ...block, title: blockTitle || block.title, page: Number(tocPages[block.id]) }))
     .filter((block) => Number.isFinite(block.page))
     .sort((a, b) => a.page - b.page);
   const excludedPages = new Set([
@@ -111,7 +141,7 @@ async function stampRunningMatter(inputPath, outputPath, { blocks, tocPages }) {
     if (excludedPages.has(pageNumber)) continue;
 
     const { width, height } = pdfPage.getSize();
-    const sectionTitle = sectionTitleForPage(pageNumber, blockRanges);
+    const sectionTitle = sectionTitleForPage(pageNumber, blockRanges, introTitle);
     const pageText = String(pageNumber);
     const color = rgb(0.38, 0.46, 0.49);
     const headerSize = 6.6;
@@ -119,7 +149,7 @@ async function stampRunningMatter(inputPath, outputPath, { blocks, tocPages }) {
     const left = 39.6;
     const right = width - 39.6;
 
-    pdfPage.drawText("The 180-Day Descent", {
+    pdfPage.drawText(bookTitle, {
       x: left,
       y: height - 24,
       size: headerSize,
@@ -145,8 +175,8 @@ async function stampRunningMatter(inputPath, outputPath, { blocks, tocPages }) {
   await writeFile(outputPath, await pdf.save({ useObjectStreams: false }));
 }
 
-function sectionTitleForPage(pageNumber, blockRanges) {
-  let title = "Introduction";
+function sectionTitleForPage(pageNumber, blockRanges, introTitle) {
+  let title = introTitle;
   for (const block of blockRanges) {
     if (pageNumber > block.page) title = block.title;
   }
@@ -195,7 +225,6 @@ async function ghostscriptPageText(pdfPath, pageNumber) {
 function postScriptString(value) {
   return `(${String(value).replaceAll("\\", "\\\\").replaceAll("(", "\\(").replaceAll(")", "\\)")})`;
 }
-await copyFile("dist/downloads/180-descent.pdf", "_site/downloads/180-descent.pdf");
 
 async function serveSite(root) {
   const absoluteRoot = path.resolve(root);

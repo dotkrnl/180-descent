@@ -6,66 +6,108 @@ import JSZip from "jszip";
 import YAML from "yaml";
 
 const book = YAML.parse(await readFile("src/_data/book.yaml", "utf8"));
-const dayFiles = (await readdir("src/days")).filter((file) => file.endsWith(".md")).sort();
-const days = dayFiles.map((file) => {
-  const parsed = matter.read(path.join("src/days", file));
-  return { file, data: parsed.data, xhtml: `day-${String(parsed.data.day).padStart(3, "0")}.xhtml` };
-});
 
 await mkdir("_site/downloads", { recursive: true });
 await mkdir("dist/downloads", { recursive: true });
 
-const zip = new JSZip();
-zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
-zip.file("META-INF/container.xml", `<?xml version="1.0" encoding="UTF-8"?>
+await buildEpub({
+  meta: {
+    title: book.title,
+    authors: book.authors,
+    language: book.language,
+    publisher: book.publisher,
+    epub_identifier: book.epub_identifier
+  },
+  dayDir: "src/days",
+  siteDayDir: "_site/days",
+  dayUrlPrefix: "/days/",
+  introHtml: "_site/introduction/index.html",
+  introUrl: "/introduction/",
+  introTitle: "Introduction",
+  introLabel: "Introduction",
+  dayLabel: "Day",
+  output: "180-descent.epub"
+});
+
+await buildEpub({
+  meta: {
+    title: book.zh.title,
+    authors: book.zh.authors,
+    language: book.zh.language,
+    publisher: book.publisher,
+    epub_identifier: book.zh.epub_identifier
+  },
+  dayDir: "src/zh/days",
+  siteDayDir: "_site/zh/days",
+  dayUrlPrefix: "/zh/days/",
+  introHtml: "_site/zh/introduction/index.html",
+  introUrl: "/zh/introduction/",
+  introTitle: "导言",
+  introLabel: "导言",
+  dayLabel: "第",
+  output: "180-descent-zh.epub"
+});
+
+async function buildEpub(config) {
+  const dayFiles = (await readdir(config.dayDir)).filter((file) => file.endsWith(".md")).sort();
+  const days = dayFiles.map((file) => {
+    const parsed = matter.read(path.join(config.dayDir, file));
+    return { file, data: parsed.data, xhtml: `day-${String(parsed.data.day).padStart(3, "0")}.xhtml` };
+  });
+
+  const zip = new JSZip();
+  zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
+  zip.file("META-INF/container.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
   <rootfiles>
     <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
   </rootfiles>
 </container>`);
 
-const oebps = zip.folder("OEBPS");
-oebps.folder("styles").file("book.css", await epubCss());
-const fontsFolder = oebps.folder("fonts");
-for (const font of await readdir("_site/assets/fonts")) {
-  if (font.endsWith(".woff2")) {
-    fontsFolder.file(font, await readFile(path.join("_site/assets/fonts", font)));
+  const oebps = zip.folder("OEBPS");
+  oebps.folder("styles").file("book.css", await epubCss());
+  const fontsFolder = oebps.folder("fonts");
+  for (const font of await readdir("_site/assets/fonts")) {
+    if (font.endsWith(".woff2")) {
+      fontsFolder.file(font, await readFile(path.join("_site/assets/fonts", font)));
+    }
   }
-}
 
-const spine = [];
-const manifestItems = [
-  `<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`,
-  `<item id="css" href="styles/book.css" media-type="text/css"/>`
-];
+  const spine = [];
+  const manifestItems = [
+    `<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`,
+    `<item id="css" href="styles/book.css" media-type="text/css"/>`
+  ];
 
-const intro = await pageToXhtml("_site/introduction/index.html", "Introduction", "introduction.xhtml");
-oebps.file("introduction.xhtml", intro);
-manifestItems.push(`<item id="intro" href="introduction.xhtml" media-type="application/xhtml+xml"/>`);
-spine.push(`<itemref idref="intro"/>`);
+  const intro = await pageToXhtml(config.introHtml, config.introTitle, "introduction.xhtml", config, days);
+  oebps.file("introduction.xhtml", intro);
+  manifestItems.push(`<item id="intro" href="introduction.xhtml" media-type="application/xhtml+xml"/>`);
+  spine.push(`<itemref idref="intro"/>`);
 
-for (const day of days) {
-  const htmlPath = path.join("_site/days", day.data.day_path, "index.html");
-  const xhtml = await pageToXhtml(htmlPath, `Day ${day.data.day}: ${day.data.title}`, day.xhtml);
-  oebps.file(day.xhtml, xhtml);
-  manifestItems.push(`<item id="day${String(day.data.day).padStart(3, "0")}" href="${day.xhtml}" media-type="application/xhtml+xml"/>`);
-  spine.push(`<itemref idref="day${String(day.data.day).padStart(3, "0")}"/>`);
-}
-
-for (const font of await readdir("_site/assets/fonts")) {
-  if (font.endsWith(".woff2")) {
-    manifestItems.push(`<item id="${font.replace(/[^a-z0-9]/gi, "_")}" href="fonts/${font}" media-type="font/woff2"/>`);
+  for (const day of days) {
+    const htmlPath = path.join(config.siteDayDir, day.data.day_path, "index.html");
+    const title = `${config.dayLabel} ${day.data.day}: ${day.data.title}`;
+    const xhtml = await pageToXhtml(htmlPath, title, day.xhtml, config, days);
+    oebps.file(day.xhtml, xhtml);
+    manifestItems.push(`<item id="day${String(day.data.day).padStart(3, "0")}" href="${day.xhtml}" media-type="application/xhtml+xml"/>`);
+    spine.push(`<itemref idref="day${String(day.data.day).padStart(3, "0")}"/>`);
   }
+
+  for (const font of await readdir("_site/assets/fonts")) {
+    if (font.endsWith(".woff2")) {
+      manifestItems.push(`<item id="${font.replace(/[^a-z0-9]/gi, "_")}" href="fonts/${font}" media-type="font/woff2"/>`);
+    }
+  }
+
+  oebps.file("nav.xhtml", navDocument(days, config));
+  oebps.file("content.opf", contentOpf(config.meta, manifestItems, spine));
+
+  const buffer = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" });
+  await writeFile(`dist/downloads/${config.output}`, buffer);
+  await copyFile(`dist/downloads/${config.output}`, `_site/downloads/${config.output}`);
 }
 
-oebps.file("nav.xhtml", navDocument(days, book));
-oebps.file("content.opf", contentOpf(book, manifestItems, spine));
-
-const buffer = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" });
-await writeFile("dist/downloads/180-descent.epub", buffer);
-await copyFile("dist/downloads/180-descent.epub", "_site/downloads/180-descent.epub");
-
-async function pageToXhtml(htmlPath, title, selfHref) {
+async function pageToXhtml(htmlPath, title, selfHref, config, days) {
   const html = await readFile(htmlPath, "utf8");
   const $ = cheerio.load(html, { decodeEntities: true });
   $("script,.site-topbar,.site-footer,.download-strip,.web-only,.print-hide,.print-only:not(.epub-only)").remove();
@@ -76,17 +118,16 @@ async function pageToXhtml(htmlPath, title, selfHref) {
     const el = $(a);
     const href = el.attr("href");
     if (!href) return;
-    if (href.startsWith("/days/")) {
-      const parts = href.split("/");
-      const slug = parts[2];
+    if (href.startsWith(config.dayUrlPrefix)) {
+      const slug = href.slice(config.dayUrlPrefix.length).split("/")[0];
       const day = days.find((d) => d.data.day_path === slug);
       if (day) {
         const anchor = href.includes("#") ? `#${href.split("#")[1]}` : "";
         el.attr("href", `${day.xhtml}${anchor}`);
       }
-    } else if (href === "/introduction/") {
+    } else if (href === config.introUrl) {
       el.attr("href", "introduction.xhtml");
-    } else if (href.startsWith("/") && !href.startsWith("/downloads/")) {
+    } else if (href.startsWith("/") && !href.includes("/downloads/")) {
       el.attr("href", "nav.xhtml");
     }
   });
@@ -94,7 +135,7 @@ async function pageToXhtml(htmlPath, title, selfHref) {
   const body = contentRoot.contents().map((_, node) => $.xml(node)).get().join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="${book.language}">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="${config.meta.language}">
   <head>
     <title>${escapeXml(title)}</title>
     <link rel="stylesheet" type="text/css" href="styles/book.css"/>
@@ -110,7 +151,7 @@ async function epubCss() {
   return css
     .replaceAll("@media print", "@media amzn-mobi")
     .replaceAll(".epub-only,.print-only,.format-alt{display:none;}", ".print-only{display:none;}.epub-alt{display:block;}")
-    .replaceAll(".site-topbar,.site-footer,.download-strip,.web-only,.epub-only{display:none!important;}", ".site-topbar,.site-footer,.download-strip,.web-only,.print-only{display:none!important;}")
+    .replaceAll(".site-topbar,.site-footer,.download-strip,.web-only,.epub-only,.print-hide{display:none!important;}", ".site-topbar,.site-footer,.download-strip,.web-only,.print-only{display:none!important;}")
     + `
 body{font-size:1em;}
 .web-only,.print-only{display:none!important;}
@@ -130,17 +171,22 @@ body{font-size:1em;}
 `;
 }
 
-function navDocument(items, meta) {
-  const links = items.map((day) => `<li><a href="${day.xhtml}">Day ${day.data.day}: ${escapeXml(day.data.title)}</a></li>`).join("\n");
+function navDocument(items, config) {
+  const links = items.map((day) => {
+    const label = config.meta.language.startsWith("zh")
+      ? `第 ${day.data.day} 日：${escapeXml(day.data.title)}`
+      : `Day ${day.data.day}: ${escapeXml(day.data.title)}`;
+    return `<li><a href="${day.xhtml}">${label}</a></li>`;
+  }).join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="${meta.language}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="${config.meta.language}">
   <head><title>Table of Contents</title></head>
   <body>
     <nav epub:type="toc" id="toc">
-      <h1>${escapeXml(meta.title)}</h1>
+      <h1>${escapeXml(config.meta.title)}</h1>
       <ol>
-        <li><a href="introduction.xhtml">Introduction</a></li>
+        <li><a href="introduction.xhtml">${escapeXml(config.introLabel)}</a></li>
         ${links}
       </ol>
     </nav>

@@ -4,36 +4,43 @@ import matter from "gray-matter";
 import * as cheerio from "cheerio";
 
 let failures = 0;
-const dayFiles = (await readdir("src/days")).filter((file) => file.endsWith(".md")).sort();
-if (!dayFiles.length) {
+const dayGroups = [
+  { dir: "src/days", label: "English" },
+  { dir: "src/zh/days", label: "Chinese" }
+];
+const allDayFiles = [];
+for (const group of dayGroups) {
+  const files = (await readdir(group.dir)).filter((file) => file.endsWith(".md")).sort();
+  for (const file of files) allDayFiles.push({ file, full: path.join(group.dir, file), label: group.label });
+}
+if (!allDayFiles.length) {
   console.error("No day files found");
   process.exit(1);
 }
 
-for (const file of dayFiles) {
-  const full = path.join("src/days", file);
+for (const { file, full, label } of allDayFiles) {
   const parsed = matter.read(full);
   for (const key of ["day", "title", "summary", "threads", "permalink"]) {
     if (!parsed.data[key]) {
-      console.error(`${file} missing frontmatter key: ${key}`);
+      console.error(`${label} ${file} missing frontmatter key: ${key}`);
       failures++;
     }
   }
   if (!parsed.content.includes('class="sources"')) {
-    console.error(`${file} has no sources section`);
+    console.error(`${label} ${file} has no sources section`);
     failures++;
   }
   if (!parsed.content.includes("chip ")) {
-    console.error(`${file} has no frontier status chips`);
+    console.error(`${label} ${file} has no frontier status chips`);
     failures++;
   }
   if (parsed.content.includes("fonts.googleapis.com")) {
-    console.error(`${file} references remote Google Fonts`);
+    console.error(`${label} ${file} references remote Google Fonts`);
     failures++;
   }
   for (const phrase of ["Static version", "live website lets", "as a table", "Receipts"]) {
     if (parsed.content.includes(phrase)) {
-      console.error(`${file} contains print-unfriendly phrase: ${phrase}`);
+      console.error(`${label} ${file} contains print-unfriendly phrase: ${phrase}`);
       failures++;
     }
   }
@@ -41,12 +48,12 @@ for (const file of dayFiles) {
   const webPanels = $(".panel.web-only").length;
   const staticAlternates = $(".format-alt.print-only").length;
   if (staticAlternates < webPanels) {
-    console.error(`${file} has ${webPanels} web-only panels but only ${staticAlternates} static print/EPUB alternates`);
+    console.error(`${label} ${file} has ${webPanels} web-only panels but only ${staticAlternates} static print/EPUB alternates`);
     failures++;
   }
   $(".chip").each((_, el) => {
     if (!$(el).attr("data-print")) {
-      console.error(`${file} has a status chip without data-print="${$(el).text().trim()}"`);
+      console.error(`${label} ${file} has a status chip without data-print="${$(el).text().trim()}"`);
       failures++;
     }
   });

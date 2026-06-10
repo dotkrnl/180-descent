@@ -1,12 +1,12 @@
 ---
 layout: layouts/base.njk
 ---
+{% set isZh = locale == "zh" %}
 <article class="page wrap wide">
   <header class="page-hero">
-    <p class="eyebrow">{{ eyebrow or book.subtitle }}</p>
+    <p class="eyebrow">{{ eyebrow or (book.zh.subtitle if isZh else book.subtitle) }}</p>
     <h1>{{ title }}</h1>
     {% if subtitle %}<p class="sub">{{ subtitle }}</p>{% endif %}
   </header>
   {{ content | safe }}
 </article>
-

@@ -1,25 +1,37 @@
+{% set isZh = locale == "zh" %}
+{% set uiTitle = book.zh.title if isZh else book.title %}
+{% set uiSubtitle = book.zh.subtitle if isZh else book.subtitle %}
+{% set uiDescription = book.zh.description if isZh else book.description %}
+{% if day_path %}
+  {% set languageUrl = "/days/" + day_path + "/" if isZh else "/zh/days/" + day_path + "/" %}
+{% else %}
+  {% set languageUrl = alternate_url or ("/" if isZh else "/zh/") %}
+{% endif %}
 <!doctype html>
-<html lang="{{ book.language }}" data-theme="auto">
+<html lang="{{ book.zh.language if isZh else book.language }}" data-theme="auto">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <title>{% if title %}{{ title }} · {% endif %}{{ book.title }}</title>
-    <meta name="description" content="{{ description or book.description }}">
+    <title>{% if title %}{{ title }} · {% endif %}{{ uiTitle }}</title>
+    <meta name="description" content="{{ description or uiDescription }}">
     <link rel="stylesheet" href="/assets/css/book.css">
     <script src="/assets/js/book.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#content">Skip to content</a>
+    <a class="skip-link" href="#content">{{ "跳到正文" if isZh else "Skip to content" }}</a>
     <header class="site-topbar">
       <div class="topbar-row">
-        <a class="course" href="/"><span class="dot"></span>{{ book.title }}</a>
+        <a class="course" href="{{ "/zh/" if isZh else "/" }}"><span class="dot"></span>{{ uiTitle }}</a>
         <nav class="topnav" aria-label="Primary">
-          <a href="/introduction/">Intro</a>
-          <a href="/syllabus/">Syllabus</a>
-          <a href="/downloads/">Downloads</a>
+          <a href="{{ "/zh/introduction/" if isZh else "/introduction/" }}">{{ "导言" if isZh else "Intro" }}</a>
+          <a href="{{ "/zh/syllabus/" if isZh else "/syllabus/" }}">{{ "课程图谱" if isZh else "Syllabus" }}</a>
+          <a href="{{ "/zh/downloads/" if isZh else "/downloads/" }}">{{ "下载" if isZh else "Downloads" }}</a>
         </nav>
-        <button class="toggle" id="themeBtn" type="button" aria-label="Toggle light or dark theme">Theme</button>
+        <div class="top-actions">
+          <a class="toggle" href="{{ languageUrl }}" aria-label="{{ "Switch to English" if isZh else "切换到中文" }}">{{ "EN" if isZh else "中文" }}</a>
+          <button class="toggle" id="themeBtn" type="button" aria-label="Toggle light or dark theme">{{ "主题" if isZh else "Theme" }}</button>
+        </div>
       </div>
     </header>
     <main id="content">
@@ -27,10 +39,9 @@
     </main>
     <footer class="site-footer">
       <div class="wrap wide footer-grid">
-        <p><strong>{{ book.title }}</strong><br>{{ book.subtitle }}<br>By {{ book.authors }}</p>
-        <p><a href="{{ book.repo }}">GitHub</a><br><a href="/downloads/">EPUB and PDF downloads</a><br><a href="/credits/">Credits</a></p>
+        <p><strong>{{ uiTitle }}</strong><br>{{ uiSubtitle }}<br>{{ "作者：" if isZh else "By " }}{{ book.zh.authors if isZh else book.authors }}</p>
+        <p><a href="{{ book.repo }}">GitHub</a><br><a href="{{ "/zh/downloads/" if isZh else "/downloads/" }}">{{ "EPUB 与 PDF 下载" if isZh else "EPUB and PDF downloads" }}</a><br><a href="{{ "/zh/credits/" if isZh else "/credits/" }}">{{ "鸣谢" if isZh else "Credits" }}</a></p>
       </div>
     </footer>
   </body>
 </html>
-

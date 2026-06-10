@@ -1,0 +1,43 @@
+---
+layout: layouts/base.njk
+permalink: /zh/
+locale: zh
+title: Home
+description: Browse and download The 180-Day Descent.
+alternate_url: /
+---
+<section class="page-hero wrap wide">
+  <p class="eyebrow">Foundations to the 2026 research frontier</p>
+  <h1>{{ book.title }}</h1>
+  <p class="sub">A 180-day map of knowledge by {{ book.authors }}.</p>
+</section>
+
+<section class="wrap wide">
+  <div class="download-grid home-actions">
+    <article class="download-card">
+      <p class="card-kicker">Read online</p>
+      <h2><a href="/zh/days/001-what-is-knowledge/">Start Day 1</a></h2>
+      <p>Browse the course as a static website with live, progressively enhanced teaching widgets.</p>
+    </article>
+    <div class="download-stack">
+      <article class="download-card">
+        <p class="card-kicker">Offline</p>
+        <h2><a href="{{ book.zh.downloads.epub }}">Download EPUB</a></h2>
+      </article>
+      <article class="download-card">
+        <p class="card-kicker">Print</p>
+        <h2><a href="{{ book.zh.downloads.pdf }}">Download PDF</a></h2>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="wrap wide">
+  <p class="sec-eyebrow">Latest descents</p>
+  <div class="toc-grid">
+    {% for item in collections.zhDays | latestDays(10) %}
+      {% include "components/day-card.njk" %}
+    {% endfor %}
+  </div>
+  <p class="all-days-link"><a href="/zh/syllabus/">View the full syllabus</a></p>
+</section>

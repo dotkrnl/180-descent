@@ -121,8 +121,16 @@ module.exports = function (eleventyConfig) {
       .getFilteredByGlob("src/days/*.md")
       .sort((a, b) => Number(a.data.day) - Number(b.data.day));
   });
+  eleventyConfig.addCollection("zhDays", (collectionApi) => {
+    return collectionApi
+      .getFilteredByGlob("src/zh/days/*.md")
+      .sort((a, b) => Number(a.data.day) - Number(b.data.day));
+  });
   eleventyConfig.addCollection("introduction", (collectionApi) => {
     return collectionApi.getFilteredByGlob("src/pages/introduction.md");
+  });
+  eleventyConfig.addCollection("zhIntroduction", (collectionApi) => {
+    return collectionApi.getFilteredByGlob("src/zh/introduction.md");
   });
 
   return {
