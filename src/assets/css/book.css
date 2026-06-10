@@ -255,17 +255,29 @@ hr.div{border:none;border-top:1px solid var(--line);margin:3rem 0;}
   body{font-size:10.2pt;line-height:1.46;background:#fff;color:#111;}
   .site-topbar,.site-footer,.download-strip,.web-only,.epub-only,.print-hide{display:none!important;}
   .print-only,.format-alt{display:block!important;}
-  .print-cover{break-after:page;page-break-after:always;}
+  .print-cover,.block-divider{break-before:page;break-after:page;page-break-before:always;page-break-after:always;box-sizing:border-box;margin:-.78in -.55in -.86in;min-height:9in;background:var(--accent-deep);color:#fff;display:flex;align-items:center;padding:.78in .82in .86in;overflow:hidden;}
+  .print-cover{break-before:auto;page-break-before:auto;flex-direction:column;justify-content:center;align-items:flex-start;}
+  .print-cover .eyebrow,.block-divider p{font-family:"IBM Plex Mono",monospace;font-size:9pt;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);margin:0 0 .18in;}
+  .print-cover h1,.block-divider h1{font-size:29pt;line-height:1.05;color:#fff;margin:0;max-width:4.3in;}
+  .print-cover .sub{font-family:"Fraunces",serif;font-style:italic;font-size:14pt;color:rgba(255,255,255,.78);margin:.24in 0 0;}
   .print-toc{break-before:page;break-after:page;page-break-before:always;page-break-after:always;}
-  .print-toc ol{margin:.2in 0 0;padding-left:.22in;font-size:11pt;line-height:1.7;}
-  .print-toc .toc-block{margin-top:.12in;font-family:"IBM Plex Mono",monospace;font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:#555;}
+  .toc-list{margin:.24in 0 0;font-size:10.6pt;}
+  .toc-row{display:grid;grid-template-columns:minmax(0,1fr) .34in;gap:.12in;align-items:baseline;margin:.055in 0;}
+  .toc-row a{border:0;color:#111;display:flex;align-items:baseline;gap:.08in;min-width:0;}
+  .toc-title{min-width:0;}
+  .toc-leader{border-bottom:1px dotted #c8c8c8;flex:1;transform:translateY(-.04in);}
+  .toc-page{font-family:"IBM Plex Mono",monospace;font-size:8.2pt;color:#555;text-align:right;}
+  .toc-block{margin-top:.18in;font-family:"IBM Plex Mono",monospace;font-size:7.8pt;letter-spacing:.07em;text-transform:uppercase;color:#555;}
+  .toc-day{margin-left:.18in;}
+  .toc-kicker{flex:0 0 .46in;font-family:"IBM Plex Mono",monospace;font-size:7.8pt;letter-spacing:.05em;text-transform:uppercase;color:#666;}
   .print-intro{break-before:page;break-after:page;page-break-before:always;page-break-after:always;}
-  .block-divider{break-before:page;break-after:page;page-break-before:always;page-break-after:always;margin:0;min-height:7.36in;background:var(--accent-deep);color:#fff;display:flex;align-items:center;padding:0 .27in;overflow:hidden;}
   .block-divider-inner{max-width:4.2in;}
-  .block-divider p{font-family:"IBM Plex Mono",monospace;font-size:9pt;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);margin:0 0 .18in;}
-  .block-divider h1{font-size:29pt;line-height:1.05;color:#fff;margin:0;}
+  .print-dest{position:absolute;width:1px;height:1px;overflow:hidden;border:0;color:transparent;}
+  .print-page-marker{position:absolute;color:transparent;font:6pt/1 "IBM Plex Mono",monospace;letter-spacing:0;}
   .wrap,.wide{max-width:none;padding:0;}
+  .print-cover{padding:.78in .82in .86in;}
   header.hero,.page-hero{padding:0 0 .25in;break-after:auto;}
+  .print-cover.page-hero{padding:.78in .82in .86in;break-after:page;page-break-after:always;}
   .hero-clock,.hero-sun{max-width:2.45in;margin:.26in auto;}
   .lede{font-size:1.06em;line-height:1.55;}
   .lede .drop{font-size:3em;}
@@ -277,6 +289,7 @@ hr.div{border:none;border-top:1px solid var(--line);margin:3rem 0;}
   .whereblock,.aside,.panel,.format-alt,.recap,.tomorrow,figure,blockquote,table{break-inside:avoid;page-break-inside:avoid;}
   .whereblock,.aside,.panel,.format-alt,.recap,.tomorrow{box-shadow:none;border-radius:0;}
   .whereblock{background:transparent;border:0!important;padding:.08in 0;margin:.18in 0;}
+  .whereblock .label{display:none!important;}
   .aside,.tomorrow{background:transparent;border:0!important;padding:.08in 0;}
   .format-alt{background:#fff;border:1px solid #ddd!important;padding:.18in .22in;margin:.28in 0;}
   .format-alt .ptitle,.format-alt .pnote{display:none!important;}

@@ -1,8 +1,13 @@
-import { mkdir, copyFile } from "node:fs/promises";
+import { mkdir, copyFile, mkdtemp, rm } from "node:fs/promises";
 import { createReadStream } from "node:fs";
+import { execFile } from "node:child_process";
 import http from "node:http";
+import { tmpdir } from "node:os";
 import path from "node:path";
+import { promisify } from "node:util";
 import { chromium } from "playwright";
+
+const execFileAsync = promisify(execFile);
 
 await mkdir("_site/downloads", { recursive: true });
 await mkdir("dist/downloads", { recursive: true });
@@ -38,40 +43,87 @@ try {
   }, publicBaseUrl);
   await page.evaluate(() => document.fonts.ready);
   await page.emulateMedia({ media: "print" });
-  await page.pdf({
-    path: "dist/downloads/180-descent.pdf",
-    displayHeaderFooter: true,
-    headerTemplate: pdfHeaderTemplate(),
-    footerTemplate: pdfFooterTemplate(),
-    margin: { top: "0.78in", right: "0.55in", bottom: "0.86in", left: "0.55in" },
-    printBackground: true,
-    preferCSSPageSize: true
-  });
+  const draftDir = await mkdtemp(path.join(tmpdir(), "180-descent-pdf-"));
+  const draftPath = path.join(draftDir, "draft.pdf");
+  try {
+    await renderPdf(page, draftPath);
+    const tocPages = await extractTocPages(draftPath);
+    await page.evaluate((pages) => {
+      for (const [key, pageNumber] of Object.entries(pages)) {
+        const target = document.querySelector(`[data-toc-page-for="${CSS.escape(key)}"]`);
+        if (target) target.textContent = String(pageNumber);
+      }
+      for (const marker of document.querySelectorAll(".print-page-marker")) {
+        marker.remove();
+      }
+    }, tocPages);
+    await renderPdf(page, "dist/downloads/180-descent.pdf");
+  } finally {
+    await rm(draftDir, { recursive: true, force: true });
+  }
 } finally {
   await browser.close();
   await server.close();
 }
 
-function pdfHeaderTemplate() {
-  return `
-    <style>
-      .pdf-header{box-sizing:border-box;width:100%;padding:0 0.55in;font:7px "IBM Plex Mono",monospace;color:#66757b;display:flex;justify-content:space-between;letter-spacing:.08em;text-transform:uppercase;}
-    </style>
-    <div class="pdf-header">
-      <span>The 180-Day Descent</span>
-      <span>Foundations of Knowledge &amp; Reasoning</span>
-    </div>`;
+async function renderPdf(page, outputPath) {
+  await page.pdf({
+    path: outputPath,
+    printBackground: true,
+    preferCSSPageSize: true
+  });
 }
 
-function pdfFooterTemplate() {
-  return `
-    <style>
-      .pdf-footer{box-sizing:border-box;width:100%;padding:0 0.55in;font:7px "IBM Plex Mono",monospace;color:#66757b;display:flex;justify-content:space-between;letter-spacing:.08em;text-transform:uppercase;}
-    </style>
-    <div class="pdf-footer">
-      <span>Where we are: Block I</span>
-      <span>Page <span class="pageNumber"></span> / <span class="totalPages"></span></span>
-    </div>`;
+async function extractTocPages(pdfPath) {
+  const markers = await ghostscriptPageMarkers(pdfPath);
+  const pages = {};
+  for (const marker of markers) {
+    if (!(marker.key in pages)) pages[marker.key] = marker.page;
+  }
+  return pages;
+}
+
+async function ghostscriptPageMarkers(pdfPath) {
+  const pageCount = await ghostscriptPageCount(pdfPath);
+  const markers = [];
+  for (let pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+    const text = await ghostscriptPageText(pdfPath, pageNumber);
+    for (const match of text.matchAll(/\[\[toc:([^\]]+)\]\]/g)) {
+      markers.push({ key: match[1], page: pageNumber });
+    }
+  }
+  return markers;
+}
+
+async function ghostscriptPageCount(pdfPath) {
+  const { stdout } = await execFileAsync("gs", [
+    "-q",
+    "-dNOSAFER",
+    "-dNODISPLAY",
+    "-c",
+    `${postScriptString(path.resolve(pdfPath))} (r) file runpdfbegin pdfpagecount = quit`
+  ]);
+  return Number(stdout.trim());
+}
+
+async function ghostscriptPageText(pdfPath, pageNumber) {
+  const { stdout } = await execFileAsync("gs", [
+    "-q",
+    "-dSAFER",
+    "-dBATCH",
+    "-dNOPAUSE",
+    "-sDEVICE=txtwrite",
+    `-dFirstPage=${pageNumber}`,
+    `-dLastPage=${pageNumber}`,
+    "-o",
+    "-",
+    pdfPath
+  ], { maxBuffer: 1024 * 1024 });
+  return stdout;
+}
+
+function postScriptString(value) {
+  return `(${String(value).replaceAll("\\", "\\\\").replaceAll("(", "\\(").replaceAll(")", "\\)")})`;
 }
 await copyFile("dist/downloads/180-descent.pdf", "_site/downloads/180-descent.pdf");
 
