@@ -1,6 +1,7 @@
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
+import * as cheerio from "cheerio";
 
 let failures = 0;
 const dayFiles = (await readdir("src/days")).filter((file) => file.endsWith(".md")).sort();
@@ -30,6 +31,19 @@ for (const file of dayFiles) {
     console.error(`${file} references remote Google Fonts`);
     failures++;
   }
+  const $ = cheerio.load(parsed.content);
+  const webPanels = $(".panel.web-only").length;
+  const staticAlternates = $(".format-alt.print-only").length;
+  if (staticAlternates < webPanels) {
+    console.error(`${file} has ${webPanels} web-only panels but only ${staticAlternates} static print/EPUB alternates`);
+    failures++;
+  }
+  $(".chip").each((_, el) => {
+    if (!$(el).attr("data-print")) {
+      console.error(`${file} has a status chip without data-print="${$(el).text().trim()}"`);
+      failures++;
+    }
+  });
 }
 
 const css = await readFile("src/assets/css/book.css", "utf8");
@@ -39,4 +53,3 @@ if (!css.includes("@font-face")) {
 }
 
 if (failures) process.exit(1);
-

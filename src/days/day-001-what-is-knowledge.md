@@ -264,8 +264,8 @@ permalink: /days/001-what-is-knowledge/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Edge 01</span>
-<span class="chip bad"><i></i>Original claim · superseded</span>
-<span class="chip ok"><i></i>Replication · established</span>
+<span class="chip bad" data-print="superseded"><i></i>Original claim · superseded</span>
+<span class="chip ok" data-print="established"><i></i>Replication · established</span>
 </div>
 <h3>Are "knowledge" intuitions universal — or just Western?</h3>
 <p>When the discipline runs on "asked carefully, almost everyone says no," a natural worry is: <em>which</em> everyone? In 2001, the founding study of <em class="term">experimental philosophy</em> — Weinberg, Nichols &amp; Stich — reported that the Gettier intuition varies by culture, with East-Asian participants supposedly more willing to grant the lucky believer "knowledge." If true, it was a bombshell: philosophy's whole method of consulting intuitions looked parochial.</p>
@@ -275,8 +275,8 @@ permalink: /days/001-what-is-knowledge/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Edge 02</span>
-<span class="chip ok"><i></i>Normative framework · established</span>
-<span class="chip hint"><i></i>"Replaces belief" · contested</span>
+<span class="chip ok" data-print="established"><i></i>Normative framework · established</span>
+<span class="chip hint" data-print="contested"><i></i>"Replaces belief" · contested</span>
 </div>
 <h3>Belief by the dial, not the switch: Bayesian epistemology</h3>
 <p>Maybe the all-or-nothing picture of belief was the wrong starting point. <em class="term">Bayesian epistemology</em> says your real epistemic states are <em class="term">credences</em> — degrees of confidence on a scale from 0 to 1. Rationality then needs just two rules: your credences must obey the laws of probability (<em>coherence</em>), and you must revise them by <em>conditionalization</em> as evidence comes in.</p>
@@ -334,8 +334,8 @@ permalink: /days/001-what-is-knowledge/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Edge 03</span>
-<span class="chip hint"><i></i>Predictive coding · promising</span>
-<span class="chip bad"><i></i>Grand "Free Energy" theory · contested</span>
+<span class="chip hint" data-print="promising"><i></i>Predictive coding · promising</span>
+<span class="chip bad" data-print="contested"><i></i>Grand "Free Energy" theory · contested</span>
 </div>
 <h3>Where do beliefs come from? The brain as a prediction machine</h3>
 <p>Philosophy asks what justifies a belief; neuroscience now asks how a lump of tissue forms one. A fast-growing program answers: the brain is not a passive sponge soaking up the world — it is a relentless <em class="term">prediction machine</em>. On the <em class="term">predictive-processing</em> view (Andy Clark, <em>Behavioral and Brain Sciences</em>, 2013; Jakob Hohwy, 2013), the brain constantly generates a model of its surroundings, predicts the sensory signals it expects, and forwards only the <em>prediction errors</em> — the surprises — up the hierarchy. Perception becomes the brain's best running guess, reined in by error; in Anil Seth's memorable phrase, a "controlled hallucination." Belief-updating starts to look like <strong>Bayesian inference rendered in neurons</strong> — the so-called "Bayesian brain," tying Edge 02 to wetware.</p>

@@ -38,6 +38,13 @@ content(".panel").each((_, panel) => {
   }
 });
 
+content(".chip").each((_, chip) => {
+  const el = content(chip);
+  if (!el.attr("data-print")) {
+    el.attr("data-print", compactChipLabel(el.text()));
+  }
+});
+
 const dayPath = `${String(day).padStart(3, "0")}-${slug}`;
 const frontmatter = [
   "---",
@@ -67,6 +74,16 @@ function escapeYaml(value) {
 function normalizeHtmlBlockIndent(value) {
   const [front, ...rest] = value.split("\n");
   return [front, ...rest.map((line) => line.replace(/^[ \t]+(?=<)/, ""))].join("\n");
+}
+
+function compactChipLabel(value) {
+  const text = value.toLowerCase();
+  if (text.includes("superseded")) return "superseded";
+  if (text.includes("established")) return "established";
+  if (text.includes("promising")) return "promising";
+  if (text.includes("contested")) return "contested";
+  if (text.includes("optimistic")) return "optimistic";
+  return "review";
 }
 
 function gettierFallback() {

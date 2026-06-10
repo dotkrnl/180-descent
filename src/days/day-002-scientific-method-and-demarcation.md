@@ -203,8 +203,8 @@ permalink: /days/002-scientific-method-and-demarcation/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Result 01</span>
-<span class="chip ok"><i></i>The headline numbers · established</span>
-<span class="chip hint"><i></i>What they mean · contested</span>
+<span class="chip ok" data-print="established"><i></i>The headline numbers · established</span>
+<span class="chip hint" data-print="contested"><i></i>What they mean · contested</span>
 </div>
 <h3>The shot heard round psychology</h3>
 <p>The landmark is the <strong>Open Science Collaboration's "Estimating the Reproducibility of Psychological Science"</strong> (<em>Science</em>, 28 August 2015) — roughly 270 researchers, led by Brian Nosek, who repeated <strong>100</strong> studies from three top psychology journals, working with the original authors to get the methods right. The result detonated across the field. But the single most important lesson is buried in plain sight: <strong>there is no one "replication rate."</strong> The paper reported several, and they tell different stories. Watch.</p>
@@ -247,7 +247,7 @@ permalink: /days/002-scientific-method-and-demarcation/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Result 02</span>
-<span class="chip ok"><i></i>Not just psychology · established</span>
+<span class="chip ok" data-print="established"><i></i>Not just psychology · established</span>
 </div>
 <h3>It isn't one field's embarrassment</h3>
 <p>The reflex defense — "soft sciences, what do you expect" — collapsed as the same exercise ran elsewhere and came back in the same unhappy range. The crisis is broad. Here are the verified anchor numbers; note the metric every time, because, as we just saw, the metric <em>is</em> the story.</p>
@@ -297,8 +297,8 @@ permalink: /days/002-scientific-method-and-demarcation/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Result 03</span>
-<span class="chip ok"><i></i>Famous casualties · established</span>
-<span class="chip hint"><i></i>"Fully dead" · contested</span>
+<span class="chip ok" data-print="established"><i></i>Famous casualties · established</span>
+<span class="chip hint" data-print="contested"><i></i>"Fully dead" · contested</span>
 </div>
 <h3>The findings that evaporated — and the scientists who said so</h3>
 <p>Abstractions don't sting; named casualties do. A run of celebrated, TED-talk-famous effects buckled under high-powered, preregistered repetition — and, remarkably, in the cleanest cases an <em>insider</em> changed their mind in public:</p>
@@ -313,7 +313,7 @@ permalink: /days/002-scientific-method-and-demarcation/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">The turn</span>
-<span class="chip ok"><i></i>Self-correction · the optimistic reading</span>
+<span class="chip ok" data-print="optimistic"><i></i>Self-correction · the optimistic reading</span>
 </div>
 <h3>Is this science failing — or science working?</h3>
 <p>Here's the reframe that makes the whole crisis a hopeful story rather than a scandal. Every one of those numbers came from <em>scientists policing science</em> — using preregistered, high-powered, openly-shared methods to expose and discard claims that couldn't stand up. That is <strong>Popper's executioner's blade, finally turned inward.</strong> The crisis isn't evidence that the demarcation criteria are wrong. It's evidence of them <em>working</em>, painfully and in public.</p>

@@ -10,9 +10,22 @@ await mkdir("dist/downloads", { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: { width: 900, height: 1350 } });
 const server = await serveSite("_site");
+const publicBaseUrl = (process.env.SITE_URL || "https://180-descent.pages.dev").replace(/\/+$/, "");
 
 try {
   await page.goto(`${server.url}/print/`, { waitUntil: "networkidle" });
+  await page.evaluate((baseUrl) => {
+    const localOrigin = window.location.origin;
+    for (const anchor of document.querySelectorAll("a[href]")) {
+      const href = anchor.getAttribute("href");
+      if (!href || href.startsWith("#")) continue;
+
+      const url = new URL(href, window.location.href);
+      if (url.origin === localOrigin) {
+        anchor.setAttribute("href", `${baseUrl}${url.pathname}${url.search}${url.hash}`);
+      }
+    }
+  }, publicBaseUrl);
   await page.evaluate(() => document.fonts.ready);
   await page.emulateMedia({ media: "print" });
   await page.pdf({
