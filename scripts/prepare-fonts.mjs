@@ -19,7 +19,6 @@ const outDir = path.resolve("src/assets/fonts");
 await mkdir(outDir, { recursive: true });
 
 for (const [pkg, file] of fonts) {
-  const packageRoot = path.dirname(await import.meta.resolve(`${pkg}/package.json`).then((url) => new URL(url).pathname));
+  const packageRoot = path.dirname(new URL(import.meta.resolve(`${pkg}/package.json`)).pathname);
   await copyFile(path.join(packageRoot, "files", file), path.join(outDir, file));
 }
-
