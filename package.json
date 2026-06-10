@@ -16,7 +16,7 @@
     "check:content": "node scripts/check-content.mjs",
     "check:epub": "node scripts/check-epub.mjs",
     "check": "npm run check:links && npm run check:content && npm run check:epub",
-    "deploy": "npm run build && wrangler pages deploy _site --project-name=180-descent"
+    "deploy": "npm run build && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent"
   },
   "dependencies": {
     "@11ty/eleventy": "^3.1.6",
