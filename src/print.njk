@@ -1,0 +1,26 @@
+---
+layout: layouts/print-base.njk
+permalink: /print/
+title: Print Edition
+---
+<section class="wrap wide page-hero">
+  <p class="eyebrow">{{ book.subtitle }}</p>
+  <h1>{{ book.title }}</h1>
+  <p class="sub">By {{ book.authors }}</p>
+</section>
+
+<section class="wrap wide">
+  <p class="sec-eyebrow">Contents</p>
+  <ol>
+    {% for day in collections.days %}
+      <li>Day {{ day.data.day }}: {{ day.data.title }}</li>
+    {% endfor %}
+  </ol>
+</section>
+
+{% for day in collections.days %}
+  <article class="lesson-print">
+    {{ day.templateContent | safe }}
+  </article>
+{% endfor %}
+

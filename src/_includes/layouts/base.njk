@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="{{ book.language }}" data-theme="auto">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>{% if title %}{{ title }} · {% endif %}{{ book.title }}</title>
+    <meta name="description" content="{{ description or book.description }}">
+    <link rel="stylesheet" href="/assets/css/book.css">
+    <script src="/assets/js/book.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <header class="site-topbar">
+      <div class="topbar-row">
+        <a class="course" href="/"><span class="dot"></span>{{ book.title }}</a>
+        <nav class="topnav" aria-label="Primary">
+          <a href="/introduction/">Intro</a>
+          <a href="/syllabus/">Syllabus</a>
+          <a href="/downloads/">Downloads</a>
+        </nav>
+        <button class="toggle" id="themeBtn" type="button" aria-label="Toggle light or dark theme">Theme</button>
+      </div>
+    </header>
+    <main id="content">
+      {{ content | safe }}
+    </main>
+    <footer class="site-footer">
+      <div class="wrap wide footer-grid">
+        <p><strong>{{ book.title }}</strong><br>{{ book.subtitle }}<br>By {{ book.authors }}</p>
+        <p><a href="{{ book.repo }}">GitHub</a><br><a href="/downloads/">EPUB and PDF downloads</a><br><a href="/credits/">Credits</a></p>
+      </div>
+    </footer>
+  </body>
+</html>
+
