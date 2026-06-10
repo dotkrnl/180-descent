@@ -30,28 +30,32 @@ Read the syllabus entry for the target day plus the immediately previous and nex
    - label frontier claims as established, promising hint, or contested/hype
    - add concrete callbacks to previous published days
    - leave future callbacks in `src/_data/future-links.yaml`
-4. For every interactive piece, provide all variants:
+4. Update `src/pages/introduction.md`:
+   - keep the paragraph that begins with "The first two days set the tone" concise
+   - refresh it each day so it summarizes the published opening arc and the newest day without becoming a running catalog
+   - keep it to one short paragraph unless the user explicitly asks for a longer introduction
+5. For every interactive piece, provide all variants:
    - live web UI
    - no-JS EPUB fallback
    - static PDF fallback
-5. Prefer existing components and CSS classes before inventing new ones.
-6. Add copyright-safe local assets only when they improve readability.
-7. Run:
+6. Prefer existing components and CSS classes before inventing new ones.
+7. Add copyright-safe local assets only when they improve readability.
+8. Run:
 
 ```sh
 rtk npm run build
 rtk npm run check
 ```
 
-8. Inspect the built website and downloads before committing.
-9. Commit a small batch with a conventional message, usually `feat: add day ### lesson`.
+9. Inspect the built website and downloads before committing.
+10. Commit a small batch with a conventional message, usually `feat: add day ### lesson`.
 
 ## Required Outputs
 
 - Updated `src/days/day-###-slug.md`
+- Updated concise opening-arc paragraph in `src/pages/introduction.md`
 - Updated callbacks and pending future links
 - Updated asset credits if images or fonts were added
 - Passing site, EPUB, PDF, link, content, and EPUB structural checks
 
 Do not edit generated files in `_site/` or `dist/`; they are build outputs.
-
