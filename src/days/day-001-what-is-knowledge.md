@@ -236,7 +236,7 @@ permalink: /days/001-what-is-knowledge/
 </g>
 </svg>
 </div>
-<div class="tri-print print-only">
+<div class="tri-print epub-only print-only">
 <p><strong>Reason chain:</strong> belief: "it's 9:12" -> because "the clock" -> because "...and why that?"</p>
 <ol>
 <li><strong>Infinite regress:</strong> every reason needs another reason forever.</li>

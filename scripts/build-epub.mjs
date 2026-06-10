@@ -67,9 +67,10 @@ await copyFile("dist/downloads/180-descent.epub", "_site/downloads/180-descent.e
 
 async function pageToXhtml(htmlPath, title, selfHref) {
   const html = await readFile(htmlPath, "utf8");
-  const $ = cheerio.load(html, { decodeEntities: false });
-  $("script,.site-topbar,.site-footer,.download-strip,.web-only,.print-only:not(.epub-only)").remove();
+  const $ = cheerio.load(html, { decodeEntities: true });
+  $("script,.site-topbar,.site-footer,.download-strip,.web-only,.print-hide,.print-only:not(.epub-only)").remove();
   $(".epub-only").removeClass("epub-only print-only format-alt").addClass("epub-alt");
+  $("svg").attr("xmlns", "http://www.w3.org/2000/svg");
   $("a[href]").each((_, a) => {
     const el = $(a);
     const href = el.attr("href");
@@ -88,7 +89,8 @@ async function pageToXhtml(htmlPath, title, selfHref) {
       el.attr("href", "nav.xhtml");
     }
   });
-  const body = $("#content").length ? $("#content").html() : $("body").html();
+  const contentRoot = $("#content").length ? $("#content") : $("body");
+  const body = contentRoot.contents().map((_, node) => $.xml(node)).get().join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="${book.language}">
@@ -115,7 +117,7 @@ function navDocument(items, meta) {
   const links = items.map((day) => `<li><a href="${day.xhtml}">Day ${day.data.day}: ${escapeXml(day.data.title)}</a></li>`).join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="${meta.language}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="${meta.language}">
   <head><title>Table of Contents</title></head>
   <body>
     <nav epub:type="toc" id="toc">
@@ -157,4 +159,3 @@ function escapeXml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
 }
-
