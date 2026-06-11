@@ -5,6 +5,7 @@ title: Introduction
 subtitle: How to read a map that descends from foundations to the frontier.
 eyebrow: The 180-day map
 description: Introduction to The 180-Day Descent.
+alternate_url: /zh/introduction/
 ---
 
 <p class="lede">This book began with a hunger rather than a credential: deep curiosity, learning for its own sake, and the wish to become at home in the world without pretending the world is small. The intended reader is a curious generalist: strong in some places, full of gaps in others, unwilling to choose between foundations and the frontier. The promise is not mastery in 180 days. It is orientation: a map of the major structures that make reality, life, mind, technology, society, and the future intelligible.</p>
