@@ -63,6 +63,25 @@ for (const [label, text, pattern] of [
   }
 }
 
+for (const [label, pdfPath, pattern] of [
+  ["Deep-dive PDF", "_site/downloads/180-descent-deep-dive.pdf", /OPTIONAL APPENDIX/i],
+  ["Day-specific PDF", "_site/downloads/180-descent-day-001-what-is-knowledge.pdf", /OPTIONAL APPENDIX/i],
+  ["Deep-dive Chinese PDF", "_site/downloads/180-descent-zh-deep-dive.pdf", /可选附录/],
+  ["Day-specific Chinese PDF", "_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf", /可选附录/]
+]) {
+  const appendixPage = await findFirstPageContaining(pdfPath, pattern);
+  if (!appendixPage) {
+    console.error(`${label} is missing an appendix page matching ${pattern}`);
+    failures++;
+    continue;
+  }
+  const box = await extractPageBoundingBox(pdfPath, appendixPage);
+  if (!isFullPageBox(box)) {
+    console.error(`${label} appendix page ${appendixPage} is missing a full-page background: ${box.join(" ")}`);
+    failures++;
+  }
+}
+
 for (const pattern of [/\[\[toc:/, /WHERE WE ARE/i, /PAGE\s+\d+\s*\/\s*\d+/, /THE 180-DAY DESCENT/]) {
   if (pattern.test(extractedText)) {
     console.error(`PDF extracted text contains forbidden print artifact matching ${pattern}`);
@@ -237,6 +256,15 @@ async function extractPdfPageText(pdfPath, pageNumber) {
     pdfPath
   ], { maxBuffer: 1024 * 1024 });
   return stdout;
+}
+
+async function findFirstPageContaining(pdfPath, pattern) {
+  const pdf = await PDFDocument.load(await readFile(pdfPath));
+  for (let pageNumber = 1; pageNumber <= pdf.getPageCount(); pageNumber++) {
+    const text = await extractPdfPageText(pdfPath, pageNumber);
+    if (pattern.test(text)) return pageNumber;
+  }
+  return null;
 }
 
 async function extractPageBoundingBox(pdfPath, pageNumber) {
