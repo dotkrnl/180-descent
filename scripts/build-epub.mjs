@@ -88,12 +88,56 @@ await buildEpub({
   includeDeepDive: true
 });
 
+await buildDayEpubs({
+  meta: {
+    title: book.title,
+    authors: book.authors,
+    language: book.language,
+    publisher: book.publisher,
+    epub_identifier: `${book.epub_identifier}-day`
+  },
+  dayDir: "src/days",
+  siteDayDir: "_site/days",
+  dayUrlPrefix: "/days/",
+  dayLabel: "Day",
+  outputPrefix: "180-descent-day"
+});
+
+await buildDayEpubs({
+  meta: {
+    title: book.zh.title,
+    authors: book.zh.authors,
+    language: book.zh.language,
+    publisher: book.publisher,
+    epub_identifier: `${book.zh.epub_identifier}-day`
+  },
+  dayDir: "src/zh/days",
+  siteDayDir: "_site/zh/days",
+  dayUrlPrefix: "/zh/days/",
+  dayLabel: "第",
+  outputPrefix: "180-descent-zh-day"
+});
+
+async function buildDayEpubs(config) {
+  const days = await loadDays(config.dayDir);
+  for (const day of days) {
+    await buildEpub({
+      ...config,
+      meta: {
+        ...config.meta,
+        title: dayDocumentTitle(day, config),
+        epub_identifier: `${config.meta.epub_identifier}-${String(day.data.day).padStart(3, "0")}`
+      },
+      days: [day],
+      introHtml: null,
+      output: `${config.outputPrefix}-${day.data.day_path}.epub`,
+      singleDay: true
+    });
+  }
+}
+
 async function buildEpub(config) {
-  const dayFiles = (await readdir(config.dayDir)).filter((file) => file.endsWith(".md")).sort();
-  const days = dayFiles.map((file) => {
-    const parsed = matter.read(path.join(config.dayDir, file));
-    return { file, data: parsed.data, xhtml: `day-${String(parsed.data.day).padStart(3, "0")}.xhtml` };
-  });
+  const days = config.days || await loadDays(config.dayDir);
 
   const zip = new JSZip();
   zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
@@ -119,14 +163,16 @@ async function buildEpub(config) {
     `<item id="css" href="styles/book.css" media-type="text/css"/>`
   ];
 
-  const intro = await pageToXhtml(config.introHtml, config.introTitle, "introduction.xhtml", config, days);
-  oebps.file("introduction.xhtml", intro);
-  manifestItems.push(`<item id="intro" href="introduction.xhtml" media-type="application/xhtml+xml"/>`);
-  spine.push(`<itemref idref="intro"/>`);
+  if (config.introHtml) {
+    const intro = await pageToXhtml(config.introHtml, config.introTitle, "introduction.xhtml", config, days);
+    oebps.file("introduction.xhtml", intro);
+    manifestItems.push(`<item id="intro" href="introduction.xhtml" media-type="application/xhtml+xml"/>`);
+    spine.push(`<itemref idref="intro"/>`);
+  }
 
   for (const day of days) {
     const htmlPath = path.join(config.siteDayDir, day.data.day_path, "index.html");
-    const title = `${config.dayLabel} ${day.data.day}: ${day.data.title}`;
+    const title = dayDocumentTitle(day, config);
     const xhtml = await pageToXhtml(htmlPath, title, day.xhtml, config, days);
     oebps.file(day.xhtml, xhtml);
     manifestItems.push(`<item id="day${String(day.data.day).padStart(3, "0")}" href="${day.xhtml}" media-type="application/xhtml+xml"/>`);
@@ -150,6 +196,9 @@ async function buildEpub(config) {
 async function pageToXhtml(htmlPath, title, selfHref, config, days) {
   const html = await readFile(htmlPath, "utf8");
   const $ = cheerio.load(html, { decodeEntities: true });
+  if (config.singleDay) {
+    $(".lesson-nav").remove();
+  }
   if (!config.includeDeepDive) {
     $(".deep-dive").remove();
   } else {
@@ -174,6 +223,8 @@ async function pageToXhtml(htmlPath, title, selfHref, config, days) {
       if (day) {
         const anchor = href.includes("#") ? `#${href.split("#")[1]}` : "";
         el.attr("href", `${day.xhtml}${anchor}`);
+      } else {
+        el.attr("href", "nav.xhtml");
       }
     } else if (href === config.introUrl) {
       el.attr("href", "introduction.xhtml");
@@ -225,6 +276,9 @@ body{font-size:1em;}
 }
 
 function navDocument(items, config) {
+  const introLink = config.introHtml
+    ? `<li><a href="introduction.xhtml">${escapeXml(config.introLabel)}</a></li>`
+    : "";
   const links = items.map((day) => {
     const label = config.meta.language.startsWith("zh")
       ? `第 ${day.data.day} 日：${escapeXml(day.data.title)}`
@@ -239,7 +293,7 @@ function navDocument(items, config) {
     <nav epub:type="toc" id="toc">
       <h1>${escapeXml(config.meta.title)}</h1>
       <ol>
-        <li><a href="introduction.xhtml">${escapeXml(config.introLabel)}</a></li>
+        ${introLink}
         ${links}
       </ol>
     </nav>
@@ -266,6 +320,21 @@ function contentOpf(meta, manifestItems, spine) {
     ${spine.join("\n    ")}
   </spine>
 </package>`;
+}
+
+async function loadDays(dayDir) {
+  const dayFiles = (await readdir(dayDir)).filter((file) => file.endsWith(".md")).sort();
+  return dayFiles.map((file) => {
+    const parsed = matter.read(path.join(dayDir, file));
+    return { file, data: parsed.data, xhtml: `day-${String(parsed.data.day).padStart(3, "0")}.xhtml` };
+  });
+}
+
+function dayDocumentTitle(day, config) {
+  if (config.meta.language.startsWith("zh")) {
+    return `${config.dayLabel} ${day.data.day} 日：${day.data.title}`;
+  }
+  return `${config.dayLabel} ${day.data.day}: ${day.data.title}`;
 }
 
 function escapeXml(value) {

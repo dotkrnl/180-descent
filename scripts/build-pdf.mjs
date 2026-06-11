@@ -1,10 +1,11 @@
-import { mkdir, copyFile, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, copyFile, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { createReadStream } from "node:fs";
 import { execFile } from "node:child_process";
 import http from "node:http";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
+import matter from "gray-matter";
 import { PDFDocument, PDFName, StandardFonts, rgb } from "pdf-lib";
 import { chromium } from "playwright";
 
@@ -59,6 +60,20 @@ try {
   for (const edition of editions) {
     await buildEdition(edition);
   }
+  await buildDayPdfs({
+    dayDir: "src/days",
+    dayRoutePrefix: "/days/",
+    outputPrefix: "180-descent-day",
+    bookTitle: "The 180-Day Descent",
+    language: "en"
+  });
+  await buildDayPdfs({
+    dayDir: "src/zh/days",
+    dayRoutePrefix: "/zh/days/",
+    outputPrefix: "180-descent-zh-day",
+    bookTitle: "180 Descent",
+    language: "zh-Hans"
+  });
 } finally {
   await browser.close();
   await server.close();
@@ -137,6 +152,93 @@ async function renderPdf(page, outputPath) {
     printBackground: true,
     preferCSSPageSize: true
   });
+}
+
+async function buildDayPdfs(config) {
+  const days = await loadDays(config.dayDir);
+  for (const day of days) {
+    await buildDayPdf(day, config);
+  }
+}
+
+async function buildDayPdf(day, config) {
+  const page = await browser.newPage({ viewport: { width: 900, height: 1350 } });
+  try {
+    await page.goto(`${server.url}${config.dayRoutePrefix}${day.data.day_path}/`, { waitUntil: "networkidle" });
+    await page.evaluate(({ baseUrl }) => {
+      const localOrigin = window.location.origin;
+      document.querySelectorAll(".lesson-nav").forEach((el) => el.remove());
+      for (const anchor of document.querySelectorAll("a[href]")) {
+        const href = anchor.getAttribute("href");
+        if (!href || href.startsWith("#")) continue;
+
+        const url = new URL(href, window.location.href);
+        if (url.origin === localOrigin) {
+          anchor.setAttribute("href", `${baseUrl}${url.pathname}${url.search}${url.hash}`);
+        }
+      }
+    }, { baseUrl: publicBaseUrl });
+    await page.evaluate(() => document.fonts.ready);
+    await page.emulateMedia({ media: "print" });
+
+    const draftDir = await mkdtemp(path.join(tmpdir(), "180-descent-day-pdf-"));
+    const draftPath = path.join(draftDir, "draft.pdf");
+    const output = `${config.outputPrefix}-${day.data.day_path}.pdf`;
+    try {
+      await renderPdf(page, draftPath);
+      await finalizeDayPdf(draftPath, `dist/downloads/${output}`, {
+        bookTitle: config.bookTitle,
+        sectionTitle: dayPdfHeaderTitle(day, config)
+      });
+      await copyFile(`dist/downloads/${output}`, `_site/downloads/${output}`);
+    } finally {
+      await rm(draftDir, { recursive: true, force: true });
+    }
+  } finally {
+    await page.close();
+  }
+}
+
+async function finalizeDayPdf(inputPath, outputPath, { bookTitle, sectionTitle }) {
+  const pdf = await PDFDocument.load(await readFile(inputPath));
+  const regular = await pdf.embedFont(StandardFonts.Helvetica);
+  for (const [index, pdfPage] of pdf.getPages().entries()) {
+    pdfPage.node.delete(PDFName.of("Annots"));
+    if (index === 0) continue;
+
+    const pageNumber = index + 1;
+    const { width, height } = pdfPage.getSize();
+    const color = rgb(0.38, 0.46, 0.49);
+    const headerSize = 6.6;
+    const footerSize = 7.2;
+    const left = 39.6;
+    const right = width - 39.6;
+    const pageText = String(pageNumber);
+
+    pdfPage.drawText(bookTitle, {
+      x: left,
+      y: height - 24,
+      size: headerSize,
+      font: regular,
+      color
+    });
+    pdfPage.drawText(sectionTitle, {
+      x: right - regular.widthOfTextAtSize(sectionTitle, headerSize),
+      y: height - 24,
+      size: headerSize,
+      font: regular,
+      color
+    });
+    pdfPage.drawText(pageText, {
+      x: right - regular.widthOfTextAtSize(pageText, footerSize),
+      y: 22,
+      size: footerSize,
+      font: regular,
+      color
+    });
+  }
+
+  await writeFile(outputPath, await pdf.save({ useObjectStreams: false }));
 }
 
 async function extractTocPages(pdfPath) {
@@ -252,6 +354,20 @@ async function ghostscriptPageText(pdfPath, pageNumber) {
 
 function postScriptString(value) {
   return `(${String(value).replaceAll("\\", "\\\\").replaceAll("(", "\\(").replaceAll(")", "\\)")})`;
+}
+
+async function loadDays(dayDir) {
+  const dayFiles = (await readdir(dayDir)).filter((file) => file.endsWith(".md")).sort();
+  return dayFiles.map((file) => {
+    const parsed = matter.read(path.join(dayDir, file));
+    return { file, data: parsed.data };
+  });
+}
+
+function dayPdfHeaderTitle(day, config) {
+  return config.language.startsWith("zh")
+    ? `Lesson ${day.data.day}`
+    : `Day ${day.data.day}`;
 }
 
 async function serveSite(root) {

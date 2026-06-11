@@ -5,7 +5,7 @@ layout: layouts/base.njk
 {% set dayCollection = collections.zhDays if isZh else collections.days %}
 {% set previousDay = dayCollection | previousPublishedDay(day) %}
 {% set nextDay = dayCollection | nextPublishedDay(day) %}
-{% set downloads = book.zh.downloads if isZh else book.downloads %}
+{% set dayDownloadPrefix = "/downloads/180-descent-zh-day-" + day_path if isZh else "/downloads/180-descent-day-" + day_path %}
 {% macro dayNav(position) %}
 <nav class="lesson-nav lesson-nav-{{ position }} wrap wide" aria-label="Day navigation">
   {% if previousDay %}
@@ -39,13 +39,9 @@ layout: layouts/base.njk
 <article class="lesson" data-day="{{ day }}">
   <div class="download-strip">
     <div class="wrap wide">
-      <span>{{ "下载本书：" if isZh else "Download the book:" }}</span>
-      <a href="{{ downloads.epub }}">EPUB</a>
-      <a href="{{ downloads.pdf }}">PDF</a>
-      {% if not isZh and downloads.deep_epub and downloads.deep_pdf %}
-      <a href="{{ downloads.deep_epub }}">Deep EPUB</a>
-      <a href="{{ downloads.deep_pdf }}">Deep PDF</a>
-      {% endif %}
+      <span>{{ "下载本日：" if isZh else "Download this day:" }}</span>
+      <a href="{{ dayDownloadPrefix }}.epub">EPUB</a>
+      <a href="{{ dayDownloadPrefix }}.pdf">PDF</a>
     </div>
   </div>
   {{ dayNav("top") }}
