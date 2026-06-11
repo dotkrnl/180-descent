@@ -263,4 +263,194 @@
     });
     renderDemarcation("relativity");
   }
+
+  document.querySelectorAll(".cm-machine").forEach(function(machine){
+    var cmP1 = machine.querySelector(".cm-p1");
+    var cmP2 = machine.querySelector(".cm-p2");
+    var cmC = machine.querySelector(".cm-c");
+    var cmOut = machine.querySelector(".cm-outlet");
+    var cmBtns = machine.querySelectorAll(".cm-btn");
+    if(!cmP1 || !cmP2 || !cmC || !cmOut || !cmBtns.length) return;
+
+    var cmData = {
+      skeptic: {
+        strike: [],
+        who: "The Skeptic",
+        html: "You accepted every line, so the conclusion stands: by your own lights, you don't know you have hands, or much of anything about the external world. Logically tidy, humanly unbearable."
+      },
+      moore: {
+        strike: ["p1"],
+        who: 'G. E. Moore: "Here is one hand"',
+        html: "You reject P1: you insist you do know you are not a vat-brain, because you know you have hands and can see them. The worry: it can feel like foot-stamping rather than an answer."
+      },
+      dretske: {
+        strike: ["p2"],
+        who: "Dretske and Nozick: deny closure",
+        html: "You reject P2: knowledge does not automatically pass to every entailment. You only need to rule out the live relevant alternatives. The cost: closure is deeply intuitive."
+      },
+      context: {
+        strike: [],
+        who: "Contextualism: change the standard",
+        html: "You reject the hidden assumption that 'know' means one fixed thing. Ordinary talk and the skeptic's seminar use different yardsticks."
+      }
+    };
+
+    function cmClear(){
+      [cmP1, cmP2, cmC].forEach(function(el){ el.classList.remove("struck"); });
+    }
+    function cmRender(key){
+      var d = cmData[key] || cmData.skeptic;
+      cmClear();
+      if(d.strike.indexOf("p1") > -1) cmP1.classList.add("struck");
+      if(d.strike.indexOf("p2") > -1) cmP2.classList.add("struck");
+      if(d.strike.length > 0 && key !== "context") cmC.classList.add("struck");
+      cmBtns.forEach(function(button){
+        button.setAttribute("aria-pressed", button.getAttribute("data-exit") === key ? "true" : "false");
+      });
+      cmOut.innerHTML = '<span class="who">' + d.who + "</span>" + d.html;
+    }
+    cmBtns.forEach(function(button){
+      button.addEventListener("click", function(){ cmRender(button.getAttribute("data-exit")); });
+    });
+  });
+
+  document.querySelectorAll(".stakes-dial").forEach(function(panel){
+    var rStakes = panel.querySelector(".stakes-range");
+    var sdVal = panel.querySelector(".stakes-value");
+    var sdCase = panel.querySelector(".stakes-case");
+    var sdErr = panel.querySelector(".stakes-error");
+    var sdState = panel.querySelector(".stakes-state");
+    var sdCtx = panel.querySelector(".stakes-contextualism");
+    var sdEnc = panel.querySelector(".stakes-encroachment");
+    var sdInv = panel.querySelector(".stakes-invariantism");
+    if(!rStakes || !sdVal || !sdCase || !sdErr || !sdState || !sdCtx || !sdEnc || !sdInv) return;
+
+    function stakesWord(s){
+      if(s < 25) return "low";
+      if(s < 55) return "rising";
+      if(s < 80) return "high";
+      return "critical";
+    }
+    function caseText(s, err){
+      var base;
+      if(s < 25){
+        base = "<b>Low stakes.</b> It is a small errand. Nothing much rides on it.";
+      } else if(s < 55){
+        base = "<b>Stakes rising.</b> Missing the deposit would be annoying, but recoverable.";
+      } else if(s < 80){
+        base = "<b>High stakes.</b> A check must clear by Monday to cover the mortgage.";
+      } else {
+        base = "<b>Critical stakes.</b> If this deposit is not in by Monday, you could lose the house.";
+      }
+      if(err){
+        base += ' <span style="color:var(--contested)">And your spouse adds: "but banks do sometimes change their weekend hours."</span>';
+      }
+      return base;
+    }
+    function renderStakes(){
+      var s = Number(rStakes.value);
+      var err = sdErr.getAttribute("aria-checked") === "true";
+      var threshold = err ? 32 : 68;
+      var knows = s < threshold;
+      sdVal.textContent = stakesWord(s);
+      sdCase.innerHTML = caseText(s, err);
+      if(knows){
+        sdState.className = "vstate know stakes-state";
+        sdState.innerHTML = '✓ "Yeah, I <strong>know</strong> it is open Saturday."';
+        sdCtx.textContent = 'Low standard in play: the sentence "S knows" comes out true.';
+        sdEnc.textContent = "Little at stake, so the true belief is action-guiding enough to count as knowledge.";
+        sdInv.textContent = "You know, and always did; the stakes have not made you cautious yet.";
+      } else {
+        sdState.className = "vstate no stakes-state";
+        sdState.innerHTML = '✕ "I had <strong>better go in and check</strong>."';
+        sdCtx.textContent = "Raised stakes or attention lift the standard. Same evidence, stricter bar.";
+        sdEnc.textContent = "What is at stake has encroached: the same evidence no longer suffices to know.";
+        sdInv.textContent = 'The word "knows" never moved; one of the two reactions is simply mistaken.';
+      }
+    }
+    rStakes.addEventListener("input", renderStakes);
+    sdErr.addEventListener("click", function(){
+      sdErr.setAttribute("aria-checked", sdErr.getAttribute("aria-checked") === "true" ? "false" : "true");
+      renderStakes();
+    });
+    renderStakes();
+  });
+
+  document.querySelectorAll(".modal-rings").forEach(function(panel){
+    var mrSat = panel.querySelector(".modal-satellites");
+    var mrCore = panel.querySelector(".modal-core");
+    var mrVerdict = panel.querySelector(".modal-verdict");
+    var mrExpl = panel.querySelector(".modal-explainer");
+    var mrBtns = panel.querySelectorAll(".mr-btn");
+    if(!mrSat || !mrCore || !mrVerdict || !mrExpl || !mrBtns.length) return;
+
+    var ns = "http://www.w3.org/2000/svg";
+    var N = 12;
+    var cx = 180;
+    var cy = 150;
+    var R = 92;
+    var scenarios = {
+      know: {
+        reds: [],
+        safe: true,
+        label: "safe: knowledge",
+        expl: "A working clock, read correctly. Vary the moment slightly and you are still right."
+      },
+      gettier: {
+        reds: [0,1,2,3,4,5,6,7,8,9,10],
+        safe: false,
+        label: "unsafe: veritic luck",
+        expl: "The stopped clock is true here, but almost every nearby moment would make the same belief false."
+      },
+      barn: {
+        reds: [1,2,4,5,7,8,10,11],
+        safe: false,
+        label: "unsafe: environmental luck",
+        expl: "You see the real barn, but nearby looks would mostly land on facades."
+      }
+    };
+
+    function drawSatellites(reds){
+      while(mrSat.firstChild) mrSat.removeChild(mrSat.firstChild);
+      for(var i = 0; i < N; i++){
+        var ang = (i / N) * 2 * Math.PI - Math.PI / 2;
+        var x = cx + R * Math.cos(ang);
+        var y = cy + R * Math.sin(ang);
+        var isRed = reds.indexOf(i) > -1;
+        var circle = document.createElementNS(ns, "circle");
+        circle.setAttribute("cx", x.toFixed(1));
+        circle.setAttribute("cy", y.toFixed(1));
+        circle.setAttribute("r", "12");
+        circle.setAttribute("fill", isRed ? "color-mix(in srgb,var(--contested) 20%,transparent)" : "color-mix(in srgb,var(--ok) 18%,transparent)");
+        circle.setAttribute("stroke", isRed ? "var(--contested)" : "var(--ok)");
+        circle.setAttribute("stroke-width", "1.8");
+        mrSat.appendChild(circle);
+
+        var text = document.createElementNS(ns, "text");
+        text.setAttribute("x", x.toFixed(1));
+        text.setAttribute("y", (y + 3.5).toFixed(1));
+        text.setAttribute("text-anchor", "middle");
+        text.setAttribute("font-family", "IBM Plex Mono, monospace");
+        text.setAttribute("font-size", "9");
+        text.setAttribute("fill", isRed ? "var(--contested)" : "var(--ok)");
+        text.textContent = isRed ? "x" : "✓";
+        mrSat.appendChild(text);
+      }
+    }
+    function renderModal(key){
+      var d = scenarios[key] || scenarios.know;
+      drawSatellites(d.reds);
+      mrCore.setAttribute("fill", "color-mix(in srgb,var(--ok) 22%,transparent)");
+      mrVerdict.className = "mr-verdict modal-verdict " + (d.safe ? "safe" : "unsafe");
+      mrVerdict.textContent = d.label;
+      mrExpl.textContent = d.expl;
+      mrBtns.forEach(function(button){
+        button.setAttribute("aria-pressed", button.getAttribute("data-scn") === key ? "true" : "false");
+      });
+    }
+    mrBtns.forEach(function(button){
+      button.addEventListener("click", function(){ renderModal(button.getAttribute("data-scn")); });
+    });
+    renderModal("know");
+  });
 })();

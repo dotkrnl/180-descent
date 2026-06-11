@@ -25,6 +25,15 @@ const editions = [
     introTitle: "Introduction"
   },
   {
+    route: "/print-deep/",
+    output: "180-descent-deep-dive.pdf",
+    dayBasePath: "/days/",
+    introPath: "/introduction/",
+    bookTitle: "The 180-Day Descent: Deep Dive",
+    introTitle: "Introduction",
+    includeDeepDive: true
+  },
+  {
     route: "/zh/print/",
     output: "180-descent-zh.pdf",
     dayBasePath: "/zh/days/",
@@ -49,6 +58,13 @@ async function buildEdition(edition) {
   const page = await browser.newPage({ viewport: { width: 900, height: 1350 } });
   try {
     await page.goto(`${server.url}${edition.route}`, { waitUntil: "networkidle" });
+    if (edition.includeDeepDive) {
+      await page.evaluate(() => {
+        for (const details of document.querySelectorAll("details.deep-dive")) {
+          details.setAttribute("open", "");
+        }
+      });
+    }
     await page.evaluate(({ baseUrl, dayBasePath, introPath }) => {
     const localOrigin = window.location.origin;
     const dayAnchors = new Map(

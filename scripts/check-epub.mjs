@@ -16,11 +16,12 @@ const required = [
 
 let failures = 0;
 const editions = [
-  "_site/downloads/180-descent.epub",
-  "_site/downloads/180-descent-zh.epub"
+  { file: "_site/downloads/180-descent.epub", deepDive: false },
+  { file: "_site/downloads/180-descent-deep-dive.epub", deepDive: true },
+  { file: "_site/downloads/180-descent-zh.epub", deepDive: false }
 ];
 
-for (const edition of editions) {
+for (const { file: edition, deepDive } of editions) {
   const data = await readFile(edition);
   const zip = await JSZip.loadAsync(data);
 
@@ -28,6 +29,31 @@ for (const edition of editions) {
     if (!zip.file(file)) {
       console.error(`${edition} missing ${file}`);
       failures++;
+    }
+  }
+
+  const dayOne = await zip.file("OEBPS/day-001.xhtml")?.async("string");
+  if (dayOne) {
+    const appendixPatterns = [
+      /The Rest of the Map/,
+      /The Skeptic&apos;s Syllogism, as four exits|The Skeptic's Syllogism, as four exits/,
+      /The Bank Cases, as a stakes table/,
+      /Safe vs\. Lucky, as nearby-worlds cases/
+    ];
+    if (deepDive) {
+      for (const pattern of appendixPatterns) {
+        if (!pattern.test(dayOne)) {
+          console.error(`${edition} is missing deep-dive appendix content matching ${pattern}`);
+          failures++;
+        }
+      }
+    } else {
+      for (const pattern of appendixPatterns) {
+        if (pattern.test(dayOne)) {
+          console.error(`${edition} contains deep-dive appendix content matching ${pattern}`);
+          failures++;
+        }
+      }
     }
   }
 

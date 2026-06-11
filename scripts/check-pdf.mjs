@@ -8,6 +8,7 @@ const execFileAsync = promisify(execFile);
 let failures = 0;
 const pdfFiles = [
   "_site/downloads/180-descent.pdf",
+  "_site/downloads/180-descent-deep-dive.pdf",
   "_site/downloads/180-descent-zh.pdf"
 ];
 
@@ -41,6 +42,7 @@ for (const file of pdfFiles) {
 
 const extractedText = await extractPdfText("_site/downloads/180-descent.pdf");
 const frontMatter = extractedText.split("THE 180-DAY MAP")[0] || "";
+const deepDiveText = await extractPdfText("_site/downloads/180-descent-deep-dive.pdf");
 
 for (const pattern of [/\[\[toc:/, /WHERE WE ARE/i, /PAGE\s+\d+\s*\/\s*\d+/, /THE 180-DAY DESCENT/]) {
   if (pattern.test(extractedText)) {
@@ -62,6 +64,34 @@ for (const pattern of [
 ]) {
   if (!pattern.test(frontMatter)) {
     console.error(`PDF TOC is missing right-aligned page number text matching ${pattern}`);
+    failures++;
+  }
+}
+
+for (const pattern of [
+  /The Rest of the Map/,
+  /The Skeptic's Syllogism, as four exits/,
+  /The Bank Cases, as a stakes table/,
+  /Safe vs\. Lucky, as nearby-worlds cases/
+]) {
+  if (pattern.test(extractedText)) {
+    console.error(`Standard PDF contains deep-dive appendix content matching ${pattern}`);
+    failures++;
+  }
+  if (!pattern.test(deepDiveText)) {
+    console.error(`Deep-dive PDF is missing appendix fallback content matching ${pattern}`);
+    failures++;
+  }
+}
+
+for (const pattern of [
+  /Choose a door/,
+  /How much rides on being right/,
+  /Spouse raises the possibility of error/,
+  /Working clock \(knowledge\)/
+]) {
+  if (pattern.test(deepDiveText)) {
+    console.error(`Deep-dive PDF contains live interactive control text matching ${pattern}`);
     failures++;
   }
 }

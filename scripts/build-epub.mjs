@@ -31,6 +31,26 @@ await buildEpub({
 
 await buildEpub({
   meta: {
+    title: `${book.title}: Deep Dive Edition`,
+    authors: book.authors,
+    language: book.language,
+    publisher: book.publisher,
+    epub_identifier: `${book.epub_identifier}-deep-dive`
+  },
+  dayDir: "src/days",
+  siteDayDir: "_site/days",
+  dayUrlPrefix: "/days/",
+  introHtml: "_site/introduction/index.html",
+  introUrl: "/introduction/",
+  introTitle: "Introduction",
+  introLabel: "Introduction",
+  dayLabel: "Day",
+  output: "180-descent-deep-dive.epub",
+  includeDeepDive: true
+});
+
+await buildEpub({
+  meta: {
     title: book.zh.title,
     authors: book.zh.authors,
     language: book.zh.language,
@@ -110,6 +130,16 @@ async function buildEpub(config) {
 async function pageToXhtml(htmlPath, title, selfHref, config, days) {
   const html = await readFile(htmlPath, "utf8");
   const $ = cheerio.load(html, { decodeEntities: true });
+  if (!config.includeDeepDive) {
+    $(".deep-dive").remove();
+  } else {
+    $("details.deep-dive").each((_, details) => {
+      const el = $(details);
+      const heading = el.find("> summary .deep-dive-title").text().trim() || "Deep Dive Appendix";
+      el.find("> summary").replaceWith(`<h2 class="deep-dive-heading">${escapeXml(heading)}</h2>`);
+      el.replaceWith(`<section class="deep-dive-epub">${el.html()}</section>`);
+    });
+  }
   $("script,.site-topbar,.site-footer,.download-strip,.web-only,.print-hide,.print-only:not(.epub-only)").remove();
   $(".epub-only .ptitle").remove();
   $(".epub-only").removeClass("epub-only print-only format-alt").addClass("epub-alt");
@@ -155,6 +185,9 @@ async function epubCss() {
     + `
 body{font-size:1em;}
 .web-only,.print-only{display:none!important;}
+.deep-dive{display:none!important;}
+.deep-dive-epub{display:block!important;margin:2em 0 0;}
+.deep-dive-heading{page-break-before:always;}
 .epub-alt{display:block!important;}
 .epub-alt>.ptitle{display:none!important;}
 .bartrack{background:#f7f7f2!important;border:1px solid #9c9588!important;}

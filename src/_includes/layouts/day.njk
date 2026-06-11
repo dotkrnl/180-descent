@@ -42,6 +42,10 @@ layout: layouts/base.njk
       <span>{{ "下载本书：" if isZh else "Download the book:" }}</span>
       <a href="{{ downloads.epub }}">EPUB</a>
       <a href="{{ downloads.pdf }}">PDF</a>
+      {% if not isZh and downloads.deep_epub and downloads.deep_pdf %}
+      <a href="{{ downloads.deep_epub }}">Deep EPUB</a>
+      <a href="{{ downloads.deep_pdf }}">Deep PDF</a>
+      {% endif %}
     </div>
   </div>
   {{ dayNav("top") }}

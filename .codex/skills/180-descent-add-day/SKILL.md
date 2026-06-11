@@ -95,4 +95,39 @@ After completing the English day file and passing all checks, mirror the work in
 9. Inspect the built zh website, EPUB, and PDF outputs before committing.
 10. Commit the Chinese edition in the same batch or a follow-up batch with a conventional message, usually `feat: add day ### zh lesson`.
 
+## Deep Dive Appendix Workflow
+
+Use this when the user provides a `day-##-appendix-*.html` file for an already published English day.
+
+1. Identify the target day from the filename or user message.
+2. Import the appendix with the reusable importer:
+
+   ```sh
+   rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix-*.html ##
+   ```
+
+3. Review the resulting `src/days/day-###-*.md` block marked by `<!-- deep-dive:start -->` and `<!-- deep-dive:end -->`:
+   - the web version must be a folded `<details class="deep-dive">` section headed by the appendix title, usually "The Rest of the Map"
+   - every live web component must be class-scoped, not ID-scoped, so repeated appendices do not conflict
+   - every live component must have an adjacent `.format-alt.epub-only.print-only` static fallback
+   - static PDF/EPUB fallbacks should be tables or semantic HTML diagrams, not removed empty space
+   - imported IDs should be namespaced with `appendix-d###-`
+4. Update `src/_data/future-links.yaml` for new future callbacks introduced by the appendix.
+5. Keep standard outputs appendix-free and deep-dive outputs appendix-inclusive:
+   - standard EPUB/PDF: no deep-dive appendix content
+   - deep-dive EPUB/PDF: appendix content included
+   - PDF: no interactive controls; require the static fallback representation
+6. Run:
+
+   ```sh
+   rtk npm run build
+   rtk npm run check
+   ```
+
+7. Verify artifacts with text-only checks when image inspection is unavailable or forbidden:
+   - inspect `OEBPS/day-###.xhtml` inside both EPUB editions
+   - extract PDF text with Ghostscript `txtwrite`
+   - confirm standard files omit appendix headings and deep-dive files include fallback headings
+8. Commit a small batch with a conventional message, usually `feat: add day ### deep dive appendix`.
+
 Do not edit generated files in `_site/` or `dist/`; they are build outputs.
