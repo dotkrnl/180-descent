@@ -3,6 +3,12 @@
 
   var root = document.documentElement;
   var themeBtn = document.getElementById("themeBtn");
+  var themeStorageKey = "180-descent-theme";
+
+  var storedTheme = readStoredTheme();
+  if(storedTheme){
+    root.setAttribute("data-theme", storedTheme);
+  }
 
   function systemDark(){
     return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -12,7 +18,9 @@
     themeBtn.addEventListener("click", function(){
       var cur = root.getAttribute("data-theme") || "auto";
       var effective = cur === "auto" ? (systemDark() ? "dark" : "light") : cur;
-      root.setAttribute("data-theme", effective === "dark" ? "light" : "dark");
+      var next = effective === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      storeTheme(next);
     });
   }
 
@@ -363,6 +371,23 @@
   function isLocalPreview(){
     var host = window.location.hostname;
     return host === "localhost" || host === "127.0.0.1" || host === "::1";
+  }
+
+  function readStoredTheme(){
+    try{
+      var theme = window.localStorage && window.localStorage.getItem(themeStorageKey);
+      return theme === "light" || theme === "dark" ? theme : "";
+    }catch(error){
+      return "";
+    }
+  }
+
+  function storeTheme(theme){
+    try{
+      if(window.localStorage){
+        window.localStorage.setItem(themeStorageKey, theme);
+      }
+    }catch(error){}
   }
 
   function compactText(text, max){

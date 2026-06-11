@@ -15,6 +15,16 @@
     <meta name="color-scheme" content="light dark">
     <title>{% if title %}{{ title }} · {% endif %}{{ uiTitle }}</title>
     <meta name="description" content="{{ description or uiDescription }}">
+    <script>
+      (function(){
+        try{
+          var theme = window.localStorage && window.localStorage.getItem("180-descent-theme");
+          if(theme === "light" || theme === "dark"){
+            document.documentElement.setAttribute("data-theme", theme);
+          }
+        }catch(error){}
+      })();
+    </script>
     <link rel="stylesheet" href="/assets/css/book.css">
     <script src="/assets/js/book.js" defer></script>
     {% for script in scripts or [] %}
