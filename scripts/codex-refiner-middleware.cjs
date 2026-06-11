@@ -5,9 +5,9 @@ const path = require("node:path");
 
 const ENDPOINT = "/__codex/refine-description";
 const SRC_DIR = path.join(process.cwd(), "src");
-const MAX_BODY_BYTES = 16 * 1024;
-const MAX_TEXT_CHARS = 4000;
+const MAX_BODY_BYTES = 5 * 1024 * 1024;
 const MAX_REASON_CHARS = 1000;
+const MAX_CONTEXT_CHARS = 6000;
 const CODEX_TIMEOUT_MS = 120000;
 const MAX_SOURCE_MATCHES = 50;
 const EDITABLE_EXTENSIONS = new Set([".md", ".njk", ".yaml", ".yml"]);
@@ -48,8 +48,9 @@ function createCodexRefinerMiddleware(options = {}) {
       return sendJson(res, status, { error: error.message || "Invalid request body." });
     }
 
-    const text = cleanInput(payload.text, MAX_TEXT_CHARS);
+    const text = cleanInput(payload.text);
     const reason = cleanInput(payload.reason, MAX_REASON_CHARS);
+    const context = cleanContext(payload.context);
     const pagePath = normalizePagePath(payload.pagePath);
 
     if (!text) {
@@ -57,8 +58,8 @@ function createCodexRefinerMiddleware(options = {}) {
     }
 
     try {
-      const refined = await refineWithCodex({ text, reason });
-      const patch = await applySourcePatch({ pagePath, original: text, refined });
+      const refined = await refineWithCodex({ text, reason, context });
+      const patch = await applySourcePatch({ pagePath, original: text, refined, reason, context });
       return sendJson(res, 200, { text: refined, patch });
     } catch (error) {
       return sendJson(res, 500, { error: error.message || "Codex failed to refine the selection." });
@@ -109,12 +110,22 @@ function readRequestBody(req) {
   });
 }
 
-function cleanInput(value, limit) {
-  return String(value || "")
+function cleanInput(value, limit = Infinity) {
+  const text = String(value || "")
     .replace(/\u0000/g, "")
     .replace(/\r\n/g, "\n")
-    .trim()
-    .slice(0, limit);
+    .trim();
+
+  return Number.isFinite(limit) ? text.slice(0, limit) : text;
+}
+
+function cleanContext(value = {}) {
+  value = value && typeof value === "object" ? value : {};
+  return {
+    before: cleanInput(value.before, MAX_CONTEXT_CHARS),
+    after: cleanInput(value.after, MAX_CONTEXT_CHARS),
+    block: cleanInput(value.block, MAX_CONTEXT_CHARS)
+  };
 }
 
 function normalizePagePath(value) {
@@ -124,16 +135,17 @@ function normalizePagePath(value) {
   return pagePath;
 }
 
-async function refineWithCodex({ text, reason }) {
+async function refineWithCodex({ text, reason, context }) {
   const tempDir = await mkdtemp(path.join(tmpdir(), "180-descent-codex-"));
   const outputPath = path.join(tempDir, "refined.txt");
 
   try {
-    await runCodex(buildPrompt({ text, reason }), outputPath);
+    await runCodex(buildPrompt({ text, reason, context }), outputPath);
     let output = sanitizeCodexOutput(await readFile(outputPath, "utf8"));
     if (sameText(output, text)) {
       await runCodex(buildPrompt({
         text,
+        context,
         reason: `${reason || ""}\nThe previous refinement was unchanged. Rewrite it now while preserving meaning.`
       }), outputPath);
       output = sanitizeCodexOutput(await readFile(outputPath, "utf8"));
@@ -150,7 +162,7 @@ async function refineWithCodex({ text, reason }) {
   }
 }
 
-function buildPrompt({ text, reason }) {
+function buildPrompt({ text, reason, context = {} }) {
   return [
     "You are refining selected public-facing description text from the web preview of The 180-Day Descent.",
     "",
@@ -158,15 +170,32 @@ function buildPrompt({ text, reason }) {
     "",
     "Constraints:",
     "- Keep the same language as the selected text.",
+    "- Read the nearby context below before rewriting. Write for the local argument, paragraph, and lesson context, not for the selected text in isolation.",
     "- Preserve the original meaning, factual claims, names, dates, references, and pedagogical intent.",
     "- Improve clarity, rhythm, specificity, and precision.",
     "- Fit naturally where the selected text already appears.",
     "- Keep the length close to the original unless the editor's reason asks otherwise.",
     "- Do not invent new facts or citations.",
     "- Always rewrite the selected text. Do not return the original text unchanged, and do not answer that no change is needed.",
+    "- If the editor asks for a terminology change, make the replacement fit the terminology system implied by the nearby context. Source writeback will handle whole-document consistency.",
     "",
     "Editor reason:",
     reason || "(none)",
+    "",
+    "Nearby context before selection:",
+    "<<<",
+    context.before || "",
+    ">>>",
+    "",
+    "Containing block context:",
+    "<<<",
+    context.block || "",
+    ">>>",
+    "",
+    "Nearby context after selection:",
+    "<<<",
+    context.after || "",
+    ">>>",
     "",
     "Selected text:",
     "<<<",
@@ -232,27 +261,49 @@ function sanitizeCodexOutput(output) {
     text = quoted[1].trim();
   }
 
-  return text.slice(0, MAX_TEXT_CHARS * 2);
+  return text;
 }
 
-async function applySourcePatch({ pagePath, original, refined }) {
+async function applySourcePatch({ pagePath, original, refined, reason, context }) {
   const pageCandidates = sourceCandidatesForPage(pagePath);
   const pagePatch = await findPatch(pageCandidates, original, refined);
   if (pagePatch.status === "unique") {
+    if (isTerminologyChange({ original, refined, reason })) {
+      return runCodexSourceEdit({
+        pagePath,
+        original,
+        refined,
+        reason,
+        context,
+        matches: pagePatch.matches,
+        filesOverride: pageCandidates
+      });
+    }
     return writePatch(pagePatch);
   }
   if (pagePatch.status === "multiple") {
-    return runCodexSourceEdit({ pagePath, original, refined, matches: pagePatch.matches });
+    return runCodexSourceEdit({
+      pagePath,
+      original,
+      refined,
+      reason,
+      context,
+      matches: pagePatch.matches,
+      filesOverride: isTerminologyChange({ original, refined, reason }) ? pageCandidates : null
+    });
   }
 
   const globalCandidates = (await listEditableSourceFiles())
     .filter((filePath) => !pageCandidates.includes(filePath));
   const globalPatch = await findPatch(globalCandidates, original, refined);
   if (globalPatch.status === "unique") {
+    if (isTerminologyChange({ original, refined, reason })) {
+      return runCodexSourceEdit({ pagePath, original, refined, reason, context, matches: globalPatch.matches });
+    }
     return writePatch(globalPatch);
   }
   if (globalPatch.status === "multiple") {
-    return runCodexSourceEdit({ pagePath, original, refined, matches: globalPatch.matches });
+    return runCodexSourceEdit({ pagePath, original, refined, reason, context, matches: globalPatch.matches });
   }
 
   throw new Error("Codex refined the text, but the selected text was not found uniquely in source.");
@@ -350,7 +401,7 @@ async function findPatch(filePaths, original, refined) {
     }
 
     if (matches.length === 1) {
-      return { status: "unique", ...matches[0] };
+      return { status: "unique", ...matches[0], matches };
     }
 
     if (matches.length > 1) {
@@ -444,12 +495,18 @@ function isYamlScalarMatch(contents, match) {
   return /^(\s*-\s*)?[\w-]+:\s*$/.test(before) && after.trim() === "";
 }
 
-async function runCodexSourceEdit({ pagePath, original, refined, matches }) {
-  const files = uniquePaths(matches.map((match) => match.filePath));
+async function runCodexSourceEdit({ pagePath, original, refined, reason, context, matches, filesOverride }) {
+  const requestedFiles = filesOverride || matches.map((match) => match.filePath);
+  const files = [];
   const before = new Map();
 
-  for (const filePath of files) {
-    before.set(filePath, await readFile(filePath, "utf8"));
+  for (const filePath of uniquePaths(requestedFiles)) {
+    try {
+      before.set(filePath, await readFile(filePath, "utf8"));
+      files.push(filePath);
+    } catch {
+      continue;
+    }
   }
 
   const tempDir = await mkdtemp(path.join(tmpdir(), "180-descent-codex-edit-"));
@@ -460,6 +517,8 @@ async function runCodexSourceEdit({ pagePath, original, refined, matches }) {
       pagePath,
       original,
       refined,
+      reason,
+      context,
       files,
       matches
     }), outputPath);
@@ -486,9 +545,9 @@ async function runCodexSourceEdit({ pagePath, original, refined, matches }) {
   }
 }
 
-function buildSourceEditPrompt({ pagePath, original, refined, files, matches }) {
+function buildSourceEditPrompt({ pagePath, original, refined, reason, context = {}, files, matches }) {
   return [
-    "You are resolving a duplicate source match from the local web preview refiner for The 180-Day Descent.",
+    "You are resolving a source writeback from the local web preview refiner for The 180-Day Descent.",
     "",
     "Edit source files in place. Do not return a patch in chat.",
     "",
@@ -496,12 +555,32 @@ function buildSourceEditPrompt({ pagePath, original, refined, files, matches }) 
     "- Edit only the files listed below.",
     "- Do not edit generated files such as _site/ or dist/.",
     "- Use the replacement text as the canonical rewrite, with only the minimal escaping or syntax adjustment required by the file format.",
+    "- Read the nearby context and then read/review the relevant listed source files before editing. Do not edit based on the selected text alone.",
     "- Replace every occurrence of the selected text when it is the same public-facing passage and should receive the same editorial change.",
+    "- For terminology changes, review the whole listed document/source file set and update every appropriate occurrence of the term, including obvious variants, so terminology stays consistent everywhere in that document.",
     "- If an occurrence is clearly unrelated or would make the text wrong in context, leave that occurrence alone.",
     "- Always make an in-place rewrite for appropriate occurrences. Do not answer that no change is needed.",
     "- Preserve HTML, Nunjucks, YAML, Markdown structure, citations, ids, classes, data attributes, and links.",
     "",
     `Page path: ${pagePath}`,
+    "",
+    "Editor reason:",
+    reason || "(none)",
+    "",
+    "Nearby context before selection:",
+    "<<<",
+    context.before || "",
+    ">>>",
+    "",
+    "Containing block context:",
+    "<<<",
+    context.block || "",
+    ">>>",
+    "",
+    "Nearby context after selection:",
+    "<<<",
+    context.after || "",
+    ">>>",
     "",
     "Selected text:",
     "<<<",
@@ -584,6 +663,11 @@ function sameText(a, b) {
 
 function normalizeComparableText(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function isTerminologyChange({ original, refined, reason }) {
+  const signal = `${reason || ""}\n${original || ""}\n${refined || ""}`.toLowerCase();
+  return /terminolog|term\b|rename|renam|replace all|every occurrence|everywhere|throughout|consistent|consistency|use .+ instead|change .+ to|术语|名词|统一|全文|全部|所有|改成|替换/g.test(signal);
 }
 
 function escapeHtml(text) {

@@ -47,6 +47,7 @@
 
     var activeRange = null;
     var activeText = "";
+    var activeContext = null;
     var running = false;
     var panelPointerDown = false;
     var selectionTimer = 0;
@@ -127,13 +128,14 @@
       }
 
       var text = selection.toString().trim();
-      if(text.length < 3 || text.length > 4000){
+      if(!text){
         hidePanel();
         return;
       }
 
       activeRange = range.cloneRange();
       activeText = text;
+      activeContext = selectionContext(activeRange);
       preview.textContent = compactText(text, 220);
       status.textContent = "";
       panel.dataset.state = "ready";
@@ -173,6 +175,7 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             text: activeText,
+            context: activeContext,
             reason: reason.value.trim(),
             pagePath: window.location.pathname
           })
@@ -280,6 +283,7 @@
       submit.disabled = false;
       activeRange = null;
       activeText = "";
+      activeContext = null;
       clearHighlight("codex-refiner-selection");
       clearHighlight("codex-refiner-running");
     }
@@ -291,6 +295,52 @@
     function ensurePanel(){
       if(!document.body.contains(panel)){
         document.body.appendChild(panel);
+      }
+    }
+
+    function selectionContext(range){
+      var main = currentMain();
+      var block = closestBlock(range);
+      return {
+        before: rangeTextBefore(main, range, 2200),
+        after: rangeTextAfter(main, range, 2200),
+        block: block ? compactText(block.textContent, 5000) : ""
+      };
+    }
+
+    function closestBlock(range){
+      var node = range.commonAncestorContainer;
+      var element = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+      return element ? element.closest("p,li,blockquote,dd,dt,h1,h2,h3,h4,article,section") : null;
+    }
+
+    function rangeTextBefore(rootNode, range, limit){
+      if(!rootNode){
+        return "";
+      }
+
+      try{
+        var before = document.createRange();
+        before.selectNodeContents(rootNode);
+        before.setEnd(range.startContainer, range.startOffset);
+        return compactStart(before.toString(), limit);
+      }catch(error){
+        return "";
+      }
+    }
+
+    function rangeTextAfter(rootNode, range, limit){
+      if(!rootNode){
+        return "";
+      }
+
+      try{
+        var after = document.createRange();
+        after.selectNodeContents(rootNode);
+        after.setStart(range.endContainer, range.endOffset);
+        return compactText(after.toString(), limit);
+      }catch(error){
+        return "";
       }
     }
 
@@ -321,5 +371,13 @@
       return normalized;
     }
     return normalized.slice(0, max - 1).trim() + "...";
+  }
+
+  function compactStart(text, max){
+    var normalized = String(text || "").replace(/\s+/g, " ").trim();
+    if(normalized.length <= max){
+      return normalized;
+    }
+    return "..." + normalized.slice(normalized.length - max + 3).trim();
   }
 })();
