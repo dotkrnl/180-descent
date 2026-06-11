@@ -5,7 +5,7 @@ locale: zh
 title: 致谢与许可
 subtitle: 捆绑资源的许可协议与来源归属。
 eyebrow: 来源说明
-description: 字体、图表与素材的来源说明。
+description: 字体与素材的来源说明。
 alternate_url: /credits/
 ---
 
@@ -13,10 +13,4 @@ alternate_url: /credits/
 
 {% for font in credits.fonts %}
 - **{{ font.name }}**：{{ font.license }}，[来源]({{ font.source }})
-{% endfor %}
-
-## 图片与图表
-
-{% for image in credits.images %}
-- **{{ image.name }}**：{{ image.source }}，{{ image.license }}
 {% endfor %}
