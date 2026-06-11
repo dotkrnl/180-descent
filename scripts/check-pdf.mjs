@@ -82,6 +82,25 @@ for (const [label, pdfPath, pattern] of [
   }
 }
 
+for (const [label, pdfPath, pattern] of [
+  ["Deep-dive PDF", "_site/downloads/180-descent-deep-dive.pdf", /Reference surveys/i],
+  ["Day-specific PDF", "_site/downloads/180-descent-day-001-what-is-knowledge.pdf", /Reference surveys/i],
+  ["Deep-dive Chinese PDF", "_site/downloads/180-descent-zh-deep-dive.pdf", /参考综述/],
+  ["Day-specific Chinese PDF", "_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf", /参考综述/]
+]) {
+  const appendixSourcePage = await findFirstPageContaining(pdfPath, pattern);
+  if (!appendixSourcePage) {
+    console.error(`${label} is missing an appendix sources page matching ${pattern}`);
+    failures++;
+    continue;
+  }
+  const sample = await samplePdfPagePixel(pdfPath, appendixSourcePage, 0.5, 0.74);
+  if (sample.every((channel) => channel > 250)) {
+    console.error(`${label} appendix sources page ${appendixSourcePage} has a white background sample: ${sample.join(" ")}`);
+    failures++;
+  }
+}
+
 for (const pattern of [/\[\[toc:/, /WHERE WE ARE/i, /PAGE\s+\d+\s*\/\s*\d+/, /THE 180-DAY DESCENT/]) {
   if (pattern.test(extractedText)) {
     console.error(`PDF extracted text contains forbidden print artifact matching ${pattern}`);
@@ -281,6 +300,51 @@ async function extractPageBoundingBox(pdfPath, pageNumber) {
   const match = `${stdout}\n${stderr}`.match(/%%HiResBoundingBox:\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)/);
   if (!match) return [Infinity, Infinity, -Infinity, -Infinity];
   return match.slice(1).map(Number);
+}
+
+async function samplePdfPagePixel(pdfPath, pageNumber, xRatio, yRatio) {
+  const { stdout } = await execFileAsync("gs", [
+    "-q",
+    "-dSAFER",
+    "-dBATCH",
+    "-dNOPAUSE",
+    "-sDEVICE=ppmraw",
+    "-r12",
+    `-dFirstPage=${pageNumber}`,
+    `-dLastPage=${pageNumber}`,
+    "-o",
+    "-",
+    pdfPath
+  ], { encoding: "buffer", maxBuffer: 1024 * 1024 });
+
+  const parsed = parsePpm(stdout);
+  const x = Math.max(0, Math.min(parsed.width - 1, Math.floor(parsed.width * xRatio)));
+  const y = Math.max(0, Math.min(parsed.height - 1, Math.floor(parsed.height * yRatio)));
+  const offset = parsed.dataOffset + ((y * parsed.width + x) * 3);
+  return [stdout[offset], stdout[offset + 1], stdout[offset + 2]];
+}
+
+function parsePpm(buffer) {
+  let index = 0;
+  const tokens = [];
+  while (tokens.length < 4 && index < buffer.length) {
+    while (index < buffer.length) {
+      while (index < buffer.length && /\s/.test(String.fromCharCode(buffer[index]))) index++;
+      if (buffer[index] !== 35) break;
+      while (index < buffer.length && buffer[index] !== 10) index++;
+    }
+    const start = index;
+    while (index < buffer.length && !/\s/.test(String.fromCharCode(buffer[index]))) index++;
+    if (index > start) tokens.push(buffer.slice(start, index).toString("ascii"));
+  }
+  while (index < buffer.length && /\s/.test(String.fromCharCode(buffer[index]))) index++;
+  if (tokens[0] !== "P6") throw new Error(`Unsupported PPM header: ${tokens.join(" ")}`);
+  return {
+    width: Number(tokens[1]),
+    height: Number(tokens[2]),
+    max: Number(tokens[3]),
+    dataOffset: index
+  };
 }
 
 function isFullPageBox([left, bottom, right, top]) {
