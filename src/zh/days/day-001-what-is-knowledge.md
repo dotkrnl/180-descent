@@ -83,7 +83,7 @@ permalink: /zh/days/001-what-is-knowledge/
 
 <div class="aside">
 <p class="h">比名字更古老的转折</p>
-<p>盖梯尔并非首创。伯特兰·罗素在<em>《人类的知识：其范围与限度》</em>（1948）中就已提出停钟案例。再往前追溯，这个问题堪称古老：大约在<strong>公元&nbsp;770&nbsp;年</strong>，佛教逻辑学家<strong>法称</strong>描述了一位旅人，他看到山丘上仿佛有烟，推断有火，而且确实有火——只不过那「烟」其实是一群昆虫。同一种结构，早了十二个世纪。十四世纪的印度，<strong>甘格沙</strong>为处理此类案例建立了一整套因果知识理论。「盖梯尔问题」是哲学中<em>趋同发现</em>的绝佳实例——那种心灵会独立地一再绊倒的东西，而它本身就在暗示：那里有某种真实的东西。</p>
+<p>盖梯尔并非首创。伯特兰·罗素在<em>《人类的知识：其范围与限度》</em>（1948）中就已提出停钟案例。再往前追溯，这个问题堪称古老：大约在<strong>公元&nbsp;770&nbsp;年</strong>，佛教逻辑学家<strong>法上</strong>（Dharmottara）描述了一位旅人，他看到山丘上仿佛有烟，推断有火，而且确实有火——只不过那「烟」其实是一群昆虫。同一种结构，早了十二个世纪。十四世纪的印度，<strong>甘格沙</strong>为处理此类案例建立了一整套因果知识理论。「盖梯尔问题」是哲学中<em>趋同发现</em>的绝佳实例——那种心灵会独立地一再绊倒的东西，而它本身就在暗示：那里有某种真实的东西。</p>
 </div>
 </section>
 
@@ -333,6 +333,331 @@ permalink: /zh/days/001-what-is-knowledge/
 <p class="threads"><b>今日线索 ›</b> 信息（置信度与贝叶斯大脑）· 能量（Friston 的自由能）· 计算（心灵作为推理引擎）——并轻触涌现与演化。</p>
 </div>
 
+
+<!-- deep-dive:start -->
+<details class="deep-dive" id="rest-of-the-map">
+<summary>
+<span class="ptitle">专题深入附录</span>
+<span class="deep-dive-title">地图的其余部分</span>
+<span class="deep-dive-sub">我们在正课里只停留于一个信念、一个临近正午的时刻。这片领域远比一座时钟广阔。</span>
+</summary>
+<div class="deep-dive-body">
+<p class="lede"><span class="drop">正</span>课的任务很紧凑：取一个信念——<em>现在是 9:12</em>——然后追问它算不算知识。要做到这一点，它悄然倚靠在一摞从未检视的假设之上，并且径直走过整片学科疆域，连头也不点。认知是否要求<em>确定性</em>？那个宣称你<em>什么都不知道</em>的怀疑论者，真的能被回应吗？「知道」这个词从一句话到下一句，真的能保持不动吗？为什么知识比完成同样工作的真信念更<em>有价值</em>？还有那些与事实无关的认知呢——知道如何游泳、认识一张面孔、熟悉一座城市？本附录将走完那张地图的其余部分。这里没有重复正课的内容；一切都悬垂于其边缘。</p>
+<div class="continues">
+<p class="label">↩ 紧接自</p>
+<p><strong>第 1 日 — 什么是知识？</strong> 在那里，我们搭好了三条腿的凳子（有正当理由的真信念），看着盖梯尔用三页纸踹掉一条腿，游览了失败的「第四条件」补丁，绘制了阿格里帕三难困境，并在三处前沿停下：「知识」的跨文化直觉测试、贝叶斯置信度，以及预测性大脑。把那天的两幅图像揣进口袋——<em>停走的钟</em>（因运气而正确，而非关联）和那位<em>弓箭手</em>，他的箭被吹偏，又落回靶心（准确，却不够<em>适切</em>）。二者都将在下文以不同面目再度登场。</p>
+</div>
+<div class="roadmap">
+<p class="h">◇ 我们跳过的七个房间</p>
+<ol>
+<li><b>盖梯尔之下的暗门</b>——使这一戏法成为可能的两个隐藏假设，以及那条将你抛入怀疑论的逃生舱口（确定性）。</li>
+<li><b>门口的怀疑论者</b>——梦境、恶魔、缸中之脑，以及 2020 年代的模拟升级。</li>
+<li><b>「知道」在滑动标尺上</b>——银行案例：相同的证据，不同的赌注，相反的裁决。</li>
+<li><b>我们真正追逐的运气</b>——反运气认识论，它终于解释了补丁战争<em>为何</em>发生。</li>
+<li><b>为何认知胜过正确</b>——Meno 之路，与知识的价值。</li>
+<li><b>我们忽略的认知类型</b>——技艺之知，以及亲知之知。</li>
+<li><b>你所知的一切，几乎皆由他人告知</b>——证言、分歧，与认识论不正义。</li>
+</ol>
+</div>
+<section>
+<p class="sec-eyebrow"><span class="n">§1</span> 机关</p>
+<h2>每个盖梯尔案例之下的两扇暗门</h2>
+<p>在探索新房间之前，请先低头。盖梯尔那三页纸的炸弹之所以爆炸，只因地板内嵌了两扇暗门——两个如此自然的假设，正课从未在其上驻足。一旦命名它们，整幅地貌便会重组。</p>
+<p><strong>暗门一：可错的正当理由。</strong> 古典图景允许你基于正当理由相信某事，而结果却为<em>假</em>。史密斯有充分的理由相信「琼斯会得到这份工作」——老板这么说了——而它是假的。如果正当理由必须<em>保证</em>真理，那一步便不可能发生，案例甚至无法启动。<strong>暗门二：封闭性。</strong> 人们假定正当理由（以及知识）可以跨越<em class="term">蕴含</em>传递：如果你对相信某事拥有正当理由，那么你对其明显蕴含之物也拥有正当理由。史密斯从「琼斯会得到它（并且有十枚硬币）」推出较弱的「获胜者有十枚硬币」——一个有效的推论——并将他的正当理由一路携带。敲掉任何一块木板，盖梯尔案例都会烟消云散。</p>
+<p>这给了我们一条诱人的出路。把暗门一猛地关上：坚持真正的知识需要<em class="term">不可错的</em>正当理由——使错误在字面上不可能的理由。再也不会有盖梯尔案例。这是<em class="term">不可错主义</em>的梦想，它非常古老。笛卡尔在 1641 年寻找一个连恶魔也无法伪造的单一信念，并找到了唯一一个即使在假设有一位全能欺骗者欺骗你关于其他一切的情况下仍能存活的信念：<em>我思，故我在</em>。你不可能被骗去错误地相信自己存在，因为欺骗需要一个你来承受欺骗。</p>
+<p>麻烦在于恶魔出门时带走的东西。如果知识要求那种确定性，那么你就不知道你有双手，不知道太阳会升起，不知道桌对面的人是你的朋友而非仿生人——因为足够巧妙的欺骗可以伪造其中任何一项。买下确定性，代价就是<strong>怀疑论</strong>：门槛被设得如此之高，几乎无一能越过。Peter Unger 在 <em>Ignorance</em>（1975）中论证的正是这一点——严格使用的「知道」几乎不适用于任何事物，正如严格而言「平坦」不适用于任何真实表面。因此，不可错主义并未消解问题；它只是用一个小谜题（某个奇怪的幸运信念）换了一个总体性的谜题（你几乎一无所知）。这正是我们打开下一扇门的信号，那位怀疑论者已经在那里敲门了。</p>
+
+<div class="aside">
+<p class="h">盖梯尔的另一个案例，一口气说完</p>
+<p>正课使用了硬币案例。盖梯尔的<em>第二个</em>案例更赤裸地展示了暗门二。史密斯凭借充分证据相信「琼斯拥有一辆 Ford」。由此他有效地推出「琼斯拥有一辆 Ford，<em>或者</em>布朗在巴塞罗那」——一个他有资格拥有的选言，因为一个为真的选言足以使整个命题为真。但琼斯终究没有 Ford……而布朗，纯属侥幸，<em>确实</em>在巴塞罗那。该选言为真、有正当理由、被相信——且显然不是知识。封闭性携带了正当理由；运气提供了真理。骨架相同，衣裳更华丽。</p>
+</div>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§2</span> 最大的遗漏</p>
+<h2>门口的怀疑论者</h2>
+<p>西方认识论有一位反复出现、拒绝离开的房客：那个宣称你对自己的心灵之外的世界<em>一无所知</em>的形象。正课把那扇门紧闭。打开它，因为每一种现代知识理论都部分地建立在应对门外所立之物的基础上。</p>
+<p>怀疑论者的工具是思想实验，其残忍程度逐级攀升。首先是<strong>梦</strong>：此刻，你怎么知道你没有在睡觉？梦境从内部感觉完全真实；你以前就被骗过。（道家庄子，约公元前 300 年，梦见自己化为蝴蝶，醒来时不确定自己是一个梦见了蝴蝶的人，还是一只此刻正在梦见人的蝴蝶——佛教论师法上在正课中重新揭开的正是同一道伤口，再次证明心灵独立地一再绊倒于此。）笛卡尔将赌注提升到一位一心要在一切事上欺骗你的<strong>邪恶恶魔</strong>。二十世纪更新了硬件：你可能是一只<em class="term">缸中之脑</em>，神经连接到一台计算机，它向你输送的正是你此刻正在拥有的体验（Hilary Putnam, <em>Reason, Truth and History</em>, 1981）。你无法从内部分辨。这就是全部要点。</p>
+<p>展开来说，怀疑论者的论证干净利落得残酷——而且它运转的正是来自 §1 的封闭性原则：</p>
+<blockquote>(1) 你并不<em>知道</em>自己不是一只被输送手部体验的、没有手的缸中之脑。<br>(2) 如果你知道你有双手，那么（既然有双手蕴含不是无手的缸中之脑）你就知道你不是。<br>(3) 所以你不知道你有双手。</blockquote>
+<p>每一行看起来都合理；合在一起，它们似乎证明你对外部世界一无所知。下面的交互面板让你尝试每一种出路——并发现每一条「出路」都是一个有名字的哲学立场，且附有价签。</p>
+</section>
+<div class="panel web-only cm-machine">
+<p class="ptitle">交互 · 选择你的出路</p>
+<h4>怀疑论者的三段论——四扇出口之门</h4>
+<p class="pnote">下面的论证是有效的：如果你接受所有三行，你就是怀疑论者。因此你必须拒绝某一点。每一次拒绝都是真实的招式，有真实的捍卫者——以及真实的代价。选择其一，看看你与谁为伍。</p>
+
+<div class="cm-arg" id="appendix-d001-cmArg">
+<div class="cm-line cm-p1" id="appendix-d001-cmP1"><span class="pn">P1</span><span class="pt">你并不<strong>知道</strong>自己不是一只无手的缸中之脑（一个无法分辨的伪造）。</span></div>
+<div class="cm-line cm-p2" id="appendix-d001-cmP2"><span class="pn">P2</span><span class="pt"><strong>封闭性：</strong>如果你知道你有双手，你就知道自己不是那样的缸中之脑。</span></div>
+<div class="cm-line concl cm-c" id="appendix-d001-cmC"><span class="pn">∴</span><span class="pt">所以你<strong>不知道</strong>自己有双手。</span></div>
+</div>
+
+<div class="cm-exits">
+<p class="h">你拒绝哪一行？</p>
+<div class="cm-btns">
+<button class="cm-btn" data-exit="skeptic">接受全部三点</button>
+<button class="cm-btn" data-exit="moore">拒绝 P1</button>
+<button class="cm-btn" data-exit="dretske">拒绝 P2（否定封闭性）</button>
+<button class="cm-btn" data-exit="context">重新定义「知道」</button>
+</div>
+</div>
+
+<div class="cm-out cm-outlet" id="appendix-d001-cmOut">
+<span class="who">选择一扇门……</span>
+      每个选项都会使你所拒绝的那行变暗，并告诉你落到了何处。
+</div>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">印刷版</p>
+<h4>怀疑论者的三段论：四种出路</h4>
+<table class="alt-table">
+<thead><tr><th>招式</th><th>拒绝的行</th><th>代表性观点</th><th>代价</th></tr></thead>
+<tbody>
+<tr><td>接受全部三点</td><td>无</td><td>怀疑论</td><td>你不知道你有双手，对外部世界也所知甚少。</td></tr>
+<tr><td>拒绝 P1</td><td>你不知道自己不是缸中之脑</td><td>Moore 的常识回应</td><td>可能感觉像是在坚持而非解释。</td></tr>
+<tr><td>拒绝 P2</td><td>封闭性</td><td>Dretske / Nozick 的相关替代项理论</td><td>封闭性在直觉上根深蒂固，在其他地方也很有用。</td></tr>
+<tr><td>改变标准</td><td>「知道」的固定含义</td><td>语境主义</td><td>怀疑论者在研讨室里获胜；普通说话者在日常生活中获胜。</td></tr>
+</tbody>
+</table>
+</div>
+<section>
+<p>这些门值得被完整命名。<strong>G. E. Moore</strong>（1939）只是将论证反向运行：<em>我远为确信这里有一只手</em>（举起它）<em>胜过我确信怀疑论者提供的任何精巧前提</em>——因此，如果前提蕴含我不知道它，那只能更糟地说明前提有问题。大胆，却奇怪地难以击败。<strong>Fred Dretske</strong>（1970）与 Robert Nozick（1981）采取了外科手术般的路线：<em>否定封闭性。</em> 在 Dretske 的<em class="term">相关替代项</em>观点看来，要知道某事，你只需排除你犯错方式中<em>相关的</em>那些，而非每一种怪异的可能。在动物园里，你知道那动物是斑马——你已经排除了「它是马」、「它是山羊」——尽管你尚未排除「它是一头被巧妙漆成斑马样子的骡子」，因为在这一语境中，那不是活的可能性。知识不会自动传递到每一个蕴含。代价是高昂的：封闭性是直觉性的，放弃它在别处会有后果。<strong>语境主义</strong>（我们下一节）提供了外交家的解决方案：也许怀疑论者和 Moore <em>都</em>是对的，因为「知道」在怀疑论者的研讨室里意味着比普通生活中更严格的东西。</p>
+
+<h3>2020 年代的升级：我们是否身处模拟之中？</h3>
+<p>缸中之脑收到了软件更新。Nick Bostrom 的<strong>模拟论证</strong>（<em>Philosophical Quarterly</em>, 2003）提出了一个审慎的概率性论证：以下三件事至少有一件为真——文明几乎从未达到运行祖先模拟的技术；或者它们达到了但选择不运行；或者<em>我们几乎肯定生活在其中一个之中</em>。David Chalmers 在 <strong>Reality+</strong>（2022）中迈出了下一步，咬下了大多数人不愿咬的子弹：他论证我们<em>无法知道</em>自己没有被模拟，并应当赋予这一可能性真实的概率——但这<strong>并非一场灾难</strong>，因为<em>「虚拟现实是真正的现实。」</em> 在他所谓的<em class="term">模拟实在论</em>看来，一棵模拟的树是一个真正的数字对象，而非幻觉；如果你一直生活在一个完美的模拟中，你的信念「那是一棵树」是<em>真的</em>，只不过是以硅的形式实现。怀疑论者假定虚假的世界意味着虚假的信念；Chalmers 否认这种联系。</p>
+<p>在继续之前，先贴上两个诚实的标签。模拟<em>假说</em>——即我们事实上被模拟了——就其现状而言，是<strong>不可检验的形而上学，而非科学</strong>：不存在公认的观察能够证实或反驳它，这使它落在了我们明日将画出的分界线的错误一侧。<span class="chip bad" data-print="unfalsifiable"><i></i>模拟假说 · 不可证伪</span> 尽管如此，其<em>哲学</em>回报是真实的：它锐化了我们甚至以「真实」和「知道」意指什么。还有一个著名的回应将螺丝向另一方向拧紧。Putnam 论证「我是一只缸中之脑」是<strong>自我驳斥的</strong>：你的词语之所以有意义，仅在于你的因果历史，因此一个终身缸中之脑的词语「缸」不可能指涉真正的缸（它从未在因果上触及过一个）——这意味着，如果你<em>是</em>一只缸中之脑，你的句子「我是一只缸中之脑」将得出<em>假</em>的结论。这是否成立仍在争论中，而这正是为什么这条线索径直撞向 AI 板块：当一个仅接受文本训练的系统输出「Paris 在法国」时，它<em>知道</em>这一点吗——还是说它是所有缸中之脑中最纯粹的一个，其词语从未触碰过世界？将这个问题留到<strong>第 138–145 日</strong>。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§3</span> 移动的目标</p>
+<h2>「知道」在滑动标尺上</h2>
+<p>这里有一种正课从未考虑过的可能性：或许六十年追寻「知道」的完美定义的失败，是因为这个词从未瞄准一个固定的点。来看 Keith DeRose（<em>Philosophy and Phenomenological Research</em>, 1992）提出的一对案例，它们催生了上千篇论文——<strong>银行案例</strong>。</p>
+<p>那是周五。你开车经过银行，看到周六排起长队，决定明天再来。你的妻子问它周六是否开门。<em>低赌注</em>版本：没什么大不了的；你说：「是的，我知道它周六开门——我两个周六前还来过的。」那听起来是真的。你知道。<em>高赌注</em>版本：有一张支票<em>必须</em>在周一前存入，否则你的抵押贷款会跳票、你会失去房子，而你的妻子合理地指出，银行确实会改变营业时间。现在，完全相同的句子——「我知道它周六开门」——在你口中凝结了。「嗯……我最好还是进去确认一下。」同一个人，同样的记忆，同样的证据，同一天。只有赌注（以及是否有人提出了出错的可能性）改变了。然而知识似乎来了又去。下面的拨盘让你在两者之间滑动，并观察它翻转。</p>
+</section>
+<div class="panel web-only stakes-dial">
+<p class="ptitle">交互 · 相同证据，变化裁决</p>
+<h4>银行案例——赌注拨盘</h4>
+<p class="pnote">你的证据是固定的：<em>「我两个周六前在这家银行，而且它在营业。」</em> 世界或你的视力没有任何变化。滑动赌注；可选地让你的配偶提出出错的可能性。观察「我知道」如何变成「我最好确认一下」——并阅读三个对立阵营如何解释这完全相同的翻转。</p>
+
+<div class="sd-case stakes-case" id="appendix-d001-sdCase">…</div>
+
+<div class="slider-row">
+<label>有多少东西系于正确之上 <span class="val stakes-value" id="appendix-d001-sdVal">低</span></label>
+<input type="range" id="appendix-d001-rStakes" min="0" max="100" value="15" aria-label="赌注" class="stakes-range">
+</div>
+
+<button class="errtoggle stakes-error" id="appendix-d001-sdErr" role="switch" aria-checked="false">
+<span class="knob"></span>
+<span class="lab">配偶提出出错的可能性 <span>「……但银行<em>确实</em>有时会改变营业时间。」</span></span>
+</button>
+
+<div class="sd-verdict">
+<div class="vstate know stakes-state" id="appendix-d001-sdState">—</div>
+<div class="sd-readings">
+<div class="r"><b>语境主义</b><span id="appendix-d001-sdCtx" class="stakes-contextualism"></span></div>
+<div class="r"><b>实用侵入</b><span id="appendix-d001-sdEnc" class="stakes-encroachment"></span></div>
+<div class="r"><b>不变主义</b><span id="appendix-d001-sdInv" class="stakes-invariantism"></span></div>
+</div>
+</div>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">印刷版</p>
+<h4>银行案例：赌注表</h4>
+<table class="alt-table">
+<thead><tr><th>案例</th><th>证据</th><th>赌注</th><th>自然裁决</th><th>测试什么</th></tr></thead>
+<tbody>
+<tr><td>低赌注</td><td>你两个周六前去过那里。</td><td>一件小事。</td><td>「我知道它在营业。」</td><td>普通标准容易达到。</td></tr>
+<tr><td>高赌注</td><td>同样的记忆。</td><td>抵押贷款截止日期。</td><td>「我最好确认一下。」</td><td>实际赌注是否影响知识。</td></tr>
+<tr><td>提出出错可能</td><td>同样的记忆加上一个活跃的怀疑。</td><td>任何严重后果。</td><td>知识声称被削弱。</td><td>语境改变的是词语还是认知者的状态。</td></tr>
+</tbody>
+</table>
+</div>
+<section>
+<p>三个阵营，对同一数据的三种诊断。<strong>语境主义</strong>（DeRose；David Lewis, "Elusive Knowledge," 1996；Stewart Cohen, 1988）将转变定位在<em>词语</em>上：「知道」就像「高」或「这里」一样——对语境敏感。提高赌注或提及错误，会提升一个信念必须达到的标准，才能使「S 知道」这句话为真。两种话语在各自的交谈中都是正确的。怀疑论者在研讨室里甚至也是对的——他只是把标准抬到了天际。<strong>实用侵入</strong>（Jason Stanley, <em>Knowledge and Practical Interests</em>, 2005；Fantl &amp; McGrath；John Hawthorne, <em>Knowledge and Lotteries</em>, 2004）将转变定位在<em>认知者</em>身上：<em>你</em>知道什么真正取决于<em>对你</em>而言实际有什么风险，因为知识应当是你能够据以行动的东西。高赌注确实可以剥夺你在事情无关紧要时本可拥有的知识——一个令人吃惊的观点，因为它让实践压力「侵入」一个据称纯粹事实性的状态。<strong>不变主义</strong>（传统的坚守者）死守阵地：「知道」意指一个固定的东西，标准不会移动，你的两个裁决之一根本就是错的——你要么一直知道，要么从未知道，而赌注只是改变了你<em>愿意</em>这样<em>说</em>的程度。<span class="chip ok" data-print="agreed"><i></i>裁决发生转变 · 已达成共识</span> <span class="chip bad" data-print="unresolved"><i></i>为何转变 · 未解决</span> 数据是坚实的；其解释却是该领域最活跃的断层线之一。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§4</span> 补丁背后的模式</p>
+<h2>我们真正追逐的运气</h2>
+<p>回到正课中的补丁战争——无假前提、敏感性、安全性、德性。它们看起来像是一袋精巧的修补，每一种都遇到了更棘手的反例。退后一步，它们便骤然清晰：每一个都在追逐<em>同一个幽灵</em>。Duncan Pritchard 在 <em>Epistemic Luck</em>（Oxford, 2005）中给了它一个精确的名字。知识的敌人是他所称的<em class="term">真理运气</em>（veritic luck）的特定物种：你的信念在实际世界中为真，但在<em>事物本可能走上的几乎所有邻近道路</em>中，你会相信同样的事，却是错的。真理与你的相信它只是偶然地同步。</p>
+<p>这是「安全性」观念的深层内容，而且它值得被<em>看见</em>。将实际世界想象为一个点，被邻近的可能世界环绕——事物本可能如何的小小现实变体。当一种信念在整个邻近区域保持为真时，它是<em class="term">安全的</em>（知识级别），而当轻轻一推就将它翻转为假时，它是<em>不安全的</em>（仅仅幸运）。切换下面的三种情境，观察邻近区域如何亮起。</p>
+</section>
+<div class="panel web-only modal-rings">
+<p class="ptitle">图表 · 一个信念的邻近区域</p>
+<h4>安全与幸运——模态 X 光</h4>
+<p class="pnote">中心点 = 实际世界，你的信念在此为真。环 = 邻近的可能世界，现实的侥幸脱险。<span style="color:var(--ok)">绿色</span> = 你在那里仍然正确；<span style="color:var(--contested)">红色</span> = 你会相信它，却是错的。知识需要一个绿色的邻近区域。</p>
+<div class="mr-wrap">
+<div class="mr-btns">
+<button class="mr-btn" data-scn="know" aria-pressed="true">正常运行的钟（知识）</button>
+<button class="mr-btn" data-scn="gettier">停走的钟（盖梯尔）</button>
+<button class="mr-btn" data-scn="barn">假谷仓之国</button>
+</div>
+<svg id="appendix-d001-mrSvg" viewBox="0 0 360 300" role="img" aria-label="一个中心世界被邻近的可能世界环绕，按信念是否保持为真着色。">
+<circle cx="180" cy="150" r="118" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 5"></circle>
+<text x="180" y="22" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">邻近可能世界</text>
+<g id="appendix-d001-mrSat" class="modal-satellites"></g>
+<circle id="appendix-d001-mrCore" cx="180" cy="150" r="24" fill="color-mix(in srgb,var(--ok) 22%,transparent)" stroke="var(--ok)" stroke-width="2.5" class="modal-core"></circle>
+<text x="180" y="147" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--ink)">实际</text>
+<text x="180" y="159" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--ink)">真</text>
+</svg>
+<div class="mr-verdict safe modal-verdict" id="appendix-d001-mrVerdict">— 安全 —</div>
+<p class="mr-expl modal-explainer" id="appendix-d001-mrExpl"></p>
+</div>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">印刷版</p>
+<h4>安全与幸运：邻近世界案例</h4>
+<table class="alt-table">
+<thead><tr><th>情境</th><th>实际世界</th><th>邻近世界</th><th>裁决</th></tr></thead>
+<tbody>
+<tr><td>正常运行的钟</td><td>你的信念为真。</td><td>微小变化仍然让你正确。</td><td>安全：知识级别。</td></tr>
+<tr><td>停走的钟</td><td>你的信念在 9:12 为真。</td><td>早一分钟或晚一分钟，同样的信念为假。</td><td>不安全：真理运气。</td></tr>
+<tr><td>假谷仓之国</td><td>你看见了唯一一座真谷仓。</td><td>大多数邻近的一瞥都会落在假门面上。</td><td>不安全：环境运气。</td></tr>
+</tbody>
+</table>
+</div>
+<section>
+<p>那单幅图像追溯性地解释了整个混乱。停走的钟<em>严重</em>失败——左右一分钟你就错了，因此邻近区域是一片红色的海洋。假谷仓之国则更微妙：你看着的谷仓确实在那里（核心是绿色的），但你被假门面包围，因此往任何方向瞥上一百米都会骗到你——红色邻近区域，没有知识，即便拥有有正当理由的真信念且无假前提。所有补丁都失败了，因为每一个都试图用略有不同的尺度去捕捉「绿色邻近区域」，而运气不断找到缝隙。</p>
+<p>既然我们有了框架，再来看正课未提及的另外两个补丁。<strong>可废止性理论</strong>（Lehrer &amp; Paxson, 1969）说知识是<em>未被击败的</em>有正当理由的真信念：外部必须不存在某种真的事实，一旦你得知它，就会消解你的正当理由。它优雅地处理了许多案例——直到「误导性击败者」的转折，那里存在一个真却误导的事实，它<em>不应该</em>剥夺你的知识，却在技术上做到了，迫使人们做出越来越精细的区分。再往前追溯，<strong>因果理论</strong>（Goldman, 1967，在他转向可靠主义之前）要求事实<em>引起</em>你的信念——没有因果链，就没有知识。对知觉而言很美；对数学却是致命的，因为数字 7 和毕达哥拉斯定理不会引起任何东西（Paul Benacerraf 在 1973 年正是提出了这个「通道问题」）。你无法与抽象对象握手。</p>
+<p>以及可靠主义最深的裂缝，正课只是略微示意过的：<strong>一般性问题</strong>（Conee &amp; Feldman, 1998）。可靠主义说，一种信念如果有<em>可靠的过程</em>产生，它就是有正当理由的——但究竟是<em>哪一个</em>过程？你的「现在是 9:12」的信念是由「读钟」产生的，也是由「读<em>那座</em>钟」产生的，还是由「在昏暗光线下使用视力」产生的，以及由「在周二信任仪器」产生的——每一个都同样真实，每一个都有不同的可靠性分数。选择类型，你就选择了裁决。以原则性的方式确定「正确」的粒度，已被证明是顽固地困难。</p>
+<p>Pritchard 落脚于何处？在<em class="term">反运气德性认识论</em>：知识需要<em>两者</em>，因为它们捕捉不同的失败。你需要<strong>安全性</strong>（绿色的邻近区域——没有真理运气）<em>并且</em>你需要<strong>适切性</strong>（信念之所以为真，是<em>通过你自己的能力</em>——正课中那位弓箭手的技艺）。单独任何一个都不够：停走的钟可以缺乏安全性，假谷仓之国可以拥有局部技艺却运气糟糕。它并非一个整洁的三字公式——而到如今，这或许就是教训。知识也许<em>正是</em>这样一种东西：需要两个独立的担保，一个关于你，一个关于你的世界。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§5</span> 问题之下的问题</p>
+<h2>为什么知道比仅仅正确更有价值？</h2>
+<p>从「什么是知识？」退一步，来到柏拉图最先提出、却无人完整回答的问题：<em>我们为何在意？</em> 如果一个真信念足以完成任务，知识的额外机制又为你买到了什么？柏拉图在 <em>Meno</em>（约公元前 380 年）中将其表述为一个旅人的问题。假设你想步行前往 Larissa 城。一个<em>知道</em>路的人会把你带到那里。但一个仅仅对路拥有<em>真信念</em>的人也会——他从未去过，只是碰巧正确。就抵达目的地而言，二者价值完全相同。那么为什么整个传统都将知识置于真信念之上？这就是<em class="term">价值问题</em>，它是一个承重性的问题：一种知识理论如果不能说明知识为何<em>更好</em>，可以说就错失了这一概念的要义。</p>
+
+<figure style="margin:1.8rem auto;max-width:30rem;">
+<svg viewBox="0 0 440 170" role="img" aria-label="两条从你通往 Larissa 的路：仅仅真信念与知识，二者皆抵达。">
+<text x="40" y="88" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink)">你</text>
+<circle cx="40" cy="95" r="6" fill="var(--ink)"></circle>
+<text x="400" y="88" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--brass)">LARISSA</text>
+<circle cx="400" cy="95" r="6" fill="var(--brass)"></circle>
+<path d="M48,92 C150,40 300,40 392,90" fill="none" stroke="var(--hint)" stroke-width="2" stroke-dasharray="2 5"></path>
+<path d="M48,98 C150,150 300,150 392,100" fill="none" stroke="var(--accent)" stroke-width="2.5"></path>
+<text x="220" y="38" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--hint)">仅仅真信念 — 抵达</text>
+<text x="220" y="165" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--accent)">知识 — 亦抵达</text>
+</svg>
+<p class="figcap">如果两条路都通向 Larissa，第二条价值何在？</p>
+</figure>
+
+<p>价值问题化为一件精确的武器，对准正课的某一种理论。它被称为<em class="term">淹没问题</em>（Linda Zagzebski, 2003）。可靠主义说，知识是来自可靠过程的真信念。但追问<em>可靠性在价值上增添了什么</em>。可靠性之所以好，仅在于它倾向于产生真理。因此一旦你<em>已经拥有</em>了真理，这个特定的真理还来自一个可靠的来源，这又增添了什么？Zagzebski 的家常类比是：一杯好咖啡并不会因为它出自一台可靠的咖啡机就更好喝——一台不可靠的机器也可能碰巧产出一杯完全相同的咖啡。使之为好的特征（美味 / 真理）已然在场；来源的可靠性被<em>淹没</em>了，没有增添任何东西。如果这是对的，可靠主义就无法解释为什么知识胜过幸运的真信念——而这正是一种知识理论最需交付的东西。</p>
+<p>这正是<strong>德性认识论</strong>证明其价值的所在，也是那位弓箭手最终兑现的地方。它的回答是：知识之有价值，并非作为<em>库存更丰</em>的真信念；它之有价值，在于它是一种<em class="term">成就</em>——一种<em>属于你</em>的成功，一种<em>通过你自己的能力</em>而实现的成功。成就带有一种幸运的成功永远不具备的价值，就像你真正瞄准射中的靶心，总比被一阵幸运的风吹进去的箭更有价值，即便二者落在同一点上。通过你自己的认知技艺达到的真信念是一种<em>认知成就</em>；幸运的真信念则不是。那额外的价值不在结果中，而在<em>抵达的过程</em>中。那条你能<em>再次</em>找到的通往 Larissa 的路，比你误打误撞撞上的那条更有价值，即便在某一天你们都到达了。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§6</span> 其他的知</p>
+<h2>我们忽略的认知类型</h2>
+<p>迄今为止的一切——整节正课——都是关于<em class="term">命题之知</em>，即知识-<em>that</em>：知道<em>那是</em> 9:12，<em>那是</em>琼斯得到了工作。但看看日常英语中「知道」有多少完全不是这回事。你知道<em>如何</em>骑自行车。你认识你母亲的脸。你知道里斯本。这些都不是事实的堆积，而哲学家们已为它们之间的关系争论了一个世纪。</p>
+
+<figure style="margin:1.8rem auto;">
+<svg viewBox="0 0 600 230" role="img" aria-label="一棵将知识分为命题之知、技艺之知与亲知之知的树。">
+<rect x="235" y="14" width="130" height="44" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
+<text x="300" y="34" text-anchor="middle" font-family="Fraunces,serif" font-size="14" fill="var(--ink)">知道</text>
+<text x="300" y="50" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--ink-faint)">这一个词</text>
+<line x1="300" y1="58" x2="100" y2="96" stroke="var(--line-strong)" stroke-width="1.5"></line>
+<line x1="300" y1="58" x2="300" y2="96" stroke="var(--line-strong)" stroke-width="1.5"></line>
+<line x1="300" y1="58" x2="500" y2="96" stroke="var(--line-strong)" stroke-width="1.5"></line>
+<rect x="30" y="98" width="140" height="50" rx="9" fill="color-mix(in srgb,var(--accent) 10%,transparent)" stroke="var(--line-strong)" stroke-width="1.4"></rect>
+<text x="100" y="118" text-anchor="middle" font-family="Fraunces,serif" font-size="13" fill="var(--ink)">命题之知</text>
+<text x="100" y="135" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">命题的</text>
+<rect x="230" y="98" width="140" height="50" rx="9" fill="color-mix(in srgb,var(--accent) 10%,transparent)" stroke="var(--line-strong)" stroke-width="1.4"></rect>
+<text x="300" y="118" text-anchor="middle" font-family="Fraunces,serif" font-size="13" fill="var(--ink)">技艺之知</text>
+<text x="300" y="135" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">程序 / 技艺</text>
+<rect x="430" y="98" width="140" height="50" rx="9" fill="color-mix(in srgb,var(--accent) 10%,transparent)" stroke="var(--line-strong)" stroke-width="1.4"></rect>
+<text x="500" y="115" text-anchor="middle" font-family="Fraunces,serif" font-size="13" fill="var(--ink)">亲知之知</text>
+<text x="500" y="132" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">亲知</text>
+<text x="100" y="178" text-anchor="middle" font-family="Newsreader,serif" font-style="italic" font-size="11.5" fill="var(--ink-soft)">「……银行在营业」</text>
+<text x="300" y="178" text-anchor="middle" font-family="Newsreader,serif" font-style="italic" font-size="11.5" fill="var(--ink-soft)">「……如何骑自行车」</text>
+<text x="500" y="178" text-anchor="middle" font-family="Newsreader,serif" font-style="italic" font-size="11.5" fill="var(--ink-soft)">「……那张脸 / 这座城市」</text>
+<text x="300" y="212" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--brass)">争论焦点：中间的箱子暗中只是左边的箱子吗？</text>
+</svg>
+<p class="figcap">一个英语动词，至少三种不同的与世界的关系。</p>
+</figure>
+
+<p><strong>技艺之知。</strong> Gilbert Ryle 在 <em>The Concept of Mind</em>（1949）中坚持认为，知道如何做某事并不是知道一组事实。一位杰出的自行车手可能无法陈述任何一条平衡法则；一个熟记了关于自行车的一切事实的人可能在第一次尝试时就摔倒。更糟的是，Ryle 论证说，将技艺还原为事实会触发无限倒退：如果每一个熟练的行动都要求首先<em>知道描述该规则的命题</em>，那么你就需要<em>应用</em>那条规则的技艺，而那又需要另一条规则，永无止境。因此技艺必须是其自身类型的知。转折在于：Jason Stanley 与 Timothy Williamson 在 <strong>"Knowing How"</strong>（2001）中回击，提出<em class="term">理智主义</em>——主张技艺之知终究只是命题之知的一种（知道某种骑车方式，并知道<em>它</em>是一种骑车方式），只是披着不同的语法外衣。技艺是否可还原为命题，确实尚未有定论。<span class="chip bad" data-print="contested"><i></i>技艺之知可还原吗？· 有争议</span></p>
+<p><strong>亲知之知。</strong> Bertrand Russell（1911）画了第二刀：在<em>亲知</em>之知——你对所见的一抹红色、所感的一种疼痛、所注视的一张面孔的直接、无中介的把握——与<em>描述</em>之知之间，即你所知的关于你从未直接遭遇过的事实的<em>关于</em>之物（「第一个站在月球上的人」，你只知道他是满足该描述的那个人）。你可以对俾斯麦知道<em>关于</em>他的惊人数量的事实，却从未<em>认识</em>他；你知道红色，其方式是世界上最伟大的盲人物理学家所不知道的，尽管他知道关于波长的每一个事实。那道缝隙——关于体验的事实与体验本身之间的缝隙——是整门课程中最难问题的一颗安静的种子，那颗种子在<strong>第 123 日</strong>等待：为什么看见红色<em>总像什么样子</em>。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§7</span> 社会转向</p>
+<h2>你所知的一切，几乎皆由他人告知</h2>
+<p>正课与大多数传统认识论一样，想象了一颗孤独的心灵面对世界——一个人，一座钟。但对你实际所知的东西做一次审计。地球约有 45 亿年历史。南极洲存在。你自己的出生日期。水的沸点。你基本上从未第一手验证过其中任何一项；你是被<em>告知</em>的，由老师、书本、父母、仪器、陌生人。<em class="term">证言</em>是任何人知识的压倒性主体——而数个世纪以来，认识论却将其当作事后之想。</p>
+<p>核心问题在于，信任证言是你必须<em>挣得</em>的东西，还是你默认就<em>有权</em>享有的东西。<strong>David Hume</strong>（1748）采取了苛刻的路线：证言只与你自己的归纳业绩记录一样好，即证言何时被证明为可靠——它<em>还原</em>为你个人收集的证据。<strong>Thomas Reid</strong>（1764）觉得这很荒谬：没有一个孩子能在信任任何人之前自行建立起一份业绩记录，而事实上，我们天生就带有一条「轻信原则」，一种默认的倾向去相信我们被告知的东西，正如我们天生就信任我们的感官一样。在 Reid 的<em>反还原主义</em>观点看来，证言是一种<em>基本的</em>知识来源，而非派生的——而且它必须是，否则知识就无法在社会性动物中起步。现代领域大多同意某种默认信任是不可避免的；争论在于多少，以及它在何时被击败。</p>
+<p>从这个房间分出的两个更新的房间，在 2026 年都极为重要。第一个是<strong>分歧</strong>。当你视某人为<em>认识论上的同侪</em>——和你一样聪明、一样知情、一样谨慎——看着同样的证据却得出相反的结论时，你该怎么做？<em class="term">调和主义</em>或「同等权重」观点（Adam Elga, <em>Noûs</em>, 2007；David Christensen, 2007）主张你应当实质性地向他们移动：固守原地意味着在没有独立理由的情况下声称<em>你</em>才是正确的，而他们犯了错误。<em>坚定</em>观点回答说，有时你可以理性地守住阵地，因为你自己的推理也是证据。这听起来很抽象，直到你注意到它就是回声室、专家共识、以及当你的来源有一半与另一半矛盾时该怎么做的全部认识论。<span class="chip bad" data-print="debate"><i></i>同等权重观点 · 正在进行的争论</span></p>
+<p>第二个则更尖锐：<strong>认识论不正义</strong>，由 Miranda Fricker 命名（<em>Epistemic Injustice: Power and the Ethics of Knowing</em>, 2007）。因为如此多的认知运行在证言之上，<em>谁被相信</em>便成为一个伦理问题，而不仅仅是认识论问题。Fricker 区分了两种不公。<em class="term">证言不正义</em>：一个说话者的话语被给予低于其应得的信任，因为对其身份的偏见——病人的疼痛被漠视，证人因其口音或性别而不被相信。<em class="term">诠释不正义</em>：更微妙也更深层——一个人甚至无法为自己的经验赋予意义，无论对自己还是对他人，因为周围文化尚未发展出相应的<em>概念</em>（她的例子：我们现在称之为性骚扰的经验，由那些没有词语来命名它的人所承受，因此无法命名这种错）。结果证明，知识是有政治性的：理解的工具分配不均，而这种不均本身可以是一种不正义。</p>
+
+<div class="aside">
+<p class="h">功能优先的逃生舱口</p>
+<p>有一种激进的方式可以终结这整段 180 页的定义追寻，它将社会转向的线索重新穿回起点。Edward Craig 在 <em>Knowledge and the State of Nature</em>（1990）中提出：停止追问<em>「知识是什么？」</em>，转而追问<em>「这个概念是为了什么——像我们这样的生物为什么会发明它？」</em> 他的回答是：一个社会性的、使用语言的物种迫切需要一种方式来标记<strong>好的信息来源</strong>——以标明谁的话你可以据以行动。「知识」就是我们演化出来别在可靠的真信息来源上的标签。这立刻解释了那些分析所苦苦挣扎的东西：为什么知识必须为<em>真</em>（一条假的提示毫无价值），为什么<em>运气</em>会使你丧失资格（你下次无法依赖侥幸），以及为什么我们在意这一切（在一个大多数你需要知道的东西都必须从他人那里获取的世界中生存）。它与 Williamson 的「停止试图定义它」相呼应，并且兑现了正课的开放问题——<em>演化</em>是否安装了那种基于运气的认知不作数的本能？Craig 的回答本质上是：是的，而且原因如下。</p>
+</div>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§8</span> 形式前沿</p>
+<h2>贝叶斯之外的两处前沿</h2>
+<p>正课的形式前沿是贝叶斯置信度。还有两个进一步的形式观念值得在地图上占有一席之地，因为两者都咬啮日常直觉，且都直接通向计算机科学与 AI。</p>
+<p><strong>认知的逻辑。</strong> Jaakko Hintikka 在 <em>Knowledge and Belief</em>（1962）中将「知道」视为一个可以像「必然地」一样进行推理的形式算子——从而开创了<em class="term">认知逻辑</em>，如今已成为计算机科学的主力工具（推理分布式智能体与 AI 系统「知道」什么）。它立刻浮出深层谜题。<em class="term">KK 原则</em>：如果你知道 <em>p</em>，你是否因此知道<em>你知道</em> <em>p</em>？这很诱人，但 Williamson（来自正课）论证它是假的——你可以知道某事，却未处于知道你知道它的位置上，因为知识有模糊的边界。以及<em>逻辑全知</em>：干净的逻辑意味着如果你知道某些公理，你就知道它们的<em>每一个</em>逻辑后承——那将使每一位数学家瞬间意识到每一个定理。对于真实的、有限的心灵而言，这显然为假，并且是为实际推理者（以及机器）建模时的一个核心头痛。</p>
+<p><strong>序言悖论。</strong> 正课中彩票悖论的伴侣，而且可以说更为棘手。你写了一本冗长而审慎的书。对于书中的<em>每一个</em>主张，你都检查了工作并理性地相信它为真。然而你也真诚地在序言中写道：「无疑仍有错误存在，且皆由我一人负责」——因为你知道在数百个主张中，你几乎肯定在某处疏漏了。因此你理性地相信每一个单独的主张，并且<em>也</em>理性地相信<em>其中至少有一个为假</em>（David Makinson, "The Paradox of the Preface," 1965）。这些不可能同时为真。其教益直击正课的开放问题上：普通的非此即彼的信念在<em>合取下不是封闭的</em>——相信许多事物中的每一个，并不授权你相信它们的大合取——这正是该领域持续从是/否信念滑向分级置信度的又一个原因。拨盘，再一次，做着开关做不到的事。</p>
+</section>
+<div class="recap">
+<p class="h">◆ 三句话总结本附录</p>
+<dl>
+<div><dt>大观念</dt><dd>正课让知识看起来像一个整洁的谜题——找到第四个条件——但它实际上是一个星座：是否要求确定性（以及这种要求招来的怀疑论者）、「知道」在赌注变化时是否还能保持不动、知识相对于仅仅的真信念<em>价值</em>何在，以及几乎所有知识都来自<em>他人</em>这一事实。</dd></div>
+<div><dt>最佳新类比</dt><dd>可能世界的邻近区域：知识是一种其邻近区域保持绿色（安全）的信念，而运气则是一种轻轻一推就变红（不安全）的信念——而且那条你能<em>再次</em>找到的通往 Larissa 的路，比你误打误撞撞上的那条更有价值，即便二者都抵达了终点。</dd></div>
+<div><dt>正在进行的争论</dt><dd>银行案例裁决为何翻转——是语境移动了「知道」这个<em>词</em>（语境主义），是赌注移动了<em>认知者</em>所知的东西（实用侵入），还是两者皆非（不变主义）——是该领域最活跃的断层线之一，同时并列的还有封闭性能否被否定，以及技艺之知是否暗中就是命题之知。</dd></div>
+</dl>
+<p class="threads"><b>此处线索 ›</b> 信息（证言 &amp; 知识的社会传递；序言/置信度）· 计算（认知逻辑；世界的模态「邻近区域」）· 演化（Craig：知识的概念作为一种为社会物种而设的良好信息来源探测器）——拾起我们整段 180 天都在追踪的同五条线索。</p>
+</div>
+<section>
+<p class="sec-eyebrow">开放问题</p>
+<h2>本附录留下的未决问题</h2>
+<ul>
+<li><strong>确定性与否？</strong> 不可错主义者是否正确：真正的知识需要无错的理由（从而招来怀疑论）——还是可错的知识才是唯一值得想要的类型？</li>
+<li><strong>否定封闭性能否不带来灾难？</strong> Dretske 与 Nozick 通过放弃它来阻挡怀疑论者；在其他地方付出的代价仍在被计算。</li>
+<li><strong>「知道」会移动吗？</strong> 对语境敏感、对赌注敏感，还是固定的——如果它移动，究竟是什么在移动，词语还是世界？</li>
+<li><strong>知识的价值究竟能否被解释</strong>，还是每一种说明都让知识看起来不比幸运的真信念更好？</li>
+<li><strong>技艺之知是否只是伪装的命题之知</strong>，还是它对世界有着自身不可还原的把握方式？</li>
+<li><strong>证言是基本的还是挣得的？</strong>——以及，顺流而下，当一位同侪分歧时，你是否真的必须与他们半路相逢？</li>
+<li><strong>而功能优先的赌注：</strong>如果知识的概念存在是为了标记好的信息来源，那是否<em>消解</em>了分析项目——还是仅仅重新安置了它？</li>
+</ul>
+</section>
+
+<hr class="div">
+<section class="sources">
+<p class="sec-eyebrow">来源</p>
+<h2>来源与延伸阅读</h2>
+<p>古典著作按原始日期引用；所有版本均为标准且广泛可得的版本。经核实的二次文献锚点与参考条目已附链接。</p>
+<ol>
+<li>Descartes, R. (1641). <em>Meditations on First Philosophy.</em> <span class="meta">—— 方法论怀疑、邪恶恶魔，以及作为唯一不可怀疑之点的我思。</span></li>
+<li>Unger, P. (1975). <em>Ignorance: A Case for Scepticism.</em> Oxford University Press. <span class="meta">—— 不可错主义被推向其怀疑论结论（「知道」如同「平坦」一样，几乎不适用于任何事物）。</span></li>
+<li>Moore, G. E. (1939). "Proof of an External World." <em>Proceedings of the British Academy</em> 25: 273–300. <span class="meta">—— 「这里有一只手」：将怀疑论论证反向运行。</span></li>
+<li>Dretske, F. (1970). "Epistemic Operators." <em>Journal of Philosophy</em> 67(24): 1007–1023. <span class="meta">—— 否定封闭性；相关替代项观点；斑马/漆骡案例。</span></li>
+<li>Nozick, R. (1981). <em>Philosophical Explanations.</em> Harvard University Press. <span class="meta">—— 敏感性 / 真值追踪，及其对封闭性的否定。</span></li>
+<li>Putnam, H. (1981). <em>Reason, Truth and History.</em> Cambridge University Press. <span class="meta">—— 缸中之脑，以及语义外在论论证「我是 BIV」是自我驳斥的。</span></li>
+<li>Bostrom, N. (2003). "Are You Living in a Computer Simulation?" <em>Philosophical Quarterly</em> 53(211): 243–255. <a href="https://www.simulation-argument.com/simulation.html">simulation-argument.com</a></li>
+<li>Chalmers, D. J. (2022). <em>Reality+: Virtual Worlds and the Problems of Philosophy.</em> W. W. Norton / Allen Lane. <span class="meta">—— 「虚拟现实是真正的现实」；模拟实在论。 <a href="https://consc.net/reality/">consc.net/reality</a></span></li>
+<li>DeRose, K. (1992). "Contextualism and Knowledge Attributions." <em>Philosophy and Phenomenological Research</em> 52(4): 913–929. <span class="meta">—— 银行案例。</span> 另见 DeRose (1995), "Solving the Skeptical Puzzle," <em>Philosophical Review</em> 104(1): 1–52。</li>
+<li>Lewis, D. (1996). "Elusive Knowledge." <em>Australasian Journal of Philosophy</em> 74(4): 549–567. <span class="meta">—— 语境主义与注意规则。</span></li>
+<li>Cohen, S. (1988). "How to Be a Fallibilist." <em>Philosophical Perspectives</em> 2: 91–123. <span class="meta">—— 机场案例。</span></li>
+<li>Stanley, J. (2005). <em>Knowledge and Practical Interests.</em> Oxford University Press. <span class="meta">—— 实用侵入 / 利益相对不变主义。</span> 另见 Hawthorne, J. (2004), <em>Knowledge and Lotteries</em> (OUP); Fantl, J. &amp; McGrath, M. (2009), <em>Knowledge in an Uncertain World</em> (OUP).</li>
+<li>Pritchard, D. (2005). <em>Epistemic Luck.</em> Oxford University Press. <span class="meta">—— 运气的模态说明；真理运气；安全性条件；后来的反运气德性认识论。</span> 概述： <a href="https://iep.utm.edu/epi-luck/">IEP, "Epistemic Luck."</a></li>
+<li>Lehrer, K. &amp; Paxson, T. (1969). "Knowledge: Undefeated Justified True Belief." <em>Journal of Philosophy</em> 66(8): 225–237. <span class="meta">—— 可废止性分析。</span></li>
+<li>Goldman, A. (1967). "A Causal Theory of Knowing." <em>Journal of Philosophy</em> 64(12): 357–372. <span class="meta">—— 以及 Benacerraf, P. (1973), "Mathematical Truth," <em>J. Phil.</em> 70(19): 661–679, 关于它为何对抽象对象失效。</span></li>
+<li>Conee, E. &amp; Feldman, R. (1998). "The Generality Problem for Reliabilism." <em>Philosophical Studies</em> 89(1): 1–29.</li>
+<li>Plato. <em>Meno</em> (~380 BCE). <span class="meta">—— 通往 Larissa 的路；价值问题（知识与真信念）。</span></li>
+<li>Zagzebski, L. (2003). "The Search for the Source of Epistemic Good." <em>Metaphilosophy</em> 34(1–2): 12–28. <span class="meta">—— 淹没问题。</span> 另见 Kvanvig, J. (2003), <em>The Value of Knowledge and the Pursuit of Understanding</em> (Cambridge UP).</li>
+<li>Ryle, G. (1949). <em>The Concept of Mind.</em> University of Chicago Press. <span class="meta">—— 技艺之知与命题之知；规则的无限倒退。</span></li>
+<li>Stanley, J. &amp; Williamson, T. (2001). "Knowing How." <em>Journal of Philosophy</em> 98(8): 411–444. <span class="meta">—— 理智主义：技艺之知作为命题之知的一种。</span></li>
+<li>Russell, B. (1910–11). "Knowledge by Acquaintance and Knowledge by Description." <em>Proceedings of the Aristotelian Society</em> 11: 108–128.</li>
+<li>Hume, D. (1748). <em>An Enquiry Concerning Human Understanding</em>, §X. <span class="meta">—— 证言的还原主义观点。</span> Reid, T. (1764). <em>An Inquiry into the Human Mind on the Principles of Common Sense.</em> <span class="meta">—— 证言作为基本来源（反还原主义）。</span></li>
+<li>Elga, A. (2007). "Reflection and Disagreement." <em>Noûs</em> 41(3): 478–502. <span class="meta">doi:10.1111/j.1468-0068.2007.00656.x.</span> 以及 Christensen, D. (2007), "Epistemology of Disagreement: The Good News," <em>Philosophical Review</em> 116(2): 187–217.</li>
+<li>Fricker, M. (2007). <em>Epistemic Injustice: Power and the Ethics of Knowing.</em> Oxford University Press. <span class="meta">—— 证言不正义与诠释不正义。</span></li>
+<li>Craig, E. (1990). <em>Knowledge and the State of Nature: An Essay in Conceptual Synthesis.</em> Oxford University Press. <span class="meta">—— 功能优先 / 良好信息来源的概念谱系学。</span></li>
+<li>Hintikka, J. (1962). <em>Knowledge and Belief: An Introduction to the Logic of the Two Notions.</em> Cornell University Press. <span class="meta">—— 认知逻辑；KK 原则；逻辑全知。</span></li>
+<li>Makinson, D. C. (1965). "The Paradox of the Preface." <em>Analysis</em> 25(6): 205–207.</li>
+<li>参考综述： <em>Stanford Encyclopedia of Philosophy</em> —— <a href="https://plato.stanford.edu/entries/skepticism/">"Skepticism,"</a> <a href="https://plato.stanford.edu/entries/contextualism-epistemology/">"Epistemic Contextualism,"</a> <a href="https://plato.stanford.edu/entries/knowledge-value/">"The Value of Knowledge,"</a> <a href="https://plato.stanford.edu/entries/testimony-episprob/">"Epistemological Problems of Testimony,"</a> <a href="https://plato.stanford.edu/entries/epistemic-injustice/">"Epistemic Injustice."</a></li>
+</ol>
+</section>
+</div>
+</details>
+<!-- deep-dive:end -->
+
 <div class="tomorrow">
 <p class="h">明日 <span class="arrow">→</span> 第 02 日</p>
 <h3><a href="/zh/days/002-scientific-method-and-demarcation/">科学方法与划界问题</a></h3>
@@ -347,7 +672,7 @@ permalink: /zh/days/001-what-is-knowledge/
 <ol>
 <li>Gettier, E. L. (1963). "Is Justified True Belief Knowledge?" <em>Analysis</em> 23(6): 121–123. <span class="meta">doi:10.1093/analys/23.6.121.</span> <a href="https://doi.org/10.1093/analys/23.6.121">doi.org/10.1093/analys/23.6.121</a></li>
 <li>Ichikawa, J. J. &amp; Steup, M. "The Analysis of Knowledge." <em>Stanford Encyclopedia of Philosophy</em> (rev. 2018). <a href="https://plato.stanford.edu/entries/knowledge-analysis/">plato.stanford.edu/entries/knowledge-analysis</a> <span class="meta">—— JTB、盖梯尔案例、安全性/敏感性，以及知识优先转向。</span></li>
-<li>"Gettier problem." <em>Wikipedia</em> (accessed 2026). <a href="https://en.wikipedia.org/wiki/Gettier_problem">en.wikipedia.org/wiki/Gettier_problem</a> <span class="meta">—— Russell（1948）、法称（约公元 770 年）与甘格沙（14 世纪）的先例。</span></li>
+<li>"Gettier problem." <em>Wikipedia</em> (accessed 2026). <a href="https://en.wikipedia.org/wiki/Gettier_problem">en.wikipedia.org/wiki/Gettier_problem</a> <span class="meta">—— Russell（1948）、法上（约公元 770 年）与甘格沙（14 世纪）的先例。</span></li>
 <li>Russell, B. (1948). <em>Human Knowledge: Its Scope and Limits.</em> London: Allen &amp; Unwin. <span class="meta">—— 停钟案例（第 ~170–171 页）。</span></li>
 <li>Goldman, A. (1976). "Discrimination and Perceptual Knowledge." <em>Journal of Philosophy</em> 73(20): 771–791. <span class="meta">—— 假谷仓案例；可靠主义。</span></li>
 <li>Nozick, R. (1981). <em>Philosophical Explanations.</em> Harvard University Press. <span class="meta">—— 真相追踪 / 敏感性。</span></li>
