@@ -33,9 +33,11 @@ Read the syllabus entry for the target day plus the immediately previous and nex
    - label frontier claims as established, promising hint, or contested/hype
    - add concrete callbacks to previous published days
    - leave future callbacks in `src/_data/future-links.yaml`
-4. Update `src/pages/introduction.md`:
-   - keep the paragraph that begins with "The first two days set the tone" concise
-   - refresh it each day so it summarizes the published opening arc and the newest day without becoming a running catalog
+4. Update the introduction opening-arc paragraph:
+   - always refresh `src/pages/introduction.md`
+   - when the Chinese edition is in scope, refresh `src/zh/introduction.md` in the same pass
+   - keep the English and Chinese paragraphs matched in scope, day count, and newest-day reference
+   - keep the paragraph concise so it summarizes the published opening arc and the newest day without becoming a running catalog
    - keep it to one short paragraph unless the user explicitly asks for a longer introduction
 5. For every interactive piece, provide all variants:
    - live web UI
@@ -78,6 +80,7 @@ Use this gate after the implementation, translation, checks, and artifact inspec
 - Updated `src/days/day-###-slug.md` route shell with `content_template`, optional `scripts`, permalink, and `{% include content_template %}`
 - Added or updated `src/_includes/days/###-slug/en.njk` lesson body
 - Updated concise opening-arc paragraph in `src/pages/introduction.md`
+- When Chinese is in scope, updated matching opening-arc paragraph in `src/zh/introduction.md`
 - Updated callbacks and pending future links
 - Updated asset credits if images or fonts were added
 - Added or reused `src/assets/js/interactions/*.js` modules for live components, with adjacent print/EPUB fallbacks in the lesson body
@@ -123,7 +126,7 @@ After completing the English day file and passing all checks, mirror the work in
    - use Chinese corner quotes `「」` for quoted speech, thoughts, propositions, slogans, and translated terms in Chinese prose; keep italics for book/journal titles, foreign terms, or true emphasis, not as a substitute for quotation marks
    - insert spaces between Chinese text and Latin letters, acronyms, Arabic numerals, percentages, and units where source typography permits, for example `2026 年`, `GLM 5.1`, `100 项`, `95% 置信区间`
    - avoid literal metaphors and stiff calques from machine translation; prefer natural, elegant Chinese that remains technically exact
-7. Update `src/_data/syllabus_zh.yaml` with the Chinese title, entry, model, debate, and frontier for the new day.
+7. Update `src/_data/syllabus_zh.yaml` with the Chinese title, entry, model, debate, and frontier for the new day, and update `src/zh/introduction.md` so the Chinese opening-arc paragraph matches the English scope, day count, and newest-day reference.
 8. Run the target-day checklist plus the zh-specific build and checks:
 
    ```sh

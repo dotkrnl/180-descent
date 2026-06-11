@@ -30,6 +30,11 @@ if (zhRoute) {
   failures++;
 }
 
+await validateIntroduction("src/pages/introduction.md", "English introduction", `Day ${day}`);
+if (zhRoute || requireZh) {
+  await validateIntroduction("src/zh/introduction.md", "Chinese introduction", `第 ${day} 日`);
+}
+
 for (const file of [
   "src/_data/future-links.yaml",
   "src/_data/credits.yaml",
@@ -150,5 +155,21 @@ async function validateRoute(routeFile, label, locale) {
       console.error(`${label} ${routeFile} references missing script: ${script}`);
       failures++;
     }
+  }
+}
+
+async function validateIntroduction(file, label, currentDayMarker) {
+  let source = "";
+  try {
+    source = await readFile(file, "utf8");
+  } catch {
+    console.error(`${label} missing expected file: ${file}`);
+    failures++;
+    return;
+  }
+
+  if (!source.includes(currentDayMarker)) {
+    console.error(`${label} ${file} should mention the current published day: ${currentDayMarker}`);
+    failures++;
   }
 }
