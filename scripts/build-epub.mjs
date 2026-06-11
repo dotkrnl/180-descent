@@ -13,6 +13,7 @@ await mkdir("dist/downloads", { recursive: true });
 await buildEpub({
   meta: {
     title: book.title,
+    subtitle: book.subtitle,
     authors: book.authors,
     language: book.language,
     publisher: book.publisher,
@@ -32,6 +33,7 @@ await buildEpub({
 await buildEpub({
   meta: {
     title: `${book.title}: Deep Dive Edition`,
+    subtitle: book.subtitle,
     authors: book.authors,
     language: book.language,
     publisher: book.publisher,
@@ -52,7 +54,9 @@ await buildEpub({
 await buildEpub({
   meta: {
     title: book.zh.title,
+    subtitle: book.zh.subtitle,
     authors: book.zh.authors,
+    translators: book.zh.translators,
     language: book.zh.language,
     publisher: book.publisher,
     epub_identifier: book.zh.epub_identifier
@@ -71,7 +75,9 @@ await buildEpub({
 await buildEpub({
   meta: {
     title: `${book.zh.title}：专题深入版`,
+    subtitle: book.zh.subtitle,
     authors: book.zh.authors,
+    translators: book.zh.translators,
     language: book.zh.language,
     publisher: book.publisher,
     epub_identifier: `${book.zh.epub_identifier}-deep-dive`
@@ -91,6 +97,7 @@ await buildEpub({
 await buildDayEpubs({
   meta: {
     title: book.title,
+    subtitle: book.subtitle,
     authors: book.authors,
     language: book.language,
     publisher: book.publisher,
@@ -106,7 +113,9 @@ await buildDayEpubs({
 await buildDayEpubs({
   meta: {
     title: book.zh.title,
+    subtitle: book.zh.subtitle,
     authors: book.zh.authors,
+    translators: book.zh.translators,
     language: book.zh.language,
     publisher: book.publisher,
     epub_identifier: `${book.zh.epub_identifier}-day`
@@ -163,6 +172,12 @@ async function buildEpub(config) {
     `<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`,
     `<item id="css" href="styles/book.css" media-type="text/css"/>`
   ];
+
+  if (config.introHtml && !config.singleDay) {
+    oebps.file("title.xhtml", titlePageDocument(config));
+    manifestItems.push(`<item id="titlepage" href="title.xhtml" media-type="application/xhtml+xml"/>`);
+    spine.push(`<itemref idref="titlepage"/>`);
+  }
 
   if (config.introHtml) {
     const intro = await pageToXhtml(config.introHtml, config.introTitle, "introduction.xhtml", config, days);
@@ -288,6 +303,9 @@ body{font-size:1em;}
 }
 
 function navDocument(items, config) {
+  const titleLink = config.introHtml && !config.singleDay
+    ? `<li><a href="title.xhtml">${escapeXml(config.meta.language.startsWith("zh") ? "书名页" : "Title Page")}</a></li>`
+    : "";
   const introLink = config.introHtml
     ? `<li><a href="introduction.xhtml">${escapeXml(config.introLabel)}</a></li>`
     : "";
@@ -305,6 +323,7 @@ function navDocument(items, config) {
     <nav epub:type="toc" id="toc">
       <h1>${escapeXml(config.meta.title)}</h1>
       <ol>
+        ${titleLink}
         ${introLink}
         ${links}
       </ol>
@@ -321,6 +340,8 @@ function contentOpf(meta, manifestItems, spine) {
     <dc:identifier id="bookid">${escapeXml(meta.epub_identifier)}</dc:identifier>
     <dc:title>${escapeXml(meta.title)}</dc:title>
     <dc:creator>${escapeXml(meta.authors)}</dc:creator>
+    ${meta.translators ? `<dc:contributor id="translator">${escapeXml(meta.translators)}</dc:contributor>
+    <meta refines="#translator" property="role" scheme="marc:relators">trl</meta>` : ""}
     <dc:language>${escapeXml(meta.language)}</dc:language>
     <dc:publisher>${escapeXml(meta.publisher)}</dc:publisher>
     <meta property="dcterms:modified">${modified}</meta>
@@ -332,6 +353,31 @@ function contentOpf(meta, manifestItems, spine) {
     ${spine.join("\n    ")}
   </spine>
 </package>`;
+}
+
+function titlePageDocument(config) {
+  const isZh = config.meta.language.startsWith("zh");
+  const authorLine = isZh ? `作者：${config.meta.authors}` : `By ${config.meta.authors}`;
+  const translatorLine = config.meta.translators
+    ? `<span class="credit-line">${escapeXml(isZh ? `翻译：${config.meta.translators}` : `Translated by ${config.meta.translators}`)}</span>`
+    : "";
+  const subtitle = config.meta.subtitle ? `<p class="eyebrow">${escapeXml(config.meta.subtitle)}</p>` : "";
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="${config.meta.language}">
+  <head>
+    <title>${escapeXml(config.meta.title)}</title>
+    <link rel="stylesheet" type="text/css" href="styles/book.css"/>
+  </head>
+  <body data-source="title.xhtml">
+    <section class="epub-title-page page-hero wrap wide">
+      ${subtitle}
+      <h1>${escapeXml(config.meta.title)}</h1>
+      <p class="sub book-credit"><span class="credit-line">${escapeXml(authorLine)}</span>${translatorLine}</p>
+    </section>
+  </body>
+</html>`;
 }
 
 async function loadDays(dayDir) {
