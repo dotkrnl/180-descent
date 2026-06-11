@@ -201,7 +201,7 @@ async function pageToXhtml(htmlPath, title, selfHref, config, days) {
     $(".lesson-nav").remove();
   }
   if (!config.includeDeepDive) {
-    $(".deep-dive").remove();
+    $(".deep-dive,.deep-dive-edition-only").remove();
   } else {
     $("details.deep-dive").each((_, details) => {
       const el = $(details);

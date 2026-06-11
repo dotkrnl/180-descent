@@ -13,6 +13,12 @@ The sequence begins with a constraint. The frontier is only useful if the instru
 
 Each day is built to work even when time is uneven. It starts with a puzzle, story, image, analogy, or thought experiment; builds a mental model; names the live debate; then walks as far toward recent, trustworthy research as the evidence allows. The spirit is close to a very short introduction, but with a steeper internal slope: begin as if the reader is smart but new here, then descend until the ground becomes genuinely current and contested.
 
+<p class="web-only">Some days also include a folded <strong>Deep Dive appendix</strong>. On the website it appears as a collapsed section at the end of the lesson; open it only when you are extremely interested, have plenty of time, and want the wider map. These appendices are optional excursions, not building blocks for later days.</p>
+
+<p class="epub-only deep-dive-edition-only">This deep-dive EPUB includes optional appendices after the main lesson when a day has one. Read them only if you are extremely interested and have time to spare; later days will not assume them.</p>
+
+<p class="print-only deep-dive-edition-only">This deep-dive PDF includes optional appendices after the main lesson when a day has one. They are for readers with unusual interest and spare time; they are not prerequisites or building blocks for later chapters.</p>
+
 The order matters. This is not a cabinet of 180 interesting facts. It is dependency-ordered: epistemology before statistics, statistics before experiments, mathematics before physics, thermodynamics before life, evolution before mind, and computation before modern AI. The arc makes room for deeper foundations where compression would be dishonest, and for sustained descents into frontier controversies such as the Hubble tension, origin-of-life physics, mammalian epigenetic inheritance, consciousness theories, AGI and alignment, and the deep history of inequality.
 
 Five threads run through the whole course:
