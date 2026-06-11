@@ -36,7 +36,17 @@ layout: layouts/base.njk
   {% endif %}
 </nav>
 {% endmacro %}
-<article class="lesson" data-day="{{ day }}">
+<article
+  class="lesson"
+  data-day="{{ day }}"
+  data-reading-progress
+  data-reading-locale="{{ "zh" if isZh else "en" }}"
+  data-reading-day="{{ day }}"
+  data-reading-url="{{ page.url | escape }}"
+  data-reading-label="{{ "第" if isZh else "Day " }}{{ day | padDay }}{{ "日" if isZh else "" }} · {{ title | escape }}"
+  data-reading-title="{{ title | escape }}"
+  data-reading-summary="{{ summary | escape }}"
+>
   <div class="download-strip">
     <div class="wrap wide">
       <span>{{ "下载本日：" if isZh else "Download this day:" }}</span>

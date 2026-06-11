@@ -4,6 +4,7 @@
   var root = document.documentElement;
   var themeBtn = document.getElementById("themeBtn");
   var themeStorageKey = "180-descent-theme";
+  var readingStorageKey = "180-descent-reading-progress";
 
   var storedTheme = readStoredTheme();
   if(storedTheme){
@@ -24,7 +25,71 @@
     });
   }
 
+  initReadingProgress();
   initCodexRefiner();
+
+  function initReadingProgress(){
+    rememberCurrentLesson();
+    hydrateReadingCard();
+  }
+
+  function rememberCurrentLesson(){
+    var lesson = document.querySelector("[data-reading-progress]");
+    if(!lesson){
+      return;
+    }
+
+    var locale = lesson.getAttribute("data-reading-locale") || currentLocale();
+    var record = {
+      day: Number(lesson.getAttribute("data-reading-day")) || 0,
+      url: lesson.getAttribute("data-reading-url") || window.location.pathname,
+      label: lesson.getAttribute("data-reading-label") || "",
+      title: lesson.getAttribute("data-reading-title") || "",
+      summary: lesson.getAttribute("data-reading-summary") || "",
+      updatedAt: new Date().toISOString()
+    };
+
+    if(!isValidReadingRecord(record)){
+      return;
+    }
+
+    var progress = readReadingProgress();
+    progress[locale] = record;
+    storeReadingProgress(progress);
+  }
+
+  function hydrateReadingCard(){
+    var card = document.querySelector("[data-reading-card]");
+    if(!card){
+      return;
+    }
+
+    var locale = card.getAttribute("data-reading-locale") || currentLocale();
+    var saved = readReadingProgress()[locale];
+    if(!isValidReadingRecord(saved)){
+      return;
+    }
+
+    var link = card.querySelector("[data-reading-link]");
+    if(!link){
+      return;
+    }
+
+    link.setAttribute("href", saved.url);
+    link.textContent = saved.label;
+
+    var kicker = card.querySelector("[data-reading-kicker]");
+    if(kicker){
+      kicker.textContent = card.getAttribute("data-reading-continue-kicker") || kicker.textContent;
+    }
+
+    var summary = card.querySelector("[data-reading-summary]");
+    if(summary && saved.summary){
+      summary.textContent = saved.summary;
+    }
+
+    card.classList.add("has-reading-progress");
+  }
 
   function initCodexRefiner(){
     if(!isLocalPreview() || !window.fetch){
@@ -388,6 +453,40 @@
         window.localStorage.setItem(themeStorageKey, theme);
       }
     }catch(error){}
+  }
+
+  function currentLocale(){
+    var lang = root.getAttribute("lang") || "";
+    return lang.indexOf("zh") === 0 ? "zh" : "en";
+  }
+
+  function readReadingProgress(){
+    try{
+      var raw = window.localStorage && window.localStorage.getItem(readingStorageKey);
+      var parsed = raw ? JSON.parse(raw) : {};
+      return parsed && typeof parsed === "object" ? parsed : {};
+    }catch(error){
+      return {};
+    }
+  }
+
+  function storeReadingProgress(progress){
+    try{
+      if(window.localStorage){
+        window.localStorage.setItem(readingStorageKey, JSON.stringify(progress));
+      }
+    }catch(error){}
+  }
+
+  function isValidReadingRecord(record){
+    return !!(
+      record &&
+      record.day > 0 &&
+      typeof record.url === "string" &&
+      /^\/(?:zh\/)?days\/[0-9]{3}-[a-z0-9-]+\/$/.test(record.url) &&
+      typeof record.label === "string" &&
+      record.label
+    );
   }
 
   function compactText(text, max){
