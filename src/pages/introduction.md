@@ -25,6 +25,6 @@ Five threads run through the whole course:
 
 The hype filter is part of the method. Frontier claims are marked as **established**, **promising hint**, or **contested/hype**. Physics and cosmology claims need datasets and error bars. Medical, AI, and social-science claims need replication, incentives, measurement, and humility. A result can be exciting and still not carry much weight. A failed claim can still be useful if it teaches us how science corrects itself. Recent does not mean reliable; peer-reviewed does not mean settled; beautiful does not mean true.
 
-The first two days set the tone. Day 1 asks why a stopped clock can give you a true, justified belief without giving you knowledge. Day 2 scales that worry up from a single mind to science as an institution: if induction cannot prove the future will resemble the past, what makes scientific claims trustworthy at all?
+The first three days set the tone. Day 1 asks why a stopped clock can give you a true, justified belief without giving you knowledge; Day 2 scales that worry up to science as an institution; Day 3 opens the reasoning engine itself, separating deduction, induction, and abduction before following valid inference into proof assistants and AI.
 
 That is the descent: not a catalog of facts, but a course in how facts earn their keep.
