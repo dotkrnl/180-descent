@@ -19,6 +19,17 @@ alternate_url: /
       <h2><a href="/zh/days/001-what-is-knowledge/" data-reading-link>从第 1 日开始</a></h2>
       <p data-reading-summary>从最初的理由出发，深入数学、物理、生命、心智、智能、文明与前沿。</p>
     </article>
+    <script type="application/json" data-reading-days data-reading-locale="zh">[
+      {% for item in collections.zhDays %}
+      {
+        "day": {{ item.data.day | json | safe }},
+        "url": {{ item.url | json | safe }},
+        "label": {{ ("第" + (item.data.day | padDay) + "日 · " + item.data.title) | json | safe }},
+        "title": {{ item.data.title | json | safe }},
+        "summary": {{ item.data.summary | json | safe }}
+      }{{ "," if not loop.last }}
+      {% endfor %}
+    ]</script>
     <div class="download-stack">
       <article class="download-card">
         <p class="card-kicker">离线版</p>

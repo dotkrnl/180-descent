@@ -16,6 +16,17 @@ description: Browse and download The 180-Day Descent.
       <h2><a href="/days/001-what-is-knowledge/" data-reading-link>Start Day 1</a></h2>
       <p data-reading-summary>A descent from first reasons into mathematics, physics, life, mind, intelligence, civilization, and the frontier.</p>
     </article>
+    <script type="application/json" data-reading-days data-reading-locale="en">[
+      {% for item in collections.days %}
+      {
+        "day": {{ item.data.day | json | safe }},
+        "url": {{ item.url | json | safe }},
+        "label": {{ ("Day " + (item.data.day | padDay) + " · " + item.data.title) | json | safe }},
+        "title": {{ item.data.title | json | safe }},
+        "summary": {{ item.data.summary | json | safe }}
+      }{{ "," if not loop.last }}
+      {% endfor %}
+    ]</script>
     <div class="download-stack">
       <article class="download-card">
         <p class="card-kicker">Offline</p>

@@ -5,6 +5,9 @@
   var themeBtn = document.getElementById("themeBtn");
   var themeStorageKey = "180-descent-theme";
   var readingStorageKey = "180-descent-reading-progress";
+  var readingResumeHash = "#continue";
+  var readingNearEndRatio = 0.9;
+  var readingSaveTimer = 0;
 
   var storedTheme = readStoredTheme();
   if(storedTheme){
@@ -29,16 +32,54 @@
   initCodexRefiner();
 
   function initReadingProgress(){
-    rememberCurrentLesson();
+    var lesson = document.querySelector("[data-reading-progress]");
+    if(lesson){
+      var didResume = resumeSavedPosition(lesson);
+      window.setTimeout(function(){
+        rememberCurrentLesson(lesson);
+      }, didResume ? 700 : 0);
+      startReadingTracker(lesson);
+    }
+
     hydrateReadingCard();
   }
 
-  function rememberCurrentLesson(){
-    var lesson = document.querySelector("[data-reading-progress]");
+  function startReadingTracker(lesson){
     if(!lesson){
       return;
     }
 
+    window.addEventListener("scroll", function(){
+      scheduleReadingProgressSave(lesson);
+    }, { passive: true });
+
+    window.addEventListener("resize", function(){
+      scheduleReadingProgressSave(lesson);
+    });
+
+    document.addEventListener("visibilitychange", function(){
+      if(document.visibilityState === "hidden"){
+        rememberCurrentLesson(lesson);
+      }
+    });
+
+    window.addEventListener("pagehide", function(){
+      rememberCurrentLesson(lesson);
+    });
+  }
+
+  function scheduleReadingProgressSave(lesson){
+    if(readingSaveTimer){
+      return;
+    }
+
+    readingSaveTimer = window.setTimeout(function(){
+      readingSaveTimer = 0;
+      rememberCurrentLesson(lesson);
+    }, 400);
+  }
+
+  function rememberCurrentLesson(lesson){
     var locale = lesson.getAttribute("data-reading-locale") || currentLocale();
     var record = {
       day: Number(lesson.getAttribute("data-reading-day")) || 0,
@@ -46,6 +87,7 @@
       label: lesson.getAttribute("data-reading-label") || "",
       title: lesson.getAttribute("data-reading-title") || "",
       summary: lesson.getAttribute("data-reading-summary") || "",
+      progress: currentReadingProgress(),
       updatedAt: new Date().toISOString()
     };
 
@@ -66,7 +108,9 @@
 
     var locale = card.getAttribute("data-reading-locale") || currentLocale();
     var saved = readReadingProgress()[locale];
-    if(!isValidReadingRecord(saved)){
+    var days = readPublishedDays(locale);
+    var target = readingCardTarget(saved, days);
+    if(!target){
       return;
     }
 
@@ -75,8 +119,8 @@
       return;
     }
 
-    link.setAttribute("href", saved.url);
-    link.textContent = saved.label;
+    link.setAttribute("href", target.href);
+    link.textContent = target.label;
 
     var kicker = card.querySelector("[data-reading-kicker]");
     if(kicker){
@@ -84,11 +128,49 @@
     }
 
     var summary = card.querySelector("[data-reading-summary]");
-    if(summary && saved.summary){
-      summary.textContent = saved.summary;
+    if(summary && target.summary){
+      summary.textContent = target.summary;
     }
 
     card.classList.add("has-reading-progress");
+  }
+
+  function resumeSavedPosition(lesson){
+    if(window.location.hash !== readingResumeHash){
+      return false;
+    }
+
+    var locale = lesson.getAttribute("data-reading-locale") || currentLocale();
+    var saved = readReadingProgress()[locale];
+    if(!isValidReadingRecord(saved) || normalizePath(saved.url) !== window.location.pathname){
+      return false;
+    }
+
+    var progress = normalizedProgress(saved.progress);
+    if(progress <= 0){
+      return false;
+    }
+
+    jumpToReadingProgress(progress);
+    window.requestAnimationFrame(function(){
+      jumpToReadingProgress(progress);
+    });
+
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(function(){
+        window.requestAnimationFrame(function(){
+          jumpToReadingProgress(progress);
+        });
+      }).catch(function(){});
+    }
+
+    window.addEventListener("load", function(){
+      window.requestAnimationFrame(function(){
+        jumpToReadingProgress(progress);
+      });
+    }, { once: true });
+
+    return true;
   }
 
   function initCodexRefiner(){
@@ -476,6 +558,100 @@
         window.localStorage.setItem(readingStorageKey, JSON.stringify(progress));
       }
     }catch(error){}
+  }
+
+  function readPublishedDays(locale){
+    var script = document.querySelector('[data-reading-days][data-reading-locale="' + locale + '"]');
+    if(!script){
+      return [];
+    }
+
+    try{
+      var days = JSON.parse(script.textContent || "[]");
+      if(!Array.isArray(days)){
+        return [];
+      }
+
+      return days.filter(isValidReadingRecord).sort(function(a, b){
+        return Number(a.day) - Number(b.day);
+      });
+    }catch(error){
+      return [];
+    }
+  }
+
+  function readingCardTarget(saved, days){
+    if(!isValidReadingRecord(saved)){
+      return null;
+    }
+
+    if(isNearEnd(saved.progress)){
+      var next = nextPublishedDay(saved, days);
+      if(next){
+        return {
+          href: next.url,
+          label: next.label,
+          summary: next.summary || saved.summary || ""
+        };
+      }
+    }
+
+    return {
+      href: saved.progress > 0 ? saved.url + readingResumeHash : saved.url,
+      label: saved.label,
+      summary: saved.summary || ""
+    };
+  }
+
+  function nextPublishedDay(saved, days){
+    var savedDay = Number(saved.day) || 0;
+    for(var i = 0; i < days.length; i++){
+      if(Number(days[i].day) > savedDay){
+        return days[i];
+      }
+    }
+    return null;
+  }
+
+  function currentReadingProgress(){
+    return normalizedProgress(window.scrollY / Math.max(1, maxPageScroll()));
+  }
+
+  function jumpToReadingProgress(progress){
+    var top = Math.round(maxPageScroll() * normalizedProgress(progress));
+    window.scrollTo(0, top);
+  }
+
+  function maxPageScroll(){
+    var doc = document.documentElement;
+    var body = document.body;
+    var height = Math.max(
+      doc ? doc.scrollHeight : 0,
+      body ? body.scrollHeight : 0,
+      doc ? doc.offsetHeight : 0,
+      body ? body.offsetHeight : 0
+    );
+    return Math.max(0, height - window.innerHeight);
+  }
+
+  function normalizedProgress(value){
+    var n = Number(value);
+    if(!isFinite(n)){
+      return 0;
+    }
+    return Math.max(0, Math.min(1, n));
+  }
+
+  function isNearEnd(progress){
+    return normalizedProgress(progress) >= readingNearEndRatio;
+  }
+
+  function normalizePath(url){
+    try{
+      return new URL(url, window.location.origin).pathname;
+    }catch(error){
+      return String(url || "").split("#")[0].split("?")[0];
+    }
   }
 
   function isValidReadingRecord(record){
