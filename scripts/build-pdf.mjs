@@ -84,11 +84,7 @@ async function buildEdition(edition) {
   try {
     await page.goto(`${server.url}${edition.route}`, { waitUntil: "networkidle" });
     if (edition.includeDeepDive) {
-      await page.evaluate(() => {
-        for (const details of document.querySelectorAll("details.deep-dive")) {
-          details.setAttribute("open", "");
-        }
-      });
+      await page.evaluate(markOptionalAppendices);
     }
     await page.evaluate(({ baseUrl, dayBasePath, introPath }) => {
     const localOrigin = window.location.origin;
@@ -169,9 +165,6 @@ async function buildDayPdf(day, config) {
       const localOrigin = window.location.origin;
       document.body.classList.add("include-deep-dive");
       document.querySelectorAll(".lesson-nav").forEach((el) => el.remove());
-      for (const details of document.querySelectorAll("details.deep-dive")) {
-        details.setAttribute("open", "");
-      }
       for (const anchor of document.querySelectorAll("a[href]")) {
         const href = anchor.getAttribute("href");
         if (!href || href.startsWith("#")) continue;
@@ -182,6 +175,7 @@ async function buildDayPdf(day, config) {
         }
       }
     });
+    await page.evaluate(markOptionalAppendices);
     await page.evaluate(() => document.fonts.ready);
     await page.emulateMedia({ media: "print" });
 
@@ -372,6 +366,46 @@ function dayPdfHeaderTitle(day, config) {
   return config.language.startsWith("zh")
     ? `Lesson ${day.data.day}`
     : `Day ${day.data.day}`;
+}
+
+function markOptionalAppendices() {
+  const isZh = document.documentElement.lang.startsWith("zh");
+  const labels = isZh
+    ? {
+        kicker: "可选附录",
+        headingPrefix: "附录：",
+        note: "本节是可选的补充阅读；可以放心跳过，不会影响正文课程。"
+      }
+    : {
+        kicker: "Optional appendix",
+        headingPrefix: "Appendix: ",
+        note: "This section is optional supplemental reading. You can skip it without losing the main lesson."
+      };
+
+  for (const details of document.querySelectorAll("details.deep-dive")) {
+    details.setAttribute("open", "");
+    const summary = details.querySelector(":scope > summary") || details.querySelector("summary");
+    if (!summary) continue;
+
+    const kicker = summary.querySelector(".ptitle");
+    if (kicker) kicker.textContent = labels.kicker;
+
+    const title = summary.querySelector(".deep-dive-title");
+    if (title) {
+      const current = title.textContent.trim();
+      if (!current.startsWith(labels.headingPrefix)) {
+        title.textContent = `${labels.headingPrefix}${current}`;
+      }
+    }
+
+    if (!summary.querySelector(".deep-dive-optional-note")) {
+      const note = document.createElement("span");
+      note.className = "deep-dive-optional-note";
+      note.textContent = labels.note;
+      const subtitle = summary.querySelector(".deep-dive-sub");
+      summary.insertBefore(note, subtitle || null);
+    }
+  }
 }
 
 async function serveSite(root) {

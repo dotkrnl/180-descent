@@ -51,6 +51,18 @@ const zhDeepDiveText = await extractPdfText("_site/downloads/180-descent-zh-deep
 const dayOneText = await extractPdfText("_site/downloads/180-descent-day-001-what-is-knowledge.pdf");
 const zhDayOneText = await extractPdfText("_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf");
 
+for (const [label, text, pattern] of [
+  ["Deep-dive PDF", deepDiveText, /Optional appendix/i],
+  ["Day-specific PDF", dayOneText, /Optional appendix/i],
+  ["Deep-dive Chinese PDF", zhDeepDiveText, /可选附录/],
+  ["Day-specific Chinese PDF", zhDayOneText, /可选附录/]
+]) {
+  if (!pattern.test(text)) {
+    console.error(`${label} is missing optional appendix label matching ${pattern}`);
+    failures++;
+  }
+}
+
 for (const pattern of [/\[\[toc:/, /WHERE WE ARE/i, /PAGE\s+\d+\s*\/\s*\d+/, /THE 180-DAY DESCENT/]) {
   if (pattern.test(extractedText)) {
     console.error(`PDF extracted text contains forbidden print artifact matching ${pattern}`);

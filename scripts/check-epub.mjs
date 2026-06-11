@@ -36,14 +36,14 @@ const chineseAppendixPatterns = [
 ];
 const editions = [
   { file: "_site/downloads/180-descent.epub", deepDive: false, appendixPatterns: englishAppendixPatterns, required: bookRequired },
-  { file: "_site/downloads/180-descent-deep-dive.epub", deepDive: true, appendixPatterns: englishAppendixPatterns, required: bookRequired },
+  { file: "_site/downloads/180-descent-deep-dive.epub", deepDive: true, appendixPatterns: englishAppendixPatterns, optionalPattern: /Optional appendix/, required: bookRequired },
   { file: "_site/downloads/180-descent-zh.epub", deepDive: false, appendixPatterns: chineseAppendixPatterns, required: bookRequired },
-  { file: "_site/downloads/180-descent-zh-deep-dive.epub", deepDive: true, appendixPatterns: chineseAppendixPatterns, required: bookRequired },
-  { file: "_site/downloads/180-descent-day-001-what-is-knowledge.epub", deepDive: true, appendixPatterns: englishAppendixPatterns, required: dayRequired },
-  { file: "_site/downloads/180-descent-zh-day-001-what-is-knowledge.epub", deepDive: true, appendixPatterns: chineseAppendixPatterns, required: dayRequired }
+  { file: "_site/downloads/180-descent-zh-deep-dive.epub", deepDive: true, appendixPatterns: chineseAppendixPatterns, optionalPattern: /可选附录/, required: bookRequired },
+  { file: "_site/downloads/180-descent-day-001-what-is-knowledge.epub", deepDive: true, appendixPatterns: englishAppendixPatterns, optionalPattern: /Optional appendix/, required: dayRequired },
+  { file: "_site/downloads/180-descent-zh-day-001-what-is-knowledge.epub", deepDive: true, appendixPatterns: chineseAppendixPatterns, optionalPattern: /可选附录/, required: dayRequired }
 ];
 
-for (const { file: edition, deepDive, appendixPatterns, required } of editions) {
+for (const { file: edition, deepDive, appendixPatterns, optionalPattern, required } of editions) {
   const data = await readFile(edition);
   const zip = await JSZip.loadAsync(data);
 
@@ -58,6 +58,10 @@ for (const { file: edition, deepDive, appendixPatterns, required } of editions) 
   if (dayOne) {
     const searchableDayOne = decodeXmlEntities(dayOne);
     if (deepDive) {
+      if (optionalPattern && !optionalPattern.test(searchableDayOne)) {
+        console.error(`${edition} is missing optional appendix label matching ${optionalPattern}`);
+        failures++;
+      }
       for (const pattern of appendixPatterns) {
         if (!pattern.test(searchableDayOne)) {
           console.error(`${edition} is missing deep-dive appendix content matching ${pattern}`);

@@ -205,8 +205,16 @@ async function pageToXhtml(htmlPath, title, selfHref, config, days) {
   } else {
     $("details.deep-dive").each((_, details) => {
       const el = $(details);
-      const heading = el.find("> summary .deep-dive-title").text().trim() || "Deep Dive Appendix";
-      el.find("> summary").replaceWith(`<h2 class="deep-dive-heading">${escapeXml(heading)}</h2>`);
+      const labels = appendixLabels(config.meta.language);
+      const heading = el.find("> summary .deep-dive-title").text().trim() || labels.fallbackTitle;
+      const subtitle = el.find("> summary .deep-dive-sub").text().trim();
+      const subtitleMarkup = subtitle ? `<p class="deep-dive-sub">${escapeXml(subtitle)}</p>` : "";
+      el.find("> summary").replaceWith(`<header class="deep-dive-header">
+<p class="deep-dive-kicker">${escapeXml(labels.kicker)}</p>
+<h2 class="deep-dive-heading">${escapeXml(`${labels.headingPrefix}${heading}`)}</h2>
+<p class="deep-dive-optional-note">${escapeXml(labels.note)}</p>
+${subtitleMarkup}
+</header>`);
       el.replaceWith(`<section class="deep-dive-epub">${el.html()}</section>`);
     });
   }
@@ -259,7 +267,10 @@ body{font-size:1em;}
 .web-only,.print-only{display:none!important;}
 .deep-dive{display:none!important;}
 .deep-dive-epub{display:block!important;margin:2em 0 0;}
+.deep-dive-header{margin:0 0 1.4em;}
+.deep-dive-kicker{font-family:"IBM Plex Mono",monospace;font-size:.78em;letter-spacing:.12em;text-transform:uppercase;color:#777;margin:0 0 .35em;}
 .deep-dive-heading{page-break-before:always;}
+.deep-dive-optional-note{font-style:italic;color:#555;margin:.2em 0 .65em;}
 .epub-alt{display:block!important;}
 .epub-alt>.ptitle{display:none!important;}
 .bartrack{background:#f7f7f2!important;border:1px solid #9c9588!important;}
@@ -336,6 +347,23 @@ function dayDocumentTitle(day, config) {
     return `${config.dayLabel} ${day.data.day} 日：${day.data.title}`;
   }
   return `${config.dayLabel} ${day.data.day}: ${day.data.title}`;
+}
+
+function appendixLabels(language = "") {
+  if (language.startsWith("zh")) {
+    return {
+      kicker: "可选附录",
+      headingPrefix: "附录：",
+      fallbackTitle: "专题深入",
+      note: "本节是可选的补充阅读；可以放心跳过，不会影响正文课程。"
+    };
+  }
+  return {
+    kicker: "Optional appendix",
+    headingPrefix: "Appendix: ",
+    fallbackTitle: "Deep Dive",
+    note: "This section is optional supplemental reading. You can skip it without losing the main lesson."
+  };
 }
 
 function escapeXml(value) {
