@@ -39,7 +39,7 @@
     </main>
     <footer class="site-footer">
       <div class="wrap wide footer-grid">
-        <p><strong>{{ uiTitle }}</strong><br>{{ uiSubtitle }}<br>{{ "作者：" if isZh else "By " }}{{ book.zh.authors if isZh else book.authors }}</p>
+        <p><strong>{{ uiTitle }}</strong><br>{{ uiSubtitle }}<br>{% if isZh %}作者：{{ book.zh.authors }}<br>翻译：{{ book.zh.translators }}{% else %}By {{ book.authors }}{% endif %}</p>
         <p><a href="{{ book.repo }}">GitHub</a><br><a href="{{ "/zh/downloads/" if isZh else "/downloads/" }}">{{ "EPUB 与 PDF 下载" if isZh else "EPUB and PDF downloads" }}</a><br><a href="{{ "/zh/credits/" if isZh else "/credits/" }}">{{ "鸣谢" if isZh else "Credits" }}</a></p>
       </div>
     </footer>
