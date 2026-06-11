@@ -204,8 +204,8 @@ permalink: /zh/days/002-scientific-method-and-demarcation/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">结果 01</span>
-<span class="chip ok" data-print="established"><i></i>核心数字 · 已确立</span>
-<span class="chip hint" data-print="contested"><i></i>其含义 · 有争议</span>
+<span class="chip ok" data-print="已确立"><i></i>核心数字 · 已确立</span>
+<span class="chip hint" data-print="有争议"><i></i>其含义 · 有争议</span>
 </div>
 <h3>震动心理学的一声枪响</h3>
 <p>里程碑是<strong>开放科学合作组织的《估计心理科学的可复现性》</strong>（<em>Science</em>，2015 年 8 月 28 日）——约 270 位研究者，在布莱恩·诺塞克领导下，复现了三本顶尖心理学期刊上的<strong>100</strong>项研究，并与原作者合作确保方法无误。结果在该领域引发爆炸。但唯一最重要的教训却藏于明处：<strong>并不存在单一的「复现率」。</strong>该论文报告了数个，而它们讲述着不同的故事。请看。</p>
@@ -248,7 +248,7 @@ permalink: /zh/days/002-scientific-method-and-demarcation/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">结果 02</span>
-<span class="chip ok" data-print="established"><i></i>非心理学独有 · 已确立</span>
+<span class="chip ok" data-print="已确立"><i></i>非心理学独有 · 已确立</span>
 </div>
 <h3>这并非一个领域的难堪</h3>
 <p>那种条件反射式的辩护——「软科学嘛，还能指望什么」——随着同样的实验在其他领域展开并返回同样令人沮丧的范围而崩塌。危机是广泛的。以下是经核实的锚定数字；每次请注意度量标准，因为如我们刚见，度量标准<em>就是</em>故事本身。</p>
@@ -298,8 +298,8 @@ permalink: /zh/days/002-scientific-method-and-demarcation/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">结果 03</span>
-<span class="chip ok" data-print="established"><i></i>未能复现的名例 · 已确立</span>
-<span class="chip hint" data-print="contested"><i></i>「完全死亡」 · 有争议</span>
+<span class="chip ok" data-print="已确立"><i></i>未能复现的名例 · 已确立</span>
+<span class="chip hint" data-print="有争议"><i></i>「完全死亡」 · 有争议</span>
 </div>
 <h3>那些未能复现的著名发现——以及公开改口的科学家们</h3>
 <p>抽象的概括不会刺痛人；具名的失败案例才会。一连串曾被称颂、TED 演讲级著名的效应，在高功效、研究预登记的复现实验中折戟——而令人瞩目的是，在最清楚的案例中，一位<em>原作者</em>公开改变了主意：</p>
@@ -314,7 +314,7 @@ permalink: /zh/days/002-scientific-method-and-demarcation/
 <div class="claim">
 <div class="ctop">
 <span class="cnum">转折</span>
-<span class="chip ok" data-print="optimistic"><i></i>自我修正 · 乐观的解读</span>
+<span class="chip ok" data-print="乐观解读"><i></i>自我修正 · 乐观的解读</span>
 </div>
 <h3>这是科学的失败——还是科学在运作？</h3>
 <p>换个角度看，整场危机也可以是一个充满希望的故事，而非一桩丑闻。上述每一个数字都来自<em>科学家以科学审视科学</em>——使用研究预登记、高功效、公开共享的方法来揭露并丢弃那些站不住脚的主张。那是<strong>波普尔的反驳之刃，终于向内翻转。</strong>危机并非划界标准错误的证据，而是它们<em>正在运作</em>的证据，痛苦地、公开地运作着。</p>

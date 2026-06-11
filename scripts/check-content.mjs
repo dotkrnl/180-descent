@@ -56,6 +56,10 @@ for (const { file, full, label } of allDayFiles) {
       console.error(`${label} ${file} has a status chip without data-print="${$(el).text().trim()}"`);
       failures++;
     }
+    if (label === "Chinese" && /[A-Za-z]/.test($(el).attr("data-print") || "")) {
+      console.error(`${label} ${file} has untranslated print chip data-print="${$(el).attr("data-print")}"`);
+      failures++;
+    }
   });
 }
 
