@@ -24,7 +24,7 @@ const englishAppendixPatterns = [
 const chineseAppendixPatterns = [
   /地图的其余部分/,
   /怀疑论者的三段论：四种出路/,
-  /银行案例：赌注表/,
+  /银行案例：利害关系表/,
   /安全与幸运：邻近世界案例/
 ];
 const editions = [

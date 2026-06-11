@@ -47,16 +47,16 @@
     var vstory = document.getElementById("vstory");
     var onFill = "color-mix(in srgb,var(--accent) 20%,transparent)";
     var gettierText = isZh ? {
-      luckState: "得到证成、为真、被相信，却仍不是知识",
+      luckState: "有理由、为真、被相信，却仍不是知识",
       luckExpl: "这是一个 <strong>盖梯尔案例</strong>：三条腿都在，但理由失准，事实只是碰巧成立。",
       knowledgeState: "在经典 JTB 观点下，这是知识",
-      knowledgeExpl: "信念、事实与证成都成立，且没有运气替裂缝打补丁。",
+      knowledgeExpl: "信念、事实与理由都成立，且没有运气替裂缝打补丁。",
       notKnowledge: "不是知识",
       missingPrefix: "缺少一条腿：",
       missingSuffix: "。",
       truth: "为真",
       belief: "信念",
-      justification: "证成",
+      justification: "理由",
       stories: {
         clock: "停走的钟只是碰巧在此刻正确。",
         coins: "史密斯得到工作且有十枚硬币，但他的证据追踪的是琼斯。",
@@ -272,7 +272,28 @@
     var cmBtns = machine.querySelectorAll(".cm-btn");
     if(!cmP1 || !cmP2 || !cmC || !cmOut || !cmBtns.length) return;
 
-    var cmData = {
+    var cmData = isZh ? {
+      skeptic: {
+        strike: [],
+        who: "怀疑论者",
+        html: "你接受了全部三行，因此结论成立：按你自己的标准，你不知道自己有双手，也几乎不知道外部世界的任何事。逻辑上整齐，人的层面却难以承受。"
+      },
+      moore: {
+        strike: ["p1"],
+        who: "G. E. 摩尔：「这里有一只手」",
+        html: "你拒绝 P1：你坚持自己知道并非缸中之脑，因为你知道自己有双手，也能看见它们。疑虑在于：这可能听起来像坚持立场，而非真正回答。"
+      },
+      dretske: {
+        strike: ["p2"],
+        who: "德雷茨克与诺齐克：否定封闭性",
+        html: "你拒绝 P2：知识不会自动沿每一个蕴含传递。你只需排除实际相关的错误可能。代价是：封闭性在直觉上非常有力。"
+      },
+      context: {
+        strike: [],
+        who: "语境主义：改变标准",
+        html: "你拒绝那个隐藏假设：认为「知道」只有一个固定标准。日常谈话与怀疑论研讨室使用的是不同标尺。"
+      }
+    } : {
       skeptic: {
         strike: [],
         who: "The Skeptic",
@@ -326,6 +347,12 @@
     if(!rStakes || !sdVal || !sdCase || !sdErr || !sdState || !sdCtx || !sdEnc || !sdInv) return;
 
     function stakesWord(s){
+      if(isZh){
+        if(s < 25) return "低";
+        if(s < 55) return "上升中";
+        if(s < 80) return "高";
+        return "危急";
+      }
       if(s < 25) return "low";
       if(s < 55) return "rising";
       if(s < 80) return "high";
@@ -333,7 +360,15 @@
     }
     function caseText(s, err){
       var base;
-      if(s < 25){
+      if(isZh && s < 25){
+        base = "<b>低利害。</b> 这只是一件小事，出错也没什么严重后果。";
+      } else if(isZh && s < 55){
+        base = "<b>利害上升。</b> 错过存款会很麻烦，但仍可补救。";
+      } else if(isZh && s < 80){
+        base = "<b>高利害。</b> 一张支票必须在周一前到账，否则会影响抵押贷款。";
+      } else if(isZh){
+        base = "<b>危急利害。</b> 如果周一前没有存入这张支票，你可能失去房子。";
+      } else if(s < 25){
         base = "<b>Low stakes.</b> It is a small errand. Nothing much rides on it.";
       } else if(s < 55){
         base = "<b>Stakes rising.</b> Missing the deposit would be annoying, but recoverable.";
@@ -342,7 +377,9 @@
       } else {
         base = "<b>Critical stakes.</b> If this deposit is not in by Monday, you could lose the house.";
       }
-      if(err){
+      if(isZh && err){
+        base += ' <span style="color:var(--contested)">而你的配偶补充：「但银行确实有时会改变周末营业时间。」</span>';
+      } else if(err){
         base += ' <span style="color:var(--contested)">And your spouse adds: "but banks do sometimes change their weekend hours."</span>';
       }
       return base;
@@ -356,16 +393,16 @@
       sdCase.innerHTML = caseText(s, err);
       if(knows){
         sdState.className = "vstate know stakes-state";
-        sdState.innerHTML = '✓ "Yeah, I <strong>know</strong> it is open Saturday."';
-        sdCtx.textContent = 'Low standard in play: the sentence "S knows" comes out true.';
-        sdEnc.textContent = "Little at stake, so the true belief is action-guiding enough to count as knowledge.";
-        sdInv.textContent = "You know, and always did; the stakes have not made you cautious yet.";
+        sdState.innerHTML = isZh ? "✓「是的，我<strong>知道</strong>它周六营业。」" : '✓ "Yeah, I <strong>know</strong> it is open Saturday."';
+        sdCtx.textContent = isZh ? "当前标准较低：「S 知道」这句话为真。" : 'Low standard in play: the sentence "S knows" comes out true.';
+        sdEnc.textContent = isZh ? "利害关系较低，因此这个真信念足以指导行动，也足以算作知识。" : "Little at stake, so the true belief is action-guiding enough to count as knowledge.";
+        sdInv.textContent = isZh ? "你知道，而且一直知道；利害关系还没有让你变得谨慎。" : "You know, and always did; the stakes have not made you cautious yet.";
       } else {
         sdState.className = "vstate no stakes-state";
-        sdState.innerHTML = '✕ "I had <strong>better go in and check</strong>."';
-        sdCtx.textContent = "Raised stakes or attention lift the standard. Same evidence, stricter bar.";
-        sdEnc.textContent = "What is at stake has encroached: the same evidence no longer suffices to know.";
-        sdInv.textContent = 'The word "knows" never moved; one of the two reactions is simply mistaken.';
+        sdState.innerHTML = isZh ? "✕「我<strong>最好进去确认一下</strong>。」" : '✕ "I had <strong>better go in and check</strong>."';
+        sdCtx.textContent = isZh ? "提高的利害或注意力抬高了标准。同样的证据，门槛更严。" : "Raised stakes or attention lift the standard. Same evidence, stricter bar.";
+        sdEnc.textContent = isZh ? "利害关系已经侵入：同样的证据不再足以构成知识。" : "What is at stake has encroached: the same evidence no longer suffices to know.";
+        sdInv.textContent = isZh ? "「知道」这个词从未移动；两个反应中必有一个是错的。" : 'The word "knows" never moved; one of the two reactions is simply mistaken.';
       }
     }
     rStakes.addEventListener("input", renderStakes);
@@ -389,7 +426,26 @@
     var cx = 180;
     var cy = 150;
     var R = 92;
-    var scenarios = {
+    var scenarios = isZh ? {
+      know: {
+        reds: [],
+        safe: true,
+        label: "安全：知识",
+        expl: "一座正常运行的钟被正确读出。时间略有变化，你仍然会是对的。"
+      },
+      gettier: {
+        reds: [0,1,2,3,4,5,6,7,8,9,10],
+        safe: false,
+        label: "不安全：真理运气",
+        expl: "停走的钟在这里恰好为真，但几乎每一个邻近时刻都会让同一个信念变假。"
+      },
+      barn: {
+        reds: [1,2,4,5,7,8,10,11],
+        safe: false,
+        label: "不安全：环境运气",
+        expl: "你看见了真正的谷仓，但邻近的大多数一瞥都会落在假谷仓外观上。"
+      }
+    } : {
       know: {
         reds: [],
         safe: true,

@@ -90,7 +90,7 @@ for (const pattern of [
 for (const pattern of [
   /地图的其余部分/,
   /怀疑论者的三段论：四种出路/,
-  /银.案例：赌注表/,
+  /银.案例：利害关系表/,
   /安全与幸运：邻近世界案例/
 ]) {
   if (pattern.test(zhText)) {
@@ -118,7 +118,7 @@ for (const pattern of [
 for (const pattern of [
   /选择一扇门/,
   /你拒绝哪一行/,
-  /赌注拨盘/,
+  /利害关系拨盘/,
   /配偶提出出错的可能性/,
   /正常运行的钟（知识）/
 ]) {

@@ -94,6 +94,8 @@ After completing the English day file and passing all checks, mirror the work in
    - preregistration -> `研究预登记`; registered reports -> `注册式报告`
    - day references -> `第 N 日`
    - hype filter -> `炒作过滤器`; evidence labels may use `争议/炒作`
+   - names in Chinese running prose -> use established Simplified Chinese renderings or transliterations for major people and places, with the original Latin form in parentheses only on first mention when useful; keep source lists, article titles, DOI metadata, URLs, CSS/JS identifiers, and citation keys in their original Latin form
+   - examples: `彼得·昂格尔`, `希拉里·普特南`, `G. E. 摩尔`, `德雷茨克`, `诺齐克`, `基思·德罗斯`, `邓肯·普里查德`, `《美诺篇》（Meno）`, `拉里萨（Larissa）`, `巴黎在法国`; do not mix untranslated prose names with translated prose names unless the name has no stable Chinese rendering or appears inside a bibliographic/source entry
    - use Chinese corner quotes `「」` for quoted speech, thoughts, propositions, slogans, and translated terms in Chinese prose; keep italics for book/journal titles, foreign terms, or true emphasis, not as a substitute for quotation marks
    - insert spaces between Chinese text and Latin letters, acronyms, Arabic numerals, percentages, and units where source typography permits, for example `2026 年`, `GLM 5.1`, `100 项`, `95% 置信区间`
    - avoid literal metaphors and stiff calques from machine translation; prefer natural, elegant Chinese that remains technically exact
