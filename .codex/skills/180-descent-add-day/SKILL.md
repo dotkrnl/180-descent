@@ -52,8 +52,26 @@ rtk npm run build
 rtk npm run check
 ```
 
-9. Inspect the built website and downloads before committing.
-10. Commit a small batch with a conventional message, usually `feat: add day ### lesson`.
+9. Inspect the built website and downloads.
+10. Run the human refinement gate below. Do not commit, push, or deploy until the user has finished this local-server review pass and explicitly confirms it is done.
+11. Re-run the target-day checklist plus `rtk npm run build` and `rtk npm run check` if the human refinement gate changed any source files.
+12. Commit a small batch with a conventional message, usually `feat: add day ### lesson`.
+
+## Human Refinement Gate
+
+Use this gate after the implementation, translation, checks, and artifact inspection are otherwise complete, and before any commit, push, or deploy.
+
+1. Start the local dev server if it is not already running:
+
+   ```sh
+   rtk npm run dev -- --port 8080
+   ```
+
+   If port 8080 is unavailable, use another local port and tell the user the URL.
+2. Ask the user to review the relevant English and/or Chinese pages in the local browser. The localhost-only Codex refiner appears when they select page text. They can enter an optional reason and click **Ask Codex**; accepted refinements must write back to source files through the local dev server, not remain as DOM-only edits.
+3. Stay available while the user refines. If the refiner reports that selected text cannot be found uniquely in source, patch the source manually or adjust the selected range, then refresh and verify.
+4. After the user says the human refinement pass is done, check `rtk git status -sb` and inspect the source diff. Confirm any user-made refinements are present in tracked source files under `src/` or skill files, never only in `_site/`.
+5. Rebuild and rerun checks after any accepted refinement. Only proceed to commit, push, or deploy after the refined source passes validation and the user has no further changes.
 
 ## Required Outputs
 
@@ -114,8 +132,10 @@ After completing the English day file and passing all checks, mirror the work in
    rtk npm run check
    ```
 
-9. Inspect the built zh website, EPUB, and PDF outputs before committing.
-10. Commit the Chinese edition in the same batch or a follow-up batch with a conventional message, usually `feat: add day ### zh lesson`.
+9. Inspect the built zh website, EPUB, and PDF outputs.
+10. Run the human refinement gate before committing. Include both English and Chinese local pages when both are in scope.
+11. Re-run the target-day checklist plus `rtk npm run build` and `rtk npm run check` if the human refinement gate changed any source files.
+12. Commit the Chinese edition in the same batch or a follow-up batch with a conventional message, usually `feat: add day ### zh lesson`.
 
 ## Deep Dive Appendix Workflow
 
@@ -155,6 +175,8 @@ Use this when the user provides a `day-##-appendix-*.html` file for an already p
    - Kimi first: extract the English deep-dive block to `/tmp/day-###-appendix-en.md`, seed `/tmp/day-###-appendix-zh.md`, and run Kimi with explicit input/output paths using `rtk kimi --print --yolo -p`. The prompt itself should be in Chinese and should explicitly require natural Chinese popular-science prose, not literal translation. Do not use `--final-message-only`; watch progress and allow 30-60 minutes for large appendix work before treating silence as failure.
    - Codex review second: compare structure against the English block, preserve comments, classes, ids, data attributes, print/EPUB fallbacks, citations, URLs, DOI links, and JavaScript hooks, then insert the reviewed Chinese block into `src/_includes/days/###-slug/zh.njk` in the matching position.
    - GLM third: run `rtk opencode run -m zhipuai-coding-plan/glm-5.1` with a Chinese prompt, and ask GLM to refine the Chinese file directly in place, not return a one-shot replacement. Tell GLM that any shell command it runs inside this repo must use the `rtk` prefix. Manually review GLM's edits before keeping them.
-9. Commit a small batch with a conventional message, usually `feat: add day ### deep dive appendix`.
+9. Run the human refinement gate before committing. Include the standard and deep-dive local pages that expose the appendix content.
+10. Re-run `rtk npm run build` and `rtk npm run check` if the human refinement gate changed any source files.
+11. Commit a small batch with a conventional message, usually `feat: add day ### deep dive appendix`.
 
 Do not edit generated files in `_site/` or `dist/`; they are build outputs.

@@ -5,6 +5,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addDataExtension("yaml,yml", (contents) => yaml.parse(contents));
 
   eleventyConfig.setServerOptions({
+    domDiff: false,
     middleware: [
       createCodexRefinerMiddleware()
     ]

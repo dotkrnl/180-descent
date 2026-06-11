@@ -9,6 +9,7 @@ const MAX_BODY_BYTES = 16 * 1024;
 const MAX_TEXT_CHARS = 4000;
 const MAX_REASON_CHARS = 1000;
 const CODEX_TIMEOUT_MS = 120000;
+const MAX_SOURCE_MATCHES = 50;
 const EDITABLE_EXTENSIONS = new Set([".md", ".njk", ".yaml", ".yml"]);
 
 function createCodexRefinerMiddleware(options = {}) {
@@ -126,13 +127,22 @@ function normalizePagePath(value) {
 async function refineWithCodex({ text, reason }) {
   const tempDir = await mkdtemp(path.join(tmpdir(), "180-descent-codex-"));
   const outputPath = path.join(tempDir, "refined.txt");
-  const prompt = buildPrompt({ text, reason });
 
   try {
-    await runCodex(prompt, outputPath);
-    const output = sanitizeCodexOutput(await readFile(outputPath, "utf8"));
+    await runCodex(buildPrompt({ text, reason }), outputPath);
+    let output = sanitizeCodexOutput(await readFile(outputPath, "utf8"));
+    if (sameText(output, text)) {
+      await runCodex(buildPrompt({
+        text,
+        reason: `${reason || ""}\nThe previous refinement was unchanged. Rewrite it now while preserving meaning.`
+      }), outputPath);
+      output = sanitizeCodexOutput(await readFile(outputPath, "utf8"));
+    }
     if (!output) {
       throw new Error("Codex returned an empty refinement.");
+    }
+    if (sameText(output, text)) {
+      throw new Error("Codex returned the original text unchanged.");
     }
     return output;
   } finally {
@@ -153,6 +163,7 @@ function buildPrompt({ text, reason }) {
     "- Fit naturally where the selected text already appears.",
     "- Keep the length close to the original unless the editor's reason asks otherwise.",
     "- Do not invent new facts or citations.",
+    "- Always rewrite the selected text. Do not return the original text unchanged, and do not answer that no change is needed.",
     "",
     "Editor reason:",
     reason || "(none)",
@@ -227,15 +238,21 @@ function sanitizeCodexOutput(output) {
 async function applySourcePatch({ pagePath, original, refined }) {
   const pageCandidates = sourceCandidatesForPage(pagePath);
   const pagePatch = await findPatch(pageCandidates, original, refined);
-  if (pagePatch) {
+  if (pagePatch.status === "unique") {
     return writePatch(pagePatch);
+  }
+  if (pagePatch.status === "multiple") {
+    return runCodexSourceEdit({ pagePath, original, refined, matches: pagePatch.matches });
   }
 
   const globalCandidates = (await listEditableSourceFiles())
     .filter((filePath) => !pageCandidates.includes(filePath));
   const globalPatch = await findPatch(globalCandidates, original, refined);
-  if (globalPatch) {
+  if (globalPatch.status === "unique") {
     return writePatch(globalPatch);
+  }
+  if (globalPatch.status === "multiple") {
+    return runCodexSourceEdit({ pagePath, original, refined, matches: globalPatch.matches });
   }
 
   throw new Error("Codex refined the text, but the selected text was not found uniquely in source.");
@@ -326,22 +343,22 @@ async function findPatch(filePaths, original, refined) {
 
       for (const match of findStrategyMatches(contents, strategy)) {
         matches.push({ filePath, contents, match, strategy, refined });
-        if (matches.length > 1) break;
+        if (matches.length >= MAX_SOURCE_MATCHES) break;
       }
 
-      if (matches.length > 1) break;
+      if (matches.length >= MAX_SOURCE_MATCHES) break;
     }
 
     if (matches.length === 1) {
-      return matches[0];
+      return { status: "unique", ...matches[0] };
     }
 
     if (matches.length > 1) {
-      throw new Error("Codex refined the text, but the selected text appears more than once in source.");
+      return { status: "multiple", matches, strategy };
     }
   }
 
-  return null;
+  return { status: "none", matches: [] };
 }
 
 function buildPatchStrategies(original) {
@@ -369,7 +386,7 @@ function findStrategyMatches(contents, strategy) {
   let match;
   while ((match = strategy.regex.exec(contents)) !== null) {
     matches.push({ index: match.index, text: match[0] });
-    if (matches.length > 1) break;
+    if (matches.length >= MAX_SOURCE_MATCHES) break;
   }
   return matches;
 }
@@ -381,7 +398,7 @@ function findExactMatches(contents, needle) {
   let index = contents.indexOf(needle);
   while (index !== -1) {
     matches.push({ index, text: needle });
-    if (matches.length > 1) break;
+    if (matches.length >= MAX_SOURCE_MATCHES) break;
     index = contents.indexOf(needle, index + needle.length);
   }
   return matches;
@@ -425,6 +442,148 @@ function isYamlScalarMatch(contents, match) {
   const after = contents.slice(match.index + match.text.length, lineEnd);
 
   return /^(\s*-\s*)?[\w-]+:\s*$/.test(before) && after.trim() === "";
+}
+
+async function runCodexSourceEdit({ pagePath, original, refined, matches }) {
+  const files = uniquePaths(matches.map((match) => match.filePath));
+  const before = new Map();
+
+  for (const filePath of files) {
+    before.set(filePath, await readFile(filePath, "utf8"));
+  }
+
+  const tempDir = await mkdtemp(path.join(tmpdir(), "180-descent-codex-edit-"));
+  const outputPath = path.join(tempDir, "source-edit.txt");
+
+  try {
+    await runCodexWorkspaceEdit(buildSourceEditPrompt({
+      pagePath,
+      original,
+      refined,
+      files,
+      matches
+    }), outputPath);
+
+    const changedFiles = [];
+    for (const filePath of files) {
+      const after = await readFile(filePath, "utf8");
+      if (after !== before.get(filePath)) {
+        changedFiles.push(path.relative(process.cwd(), filePath));
+      }
+    }
+
+    if (changedFiles.length === 0) {
+      throw new Error("Codex found duplicate matches but did not edit any source files.");
+    }
+
+    return {
+      files: changedFiles,
+      matches: matches.length,
+      strategy: "codex-source-edit"
+    };
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+}
+
+function buildSourceEditPrompt({ pagePath, original, refined, files, matches }) {
+  return [
+    "You are resolving a duplicate source match from the local web preview refiner for The 180-Day Descent.",
+    "",
+    "Edit source files in place. Do not return a patch in chat.",
+    "",
+    "Rules:",
+    "- Edit only the files listed below.",
+    "- Do not edit generated files such as _site/ or dist/.",
+    "- Use the replacement text as the canonical rewrite, with only the minimal escaping or syntax adjustment required by the file format.",
+    "- Replace every occurrence of the selected text when it is the same public-facing passage and should receive the same editorial change.",
+    "- If an occurrence is clearly unrelated or would make the text wrong in context, leave that occurrence alone.",
+    "- Always make an in-place rewrite for appropriate occurrences. Do not answer that no change is needed.",
+    "- Preserve HTML, Nunjucks, YAML, Markdown structure, citations, ids, classes, data attributes, and links.",
+    "",
+    `Page path: ${pagePath}`,
+    "",
+    "Selected text:",
+    "<<<",
+    original,
+    ">>>",
+    "",
+    "Replacement text:",
+    "<<<",
+    refined,
+    ">>>",
+    "",
+    "Files you may edit:",
+    ...files.map((filePath) => `- ${path.relative(process.cwd(), filePath)}`),
+    "",
+    "Observed source matches:",
+    ...matches.map((item, index) => {
+      const relative = path.relative(process.cwd(), item.filePath);
+      return `${index + 1}. ${relative}: ${sourceExcerpt(item.contents, item.match)}`;
+    })
+  ].join("\n");
+}
+
+function runCodexWorkspaceEdit(prompt, outputPath) {
+  return new Promise((resolve, reject) => {
+    const child = spawn("codex", [
+      "--ask-for-approval",
+      "never",
+      "exec",
+      "--ephemeral",
+      "--sandbox",
+      "workspace-write",
+      "--color",
+      "never",
+      "--output-last-message",
+      outputPath
+    ], {
+      cwd: process.cwd(),
+      stdio: ["pipe", "ignore", "pipe"]
+    });
+
+    let stderr = "";
+    const timeout = setTimeout(() => {
+      child.kill("SIGTERM");
+      reject(new Error("Codex timed out while editing duplicate source matches."));
+    }, CODEX_TIMEOUT_MS);
+
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk.toString("utf8");
+    });
+
+    child.on("error", (error) => {
+      clearTimeout(timeout);
+      reject(new Error(`Unable to start Codex source edit: ${error.message}`));
+    });
+
+    child.on("close", (code) => {
+      clearTimeout(timeout);
+      if (code === 0) {
+        resolve();
+        return;
+      }
+
+      const detail = stderr.trim().split("\n").slice(-4).join(" ");
+      reject(new Error(detail || `Codex source edit exited with status ${code}.`));
+    });
+
+    child.stdin.end(prompt);
+  });
+}
+
+function sourceExcerpt(contents, match) {
+  const start = Math.max(0, match.index - 120);
+  const end = Math.min(contents.length, match.index + match.text.length + 120);
+  return JSON.stringify(contents.slice(start, end).replace(/\s+/g, " ").trim());
+}
+
+function sameText(a, b) {
+  return normalizeComparableText(a) === normalizeComparableText(b);
+}
+
+function normalizeComparableText(value) {
+  return String(value || "").replace(/\s+/g, " ").trim();
 }
 
 function escapeHtml(text) {

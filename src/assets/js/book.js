@@ -23,8 +23,7 @@
       return;
     }
 
-    var main = document.getElementById("content");
-    if(!main){
+    if(!document.getElementById("content")){
       return;
     }
 
@@ -33,14 +32,19 @@
       cache: "no-store"
     }).then(function(response){
       if(response.ok){
-        mountCodexRefiner(main);
+        mountCodexRefiner();
       }
     }).catch(function(){
       // The static site can also be served on localhost; keep the tool hidden there.
     });
   }
 
-  function mountCodexRefiner(main){
+  function mountCodexRefiner(){
+    if(window.__codexRefinerMounted){
+      return;
+    }
+    window.__codexRefinerMounted = true;
+
     var activeRange = null;
     var activeText = "";
     var running = false;
@@ -84,7 +88,8 @@
         return;
       }
 
-      if(!main.contains(event.target)){
+      var main = currentMain();
+      if(!main || !main.contains(event.target)){
         hidePanel();
       }
     }, true);
@@ -114,6 +119,7 @@
         return;
       }
 
+      ensurePanel();
       var range = selection.getRangeAt(0);
       if(!isAllowedRange(range)){
         hidePanel();
@@ -139,9 +145,10 @@
     }
 
     function isAllowedRange(range){
+      var main = currentMain();
       var node = range.commonAncestorContainer;
       var element = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
-      if(!element || !main.contains(element)){
+      if(!main || !element || !main.contains(element)){
         return false;
       }
 
@@ -218,7 +225,10 @@
       window.setTimeout(function(){
         var textNode = document.createTextNode(mark.textContent);
         mark.replaceWith(textNode);
-        main.normalize();
+        var main = currentMain();
+        if(main){
+          main.normalize();
+        }
       }, 2600);
     }
 
@@ -272,6 +282,16 @@
       activeText = "";
       clearHighlight("codex-refiner-selection");
       clearHighlight("codex-refiner-running");
+    }
+
+    function currentMain(){
+      return document.getElementById("content");
+    }
+
+    function ensurePanel(){
+      if(!document.body.contains(panel)){
+        document.body.appendChild(panel);
+      }
     }
 
     function setHighlight(name, range){
