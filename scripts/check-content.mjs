@@ -20,31 +20,41 @@ if (!allDayFiles.length) {
 
 for (const { file, full, label } of allDayFiles) {
   const parsed = matter.read(full);
-  for (const key of ["day", "title", "summary", "threads", "permalink"]) {
+  for (const key of ["day", "title", "summary", "threads", "content_template", "permalink"]) {
     if (!parsed.data[key]) {
       console.error(`${label} ${file} missing frontmatter key: ${key}`);
       failures++;
     }
   }
-  if (!parsed.content.includes('class="sources"')) {
+  const content = await readDayContent(parsed, full);
+  for (const script of parsed.data.scripts || []) {
+    const scriptPath = String(script).replace(/^\//, "src/");
+    try {
+      await readFile(scriptPath, "utf8");
+    } catch {
+      console.error(`${label} ${file} references missing script: ${script}`);
+      failures++;
+    }
+  }
+  if (!content.includes('class="sources"')) {
     console.error(`${label} ${file} has no sources section`);
     failures++;
   }
-  if (!parsed.content.includes("chip ")) {
+  if (!content.includes("chip ")) {
     console.error(`${label} ${file} has no frontier status chips`);
     failures++;
   }
-  if (parsed.content.includes("fonts.googleapis.com")) {
+  if (content.includes("fonts.googleapis.com")) {
     console.error(`${label} ${file} references remote Google Fonts`);
     failures++;
   }
   for (const phrase of ["Static version", "live website lets", "as a table", "Receipts"]) {
-    if (parsed.content.includes(phrase)) {
+    if (content.includes(phrase)) {
       console.error(`${label} ${file} contains print-unfriendly phrase: ${phrase}`);
       failures++;
     }
   }
-  const $ = cheerio.load(parsed.content);
+  const $ = cheerio.load(content);
   const webPanels = $(".panel.web-only").length;
   const staticAlternates = $(".format-alt.print-only").length;
   if (staticAlternates < webPanels) {
@@ -79,6 +89,18 @@ for (const file of await walk(".", new Set([".cjs", ".css", ".html", ".json", ".
 }
 
 if (failures) process.exit(1);
+
+async function readDayContent(parsed, sourceFile) {
+  if (!parsed.data.content_template) return parsed.content;
+  const includePath = path.join("src/_includes", parsed.data.content_template);
+  try {
+    return await readFile(includePath, "utf8");
+  } catch {
+    console.error(`${sourceFile} points to missing content_template: ${parsed.data.content_template}`);
+    failures++;
+    return parsed.content;
+  }
+}
 
 async function walk(dir, exts) {
   const ignored = new Set([".git", "_site", "dist", "node_modules"]);

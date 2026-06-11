@@ -33,6 +33,12 @@ The Cloudflare Pages project name is `180-descent`.
 
 Use the repo-local Codex skill at `.codex/skills/180-descent-add-day/`. It documents the day-ingestion workflow, required files, callback/future-link rules, and validation commands.
 
+Day source is split by responsibility:
+
+- `src/days/day-###-slug.md` and `src/zh/days/day-###-slug.md` are Eleventy route shells: frontmatter, permalink, `content_template`, and optional page `scripts`.
+- `src/_includes/days/###-slug/en.njk` and `src/_includes/days/###-slug/zh.njk` hold the lesson bodies.
+- Reusable interaction code lives in `src/assets/js/interactions/` and is loaded only by day frontmatter that lists it.
+
 ## Adding A Deep Dive Appendix
 
 Use the same repo-local skill. For an English appendix HTML file, import it into the existing day with:

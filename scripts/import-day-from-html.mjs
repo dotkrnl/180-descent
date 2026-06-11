@@ -46,6 +46,8 @@ content(".chip").each((_, chip) => {
 });
 
 const dayPath = `${String(day).padStart(3, "0")}-${slug}`;
+const contentTemplate = `days/${dayPath}/en.njk`;
+const scripts = interactionScriptsFor(content);
 const frontmatter = [
   "---",
   "layout: layouts/day.njk",
@@ -59,13 +61,17 @@ const frontmatter = [
   `source_file: ${source}`,
   "threads:",
   ...threadsRaw.split(",").map((thread) => `  - ${thread.trim()}`),
+  `content_template: ${contentTemplate}`,
+  ...(scripts.length ? ["scripts:", ...scripts.map((script) => `  - ${script}`)] : []),
   `permalink: /days/${dayPath}/`,
   "---",
   ""
 ].join("\n");
 
 await mkdir("src/days", { recursive: true });
-await writeFile(path.join("src/days", `day-${dayPath}.md`), frontmatter + normalizeHtmlBlockIndent(content("root").html().trim()) + "\n");
+await mkdir(path.join("src/_includes/days", dayPath), { recursive: true });
+await writeFile(path.join("src/_includes", contentTemplate), normalizeHtmlBlockIndent(content("root").html().trim()) + "\n");
+await writeFile(path.join("src/days", `day-${dayPath}.md`), frontmatter + "{% include content_template %}\n");
 
 function escapeYaml(value) {
   return String(value).replaceAll("\\", "\\\\").replaceAll('"', '\\"');
@@ -84,6 +90,15 @@ function compactChipLabel(value) {
   if (text.includes("contested")) return "contested";
   if (text.includes("optimistic")) return "optimistic";
   return "review";
+}
+
+function interactionScriptsFor($root) {
+  const scripts = [];
+  if ($root("#ticks").length) scripts.push("/assets/js/interactions/clock-ticks.js");
+  if ($root("#sw-b").length) scripts.push("/assets/js/interactions/gettier-machine.js");
+  if ($root("#rS").length) scripts.push("/assets/js/interactions/credence-dial.js");
+  if ($root("#claimlist").length) scripts.push("/assets/js/interactions/demarcation-lab.js");
+  return scripts;
 }
 
 function gettierFallback() {

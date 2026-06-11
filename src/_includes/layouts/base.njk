@@ -17,6 +17,9 @@
     <meta name="description" content="{{ description or uiDescription }}">
     <link rel="stylesheet" href="/assets/css/book.css">
     <script src="/assets/js/book.js" defer></script>
+    {% for script in scripts or [] %}
+      <script src="{{ script }}" defer></script>
+    {% endfor %}
   </head>
   <body>
     <a class="skip-link" href="#content">{{ "跳到正文" if isZh else "Skip to content" }}</a>

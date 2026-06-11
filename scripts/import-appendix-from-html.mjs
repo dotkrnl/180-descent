@@ -11,12 +11,15 @@ if (!source || !dayRaw) {
 
 const day = Number(dayRaw);
 const dayFile = await findDayFile(day);
-const original = await readFile(dayFile, "utf8");
-const parsed = matter(original);
+const routeSource = await readFile(dayFile, "utf8");
+const parsed = matter(routeSource);
+const contentFile = dayContentFile(parsed);
+const originalContent = contentFile ? await readFile(contentFile, "utf8") : parsed.content;
 const html = await readFile(source, "utf8");
 const $ = cheerio.load(html, { decodeEntities: false });
 const header = $("header.hero").first();
 const wrap = $("body > div.wrap").first();
+const neededScripts = new Set();
 
 if (!header.length || !wrap.length) {
   throw new Error(`Could not find appendix hero/wrap content in ${source}`);
@@ -44,6 +47,7 @@ root.find(".panel").each((_, panel) => {
   const el = fragment(panel);
   if (el.find("[id='cmArg']").length) {
     el.addClass("web-only cm-machine");
+    neededScripts.add("/assets/js/interactions/closure-machine.js");
     addClassById(fragment, "cmP1", "cm-p1");
     addClassById(fragment, "cmP2", "cm-p2");
     addClassById(fragment, "cmC", "cm-c");
@@ -51,6 +55,7 @@ root.find(".panel").each((_, panel) => {
     el.after(closureFallback());
   } else if (el.find("[id='rStakes']").length) {
     el.addClass("web-only stakes-dial");
+    neededScripts.add("/assets/js/interactions/stakes-dial.js");
     addClassById(fragment, "sdCase", "stakes-case");
     addClassById(fragment, "rStakes", "stakes-range");
     addClassById(fragment, "sdVal", "stakes-value");
@@ -62,6 +67,7 @@ root.find(".panel").each((_, panel) => {
     el.after(stakesFallback());
   } else if (el.find("[id='mrSvg']").length) {
     el.addClass("web-only modal-rings");
+    neededScripts.add("/assets/js/interactions/modal-rings.js");
     addClassById(fragment, "mrSat", "modal-satellites");
     addClassById(fragment, "mrCore", "modal-core");
     addClassById(fragment, "mrVerdict", "modal-verdict");
@@ -98,13 +104,60 @@ const appendixBlock = [
   "<!-- deep-dive:end -->"
 ].join("\n");
 
-const target = parsed.content.includes("<!-- deep-dive:start -->")
-  ? parsed.content.replace(/<!-- deep-dive:start -->[\s\S]*?<!-- deep-dive:end -->/, appendixBlock)
-  : parsed.content.includes('class="deep-dive"')
-    ? parsed.content.replace(/<details class="deep-dive"[\s\S]*?<\/details>/, appendixBlock)
-    : parsed.content.replace(/\n<div class="tomorrow">/, `\n${appendixBlock}\n\n<div class="tomorrow">`);
+const target = originalContent.includes("<!-- deep-dive:start -->")
+  ? originalContent.replace(/<!-- deep-dive:start -->[\s\S]*?<!-- deep-dive:end -->/, appendixBlock)
+  : originalContent.includes('class="deep-dive"')
+    ? originalContent.replace(/<details class="deep-dive"[\s\S]*?<\/details>/, appendixBlock)
+    : originalContent.replace(/\n<div class="tomorrow">/, `\n${appendixBlock}\n\n<div class="tomorrow">`);
 
-await writeFile(dayFile, matter.stringify(target, parsed.data));
+if (contentFile) {
+  await writeFile(contentFile, target.trimEnd() + "\n");
+  await ensureScripts(dayFile, routeSource, [...neededScripts]);
+} else {
+  const scripts = [...new Set([...(parsed.data.scripts || []), ...neededScripts])];
+  await writeFile(dayFile, matter.stringify(target, { ...parsed.data, scripts }));
+}
+
+function dayContentFile(parsedDay) {
+  if (!parsedDay.data.content_template) return null;
+  return path.join("src/_includes", parsedDay.data.content_template);
+}
+
+async function ensureScripts(routeFile, sourceText, additions) {
+  const missing = additions.filter((script) => {
+    const current = matter(sourceText).data.scripts || [];
+    return !current.includes(script);
+  });
+  if (!missing.length) return;
+
+  const match = sourceText.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!match) {
+    const current = matter(sourceText);
+    const scripts = [...new Set([...(current.data.scripts || []), ...missing])];
+    await writeFile(routeFile, matter.stringify(current.content, { ...current.data, scripts }));
+    return;
+  }
+
+  const frontmatter = addScriptsToFrontmatter(match[1], missing);
+  await writeFile(routeFile, `---\n${frontmatter}\n---\n${match[2]}`);
+}
+
+function addScriptsToFrontmatter(frontmatter, additions) {
+  const lines = frontmatter.split("\n");
+  const scriptsIndex = lines.findIndex((line) => /^scripts:\s*$/.test(line));
+  if (scriptsIndex >= 0) {
+    let insertAt = scriptsIndex + 1;
+    while (insertAt < lines.length && /^\s+-\s+/.test(lines[insertAt])) insertAt++;
+    lines.splice(insertAt, 0, ...additions.map((script) => `  - ${script}`));
+    return lines.join("\n");
+  }
+
+  const block = ["scripts:", ...additions.map((script) => `  - ${script}`)];
+  const permalinkIndex = lines.findIndex((line) => /^permalink:/.test(line));
+  if (permalinkIndex >= 0) lines.splice(permalinkIndex, 0, ...block);
+  else lines.push(...block);
+  return lines.join("\n");
+}
 
 async function findDayFile(dayNumber) {
   const files = (await readdir("src/days")).filter((file) => file.endsWith(".md"));
