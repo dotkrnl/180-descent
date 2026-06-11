@@ -97,11 +97,55 @@ permalink: /days/002-scientific-method-and-demarcation/
 </div>
 </section>
 
+<section>
+<p class="sec-eyebrow">The complication</p>
+<h2>Kuhn: but that's not how science actually behaves</h2>
+<p>Popper described how science <em>ought</em> to work. In 1962, a physicist-turned-historian named <strong>Thomas Kuhn</strong> looked at how it has <em>really</em> worked — and found something messier and more human. His book <em>The Structure of Scientific Revolutions</em> became one of the most cited academic works of the twentieth century, and it gave us a word you've used a hundred times without knowing its origin: <em class="term">paradigm</em>.</p>
+<p>Here's Kuhn's heresy. Real working scientists, almost all the time, are <em>not</em> trying to falsify their grand theories. They're doing what he called <em class="term">normal science</em>: puzzle-solving inside an accepted framework — a paradigm — that they take entirely for granted. A chemist doesn't wake up trying to refute the periodic table; she uses it to figure out a reaction. The paradigm isn't on trial. It's the courtroom.</p>
+<p>And when an experiment comes back wrong? Scientists mostly <em>don't</em> drop the theory, the way Popper's story says they should. They shrug it off as an <em class="term">anomaly</em> — a puzzle for later, probably their own mistake. The theory is too useful, too productive, to abandon over one stubborn data point. (Notice that this is the <em>opposite</em> of falsificationism — and it's also, awkwardly, what those Freudians and Marxists were doing.)</p>
+<p>Only when anomalies <em>pile up</em> — when they become too numerous and too central to ignore — does the field slide into <em class="term">crisis</em>. And crisis is resolved not by a tidy refutation but by a <strong>scientific revolution</strong>: a wholesale <em>switch</em> to a new paradigm. Ptolemy's circles give way to Kepler's ellipses; Newton's absolute space gives way to Einstein's spacetime. Kuhn argued these shifts are so total that the two paradigms become <em class="term">incommensurable</em> — there's "no common measure," because the rival camps don't even agree on what the key terms mean or which problems matter. "Mass" means something subtly different to Newton and to Einstein. A paradigm shift is less like winning an argument and more like a <em>gestalt flip</em> — the duck becomes the rabbit, and you can't see it both ways at once.</p>
+
+<div class="aside">
+<p class="h">A myth worth killing</p>
+<p>Kuhn is often waved around as proof that "science is just opinion" or "all paradigms are equally valid." He <em>hated</em> that reading and spent years pushing back on it. His point wasn't that science is irrational — it's that scientific rationality is more <em>communal</em>, <em>historical</em>, and <em>conservative</em> than the clean falsificationist fairy tale admits. Paradigms get overthrown because rivals genuinely solve more puzzles. That's not relativism. It's just realism about how humans do the work.</p>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">The repair</p>
+<h2>Lakatos: theories don't die alone — and the Duhem–Quine ghost</h2>
+<p>So Popper says <em>falsify</em>; Kuhn says <em>scientists don't, and shouldn't be too hasty</em>. Was there a way to honor both — to keep falsification's spine while admitting Kuhn's history? <strong>Imre Lakatos</strong>, a Hungarian émigré at the London School of Economics, tried to build exactly that bridge. But first we have to meet the ghost haunting the whole room.</p>
+<p>It's called the <em class="term">Duhem–Quine thesis</em>, and once you see it you can't unsee it. The claim is simple and devastating: <strong>no hypothesis is ever tested alone.</strong> When you test "this star sits <em>there</em>," you're also relying on optics, atmospheric models, the telescope's calibration, the theory of how light travels. So when the prediction fails, pure logic <em>never</em> tells you which link broke. Maybe the hypothesis is wrong — or maybe your telescope was miscalibrated. You can <em>always</em> save your pet theory by blaming an auxiliary assumption instead. Popper's clean "single black swan kills the theory" turns out to be never quite that clean: you can insist the swan was a painted goose.</p>
+<p>This isn't armchair pedantry — it's the engine of real discovery. When Uranus wobbled off its predicted Newtonian orbit in the 1840s, nobody declared Newton refuted. They blamed an auxiliary: there must be an <em>unseen planet</em> tugging on it. They were right — that's how <strong>Neptune</strong> was found in 1846, a glorious vindication. Emboldened, astronomers used the same move on Mercury's wobble, predicting another hidden planet they named <strong>Vulcan</strong>. They hunted it for decades. It does not exist. Mercury's wobble was telling them Newton himself was incomplete — and only Einstein, in 1915, could say so. <em>Same logical move, opposite outcomes.</em> So how do you tell a brilliant rescue from a desperate dodge?</p>
+<p>Lakatos's answer reframes the unit of science. Don't judge lone theories — judge <em class="term">research programmes</em> unfolding over time. Each has a <strong>hard core</strong> (the central commitments you protect by decision — "Newton's laws hold") wrapped in a <em class="term">protective belt</em> of adjustable auxiliary hypotheses. When trouble comes, you absorb the hit in the belt, not the core. That's allowed. The question is what happens <em>next</em>:</p>
+<ul>
+<li>A <strong>progressive</strong> programme's patches <em>predict surprising new facts</em> that then turn up. "There's a hidden planet" predicted Neptune at a specific spot in the sky — and there it was. The rescue <em>paid for itself</em> with new knowledge.</li>
+<li>A <strong>degenerating</strong> programme only ever patches <em>after the fact</em>, bolting on excuses to explain away each failure while predicting nothing new. Vulcan, endlessly relocated to wherever it conveniently couldn't be seen, was the warning sign.</li>
+</ul>
+<p>That's the demarcation line redrawn — and it's a far better fit for real history. Science isn't a single theory facing a single verdict; it's a <em>programme</em> earning or losing its keep over years, measured by whether it keeps telling us things we didn't already know.</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">The wrecking ball</p>
+<h2>Feyerabend and the death of "the" method</h2>
+<p>Then Lakatos's friend and sparring partner <strong>Paul Feyerabend</strong> took the whole project out behind the barn. In <em>Against Method</em> (1975), he made a mischievous, maddening, and weirdly well-evidenced argument: comb through the actual history of great scientific breakthroughs, and you'll find that <em>every</em> proposed rule of method was <strong>broken</strong> by somebody, at some crucial moment, in order to make progress. Galileo advanced the Copernican cause with propaganda, rhetorical tricks, and by ignoring inconvenient data. Had he obeyed the tidy rules of method, the revolution might have stalled.</p>
+<p>His conclusion became the most infamous three words in the philosophy of science: <em class="term">"anything goes."</em> But here's the catch nearly everyone misses — Feyerabend did <em>not</em> mean "do whatever you like, all ideas are equal." He meant it as a bitter <em>reductio</em>: the only methodological rule with no historical counterexamples is one so empty it permits everything. It was, in his words, the "terrified exclamation" of a rationalist who finally looks honestly at history. He was burning down the idea that there is one capital-M Method that defines science for all time — not endorsing chaos.</p>
+<p>And in 1983, the philosopher <strong>Larry Laudan</strong> delivered what looked like the funeral oration. In a famous essay, "The Demise of the Demarcation Problem," he argued that <em>every</em> attempt to draw a clean line — Popper's included — had failed, and that "science" and "pseudoscience" are too varied to share a single defining mark. The terms, he wrote acidly, are mostly "hollow phrases which do only emotive work for us." After two and a half millennia, the demarcation problem was pronounced dead.</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">The resurrection</p>
+<h2>Why the line still matters</h2>
+<p>Except — corpses this useful don't stay buried. In 2013, philosophers <strong>Massimo Pigliucci and Maarten Boudry</strong> edited a volume bluntly titled <em>Philosophy of Pseudoscience: Reconsidering the Demarcation Problem</em>, reviving the whole question against Laudan. Their argument is partly practical and hard to wave away: in a world of vaccine refusal, climate denial, miracle cures, and intelligent-design "theory," telling science from its imitations is not an idle parlor game. It has a body count.</p>
+<p>Their philosophical move is to stop demanding a <em>single</em> magic criterion and instead treat science as a <em class="term">family-resemblance concept</em> — borrowing from Wittgenstein. There's no one feature every science shares and every pseudoscience lacks. Instead there's a <em>cluster</em>: falsifiable predictions, yes, but also empirical track record, openness to correction, coherence with established knowledge, honest treatment of anomalies, and the absence of the tell-tale dodges (endless ad-hoc rescue, persecution narratives, immunity to evidence). No single thread holds the rope; the threads overlapping do. A real science can be weak on one criterion and strong on the rest. A pseudoscience reveals itself by failing the whole pattern at once.</p>
+<p>Which sets up the punchline of the entire day. All of this — Popper, Kuhn, Lakatos, the cluster of virtues — has been <em>philosophy</em>, argued in seminar rooms. But in the last fifteen years, science did something extraordinary: it turned the demarcation question on <em>itself</em>, empirically, at scale. It asked whether its own published findings could survive the most basic scientific demand of all.</p>
+</section>
+
 <!-- ===================== INTERACTIVE 1 ===================== -->
 <div class="panel web-only">
 <p class="ptitle">Interactive · run the searchlight</p>
 <h4>The Demarcation Lab</h4>
-<p class="pnote">Pick a claim. We'll run it past <strong>Popper</strong> (is it falsifiable?) — and then past the three thinkers who complicate his verdict. Notice how often the four of them disagree. That disagreement <em>is</em> the philosophy of science.</p>
+<p class="pnote">Pick a claim. We'll run it past <strong>Popper</strong> (is it falsifiable?) — and then past <strong>Kuhn</strong>, <strong>Lakatos</strong>, and the <strong>cluster view</strong>, all of which complicate his verdict. Notice how often the four lenses disagree. That disagreement <em>is</em> the philosophy of science.</p>
 
 <div class="lab-grid">
 <div class="claimlist" id="claimlist">
@@ -150,50 +194,6 @@ permalink: /days/002-scientific-method-and-demarcation/
 </tbody>
 </table>
 </div>
-
-<section>
-<p class="sec-eyebrow">The complication</p>
-<h2>Kuhn: but that's not how science actually behaves</h2>
-<p>Popper described how science <em>ought</em> to work. In 1962, a physicist-turned-historian named <strong>Thomas Kuhn</strong> looked at how it has <em>really</em> worked — and found something messier and more human. His book <em>The Structure of Scientific Revolutions</em> became one of the most cited academic works of the twentieth century, and it gave us a word you've used a hundred times without knowing its origin: <em class="term">paradigm</em>.</p>
-<p>Here's Kuhn's heresy. Real working scientists, almost all the time, are <em>not</em> trying to falsify their grand theories. They're doing what he called <em class="term">normal science</em>: puzzle-solving inside an accepted framework — a paradigm — that they take entirely for granted. A chemist doesn't wake up trying to refute the periodic table; she uses it to figure out a reaction. The paradigm isn't on trial. It's the courtroom.</p>
-<p>And when an experiment comes back wrong? Scientists mostly <em>don't</em> drop the theory, the way Popper's story says they should. They shrug it off as an <em class="term">anomaly</em> — a puzzle for later, probably their own mistake. The theory is too useful, too productive, to abandon over one stubborn data point. (Notice that this is the <em>opposite</em> of falsificationism — and it's also, awkwardly, what those Freudians and Marxists were doing.)</p>
-<p>Only when anomalies <em>pile up</em> — when they become too numerous and too central to ignore — does the field slide into <em class="term">crisis</em>. And crisis is resolved not by a tidy refutation but by a <strong>scientific revolution</strong>: a wholesale <em>switch</em> to a new paradigm. Ptolemy's circles give way to Kepler's ellipses; Newton's absolute space gives way to Einstein's spacetime. Kuhn argued these shifts are so total that the two paradigms become <em class="term">incommensurable</em> — there's "no common measure," because the rival camps don't even agree on what the key terms mean or which problems matter. "Mass" means something subtly different to Newton and to Einstein. A paradigm shift is less like winning an argument and more like a <em>gestalt flip</em> — the duck becomes the rabbit, and you can't see it both ways at once.</p>
-
-<div class="aside">
-<p class="h">A myth worth killing</p>
-<p>Kuhn is often waved around as proof that "science is just opinion" or "all paradigms are equally valid." He <em>hated</em> that reading and spent years pushing back on it. His point wasn't that science is irrational — it's that scientific rationality is more <em>communal</em>, <em>historical</em>, and <em>conservative</em> than the clean falsificationist fairy tale admits. Paradigms get overthrown because rivals genuinely solve more puzzles. That's not relativism. It's just realism about how humans do the work.</p>
-</div>
-</section>
-
-<section>
-<p class="sec-eyebrow">The repair</p>
-<h2>Lakatos: theories don't die alone — and the Duhem–Quine ghost</h2>
-<p>So Popper says <em>falsify</em>; Kuhn says <em>scientists don't, and shouldn't be too hasty</em>. Was there a way to honor both — to keep falsification's spine while admitting Kuhn's history? <strong>Imre Lakatos</strong>, a Hungarian émigré at the London School of Economics, tried to build exactly that bridge. But first we have to meet the ghost haunting the whole room.</p>
-<p>It's called the <em class="term">Duhem–Quine thesis</em>, and once you see it you can't unsee it. The claim is simple and devastating: <strong>no hypothesis is ever tested alone.</strong> When you test "this star sits <em>there</em>," you're also relying on optics, atmospheric models, the telescope's calibration, the theory of how light travels. So when the prediction fails, pure logic <em>never</em> tells you which link broke. Maybe the hypothesis is wrong — or maybe your telescope was miscalibrated. You can <em>always</em> save your pet theory by blaming an auxiliary assumption instead. Popper's clean "single black swan kills the theory" turns out to be never quite that clean: you can insist the swan was a painted goose.</p>
-<p>This isn't armchair pedantry — it's the engine of real discovery. When Uranus wobbled off its predicted Newtonian orbit in the 1840s, nobody declared Newton refuted. They blamed an auxiliary: there must be an <em>unseen planet</em> tugging on it. They were right — that's how <strong>Neptune</strong> was found in 1846, a glorious vindication. Emboldened, astronomers used the same move on Mercury's wobble, predicting another hidden planet they named <strong>Vulcan</strong>. They hunted it for decades. It does not exist. Mercury's wobble was telling them Newton himself was incomplete — and only Einstein, in 1915, could say so. <em>Same logical move, opposite outcomes.</em> So how do you tell a brilliant rescue from a desperate dodge?</p>
-<p>Lakatos's answer reframes the unit of science. Don't judge lone theories — judge <em class="term">research programmes</em> unfolding over time. Each has a <strong>hard core</strong> (the central commitments you protect by decision — "Newton's laws hold") wrapped in a <em class="term">protective belt</em> of adjustable auxiliary hypotheses. When trouble comes, you absorb the hit in the belt, not the core. That's allowed. The question is what happens <em>next</em>:</p>
-<ul>
-<li>A <strong>progressive</strong> programme's patches <em>predict surprising new facts</em> that then turn up. "There's a hidden planet" predicted Neptune at a specific spot in the sky — and there it was. The rescue <em>paid for itself</em> with new knowledge.</li>
-<li>A <strong>degenerating</strong> programme only ever patches <em>after the fact</em>, bolting on excuses to explain away each failure while predicting nothing new. Vulcan, endlessly relocated to wherever it conveniently couldn't be seen, was the warning sign.</li>
-</ul>
-<p>That's the demarcation line redrawn — and it's a far better fit for real history. Science isn't a single theory facing a single verdict; it's a <em>programme</em> earning or losing its keep over years, measured by whether it keeps telling us things we didn't already know.</p>
-</section>
-
-<section>
-<p class="sec-eyebrow">The wrecking ball</p>
-<h2>Feyerabend and the death of "the" method</h2>
-<p>Then Lakatos's friend and sparring partner <strong>Paul Feyerabend</strong> took the whole project out behind the barn. In <em>Against Method</em> (1975), he made a mischievous, maddening, and weirdly well-evidenced argument: comb through the actual history of great scientific breakthroughs, and you'll find that <em>every</em> proposed rule of method was <strong>broken</strong> by somebody, at some crucial moment, in order to make progress. Galileo advanced the Copernican cause with propaganda, rhetorical tricks, and by ignoring inconvenient data. Had he obeyed the tidy rules of method, the revolution might have stalled.</p>
-<p>His conclusion became the most infamous three words in the philosophy of science: <em class="term">"anything goes."</em> But here's the catch nearly everyone misses — Feyerabend did <em>not</em> mean "do whatever you like, all ideas are equal." He meant it as a bitter <em>reductio</em>: the only methodological rule with no historical counterexamples is one so empty it permits everything. It was, in his words, the "terrified exclamation" of a rationalist who finally looks honestly at history. He was burning down the idea that there is one capital-M Method that defines science for all time — not endorsing chaos.</p>
-<p>And in 1983, the philosopher <strong>Larry Laudan</strong> delivered what looked like the funeral oration. In a famous essay, "The Demise of the Demarcation Problem," he argued that <em>every</em> attempt to draw a clean line — Popper's included — had failed, and that "science" and "pseudoscience" are too varied to share a single defining mark. The terms, he wrote acidly, are mostly "hollow phrases which do only emotive work for us." After two and a half millennia, the demarcation problem was pronounced dead.</p>
-</section>
-
-<section>
-<p class="sec-eyebrow">The resurrection</p>
-<h2>Why the line still matters</h2>
-<p>Except — corpses this useful don't stay buried. In 2013, philosophers <strong>Massimo Pigliucci and Maarten Boudry</strong> edited a volume bluntly titled <em>Philosophy of Pseudoscience: Reconsidering the Demarcation Problem</em>, reviving the whole question against Laudan. Their argument is partly practical and hard to wave away: in a world of vaccine refusal, climate denial, miracle cures, and intelligent-design "theory," telling science from its imitations is not an idle parlor game. It has a body count.</p>
-<p>Their philosophical move is to stop demanding a <em>single</em> magic criterion and instead treat science as a <em class="term">family-resemblance concept</em> — borrowing from Wittgenstein. There's no one feature every science shares and every pseudoscience lacks. Instead there's a <em>cluster</em>: falsifiable predictions, yes, but also empirical track record, openness to correction, coherence with established knowledge, honest treatment of anomalies, and the absence of the tell-tale dodges (endless ad-hoc rescue, persecution narratives, immunity to evidence). No single thread holds the rope; the threads overlapping do. A real science can be weak on one criterion and strong on the rest. A pseudoscience reveals itself by failing the whole pattern at once.</p>
-<p>Which sets up the punchline of the entire day. All of this — Popper, Kuhn, Lakatos, the cluster of virtues — has been <em>philosophy</em>, argued in seminar rooms. But in the last fifteen years, science did something extraordinary: it turned the demarcation question on <em>itself</em>, empirically, at scale. It asked whether its own published findings could survive the most basic scientific demand of all.</p>
-</section>
 
 <section class="frontier">
 <p class="sec-eyebrow">The frontier · 2026</p>
