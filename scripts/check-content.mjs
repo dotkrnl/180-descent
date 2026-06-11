@@ -40,6 +40,12 @@ for (const { file, full, label } of allDayFiles) {
     console.error(`${label} ${file} has no sources section`);
     failures++;
   }
+  const firstSources = content.indexOf('class="sources"');
+  const deepDiveStart = content.indexOf("<!-- deep-dive:start -->");
+  if (deepDiveStart >= 0 && (firstSources < 0 || firstSources > deepDiveStart)) {
+    console.error(`${label} ${file} places main lesson sources after the appendix`);
+    failures++;
+  }
   if (!content.includes("chip ")) {
     console.error(`${label} ${file} has no frontier status chips`);
     failures++;
