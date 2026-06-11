@@ -64,7 +64,7 @@ rtk npm run check
 After completing the English day file and passing all checks, mirror the work into the Chinese edition:
 
 1. Create `src/zh/days/day-###-slug.md` as a translation of the English day file.
-2. Use Kimi CLI for the first Chinese translation pass. Kimi can be slow: use a long timeout, poll patiently, and do not assume it is stuck just because it is quiet for several minutes. It is normal for a large file to take 30-60 minutes before a useful write appears. Ask Kimi to work agentically and update files directly, not to return a one-shot full-file translation in chat.
+2. Use Kimi CLI for the first Chinese translation pass. Kimi can be slow: use a long timeout, poll patiently, and do not assume it is stuck just because it is quiet for several minutes. It is normal for a large file to take 30-60 minutes before a useful write appears. Ask Kimi to work agentically and update files directly, not to return a one-shot full-file translation in chat. If delegated agents run shell commands inside this repo, explicitly tell them to prefix every shell command with `rtk`.
 
    Use the actual CLI prompt flag and keep progress visible. Do **not** add `--final-message-only` while supervising a long translation run; it hides intermediate tool calls and makes a quiet but healthy run look stuck. Prefer `--print --yolo -p` so Codex can see Kimi's reads/writes and progress notes:
 
@@ -144,7 +144,7 @@ Use this when the user provides a `day-##-appendix-*.html` file for an already p
 8. Mirror the appendix into the Chinese edition in this order:
    - Kimi first: extract the English deep-dive block to `/tmp/day-###-appendix-en.md`, seed `/tmp/day-###-appendix-zh.md`, and run Kimi with explicit input/output paths using `rtk kimi --print --yolo -p`. Do not use `--final-message-only`; watch progress and allow 30-60 minutes for large appendix work before treating silence as failure.
    - Codex review second: compare structure against the English block, preserve comments, classes, ids, data attributes, print/EPUB fallbacks, citations, URLs, DOI links, and JavaScript hooks, then insert the reviewed Chinese block into `src/zh/days/day-###-*.md` in the matching position.
-   - GLM third: run `rtk opencode run -m zhipuai-coding-plan/glm-5.1` and ask GLM to refine the Chinese file directly in place, not return a one-shot replacement. Manually review GLM's edits before keeping them.
+   - GLM third: run `rtk opencode run -m zhipuai-coding-plan/glm-5.1` and ask GLM to refine the Chinese file directly in place, not return a one-shot replacement. Tell GLM that any shell command it runs inside this repo must use the `rtk` prefix. Manually review GLM's edits before keeping them.
 9. Commit a small batch with a conventional message, usually `feat: add day ### deep dive appendix`.
 
 Do not edit generated files in `_site/` or `dist/`; they are build outputs.
