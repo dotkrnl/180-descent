@@ -29,10 +29,13 @@ Read the syllabus entry for the target day plus the immediately previous and nex
    Use `scripts/import-day-from-html.mjs` when it fits the source, then correct front matter from the syllabus as needed.
 3. Review the lesson text:
    - preserve the teaching arc and voice
-   - fix factual issues
+   - fact-check every factual claim, quote, and reference with web search before keeping or adding it
+   - verify direct quotes against the original or a reliable reproduction, and convert uncertain quotes to paraphrase
+   - fix factual issues and keep citations tied to the claims they support
    - label frontier claims as established, promising hint, or contested/hype
    - add concrete callbacks to previous published days
    - leave future callbacks in `src/_data/future-links.yaml`
+   - improve readability, clarity, rhythm, and entertainment value when doing so makes the lesson easier or more enjoyable to read without weakening accuracy
 4. Update the introduction opening-arc paragraph:
    - always refresh `src/pages/introduction.md`
    - when the Chinese edition is in scope, refresh `src/zh/introduction.md` in the same pass
@@ -45,7 +48,7 @@ Read the syllabus entry for the target day plus the immediately previous and nex
    - static PDF fallback
    Put live behavior in `src/assets/js/interactions/*.js` and list each module in the route shell `scripts:` front matter. Keep `src/assets/js/book.js` for truly global behavior only. Prefer semantic HTML/CSS diagrams with print/EPUB fallbacks over raw inline SVG when layout can be expressed with normal boxes and text.
 6. Prefer existing components, CSS classes, and interaction modules before inventing new ones.
-7. Add copyright-safe local assets only when they improve readability.
+7. Add copyright-safe local assets only when they improve readability. Include open-license figures when they clarify a concept, source, artifact, or historical context better than text alone.
 8. Run the skill checklist for the target day, then the full project checks:
 
 ```sh
