@@ -4,28 +4,28 @@ permalink: /downloads/
 title: Downloads
 subtitle: The same source rendered for the browser, ebook readers, and print.
 eyebrow: Formats
-description: Download EPUB and PDF editions.
+description: Choose a concise standard edition or the appendix-rich deep-dive edition in EPUB or PDF format.
 ---
 
 <div class="download-grid downloads-list">
   <article class="download-card">
     <p class="card-kicker">Standard EPUB</p>
-    <h2><a href="{{ book.downloads.epub }}">180-descent.epub</a></h2>
-    <p>The main lessons without deep-dive appendices.</p>
+    <h2><a href="{{ book.downloads.epub }}">Standard ebook edition</a></h2>
+    <p>For ebook readers and reading apps. Contains the core 180-day lesson sequence without the optional research appendices.</p>
   </article>
   <article class="download-card">
     <p class="card-kicker">Standard PDF</p>
-    <h2><a href="{{ book.downloads.pdf }}">180-descent.pdf</a></h2>
-    <p>The print edition without deep-dive appendices.</p>
+    <h2><a href="{{ book.downloads.pdf }}">Standard print edition</a></h2>
+    <p>A fixed-layout, print-friendly copy of the core lessons, tuned for paging, citations, and offline reading.</p>
   </article>
   <article class="download-card">
     <p class="card-kicker">Deep Dive EPUB</p>
-    <h2><a href="{{ book.downloads.deep_epub }}">180-descent-deep-dive.epub</a></h2>
-    <p>Includes each day's appendix material.</p>
+    <h2><a href="{{ book.downloads.deep_epub }}">Deep-dive ebook edition</a></h2>
+    <p>The ebook reader version with each day's optional appendix included for fuller context, extra examples, and source notes.</p>
   </article>
   <article class="download-card">
     <p class="card-kicker">Deep Dive PDF</p>
-    <h2><a href="{{ book.downloads.deep_pdf }}">180-descent-deep-dive.pdf</a></h2>
-    <p>Includes each day's appendix material in static print form.</p>
+    <h2><a href="{{ book.downloads.deep_pdf }}">Deep-dive print edition</a></h2>
+    <p>The complete print-ready edition with deep-dive appendices included, best for offline study, annotation, or reference.</p>
   </article>
 </div>
