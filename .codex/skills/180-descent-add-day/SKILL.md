@@ -64,15 +64,20 @@ rtk npm run check
 After completing the English day file and passing all checks, mirror the work into the Chinese edition:
 
 1. Create `src/zh/days/day-###-slug.md` as a translation of the English day file.
-2. Use Kimi CLI for Chinese translation, instructing it to produce text that is **优雅，文艺，读起来令人愉悦** while remaining technically precise.
-3. Manually review the Kimi output for correctness, idiomatic Chinese, terminology consistency, and preservation of all YAML front matter keys, indentation, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JavaScript hooks, Nunjucks syntax, front matter structure, and permalink paths. Do not treat Kimi output as final.
-4. Run a GLM consistency and language refinement pass with opencode using the Zhipu AI Coding Plan model:
+2. Use Kimi CLI for the first Chinese translation pass. Kimi can be slow: use a long timeout, poll patiently, and do not assume it is stuck just because it is quiet for several minutes. Ask Kimi to work agentically and update the target files directly, not to return a one-shot full-file translation in chat:
 
    ```sh
-   rtk opencode run -m zhipuai-coding-plan/glm-5.1 "Review the Chinese edition changes for translation correctness, terminology consistency, remaining English that should be Chinese, and elegant but technically precise wording. Do not edit files; return concise actionable findings with file:line, current phrase, recommended replacement, and rationale."
+   rtk kimi "Translate the Chinese edition files for Day ### directly in the repository. Edit the target files in place. Produce Simplified Chinese that is 优雅，文艺，读起来令人愉悦 while remaining technically precise. Preserve all front matter keys, permalinks, locale: zh, day numbers, slugs, URLs, DOI links, citation metadata, HTML classes, ids, data attributes, ARIA structure, tables, SVG structure, and Nunjucks syntax. Do not edit English source files or build scripts. Finish with a concise summary of changed files."
    ```
 
-5. Manually review GLM's findings, apply only the corrections that are technically and stylistically sound, and reject suggestions that would damage citations, code hooks, front matter, ids, URLs, or intended technical meaning.
+3. Manually review the Kimi edits before involving GLM. Check correctness, idiomatic Chinese, terminology consistency, and preservation of all YAML front matter keys, indentation, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JavaScript hooks, Nunjucks syntax, front matter structure, and permalink paths. Do not treat Kimi output as final.
+4. Run a GLM consistency and language refinement pass with opencode using the Zhipu AI Coding Plan model. GLM can also be slow: use a long timeout and wait patiently. Ask GLM to refine the files directly in place, not to produce a one-shot review or replacement text:
+
+   ```sh
+   rtk opencode run -m zhipuai-coding-plan/glm-5.1 "Refine the Chinese edition files directly in the repository. Edit files in place for translation correctness, terminology consistency, remaining English that should be Chinese, and elegant but technically precise wording. Preserve front matter, permalinks, URLs, DOI links, citation metadata, HTML classes, ids, data attributes, ARIA structure, tables, SVG structure, JavaScript hooks, and Nunjucks syntax. Do not edit English source files or build scripts. Finish with a concise summary of changed files and any issues left for Codex to decide."
+   ```
+
+5. Manually review GLM's edits, keep only the corrections that are technically and stylistically sound, and reject or revert suggestions that would damage citations, code hooks, front matter, ids, URLs, or intended technical meaning.
 6. Maintain these Chinese terminology conventions unless the user explicitly changes them:
    - book/course "descent" -> `深入`, not `下潜`
    - "deep dive" syllabus blocks -> `专题深入`
