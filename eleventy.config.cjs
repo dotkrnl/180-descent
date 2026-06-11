@@ -1,7 +1,14 @@
 const yaml = require("yaml");
+const { createCodexRefinerMiddleware } = require("./scripts/codex-refiner-middleware.cjs");
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addDataExtension("yaml,yml", (contents) => yaml.parse(contents));
+
+  eleventyConfig.setServerOptions({
+    middleware: [
+      createCodexRefinerMiddleware()
+    ]
+  });
 
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "src/_headers": "_headers" });
