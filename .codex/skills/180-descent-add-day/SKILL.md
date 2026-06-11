@@ -77,7 +77,8 @@ After completing the English day file and passing all checks, mirror the work in
    - book/course "descent" -> `深入`, not `下潜`
    - "deep dive" syllabus blocks -> `专题深入`
    - JTB -> `有正当理由的真信念`; prefer `正当理由` or `理由` in running prose, and avoid `证成` unless explicitly discussing the technical term
-   - scientific replication -> `复现`, `重复实验`, or `可重复性`; use `复制` only for biological/molecular copying
+   - scientific replication -> `复现`, `复现实验`, or `可复现`; use `复现危机` for the reproducibility crisis, and use `复制` only for biological/molecular copying
+   - preregistration -> `研究预登记`; registered reports -> `注册式报告`
    - day references -> `第 N 日`
    - hype filter -> `炒作过滤器`; evidence labels may use `争议/炒作`
    - use Chinese corner quotes `「」` for quoted speech, thoughts, propositions, slogans, and translated terms in Chinese prose; keep italics for book/journal titles, foreign terms, or true emphasis, not as a substitute for quotation marks

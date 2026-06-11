@@ -60,7 +60,7 @@ permalink: /zh/days/001-what-is-knowledge/
 
 <div class="whereblock">
 <p class="label">◆ 我们身在何处</p>
-<p>这是第一次深入，因此身后尚无来路——日志一片空白。相反，我们今天播下种子。今日引入的这套机制（信念以<em>程度</em>呈现；根据证据更新；心智作为推理引擎）是整个课程赖以支撑的认识论工具箱。留意它将在<a href="/zh/days/002-scientific-method-and-demarcation/"><strong>第 2 日</strong></a>（科学如何判定什么才算数）、<strong>第 4 日</strong>（概率作为部分信念的逻辑）、<strong>第 7 日</strong>（信息）、<strong>第 119 日</strong>（预测性大脑）以及<strong>第 149 日</strong>（著名发现为何经不起重复检验）中重新浮现。我们将贯穿全部 180 天的五条线索——<em>信息、能量、演化、涌现、计算</em>——都在此处悄然首演。</p>
+<p>这是第一次深入，因此身后尚无来路——日志一片空白。相反，我们今天播下种子。今日引入的这套机制（信念以<em>程度</em>呈现；根据证据更新；心智作为推理引擎）是整个课程赖以支撑的认识论工具箱。留意它将在<a href="/zh/days/002-scientific-method-and-demarcation/"><strong>第 2 日</strong></a>（科学如何判定什么才算数）、<strong>第 4 日</strong>（概率作为部分信念的逻辑）、<strong>第 7 日</strong>（信息）、<strong>第 119 日</strong>（预测性大脑）以及<strong>第 149 日</strong>（著名发现为何经不起复现检验）中重新浮现。我们将贯穿全部 180 天的五条线索——<em>信息、能量、演化、涌现、计算</em>——都在此处悄然首演。</p>
 </div>
 
 <section>
@@ -336,7 +336,7 @@ permalink: /zh/days/001-what-is-knowledge/
 <div class="tomorrow">
 <p class="h">明日 <span class="arrow">→</span> 第 02 日</p>
 <h3><a href="/zh/days/002-scientific-method-and-demarcation/">科学方法与划界问题</a></h3>
-<p>今天我们追问，单个信念何时算得上知识。明天我们将问题放大至一整座机构：科学如何裁定哪些断言才有资格进入竞技场？波普尔要求真正的理论必须<em>可证伪</em>，库恩的范式转移，拉卡托斯的研究纲领——以及现代可重复性危机，作为划界线在现实检验中的试炼。带上今日校准好的直觉；你会用得着。</p>
+<p>今天我们追问，单个信念何时算得上知识。明天我们将问题放大至一整座机构：科学如何裁定哪些断言值得被认真纳入讨论？波普尔要求真正的理论必须<em>可证伪</em>，库恩的范式转移，拉卡托斯的研究纲领——以及现代复现危机，作为划界线在现实检验中的试炼。带上今日校准好的直觉；你会用得着。</p>
 </div>
 
 <hr class="div">
