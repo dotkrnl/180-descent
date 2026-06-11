@@ -7,7 +7,7 @@ eyebrow: The 180-day map
 description: Introduction to The 180-Day Descent.
 ---
 
-This book began with a hunger rather than a credential: deep curiosity, learning for its own sake, and the wish to become at home in the world without pretending the world is small. The intended reader is a curious generalist: strong in some places, full of gaps in others, unwilling to choose between foundations and the frontier. The promise is not mastery in 180 days. It is orientation: a map of the major structures that make reality, life, mind, technology, society, and the future intelligible.
+<p class="lede">This book began with a hunger rather than a credential: deep curiosity, learning for its own sake, and the wish to become at home in the world without pretending the world is small. The intended reader is a curious generalist: strong in some places, full of gaps in others, unwilling to choose between foundations and the frontier. The promise is not mastery in 180 days. It is orientation: a map of the major structures that make reality, life, mind, technology, society, and the future intelligible.</p>
 
 The sequence begins with a constraint. The frontier is only useful if the instruments of belief are calibrated first. So the course does not open with cosmology, artificial intelligence, or medicine. It opens with knowledge itself: what counts as a reason, why true belief can still be luck, how science separates testable claims from protective stories, and how probability lets a mind live without certainty. Only then does the descent widen into mathematics, physics, chemistry, biology, medicine, neuroscience, AI, economics, civilization, ethics, and the forces now bending the future.
 
