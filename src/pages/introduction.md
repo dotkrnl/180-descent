@@ -10,6 +10,8 @@ alternate_url: /zh/introduction/
 
 <p class="lede">This book began with a hunger rather than a credential: deep curiosity, learning for its own sake, and the wish to become at home in the world without pretending the world is small. The intended reader is a curious generalist: strong in some places, full of gaps in others, unwilling to choose between foundations and the frontier. The promise is not mastery in 180 days. It is orientation: a map of the major structures that make reality, life, mind, technology, society, and the future intelligible.</p>
 
+AI systems perform deep research, synthesis, and writing for the project. A human editor manually checks the material and improves readability before publication.
+
 The sequence begins with a constraint. The frontier is only useful if the instruments of belief are calibrated first. So the course does not open with cosmology, artificial intelligence, or medicine. It opens with knowledge itself: what counts as a reason, why true belief can still be luck, how science separates testable claims from protective stories, and how probability lets a mind live without certainty. Only then does the descent widen into mathematics, physics, chemistry, biology, medicine, neuroscience, AI, economics, civilization, ethics, and the forces now bending the future.
 
 Each day is built to work even when time is uneven. It starts with a puzzle, story, image, analogy, or thought experiment; builds a mental model; names the live debate; then walks as far toward recent, trustworthy research as the evidence allows. The spirit is close to a very short introduction, but with a steeper internal slope: begin as if the reader is smart but new here, then descend until the ground becomes genuinely current and contested.

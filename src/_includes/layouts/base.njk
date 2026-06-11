@@ -2,6 +2,7 @@
 {% set uiTitle = book.zh.title if isZh else book.title %}
 {% set uiSubtitle = book.zh.subtitle if isZh else book.subtitle %}
 {% set uiDescription = book.zh.description if isZh else book.description %}
+{% set isWebIndex = page.url == "/" or page.url == "/zh/" %}
 {% if day_path %}
   {% set languageUrl = "/days/" + day_path + "/" if isZh else "/zh/days/" + day_path + "/" %}
 {% else %}
@@ -68,6 +69,9 @@
     <footer class="site-footer">
       <div class="wrap wide footer-grid">
         <p><strong>{{ uiTitle }}</strong><br>{{ uiSubtitle }}<br>{% if isZh %}作者：{{ book.zh.authors }}<br>翻译：{{ book.zh.translators }}{% else %}By {{ book.authors }}{% endif %}</p>
+        {% if isWebIndex %}
+        <p><strong>{{ "人工编辑" if isZh else "Human editor" }}</strong><br><a href="https://jasonlau.io">Jason Lau</a></p>
+        {% endif %}
         <p><a href="{{ book.repo }}">GitHub</a><br><a href="{{ "/zh/downloads/" if isZh else "/downloads/" }}">{{ "EPUB 与 PDF 下载" if isZh else "EPUB and PDF downloads" }}</a><br><a href="{{ "/zh/credits/" if isZh else "/credits/" }}">{{ "鸣谢" if isZh else "Credits" }}</a></p>
       </div>
     </footer>
