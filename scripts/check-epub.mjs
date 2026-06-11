@@ -15,13 +15,26 @@ const required = [
 ];
 
 let failures = 0;
+const englishAppendixPatterns = [
+  /The Rest of the Map/,
+  /The Skeptic&apos;s Syllogism, as four exits|The Skeptic's Syllogism, as four exits/,
+  /The Bank Cases, as a stakes table/,
+  /Safe vs\. Lucky, as nearby-worlds cases/
+];
+const chineseAppendixPatterns = [
+  /地图的其余部分/,
+  /怀疑论者的三段论：四种出路/,
+  /银行案例：赌注表/,
+  /安全与幸运：邻近世界案例/
+];
 const editions = [
-  { file: "_site/downloads/180-descent.epub", deepDive: false },
-  { file: "_site/downloads/180-descent-deep-dive.epub", deepDive: true },
-  { file: "_site/downloads/180-descent-zh.epub", deepDive: false }
+  { file: "_site/downloads/180-descent.epub", deepDive: false, appendixPatterns: englishAppendixPatterns },
+  { file: "_site/downloads/180-descent-deep-dive.epub", deepDive: true, appendixPatterns: englishAppendixPatterns },
+  { file: "_site/downloads/180-descent-zh.epub", deepDive: false, appendixPatterns: chineseAppendixPatterns },
+  { file: "_site/downloads/180-descent-zh-deep-dive.epub", deepDive: true, appendixPatterns: chineseAppendixPatterns }
 ];
 
-for (const { file: edition, deepDive } of editions) {
+for (const { file: edition, deepDive, appendixPatterns } of editions) {
   const data = await readFile(edition);
   const zip = await JSZip.loadAsync(data);
 
@@ -34,22 +47,17 @@ for (const { file: edition, deepDive } of editions) {
 
   const dayOne = await zip.file("OEBPS/day-001.xhtml")?.async("string");
   if (dayOne) {
-    const appendixPatterns = [
-      /The Rest of the Map/,
-      /The Skeptic&apos;s Syllogism, as four exits|The Skeptic's Syllogism, as four exits/,
-      /The Bank Cases, as a stakes table/,
-      /Safe vs\. Lucky, as nearby-worlds cases/
-    ];
+    const searchableDayOne = decodeXmlEntities(dayOne);
     if (deepDive) {
       for (const pattern of appendixPatterns) {
-        if (!pattern.test(dayOne)) {
+        if (!pattern.test(searchableDayOne)) {
           console.error(`${edition} is missing deep-dive appendix content matching ${pattern}`);
           failures++;
         }
       }
     } else {
       for (const pattern of appendixPatterns) {
-        if (pattern.test(dayOne)) {
+        if (pattern.test(searchableDayOne)) {
           console.error(`${edition} contains deep-dive appendix content matching ${pattern}`);
           failures++;
         }
@@ -109,4 +117,15 @@ if (failures) process.exit(1);
 function isInsideSvg(text, index) {
   const before = text.slice(0, index);
   return before.lastIndexOf("<svg") > before.lastIndexOf("</svg>");
+}
+
+function decodeXmlEntities(value) {
+  return value
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(Number.parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number.parseInt(dec, 10)))
+    .replace(/&apos;/g, "'")
+    .replace(/&quot;/g, "\"")
+    .replace(/&gt;/g, ">")
+    .replace(/&lt;/g, "<")
+    .replace(/&amp;/g, "&");
 }

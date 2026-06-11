@@ -9,7 +9,8 @@ let failures = 0;
 const pdfFiles = [
   "_site/downloads/180-descent.pdf",
   "_site/downloads/180-descent-deep-dive.pdf",
-  "_site/downloads/180-descent-zh.pdf"
+  "_site/downloads/180-descent-zh.pdf",
+  "_site/downloads/180-descent-zh-deep-dive.pdf"
 ];
 
 for (const file of pdfFiles) {
@@ -43,6 +44,8 @@ for (const file of pdfFiles) {
 const extractedText = await extractPdfText("_site/downloads/180-descent.pdf");
 const frontMatter = extractedText.split("THE 180-DAY MAP")[0] || "";
 const deepDiveText = await extractPdfText("_site/downloads/180-descent-deep-dive.pdf");
+const zhText = await extractPdfText("_site/downloads/180-descent-zh.pdf");
+const zhDeepDiveText = await extractPdfText("_site/downloads/180-descent-zh-deep-dive.pdf");
 
 for (const pattern of [/\[\[toc:/, /WHERE WE ARE/i, /PAGE\s+\d+\s*\/\s*\d+/, /THE 180-DAY DESCENT/]) {
   if (pattern.test(extractedText)) {
@@ -85,6 +88,22 @@ for (const pattern of [
 }
 
 for (const pattern of [
+  /地图的其余部分/,
+  /怀疑论者的三段论：四种出路/,
+  /银.案例：赌注表/,
+  /安全与幸运：邻近世界案例/
+]) {
+  if (pattern.test(zhText)) {
+    console.error(`Standard Chinese PDF contains deep-dive appendix content matching ${pattern}`);
+    failures++;
+  }
+  if (!pattern.test(zhDeepDiveText)) {
+    console.error(`Deep-dive Chinese PDF is missing appendix fallback content matching ${pattern}`);
+    failures++;
+  }
+}
+
+for (const pattern of [
   /Choose a door/,
   /How much rides on being right/,
   /Spouse raises the possibility of error/,
@@ -92,6 +111,19 @@ for (const pattern of [
 ]) {
   if (pattern.test(deepDiveText)) {
     console.error(`Deep-dive PDF contains live interactive control text matching ${pattern}`);
+    failures++;
+  }
+}
+
+for (const pattern of [
+  /选择一扇门/,
+  /你拒绝哪一行/,
+  /赌注拨盘/,
+  /配偶提出出错的可能性/,
+  /正常运行的钟（知识）/
+]) {
+  if (pattern.test(zhDeepDiveText)) {
+    console.error(`Deep-dive Chinese PDF contains live interactive control text matching ${pattern}`);
     failures++;
   }
 }

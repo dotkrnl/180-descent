@@ -18,4 +18,12 @@ alternate_url: /downloads/
     <p class="card-kicker">PDF</p>
     <h2><a href="{{ book.zh.downloads.pdf }}">180-descent-zh.pdf</a></h2>
   </article>
+  <article class="download-card">
+    <p class="card-kicker">EPUB · 专题深入版</p>
+    <h2><a href="{{ book.zh.downloads.deep_epub }}">180-descent-zh-deep-dive.epub</a></h2>
+  </article>
+  <article class="download-card">
+    <p class="card-kicker">PDF · 专题深入版</p>
+    <h2><a href="{{ book.zh.downloads.deep_pdf }}">180-descent-zh-deep-dive.pdf</a></h2>
+  </article>
 </div>

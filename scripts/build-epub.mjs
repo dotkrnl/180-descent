@@ -68,6 +68,26 @@ await buildEpub({
   output: "180-descent-zh.epub"
 });
 
+await buildEpub({
+  meta: {
+    title: `${book.zh.title}：专题深入版`,
+    authors: book.zh.authors,
+    language: book.zh.language,
+    publisher: book.publisher,
+    epub_identifier: `${book.zh.epub_identifier}-deep-dive`
+  },
+  dayDir: "src/zh/days",
+  siteDayDir: "_site/zh/days",
+  dayUrlPrefix: "/zh/days/",
+  introHtml: "_site/zh/introduction/index.html",
+  introUrl: "/zh/introduction/",
+  introTitle: "导言",
+  introLabel: "导言",
+  dayLabel: "第",
+  output: "180-descent-zh-deep-dive.epub",
+  includeDeepDive: true
+});
+
 async function buildEpub(config) {
   const dayFiles = (await readdir(config.dayDir)).filter((file) => file.endsWith(".md")).sort();
   const days = dayFiles.map((file) => {

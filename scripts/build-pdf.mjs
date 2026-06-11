@@ -41,6 +41,16 @@ const editions = [
     bookTitle: "180 Descent",
     introTitle: "Chinese Edition",
     blockTitle: "Lessons"
+  },
+  {
+    route: "/zh/print-deep/",
+    output: "180-descent-zh-deep-dive.pdf",
+    dayBasePath: "/zh/days/",
+    introPath: "/zh/introduction/",
+    bookTitle: "180 Descent",
+    introTitle: "Chinese Edition",
+    blockTitle: "Lessons",
+    includeDeepDive: true
   }
 ];
 const browser = await chromium.launch({ headless: true });

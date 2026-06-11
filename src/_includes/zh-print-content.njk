@@ -1,0 +1,68 @@
+{% set intro = collections.zhIntroduction[0] %}
+
+<section class="wrap wide page-hero print-cover">
+  <p class="eyebrow">{{ book.zh.subtitle }}</p>
+  <h1>{{ book.zh.title }}</h1>
+  <p class="sub">作者：{{ book.zh.authors }} · 翻译：{{ book.zh.translators }}</p>
+</section>
+
+<nav class="wrap wide print-toc" id="toc" aria-label="目录">
+  <p class="sec-eyebrow">目录</p>
+  <div class="toc-list">
+    {% if intro %}
+      <div class="toc-row toc-front">
+        <a href="#intro"><span class="toc-title">引言</span><span class="toc-leader"></span></a>
+        <span class="toc-page" data-toc-page-for="intro"></span>
+      </div>
+    {% endif %}
+    {% for day in collections.zhDays %}
+      {% set previousBlock = "" %}
+      {% if not loop.first %}
+        {% set previousBlock = collections.zhDays[loop.index0 - 1].data.block %}
+      {% endif %}
+      {% if loop.first or day.data.block != previousBlock %}
+        {% set blockNo = collections.zhDays | blockOrdinal(loop.index0) %}
+        <div class="toc-row toc-block">
+          <a href="#block-{{ blockNo }}"><span class="toc-title">模块 {{ blockNo | roman }} · {{ day.data.block }}</span><span class="toc-leader"></span></a>
+          <span class="toc-page" data-toc-page-for="block-{{ blockNo }}"></span>
+        </div>
+      {% endif %}
+      <div class="toc-row toc-day">
+        <a href="#day-{{ day.data.day | padDay }}"><span class="toc-kicker">第 {{ day.data.day }} 日</span><span class="toc-title">{{ day.data.title }}</span><span class="toc-leader"></span></a>
+        <span class="toc-page" data-toc-page-for="day-{{ day.data.day | padDay }}"></span>
+      </div>
+    {% endfor %}
+  </div>
+</nav>
+
+{% if intro %}
+  <article class="wrap wide print-intro" id="intro" data-print-title="引言">
+    <span class="print-page-marker">[[toc:intro]]</span>
+    <p class="eyebrow">{{ intro.data.eyebrow or "引言" }}</p>
+    <h1>{{ intro.data.title }}</h1>
+    {% if intro.data.subtitle %}<p class="sub">{{ intro.data.subtitle }}</p>{% endif %}
+    {{ intro.templateContent | safe }}
+  </article>
+{% endif %}
+
+{% for day in collections.zhDays %}
+  {% set previousBlock = "" %}
+  {% if not loop.first %}
+    {% set previousBlock = collections.zhDays[loop.index0 - 1].data.block %}
+  {% endif %}
+  {% if loop.first or day.data.block != previousBlock %}
+    {% set blockNo = collections.zhDays | blockOrdinal(loop.index0) %}
+    <section class="block-divider" data-print-title="模块 {{ blockNo | roman }}">
+      <a class="print-dest" id="block-{{ blockNo }}"></a>
+      <span class="print-page-marker">[[toc:block-{{ blockNo }}]]</span>
+      <div class="block-divider-inner">
+        <p>模块 {{ blockNo | roman }}</p>
+        <h1>{{ day.data.block }}</h1>
+      </div>
+    </section>
+  {% endif %}
+  <article class="lesson-print" id="day-{{ day.data.day | padDay }}" data-day-path="{{ day.data.day_path }}" data-print-title="第 {{ day.data.day }} 日 · {{ day.data.title }}" data-print-block="{{ day.data.block }}">
+    <span class="print-page-marker">[[toc:day-{{ day.data.day | padDay }}]]</span>
+    {{ day.templateContent | safe }}
+  </article>
+{% endfor %}
