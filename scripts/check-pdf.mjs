@@ -46,6 +46,7 @@ for (const file of pdfFiles) {
 const extractedText = await extractPdfText("_site/downloads/180-descent.pdf");
 const frontMatter = extractedText.split("THE 180-DAY MAP")[0] || "";
 const deepDiveText = await extractPdfText("_site/downloads/180-descent-deep-dive.pdf");
+const deepDiveFrontMatter = deepDiveText.split("THE 180-DAY MAP")[0] || "";
 const zhText = await extractPdfText("_site/downloads/180-descent-zh.pdf");
 const zhDeepDiveText = await extractPdfText("_site/downloads/180-descent-zh-deep-dive.pdf");
 const dayOneText = await extractPdfText("_site/downloads/180-descent-day-001-what-is-knowledge.pdf");
@@ -193,17 +194,24 @@ for (const pattern of [
 const blockMatch = frontMatter.match(/BLOCK I · FOUNDATIONS OF KNOWLEDGE & REASONING\s+(\d+)/);
 const introMatch = frontMatter.match(/Introduction\s+(\d+)/);
 const dayOneMatch = frontMatter.match(/DAY 1\s+What Is Knowledge\?\s+(\d+)/);
-if (blockMatch) {
-  for (const pageNumber of [1, Number(blockMatch[1])]) {
-    const box = await extractPageBoundingBox("_site/downloads/180-descent.pdf", pageNumber);
+for (const [label, pdfPath, matterText] of [
+  ["PDF", "_site/downloads/180-descent.pdf", frontMatter],
+  ["Deep-dive PDF", "_site/downloads/180-descent-deep-dive.pdf", deepDiveFrontMatter]
+]) {
+  const match = matterText.match(/BLOCK I · FOUNDATIONS OF KNOWLEDGE & REASONING\s+(\d+)/);
+  if (!match) {
+    console.error(`${label} TOC is missing the Block I page number needed for full-bleed validation`);
+    failures++;
+    continue;
+  }
+
+  for (const pageNumber of [1, Number(match[1])]) {
+    const box = await extractPageBoundingBox(pdfPath, pageNumber);
     if (!isFullPageBox(box)) {
-      console.error(`PDF page ${pageNumber} is not painted to the full 6x9 page bounds: ${box.join(" ")}`);
+      console.error(`${label} page ${pageNumber} is not painted to the full 6x9 page bounds: ${box.join(" ")}`);
       failures++;
     }
   }
-} else {
-  console.error("PDF TOC is missing the Block I page number needed for full-bleed validation");
-  failures++;
 }
 
 if (introMatch && dayOneMatch) {

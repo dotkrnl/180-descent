@@ -5,6 +5,7 @@ import http from "node:http";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
+import { inflateSync } from "node:zlib";
 import matter from "gray-matter";
 import { PDFDocument, PDFName, StandardFonts, rgb } from "pdf-lib";
 import { chromium } from "playwright";
@@ -256,6 +257,7 @@ async function stampRunningMatter(inputPath, outputPath, { blocks, tocPages, boo
     .map((block) => ({ ...block, title: blockTitle || block.title, page: Number(tocPages[block.id]) }))
     .filter((block) => Number.isFinite(block.page))
     .sort((a, b) => a.page - b.page);
+  const blockPages = new Set(blockRanges.map((block) => block.page));
   const excludedPages = new Set([
     1,
     2,
@@ -266,6 +268,7 @@ async function stampRunningMatter(inputPath, outputPath, { blocks, tocPages, boo
     pdfPage.node.delete(PDFName.of("Annots"));
 
     const pageNumber = index + 1;
+    if (pageNumber === 1 || blockPages.has(pageNumber)) paintTealPageBackground(pdf, pdfPage);
     if (excludedPages.has(pageNumber)) continue;
 
     const { width, height } = pdfPage.getSize();
@@ -301,6 +304,34 @@ async function stampRunningMatter(inputPath, outputPath, { blocks, tocPages, boo
   }
 
   await writeFile(outputPath, await pdf.save({ useObjectStreams: false }));
+}
+
+function paintTealPageBackground(pdf, pdfPage) {
+  const { Contents } = pdfPage.node.normalizedEntries();
+  const pageBackgroundColor = ".0745 .3216 .3529 RG .0745 .3216 .3529 rg";
+  const pageBackgroundPattern = /1 1 1 RG 1 1 1 rg(?=\n\/G\d+ gs\n0 0 [\d.]+ [\d.]+ re\nf)/;
+
+  for (let index = 0; index < Contents.size(); index++) {
+    const ref = Contents.get(index);
+    const stream = pdf.context.lookup(ref);
+    if (typeof stream?.getContents !== "function") continue;
+
+    const decoded = decodePdfStream(stream);
+    if (!pageBackgroundPattern.test(decoded)) continue;
+
+    const updated = decoded.replace(pageBackgroundPattern, pageBackgroundColor);
+    Contents.set(index, pdf.context.register(pdf.context.flateStream(updated)));
+    return;
+  }
+
+  throw new Error("Unable to find full-bleed teal page background stream");
+}
+
+function decodePdfStream(stream) {
+  const contents = Buffer.from(stream.getContents());
+  const filter = stream.dict.get(PDFName.of("Filter"))?.toString();
+  if (filter === "/FlateDecode") return inflateSync(contents).toString("latin1");
+  return contents.toString("latin1");
 }
 
 function sectionTitleForPage(pageNumber, blockRanges, introTitle) {
