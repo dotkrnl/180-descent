@@ -131,7 +131,8 @@ async function buildDayEpubs(config) {
       days: [day],
       introHtml: null,
       output: `${config.outputPrefix}-${day.data.day_path}.epub`,
-      singleDay: true
+      singleDay: true,
+      includeDeepDive: true
     });
   }
 }

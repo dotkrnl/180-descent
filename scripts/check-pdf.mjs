@@ -10,7 +10,9 @@ const pdfFiles = [
   "_site/downloads/180-descent.pdf",
   "_site/downloads/180-descent-deep-dive.pdf",
   "_site/downloads/180-descent-zh.pdf",
-  "_site/downloads/180-descent-zh-deep-dive.pdf"
+  "_site/downloads/180-descent-zh-deep-dive.pdf",
+  "_site/downloads/180-descent-day-001-what-is-knowledge.pdf",
+  "_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf"
 ];
 
 for (const file of pdfFiles) {
@@ -46,6 +48,8 @@ const frontMatter = extractedText.split("THE 180-DAY MAP")[0] || "";
 const deepDiveText = await extractPdfText("_site/downloads/180-descent-deep-dive.pdf");
 const zhText = await extractPdfText("_site/downloads/180-descent-zh.pdf");
 const zhDeepDiveText = await extractPdfText("_site/downloads/180-descent-zh-deep-dive.pdf");
+const dayOneText = await extractPdfText("_site/downloads/180-descent-day-001-what-is-knowledge.pdf");
+const zhDayOneText = await extractPdfText("_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf");
 
 for (const pattern of [/\[\[toc:/, /WHERE WE ARE/i, /PAGE\s+\d+\s*\/\s*\d+/, /THE 180-DAY DESCENT/]) {
   if (pattern.test(extractedText)) {
@@ -85,6 +89,10 @@ for (const pattern of [
     console.error(`Deep-dive PDF is missing appendix fallback content matching ${pattern}`);
     failures++;
   }
+  if (!pattern.test(dayOneText)) {
+    console.error(`Day-specific PDF is missing appendix fallback content matching ${pattern}`);
+    failures++;
+  }
 }
 
 for (const pattern of [
@@ -99,6 +107,10 @@ for (const pattern of [
   }
   if (!pattern.test(zhDeepDiveText)) {
     console.error(`Deep-dive Chinese PDF is missing appendix fallback content matching ${pattern}`);
+    failures++;
+  }
+  if (!pattern.test(zhDayOneText)) {
+    console.error(`Day-specific Chinese PDF is missing appendix fallback content matching ${pattern}`);
     failures++;
   }
 }

@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import JSZip from "jszip";
 
-const required = [
+const bookRequired = [
   "mimetype",
   "META-INF/container.xml",
   "OEBPS/content.opf",
@@ -12,6 +12,13 @@ const required = [
   "OEBPS/introduction.xhtml",
   "OEBPS/day-001.xhtml",
   "OEBPS/day-002.xhtml"
+];
+const dayRequired = [
+  "mimetype",
+  "META-INF/container.xml",
+  "OEBPS/content.opf",
+  "OEBPS/nav.xhtml",
+  "OEBPS/day-001.xhtml"
 ];
 
 let failures = 0;
@@ -28,13 +35,15 @@ const chineseAppendixPatterns = [
   /安全与幸运：邻近世界案例/
 ];
 const editions = [
-  { file: "_site/downloads/180-descent.epub", deepDive: false, appendixPatterns: englishAppendixPatterns },
-  { file: "_site/downloads/180-descent-deep-dive.epub", deepDive: true, appendixPatterns: englishAppendixPatterns },
-  { file: "_site/downloads/180-descent-zh.epub", deepDive: false, appendixPatterns: chineseAppendixPatterns },
-  { file: "_site/downloads/180-descent-zh-deep-dive.epub", deepDive: true, appendixPatterns: chineseAppendixPatterns }
+  { file: "_site/downloads/180-descent.epub", deepDive: false, appendixPatterns: englishAppendixPatterns, required: bookRequired },
+  { file: "_site/downloads/180-descent-deep-dive.epub", deepDive: true, appendixPatterns: englishAppendixPatterns, required: bookRequired },
+  { file: "_site/downloads/180-descent-zh.epub", deepDive: false, appendixPatterns: chineseAppendixPatterns, required: bookRequired },
+  { file: "_site/downloads/180-descent-zh-deep-dive.epub", deepDive: true, appendixPatterns: chineseAppendixPatterns, required: bookRequired },
+  { file: "_site/downloads/180-descent-day-001-what-is-knowledge.epub", deepDive: true, appendixPatterns: englishAppendixPatterns, required: dayRequired },
+  { file: "_site/downloads/180-descent-zh-day-001-what-is-knowledge.epub", deepDive: true, appendixPatterns: chineseAppendixPatterns, required: dayRequired }
 ];
 
-for (const { file: edition, deepDive, appendixPatterns } of editions) {
+for (const { file: edition, deepDive, appendixPatterns, required } of editions) {
   const data = await readFile(edition);
   const zip = await JSZip.loadAsync(data);
 

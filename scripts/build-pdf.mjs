@@ -165,19 +165,23 @@ async function buildDayPdf(day, config) {
   const page = await browser.newPage({ viewport: { width: 900, height: 1350 } });
   try {
     await page.goto(`${server.url}${config.dayRoutePrefix}${day.data.day_path}/`, { waitUntil: "networkidle" });
-    await page.evaluate(({ baseUrl }) => {
+    await page.evaluate(() => {
       const localOrigin = window.location.origin;
+      document.body.classList.add("include-deep-dive");
       document.querySelectorAll(".lesson-nav").forEach((el) => el.remove());
+      for (const details of document.querySelectorAll("details.deep-dive")) {
+        details.setAttribute("open", "");
+      }
       for (const anchor of document.querySelectorAll("a[href]")) {
         const href = anchor.getAttribute("href");
         if (!href || href.startsWith("#")) continue;
 
         const url = new URL(href, window.location.href);
         if (url.origin === localOrigin) {
-          anchor.setAttribute("href", `${baseUrl}${url.pathname}${url.search}${url.hash}`);
+          anchor.removeAttribute("href");
         }
       }
-    }, { baseUrl: publicBaseUrl });
+    });
     await page.evaluate(() => document.fonts.ready);
     await page.emulateMedia({ media: "print" });
 
