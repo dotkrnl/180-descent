@@ -1,7 +1,8 @@
 {% set intro = collections.zhIntroduction[0] %}
+{% set coverSubtitle = book.zh.deep_dive_subtitle if includeDeepDive and book.zh.deep_dive_subtitle else book.zh.subtitle %}
 
 <section class="wrap wide page-hero print-cover">
-  <p class="eyebrow">{{ book.zh.subtitle }}</p>
+  <p class="eyebrow">{{ coverSubtitle }}</p>
   <h1>{{ book.zh.title }}</h1>
   <p class="sub book-credit"><span class="credit-line">作者：{{ book.zh.authors }}</span><span class="credit-line">翻译：{{ book.zh.translators }}</span></p>
 </section>

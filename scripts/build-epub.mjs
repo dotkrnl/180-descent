@@ -33,7 +33,7 @@ await buildEpub({
 await buildEpub({
   meta: {
     title: `${book.title}: Deep Dive Edition`,
-    subtitle: book.subtitle,
+    subtitle: book.deep_dive_subtitle,
     authors: book.authors,
     language: book.language,
     publisher: book.publisher,
@@ -75,7 +75,7 @@ await buildEpub({
 await buildEpub({
   meta: {
     title: `${book.zh.title}：专题深入版`,
-    subtitle: book.zh.subtitle,
+    subtitle: book.zh.deep_dive_subtitle,
     authors: book.zh.authors,
     translators: book.zh.translators,
     language: book.zh.language,

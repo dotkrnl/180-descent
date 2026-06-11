@@ -1,7 +1,8 @@
 {% set intro = collections.introduction[0] %}
+{% set coverSubtitle = book.deep_dive_subtitle if includeDeepDive and book.deep_dive_subtitle else book.subtitle %}
 
 <section class="wrap wide page-hero print-cover">
-  <p class="eyebrow">{{ book.subtitle }}</p>
+  <p class="eyebrow">{{ coverSubtitle }}</p>
   <h1>{{ book.title }}</h1>
   <p class="sub">By {{ book.authors }}</p>
 </section>
