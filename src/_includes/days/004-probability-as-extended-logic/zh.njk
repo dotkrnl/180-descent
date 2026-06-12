@@ -176,11 +176,68 @@
 <section>
 <p class="sec-eyebrow">模型</p>
 <h2>贝叶斯定理：信念的更新法则</h2>
-<p>我们刚才对门做的那套手工操作，其实有个名字，也有个公式。它是证据理论里最重要的一条方程，写出来却简单得近乎朴素：</p>
+<p>我们刚才对门做的那套手工操作，其实有个名字，也有个公式。公式看起来冷冰冰，想法却很直接：贝叶斯定理只是在证据到来之后，重新给仍然可能的世界分配权重。</p>
+
+<figure class="bayes-sieve">
+<figcaption>
+<span class="bs-title">贝叶斯像一只筛子</span>
+<span class="bs-sub">证据 E =「主持人打开了 3 号门」。每个假设一开始都有同样的先验；随后，谁越能预言这个具体揭示，谁留下的权重就越大。</span>
+</figcaption>
+<div class="bs-equation">
+<span class="post">P(H&nbsp;|&nbsp;E)</span>
+<span>=</span>
+<span class="prior">P(H)</span>
+<span>×</span>
+<span class="like">P(E&nbsp;|&nbsp;H)</span>
+<span>/</span>
+<span class="evidence">P(E)</span>
+</div>
+<div class="bs-table-wrap">
+<table class="bs-table">
+<thead>
+<tr>
+<th>假设 H</th>
+<th><span>P(H)</span><small>先验</small></th>
+<th><span>P(E&nbsp;|&nbsp;H)</span><small>证据吻合度</small></th>
+<th><span>P(H) × P(E&nbsp;|&nbsp;H)</span><small>留下的权重</small></th>
+<th><span>P(E)</span><small>证据总量</small></th>
+<th><span>P(H&nbsp;|&nbsp;E)</span><small>后验</small></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>车在你选的 1 号门后</th>
+<td class="bs-val bs-prior" data-label="P(H) 先验"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H) 证据吻合度"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H)"><b>1/6</b><span class="bs-note">仍可能，但证据只支持一半</span></td>
+<td class="bs-val bs-evidence" data-label="P(E) 证据总量"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E) 后验"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+</tr>
+<tr>
+<th>车在 2 号门后</th>
+<td class="bs-val bs-prior" data-label="P(H) 先验"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H) 证据吻合度"><b>1</b><span class="bs-meter"><i style="width:100%"></i></span></td>
+<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H)"><b>1/3</b><span class="bs-note">最强幸存者：这个揭示是被迫的</span></td>
+<td class="bs-val bs-evidence" data-label="P(E) 证据总量"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E) 后验"><b>2/3</b><span class="bs-meter"><i style="width:66.67%"></i></span></td>
+</tr>
+<tr>
+<th>车在 3 号门后</th>
+<td class="bs-val bs-prior" data-label="P(H) 先验"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<td class="bs-val bs-like zero" data-label="P(E&nbsp;|&nbsp;H) 证据吻合度"><b>0</b><span class="bs-meter"><i style="width:0%"></i></span></td>
+<td class="bs-val zero" data-label="P(H) × P(E&nbsp;|&nbsp;H)"><b>0</b><span class="bs-note">被排除：主持人不能打开藏车的门</span></td>
+<td class="bs-val bs-evidence" data-label="P(E) 证据总量"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val bs-post zero" data-label="P(H&nbsp;|&nbsp;E) 后验"><b>0</b><span class="bs-meter"><i style="width:0%"></i></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="bs-total"><span>P(E)</span> 是证据筛过之后留下的总权重：<span class="hl">1/6 + 1/3 + 0 = 1/2</span>。把每个幸存权重都除以这个 1/2，未打开的 2 号门就拿走了剩余概率中的 <span class="hl">2/3</span>。</p>
+</figure>
 
 <div class="mathline">
-<span class="post">P(H | E)</span> = <span class="prior">P(H)</span> × <span class="like">P(E | H)</span> / P(E)
-<small><span style="color:var(--accent-deep)">后验</span>（看到证据后的置信度）= <span style="color:var(--brass)">先验</span>（之前的置信度）× <span style="color:var(--contested)">似然</span>（H 预测 E 的能力），再归一化</small>
+<span class="post">P(H&nbsp;|&nbsp;E)</span> = <span class="prior">P(H)</span> × <span class="like">P(E&nbsp;|&nbsp;H)</span> / <span class="evidence">P(E)</span>
+<small><span style="color:var(--accent-deep)">后验</span>（看到证据后的置信度）= <span style="color:var(--brass)">先验</span>（之前的置信度）× <span style="color:var(--contested)">似然</span>（H 预测 E 的能力），再用 <span style="color:var(--accent)">证据总量</span> 归一化</small>
 </div>
 
 <p>用一句话说：看到证据 E 后，你对假设 H 的<span class="term">后验</span>置信度，等于你的<span class="term">先验</span>置信度乘以<span class="term">似然</span>——即 H 预测你会看到 E 的力度——再除以 E 本身出现的总体预期。强有力的证据，是你的假设能预见、而对手却预见不到的东西。整台引擎就这么多。信念永远流向最能解释已发生之事的那一方。</p>
