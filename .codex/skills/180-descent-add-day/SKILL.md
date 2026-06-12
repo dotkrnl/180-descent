@@ -74,6 +74,15 @@ Do not proceed to commit/publish until this gate has been completed and any issu
    - keep citations tied to the claims they support
    - label frontier claims as established, promising hint, or contested/hype
    - add concrete callbacks to previous published days
+   - after the new route exists, run a forward-pointer sweep across all earlier
+     published English and Chinese lesson includes, including appendix content:
+     search `src/_data/future-links.yaml` plus source text for the new day
+     number, title, slug, and distinctive callback phrases; every reference to
+     the newly published day should link to its route in that edition, not
+     remain plain text such as `<strong>Day N</strong>` or
+     `<strong>第 N 日</strong>`
+   - verify all resolved `future-links.yaml` entries for the new target day have
+     matching source links or deliberately documented prose callbacks
    - verify the inline `class="tomorrow"` block: if the next day already has a published route, link its title to that route; if the next day is not published yet, preview it without adding a broken link
    - leave future callbacks in `src/_data/future-links.yaml`
    - improve readability, clarity, rhythm, and entertainment value when doing so helps the lesson without weakening accuracy
@@ -110,6 +119,7 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
 - Added or updated `src/_includes/days/###-slug/en.njk` lesson body
 - Added or updated Chinese route shell, Chinese lesson include, `src/_data/syllabus_zh.yaml`, and `src/zh/introduction.md` when the repo has a Chinese edition unless the user explicitly skipped it
 - Correct inline tomorrow block link behavior for both English and Chinese editions when present: published next days link to their route; unpublished next days remain unlinked
+- Resolved forward pointers from earlier published days and appendices to the newly published day in both English and Chinese editions when present
 - Updated concise opening-arc paragraph in `src/pages/introduction.md`
 - Updated callbacks and pending future links
 - Added or reused `src/assets/js/interactions/*.js` modules for live components, with adjacent print/EPUB fallbacks in the lesson body
