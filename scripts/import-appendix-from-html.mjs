@@ -15,7 +15,7 @@ const routeSource = await readFile(dayFile, "utf8");
 const parsed = matter(routeSource);
 const contentFile = dayContentFile(parsed);
 const originalContent = contentFile ? await readFile(contentFile, "utf8") : parsed.content;
-const html = await readFile(source, "utf8");
+const html = normalizeSvgTextEmphasis(await readFile(source, "utf8"));
 const $ = cheerio.load(html, { decodeEntities: false });
 const header = $("header.hero").first();
 const wrap = $("body > div.wrap").first();
@@ -27,6 +27,8 @@ if (!header.length || !wrap.length) {
 
 const title = cleanText(header.find("h1").first().text()) || "The Rest of the Map";
 const subtitle = cleanText(header.find(".sub").first().text());
+const appendixId = slugify(title) || "rest-of-the-map";
+const idPrefix = `appendix-d${String(day).padStart(3, "0")}-${appendixId}-`;
 const ledeHtml = htmlFrom(header.find(".lede").first());
 const wrapHtml = wrap.children().map((_, child) => $.html(child)).get().join("\n");
 const fragment = cheerio.load(`<root>${[ledeHtml, wrapHtml].filter(Boolean).join("\n")}</root>`, { decodeEntities: false }, false);
@@ -35,7 +37,9 @@ const root = fragment("root");
 root.find(".tomorrow,.endcap").remove();
 root.find(".sources .sec-eyebrow").each((_, el) => {
   const node = fragment(el);
-  if (cleanText(node.text()) === "Receipts") node.text("Sources");
+  const label = cleanText(node.text());
+  if (label === "Receipts") node.text("Sources");
+  else if (label.startsWith("Receipts ")) node.text(label.replace(/^Receipts/, "Sources"));
 });
 root.find("[style]").each((_, el) => {
   const node = fragment(el);
@@ -73,6 +77,37 @@ root.find(".panel").each((_, panel) => {
     addClassById(fragment, "mrVerdict", "modal-verdict");
     addClassById(fragment, "mrExpl", "modal-explainer");
     el.after(modalFallback());
+  } else if (el.find("[id='echoSvg']").length) {
+    el.addClass("web-only echo-chamber");
+    neededScripts.add("/assets/js/interactions/echo-chamber.js");
+    addClassById(fragment, "echoOutLinks", "echo-out-links");
+    addClassById(fragment, "echoExpose", "echo-expose");
+    addClassById(fragment, "echoMsg", "echo-message");
+    addClassById(fragment, "o1", "echo-out-node");
+    addClassById(fragment, "o2", "echo-out-node");
+    addClassById(fragment, "o3", "echo-out-node");
+    el.after(echoFallback());
+  } else if (el.find("[id='accSvg']").length) {
+    el.addClass("web-only accuracy-domination");
+    neededScripts.add("/assets/js/interactions/accuracy-domination.js");
+    addClassById(fragment, "aS", "accuracy-s-value");
+    addClassById(fragment, "raS", "accuracy-s-range");
+    addClassById(fragment, "aN", "accuracy-n-value");
+    addClassById(fragment, "raN", "accuracy-n-range");
+    addClassById(fragment, "aLedger", "accuracy-ledger");
+    addClassById(fragment, "aLh", "accuracy-ledger-title");
+    addClassById(fragment, "aBody", "accuracy-ledger-body");
+    addClassById(fragment, "aSnap", "accuracy-snap");
+    addClassById(fragment, "accP", "accuracy-point");
+    addClassById(fragment, "accStar", "accuracy-star");
+    addClassById(fragment, "accConn", "accuracy-connector");
+    addClassById(fragment, "accCap", "accuracy-caption");
+    addClassById(fragment, "lp1", "accuracy-point-line-s");
+    addClassById(fragment, "lp2", "accuracy-point-line-not");
+    addClassById(fragment, "ls1", "accuracy-star-line-s");
+    addClassById(fragment, "ls2", "accuracy-star-line-not");
+    addClassById(fragment, "accSlines", "accuracy-star-lines");
+    el.after(accuracyFallback());
   }
 });
 
@@ -81,13 +116,10 @@ root.find(".chip").each((_, chip) => {
   if (!el.attr("data-print")) el.attr("data-print", compactChipLabel(el.text()));
 });
 
-root.find("[id]").each((_, el) => {
-  const node = fragment(el);
-  node.attr("id", `appendix-d${String(day).padStart(3, "0")}-${node.attr("id")}`);
-});
+namespaceIds(fragment, root, idPrefix);
 
 const appendixHtml = [
-  `<details class="deep-dive" id="rest-of-the-map">`,
+  `<details class="deep-dive" id="${appendixId}">`,
   `<summary>`,
   `<span class="ptitle">Deep dive appendix</span>`,
   `<span class="deep-dive-title">${escapeHtml(title)}</span>`,
@@ -104,11 +136,7 @@ const appendixBlock = [
   "<!-- deep-dive:end -->"
 ].join("\n");
 
-const target = originalContent.includes("<!-- deep-dive:start -->")
-  ? originalContent.replace(/<!-- deep-dive:start -->[\s\S]*?<!-- deep-dive:end -->/, appendixBlock)
-  : originalContent.includes('class="deep-dive"')
-    ? originalContent.replace(/<details class="deep-dive"[\s\S]*?<\/details>/, appendixBlock)
-    : originalContent.replace(/\n<div class="tomorrow">/, `\n${appendixBlock}\n\n<div class="tomorrow">`);
+const target = upsertAppendix(originalContent, appendixHtml, appendixBlock, appendixId);
 
 if (contentFile) {
   await writeFile(contentFile, target.trimEnd() + "\n");
@@ -173,6 +201,57 @@ function addClassById($root, id, className) {
   if (el.length) el.addClass(className);
 }
 
+function namespaceIds($root, rootNode, prefix) {
+  const idMap = new Map();
+  rootNode.find("[id]").each((_, el) => {
+    const node = $root(el);
+    const current = node.attr("id");
+    if (!current) return;
+    const next = `${prefix}${current}`;
+    idMap.set(current, next);
+    node.attr("id", next);
+  });
+  if (!idMap.size) return;
+
+  rootNode.find("*").each((_, el) => {
+    const attrs = el.attribs || {};
+    for (const attr of Object.keys(attrs)) {
+      if (attr === "id") continue;
+      const original = attrs[attr];
+      const updated = replaceIdReferences(original, idMap);
+      if (updated !== original) $root(el).attr(attr, updated);
+    }
+  });
+}
+
+function replaceIdReferences(value, idMap) {
+  let next = value;
+  for (const [oldId, newId] of idMap) {
+    next = next
+      .replace(new RegExp(`#${escapeRegExp(oldId)}\\b`, "g"), `#${newId}`)
+      .replace(new RegExp(`(^|\\s)${escapeRegExp(oldId)}(?=\\s|$)`, "g"), `$1${newId}`);
+  }
+  return next;
+}
+
+function upsertAppendix(content, appendixHtml, appendixBlock, appendixId) {
+  const existingDetails = new RegExp(`<details class="deep-dive" id="${escapeRegExp(appendixId)}"[\\s\\S]*?<\\/details>`);
+  const markedBlock = /<!-- deep-dive:start -->[\s\S]*?<!-- deep-dive:end -->/;
+  const blockMatch = content.match(markedBlock);
+  if (blockMatch) {
+    const block = blockMatch[0];
+    const nextBlock = existingDetails.test(block)
+      ? block.replace(existingDetails, appendixHtml)
+      : block.replace(/\n?<!-- deep-dive:end -->/, `\n\n${appendixHtml}\n<!-- deep-dive:end -->`);
+    return content.replace(block, nextBlock);
+  }
+  if (content.includes('class="deep-dive"')) {
+    if (existingDetails.test(content)) return content.replace(existingDetails, appendixHtml);
+    return content.replace(/(<details class="deep-dive"[\s\S]*?<\/details>)/, `<!-- deep-dive:start -->\n$1\n\n${appendixHtml}\n<!-- deep-dive:end -->`);
+  }
+  return content.replace(/\n<div class="tomorrow">/, `\n${appendixBlock}\n\n<div class="tomorrow">`);
+}
+
 function cleanText(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
@@ -200,9 +279,48 @@ function compactChipLabel(value) {
   if (text.includes("contested")) return "contested";
   if (text.includes("debate")) return "debate";
   if (text.includes("established")) return "established";
+  if (text.includes("widely adopted")) return "established";
+  if (text.includes("robust")) return "promising";
+  if (text.includes("plausible")) return "promising";
+  if (text.includes("taken seriously")) return "promising";
   if (text.includes("promising")) return "promising";
   if (text.includes("superseded")) return "superseded";
   return "review";
+}
+
+function normalizeSvgTextEmphasis(value) {
+  return value.replace(/(<text\b[^>]*>[^<]*)<em>([^<]*)<\/em>([^<]*<\/text>)/g, "$1$2$3");
+}
+
+function echoFallback() {
+  return `
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Print form</p>
+<h4>Bubble vs. Chamber, as exposure outcomes</h4>
+<table class="alt-table">
+<thead><tr><th>Structure</th><th>Outside voices</th><th>Exposure outcome</th><th>Lesson</th></tr></thead>
+<tbody>
+<tr><td>Epistemic bubble</td><td>Absent, not refuted.</td><td>New sources can connect and puncture the bubble.</td><td>Exposure can work when the problem is missing information.</td></tr>
+<tr><td>Echo chamber</td><td>Present but pre-discredited.</td><td>Exposure can reinforce distrust because the chamber predicted hostile outsiders.</td><td>The obvious repair can backfire when distrust is built into the structure.</td></tr>
+</tbody>
+</table>
+</div>`;
+}
+
+function accuracyFallback() {
+  return `
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Print form</p>
+<h4>Accuracy domination, as credence geometry</h4>
+<table class="alt-table">
+<thead><tr><th>Credences</th><th>Sum</th><th>Geometry</th><th>Verdict</th></tr></thead>
+<tbody>
+<tr><td>P(S)=0.50, P(not-S)=0.50</td><td>1.00</td><td>On the coherence line.</td><td>Undominated: no other credence is closer in every world.</td></tr>
+<tr><td>P(S)=0.80, P(not-S)=0.80</td><td>1.60</td><td>Above the coherence line.</td><td>Dominated by a coherent projection closer to both truth-corners.</td></tr>
+<tr><td>P(S)=0.20, P(not-S)=0.20</td><td>0.40</td><td>Below the coherence line.</td><td>Dominated by a coherent projection closer to both truth-corners.</td></tr>
+</tbody>
+</table>
+</div>`;
 }
 
 function closureFallback() {
@@ -260,4 +378,16 @@ function escapeHtml(value) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+}
+
+function slugify(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

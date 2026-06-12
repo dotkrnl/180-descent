@@ -21,6 +21,8 @@ scripts:
   - /assets/js/interactions/closure-machine.js
   - /assets/js/interactions/stakes-dial.js
   - /assets/js/interactions/modal-rings.js
+  - /assets/js/interactions/echo-chamber.js
+  - /assets/js/interactions/accuracy-domination.js
 permalink: /zh/days/001-what-is-knowledge/
 ---
 {% include content_template %}

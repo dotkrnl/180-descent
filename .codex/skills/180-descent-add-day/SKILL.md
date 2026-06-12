@@ -46,14 +46,20 @@ Read the syllabus entry for the target day plus the immediately previous and nex
    - summarize the published opening arc and newest day
    - keep it concise, normally one short paragraph
    - if Chinese is also in scope, use `180-descent-chinese-edition` for the matched `src/zh/introduction.md` update
-5. For every interactive piece, provide all variants:
+   - when using `180-descent-chinese-edition`, follow its Slow-Agent Rule for Kimi and GLM; do not interrupt or substitute those passes just because they are quiet for several minutes
+5. If Chinese mirroring is in scope for the day, run the `180-descent-chinese-edition` Normal Day Workflow for the main route shell and lesson body:
+   - translate the normal day content with Kimi and run the GLM refinement pass
+   - follow the Slow-Agent Rule for both agents; they can be very slow on main lesson content, not just appendices
+   - do not interrupt, replace, or truncate either pass merely because it is quiet for several minutes
+   - manually review the resulting Chinese route shell, lesson include, terminology, interactive text, citations, URLs, DOI metadata, and Nunjucks/HTML structure
+6. For every interactive piece, provide all variants:
    - live web UI
    - no-JS EPUB fallback
    - static PDF fallback
    Put live behavior in `src/assets/js/interactions/*.js` and list each module in the route shell `scripts:` front matter. Keep `src/assets/js/book.js` for truly global behavior only. Prefer semantic HTML/CSS diagrams with print/EPUB fallbacks over raw inline SVG when layout can be expressed with normal boxes and text.
-6. Prefer existing components, CSS classes, and interaction modules before inventing new ones.
-7. If images or other bundled assets would improve the lesson, switch to `180-descent-assets` before adding them.
-8. Run the target-day checklist and project checks:
+7. Prefer existing components, CSS classes, and interaction modules before inventing new ones.
+8. If images or other bundled assets would improve the lesson, switch to `180-descent-assets` before adding them.
+9. Run the target-day checklist and project checks:
 
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ###
