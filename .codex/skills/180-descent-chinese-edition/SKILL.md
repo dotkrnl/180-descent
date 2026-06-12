@@ -28,17 +28,17 @@ Chinese editions must preserve the fact-check status of the English source inste
 3. Use Kimi CLI for the first Chinese translation pass. Follow the Slow-Agent Rule. Do not use `--final-message-only`.
 
 ```sh
-rtk kimi --print --yolo -p "请直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑目标 route shell 与 lesson include。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。保留所有 front matter 键、content_template、scripts、permalinks、locale: zh、day 数字、slug、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、表格、SVG 结构与 Nunjucks 语法。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
+rtk kimi --print --yolo -p "请直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑目标 route shell 与 lesson include。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。中文正文必须遵守本 skill 的 Typography Gate：不要在中文正文中使用 <em>/<i>；普通正文避免 <strong>/<b>；术语和必要强调只少量使用 <u>；命题、想法、口号、短语作为语言对象时优先使用「」；颜色只保留语义标签、图表、状态组件，不做普通强调；避免密集标记。保留所有 front matter 键、content_template、scripts、permalinks、locale: zh、day 数字、slug、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、表格、SVG 结构与 Nunjucks 语法。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
 ```
 
-4. Manually review Kimi edits for correctness, idiomatic Chinese, route-shell/body split, and preservation of YAML, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JS hooks, Nunjucks syntax, and permalink paths.
+4. Manually review Kimi edits for correctness, idiomatic Chinese, route-shell/body split, Typography Gate compliance, and preservation of YAML, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JS hooks, Nunjucks syntax, and permalink paths.
 5. Run a GLM consistency and language refinement pass with opencode. Follow the Slow-Agent Rule. Ask GLM to edit files in place and tell it all repo shell commands must use `rtk`.
 
 ```sh
-rtk opencode run -m zhipuai-coding-plan/glm-5.1 "请直接在本仓库中润色中文版本文件，并原地编辑。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。保留 route shell、lesson include、front matter、content_template、scripts、permalinks、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、表格、SVG 结构、JavaScript hook 与 Nunjucks 语法。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+rtk opencode run -m zhipuai-coding-plan/glm-5.1 "请直接在本仓库中润色中文版本文件，并原地编辑。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守本 skill 的 Typography Gate：不要在中文正文中使用 <em>/<i>；普通正文避免 <strong>/<b>；术语和必要强调只少量使用 <u>；命题、想法、口号、短语作为语言对象时优先使用「」；颜色只保留语义标签、图表、状态组件，不做普通强调；避免密集标记。保留 route shell、lesson include、front matter、content_template、scripts、permalinks、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、表格、SVG 结构、JavaScript hook 与 Nunjucks 语法。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
 ```
 
-6. Manually review GLM edits and keep only technically and stylistically sound changes.
+6. Manually review GLM edits and keep only technically and stylistically sound changes. Confirm the Typography Gate before treating the Chinese edition as complete.
 7. Run the Factual Parity Gate against the English source and any fact-check corrections made during the same work.
 8. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
 9. Run:
@@ -54,10 +54,10 @@ rtk npm run check
 For large appendices, use explicit temporary input/output files instead of asking an agent to overwrite its input:
 
 ```sh
-rtk kimi --print --yolo -p "请读取英文输入文件 /tmp/day-###-appendix-en.md，并把输出文件 /tmp/day-###-appendix-zh.md 的全部内容原地替换为简体中文版本。只编辑 /tmp/day-###-appendix-zh.md，不要编辑仓库文件。译文不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，同时保持技术含义准确。不要在聊天中返回一次性的完整文件译文。请输出简短进度说明，并在结束时用中文概括结果。"
+rtk kimi --print --yolo -p "请读取英文输入文件 /tmp/day-###-appendix-en.md，并把输出文件 /tmp/day-###-appendix-zh.md 的全部内容原地替换为简体中文版本。只编辑 /tmp/day-###-appendix-zh.md，不要编辑仓库文件。译文不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，同时保持技术含义准确。中文正文必须遵守本 skill 的 Typography Gate：不要在中文正文中使用 <em>/<i>；普通正文避免 <strong>/<b>；术语和必要强调只少量使用 <u>；命题、想法、口号、短语作为语言对象时优先使用「」；颜色只保留语义标签、图表、状态组件，不做普通强调；避免密集标记。不要在聊天中返回一次性的完整文件译文。请输出简短进度说明，并在结束时用中文概括结果。"
 ```
 
-Then compare structure against English, preserve comments/classes/ids/data attributes/fallbacks/citations/URLs/DOIs/JS hooks, insert into the matching Chinese include, run GLM, manually review, then build and check.
+Then compare structure against English, preserve comments/classes/ids/data attributes/fallbacks/citations/URLs/DOIs/JS hooks, insert into the matching Chinese include, run GLM, manually review, confirm the Typography Gate, then build and check.
 
 ## Terminology
 
@@ -76,8 +76,24 @@ Maintain these conventions unless the user changes them:
 - insert spaces between Chinese text and Latin letters, acronyms, Arabic numerals, percentages, and units where source typography permits, e.g. `2026 年`, `GLM 5.1`, `100 项`, `95% 置信区间`
 - avoid literal metaphors and stiff calques; prefer natural, elegant Chinese that remains technically exact
 
-## Typography
+## Typography Gate
 
-- In Chinese translations, use `<u>...</u>` (HTML underline) for emphasis and terms. Do not use `<em>...</em>` or `<i>...</i>` in Chinese prose.
-- English editions keep `<em>...</em>` for emphasis and `<em class="term">...</em>` for terms.
-- When converting or editing Chinese files, replace `<em>` with `<u>` and `</em>` with `</u>`; preserve all attributes such as `class="term"`.
+Chinese editions should be visually quieter than English editions. Keep the
+semantic meaning of English emphasis, but do not mirror English markup
+mechanically.
+
+- English editions keep `<em>...</em>` for emphasis, `<em class="term">...</em>` for terms, and `<strong>...</strong>` for strong contrast or structural labels.
+- Chinese running prose may use only sparse underline and semantic color for visual emphasis. Do not use `<em>...</em>` or `<i>...</i>` in Chinese prose. Avoid `<strong>...</strong>` and `<b>...</b>` in Chinese prose unless the markup is structural UI, a table/header label, a navigation label, a control label, or otherwise required by an existing component.
+- Use `<u class="term">...</u>` only for a first-use technical term in the local section. Use plain `<u>...</u>` only for necessary conceptual stress. Repeated terms should usually be plain text.
+- Prefer Chinese corner quotes `「」` over markup for quoted speech, thoughts, propositions, slogans, translated terms, and phrases discussed as language.
+- Use Chinese title marks `《》` for translated book, article, dialogue, and work titles where appropriate. Keep Latin source-list metadata, DOI strings, URLs, citation keys, CSS/JS identifiers, and journal metadata stable.
+- Preserve semantic color/status components: evidence chips, hype/frontier labels, diagram keys, warnings, and component states. Do not add inline `style="color:..."` or color classes for ordinary prose emphasis.
+- Keep emphasis sparse: target at most one marked phrase per normal paragraph, two only when a paragraph explicitly teaches a contrast. If several nearby phrases are marked, rewrite the sentence or use quotes instead.
+- Never stack visual emphasis in prose: avoid bold+underline, underline+color, bold+color, and nested emphasis tags.
+- When converting or editing Chinese files, decide case by case:
+  1. first-use technical term -> `<u class="term">...</u>`
+  2. necessary conceptual stress -> sparse `<u>...</u>`
+  3. proposition, thought, slogan, or phrase-as-language -> `「」`
+  4. title -> `《》` when idiomatic, otherwise plain text
+  5. ordinary emphasis -> remove markup
+  6. structural UI/status/diagram markup -> preserve existing classes and semantics
