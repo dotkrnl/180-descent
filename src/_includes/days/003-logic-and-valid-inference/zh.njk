@@ -220,11 +220,11 @@
 <p>「经典」逻辑并非唯一一致的选项；它只是更广阔的逻辑图景中一个已站稳脚跟的位置，每一套替代逻辑都放弃了大多数人以为不可动摇的某条定律。</p>
 <p><strong>直觉主义逻辑</strong>放弃了<em>排中律</em>。它由 L. E. J. 布劳威尔开创，1920–30 年代由阿伦德·海廷形式化，坚持一条陈述只有在你能<em>构造</em>出其证明时才算为真。你不能凭空断言「A 或非-A」——你必须证明其中一边。一个例子能尖锐地说明动机：排中律会让你轻松断言，对任何计算机程序，「它停机或不停机」——然而（我们将在<strong>第 27 日</strong>看到）不存在判定停机的通用方法，因此没有构造支撑这一断言。直觉主义说：那就别断言。这听起来像是哲学洁癖，直到你发现经由一种美得值得专设一框的对应关系，它竟通向计算机科学的心脏。</p>
 <p><strong>次协调逻辑</strong>放弃了<em>爆炸原则</em>。在经典逻辑中，单个矛盾是灾难性的：从「P 且非-P」你可以推出<em>任何东西</em>（原则<em>ex contradictione quodlibet</em>，「由矛盾可得任意结论」）——一处不一致，整座系统便付之一炬。次协调逻辑拒绝这一点，让你即便某些矛盾潜入，仍能合理推理——这对大型数据库、法典，以及任何局部不一致却仍有整体价值的信息集都很有用。更强硬的哲学表亲，<em class="term">双面真理论</em>——格雷厄姆·普里斯特认为有些矛盾<em>实际为真</em>，如说谎者语句「这句话是假的」——则争议大得多。务必区分二者：你可以采纳次协调逻辑（关于爆炸原则的技术选择）而不成为双面真理论者（关于真实矛盾的本体论主张）。前者是工具；后者是世界观。</p>
-<p><strong>模糊逻辑</strong>完全放弃了二值限制。1965 年，卢菲特·扎德让真值在 0 到 1 的连续区间滑动，以刻画模糊性——「水是温的」为 0.7 真——建立在 1920 年代扬·武卡谢维奇的多值逻辑之上。它运行在控制系统与家电中。而<strong>模态逻辑</strong>——关于<em>必然</em>与<em>可能</em>（□ 与 ◇）的逻辑——以及它的时态分支，支撑着硬件与软件的<em>形式验证</em>，因为它达到了一种罕见的平衡：表达能力足以说出有用的事，又足够克制以保持可判定性。这些不是博物馆中的藏品，而是现代技术世界实际运转的逻辑。</p>
+<p><strong>模糊逻辑</strong>完全放弃了二值限制。1965 年，卢菲特·扎德让真值在 0 到 1 的连续区间滑动，以刻画模糊性——「水是温的」为 0.7 真——建立在 1920 年代扬·武卡谢维奇的多值逻辑之上。它运行在控制系统与家电中。而<strong>模态逻辑</strong>——关于<em>必然</em>与<em>可能</em>（□ 与 ◇）的逻辑——以及经过精心选择的时态逻辑，支撑着硬件与软件的<em>形式验证</em>：某些具体片段既能表达有用性质，又足够克制，可以保留模型检查所需的可判定性。这些不是博物馆中的藏品，而是现代技术世界实际运转的逻辑。</p>
 
 <div class="ch-box">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .3rem;">桥梁 · 命题即类型</p>
-<p style="font-size:.92em;margin:0 0 .8rem;color:var(--ink-soft);">直觉主义逻辑之所以重要的根本原因，是<strong>柯里–霍华德对应</strong>：证明与程序是<em>同一样东西</em>，只是写在两种记号里。证明一个定理<em>就是</em>编写一个已验证的程序——反之亦然。</p>
+<p style="font-size:.92em;margin:0 0 .8rem;color:var(--ink-soft);">直觉主义逻辑之所以重要的根本原因，是<strong>柯里–霍华德对应</strong>：在适当的形式系统中，命题对应类型，证明对应程序。证明一个定理，可以被看作构造一个居于相应类型之中的程序式对象——反过来也一样。</p>
 <svg viewBox="0 0 480 150" role="img" aria-label="柯里–霍华德对应：逻辑一侧映射到计算一侧。">
 <g font-family="IBM Plex Mono,monospace" font-size="12">
 <text x="120" y="22" text-anchor="middle" fill="var(--accent)" letter-spacing="1.5">逻辑</text>
@@ -249,7 +249,7 @@
 <text x="240" y="116" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
 </g>
 </svg>
-<p style="font-size:.86em;margin:.7rem 0 0;color:var(--ink-faint);">这就是为什么下面的证明助手都建立在直觉主义类型论之上——也是为何<em>逻辑与计算</em>，我们五条线索之二，并非彼此相邻的邻域，而是同一片疆域的两面视图。（将在<strong>第 27–29 日</strong>继续展开。）</p>
+<p style="font-size:.86em;margin:.7rem 0 0;color:var(--ink-faint);">这就是为什么下面若干证明助手建立在类型论基础之上——也是为何<em>逻辑与计算</em>，我们五条线索之二，并非彼此相邻的邻域，而是同一片疆域的两面视图。（将在<strong>第 27–29 日</strong>继续展开。）</p>
 </div>
 </div>
 
@@ -259,17 +259,17 @@
 <span class="chip ok" data-print="已确立"><i></i>机器核查证明 · 已确立</span>
 </div>
 <h3>零容错的证明：证明助手的崛起</h3>
-<p>亚里士多德的梦想是一条紧密到无人能够怀疑的推理链。二十三个世纪后，这个梦想有了软件化身。<em class="term">证明助手</em>是一种程序，其中每一步逻辑都必须通过机器核查；没有任何一步能凭权威、直觉或一句「显然」而蒙混过关。主流系统是<strong>Lean</strong>（现为 Lean 4）、<strong>Rocq</strong>（原名为 Coq，2025 年更名）、<strong>Isabelle/HOL</strong> 与<strong>Agda</strong>——都是上述直觉主义类型论的继承者。</p>
-<p>Lean 的社区共建数学库<em class="term">mathlib</em>，是有史以来最大、最统一的数学形式化库：<strong>超过 278,000 条定理与 132,000 个定义</strong>——2026 年 6 月统计时如此，且仍在增长——覆盖了某著名「形式化这些」挑战清单上 100 个问题中的 84 个。这不是玩具。看看它已验证的成果：</p>
+<p>亚里士多德的梦想是一条紧密到无人能够怀疑的推理链。二十三个世纪后，这个梦想有了软件化身。<em class="term">证明助手</em>是一种程序，其中每一步逻辑都必须通过机器核查；没有任何一步能凭权威、直觉或一句「显然」而蒙混过关。主流系统包括<strong>Lean</strong>（现为 Lean 4）、<strong>Rocq</strong>（原名为 Coq，2025 年更名）、<strong>Agda</strong> 与<strong>Isabelle/HOL</strong>。Lean、Rocq 与 Agda 属于类型论家族；Isabelle/HOL 则建立在经典高阶逻辑之上。目标相同，基础不同。</p>
+<p>Lean 的社区共建数学库<em class="term">mathlib</em>，是世界上最大的统一数学形式化库之一：<strong>超过 278,000 条定理与 132,000 个定义</strong>——2026 年 6 月统计时如此，且仍在增长——覆盖了某著名「形式化这些」挑战清单上 100 个问题中的 84 个。这不是玩具。看看它已验证的成果：</p>
 
 <ul class="mtl">
 <li class="done"><span class="yr">2022 · 已完成</span><b>液体张量实验。</b>2020 年 12 月，菲尔兹奖得主彼得·朔尔策向全世界发出挑战，要求验证其「凝聚数学」中一个他本人都不太确定的定理。约翰·科默兰与亚当·托帕兹带领的团队在 Lean 中完成了验证，于 2022 年 7 月 14 日收束。一位一线数学家借助机器，获得对一份复杂到人类审稿人难以安心核查的证明的<em>信心</em>——这正是关键所在。</li>
 <li class="done"><span class="yr">2023 · 三周内完成</span><b>多项式弗雷曼–鲁萨猜想。</b>蒂姆·高尔斯、本·格林、弗雷迪·曼纳斯与陶哲轩发表这一加性组合学结果的证明数日后，陶哲轩启动了一个 Lean 项目来形式化它——三周后便宣布依赖图「被一片可爱的绿色完全覆盖」。形式化几乎与研究同步推进。</li>
-<li class="done"><span class="yr">2024–25 · 已完成</span><b>等式理论项目。</b>陶哲轩的合作实验（2024 年 9 月启动）旨在判定 4,694 条代数定律之间全部 <strong>22,033,636</strong> 种可能的蕴涵关系，结合人类证明、自动证明器、AI 与 Lean 验证，50 余位贡献者——在 200 多天内完成了工作。这是一种大规模协作、机器核查数学的新范式。</li>
+<li class="done"><span class="yr">2024–25 · 已完成</span><b>等式理论项目。</b>陶哲轩的合作实验（2024 年 9 月启动）旨在判定 4,694 条代数定律之间的蕴涵关系——若把每条定律对自身的平凡蕴涵也算入，共有 <strong>22,033,636</strong> 个有序对；若只数非平凡图边，则为 <strong>22,028,942</strong> 条——结合人类证明、自动证明器、AI 与 Lean 验证，50 余位贡献者，在 200 多天内完成了工作。这是一种大规模协作、机器核查数学的新范式。</li>
 <li class="prog"><span class="yr">2024–2029 · 进行中</span><b>费马大定理。</b>凯文·巴扎德由 EPSRC 资助的项目（2024 年 4 月启动，伦敦帝国理工学院）旨在形式化 FLT——并非怀尔斯的原始证明，而是一条现代路线。巴扎德「谨慎乐观」地认为自己能把它归约到 1980 年代已知的结果，但坦率承认整个项目「至少需要 5 年」。<em>尚未完成</em>——最诚实也准确的说法是：它仍在进行中，也是那 100 个挑战问题中尚未闭合的最后一项。</li>
 </ul>
 
-<p>这种确定性已从纯数学延伸到生命所依赖的系统。Rocq 中<em>被证明正确</em>的 C 编译器<strong>CompCert</strong>；一项著名的编译器查错研究耗费约六个 CPU 年，试图诱使它生成错误代码，却一无所获——「我们测试过的唯一一个 Csmith 无法找到错误代码的编译器」——同时在 GCC 与 LLVM 中找出了大量 bug。<strong>seL4</strong> 是第一个在 Isabelle/HOL 中拥有完整机器检查功能性正确性证明的操作系统微内核，保证它绝不会崩溃或执行不安全操作。这些不是承诺；而是关于软件的定理。<em>这</em>就是逻辑的机械化所能做的事——而且它已<em>确立</em>。</p>
+<p>这种确定性已从纯数学延伸到生命所依赖的系统。Rocq 中<em>被证明正确</em>的 C 编译器<strong>CompCert</strong>；一项著名的编译器查错研究耗费约六个 CPU 年，试图诱使它生成错误代码，却一无所获——「我们测试过的唯一一个 Csmith 无法找到错误代码的编译器」——同时在 GCC 与 LLVM 中找出了大量 bug。<strong>seL4</strong> 是第一个在 Isabelle/HOL 中拥有完整机器检查功能性正确性证明的操作系统微内核：在其明确列出的假设下，C 实现细化了形式规格，因此整类崩溃与不安全行为不是靠希望避免，而是被定理排除。这些不是普通承诺，而是关于软件的有条件定理。<em>这</em>就是逻辑的机械化所能做的事——而且它已<em>确立</em>。</p>
 </div>
 
 <div class="claim">
@@ -287,7 +287,7 @@
 <li><strong>离开 Lean 是一种取舍，不是无代价的升级。</strong>2024 年的银牌是<em>形式验证的</em>——由机器保证正确。2025 年的自然语言金牌是<em>人工评分的</em>，意味着我们重新依赖可能藏有细微漏洞的散文。更通用，却更不确定。别让「金牌胜过银牌」的叙事掩盖了认识论地面的移动。</li>
 <li><strong>它昂贵且狭窄。</strong>每道困难的 2024 年题需要两到三天的计算，而且题目还需先被人工形式化为 Lean 陈述。这还称不上通用数学智能。</li>
 </ul>
-<p>最需要明确否定的说法是：<strong>AI 尚未「解决数学」，也没有使数学家变得多余。</strong> <span class="chip bad" data-print="争议/炒作"><i></i>炒作</span> 没有任何 AI 独立证明过一个著名的开放猜想并被接受为里程碑。2025–26 年描述代理「在 Lean 中闭合开放问题」的预印本虽然有趣，但狭窄且新鲜，应归入<span class="chip hint" data-print="有望的线索"><i></i>有望的线索</span>，留待日后审视，而非大肆宣扬。真正的革命比标题更安静、也更持久：一条延续 2300 年的标准——<em>证明是一条无人能怀疑的链</em>——终于交由机器以零容错执行，而 AI 正在学习沿这些严苛轨道搜索。（我们将在<strong>第 138–145 日</strong>深入追寻这一主题。）</p>
+<p>最需要明确否定的说法是：<strong>AI 尚未「解决数学」，也没有使数学家变得多余。</strong> <span class="chip bad" data-print="争议/炒作"><i></i>炒作</span> 没有任何 AI 独立证明过一个著名的开放猜想并被接受为里程碑。关于定理证明代理找到小型 Lean 证明、或帮助完成狭窄形式化任务的报道虽然有趣，但仍早期、范围有限，也还不能替代被数学共同体接受的研究数学；它们应归入<span class="chip hint" data-print="有望的线索"><i></i>有望的线索</span>，留待日后审视，而非大肆宣扬。真正的革命比标题更安静、也更持久：一条延续 2300 年的标准——<em>证明是一条无人能怀疑的链</em>——终于交由机器以零容错执行，而 AI 正在学习沿这些严苛轨道搜索。（我们将在<strong>第 138–145 日</strong>深入追寻这一主题。）</p>
 <div class="aside" style="margin-top:1.4rem;">
 <p class="h">关于虚构来源的注记</p>
 <p>本课程的炒作过滤器有一条必须明说的规则：凡是指向未来日期预印本编号的引用，一律剔除。这一领域的搜索结果中，充斥着信誓旦旦引用尚不存在论文的条目。以上每个里程碑都可追溯到真实、有日期、可核实的原始来源——已发表的 <em>Nature</em> 论文、官方竞赛结果、具名研究者本人的公开宣布。当一条关于 AI 与数学的声明无法这样追溯时，正确反应不是兴奋，而是怀疑。</p>
@@ -315,7 +315,7 @@
 <div><dt>最佳类比</dt><dd>夏洛克·福尔摩斯的「演绎」其实是溯因——对线索的最佳解释，而非保证结论——而一个有效却不可靠的论证，是一条接合严密却输送污水的管道。</dd></div>
 <div><dt>当下争议</dt><dd>逻辑是发现还是发明（以及是否只有一种真逻辑，还是一套工具箱），如今被一条真实的前沿所激化：Lean 等证明助手以零容错验证前沿数学，AI 已达奖牌水准——但并未真正「解决数学」。</dd></div>
 </dl>
-<p class="threads"><b>今日线索 ›</b> 计算（柯里–霍华德：证明<em>就是</em>程序；硅芯片中的布尔代数；证明助手）· 信息（形式化使证明内容可被机器核查）· 涌现（大规模协作证明组合 2200 万步核查）——也将演绎与归纳衔接到<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>与<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>。</p>
+<p class="threads"><b>今日线索 ›</b> 计算（柯里–霍华德：证明对应程序；硅芯片中的布尔代数；证明助手）· 信息（形式化使证明内容可被机器核查）· 涌现（大规模协作证明判定约 2200 万个蕴涵关系）——也将演绎与归纳衔接到<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>与<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>。</p>
 </div>
 
 <div class="tomorrow">
@@ -347,7 +347,7 @@
 <li>"100 theorems in Lean." <em>Lean community</em> (accessed June 2026). <a href="https://leanprover-community.github.io/100.html">leanprover-community.github.io/100.html</a> <span class="meta">——Wiedijk 的 100 个定理基准中已有 84 个在 Lean 中形式化。</span></li>
 <li>Commelin, J. &amp; Topaz, A. et al. "Liquid Tensor Experiment." <em>Lean community blog</em> (completion 14 July 2022); Scholze's original challenge (Dec 2020). <a href="https://leanprover-community.github.io/blog/posts/lte-final/">leanprover-community.github.io</a> <span class="meta">——机器核查一位菲尔兹奖得主自己都不太确定的证明。</span></li>
 <li>Tao, T. "Formalizing the proof of PFR in Lean4." <em>terrytao.wordpress.com</em> (Nov 2023). Gowers, Green, Manners &amp; Tao, "On a conjecture of Marton," <em>Annals of Mathematics</em> (2025). <a href="https://terrytao.wordpress.com/2023/11/18/formalizing-the-proof-of-pfr-in-lean4-using-blueprint-a-short-tour/">terrytao.wordpress.com</a></li>
-<li>Tao, T. et al. "The Equational Theories Project." Project announced Sept 2024; retrospective paper Dec 2025 (arXiv:2512.07087). <a href="https://teorth.github.io/equational_theories/">teorth.github.io/equational_theories</a> <span class="meta">——22,033,636 种蕴涵关系，50 余位贡献者，Lean 验证。</span></li>
+<li>Tao, T. et al. "The Equational Theories Project." Project announced Sept 2024; retrospective paper Dec 2025 (arXiv:2512.07087). <a href="https://teorth.github.io/equational_theories/">teorth.github.io/equational_theories</a> <span class="meta">——22,033,636 个含自蕴涵的有序对；22,028,942 条非平凡图边；50 余位贡献者，Lean 验证。</span></li>
 <li>Buzzard, K. "Fermat's Last Theorem project." <em>Lean community blog</em> (launch 30 April 2024); EPSRC grant EP/Y022904/1 (2024–2029), Imperial College London. <a href="https://leanprover-community.github.io/blog/posts/FLT-announcement/">leanprover-community.github.io</a> <span class="meta">——进行中；「至少需要 5 年」。</span></li>
 <li>Leroy, X. et al. "CompCert" — a formally verified C compiler. Yang, Chen, Eide &amp; Regehr, "Finding and Understanding Bugs in C Compilers," <em>PLDI</em> (2011). <a href="https://compcert.org/">compcert.org</a> <span class="meta">——约六个 CPU 年未找到错误代码。</span></li>
 <li>Klein, G. et al. (2009). "seL4: Formal Verification of an OS Kernel." <em>SOSP '09.</em> <a href="https://sel4.systems/">sel4.systems</a> <span class="meta">——首个操作系统微内核功能性正确性的机器检查证明（Isabelle/HOL）。</span></li>
