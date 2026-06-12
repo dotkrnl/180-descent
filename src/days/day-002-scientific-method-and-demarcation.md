@@ -16,6 +16,8 @@ threads:
 content_template: days/002-scientific-method-and-demarcation/en.njk
 scripts:
   - /assets/js/interactions/demarcation-lab.js
+  - /assets/js/interactions/grue-machine.js
+  - /assets/js/interactions/base-rate-engine.js
 permalink: /days/002-scientific-method-and-demarcation/
 ---
 {% include content_template %}
