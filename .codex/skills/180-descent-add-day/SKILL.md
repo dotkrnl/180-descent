@@ -1,6 +1,6 @@
 ---
 name: 180-descent-add-day
-description: Add a new English day page to The 180-Day Descent repo from a supplied HTML lesson, using the route-shell plus lesson-include convention, reviewing factual claims and sources, adding callbacks, and providing web/EPUB/PDF component variants. Use when Codex needs to import or create a normal day lesson under src/days/ and src/_includes/days/.
+description: Add a new English day page to The 180-Day Descent repo from a supplied HTML lesson, using the route-shell plus lesson-include convention, reviewing factual claims and sources, adding callbacks, proactively searching useful image candidates, and providing web/EPUB/PDF component variants. Use when Codex needs to import or create a normal day lesson under src/days/ and src/_includes/days/.
 ---
 
 # Add A Day To 180 Descent
@@ -62,6 +62,28 @@ Before any new English day is considered ready, run a claim-level factual review
 
 Do not proceed to commit/publish until this gate has been completed and any issues have been fixed or explicitly reported to the user.
 
+## Image Candidate Gate
+
+Before any new day is considered ready, perform a proactive image pass even if
+the supplied lesson did not ask for images.
+
+1. Identify two to four places where a non-decorative image might make the
+   lesson clearer, more concrete, or more memorable. Prefer places where the
+   lesson names a real person, artifact, experiment, historical scene, diagram,
+   instrument, manuscript, chart, or visual object.
+2. Search for practical candidates from open-license, public-domain, Creative
+   Commons, or official-source collections. Browse when needed to verify source,
+   creator, license, and reuse terms; do not rely on a thumbnail alone.
+3. Present useful candidates to the user before adding any third-party image.
+   Include proposed placement, why it helps, source URL, creator, license, and
+   attribution/share-alike obligations. If no candidate is good enough, say
+   that explicitly and continue without images.
+4. Do not add decorative images merely to satisfy the gate. Prefer existing
+   semantic HTML/CSS/SVG diagrams when they explain the concept better than a
+   photo or scan.
+5. If the user accepts a third-party image, switch to `180-descent-assets` for
+   bundling, credits, compression, EPUB/PDF handling, and visual verification.
+
 ## Workflow
 
 1. Identify day number, title, block, entry analogy, model, debate, and frontier from `src/_data/syllabus.yaml`.
@@ -105,7 +127,7 @@ Do not proceed to commit/publish until this gate has been completed and any issu
    - static PDF fallback
    Put live behavior in `src/assets/js/interactions/*.js` and list each module in the route shell `scripts:` front matter. Keep `src/assets/js/book.js` for truly global behavior only. Prefer semantic HTML/CSS diagrams with print/EPUB fallbacks over raw inline SVG when layout can be expressed with normal boxes and text.
 7. Prefer existing components, CSS classes, and interaction modules before inventing new ones.
-8. If images or other bundled assets would improve the lesson, switch to `180-descent-assets` before adding them.
+8. Run the Image Candidate Gate. If the user accepts any third-party image or bundled asset, switch to `180-descent-assets` before adding it.
 9. Run the target-day checklist and project checks:
 
 ```sh
@@ -125,6 +147,9 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
 - Resolved forward pointers from earlier published days and appendices to the newly published day in both English and Chinese editions when present
 - Updated concise opening-arc paragraph in `src/pages/introduction.md`
 - Updated callbacks and pending future links
+- Completed Image Candidate Gate outcome: accepted candidates added through
+  `180-descent-assets`, or proposed/rejected/no-useful-candidate status reported
+  to the user before commit/publish
 - Added or reused `src/assets/js/interactions/*.js` modules for live components, with adjacent print/EPUB fallbacks in the lesson body
 - Passing target-day checklist, site build, EPUB/PDF build, link/content checks, EPUB structural checks, and PDF checks
 
