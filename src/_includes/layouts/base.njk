@@ -74,7 +74,7 @@
       <div class="wrap wide footer-grid">
         <p><strong>{{ uiTitle }}</strong><br>{{ uiSubtitle }}<br>{% if isZh %}作者：{{ book.zh.authors }}<br>翻译：{{ book.zh.translators }}{% else %}By {{ book.authors }}{% endif %}</p>
         {% if isWebIndex %}
-        <p><strong>{{ "人工编辑" if isZh else "Human editor" }}</strong><br><a href="https://jasonlau.io">{{ "刘家昌" if isZh else "Jason Lau" }}</a></p>
+        <p><strong>{{ "人工编辑" if isZh else "Human editor" }}</strong><br><a href="{{ "https://jasonlau.io/cn/" if isZh else "https://jasonlau.io" }}">{{ "刘家昌" if isZh else "Jason Lau" }}</a></p>
         {% endif %}
         <p><a href="{{ book.repo }}">GitHub</a><br><a href="{{ "/zh/downloads/" if isZh else "/downloads/" }}">{{ "EPUB 与 PDF 下载" if isZh else "EPUB and PDF downloads" }}</a><br><a href="{{ "/zh/credits/" if isZh else "/credits/" }}">{{ "鸣谢" if isZh else "Credits" }}</a></p>
       </div>
