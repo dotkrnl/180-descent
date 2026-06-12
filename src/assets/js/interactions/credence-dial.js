@@ -22,8 +22,8 @@
       coherent: "融贯",
       coherentBody: "你的置信度之和恰好为 1。没有一组看似公平的赌约能保证让你亏损。",
       dutchBook: "荷兰赌",
-      overBody: function(sum){ return "你会为两场恰有一场支付 <code>$1.00</code> 的赌约付出 " + money(sum) + "。你将会损失 <strong>" + money(sum - 1) + "</strong>。"; },
-      underBody: function(sum){ return "如果博彩商以 " + money(sum) + " 从你手中买下两场赌约，其中一场必定支付 <code>$1.00</code>。博彩商锁定 <strong>" + money(1 - sum) + "</strong> 的收益。"; }
+      overBody: function(sum){ return '你会为两场恰有一场支付 <code>$1.00</code> 的赌约付出 ' + money(sum) + '。你将会损失 <span class="hl">' + money(sum - 1) + "</span>。"; },
+      underBody: function(sum){ return '如果博彩商以 ' + money(sum) + ' 从你手中买下两场赌约，其中一场必定支付 <code>$1.00</code>。博彩商锁定 <span class="hl">' + money(1 - sum) + "</span> 的收益。"; }
     } : {
       sum: "sum = ",
       over: " (over)",

@@ -71,7 +71,7 @@
       segFP.style.width = (100 - trueWidth) + "%";
       ppvBig.textContent = percent + "%";
       ppvCap.innerHTML = isZh
-        ? '为真。这里每 100 个发表的「发现」中，大约 <strong>' + realN + '</strong> 个是真的，<strong>' + falseN + '</strong> 个只是披着信号外衣的噪音。<span style="display:block;margin-top:.3rem;color:var(--ink-faint);font-size:.92em;">' + verdictText(percent) + "</span>"
+        ? '为真。这里每 100 个发表的「发现」中，大约 <span class="hl">' + realN + '</span> 个是真的，<span class="hl">' + falseN + '</span> 个只是披着信号外衣的噪音。<span style="display:block;margin-top:.3rem;color:var(--ink-faint);font-size:.92em;">' + verdictText(percent) + "</span>"
         : 'real. About <strong>' + realN + '</strong> of every 100 published "discoveries" here are true, and <strong>' + falseN + '</strong> are noise dressed as signal. <span style="display:block;margin-top:.3rem;color:var(--ink-faint);font-size:.92em;">' + verdictText(percent) + "</span>";
     }
 

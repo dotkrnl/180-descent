@@ -157,7 +157,9 @@
       root.dataset.result = "";
       resetDoorActions();
       setStatus("stepPick", "modePick");
-      say.innerHTML = isZh ? "<b>选一扇门</b>开始。" : "<b>Pick a door</b> to begin.";
+      say.innerHTML = isZh
+        ? '<span class="hl">选一扇门</span>开始。'
+        : "<b>Pick a door</b> to begin.";
       nextWrap.style.display = "none";
     }
 
@@ -182,7 +184,7 @@
       setDoorAction(state.opened, labelFor("openedGoat"), "host-opened", isZh ? "主持人已经打开：山羊。" : "The host opened this door: goat.");
       setStatus("stepChoose", "modeChoose");
       say.innerHTML = isZh
-        ? "你选了 <b>" + (state.pick + 1) + " 号门</b>。主持人打开 <b>" + (state.opened + 1) + " 号门</b>：山羊。现在点 <b>" + (state.pick + 1) + " 号门</b>表示坚持，或点 <b>" + (state.other + 1) + " 号门</b>表示换门。"
+        ? '你选了 <span class="hl">' + (state.pick + 1) + ' 号门</span>。主持人打开 <span class="hl">' + (state.opened + 1) + ' 号门</span>：山羊。现在点 <span class="hl">' + (state.pick + 1) + ' 号门</span>表示坚持，或点 <span class="hl">' + (state.other + 1) + ' 号门</span>表示换门。'
         : "You picked <b>Door " + (state.pick + 1) + "</b>. The host opens <b>Door " + (state.opened + 1) + "</b>: goat. Now click <b>Door " + (state.pick + 1) + "</b> to stay, or <b>Door " + (state.other + 1) + "</b> to switch.";
     }
 
@@ -213,8 +215,8 @@
       root.dataset.result = won ? "won" : "lost";
       setStatus("stepResult", won ? "modeWon" : "modeLost");
       say.innerHTML = isZh
-        ? "你 <b>" + (switched ? "换到" : "坚守") + " " + (finalPick + 1) + " 号门</b>，" +
-          (won ? '<b class="win-text">赢得了汽车。</b>' : '<b class="lose-text">得到了山羊。</b>') +
+        ? '你 <span class="hl">' + (switched ? "换到" : "坚守") + " " + (finalPick + 1) + ' 号门</span>，' +
+          (won ? '<span class="win-text">赢得了汽车。</span>' : '<span class="lose-text">得到了山羊。</span>') +
           " " + (switched ? "换门是 2/3 策略。" : "坚守是 1/3 策略。")
         : "You <b>" + (switched ? "switched to" : "stayed on") + " Door " + (finalPick + 1) + "</b> and " +
           (won ? '<b class="win-text">won the car.</b>' : '<b class="lose-text">got a goat.</b>') +
@@ -255,7 +257,7 @@
       setStatus("stepSim", "modeSim");
       nextWrap.style.display = "none";
       say.innerHTML = isZh
-        ? "已加入 <b>1000 场配对模拟</b>。坚守约 <b>33%</b>；换门约 <b>67%</b>。你也可以继续手动选门。"
+        ? '已加入 <span class="hl">1000 场配对模拟</span>。坚守约 <span class="hl">33%</span>；换门约 <span class="hl">67%</span>。你也可以继续手动选门。'
         : "Added <b>1,000 paired simulations</b>. Staying lands near <b>33%</b>; switching near <b>67%</b>. You can keep playing by hand.";
     });
     btnReset.addEventListener("click", function(){
@@ -317,7 +319,7 @@
       vFpr.textContent = Math.round(falsePositiveRate * 100) + "%";
       postNum.textContent = (posterior * 100).toFixed(1) + "%";
       postExpl.innerHTML = isZh
-        ? "1000 人中，约有 <code>" + sickCount + "</code> 人患病。测试能检出其中 <code>" + truePositiveCount + "</code> 人，但也会把 <code>" + falsePositiveCount + "</code> 个健康人误判阳性。在全部 <b>" + positives + " 个阳性</b>中，<code>" + truePositiveCount + "</code> 人确实患病 → <b>" + (posterior * 100).toFixed(1) + "%</b>。"
+        ? '1000 人中，约有 <code>' + sickCount + '</code> 人患病。测试能检出其中 <code>' + truePositiveCount + '</code> 人，但也会把 <code>' + falsePositiveCount + '</code> 个健康人误判阳性。在全部 <span class="hl">' + positives + ' 个阳性</span>中，<code>' + truePositiveCount + '</code> 人确实患病 → <span class="hl">' + (posterior * 100).toFixed(1) + "%</span>。"
         : "Of 1,000 people, about <code>" + sickCount + "</code> are sick. The test flags <code>" + truePositiveCount + "</code> of them but also <code>" + falsePositiveCount + "</code> healthy people. Among <b>all " + positives + " positives</b>, <code>" + truePositiveCount + "</code> are truly sick → <b>" + (posterior * 100).toFixed(1) + "%</b>.";
 
       dots.forEach(function(dot, index){

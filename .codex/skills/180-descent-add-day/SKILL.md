@@ -40,7 +40,7 @@ When Chinese mirroring is required, run the `180-descent-chinese-edition` Normal
 Day Workflow before considering the day complete. This includes the Chinese
 route shell, Chinese lesson include, `src/_data/syllabus_zh.yaml`,
 `src/zh/introduction.md`, translated interactive UI text, tomorrow-card behavior,
-the Chinese Typography Gate for sparse underline/semantic color instead of
+the Chinese Typography Gate for color/corner quotes instead of
 mechanically mirrored English emphasis, and the `--require-zh` target-day
 checklist.
 
@@ -120,7 +120,7 @@ the supplied lesson did not ask for images.
    - follow the Slow-Agent Rule for both agents; they can be very slow on main lesson content, not just appendices
    - do not interrupt, replace, or truncate either pass merely because it is quiet for several minutes
    - manually review the resulting Chinese route shell, lesson include, terminology, interactive text, citations, URLs, DOI metadata, and Nunjucks/HTML structure
-   - apply the Chinese Typography Gate from `180-descent-chinese-edition`: remove dense emphasis, avoid `<em>/<i>/<strong>/<b>` in Chinese prose, use sparse `<u>` for terms or necessary stress, prefer `「」`/`《》` where markup is only acting as voice or quotation, and preserve color only for semantic status, diagrams, or component state
+   - apply the Chinese Typography Gate from `180-descent-chinese-edition`: remove dense emphasis; avoid `<em>/<i>/<strong>/<b>/<u>` in Chinese prose; use color-only spans (`span.term`, sparse `span.hl`) and `「」` for the allowed highlight system; prefer `「」`/`《》` where markup is only acting as voice, quotation, or title; preserve semantic status, diagram, and component-state color
 6. For every interactive piece, provide all variants:
    - live web UI
    - no-JS EPUB fallback

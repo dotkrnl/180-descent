@@ -30,13 +30,13 @@
     function caseText(s, err){
       var base;
       if(isZh && s < 25){
-        base = "<b>低利害。</b> 这只是一件小事，出错也没什么严重后果。";
+        base = '<span class="hl">低利害。</span> 这只是一件小事，出错也没什么严重后果。';
       } else if(isZh && s < 55){
-        base = "<b>利害上升。</b> 错过存款会很麻烦，但仍可补救。";
+        base = '<span class="hl">利害上升。</span> 错过存款会很麻烦，但仍可补救。';
       } else if(isZh && s < 80){
-        base = "<b>高利害。</b> 一张支票必须在周一前到账，否则会影响抵押贷款。";
+        base = '<span class="hl">高利害。</span> 一张支票必须在周一前到账，否则会影响抵押贷款。';
       } else if(isZh){
-        base = "<b>危急利害。</b> 如果周一前没有存入这张支票，你可能失去房子。";
+        base = '<span class="hl">危急利害。</span> 如果周一前没有存入这张支票，你可能失去房子。';
       } else if(s < 25){
         base = "<b>Low stakes.</b> It is a small errand. Nothing much rides on it.";
       } else if(s < 55){
@@ -62,13 +62,17 @@
       sdCase.innerHTML = caseText(s, err);
       if(knows){
         sdState.className = "vstate know stakes-state";
-        sdState.innerHTML = isZh ? "✓「是的，我<strong>知道</strong>它周六营业。」" : '✓ "Yeah, I <strong>know</strong> it is open Saturday."';
+        sdState.innerHTML = isZh
+          ? '✓「是的，我<span class="hl">知道</span>它周六营业。」'
+          : '✓ "Yeah, I <strong>know</strong> it is open Saturday."';
         sdCtx.textContent = isZh ? "当前标准较低：「S 知道」这句话为真。" : 'Low standard in play: the sentence "S knows" comes out true.';
         sdEnc.textContent = isZh ? "利害关系较低，因此这个真信念足以指导行动，也足以算作知识。" : "Little at stake, so the true belief is action-guiding enough to count as knowledge.";
         sdInv.textContent = isZh ? "你知道，而且一直知道；利害关系还没有让你变得谨慎。" : "You know, and always did; the stakes have not made you cautious yet.";
       } else {
         sdState.className = "vstate no stakes-state";
-        sdState.innerHTML = isZh ? "✕「我<strong>最好进去确认一下</strong>。」" : '✕ "I had <strong>better go in and check</strong>."';
+        sdState.innerHTML = isZh
+          ? '✕「我<span class="hl">最好进去确认一下</span>。」'
+          : '✕ "I had <strong>better go in and check</strong>."';
         sdCtx.textContent = isZh ? "提高的利害或注意力抬高了标准。同样的证据，门槛更严。" : "Raised stakes or attention lift the standard. Same evidence, stricter bar.";
         sdEnc.textContent = isZh ? "利害关系已经侵入：同样的证据不再足以构成知识。" : "What is at stake has encroached: the same evidence no longer suffices to know.";
         sdInv.textContent = isZh ? "「知道」这个词从未移动；两个反应中必有一个是错的。" : 'The word "knows" never moved; one of the two reactions is simply mistaken.';
