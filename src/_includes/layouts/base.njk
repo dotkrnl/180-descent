@@ -3,7 +3,9 @@
 {% set uiSubtitle = book.zh.subtitle if isZh else book.subtitle %}
 {% set uiDescription = book.zh.description if isZh else book.description %}
 {% set isWebIndex = page.url == "/" or page.url == "/zh/" %}
-{% if day_path %}
+{% if hide_language_toggle %}
+  {% set languageUrl = "" %}
+{% elif day_path %}
   {% set languageUrl = "/days/" + day_path + "/" if isZh else "/zh/days/" + day_path + "/" %}
 {% else %}
   {% set languageUrl = alternate_url or ("/" if isZh else "/zh/") %}
@@ -43,7 +45,9 @@
           <a href="{{ "/zh/downloads/" if isZh else "/downloads/" }}">{{ "下载" if isZh else "Downloads" }}</a>
         </nav>
         <div class="top-actions">
+          {% if languageUrl %}
           <a class="toggle" href="{{ languageUrl }}" aria-label="{{ "切换到英文" if isZh else "切换到中文" }}">{{ "EN" if isZh else "中文" }}</a>
+          {% endif %}
           <button class="toggle theme-toggle" id="themeBtn" type="button" aria-label="{{ "切换明暗主题" if isZh else "Toggle light or dark theme" }}">
             <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <circle cx="12" cy="12" r="4"></circle>
