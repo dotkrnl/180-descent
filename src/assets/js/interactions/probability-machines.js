@@ -16,34 +16,84 @@
   }
 
   function initMontyHall(){
-    var doors = [id("door0"), id("door1"), id("door2")];
-    var say = id("mhSay");
-    var nextWrap = id("mhNextWrap");
-    var btnNext = id("btnNext");
-    var btnAuto = id("btnAuto");
-    var btnReset = id("btnReset");
-    var stayWinsEl = id("stayWins");
-    var stayPlaysEl = id("stayPlays");
-    var stayPctEl = id("stayPct");
-    var switchWinsEl = id("switchWins");
-    var switchPlaysEl = id("switchPlays");
-    var switchPctEl = id("switchPct");
+    var root = document.querySelector(".probability-monty");
+    if (!root) return;
+
+    function mid(name){
+      return root.querySelector("#" + name);
+    }
+
+    var doors = [mid("door0"), mid("door1"), mid("door2")];
+    var say = mid("mhSay");
+    var stepEl = mid("mhStep");
+    var modeEl = mid("mhMode");
+    var nextWrap = mid("mhNextWrap");
+    var btnNext = mid("btnNext");
+    var btnAuto = mid("btnAuto");
+    var btnReset = mid("btnReset");
+    var stayWinsEl = mid("stayWins");
+    var stayPlaysEl = mid("stayPlays");
+    var stayPctEl = mid("stayPct");
+    var switchWinsEl = mid("switchWins");
+    var switchPlaysEl = mid("switchPlays");
+    var switchPctEl = mid("switchPct");
 
     if (doors.some(function(door){ return !door; }) || !say || !nextWrap || !btnNext || !btnAuto || !btnReset) return;
     if (!stayWinsEl || !stayPlaysEl || !stayPctEl || !switchWinsEl || !switchPlaysEl || !switchPctEl) return;
 
     var stats = { stayW: 0, stayP: 0, switchW: 0, switchP: 0 };
     var state = { car: -1, pick: -1, opened: -1, other: -1, phase: "pick" };
+    var labels = isZh
+      ? {
+        pick: "选择",
+        stay: "坚持这扇",
+        switchDoor: "换到这扇",
+        openedGoat: "已开：山羊",
+        car: "汽车",
+        goat: "山羊",
+        win: "你的选择：赢",
+        lose: "你的选择：山羊",
+        stepPick: "步骤 1",
+        modePick: "先选门",
+        stepChoose: "步骤 2",
+        modeChoose: "坚持或换门",
+        stepResult: "结果",
+        modeWon: "赢得汽车",
+        modeLost: "得到山羊",
+        stepSim: "模拟",
+        modeSim: "1000 局"
+      }
+      : {
+        pick: "Pick",
+        stay: "Stay here",
+        switchDoor: "Switch here",
+        openedGoat: "Opened: goat",
+        car: "Car",
+        goat: "Goat",
+        win: "Your pick: win",
+        lose: "Your pick: goat",
+        stepPick: "Step 1",
+        modePick: "Pick first",
+        stepChoose: "Step 2",
+        modeChoose: "Stay or switch",
+        stepResult: "Result",
+        modeWon: "Won the car",
+        modeLost: "Got a goat",
+        stepSim: "Simulation",
+        modeSim: "1,000 rounds"
+      };
 
     function doorName(index){
       return isZh ? (index + 1) + " 号门" : "Door " + (index + 1);
     }
 
     function labelFor(kind){
-      var labels = isZh
-        ? { pick: "选择", stay: "坚持这扇", switchDoor: "换到这扇", openedGoat: "已开：山羊", car: "汽车", goat: "山羊", win: "你的选择：赢", lose: "你的选择：山羊" }
-        : { pick: "Pick", stay: "Stay here", switchDoor: "Switch here", openedGoat: "Opened: goat", car: "Car", goat: "Goat", win: "Your pick: win", lose: "Your pick: goat" };
       return labels[kind];
+    }
+
+    function setStatus(stepKey, modeKey){
+      if (stepEl) stepEl.textContent = labels[stepKey];
+      if (modeEl) modeEl.textContent = labels[modeKey];
     }
 
     function setDoorAction(index, label, className, ariaAction){
@@ -58,6 +108,7 @@
     function resetDoorActions(){
       doors.forEach(function(door, index){
         var action = door.querySelector(".daction");
+        door.disabled = false;
         door.classList.remove("choose-stay", "choose-switch", "host-opened", "final-pick", "won", "lost");
         if (action) action.textContent = labelFor("pick");
         door.setAttribute("aria-label", doorName(index) + ". " + (isZh ? "选择这扇门。" : "Pick this door."));
@@ -67,10 +118,12 @@
     function clearPrizes(){
       doors.forEach(function(door){
         var holder = door.querySelector(".prizeholder");
-        if (holder) holder.innerHTML = "";
-        door.classList.remove("picked", "revealed", "win", "final-pick", "won", "lost", "choose-stay", "choose-switch", "host-opened");
-        var panel = door.querySelector(".door-panel");
-        if (panel) panel.setAttribute("fill", "var(--accent-deep)");
+        if (holder) {
+          holder.textContent = "";
+          holder.className = "prizeholder";
+        }
+        door.disabled = false;
+        door.classList.remove("picked", "revealed", "has-car", "has-goat", "final-pick", "won", "lost", "choose-stay", "choose-switch", "host-opened");
       });
     }
 
@@ -78,14 +131,10 @@
       var holder = doors[index].querySelector(".prizeholder");
       if (holder) {
         var label = kind === "car" ? labelFor("car") : labelFor("goat");
-        var color = kind === "car" ? "var(--ok)" : "var(--contested)";
-        var fontSize = isZh ? "17" : "15";
-        holder.innerHTML = '<rect x="17" y="56" width="56" height="42" rx="7" fill="var(--raised)" stroke="var(--line-strong)" stroke-width="1.5"></rect>' +
-          '<text x="45" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="' + fontSize + '" font-weight="600" fill="' + color + '">' + label + "</text>";
+        holder.textContent = label;
+        holder.className = "prizeholder " + (kind === "car" ? "is-car" : "is-goat");
       }
-      var panel = doors[index].querySelector(".door-panel");
-      if (panel) panel.setAttribute("fill", "var(--paper)");
-      doors[index].classList.add("revealed");
+      doors[index].classList.add("revealed", kind === "car" ? "has-car" : "has-goat");
     }
 
     function updateTally(){
@@ -104,7 +153,10 @@
       state.opened = -1;
       state.other = -1;
       state.phase = "pick";
+      root.dataset.phase = "pick";
+      root.dataset.result = "";
       resetDoorActions();
+      setStatus("stepPick", "modePick");
       say.innerHTML = isZh ? "<b>选一扇门</b>开始。" : "<b>Pick a door</b> to begin.";
       nextWrap.style.display = "none";
     }
@@ -121,9 +173,14 @@
       showPrize(state.opened, "goat");
       doors[state.pick].classList.add("picked");
       state.phase = "choose";
+      root.dataset.phase = "choose";
+      doors.forEach(function(door, index){
+        door.disabled = index !== state.pick && index !== state.other;
+      });
       setDoorAction(state.pick, labelFor("stay"), "choose-stay", isZh ? "点这里表示坚持。" : "Click here to stay.");
       setDoorAction(state.other, labelFor("switchDoor"), "choose-switch", isZh ? "点这里表示换门。" : "Click here to switch.");
       setDoorAction(state.opened, labelFor("openedGoat"), "host-opened", isZh ? "主持人已经打开：山羊。" : "The host opened this door: goat.");
+      setStatus("stepChoose", "modeChoose");
       say.innerHTML = isZh
         ? "你选了 <b>" + (state.pick + 1) + " 号门</b>。主持人打开 <b>" + (state.opened + 1) + " 号门</b>：山羊。现在点 <b>" + (state.pick + 1) + " 号门</b>表示坚持，或点 <b>" + (state.other + 1) + " 号门</b>表示换门。"
         : "You picked <b>Door " + (state.pick + 1) + "</b>. The host opens <b>Door " + (state.opened + 1) + "</b>: goat. Now click <b>Door " + (state.pick + 1) + "</b> to stay, or <b>Door " + (state.other + 1) + "</b> to switch.";
@@ -138,6 +195,7 @@
       doors.forEach(function(door, index){
         var kind = index === state.car ? "car" : "goat";
         setDoorAction(index, labelFor(kind), "", isZh ? labelFor(kind) + "。" : labelFor(kind) + ".");
+        door.disabled = true;
       });
       doors[finalPick].classList.add("final-pick", won ? "won" : "lost");
       var finalAction = doors[finalPick].querySelector(".daction");
@@ -151,6 +209,9 @@
         if (won) stats.stayW++;
       }
       updateTally();
+      root.dataset.phase = "done";
+      root.dataset.result = won ? "won" : "lost";
+      setStatus("stepResult", won ? "modeWon" : "modeLost");
       say.innerHTML = isZh
         ? "你 <b>" + (switched ? "换到" : "坚守") + " " + (finalPick + 1) + " 号门</b>，" +
           (won ? '<b class="win-text">赢得了汽车。</b>' : '<b class="lose-text">得到了山羊。</b>') +
@@ -164,6 +225,7 @@
 
     doors.forEach(function(door, index){
       door.addEventListener("click", function(){
+        if (door.disabled) return;
         if (state.phase === "pick") {
           state.pick = index;
           hostOpens();
@@ -185,9 +247,16 @@
         else stats.switchW++;
       }
       updateTally();
+      clearPrizes();
+      state = { car: rint(3), pick: -1, opened: -1, other: -1, phase: "pick" };
+      root.dataset.phase = "pick";
+      root.dataset.result = "";
+      resetDoorActions();
+      setStatus("stepSim", "modeSim");
+      nextWrap.style.display = "none";
       say.innerHTML = isZh
-        ? "已自动运行 <b>1000 场配对游戏</b>。坚守约 <b>33%</b>；换门约 <b>67%</b>。"
-        : "Ran <b>1,000 paired games</b>. Staying lands near <b>33%</b>; switching near <b>67%</b>.";
+        ? "已加入 <b>1000 场配对模拟</b>。坚守约 <b>33%</b>；换门约 <b>67%</b>。你也可以继续手动选门。"
+        : "Added <b>1,000 paired simulations</b>. Staying lands near <b>33%</b>; switching near <b>67%</b>. You can keep playing by hand.";
     });
     btnReset.addEventListener("click", function(){
       stats = { stayW: 0, stayP: 0, switchW: 0, switchP: 0 };

@@ -73,45 +73,56 @@
 <h4>蒙提霍尔机</h4>
 <p class="pnote">选一扇门。主持人会打开另一扇——永远是山羊，不是你选的，也不是藏车的。然后点原来的门表示坚持，点另一扇未打开的门表示换门。先手动玩几把，再点<strong>自动运行 1000 次</strong>，看两种策略的胜率如何分道扬镳。数字不会说谎。</p>
 
+<div class="mh-machine" id="mhMachine">
+<div class="mh-odds" aria-label="策略胜率">
+<div class="mh-odd stay"><span>坚持保留第一次选择</span><b>1/3</b></div>
+<div class="mh-odd switch"><span>换门接住未选的组合</span><b>2/3</b></div>
+</div>
+
 <div class="mh-stage" id="mhStage">
-<button class="mh-door" data-door="0" id="door0">
-<svg viewBox="0 0 90 140" role="img" aria-label="1 号门">
-<rect class="door-panel" x="6" y="6" width="78" height="128" rx="5" fill="var(--accent-deep)" stroke="var(--line-strong)" stroke-width="2"></rect>
-<rect x="13" y="13" width="64" height="52" rx="2" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.5"></rect>
-<rect x="13" y="71" width="64" height="56" rx="2" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.5"></rect>
-<circle cx="68" cy="99" r="3.4" fill="var(--brass)"></circle>
-<g class="prizeholder"></g>
-</svg>
+<button class="mh-door" data-door="0" id="door0" type="button">
+<span class="mh-door-face" aria-hidden="true">
+<span class="mh-door-number">1</span>
+<span class="mh-door-panel top"></span>
+<span class="mh-door-panel bottom"></span>
+<span class="mh-door-knob"></span>
+<span class="prizeholder"></span>
+</span>
 <span class="dlab">1 号门</span>
 <span class="daction" aria-hidden="true">选择</span>
 </button>
-<button class="mh-door" data-door="1" id="door1">
-<svg viewBox="0 0 90 140" role="img" aria-label="2 号门">
-<rect class="door-panel" x="6" y="6" width="78" height="128" rx="5" fill="var(--accent-deep)" stroke="var(--line-strong)" stroke-width="2"></rect>
-<rect x="13" y="13" width="64" height="52" rx="2" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.5"></rect>
-<rect x="13" y="71" width="64" height="56" rx="2" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.5"></rect>
-<circle cx="68" cy="99" r="3.4" fill="var(--brass)"></circle>
-<g class="prizeholder"></g>
-</svg>
+<button class="mh-door" data-door="1" id="door1" type="button">
+<span class="mh-door-face" aria-hidden="true">
+<span class="mh-door-number">2</span>
+<span class="mh-door-panel top"></span>
+<span class="mh-door-panel bottom"></span>
+<span class="mh-door-knob"></span>
+<span class="prizeholder"></span>
+</span>
 <span class="dlab">2 号门</span>
 <span class="daction" aria-hidden="true">选择</span>
 </button>
-<button class="mh-door" data-door="2" id="door2">
-<svg viewBox="0 0 90 140" role="img" aria-label="3 号门">
-<rect class="door-panel" x="6" y="6" width="78" height="128" rx="5" fill="var(--accent-deep)" stroke="var(--line-strong)" stroke-width="2"></rect>
-<rect x="13" y="13" width="64" height="52" rx="2" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.5"></rect>
-<rect x="13" y="71" width="64" height="56" rx="2" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.5"></rect>
-<circle cx="68" cy="99" r="3.4" fill="var(--brass)"></circle>
-<g class="prizeholder"></g>
-</svg>
+<button class="mh-door" data-door="2" id="door2" type="button">
+<span class="mh-door-face" aria-hidden="true">
+<span class="mh-door-number">3</span>
+<span class="mh-door-panel top"></span>
+<span class="mh-door-panel bottom"></span>
+<span class="mh-door-knob"></span>
+<span class="prizeholder"></span>
+</span>
 <span class="dlab">3 号门</span>
 <span class="daction" aria-hidden="true">选择</span>
 </button>
 </div>
 
+<div class="mh-status">
+<span class="mh-step" id="mhStep">步骤 1</span>
+<span class="mh-mode" id="mhMode">先选门</span>
 <p class="mh-say" id="mhSay" aria-live="polite"><b>选一扇门</b>开始。</p>
+</div>
+
 <div class="mh-controls" id="mhNextWrap" style="display:none;">
-<button class="btn ghost" id="btnNext">再来一局 →</button>
+<button class="btn ghost" id="btnNext" type="button">再来一局 →</button>
 </div>
 
 <div class="mh-tally">
@@ -129,8 +140,9 @@
 
 <div class="mh-auto">
 <span class="h">大规模实验（教师实验法的自动化版本）</span>
-<button class="btn" id="btnAuto">自动运行 1000 次</button>
-<button class="btn ghost" id="btnReset">重置计数</button>
+<button class="btn" id="btnAuto" type="button">自动运行 1000 次</button>
+<button class="btn ghost" id="btnReset" type="button">重置计数</button>
+</div>
 </div>
 </div>
 
