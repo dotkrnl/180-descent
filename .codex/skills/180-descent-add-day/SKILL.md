@@ -26,6 +26,24 @@ Use adjacent skills when the request includes their scope:
 
 Read the syllabus entry for the target day plus the immediately previous and next days.
 
+## Fact-Check Gate
+
+Before any new English day is considered ready, run a claim-level factual review. Treat every factual claim you are not personally 100% sure about as needing verification.
+
+1. Inventory factual claims by local file and line: dates, chronology, publication metadata, names/titles, quotes, numbers, statistical results, legal/regulatory/current claims, technical capabilities, "first/largest/only" superlatives, and claims about contested frontier work.
+2. Verify against the strongest practical source:
+   - primary papers, books, official project pages, standards, repositories, release notes, datasets, or competition pages
+   - reputable publisher pages, DOI records, SEP/IEP entries, PubMed/arXiv pages, or institutional pages when primary text is unavailable
+   - avoid relying on Wikipedia except as a pointer to better sources
+3. Browse for current or unstable claims, including model capabilities, software/library status, live statistics, leadership, prices, laws, standards, recent papers, and anything dated "latest", "current", "today", or this year.
+4. Check direct quotes against the original publication, transcript, archive scan, or a reliable reproduction. If the exact wording cannot be verified, paraphrase and cite the source.
+5. Check numbers by recalculating when possible: percentages, sample sizes, score thresholds, table rows, totals, and "X of Y" statements. Note whether a count includes trivial cases or self-pairs.
+6. Audit wording for overclaiming. Soften unsupported superlatives, absolute guarantees, causal claims, and "settled" labels unless the cited source really supports them. Mark frontier items as established, promising hint, or contested/hype.
+7. Keep citations adjacent to the claims they support. If a source supports only part of a sentence, revise the sentence or add the missing source.
+8. When Chinese is in scope, mirror every factual correction into the Chinese route/include and manually verify dates, numbers, names, source metadata, URLs, DOI strings, and evidence labels after translation.
+
+Do not proceed to commit/publish until this gate has been completed and any issues have been fixed or explicitly reported to the user.
+
 ## Workflow
 
 1. Identify day number, title, block, entry analogy, model, debate, and frontier from `src/_data/syllabus.yaml`.
@@ -35,7 +53,7 @@ Read the syllabus entry for the target day plus the immediately previous and nex
    Use `scripts/import-day-from-html.mjs` when it fits the source, then correct front matter from the syllabus as needed.
 3. Review the lesson text:
    - preserve the teaching arc and voice
-   - fact-check factual claims, quotes, citations, DOI/URL metadata, dates, and result numbers before keeping or adding them
+   - run the Fact-Check Gate before keeping or adding factual claims
    - verify direct quotes against the original publication, transcript, archive scan, or reliable reproduction; paraphrase uncertain wording
    - keep citations tied to the claims they support
    - label frontier claims as established, promising hint, or contested/hype

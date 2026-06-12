@@ -7,6 +7,21 @@ description: Add a deep-dive appendix to an existing The 180-Day Descent day fro
 
 Use this when the user provides a `day-##-appendix-*.html` file for an already published day.
 
+## Fact-Check Gate
+
+Appendices use the same claim-level review standard as normal days. Before keeping imported appendix text, treat every factual claim you are not personally 100% sure about as needing verification.
+
+1. Inventory claims by local file and line, including dates, chronology, publication metadata, names/titles, quotes, numbers, statistical results, current claims, technical capabilities, "first/largest/only" superlatives, and frontier claims.
+2. Verify against primary or strongest-available sources: original papers/books, DOI or publisher pages, official project pages, repositories, datasets, competition pages, SEP/IEP entries, PubMed/arXiv pages, or institutional pages.
+3. Browse for current or unstable claims and compare dates carefully. Do not assume model, software, standards, law, leadership, or "latest" claims are still current.
+4. Check direct quotes against original or reliable reproductions; paraphrase if exact wording is uncertain.
+5. Recalculate numbers when possible and clarify count definitions, such as whether totals include trivial cases, self-pairs, exclusions, failed attempts, or completed-only denominators.
+6. Audit wording for overclaiming. Soften unsupported superlatives, absolute guarantees, causal claims, and "settled" labels. Mark frontier claims as established, promising hint, or contested/hype.
+7. Keep citations adjacent to supported claims, and revise any sentence whose source supports only part of the claim.
+8. If the target day has a Chinese edition, mirror all factual corrections into the Chinese appendix/include and manually verify numerical/date/citation parity after translation.
+
+Do not proceed to commit/publish until this gate has been completed and any issues have been fixed or explicitly reported to the user.
+
 ## Workflow
 
 1. Identify the target day from the filename or user message. Check whether the day already has `src/zh/days/day-###-*.md` and `src/_includes/days/###-*/zh.njk`.
@@ -24,7 +39,7 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
    - imported IDs are namespaced with `appendix-d###-`
    - newly required interaction modules are listed in route-shell `scripts:` front matter
 4. Review appendix text and sources with the add-day standard:
-   - fact-check factual claims, dates, publication metadata, DOI/URL metadata, result numbers, and direct quotations before keeping them
+   - run the Fact-Check Gate before keeping factual claims
    - for recent or current claims, verify against primary sources or reliable publication pages
    - keep citations tied to the claims they support
    - label frontier claims as established, promising hint, or contested/hype

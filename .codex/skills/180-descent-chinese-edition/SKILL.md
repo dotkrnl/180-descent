@@ -11,6 +11,16 @@ Use this skill when English lesson or appendix work must be mirrored into the Ch
 
 Kimi translation and GLM refinement can be very slow for normal main lesson bodies, route shells, introduction updates, and appendix HTML. Use long-running commands, poll patiently, and let the process finish unless it exits with an error or the user explicitly tells you to stop. Do not substitute another translator, truncate the pass, or assume silence for several minutes means the agent is stuck. This rule applies equally to main day content and appendices.
 
+## Factual Parity Gate
+
+Chinese editions must preserve the fact-check status of the English source instead of introducing fresh factual drift.
+
+1. After translation or refinement, compare the Chinese route/include against the English source for dates, chronology, names, article/book titles, quotations, numbers, percentages, sample sizes, score thresholds, "X of Y" claims, URLs, DOI strings, evidence labels, and source metadata.
+2. If the English source was corrected during a fact-check pass, mirror the correction in Chinese before committing.
+3. If a Chinese paraphrase creates a stronger claim than the English, weaken it back to the verified English meaning.
+4. If the Chinese edition adds a factual claim not present in English, run the same claim-level verification required by the add-day or add-appendix Fact-Check Gate.
+5. Keep terminology idiomatic, but do not trade away technical distinctions such as "replication effect sizes" versus "original effects were real", "conditional theorem" versus unconditional guarantee, or type-theoretic proof assistants versus classical higher-order logic systems.
+
 ## Normal Day Workflow
 
 1. Create `src/zh/days/day-###-slug.md` and `src/_includes/days/###-slug/zh.njk`.
@@ -29,8 +39,9 @@ rtk opencode run -m zhipuai-coding-plan/glm-5.1 "请直接在本仓库中润色�
 ```
 
 6. Manually review GLM edits and keep only technically and stylistically sound changes.
-7. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
-8. Run:
+7. Run the Factual Parity Gate against the English source and any fact-check corrections made during the same work.
+8. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
+9. Run:
 
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ### --require-zh
