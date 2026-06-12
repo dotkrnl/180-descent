@@ -3,7 +3,7 @@ layout: layouts/page.njk
 permalink: /zh/downloads/
 locale: zh
 title: 下载
-subtitle: 同一份源文件，呈现为网页、电子书与印刷品三种形态。
+subtitle: 同一份地图，不同的形式。
 eyebrow: 格式
 description: 选择精简的标准版，或收录专题附录的深入版；两者均提供 EPUB 与 PDF。
 alternate_url: /downloads/

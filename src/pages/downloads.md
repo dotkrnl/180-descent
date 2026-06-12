@@ -2,7 +2,7 @@
 layout: layouts/page.njk
 permalink: /downloads/
 title: Downloads
-subtitle: The same source rendered for the browser, ebook readers, and print.
+subtitle: One map, different forms.
 eyebrow: Formats
 description: Choose a concise standard edition or the appendix-rich deep-dive edition in EPUB or PDF format.
 ---
