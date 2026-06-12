@@ -16,7 +16,7 @@ await mkdir("_site/downloads", { recursive: true });
 await mkdir("dist/downloads", { recursive: true });
 
 const server = await serveSite("_site");
-const publicBaseUrl = (process.env.SITE_URL || "https://180-descent.pages.dev").replace(/\/+$/, "");
+const publicBaseUrl = (process.env.SITE_URL || "https://180d.io").replace(/\/+$/, "");
 const editions = [
   {
     route: "/print/",
