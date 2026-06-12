@@ -1,11 +1,15 @@
-import { readFile } from "node:fs/promises";
+import { readFile, mkdtemp, rm } from "node:fs/promises";
 import { execFile } from "node:child_process";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { promisify } from "node:util";
 import { PDFDocument, PDFName } from "pdf-lib";
 
 const execFileAsync = promisify(execFile);
+const debug = process.env.PDF_CHECK_DEBUG === "1";
 
 let failures = 0;
+const pdfCache = new Map();
 const pdfFiles = [
   "_site/downloads/180-descent.pdf",
   "_site/downloads/180-descent-deep-dive.pdf",
@@ -16,9 +20,10 @@ const pdfFiles = [
 ];
 
 for (const file of pdfFiles) {
-  const data = await readFile(file);
-  const text = data.toString("latin1");
-  const annotationCount = await countPdfAnnotations(data);
+  debugStep(`load ${file}`);
+  const info = await pdfInfo(file);
+  const text = info.data.toString("latin1");
+  const annotationCount = countPdfAnnotations(info);
 
   if (!text.startsWith("%PDF-")) {
     console.error(`${file} does not start with a PDF header`);
@@ -43,6 +48,7 @@ for (const file of pdfFiles) {
   }
 }
 
+debugStep("extract full text");
 const extractedText = await extractPdfText("_site/downloads/180-descent.pdf");
 const frontMatter = extractedText.split("THE 180-DAY MAP")[0] || "";
 const deepDiveText = await extractPdfText("_site/downloads/180-descent-deep-dive.pdf");
@@ -70,16 +76,20 @@ for (const [label, pdfPath, pattern] of [
   ["Deep-dive Chinese PDF", "_site/downloads/180-descent-zh-deep-dive.pdf", /可选附录/],
   ["Day-specific Chinese PDF", "_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf", /可选附录/]
 ]) {
+  debugStep(`find appendix ${label}`);
   const appendixPage = await findFirstPageContaining(pdfPath, pattern);
   if (!appendixPage) {
     console.error(`${label} is missing an appendix page matching ${pattern}`);
     failures++;
     continue;
   }
-  const box = await extractPageBoundingBox(pdfPath, appendixPage);
-  if (!isFullPageBox(box)) {
-    console.error(`${label} appendix page ${appendixPage} is missing a full-page background: ${box.join(" ")}`);
-    failures++;
+  for (const [xRatio, yRatio] of [[0.03, 0.03], [0.97, 0.97]]) {
+    const sample = await samplePdfPagePixel(pdfPath, appendixPage, xRatio, yRatio);
+    if (isWhitePixel(sample)) {
+      console.error(`${label} appendix page ${appendixPage} is missing a full-page background sample at ${xRatio},${yRatio}: ${sample.join(" ")}`);
+      failures++;
+      break;
+    }
   }
 }
 
@@ -89,6 +99,7 @@ for (const [label, pdfPath, pattern] of [
   ["Deep-dive Chinese PDF", "_site/downloads/180-descent-zh-deep-dive.pdf", /参考综述/],
   ["Day-specific Chinese PDF", "_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf", /参考综述/]
 ]) {
+  debugStep(`find appendix sources ${label}`);
   const appendixSourcePage = await findFirstPageContaining(pdfPath, pattern);
   if (!appendixSourcePage) {
     console.error(`${label} is missing an appendix sources page matching ${pattern}`);
@@ -198,6 +209,7 @@ for (const [label, pdfPath, matterText] of [
   ["PDF", "_site/downloads/180-descent.pdf", frontMatter],
   ["Deep-dive PDF", "_site/downloads/180-descent-deep-dive.pdf", deepDiveFrontMatter]
 ]) {
+  debugStep(`validate full bleed ${label}`);
   const match = matterText.match(/BLOCK I · FOUNDATIONS OF KNOWLEDGE & REASONING\s+(\d+)/);
   if (!match) {
     console.error(`${label} TOC is missing the Block I page number needed for full-bleed validation`);
@@ -221,6 +233,7 @@ if (introMatch && dayOneMatch) {
     [introPage, "Introduction"],
     [dayOnePage, "Foundations of Knowledge & Reasoning"]
   ]) {
+    debugStep(`validate running header page ${pageNumber}`);
     const pageText = await extractPdfPageText("_site/downloads/180-descent.pdf", pageNumber);
     if (!new RegExp(`The 180-Day Descent\\s+${escapeRegExp(section)}`).test(pageText)) {
       console.error(`PDF page ${pageNumber} is missing its running header`);
@@ -233,6 +246,7 @@ if (introMatch && dayOneMatch) {
   }
 
   for (const pageNumber of [2, Number(blockMatch?.[1])].filter(Boolean)) {
+    debugStep(`validate no running header page ${pageNumber}`);
     const pageText = await extractPdfPageText("_site/downloads/180-descent.pdf", pageNumber);
     if (/The 180-Day Descent\s+Foundations of Knowledge & Reasoning/.test(pageText) || new RegExp(`\\n\\s*${pageNumber}\\s*$`).test(pageText)) {
       console.error(`PDF page ${pageNumber} should not have running header/footer text`);
@@ -244,24 +258,50 @@ if (introMatch && dayOneMatch) {
   failures++;
 }
 
-if (failures) process.exit(1);
+process.exit(failures ? 1 : 0);
 
-async function extractPdfText(pdfPath) {
-  const { stdout } = await execFileAsync("gs", [
-    "-q",
-    "-dSAFER",
-    "-dBATCH",
-    "-dNOPAUSE",
-    "-sDEVICE=txtwrite",
-    "-o",
-    "-",
-    pdfPath
-  ], { maxBuffer: 8 * 1024 * 1024 });
-  return stdout;
+function debugStep(label) {
+  if (debug) console.error(`[check-pdf] ${label}`);
 }
 
-async function countPdfAnnotations(data) {
+async function pdfInfo(pdfPath) {
+  if (pdfCache.has(pdfPath)) return pdfCache.get(pdfPath);
+  const data = await readFile(pdfPath);
   const pdf = await PDFDocument.load(data);
+  const pageTexts = await extractPdfPageTexts(pdfPath, pdf.getPageCount());
+  const info = { data, pdf, pageTexts, text: pageTexts.join("\n") };
+  pdfCache.set(pdfPath, info);
+  return info;
+}
+
+async function extractPdfText(pdfPath) {
+  return (await pdfInfo(pdfPath)).text;
+}
+
+async function extractPdfPageTexts(pdfPath, pageCount) {
+  const workDir = await mkdtemp(path.join(tmpdir(), "180-descent-pdf-text-"));
+  const outputPattern = path.join(workDir, "page-%03d.txt");
+  try {
+    await execFileAsync("gs", [
+      "-q",
+      "-dSAFER",
+      "-dBATCH",
+      "-dNOPAUSE",
+      "-sDEVICE=txtwrite",
+      `-sOutputFile=${outputPattern}`,
+      pdfPath
+    ], { maxBuffer: 1024 * 1024, timeout: 30000 });
+
+    return Promise.all(Array.from({ length: pageCount }, async (_, index) => {
+      const file = path.join(workDir, `page-${String(index + 1).padStart(3, "0")}.txt`);
+      return readFile(file, "utf8").catch(() => "");
+    }));
+  } finally {
+    await rm(workDir, { recursive: true, force: true });
+  }
+}
+
+function countPdfAnnotations({ pdf }) {
   let count = 0;
   for (const page of pdf.getPages()) {
     count += page.node.lookup(PDFName.of("Annots"))?.size?.() ?? 0;
@@ -270,26 +310,14 @@ async function countPdfAnnotations(data) {
 }
 
 async function extractPdfPageText(pdfPath, pageNumber) {
-  const { stdout } = await execFileAsync("gs", [
-    "-q",
-    "-dSAFER",
-    "-dBATCH",
-    "-dNOPAUSE",
-    "-sDEVICE=txtwrite",
-    `-dFirstPage=${pageNumber}`,
-    `-dLastPage=${pageNumber}`,
-    "-o",
-    "-",
-    pdfPath
-  ], { maxBuffer: 1024 * 1024 });
-  return stdout;
+  return (await pdfInfo(pdfPath)).pageTexts[pageNumber - 1] || "";
 }
 
 async function findFirstPageContaining(pdfPath, pattern) {
-  const pdf = await PDFDocument.load(await readFile(pdfPath));
-  for (let pageNumber = 1; pageNumber <= pdf.getPageCount(); pageNumber++) {
-    const text = await extractPdfPageText(pdfPath, pageNumber);
-    if (pattern.test(text)) return pageNumber;
+  const { pageTexts } = await pdfInfo(pdfPath);
+  for (const [index, text] of pageTexts.entries()) {
+    pattern.lastIndex = 0;
+    if (pattern.test(text)) return index + 1;
   }
   return null;
 }
@@ -304,7 +332,7 @@ async function extractPageBoundingBox(pdfPath, pageNumber) {
     `-dFirstPage=${pageNumber}`,
     `-dLastPage=${pageNumber}`,
     pdfPath
-  ], { maxBuffer: 1024 * 1024 });
+  ], { maxBuffer: 1024 * 1024, timeout: 15000 });
   const match = `${stdout}\n${stderr}`.match(/%%HiResBoundingBox:\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)/);
   if (!match) return [Infinity, Infinity, -Infinity, -Infinity];
   return match.slice(1).map(Number);
@@ -323,7 +351,7 @@ async function samplePdfPagePixel(pdfPath, pageNumber, xRatio, yRatio) {
     "-o",
     "-",
     pdfPath
-  ], { encoding: "buffer", maxBuffer: 1024 * 1024 });
+  ], { encoding: "buffer", maxBuffer: 1024 * 1024, timeout: 15000 });
 
   const parsed = parsePpm(stdout);
   const x = Math.max(0, Math.min(parsed.width - 1, Math.floor(parsed.width * xRatio)));
@@ -357,6 +385,10 @@ function parsePpm(buffer) {
 
 function isFullPageBox([left, bottom, right, top]) {
   return left <= 1 && bottom <= 1 && right >= 431 && top >= 647;
+}
+
+function isWhitePixel(sample) {
+  return sample.every((channel) => channel > 250);
 }
 
 function escapeRegExp(value) {

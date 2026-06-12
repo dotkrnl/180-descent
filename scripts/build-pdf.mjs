@@ -144,10 +144,34 @@ async function buildEdition(edition) {
 }
 
 async function renderPdf(page, outputPath) {
+  await loadPageImages(page);
   await page.pdf({
     path: outputPath,
     printBackground: true,
     preferCSSPageSize: true
+  });
+}
+
+async function loadPageImages(page) {
+  await page.evaluate(async () => {
+    const images = [...document.images];
+    await Promise.all(images.map(async (image) => {
+      image.loading = "eager";
+      if (!image.getAttribute("src") && image.dataset?.src) {
+        image.setAttribute("src", image.dataset.src);
+      }
+
+      if (!image.complete) {
+        await new Promise((resolve) => {
+          image.addEventListener("load", resolve, { once: true });
+          image.addEventListener("error", resolve, { once: true });
+        });
+      }
+
+      if (typeof image.decode === "function") {
+        await image.decode().catch(() => {});
+      }
+    }));
   });
 }
 
@@ -458,6 +482,11 @@ async function serveSite(root) {
       ".css": "text/css; charset=utf-8",
       ".html": "text/html; charset=utf-8",
       ".js": "text/javascript; charset=utf-8",
+      ".jpg": "image/jpeg",
+      ".jpeg": "image/jpeg",
+      ".png": "image/png",
+      ".svg": "image/svg+xml",
+      ".webp": "image/webp",
       ".pdf": "application/pdf",
       ".epub": "application/epub+zip",
       ".woff2": "font/woff2"

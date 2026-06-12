@@ -14,3 +14,9 @@ alternate_url: /credits/
 {% for font in credits.fonts %}
 - **{{ font.name }}**：{{ font.license }}，[来源]({{ font.source }})
 {% endfor %}
+
+## 图片
+
+{% for image in credits.images %}
+- **{{ image.title }}**，作者：{{ image.creator }}；{{ image.license }}，[来源]({{ image.source }})。{{ image.notes }}
+{% endfor %}

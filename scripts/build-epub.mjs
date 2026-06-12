@@ -168,6 +168,7 @@ async function buildEpub(config) {
   }
 
   const spine = [];
+  const imageAssets = new Map();
   const manifestItems = [
     `<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`,
     `<item id="css" href="styles/book.css" media-type="text/css"/>`
@@ -180,7 +181,7 @@ async function buildEpub(config) {
   }
 
   if (config.introHtml) {
-    const intro = await pageToXhtml(config.introHtml, config.introTitle, "introduction.xhtml", config, days);
+    const intro = await pageToXhtml(config.introHtml, config.introTitle, "introduction.xhtml", config, days, imageAssets);
     oebps.file("introduction.xhtml", intro);
     manifestItems.push(`<item id="intro" href="introduction.xhtml" media-type="application/xhtml+xml"/>`);
     spine.push(`<itemref idref="intro"/>`);
@@ -189,10 +190,15 @@ async function buildEpub(config) {
   for (const day of days) {
     const htmlPath = path.join(config.siteDayDir, day.data.day_path, "index.html");
     const title = dayDocumentTitle(day, config);
-    const xhtml = await pageToXhtml(htmlPath, title, day.xhtml, config, days);
+    const xhtml = await pageToXhtml(htmlPath, title, day.xhtml, config, days, imageAssets);
     oebps.file(day.xhtml, xhtml);
     manifestItems.push(`<item id="day${String(day.data.day).padStart(3, "0")}" href="${day.xhtml}" media-type="application/xhtml+xml"/>`);
     spine.push(`<itemref idref="day${String(day.data.day).padStart(3, "0")}"/>`);
+  }
+
+  for (const image of imageAssets.values()) {
+    oebps.file(image.href, await readFile(image.filePath));
+    manifestItems.push(`<item id="${image.id}" href="${escapeXml(image.href)}" media-type="${image.mediaType}"/>`);
   }
 
   for (const font of await readdir("_site/assets/fonts")) {
@@ -209,7 +215,7 @@ async function buildEpub(config) {
   await copyFile(`dist/downloads/${config.output}`, `_site/downloads/${config.output}`);
 }
 
-async function pageToXhtml(htmlPath, title, selfHref, config, days) {
+async function pageToXhtml(htmlPath, title, selfHref, config, days, imageAssets) {
   const html = await readFile(htmlPath, "utf8");
   const $ = cheerio.load(html, { decodeEntities: true });
   if (config.singleDay) {
@@ -255,6 +261,15 @@ ${subtitleMarkup}
     } else if (href.startsWith("/") && !href.includes("/downloads/")) {
       el.attr("href", "nav.xhtml");
     }
+  });
+  $("img[src]").each((_, img) => {
+    const el = $(img);
+    const epubImage = registerEpubImage(el.attr("src"), imageAssets);
+    if (!epubImage) return;
+
+    el.attr("src", epubImage.href);
+    el.removeAttr("srcset");
+    el.removeAttr("sizes");
   });
   const contentRoot = $("#content").length ? $("#content") : $("body");
   const body = contentRoot.contents().map((_, node) => $.xml(node)).get().join("\n");
@@ -353,6 +368,34 @@ function contentOpf(meta, manifestItems, spine) {
     ${spine.join("\n    ")}
   </spine>
 </package>`;
+}
+
+function registerEpubImage(src = "", imageAssets) {
+  const pathOnly = src.split(/[?#]/)[0];
+  if (!pathOnly.startsWith("/assets/images/")) return null;
+
+  const extension = path.extname(pathOnly).toLowerCase();
+  const mediaTypes = {
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png": "image/png",
+    ".svg": "image/svg+xml",
+    ".webp": "image/webp"
+  };
+  const mediaType = mediaTypes[extension];
+  if (!mediaType) return null;
+
+  const href = pathOnly.replace(/^\/assets\/images\//, "images/");
+  if (!imageAssets.has(href)) {
+    imageAssets.set(href, {
+      href,
+      filePath: path.join("_site", pathOnly.slice(1)),
+      mediaType,
+      id: `img_${href.replace(/[^a-z0-9]/gi, "_")}`
+    });
+  }
+
+  return imageAssets.get(href);
 }
 
 function titlePageDocument(config) {

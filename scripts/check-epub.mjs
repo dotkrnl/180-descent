@@ -99,6 +99,16 @@ for (const { file: edition, deepDive, appendixPatterns, optionalPattern, require
       console.error(`${edition} contains generic fallback label in ${name}`);
       failures++;
     }
+    for (const match of text.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/gi)) {
+      const src = match[1];
+      if (/^(?:\/|https?:)/i.test(src)) {
+        console.error(`${edition} contains non-local EPUB image src in ${name}: ${src}`);
+        failures++;
+      } else if (src.startsWith("images/") && !zip.file(`OEBPS/${src}`)) {
+        console.error(`${edition} references missing EPUB image in ${name}: ${src}`);
+        failures++;
+      }
+    }
     const namedEntities = text.match(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)[A-Za-z][A-Za-z0-9]+;/g);
     if (namedEntities) {
       console.error(`${edition} contains XML-unsafe named entities in ${name}: ${[...new Set(namedEntities)].join(", ")}`);
