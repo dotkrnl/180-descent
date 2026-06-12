@@ -71,7 +71,7 @@
 <div class="panel web-only probability-monty">
 <p class="ptitle">交互 · 亲手试试</p>
 <h4>蒙提霍尔机</h4>
-<p class="pnote">选一扇门。主持人会打开另一扇——永远是山羊，不是你选的，也不是藏车的。然后决定：坚持，还是换门。先手动玩几把，再点<strong>自动运行 1000 次</strong>，看两种策略的胜率如何分道扬镳。数字不会说谎。</p>
+<p class="pnote">选一扇门。主持人会打开另一扇——永远是山羊，不是你选的，也不是藏车的。然后点原来的门表示坚持，点另一扇未打开的门表示换门。先手动玩几把，再点<strong>自动运行 1000 次</strong>，看两种策略的胜率如何分道扬镳。数字不会说谎。</p>
 
 <div class="mh-stage" id="mhStage">
 <button class="mh-door" data-door="0" id="door0">
@@ -83,6 +83,7 @@
 <g class="prizeholder"></g>
 </svg>
 <span class="dlab">1 号门</span>
+<span class="daction" aria-hidden="true">选择</span>
 </button>
 <button class="mh-door" data-door="1" id="door1">
 <svg viewBox="0 0 90 140" role="img" aria-label="2 号门">
@@ -93,6 +94,7 @@
 <g class="prizeholder"></g>
 </svg>
 <span class="dlab">2 号门</span>
+<span class="daction" aria-hidden="true">选择</span>
 </button>
 <button class="mh-door" data-door="2" id="door2">
 <svg viewBox="0 0 90 140" role="img" aria-label="3 号门">
@@ -103,15 +105,11 @@
 <g class="prizeholder"></g>
 </svg>
 <span class="dlab">3 号门</span>
+<span class="daction" aria-hidden="true">选择</span>
 </button>
 </div>
 
-<p class="mh-say" id="mhSay"><b>选一扇门</b>开始。</p>
-
-<div class="mh-controls" id="mhChoiceBtns" style="display:none;">
-<button class="btn" id="btnStay">坚持</button>
-<button class="btn" id="btnSwitch">换门</button>
-</div>
+<p class="mh-say" id="mhSay" aria-live="polite"><b>选一扇门</b>开始。</p>
 <div class="mh-controls" id="mhNextWrap" style="display:none;">
 <button class="btn ghost" id="btnNext">再来一局 →</button>
 </div>
@@ -131,7 +129,7 @@
 
 <div class="mh-auto">
 <span class="h">大规模实验（教师实验法的自动化版本）</span>
-<button class="btn" id="btnAuto">⚡ 自动运行 1000 次</button>
+<button class="btn" id="btnAuto">自动运行 1000 次</button>
 <button class="btn ghost" id="btnReset">重置计数</button>
 </div>
 </div>

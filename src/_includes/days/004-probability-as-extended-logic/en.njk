@@ -71,7 +71,7 @@
 <div class="panel web-only probability-monty">
 <p class="ptitle">Interactive · play it yourself</p>
 <h4>The Monty Hall Machine</h4>
-<p class="pnote">Pick a door. The host opens a different one — always a goat, never your pick, never the car. Then choose: stay or switch. Play a few by hand, then hit <strong>auto-run 1,000×</strong> and watch the two strategies separate. The tallies don't lie.</p>
+<p class="pnote">Pick a door. The host opens a different one — always a goat, never your pick, never the car. Then click your original door to stay, or click the other closed door to switch. Play a few by hand, then hit <strong>auto-run 1,000×</strong> and watch the two strategies separate. The tallies don't lie.</p>
 
 <div class="mh-stage" id="mhStage">
 <button class="mh-door" data-door="0" id="door0">
@@ -83,6 +83,7 @@
 <g class="prizeholder"></g>
 </svg>
 <span class="dlab">Door 1</span>
+<span class="daction" aria-hidden="true">Pick</span>
 </button>
 <button class="mh-door" data-door="1" id="door1">
 <svg viewBox="0 0 90 140" role="img" aria-label="Door 2">
@@ -93,6 +94,7 @@
 <g class="prizeholder"></g>
 </svg>
 <span class="dlab">Door 2</span>
+<span class="daction" aria-hidden="true">Pick</span>
 </button>
 <button class="mh-door" data-door="2" id="door2">
 <svg viewBox="0 0 90 140" role="img" aria-label="Door 3">
@@ -103,15 +105,11 @@
 <g class="prizeholder"></g>
 </svg>
 <span class="dlab">Door 3</span>
+<span class="daction" aria-hidden="true">Pick</span>
 </button>
 </div>
 
-<p class="mh-say" id="mhSay"><b>Pick a door</b> to begin.</p>
-
-<div class="mh-controls" id="mhChoiceBtns" style="display:none;">
-<button class="btn" id="btnStay">Stay</button>
-<button class="btn" id="btnSwitch">Switch</button>
-</div>
+<p class="mh-say" id="mhSay" aria-live="polite"><b>Pick a door</b> to begin.</p>
 <div class="mh-controls" id="mhNextWrap" style="display:none;">
 <button class="btn ghost" id="btnNext">Play again →</button>
 </div>
@@ -131,7 +129,7 @@
 
 <div class="mh-auto">
 <span class="h">Run the experiment at scale (the schoolteachers' method, automated)</span>
-<button class="btn" id="btnAuto">⚡ Auto-run 1,000×</button>
+<button class="btn" id="btnAuto">Auto-run 1,000×</button>
 <button class="btn ghost" id="btnReset">Reset tallies</button>
 </div>
 </div>
