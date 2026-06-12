@@ -193,14 +193,14 @@
 <!-- ===================== INTERACTIVE 2 ===================== -->
 <div class="panel web-only probability-bayes">
 <p class="ptitle">Interactive · the base-rate trap</p>
-<h4>A "99% accurate" test for a rare disease</h4>
+<h4>A 99%-sensitive test for a rare disease</h4>
 <p class="pnote">A disease affects a small slice of the population. The test is excellent. You test positive. <strong>What's the chance you're actually sick?</strong> Drag the sliders and watch the grid of 1,000 people sort itself into the four outcomes. The answer is almost always far lower than people guess.</p>
 
 <div class="bayes-grid">
 <div>
 <div class="slider-row">
-<label>Disease prevalence (base rate) <span class="val" id="vPrev">1.0%</span></label>
-<input type="range" id="rPrev" min="1" max="500" value="10" aria-label="Prevalence per 1000">
+<label>Disease prevalence (base rate) <span class="val" id="vPrev">0.1%</span></label>
+<input type="range" id="rPrev" min="1" max="500" value="1" aria-label="Prevalence per 1000">
 </div>
 <div class="slider-row">
 <label>Test sensitivity — catches true cases <span class="val" id="vSens">99%</span></label>
@@ -213,7 +213,7 @@
 
 <div class="post-readout">
 <p class="lh">P( sick | positive test )</p>
-<div class="num" id="postNum">16.7%</div>
+<div class="num" id="postNum">1.9%</div>
 <p id="postExpl"></p>
 </div>
 </div>
@@ -235,16 +235,16 @@
 <div class="format-alt epub-only print-only">
 <p class="ptitle">Reference table</p>
 <h4>The base-rate trap</h4>
-<p class="pnote">For the default slider values: 1% prevalence, 99% sensitivity, and a 5% false-positive rate.</p>
+<p class="pnote">For the default slider values: 0.1% prevalence, 99% sensitivity, and a 5% false-positive rate.</p>
 <table class="alt-table">
 <thead><tr><th>Group</th><th>Count out of 1,000</th><th>Positive tests</th></tr></thead>
 <tbody>
-<tr><td>Sick people</td><td>10</td><td>About 10 true positives</td></tr>
-<tr><td>Healthy people</td><td>990</td><td>About 50 false positives</td></tr>
-<tr><td>All positive tests</td><td>About 60</td><td>Only about 10 are truly sick</td></tr>
+<tr><td>Sick people</td><td>1</td><td>About 1 true positive</td></tr>
+<tr><td>Healthy people</td><td>999</td><td>About 50 false positives</td></tr>
+<tr><td>All positive tests</td><td>About 51</td><td>Only about 1 is truly sick</td></tr>
 </tbody>
 </table>
-<p>The posterior is therefore about 10 / 60, or 16.7%. If prevalence is 1 in 1,000, as in the Casscells study, the same kind of test yields a posterior of about 2%.</p>
+<p>The posterior is therefore about 0.99 / 50.94, or 1.9% — the Casscells result with the sensitivity made explicit.</p>
 </div>
 
 <section>

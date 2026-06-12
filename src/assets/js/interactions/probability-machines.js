@@ -318,9 +318,13 @@
       vSens.textContent = Math.round(sensitivity * 100) + "%";
       vFpr.textContent = Math.round(falsePositiveRate * 100) + "%";
       postNum.textContent = (posterior * 100).toFixed(1) + "%";
+      var sickPeople = sickCount === 1 ? "person has" : "people have";
+      var trueCases = truePositiveCount === 1 ? "true case" : "true cases";
+      var positiveTests = positives === 1 ? "positive" : "positives";
+      var trulySickVerb = truePositiveCount === 1 ? "is" : "are";
       postExpl.innerHTML = isZh
         ? '1000 人中，约有 <code>' + sickCount + '</code> 人患病。测试能检出其中 <code>' + truePositiveCount + '</code> 人，但也会把 <code>' + falsePositiveCount + '</code> 个健康人误判阳性。在全部 <span class="hl">' + positives + ' 个阳性</span>中，<code>' + truePositiveCount + '</code> 人确实患病 → <span class="hl">' + (posterior * 100).toFixed(1) + "%</span>。"
-        : "Of 1,000 people, about <code>" + sickCount + "</code> are sick. The test flags <code>" + truePositiveCount + "</code> of them but also <code>" + falsePositiveCount + "</code> healthy people. Among <b>all " + positives + " positives</b>, <code>" + truePositiveCount + "</code> are truly sick → <b>" + (posterior * 100).toFixed(1) + "%</b>.";
+        : "Of 1,000 people, about <code>" + sickCount + "</code> " + sickPeople + " the disease. The test flags <code>" + truePositiveCount + "</code> " + trueCases + " but also <code>" + falsePositiveCount + "</code> healthy people. Among <b>all " + positives + " " + positiveTests + "</b>, <code>" + truePositiveCount + "</code> " + trulySickVerb + " truly sick → <b>" + (posterior * 100).toFixed(1) + "%</b>.";
 
       dots.forEach(function(dot, index){
         if (index < truePositiveCount) dot.setAttribute("fill", "var(--ok)");
