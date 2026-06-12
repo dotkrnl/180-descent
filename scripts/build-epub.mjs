@@ -404,6 +404,7 @@ function titlePageDocument(config) {
   const translatorLine = config.meta.translators
     ? `<span class="credit-line">${escapeXml(isZh ? `翻译：${config.meta.translators}` : `Translated by ${config.meta.translators}`)}</span>`
     : "";
+  const editorLine = `<span class="credit-line">${escapeXml(isZh ? "人工编辑：刘家昌" : "Human editor: Jason Lau")}</span>`;
   const subtitle = config.meta.subtitle ? `<p class="eyebrow">${escapeXml(config.meta.subtitle)}</p>` : "";
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -417,7 +418,7 @@ function titlePageDocument(config) {
     <section class="epub-title-page page-hero wrap wide">
       ${subtitle}
       <h1>${escapeXml(config.meta.title)}</h1>
-      <p class="sub book-credit"><span class="credit-line">${escapeXml(authorLine)}</span>${translatorLine}</p>
+      <p class="sub book-credit"><span class="credit-line">${escapeXml(authorLine)}</span>${translatorLine}${editorLine}</p>
     </section>
   </body>
 </html>`;
