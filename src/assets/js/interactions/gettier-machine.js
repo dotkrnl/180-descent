@@ -20,7 +20,7 @@
     var gettierText = isZh ? {
       luckState: "有理由、为真、被相信，却仍不是知识",
       luckExpl: "这是一个 <strong>盖梯尔案例</strong>：三条腿都在，但理由失准，事实只是碰巧成立。",
-      knowledgeState: "在经典 JTB 观点下，这是知识",
+      knowledgeState: "在经典 JTB（Justified True Belief，证成的真信念）观点下，这是知识",
       knowledgeExpl: "信念、事实与理由都成立，且没有运气替裂缝打补丁。",
       notKnowledge: "不是知识",
       missingPrefix: "缺少一条腿：",
