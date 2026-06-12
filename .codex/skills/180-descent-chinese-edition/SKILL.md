@@ -65,13 +65,19 @@ Maintain these conventions unless the user changes them:
 
 - book/course "descent" -> `深入`, not `下潜`
 - "deep dive" syllabus blocks -> `专题深入`
-- JTB -> `有正当理由的真信念`; prefer `正当理由` or `理由` in running prose, avoid `证成` unless discussing the technical term
+- JTB -> expand on first use as `JTB（Justified True Belief，证成的真信念）`; thereafter `JTB（证成的真信念）` is acceptable in Chinese prose
 - scientific replication -> `复现`, `复现实验`, or `可复现`; use `复现危机`; use `复制` only for biological/molecular copying
 - preregistration -> `研究预登记`; registered reports -> `注册式报告`
 - day references -> `第 N 日`
-- hype filter -> `炒作过滤器`; evidence labels may use `争议/炒作`
+- hype filter -> `前沿校准器`; evidence labels may use `争议/炒作`
 - names in Chinese running prose -> use established Simplified Chinese renderings or transliterations, with Latin form on first mention only when useful; keep source lists, article titles, DOI metadata, URLs, CSS/JS identifiers, and citation keys in Latin form
 - examples: `彼得·昂格尔`, `希拉里·普特南`, `G. E. 摩尔`, `德雷茨克`, `诺齐克`, `基思·德罗斯`, `邓肯·普里查德`, `《美诺篇》（Meno）`, `拉里萨（Larissa）`, `巴黎在法国`
 - use Chinese corner quotes `「」` for quoted speech, thoughts, propositions, slogans, and translated terms in Chinese prose
 - insert spaces between Chinese text and Latin letters, acronyms, Arabic numerals, percentages, and units where source typography permits, e.g. `2026 年`, `GLM 5.1`, `100 项`, `95% 置信区间`
 - avoid literal metaphors and stiff calques; prefer natural, elegant Chinese that remains technically exact
+
+## Typography
+
+- In Chinese translations, use `<u>...</u>` (HTML underline) for emphasis and terms. Do not use `<em>...</em>` or `<i>...</i>` in Chinese prose.
+- English editions keep `<em>...</em>` for emphasis and `<em class="term">...</em>` for terms.
+- When converting or editing Chinese files, replace `<em>` with `<u>` and `</em>` with `</u>`; preserve all attributes such as `class="term"`.
