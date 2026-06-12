@@ -1,6 +1,8 @@
 (function(){
   "use strict";
 
+  var isZh = (document.documentElement.getAttribute("lang") || "").toLowerCase().indexOf("zh") === 0;
+
   function id(name){
     return document.getElementById(name);
   }
@@ -10,7 +12,7 @@
   }
 
   function pct(wins, plays){
-    return plays === 0 ? "— wins" : (Math.round(1000 * wins / plays) / 10) + "% wins";
+    return plays === 0 ? (isZh ? "— 胜率" : "— wins") : (Math.round(1000 * wins / plays) / 10) + "%" + (isZh ? " 胜率" : " wins");
   }
 
   function initMontyHall(){
@@ -72,7 +74,7 @@
       state.opened = -1;
       state.other = -1;
       state.phase = "pick";
-      say.innerHTML = "<b>Pick a door</b> to begin.";
+      say.innerHTML = isZh ? "<b>选一扇门</b>开始。" : "<b>Pick a door</b> to begin.";
       choiceBtns.style.display = "none";
       nextWrap.style.display = "none";
     }
@@ -89,7 +91,9 @@
       showPrize(state.opened, "goat");
       doors[state.pick].classList.add("picked");
       state.phase = "choose";
-      say.innerHTML = "You picked <b>Door " + (state.pick + 1) + "</b>. The host opens <b>Door " + (state.opened + 1) + "</b> — a goat. Now: <b>stay</b> on " + (state.pick + 1) + ", or <b>switch</b> to " + (state.other + 1) + "?";
+      say.innerHTML = isZh
+        ? "你选了<b>" + (state.pick + 1) + " 号门</b>。主持人打开<b>" + (state.opened + 1) + " 号门</b>——是一只山羊。现在：<b>坚守</b> " + (state.pick + 1) + " 号门，还是<b>换到</b> " + (state.other + 1) + " 号门？"
+        : "You picked <b>Door " + (state.pick + 1) + "</b>. The host opens <b>Door " + (state.opened + 1) + "</b> — a goat. Now: <b>stay</b> on " + (state.pick + 1) + ", or <b>switch</b> to " + (state.other + 1) + "?";
       choiceBtns.style.display = "flex";
     }
 
@@ -108,9 +112,13 @@
         if (won) stats.stayW++;
       }
       updateTally();
-      say.innerHTML = "You <b>" + (switched ? "switched to" : "stayed on") + " Door " + (finalPick + 1) + "</b> and " +
-        (won ? '<b class="win-text">won the car.</b>' : '<b class="lose-text">got a goat.</b>') +
-        " " + (switched ? "Switching is the 2/3 play." : "Staying is the 1/3 play.");
+      say.innerHTML = isZh
+        ? "你<b>" + (switched ? "换到" : "坚守") + " " + (finalPick + 1) + " 号门</b>，" +
+          (won ? '<b class="win-text">赢得了汽车。</b>' : '<b class="lose-text">得到了山羊。</b>') +
+          " " + (switched ? "换门是 2/3 策略。" : "坚守是 1/3 策略。")
+        : "You <b>" + (switched ? "switched to" : "stayed on") + " Door " + (finalPick + 1) + "</b> and " +
+          (won ? '<b class="win-text">won the car.</b>' : '<b class="lose-text">got a goat.</b>') +
+          " " + (switched ? "Switching is the 2/3 play." : "Staying is the 1/3 play.");
       choiceBtns.style.display = "none";
       nextWrap.style.display = "flex";
       state.phase = "done";
@@ -141,7 +149,9 @@
         else stats.switchW++;
       }
       updateTally();
-      say.innerHTML = "Ran <b>1,000 paired games</b>. Staying lands near <b>33%</b>; switching near <b>67%</b>.";
+      say.innerHTML = isZh
+        ? "已自动运行 <b>1000 场配对游戏</b>。坚守约 <b>33%</b>；换门约 <b>67%</b>。"
+        : "Ran <b>1,000 paired games</b>. Staying lands near <b>33%</b>; switching near <b>67%</b>.";
     });
     btnReset.addEventListener("click", function(){
       stats = { stayW: 0, stayP: 0, switchW: 0, switchP: 0 };
@@ -201,7 +211,9 @@
       vSens.textContent = Math.round(sensitivity * 100) + "%";
       vFpr.textContent = Math.round(falsePositiveRate * 100) + "%";
       postNum.textContent = (posterior * 100).toFixed(1) + "%";
-      postExpl.innerHTML = "Of 1,000 people, about <code>" + sickCount + "</code> are sick. The test flags <code>" + truePositiveCount + "</code> of them but also <code>" + falsePositiveCount + "</code> healthy people. Among <b>all " + positives + " positives</b>, <code>" + truePositiveCount + "</code> are truly sick → <b>" + (posterior * 100).toFixed(1) + "%</b>.";
+      postExpl.innerHTML = isZh
+        ? "1000 人中，约有 <code>" + sickCount + "</code> 人患病。测试能检出其中 <code>" + truePositiveCount + "</code> 人，但也会把 <code>" + falsePositiveCount + "</code> 个健康人误判阳性。在全部 <b>" + positives + " 个阳性</b>中，<code>" + truePositiveCount + "</code> 人确实患病 → <b>" + (posterior * 100).toFixed(1) + "%</b>。"
+        : "Of 1,000 people, about <code>" + sickCount + "</code> are sick. The test flags <code>" + truePositiveCount + "</code> of them but also <code>" + falsePositiveCount + "</code> healthy people. Among <b>all " + positives + " positives</b>, <code>" + truePositiveCount + "</code> are truly sick → <b>" + (posterior * 100).toFixed(1) + "%</b>.";
 
       dots.forEach(function(dot, index){
         if (index < truePositiveCount) dot.setAttribute("fill", "var(--ok)");
@@ -254,16 +266,16 @@
       ev.wealth = 0.5 * (ev.up + ev.down);
       evWealthEl.textContent = ev.wealth.toFixed(2);
       evFlipsEl.textContent = ev.flips;
-      evHeadsEl.textContent = ev.heads + " heads";
+      evHeadsEl.textContent = ev.heads + (isZh ? " 次正面" : " heads");
       if (ev.wealth >= 20) {
         ev.rejected = true;
         evVerdict.classList.add("reject");
-        evVerdictTxt.textContent = "reject null";
-        evVerdictSub.textContent = "wealth >= 20 (level 0.05)";
+        evVerdictTxt.textContent = isZh ? "拒绝原假设" : "reject null";
+        evVerdictSub.textContent = isZh ? "财富 ≥ 20（显著性水平 0.05）" : "wealth >= 20 (level 0.05)";
       } else {
         evVerdict.classList.remove("reject");
-        evVerdictTxt.textContent = "collecting...";
-        evVerdictSub.textContent = "need wealth >= 20";
+        evVerdictTxt.textContent = isZh ? "收集中…" : "collecting...";
+        evVerdictSub.textContent = isZh ? "需要财富 ≥ 20" : "need wealth >= 20";
       }
       redraw();
     }

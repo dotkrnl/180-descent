@@ -8,7 +8,6 @@ block: Foundations of Knowledge & Reasoning
 slug: probability-as-extended-logic
 day_path: 004-probability-as-extended-logic
 source_file: ../day-04-probability-as-extended-logic.html
-hide_language_toggle: true
 threads:
   - information
   - computation
