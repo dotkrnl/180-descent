@@ -3,9 +3,9 @@ layout: layouts/page.njk
 permalink: /zh/downloads/
 locale: zh
 title: 下载
-subtitle: 同一源文件，分别渲染为浏览器、电子阅读器与印刷品三种形态。
+subtitle: 同一套源文件，分别渲染为网页、电子阅读器与印刷品三种形态。
 eyebrow: 格式
-description: 选择精简的标准版，或包含专题附录的深入版；两者都提供 EPUB 与 PDF 格式。
+description: 选择精简的标准版，或包含专题附录的深入版；两者均提供 EPUB 与 PDF。
 alternate_url: /downloads/
 ---
 
@@ -13,12 +13,12 @@ alternate_url: /downloads/
   <article class="download-card">
     <p class="card-kicker">EPUB</p>
     <h2><a href="{{ book.zh.downloads.epub }}">标准电子书版</a></h2>
-    <p>适合电子阅读器和阅读应用，保留 180 天主线课程，不包含可选专题附录。</p>
+    <p>适合电子阅读器与阅读应用，保留 180 天主线课程，不含可选专题附录。</p>
   </article>
   <article class="download-card">
     <p class="card-kicker">PDF</p>
     <h2><a href="{{ book.zh.downloads.pdf }}">标准 PDF 版</a></h2>
-    <p>固定版式的标准版，适合打印、离线阅读和按页批注，同样不包含可选专题附录。</p>
+    <p>固定版式的标准版，适合打印、离线阅读与按页批注，同样不含可选专题附录。</p>
   </article>
   <article class="download-card">
     <p class="card-kicker">EPUB · 专题深入版</p>

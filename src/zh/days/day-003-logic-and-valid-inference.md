@@ -4,7 +4,7 @@ tags: zhDay
 locale: zh
 day: 3
 title: "逻辑与有效推理"
-summary: "演绎、归纳与溯因区分有效形式与真实结论，而证明助手让逻辑真正运转起来。"
+summary: "演绎、归纳与溯因区分有效形式与真实结论；证明助手则让逻辑真正落地。"
 block: 知识与推理的根基
 slug: logic-and-valid-inference
 day_path: 003-logic-and-valid-inference

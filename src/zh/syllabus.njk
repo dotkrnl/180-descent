@@ -3,7 +3,7 @@ layout: layouts/page.njk
 permalink: /zh/syllabus/
 locale: zh
 title: 课程表
-subtitle: 一张按依赖关系排序的地图，从根基到前沿。
+subtitle: 一张按依赖关系排序的地图，从根基通向前沿。
 eyebrow: 地图
 description: 完整的 180 天课程地图，已发布的课程将在上线时链接。
 alternate_url: /syllabus/
@@ -14,9 +14,9 @@ alternate_url: /syllabus/
 {% set nextDay = syllabus_zh | nextSyllabusDay(collections.zhDays) %}
 {% set upcoming = syllabus_zh | upcomingSyllabusDays(collections.zhDays, 6) %}
 
-<p class="lede">课程表是这本书穿越世界的路线：不是一堆互不相关的主题搁在架子上，而是一连串逐步深入的台阶，每一天都为下一天提供更坚实的地面。它始于追问信念如何获得信任，然后走过数学、物理、化学、生命、医学、心智、人工智能、经济学、社会、伦理与未来。</p>
+<p class="lede">课程表是这本书穿越世界的路线：不是一堆互不相关的主题搁在架子上，而是一连串逐级深入的台阶，每一天都为下一天铺就更坚实的地面。它始于追问信念如何赢得信任，继而走过数学、物理、化学、生命、医学、心智、人工智能、经济学、社会、伦理与未来。</p>
 
-<p>每一课保持同样的内在形状：一个平易近人的入口、一个核心模型、一场尚在进行的辩论，以及一段走向新近研究的旅程。前沿内容必须经过克制处理。主张被标记为已确立、有望的线索，或争议/炒作；目标不是让新奇感显得确定，而是展示证据如何改变它的分量。</p>
+<p>每一课都保持同样的内在结构：一个平易近人的入口、一个核心模型、一场仍在进行的辩论，以及一段走向新近研究的旅程。前沿内容需要克制处理。主张被标记为已确立、有望的线索，或争议/炒作；目标不是让新奇感显得确定，而是展示证据如何改变它的分量。</p>
 
 <div class="syllabus-progress" aria-label="课程进度">
   <div>
@@ -68,7 +68,7 @@ alternate_url: /syllabus/
   <p class="sec-eyebrow">续篇</p>
   <h2 id="what-comes-next">接下来是什么</h2>
   {% if nextDay %}
-  <p>本书已发布至第 {{ publishedCount | padDay }} 日。下一课是<strong>第 {{ nextDay.day | padDay }} 日：{{ nextDay.title }}</strong>，位于模块 {{ nextDay.block_id }}。它延续开篇工具箱，将有效推理、强证据与有说服力的错误之间的区别打磨得更加锋利。</p>
+  <p>本书已发布至第 {{ publishedCount | padDay }} 日。下一课是<strong>第 {{ nextDay.day | padDay }} 日：{{ nextDay.title }}</strong>，位于模块 {{ nextDay.block_id }}。它延续开篇工具箱，把有效推理、强证据与看似有说服力的错误之间的区别打磨得更加锋利。</p>
   <ol class="upcoming-list">
   {% for day in upcoming %}
     <li><span class="upcoming-day">第 {{ day.day | padDay }} 日 · </span><span>{{ day.title }}</span></li>
