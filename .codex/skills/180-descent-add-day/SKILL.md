@@ -58,6 +58,7 @@ Do not proceed to commit/publish until this gate has been completed and any issu
    - keep citations tied to the claims they support
    - label frontier claims as established, promising hint, or contested/hype
    - add concrete callbacks to previous published days
+   - verify the inline `class="tomorrow"` block: if the next day already has a published route, link its title to that route; if the next day is not published yet, preview it without adding a broken link
    - leave future callbacks in `src/_data/future-links.yaml`
    - improve readability, clarity, rhythm, and entertainment value when doing so helps the lesson without weakening accuracy
 4. Update the English introduction opening-arc paragraph in `src/pages/introduction.md`:
@@ -89,6 +90,7 @@ rtk npm run check
 
 - Updated `src/days/day-###-slug.md` route shell with `content_template`, optional `scripts`, permalink, and `{% include content_template %}`
 - Added or updated `src/_includes/days/###-slug/en.njk` lesson body
+- Correct inline tomorrow block link behavior for both English and Chinese editions: published next days link to their route; unpublished next days remain unlinked
 - Updated concise opening-arc paragraph in `src/pages/introduction.md`
 - Updated callbacks and pending future links
 - Added or reused `src/assets/js/interactions/*.js` modules for live components, with adjacent print/EPUB fallbacks in the lesson body
