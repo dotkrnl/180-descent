@@ -3,9 +3,9 @@ layout: layouts/page.njk
 permalink: /zh/downloads/
 locale: zh
 title: 下载
-subtitle: 同一套源文件，分别渲染为网页、电子阅读器与印刷品三种形态。
+subtitle: 同一份源文件，呈现为网页、电子书与印刷品三种形态。
 eyebrow: 格式
-description: 选择精简的标准版，或包含专题附录的深入版；两者均提供 EPUB 与 PDF。
+description: 选择精简的标准版，或收录专题附录的深入版；两者均提供 EPUB 与 PDF。
 alternate_url: /downloads/
 ---
 
@@ -13,21 +13,21 @@ alternate_url: /downloads/
   <article class="download-card">
     <p class="card-kicker">EPUB</p>
     <h2><a href="{{ book.zh.downloads.epub }}">标准电子书版</a></h2>
-    <p>适合电子阅读器与阅读应用，保留 180 天主线课程，不含可选专题附录。</p>
+    <p>适合各类电子阅读器与阅读应用，收录 180 天主线课程内容，不包含专题附录。</p>
   </article>
   <article class="download-card">
     <p class="card-kicker">PDF</p>
     <h2><a href="{{ book.zh.downloads.pdf }}">标准 PDF 版</a></h2>
-    <p>固定版式的标准版，适合打印、离线阅读与按页批注，同样不含可选专题附录。</p>
+    <p>便于打印、离线阅读与逐页批注；内容与标准电子书版一致，未收录专题附录。</p>
   </article>
   <article class="download-card">
     <p class="card-kicker">EPUB · 专题深入版</p>
     <h2><a href="{{ book.zh.downloads.deep_epub }}">专题深入电子书版</a></h2>
-    <p>在电子书格式中加入每日专题附录，提供更多背景、例子与参考说明。</p>
+    <p>在标准内容基础上增设每日专题附录，提供更丰富的背景知识与实例解析。</p>
   </article>
   <article class="download-card">
     <p class="card-kicker">PDF · 专题深入版</p>
     <h2><a href="{{ book.zh.downloads.deep_pdf }}">专题深入 PDF 版</a></h2>
-    <p>包含专题附录的完整固定版式，适合系统学习、打印保存或长期查阅。</p>
+    <p>完整收录全部专题附录，适合系统学习、打印存档与长期查阅。</p>
   </article>
 </div>
