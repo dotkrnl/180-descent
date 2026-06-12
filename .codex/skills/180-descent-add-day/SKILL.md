@@ -5,9 +5,12 @@ description: Add a new English day page to The 180-Day Descent repo from a suppl
 
 # Add A Day To 180 Descent
 
-Use this skill for the core English day-add workflow only.
+Use this skill for the normal day-add workflow. The English route and lesson
+include are handled here; when the repo already has a Chinese edition, Chinese
+mirroring is part of the default workflow and hands off to
+`180-descent-chinese-edition`.
 
-Use adjacent skills when the request includes their scope:
+Use adjacent skills when the workflow reaches their scope:
 
 - Chinese mirroring or translation: `180-descent-chinese-edition`
 - Deep-dive appendices: `180-descent-add-appendix`
@@ -26,6 +29,19 @@ Use adjacent skills when the request includes their scope:
 
 Read the syllabus entry for the target day plus the immediately previous and next days.
 
+## Chinese Mirroring Default
+
+In this repo, new normal day additions must be mirrored into the Chinese edition
+when `src/zh/days/` and `src/_data/syllabus_zh.yaml` exist, unless the user
+explicitly requests an English-only/no-Chinese change. Do not treat the absence
+of an explicit Chinese request as meaning Chinese is out of scope.
+
+When Chinese mirroring is required, run the `180-descent-chinese-edition` Normal
+Day Workflow before considering the day complete. This includes the Chinese
+route shell, Chinese lesson include, `src/_data/syllabus_zh.yaml`,
+`src/zh/introduction.md`, translated interactive UI text, tomorrow-card behavior,
+and the `--require-zh` target-day checklist.
+
 ## Fact-Check Gate
 
 Before any new English day is considered ready, run a claim-level factual review. Treat every factual claim you are not personally 100% sure about as needing verification.
@@ -40,7 +56,7 @@ Before any new English day is considered ready, run a claim-level factual review
 5. Check numbers by recalculating when possible: percentages, sample sizes, score thresholds, table rows, totals, and "X of Y" statements. Note whether a count includes trivial cases or self-pairs.
 6. Audit wording for overclaiming. Soften unsupported superlatives, absolute guarantees, causal claims, and "settled" labels unless the cited source really supports them. Mark frontier items as established, promising hint, or contested/hype.
 7. Keep citations adjacent to the claims they support. If a source supports only part of a sentence, revise the sentence or add the missing source.
-8. When Chinese is in scope, mirror every factual correction into the Chinese route/include and manually verify dates, numbers, names, source metadata, URLs, DOI strings, and evidence labels after translation.
+8. When Chinese mirroring is required, mirror every factual correction into the Chinese route/include and manually verify dates, numbers, names, source metadata, URLs, DOI strings, and evidence labels after translation.
 
 Do not proceed to commit/publish until this gate has been completed and any issues have been fixed or explicitly reported to the user.
 
@@ -64,9 +80,9 @@ Do not proceed to commit/publish until this gate has been completed and any issu
 4. Update the English introduction opening-arc paragraph in `src/pages/introduction.md`:
    - summarize the published opening arc and newest day
    - keep it concise, normally one short paragraph
-   - if Chinese is also in scope, use `180-descent-chinese-edition` for the matched `src/zh/introduction.md` update
+   - when Chinese mirroring is required, use `180-descent-chinese-edition` for the matched `src/zh/introduction.md` update
    - when using `180-descent-chinese-edition`, follow its Slow-Agent Rule for Kimi and GLM; do not interrupt or substitute those passes just because they are quiet for several minutes
-5. If Chinese mirroring is in scope for the day, run the `180-descent-chinese-edition` Normal Day Workflow for the main route shell and lesson body:
+5. When Chinese mirroring is required by default or explicitly requested, run the `180-descent-chinese-edition` Normal Day Workflow for the main route shell and lesson body:
    - translate the normal day content with Kimi and run the GLM refinement pass
    - follow the Slow-Agent Rule for both agents; they can be very slow on main lesson content, not just appendices
    - do not interrupt, replace, or truncate either pass merely because it is quiet for several minutes
@@ -86,11 +102,14 @@ rtk npm run build
 rtk npm run check
 ```
 
+When Chinese mirroring is required, run the checklist with `--require-zh`.
+
 ## Required Outputs
 
 - Updated `src/days/day-###-slug.md` route shell with `content_template`, optional `scripts`, permalink, and `{% include content_template %}`
 - Added or updated `src/_includes/days/###-slug/en.njk` lesson body
-- Correct inline tomorrow block link behavior for both English and Chinese editions: published next days link to their route; unpublished next days remain unlinked
+- Added or updated Chinese route shell, Chinese lesson include, `src/_data/syllabus_zh.yaml`, and `src/zh/introduction.md` when the repo has a Chinese edition unless the user explicitly skipped it
+- Correct inline tomorrow block link behavior for both English and Chinese editions when present: published next days link to their route; unpublished next days remain unlinked
 - Updated concise opening-arc paragraph in `src/pages/introduction.md`
 - Updated callbacks and pending future links
 - Added or reused `src/assets/js/interactions/*.js` modules for live components, with adjacent print/EPUB fallbacks in the lesson body
