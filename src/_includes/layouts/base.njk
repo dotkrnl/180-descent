@@ -28,10 +28,10 @@
         }catch(error){}
       })();
     </script>
-    <link rel="stylesheet" href="/assets/css/book.css">
-    <script src="/assets/js/book.js" defer></script>
+    <link rel="stylesheet" href="{{ '/assets/css/book.css' | assetUrl }}">
+    <script src="{{ '/assets/js/book.js' | assetUrl }}" defer></script>
     {% for script in scripts or [] %}
-      <script src="{{ script }}" defer></script>
+      <script src="{{ script | assetUrl }}" defer></script>
     {% endfor %}
   </head>
   <body>

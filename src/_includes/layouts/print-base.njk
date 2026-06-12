@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <title>{{ title }} · {{ book.zh.title if isZh else book.title }}</title>
-    <link rel="stylesheet" href="/assets/css/book.css">
+    <link rel="stylesheet" href="{{ '/assets/css/book.css' | assetUrl }}">
   </head>
   <body class="print-document{% if includeDeepDive %} include-deep-dive{% endif %}">
     {{ content | safe }}

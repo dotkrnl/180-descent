@@ -1,5 +1,44 @@
+const crypto = require("node:crypto");
+const fs = require("node:fs");
+const path = require("node:path");
 const yaml = require("yaml");
 const { createCodexRefinerMiddleware } = require("./scripts/codex-refiner-middleware.cjs");
+
+const assetHashCache = new Map();
+
+function assetUrl(value = "") {
+  const raw = String(value || "");
+  const match = raw.match(/^([^?#]+)(\?[^#]*)?(#.*)?$/);
+  if (!match || !match[1].startsWith("/assets/")) return raw;
+
+  const [, pathname, query = "", fragment = ""] = match;
+  const sourcePath = path.join(__dirname, "src", pathname.slice(1));
+
+  try {
+    const stat = fs.statSync(sourcePath);
+    const cached = assetHashCache.get(sourcePath);
+    let hash = cached?.hash;
+
+    if (!cached || cached.mtimeMs !== stat.mtimeMs || cached.size !== stat.size) {
+      hash = crypto
+        .createHash("sha256")
+        .update(fs.readFileSync(sourcePath))
+        .digest("hex")
+        .slice(0, 12);
+      assetHashCache.set(sourcePath, {
+        hash,
+        mtimeMs: stat.mtimeMs,
+        size: stat.size
+      });
+    }
+
+    const params = new URLSearchParams(query ? query.slice(1) : "");
+    params.set("v", hash);
+    return `${pathname}?${params.toString()}${fragment}`;
+  } catch (error) {
+    return raw;
+  }
+}
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addDataExtension("yaml,yml", (contents) => yaml.parse(contents));
@@ -15,6 +54,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/_headers": "_headers" });
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
 
+  eleventyConfig.addFilter("assetUrl", assetUrl);
   eleventyConfig.addFilter("padDay", (value) => String(value).padStart(3, "0"));
   eleventyConfig.addFilter("slugify", (value = "") => String(value)
     .toLowerCase()

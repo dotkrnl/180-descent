@@ -48,11 +48,11 @@
         pick: "选择",
         stay: "坚持这扇",
         switchDoor: "换到这扇",
-        openedGoat: "已开：山羊",
+        openedGoat: "已开：🐐",
         car: "汽车",
         goat: "山羊",
-        win: "你的选择：赢",
-        lose: "你的选择：山羊",
+        win: "你的选择：🚗",
+        lose: "你的选择：🐐",
         stepPick: "步骤 1",
         modePick: "先选门",
         stepChoose: "步骤 2",
@@ -67,11 +67,11 @@
         pick: "Pick",
         stay: "Stay here",
         switchDoor: "Switch here",
-        openedGoat: "Opened: goat",
+        openedGoat: "Opened: 🐐",
         car: "Car",
         goat: "Goat",
-        win: "Your pick: win",
-        lose: "Your pick: goat",
+        win: "Your pick: 🚗",
+        lose: "Your pick: 🐐",
         stepPick: "Step 1",
         modePick: "Pick first",
         stepChoose: "Step 2",
@@ -89,6 +89,10 @@
 
     function labelFor(kind){
       return labels[kind];
+    }
+
+    function prizeMark(kind){
+      return kind === "car" ? "🚗" : "🐐";
     }
 
     function setStatus(stepKey, modeKey){
@@ -130,8 +134,7 @@
     function showPrize(index, kind){
       var holder = doors[index].querySelector(".prizeholder");
       if (holder) {
-        var label = kind === "car" ? labelFor("car") : labelFor("goat");
-        holder.textContent = label;
+        holder.textContent = prizeMark(kind);
         holder.className = "prizeholder " + (kind === "car" ? "is-car" : "is-goat");
       }
       doors[index].classList.add("revealed", kind === "car" ? "has-car" : "has-goat");
@@ -196,7 +199,7 @@
       }
       doors.forEach(function(door, index){
         var kind = index === state.car ? "car" : "goat";
-        setDoorAction(index, labelFor(kind), "", isZh ? labelFor(kind) + "。" : labelFor(kind) + ".");
+        setDoorAction(index, prizeMark(kind), "", isZh ? labelFor(kind) + "。" : labelFor(kind) + ".");
         door.disabled = true;
       });
       doors[finalPick].classList.add("final-pick", won ? "won" : "lost");
