@@ -289,7 +289,7 @@
 <section>
 <p>That severed arrow in the right-hand graph is the do-operator made visual. Intervening doesn't just <em>look</em> at X — it <strong>deletes the arrows pointing into X</strong> and replaces them with your hand. The summer→ice-cream link is cut, so summer can no longer use ice cream as a backdoor route to fake an effect on drowning. What survives is only the real thing.</p>
 <p>Pearl gave us a grammar for doing this on paper. A <em class="term">structural causal model</em>{% tip 'A structural causal model represents how variables are generated from other variables and from background noise.' %} draws the variables as a <em class="term">directed acyclic graph</em>{% tip 'A directed acyclic graph, or DAG, is a network of arrows with no directed loops.' %} — boxes and arrows, no loops — and three named patterns do most of the work. A <em class="term">fork</em> (X ← Z → Y) is a confounder; block it by conditioning on Z. A <em class="term">chain</em> (X → Z → Y) is a mediator. And a <em class="term">collider</em> (X → Z ← Y) is the trap: X and Y are unrelated until you condition on their shared effect Z, at which point a phantom correlation springs into being. This is why "controlling for everything you can measure" is not cautious but reckless — condition on a collider and you <em>manufacture</em> the very bias you were trying to remove.</p>
-<div class="dag-examples web-only" role="group" aria-label="Concrete DAG examples: a fork, a chain, and a collider.">
+<div class="dag-examples" role="group" aria-label="Concrete DAG examples: a fork, a chain, and a collider.">
 <figure class="dag-card">
 <svg viewBox="0 0 220 150" role="img" aria-label="Fork DAG: summer causes both ice-cream buying and drowning.">
 <rect x="72" y="14" width="76" height="24" rx="5" fill="var(--paper)" stroke="var(--line)"></rect>
@@ -341,18 +341,6 @@
 </svg>
 <figcaption><b>Collider</b><span>Skill and luck meet at admission. Conditioning on admission opens a fake relationship.</span></figcaption>
 </figure>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>Concrete DAG Examples</h3>
-<table class="alt-table">
-<thead><tr><th>Pattern</th><th>Concrete graph</th><th>What it means</th></tr></thead>
-<tbody>
-<tr><td>Fork / confounder</td><td>Summer → ice cream; Summer → drowning</td><td>Condition on summer to compare like with like.</td></tr>
-<tr><td>Chain / mediator</td><td>Smoking → tar → cancer</td><td>Tar carries part of the effect from smoking to cancer.</td></tr>
-<tr><td>Collider</td><td>Skill → admission ← luck</td><td>Conditioning on admission can create a fake relationship between skill and luck.</td></tr>
-</tbody>
-</table>
 </div>
 <div class="aside">
 <p class="h">The front-door trick</p>
