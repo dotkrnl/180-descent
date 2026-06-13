@@ -114,18 +114,24 @@ the same public day pages and deep-dive artifacts.
    where possible. Compact/icon controls need accessible names, and stateful
    controls must expose `aria-pressed`, `aria-checked` with a valid role, or
    other appropriate state.
-4. Changing verdicts, counters, charts, or simulation readouts must have a
+4. If a control has visible text, its accessible name must include that visible
+   label so voice-control users can target what they see.
+5. Repeated landmarks must have unique accessible names, and appendix-added
+   navigation/regions must not duplicate existing page landmark names.
+6. Appendix headings must fit the page hierarchy without skipping levels; style
+   a semantic heading rather than jumping levels for visual size.
+7. Changing verdicts, counters, charts, or simulation readouts must have a
    screen-reader path, usually an `aria-live="polite"` region.
-5. Do not rely on color alone for claims, verdicts, diagram keys, or state.
+8. Do not rely on color alone for claims, verdicts, diagram keys, or state.
    Pair color with visible text, symbols, or structure, and keep small text at
    WCAG AA contrast.
-6. EPUB/PDF fallbacks must preserve the same information in accessible static
+9. EPUB/PDF fallbacks must preserve the same information in accessible static
    form: real tables, labelled diagrams, or worked examples rather than empty
    visual placeholders.
-7. If Chinese mirroring is in scope, translate alt text, accessible labels,
+10. If Chinese mirroring is in scope, translate alt text, accessible labels,
    button text, and fallback copy into idiomatic Simplified Chinese while
    preserving classes, IDs, and JS hooks.
-8. Run `rtk npm run check:a11y` directly or through `rtk npm run check` before
+11. Run `rtk npm run check:a11y` directly or through `rtk npm run check` before
    treating the appendix as complete.
 
 ## Workflow

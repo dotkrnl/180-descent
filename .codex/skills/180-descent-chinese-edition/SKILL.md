@@ -81,12 +81,21 @@ while localizing user-facing accessible text.
    `aria-labelledby`, roles, `aria-live`, `aria-current`, `aria-pressed`,
    `aria-checked`, table headers, figure/caption relationships, classes, data
    attributes, and JavaScript selectors.
-4. For `svg role="img"`, translate `aria-label` or labelled text. Decorative
+4. When a control has visible text, ensure the Chinese accessible name includes
+   that exact visible label. For bilingual toggles, keep labels such as
+   `EN，切换到英文` or `中文, Switch to Chinese` so voice-control users can target
+   the visible text.
+5. Preserve unique landmark names when top/bottom or repeated navigation
+   regions exist, translating the names rather than collapsing them into one
+   repeated label.
+6. Preserve logical heading order. Do not introduce heading-level skips during
+   translation or refinement.
+7. For `svg role="img"`, translate `aria-label` or labelled text. Decorative
    SVGs should remain `aria-hidden="true"`.
-5. Preserve non-color cues in status chips, legends, diagrams, and tables. If
+8. Preserve non-color cues in status chips, legends, diagrams, and tables. If
    the English source pairs color with text or symbols, the Chinese version must
    keep the same accessible meaning.
-6. Run `rtk npm run check:a11y` directly or through `rtk npm run check` after
+9. Run `rtk npm run check:a11y` directly or through `rtk npm run check` after
    building, and fix any Chinese-page failures before treating mirroring as
    complete.
 

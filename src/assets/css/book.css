@@ -209,6 +209,22 @@ blockquote .src{display:block;font-family:"IBM Plex Mono",monospace;font-style:n
 .simp-toggle{display:inline-flex;border:1px solid var(--line-strong);border-radius:999px;overflow:hidden;margin-bottom:1.2rem;}
 .simp-toggle button{cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;border:0;background:var(--paper);color:var(--ink-soft);padding:.5rem .95rem;transition:background .2s,color .2s;}
 .simp-toggle button[aria-pressed="true"]{background:var(--accent);color:#fff;}
+.simp-machine{display:grid;grid-template-columns:1fr;gap:1.1rem;align-items:start;}
+@media(min-width:680px){.simp-machine{grid-template-columns:minmax(0,1.15fr) minmax(14rem,.85fr);}}
+.simp-grid{display:block;width:100%;height:auto;border:1px solid var(--line-strong);border-radius:10px;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 5%,var(--raised)),var(--paper));padding:.55rem;box-sizing:border-box;}
+.simp-dot.A.ok{fill:color-mix(in srgb,var(--accent) 72%,transparent);}
+.simp-dot.B.ok{fill:color-mix(in srgb,var(--brass) 76%,transparent);}
+.simp-dot.fail{fill:var(--line-strong);opacity:.42;}
+.simp-rule{stroke:var(--ink);stroke-opacity:.28;stroke-width:.75;stroke-dasharray:1.5 1.5;}
+.simp-calc{display:grid;gap:.65rem;}
+.simp-room{border:1px solid var(--line);border-radius:9px;background:var(--paper);padding:.72rem .8rem;}
+.simp-room-title{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 .5rem;}
+.simp-line{display:grid;grid-template-columns:minmax(5rem,.75fr) minmax(0,1fr);gap:.55rem;align-items:baseline;margin:.24rem 0;font-family:"IBM Plex Mono",monospace;font-size:.78rem;}
+.simp-line span{font-weight:600;}
+.simp-line.A span{color:var(--accent);}
+.simp-line.B span{color:var(--brass);}
+.simp-line code{justify-self:end;background:transparent;color:var(--ink);}
+.simp-room-note{font-size:.82em;color:var(--ink-soft);margin:.55rem 0 0;}
 .simp-wrap{display:grid;grid-template-columns:1fr;gap:.4rem;}
 .barrow{display:grid;grid-template-columns:5.2rem minmax(0,1fr);align-items:center;gap:.7rem;margin:.45rem 0;}
 .barrow .who{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-soft);text-align:right;line-height:1.2;}
@@ -217,7 +233,7 @@ blockquote .src{display:block;font-family:"IBM Plex Mono",monospace;font-style:n
 .barrow .fill.A{background:color-mix(in srgb,var(--accent) 70%,transparent);}
 .barrow .fill.B{background:color-mix(in srgb,var(--brass) 72%,transparent);}
 .barrow .pct{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);font-family:"IBM Plex Mono",monospace;font-size:.74rem;font-weight:600;color:var(--ink);}
-.barrow .raw{font-family:"IBM Plex Mono",monospace;font-size:.6rem;color:#fff;padding-left:.5rem;white-space:nowrap;opacity:.92;}
+.barrow .raw{font-family:"IBM Plex Mono",monospace;font-size:.6rem;color:#101a22;padding-left:.5rem;white-space:nowrap;opacity:.92;}
 .bar-gap{height:.4rem;}
 .simp-winner{margin-top:1.1rem;font-family:"Fraunces",serif;font-size:1.08rem;border-left:3px solid;padding:.5rem 0 .5rem .85rem;transition:border-color .3s;}
 .simp-winner.A{border-color:var(--accent);}
@@ -244,6 +260,7 @@ blockquote .src{display:block;font-family:"IBM Plex Mono",monospace;font-style:n
 .rung-detail{margin-top:.4rem;border-top:1px dashed var(--line);padding-top:.9rem;text-align:left;min-height:8.5em;}
 .rung-detail .rname{font-family:"Fraunces",serif;font-weight:600;font-size:1.15rem;display:flex;align-items:center;gap:.5rem;}
 .rung-detail .rexpr{font-family:"IBM Plex Mono",monospace;font-size:.95rem;color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent);padding:.1em .45em;border-radius:5px;display:inline-block;margin:.5rem 0;}
+.rung-detail .rexpr code{color:var(--ink);background:transparent;}
 .rung-detail p{font-size:.92em;color:var(--ink-soft);margin:.3rem 0 0;}
 .dovs-controls{display:flex;flex-direction:column;gap:1.15rem;}
 .dovs-stage{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:.3rem;}

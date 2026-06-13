@@ -6,16 +6,6 @@ import { chromium } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
 
 const siteDir = path.resolve("_site");
-const pages = [
-  "/",
-  "/zh/",
-  "/syllabus/",
-  "/zh/syllabus/",
-  "/days/001-what-is-knowledge/",
-  "/zh/days/001-what-is-knowledge/",
-  "/days/004-probability-as-extended-logic/",
-  "/zh/days/004-probability-as-extended-logic/"
-];
 
 const mimeTypes = new Map([
   [".css", "text/css; charset=utf-8"],
@@ -131,6 +121,54 @@ function elementName($, el) {
   return imageAlt;
 }
 
+function visibleLabel($, el) {
+  const clone = $(el).clone();
+  clone.find("[aria-hidden='true'],script,style").remove();
+  return clone.text().replace(/\s+/g, " ").trim();
+}
+
+function labelTokens(value) {
+  return String(value || "")
+    .toLowerCase()
+    .match(/[\p{L}\p{N}?]+/gu) || [];
+}
+
+function labelMatchesName(label, name) {
+  const tokens = labelTokens(label);
+  if (!tokens.length) return true;
+  const haystack = String(name || "").toLowerCase();
+  return tokens.every((token) => haystack.includes(token));
+}
+
+function landmarkName($, el) {
+  const ariaLabel = $(el).attr("aria-label");
+  if (ariaLabel && ariaLabel.trim()) return ariaLabel.trim();
+
+  const labelledBy = $(el).attr("aria-labelledby");
+  if (labelledBy) {
+    return labelledBy
+      .split(/\s+/)
+      .map((id) => $(`[id="${attrSelectorValue(id)}"]`).text().trim())
+      .filter(Boolean)
+      .join(" ");
+  }
+
+  return "";
+}
+
+function landmarkRole(el) {
+  const role = (el.attribs?.role || "").trim();
+  if (role) return role;
+  if (el.tagName === "header") return "banner";
+  if (el.tagName === "main") return "main";
+  if (el.tagName === "footer") return "contentinfo";
+  if (el.tagName === "nav") return "navigation";
+  if (el.tagName === "aside") return "complementary";
+  if (el.tagName === "form") return "form";
+  if (el.tagName === "section") return "region";
+  return "";
+}
+
 async function checkStaticAccessibility() {
   const errors = [];
   const htmlFiles = await walkHtml(siteDir);
@@ -153,8 +191,13 @@ async function checkStaticAccessibility() {
     });
 
     $("a[href],button").each((index, el) => {
-      if (!elementName($, el)) {
+      const name = elementName($, el);
+      if (!name) {
         errors.push(`${url}: ${el.tagName} ${index + 1} is missing an accessible name`);
+      }
+      const label = visibleLabel($, el);
+      if (name && label && !labelMatchesName(label, name)) {
+        errors.push(`${url}: ${el.tagName} "${label}" accessible name should include its visible label, got "${name}"`);
       }
     });
 
@@ -164,14 +207,47 @@ async function checkStaticAccessibility() {
         errors.push(`${url}: [aria-checked] ${index + 1} must use checkbox, menuitemcheckbox, radio, or switch role`);
       }
     });
+
+    let previousHeadingLevel = 0;
+    $("h1,h2,h3,h4,h5,h6").each((_, el) => {
+      const level = Number(el.tagName.slice(1));
+      const text = $(el).text().replace(/\s+/g, " ").trim();
+      if (level === 1) {
+        previousHeadingLevel = 1;
+        return;
+      }
+      if (previousHeadingLevel && level > previousHeadingLevel + 1) {
+        errors.push(`${url}: heading jumps from h${previousHeadingLevel} to h${level}${text ? ` at "${text}"` : ""}`);
+      }
+      previousHeadingLevel = level;
+    });
+
+    const landmarkCounts = new Map();
+    $("header,nav,main,footer,aside,form,section[aria-label],section[aria-labelledby],[role='banner'],[role='navigation'],[role='main'],[role='contentinfo'],[role='complementary'],[role='form'],[role='region']").each((_, el) => {
+      const role = landmarkRole(el);
+      if (!role) return;
+      const name = landmarkName($, el);
+      const key = `${role}|${name}`;
+      landmarkCounts.set(key, (landmarkCounts.get(key) || 0) + 1);
+    });
+    for (const [key, count] of landmarkCounts) {
+      const [role, name] = key.split("|");
+      if (name && count > 1) {
+        errors.push(`${url}: ${count} ${role} landmarks share accessible name "${name}"`);
+      }
+    }
   }
 
-  return errors;
+  const axePages = htmlFiles
+    .map(htmlUrl)
+    .filter((url) => !/^\/(?:zh\/)?print(?:-deep)?\//.test(url));
+
+  return { errors, axePages };
 }
 
 async function main() {
   await fs.access(siteDir);
-  const staticFailures = await checkStaticAccessibility();
+  const { errors: staticFailures, axePages } = await checkStaticAccessibility();
   const { server, origin } = await startServer();
   const browser = await chromium.launch();
   const failures = [...staticFailures];
@@ -179,7 +255,7 @@ async function main() {
   try {
     const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     const page = await context.newPage();
-    for (const pagePath of pages) {
+    for (const pagePath of axePages) {
       await page.goto(`${origin}${pagePath}`, { waitUntil: "networkidle" });
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
@@ -199,7 +275,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`Accessibility check passed for ${pages.length} pages.`);
+  console.log(`Accessibility check passed for ${axePages.length} pages.`);
 }
 
 main().catch((error) => {

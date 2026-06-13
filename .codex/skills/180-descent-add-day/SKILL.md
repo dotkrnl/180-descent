@@ -185,21 +185,30 @@ interaction contract.
    buttons and compact controls need accessible names; selected/toggled state
    must use appropriate `aria-current`, `aria-pressed`, or `aria-checked` plus a
    valid role such as `switch`.
-4. Dynamic verdicts, counters, and simulation/readout text that changes after
+4. If a control has visible text, its accessible name must include that visible
+   label so voice-control users can target what they see. Put the visible label
+   first when adding extra context, for example `中文, Switch to Chinese`.
+5. Landmark regions that repeat on the same page must have unique accessible
+   names, for example top and bottom lesson navigation.
+6. Heading levels must follow a logical sequence without skipping levels. Keep
+   visual size separate from semantic level by styling classes/selectors rather
+   than jumping from `h2` to `h4`.
+7. Dynamic verdicts, counters, and simulation/readout text that changes after
    user input must be reachable to screen readers, usually through
    `aria-live="polite"` on the changing output region.
-5. Do not rely on color alone for meaning. Pair color/status with text labels,
+8. Do not rely on color alone for meaning. Pair color/status with text labels,
    symbols, or structural copy, and keep small text/color-token choices within
    WCAG AA contrast.
-6. Keyboard focus must remain visible and logical through navigation,
+9. Keyboard focus must remain visible and logical through navigation,
    disclosure widgets, sliders, and lesson interactions.
-7. When Chinese mirroring is in scope, translate user-facing alt text,
+10. When Chinese mirroring is in scope, translate user-facing alt text,
    `aria-label`, `aria-labelledby` text, button labels, and fallback copy into
    idiomatic Simplified Chinese while preserving IDs, classes, and JS hooks.
-8. Run `rtk npm run check:a11y` directly or through `rtk npm run check` and fix
+11. Run `rtk npm run check:a11y` directly or through `rtk npm run check` and fix
    failures before treating the day as complete. The check gate enforces all
    generated images having `alt`, named `role="img"` SVGs, named links/buttons,
-   valid `aria-checked` roles, and axe smoke tests for representative pages.
+   visible-label/name matching, valid `aria-checked` roles, heading order,
+   unique landmark names, and axe tests for every non-print page.
 
 ## Workflow
 
@@ -290,8 +299,9 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
   to the user before commit/publish
 - Added or reused `src/assets/js/interactions/*.js` modules for live components, with adjacent print/EPUB fallbacks in the lesson body
 - Accessibility Gate completed: image alt text, SVG names, control names/states,
-  live readouts, keyboard focus, contrast, and Chinese accessible-label parity
-  are covered, with `check:a11y` passing
+  visible-label/name matching, unique landmarks, heading order, live readouts,
+  keyboard focus, contrast, and Chinese accessible-label parity are covered,
+  with `check:a11y` passing
 - Generated or refreshed social-card PNGs through
   `scripts/generate-social-cards.mjs`, with `check:seo` passing for canonical,
   hreflang, sitemap, JSON-LD, and social-image coverage

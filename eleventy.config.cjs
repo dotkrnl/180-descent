@@ -234,7 +234,7 @@ module.exports = function (eleventyConfig) {
     const locale = this?.ctx?.locale || "";
     const pageUrl = this?.page?.url || "";
     const isZh = locale === "zh" || String(pageUrl).startsWith("/zh/");
-    const label = isZh ? "？，显示说明" : "?, Show note";
+    const label = isZh ? "?, 显示说明" : "?, Show note";
     return `<span class="tip-note"><button class="tip-note-mark" type="button" aria-expanded="false" aria-label="${escapeHtml(label)}">?</button><span class="tip-note-box" role="tooltip">${escapeHtml(text)}</span></span>`;
   });
 

@@ -49,9 +49,10 @@ and local existence of Open Graph social images.
 
 The accessibility check must pass before publishing. It scans every generated
 HTML file for image `alt` attributes, named `role="img"` SVGs, named
-links/buttons, and valid `aria-checked` roles, then runs axe smoke tests against
-representative English and Chinese pages. Do not bypass it for decorative
-images; use `alt=""` where decoration is intentional.
+links/buttons, visible-label/name matching, valid `aria-checked` roles, heading
+order, and unique landmark names, then runs axe tests against every non-print
+page. Do not bypass it for decorative images; use `alt=""` where decoration is
+intentional.
 
 3. Stage only intended files. Never stage unrelated user changes.
 4. Commit with a Conventional Commit message, e.g. `feat: add open-license lesson images`.
