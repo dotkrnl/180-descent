@@ -169,9 +169,10 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
    - EPUB/PDF copy: describe only the fallback table, diagram, worked example,
      or note the reader can use
 8. If the English target day already has a Chinese route/include, Chinese mirroring is required unless the user explicitly asked for English-only. Use `180-descent-chinese-edition` Appendix Translation:
-   - translate only the new appendix into Simplified Chinese with Kimi using explicit temporary input/output files
-   - expect Kimi translation and GLM refinement to be very slow on long appendix HTML; keep polling and let them finish unless they exit with an error or the user explicitly tells you to stop
-   - do not replace Kimi with a different translator just because the process is quiet for several minutes
+   - translate only the new appendix into Simplified Chinese with Gemini using explicit temporary input/output files
+   - run Kimi review after Gemini, then GLM refinement
+   - expect Kimi review and GLM refinement to be very slow on long appendix HTML; keep polling and let them finish unless they exit with an error or the user explicitly tells you to stop
+   - do not replace Kimi or GLM with a different reviewer just because the process is quiet for several minutes
    - insert it into the matching Chinese include without disturbing existing appendices
    - run the GLM refinement pass
    - manually review preservation of HTML structure, comments, classes, ids, data attributes, fallbacks, citations, URLs, DOI metadata, scripts, and terminology

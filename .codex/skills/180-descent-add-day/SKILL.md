@@ -234,10 +234,11 @@ interaction contract.
    - summarize the published opening arc and newest day
    - keep it concise, normally one short paragraph
    - when Chinese mirroring is required, use `180-descent-chinese-edition` for the matched `src/zh/introduction.md` update
-   - when using `180-descent-chinese-edition`, follow its Slow-Agent Rule for Kimi and GLM; do not interrupt or substitute those passes just because they are quiet for several minutes
+   - when using `180-descent-chinese-edition`, follow its translator order: Gemini first, then Kimi review, then GLM review
+   - follow its Slow-Agent Rule for Kimi and GLM; do not interrupt or substitute those passes just because they are quiet for several minutes
 5. When Chinese mirroring is required by default or explicitly requested, run the `180-descent-chinese-edition` Normal Day Workflow for the main route shell and lesson body:
-   - translate the normal day content with Kimi and run the GLM refinement pass
-   - follow the Slow-Agent Rule for both agents; they can be very slow on main lesson content, not just appendices
+   - translate the normal day content with Gemini, then run Kimi and GLM refinement passes
+   - follow the Slow-Agent Rule for Kimi and GLM; they can be very slow on main lesson content, not just appendices
    - do not interrupt, replace, or truncate either pass merely because it is quiet for several minutes
    - manually review the resulting Chinese route shell, lesson include, terminology, interactive text, citations, URLs, DOI metadata, and Nunjucks/HTML structure
    - apply the Chinese Typography Gate from `180-descent-chinese-edition`: remove dense emphasis; avoid `<em>/<i>/<strong>/<b>/<u>` in Chinese prose; use bold/color term spans (`span.term`), sparse color-only highlights (`span.hl`), and `「」` for the allowed highlight system; prefer `「」`/`《》` where markup is only acting as voice, quotation, or title; preserve semantic status, diagram, and component-state color

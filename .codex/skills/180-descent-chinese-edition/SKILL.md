@@ -1,15 +1,23 @@
 ---
 name: 180-descent-chinese-edition
-description: Mirror or refine The 180-Day Descent Chinese edition for normal lessons, deep-dive appendices, Chinese route shells, Chinese lesson includes, syllabus_zh metadata, and zh introduction updates. Use when Codex needs Simplified Chinese translation, terminology consistency, Kimi/GLM review, or zh artifact verification.
+description: Mirror or refine The 180-Day Descent Chinese edition for normal lessons, deep-dive appendices, Chinese route shells, Chinese lesson includes, syllabus_zh metadata, and zh introduction updates. Use when Codex needs Simplified Chinese translation, terminology consistency, Gemini/Kimi/GLM review, or zh artifact verification.
 ---
 
 # Chinese Edition For 180 Descent
 
 Use this skill when English lesson or appendix work must be mirrored into the Chinese edition.
 
+## Translator Order
+
+Use translators in this order unless the user explicitly says otherwise:
+
+1. Gemini first, for the initial Simplified Chinese draft.
+2. Kimi second, through `opencode`, for review, accuracy, terminology, and idiomatic refinement.
+3. GLM third, through `opencode`, for a final consistency and language refinement pass.
+
 ## Slow-Agent Rule
 
-Kimi translation and GLM refinement can be very slow for normal main lesson bodies, route shells, introduction updates, and appendix HTML. Use long-running commands, poll patiently, and let the process finish unless it exits with an error or the user explicitly tells you to stop. Do not substitute another translator, truncate the pass, or assume silence for several minutes means the agent is stuck. This rule applies equally to main day content and appendices.
+Kimi review and GLM refinement can be very slow for normal main lesson bodies, route shells, introduction updates, and appendix HTML. They may look stalled for a long time. Use long-running commands, poll patiently, and never stop them once they have started unless the process exits with an error or the user explicitly tells you to stop. Do not substitute another translator, truncate the pass, or assume silence for several minutes means the agent is stuck. This rule applies equally to main day content and appendices.
 
 ## Factual Parity Gate
 
@@ -35,7 +43,7 @@ defines the same term before the mention.
 4. Do not introduce `<em>`, `<strong>`, links, citations, or other HTML inside
    tip text; the global shortcode escapes the text and renders it as a web tip
    box plus numbered PDF/EPUB footnote.
-5. After Kimi or GLM edits, manually compare English and Chinese first-use tips
+5. After Gemini, Kimi, or GLM edits, manually compare English and Chinese first-use tips
    for coverage and technical parity.
 
 ## SEO Parity Gate
@@ -86,27 +94,34 @@ while localizing user-facing accessible text.
 
 1. Create `src/zh/days/day-###-slug.md` and `src/_includes/days/###-slug/zh.njk`.
 2. Preserve the same `day_path` as English, but use `locale: zh`, `tags: zhDay`, `/zh/days/.../` permalink, and `content_template: days/###-slug/zh.njk`.
-3. Use Kimi CLI for the first Chinese translation pass. Follow the Slow-Agent Rule. Do not use `--final-message-only`.
+3. Use Gemini CLI for the first Chinese translation pass. Ask it to edit the Chinese route shell and lesson include in place, and to work in yolo mode.
 
 ```sh
-rtk kimi --print --yolo -p "请直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑目标 route shell 与 lesson include。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留所有 front matter 键、content_template、scripts、permalinks、locale: zh、day 数字、slug、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构与 Nunjucks 语法，并保留和翻译所有 {% tip '...' %} 说明。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
+rtk gemini -y -p "请以 yolo 模式直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑目标 route shell 与 lesson include。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留所有 front matter 键、content_template、scripts、permalinks、locale: zh、day 数字、slug、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构与 Nunjucks 语法，并保留和翻译所有 {% tip '...' %} 说明。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
 ```
 
-4. Manually review Kimi edits for correctness, idiomatic Chinese, route-shell/body split, Typography Gate compliance, Tip Parity Gate compliance, Accessibility Parity Gate compliance, and preservation of YAML, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JS hooks, Nunjucks syntax, and permalink paths.
-5. Run a GLM consistency and language refinement pass with opencode. Follow the Slow-Agent Rule. Ask GLM to edit files in place and tell it all repo shell commands must use `rtk`.
+4. Manually review Gemini edits for correctness, idiomatic Chinese, route-shell/body split, Typography Gate compliance, Tip Parity Gate compliance, Accessibility Parity Gate compliance, and preservation of YAML, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JS hooks, Nunjucks syntax, and permalink paths.
+5. Run a Kimi review and refinement pass with opencode. Follow the Slow-Agent Rule. Ask Kimi to work in yolo mode, edit files in place, and leave English source files and build scripts untouched.
 
 ```sh
-rtk opencode run -m zhipuai-coding-plan/glm-5.1 "请直接在本仓库中润色中文版本文件，并原地编辑。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留 route shell、lesson include、front matter、content_template、scripts、permalinks、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 Nunjucks 语法，并保留和润色所有 {% tip '...' %} 中文说明。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+rtk opencode run --dangerously-skip-permissions -m kimi-for-coding/k2p7 "请以 yolo 模式直接在本仓库中审核并润色第 ### 日的中文版本文件，并原地编辑目标 route shell 与 lesson include。所有仓库 shell 命令都必须使用 rtk 前缀。重点检查 Gemini 初稿的翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留所有 front matter 键、content_template、scripts、permalinks、locale: zh、day 数字、slug、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 Nunjucks 语法，并保留和润色所有 {% tip '...' %} 中文说明。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件，以及需要 Codex 决定的遗留问题。"
 ```
 
-6. Manually review GLM edits and keep only technically and stylistically sound changes. Confirm the Typography Gate, Tip Parity Gate, and Accessibility Parity Gate before treating the Chinese edition as complete.
-7. Run the Factual Parity Gate against the English source and any fact-check corrections made during the same work.
-8. Run the SEO Parity Gate against the English route shell and the generated
+6. Manually review Kimi edits and keep only technically and stylistically sound changes. Confirm the Typography Gate, Tip Parity Gate, and Accessibility Parity Gate before moving to GLM.
+7. Run a GLM consistency and language refinement pass with opencode. Follow the Slow-Agent Rule. Ask GLM to work in yolo mode, edit files in place, and tell it all repo shell commands must use `rtk`.
+
+```sh
+rtk opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.2 "请以 yolo 模式直接在本仓库中润色中文版本文件，并原地编辑。所有仓库 shell 命令都必须使用 rtk 前缀。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留 route shell、lesson include、front matter、content_template、scripts、permalinks、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 Nunjucks 语法，并保留和润色所有 {% tip '...' %} 中文说明。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+```
+
+8. Manually review GLM edits and keep only technically and stylistically sound changes. Confirm the Typography Gate, Tip Parity Gate, and Accessibility Parity Gate before treating the Chinese edition as complete.
+9. Run the Factual Parity Gate against the English source and any fact-check corrections made during the same work.
+10. Run the SEO Parity Gate against the English route shell and the generated
    Chinese route shell.
-9. Run the Accessibility Parity Gate against the English route/include and the
+11. Run the Accessibility Parity Gate against the English route/include and the
    generated Chinese route/include.
-10. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
-11. Run:
+12. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
+13. Run:
 
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ### --require-zh
@@ -117,13 +132,13 @@ rtk npm run check
 
 ## Appendix Translation
 
-For large appendices, use explicit temporary input/output files instead of asking an agent to overwrite its input:
+For large appendices, use explicit temporary input/output files instead of asking an agent to overwrite its input. Run Gemini first:
 
 ```sh
-rtk kimi --print --yolo -p "请读取英文输入文件 /tmp/day-###-appendix-en.md，并把输出文件 /tmp/day-###-appendix-zh.md 的全部内容原地替换为简体中文版本。只编辑 /tmp/day-###-appendix-zh.md，不要编辑仓库文件。译文不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，同时保持技术含义准确。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留和翻译所有 {% tip '...' %} 说明。不要在聊天中返回一次性的完整文件译文。请输出简短进度说明，并在结束时用中文概括结果。"
+rtk gemini -y -p "请以 yolo 模式读取英文输入文件 /tmp/day-###-appendix-en.md，并把输出文件 /tmp/day-###-appendix-zh.md 的全部内容原地替换为简体中文版本。只编辑 /tmp/day-###-appendix-zh.md，不要编辑仓库文件。译文不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，同时保持技术含义准确。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留和翻译所有 {% tip '...' %} 说明。不要在聊天中返回一次性的完整文件译文。请输出简短进度说明，并在结束时用中文概括结果。"
 ```
 
-Then compare structure against English, preserve comments/classes/ids/data attributes/fallbacks/citations/URLs/DOIs/JS hooks and `{% tip %}` notes, insert into the matching Chinese include, run GLM, manually review, confirm the Typography Gate and Tip Parity Gate, then build and check.
+Then run Kimi review through opencode on the temporary Chinese output, compare structure against English, preserve comments/classes/ids/data attributes/fallbacks/citations/URLs/DOIs/JS hooks and `{% tip %}` notes, insert into the matching Chinese include, run GLM 5.2 through opencode, manually review, confirm the Typography Gate and Tip Parity Gate, then build and check.
 
 ## Terminology
 
@@ -139,7 +154,7 @@ Maintain these conventions unless the user changes them:
 - names in Chinese running prose -> use established Simplified Chinese renderings or transliterations, with Latin form on first mention only when useful; keep source lists, article titles, DOI metadata, URLs, CSS/JS identifiers, and citation keys in Latin form
 - examples: `彼得·昂格尔`, `希拉里·普特南`, `G. E. 摩尔`, `德雷茨克`, `诺齐克`, `基思·德罗斯`, `邓肯·普里查德`, `《美诺篇》（Meno）`, `拉里萨（Larissa）`, `巴黎在法国`
 - use Chinese corner quotes `「」` for quoted speech, thoughts, propositions, slogans, and translated terms in Chinese prose
-- insert spaces between Chinese text and Latin letters, acronyms, Arabic numerals, percentages, and units where source typography permits, e.g. `2026 年`, `GLM 5.1`, `100 项`, `95% 置信区间`
+- insert spaces between Chinese text and Latin letters, acronyms, Arabic numerals, percentages, and units where source typography permits, e.g. `2026 年`, `GLM 5.2`, `100 项`, `95% 置信区间`
 - avoid literal metaphors and stiff calques; prefer natural, elegant Chinese that remains technically exact
 
 ## Typography Gate
