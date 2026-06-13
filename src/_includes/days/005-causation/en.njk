@@ -82,39 +82,24 @@
 
 <p>The mechanism is always a lurking variable that's distributed unevenly between the groups you're comparing. In the kidney-stone data (Charig et al., <em>BMJ</em>, 1986), surgeons gave the gentler treatment <strong>B</strong> mostly to the <em>easy</em> small stones and reserved old-fashioned open surgery <strong>A</strong> for the <em>hard</em> big ones. So B's overall success rate is flattered by an easier caseload. Split by stone size — hold the <em class="term">confounder</em>{% tip 'A confounder is a third variable that influences both the apparent cause and the apparent effect, making them move together.' %} fixed, exactly as Cartwright demanded — and A pulls ahead in both rooms.</p>
 
-<div class="theory-key">
-<div class="k">
-<span class="who2">All patients</span><b>Mixed bucket.</b>
-<p><code>A: 273/350 = 78.0%</code><br><code>B: 289/350 = 82.6%</code></p>
-<p><span class="chip bad" data-print="pooled winner B"><i></i>pooled winner: B</span></p>
-</div>
-<div class="k">
-<span class="who2">Small stones</span><b>Conditioned comparison.</b>
-<p><code>A: 81/87 = 93.1%</code><br><code>B: 234/270 = 86.7%</code></p>
-<p><span class="chip ok" data-print="conditioned winner A"><i></i>conditioned winner: A</span></p>
-</div>
-<div class="k">
-<span class="who2">Large stones</span><b>Conditioned comparison.</b>
-<p><code>A: 192/263 = 73.0%</code><br><code>B: 55/80 = 68.8%</code></p>
-<p><span class="chip ok" data-print="conditioned winner A"><i></i>conditioned winner: A</span></p>
-</div>
-</div>
-
-<p>Read the three squares as the first version of <strong>conditioning</strong>. "All patients" mixes easy and hard cases into one bucket. "Small stones" and "large stones" compare like with like by holding stone size fixed. The whole foundation is here: the right causal comparison often appears only after you choose the right variable to condition on.</p>
+<p>The Reversal Machine below turns that into one picture. Each tiny square is one patient. The pooled view sorts the same 700 patients only by treatment; the conditioned view rearranges those same patients into small-stone and large-stone rooms first, then compares A with B inside each room. That rearrangement is the foundation of <strong>conditioning</strong>: compare like with like before you call anything a cause.</p>
 </section>
 
 <!-- ===================== INTERACTIVE 1 : SIMPSON ===================== -->
 <div class="panel web-only causation-simpson">
 <p class="ptitle">Interactive · watch it flip</p>
 <h3>The Reversal Machine</h3>
-<p class="pnote">Real 1986 kidney-stone data, 350 patients per treatment. Toggle between the <strong>pooled</strong> view and the <strong>split-by-stone-size</strong> view. The split view conditions on stone size: it asks the same treatment question inside comparable cases instead of mixing easy and hard patients.</p>
+<p class="pnote">Real 1986 kidney-stone data, 350 patients per treatment. Each square is one patient; filled treatment-color squares are successes, pale squares are failures. Toggle the arrangement and watch the same cases tell two different stories.</p>
 
 <div class="simp-toggle" role="group" aria-label="View mode">
 <button id="simp-pooled" type="button" aria-pressed="true">Pooled (all patients)</button>
 <button id="simp-split" type="button" aria-pressed="false">Split by stone size</button>
 </div>
 
-<div class="simp-wrap" id="simpWrap"></div>
+<div class="simp-machine">
+<svg class="simp-grid" id="simpGrid" viewBox="0 0 224 150" role="img" aria-label="A grid of 700 kidney-stone patients arranged by the selected comparison."></svg>
+<div class="simp-calc" id="simpCalc" aria-live="polite"></div>
+</div>
 
 <div class="simp-winner A" id="simpWinner" aria-live="polite"></div>
 <div class="legend">
@@ -276,6 +261,8 @@
 </div>
 </div>
 
+<div class="dovs-equations" id="dovsEquations" aria-live="polite"></div>
+
 <div class="dovs-verdict gap" id="dovsVerdict" aria-live="polite">
 <p class="vh" id="dovsVH">The confounding gap</p>
 <p id="dovsBody"></p>
@@ -300,43 +287,50 @@
 <section>
 <p>That severed arrow in the right-hand graph is the do-operator made visual. Intervening doesn't just <em>look</em> at X — it <strong>deletes the arrows pointing into X</strong> and replaces them with your hand. The summer→ice-cream link is cut, so summer can no longer use ice cream as a backdoor route to fake an effect on drowning. What survives is only the real thing.</p>
 <p>Pearl gave us a grammar for doing this on paper. A <em class="term">structural causal model</em>{% tip 'A structural causal model represents how variables are generated from other variables and from background noise.' %} draws the variables as a <em class="term">directed acyclic graph</em>{% tip 'A directed acyclic graph, or DAG, is a network of arrows with no directed loops.' %} — boxes and arrows, no loops — and three named patterns do most of the work. A <em class="term">fork</em> (X ← Z → Y) is a confounder; block it by conditioning on Z. A <em class="term">chain</em> (X → Z → Y) is a mediator. And a <em class="term">collider</em> (X → Z ← Y) is the trap: X and Y are unrelated until you condition on their shared effect Z, at which point a phantom correlation springs into being. This is why "controlling for everything you can measure" is not cautious but reckless — condition on a collider and you <em>manufacture</em> the very bias you were trying to remove.</p>
-<figure class="hero-fig web-only">
-<svg viewBox="0 0 720 190" role="img" aria-label="Concrete DAG examples: a fork, a chain, and a collider.">
-<defs>
-<marker id="day5-dag-arrow-en" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker>
-</defs>
-<text x="120" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">fork / confounder</text>
-<rect x="70" y="44" width="100" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="120" y="65" text-anchor="middle" font-size="12" fill="var(--ink)">Summer</text>
-<rect x="10" y="126" width="110" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="65" y="147" text-anchor="middle" font-size="12" fill="var(--ink)">Ice cream</text>
-<rect x="140" y="126" width="100" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="190" y="147" text-anchor="middle" font-size="12" fill="var(--ink)">Drowning</text>
-<line x1="100" y1="78" x2="72" y2="122" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-en)"></line>
-<line x1="140" y1="78" x2="184" y2="122" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-en)"></line>
-
-<text x="360" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">chain / mediator</text>
-<rect x="275" y="86" width="80" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="315" y="107" text-anchor="middle" font-size="12" fill="var(--ink)">Smoking</text>
-<rect x="390" y="86" width="92" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="436" y="107" text-anchor="middle" font-size="12" fill="var(--ink)">Tar</text>
-<rect x="520" y="86" width="82" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="561" y="107" text-anchor="middle" font-size="12" fill="var(--ink)">Cancer</text>
-<line x1="356" y1="102" x2="386" y2="102" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-en)"></line>
-<line x1="483" y1="102" x2="516" y2="102" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-en)"></line>
-
-<text x="610" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">collider</text>
-<rect x="548" y="44" width="80" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="588" y="65" text-anchor="middle" font-size="12" fill="var(--ink)">Skill</text>
-<rect x="650" y="44" width="62" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="681" y="65" text-anchor="middle" font-size="12" fill="var(--ink)">Luck</text>
-<rect x="584" y="126" width="104" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="636" y="147" text-anchor="middle" font-size="12" fill="var(--ink)">Admission</text>
-<line x1="598" y1="78" x2="626" y2="122" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-en)"></line>
-<line x1="675" y1="78" x2="649" y2="122" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-en)"></line>
+<div class="dag-examples web-only" role="group" aria-label="Concrete DAG examples: a fork, a chain, and a collider.">
+<figure class="dag-card">
+<svg viewBox="0 0 220 150" role="img" aria-label="Fork DAG: summer causes both ice-cream buying and drowning.">
+<defs><marker id="day5-dag-fork-en" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
+<rect x="60" y="12" width="100" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="110" y="33" text-anchor="middle" font-size="12" fill="var(--ink)">Summer</text>
+<rect x="10" y="104" width="92" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="56" y="125" text-anchor="middle" font-size="12" fill="var(--ink)">Ice cream</text>
+<rect x="124" y="104" width="86" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="167" y="125" text-anchor="middle" font-size="12" fill="var(--ink)">Drowning</text>
+<line x1="92" y1="46" x2="60" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-fork-en)"></line>
+<line x1="128" y1="46" x2="162" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-fork-en)"></line>
 </svg>
-<figcaption>Concrete DAGs: summer creates the ice-cream/drowning fork; tar mediates a smoking/cancer chain; admission is a collider because skill and luck both feed into the same selection event.</figcaption>
+<figcaption><b>Fork / confounder</b><span>Summer changes both exposure and outcome. Condition on summer before comparing.</span></figcaption>
 </figure>
+<figure class="dag-card">
+<svg viewBox="0 0 220 150" role="img" aria-label="Chain DAG: smoking causes tar, and tar causes cancer.">
+<defs><marker id="day5-dag-chain-en" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
+<rect x="8" y="58" width="78" height="34" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="47" y="80" text-anchor="middle" font-size="12" fill="var(--ink)">Smoking</text>
+<rect x="104" y="58" width="50" height="34" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="129" y="80" text-anchor="middle" font-size="12" fill="var(--ink)">Tar</text>
+<rect x="172" y="58" width="42" height="34" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="193" y="80" text-anchor="middle" font-size="12" fill="var(--ink)">Cancer</text>
+<line x1="87" y1="75" x2="100" y2="75" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-chain-en)"></line>
+<line x1="155" y1="75" x2="168" y2="75" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-chain-en)"></line>
+</svg>
+<figcaption><b>Chain / mediator</b><span>Tar carries part of smoking's effect. Conditioning on tar changes the question.</span></figcaption>
+</figure>
+<figure class="dag-card">
+<svg viewBox="0 0 220 150" role="img" aria-label="Collider DAG: skill and luck both cause admission.">
+<defs><marker id="day5-dag-collider-en" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
+<rect x="20" y="12" width="76" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="58" y="33" text-anchor="middle" font-size="12" fill="var(--ink)">Skill</text>
+<rect x="124" y="12" width="76" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="162" y="33" text-anchor="middle" font-size="12" fill="var(--ink)">Luck</text>
+<rect x="62" y="104" width="96" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="110" y="125" text-anchor="middle" font-size="12" fill="var(--ink)">Admission</text>
+<line x1="68" y1="46" x2="98" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-collider-en)"></line>
+<line x1="152" y1="46" x2="122" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-collider-en)"></line>
+</svg>
+<figcaption><b>Collider</b><span>Skill and luck meet at admission. Conditioning on admission opens a fake relationship.</span></figcaption>
+</figure>
+</div>
 <div class="format-alt epub-only print-only">
 <p class="ptitle">Reference table</p>
 <h3>Concrete DAG Examples</h3>

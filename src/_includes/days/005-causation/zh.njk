@@ -82,39 +82,24 @@
 
 <p>其机制总是一个「潜伏变量」在你所比较的组别之间分布不均。在肾结石数据（Charig 等人，《英国医学杂志》，1986 年）中，外科医生主要将微创的疗法 B 用于「容易处理」的小结石，而将传统的开放式手术 A 留给「困难」的大结石。因此，B 的整体成功率因其更容易处理的病例而显得虚高。如果按结石大小拆分——正如卡特赖特所要求的，通过分层比较固定<span class="term">混杂因素</span>（Confounder）{% tip '混杂因素是同时影响表现原因和表现结果的第三个变量，会导致二者产生虚假的同步变动。' %}——A 在两组中都会胜出。</p>
 
-<div class="theory-key">
-<div class="k">
-<span class="who2">所有患者</span><b>总体样本。</b>
-<p><code>A: 273/350 = 78.0%</code><br><code>B: 289/350 = 82.6%</code></p>
-<p><span class="chip bad" data-print="汇总赢家：疗法乙"><i></i>汇总赢家：B</span></p>
-</div>
-<div class="k">
-<span class="who2">小结石</span><b>分层比较。</b>
-<p><code>A: 81/87 = 93.1%</code><br><code>B: 234/270 = 86.7%</code></p>
-<p><span class="chip ok" data-print="分层赢家：疗法甲"><i></i>分层赢家：A</span></p>
-</div>
-<div class="k">
-<span class="who2">大结石</span><b>分层比较。</b>
-<p><code>A: 192/263 = 73.0%</code><br><code>B: 55/80 = 68.8%</code></p>
-<p><span class="chip ok" data-print="分层赢家：疗法甲"><i></i>分层赢家：A</span></p>
-</div>
-</div>
-
-<p>把这三个方块看作「分层比较」的直观演示。「所有患者」将难易病例混为一谈；「小结石」和「大结石」则通过固定结石大小，实现了同类病例间的公平竞争。因果分析的基石就在于此：正确的比较，往往始于选对那个需要被「条件化」的变量。</p>
+<p>下面的「反转机器」会把这件事压成一张图。每一个小方块代表一名患者。汇总视图只按疗法排列同一批 700 名患者；分层视图则先把同一批患者重新排进「小结石」和「大结石」两个房间，再在每个房间里比较 A 与 B。这个重新排列就是<span class="term">条件化</span>的基础：先让比较对象可比，再谈因果判断。</p>
 </section>
 
 <!-- ===================== INTERACTIVE 1 : SIMPSON ===================== -->
 <div class="panel web-only causation-simpson">
 <p class="ptitle">互动 · 观察反转</p>
 <h3>反转机器</h3>
-<p class="pnote">基于 1986 年肾结石真实数据，每种疗法样本量为 350。请在「总体」与「分层」视图间切换。分层视图展示了对结石大小进行<span class="term">条件化</span>（Conditioning）后的结果：它不再将难易病例混为一谈，而是在具备可比性的组别内部考察疗法效果。</p>
+<p class="pnote">基于 1986 年肾结石真实数据，每种疗法样本量为 350。每个小方块代表一名患者；有治疗颜色的方块是成功病例，浅色方块是失败病例。切换排列方式，观察同一批病例如何讲出两种不同故事。</p>
 
 <div class="simp-toggle" role="group" aria-label="视图模式">
 <button id="simp-pooled" type="button" aria-pressed="true">汇总（所有患者）</button>
 <button id="simp-split" type="button" aria-pressed="false">按结石大小拆分</button>
 </div>
 
-<div class="simp-wrap" id="simpWrap"></div>
+<div class="simp-machine">
+<svg class="simp-grid" id="simpGrid" viewBox="0 0 224 150" role="img" aria-label="一张由 700 名肾结石患者组成的方格图，会按所选比较方式重新排列。"></svg>
+<div class="simp-calc" id="simpCalc" aria-live="polite"></div>
+</div>
 
 <div class="simp-winner A" id="simpWinner" aria-live="polite"></div>
 <div class="legend">
@@ -276,6 +261,8 @@
 </div>
 </div>
 
+<div class="dovs-equations" id="dovsEquations" aria-live="polite"></div>
+
 <div class="dovs-verdict gap" id="dovsVerdict" aria-live="polite">
 <p class="vh" id="dovsVH">混杂偏差</p>
 <p id="dovsBody"></p>
@@ -300,43 +287,50 @@
 <section>
 <p>右侧图中被切断的箭头就是 do-算子的直观表现。干预不仅仅是「看」X——它<span class="hl">删除了指向 X 的箭头</span>，并用你的「手」取而代之。「夏季 → 冰淇淋」的链接被切断，因此夏季再也无法利用冰淇淋作为「后门路径」来伪造对溺水的效应。留下来的只有真实的因果关系。</p>
 <p>珀尔为我们提供了一套在纸上进行此类操作的语法。一个<span class="term">结构因果模型</span>（Structural Causal Model）{% tip '结构因果模型描述了变量是如何从其他变量与背景噪声中生成的。' %}将变量绘制为<span class="term">有向无环图</span>（Directed Acyclic Graph，简称 DAG）{% tip '有向无环图（DAG）是由箭头组成的网络，且不包含任何有向环。' %}——即由方框与箭头组成且无循环的图——其中三种命名模式承担了大部分工作。一个<span class="term">叉形结构</span>（Fork，X ← Z → Y）是一个混杂因素；通过对 Z 取条件来阻断它。一个<span class="term">链形结构</span>（Chain，X → Z → Y）是一个中介因子。而一个<span class="term">对撞结构</span>（Collider，X → Z ← Y）则是陷阱：X 和 Y 本身无关，直到你对它们的共同结果 Z 进行条件化处理，此时一个幻影般的相关性便会跃然纸上。这就是为什么「控制你能测量的一切」并非严谨而是鲁莽——对一个对撞因子取条件，你就会「制造」出你原本试图消除的偏差。</p>
-<figure class="hero-fig web-only">
-<svg viewBox="0 0 720 190" role="img" aria-label="三个具体 DAG 示例：叉形结构、链形结构和对撞结构。">
-<defs>
-<marker id="day5-dag-arrow-zh" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker>
-</defs>
-<text x="120" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">叉形 / 混杂</text>
-<rect x="70" y="44" width="100" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="120" y="65" text-anchor="middle" font-size="12" fill="var(--ink)">夏季</text>
-<rect x="10" y="126" width="110" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="65" y="147" text-anchor="middle" font-size="12" fill="var(--ink)">冰淇淋</text>
-<rect x="140" y="126" width="100" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="190" y="147" text-anchor="middle" font-size="12" fill="var(--ink)">溺水</text>
-<line x1="100" y1="78" x2="72" y2="122" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-zh)"></line>
-<line x1="140" y1="78" x2="184" y2="122" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-zh)"></line>
-
-<text x="360" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">链形 / 中介</text>
-<rect x="275" y="86" width="80" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="315" y="107" text-anchor="middle" font-size="12" fill="var(--ink)">吸烟</text>
-<rect x="390" y="86" width="92" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="436" y="107" text-anchor="middle" font-size="12" fill="var(--ink)">焦油</text>
-<rect x="520" y="86" width="82" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="561" y="107" text-anchor="middle" font-size="12" fill="var(--ink)">癌症</text>
-<line x1="356" y1="102" x2="386" y2="102" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-zh)"></line>
-<line x1="483" y1="102" x2="516" y2="102" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-zh)"></line>
-
-<text x="610" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">对撞结构</text>
-<rect x="548" y="44" width="80" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="588" y="65" text-anchor="middle" font-size="12" fill="var(--ink)">能力</text>
-<rect x="650" y="44" width="62" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="681" y="65" text-anchor="middle" font-size="12" fill="var(--ink)">运气</text>
-<rect x="584" y="126" width="104" height="32" rx="6" fill="var(--raised)" stroke="var(--line)"></rect>
-<text x="636" y="147" text-anchor="middle" font-size="12" fill="var(--ink)">录取</text>
-<line x1="598" y1="78" x2="626" y2="122" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-zh)"></line>
-<line x1="675" y1="78" x2="649" y2="122" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-arrow-zh)"></line>
+<div class="dag-examples web-only" role="group" aria-label="三个具体 DAG 示例：叉形结构、链形结构和对撞结构。">
+<figure class="dag-card">
+<svg viewBox="0 0 220 150" role="img" aria-label="叉形 DAG：夏季同时导致冰淇淋购买和溺水。">
+<defs><marker id="day5-dag-fork-zh" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
+<rect x="60" y="12" width="100" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="110" y="33" text-anchor="middle" font-size="12" fill="var(--ink)">夏季</text>
+<rect x="10" y="104" width="92" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="56" y="125" text-anchor="middle" font-size="12" fill="var(--ink)">冰淇淋</text>
+<rect x="124" y="104" width="86" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="167" y="125" text-anchor="middle" font-size="12" fill="var(--ink)">溺水</text>
+<line x1="92" y1="46" x2="60" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-fork-zh)"></line>
+<line x1="128" y1="46" x2="162" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-fork-zh)"></line>
 </svg>
-<figcaption>具体的 DAG 示例：夏季构成了冰淇淋与溺水的「叉形结构」；焦油作为「链形结构」的中介因子连接了吸烟与癌症；录取则是「对撞结构」，能力与运气在此交汇，共同决定了筛选结果。</figcaption>
+<figcaption><b>叉形 / 混杂</b><span>夏季同时改变暴露与结果。比较前先对夏季取条件。</span></figcaption>
 </figure>
+<figure class="dag-card">
+<svg viewBox="0 0 220 150" role="img" aria-label="链形 DAG：吸烟导致焦油，焦油导致癌症。">
+<defs><marker id="day5-dag-chain-zh" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
+<rect x="8" y="58" width="78" height="34" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="47" y="80" text-anchor="middle" font-size="12" fill="var(--ink)">吸烟</text>
+<rect x="104" y="58" width="50" height="34" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="129" y="80" text-anchor="middle" font-size="12" fill="var(--ink)">焦油</text>
+<rect x="172" y="58" width="42" height="34" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="193" y="80" text-anchor="middle" font-size="12" fill="var(--ink)">癌症</text>
+<line x1="87" y1="75" x2="100" y2="75" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-chain-zh)"></line>
+<line x1="155" y1="75" x2="168" y2="75" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-chain-zh)"></line>
+</svg>
+<figcaption><b>链形 / 中介</b><span>焦油承载吸烟的部分效应。对焦油取条件会改变问题。</span></figcaption>
+</figure>
+<figure class="dag-card">
+<svg viewBox="0 0 220 150" role="img" aria-label="对撞 DAG：能力与运气共同导致录取。">
+<defs><marker id="day5-dag-collider-zh" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
+<rect x="20" y="12" width="76" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="58" y="33" text-anchor="middle" font-size="12" fill="var(--ink)">能力</text>
+<rect x="124" y="12" width="76" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="162" y="33" text-anchor="middle" font-size="12" fill="var(--ink)">运气</text>
+<rect x="62" y="104" width="96" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="110" y="125" text-anchor="middle" font-size="12" fill="var(--ink)">录取</text>
+<line x1="68" y1="46" x2="98" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-collider-zh)"></line>
+<line x1="152" y1="46" x2="122" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-collider-zh)"></line>
+</svg>
+<figcaption><b>对撞结构</b><span>能力与运气在录取处相遇。对录取取条件会打开伪相关。</span></figcaption>
+</figure>
+</div>
 <div class="format-alt epub-only print-only">
 <p class="ptitle">参考表</p>
 <h3>具体 DAG 示例</h3>
