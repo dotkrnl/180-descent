@@ -240,6 +240,7 @@ ${subtitleMarkup}
     });
   }
   $("script,.site-topbar,.site-footer,.download-strip,.web-only,.print-hide,.print-only:not(.epub-only)").remove();
+  convertTipNotesToFootnotes($, config.meta.language, selfHref);
   $(".epub-only .ptitle").remove();
   $(".epub-only").removeClass("epub-only print-only format-alt").addClass("epub-alt");
   $("svg").attr("xmlns", "http://www.w3.org/2000/svg");
@@ -275,7 +276,7 @@ ${subtitleMarkup}
   const body = contentRoot.contents().map((_, node) => $.xml(node)).get().join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="${config.meta.language}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="${config.meta.language}">
   <head>
     <title>${escapeXml(title)}</title>
     <link rel="stylesheet" type="text/css" href="styles/book.css"/>
@@ -303,6 +304,16 @@ body{font-size:1em;}
 .deep-dive-optional-note{font-style:italic;color:#555;margin:.2em 0 .65em;}
 .epub-alt{display:block!important;}
 .epub-alt>.ptitle{display:none!important;}
+.tip-note{display:inline!important;margin:0!important;vertical-align:baseline!important;}
+.tip-note-mark,.tip-note-box{display:none!important;}
+.tip-note-ref{display:inline!important;font-family:"IBM Plex Mono",monospace;font-size:.72em;font-weight:500;line-height:0;vertical-align:super;margin-left:.08em;color:#555;}
+.tip-note-ref a{color:#555;text-decoration:none;border-bottom:0;}
+.tip-footnotes{display:block!important;margin:1.6em 0 1.2em;padding-top:.75em;border-top:1px solid #ddd;font-size:.86em;line-height:1.45;color:#555;}
+.tip-footnotes h2{font-family:"IBM Plex Mono",monospace;font-size:.82em;letter-spacing:.1em;text-transform:uppercase;color:#777;margin:0 0 .55em;}
+.tip-footnotes ol{margin:0;padding-left:1.35em;}
+.tip-footnotes li{margin:.35em 0;}
+.tip-footnotes p{margin:0;}
+.tip-note-back{font-size:.86em;color:#777;border-bottom:0;text-decoration:none;}
 .bartrack{background:#f7f7f2!important;border:1px solid #9c9588!important;}
 .barfill{display:block!important;min-height:1.1em!important;}
 .barfill.orig{background:#2f7d52!important;}
@@ -315,6 +326,67 @@ body{font-size:1em;}
   .barfill.mid{background:#d8ac5a!important;}
 }
 `;
+}
+
+function convertTipNotesToFootnotes($, language = "", selfHref = "document.xhtml") {
+  const isZh = language.startsWith("zh");
+  const labels = isZh
+    ? {
+        heading: "说明",
+        reference: "说明",
+        back: "返回"
+      }
+    : {
+        heading: "Notes",
+        reference: "Note",
+        back: "Back"
+      };
+  const scopeCandidates = $(".page,.lesson,.print-intro,.lesson-print").toArray();
+  const scopes = scopeCandidates.length ? scopeCandidates : [$("body").get(0)].filter(Boolean);
+  const used = new Set();
+
+  scopes.forEach((scopeElement, scopeIndex) => {
+    const scope = $(scopeElement);
+    const notes = scope.find(".tip-note").toArray()
+      .filter((note) => !used.has(note))
+      .filter((note) => !$(note).closest(".tip-footnotes").length);
+
+    if (!notes.length) return;
+
+    const baseId = epubNoteBaseId(scope, selfHref, scopeIndex);
+    const items = [];
+    notes.forEach((noteElement, noteIndex) => {
+      used.add(noteElement);
+      const note = $(noteElement);
+      const box = note.children(".tip-note-box").first();
+      const text = box.text().trim();
+      if (!text) return;
+
+      const number = noteIndex + 1;
+      const refId = `${baseId}-tip-ref-${number}`;
+      const noteId = `${baseId}-tip-note-${number}`;
+      note.children(".tip-note-mark").remove();
+      box.remove();
+      note.append(`<sup class="tip-note-ref" id="${refId}"><a href="#${noteId}" epub:type="noteref" aria-label="${escapeXml(`${labels.reference} ${number}`)}">${number}</a></sup>`);
+      items.push(`<li id="${noteId}" epub:type="footnote"><p>${escapeXml(text)} <a class="tip-note-back" href="#${refId}">${escapeXml(labels.back)}</a></p></li>`);
+    });
+
+    if (!items.length) return;
+
+    const section = `<section class="tip-footnotes" epub:type="footnotes" role="doc-endnotes"><h2>${escapeXml(labels.heading)}</h2><ol>${items.join("")}</ol></section>`;
+    const sources = scope.find(".sources").first();
+    if (sources.length) {
+      sources.before(section);
+    } else {
+      scope.append(section);
+    }
+  });
+}
+
+function epubNoteBaseId(scope, selfHref, scopeIndex) {
+  const id = scope.attr("id") || scope.attr("data-day-path") || scope.attr("data-reading-day") || `${selfHref}-${scopeIndex + 1}`;
+  const base = String(id).replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-|-$/g, "");
+  return `tip-${base || `section-${scopeIndex + 1}`}`;
 }
 
 function navDocument(items, config) {
@@ -409,7 +481,7 @@ function titlePageDocument(config) {
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="${config.meta.language}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="${config.meta.language}">
   <head>
     <title>${escapeXml(config.meta.title)}</title>
     <link rel="stylesheet" type="text/css" href="styles/book.css"/>

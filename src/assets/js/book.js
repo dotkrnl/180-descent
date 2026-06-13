@@ -29,7 +29,96 @@
   }
 
   initReadingProgress();
+  initTipNotes();
   initCodexRefiner();
+
+  function initTipNotes(){
+    var notes = document.querySelectorAll(".tip-note");
+    if(!notes.length){
+      return;
+    }
+
+    function closeAll(except){
+      for(var i = 0; i < notes.length; i++){
+        if(notes[i] === except){
+          continue;
+        }
+        notes[i].removeAttribute("data-open");
+        notes[i].removeAttribute("data-align");
+        var mark = notes[i].querySelector(".tip-note-mark");
+        if(mark){
+          mark.setAttribute("aria-expanded", "false");
+        }
+      }
+    }
+
+    function alignBox(note){
+      if(!note){
+        return;
+      }
+
+      note.removeAttribute("data-align");
+      var box = note.querySelector(".tip-note-box");
+      if(!box){
+        return;
+      }
+
+      var rect = box.getBoundingClientRect();
+      if(rect.left < 12){
+        note.setAttribute("data-align", "left");
+      }else if(rect.right > window.innerWidth - 12){
+        note.setAttribute("data-align", "right");
+      }
+    }
+
+    for(var i = 0; i < notes.length; i++){
+      var button = notes[i].querySelector(".tip-note-mark");
+      if(!button){
+        continue;
+      }
+
+      button.addEventListener("click", function(event){
+        event.preventDefault();
+        event.stopPropagation();
+
+        var note = this.closest(".tip-note");
+        var shouldOpen = note && note.getAttribute("data-open") !== "true";
+        closeAll(note);
+        if(!note){
+          return;
+        }
+
+        if(shouldOpen){
+          note.setAttribute("data-open", "true");
+          this.setAttribute("aria-expanded", "true");
+          window.requestAnimationFrame(function(){
+            alignBox(note);
+          });
+        }else{
+          note.removeAttribute("data-open");
+          note.removeAttribute("data-align");
+          this.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+
+    document.addEventListener("click", function(event){
+      if(event.target.closest && event.target.closest(".tip-note")){
+        return;
+      }
+      closeAll();
+    });
+
+    document.addEventListener("keydown", function(event){
+      if(event.key === "Escape"){
+        closeAll();
+      }
+    });
+
+    window.addEventListener("resize", function(){
+      closeAll();
+    });
+  }
 
   function initReadingProgress(){
     var lesson = document.querySelector("[data-reading-progress]");

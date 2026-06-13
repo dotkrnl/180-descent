@@ -84,6 +84,31 @@ the supplied lesson did not ask for images.
 5. If the user accepts a third-party image, switch to `180-descent-assets` for
    bundling, credits, compression, EPUB/PDF handling, and visual verification.
 
+## Explanatory Tip Gate
+
+Before any new day is considered ready, review the lesson as a smart
+bachelor-degree holder who is not a specialist in the topic. Add a short
+explanatory tip for any first-use term, theorem, named method, technical
+artifact, statistical measure, philosophical position, current research label,
+or institutional acronym that is not common knowledge at that level and is not
+already defined before or immediately during the mention.
+
+1. Add tips with the global shortcode immediately after the term:
+   `{% tip 'Brief plain-language explanation.' %}`. On the website this renders
+   as a tappable `?` tip box; PDF and EPUB exports render numbered footnotes,
+   not inline parenthetical text after the term.
+2. Keep tips brief and explanatory, not source citations. They should define the
+   term or clarify why it matters in one sentence.
+3. Do not over-annotate ordinary words, terms already defined nearby, repeated
+   uses after the first clear definition, or component labels whose surrounding
+   prose explains the concept.
+4. Do include tips inside deep-dive appendix content, fallback copy, and the
+   introduction when those pages are in scope.
+5. When Chinese mirroring is required, mirror each English tip into idiomatic
+   Simplified Chinese at the matching term. Preserve the `{% tip '...' %}`
+   shortcode syntax and manually check that Chinese punctuation does not break
+   Nunjucks parsing.
+
 ## Workflow
 
 1. Identify day number, title, block, entry analogy, model, debate, and frontier from `src/_data/syllabus.yaml`.
@@ -94,6 +119,7 @@ the supplied lesson did not ask for images.
 3. Review the lesson text:
    - preserve the teaching arc and voice
    - run the Fact-Check Gate before keeping or adding factual claims
+   - run the Explanatory Tip Gate for first-use specialist terms and mirror the tips into Chinese when Chinese mirroring is in scope
    - verify direct quotes against the original publication, transcript, archive scan, or reliable reproduction; paraphrase uncertain wording
    - keep citations tied to the claims they support
    - label frontier claims as established, promising hint, or contested/hype
@@ -154,6 +180,7 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
 - Resolved forward pointers from earlier published days and appendices to the newly published day in both English and Chinese editions when present
 - Updated concise opening-arc paragraph in `src/pages/introduction.md`
 - Updated callbacks and pending future links
+- Added first-use explanatory `{% tip %}` notes for specialist terms that are not common knowledge and are not already defined, with Chinese mirrors when the Chinese edition is in scope
 - Completed Image Candidate Gate outcome: accepted candidates added through
   `180-descent-assets`, or proposed/rejected/no-useful-candidate status reported
   to the user before commit/publish

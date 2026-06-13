@@ -22,6 +22,30 @@ Appendices use the same claim-level review standard as normal days. Before keepi
 
 Do not proceed to commit/publish until this gate has been completed and any issues have been fixed or explicitly reported to the user.
 
+## Explanatory Tip Gate
+
+Appendices use the same reader-assistance standard as normal days. Before an
+appendix is considered ready, review it as a smart bachelor-degree holder who
+is not a specialist in the topic. Add a short explanatory tip for any first-use
+term, theorem, named method, technical artifact, statistical measure,
+philosophical position, current research label, or institutional acronym that
+is not common knowledge at that level and is not already defined before or
+immediately during the mention.
+
+1. Add tips with the global shortcode immediately after the term:
+   `{% tip 'Brief plain-language explanation.' %}`. On the website this renders
+   as a tappable `?` tip box; PDF and EPUB exports render numbered footnotes,
+   not inline parenthetical text after the term.
+2. Keep tips brief and explanatory, not source citations. They should define the
+   term or clarify why it matters in one sentence.
+3. Do not over-annotate ordinary words, terms already defined nearby, repeated
+   uses after the first clear definition, or component labels whose surrounding
+   prose explains the concept.
+4. If the target day has a Chinese edition, mirror each English tip into
+   idiomatic Simplified Chinese at the matching term. Preserve the
+   `{% tip '...' %}` shortcode syntax and manually check that Chinese punctuation
+   does not break Nunjucks parsing.
+
 ## Workflow
 
 1. Identify the target day from the filename or user message. Check whether the day already has `src/zh/days/day-###-*.md` and `src/_includes/days/###-*/zh.njk`.
@@ -46,6 +70,7 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
    - newly required interaction modules are listed in route-shell `scripts:` front matter
 4. Review appendix text and sources with the add-day standard:
    - run the Fact-Check Gate before keeping factual claims
+   - run the Explanatory Tip Gate for first-use specialist terms and mirror the tips into Chinese when Chinese mirroring is in scope
    - for recent or current claims, verify against primary sources or reliable publication pages
    - keep citations tied to the claims they support
    - label frontier claims as established, promising hint, or contested/hype

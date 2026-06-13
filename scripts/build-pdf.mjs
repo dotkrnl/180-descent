@@ -109,6 +109,7 @@ async function buildEdition(edition) {
       }
     }
     }, { baseUrl: publicBaseUrl, dayBasePath: edition.dayBasePath, introPath: edition.introPath });
+    await page.evaluate(prepareTipFootnotesForPrint);
     await page.evaluate(() => document.fonts.ready);
     await page.emulateMedia({ media: "print" });
     const blocks = await page.evaluate(() => {
@@ -201,6 +202,7 @@ async function buildDayPdf(day, config) {
       }
     });
     await page.evaluate(markOptionalAppendices);
+    await page.evaluate(prepareTipFootnotesForPrint);
     await page.evaluate(() => document.fonts.ready);
     await page.emulateMedia({ media: "print" });
 
@@ -461,6 +463,98 @@ function markOptionalAppendices() {
       summary.insertBefore(note, subtitle || null);
     }
   }
+}
+
+function prepareTipFootnotesForPrint() {
+  function staticNoteBaseId(scope, scopeIndex) {
+    const source = scope.id || scope.dataset?.dayPath || scope.dataset?.readingDay || `section-${scopeIndex + 1}`;
+    return `tip-${String(source).replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-|-$/g, "") || `section-${scopeIndex + 1}`}`;
+  }
+
+  const isZh = document.documentElement.lang.startsWith("zh");
+  const labels = isZh
+    ? {
+        heading: "说明",
+        reference: "说明",
+        back: "返回"
+      }
+    : {
+        heading: "Notes",
+        reference: "Note",
+        back: "Back"
+      };
+  const includeDeepDive = document.body.classList.contains("include-deep-dive");
+  const scopeList = [
+    ...document.querySelectorAll(".print-intro,.lesson-print,.lesson,.page")
+  ];
+  const scopes = scopeList.length ? scopeList : [document.body];
+  const used = new Set();
+
+  scopes.forEach((scope, scopeIndex) => {
+    const notes = [...scope.querySelectorAll(".tip-note")]
+      .filter((note) => !used.has(note))
+      .filter((note) => !note.closest(".tip-footnotes"))
+      .filter((note) => includeDeepDive || !note.closest(".deep-dive"));
+
+    if (!notes.length) return;
+
+    const baseId = staticNoteBaseId(scope, scopeIndex);
+    const section = document.createElement("section");
+    section.className = "tip-footnotes print-only";
+    section.setAttribute("aria-label", labels.heading);
+
+    const heading = document.createElement("h2");
+    heading.textContent = labels.heading;
+    section.appendChild(heading);
+
+    const list = document.createElement("ol");
+    section.appendChild(list);
+
+    notes.forEach((note, noteIndex) => {
+      used.add(note);
+      const number = noteIndex + 1;
+      const refId = `${baseId}-tip-ref-${number}`;
+      const noteId = `${baseId}-tip-note-${number}`;
+      const box = note.querySelector(":scope > .tip-note-box");
+      const text = (box?.textContent || "").trim();
+      if (!text) return;
+
+      note.querySelector(":scope > .tip-note-mark")?.remove();
+      box?.remove();
+
+      const ref = document.createElement("sup");
+      ref.className = "tip-note-ref";
+      ref.id = refId;
+      const link = document.createElement("a");
+      link.href = `#${noteId}`;
+      link.setAttribute("aria-label", `${labels.reference} ${number}`);
+      link.textContent = String(number);
+      ref.appendChild(link);
+      note.appendChild(ref);
+
+      const item = document.createElement("li");
+      item.id = noteId;
+      const paragraph = document.createElement("p");
+      paragraph.textContent = text;
+      const back = document.createElement("a");
+      back.className = "tip-note-back";
+      back.href = `#${refId}`;
+      back.textContent = labels.back;
+      paragraph.append(" ");
+      paragraph.appendChild(back);
+      item.appendChild(paragraph);
+      list.appendChild(item);
+    });
+
+    if (!list.children.length) return;
+
+    const sources = scope.querySelector(".sources");
+    if (sources) {
+      sources.parentNode.insertBefore(section, sources);
+    } else {
+      scope.appendChild(section);
+    }
+  });
 }
 
 async function serveSite(root) {
