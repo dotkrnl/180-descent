@@ -79,29 +79,29 @@
 
     var data = isZh
       ? {
-        1: { name: "第 1 层 · 关联", expr: "P(Y | X)  —  「观察」", body: "世界以其本然之姿呈现：观察模式、寻找相关、执行回归。绝大多数机器学习皆止步于此。它精于预测，却分不清冰淇淋与夏天。" },
-        2: { name: "第 2 层 · 干预", expr: "P(Y | do(X))  —  「行动」", body: "现在你亲手改变世界。强行设定 X 会切断其原有的因果纽带，混杂因素便无法再伪装成效应。从「观察」到「干预」，正是今日的核心跨越。" },
-        3: { name: "第 3 层 · 反事实", expr: "P(Y_x | X', Y')  —  「想象」", body: "最高层级：在获知现实结果后，追问一个从未发生过的平行世界。责备、遗憾、解释，皆栖息于此。" }
+        1: { name: "第 1 层 · 关联", expr: "<code>P(Y | X)</code>  —  「观察」", body: "世界以其本然之姿呈现：观察模式、寻找相关、执行回归。绝大多数机器学习皆止步于此。它精于预测，却分不清冰淇淋与夏天。" },
+        2: { name: "第 2 层 · 干预", expr: "<code>P(Y | do(X))</code>  —  「行动」", body: "现在你亲手改变世界。强行设定 X 会切断其原有的因果纽带，混杂因素便无法再伪装成效应。从「观察」到「干预」，正是今日的核心跨越。" },
+        3: { name: "第 3 层 · 反事实", expr: "<code>P(Y<sub>x</sub> | X′, Y′)</code>  —  「想象」", body: "最高层级：在获知现实结果后，追问一个从未发生过的平行世界。这里 Y_x 指把 X 设为 x 的世界里的 Y；X′ 和 Y′ 是已经发生的现实事实。" }
       }
       : {
-        1: { name: "Rung 1 · Association", expr: 'P(Y | X)  —  "seeing"', body: "The world as it presents itself. You observe and find patterns: correlation, regression, most of machine learning. Powerful for prediction, but it can never tell ice cream from summer." },
-        2: { name: "Rung 2 · Intervention", expr: 'P(Y | do(X))  —  "doing"', body: "Now you reach in and act. Forcing X severs X from its usual causes, so confounders cannot fake an effect. The leap from 1 to 2 is the whole day." },
-        3: { name: "Rung 3 · Counterfactuals", expr: 'P(Y_x | X\', Y\')  —  "imagining"', body: "The highest rung: reasoning about what would have happened in a world that never was, given what actually did. This is where blame, regret, and explanation live." }
+        1: { name: "Rung 1 · Association", expr: '<code>P(Y | X)</code>  —  "seeing"', body: "The world as it presents itself. You observe and find patterns: correlation, regression, most of machine learning. Powerful for prediction, but it can never tell ice cream from summer." },
+        2: { name: "Rung 2 · Intervention", expr: '<code>P(Y | do(X))</code>  —  "doing"', body: "Now you reach in and act. Forcing X severs X from its usual causes, so confounders cannot fake an effect. The leap from 1 to 2 is the whole day." },
+        3: { name: "Rung 3 · Counterfactuals", expr: '<code>P(Y<sub>x</sub> | X′, Y′)</code>  —  "imagining"', body: "The highest rung: reasoning about what would have happened in a world that never was, given what actually did. Here Y_x means Y in the world where X is set to x; X′ and Y′ are the actual facts you condition on." }
       };
     var climber = root.querySelector("#climber");
     var detail = root.querySelector("#rungDetail");
-    var buttons = root.querySelectorAll(".rungbtn");
+    var controls = root.querySelectorAll(".rungbtn, .ladder-rung-hotspot");
     var rungY = { 1: 200, 2: 128, 3: 56 };
     var lines = {
       1: root.querySelector("#lr1"),
       2: root.querySelector("#lr2"),
       3: root.querySelector("#lr3")
     };
-    if (!climber || !detail || !buttons.length || !lines[1] || !lines[2] || !lines[3]) return;
+    if (!climber || !detail || !controls.length || !lines[1] || !lines[2] || !lines[3]) return;
 
     function setRung(r){
-      buttons.forEach(function(button){
-        button.setAttribute("aria-pressed", button.getAttribute("data-rung") === String(r) ? "true" : "false");
+      controls.forEach(function(control){
+        control.setAttribute("aria-pressed", control.getAttribute("data-rung") === String(r) ? "true" : "false");
       });
       climber.setAttribute("cy", rungY[r]);
       Object.keys(lines).forEach(function(key){
@@ -117,9 +117,15 @@
         '<p>' + d.body + '</p>';
     }
 
-    buttons.forEach(function(button){
-      button.addEventListener("click", function(){
-        setRung(button.getAttribute("data-rung"));
+    controls.forEach(function(control){
+      control.addEventListener("click", function(){
+        setRung(control.getAttribute("data-rung"));
+      });
+      control.addEventListener("keydown", function(event){
+        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+          event.preventDefault();
+          setRung(control.getAttribute("data-rung"));
+        }
       });
     });
     setRung(2);
@@ -152,7 +158,7 @@
       var doEst = tru;
 
       numSee.innerHTML = (seeEst >= 0 ? "+" : "") + seeEst.toFixed(2) + "<small>" + (isZh ? "表观效应" : "looks like the effect") + "</small>";
-      numDo.innerHTML = (doEst >= 0 ? "+" : "") + doEst.toFixed(2) + "<small>" + (isZh ? "真实效应" : "the real effect") + "</small>";
+      numDo.innerHTML = (doEst >= 0 ? "+" : "") + doEst.toFixed(2) + "<small>" + (isZh ? "直接效应" : "direct effect") + "</small>";
 
       var gap = seeEst - doEst;
       if (gap < 0.02) {
