@@ -46,7 +46,9 @@
         notes[i].removeAttribute("data-open");
         notes[i].removeAttribute("data-align");
         notes[i].removeAttribute("data-place");
-        notes[i].style.removeProperty("--tip-shift");
+        notes[i].removeAttribute("data-positioned");
+        notes[i].style.removeProperty("--tip-left");
+        notes[i].style.removeProperty("--tip-arrow-left");
         var mark = notes[i].querySelector(".tip-note-mark");
         if(mark){
           mark.setAttribute("aria-expanded", "false");
@@ -61,13 +63,18 @@
 
       note.removeAttribute("data-align");
       note.removeAttribute("data-place");
-      note.style.removeProperty("--tip-shift");
+      note.removeAttribute("data-positioned");
+      note.style.removeProperty("--tip-left");
+      note.style.removeProperty("--tip-arrow-left");
       var box = note.querySelector(".tip-note-box");
       if(!box){
         return;
       }
 
       var rect = box.getBoundingClientRect();
+      var noteRect = note.getBoundingClientRect();
+      var mark = note.querySelector(".tip-note-mark");
+      var markRect = mark ? mark.getBoundingClientRect() : noteRect;
       var gutter = 12;
       var shift = 0;
       if(rect.left < gutter){
@@ -76,9 +83,13 @@
         shift = (window.innerWidth - gutter) - rect.right;
       }
 
-      if(shift){
-        note.style.setProperty("--tip-shift", shift.toFixed(1) + "px");
-      }
+      var left = rect.left + shift;
+      var arrowLeft = (markRect.left + markRect.width / 2) - left;
+      arrowLeft = Math.max(14, Math.min(rect.width - 14, arrowLeft));
+
+      note.style.setProperty("--tip-left", (left - noteRect.left).toFixed(1) + "px");
+      note.style.setProperty("--tip-arrow-left", arrowLeft.toFixed(1) + "px");
+      note.setAttribute("data-positioned", "true");
 
       if(rect.top < 72){
         note.setAttribute("data-place", "below");
@@ -113,7 +124,9 @@
           note.removeAttribute("data-open");
           note.removeAttribute("data-align");
           note.removeAttribute("data-place");
-          note.style.removeProperty("--tip-shift");
+          note.removeAttribute("data-positioned");
+          note.style.removeProperty("--tip-left");
+          note.style.removeProperty("--tip-arrow-left");
           this.setAttribute("aria-expanded", "false");
         }
       });
