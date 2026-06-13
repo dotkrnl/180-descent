@@ -57,6 +57,13 @@
       scheduleReadingProgressSave(lesson);
     });
 
+    var appendices = lesson.querySelectorAll("details.deep-dive[id]");
+    for(var i = 0; i < appendices.length; i++){
+      appendices[i].addEventListener("toggle", function(){
+        scheduleReadingProgressSave(lesson);
+      });
+    }
+
     document.addEventListener("visibilitychange", function(){
       if(document.visibilityState === "hidden"){
         rememberCurrentLesson(lesson);
@@ -88,6 +95,7 @@
       title: lesson.getAttribute("data-reading-title") || "",
       summary: lesson.getAttribute("data-reading-summary") || "",
       progress: currentReadingProgress(),
+      expandedAppendices: currentExpandedAppendices(lesson),
       updatedAt: new Date().toISOString()
     };
 
@@ -151,6 +159,7 @@
       return false;
     }
 
+    restoreExpandedAppendices(lesson, saved.expandedAppendices);
     jumpToReadingProgress(progress);
     window.requestAnimationFrame(function(){
       jumpToReadingProgress(progress);
@@ -615,6 +624,37 @@
 
   function currentReadingProgress(){
     return normalizedProgress(window.scrollY / Math.max(1, maxPageScroll()));
+  }
+
+  function currentExpandedAppendices(lesson){
+    var expanded = [];
+    var appendices = lesson.querySelectorAll("details.deep-dive[id]");
+    for(var i = 0; i < appendices.length; i++){
+      if(appendices[i].open){
+        expanded.push(appendices[i].id);
+      }
+    }
+    return expanded;
+  }
+
+  function restoreExpandedAppendices(lesson, expanded){
+    if(!Array.isArray(expanded) || !expanded.length){
+      return;
+    }
+
+    var expandedById = {};
+    for(var i = 0; i < expanded.length; i++){
+      if(typeof expanded[i] === "string" && expanded[i]){
+        expandedById[expanded[i]] = true;
+      }
+    }
+
+    var appendices = lesson.querySelectorAll("details.deep-dive[id]");
+    for(var j = 0; j < appendices.length; j++){
+      if(expandedById[appendices[j].id]){
+        appendices[j].open = true;
+      }
+    }
   }
 
   function jumpToReadingProgress(progress){
