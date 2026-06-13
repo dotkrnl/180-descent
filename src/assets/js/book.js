@@ -100,6 +100,26 @@
           this.setAttribute("aria-expanded", "false");
         }
       });
+
+      button.addEventListener("mouseenter", function(){
+        var note = this.closest(".tip-note");
+        if(!note){
+          return;
+        }
+        window.requestAnimationFrame(function(){
+          alignBox(note);
+        });
+      });
+
+      button.addEventListener("focus", function(){
+        var note = this.closest(".tip-note");
+        if(!note){
+          return;
+        }
+        window.requestAnimationFrame(function(){
+          alignBox(note);
+        });
+      });
     }
 
     document.addEventListener("click", function(event){
