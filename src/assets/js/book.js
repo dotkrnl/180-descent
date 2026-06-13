@@ -105,6 +105,7 @@
         if(shouldOpen){
           note.setAttribute("data-open", "true");
           this.setAttribute("aria-expanded", "true");
+          alignBox(note);
           window.requestAnimationFrame(function(){
             alignBox(note);
           });
