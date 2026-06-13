@@ -82,14 +82,14 @@
 
 <p>The mechanism is always a lurking variable that's distributed unevenly between the groups you're comparing. In the kidney-stone data (Charig et al., <em>BMJ</em>, 1986), surgeons gave the gentler treatment <strong>B</strong> mostly to the <em>easy</em> small stones and reserved old-fashioned open surgery <strong>A</strong> for the <em>hard</em> big ones. So B's overall success rate is flattered by an easier caseload. Split by stone size — hold the <em class="term">confounder</em>{% tip 'A confounder is a third variable that influences both the apparent cause and the apparent effect, making them move together.' %} fixed, exactly as Cartwright demanded — and A pulls ahead in both rooms.</p>
 
-<p>The Reversal Machine below turns that into one picture. Each tiny square is one patient. The pooled view sorts the same 700 patients only by treatment; the conditioned view rearranges those same patients into small-stone and large-stone rooms first, then compares A with B inside each room. That rearrangement is the foundation of <strong>conditioning</strong>: compare like with like before you call anything a cause.</p>
+<p>The Reversal Machine below turns that into one picture. Each square is one patient and never moves. Color says which treatment they received; row says whether the case was small-stone or large-stone; fill says whether the treatment worked. The pooled view compares the two treatment columns. The conditioned view keeps the same picture but compares inside each row first. That is the foundation of <strong>conditioning</strong>: compare like with like before you call anything a cause.</p>
 </section>
 
 <!-- ===================== INTERACTIVE 1 : SIMPSON ===================== -->
 <div class="panel web-only causation-simpson">
 <p class="ptitle">Interactive · watch it flip</p>
 <h3>The Reversal Machine</h3>
-<p class="pnote">Real 1986 kidney-stone data, 350 patients per treatment. Each square is one patient; filled treatment-color squares are successes, pale squares are failures. Toggle the arrangement and watch the same cases tell two different stories.</p>
+<p class="pnote">Real 1986 kidney-stone data, 350 patients per treatment. The cases stay fixed; the toggle changes which comparison frame is drawn around them.</p>
 
 <div class="simp-toggle" role="group" aria-label="View mode">
 <button id="simp-pooled" type="button" aria-pressed="true">Pooled (all patients)</button>
@@ -97,7 +97,7 @@
 </div>
 
 <div class="simp-machine">
-<svg class="simp-grid" id="simpGrid" viewBox="0 0 224 150" role="img" aria-label="A grid of 700 kidney-stone patients arranged by the selected comparison."></svg>
+<svg class="simp-grid" id="simpGrid" viewBox="0 0 270 266" role="img" aria-label="A fixed grid of 700 kidney-stone patients, using rows for case type and fill for success."></svg>
 <div class="simp-calc" id="simpCalc" aria-live="polite"></div>
 </div>
 
@@ -105,6 +105,8 @@
 <div class="legend">
 <span><i class="A"></i> Treatment A — open surgery</span>
 <span><i class="B"></i> Treatment B — keyhole (PCNL)</span>
+<span><i class="effective"></i> effective</span>
+<span><i class="not-effective"></i> not effective</span>
 </div>
 </div>
 
@@ -290,43 +292,52 @@
 <div class="dag-examples web-only" role="group" aria-label="Concrete DAG examples: a fork, a chain, and a collider.">
 <figure class="dag-card">
 <svg viewBox="0 0 220 150" role="img" aria-label="Fork DAG: summer causes both ice-cream buying and drowning.">
-<defs><marker id="day5-dag-fork-en" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
-<rect x="60" y="12" width="100" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
-<text x="110" y="33" text-anchor="middle" font-size="12" fill="var(--ink)">Summer</text>
-<rect x="10" y="104" width="92" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
-<text x="56" y="125" text-anchor="middle" font-size="12" fill="var(--ink)">Ice cream</text>
-<rect x="124" y="104" width="86" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
-<text x="167" y="125" text-anchor="middle" font-size="12" fill="var(--ink)">Drowning</text>
-<line x1="92" y1="46" x2="60" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-fork-en)"></line>
-<line x1="128" y1="46" x2="162" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-fork-en)"></line>
+<rect x="72" y="14" width="76" height="24" rx="5" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="110" y="30" text-anchor="middle" font-size="9.5" fill="var(--ink)">Summer</text>
+<rect x="22" y="112" width="72" height="24" rx="5" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="58" y="128" text-anchor="middle" font-size="9.5" fill="var(--ink)">Ice cream</text>
+<rect x="126" y="112" width="72" height="24" rx="5" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="162" y="128" text-anchor="middle" font-size="9.5" fill="var(--ink)">Drowning</text>
+<g fill="var(--ink-soft)" stroke="var(--ink-soft)" stroke-width="2.1" stroke-linecap="round">
+<line x1="92" y1="40" x2="63.2" y2="101.2"></line>
+<path d="M60 108 L59.8 99.6 L66.6 102.8 Z" stroke="none"></path>
+<line x1="128" y1="40" x2="156.8" y2="101.2"></line>
+<path d="M160 108 L153.4 102.8 L160.2 99.6 Z" stroke="none"></path>
+</g>
 </svg>
 <figcaption><b>Fork / confounder</b><span>Summer changes both exposure and outcome. Condition on summer before comparing.</span></figcaption>
 </figure>
 <figure class="dag-card">
 <svg viewBox="0 0 220 150" role="img" aria-label="Chain DAG: smoking causes tar, and tar causes cancer.">
-<defs><marker id="day5-dag-chain-en" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
-<rect x="8" y="58" width="78" height="34" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
-<text x="47" y="80" text-anchor="middle" font-size="12" fill="var(--ink)">Smoking</text>
-<rect x="104" y="58" width="50" height="34" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
-<text x="129" y="80" text-anchor="middle" font-size="12" fill="var(--ink)">Tar</text>
-<rect x="172" y="58" width="42" height="34" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
-<text x="193" y="80" text-anchor="middle" font-size="12" fill="var(--ink)">Cancer</text>
-<line x1="87" y1="75" x2="100" y2="75" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-chain-en)"></line>
-<line x1="155" y1="75" x2="168" y2="75" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-chain-en)"></line>
+<rect x="14" y="62" width="60" height="26" rx="5" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="44" y="79" text-anchor="middle" font-size="9.5" fill="var(--ink)">Smoking</text>
+<rect x="96" y="62" width="44" height="26" rx="5" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="118" y="79" text-anchor="middle" font-size="9.5" fill="var(--ink)">Tar</text>
+<rect x="162" y="62" width="52" height="26" rx="5" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="188" y="79" text-anchor="middle" font-size="9.5" fill="var(--ink)">Cancer</text>
+<g fill="var(--ink-soft)" stroke="var(--ink-soft)" stroke-width="2.1" stroke-linecap="round">
+<line x1="76" y1="75" x2="86.5" y2="75"></line>
+<path d="M94 75 L86.5 71.2 L86.5 78.8 Z" stroke="none"></path>
+<line x1="142" y1="75" x2="152.5" y2="75"></line>
+<path d="M160 75 L152.5 71.2 L152.5 78.8 Z" stroke="none"></path>
+</g>
 </svg>
 <figcaption><b>Chain / mediator</b><span>Tar carries part of smoking's effect. Conditioning on tar changes the question.</span></figcaption>
 </figure>
 <figure class="dag-card">
 <svg viewBox="0 0 220 150" role="img" aria-label="Collider DAG: skill and luck both cause admission.">
-<defs><marker id="day5-dag-collider-en" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
-<rect x="20" y="12" width="76" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
-<text x="58" y="33" text-anchor="middle" font-size="12" fill="var(--ink)">Skill</text>
-<rect x="124" y="12" width="76" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
-<text x="162" y="33" text-anchor="middle" font-size="12" fill="var(--ink)">Luck</text>
-<rect x="62" y="104" width="96" height="32" rx="6" fill="var(--paper)" stroke="var(--line)"></rect>
-<text x="110" y="125" text-anchor="middle" font-size="12" fill="var(--ink)">Admission</text>
-<line x1="68" y1="46" x2="98" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-collider-en)"></line>
-<line x1="152" y1="46" x2="122" y2="100" stroke="var(--ink-faint)" stroke-width="2" marker-end="url(#day5-dag-collider-en)"></line>
+<rect x="30" y="14" width="56" height="24" rx="5" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="58" y="30" text-anchor="middle" font-size="9.5" fill="var(--ink)">Skill</text>
+<rect x="134" y="14" width="56" height="24" rx="5" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="162" y="30" text-anchor="middle" font-size="9.5" fill="var(--ink)">Luck</text>
+<rect x="76" y="112" width="68" height="24" rx="5" fill="var(--paper)" stroke="var(--line)"></rect>
+<text x="110" y="128" text-anchor="middle" font-size="9.5" fill="var(--ink)">Admission</text>
+<g fill="var(--ink-soft)" stroke="var(--ink-soft)" stroke-width="2.1" stroke-linecap="round">
+<line x1="66" y1="40" x2="96.6" y2="101.3"></line>
+<path d="M100 108 L93.3 103 L100 99.6 Z" stroke="none"></path>
+<line x1="154" y1="40" x2="123.4" y2="101.3"></line>
+<path d="M120 108 L120 99.6 L126.7 103 Z" stroke="none"></path>
+</g>
 </svg>
 <figcaption><b>Collider</b><span>Skill and luck meet at admission. Conditioning on admission opens a fake relationship.</span></figcaption>
 </figure>

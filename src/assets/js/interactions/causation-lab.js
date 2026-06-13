@@ -25,104 +25,135 @@
     if (!grid || !calc || !winner || !bPooled || !bSplit) return;
 
     var mode = "pooled";
+    var cellW = 82;
+    var cellH = 92;
+    var cellStep = 5;
+    var dot = 4;
+    var layout = {
+      A: { x: 40 },
+      B: { x: 150 },
+      small: { y: 34 },
+      large: { y: 150 }
+    };
 
-    function group(treatment, size, label){
+    function group(treatment, size){
       var source = size === "all"
         ? { s: data[treatment].small.s + data[treatment].large.s, n: data[treatment].small.n + data[treatment].large.n }
         : data[treatment][size];
-      var people = [];
-      for (var i = 0; i < source.n; i++) {
-        people.push({
-          treatment: treatment,
-          success: i < source.s,
-          label: label
-        });
-      }
-      return { treatment: treatment, size: size, label: label, s: source.s, n: source.n, people: people };
+      return { treatment: treatment, size: size, s: source.s, n: source.n };
     }
 
     function pctText(s, n){
       return (s / n * 100).toFixed(1) + "%";
     }
 
-    function calcLine(g){
+    function calcLine(g, win){
       var cls = g.treatment === "A" ? "A" : "B";
-      return '<div class="simp-line ' + cls + '">' +
+      var percent = pctText(g.s, g.n);
+      var fail = g.n - g.s;
+      return '<div class="simp-line ' + cls + (win ? ' win' : '') + '">' +
         '<span>' + (isZh ? "疗法 " : "Treatment ") + g.treatment + '</span>' +
-        '<code>' + g.s + '/' + g.n + ' = ' + pctText(g.s, g.n) + '</code>' +
+        '<code>' + g.s + (isZh ? " 有效 / " : " effective / ") + fail + (isZh ? " 无效" : " not effective") + '</code>' +
+        '<b class="simp-pct">' + percent + '</b>' +
+        '<div class="simp-rate" aria-hidden="true"><i style="width:' + percent + '"></i></div>' +
         '</div>';
     }
 
-    function renderGrid(groups){
-      var cols = 35;
-      var cell = 4.6;
-      var gap = 1.05;
-      var y0 = 10;
-      var html = "";
-      var cursor = 0;
-      var boundaries = [];
-      groups.forEach(function(g, groupIndex){
-        if (groupIndex > 0) boundaries.push(cursor);
-        g.people.forEach(function(person){
-          var col = cursor % cols;
-          var rowIndex = Math.floor(cursor / cols);
-          html += '<rect class="simp-dot ' + person.treatment + (person.success ? ' ok' : ' fail') + '" x="' +
-            (col * (cell + gap)).toFixed(2) + '" y="' + (y0 + rowIndex * (cell + gap)).toFixed(2) +
-            '" width="' + cell + '" height="' + cell + '" rx=".7"></rect>';
-          cursor++;
-        });
-      });
-      boundaries.forEach(function(boundary){
-        if (boundary % cols === 0) {
-          var y = y0 + Math.floor(boundary / cols) * (cell + gap) - gap / 2;
-          html += '<line class="simp-rule" x1="0" y1="' + y.toFixed(2) + '" x2="196.7" y2="' + y.toFixed(2) + '"></line>';
-        } else {
-          var x = (boundary % cols) * (cell + gap) - gap / 2;
-          var rowIndex = Math.floor(boundary / cols);
-          var y1 = y0 + rowIndex * (cell + gap) - gap / 2;
-          html += '<line class="simp-rule" x1="' + x.toFixed(2) + '" y1="' + y1.toFixed(2) + '" x2="' + x.toFixed(2) + '" y2="' + (y1 + cell + gap).toFixed(2) + '"></line>';
-        }
-      });
+    function glyph(treatment, size, success, x, y){
+      var cls = 'simp-dot ' + treatment + ' ' + size + (success ? ' ok' : ' fail');
+      return '<rect class="' + cls + '" x="' + x.toFixed(2) + '" y="' + y.toFixed(2) +
+        '" width="' + dot + '" height="' + dot + '" rx=".45"></rect>';
+    }
+
+    function renderCell(treatment, size){
+      var g = group(treatment, size);
+      var cfg = { x: layout[treatment].x, y: layout[size].y };
+      var cols = Math.floor(cellW / cellStep);
+      var rows = Math.ceil(g.n / cols);
+      var y0 = cfg.y + (cellH - rows * cellStep) / 2;
+      var html = '<rect class="simp-cell-bg ' + treatment + ' ' + size + '" x="' + cfg.x + '" y="' + cfg.y +
+        '" width="' + cellW + '" height="' + cellH + '" rx="7"></rect>';
+      for (var i = 0; i < g.n; i++) {
+        var col = i % cols;
+        var rowIndex = Math.floor(i / cols);
+        var x = cfg.x + 3 + col * cellStep;
+        var y = y0 + rowIndex * cellStep;
+        html += glyph(treatment, size, i < g.s, x, y);
+      }
+      return html;
+    }
+
+    function focusRect(cls, x, y, w, h, label, lx, ly){
+      var text = label
+        ? '<text class="simp-overlay-label" x="' + lx + '" y="' + ly + '" text-anchor="middle">' + label + '</text>'
+        : '';
+      return '<rect class="' + cls + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="8"></rect>' + text;
+    }
+
+    function renderGrid(){
+      var html = '<text class="simp-axis-label treatment" x="' + (layout.A.x + cellW / 2) + '" y="18" text-anchor="middle">' +
+        (isZh ? "疗法 A" : "Treatment A") + '</text>' +
+        '<text class="simp-axis-label treatment" x="' + (layout.B.x + cellW / 2) + '" y="18" text-anchor="middle">' +
+        (isZh ? "疗法 B" : "Treatment B") + '</text>' +
+        '<text class="simp-axis-label row" x="16" y="' + (layout.small.y + cellH / 2 + 4) + '" text-anchor="middle">' +
+        (isZh ? "小结石" : "small") + '</text>' +
+        '<text class="simp-axis-label row" x="16" y="' + (layout.large.y + cellH / 2 + 4) + '" text-anchor="middle">' +
+        (isZh ? "大结石" : "large") + '</text>';
+      html += renderCell("A", "small") + renderCell("B", "small") + renderCell("A", "large") + renderCell("B", "large");
+      if (mode === "pooled") {
+        html += focusRect("simp-focus pooled A", layout.A.x - 5, layout.small.y - 5, cellW + 10, layout.large.y + cellH - layout.small.y + 10, isZh ? "合计 A" : "all A", layout.A.x + cellW / 2, 255);
+        html += focusRect("simp-focus pooled B", layout.B.x - 5, layout.small.y - 5, cellW + 10, layout.large.y + cellH - layout.small.y + 10, isZh ? "合计 B" : "all B", layout.B.x + cellW / 2, 255);
+      } else {
+        html += focusRect("simp-focus split row", layout.A.x - 5, layout.small.y - 5, layout.B.x + cellW - layout.A.x + 10, cellH + 10, isZh ? "只比上排小结石" : "compare top row", 136, layout.small.y + cellH + 17);
+        html += focusRect("simp-focus split row", layout.A.x - 5, layout.large.y - 5, layout.B.x + cellW - layout.A.x + 10, cellH + 10, isZh ? "只比下排大结石" : "compare bottom row", 136, layout.large.y + cellH + 17);
+      }
       grid.innerHTML = html;
     }
 
+    function room(title, lines, note){
+      return '<div class="simp-room">' +
+        '<p class="simp-room-title">' + title + '</p>' +
+        lines.join("") +
+        (note ? '<p class="simp-room-note">' + note + '</p>' : '') +
+        '</div>';
+    }
+
     function render(){
+      renderGrid();
       if (mode === "pooled") {
-        var pooledGroups = [
-          group("A", "all", isZh ? "疗法 A · 汇总" : "Treatment A · pooled"),
-          group("B", "all", isZh ? "疗法 B · 汇总" : "Treatment B · pooled")
-        ];
-        renderGrid(pooledGroups);
-        calc.innerHTML = '<div class="simp-room pooled">' +
-          '<p class="simp-room-title">' + (isZh ? "汇总比较：先按疗法分组" : "Pooled comparison: sort by treatment first") + '</p>' +
-          calcLine(pooledGroups[0]) + calcLine(pooledGroups[1]) +
-          '<p class="simp-room-note">' + (isZh ? "乙组看起来更好，但这里混合了小结石和大结石患者。" : "B looks better, but this mixes small-stone and large-stone patients.") + '</p>' +
-          '</div>';
-        grid.setAttribute("aria-label", isZh ? "700 名患者按疗法汇总排列，疗法 B 在汇总成功率上更高。" : "Seven hundred patients arranged by pooled treatment groups; Treatment B has the higher pooled success rate.");
+        var pooledA = group("A", "all");
+        var pooledB = group("B", "all");
+        calc.innerHTML = room(
+          isZh ? "汇总比较：忽略行，只看疗法" : "Pooled comparison: ignore row, compare treatment",
+          [calcLine(pooledA, false), calcLine(pooledB, true)],
+          isZh ? "同一张图没有移动任何病例；这里只是把上排和下排一起计数。B 的列里小结石病例更多，因此汇总率被轻症病例抬高。" : "No case moved. This view counts the top and bottom rows together. B has many more easy small-stone cases, so its pooled rate is flattered."
+        );
+        grid.setAttribute("aria-label", isZh ? "700 名患者固定在同一位置，全部用方块表示；上排是小结石，下排是大结石。汇总视图按疗法 A 和疗法 B 的列比较所有病例。" : "Seven hundred patients stay fixed in place, all drawn as squares; the top row is small stones and the bottom row is large stones. The pooled view compares the Treatment A and Treatment B columns.");
         var aw = pct(poolA);
         var bw = pct(poolB);
         winner.className = "simp-winner B";
         winner.innerHTML = isZh
-          ? "汇总数据显示，<span class=\"hl\">疗法 B 胜出</span>，胜率 " + (bw * 100).toFixed(1) + "% 对 " + (aw * 100).toFixed(1) + "%。结论看似已定。"
-          : "Pooled, <b>Treatment B wins</b> — " + (bw * 100).toFixed(1) + "% vs " + (aw * 100).toFixed(1) + "%. Looks settled.";
+          ? "汇总数据显示，<span class=\"hl\">疗法 B 胜出</span>，胜率 " + (bw * 100).toFixed(1) + "% 对 " + (aw * 100).toFixed(1) + "%。但注意：上下两排的病例分布并不均衡。"
+          : "Pooled, <b>Treatment B wins</b> — " + (bw * 100).toFixed(1) + "% vs " + (aw * 100).toFixed(1) + "%. But the row mix is not balanced.";
       } else {
-        var smallA = group("A", "small", isZh ? "疗法 A · 小结石" : "Treatment A · small stones");
-        var smallB = group("B", "small", isZh ? "疗法 B · 小结石" : "Treatment B · small stones");
-        var largeA = group("A", "large", isZh ? "疗法 A · 大结石" : "Treatment A · large stones");
-        var largeB = group("B", "large", isZh ? "疗法 B · 大结石" : "Treatment B · large stones");
-        renderGrid([smallA, smallB, largeA, largeB]);
-        calc.innerHTML = '<div class="simp-room">' +
-          '<p class="simp-room-title">' + (isZh ? "小结石：先固定病例难度" : "Small stones: condition on difficulty") + '</p>' +
-          calcLine(smallA) + calcLine(smallB) +
-          '</div><div class="simp-room">' +
-          '<p class="simp-room-title">' + (isZh ? "大结石：再比较同类病例" : "Large stones: compare like with like") + '</p>' +
-          calcLine(largeA) + calcLine(largeB) +
-          '</div>';
-        grid.setAttribute("aria-label", isZh ? "同一批 700 名患者先按结石大小分层，再在每层内比较疗法；疗法 A 在两层中都更高。" : "The same seven hundred patients arranged first by stone size, then by treatment; Treatment A has the higher success rate in both strata.");
+        var smallA = group("A", "small");
+        var smallB = group("B", "small");
+        var largeA = group("A", "large");
+        var largeB = group("B", "large");
+        calc.innerHTML = room(
+          isZh ? "小结石：只比较上排" : "Small stones: compare only top row",
+          [calcLine(smallA, true), calcLine(smallB, false)],
+          isZh ? "固定病例类型后，A 在小结石中更高。" : "Holding case type fixed, A is higher among small stones."
+        ) + room(
+          isZh ? "大结石：只比较下排" : "Large stones: compare only bottom row",
+          [calcLine(largeA, true), calcLine(largeB, false)],
+          isZh ? "固定病例类型后，A 在大结石中也更高。" : "Holding case type fixed, A is also higher among large stones."
+        );
+        grid.setAttribute("aria-label", isZh ? "700 名患者仍固定在同一位置，全部用方块表示；分层视图在小结石上排和大结石下排内分别比较疗法。" : "The same seven hundred patients stay fixed in place, all drawn as squares; the conditioned view compares treatments within the top small-stone row and the bottom large-stone row.");
         winner.className = "simp-winner A";
         winner.innerHTML = isZh
-          ? "按结石大小拆分后，<span class=\"hl\">疗法 A 在两组中均胜出</span>。汇总结论发生了反转；混杂因素在于 B 接收了更多易处理的轻症。"
-          : "Split by stone size, <b>Treatment A wins both rooms</b>. The pooled verdict reverses; the confounder is B's easier caseload.";
+          ? "按结石大小条件化后，<span class=\"hl\">疗法 A 在两类病例中均胜出</span>。汇总结论反转，因为 B 接收了更多容易处理的小结石病例。"
+          : "Condition on stone size and <b>Treatment A wins both case types</b>. The pooled verdict reverses because B received more easy small-stone cases.";
       }
     }
 
