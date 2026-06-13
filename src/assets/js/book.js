@@ -127,6 +127,7 @@
         notes[i].removeAttribute("data-place");
         notes[i].removeAttribute("data-positioned");
         notes[i].style.removeProperty("--tip-left");
+        notes[i].style.removeProperty("--tip-top");
         notes[i].style.removeProperty("--tip-arrow-left");
         var mark = notes[i].querySelector(".tip-note-mark");
         if(mark){
@@ -144,6 +145,7 @@
       note.removeAttribute("data-place");
       note.removeAttribute("data-positioned");
       note.style.removeProperty("--tip-left");
+      note.style.removeProperty("--tip-top");
       note.style.removeProperty("--tip-arrow-left");
       var box = note.querySelector(".tip-note-box");
       if(!box){
@@ -160,6 +162,11 @@
         viewportWidth = viewportWidth ? Math.min(viewportWidth, window.visualViewport.width) : window.visualViewport.width;
       }
       viewportWidth = viewportWidth || window.innerWidth;
+      var viewportHeight = document.documentElement ? document.documentElement.clientHeight : 0;
+      if(window.visualViewport && window.visualViewport.height){
+        viewportHeight = viewportHeight ? Math.min(viewportHeight, window.visualViewport.height) : window.visualViewport.height;
+      }
+      viewportHeight = viewportHeight || window.innerHeight;
       var shift = 0;
       if(rect.left < gutter){
         shift = gutter - rect.left;
@@ -170,12 +177,16 @@
       var left = rect.left + shift;
       var arrowLeft = (markRect.left + markRect.width / 2) - left;
       arrowLeft = Math.max(14, Math.min(rect.width - 14, arrowLeft));
+      var placeBelow = rect.top < 72;
+      var top = placeBelow ? markRect.bottom + 8 : markRect.top - rect.height - 8;
+      top = Math.max(gutter, Math.min(viewportHeight - rect.height - gutter, top));
 
-      note.style.setProperty("--tip-left", (left - noteRect.left).toFixed(1) + "px");
+      note.style.setProperty("--tip-left", left.toFixed(1) + "px");
+      note.style.setProperty("--tip-top", top.toFixed(1) + "px");
       note.style.setProperty("--tip-arrow-left", arrowLeft.toFixed(1) + "px");
       note.setAttribute("data-positioned", "true");
 
-      if(rect.top < 72){
+      if(placeBelow){
         note.setAttribute("data-place", "below");
       }
     }
@@ -210,6 +221,7 @@
           note.removeAttribute("data-place");
           note.removeAttribute("data-positioned");
           note.style.removeProperty("--tip-left");
+          note.style.removeProperty("--tip-top");
           note.style.removeProperty("--tip-arrow-left");
           this.setAttribute("aria-expanded", "false");
         }
