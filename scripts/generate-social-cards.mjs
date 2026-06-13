@@ -10,6 +10,7 @@ const rootDir = path.resolve(__dirname, "..");
 const outDir = path.join(rootDir, "src/assets/images/social");
 const scriptPath = fileURLToPath(import.meta.url);
 const bookPath = path.join(rootDir, "src/_data/book.yaml");
+const brandMarkPath = path.join(rootDir, "src/assets/images/brand/180-descent-icon.png");
 
 function escapeHtml(value = "") {
   return String(value)
@@ -47,7 +48,11 @@ async function readDays(dir, locale = "en") {
   return days;
 }
 
-function cardHtml(card) {
+function imageDataUri(base64) {
+  return `data:image/png;base64,${base64}`;
+}
+
+function cardHtml(card, brandMarkBase64) {
   const isZh = card.locale === "zh";
   const kicker = card.kicker || (isZh ? "深入一百八十日" : "The 180-Day Descent");
   const label = card.day
@@ -122,13 +127,11 @@ function cardHtml(card) {
     align-items: center;
     gap: 14px;
   }
-  .dot {
-    width: 74px;
-    height: 18px;
-    background:
-      radial-gradient(circle at 9px 9px, #c54840 0 8px, transparent 9px),
-      radial-gradient(circle at 37px 9px, #bd8a38 0 8px, transparent 9px),
-      radial-gradient(circle at 65px 9px, #1e4942 0 8px, transparent 9px);
+  .footer-mark {
+    width: 76px;
+    height: 76px;
+    display: block;
+    object-fit: contain;
   }
 </style>
 </head>
@@ -140,7 +143,7 @@ function cardHtml(card) {
     ${summary ? `<p class="summary">${escapeHtml(summary)}</p>` : ""}
     <div class="footer">
       <span>${escapeHtml(label)}</span>
-      <span class="mark"><span class="dot"></span><span>180d.io</span></span>
+      <span class="mark"><img class="footer-mark" src="${imageDataUri(brandMarkBase64)}" alt=""><span>180d.io</span></span>
     </div>
   </main>
 </body>
@@ -159,10 +162,12 @@ async function needsGeneration(card, bookMtimeMs, scriptMtimeMs) {
 
 async function main() {
   await fs.mkdir(outDir, { recursive: true });
-  const [book, bookStat, scriptStat] = await Promise.all([
+  const [book, bookStat, scriptStat, brandMarkStat, brandMarkBase64] = await Promise.all([
     readBookData(),
     fs.stat(bookPath),
-    fs.stat(scriptPath)
+    fs.stat(scriptPath),
+    fs.stat(brandMarkPath),
+    fs.readFile(brandMarkPath, "base64")
   ]);
 
   const enDays = await readDays("src/days", "en");
@@ -194,7 +199,8 @@ async function main() {
 
   const pending = [];
   for (const card of cards) {
-    if (await needsGeneration(card, bookStat.mtimeMs, scriptStat.mtimeMs)) pending.push(card);
+    const dependencyMtimeMs = Math.max(bookStat.mtimeMs, scriptStat.mtimeMs, brandMarkStat.mtimeMs);
+    if (await needsGeneration(card, dependencyMtimeMs, dependencyMtimeMs)) pending.push(card);
   }
 
   if (!pending.length) {
@@ -206,7 +212,7 @@ async function main() {
   try {
     const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
     for (const card of pending) {
-      await page.setContent(cardHtml(card), { waitUntil: "load" });
+      await page.setContent(cardHtml(card, brandMarkBase64), { waitUntil: "load" });
       await page.screenshot({ path: card.outPath, type: "png" });
       console.log(`Generated ${path.relative(rootDir, card.outPath)}`);
     }

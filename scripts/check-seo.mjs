@@ -39,6 +39,14 @@ function localPathForUrl(url) {
   return path.join(siteDir, parsed.pathname.replace(/^\/+/, ""));
 }
 
+function localPathForHref(href) {
+  if (!href) return "";
+  const parsed = href.startsWith("http")
+    ? new URL(href)
+    : new URL(href, siteUrl);
+  return path.join(siteDir, parsed.pathname.replace(/^\/+/, ""));
+}
+
 function isIndexablePage(url) {
   return !/^\/(?:zh\/)?print(?:-deep)?\//.test(url);
 }
@@ -71,6 +79,9 @@ async function checkHtml(filePath) {
   const description = $('meta[name="description"]').attr("content") || "";
   const canonical = $('link[rel="canonical"]').attr("href") || "";
   const ogImage = $('meta[property="og:image"]').attr("content") || "";
+  const favicon = $('link[rel="icon"]').first().attr("href") || "";
+  const appleTouchIcon = $('link[rel="apple-touch-icon"]').attr("href") || "";
+  const manifest = $('link[rel="manifest"]').attr("href") || "";
 
   if (!title) errors.push(`${url}: missing <title>`);
   if (!description) errors.push(`${url}: missing meta description`);
@@ -80,10 +91,16 @@ async function checkHtml(filePath) {
   if (!ogImage) errors.push(`${url}: missing og:image`);
   if (!$('meta[name="twitter:card"]').attr("content")) errors.push(`${url}: missing twitter card metadata`);
   if (!$('script[type="application/ld+json"]').length) errors.push(`${url}: missing JSON-LD structured data`);
+  if (!favicon) errors.push(`${url}: missing favicon link`);
+  if (!appleTouchIcon) errors.push(`${url}: missing apple-touch-icon link`);
+  if (!manifest) errors.push(`${url}: missing web app manifest link`);
 
   if (ogImage) {
     const imagePath = localPathForUrl(ogImage);
     if (!imagePath || !await exists(imagePath)) errors.push(`${url}: og:image does not exist locally (${ogImage})`);
+  }
+  for (const [label, href] of [["favicon", favicon], ["apple-touch-icon", appleTouchIcon], ["manifest", manifest]]) {
+    if (href && !await exists(localPathForHref(href))) errors.push(`${url}: ${label} does not exist locally (${href})`);
   }
 
   const alt = alternateUrl(url);
