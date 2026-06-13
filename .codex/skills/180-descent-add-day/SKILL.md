@@ -1,6 +1,6 @@
 ---
 name: 180-descent-add-day
-description: Add a new English day page to The 180-Day Descent repo from a supplied HTML lesson, using the route-shell plus lesson-include convention, reviewing factual claims and sources, adding callbacks, proactively searching useful image candidates, and providing web/EPUB/PDF component variants. Use when Codex needs to import or create a normal day lesson under src/days/ and src/_includes/days/.
+description: Add a new English day page to The 180-Day Descent repo from a supplied HTML lesson, using the route-shell plus lesson-include convention, refining imported prose, highlighting inline terms, reviewing factual claims and sources, adding callbacks, proactively searching useful image candidates, and providing web/EPUB/PDF component variants. Use when Codex needs to import or create a normal day lesson under src/days/ and src/_includes/days/.
 ---
 
 # Add A Day To 180 Descent
@@ -40,9 +40,9 @@ When Chinese mirroring is required, run the `180-descent-chinese-edition` Normal
 Day Workflow before considering the day complete. This includes the Chinese
 route shell, Chinese lesson include, `src/_data/syllabus_zh.yaml`,
 `src/zh/introduction.md`, translated interactive UI text, tomorrow-card behavior,
-the Chinese Typography Gate for color/corner quotes instead of
-mechanically mirrored English emphasis, and the `--require-zh` target-day
-checklist.
+the Chinese Typography Gate for color/corner quotes and bold/color term spans
+instead of mechanically mirrored English emphasis, and the `--require-zh`
+target-day checklist.
 
 ## Fact-Check Gate
 
@@ -109,6 +109,42 @@ already defined before or immediately during the mention.
    shortcode syntax and manually check that Chinese punctuation does not break
    Nunjucks parsing.
 
+## Text Refinement And Term Highlight Gate
+
+Imported lesson HTML is a draft, not a finished source of truth. Before any new
+day is considered ready, refine the imported prose and audit visual term
+highlighting in both languages.
+
+1. Improve clarity, rhythm, transitions, and entertainment value where it helps
+   the lesson without weakening accuracy or changing the teaching arc. Remove
+   source-page boilerplate and smooth awkward imported phrasing.
+2. Highlight inline concept definitions with `class="term"` even when no
+   explanatory `{% tip %}` is needed. Do not limit term highlighting to terms
+   that have tips.
+3. Use term markup for first definitions or anchor mentions of specialist
+   terms, named methods, theorems, positions, statistical measures, technical
+   artifacts, and research labels. Do not mark every repeated mention, ordinary
+   words, source titles, or biographical names unless they are the concept being
+   taught.
+4. Match the local English markup pattern for term elements (`em`, `span`, or
+   `u` with `class="term"`). Do not use `<strong>` merely to create the term
+   style.
+5. In Chinese prose, use `span class="term"` for conceptual terms. Chinese
+   terms are color-coded and bold through CSS; keep `span.hl` for sparse
+   color-only emphasis. Avoid mechanically mirroring English italics or bold.
+6. When English and Chinese versions both exist, sync the conceptual term set:
+   each English highlighted definition should have a corresponding Chinese
+   highlighted term at the matching location, and vice versa. Translations need
+   not be word-for-word, but the teaching anchors should align.
+7. Audit parity before completion, for example:
+
+```sh
+rtk node -e 'const fs=require("fs"); for (const file of process.argv.slice(1)) { const s=fs.readFileSync(file,"utf8"); const terms=[...s.matchAll(/<(?:em|span|u)\s+class="term"[^>]*>(.*?)<\/(?:em|span|u)>/g)].map(m=>m[1].replace(/<[^>]+>/g,"").trim()); console.log(`${file}: ${terms.length}`); }' src/_includes/days/###-slug/{en,zh}.njk
+```
+
+   Equal counts are a quick signal, not a substitute for manually checking
+   meaning, order, and placement.
+
 ## SEO Gate
 
 Every new normal day is a public indexable page. Before a day is considered
@@ -145,6 +181,7 @@ ready, confirm its route shell supports the shared SEO system:
    Confirm the route shell passes the SEO Gate before moving on.
 3. Review the lesson text:
    - preserve the teaching arc and voice
+   - run the Text Refinement And Term Highlight Gate before treating imported HTML as finished text
    - run the Fact-Check Gate before keeping or adding factual claims
    - run the Explanatory Tip Gate for first-use specialist terms and mirror the tips into Chinese when Chinese mirroring is in scope
    - verify direct quotes against the original publication, transcript, archive scan, or reliable reproduction; paraphrase uncertain wording
@@ -173,7 +210,7 @@ ready, confirm its route shell supports the shared SEO system:
    - follow the Slow-Agent Rule for both agents; they can be very slow on main lesson content, not just appendices
    - do not interrupt, replace, or truncate either pass merely because it is quiet for several minutes
    - manually review the resulting Chinese route shell, lesson include, terminology, interactive text, citations, URLs, DOI metadata, and Nunjucks/HTML structure
-   - apply the Chinese Typography Gate from `180-descent-chinese-edition`: remove dense emphasis; avoid `<em>/<i>/<strong>/<b>/<u>` in Chinese prose; use color-only spans (`span.term`, sparse `span.hl`) and `「」` for the allowed highlight system; prefer `「」`/`《》` where markup is only acting as voice, quotation, or title; preserve semantic status, diagram, and component-state color
+   - apply the Chinese Typography Gate from `180-descent-chinese-edition`: remove dense emphasis; avoid `<em>/<i>/<strong>/<b>/<u>` in Chinese prose; use bold/color term spans (`span.term`), sparse color-only highlights (`span.hl`), and `「」` for the allowed highlight system; prefer `「」`/`《》` where markup is only acting as voice, quotation, or title; preserve semantic status, diagram, and component-state color
 6. For every interactive piece, provide all variants:
    - live web UI
    - no-JS EPUB fallback
@@ -212,6 +249,9 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
 - Updated concise opening-arc paragraph in `src/pages/introduction.md`
 - Updated callbacks and pending future links
 - Added first-use explanatory `{% tip %}` notes for specialist terms that are not common knowledge and are not already defined, with Chinese mirrors when the Chinese edition is in scope
+- Refined imported prose and synced `class="term"` highlights for inline
+  concept definitions across English and Chinese, including terms that do not
+  need explanatory tips
 - Completed Image Candidate Gate outcome: accepted candidates added through
   `180-descent-assets`, or proposed/rejected/no-useful-candidate status reported
   to the user before commit/publish

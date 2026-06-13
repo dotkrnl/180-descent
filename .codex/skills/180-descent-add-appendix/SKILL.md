@@ -1,6 +1,6 @@
 ---
 name: 180-descent-add-appendix
-description: Add a deep-dive appendix to an existing The 180-Day Descent day from a supplied appendix HTML file, preserving standard versus deep-dive output separation, route shell scripts, static fallbacks, source/factual review, future callbacks, Chinese mirroring for days that have zh editions, and full artifact verification.
+description: Add a deep-dive appendix to an existing The 180-Day Descent day from a supplied appendix HTML file, refining imported prose, highlighting inline terms, preserving standard versus deep-dive output separation, route shell scripts, static fallbacks, source/factual review, future callbacks, Chinese mirroring for days that have zh editions, and full artifact verification.
 ---
 
 # Add A Deep-Dive Appendix
@@ -46,6 +46,42 @@ immediately during the mention.
    `{% tip '...' %}` shortcode syntax and manually check that Chinese punctuation
    does not break Nunjucks parsing.
 
+## Text Refinement And Term Highlight Gate
+
+Imported appendix HTML is a draft, not a finished source of truth. Before an
+appendix is considered ready, refine the imported prose and audit visual term
+highlighting in both languages when Chinese is in scope.
+
+1. Improve clarity, rhythm, transitions, and entertainment value where it helps
+   the appendix without weakening accuracy or changing the teaching arc. Remove
+   source-page boilerplate and smooth awkward imported phrasing.
+2. Highlight inline concept definitions with `class="term"` even when no
+   explanatory `{% tip %}` is needed. Do not limit term highlighting to terms
+   that have tips.
+3. Use term markup for first definitions or anchor mentions of specialist
+   terms, named methods, theorems, positions, statistical measures, technical
+   artifacts, and research labels. Do not mark every repeated mention, ordinary
+   words, source titles, or biographical names unless they are the concept being
+   taught.
+4. Match the local English markup pattern for term elements (`em`, `span`, or
+   `u` with `class="term"`). Do not use `<strong>` merely to create the term
+   style.
+5. In Chinese prose, use `span class="term"` for conceptual terms. Chinese
+   terms are color-coded and bold through CSS; keep `span.hl` for sparse
+   color-only emphasis. Avoid mechanically mirroring English italics or bold.
+6. When English and Chinese versions both exist, sync the conceptual term set:
+   each English highlighted definition should have a corresponding Chinese
+   highlighted term at the matching location, and vice versa. Translations need
+   not be word-for-word, but the teaching anchors should align.
+7. Audit parity before completion, for example:
+
+```sh
+rtk node -e 'const fs=require("fs"); for (const file of process.argv.slice(1)) { const s=fs.readFileSync(file,"utf8"); const terms=[...s.matchAll(/<(?:em|span|u)\s+class="term"[^>]*>(.*?)<\/(?:em|span|u)>/g)].map(m=>m[1].replace(/<[^>]+>/g,"").trim()); console.log(`${file}: ${terms.length}`); }' src/_includes/days/###-slug/{en,zh}.njk
+```
+
+   Equal counts are a quick signal, not a substitute for manually checking
+   meaning, order, and placement.
+
 ## SEO Preservation Gate
 
 Appendices do not normally create separate public URLs, but they can change the
@@ -87,6 +123,7 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
    - imported IDs are namespaced with `appendix-d###-`
    - newly required interaction modules are listed in route-shell `scripts:` front matter
 4. Review appendix text and sources with the add-day standard:
+   - run the Text Refinement And Term Highlight Gate before treating imported HTML as finished text
    - run the Fact-Check Gate before keeping factual claims
    - run the Explanatory Tip Gate for first-use specialist terms and mirror the tips into Chinese when Chinese mirroring is in scope
    - for recent or current claims, verify against primary sources or reliable publication pages
