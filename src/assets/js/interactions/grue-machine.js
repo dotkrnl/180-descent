@@ -8,10 +8,10 @@
 
   function textSet() {
     return isZh ? {
-      tieTitle: "平局仍在",
-      tieBody: '你检查过的每一颗祖母绿都是绿色的；这个事实支持「全都为绿」，也同样支持「全都为绿蓝」。两个世界在你实际看见的宝石上完全一致；它们只在 <span class="term">t</span> 之后的阴影区域分歧，而你还没有抵达那里。古德曼的要点是：无论过去证据有多庞大，它本身都不会告诉你该把哪一种规律投射到未来。',
-      brokenTitle: "现实终于打破平局",
-      brokenBody: '现在你检查的是 <span class="term">t</span> 之后的祖母绿；两个世界终于给出不同、可检验的预言（绿色 vs. 蓝色）。现实可以裁决了。但请注意代价：你必须真的进入未来。在 <span class="term">t</span> 之前，证据已经全部在手，绿色与绿蓝之间仍然严格欠决定。这正是令人不安的重点。'
+      tieTitle: "僵局仍在",
+      tieBody: '你检查过的每一颗祖母绿都是绿色的；这个事实既支持「全绿」理论，也同等程度地支持「全绿蓝」理论。两个平行世界在你已见的宝石上完全重合；它们仅在 <span class="term">t</span> 之后的阴影区域分岔，而你尚未抵达那里。古德曼的要点在于：无论过往证据多么庞大，它本身都无法指引你该将哪一种规律性投射到未来。',
+      brokenTitle: "现实终于打破僵局",
+      brokenBody: '此刻你正在检查 <span class="term">t</span> 之后的祖母绿；两个世界终于给出了截然不同、可供检验的预言（绿色 vs. 蓝色）。现实终于可以裁决孰是孰非。但请注意其代价：你必须身处未来。在跨越 <span class="term">t</span> 之前，即便所有证据已在手，绿色与绿蓝之间仍然严格地处于「欠决定」状态。这正是问题的深刻与不安所在。'
     } : {
       tieTitle: "The tie holds",
       tieBody: "Every emerald you've examined is green, and that fact is <em>exactly</em> as good evidence for \"all green\" as for \"all grue.\" The two worlds agree on every gem you've actually seen; they only diverge in the shaded region beyond <strong>t</strong>, which you haven't reached. Goodman's point: no amount of past evidence, however vast, tells you which regularity to carry forward.",

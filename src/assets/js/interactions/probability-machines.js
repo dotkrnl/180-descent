@@ -46,22 +46,22 @@
     var labels = isZh
       ? {
         pick: "选择",
-        stay: "坚持这扇",
-        switchDoor: "换到这扇",
+        stay: "坚持原选",
+        switchDoor: "改换门庭",
         openedGoat: "已开：🐐",
-        car: "汽车",
+        car: "跑车",
         goat: "山羊",
         win: "你的选择：🚗",
         lose: "你的选择：🐐",
         stepPick: "步骤 1",
-        modePick: "先选门",
+        modePick: "先行锁定",
         stepChoose: "步骤 2",
-        modeChoose: "坚持或换门",
+        modeChoose: "坚持或换选",
         stepResult: "结果",
-        modeWon: "赢得汽车",
+        modeWon: "赢得跑车",
         modeLost: "得到山羊",
-        stepSim: "模拟",
-        modeSim: "1000 局"
+        stepSim: "大规模模拟",
+        modeSim: "1,000 次重复"
       }
       : {
         pick: "Pick",
@@ -182,12 +182,12 @@
       doors.forEach(function(door, index){
         door.disabled = index !== state.pick && index !== state.other;
       });
-      setDoorAction(state.pick, labelFor("stay"), "choose-stay", isZh ? "点这里表示坚持。" : "Click here to stay.");
-      setDoorAction(state.other, labelFor("switchDoor"), "choose-switch", isZh ? "点这里表示换门。" : "Click here to switch.");
+      setDoorAction(state.pick, labelFor("stay"), "choose-stay", isZh ? "点这里表示坚持原选。" : "Click here to stay.");
+      setDoorAction(state.other, labelFor("switchDoor"), "choose-switch", isZh ? "点这里表示改换门庭。" : "Click here to switch.");
       setDoorAction(state.opened, labelFor("openedGoat"), "host-opened", isZh ? "主持人已经打开：山羊。" : "The host opened this door: goat.");
       setStatus("stepChoose", "modeChoose");
       say.innerHTML = isZh
-        ? '你选了 <span class="hl">' + (state.pick + 1) + ' 号门</span>。主持人打开 <span class="hl">' + (state.opened + 1) + ' 号门</span>：山羊。现在点 <span class="hl">' + (state.pick + 1) + ' 号门</span>表示坚持，或点 <span class="hl">' + (state.other + 1) + ' 号门</span>表示换门。'
+        ? '你锁定了 <span class="hl">' + (state.pick + 1) + ' 号门</span>。主持人开启了 <span class="hl">' + (state.opened + 1) + ' 号门</span>：是山羊。现在点 <span class="hl">' + (state.pick + 1) + ' 号门</span>坚持原选，或点 <span class="hl">' + (state.other + 1) + ' 号门</span>改换门庭。'
         : "You picked <b>Door " + (state.pick + 1) + "</b>. The host opens <b>Door " + (state.opened + 1) + "</b>: goat. Now click <b>Door " + (state.pick + 1) + "</b> to stay, or <b>Door " + (state.other + 1) + "</b> to switch.";
     }
 
@@ -205,7 +205,7 @@
       doors[finalPick].classList.add("final-pick", won ? "won" : "lost");
       var finalAction = doors[finalPick].querySelector(".daction");
       if (finalAction) finalAction.textContent = won ? labelFor("win") : labelFor("lose");
-      doors[finalPick].setAttribute("aria-label", doorName(finalPick) + ". " + (won ? (isZh ? "你的选择，赢得汽车。" : "Your pick, won the car.") : (isZh ? "你的选择，得到山羊。" : "Your pick, got a goat.")));
+      doors[finalPick].setAttribute("aria-label", doorName(finalPick) + ". " + (won ? (isZh ? "你的选择，赢得跑车。" : "Your pick, won the car.") : (isZh ? "你的选择，得到山羊。" : "Your pick, got a goat.")));
       if (switched) {
         stats.switchP++;
         if (won) stats.switchW++;
@@ -218,9 +218,9 @@
       root.dataset.result = won ? "won" : "lost";
       setStatus("stepResult", won ? "modeWon" : "modeLost");
       say.innerHTML = isZh
-        ? '你 <span class="hl">' + (switched ? "换到" : "坚守") + " " + (finalPick + 1) + ' 号门</span>，' +
-          (won ? '<span class="win-text">赢得了汽车。</span>' : '<span class="lose-text">得到了山羊。</span>') +
-          " " + (switched ? "换门是 2/3 策略。" : "坚守是 1/3 策略。")
+        ? '你 <span class="hl">' + (switched ? "改换门庭至" : "选择坚持") + " " + (finalPick + 1) + ' 号门</span>，' +
+          (won ? '<span class="win-text">赢得了跑车！</span>' : '<span class="lose-text">得到了山羊。</span>') +
+          " " + (switched ? "换门是 2/3 的明智策略。" : "坚守仅有 1/3 胜算。")
         : "You <b>" + (switched ? "switched to" : "stayed on") + " Door " + (finalPick + 1) + "</b> and " +
           (won ? '<b class="win-text">won the car.</b>' : '<b class="lose-text">got a goat.</b>') +
           " " + (switched ? "Switching is the 2/3 play." : "Staying is the 1/3 play.");
@@ -260,7 +260,7 @@
       setStatus("stepSim", "modeSim");
       nextWrap.style.display = "none";
       say.innerHTML = isZh
-        ? '已加入 <span class="hl">1000 场配对模拟</span>。坚守约 <span class="hl">33%</span>；换门约 <span class="hl">67%</span>。你也可以继续手动选门。'
+        ? '已并行注入 <span class="hl">1,000 次配对模拟</span>。坚持原选胜率约为 <span class="hl">33%</span>；改换门庭则约为 <span class="hl">67%</span>。你也可以继续手动体验。'
         : "Added <b>1,000 paired simulations</b>. Staying lands near <b>33%</b>; switching near <b>67%</b>. You can keep playing by hand.";
     });
     btnReset.addEventListener("click", function(){

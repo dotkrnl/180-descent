@@ -4,7 +4,7 @@ tags: zhDay
 locale: zh
 day: 4
 title: "概率成为扩展的逻辑"
-summary: "蒙提霍尔与贝叶斯揭示，概率是部分置信度的逻辑；e 值则将假设检验化作一场下注。"
+summary: "从蒙提霍尔问题的直觉陷阱到贝叶斯定理的更新准则，我们将概率视为处理不确定性的唯一逻辑，并见证 e 值对假设检验的重塑。"
 block: 知识与推理的根基
 slug: probability-as-extended-logic
 day_path: 004-probability-as-extended-logic

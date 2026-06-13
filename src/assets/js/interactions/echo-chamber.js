@@ -4,16 +4,16 @@
   var root = document.documentElement;
   var isZh = (root.getAttribute("lang") || "").toLowerCase().indexOf("zh") === 0;
   var copy = isZh ? {
-    expose: "\u25b6 \u63a5\u89e6\u5916\u90e8\u58f0\u97f3",
-    reset: "\u21ba \u91cd\u7f6e\u63a5\u89e6",
-    bubbleTitle: "\u8ba4\u8bc6\u6c14\u6ce1",
-    bubbleBody: "\u5916\u90e8\u58f0\u97f3\u6839\u672c\u4e0d\u5728\u573a\u2014\u2014\u4e0d\u662f\u88ab\u9a73\u5012\uff0c\u53ea\u662f\u7f3a\u5e2d\u3002\u6c14\u6ce1\u5f88\u8106\u5f31\uff1a\u5b83\u53ea\u9760\u7f3a\u4e4f\u63a5\u89e6\u800c\u5b58\u6d3b\u3002",
-    poppedTitle: "\u6c14\u6ce1\u88ab\u6233\u7834 \u2713",
-    poppedBody: "缺席的声音到来了。你的信念现在可以根据它们更新——一个好的外部来源就足以打破气泡。接触「有效」。",
-    chamberTitle: "\u56de\u58f0\u5ba4",
-    chamberBody: "\u5916\u90e8\u58f0\u97f3\u5728\u573a\uff0c\u4f46\u5df2\u88ab\u9884\u5148\u62b9\u9ed1\u2014\u2014\u4f60\u88ab\u8bad\u7ec3\u6210\u63d0\u524d\u4e0d\u4fe1\u4efb\u5b83\u4eec\uff08\u201c\u4ed6\u4eec\u5728\u6492\u8c0e\u201d\uff09\u3002\u56de\u58f0\u5ba4\u5f88\u7a33\u56fa\uff1a\u4e0d\u4fe1\u4efb\u88ab\u5199\u8fdb\u4e86\u7ed3\u6784\u91cc\u3002",
-    backfireTitle: "\u63a5\u89e6\u53cd\u566c \u2717",
-    backfireBody: "你听到了另一边——而回声室早就预言他们会误导你，所以听见他们反而「证实了这个故事」。不信任加深。这就是为什么「直接给他们看事实」可能让回声室「更强」。"
+    expose: "▶ 接触外部声音",
+    reset: "↺ 重置接触",
+    bubbleTitle: "认识气泡",
+    bubbleBody: "外部声音根本不在场——它们并非被反驳，而仅仅是缺席。气泡极其脆弱：它全靠缺乏信息流动而维持存续。",
+    poppedTitle: "气泡被戳破 ✓",
+    poppedBody: "缺失的声音终于传达。你的信念现在可以根据新证据进行更新——通常一个可靠的外部来源就足以打破气泡。此时，接触「有效」。",
+    chamberTitle: "回声室",
+    chamberBody: "外部声音虽在场，却已被预先贬低——你被训练去提前质疑它们（如「他们在撒谎」）。回声室极其稳固：这种不信任已被内置于认知结构中。",
+    backfireTitle: "接触反噬 ✕",
+    backfireBody: "当你听到对立面的声音，回声室早预言了对方会试图误导你，于是这种接触反而「证实了原有的预言」。不信任感随之加深。这就是为何「只管向对方展示事实」往往会让回声室变得更强。"
   } : {
     expose: "\u25b6 Expose to outside voices",
     reset: "\u21ba Reset exposure",

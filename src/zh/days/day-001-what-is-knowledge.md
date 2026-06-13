@@ -4,7 +4,7 @@ tags: zhDay
 locale: zh
 day: 1
 title: "知识是什么？"
-summary: "一座停走的时钟揭示：证成充分的真信念，未必就是知识。"
+summary: "一座停摆的大钟揭示：即便拥有充分理由的真信念，也未必称得上知识。"
 block: 知识与推理的根基
 slug: what-is-knowledge
 day_path: 001-what-is-knowledge

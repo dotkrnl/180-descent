@@ -4,7 +4,7 @@ tags: zhDay
 locale: zh
 day: 3
 title: "逻辑与有效推理"
-summary: "演绎、归纳与溯因区分有效形式与真实结论；证明助手则让逻辑被严格地确立。"
+summary: "区分演绎、归纳与溯因三种推理引擎，厘清有效性与健全性的分野，并见证逻辑如何演变为机器核查的计算。"
 block: 知识与推理的根基
 slug: logic-and-valid-inference
 day_path: 003-logic-and-valid-inference

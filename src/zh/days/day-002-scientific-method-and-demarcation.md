@@ -3,8 +3,8 @@ layout: layouts/day.njk
 tags: zhDay
 locale: zh
 day: 2
-title: "科学方法与划界"
-summary: "休谟、波普尔、库恩、拉卡托斯与复现危机，共同追问科学为何值得信任。"
+title: "科学方法与划界问题"
+summary: "从休谟的归纳陷阱到波普尔的证伪之刃，再到现代复现危机，我们追问科学何以成其为科学。"
 block: 知识与推理的根基
 slug: scientific-method-and-demarcation
 day_path: 002-scientific-method-and-demarcation

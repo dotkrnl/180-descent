@@ -8,22 +8,22 @@
     ponens: {
       valid: true,
       lines: ["如果 <span class=\"op\">P</span>，则 <span class=\"op\">Q</span>", "<span class=\"op\">P</span> 为真", "<span class=\"op\">Q</span>"],
-      expl: "有效。肯定前件 P，结论 Q 就逃不掉。这是克律西波斯第一条「不可证明式」，也是最古老的命名推理规则之一。"
+      expl: "有效。肯定了充分条件 P，结论 Q 必然随之成立。这是克律西波斯第一条「不可证明式」，也是逻辑学中最古老的命名规则之一。"
     },
     tollens: {
       valid: true,
       lines: ["如果 <span class=\"op\">P</span>，则 <span class=\"op\">Q</span>", "<span class=\"op\">Q</span> 为假", "<span class=\"op\">P</span> 为假"],
-      expl: "有效。如果 Q 必然随 P 而来，那么 Q 不在场，P 也不能成立。这是否定后件，也是反证法背后的发动机。"
+      expl: "有效。若 Q 是 P 的必要结果，则 Q 不成立足以否定 P 的存在。这是否定后件式，也是一切反证法背后的核心引擎。"
     },
     affirm: {
       valid: false,
       lines: ["如果 <span class=\"op\">P</span>，则 <span class=\"op\">Q</span>", "<span class=\"op\">Q</span> 为真", "<span class=\"op\">P</span>"],
-      expl: "无效。Q 可能还有别的原因，所以发现 Q 并不能保证 P。它很诱人，因为结论有时碰巧为真。"
+      expl: "无效。Q 可能源于其他原因，因此观测到 Q 无法反推 P 必定成立。这种谬误极具迷惑性，因为结论有时恰好是真的。"
     },
     deny: {
       valid: false,
       lines: ["如果 <span class=\"op\">P</span>，则 <span class=\"op\">Q</span>", "<span class=\"op\">P</span> 为假", "<span class=\"op\">Q</span> 为假"],
-      expl: "无效。排除一个充分原因 P，并不等于排除结果 Q 的所有来源。"
+      expl: "无效。排除一个充分原因 P，并不等同于排除了结果 Q 的所有潜在来源。它与肯定后件互为镜像。"
     }
   } : {
     ponens: {

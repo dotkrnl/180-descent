@@ -5,12 +5,12 @@
   var isZh = (root.getAttribute("lang") || "").toLowerCase().indexOf("zh") === 0;
 
   var demarcationData = isZh ? {
-    relativity:{claim:"遥远星光掠过太阳边缘时弯折 1.75 角秒。",popper:["sci","可证伪：日食测量本可以杀死它。"],kuhn:["sci","一种新的时空范式，推翻牛顿式假设。"],lakatos:["sci","一个作出新颖确认的进步纲领。"],laudan:["sci","在整组科学美德上都很强。"]},
-    astrology:{claim:"水星呈逆行视运动时，通讯与旅行会出问题。",popper:["non","足够有弹性，几乎能容纳任何结果。"],kuhn:["non","没有会从反常中更新的解谜范式。"],lakatos:["non","一个以事后补救为主的退化纲领。"],laudan:["non","在记录、修正与冒险预言上都很弱。"]},
-    marx:{claim:"全部人类历史从根本上说都是阶级斗争史。",popper:["non","波普尔的判断：预言失败后被重新解释。"],kuhn:["dep","对信奉者而言近似范式，但过于能吸收反常。"],lakatos:["dep","可以起初进步，后来退化。"],laudan:["dep","有些部分是可检验的社会科学，有些则是历史哲学。"]},
-    strings:{claim:"现实的基本构成是约十一维空间中振动的弦。",popper:["dep","数学上丰富，但关键预言尚无法实际检验。"],kuhn:["dep","常规科学仍在进行，却缺少决定性的经验筛选。"],lakatos:["dep","要看这个纲领能否随时间变得进步。"],laudan:["dep","这是活的边界争议，不能用一个词裁决。"]},
-    evolution:{claim:"所有生命都来自共同祖先。",popper:["sci","原则上可证伪：前寒武纪兔子将是灾难。"],kuhn:["sci","现代生物学的核心范式。"],lakatos:["sci","跨化石、遗传学与分子生物学的深度进步纲领。"],laudan:["sci","可预测、融贯、自我修正，并得到广泛确认。"]},
-    freud:{claim:"神经症状源于被压抑进无意识的冲突。",popper:["non","波普尔的例子：一种能够容纳太多东西的理论。"],kuhn:["dep","存在近似范式的学派，但收敛性较弱。"],lakatos:["non","更像事后解释，而非冒险预言后的确认。"],laudan:["dep","格伦鲍姆认为某些精神分析主张可被反驳，因此边界会变得模糊。"]}
+    relativity:{claim:"星光掠过太阳边缘时弯折 1.75 角秒。",popper:["sci","可证伪：1919 年的日食观测本可以宣判其死刑。"],kuhn:["sci","成功确立了时空新范式，替代了牛顿力学。"],lakatos:["sci","由于作出了惊人的新颖预言并获证实，是典型的进步纲领。"],laudan:["sci","在整组科学美德（经验表现、融贯性等）上表现极强。"]},
+    astrology:{claim:"水星逆行期间，通讯与旅行易出故障。",popper:["non","具有极大的弹性，几乎能将任何结果解读为证实。"],kuhn:["non","缺乏能够从反常中学习并持续解谜的成熟范式。"],lakatos:["non","主要依靠事后修补来解释失败，属于退化纲领。"],laudan:["non","在实证记录、修正机制与预测能力上均显疲软。"]},
+    marx:{claim:"人类历史的本质是阶级斗争史。",popper:["non","波普尔的经典案例：预言失败后往往被追溯性地重新诠释。"],kuhn:["dep","对信奉者而言具备范式特征，但吸收反常的能力过强。"],lakatos:["dep","早期具备一定的进步性，后期则显现出明显的退化特征。"],laudan:["dep","部分属于可检验的社会科学主张，部分则属于不可证伪的历史哲学。"]},
+    strings:{claim:"现实的基本单元是十一维空间中振动的弦。",popper:["dep","数学结构极其精妙，但关键预言目前仍无法进行实证检验。"],kuhn:["dep","常规科学活动正在密集开展，但仍缺少决定性的经验判准。"],lakatos:["dep","有待观察该纲领能否随时间演进给出新颖的经验内容。"],laudan:["dep","属于鲜活的边界案例，难以简单地一语断之。"]},
+    evolution:{claim:"所有生命都拥有共同的祖先。",popper:["sci","原则上可证伪：若发现「寒武纪前的兔子」化石将是灭顶之灾。"],kuhn:["sci","现代生物学的核心范式，界定了所有研究问题的方向。"],lakatos:["sci","一个在化石、遗传与分子生物学领域持续产出新知识的深度进步纲领。"],laudan:["sci","可预测、高度融贯、具备自我修正能力且得到了极其广泛的确认。"]},
+    freud:{claim:"神经症症状源于被压抑的无意识冲突。",popper:["non","波普尔的例子：一个由于能解释太多而无法被驳倒的理论。"],kuhn:["dep","虽有类似范式的学派，但在经验层面的收敛性很差。"],lakatos:["non","表现出更多的事后补救特质，而非对冒险预言的成功确证。"],laudan:["dep","格伦鲍姆指出，其部分主张实际上是可以被证伪的，划界在此变得模糊。"]}
   } : {
     relativity:{claim:"Light from a distant star bends by 1.75 arcseconds as it grazes the sun.",popper:["sci","Falsifiable: the eclipse measurement could have killed it."],kuhn:["sci","A new spacetime paradigm overturning Newtonian assumptions."],lakatos:["sci","A progressive programme with novel confirmations."],laudan:["sci","Strong across the whole cluster of scientific virtues."]},
     astrology:{claim:"Communication and travel go awry when Mercury is in apparent retrograde motion.",popper:["non","Elastic enough to fit almost any outcome."],kuhn:["non","No puzzle-solving paradigm that updates from anomalies."],lakatos:["non","A degenerating programme of after-the-fact rescue."],laudan:["non","Weak across track record, correction, and risky prediction."]},

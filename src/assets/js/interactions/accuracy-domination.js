@@ -4,16 +4,16 @@
   var root = document.documentElement;
   var isZh = (root.getAttribute("lang") || "").toLowerCase().indexOf("zh") === 0;
   var copy = isZh ? {
-    coherentTitle: "\u878d\u8d2f - \u672a\u88ab\u652f\u914d",
+    coherentTitle: "融贯 - 未被支配",
     coherentBody: function(sum){
-      return '你的置信度总和为 <code>' + sum + '</code>，所以这个点落在直线上。没有其他置信度在<span class="hl">每一个</span>世界中都更接近真理——你不会被准确性支配。这与第 1 日的荷兰赌给出同一裁决，只是没有下注。';
+      return '你的置信度总和为 <code>' + sum + '</code>，该点落在直线上。这意味着不存在能在<span class="hl">每一个</span>世界中都比你更接近真理的其他置信度——你未被准确性支配。这与第 1 日的荷兰赌裁决一致，只是无需涉及任何博弈。';
     },
-    coherentCaption: "\u5728\u7ebf\u4e0a\uff1a\u6ca1\u6709\u522b\u7684\u7f6e\u4fe1\u5ea6\u80fd\u5728\u771f\u7406\u4e0a\u51fb\u8d25\u4f60\u3002",
-    dominatedTitle: "\u4e0d\u878d\u8d2f - \u88ab\u51c6\u786e\u6027\u652f\u914d",
+    coherentCaption: "在线上：没有其他置信度能在真理维度上击败你。",
+    dominatedTitle: "不融贯 - 被准确性支配",
     dominatedBody: function(sum, dP1, dS1, dP2, dS2){
-      return '总和 = <code>' + sum + '</code>，偏离直线。绿点（最近的融贯置信度）在<span class="hl">两个</span>世界中都更接近真理：如果 S 为真，' + dP1 + '&nbsp;→&nbsp;' + dS1 + '；如果 S 为假，' + dP2 + '&nbsp;→&nbsp;' + dS2 + '。无论牌怎样，它都击败你。这种被保证的准确性损失——而不是金钱损失——正是不融贯之所以不理性的理由。';
+      return '总和 = <code>' + sum + '</code>，偏离了直线。绿点（最近的融贯置信度）在<span class="hl">所有</span>可能世界中都更接近真理：若 S 为真，误差从 ' + dP1 + '&nbsp;降至&nbsp;' + dS1 + '；若 S 为假，误差从 ' + dP2 + '&nbsp;降至&nbsp;' + dS2 + '。无论牌局结果如何，它都完胜于你。这种注定的准确性损失——而非金钱的亏损——正是不融贯在理性上站不住脚的根源。';
     },
-    dominatedCaption: "\u504f\u79bb\u76f4\u7ebf\uff1a\u4e00\u4e2a\u878d\u8d2f\u70b9\uff08\u7eff\u8272\uff09\u79bb\u4e24\u4e2a\u771f\u7406\u89d2\u90fd\u66f4\u8fd1\u3002"
+    dominatedCaption: "偏离直线：绿色的融贯点距离两个真理角都更近。"
   } : {
     coherentTitle: "Coherent - undominated",
     coherentBody: function(sum){

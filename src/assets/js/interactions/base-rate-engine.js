@@ -9,9 +9,9 @@
 
   function verdictText(percent) {
     if (isZh) {
-      if (percent >= 80) return "强健领域：这里大多数发表的发现都是真的。";
-      if (percent >= 50) return "摇晃但未沉没：相当一部分「发现」其实是噪音。";
-      return "已经没入水下：这里大多数发表的「发现」都是假的。";
+      if (percent >= 80) return "稳健领域：此处发表的发现绝大多数真实可靠。";
+      if (percent >= 50) return "根基动摇：虽尚在维持，但已有相当比例的「发现」实为噪音。";
+      return "情况严峻：此处多数所谓的「发现」实际上并不成立。";
     }
     if (percent >= 80) return "Strong field: most published discoveries here are real.";
     if (percent >= 50) return "Shaky: a large minority of \"discoveries\" are noise.";
