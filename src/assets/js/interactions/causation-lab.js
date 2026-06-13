@@ -45,7 +45,7 @@
         var bw = pct(poolB);
         winner.className = "simp-winner B";
         winner.innerHTML = isZh
-          ? "汇总数据显示，<b>疗法 B 胜出</b>，胜率 " + (bw * 100).toFixed(1) + "% 对 " + (aw * 100).toFixed(1) + "%。结论看似已定。"
+          ? "汇总数据显示，<span class=\"hl\">疗法 B 胜出</span>，胜率 " + (bw * 100).toFixed(1) + "% 对 " + (aw * 100).toFixed(1) + "%。结论看似已定。"
           : "Pooled, <b>Treatment B wins</b> — " + (bw * 100).toFixed(1) + "% vs " + (aw * 100).toFixed(1) + "%. Looks settled.";
       } else {
         html += row(isZh ? "疗法 A · 小结石" : "A · small", "A", pct(data.A.small), data.A.small.s + "/" + data.A.small.n);
@@ -56,7 +56,7 @@
         wrap.innerHTML = html;
         winner.className = "simp-winner A";
         winner.innerHTML = isZh
-          ? "按结石大小拆分后，<b>疗法 A 在两组中均胜出</b>。汇总结论发生了反转；混杂因素在于 B 接收了更多易处理的轻症。"
+          ? "按结石大小拆分后，<span class=\"hl\">疗法 A 在两组中均胜出</span>。汇总结论发生了反转；混杂因素在于 B 接收了更多易处理的轻症。"
           : "Split by stone size, <b>Treatment A wins both rooms</b>. The pooled verdict reverses; the confounder is B's easier caseload.";
       }
     }
@@ -165,7 +165,7 @@
         verdict.className = "dovs-verdict gap";
         vh.textContent = (isZh ? "混杂偏差 = " : "The confounding gap = ") + gap.toFixed(2);
         body.innerHTML = isZh
-          ? "肉眼观察到的关联为 <strong>" + seeEst.toFixed(2) + "</strong>；但真实的因果效应仅为 <strong>" + doEst.toFixed(2) + "</strong>。其中的差额全由「夏季」贡献：一条后门路径成功地伪装成了因果。"
+          ? "肉眼观察到的关联为 <span class=\"hl\">" + seeEst.toFixed(2) + "</span>；但真实的因果效应仅为 <span class=\"hl\">" + doEst.toFixed(2) + "</span>。其中的差额全由「夏季」贡献：一条后门路径成功地伪装成了因果。"
           : "The eyeball sees <strong>" + seeEst.toFixed(2) + "</strong>; the true causal effect is only <strong>" + doEst.toFixed(2) + "</strong>. The difference is pure summer: a backdoor path masquerading as cause.";
       }
     }
