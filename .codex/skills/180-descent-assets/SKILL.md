@@ -37,6 +37,22 @@ Do not add decorative images just because they are available. Use images when th
   like any other bundled image: store it locally, credit it in
   `src/_data/credits.yaml`, verify reuse rights, and run the SEO check.
 
+## Accessibility Requirements
+
+- Every committed image that appears in lesson, page, EPUB, or PDF output must
+  have an `alt` attribute at each markup use site.
+- Write concise descriptive alt text for informative images. Use `alt=""` only
+  when the image is purely decorative or the adjacent text/caption fully
+  duplicates the image's accessible purpose.
+- Captions and credits do not replace `alt`; they serve different jobs.
+- When the same image appears in the Chinese edition, translate the alt text
+  into idiomatic Simplified Chinese while preserving the same factual meaning.
+- If an image is used only as a social/Open Graph card and is not rendered in
+  page content, ensure the SEO image exists locally; no page-level `alt` is
+  needed because it is not an `<img>` in the document.
+- For SVG figures, use `role="img"` plus `aria-label`/`aria-labelledby` for
+  informative diagrams, or `aria-hidden="true"` for decorative SVGs.
+
 ## Artifact Handling
 
 - Use `/assets/images/...` for local site images.
@@ -52,6 +68,7 @@ Run:
 ```sh
 rtk npm run build
 rtk npm run check:seo
+rtk npm run check:a11y
 rtk npm run check
 ```
 

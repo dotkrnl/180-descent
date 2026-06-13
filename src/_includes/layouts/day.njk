@@ -7,7 +7,7 @@ layout: layouts/base.njk
 {% set nextDay = dayCollection | nextPublishedDay(day) %}
 {% set dayDownloadPrefix = "/downloads/180-descent-zh-day-" + day_path if isZh else "/downloads/180-descent-day-" + day_path %}
 {% macro dayNav(position) %}
-<nav class="lesson-nav lesson-nav-{{ position }} wrap wide" aria-label="Day navigation">
+<nav class="lesson-nav lesson-nav-{{ position }} wrap wide" aria-label="{{ "日课导航" if isZh else "Day navigation" }}">
   {% if previousDay %}
   <a class="lesson-nav-card" href="{{ previousDay.url }}">
     <span>{{ "上一篇" if isZh else "Previous" }}</span>

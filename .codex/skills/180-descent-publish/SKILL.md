@@ -39,12 +39,19 @@ rtk git diff --stat
 ```sh
 rtk npm run build
 rtk npm run check:seo
+rtk npm run check:a11y
 rtk npm run check
 ```
 
 The SEO check must pass before publishing. It verifies built canonical tags,
 meta descriptions, reciprocal `hreflang`, JSON-LD, sitemap/robots discovery,
 and local existence of Open Graph social images.
+
+The accessibility check must pass before publishing. It scans every generated
+HTML file for image `alt` attributes, named `role="img"` SVGs, named
+links/buttons, and valid `aria-checked` roles, then runs axe smoke tests against
+representative English and Chinese pages. Do not bypass it for decorative
+images; use `alt=""` where decoration is intentional.
 
 3. Stage only intended files. Never stage unrelated user changes.
 4. Commit with a Conventional Commit message, e.g. `feat: add open-license lesson images`.

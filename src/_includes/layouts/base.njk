@@ -22,6 +22,9 @@
 {% set dayCollection = collections.zhDays if isZh else collections.days %}
 {% set previousDay = dayCollection | previousPublishedDay(day) if day else null %}
 {% set nextDay = dayCollection | nextPublishedDay(day) if day else null %}
+{% set introUrl = "/zh/introduction/" if isZh else "/introduction/" %}
+{% set syllabusUrl = "/zh/syllabus/" if isZh else "/syllabus/" %}
+{% set downloadsUrl = "/zh/downloads/" if isZh else "/downloads/" %}
 <!doctype html>
 <html lang="{{ book.zh.language if isZh else book.language }}" data-theme="auto">
   <head>
@@ -194,15 +197,23 @@
       <div class="topbar-row">
         <a class="course" href="{{ "/zh/" if isZh else "/" }}"><img class="brand-mark" src="{{ '/assets/images/brand/180-descent-icon-96.png' | assetUrl }}" width="28" height="28" alt="" decoding="async">{{ uiTitle }}</a>
         <nav class="topnav" aria-label="{{ "主导航" if isZh else "Primary" }}">
-          <a href="{{ "/zh/introduction/" if isZh else "/introduction/" }}">{{ "引言" if isZh else "Intro" }}</a>
-          <a href="{{ "/zh/syllabus/" if isZh else "/syllabus/" }}">{{ "课程表" if isZh else "Syllabus" }}</a>
-          <a href="{{ "/zh/downloads/" if isZh else "/downloads/" }}">{{ "下载" if isZh else "Downloads" }}</a>
+          <a href="{{ introUrl }}"{% if page.url == introUrl %} aria-current="page"{% endif %}>{{ "引言" if isZh else "Intro" }}</a>
+          <a href="{{ syllabusUrl }}"{% if page.url == syllabusUrl %} aria-current="page"{% endif %}>{{ "课程表" if isZh else "Syllabus" }}</a>
+          <a href="{{ downloadsUrl }}"{% if page.url == downloadsUrl %} aria-current="page"{% endif %}>{{ "下载" if isZh else "Downloads" }}</a>
         </nav>
         <div class="top-actions">
           {% if languageUrl %}
-          <a class="toggle" href="{{ languageUrl }}" aria-label="{{ "切换到英文" if isZh else "切换到中文" }}">{{ "EN" if isZh else "中文" }}</a>
+          <a class="toggle" href="{{ languageUrl }}" hreflang="{{ book.language if isZh else book.zh.language }}" lang="{{ book.language if isZh else book.zh.language }}" aria-label="{{ "切换到英文" if isZh else "Switch to Chinese" }}">{{ "EN" if isZh else "中文" }}</a>
           {% endif %}
-          <button class="toggle theme-toggle" id="themeBtn" type="button" aria-label="{{ "切换明暗主题" if isZh else "Toggle light or dark theme" }}">
+          <button
+            class="toggle theme-toggle"
+            id="themeBtn"
+            type="button"
+            aria-pressed="false"
+            aria-label="{{ "切换到深色主题" if isZh else "Switch to dark theme" }}"
+            data-label-dark="{{ "切换到深色主题" if isZh else "Switch to dark theme" }}"
+            data-label-light="{{ "切换到浅色主题" if isZh else "Switch to light theme" }}"
+          >
             <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <circle cx="12" cy="12" r="4"></circle>
               <path d="M12 2v2"></path>

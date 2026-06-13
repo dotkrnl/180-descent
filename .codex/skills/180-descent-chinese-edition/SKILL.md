@@ -57,6 +57,31 @@ JSON-LD, and social-card system as English routes.
    `rtk npm run build`, then run `rtk npm run check:seo` or the full project
    check before considering Chinese mirroring complete.
 
+## Accessibility Parity Gate
+
+Chinese editions must preserve the accessibility behavior of the English source
+while localizing user-facing accessible text.
+
+1. Translate every informative image `alt` attribute into idiomatic Simplified
+   Chinese. Preserve `alt=""` for decorative images only when the English image
+   is decorative or fully redundant.
+2. Translate user-facing `aria-label`, `aria-labelledby` text, button labels,
+   range labels, status/readout labels, and static fallback copy. Do not leave
+   English accessible labels in Chinese UI unless the label is a proper noun,
+   code identifier, or technical term that must remain in English.
+3. Preserve structural accessibility hooks: IDs referenced by
+   `aria-labelledby`, roles, `aria-live`, `aria-current`, `aria-pressed`,
+   `aria-checked`, table headers, figure/caption relationships, classes, data
+   attributes, and JavaScript selectors.
+4. For `svg role="img"`, translate `aria-label` or labelled text. Decorative
+   SVGs should remain `aria-hidden="true"`.
+5. Preserve non-color cues in status chips, legends, diagrams, and tables. If
+   the English source pairs color with text or symbols, the Chinese version must
+   keep the same accessible meaning.
+6. Run `rtk npm run check:a11y` directly or through `rtk npm run check` after
+   building, and fix any Chinese-page failures before treating mirroring as
+   complete.
+
 ## Normal Day Workflow
 
 1. Create `src/zh/days/day-###-slug.md` and `src/_includes/days/###-slug/zh.njk`.
@@ -64,22 +89,24 @@ JSON-LD, and social-card system as English routes.
 3. Use Kimi CLI for the first Chinese translation pass. Follow the Slow-Agent Rule. Do not use `--final-message-only`.
 
 ```sh
-rtk kimi --print --yolo -p "请直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑目标 route shell 与 lesson include。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留所有 front matter 键、content_template、scripts、permalinks、locale: zh、day 数字、slug、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、表格、SVG 结构与 Nunjucks 语法，并保留和翻译所有 {% tip '...' %} 说明。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
+rtk kimi --print --yolo -p "请直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑目标 route shell 与 lesson include。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留所有 front matter 键、content_template、scripts、permalinks、locale: zh、day 数字、slug、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构与 Nunjucks 语法，并保留和翻译所有 {% tip '...' %} 说明。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
 ```
 
-4. Manually review Kimi edits for correctness, idiomatic Chinese, route-shell/body split, Typography Gate compliance, Tip Parity Gate compliance, and preservation of YAML, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JS hooks, Nunjucks syntax, and permalink paths.
+4. Manually review Kimi edits for correctness, idiomatic Chinese, route-shell/body split, Typography Gate compliance, Tip Parity Gate compliance, Accessibility Parity Gate compliance, and preservation of YAML, numbers, dates, citations, DOIs, URLs, CSS classes, ids, JS hooks, Nunjucks syntax, and permalink paths.
 5. Run a GLM consistency and language refinement pass with opencode. Follow the Slow-Agent Rule. Ask GLM to edit files in place and tell it all repo shell commands must use `rtk`.
 
 ```sh
-rtk opencode run -m zhipuai-coding-plan/glm-5.1 "请直接在本仓库中润色中文版本文件，并原地编辑。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留 route shell、lesson include、front matter、content_template、scripts、permalinks、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、表格、SVG 结构、JavaScript hook 与 Nunjucks 语法，并保留和润色所有 {% tip '...' %} 中文说明。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+rtk opencode run -m zhipuai-coding-plan/glm-5.1 "请直接在本仓库中润色中文版本文件，并原地编辑。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守本 skill 的 Typography Gate：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term（会呈现为加粗加色），必要强调少量用 span.hl（只加色）；命题、想法、口号、短语作为语言对象时优先使用「」；保留语义标签、图表、状态组件的既有颜色，不添加普通正文内联颜色；避免密集标记。保留 route shell、lesson include、front matter、content_template、scripts、permalinks、URL、DOI 链接、citation metadata、HTML class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 Nunjucks 语法，并保留和润色所有 {% tip '...' %} 中文说明。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
 ```
 
-6. Manually review GLM edits and keep only technically and stylistically sound changes. Confirm the Typography Gate and Tip Parity Gate before treating the Chinese edition as complete.
+6. Manually review GLM edits and keep only technically and stylistically sound changes. Confirm the Typography Gate, Tip Parity Gate, and Accessibility Parity Gate before treating the Chinese edition as complete.
 7. Run the Factual Parity Gate against the English source and any fact-check corrections made during the same work.
 8. Run the SEO Parity Gate against the English route shell and the generated
    Chinese route shell.
-9. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
-10. Run:
+9. Run the Accessibility Parity Gate against the English route/include and the
+   generated Chinese route/include.
+10. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
+11. Run:
 
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ### --require-zh

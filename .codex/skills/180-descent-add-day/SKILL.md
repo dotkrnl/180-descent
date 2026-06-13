@@ -171,6 +171,36 @@ ready, confirm its route shell supports the shared SEO system:
    and fix any missing canonical, hreflang, sitemap, JSON-LD, or social-image
    issue before treating the addition as complete.
 
+## Accessibility Gate
+
+Every new or revised day must preserve the site's accessible reading and
+interaction contract.
+
+1. Every `<img>` in generated output must have an `alt` attribute. Use concise
+   descriptive alt text for informative images, and `alt=""` only when the image
+   is purely decorative or already fully described by adjacent text.
+2. Every `svg role="img"` must have `aria-label` or `aria-labelledby`. SVGs
+   that are decorative must be hidden with `aria-hidden="true"`.
+3. Interactive controls must use native controls where possible. Icon-only
+   buttons and compact controls need accessible names; selected/toggled state
+   must use appropriate `aria-current`, `aria-pressed`, or `aria-checked` plus a
+   valid role such as `switch`.
+4. Dynamic verdicts, counters, and simulation/readout text that changes after
+   user input must be reachable to screen readers, usually through
+   `aria-live="polite"` on the changing output region.
+5. Do not rely on color alone for meaning. Pair color/status with text labels,
+   symbols, or structural copy, and keep small text/color-token choices within
+   WCAG AA contrast.
+6. Keyboard focus must remain visible and logical through navigation,
+   disclosure widgets, sliders, and lesson interactions.
+7. When Chinese mirroring is in scope, translate user-facing alt text,
+   `aria-label`, `aria-labelledby` text, button labels, and fallback copy into
+   idiomatic Simplified Chinese while preserving IDs, classes, and JS hooks.
+8. Run `rtk npm run check:a11y` directly or through `rtk npm run check` and fix
+   failures before treating the day as complete. The check gate enforces all
+   generated images having `alt`, named `role="img"` SVGs, named links/buttons,
+   valid `aria-checked` roles, and axe smoke tests for representative pages.
+
 ## Workflow
 
 1. Identify day number, title, block, entry analogy, model, debate, and frontier from `src/_data/syllabus.yaml`.
@@ -224,8 +254,10 @@ ready, confirm its route shell supports the shared SEO system:
    "static", "print form", or a "PDF/EPUB version"; name the useful artifact
    they see.
 7. Prefer existing components, CSS classes, and interaction modules before inventing new ones.
-8. Run the Image Candidate Gate. If the user accepts any third-party image or bundled asset, switch to `180-descent-assets` before adding it.
-9. Run the target-day checklist and project checks:
+8. Run the Accessibility Gate for any markup, images, SVGs, controls, live
+   outputs, or fallback content added or changed by the day.
+9. Run the Image Candidate Gate. If the user accepts any third-party image or bundled asset, switch to `180-descent-assets` before adding it.
+10. Run the target-day checklist and project checks:
 
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ###
@@ -256,9 +288,13 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
   `180-descent-assets`, or proposed/rejected/no-useful-candidate status reported
   to the user before commit/publish
 - Added or reused `src/assets/js/interactions/*.js` modules for live components, with adjacent print/EPUB fallbacks in the lesson body
+- Accessibility Gate completed: image alt text, SVG names, control names/states,
+  live readouts, keyboard focus, contrast, and Chinese accessible-label parity
+  are covered, with `check:a11y` passing
 - Generated or refreshed social-card PNGs through
   `scripts/generate-social-cards.mjs`, with `check:seo` passing for canonical,
   hreflang, sitemap, JSON-LD, and social-image coverage
-- Passing target-day checklist, site build, EPUB/PDF build, link/content checks, EPUB structural checks, and PDF checks
+- Passing target-day checklist, site build, EPUB/PDF build, link/content checks,
+  accessibility checks, EPUB structural checks, and PDF checks
 
 Do not edit generated files in `_site/` or `dist/`; they are build outputs.

@@ -100,6 +100,34 @@ appendix:
 4. Run `rtk npm run check:seo` or the full project check before treating the
    appendix as complete.
 
+## Accessibility Gate
+
+Appendices share the normal day accessibility standard because they render into
+the same public day pages and deep-dive artifacts.
+
+1. Every `<img>` in generated output must have an `alt` attribute. Use concise
+   descriptive alt text for informative images, and `alt=""` only for purely
+   decorative or redundant images.
+2. Every `svg role="img"` must have `aria-label` or `aria-labelledby`; hide
+   decorative SVGs with `aria-hidden="true"`.
+3. Live appendix controls must use native buttons, inputs, and semantic tables
+   where possible. Compact/icon controls need accessible names, and stateful
+   controls must expose `aria-pressed`, `aria-checked` with a valid role, or
+   other appropriate state.
+4. Changing verdicts, counters, charts, or simulation readouts must have a
+   screen-reader path, usually an `aria-live="polite"` region.
+5. Do not rely on color alone for claims, verdicts, diagram keys, or state.
+   Pair color with visible text, symbols, or structure, and keep small text at
+   WCAG AA contrast.
+6. EPUB/PDF fallbacks must preserve the same information in accessible static
+   form: real tables, labelled diagrams, or worked examples rather than empty
+   visual placeholders.
+7. If Chinese mirroring is in scope, translate alt text, accessible labels,
+   button text, and fallback copy into idiomatic Simplified Chinese while
+   preserving classes, IDs, and JS hooks.
+8. Run `rtk npm run check:a11y` directly or through `rtk npm run check` before
+   treating the appendix as complete.
+
 ## Workflow
 
 1. Identify the target day from the filename or user message. Check whether the day already has `src/zh/days/day-###-*.md` and `src/_includes/days/###-*/zh.njk`.
@@ -130,22 +158,25 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
    - keep citations tied to the claims they support
    - label frontier claims as established, promising hint, or contested/hype
    - remove source-page boilerplate such as "Receipts" if it violates project checks
-5. Update `src/_data/future-links.yaml` for new future callbacks.
-6. Preserve output separation:
+5. Run the Accessibility Gate for any images, SVGs, controls, live outputs,
+   fallback artifacts, or Chinese accessible labels added or changed by the
+   appendix.
+6. Update `src/_data/future-links.yaml` for new future callbacks.
+7. Preserve output separation:
    - standard EPUB/PDF: omit appendix content
    - deep-dive EPUB/PDF: include appendix content
    - PDF: no interactive controls; require static fallback representation
    - EPUB/PDF copy: describe only the fallback table, diagram, worked example,
      or note the reader can use
-7. If the English target day already has a Chinese route/include, Chinese mirroring is required unless the user explicitly asked for English-only. Use `180-descent-chinese-edition` Appendix Translation:
+8. If the English target day already has a Chinese route/include, Chinese mirroring is required unless the user explicitly asked for English-only. Use `180-descent-chinese-edition` Appendix Translation:
    - translate only the new appendix into Simplified Chinese with Kimi using explicit temporary input/output files
    - expect Kimi translation and GLM refinement to be very slow on long appendix HTML; keep polling and let them finish unless they exit with an error or the user explicitly tells you to stop
    - do not replace Kimi with a different translator just because the process is quiet for several minutes
    - insert it into the matching Chinese include without disturbing existing appendices
    - run the GLM refinement pass
    - manually review preservation of HTML structure, comments, classes, ids, data attributes, fallbacks, citations, URLs, DOI metadata, scripts, and terminology
-8. If images or other bundled assets are introduced, use `180-descent-assets`.
-9. Run the target-day checklist and project checks:
+9. If images or other bundled assets are introduced, use `180-descent-assets`.
+10. Run the target-day checklist and project checks:
 
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ### --require-zh
@@ -155,11 +186,11 @@ rtk npm run check
 ```
 
    Omit `--require-zh` only when the day has no Chinese edition or the user explicitly requested English-only.
-10. Verify artifacts:
+11. Verify artifacts:
    - inspect `OEBPS/day-###.xhtml` inside both standard and deep-dive EPUB editions
    - extract PDF text with Ghostscript `txtwrite`
    - confirm standard files omit appendix headings and deep-dive files include fallback headings
    - when zh is in scope, repeat the same omission/inclusion checks for Chinese EPUB/PDF/day-specific artifacts
-11. Commit only after verification and any requested human refinement are complete; use `180-descent-publish` for commit/push/deploy.
+12. Commit only after verification and any requested human refinement are complete; use `180-descent-publish` for commit/push/deploy.
 
 Do not edit generated files in `_site/` or `dist/`.

@@ -13,6 +13,7 @@
   if(storedTheme){
     root.setAttribute("data-theme", storedTheme);
   }
+  syncThemeButton();
 
   function systemDark(){
     return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -25,12 +26,58 @@
       var next = effective === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       storeTheme(next);
+      syncThemeButton();
     });
   }
 
+  initLiveRegions();
   initReadingProgress();
   initTipNotes();
   initCodexRefiner();
+
+  function syncThemeButton(){
+    if(!themeBtn){
+      return;
+    }
+    var cur = root.getAttribute("data-theme") || "auto";
+    var effective = cur === "auto" ? (systemDark() ? "dark" : "light") : cur;
+    var label = effective === "dark"
+      ? themeBtn.getAttribute("data-label-light")
+      : themeBtn.getAttribute("data-label-dark");
+    if(label){
+      themeBtn.setAttribute("aria-label", label);
+      themeBtn.setAttribute("title", label);
+    }
+    themeBtn.setAttribute("aria-pressed", effective === "dark" ? "true" : "false");
+  }
+
+  function initLiveRegions(){
+    var selectors = [
+      ".vexpl",
+      "#sumtxt",
+      "#ledger",
+      ".cm-outlet",
+      ".sd-verdict",
+      ".modal-verdict",
+      ".accuracy-ledger",
+      ".verdict-card",
+      ".grue-readout",
+      ".ii-verdict",
+      ".ii-vexpl",
+      ".post-readout",
+      ".ev-readout",
+      ".ev-verdict"
+    ].join(",");
+    var regions = document.querySelectorAll(selectors);
+    for(var i = 0; i < regions.length; i++){
+      if(!regions[i].hasAttribute("aria-live")){
+        regions[i].setAttribute("aria-live", "polite");
+      }
+      if(!regions[i].hasAttribute("aria-atomic")){
+        regions[i].setAttribute("aria-atomic", "true");
+      }
+    }
+  }
 
   function initTipNotes(){
     var notes = document.querySelectorAll(".tip-note");
