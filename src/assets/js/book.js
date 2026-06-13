@@ -159,6 +159,7 @@
   function initReadingProgress(){
     var lesson = document.querySelector("[data-reading-progress]");
     if(lesson){
+      restoreSavedAppendicesForCurrentLesson(lesson);
       var didResume = resumeSavedPosition(lesson);
       window.setTimeout(function(){
         rememberCurrentLesson(lesson);
@@ -304,6 +305,21 @@
       });
     }, { once: true });
 
+    return true;
+  }
+
+  function restoreSavedAppendicesForCurrentLesson(lesson){
+    if(!lesson){
+      return false;
+    }
+
+    var locale = lesson.getAttribute("data-reading-locale") || currentLocale();
+    var saved = readReadingProgress()[locale];
+    if(!isValidReadingRecord(saved) || normalizePath(saved.url) !== window.location.pathname){
+      return false;
+    }
+
+    restoreExpandedAppendices(lesson, saved.expandedAppendices);
     return true;
   }
 
