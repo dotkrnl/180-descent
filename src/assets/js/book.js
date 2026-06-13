@@ -45,6 +45,8 @@
         }
         notes[i].removeAttribute("data-open");
         notes[i].removeAttribute("data-align");
+        notes[i].removeAttribute("data-place");
+        notes[i].style.removeProperty("--tip-shift");
         var mark = notes[i].querySelector(".tip-note-mark");
         if(mark){
           mark.setAttribute("aria-expanded", "false");
@@ -58,16 +60,28 @@
       }
 
       note.removeAttribute("data-align");
+      note.removeAttribute("data-place");
+      note.style.removeProperty("--tip-shift");
       var box = note.querySelector(".tip-note-box");
       if(!box){
         return;
       }
 
       var rect = box.getBoundingClientRect();
-      if(rect.left < 12){
-        note.setAttribute("data-align", "left");
-      }else if(rect.right > window.innerWidth - 12){
-        note.setAttribute("data-align", "right");
+      var gutter = 12;
+      var shift = 0;
+      if(rect.left < gutter){
+        shift = gutter - rect.left;
+      }else if(rect.right > window.innerWidth - gutter){
+        shift = (window.innerWidth - gutter) - rect.right;
+      }
+
+      if(shift){
+        note.style.setProperty("--tip-shift", shift.toFixed(1) + "px");
+      }
+
+      if(rect.top < 72){
+        note.setAttribute("data-place", "below");
       }
     }
 
@@ -97,6 +111,8 @@
         }else{
           note.removeAttribute("data-open");
           note.removeAttribute("data-align");
+          note.removeAttribute("data-place");
+          note.style.removeProperty("--tip-shift");
           this.setAttribute("aria-expanded", "false");
         }
       });
