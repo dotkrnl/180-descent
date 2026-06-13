@@ -1,0 +1,382 @@
+<header class="hero wrap">
+<p class="eyebrow">模块一 · 知识与推理的根基 · <span class="daymark">第 05 日 / 180</span></p>
+<h1>因果性</h1>
+<p class="sub">冰淇淋销量与溺水人数同步起伏。但没有人是因为吃圣代而溺水的。那么，规律与因果之间的区别究竟在何处？</p>
+
+<figure class="hero-fig">
+<svg viewBox="0 0 460 300" role="img" aria-label="散点图显示冰淇淋销量与溺水人数同步上升，且有一个隐藏的「夏季」变量同时影响两者。">
+<!-- axes -->
+<line x1="56" y1="248" x2="438" y2="248" stroke="var(--line-strong)" stroke-width="1.5"></line>
+<line x1="56" y1="40" x2="56" y2="248" stroke="var(--line-strong)" stroke-width="1.5"></line>
+<text x="247" y="280" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">冰淇淋销量 →</text>
+<text x="20" y="150" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)" transform="rotate(-90 20 150)">溺水人数 →</text>
+<!-- trend line -->
+<line x1="74" y1="226" x2="416" y2="70" stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.7"></line>
+<!-- scatter points, colored by hidden season -->
+<g>
+<circle cx="92" cy="214" r="6" fill="color-mix(in srgb,var(--accent) 55%,transparent)"></circle>
+<circle cx="116" cy="206" r="6" fill="color-mix(in srgb,var(--accent) 55%,transparent)"></circle>
+<circle cx="140" cy="196" r="6" fill="color-mix(in srgb,var(--accent) 60%,transparent)"></circle>
+<circle cx="168" cy="188" r="6" fill="color-mix(in srgb,var(--accent) 60%,transparent)"></circle>
+<circle cx="196" cy="172" r="6" fill="color-mix(in srgb,var(--hint) 65%,transparent)"></circle>
+<circle cx="222" cy="168" r="6" fill="color-mix(in srgb,var(--hint) 65%,transparent)"></circle>
+<circle cx="252" cy="150" r="6" fill="color-mix(in srgb,var(--hint) 70%,transparent)"></circle>
+<circle cx="282" cy="140" r="6" fill="color-mix(in srgb,var(--contested) 60%,transparent)"></circle>
+<circle cx="312" cy="122" r="6" fill="color-mix(in srgb,var(--contested) 65%,transparent)"></circle>
+<circle cx="344" cy="108" r="6" fill="color-mix(in srgb,var(--contested) 70%,transparent)"></circle>
+<circle cx="372" cy="92" r="6" fill="color-mix(in srgb,var(--contested) 72%,transparent)"></circle>
+<circle cx="402" cy="78" r="6" fill="color-mix(in srgb,var(--contested) 75%,transparent)"></circle>
+</g>
+<!-- hidden confounder badge -->
+<g>
+<rect x="300" y="200" width="132" height="40" rx="8" fill="var(--raised)" stroke="var(--brass)" stroke-width="1.4"></rect>
+<text x="366" y="218" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--brass)">隐藏原因</text>
+<text x="366" y="232" text-anchor="middle" font-family="Fraunces,serif" font-size="13" font-weight="600" fill="var(--ink)">☀ 夏季高温</text>
+</g>
+</svg>
+<figcaption>点阵同步上行——这是典型的相关性。它们的颜色代表了图表中从未显示的变量：<span class="hl">季节</span>。高温既催生了甜筒销量，又驱使人们下水嬉戏。</figcaption>
+</figure>
+
+<p class="lede"><span class="drop">每</span>年夏天，有两个数字总是步调一致。随着冰淇淋销量的攀升，溺水人数也随之增加；当秋天到来、甜筒不再畅销时，溺水事件也逐渐平息。将它们绘制成图表，你会得到一条清晰、坚定的上升曲线——这种相关性往往会让粗心的分析师迫不及待地炮制出大新闻：「禁止冰淇淋，挽救生命」。然而你凭直觉就知道，这纯属无稽之谈。从来没有人因为吃圣代而溺亡。</p>
+
+<p>你凭直觉所感知的，正是科学中最难用笔墨形容的事物之一。有一个隐形的角色潜伏在幕后——<span class="hl">夏季</span>——它在同时操控着这两根弦。酷热驱使人们购买冰淇淋，同时也驱使人们进入湖泊和海洋，不幸的是，其中一些人会溺水。这两个可见的数字之所以共舞，只是因为有一个不可见的指挥家在指挥。今天的主题是捕捉这位不可见指挥家的机制，以及现代科学的一项重大发现：<span class="term">因果性</span>（causation）不仅仅是「加强版」的相关性。它位于一段梯子的高处，而这段梯子是你仅靠盯着数据无法爬上去的。</p>
+</header><div class="wrap">
+
+<div class="whereblock">
+<p class="label">◆ 课程进度</p>
+<p>课程进入第五日，工具箱里的工具开始相互咬合。<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>警告过我们，那些仅仅「凭运气」而正确的信念——就像坏掉的钟。<span class="term">虚假相关</span>（spurious correlation）{% tip '虚假相关是指两个测量变量之间存在真实的统计关联，但这种关联并非源于直接的因果联系，而是由其他因素引起的。' %}正是群体规模上的「坏钟」：一个数值是「对」的，但原因完全是错的。<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>介绍了休谟和归纳问题；今天我们再次遇见「同一个休谟」，因为他对因果性的攻击和对归纳的攻击本质上是同一把利刃。<a href="/zh/days/003-logic-and-valid-inference/">第 3 日</a>将推理分为演绎、归纳和溯因——我们将看到，因果发现正是「带刺的」溯因：它是对最佳因果解释的推导。而<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>为我们带来了「干预」（do）与「观察」（see）之别的基础，即概率：今天的核心结论「P(y|do(x)) ≠ P(y|x)」是本课程迄今为止最重要的不等式。</p>
+</div>
+
+<section>
+<p class="sec-eyebrow">最古老的问题</p>
+<h2>休谟踢翻了支撑</h2>
+<p>从麻烦开始的地方谈起。在 1739 年的《人性论》中，大卫·休谟提出了一个看似简单得离谱的问题：当一个台球撞击另一个台球，第二个球滚走时，你「究竟」看到了什么？你看到第一个球在移动。你看到它们相互接触。你看到第二个球开始移动。无论你多么努力地观察，你永远无法看到的，是<span class="hl">因果本身</span>：即连接这两个事件的「必然联系」、隐藏的力，或是那个代表「因为」的小箭头。</p>
+<p>休谟主张，我们实际观察到的只有<span class="term">恒常结合</span>（constant conjunction）{% tip '恒常结合意味着某种类型的事件反复紧随另一种类型的事件发生。' %}：此类事件总是可靠地跟随彼类事件发生。再加上原因在先（先后性）以及两个事件在时空上接触（连续性），你便拥有了经验所能提供的一切。那种「必然性」的感觉——即第二个球「不得不」移动的感觉——根本不存在于外部世界。它是一种思维习惯，是重复建立起来的惯常预期，然后像胶片投射到银幕上一样被投射回了现实世界。休谟发现，「原因」的两个定义在我们的脑海中纠缠在一起：一个是关于世界的（恒常结合），一个是关于我们的（思维从一个跳跃到另一个的熟练过程）。</p>
+<p>这听起来应该很耳熟。这正是<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日提到的归纳问题</a>换了件马甲。如果因果性仅仅是「此事件总在彼事件之后发生」，那么声称下一次碰撞会与上一次表现一致，就正是对「自然统一性」的无法证明的豪赌，而休谟已经证明这种豪赌永远无法在不产生循环论证的情况下获得辩护。因果与归纳是同一个伤口。在接下来的两个世纪里，哲学基本上就是在反复抓挠这个伤口。</p>
+
+<div class="aside">
+<p class="h">为什么叫「宇宙的粘合剂」？</p>
+<p>这个短语常与休谟联系在一起，但最好将其视为麦基的标题和意象：J. L. 麦基 1974 年的书名为《宇宙的粘合剂》（The Cement of the Universe）。休谟所乐见的讽刺依然存在：这种「粘合剂」是我们永远无法看到的。我们推断出胶水的存在，仅仅是因为砖块总能粘在一起。</p>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">四种修正</p>
+<h2>阐明「更多」的含义</h2>
+<p>如果因果性不仅仅是恒常结合，那么最显而易见的方法就是说明这「更多」的部分是什么。20 世纪产生了几个严肃的答案——以不同的方式来完成「C 导致 E 意味着……」这个句子。它们与其说是简单的对手，不如说是现代因果模型不断借用的透镜。</p>
+
+<div class="theory-key">
+<div class="k"><span class="who2">路易斯 · 1973</span><b><span class="term">反事实</span>（Counterfactual）{% tip '反事实询问如果某些事实发生改变，原本会发生什么。' %}。</b>「C 导致 E」意味着：「若 C 未发生，E 就不会发生。」通过「可能世界」来理解——想象一个 C 不存在的最接近现实的世界，并检查 E 是否仍然发生。简洁直观，但它必须应对「后备原因」和「双重打击」（预截和过度决定）的挑战。</div>
+<div class="k"><span class="who2">莱兴巴赫 · 萨佩斯 · 卡特赖特</span><b>概率性。</b>原因会提高其结果发生的概率。莱兴巴赫的<span class="term">共同原因原理</span>（common-cause principle）{% tip '共同原因原理指出，令人惊讶的相关性通常需要一个直接的因果链接，或是一个解释它的共同前置原因。' %}：如果 A 和 B 相关，但两者互不为因，那么一个共同的原因 C 会将其「屏蔽」（screen off）——固定 C，相关性就会消失。（正如夏季这个例子。）</div>
+<div class="k"><span class="who2">伍德沃德 · 2003</span><b>干预主义。</b>如果「拨动 C——且仅拨动 C——会改变 E」，那么 C 导致 E。不需要人类参与：一次<span class="term">干预</span>（intervention）{% tip '干预是一种理想化的改变，它在设定某个变量的值的同时，阻断了该变量通常的前置原因。' %}是一次「外科手术式」的扰动，因此即使没有人按下按钮，火山依然会导致火山灰。这是珀尔机制的哲学孪生兄弟，诞生于同一时代。</div>
+<div class="k"><span class="who2">核心脉络</span><b>一个问题，四个视角。</b>反事实 = 「如果没有发生会怎样？」；概率性 = 「在固定竞争对手的情况下，它是否提高了胜算？」；干预式 = 「如果我拨动它，会发生什么变化？」。接下来的珀尔框架为这三者提供了一套共同的语法。</div>
+</div>
+
+<p class="theory-note">注意卡特赖特 (1979) 是如何完善概率论述的，因为她的修正正是今天的转折点。原因确实提高了结果的概率——但仅限于在「因果同质」的背景下，即所有其他原因都保持固定的情况下。忘记这个前提，你就会直接掉进统计学中最精妙的陷阱。</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">陷阱</p>
+<h2>辛普森悖论：当数字发生彻底反转</h2>
+<p>这里有一个听起来不可思议、除非亲眼所见的事实：某种疗法可能<span class="hl">对小结石效果更好，对大结石效果也更好，但总体表现却更差</span>。不是「看起来更差」——而是在汇总数据上确实更差。同样的模式也曾推翻过一项明显的性别歧视「确凿证据」。这两者都是真实的数据集，下方的反转图表将向你展示这种反转是如何发生的。</p>
+
+<p>其机制总是一个「潜伏变量」在你所比较的组别之间分布不均。在肾结石数据（Charig 等人，《英国医学杂志》，1986 年）中，外科医生主要将温和的疗法 B 用于「容易处理」的小结石，而将传统的开放式手术 A 留给「困难」的大结石。因此，B 的整体成功率因其更容易处理的病例而显得虚高。如果按结石大小拆分——正如卡特赖特所要求的，固定<span class="term">混杂因素</span>（confounder）{% tip '混杂因素是影响表现原因和表现结果的第三个变量，导致它们同步变动。' %}——A 在两组中都会胜出。</p>
+</section>
+
+<!-- ===================== INTERACTIVE 1 : SIMPSON ===================== -->
+<div class="panel web-only causation-simpson">
+<p class="ptitle">互动 · 观察反转</p>
+<h4>反转机器</h4>
+<p class="pnote">1986 年真实的肾结石数据，每种疗法 350 名患者。在「汇总」视图和「按结石大小拆分」视图之间切换。观察哪种疗法「获胜」的结论如何反转——这种切换就是辛普森悖论，而解决它正是处理混杂因素的核心艺术。</p>
+
+<div class="simp-toggle" role="group" aria-label="视图模式">
+<button id="simp-pooled" type="button" aria-pressed="true">汇总（所有患者）</button>
+<button id="simp-split" type="button" aria-pressed="false">按结石大小拆分</button>
+</div>
+
+<div class="simp-wrap" id="simpWrap"></div>
+
+<div class="simp-winner A" id="simpWinner" aria-live="polite"></div>
+<div class="legend">
+<span><i class="A"></i> 疗法 A — 开放手术</span>
+<span><i class="B"></i> 疗法 B — 微创手术 (PCNL)</span>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表</p>
+<h4>肾结石辛普森反转</h4>
+<p class="pnote">当所有患者汇总时，疗法 B 看起来更好；但在每个结石大小组别内部，疗法 A 的表现都更优。</p>
+<table class="alt-table">
+<thead><tr><th>视图</th><th>疗法 A</th><th>疗法 B</th><th>表观赢家</th></tr></thead>
+<tbody>
+<tr><td>所有患者</td><td>273 / 350 = 78.0%</td><td>289 / 350 = 82.6%</td><td>B</td></tr>
+<tr><td>小结石</td><td>81 / 87 = 93.1%</td><td>234 / 270 = 86.7%</td><td>A</td></tr>
+<tr><td>大结石</td><td>192 / 263 = 73.0%</td><td>55 / 80 = 68.8%</td><td>A</td></tr>
+</tbody>
+</table>
+<p>汇总比较之所以反转，是因为 B 被更多地用于较容易处理的小结石病例。</p>
+</div>
+
+<section>
+<p>教训是惨痛的：<span class="hl">你无法从数字表格中读出因果关系。</span>完全相同的数字，根据一个甚至可能不在电子表格中的变量，可以支持截然相反的结论。这引出了一个统领后续所有内容的问题——如果光靠数据无法告诉你答案，那么「什么」能告诉你？答案来自一位计算机科学家，他在 20 世纪 80 年代致力于构建在不确定性下进行推理的机器：你需要添加数据中不包含的东西——一个关于「箭头指向何处」的模型。</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">因果革命</p>
+<h2>珀尔的梯子，以及改变一切的动词</h2>
+<p>朱迪亚·珀尔（Judea Pearl）获得了 2011 年的图灵奖——通常被称为计算机界的诺贝尔奖——「因其通过开发概率和因果推理演算，对人工智能做出的基础性贡献」。他的核心意象在他 2018 年的科普著作《为什么》（The Book of Why）中得以普及，即<span class="term">因果之梯</span>（Ladder of Causation）{% tip '珀尔的梯子将关联、干预和反事实推理分为三个层级，每个层级对问题的深度和证据的要求都比下一层更高。' %}。它分为三层，每一层都要求比下一层更深刻的问题和更有力的证据。珀尔喜欢讽刺道，大多数统计学和几乎所有的机器学习从未离开过最底层。</p>
+<p>亲自攀爬：</p>
+</section>
+
+<!-- ===================== INTERACTIVE 2 : LADDER ===================== -->
+<div class="panel web-only causation-ladder">
+<p class="ptitle">互动 · 攀爬因果之梯</p>
+<h4>因果性的三个阶梯</h4>
+<p class="pnote">点击阶梯。每一层都增加了一个动词、一个记号以及一个下一层「无法」回答的问题。从第 1 层到第 2 层的跨越，正是今天我们要探讨的全部内容。</p>
+
+<div class="ladder-grid">
+<div class="rung-btns" id="rungBtns">
+<button class="rungbtn" type="button" data-rung="3" aria-pressed="false">
+<span class="num">3</span>
+<span class="lab"><span class="verb">想象</span><b>反事实</b><span class="q">「要是当时我吃了阿司匹林，头痛现在是不是已经好了？——考虑到我当时并没吃，而且现在还在疼。」</span></span>
+</button>
+<button class="rungbtn" type="button" data-rung="2" aria-pressed="true">
+<span class="num">2</span>
+<span class="lab"><span class="verb">干预</span><b>干预</b><span class="q">「如果我吃了这片阿司匹林，我的头痛会消失吗？」</span></span>
+</button>
+<button class="rungbtn" type="button" data-rung="1" aria-pressed="false">
+<span class="num">1</span>
+<span class="lab"><span class="verb">观察</span><b>关联</b><span class="q">「看到有人买阿司匹林，在多大程度上预示着他患有头痛？」</span></span>
+</button>
+</div>
+
+<div class="ladder-vis">
+<svg viewBox="0 0 300 240" role="img" aria-label="一个三级阶梯；选定的层级被突出显示。">
+<!-- rails -->
+<line x1="70" y1="20" x2="70" y2="226" stroke="var(--line-strong)" stroke-width="4" stroke-linecap="round"></line>
+<line x1="230" y1="20" x2="230" y2="226" stroke="var(--line-strong)" stroke-width="4" stroke-linecap="round"></line>
+<!-- rung 3 (top) -->
+<g id="lr3">
+<line x1="70" y1="56" x2="230" y2="56" stroke="var(--ink-faint)" stroke-width="6" stroke-linecap="round"></line>
+<text x="150" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">想象</text>
+</g>
+<!-- rung 2 (mid) -->
+<g id="lr2">
+<line x1="70" y1="128" x2="230" y2="128" stroke="var(--ink-faint)" stroke-width="6" stroke-linecap="round"></line>
+<text x="150" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">干预</text>
+</g>
+<!-- rung 1 (bottom) -->
+<g id="lr1">
+<line x1="70" y1="200" x2="230" y2="200" stroke="var(--ink-faint)" stroke-width="6" stroke-linecap="round"></line>
+<text x="150" y="184" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">观察</text>
+</g>
+<!-- climber -->
+<circle id="climber" cx="150" cy="128" r="11" fill="var(--accent)" stroke="var(--raised)" stroke-width="3"></circle>
+</svg>
+
+<div class="rung-detail" id="rungDetail" aria-live="polite"></div>
+</div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表</p>
+<h4>珀尔的因果之梯</h4>
+<table class="alt-table">
+<thead><tr><th>层级</th><th>动词</th><th>记号</th><th>问题</th></tr></thead>
+<tbody>
+<tr><td>1. 关联</td><td>观察</td><td>P(Y | X)</td><td>在观察到 X 的案例中，结果有何不同？</td></tr>
+<tr><td>2. 干预</td><td>干预</td><td>P(Y | do(X))</td><td>如果通过干预设定了 X，会发生什么？</td></tr>
+<tr><td>3. 反事实</td><td>想象</td><td>P(Y<sub>x</sub> | X', Y')</td><td>在给定实际发生情况的前提下，在另一个不同的世界里会发生什么？</td></tr>
+</tbody>
+</table>
+</div>
+
+<section>
+<h3>do-算子：观察不等于干预</h3>
+<p>这是整个现代因果领域的概念枢纽，值得仔细体味。对于变量 X，你可以进行两种截然不同的操作。</p>
+<p>你可以对它进行调节（conditioning）{% tip '调节是指将注意力缩小到某个变量已经具有给定值的案例上。' %}——记作 <code>P(Y | X = x)</code>。这意味着：在所有 X「恰好」等于 x 的案例中，Y 的分布是怎样的？你是在过滤现有的群体。这就是「观察」（seeing）。</p>
+<p>或者你可以进行干预——在珀尔的记号中写为 <code>P(Y | do(X = x))</code>。这意味着：介入其中，强迫每个人的 X 都等于 x，将 X 与其通常的原因切断，然后观察 Y。这就是「干预」（doing）——这正是随机实验所做的事情。</p>
+<p>当存在混杂因素时，这两个数值就会分离，而它们之间的差距就是「偏差」。在那些「恰好」买了大量冰淇淋的人中，溺水确实更常见（因为他们是夏天的那批人）——所以「观察」到的数值很高。但是，如果你「强迫」一组随机样本在（比如说）分布均匀的天气里买冰淇淋，溺水人数并不会变化——「干预」后的数值是平整的。下方的机器让你能够调节混杂因素的强度，观察这两个数值如何分道扬镳。</p>
+</section>
+
+<!-- ===================== INTERACTIVE 3 : DO vs SEE ===================== -->
+<div class="panel web-only causation-do-see">
+<p class="ptitle">互动 · 观察与干预</p>
+<h4>do-算子与观察眼</h4>
+<p class="pnote">一个模型世界：一个隐藏原因（夏季）同时推高了冰淇淋购买量和游泳溺水人数。你也可以自己设定一个微小的真实直接效应（例如，游泳前吃太饱导致的抽搐）。滑动混杂因素的强度，观察幼稚的「观察」估值如何膨胀，而诚实的「干预」估值则仅追踪真实的效应。</p>
+
+<div class="dovs-controls">
+<div class="slider-row">
+<label for="rConf">隐藏混杂因素的强度（夏季 → 两者） <span class="val" id="vConf">0.75</span></label>
+<input type="range" id="rConf" min="0" max="100" value="75" aria-label="混杂因素强度">
+</div>
+<div class="slider-row">
+<label for="rTrue">冰淇淋对溺水的真实直接效应 <span class="val" id="vTrue">0.05</span></label>
+<input type="range" id="rTrue" min="0" max="40" value="5" aria-label="真实直接效应">
+</div>
+
+<div class="dovs-stage">
+<div class="dovs-card see">
+<p class="cap">第 1 层 · 观察</p>
+<p class="expr">P(溺水 | 购买) − P(溺水 | 未购买)</p>
+<svg viewBox="0 0 200 96" role="img" aria-label="图表显示夏季指向冰淇淋和溺水；虚假路径是开启的。">
+<text x="100" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--brass)">☀ 夏季</text>
+<line x1="78" y1="22" x2="36" y2="58" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
+<line x1="122" y1="22" x2="164" y2="58" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
+<line x1="44" y1="68" x2="150" y2="68" stroke="var(--contested)" stroke-width="2" marker-end="url(#ah1)"></line>
+<text x="30" y="80" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">冰淇淋</text>
+<text x="172" y="80" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">溺水</text>
+<defs><marker id="ah1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
+</svg>
+<p class="dovs-num" id="numSee">—<small>看起来像是效应</small></p>
+</div>
+
+<div class="dovs-card do">
+<p class="cap">第 2 层 · 干预</p>
+<p class="expr">P(溺水 | do(购买)) − P(溺水 | do(未购买))</p>
+<svg viewBox="0 0 200 96" role="img" aria-label="同样的图表，但从夏季到冰淇淋的箭头被干预切断了。">
+<text x="100" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--brass)">☀ 夏季</text>
+<line x1="78" y1="22" x2="36" y2="58" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="3 3"></line>
+<line x1="59" y1="36" x2="49" y2="46" stroke="var(--contested)" stroke-width="2.4"></line>
+<line x1="49" y1="36" x2="59" y2="46" stroke="var(--contested)" stroke-width="2.4"></line>
+<line x1="122" y1="22" x2="164" y2="58" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah2)"></line>
+<line x1="44" y1="68" x2="150" y2="68" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah2)"></line>
+<text x="30" y="80" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">冰淇淋</text>
+<text x="172" y="80" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">溺水</text>
+<text x="54" y="32" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--contested)">切断</text>
+<defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
+</svg>
+<p class="dovs-num" id="numDo">—<small>真实效应</small></p>
+</div>
+</div>
+
+<div class="dovs-verdict gap" id="dovsVerdict" aria-live="polite">
+<p class="vh" id="dovsVH">混杂偏差</p>
+<p id="dovsBody"></p>
+</div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">案例详解</p>
+<h4>观察不等于干预</h4>
+<p>在这个模型世界中，观察到的关联等于真实直接效应加上来自夏季的偏差项。在默认设置下，真实直接效应为 +0.05，但观察到的关联要大得多，因为夏季同时推高了冰淇淋购买量和游泳死亡人数。</p>
+<table class="alt-table">
+<thead><tr><th>量</th><th>问题含义</th><th>默认读数</th></tr></thead>
+<tbody>
+<tr><td>P(溺水 | 购买) - P(溺水 | 未购买)</td><td>观察：比较现有的购买者与非购买者。</td><td>真实效应加上混杂偏差。</td></tr>
+<tr><td>P(溺水 | do(购买)) - P(溺水 | do(未购买))</td><td>干预：直接设定购买行为并切断其通常的原因。</td><td>仅包含真实直接效应。</td></tr>
+</tbody>
+</table>
+</div>
+
+<section>
+<p>右侧图中被切断的箭头就是 do-算子的直观表现。干预不仅仅是「看」X——它<span class="hl">删除了指向 X 的箭头</span>，并用你的「手」取而代之。「夏季 → 冰淇淋」的链接被切断，因此夏季再也无法利用冰淇淋作为「后门路径」来伪造对溺水的效应。留下来的只有真实的因果关系。</p>
+<p>珀尔为我们提供了一套在纸上进行此类操作的语法。一个<span class="term">结构因果模型</span>（structural causal model）{% tip '结构因果模型描述了变量是如何从其他变量和背景噪声中生成的。' %}将变量绘制为<span class="term">有向无环图</span>（directed acyclic graph，简称 DAG）{% tip '有向无环图（DAG）是由箭头组成的网络，且不包含任何有向环。' %}——即由方框和箭头组成且无循环的图——其中三种命名模式承担了大部分工作。一个<span class="term">叉形</span>（fork，X ← Z → Y）是一个混杂因素；通过调节 Z 来阻断它。一个<span class="term">链形</span>（chain，X → Z → Y）是一个中介因子。而一个<span class="term">对撞形</span>（collider，X → Z ← Y）则是陷阱：X 和 Y 本身无关，直到你调节了它们的共同结果 Z，此时一个幻影般的相关性便会跃然纸上。这就是为什么「控制你能测量的一切」并非严谨而是鲁莽——调节一个对撞因子，你就会「制造」出你原本试图消除的偏差。</p>
+<div class="aside">
+<p class="h">前门技巧</p>
+<p>珀尔的<span class="term">前门准则</span>（front-door criterion）{% tip '前门准则通过测量中介因子，在直接因果路径被混杂的情况下识别因果效应。' %}是该框架中最巧妙的招式之一：有时即使存在未测量的基因混杂因素，你仍然可以估算吸烟对癌症的效应，只要你能测量中间的一个完整中介因子（例如肺部的焦油沉积）。通过中介因子进行计算，隐藏的混杂因素就会抵消掉。这是一种真正的「从观察数据中获取因果答案」的手段——但至关重要的一点是，这仅仅是因为你提供了一张说明焦油是完整中介因子的「图表」。天下没有免费的午餐：假设只是从电子表格转移到了图表中。</p>
+</div>
+</section>
+
+<section class="frontier">
+<p class="sec-eyebrow">前沿 · 2026</p>
+<h2>三个活跃领域——以及「炒作」过滤器</h2>
+<p>现在来谈谈那个催生了数千篇论文、甚至开创了一个行业的问题：<span class="hl">你能仅从观察中推断出因果吗？</span>2026 年的坦诚回答是精确的「部分可以——但存在一堵已被证明的墙」。下方的每项声明都标明了其可信度。</p>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">前沿 01</span>
+<span class="chip ok" data-print="已确立"><i></i>do-演算完备性 · 已证定理</span>
+<span class="chip ok" data-print="已确立"><i></i>马尔可夫等价天花板 · 已证</span>
+</div>
+<h3>圈定领域的两个定理</h3>
+<p>这是今天最稳固的基石——它不是可能被推翻的经验发现，而是「数学证明」。首先，do-演算是完备的。珀尔的三条重写规则只要在可能的情况下，就能将 <code>do()</code> 表达式转化为普通的概率；Shpitser &amp; Pearl (2006) 以及黄与瓦尔托塔 (2006) 独立证明了，如果这些规则「无法」消除 do-算子，那么没有任何方法可以做到——该效应在观察数据加上那张图的前提下确实是不可识别的。珀尔称这终结了「非参数识别的篇章」。对于「观察何时能替代干预」这一问题，这是一个简洁、永久的答案。</p>
+<p>其次，是另一边的墙：马尔可夫等价天花板。仅利用观察数据中的条件独立模式，某些不同的因果图在「证明上是不可区分的」。X→Y→Z、X←Y←Z 和 X←Y→Z 都暗示了同一个事实（「一旦知道 Y，X 和 Z 就是独立的」），因此再多的此类数据也无法区分它们。它们构成了一个<span class="term">马尔可夫等价类</span>（Markov equivalence class）{% tip '马尔可夫等价类是一组暗示相同条件独立性的因果图，因此此类观察数据无法在它们之间做出选择。' %}。只有对撞结构 X→Y←Z 是独特的。结论是冷酷的：<span class="hl">在无假设的情况下，单靠观察永远无法提供唯一的因果图</span>——只能提供一类候选。这两项结果在最强的意义上都是 <span class="chip ok" data-print="已确立"><i></i>已确立</span> 的：它们是定理。</p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">前沿 02</span>
+<span class="chip hint" data-print="前景可期"><i></i>从数据推导方向 · 在特定假设下有效</span>
+<span class="chip ok" data-print="已确立"><i></i>随机对照试验与可信度革命 · 已确立</span>
+</div>
+<h3>从静态数据中榨取方向——以及为什么实验依然为王</h3>
+<p>那么，这堵墙就是终点吗？并非如此——你可以通过引入独立性测试本身不使用的额外假设来翻越它。<span class="term">LiNGAM</span>（Shimizu 等人，《机器学习研究》，2006 年）{% tip 'LiNGAM 是一种因果发现方法，其名称是「线性非高斯无环模型」的缩写。' %}证明了，如果关系是线性的、没有隐藏混杂因素，且噪声是「非高斯」的，那么完整的方向就是可识别的——非高斯噪声的不对称性打破了 X→Y 和 Y→X 之间的平局。<span class="term">加性噪声模型</span>（additive-noise models）{% tip '加性噪声模型假设效应等于原因的函数加上独立的噪声，这种不对称性有时可以识别因果方向。' %}（Hoyer, Janzing, Mooij, Peters &amp; Schölkopf, NeurIPS 2009）将这一理论扩展到了非线性因果对。在标准的 Tübingen 因果对（Tübingen Cause-Effect Pairs）{% tip 'Tübingen 基准是一组由专家标记了因果方向的真实世界变量对。' %}基准测试中——108 对具有已知真实情况的数据，如「海拔 → 温度」——一个强大的系统报告了约 83% 的准确率（Mosaic, Wu &amp; Fukumizu 2020），这证明了一些「通常被认为不可能」的事情在部分程度上是可行的。但请注意这种技巧的形式：你只有通过「假设」非高斯性或加性才能翻过墙。这些假设单靠同一份观察分布是无法验证的——而且对于整个基于约束的项目来说，那个起支撑作用的假设——<span class="term">忠实性</span>（faithfulness）{% tip '忠实性是指数据中的独立性反映了图结构，而非因果路径之间精确的相互抵消。' %}，在有限样本中可能会悄无声息地失效。<span class="chip hint" data-print="前景可期"><i></i>有前景 / 在特定假设下有效。</span></p>
+<p>这就是为什么金标准依然简单得残酷：做实验。一次<span class="term">随机对照试验</span>（randomized controlled trial，简称 RCT）{% tip '随机对照试验通过随机分配参与者到不同条件，从而使背景原因在平均意义上达到平衡。' %}通过随机分配 X 物理地执行了 <code>do(X)</code>，一举切断了所有后门路径。当你无法进行随机化时，经济学中的<span class="term">可信度革命</span>（credibility revolution）{% tip '经济学中的可信度革命强调模拟实验的研究设计，如工具变量和断点回归。' %}会寻找模仿随机化的「自然实验」——工具变量、断点回归、双重差分法。该项目为大卫·卡德、约书亚·安格里斯特和圭多·因本斯赢得了 2021 年诺贝尔经济学奖（我们将在第 152 日详细讨论）。<span class="chip ok" data-print="已确立"><i></i>已确立。</span></p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">前沿 03</span>
+<span class="chip hint" data-print="前景可期"><i></i>因果表征学习 · 有前景的项目</span>
+<span class="chip bad" data-print="争议/炒作"><i></i>「LLM 具有因果推理能力」 · 有争议</span>
+</div>
+<h3>机器能做到吗？因果机器学习与「因果鹦鹉」</h3>
+<p>最热门也最模糊的前沿。<span class="term">因果表征学习</span>（causal representation learning）（Schölkopf 等人，《IEEE 会报》，2021 年 5 月）{% tip '因果表征学习试图从原始数据（如像素、文本或传感器流）中学习有用的因果变量。' %}提出了一个深刻的问题：经典的因果发现假设变量是现成提供给你的，但现实世界是以像素和单词的形式呈现的。网络能否「学习」到高层因果变量——这是否能带来对<span class="term">分布偏移</span>（distribution shift）{% tip '分布偏移意味着模型部署后看到的数据与其学习时的数据存在差异。' %}的鲁棒性（这是当今模型通常缺乏的）？这是一个严肃且活跃的项目，其最大的承诺目前仍属于 <span class="chip hint" data-print="前景可期"><i></i>有前景的线索</span>，尚未大规模兑现。</p>
+<p>接着是引雷针问题：大型语言模型能进行因果推理吗？Kıcıman, Ness, Sharma &amp; Tan (2023) 报告称，GPT-4 在 Tübingen 成对因果方向任务上达到了 97% 的准确率——比之前的最佳成绩提高了 13 个百分点——并在反事实评分上表现强劲，认为仅凭记忆无法解释这一点。反驳意见也来得很快：Zečević 等人的《因果鹦鹉》（Causal Parrots，TMLR 2023）辩称，LLM 只是在「谈论」因果而自身并「非」因果——它们是在背诵沉浸在训练文本中的因果事实，而非执行珀尔式的推理。2024-25 年的综合观点（例如 Jin 等人，ICLR 2024，《大模型能从相关性中推断因果吗？》）采取了折中立场：模型是强大的「因果知识检索器」，在第 1 层问题上通常表现出色，但真正的考验是全新的第 2/3 层干预和反事实结构。回想一下<a href="/zh/days/001-what-is-knowledge/">第 1 日的盖梯尔陷阱</a>的新变体：一个输出正确因果声明的 LLM，如果其原因与因果结构无关，那么它是对的，但它「知道」吗？再回想一下<a href="/zh/days/003-logic-and-valid-inference/">第 3 日</a>：背诵记忆的事实并不是溯因。关于「LLM 在珀尔意义上具有因果推理能力」的结论：<span class="chip bad" data-print="争议/炒作"><i></i>有争议 / 炒作。</span> 它对于「建立」因果分析很有用，但尚未确立为因果推理器。因果机器学习底层的开源工具（DoWhy, EconML）是真实的，且建立在上述定理之上，但关于「因果 AI 将很快取代普通相关性机器学习」的营销口号仍超前于证据。</p>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">开放性问题</p>
+<h2>尚未定论的问题</h2>
+<ul class="clean">
+<li>是否存在一种「正确」的因果理论？或者反事实、概率性和干预主义论述各抓住了不同的侧面，且都无法还原为其他论述？没有任何分析能避开所有的反例（预截、过度决定、情境一致性）。</li>
+<li>我们在多大程度上可以信任忠实性？即假设现实系统永远不会有精确抵消的因果路径，这很方便但无法测试——而具有反馈和稳态机制的生物学可能会经常违反它。</li>
+<li>因果变量能否从原始数据（像素、语言）中学习，而不是手动交给算法？这甚至是一个定义良好的问题吗？因为将世界划分为变量的「正确」方式本身可能就取决于视角。</li>
+<li>大型模型是否构建了内部因果世界模型，还是仅仅建立了因果言论的统计模型？答案直接指向第 138-145 日，以及预测是否等同于理解的问题。</li>
+<li>箭头从何而来？这里的每种方法都需要「某种」因果输入——一张图、一个假设或一个实验。休谟的幽灵依然在发问：这些输入究竟是从世界中读取的，还是带入到世界中去的？</li>
+</ul>
+</section>
+
+<div class="recap">
+<p class="h">◆ 今日三句话总结</p>
+<dl>
+<div><dt>核心思想</dt><dd>因果性不是更强的相关性，而是一种「不同类型」的事物，它位于珀尔阶梯的更高层级——「干预」和「想象」高于单纯的「观察」——因此只要存在混杂因素， <code>P(Y|do(X)) ≠ P(Y|X)</code> 就会成立，而在不引入因果假设的情况下，光靠盯着观察数据无法消除这一鸿沟。</dd></div>
+<div><dt>最佳类比</dt><dd>冰淇淋和溺水人数同步上升，而夏季在幕后同时操控着这两根弦；do-算子就像一把剪刀，切断了进入变量的弦，让你能看清它真正驱动的是什么。</dd></div>
+<div><dt>实时争议</dt><dd>因果能否仅从观察中推断——在没有额外假设的情况下，证明只能推断到「马尔可夫等价类」，但在有假设的情况下（LiNGAM、加性噪声）可以部分恢复；以及 2026 年关于 LLM 究竟是具有真实的因果推理能力还是仅仅在模仿因果言论的激烈争论。</dd></div>
+</dl>
+<p class="threads"><span class="threads-label">今日线索 ›</span> 信息（图表是数据所缺乏的额外信息；do-算子量化了证据与干预的区别） · 计算（do-演算作为一种完备的「算法」；因果发现作为一种搜索） · 涌现（因果结构是原始相关性之上的更高层级）——并回溯至 <a href="/zh/days/001-what-is-knowledge/">第 1 日</a>（凭运气正确）、<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>（休谟）、<a href="/zh/days/003-logic-and-valid-inference/">第 3 日</a>（溯因）以及 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>（P(y|x)）。</p>
+</div>
+
+<div class="tomorrow">
+<p class="h">明日 <span class="arrow">→</span> 第 06 日</p>
+<h3>统计学与不自欺的艺术</h3>
+<p>今天我们看到了混杂因素如何反转结论。明日我们将遇到更微妙的敌人：<span class="hl">你自己</span>。硬币实验中的 p-值操纵、路径分叉花园、效应量与对「显著性」的崇拜——我们刚刚遇到的对撞机陷阱将作为诚实的分析师欺骗诚实听众的最简单方式之一再次出现。带着今天的本能，每一次都去追问：「那张图表上没有显示的变量是什么？」</p>
+</div>
+
+<hr class="div">
+
+<section class="sources">
+<p class="sec-eyebrow">证据</p>
+<h2>来源与深入阅读</h2>
+<ol>
+<li>Hume, D. (1739–40). <em>A Treatise of Human Nature</em>, Book I, Part III; and (1748) <em>An Enquiry Concerning Human Understanding</em>, §VII. <span class="meta">— 恒常结合；无可见的必然联系。</span></li>
+<li>Mackie, J. L. (1974). <em>The Cement of the Universe: A Study of Causation.</em> Oxford University Press. <span class="meta">— INUS 条件；书名短语。</span></li>
+<li>Lewis, D. (1973). "Causation." <em>Journal of Philosophy</em> 70(17): 556–567. <span class="meta">doi:10.2307/2025310.</span> <a href="https://doi.org/10.2307/2025310">doi.org/10.2307/2025310</a> 另见 Lewis, <em>Counterfactuals</em> (Blackwell, 1973)；修订后的 "influence" 论述 (2000)。</li>
+<li>Reichenbach, H. (1956). <em>The Direction of Time.</em> University of California Press. <span class="meta">— 共同原因原理与屏蔽。</span></li>
+<li>Suppes, P. (1970). <em>A Probabilistic Theory of Causality.</em> North-Holland. <span class="meta">— 表面原因与虚假原因。</span></li>
+<li>Cartwright, N. (1979). "Causal Laws and Effective Strategies." <em>Noûs</em> 13(4): 419–437. <span class="meta">— 仅在因果同质背景下的概率提升。</span> <a href="https://academic.oup.com/book/27605/chapter/197659592">概览</a></li>
+<li>Woodward, J. (2003). <em>Making Things Happen: A Theory of Causal Explanation.</em> Oxford University Press. <span class="meta">— 干预主义/操控主义理论。</span></li>
+<li>Bickel, P. J., Hammel, E. A. &amp; O'Connell, J. W. (1975). "Sex Bias in Graduate Admissions: Data from Berkeley." <em>Science</em> 187(4175): 398–404. <span class="meta">doi:10.1126/science.187.4175.398.</span> <a href="https://doi.org/10.1126/science.187.4175.398">doi.org/10.1126/science.187.4175.398</a></li>
+<li>Charig, C. R., Webb, D. R., Payne, S. R. &amp; Wickham, J. E. A. (1986). "Comparison of treatment of renal calculi by open surgery, percutaneous nephrolithotomy, and extracorporeal shockwave lithotripsy." <em>British Medical Journal</em> 292: 879–882. <span class="meta">— 肾结石辛普森悖论数据。</span></li>
+<li>Simpson, E. H. (1951). "The Interpretation of Interaction in Contingency Tables." <em>JRSS B</em> 13: 238–241. Blyth, C. R. (1972), <em>JASA</em> 67: 364–366 (提出 "Simpson's paradox" 一词)。Yule, G. U. (1903) 关于虚假相关。</li>
+<li>Pearl, J. (2009). <em>Causality: Models, Reasoning, and Inference</em>, 2nd ed. Cambridge University Press. 以及 Pearl, J. &amp; Mackenzie, D. (2018). <em>The Book of Why.</em> Basic Books. <span class="meta">— 因果之梯；do-演算；后门/前门。</span></li>
+<li>Shpitser, I. &amp; Pearl, J. (2006). "Identification of Joint Interventional Distributions in Recursive Semi-Markovian Causal Models." <em>AAAI.</em> &amp; Huang, Y. &amp; Valtorta, M. (2006). "Pearl's Calculus of Intervention Is Complete." <em>UAI.</em> <span class="meta">— do-演算的完备性（已证）。</span></li>
+<li>ACM (2012). 2011 A.M. Turing Award — Judea Pearl. <a href="https://amturing.acm.org/award_winners/pearl_2658896.cfm">amturing.acm.org/award_winners/pearl</a></li>
+<li>Spirtes, P., Glymour, C. &amp; Scheines, R. (2000). <em>Causation, Prediction, and Search</em>, 2nd ed. MIT Press. <span class="meta">— PC 与 FCI 算法；马尔可夫等价。</span></li>
+<li>Shimizu, S., Hoyer, P. O., Hyvärinen, A. &amp; Kerminen, A. (2006). "A Linear Non-Gaussian Acyclic Model for Causal Discovery." <em>JMLR</em> 7: 2003–2030. <a href="https://github.com/amber0309/LiNGAM">参考代码</a></li>
+<li>Hoyer, P., Janzing, D., Mooij, J., Peters, J. &amp; Schölkopf, B. (2009). "Nonlinear causal discovery with additive noise models." <em>NeurIPS.</em> Mooij, J. et al. (2016). "Distinguishing Cause from Effect Using Observational Data." <em>JMLR</em> 17(32): 1–102. Wu, P. &amp; Fukumizu, K. (2020). "Causal Mosaic: Cause-Effect Inference via Nonlinear ICA and Ensemble Method." <em>Proceedings of Machine Learning Research</em> 108: 1157–1167. <span class="meta">— 加性噪声模型、Tübingen 成对基准与 Mosaic 结果。</span></li>
+<li>Schölkopf, B., Locatello, F., Bauer, S., Ke, N. R., Kalchbrenner, N., Goyal, A. &amp; Bengio, Y. (2021). "Toward Causal Representation Learning." <em>Proceedings of the IEEE</em> 109(5): 612–634. <span class="meta">doi:10.1109/JPROC.2021.3058954.</span></li>
+<li>Kıcıman, E., Ness, R., Sharma, A. &amp; Tan, C. (2023). "Causal Reasoning and Large Language Models." <span class="meta">arXiv:2305.00050; TMLR 2024.</span> &amp; Zečević, M., Willig, M., Dhami, D. S. &amp; Kersting, K. (2023). "Causal Parrots: Large Language Models May Talk Causality But Are Not Causal." <em>TMLR.</em> <span class="meta">arXiv:2308.13067.</span> &amp; Jin, Z. et al. (2024). "Can Large Language Models Infer Causation from Correlation?" <em>ICLR.</em></li>
+<li>The Royal Swedish Academy of Sciences (2021). The Sveriges Riksbank Prize in Economic Sciences — Card, Angrist &amp; Imbens. <a href="https://www.nobelprize.org/prizes/economic-sciences/2021/summary/">nobelprize.org/prizes/economic-sciences/2021</a></li>
+<li>Stanford Encyclopedia of Philosophy: "Causation" / "Counterfactual Theories of Causation" / "Causal Models" / "Probabilistic Causation." <a href="https://plato.stanford.edu/entries/causation-counterfactual/">plato.stanford.edu/entries/causation-counterfactual</a></li>
+</ol>
+</section>
+
+<p class="endcap">第 05 日结束 · <span class="gleam">还剩 175 次深入</span></p>
+
+</div>
