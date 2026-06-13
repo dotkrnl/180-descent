@@ -155,11 +155,16 @@
       var mark = note.querySelector(".tip-note-mark");
       var markRect = mark ? mark.getBoundingClientRect() : noteRect;
       var gutter = 12;
+      var viewportWidth = document.documentElement ? document.documentElement.clientWidth : 0;
+      if(window.visualViewport && window.visualViewport.width){
+        viewportWidth = viewportWidth ? Math.min(viewportWidth, window.visualViewport.width) : window.visualViewport.width;
+      }
+      viewportWidth = viewportWidth || window.innerWidth;
       var shift = 0;
       if(rect.left < gutter){
         shift = gutter - rect.left;
-      }else if(rect.right > window.innerWidth - gutter){
-        shift = (window.innerWidth - gutter) - rect.right;
+      }else if(rect.right > viewportWidth - gutter){
+        shift = (viewportWidth - gutter) - rect.right;
       }
 
       var left = rect.left + shift;
