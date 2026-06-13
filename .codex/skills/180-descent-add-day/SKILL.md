@@ -109,6 +109,32 @@ already defined before or immediately during the mention.
    shortcode syntax and manually check that Chinese punctuation does not break
    Nunjucks parsing.
 
+## SEO Gate
+
+Every new normal day is a public indexable page. Before a day is considered
+ready, confirm its route shell supports the shared SEO system:
+
+1. Keep front matter `title`, `summary`, `day`, `day_path`, `locale` when
+   applicable, `permalink`, and `content_template` accurate. The shared base
+   layout uses `summary` as the day meta description, Open Graph/Twitter
+   description, and LearningResource JSON-LD description when no explicit
+   `description` is present.
+2. Write `summary` as a concise search-result snippet for the lesson, not as an
+   internal note. It should identify the concrete puzzle/model and why the day
+   matters.
+3. Do not set `robots: noindex`, `sitemap_exclude: true`, `canonical_url`, or
+   `seo_image` for normal day pages unless the user explicitly requests a
+   special case and the reason is documented.
+4. Preserve the same `day_path` across English and Chinese editions. The base
+   layout derives canonical URLs, reciprocal `hreflang`, previous/next links,
+   and day-specific social-card paths from this metadata.
+5. Do not manually edit generated files in `src/assets/images/social/`. Run the
+   build or `rtk node scripts/generate-social-cards.mjs`; it creates/refreshes
+   default and per-day PNG cards from route-shell front matter.
+6. After building, run `rtk npm run check:seo` or the full `rtk npm run check`
+   and fix any missing canonical, hreflang, sitemap, JSON-LD, or social-image
+   issue before treating the addition as complete.
+
 ## Workflow
 
 1. Identify day number, title, block, entry analogy, model, debate, and frontier from `src/_data/syllabus.yaml`.
@@ -116,6 +142,7 @@ already defined before or immediately during the mention.
    - route shell: `src/days/day-###-slug.md`
    - lesson body: `src/_includes/days/###-slug/en.njk`
    Use `scripts/import-day-from-html.mjs` when it fits the source, then correct front matter from the syllabus as needed.
+   Confirm the route shell passes the SEO Gate before moving on.
 3. Review the lesson text:
    - preserve the teaching arc and voice
    - run the Fact-Check Gate before keeping or adding factual claims
@@ -166,6 +193,7 @@ already defined before or immediately during the mention.
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ###
 rtk npm run build
+rtk npm run check:seo
 rtk npm run check
 ```
 
@@ -174,6 +202,9 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
 ## Required Outputs
 
 - Updated `src/days/day-###-slug.md` route shell with `content_template`, optional `scripts`, permalink, and `{% include content_template %}`
+- SEO-ready day front matter: accurate `title`, snippet-quality `summary`,
+  stable `day_path`, correct locale/permalink metadata, and no accidental
+  `noindex`, `sitemap_exclude`, custom canonical, or stale custom social image
 - Added or updated `src/_includes/days/###-slug/en.njk` lesson body
 - Added or updated Chinese route shell, Chinese lesson include, `src/_data/syllabus_zh.yaml`, and `src/zh/introduction.md` when the repo has a Chinese edition unless the user explicitly skipped it
 - Correct inline tomorrow block link behavior for both English and Chinese editions when present: published next days link to their route; unpublished next days remain unlinked
@@ -185,6 +216,9 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
   `180-descent-assets`, or proposed/rejected/no-useful-candidate status reported
   to the user before commit/publish
 - Added or reused `src/assets/js/interactions/*.js` modules for live components, with adjacent print/EPUB fallbacks in the lesson body
+- Generated or refreshed social-card PNGs through
+  `scripts/generate-social-cards.mjs`, with `check:seo` passing for canonical,
+  hreflang, sitemap, JSON-LD, and social-image coverage
 - Passing target-day checklist, site build, EPUB/PDF build, link/content checks, EPUB structural checks, and PDF checks
 
 Do not edit generated files in `_site/` or `dist/`; they are build outputs.

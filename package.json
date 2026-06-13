@@ -8,15 +8,16 @@
     "clean": "rm -rf _site dist",
     "dev": "node scripts/prepare-fonts.mjs && eleventy --serve",
     "serve": "npm run dev",
-    "build:site": "node scripts/prepare-fonts.mjs && eleventy",
+    "build:site": "node scripts/prepare-fonts.mjs && node scripts/generate-social-cards.mjs && eleventy",
     "build:epub": "node scripts/build-epub.mjs",
     "build:pdf": "node scripts/build-pdf.mjs",
     "build": "npm run build:site && npm run build:epub && npm run build:pdf",
     "check:links": "node scripts/check-links.mjs",
     "check:content": "node scripts/check-content.mjs",
+    "check:seo": "node scripts/check-seo.mjs",
     "check:epub": "node scripts/check-epub.mjs",
     "check:pdf": "node scripts/check-pdf.mjs",
-    "check": "npm run check:links && npm run check:content && npm run check:epub && npm run check:pdf",
+    "check": "npm run check:links && npm run check:content && npm run check:seo && npm run check:epub && npm run check:pdf",
     "deploy": "npm run build && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent"
   },
   "dependencies": {

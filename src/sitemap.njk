@@ -1,0 +1,22 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{% for item in collections.sitemapPages %}
+  {% set itemUrl = item.url | absoluteUrl(book.site_url) %}
+  {% set alternatePath = item.data | alternateUrl %}
+  {% set enUrl = (alternatePath if item.data.locale == "zh" else item.url) | absoluteUrl(book.site_url) %}
+  {% set zhUrl = (item.url if item.data.locale == "zh" else alternatePath) | absoluteUrl(book.site_url) %}
+  <url>
+    <loc>{{ itemUrl | xmlEscape }}</loc>
+    <lastmod>{{ item.date | dateToIso }}</lastmod>
+    {% if alternatePath %}
+    <xhtml:link rel="alternate" hreflang="{{ book.language }}" href="{{ enUrl | xmlEscape }}" />
+    <xhtml:link rel="alternate" hreflang="{{ book.zh.language }}" href="{{ zhUrl | xmlEscape }}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ enUrl | xmlEscape }}" />
+    {% endif %}
+  </url>
+{% endfor %}
+</urlset>

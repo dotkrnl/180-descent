@@ -48,6 +48,56 @@ function escapeHtml(value = "") {
     .replace(/"/g, "&quot;");
 }
 
+function absoluteUrl(value = "", siteUrl = "") {
+  const raw = String(value || "");
+  if (/^https?:\/\//i.test(raw)) return raw;
+  const base = String(siteUrl || "").replace(/\/+$/g, "");
+  const path = raw.startsWith("/") ? raw : `/${raw}`;
+  return `${base}${path}`;
+}
+
+function alternateUrlFor(data = {}) {
+  const pageUrl = data.page?.url || "";
+  return languageAlternateUrl(pageUrl, data.locale, data.day_path, data.alternate_url, data.hide_language_toggle);
+}
+
+function languageAlternateUrl(pageUrl = "", locale = "", dayPath = "", explicit = "", hide = false) {
+  if (explicit) return explicit;
+  if (hide) return "";
+  if (dayPath) return locale === "zh" ? `/days/${dayPath}/` : `/zh/days/${dayPath}/`;
+  if (pageUrl === "/") return "/zh/";
+  if (pageUrl === "/zh/") return "/";
+  if (pageUrl.startsWith("/zh/")) return pageUrl.replace(/^\/zh/, "") || "/";
+  if (pageUrl && pageUrl !== "/") return `/zh${pageUrl}`;
+  return "";
+}
+
+function socialImageFor(data = {}) {
+  if (data.seo_image || data.image) return data.seo_image || data.image;
+  if (data.day_path) {
+    const prefix = data.locale === "zh" ? "zh-day" : "day";
+    return `/assets/images/social/${prefix}-${data.day_path}.png`;
+  }
+  return data.locale === "zh"
+    ? "/assets/images/social/180-descent-zh.png"
+    : "/assets/images/social/180-descent.png";
+}
+
+function xmlEscape(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function dateToIso(value) {
+  const date = value instanceof Date ? value : new Date(value || Date.now());
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toISOString().slice(0, 10);
+}
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.addDataExtension("yaml,yml", (contents) => yaml.parse(contents));
 
@@ -63,6 +113,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
 
   eleventyConfig.addFilter("assetUrl", assetUrl);
+  eleventyConfig.addFilter("absoluteUrl", absoluteUrl);
+  eleventyConfig.addFilter("alternateUrl", alternateUrlFor);
+  eleventyConfig.addFilter("languageAlternateUrl", languageAlternateUrl);
+  eleventyConfig.addFilter("socialImage", socialImageFor);
+  eleventyConfig.addFilter("xmlEscape", xmlEscape);
+  eleventyConfig.addFilter("dateToIso", dateToIso);
   eleventyConfig.addFilter("padDay", (value) => String(value).padStart(3, "0"));
   eleventyConfig.addFilter("slugify", (value = "") => String(value)
     .toLowerCase()
@@ -195,6 +251,16 @@ module.exports = function (eleventyConfig) {
   });
   eleventyConfig.addCollection("zhIntroduction", (collectionApi) => {
     return collectionApi.getFilteredByGlob("src/zh/introduction.md");
+  });
+  eleventyConfig.addCollection("sitemapPages", (collectionApi) => {
+    return collectionApi
+      .getAllSorted()
+      .filter((item) => {
+        if (!item.url || !item.outputPath || !item.outputPath.endsWith(".html")) return false;
+        if (item.data?.sitemap_exclude || item.data?.robots?.includes("noindex")) return false;
+        if (item.url.includes("/print")) return false;
+        return true;
+      });
   });
 
   return {

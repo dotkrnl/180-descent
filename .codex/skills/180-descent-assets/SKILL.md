@@ -29,6 +29,13 @@ Do not add decorative images just because they are available. Use images when th
 - Keep `width` and `height` attributes in lesson markup aligned with compressed asset dimensions.
 - Update `src/_data/credits.yaml` for every added asset: creator, title/description, source URL, license name/version, local asset path, and whether it was modified.
 - Note modifications such as "Locally resized and compressed from the Wikimedia Commons original."
+- Social-card PNGs under `src/assets/images/social/` are generated first-party
+  build assets from route-shell front matter by
+  `scripts/generate-social-cards.mjs`; do not hand-edit or credit them as
+  third-party assets.
+- If a user explicitly wants a custom third-party image as `seo_image`, treat it
+  like any other bundled image: store it locally, credit it in
+  `src/_data/credits.yaml`, verify reuse rights, and run the SEO check.
 
 ## Artifact Handling
 
@@ -44,6 +51,7 @@ Run:
 
 ```sh
 rtk npm run build
+rtk npm run check:seo
 rtk npm run check
 ```
 

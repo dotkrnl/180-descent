@@ -46,6 +46,24 @@ immediately during the mention.
    `{% tip '...' %}` shortcode syntax and manually check that Chinese punctuation
    does not break Nunjucks parsing.
 
+## SEO Preservation Gate
+
+Appendices do not normally create separate public URLs, but they can change the
+quality of an existing day's indexable page. When adding or revising an
+appendix:
+
+1. Preserve the target route shell's `title`, `summary`, `day_path`,
+   `permalink`, locale, and canonical/indexing metadata unless a deliberate SEO
+   update is part of the task.
+2. If the appendix changes the main page's search intent or makes the existing
+   `summary` misleading, update the English summary and mirror the change into
+   Chinese when that edition exists.
+3. Do not manually edit generated social cards. Run `rtk npm run build` or
+   `rtk node scripts/generate-social-cards.mjs` after route-shell summary/title
+   changes.
+4. Run `rtk npm run check:seo` or the full project check before treating the
+   appendix as complete.
+
 ## Workflow
 
 1. Identify the target day from the filename or user message. Check whether the day already has `src/zh/days/day-###-*.md` and `src/_includes/days/###-*/zh.njk`.
@@ -95,6 +113,7 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ### --require-zh
 rtk npm run build
+rtk npm run check:seo
 rtk npm run check
 ```
 

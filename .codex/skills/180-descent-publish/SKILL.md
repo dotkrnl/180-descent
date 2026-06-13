@@ -38,8 +38,13 @@ rtk git diff --stat
 
 ```sh
 rtk npm run build
+rtk npm run check:seo
 rtk npm run check
 ```
+
+The SEO check must pass before publishing. It verifies built canonical tags,
+meta descriptions, reciprocal `hreflang`, JSON-LD, sitemap/robots discovery,
+and local existence of Open Graph social images.
 
 3. Stage only intended files. Never stage unrelated user changes.
 4. Commit with a Conventional Commit message, e.g. `feat: add open-license lesson images`.

@@ -38,6 +38,25 @@ defines the same term before the mention.
 5. After Kimi or GLM edits, manually compare English and Chinese first-use tips
    for coverage and technical parity.
 
+## SEO Parity Gate
+
+Chinese route shells participate in the same canonical, `hreflang`, sitemap,
+JSON-LD, and social-card system as English routes.
+
+1. Preserve `locale: zh`, `tags: zhDay`, `day`, `slug`, `day_path`,
+   `permalink: /zh/days/.../`, and `content_template` exactly in the expected
+   Chinese route shell shape.
+2. Translate `summary` as a concise Chinese search-result snippet. Keep the
+   meaning parallel to English, but make it natural for Chinese readers.
+3. Do not add custom `canonical_url`, `seo_image`, `robots: noindex`, or
+   `sitemap_exclude` to Chinese normal day pages unless the user explicitly
+   requests a documented special case.
+4. Ensure English and Chinese route shells share the same `day_path`; this is
+   what connects reciprocal `hreflang` links and generated day social cards.
+5. Run `rtk node scripts/generate-social-cards.mjs` directly or via
+   `rtk npm run build`, then run `rtk npm run check:seo` or the full project
+   check before considering Chinese mirroring complete.
+
 ## Normal Day Workflow
 
 1. Create `src/zh/days/day-###-slug.md` and `src/_includes/days/###-slug/zh.njk`.
@@ -57,12 +76,15 @@ rtk opencode run -m zhipuai-coding-plan/glm-5.1 "请直接在本仓库中润色�
 
 6. Manually review GLM edits and keep only technically and stylistically sound changes. Confirm the Typography Gate and Tip Parity Gate before treating the Chinese edition as complete.
 7. Run the Factual Parity Gate against the English source and any fact-check corrections made during the same work.
-8. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
-9. Run:
+8. Run the SEO Parity Gate against the English route shell and the generated
+   Chinese route shell.
+9. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
+10. Run:
 
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ### --require-zh
 rtk npm run build
+rtk npm run check:seo
 rtk npm run check
 ```
 
