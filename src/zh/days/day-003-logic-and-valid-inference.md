@@ -16,6 +16,8 @@ threads:
 content_template: days/003-logic-and-valid-inference/zh.njk
 scripts:
   - /assets/js/interactions/inference-inspector.js
+  - /assets/js/interactions/fallacy-spotter.js
+  - /assets/js/interactions/hype-filter-trainer.js
 permalink: /zh/days/003-logic-and-valid-inference/
 ---
 {% include content_template %}

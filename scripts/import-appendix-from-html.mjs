@@ -108,6 +108,25 @@ root.find(".panel").each((_, panel) => {
     addClassById(fragment, "ls2", "accuracy-star-line-not");
     addClassById(fragment, "accSlines", "accuracy-star-lines");
     el.after(accuracyFallback());
+  } else if (el.find("[id='fsClaim']").length) {
+    el.addClass("web-only fallacy-spotter");
+    neededScripts.add("/assets/js/interactions/fallacy-spotter.js");
+    addClassById(fragment, "fsScore", "fallacy-score");
+    addClassById(fragment, "fsClaim", "fallacy-claim");
+    addClassById(fragment, "fsOpts", "fallacy-options");
+    addClassById(fragment, "fsExplain", "fallacy-explain");
+    addClassById(fragment, "fsNext", "fallacy-next");
+    el.after(fallacyFallback());
+  } else if (el.find("[id='hfClaim']").length) {
+    el.addClass("web-only hype-filter-trainer");
+    neededScripts.add("/assets/js/interactions/hype-filter-trainer.js");
+    addClassById(fragment, "hfScore", "hype-score");
+    addClassById(fragment, "hfTag", "hype-tag");
+    addClassById(fragment, "hfClaim", "hype-claim");
+    addClassById(fragment, "hfExplain", "hype-explain");
+    addClassById(fragment, "hfNext", "hype-next");
+    el.find(".hfbtn").addClass("hype-choice");
+    el.after(hypeFilterFallback());
   }
 });
 
@@ -367,6 +386,44 @@ function modalFallback() {
 <tr><td>Working clock</td><td>Your belief is true.</td><td>Small variations still leave you right.</td><td>Safe: knowledge-grade.</td></tr>
 <tr><td>Stopped clock</td><td>Your belief is true at 9:12.</td><td>A minute earlier or later, the same belief is false.</td><td>Unsafe: veritic luck.</td></tr>
 <tr><td>Fake-barn country</td><td>You see the one real barn.</td><td>Most nearby looks would have landed on facades.</td><td>Unsafe: environmental luck.</td></tr>
+</tbody>
+</table>
+</div>`;
+}
+
+function fallacyFallback() {
+  return `
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Worked exercise</p>
+<h4>The Fallacy Spotter, as an answer key</h4>
+<table class="alt-table">
+<thead><tr><th>Argument shape</th><th>Better name</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>Dismiss the climate plan by attacking the speaker's private life.</td><td>Ad hominem</td><td>The personal attack does not test whether the plan is sound.</td></tr>
+<tr><td>Offer only total budget cuts or bankruptcy.</td><td>False dilemma</td><td>The argument hides partial options between the two extremes.</td></tr>
+<tr><td>Blame a new traffic light for back pain because it came first.</td><td>Post hoc</td><td>Sequence alone is not causation.</td></tr>
+<tr><td>Trust the book because the book says it is true.</td><td>Begging the question</td><td>The conclusion is smuggled into the premise.</td></tr>
+<tr><td>Infer that a whole city is rude from two people.</td><td>Hasty generalization</td><td>The sample is too thin for the sweeping rule.</td></tr>
+</tbody>
+</table>
+</div>`;
+}
+
+function hypeFilterFallback() {
+  return `
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h4>The Hype-Filter Trainer, as a calibration key</h4>
+<table class="alt-table">
+<thead><tr><th>Claim</th><th>Best tag</th><th>Calibration note</th></tr></thead>
+<tbody>
+<tr><td>An open 32B Lean prover reaches about 90% on miniF2F.</td><td>Established</td><td>Lean checking makes correctness auditable; the sampling budget still matters.</td></tr>
+<tr><td>GPT-5 solved ten previously unsolved Erdos problems.</td><td>Hype</td><td>The contested public version describes literature retrieval, not ten new results.</td></tr>
+<tr><td>FunSearch improved the dimension-8 cap-set construction.</td><td>Established</td><td>The construction is published and directly checkable, though it was search rather than insight.</td></tr>
+<tr><td>o3 scored over 25% on FrontierMath.</td><td>Hype</td><td>The number is fragile because of benchmark access and later lower independent testing.</td></tr>
+<tr><td>Erdos problem #728 was more-or-less autonomously advanced and Lean-checked.</td><td>Promising</td><td>Real and interesting, but still early and with human feedback around the loop.</td></tr>
+<tr><td>Altered word-problem failures prove LLMs cannot reason.</td><td>Promising</td><td>The fragility result is real; the universal conclusion remains disputed.</td></tr>
+<tr><td>A chain-of-thought transcript faithfully reports the model's actual reasoning.</td><td>Hype</td><td>Evidence suggests explanations can be post-hoc rationalizations.</td></tr>
 </tbody>
 </table>
 </div>`;
