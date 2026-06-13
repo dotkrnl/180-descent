@@ -140,7 +140,7 @@ for (const pattern of [
 for (const pattern of [
   /The Rest of the Map/,
   /The Skeptic's Syllogism, as four exits/,
-  /The Bank Cases, as a stakes table/,
+  /The Bank Cases/,
   /Safe vs\. Lucky, as nearby-worlds cases/,
   /The Edge of the Map/,
   /Bubble vs\. Chamber, as exposure outcomes/,

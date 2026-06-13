@@ -36,6 +36,12 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
    - live web components are class-scoped, not ID-scoped, so repeated appendices do not conflict
    - live components have adjacent `.format-alt.epub-only.print-only` static fallbacks
    - PDF/EPUB fallbacks are tables or semantic HTML diagrams, not empty space
+   - reader-visible PDF/EPUB prose names the artifact readers actually get
+     (table, diagram, worked example, note), not "static", "print form", or an
+     absent widget
+   - shared prose that says "drag", "click", "try below", "interactive",
+     "widget", or similar is split into `.web-only` copy plus
+     `.epub-only.print-only` copy for the fallback
    - imported IDs are namespaced with `appendix-d###-`
    - newly required interaction modules are listed in route-shell `scripts:` front matter
 4. Review appendix text and sources with the add-day standard:
@@ -49,6 +55,8 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
    - standard EPUB/PDF: omit appendix content
    - deep-dive EPUB/PDF: include appendix content
    - PDF: no interactive controls; require static fallback representation
+   - EPUB/PDF copy: describe only the fallback table, diagram, worked example,
+     or note the reader can use
 7. If the English target day already has a Chinese route/include, Chinese mirroring is required unless the user explicitly asked for English-only. Use `180-descent-chinese-edition` Appendix Translation:
    - translate only the new appendix into Simplified Chinese with Kimi using explicit temporary input/output files
    - expect Kimi translation and GLM refinement to be very slow on long appendix HTML; keep polling and let them finish unless they exit with an error or the user explicitly tells you to stop

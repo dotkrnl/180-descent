@@ -25,7 +25,7 @@ let failures = 0;
 const englishAppendixPatterns = [
   /The Rest of the Map/,
   /The Skeptic&apos;s Syllogism, as four exits|The Skeptic's Syllogism, as four exits/,
-  /The Bank Cases, as a stakes table/,
+  /The Bank Cases/,
   /Safe vs\. Lucky, as nearby-worlds cases/,
   /The Edge of the Map/,
   /Bubble vs\. Chamber, as exposure outcomes/,

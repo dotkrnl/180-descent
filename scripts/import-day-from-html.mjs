@@ -105,7 +105,7 @@ function gettierFallback() {
   return `
 <div class="format-alt epub-only print-only">
   <p class="ptitle">Reference table</p>
-  <h4>The Gettier Machine</h4>
+  <h4>Gettier Cases</h4>
   <p class="pnote">Key cases:</p>
   <table class="alt-table">
     <thead><tr><th>Case</th><th>Belief</th><th>Truth</th><th>Justification</th><th>Luck</th><th>Verdict</th></tr></thead>
@@ -123,7 +123,7 @@ function credenceFallback() {
   return `
 <div class="format-alt epub-only print-only">
   <p class="ptitle">Reference table</p>
-  <h4>The Credence Dial and the Dutch Book</h4>
+  <h4>Credence Coherence</h4>
   <p>If your credence in <em>S</em> and your credence in <em>not-S</em> sum to 1.00, the pair is coherent. If they sum above 1.00, you will overpay for bets where exactly one can win. If they sum below 1.00, a bookie can reverse the bets and still guarantee a profit.</p>
   <table class="alt-table">
     <thead><tr><th>Credence in S</th><th>Credence in not-S</th><th>Sum</th><th>Result</th></tr></thead>
@@ -140,7 +140,7 @@ function demarcationFallback() {
   return `
 <div class="format-alt epub-only print-only">
   <p class="ptitle">Reference table</p>
-  <h4>The Demarcation Lab</h4>
+  <h4>Demarcation Criteria</h4>
   <table class="alt-table">
     <thead><tr><th>Claim</th><th>Popper</th><th>Kuhn</th><th>Lakatos</th><th>Cluster view</th></tr></thead>
     <tbody>

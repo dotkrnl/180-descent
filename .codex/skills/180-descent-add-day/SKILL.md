@@ -126,6 +126,13 @@ the supplied lesson did not ask for images.
    - no-JS EPUB fallback
    - static PDF fallback
    Put live behavior in `src/assets/js/interactions/*.js` and list each module in the route shell `scripts:` front matter. Keep `src/assets/js/book.js` for truly global behavior only. Prefer semantic HTML/CSS diagrams with print/EPUB fallbacks over raw inline SVG when layout can be expressed with normal boxes and text.
+   Review the surrounding prose for format accuracy: any reader-visible text in
+   EPUB/PDF must describe the table, diagram, worked example, or other fallback
+   actually present there. If the web copy says "drag", "click", "try below",
+   "interactive", "widget", or similar, split it into `.web-only` copy and
+   `.epub-only.print-only` copy. Do not tell book readers the fallback is
+   "static", "print form", or a "PDF/EPUB version"; name the useful artifact
+   they see.
 7. Prefer existing components, CSS classes, and interaction modules before inventing new ones.
 8. Run the Image Candidate Gate. If the user accepts any third-party image or bundled asset, switch to `180-descent-assets` before adding it.
 9. Run the target-day checklist and project checks:

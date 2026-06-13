@@ -39,6 +39,10 @@ Good EPUB patterns:
 - answer reveals that do not require scripts
 - static SVGs
 
+Reader-visible EPUB copy should name the artifact the reader gets: table,
+diagram, worked example, reveal, or note. Do not label it as "static",
+"print form", "PDF/EPUB version", or an absent widget.
+
 ## PDF
 
 PDF must not contain interactive controls. Replace live controls with:
@@ -49,6 +53,11 @@ PDF must not contain interactive controls. Replace live controls with:
 - short explanatory notes
 
 The PDF is generated from `/print/` with print CSS. Anything marked `.web-only` is hidden in print.
+
+Audit shared prose before every live component. If it tells the reader to drag,
+click, run, choose, or use an interactive below, split the instruction into
+`.web-only` copy and a `.epub-only.print-only` sentence that describes the
+table, diagram, or worked example that remains.
 
 ## Placement
 

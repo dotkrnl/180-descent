@@ -295,7 +295,7 @@ function normalizeSvgTextEmphasis(value) {
 function echoFallback() {
   return `
 <div class="format-alt epub-only print-only">
-<p class="ptitle">Print form</p>
+<p class="ptitle">Reference table</p>
 <h4>Bubble vs. Chamber, as exposure outcomes</h4>
 <table class="alt-table">
 <thead><tr><th>Structure</th><th>Outside voices</th><th>Exposure outcome</th><th>Lesson</th></tr></thead>
@@ -310,7 +310,7 @@ function echoFallback() {
 function accuracyFallback() {
   return `
 <div class="format-alt epub-only print-only">
-<p class="ptitle">Print form</p>
+<p class="ptitle">Reference table</p>
 <h4>Accuracy domination, as credence geometry</h4>
 <table class="alt-table">
 <thead><tr><th>Credences</th><th>Sum</th><th>Geometry</th><th>Verdict</th></tr></thead>
@@ -326,7 +326,7 @@ function accuracyFallback() {
 function closureFallback() {
   return `
 <div class="format-alt epub-only print-only">
-<p class="ptitle">Print form</p>
+<p class="ptitle">Reference table</p>
 <h4>The Skeptic's Syllogism, as four exits</h4>
 <table class="alt-table">
 <thead><tr><th>Move</th><th>Line refused</th><th>Representative view</th><th>Cost</th></tr></thead>
@@ -343,8 +343,8 @@ function closureFallback() {
 function stakesFallback() {
   return `
 <div class="format-alt epub-only print-only">
-<p class="ptitle">Print form</p>
-<h4>The Bank Cases, as a stakes table</h4>
+<p class="ptitle">Reference table</p>
+<h4>The Bank Cases</h4>
 <table class="alt-table">
 <thead><tr><th>Case</th><th>Evidence</th><th>Stakes</th><th>Natural verdict</th><th>What it tests</th></tr></thead>
 <tbody>
@@ -359,7 +359,7 @@ function stakesFallback() {
 function modalFallback() {
   return `
 <div class="format-alt epub-only print-only">
-<p class="ptitle">Print form</p>
+<p class="ptitle">Reference table</p>
 <h4>Safe vs. Lucky, as nearby-worlds cases</h4>
 <table class="alt-table">
 <thead><tr><th>Scenario</th><th>Actual world</th><th>Nearby worlds</th><th>Verdict</th></tr></thead>
