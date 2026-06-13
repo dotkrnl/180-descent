@@ -36,7 +36,15 @@
     <meta name="description" content="{{ metaDescription }}">
     <meta name="robots" content="{{ robots or "index, follow" }}">
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/brand/favicon-32.png' | assetUrl }}">
+    <link
+      id="themeFavicon"
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ '/assets/images/brand/favicon-32.png' | assetUrl }}"
+      data-light-href="{{ '/assets/images/brand/favicon-32.png' | assetUrl }}"
+      data-dark-href="{{ '/assets/images/brand/favicon-32-dark.png' | assetUrl }}"
+    >
     <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/brand/apple-touch-icon.png' | assetUrl }}">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="canonical" href="{{ canonicalUrl }}">
@@ -195,7 +203,7 @@
     <a class="skip-link" href="#content">{{ "跳到正文" if isZh else "Skip to content" }}</a>
     <header class="site-topbar">
       <div class="topbar-row">
-        <a class="course" href="{{ "/zh/" if isZh else "/" }}"><img class="brand-mark" src="{{ '/assets/images/brand/180-descent-icon-96.png' | assetUrl }}" width="28" height="28" alt="" decoding="async">{{ uiTitle }}</a>
+        <a class="course" href="{{ "/zh/" if isZh else "/" }}"><span class="brand-mark-shell" aria-hidden="true"><img class="brand-mark brand-mark-light" src="{{ '/assets/images/brand/180-descent-icon-96.png' | assetUrl }}" width="28" height="28" alt="" decoding="async"><img class="brand-mark brand-mark-dark" src="{{ '/assets/images/brand/180-descent-icon-dark-96.png' | assetUrl }}" width="28" height="28" alt="" decoding="async"></span>{{ uiTitle }}</a>
         <nav class="topnav" aria-label="{{ "主导航" if isZh else "Primary" }}">
           <a href="{{ introUrl }}"{% if page.url == introUrl %} aria-current="page"{% endif %}>{{ "引言" if isZh else "Intro" }}</a>
           <a href="{{ syllabusUrl }}"{% if page.url == syllabusUrl %} aria-current="page"{% endif %}>{{ "课程表" if isZh else "Syllabus" }}</a>
