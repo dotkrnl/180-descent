@@ -87,6 +87,34 @@ rtk node -e 'const fs=require("fs"); for (const file of process.argv.slice(1)) {
    Equal counts are a quick signal, not a substitute for manually checking
    meaning, order, and placement.
 
+## Appendix Style Parity Gate
+
+Deep-dive appendices must look and behave like the rest of the project in web,
+EPUB, and PDF output. Do not preserve imported page-specific wrappers just
+because they render in a browser.
+
+1. Use the standard appendix shell:
+   `<details class="deep-dive">`, a `<summary>` containing `.ptitle`,
+   `.deep-dive-title`, and `.deep-dive-sub`, followed by
+   `<div class="deep-dive-body">`.
+2. Put appendix sections inside semantic `<section>` blocks and use the shared
+   heading pattern:
+   `<p class="sec-eyebrow"><span class="n">§/Part/Movement label</span></p>`
+   followed by the real heading. Do not add local wrappers such as
+   `movement`, `dispatch`, `mv-num`, or `dp-num`.
+3. Use existing shared components (`panel`, `aside`, `format-alt`, `roadmap`,
+   `continues`, `recap`, `sources`, `alt-table`) or explicitly shared appendix
+   components (`appendix-card-grid`, `appendix-card`, `appendix-timeline`).
+   Avoid generic imported classes such as `cards`, `card`, `tl`, `ttable`, and
+   `warnstrip`; if a new component is truly needed, add scoped shared CSS and
+   make it pass the appendix style check.
+4. Do not use raw `<br>` elements for vertical spacing. Use block structure and
+   shared CSS; line breaks are acceptable only for intentional inline/table-cell
+   breaks.
+5. Run `rtk npm run check:appendix-style` after adding or changing appendix
+   markup. This gate scans every deep-dive source block for unowned classes,
+   missing shell structure, and raw spacing breaks that would cause style drift.
+
 ## SEO Preservation Gate
 
 Appendices do not normally create separate public URLs, but they can change the
@@ -172,14 +200,15 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
 5. Run the Accessibility Gate for any images, SVGs, controls, live outputs,
    fallback artifacts, or Chinese accessible labels added or changed by the
    appendix.
-6. Update `src/_data/future-links.yaml` for new future callbacks.
-7. Preserve output separation:
+6. Run the Appendix Style Parity Gate whenever appendix markup or CSS changes.
+7. Update `src/_data/future-links.yaml` for new future callbacks.
+8. Preserve output separation:
    - standard EPUB/PDF: omit appendix content
    - deep-dive EPUB/PDF: include appendix content
    - PDF: no interactive controls; require static fallback representation
    - EPUB/PDF copy: describe only the fallback table, diagram, worked example,
      or note the reader can use
-8. If the English target day already has a Chinese route/include, Chinese mirroring is required unless the user explicitly asked for English-only. Use `180-descent-chinese-edition` Appendix Translation:
+9. If the English target day already has a Chinese route/include, Chinese mirroring is required unless the user explicitly asked for English-only. Use `180-descent-chinese-edition` Appendix Translation:
    - translate only the new appendix into Simplified Chinese with Gemini using explicit temporary input/output files
    - run Kimi review after Gemini, then GLM refinement
    - expect Kimi review and GLM refinement to be very slow on long appendix HTML; keep polling and let them finish unless they exit with an error or the user explicitly tells you to stop
@@ -187,22 +216,23 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
    - insert it into the matching Chinese include without disturbing existing appendices
    - run the GLM refinement pass
    - manually review preservation of HTML structure, comments, classes, ids, data attributes, fallbacks, citations, URLs, DOI metadata, scripts, and terminology
-9. If images or other bundled assets are introduced, use `180-descent-assets`.
-10. Run the target-day checklist and project checks:
+10. If images or other bundled assets are introduced, use `180-descent-assets`.
+11. Run the target-day checklist and project checks:
 
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ### --require-zh
 rtk npm run build
+rtk npm run check:appendix-style
 rtk npm run check:seo
 rtk npm run check
 ```
 
    Omit `--require-zh` only when the day has no Chinese edition or the user explicitly requested English-only.
-11. Verify artifacts:
+12. Verify artifacts:
    - inspect `OEBPS/day-###.xhtml` inside both standard and deep-dive EPUB editions
    - extract PDF text with Ghostscript `txtwrite`
    - confirm standard files omit appendix headings and deep-dive files include fallback headings
    - when zh is in scope, repeat the same omission/inclusion checks for Chinese EPUB/PDF/day-specific artifacts
-12. Commit only after verification and any requested human refinement are complete; use `180-descent-publish` for commit/push/deploy.
+13. Commit only after verification and any requested human refinement are complete; use `180-descent-publish` for commit/push/deploy.
 
 Do not edit generated files in `_site/` or `dist/`.

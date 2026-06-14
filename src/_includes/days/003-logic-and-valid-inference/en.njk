@@ -373,11 +373,9 @@
 </summary>
 <div class="deep-dive-body">
 <p class="lede"><span class="drop">T</span>he main descent told a clean story: three engines of inference, validity versus soundness, the slow alchemy that turned logic into algebra, and a frontier where machines now check proofs without mercy. But a clean story is a curated one. Behind it sits a far stranger and richer landscape — a logic so old it predates its own discoverers' embarrassment, paradoxes that have toppled foundations twice, a tortoise who refuses to be argued with, and a string of theorems no human will ever fully read, accepted as true anyway because a machine vouched for every step. This appendix is the director's cut. It assumes you've watched the film; it adds the scenes that didn't fit, in the same order the film would have used them, so you can read straight through.</p>
-<div class="movement">
-<p class="mv-num">Movement I</p>
-<h2>What the syllogism was hiding</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Movement I</span></p>
+<h2>What the syllogism was hiding</h2>
 <p>The main page handed you "All men are mortal" and moved on. But Aristotle's term logic has internal architecture worth seeing, and a fault line that took two thousand years to notice.</p>
 
 <p>Every classical categorical statement comes in one of four flavours, and medieval logicians labelled them with the vowels of two Latin words — <em>affirmo</em> ("I affirm") and <em>nego</em> ("I deny"). <strong>A</strong>: <em>All</em> S are P (universal affirmative). <strong>E</strong>: <em>No</em> S are P (universal negative). <strong>I</strong>: <em>Some</em> S are P (particular affirmative). <strong>O</strong>: <em>Some</em> S are not P (particular negative). Arrange these four at the corners of a square and you get one of the oldest diagrams in Western thought, the <em class="term">square of opposition</em>{% tip 'The square of opposition is a classical diagram showing which categorical claims contradict, oppose, or imply one another.' %}, which maps how the four statements support and contradict one another. The A and O corners are <em>contradictories</em> — exactly one is true. So are E and I. The A and E corners are <em>contraries</em> — they can't both be true, but they can both be false. It is a little machine for reasoning about quantity, and for centuries it was drilled into every educated head in Europe.</p>
@@ -441,24 +439,22 @@
 <p>The main page spoke of "valid form" but never showed how a logician <em>constructs</em> a proof step by step. There are two great styles, and the rivalry between them shaped twentieth-century logic. <em class="term">Natural deduction</em>{% tip 'Natural deduction is a proof style built around familiar moves such as assuming a claim temporarily and later discharging that assumption.' %}, devised by Gerhard Gentzen in the 1930s (and independently by Stanisław Jaśkowski), tries to mimic how humans actually reason: you make temporary assumptions, derive consequences, and then "discharge" the assumptions — exactly the move in "suppose for contradiction…" Its sibling, the <em class="term">sequent calculus</em>{% tip 'Sequent calculus represents proof steps as transformations of sequents: explicit records of premises on one side and conclusions on the other.' %}, also Gentzen's, is more symmetric and machine-friendly, tracking what follows from what as an explicit ledger of premises and conclusions.</p>
 <p>Gentzen then proved something deep about his own system: the <em class="term">cut-elimination theorem</em>{% tip 'Cut elimination says certain detours through intermediate lemmas can be removed, giving proofs a more direct normal form.' %} (his "Hauptsatz," or "main theorem"). Informally, it says any proof that detours through a clever intermediate lemma can be rewritten into a direct proof that never leaves the subject matter of its premises and conclusion. Every shortcut can, in principle, be unwound into a plodding straight line. This sounds technical, but it is the theoretical engine that makes <em>automated</em> proof search possible at all — it guarantees the search space has a manageable shape — and it connects, through Curry–Howard from the main page, to how programs compute by simplification. Gentzen's ledgers are the distant ancestor of the proof assistants we'll return to in Movement V.</p>
 </section>
-<div class="movement">
-<p class="mv-num">Movement II</p>
-<h2>A field guide to bad arguments</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Movement II</span></p>
+<h2>A field guide to bad arguments</h2>
 <p>The main page gave you the two great <em>formal</em> fallacies — affirming the consequent and denying the antecedent — the ones with broken skeletons. But most of the bad reasoning you'll actually meet in the wild is <em>informal</em>: the form is fine, the content cheats. These have been catalogued since antiquity (Aristotle wrote a whole treatise, the <em>Sophistical Refutations</em>, on argumentative dirty tricks), and knowing their names is a genuine cognitive upgrade — you cannot easily un-see a fallacy once you can label it. Here is a working field guide to the most common specimens.</p>
 
-<div class="cards">
-<div class="card"><b>Ad hominem</b> <span class="latin">"to the person"</span><p>Attack the arguer instead of the argument. "You'd say that — you're a banker." Whether bankers are biased is irrelevant to whether the claim is true.</p></div>
-<div class="card"><b>Straw man</b><p>Replace your opponent's actual position with a flimsy caricature, then knock that down. The easiest argument to win is one your opponent never made.</p></div>
-<div class="card"><b>Equivocation</b><p>Slide a word between two meanings mid-argument. "Nothing is better than eternal happiness; a ham sandwich is better than nothing; therefore a ham sandwich is better than eternal happiness." "Nothing" switched jobs.</p></div>
-<div class="card"><b>False dilemma</b><p>Offer two options as if they were the only two. "Either we ban it or we descend into chaos." Reality usually has more than two doors.</p></div>
-<div class="card"><b>Begging the question</b> <span class="latin">petitio principii</span><p>Smuggle the conclusion into the premises. "It's reliable because it says so, and it wouldn't say so if it weren't reliable." The argument assumes what it's meant to prove — a tiny version of Day 1's circular justification.</p></div>
-<div class="card"><b>Post hoc</b> <span class="latin">post hoc ergo propter hoc</span><p>"After this, therefore because of this." The rooster crows, the sun rises; the rooster takes the credit. Mistaking sequence for cause — the trap Day 5 is built to disarm.</p></div>
-<div class="card"><b>Slippery slope</b><p>Claim one small step must inevitably tumble all the way down, without showing why each step forces the next. Sometimes true, usually asserted rather than argued.</p></div>
-<div class="card"><b>Appeal to authority</b> <span class="latin">ad verecundiam</span><p>Not all such appeals are fallacious — trusting genuine experts is rational. It curdles into fallacy when the "authority" is irrelevant, fabricated, or outside their field.</p></div>
-<div class="card"><b>Hasty generalization</b><p>Leap to a sweeping rule from a handful of cases. Induction (Day 2) done recklessly — the fallacy is in the <em>haste</em>, not the generalizing.</p></div>
-<div class="card"><b>No true Scotsman</b><p>Defend a generalization by redefining it to dodge counterexamples. "No Scotsman puts sugar on porridge." "But my uncle Angus—" "No <em>true</em> Scotsman." The claim is made unfalsifiable by fiat.</p></div>
+<div class="appendix-card-grid">
+<div class="appendix-card"><b>Ad hominem</b> <span class="latin">"to the person"</span><p>Attack the arguer instead of the argument. "You'd say that — you're a banker." Whether bankers are biased is irrelevant to whether the claim is true.</p></div>
+<div class="appendix-card"><b>Straw man</b><p>Replace your opponent's actual position with a flimsy caricature, then knock that down. The easiest argument to win is one your opponent never made.</p></div>
+<div class="appendix-card"><b>Equivocation</b><p>Slide a word between two meanings mid-argument. "Nothing is better than eternal happiness; a ham sandwich is better than nothing; therefore a ham sandwich is better than eternal happiness." "Nothing" switched jobs.</p></div>
+<div class="appendix-card"><b>False dilemma</b><p>Offer two options as if they were the only two. "Either we ban it or we descend into chaos." Reality usually has more than two doors.</p></div>
+<div class="appendix-card"><b>Begging the question</b> <span class="latin">petitio principii</span><p>Smuggle the conclusion into the premises. "It's reliable because it says so, and it wouldn't say so if it weren't reliable." The argument assumes what it's meant to prove — a tiny version of Day 1's circular justification.</p></div>
+<div class="appendix-card"><b>Post hoc</b> <span class="latin">post hoc ergo propter hoc</span><p>"After this, therefore because of this." The rooster crows, the sun rises; the rooster takes the credit. Mistaking sequence for cause — the trap Day 5 is built to disarm.</p></div>
+<div class="appendix-card"><b>Slippery slope</b><p>Claim one small step must inevitably tumble all the way down, without showing why each step forces the next. Sometimes true, usually asserted rather than argued.</p></div>
+<div class="appendix-card"><b>Appeal to authority</b> <span class="latin">ad verecundiam</span><p>Not all such appeals are fallacious — trusting genuine experts is rational. It curdles into fallacy when the "authority" is irrelevant, fabricated, or outside their field.</p></div>
+<div class="appendix-card"><b>Hasty generalization</b><p>Leap to a sweeping rule from a handful of cases. Induction (Day 2) done recklessly — the fallacy is in the <em>haste</em>, not the generalizing.</p></div>
+<div class="appendix-card"><b>No true Scotsman</b><p>Defend a generalization by redefining it to dodge counterexamples. "No Scotsman puts sugar on porridge." "But my uncle Angus—" "No <em>true</em> Scotsman." The claim is made unfalsifiable by fiat.</p></div>
 </div>
 
 <p>A special pair deserves its own spotlight, because they are where logic meets the probability we'll meet tomorrow on <strong>Day 4</strong>. The <em class="term">gambler's fallacy</em>{% tip 'The gambler’s fallacy is the mistake of thinking independent random events must “balance out” soon after a streak.' %} is the conviction that a run of reds at the roulette wheel makes black "due" — as if the wheel had a memory and a conscience. It doesn't; each spin is independent, and the ball owes you nothing. Its mirror image, the <em class="term">base-rate fallacy</em>{% tip 'The base-rate fallacy is ignoring how common or rare the underlying condition is when interpreting evidence.' %}, is ignoring how rare something is when interpreting evidence: a test that's "99% accurate" for a disease that afflicts one person in ten thousand will still flag mostly healthy people, because the rare truth is swamped by the common error. Both are failures of probabilistic intuition so systematic that they need formal machinery to override — which is precisely the argument tomorrow opens with.</p>
@@ -489,11 +485,9 @@
 </table>
 </div>
 </section>
-<div class="movement">
-<p class="mv-num">Movement III</p>
-<h2>The sentences that broke logic</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Movement III</span></p>
+<h2>The sentences that broke logic</h2>
 <p>The main page mentioned Russell's paradox in passing, as the letter that cracked Frege's life's work. But paradoxes are not mere curiosities in logic — they are its stress tests, the places where the machine seizes up and forces a redesign. Twice, a single self-referential sentence has brought down a foundation. Understanding <em>why</em> is to understand what logic is made of.</p>
 
 <h3>The Liar, and why it won't sit still</h3>
@@ -514,11 +508,9 @@
 <h3>When two truth-values weren't enough</h3>
 <p>One more foundational tremor, and a charming one. The main page listed fuzzy and many-valued logics among the non-classical zoo, but skipped the story of where the <em>first</em> rigorous <em class="term">many-valued logic</em>{% tip 'Many-valued logic allows more truth values than just true and false, such as indeterminate or degrees of truth.' %} came from. In 1920, the Polish logician Jan Łukasiewicz was brooding on a problem Aristotle himself had raised: the <em>sea battle</em>. "There will be a sea battle tomorrow." Is that statement true or false <em>today</em>? If it's already true, the future seems fixed and free will evaporates; if already false, the battle is impossible. Aristotle squirmed. Łukasiewicz's bold move was to deny that the statement must be either true or false right now — he introduced a <em>third</em> value, "possible" or "indeterminate," for the open future. From that one philosophical itch grew the entire field of many-valued logic, the mathematical parent of the fuzzy logic running in your camera's autofocus. A question about fate, asked for two thousand years, turned into a branch of engineering.</p>
 </section>
-<div class="movement">
-<p class="mv-num">Movement IV</p>
-<h2>The rule that needs no rule</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Movement IV</span></p>
+<h2>The rule that needs no rule</h2>
 <p>Here is a puzzle that looks like whimsy and turns out to touch bedrock. It was published in 1895 by Lewis Carroll — yes, the <em>Alice</em> author, who by day was the Oxford logician Charles Dodgson — under the title <strong>"What the Tortoise Said to Achilles."</strong> It is four pages long, written as a dialogue, and it has unsettled logicians for over a century.</p>
 
 <p>Achilles has a valid argument. From two premises — call them <strong>A</strong> ("things equal to the same thing are equal to each other") and <strong>B</strong> ("these two things are both equal to that third thing") — the conclusion <strong>Z</strong> ("these two things are equal to each other") plainly follows. The Tortoise, with maddening politeness, agrees that A and B are true, and agrees the argument is valid. But he declines to accept Z. Why? Because, he says, to get from "A and B are true" to "therefore Z," you must be relying on some further rule — call it <strong>C</strong>: "if A and B are true, then Z is true." Fine, says Achilles, grant C as well. The Tortoise cheerfully does — and still won't accept Z. Because now, to get from A, B, <em>and C</em> to Z, you need yet another rule, <strong>D</strong>: "if A and B and C are true, then Z." And so on, forever. Every time Achilles tries to nail down the rule of inference by writing it as an explicit premise, the Tortoise demands a new rule to license <em>that</em> premise. The list of premises grows without end and Z is never reached.</p>
@@ -538,11 +530,9 @@
 <p>The main page's frontier — proof assistants verifying mathematics at zero tolerance — naturally invites a dream: could we someday formalize <em>all</em> of mathematics, reduce every truth to a mechanical check, and never be uncertain again? It is the dream Frege and Russell chased, and it is worth knowing, even now, that the dream has a proven ceiling. In 1931, a 25-year-old Austrian named Kurt Gödel demonstrated that <em>any</em> formal system rich enough to express ordinary arithmetic must contain true statements it cannot prove — and can never prove its own consistency from within. There is no complete, self-certifying formalization of mathematics. Not because we haven't built it yet, but because it cannot exist.</p>
 <p>This is the great counterweight to Movement V, and we will give it the full day it deserves on <strong>Day 28</strong>. For now, hold the tension in your mind like a chord: mechanized proof is breathtakingly powerful, verifying things no human could check by hand — <em>and</em> there is a hard, theorem-proven limit to how much certainty any such system can deliver about itself. The proof assistant is a magnificent tool operating inside a cage whose bars Gödel measured exactly. Keep both halves. The triumph and the limit are the same subject seen from two sides — which, you may have noticed, is the recurring shape of this entire course.</p>
 </section>
-<div class="movement">
-<p class="mv-num">Movement V</p>
-<h2>The long road to a proof no human can read</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Movement V</span></p>
+<h2>The long road to a proof no human can read</h2>
 <p>The main page introduced Lean and AlphaProof as if they arrived fully formed. They didn't. There is a sixty-year backstory of machines proving things, and it contains some of the most philosophically charged moments in modern mathematics — the points where the community had to decide whether a proof <em>nobody could fully check by hand</em> still counted as a proof. This is the deep history the frontier was standing on.</p>
 
 <h3>Two theorems that license the whole enterprise</h3>
@@ -561,7 +551,7 @@
 <p>The pattern recurred, bigger, in the story of <em class="term">Kepler's conjecture</em>{% tip 'Kepler’s conjecture says the familiar cannonball/orange stacking is the densest possible packing of equal spheres in three dimensions.' %} — the 1611 claim, made by the astronomer who also gave us planetary orbits, that the way greengrocers stack oranges (the "face-centred cubic" packing) is the densest possible arrangement of spheres. Thomas Hales proved it in 1998, but the proof was a 300-page argument leaning on enormous computer calculations. The twelve referees of the <em>Annals of Mathematics</em> laboured for years and finally returned a verdict no journal had ever issued: they were "99% certain" the proof was correct, but could not fully verify the computer portions. Ninety-nine percent. For a mathematical proof, whose entire promise is certainty, that one percent was a wound.</p>
 <p>Hales's response was to declare war on the doubt. He launched the <strong>Flyspeck project</strong> — the name a playful contraction of "Formal Proof of Kepler" — to formalize the entire thing inside proof assistants, leaving no calculation untrusted. It took a international team over a decade. In <strong>2014</strong> they finished, using a combination of the <strong>HOL Light</strong> and <strong>Isabelle</strong> systems, and published the official account in 2015. The orange-stacking problem, open for 400 years and only "99% certain" in 1998, became a fully machine-verified theorem. <span class="chip ok" data-print="established"><i></i>established</span></p>
 
-<ul class="tl">
+<ul class="appendix-timeline">
 <li><span class="yr">1929 · the licence</span><b>Gödel's completeness theorem.</b> Provability and truth march in step for first-order logic — the guarantee under which every proof checker operates.</li>
 <li class="open"><span class="yr">1976 · the scandal</span><b>Four Colour Theorem (Appel &amp; Haken).</b> ~2,000 cases checked by computer; the first major proof no human could verify by hand. "Four colors suffice."</li>
 <li><span class="yr">1996 · the lone machine</span><b>Robbins conjecture (McCune's EQP).</b> An automated prover settles a 60-year-old open problem in 8 days — with a proof "nobody understands."</li>
@@ -591,7 +581,7 @@
 </div>
 <hr class="div">
 <section class="sources">
-<p class="mv-num">Appendix sources</p>
+<p class="sec-eyebrow"><span class="n">Appendix sources</span></p>
 <h2>Sources &amp; further reading</h2>
 <ol>
 <li>Parsons, T. "The Traditional Square of Opposition." <em>Stanford Encyclopedia of Philosophy.</em> <a href="https://plato.stanford.edu/entries/square/">plato.stanford.edu/entries/square</a> <span class="meta">— the A/E/I/O scheme, subalternation, and the existential-import problem.</span></li>
@@ -625,11 +615,9 @@
 </summary>
 <div class="deep-dive-body">
 <p class="lede"><span class="drop">T</span>he first appendix was the director's cut — settled history, scenes that didn't fit but were never in doubt. This one is different, and you should read it with a different posture. Everything here is from 2023 to 2026; much of it is so fresh that the mathematical community has not finished arguing about what it means. Some of it will look, in five years, like the moment the ground shifted. Some will look like a press release that fooled a lot of people for a week. The honest trouble is that, right now, <em>nobody can fully tell which is which</em> — and that is precisely why it belongs in a course about valid inference. This is the hype filter not as a teaching exercise but as a survival skill, applied live, to claims still warm from the lab.</p>
-<div class="dispatch">
-<p class="dp-num">Dispatch I</p>
-<h2>The provers grew up — and went open</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Dispatch I</span></p>
+<h2>The provers grew up — and went open</h2>
 <p>The main page left the AI-proving story at AlphaProof: a closed system, behind a corporate wall, requiring days of computation per problem. Since then the field has done something the larger AI world rarely does — it has gone <em>open</em>, and it has gotten startlingly good. In 2025, anyone with a decent graphics card could download a model that solves olympiad-level mathematics in formal, machine-checked Lean. That is the quiet earthquake.</p>
 
 <p>To follow it you need to understand the scoreboard. Machine provers are ranked on shared <em class="term">benchmarks</em>{% tip 'A benchmark is a standardized test set used to compare systems under stated conditions.' %} — frozen sets of problems everyone tests against. Three matter. <strong>miniF2F</strong> (introduced 2022) is a few hundred olympiad-style problems and was, until recently, the gold standard; it is now nearly <em>saturated</em>, with the best systems scoring near the ceiling. <strong>PutnamBench</strong> (2024) is harder — problems from the legendarily brutal Putnam undergraduate competition, where the median human score is famously <em>zero</em>. And <strong>FrontierMath</strong> (2024) is harder still: research-level problems that take human experts hours or days, designed so that today's models score in the single or low double digits. As one benchmark saturates, the field builds a taller one. The scoreboard is a ladder, and the rungs keep getting added above.</p>
@@ -678,7 +666,7 @@
 
 <p>Now the systems doing the climbing. Two open-weights provers reset expectations in 2025, and a third pushed into olympiad-gold territory.</p>
 
-<table class="ttable">
+<table class="alt-table">
 <thead><tr><th>System</th><th>What it claims</th><th>Status</th></tr></thead>
 <tbody>
 <tr>
@@ -706,11 +694,9 @@
 <p>There's a reason this whole dispatch can wear an <span class="chip ok" data-print="established"><i></i>established</span> tag while the next four get murkier. These systems output proofs <em>in Lean</em>, and Lean's kernel either accepts a proof or it doesn't. So the question that haunts the rest of this page — "is the AI really reasoning, or faking it?" — simply doesn't arise for the <em>output</em>. A Lean-verified proof is correct whether the model understood a word of it. Formalization buys certainty about the <em>result</em> at the price of saying nothing about the <em>mind</em>. That trade is the single most important idea connecting this appendix to the curriculum's theme: when you can't trust the reasoner, verify the reasoning.</p>
 </div>
 </section>
-<div class="dispatch">
-<p class="dp-num">Dispatch II</p>
-<h2>The machine that found something nobody had found</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Dispatch II</span></p>
+<h2>The machine that found something nobody had found</h2>
 <p>Proving a known theorem is one thing. <em>Discovering</em> a new mathematical object — a construction no human had ever written down — is another, and in 2023 a machine did exactly that, in a way worth understanding precisely because it is so easy to mis-tell.</p>
 
 <p>The system was <em class="term">FunSearch</em>{% tip 'FunSearch is a DeepMind system that uses a language model to generate programs, then keeps variants that score better on a mathematical objective.' %}, from Google DeepMind, published in <em>Nature</em> in December 2023. The setup is elegant and a little humbling. Take a hard mathematical problem where you want the <em>best possible example</em> of something. Have a large language model write little programs that generate candidate examples. Score each program by how good its output is. Keep the winners, feed them back to the model to mutate and improve, and loop — an evolutionary search where the LLM is the source of mutations and a fast, dumb scorer is the judge. The target was the <em class="term">cap set problem</em>{% tip 'The cap set problem asks how large a subset of a finite grid can be while avoiding three points in a line.' %}, a notorious question in combinatorics that the Fields Medalist Terence Tao has called one of his favourites. FunSearch found a cap set in dimension 8 of size <strong>512</strong> — larger than the best previously known, which had stood at 496 — and nudged a long-stuck lower bound upward for the first time in twenty years.</p>
@@ -724,11 +710,9 @@
 <p>Three things get blurred together in headlines, and separating them dissolves most of the confusion on this whole page. <strong>Verifying</strong> a proof a human wrote (Lean's job, fully solved). <strong>Searching</strong> for a good construction or a proof among many candidates (FunSearch, AlphaEvolve, the provers of Dispatch I — real and improving). And <strong>understanding</strong> — knowing <em>why</em> something is true, the thing mathematicians actually prize (machines do not do this, and it isn't clear what it would mean for them to). When someone says "AI did mathematics," your first question should always be: <em>which of the three?</em></p>
 </div>
 </section>
-<div class="dispatch">
-<p class="dp-num">Dispatch III</p>
-<h2>The Erdős affair: a case study in how to read a headline</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Dispatch III</span></p>
+<h2>The Erdős affair: a case study in how to read a headline</h2>
 <p>If you want a single story that teaches the entire skill this curriculum is built around — separating a true claim from a true-sounding one — it is the saga of AI and the Erdős problems, which played out in public over the winter of 2025–2026. It has a hype spike, a sharp correction, and then a quieter, genuinely interesting truth. Watch all three beats.</p>
 
 <p>The backdrop: Paul Erdős, the wandering Hungarian who posed more problems than perhaps anyone in history, left behind hundreds of open questions, now catalogued at a public database maintained by the mathematician Thomas Bloom. They make an irresistible target for an AI lab wanting to claim a scalp.</p>
@@ -746,19 +730,17 @@
 
 <p>But notice how Tao — a working mathematician, not a marketing department — frames it, because his framing is the model of calibrated thinking this course is trying to install in you. These, he stresses, are the <strong>"lowest-hanging fruit."</strong> Erdős problems "vary widely in difficulty, by several orders of magnitude"; an "open" label "is always provisional"; and the reporting is badly biased, because the failures never get announced — the tool had already been "quietly applied to a significant fraction of the currently open Erdős problems, without notable success." The successes are real and worth celebrating. They are also the easiest problems in the pile, solved with human feedback in the loop, with closely related results already sitting in the literature. The machine is, in Tao's lovely phrase, "clearing out the lowest-hanging fruit and isolating the problems which are genuinely difficult."</p>
 
-<ul class="tl">
-<li class="hype"><span class="yr">Oct 2025 · the spike</span><b>"GPT-5 solved 10 unsolved Erdős problems."</b> Announced by OpenAI figures; widely shared as a research breakthrough. <span class="chip bad" style="margin-left:.3rem;" data-print="review"><i></i>hype</span></li>
+<ul class="appendix-timeline">
+<li class="hype"><span class="yr">Oct 2025 · the spike</span><b>"GPT-5 solved 10 unsolved Erdős problems."</b> Announced by OpenAI figures; widely shared as a research breakthrough. <span class="chip bad" data-print="review"><i></i>hype</span></li>
 <li class="real"><span class="yr">Oct 2025 · the correction</span><b>"A dramatic misrepresentation" — Thomas Bloom.</b> The problems were solved years ago by humans; the AI found the existing papers. Hassabis: "embarrassing."</li>
-<li class="hint"><span class="yr">Jan 2026 · the real thing</span><b>Erdős #728 solved "more or less autonomously," not in existing literature.</b> A few more follow, some Lean-verified and accepted by Tao — but the "lowest-hanging fruit." <span class="chip hint" style="margin-left:.3rem;" data-print="promising"><i></i>promising</span></li>
+<li class="hint"><span class="yr">Jan 2026 · the real thing</span><b>Erdős #728 solved "more or less autonomously," not in existing literature.</b> A few more follow, some Lean-verified and accepted by Tao — but the "lowest-hanging fruit." <span class="chip hint" data-print="promising"><i></i>promising</span></li>
 </ul>
 
 <p>The lesson is not "AI math is fake" — beat three is real, and may well be the leading edge of something large. The lesson is that the <em>same underlying events</em> produced a wildly false headline in October and a carefully true statement in January, and the only way to tell them apart was to ask who was speaking, what "solved" and "open" actually meant, and whether the result had been checked. That is the hype filter, working exactly as designed, on a live story. Hold onto the method; you'll need it long after the specific problem numbers are forgotten.</p>
 </section>
-<div class="dispatch">
-<p class="dp-num">Dispatch IV</p>
-<h2>Is any of it actually reasoning?</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Dispatch IV</span></p>
+<h2>Is any of it actually reasoning?</h2>
 <p>Underneath the benchmark scores and the headlines sits a question that is not yet answered, and that honest researchers on both sides admit is not yet answered: when a model produces a chain of plausible-looking steps and lands on a correct answer, is it <em>reasoning</em> — or performing an extraordinarily sophisticated imitation of reasoning, pattern-matched from billions of examples? This is the modern, mechanized form of the Day 1 question about whether a system that outputs a true claim actually <em>knows</em> anything. And in 2024–2025 it produced one of the sharpest empirical fights in the field.</p>
 
 <h3>The case for "it's pattern-matching"</h3>
@@ -767,8 +749,8 @@
 <h3>The case for "not so fast"</h3>
 <p>The rebuttals were swift and, in part, fair. A widely-circulated reply — half-jokingly credited to an AI co-author — argued the Apple results were partly <em>experimental artifacts</em>: some "failures" were just the model running into an output-length limit mid-answer, and some puzzle instances scored as failures were <em>mathematically unsolvable to begin with</em>, so no system could have gotten them "right." A neutral replication by a Spanish research group (published September 2025) landed, satisfyingly, in the middle: yes, some of the dramatic collapse was an artifact of output limits — but no, not all of it; the models genuinely <em>did</em> stumble as complexity rose even modestly, around the eight-disk mark. The truth, as so often on this page, is neither headline.</p>
 
-<div class="warnstrip">
-<span class="ic">⚖</span>
+<div class="aside">
+<p class="h">Unresolved verdict</p>
 <p>This is the rare frontier question where the intellectually honest verdict is <strong>"genuinely unresolved."</strong> The evidence supports neither "LLMs truly reason" nor "it's pure mimicry." Real fragility, real contamination of test data, and real non-trivial generalization all coexist. A course on valid inference should model exactly this: the willingness to say <em>we do not yet know</em>, and to keep both hypotheses alive until better experiments arrive.</p>
 </div>
 
@@ -777,11 +759,9 @@
 
 <p>Sit with what that implies for an AI "proof." If a system hands you a step-by-step argument and the steps are <em>not</em> faithful to how it actually got there, then the explanation is decorative — and you are back, exactly, to the Day 1 Gettier worry: a conclusion that may be correct while its stated justification has nothing to do with why it's correct. This is the deepest reason the Lean-verified provers of Dispatch I matter so much. They are the one corner of this whole landscape where the question "but is the reasoning real?" can be sidestepped entirely — because the kernel doesn't read the story, it checks the proof. When you cannot trust the explanation, you verify the result. The entire frontier keeps arriving back at that single sentence.</p>
 </section>
-<div class="dispatch">
-<p class="dp-num">Dispatch V</p>
-<h2>The day the scoreboard lied</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Dispatch V</span></p>
+<h2>The day the scoreboard lied</h2>
 <p>Every claim on this page ultimately rests on a benchmark number, which means the benchmarks themselves are load-bearing — and in late 2024 a single episode showed how badly a number can mislead, even one announced by a serious lab in good faith. It is the most important cautionary tale in the whole appendix, because it is not about the AI at all. It is about the <em>measurement</em>.</p>
 
 <p>FrontierMath, recall, is the hardest of the benchmarks — research-level problems. In December 2024, during a livestreamed launch, OpenAI's research chief announced that their forthcoming o3 model had reached <strong>over 25%</strong> on it, up from the under-2% that every prior system managed. A leap from 2% to 25% on expert-level mathematics is the kind of number that reshapes how a field talks about itself for a year. It made headlines accordingly.</p>
@@ -795,11 +775,9 @@
 <p>When you read that a system "scored X% on benchmark Y," quietly ask four questions before believing it. <em>Who built and funded Y?</em> <em>Did the testing party have prior access to it?</em> <em>How many attempts per problem did X% allow?</em> <em>Has anyone independent reproduced it?</em> A number that survives all four is worth something. A number that fails even one — like the 25% here — is a starting point for investigation, not a fact. To Epoch AI's credit, they later disclosed the conflict, kept a true holdout set, and through 2025–26 actively corrected errors in the benchmark; the self-correction is itself a healthy sign.</p>
 </div>
 </section>
-<div class="dispatch">
-<p class="dp-num">Dispatch VI</p>
-<h2>The quieter revolutions</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Dispatch VI</span></p>
+<h2>The quieter revolutions</h2>
 <p>The AI-proving story has sucked up most of the oxygen, but four other frontiers have moved meaningfully since 2020, with less noise and — in some cases — more solidity. They round out the picture, and a couple may matter more in the long run than this year's leaderboard.</p>
 
 <h3>The Continuum Hypothesis is back in play</h3>
@@ -814,11 +792,9 @@
 <h3>The question that outlasts all the others</h3>
 <p>Finally, a frontier that is philosophical rather than technical, and that this whole page has been circling. A small but serious literature — Jeremy Avigad's "Mathematics and the formal turn" (2024), work by Eamon Duede and others on knowledge "in an era of computational opacity" — asks what happens to mathematical <em>understanding</em> when proofs become things only machines can check. Mathematics has always wanted two goods from a proof: <em>certainty</em> that a thing is true, and <em>understanding</em> of <em>why</em>. The machines are now superb at delivering the first. The mathematician Alex Kontorovich has named the nightmare version: a million-line, machine-verified proof of a famous conjecture like the Riemann Hypothesis that is <em>certainly correct</em> and <em>completely incomprehensible</em> — true knowledge that explains nothing, the ultimate descendant of Day 1's belief that is right without being understood. Whether that is a triumph or a hollowing-out of the subject is not a question any benchmark can settle. <span class="chip hint" data-print="review"><i></i>open question</span> It is the one this dispatch leaves you holding.</p>
 </section>
-<div class="dispatch">
-<p class="dp-num">Now you try</p>
-<h2>The hype filter, hands on</h2>
-</div>
 <section>
+<p class="sec-eyebrow"><span class="n">Now you try</span></p>
+<h2>The hype filter, hands on</h2>
 <p>You've watched the filter applied six times. Now apply it yourself. Each card below is a real claim from the 2023–2026 frontier, drawn from the dispatches above. Decide where it lands — <span class="chip ok" data-print="established"><i></i>established</span>, <span class="chip hint" data-print="promising"><i></i>promising</span>, or <span class="chip bad" data-print="review"><i></i>hype</span> — then reveal the verdict and the reasoning. The aim is not a perfect score. It's to feel the <em>weighing</em> become automatic.</p>
 
 <div class="panel web-only hype-filter-trainer">
@@ -862,7 +838,7 @@
 </div>
 <hr class="div">
 <section class="sources">
-<p class="dp-num">Appendix sources II</p>
+<p class="sec-eyebrow"><span class="n">Appendix sources II</span></p>
 <h2>Sources &amp; further reading</h2>
 <p style="font-size:.92em;">Frontier sources, dated. Peer-reviewed venues are noted; preprints and company/news items are marked as such, since several of the most recent claims are not yet through review.</p>
 <ol>
