@@ -46,6 +46,22 @@ defines the same term before the mention.
 5. After Gemini, Kimi, or GLM edits, manually compare English and Chinese first-use tips
    for coverage and technical parity.
 
+## Terminology Consistency Gate
+
+Before committing Chinese text, scan the edited files for disallowed variants
+of project terms and normalize them.
+
+1. Translate `hype filter` and `frontier calibrator` only as `前沿校准器`.
+   Do not accept variants such as `炒作过滤`, `炒作过滤器`, `过滤 hype`,
+   `去 hype`, or `去伪存真` for this course feature.
+2. Keep `前沿校准器` wording in headings, notes, labels, and prose whenever it
+   refers to the course's evidence/hype-calibration device. Evidence chips may
+   still use labels such as `争议/炒作`.
+3. For knowledge terms, distinguish `知识`/`知道` from broad `认知`: use
+   `知识` or `知道` for knowledge/knowing, `认识论` for epistemology, and
+   reserve `认知` for cognitive mechanisms or established social terms such as
+   `认知不正义`, `认知后盾`, `认知气泡`, and `认知效用理论`.
+
 ## SEO Parity Gate
 
 Chinese route shells participate in the same canonical, `hreflang`, sitemap,
@@ -156,12 +172,14 @@ Maintain these conventions unless the user changes them:
 - book/course "descent" -> `深入`, not `下潜`
 - "deep dive" syllabus blocks -> `专题深入`
 - JTB -> expand on first use as `JTB（Justified True Belief，证成的真信念）`; thereafter `JTB（证成的真信念）` is acceptable in Chinese prose
-- translate `epistemology` as `认识论`, but do not mechanically render every `epistemic` as `认识论的`; prefer established natural compounds such as `认知运气`/`知识运气`, `认知不正义`, `认知后盾`, `认知气泡`, `认知效用理论`, and `认知逻辑` when the English adjective describes knowledge-related status, value, environment, or norms rather than the academic discipline itself
+- translate `epistemology` as `认识论`, but do not mechanically render every `epistemic` as `认识论的`; prefer established natural compounds such as `认知运气`/`知识运气`, `认知不正义`, `认知后盾`, `认知气泡`, and `认知效用理论` when the English adjective describes knowledge-related status, value, environment, or norms rather than the academic discipline itself; translate `epistemic logic` as `知识逻辑`
 - translate English `know` by function in Chinese: `know that` -> `知道……为真`, `know how` -> `会` or `知道如何`, acquaintance/faces/places -> `认识`/`认得`/`熟悉`, and Russell's `knowledge by acquaintance` -> `亲知`
 - scientific replication -> `复现`, `复现实验`, or `可复现`; use `复现危机`; use `复制` only for biological/molecular copying
 - preregistration -> `研究预登记`; registered reports -> `注册式报告`
 - day references -> `第 N 日`
-- hype filter -> `前沿校准器`; evidence labels may use `争议/炒作`
+- hype filter / frontier calibrator -> `前沿校准器` only; do not use variants
+  such as `炒作过滤`, `过滤 hype`, `去 hype`, or `去伪存真`; evidence labels may
+  still use `争议/炒作`
 - names in Chinese running prose -> use established Simplified Chinese renderings or transliterations, with Latin form on first mention only when useful; keep source lists, article titles, DOI metadata, URLs, CSS/JS identifiers, and citation keys in Latin form
 - examples: `彼得·昂格尔`, `希拉里·普特南`, `G. E. 摩尔`, `德雷茨克`, `诺齐克`, `基思·德罗斯`, `邓肯·普里查德`, `《美诺篇》（Meno）`, `拉里萨（Larissa）`, `巴黎在法国`
 - use Chinese corner quotes `「」` for quoted speech, thoughts, propositions, slogans, and translated terms in Chinese prose
