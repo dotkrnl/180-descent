@@ -6,7 +6,7 @@
   var copy = isZh ? {
     coherentTitle: "融贯 - 未被支配",
     coherentBody: function(sum){
-      return '你的置信度总和为 <code>' + sum + '</code>，该点落在直线上。这意味着不存在能在<span class="hl">每一个</span>世界中都比你更接近真理的其他置信度——你未被准确性支配。这与第 1 日的荷兰赌裁决一致，只是无需涉及任何博弈。';
+      return '你的置信度总和为 <code>' + sum + '</code>，该点落在直线上。这意味着不存在能在<span class="hl">每一个</span>世界中都比你更接近真理的其他置信度——你未被准确性支配。这与第 1 日的荷兰赌判断一致，只是无需涉及任何博弈。';
     },
     coherentCaption: "在线上：没有其他置信度能在真理维度上击败你。",
     dominatedTitle: "不融贯 - 被准确性支配",

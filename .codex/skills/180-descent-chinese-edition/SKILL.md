@@ -156,6 +156,8 @@ Maintain these conventions unless the user changes them:
 - book/course "descent" -> `深入`, not `下潜`
 - "deep dive" syllabus blocks -> `专题深入`
 - JTB -> expand on first use as `JTB（Justified True Belief，证成的真信念）`; thereafter `JTB（证成的真信念）` is acceptable in Chinese prose
+- translate `epistemology` as `认识论`, but do not mechanically render every `epistemic` as `认识论的`; prefer established natural compounds such as `认知运气`/`知识运气`, `认知不正义`, `认知后盾`, `认知气泡`, `认知效用理论`, and `认知逻辑` when the English adjective describes knowledge-related status, value, environment, or norms rather than the academic discipline itself
+- translate English `know` by function in Chinese: `know that` -> `知道……为真`, `know how` -> `会` or `知道如何`, acquaintance/faces/places -> `认识`/`认得`/`熟悉`, and Russell's `knowledge by acquaintance` -> `亲知`
 - scientific replication -> `复现`, `复现实验`, or `可复现`; use `复现危机`; use `复制` only for biological/molecular copying
 - preregistration -> `研究预登记`; registered reports -> `注册式报告`
 - day references -> `第 N 日`
