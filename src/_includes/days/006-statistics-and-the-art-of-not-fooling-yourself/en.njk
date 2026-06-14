@@ -1,0 +1,368 @@
+<header class="hero wrap">
+<p class="eyebrow">Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 06 / 180</span></p>
+<h1>Statistics &amp; the Art of <em>Not Fooling Yourself</em></h1>
+<p class="sub">There is a path through your data that ends in <em>p</em>&nbsp;&lt;&nbsp;.05. There is almost always such a path. The whole discipline is the struggle not to walk it by accident.</p>
+
+<figure class="hero-fig">
+<svg viewBox="0 0 520 270" role="img" aria-label="A branching garden of analysis choices: one dataset forks into many paths, most ending in non-significant results, a few cherry-picked ones ending in a significant result.">
+<defs>
+<marker id="hx" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--line-strong)"></path></marker>
+<marker id="hxg" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--contested)"></path></marker>
+</defs>
+<!-- root -->
+<rect x="8" y="118" width="86" height="36" rx="8" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
+<text x="51" y="135" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="var(--ink)">your data</text>
+<text x="51" y="148" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">(pure noise)</text>
+<!-- tier 1 branches -->
+<g stroke="var(--line-strong)" stroke-width="1.5" fill="none" marker-end="url(#hx)">
+<path d="M94,128 C130,100 150,86 178,80"></path>
+<path d="M94,136 C130,136 150,136 178,136"></path>
+<path d="M94,144 C130,172 150,186 178,192"></path>
+</g>
+<g font-family="IBM Plex Mono,monospace" font-size="8.5" fill="var(--ink-faint)" text-anchor="middle">
+<text x="140" y="86">drop outlier?</text>
+<text x="140" y="128">add covariate?</text>
+<text x="140" y="200">stop now?</text>
+</g>
+<!-- tier 2 fan -->
+<g stroke="var(--line-strong)" stroke-width="1.2" fill="none" marker-end="url(#hx)">
+<path d="M196,78 C240,60 270,52 312,50"></path>
+<path d="M196,82 C240,92 270,98 312,104"></path>
+<path d="M196,136 C240,124 270,118 312,116"></path>
+<path d="M196,138 C240,150 270,158 312,166"></path>
+<path d="M196,192 C240,206 270,214 312,220"></path>
+</g>
+<!-- the cherry-picked path, highlighted -->
+<g stroke="var(--contested)" stroke-width="2.1" fill="none" marker-end="url(#hxg)">
+<path d="M94,130 C130,100 150,86 178,80"></path>
+<path d="M196,78 C240,60 270,52 312,50"></path>
+</g>
+<!-- endpoint nodes -->
+<g font-family="IBM Plex Mono,monospace" font-size="9">
+<g><rect x="316" y="38" width="92" height="24" rx="6" fill="color-mix(in srgb,var(--contested) 14%,transparent)" stroke="var(--contested)" stroke-width="1.6"></rect><text x="362" y="54" text-anchor="middle" fill="var(--contested)">p = .03 ✓</text></g>
+<g><rect x="316" y="92" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"></rect><text x="362" y="108" text-anchor="middle" fill="var(--ink-faint)">p = .61</text></g>
+<g><rect x="316" y="104" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2" opacity="0"></rect></g>
+<g><rect x="316" y="154" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"></rect><text x="362" y="170" text-anchor="middle" fill="var(--ink-faint)">p = .44</text></g>
+<g><rect x="316" y="208" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"></rect><text x="362" y="224" text-anchor="middle" fill="var(--ink-faint)">p = .78</text></g>
+</g>
+<text x="430" y="54" font-family="Fraunces,serif" font-style="italic" font-size="13" fill="var(--contested)">report</text>
+<text x="430" y="70" font-family="Fraunces,serif" font-style="italic" font-size="13" fill="var(--contested)">this one.</text>
+<text x="430" y="170" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">forget</text>
+<text x="430" y="182" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">these.</text>
+</svg>
+<figcaption>The garden of forking paths. The data are pure noise — yet enough branches guarantee one ends in a "discovery."</figcaption>
+</figure>
+
+<p class="lede"><span class="drop">I</span>n 2011 three psychologists set out to prove something impossible. They sat twenty undergraduates down, played half of them the Beatles' <em>"When I'm Sixty-Four"</em> and the other half a control tune, then asked a battery of questions — including each person's date of birth. After a perfectly ordinary statistical analysis, they announced their finding: listening to <em>"When I'm Sixty-Four"</em> made people <strong>a year and a half younger</strong>. Not feel younger. Be younger — their birth dates said so, at <em>p</em> = .04.</p>
+
+<p>This is, of course, insane. A song cannot reach back and edit the year you were born. And that was exactly the point. Joseph Simmons, Leif Nelson, and Uri Simonsohn had used only standard, respectable tools, made only choices that any working scientist makes every week — and conjured a statistically significant impossibility. Their paper was a confession written as a weapon. Today we learn what it exposed, and how a science learns to stop fooling itself.</p>
+</header><div class="wrap">
+
+<div class="whereblock">
+<p class="label">◆ Where we are</p>
+<p>On <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> we met the replication crisis as a set of bruising numbers (97% of original psychology studies "worked"; only 36% replicated) and named <em class="term">p-hacking</em>{% tip 'P-hacking means trying enough analyses, exclusions, outcomes, or stopping rules that random noise can be made to look statistically significant.' %} without yet opening it up. Today we open it up. This is the statistical engine room beneath that crisis — and beneath <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a>'s Gettier worry (a belief that's true by luck, not connection) scaled up to entire literatures. We'll lean hard on <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>'s lesson that a <em>p</em>-value is not the probability the null is true (that confusion is the base-rate fallacy in disguise), and on <a href="/days/005-causation/"><strong>Day 5</strong></a>'s warning that <em>which variables you control for</em> is itself a fork in the road. Threads today: <em>information</em> (signal vs noise) and <em>computation</em> (the lab as a fallible inference machine), with a quiet preview of <em>emergence</em> — science as an error-correcting system bigger than any one analyst.</p>
+</div>
+
+<section>
+<p class="sec-eyebrow">The hook</p>
+<h2>The easiest person to fool</h2>
+<blockquote>"The first principle is that you must not fool yourself — and you are the easiest person to fool." — Richard Feynman, Caltech commencement, 1974</blockquote>
+<p>Feynman was talking about a kind of integrity that no formula can supply. The cruel twist of modern statistics is that the formulas, used the way humans naturally use them, become accomplices. They lend the warm authority of mathematics to whatever you were already hoping to find.</p>
+<p>The villain has a clinical name: <em class="term">researcher degrees of freedom</em>{% tip 'Researcher degrees of freedom are the legitimate-looking analytic choices a researcher can make about data collection, cleaning, modeling, and reporting.' %}. Every real analysis hides dozens of small, defensible decisions. Which outliers to exclude? Should you control for age? Sex? Both? Do you stop collecting data now, or run twenty more participants? You measured three outcomes — which do you report? Each choice, taken alone, is innocent. Taken together, made <em>after</em> you've glanced at how the numbers are leaning, they become a machine for minting false discoveries.</p>
+<p>Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved it with the Beatles. By simulation, they showed that bundling just four ordinary degrees of freedom — peeking at the data and adding more if needed; choosing between two related outcome measures; adding or dropping a covariate like gender; dropping one of three experimental conditions — can inflate your chance of a false positive from the advertised <strong>5%</strong> to as high as <strong>61%</strong>. Flip enough innocent switches and a coin-flip's worth of noise becomes a near-certainty of "success."</p>
+<p>The next panel lets you run that machine yourself — with a live simulation, not a canned animation. Every "study" inside it is pure static, generated with no real effect whatsoever. Watch what your freedom does to the truth.</p>
+</section>
+
+<!-- ===================== INTERACTIVE 1 ===================== -->
+<div class="panel web-only statistics-factory">
+<p class="ptitle">Interactive · live Monte-Carlo simulation</p>
+<h3>The False-Positive Factory</h3>
+<p class="pnote">Each run simulates <strong>~1,500 experiments</strong> in which there is <em>no real effect at all</em> — two groups drawn from the same distribution. With no tricks, about 5% will cross <em>p</em> &lt; .05 by chance (that's what 5% <em>means</em>). Now hand yourself some researcher degrees of freedom and re-run. The factory simply reports the prettiest result it can find among the analyses you've allowed.</p>
+
+<div class="fp-grid">
+<div>
+<div class="switches">
+<button class="swbtn" id="fp-dv" role="switch" aria-checked="false">
+<span class="knob"></span><span class="lab"><b>Two outcome measures</b><span>Measure two related things, report whichever "works"</span></span>
+</button>
+<button class="swbtn" id="fp-stop" role="switch" aria-checked="false">
+<span class="knob"></span><span class="lab"><b>Optional stopping</b><span>Not significant at n=20? Add 10 more and re-test</span></span>
+</button>
+<button class="swbtn" id="fp-cov" role="switch" aria-checked="false">
+<span class="knob"></span><span class="lab"><b>A flexible covariate</b><span>Try it overall, then split by "gender" too</span></span>
+</button>
+<button class="swbtn" id="fp-drop" role="switch" aria-checked="false">
+<span class="knob"></span><span class="lab"><b>Drop a condition</b><span>Run three groups, report the best pair</span></span>
+</button>
+</div>
+<div class="fp-actions">
+<button class="btn primary" id="fp-run">Re-run simulation</button>
+<button class="btn" id="fp-all">Flip all four</button>
+<button class="btn" id="fp-reset">Reset</button>
+</div>
+</div>
+
+<div class="fp-meter">
+<div class="fp-bigwrap">
+<div class="fp-big low" id="fp-pct">5%</div>
+<div class="fp-biglab">false-positive rate · "findings" from pure noise</div>
+</div>
+<div class="fp-bar"><div class="fill" id="fp-fill"></div><div class="honest"></div></div>
+<div class="fp-scale"><span>0%</span><span>↑ honest 5%</span><span>~65%</span></div>
+<div class="fp-read" id="fp-read">No tricks enabled. One test, one answer. This is the rate the system promises — and almost the only condition under which it keeps that promise.</div>
+</div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h3>The False-Positive Factory</h3>
+<p class="pnote">Each ordinary analytic freedom multiplies the number of chances to report a chance result.</p>
+<table class="alt-table">
+<thead><tr><th>Analytic freedom</th><th>What changes</th><th>Why it inflates false positives</th></tr></thead>
+<tbody>
+<tr><td>Two outcome measures</td><td>Measure two related results and report the one that works.</td><td>Noise gets two chances to cross <em>p</em> &lt; .05.</td></tr>
+<tr><td>Optional stopping</td><td>Peek at n=20, then add participants if needed.</td><td>The stopping rule itself becomes another path through the data.</td></tr>
+<tr><td>Flexible covariate</td><td>Try the overall result and subgroup splits.</td><td>Legitimate controls become multiple comparisons when chosen after seeing the data.</td></tr>
+<tr><td>Drop a condition</td><td>Run three groups, then report the best pair.</td><td>The reported contrast is selected because it looks best.</td></tr>
+</tbody>
+</table>
+<p>Simmons, Nelson, and Simonsohn showed that combining four such freedoms can raise a nominal 5% false-positive rate to about 61% even when the data contain no real effect.</p>
+</div>
+
+<section>
+<p class="sec-eyebrow">The core model</p>
+<h2>What a <em>p</em>-value actually says (and the six lies people tell about it)</h2>
+<p>To not be fooled, you have to know precisely what the instrument reports. Almost nobody does — including, surveys find, most scientists and a worrying number of the statistics instructors teaching them. So, carefully:</p>
+
+<div class="def">
+<p class="h">Definition · the p-value</p>
+      The <em class="term">p-value</em>{% tip 'A p-value is a tail probability for data under a specified null model, not the probability that the null hypothesis is true.' %} is the probability — <strong>computed on the assumption that the null hypothesis{% tip 'A null hypothesis is the baseline claim being tested, often that there is no effect or no difference.' %} and every modelling assumption are true</strong> — of getting a result <strong>at least as extreme</strong> as the one you actually observed.
+</div>
+
+<p>Read it twice. It is a statement about <em>data, assuming a hypothesis</em> — written P(data&nbsp;|&nbsp;null). It is emphatically <em>not</em> a statement about the hypothesis given the data, P(null&nbsp;|&nbsp;data). Confusing those two is the exact inversion <strong>Day 4</strong> warned about with the disease-test problem: P(positive&nbsp;|&nbsp;sick) is not P(sick&nbsp;|&nbsp;positive), and no amount of staring turns one into the other without a prior. Here are the six misreadings to burn out of your reflexes — drawn from Greenland and colleagues' field guide to <em>twenty-five</em> of them:</p>
+
+<ul class="mislist">
+<li><b>"<em>p</em> = .03 means there's a 3% chance the null is true."</b><span class="fix">No. That's P(null | data) — a Bayesian quantity needing a prior. The <em>p</em>-value already <em>assumes</em> the null.</span></li>
+<li><b>"<em>p</em> = .05 means a 5% chance the result is just chance."</b><span class="fix">No. Chance (the null) is the very assumption the calculation is built on; it can't also be the thing in doubt.</span></li>
+<li><b>"<em>p</em> &gt; .05 means there is no effect."</b><span class="fix">No. Absence of evidence is not evidence of absence — an underpowered study fails to detect real effects all the time.</span></li>
+<li><b>"1 − <em>p</em> is the probability the alternative is true."</b><span class="fix">No. Neither <em>p</em> nor its complement is a probability about any hypothesis.</span></li>
+<li><b>"<em>p</em> tells you the result will replicate."</b><span class="fix">No. A low <em>p</em> from one noisy study says little about the next study.</span></li>
+<li><b>"A significant result is a large or important one."</b><span class="fix">No. With a big enough sample, a trivially small effect is "significant." Significance ≠ size ≠ importance.</span></li>
+</ul>
+
+<p>That last one is the quiet killer, so it gets its own model.</p>
+
+<h3>Significance is not size: meet the effect size</h3>
+<p>A <em>p</em>-value smushes together two utterly different things — <em>how big</em> an effect is and <em>how much data</em> you collected. Pour in enough participants and even a microscopic, meaningless difference crosses the line. So grown-up statistics insists on reporting the <em class="term">effect size</em>{% tip 'An effect size reports how large a difference or association is, instead of only whether it crossed a significance threshold.' %} separately: <em>Cohen's d</em>{% tip 'Cohen’s d expresses a difference between two means in units of standard deviation.' %} (a difference in means measured in standard deviations) or a correlation <em>r</em>. Jacob Cohen offered rough labels — <em>d</em> ≈ 0.2 small, 0.5 medium, 0.8 large — while cheerfully admitting they were arbitrary: "Although arbitrary, the proposed conventions will be found to be reasonable by reasonable people." The point is not the labels. The point is that a number with no effect size attached has told you almost nothing worth knowing.</p>
+
+<h3>The interval you've been misreading too</h3>
+<p><em class="term">Confidence intervals</em>{% tip 'A confidence interval is a range produced by a method with a stated long-run coverage rate, such as 95%.' %} are sold as the humane alternative to <em>p</em>-values, and they are better — but they hide their own trap.</p>
+<div class="def">
+<p class="h">Definition · the 95% confidence interval</p>
+      A 95% CI is produced by a <strong>procedure</strong> that, across many hypothetical repeat experiments, brackets the true value 95% of the time. The "95%" describes the long-run reliability of the <em>method</em>, not the odds for your one particular interval.
+</div>
+<p>So the natural sentence — "there's a 95% chance the true value is in <em>this</em> interval" — is, in the frequentist world, simply false. Your interval either contains the truth or it doesn't; the dice were thrown when you ran the study. (A <strong>Day 4</strong> Bayesian <em>credible</em> interval <em>does</em> license that sentence — but only after you've committed to a prior. Different tool, different promise.) Nor does a CI mean 95% of your data live inside it, nor that values just outside are impossible. What it gives you, refreshingly, is a <em>range of effect sizes compatible with your data</em> — and that reframing, from "yes/no" to "how much, how precisely," is the heart of what reformers call the <em>new statistics</em>.</p>
+
+<h3>Why small studies don't just miss — they lie</h3>
+<p>Two ways to be wrong: a <em class="term">Type I error</em>{% tip 'A Type I error is a false positive: rejecting a true null hypothesis.' %} (false alarm — declaring an effect that isn't there) and a <em class="term">Type II error</em>{% tip 'A Type II error is a false negative: missing a real effect.' %} (a miss — failing to see one that is). <em class="term">Statistical power</em>{% tip 'Statistical power is the probability that a study will detect an effect of a given size if that effect is real.' %} is your chance of catching a real effect; more data buys more power. You'd assume an underpowered study just yields shrugs and "no result." Worse: it actively poisons the literature. When power is low, the only estimates lucky enough to clear the significance bar are the wildly overblown ones — the <em class="term">winner's curse</em>{% tip 'The winner’s curse is the tendency for selected significant estimates from noisy studies to exaggerate the true effect.' %}. Pair that with journals printing only "significant" findings, and you manufacture a published record of effects that are both exaggerated and fragile. A sobering 2013 audit ("Power failure," Button et al.) put the median power across neuroscience at roughly <strong>21%</strong>. Four out of five real effects, on average, going undetected — and the ones that surface, inflated.</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">The deeper trap</p>
+<h2>You don't have to cheat to be fooled</h2>
+<p>Here is the part that should keep honest people up at night. You might read all of the above, swear off p-hacking, run exactly <strong>one</strong> pre-planned analysis, and report it faithfully — and <em>still</em> have an inflated false-positive rate. This is Andrew Gelman and Eric Loken's <em class="term">garden of forking paths</em>{% tip 'The garden of forking paths is the set of analyses a researcher might reasonably have chosen after seeing different patterns in the same data.' %}.</p>
+<p>Their insight is subtle and a little haunting. The damage doesn't require running many analyses. It only requires that the single analysis you ran was <em>contingent on the data you happened to see</em>. Suppose your data had come out slightly differently — a touch noisier here, a cluster there. You'd have made a different, equally reasonable choice: controlled for age instead of income, compared women instead of the whole sample, used a median instead of a mean. The other analyses are invisible because you never ran them. But the universe of paths you <em>would have</em> taken, in nearby worlds, is exactly the multiplicity that inflates your error rate. As Gelman and Loken put it, you can get a false positive with no "fishing expedition" and no p-hacking at all, even with the hypothesis fixed in advance.</p>
+<p>Notice how this rhymes with <a href="/days/005-causation/"><strong>Day 5</strong></a>. There, the lurking decision was <em>which variables to condition on</em> — and conditioning on a <em class="term">collider</em>{% tip 'A collider is a variable influenced by two other variables; conditioning on it can create a misleading association between its causes.' %} could <em>manufacture</em> a correlation out of nothing. The forking paths are the same hazard generalized: every defensible analytic choice is a junction, and the data quietly nudge you down the branch that flatters your hypothesis. The honest analyst and the p-hacker can produce the identical false result. The difference is only that one of them knows they did it.</p>
+
+<div class="aside">
+<p class="h">The fix that names the disease</p>
+<p>If the problem is that choices get made <em>after</em> seeing the data, the cleanest cure is to make them <em>before</em>: <em class="term">preregistration</em>{% tip 'Preregistration means recording hypotheses, data handling, and analysis plans before looking at the results.' %} (write down your analysis plan, publicly, in advance) and <em class="term">Registered Reports</em>{% tip 'Registered Reports are journal articles accepted in principle after peer review of the research question and method, before the results are known.' %} (journals peer-review and accept the <em>plan</em>, before any results exist). We met these on <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a>; here's <em>why</em> they bite. They don't make you smarter — they amputate the forking paths, converting a garden of "reasonable choices I made while peeking" into a single committed road. Everything else can still be reported; it just gets labelled honestly as <em>exploratory</em>.</p>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">The debate</p>
+<h2>Burn the threshold, or just lower it?</h2>
+<p>If <em>p</em> &lt; .05 is so abusable, what should replace it? Here the field splits — not into crank versus expert, but into camps of serious statisticians who genuinely disagree. It helps to lay them on a single line, from "patch it" to "torch it."</p>
+</section>
+
+<!-- ===================== VISUAL 2 ===================== -->
+<div class="panel statistics-spectrum">
+<p class="ptitle">Diagram · the reform spectrum</p>
+<h3>Four ways to live with <em>p</em></h3>
+<p class="pnote">Everyone on this line agrees the status quo is broken. They disagree about how radical the cure must be.</p>
+<svg viewBox="0 0 640 168" role="img" aria-label="A spectrum from keeping p less than 0.05, to redefining it to 0.005, to justifying your alpha, to retiring statistical significance entirely.">
+<line x1="40" y1="60" x2="600" y2="60" stroke="var(--line-strong)" stroke-width="2"></line>
+<g font-family="IBM Plex Mono,monospace">
+<!-- stop 1 -->
+<circle cx="70" cy="60" r="7" fill="var(--paper)" stroke="var(--ink-faint)" stroke-width="2"></circle>
+<text x="70" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">keep .05</text>
+<text x="70" y="92" text-anchor="middle" font-size="8.5" fill="var(--ink-faint)">status quo</text>
+<!-- stop 2 -->
+<circle cx="230" cy="60" r="7" fill="color-mix(in srgb,var(--hint) 30%,transparent)" stroke="var(--hint)" stroke-width="2"></circle>
+<text x="230" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">redefine: .005</text>
+<text x="230" y="92" text-anchor="middle" font-size="8.5" fill="var(--ink-faint)">Benjamin+ 2018</text>
+<text x="230" y="104" text-anchor="middle" font-size="8.5" fill="var(--ink-faint)">(72 authors)</text>
+<!-- stop 3 -->
+<circle cx="400" cy="60" r="7" fill="color-mix(in srgb,var(--accent) 30%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+<text x="400" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">justify your α</text>
+<text x="400" y="92" text-anchor="middle" font-size="8.5" fill="var(--ink-faint)">Lakens+ 2018</text>
+<text x="400" y="104" text-anchor="middle" font-size="8.5" fill="var(--ink-faint)">(88 authors)</text>
+<!-- stop 4 -->
+<circle cx="568" cy="60" r="7" fill="color-mix(in srgb,var(--contested) 30%,transparent)" stroke="var(--contested)" stroke-width="2"></circle>
+<text x="568" y="40" text-anchor="middle" font-size="11" fill="var(--contested)">retire it</text>
+<text x="568" y="92" text-anchor="middle" font-size="8.5" fill="var(--ink-faint)">Amrhein+ 2019</text>
+<text x="568" y="104" text-anchor="middle" font-size="8.5" fill="var(--ink-faint)">(800+ signatories)</text>
+</g>
+<text x="40" y="146" text-anchor="start" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">patch the rule…</text>
+<text x="600" y="146" text-anchor="end" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">…abolish the bright line</text>
+</svg>
+<div class="spec-key">
+<div class="k"><b>Redefine</b> — Benjamin et al. (2018) keep the threshold idea but move it: call <em>p</em> &lt; .005 a "discovery," and .005–.05 merely "suggestive." Simple, blunt, and (critics say) treats a symptom.</div>
+<div class="k"><b>Justify your alpha</b> — Lakens et al. (2018) reject any universal number. Pick your threshold deliberately, case by case, weighing the real costs of false alarms versus misses, and <em>show your reasoning</em>.</div>
+<div class="k"><b>Retire significance</b> — Amrhein, Greenland &amp; McShane (2019), with 800+ co-signers in <em>Nature</em>, want to scrap the "significant / not significant" dichotomy itself — the habit of treating <em>p</em> = .04 and <em>p</em> = .06 as different worlds. Not a ban on <em>p</em>-values; a ban on the bright line.</div>
+<div class="k"><b>The official referee</b> — the American Statistical Association weighed in twice: a careful 2016 statement of six principles, then a more radical 2019 editorial urging us to stop saying "statistically significant" at all. (That 2019 piece was the editors' view, not formal ASA policy — a distinction that itself caused a row.)</div>
+</div>
+</div>
+
+<section>
+<p>What unites the whole spectrum, from cautious to incendiary, is a single migration: away from a yes/no verdict at a magic number, toward <em>reporting how big an effect is, how uncertain you are, and how fragile the answer is to the choices you made</em>. That last idea — fragility — is where the live 2020s frontier lives.</p>
+</section>
+
+<section class="frontier">
+<p class="sec-eyebrow">The frontier · 2024–2026</p>
+<h2>Making fragility visible — and the hype filter</h2>
+<p>If a single analysis can mislead, the modern move is brutally simple: <em>run them all</em>, and show the spread. Two named methods do this, and a third line of work tests the whole idea by turning loose armies of real scientists on the same data. As always, each claim gets a label.</p>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 01</span>
+<span class="chip ok" data-print="established"><i></i>As a transparency tool · established</span>
+<span class="chip hint" data-print="contested"><i></i>As a formal test · contested</span>
+</div>
+<h3>Multiverse &amp; specification-curve analysis</h3>
+<p>Instead of defending one analysis, you enumerate <em>every</em> reasonable combination of choices — keep outliers or trim them, log-transform or not, control for this covariate or that — and compute the result under each. <em class="term">Multiverse analysis</em>{% tip 'Multiverse analysis runs many defensible analysis choices and reports the distribution of results rather than one preferred path.' %} (Steegen, Tuerlinckx, Gelman &amp; Vanpaemel, <em>Perspectives on Psychological Science</em>, 2016) displays the whole cloud of outcomes. <em class="term">Specification-curve analysis</em>{% tip 'Specification-curve analysis sorts many defensible model specifications by their estimated effect to reveal robustness or fragility.' %} (Simonsohn, Simmons &amp; Nelson, <em>Nature Human Behaviour</em>, 2020) sorts hundreds of specifications into a single curve and asks: across all the defensible ways to slice this, does the effect hold up, or does it evaporate the moment you wiggle a choice? It's honest, vivid, and increasingly expected by reviewers. The interactive below lets you feel it.</p>
+<p>The <strong>hype filter</strong> matters here, though. These are superb <em>transparency</em> devices and weak <em>inferential</em> ones. The authors of specification-curve analysis concede the catch themselves: deciding which specifications are "reasonable" is a judgement call no algorithm can make, and "the goal to eliminate subjectivity is unattainable." A determined arguer can still curate the multiverse. And there is no settled way to compute a single valid conclusion from a curve — which is why 2024 brought new machinery (PIMA, below) trying to supply one. <span class="chip ok" style="margin-left:.2rem" data-print="established"><i></i>established as a robustness display</span> &nbsp;<span class="chip bad" data-print="review"><i></i>oversold if treated as an objectivity machine</span></p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 02</span>
+<span class="chip ok" data-print="established"><i></i>Empirical phenomenon · established</span>
+</div>
+<h3>Many analysts, one dataset — the most damning evidence in the room</h3>
+<p>Here is the experiment that should change how you read every headline. Take one dataset, one clear question, and hand identical copies to dozens of expert teams. Do they converge? They do not.</p>
+<p>In Silberzahn et al. (<em>Advances in Methods and Practices in Psychological Science</em>, 2018), <strong>29 teams</strong> (61 analysts) were asked a single question — do soccer referees give more red cards to dark-skin-toned players? Their estimated odds ratios ranged from <strong>0.89 to 2.93</strong>; twenty teams found a significant positive effect, nine did not. Tellingly, the analysts' prior beliefs and even their statistical expertise did <em>not</em> explain who found what. In Botvinik-Nezer et al. (<em>Nature</em>, 2020), <strong>70 teams</strong> (180 researchers) analysed the same brain-imaging dataset against nine pre-set hypotheses — and no two teams used the same pipeline; their yes/no conclusions diverged sharply even when their underlying statistical maps were highly correlated. Breznau et al. (<em>PNAS</em>, 2022) put the same data and hypothesis (does immigration erode support for social policy?) to <strong>73 teams</strong> and watched estimates scatter from clearly negative to clearly positive. Even finance has its version: Menkveld et al.'s "Nonstandard Errors" (<em>Journal of Finance</em>, 2024) had <strong>164 teams</strong> test the same hypotheses on the same market data, and found the cross-team variability rivalled ordinary statistical error — shrinking, encouragingly, when extra peer-review stages were added.</p>
+<p>This is <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a>'s Gettier problem made flesh, inside a single dataset. Each team's belief is "justified" by a competent analysis; whether it's <em>true</em> — connected to reality rather than to their particular path through the garden — varies team to team. One analysis is one branch. Treat it accordingly.</p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 03</span>
+<span class="chip hint" data-print="promising"><i></i>New methods · promising hint</span>
+<span class="chip ok" data-print="established"><i></i>Reform infrastructure · established trend</span>
+</div>
+<h3>Plugging the inference gap — and Day 4's quiet alternative</h3>
+<p>The open problem in all of the above is honest <em>inference</em> across a multiverse: how do you draw one valid conclusion from a thousand entangled analyses? A 2024 entry, <em class="term">PIMA</em> (Post-selection Inference in Multiverse Analysis; Girardi et al., <em>Psychometrika</em>, 2024), offers a sign-flipping test that aims to give the multiverse a proper joint error guarantee, reaching beyond the linear-model limits of the 2020 specification curve. It's peer-reviewed and genuinely interesting, but new and not yet standard practice — a <strong>promising hint</strong>, not a settled tool.</p>
+<p>Meanwhile the boring, durable fixes keep spreading: the Registered Reports format — where journals accept your <em>plan</em> before your results exist — is now offered at <strong>several hundred journals</strong>, and preregistration is becoming a default rather than a virtue. And recall <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>'s <em class="term">e-values</em>{% tip 'E-values measure evidence as the payoff of a betting strategy against a null hypothesis.' %} and "testing by betting" (Grünwald, Ramdas, Shafer): an alternative to the <em>p</em>-value that stays valid even if you peek at your data and stop whenever you like — aimed squarely at the optional-stopping degree of freedom you toggled in the factory above. Still a research frontier rather than mainstream practice — <strong>promising</strong>, watch this space.</p>
+</div>
+</section>
+
+<!-- ===================== INTERACTIVE 3 ===================== -->
+<div class="panel web-only statistics-spec-curve">
+<p class="ptitle">Interactive · run your own multiverse</p>
+<h3>The Specification Curve</h3>
+<p class="pnote">A fixed (synthetic) dataset in which X and Y look related — but mostly because a lurking background variable <strong>W</strong> drives both (a <strong>Day 5</strong> confounder). Switch on the analytic choices you'd consider "reasonable." Each combination is one specification; the curve sorts them by effect size. Teal dots are "significant" (<em>p</em> &lt; .05), grey dots are not. Watch what happens when you toggle <em>control for W</em> — then flip <strong>Cherry-pick</strong> and see how a motivated author would report this versus what the whole multiverse actually says.</p>
+
+<div class="mv-controls" id="mv-controls">
+<button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>trim outliers</button>
+<button class="mvchip" id="mv-cov" aria-pressed="false"><i></i>control for W</button>
+<button class="mvchip" id="mv-rank" aria-pressed="false"><i></i>rank-transform</button>
+<button class="mvchip" id="mv-sub" aria-pressed="false"><i></i>drop subgroup</button>
+<button class="mvchip" id="mv-cherry" aria-pressed="false" style="margin-left:auto;border-style:dashed;"><i></i>cherry-pick</button>
+</div>
+
+<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 640 240" role="img" aria-label="A specification curve: a sorted plot of effect estimates across all enabled analytic specifications."></svg>
+
+<div class="mv-read" id="mv-read"></div>
+<div class="mv-cherry honest" id="mv-cherrybox">
+<p class="lh" id="mv-clh">The honest reading</p>
+<p id="mv-cbody" style="margin:0;"></p>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h3>Specification Curve Summary</h3>
+<p class="pnote">The same synthetic dataset can be analysed through multiple defensible specifications.</p>
+<table class="alt-table">
+<thead><tr><th>Choice</th><th>Effect on the analysis</th><th>Interpretive risk</th></tr></thead>
+<tbody>
+<tr><td>Trim outliers</td><td>Exclude extreme values before estimating the association.</td><td>May stabilize a result or selectively remove inconvenient points.</td></tr>
+<tr><td>Control for W</td><td>Adjust for a lurking background variable that drives both X and Y.</td><td>Often shrinks a spurious association, but the control must be justified causally.</td></tr>
+<tr><td>Rank-transform</td><td>Replace raw values with ranks before computing the association.</td><td>Can reduce sensitivity to distribution shape while changing the estimand.</td></tr>
+<tr><td>Drop subgroup</td><td>Analyse only a subset of the data.</td><td>Can test a real boundary condition or create a flattering subset.</td></tr>
+</tbody>
+</table>
+<p>The honest report is the distribution across reasonable specifications; the dishonest report is the prettiest point on the curve.</p>
+</div>
+
+<section>
+<p class="sec-eyebrow">Open questions</p>
+<h2>What's genuinely unsettled</h2>
+<ul>
+<li><strong>Should "statistical significance" survive at all?</strong> Reformers are split between disciplining the threshold and abolishing it. Decisions still have to be made somewhere — a drug is approved or it isn't — and abolitionists owe an account of how.</li>
+<li><strong>Can a multiverse ever yield a single honest verdict?</strong> Or is the choice of "reasonable specifications" an irreducibly subjective act that just relocates the forking paths one level up? PIMA and friends are early attempts; the jury is out.</li>
+<li><strong>Is variation in <em>conclusions</em> the same as variation in <em>reality</em>?</strong> A subtle 2023 reanalysis noted that in some many-analyst studies the headline-grabbing disagreement was about <em>significance</em>, while the underlying effect sizes were quietly consistent and small. Disagreement about a verdict can exceed disagreement about the number. Don't over-learn "everything is hopeless."</li>
+<li><strong>Do <em>p</em>-values or e-values deserve the future?</strong> The betting-based tools elegantly solve optional stopping but can demand more data and import a new modelling burden (which bet?). Coexistence looks likelier than conquest.</li>
+<li><strong>And the question waiting in the AI block:</strong> when a model trained on millions of papers reports a "robust" result, has it learned to reason about evidence — or to imitate the very forking-path habits that got us here? (<strong>Days 138–145</strong>.)</li>
+</ul>
+</section>
+
+<div class="recap">
+<p class="h">◆ The day in three sentences</p>
+<dl>
+<div><dt>Big idea</dt><dd>Statistical tools don't protect you from fooling yourself — used with ordinary human flexibility they help you do it, because the dozens of defensible choices in any analysis (the "garden of forking paths") let noise masquerade as discovery, so the cure is transparency, preregistration, effect sizes with uncertainty, and robustness across reasonable analyses rather than a verdict at a magic threshold.</dd></div>
+<div><dt>Best analogy</dt><dd>The False-Positive Factory: hand yourself enough innocent freedoms and a coin-flip's worth of nothing becomes a 61% chance of "success" — and the garden of forking paths, where the analyses you <em>would have</em> run in nearby worlds inflate your error even if you only ran one.</dd></div>
+<div><dt>Live controversy</dt><dd>Whether to lower the threshold (<em>p</em> &lt; .005), justify it case by case, or retire "statistical significance" altogether — with multiverse and many-analyst studies revealing how alarmingly a single dataset's verdict depends on who analyses it.</dd></div>
+</dl>
+<p class="threads"><b>Threads today ›</b> information (separating signal from noise; the <em>p</em>-value as a misread evidence measure) · computation (the lab as a fallible inference engine; the multiverse as brute enumeration) · emergence (science as an error-correcting system larger than any analyst — preregistration, many-analyst crowds, meta-analysis).</p>
+</div>
+
+<div class="tomorrow">
+<p class="h">Tomorrow <span class="arrow">→</span> Day 07</p>
+<h3>Information Theory</h3>
+<p>Today was about not mistaking noise for signal. Tomorrow we learn to <em>measure</em> signal exactly. Claude Shannon's bit, entropy as surprise, the game of twenty questions, channel capacity — and the startling bridge to physics in Landauer's principle, the irreducible energy cost of erasing a single bit. The <em>information</em> thread we've been quietly pulling since Day 1 finally gets its own mathematics.</p>
+</div>
+
+<hr class="div">
+
+<section class="sources">
+<p class="sec-eyebrow">Sources</p>
+<h2>Sources &amp; further reading</h2>
+<ol>
+<li>Simmons, J. P., Nelson, L. D. &amp; Simonsohn, U. (2011). "False-Positive Psychology: Undisclosed Flexibility in Data Collection and Analysis Allows Presenting Anything as Significant." <em>Psychological Science</em> 22(11): 1359–1366. <span class="meta">doi:10.1177/0956797611417632.</span> <a href="https://doi.org/10.1177/0956797611417632">doi.org/10.1177/0956797611417632</a> <span class="meta">— the "When I'm Sixty-Four" demonstration; the 5%→61% simulation.</span></li>
+<li>Gelman, A. &amp; Loken, E. (2014). "The Statistical Crisis in Science." <em>American Scientist</em> 102(6): 460–465. <span class="meta">— the "garden of forking paths"; earlier as a 2013 Columbia working paper.</span> <a href="https://www.americanscientist.org/article/the-statistical-crisis-in-science">americanscientist.org</a></li>
+<li>Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. &amp; Altman, D. G. (2016). "Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations." <em>European Journal of Epidemiology</em> 31(4): 337–350. <span class="meta">doi:10.1007/s10654-016-0149-3.</span> <a href="https://doi.org/10.1007/s10654-016-0149-3">doi.org/10.1007/s10654-016-0149-3</a> <span class="meta">— the canonical list of 25 misreadings.</span></li>
+<li>Wasserstein, R. L. &amp; Lazar, N. A. (2016). "The ASA Statement on p-Values: Context, Process, and Purpose." <em>The American Statistician</em> 70(2): 129–133. <span class="meta">doi:10.1080/00031305.2016.1154108.</span> <a href="https://doi.org/10.1080/00031305.2016.1154108">doi.org/10.1080/00031305.2016.1154108</a> <span class="meta">— the six principles.</span></li>
+<li>Wasserstein, R. L., Schirm, A. L. &amp; Lazar, N. A. (2019). "Moving to a World Beyond 'p &lt; 0.05'." <em>The American Statistician</em> 73(sup1): 1–19. <span class="meta">doi:10.1080/00031305.2019.1583913.</span> <a href="https://doi.org/10.1080/00031305.2019.1583913">doi.org/10.1080/00031305.2019.1583913</a> <span class="meta">— editorial to a 43-article special issue; "stop saying statistically significant" (editors' view, not ASA policy).</span></li>
+<li>Benjamin, D. J., Berger, J. O., Johannesson, M., et al. (2018). "Redefine statistical significance." <em>Nature Human Behaviour</em> 2(1): 6–10. <span class="meta">doi:10.1038/s41562-017-0189-z.</span> <a href="https://doi.org/10.1038/s41562-017-0189-z">doi.org/10.1038/s41562-017-0189-z</a></li>
+<li>Lakens, D., Adolfi, F. G., Albers, C. J., et al. (2018). "Justify your alpha." <em>Nature Human Behaviour</em> 2(3): 168–171. <span class="meta">doi:10.1038/s41562-018-0311-x.</span> <a href="https://doi.org/10.1038/s41562-018-0311-x">doi.org/10.1038/s41562-018-0311-x</a></li>
+<li>Amrhein, V., Greenland, S. &amp; McShane, B. (2019). "Scientists rise up against statistical significance." <em>Nature</em> 567(7748): 305–307. <span class="meta">doi:10.1038/d41586-019-00857-9; 800+ signatories.</span> <a href="https://doi.org/10.1038/d41586-019-00857-9">doi.org/10.1038/d41586-019-00857-9</a></li>
+<li>Button, K. S., Ioannidis, J. P. A., Mokrysz, C., et al. (2013). "Power failure: why small sample size undermines the reliability of neuroscience." <em>Nature Reviews Neuroscience</em> 14(5): 365–376. <span class="meta">doi:10.1038/nrn3475; median power ≈ 21%.</span> <a href="https://doi.org/10.1038/nrn3475">doi.org/10.1038/nrn3475</a></li>
+<li>Steegen, S., Tuerlinckx, F., Gelman, A. &amp; Vanpaemel, W. (2016). "Increasing Transparency Through a Multiverse Analysis." <em>Perspectives on Psychological Science</em> 11(5): 702–712. <span class="meta">doi:10.1177/1745691616658637.</span> <a href="https://doi.org/10.1177/1745691616658637">doi.org/10.1177/1745691616658637</a></li>
+<li>Simonsohn, U., Simmons, J. P. &amp; Nelson, L. D. (2020). "Specification curve analysis." <em>Nature Human Behaviour</em> 4(11): 1208–1214. <span class="meta">doi:10.1038/s41562-020-0912-z.</span> <a href="https://doi.org/10.1038/s41562-020-0912-z">doi.org/10.1038/s41562-020-0912-z</a></li>
+<li>Silberzahn, R., Uhlmann, E. L., Martin, D. P., et al. (2018). "Many Analysts, One Data Set." <em>Advances in Methods and Practices in Psychological Science</em> 1(3): 337–356. <span class="meta">doi:10.1177/2515245917747646; 29 teams, ORs 0.89–2.93.</span> <a href="https://doi.org/10.1177/2515245917747646">doi.org/10.1177/2515245917747646</a></li>
+<li>Botvinik-Nezer, R., Holzmeister, F., Camerer, C. F., et al. (2020). "Variability in the analysis of a single neuroimaging dataset by many teams." <em>Nature</em> 582(7810): 84–88. <span class="meta">doi:10.1038/s41586-020-2314-9; 70 teams.</span> <a href="https://doi.org/10.1038/s41586-020-2314-9">doi.org/10.1038/s41586-020-2314-9</a></li>
+<li>Breznau, N., Rinke, E. M., Wuttke, A., et al. (2022). "Observing many researchers using the same data and hypothesis reveals a hidden universe of uncertainty." <em>PNAS</em> 119(44): e2203150119. <span class="meta">doi:10.1073/pnas.2203150119; 73 teams.</span> <a href="https://doi.org/10.1073/pnas.2203150119">doi.org/10.1073/pnas.2203150119</a></li>
+<li>Menkveld, A. J., Dreber, A., Holzmeister, F., et al. (2024). "Nonstandard Errors." <em>The Journal of Finance</em> 79(3): 2339–2390. <span class="meta">doi:10.1111/jofi.13337; 164 teams.</span> <a href="https://doi.org/10.1111/jofi.13337">doi.org/10.1111/jofi.13337</a></li>
+<li>Girardi, P., Vesely, A., Lakens, D., et al. (2024). "Post-selection Inference in Multiverse Analysis (PIMA): An Inferential Framework Based on the Sign Flipping Score Test." <em>Psychometrika</em> 89(2): 542–568. <span class="meta">doi:10.1007/s11336-024-09973-6.</span> <a href="https://doi.org/10.1007/s11336-024-09973-6">doi.org/10.1007/s11336-024-09973-6</a></li>
+<li>Cohen, J. (1988). <em>Statistical Power Analysis for the Behavioral Sciences</em> (2nd ed.). Lawrence Erlbaum. <span class="meta">— effect-size conventions, offered as deliberately arbitrary.</span></li>
+</ol>
+<p class="meta" style="margin-top:1rem;">Citation hygiene: a future-dated 2026 arXiv preprint surfaced during research and was discarded as unverifiable per the course rule; PIMA's working-paper ID (arXiv:2210.02794, 2022) is legitimate and the work is peer-published.</p>
+</section>
+
+<p class="endcap">End of Day 06 · <span class="gleam">174 descents remain</span></p>
+
+</div>
