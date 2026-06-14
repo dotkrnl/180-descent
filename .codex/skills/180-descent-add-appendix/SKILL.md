@@ -13,12 +13,17 @@ Appendices use the same claim-level review standard as normal days. Before keepi
 
 1. Inventory claims by local file and line, including dates, chronology, publication metadata, names/titles, quotes, numbers, statistical results, current claims, technical capabilities, "first/largest/only" superlatives, and frontier claims.
 2. Verify against primary or strongest-available sources: original papers/books, DOI or publisher pages, official project pages, repositories, datasets, competition pages, SEP/IEP entries, PubMed/arXiv pages, or institutional pages.
-3. Browse for current or unstable claims and compare dates carefully. Do not assume model, software, standards, law, leadership, or "latest" claims are still current.
-4. Check direct quotes against original or reliable reproductions; paraphrase if exact wording is uncertain.
-5. Recalculate numbers when possible and clarify count definitions, such as whether totals include trivial cases, self-pairs, exclusions, failed attempts, or completed-only denominators.
-6. Audit wording for overclaiming. Soften unsupported superlatives, absolute guarantees, causal claims, and "settled" labels. Mark frontier claims as established, promising hint, or contested/hype.
-7. Keep citations adjacent to supported claims, and revise any sentence whose source supports only part of the claim.
-8. If the target day has a Chinese edition, mirror all factual corrections into the Chinese appendix/include and manually verify numerical/date/citation parity after translation.
+3. For every scholarly source in appendix source lists, search DOI metadata and
+   add a DOI plus `https://doi.org/...` link when a high-confidence exact match
+   exists. Verify title, authors, year, venue, volume/issue, and pages against
+   DOI/publisher metadata before adding it. Do not invent or add near-match
+   DOIs; if no reliable DOI is found, leave the source without one.
+4. Browse for current or unstable claims and compare dates carefully. Do not assume model, software, standards, law, leadership, or "latest" claims are still current.
+5. Check direct quotes against original or reliable reproductions; paraphrase if exact wording is uncertain.
+6. Recalculate numbers when possible and clarify count definitions, such as whether totals include trivial cases, self-pairs, exclusions, failed attempts, or completed-only denominators.
+7. Audit wording for overclaiming. Soften unsupported superlatives, absolute guarantees, causal claims, and "settled" labels. Mark frontier claims as established, promising hint, or contested/hype.
+8. Keep citations adjacent to supported claims, and revise any sentence whose source supports only part of the claim.
+9. If the target day has a Chinese edition, mirror all factual corrections into the Chinese appendix/include and manually verify numerical/date/citation parity after translation.
 
 Do not proceed to commit/publish until this gate has been completed and any issues have been fixed or explicitly reported to the user.
 

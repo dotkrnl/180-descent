@@ -53,12 +53,17 @@ Before any new English day is considered ready, run a claim-level factual review
    - primary papers, books, official project pages, standards, repositories, release notes, datasets, or competition pages
    - reputable publisher pages, DOI records, SEP/IEP entries, PubMed/arXiv pages, or institutional pages when primary text is unavailable
    - avoid relying on Wikipedia except as a pointer to better sources
-3. Browse for current or unstable claims, including model capabilities, software/library status, live statistics, leadership, prices, laws, standards, recent papers, and anything dated "latest", "current", "today", or this year.
-4. Check direct quotes against the original publication, transcript, archive scan, or a reliable reproduction. If the exact wording cannot be verified, paraphrase and cite the source.
-5. Check numbers by recalculating when possible: percentages, sample sizes, score thresholds, table rows, totals, and "X of Y" statements. Note whether a count includes trivial cases or self-pairs.
-6. Audit wording for overclaiming. Soften unsupported superlatives, absolute guarantees, causal claims, and "settled" labels unless the cited source really supports them. Mark frontier items as established, promising hint, or contested/hype.
-7. Keep citations adjacent to the claims they support. If a source supports only part of a sentence, revise the sentence or add the missing source.
-8. When Chinese mirroring is required, mirror every factual correction into the Chinese route/include and manually verify dates, numbers, names, source metadata, URLs, DOI strings, and evidence labels after translation.
+3. For every scholarly source in the lesson source list, search DOI metadata
+   and add a DOI plus `https://doi.org/...` link when a high-confidence exact
+   match exists. Verify title, authors, year, venue, volume/issue, and pages
+   against DOI/publisher metadata before adding it. Do not invent or add
+   near-match DOIs; if no reliable DOI is found, leave the source without one.
+4. Browse for current or unstable claims, including model capabilities, software/library status, live statistics, leadership, prices, laws, standards, recent papers, and anything dated "latest", "current", "today", or this year.
+5. Check direct quotes against the original publication, transcript, archive scan, or a reliable reproduction. If the exact wording cannot be verified, paraphrase and cite the source.
+6. Check numbers by recalculating when possible: percentages, sample sizes, score thresholds, table rows, totals, and "X of Y" statements. Note whether a count includes trivial cases or self-pairs.
+7. Audit wording for overclaiming. Soften unsupported superlatives, absolute guarantees, causal claims, and "settled" labels unless the cited source really supports them. Mark frontier items as established, promising hint, or contested/hype.
+8. Keep citations adjacent to the claims they support. If a source supports only part of a sentence, revise the sentence or add the missing source.
+9. When Chinese mirroring is required, mirror every factual correction into the Chinese route/include and manually verify dates, numbers, names, source metadata, URLs, DOI strings, and evidence labels after translation.
 
 Do not proceed to commit/publish until this gate has been completed and any issues have been fixed or explicitly reported to the user.
 
