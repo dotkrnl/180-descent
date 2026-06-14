@@ -1,5 +1,6 @@
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
+import { load } from "cheerio";
 
 const includeRoot = "src/_includes/days";
 const cssFiles = ["src/assets/css/book.css"];
@@ -52,6 +53,7 @@ const includeFiles = await collectIncludeFiles(includeRoot);
 
 for (const file of includeFiles) {
   const content = await readFile(file, "utf8");
+  checkDeepDiveWrap(file, content);
   const blocks = deepDiveBlocks(content, file);
   for (const block of blocks) checkBlock(file, block);
 }
@@ -153,6 +155,19 @@ function checkBlock(file, block) {
       allowedMarkerClasses.has(className)
     ) continue;
     errors.push(`${file}: appendix class "${className}" has no shared CSS rule or JS owner`);
+  }
+}
+
+function checkDeepDiveWrap(file, content) {
+  if (!content.includes("<!-- deep-dive:start -->")) return;
+
+  const $ = load(content, { decodeEntities: false }, false);
+  const allDetails = $("details.deep-dive").length;
+  if (!allDetails) return;
+
+  const wrappedDetails = $("div.wrap details.deep-dive").length;
+  if (wrappedDetails !== allDetails) {
+    errors.push(`${file}: ${allDetails - wrappedDetails} deep-dive section(s) outside the standard .wrap content container`);
   }
 }
 

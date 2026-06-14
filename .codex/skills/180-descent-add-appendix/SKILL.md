@@ -96,7 +96,9 @@ because they render in a browser.
 1. Use the standard appendix shell:
    `<details class="deep-dive">`, a `<summary>` containing `.ptitle`,
    `.deep-dive-title`, and `.deep-dive-sub`, followed by
-   `<div class="deep-dive-body">`.
+   `<div class="deep-dive-body">`. Keep the whole appendix inside the day
+   include's normal `<div class="wrap">` content container; do not close the
+   wrapper before `<!-- deep-dive:start -->`.
 2. Put appendix sections inside semantic `<section>` blocks and use the shared
    heading pattern:
    `<p class="sec-eyebrow"><span class="n">§/Part/Movement label</span></p>`
@@ -113,7 +115,8 @@ because they render in a browser.
    breaks.
 5. Run `rtk npm run check:appendix-style` after adding or changing appendix
    markup. This gate scans every deep-dive source block for unowned classes,
-   missing shell structure, and raw spacing breaks that would cause style drift.
+   missing shell structure, escaped `.wrap` containers, and raw spacing breaks
+   that would cause style drift.
 
 ## SEO Preservation Gate
 
