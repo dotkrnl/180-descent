@@ -215,6 +215,27 @@ interaction contract.
    visible-label/name matching, valid `aria-checked` roles, heading order,
    unique landmark names, and axe tests for every non-print page.
 
+## Output-Variant Copy Gate
+
+Every interactive, animated, or web-only component needs reader-visible copy
+for each output mode. Do not let web instructions leak into print or EPUB.
+
+1. Shared prose must not say the reader can click, drag, toggle, press buttons,
+   move sliders, run a live simulation, use a widget, or use "the next panel"
+   unless that exact affordance exists in every output mode.
+2. Put web instructions in `.web-only` copy beside the live component.
+3. Put print/EPUB instructions in `.epub-only.print-only` copy that names the
+   static artifact the reader actually gets: a table, diagram, worked example,
+   reference note, or calculation.
+4. Fallback copy must not call itself "static", "print form", "PDF/EPUB
+   version", "canned", or an inferior substitute. Describe the useful object.
+5. In Chinese, apply the same split idiomatically: web copy may mention
+   `交互`, `点击`, `拖动`, `切换`, `按钮`, `滑块`, or `实时模拟`; fallback copy should
+   name `表格`, `示意图`, `算例`, or `参考说明` instead.
+6. After editing, run the target-day checklist. It scans common leaks such as
+   shared copy immediately before `.panel.web-only` and fallback-only copy that
+   still mentions absent controls.
+
 ## Workflow
 
 1. Identify day number, title, block, entry analogy, model, debate, and frontier from `src/_data/syllabus.yaml`.
@@ -242,6 +263,11 @@ interaction contract.
    - verify all resolved `future-links.yaml` entries for the new target day have
      matching source links or deliberately documented prose callbacks
    - verify the inline `class="tomorrow"` block: if the next day already has a published route, link its title to that route; if the next day is not published yet, preview it without adding a broken link
+   - update the previous published day's inline `class="tomorrow"` block in
+     both English and Chinese when adding day N: the `<h3>` text must match the
+     new route-shell `title` exactly, the link must point to the new
+     `permalink`, and the preview paragraph must summarize the actual finished
+     lesson rather than stale syllabus/import-placeholder copy
    - leave future callbacks in `src/_data/future-links.yaml`
    - improve readability, clarity, rhythm, and entertainment value when doing so helps the lesson without weakening accuracy
 4. Update the English introduction opening-arc paragraph in `src/pages/introduction.md`:
@@ -261,13 +287,8 @@ interaction contract.
    - no-JS EPUB fallback
    - static PDF fallback
    Put live behavior in `src/assets/js/interactions/*.js` and list each module in the route shell `scripts:` front matter. Keep `src/assets/js/book.js` for truly global behavior only. Prefer semantic HTML/CSS diagrams with print/EPUB fallbacks over raw inline SVG when layout can be expressed with normal boxes and text.
-   Review the surrounding prose for format accuracy: any reader-visible text in
-   EPUB/PDF must describe the table, diagram, worked example, or other fallback
-   actually present there. If the web copy says "drag", "click", "try below",
-   "interactive", "widget", or similar, split it into `.web-only` copy and
-   `.epub-only.print-only` copy. Do not tell book readers the fallback is
-   "static", "print form", or a "PDF/EPUB version"; name the useful artifact
-   they see.
+   Run the Output-Variant Copy Gate on surrounding prose so web-only affordance
+   language is split from print/EPUB fallback language.
 7. Prefer existing components, CSS classes, and interaction modules before inventing new ones.
 8. Run the Accessibility Gate for any markup, images, SVGs, controls, live
    outputs, or fallback content added or changed by the day.
@@ -292,6 +313,9 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
 - Added or updated `src/_includes/days/###-slug/en.njk` lesson body
 - Added or updated Chinese route shell, Chinese lesson include, `src/_data/syllabus_zh.yaml`, and `src/zh/introduction.md` when the repo has a Chinese edition unless the user explicitly skipped it
 - Correct inline tomorrow block link behavior for both English and Chinese editions when present: published next days link to their route; unpublished next days remain unlinked
+- Previous-day tomorrow blocks updated in both editions when present: linked
+  title matches the new route title exactly, and the preview summary reflects
+  the published lesson's real title, scope, and teaching arc
 - Resolved forward pointers from earlier published days and appendices to the newly published day in both English and Chinese editions when present
 - Updated concise opening-arc paragraph in `src/pages/introduction.md`
 - Updated callbacks and pending future links
@@ -303,6 +327,10 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
   `180-descent-assets`, or proposed/rejected/no-useful-candidate status reported
   to the user before commit/publish
 - Added or reused `src/assets/js/interactions/*.js` modules for live components, with adjacent print/EPUB fallbacks in the lesson body
+- Output-Variant Copy Gate completed: web-only prose describes live controls;
+  print/EPUB prose describes the actual fallback table, diagram, worked
+  example, or note; no shared or fallback copy tells book readers to use absent
+  controls
 - Accessibility Gate completed: image alt text, SVG names, control names/states,
   visible-label/name matching, unique landmarks, heading order, live readouts,
   keyboard focus, contrast, and Chinese accessible-label parity are covered,

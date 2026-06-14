@@ -81,6 +81,18 @@ JSON-LD, and social-card system as English routes.
    `rtk npm run build`, then run `rtk npm run check:seo` or the full project
    check before considering Chinese mirroring complete.
 
+## Previous-Day Tomorrow Block Gate
+
+When publishing or mirroring day N, update the Chinese day N-1 inline
+`class="tomorrow"` block if day N-1 exists.
+
+1. Its `<h3>` text must match the Chinese route-shell `title` for day N exactly.
+2. Its link must point to the Chinese route-shell `permalink` for day N.
+3. Its preview paragraph must describe the actual completed Chinese lesson, not
+   a stale English import title, old syllabus draft, or placeholder summary.
+4. Keep the paragraph idiomatic Simplified Chinese and aligned with the English
+   previous-day preview, while preserving any deliberate Chinese localization.
+
 ## Accessibility Parity Gate
 
 Chinese editions must preserve the accessibility behavior of the English source
@@ -115,6 +127,24 @@ while localizing user-facing accessible text.
    building, and fix any Chinese-page failures before treating mirroring as
    complete.
 
+## Output-Variant Copy Parity Gate
+
+Chinese editions must preserve the English split between live web copy and
+static print/EPUB copy.
+
+1. Translate `.web-only` instructions as web instructions, preserving references
+   to interactions only there.
+2. Translate `.epub-only.print-only` instructions as static-output instructions
+   that name the actual Chinese fallback artifact, such as `表格`, `示意图`,
+   `算例`, or `参考说明`.
+3. Do not merge web-only and fallback-only paragraphs during translation or
+   refinement.
+4. Do not let Chinese fallback prose mention absent controls such as `交互`,
+   `点击`, `拖动`, `切换`, `按钮`, `滑块`, `面板`, `亲自运行`, or `实时模拟`.
+5. If the English source lacks a fallback-specific paragraph around a web-only
+   component, add the missing split in English first, then mirror it into
+   Chinese.
+
 ## Normal Day Workflow
 
 1. Create `src/zh/days/day-###-slug.md` and `src/_includes/days/###-slug/zh.njk`.
@@ -143,10 +173,12 @@ rtk opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.2 "
 9. Run the Factual Parity Gate against the English source and any fact-check corrections made during the same work.
 10. Run the SEO Parity Gate against the English route shell and the generated
    Chinese route shell.
-11. Run the Accessibility Parity Gate against the English route/include and the
+11. Run the Accessibility Parity Gate and Output-Variant Copy Parity Gate
+    against the English route/include and the
    generated Chinese route/include.
-12. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
-13. Run:
+12. Run the Previous-Day Tomorrow Block Gate for the Chinese day N-1 include.
+13. Update `src/_data/syllabus_zh.yaml` and `src/zh/introduction.md` so scope, day count, and newest-day reference match English.
+14. Run:
 
 ```sh
 rtk node .codex/skills/180-descent-add-day/scripts/add-day-checklist.mjs ### --require-zh

@@ -20,11 +20,15 @@ const prefix = `day-${String(day).padStart(3, "0")}-`;
 let failures = 0;
 
 const englishRoute = await findRoute("src/days", true);
-if (englishRoute) await validateRoute(englishRoute, "English", "en");
+if (englishRoute) {
+  await validateRoute(englishRoute, "English", "en");
+  await validatePreviousTomorrowBlock(englishRoute, "English", "en");
+}
 
 const zhRoute = await findRoute("src/zh/days", false);
 if (zhRoute) {
   await validateRoute(zhRoute, "Chinese", "zh");
+  await validatePreviousTomorrowBlock(zhRoute, "Chinese", "zh");
 } else if (requireZh) {
   console.error(`Expected exactly one src/zh/days/${prefix}*.md file; found 0`);
   failures++;
@@ -147,6 +151,7 @@ async function validateRoute(routeFile, label, locale) {
     }
   });
   await validateTomorrowBlock($, includePath, label, locale);
+  validateOutputVariantCopy($, includePath, label);
 
   const scripts = Array.isArray(data.scripts) ? data.scripts : data.scripts ? [data.scripts] : [];
   for (const script of scripts) {
@@ -162,6 +167,71 @@ async function validateRoute(routeFile, label, locale) {
       failures++;
     }
   }
+}
+
+function validateOutputVariantCopy($, includePath, label) {
+  const sharedBeforePanelPatterns = [
+    /live simulation/i,
+    /canned animation/i,
+    /next panel/i,
+    /interactive/i,
+    /click/i,
+    /tap/i,
+    /drag/i,
+    /toggle/i,
+    /slider/i,
+    /button/i,
+    /widget/i,
+    /try (it )?(below|yourself)/i,
+    /run (that|this|the).*yourself/i,
+    /play with/i,
+    /实时.*模拟/,
+    /预设.*动画/,
+    /接下来.*面板/,
+    /交互|互动|点击|拖动|切换|按钮|滑块|亲自运行|亲手操作|亲身体验|试试|拨动/
+  ];
+  const fallbackPatterns = [
+    /live simulation/i,
+    /canned animation/i,
+    /interactive/i,
+    /click/i,
+    /tap/i,
+    /drag/i,
+    /toggle/i,
+    /slider/i,
+    /button/i,
+    /widget/i,
+    /run .*yourself/i,
+    /实时.*模拟/,
+    /预设.*动画/,
+    /交互|互动|点击|拖动|切换|按钮|滑块|亲自运行|亲手操作|亲身体验|拨动/
+  ];
+
+  $(".panel.web-only").each((_, panel) => {
+    let previous = $(panel).prevAll().filter((__, node) => node.type === "tag").first();
+    if (!previous.length) return;
+    if (String(previous.prop("tagName") || "").toLowerCase() === "section") {
+      const lastChild = previous.children().filter((__, node) => node.type === "tag").last();
+      if (lastChild.length) previous = lastChild;
+    }
+    const previousTag = String(previous.prop("tagName") || "").toLowerCase();
+    if (!["p", "li", "figcaption", "h2", "h3", "h4", "h5", "h6"].includes(previousTag)) return;
+    const classes = String(previous.attr("class") || "").split(/\s+/);
+    if (classes.includes("web-only") || classes.includes("epub-only") || classes.includes("print-only")) return;
+    const text = normalizeText(previous.text());
+    if (text && sharedBeforePanelPatterns.some((pattern) => pattern.test(text))) {
+      console.error(`${label} ${includePath} has shared interaction-specific copy immediately before a web-only panel; split it into web-only and print/EPUB fallback copy: "${text.slice(0, 120)}"`);
+      failures++;
+    }
+  });
+
+  $(".epub-only, .print-only").find("p, li, figcaption, h2, h3, h4, h5, h6").addBack("p, li, figcaption, h2, h3, h4, h5, h6").each((_, node) => {
+    const text = normalizeText($(node).text());
+    if (text && fallbackPatterns.some((pattern) => pattern.test(text))) {
+      console.error(`${label} ${includePath} has fallback-only copy that mentions absent interactive controls; describe the static table, diagram, worked example, or note instead: "${text.slice(0, 120)}"`);
+      failures++;
+    }
+  });
 }
 
 async function validateTomorrowBlock($, includePath, label, locale) {
@@ -210,6 +280,71 @@ async function validateTomorrowBlock($, includePath, label, locale) {
     console.error(`${label} ${includePath} tomorrow block should link to next published day: ${expectedHref}`);
     failures++;
   }
+
+  const headingText = normalizeText(block.find("h3").first().text());
+  const expectedTitle = normalizeText(String(nextParsed.data.title || ""));
+  if (headingText !== expectedTitle) {
+    console.error(`${label} ${includePath} tomorrow block title should match next route title: ${nextParsed.data.title}`);
+    failures++;
+  }
+}
+
+async function validatePreviousTomorrowBlock(routeFile, label, locale) {
+  if (day <= 1) return;
+
+  const dir = locale === "zh" ? "src/zh/days" : "src/days";
+  const previousFiles = await findRouteFiles(dir, day - 1);
+  if (previousFiles.length === 0) return;
+  if (previousFiles.length > 1) {
+    console.error(`${label} expected at most one ${dir}/day-${String(day - 1).padStart(3, "0")}-*.md file; found ${previousFiles.length}`);
+    failures++;
+    return;
+  }
+
+  const currentParsed = matter(await readFile(routeFile, "utf8"));
+  const currentTitle = String(currentParsed.data.title || "");
+  const currentPermalink = currentParsed.data.permalink;
+  if (!currentTitle || !currentPermalink) return;
+
+  const previousRoute = path.join(dir, previousFiles[0]);
+  const previousParsed = matter(await readFile(previousRoute, "utf8"));
+  const previousTemplate = previousParsed.data.content_template;
+  const previousInclude = path.join("src/_includes", String(previousTemplate || ""));
+  let previousBody = "";
+  try {
+    previousBody = await readFile(previousInclude, "utf8");
+  } catch {
+    console.error(`${label} previous route ${previousRoute} points to missing lesson body: ${previousInclude}`);
+    failures++;
+    return;
+  }
+
+  const $ = cheerio.load(previousBody);
+  const blocks = $(".tomorrow");
+  if (blocks.length !== 1) {
+    console.error(`${label} previous include ${previousInclude} should have exactly one inline tomorrow block; found ${blocks.length}`);
+    failures++;
+    return;
+  }
+
+  const block = blocks.first();
+  const matchingLinks = block.find("a[href]").filter((_, anchor) => $(anchor).attr("href") === currentPermalink);
+  if (matchingLinks.length === 0) {
+    console.error(`${label} previous include ${previousInclude} tomorrow block should link to current published day: ${currentPermalink}`);
+    failures++;
+  }
+
+  const headingText = normalizeText(block.find("h3").first().text());
+  if (headingText !== normalizeText(currentTitle)) {
+    console.error(`${label} previous include ${previousInclude} tomorrow block title should match current route title: ${currentTitle}`);
+    failures++;
+  }
+
+  const summaryText = normalizeText(block.find("h3").first().nextAll("p").first().text());
+  if (summaryText.length < 80) {
+    console.error(`${label} previous include ${previousInclude} tomorrow block should include a substantive preview summary for day ${day}`);
+    failures++;
+  }
 }
 
 async function validateIntroduction(file, label, currentDayMarker) {
@@ -226,4 +361,8 @@ async function validateIntroduction(file, label, currentDayMarker) {
     console.error(`${label} ${file} should mention the current published day: ${currentDayMarker}`);
     failures++;
   }
+}
+
+function normalizeText(value) {
+  return String(value || "").replace(/\s+/g, " ").trim();
 }

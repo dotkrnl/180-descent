@@ -183,6 +183,25 @@ the same public day pages and deep-dive artifacts.
 11. Run `rtk npm run check:a11y` directly or through `rtk npm run check` before
    treating the appendix as complete.
 
+## Output-Variant Copy Gate
+
+Appendix interactions must have separate copy for web and static outputs.
+
+1. Shared appendix prose must not tell readers to click, drag, toggle, press
+   buttons, move sliders, run a live simulation, use a widget, or use "the next
+   panel" unless that affordance exists in web, EPUB, and PDF.
+2. Put live instructions in `.web-only` copy beside the live component.
+3. Put static instructions in `.epub-only.print-only` copy that names the table,
+   diagram, worked example, reference note, or calculation present in the
+   fallback.
+4. Do not describe fallbacks as "static", "print form", "PDF/EPUB version",
+   "canned", or an inferior substitute. Name the useful artifact.
+5. In Chinese appendices, split the copy the same way: web copy may mention
+   `交互`, `点击`, `拖动`, `切换`, `按钮`, `滑块`, or `实时模拟`; fallback copy should
+   name `表格`, `示意图`, `算例`, or `参考说明`.
+6. Run the target-day checklist after insertion; it scans common web-copy leaks
+   around `.panel.web-only` components and fallback-only control language.
+
 ## Workflow
 
 1. Identify the target day from the filename or user message. Check whether the day already has `src/zh/days/day-###-*.md` and `src/_includes/days/###-*/zh.njk`.
@@ -197,12 +216,9 @@ rtk node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix
    - live web components are class-scoped, not ID-scoped, so repeated appendices do not conflict
    - live components have adjacent `.format-alt.epub-only.print-only` static fallbacks
    - PDF/EPUB fallbacks are tables or semantic HTML diagrams, not empty space
-   - reader-visible PDF/EPUB prose names the artifact readers actually get
-     (table, diagram, worked example, note), not "static", "print form", or an
-     absent widget
-   - shared prose that says "drag", "click", "try below", "interactive",
-     "widget", or similar is split into `.web-only` copy plus
-     `.epub-only.print-only` copy for the fallback
+   - run the Output-Variant Copy Gate so reader-visible PDF/EPUB prose names
+     the artifact readers actually get and shared web-control instructions are
+     split into `.web-only` plus `.epub-only.print-only` copy
    - imported IDs are namespaced with `appendix-d###-`
    - newly required interaction modules are listed in route-shell `scripts:` front matter
 4. Review appendix text and sources with the add-day standard:
