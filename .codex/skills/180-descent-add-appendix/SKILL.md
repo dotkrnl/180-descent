@@ -106,17 +106,30 @@ because they render in a browser.
    `movement`, `dispatch`, `mv-num`, or `dp-num`.
 3. Use existing shared components (`panel`, `aside`, `format-alt`, `roadmap`,
    `continues`, `recap`, `sources`, `alt-table`) or explicitly shared appendix
-   components (`appendix-card-grid`, `appendix-card`, `appendix-timeline`).
+   components (`appendix-card-grid`, `appendix-card`, `appendix-timeline`,
+   `appendix-figure`, `appendix-caption`, `appendix-note`, `source-note`,
+   `table-subnote`, `chip-inline`, `tone-*`, `u-m-0`).
    Avoid generic imported classes such as `cards`, `card`, `tl`, `ttable`, and
-   `warnstrip`; if a new component is truly needed, add scoped shared CSS and
-   make it pass the appendix style check.
+   `warnstrip`. Do not reuse main-lesson layout wrappers such as `whereblock`
+   inside appendices; use `continues` instead. If a new component is truly
+   needed, add shared CSS whose selector is not tied to a day number or appendix
+   id, then make it pass the appendix style check.
 4. Do not use raw `<br>` elements for vertical spacing. Use block structure and
    shared CSS; line breaks are acceptable only for intentional inline/table-cell
    breaks.
-5. Run `rtk npm run check:appendix-style` after adding or changing appendix
+5. Do not use inline `style="..."` attributes inside appendix source markup.
+   Put static presentation in shared classes in `src/assets/css/book.css`.
+   Runtime JS may update element style properties after load, but source markup
+   should remain class-driven. SVG drawing attributes such as `fill`, `stroke`,
+   `font-size`, and `opacity` are acceptable when they are part of the diagram.
+6. Do not add day-scoped appendix classes or CSS selectors such as
+   `.d003-*`, `.day-003-*`, `.appendix-d003-*`, or `#appendix-d003...` to CSS.
+   IDs in markup should still be namespaced for JS/SVG uniqueness, but styling
+   must come from reusable component or utility classes.
+7. Run `rtk npm run check:appendix-style` after adding or changing appendix
    markup. This gate scans every deep-dive source block for unowned classes,
-   missing shell structure, escaped `.wrap` containers, and raw spacing breaks
-   that would cause style drift.
+   missing shell structure, escaped `.wrap` containers, inline styles,
+   day-scoped CSS/classes, and raw spacing breaks that would cause style drift.
 
 ## SEO Preservation Gate
 

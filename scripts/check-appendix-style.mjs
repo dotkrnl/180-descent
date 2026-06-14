@@ -15,7 +15,8 @@ const forbiddenClasses = new Map([
   ["card", "Use .appendix-card for appendix cards; generic .card has no shared owner."],
   ["tl", "Use .appendix-timeline for appendix timelines."],
   ["ttable", "Use .alt-table unless a shared table component is added."],
-  ["warnstrip", "Use .aside or a named shared callout component."]
+  ["warnstrip", "Use .aside or a named shared callout component."],
+  ["whereblock", "Use .continues for appendix continuation/context blocks; .whereblock belongs to main lessons."]
 ]);
 
 const allowedStateClasses = new Set([
@@ -70,6 +71,7 @@ async function collectCssClasses() {
   const out = new Set();
   for (const file of cssFiles) {
     const css = await readFile(file, "utf8");
+    checkCssForDayScopedSelectors(file, css);
     for (const match of css.matchAll(/\.(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g)) {
       out.add(match[1]);
     }
@@ -141,11 +143,18 @@ function checkBlock(file, block) {
   if (/<br\s*\/?>\s*<blockquote\b/i.test(block)) {
     errors.push(`${file}: raw <br> used as spacing before a blockquote inside an appendix`);
   }
+  if (/\sstyle\s*=/.test(block)) {
+    errors.push(`${file}: inline style attributes are not allowed inside appendices; add a shared class in book.css`);
+  }
 
   for (const className of classNames(block)) {
     const forbidden = forbiddenClasses.get(className);
     if (forbidden) {
       errors.push(`${file}: forbidden appendix class "${className}". ${forbidden}`);
+      continue;
+    }
+    if (isDayScopedClass(className)) {
+      errors.push(`${file}: appendix class "${className}" is day-scoped; use a reusable component or utility class`);
       continue;
     }
     if (
@@ -156,6 +165,20 @@ function checkBlock(file, block) {
     ) continue;
     errors.push(`${file}: appendix class "${className}" has no shared CSS rule or JS owner`);
   }
+}
+
+function checkCssForDayScopedSelectors(file, css) {
+  const selectorPattern = /(^|})\s*([^{}]+)\{/g;
+  for (const match of css.matchAll(selectorPattern)) {
+    const selector = match[2].trim();
+    if (/(?:#|\.)(?:appendix-d\d{3}|day-\d{3}|d\d{3}(?:[-_]|$))/i.test(selector)) {
+      errors.push(`${file}: day-scoped CSS selector "${selector}" should be a shared component or utility selector`);
+    }
+  }
+}
+
+function isDayScopedClass(className) {
+  return /^(?:appendix-d\d{3}|day-\d{3}|d\d{3}(?:[-_]|$))/i.test(className);
 }
 
 function checkDeepDiveWrap(file, content) {
