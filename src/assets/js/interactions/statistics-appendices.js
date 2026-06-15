@@ -13,6 +13,11 @@
     return Math.round(x * 100) + "%";
   }
 
+  function fmtApproxPct(x) {
+    if (x > 0.995 && x < 1) return "\u2248100%";
+    return "\u2248" + fmtPct(x);
+  }
+
   function fmtNum(x) {
     return Number(x).toLocaleString(undefined, { maximumFractionDigits: 0 });
   }
@@ -356,10 +361,10 @@
       by(A2, "pathCleanVal").textContent = clean;
       by(A2, "pathK").textContent = fmtNum(k);
       setBar(by(A2, "pathRiskBar"), risk * 100);
-      by(A2, "pathRiskPct").textContent = fmtPct(risk);
+      by(A2, "pathRiskPct").textContent = fmtApproxPct(risk);
       by(A2, "pathsRead").innerHTML = zh
-        ? '这个设定会产生 <span class="hl">' + fmtNum(k) + '</span> 条看似合理的分析路径。在纯噪声且 alpha 为 .05 时，名义显著路径的期望数量是 <span class="hl">' + (k * 0.05).toFixed(1) + '</span>。'
-        : 'This setup creates <b>' + fmtNum(k) + '</b> plausible analysis paths. With pure noise and alpha .05, the expected number of nominally significant paths is <b>' + (k * 0.05).toFixed(1) + '</b>.';
+        ? '这个设定会产生 <span class="hl">' + fmtNum(k) + '</span> 条看似合理的分析路径。在纯噪声且 alpha 为 .05 时，名义显著路径的期望数量是 <span class="hl">' + (k * 0.05).toFixed(1) + '</span>；在独立性近似下，至少出现一次假阳性的概率为 <span class="hl">' + fmtApproxPct(risk) + '</span>。'
+        : 'This setup creates <b>' + fmtNum(k) + '</b> plausible analysis paths. With pure noise and alpha .05, the expected number of nominally significant paths is <b>' + (k * 0.05).toFixed(1) + '</b>; under the independence approximation, the chance of at least one false positive is <b>' + fmtApproxPct(risk) + '</b>.';
     });
   }
 

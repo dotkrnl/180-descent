@@ -32,6 +32,78 @@
     return 0.5 * (1 + erf(x / Math.SQRT2));
   }
 
+  function gammaln(x){
+    var c = [76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
+    var y = x;
+    var t = x + 5.5;
+    t -= (x + 0.5) * Math.log(t);
+    var s = 1.000000000190015;
+    for (var j = 0; j < 6; j++) {
+      y += 1;
+      s += c[j] / y;
+    }
+    return -t + Math.log(2.5066282746310005 * s / x);
+  }
+
+  function betacf(a,b,x){
+    var maxIterations = 200;
+    var eps = 3e-12;
+    var tiny = 1e-300;
+    var qab = a + b;
+    var qap = a + 1;
+    var qam = a - 1;
+    var c = 1;
+    var d = 1 - qab * x / qap;
+    if (Math.abs(d) < tiny) d = tiny;
+    d = 1 / d;
+    var h = d;
+    for (var m = 1; m <= maxIterations; m++) {
+      var m2 = 2 * m;
+      var aa = m * (b - m) * x / ((qam + m2) * (a + m2));
+      d = 1 + aa * d;
+      if (Math.abs(d) < tiny) d = tiny;
+      c = 1 + aa / c;
+      if (Math.abs(c) < tiny) c = tiny;
+      d = 1 / d;
+      h *= d * c;
+      aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
+      d = 1 + aa * d;
+      if (Math.abs(d) < tiny) d = tiny;
+      c = 1 + aa / c;
+      if (Math.abs(c) < tiny) c = tiny;
+      d = 1 / d;
+      var del = d * c;
+      h *= del;
+      if (Math.abs(del - 1) < eps) break;
+    }
+    return h;
+  }
+
+  function betai(a,b,x){
+    if (x <= 0) return 0;
+    if (x >= 1) return 1;
+    var bt = Math.exp(gammaln(a + b) - gammaln(a) - gammaln(b) + a * Math.log(x) + b * Math.log(1 - x));
+    if (x < (a + 1) / (a + b + 2)) return bt * betacf(a, b, x) / a;
+    return 1 - bt * betacf(b, a, 1 - x) / b;
+  }
+
+  function studentTCdf(t,df){
+    var x = df / (df + t * t);
+    var ib = betai(df / 2, 0.5, x);
+    return t >= 0 ? 1 - 0.5 * ib : 0.5 * ib;
+  }
+
+  function tCritical95(df){
+    var lo = 0;
+    var hi = 10;
+    for (var i = 0; i < 50; i++) {
+      var mid = (lo + hi) / 2;
+      if (studentTCdf(mid, df) < 0.975) lo = mid;
+      else hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
+
   function tTestP(a,b){
     if (a.length < 3 || b.length < 3) return 1;
     var ma = mean(a);
@@ -264,10 +336,12 @@
       var noise = Number(controls.noise.value);
       var d = noise > 0 ? effect / noise : 0;
       var se = noise * Math.sqrt(2 / n);
-      var z = se > 0 ? Math.abs(effect / se) : 0;
-      var p = 2 * (1 - normalCdf(z));
-      var lo = effect - 1.96 * se;
-      var hi = effect + 1.96 * se;
+      var df = Math.max(1, 2 * n - 2);
+      var t = se > 0 ? Math.abs(effect / se) : 0;
+      var p = 2 * (1 - studentTCdf(t, df));
+      var margin = tCritical95(df) * se;
+      var lo = effect - margin;
+      var hi = effect + margin;
       var label = importance(d);
 
       outs.effect.textContent = effect.toFixed(2);
@@ -299,6 +373,112 @@
 
     Object.keys(controls).forEach(function(key){
       controls[key].addEventListener("input", render);
+    });
+    render();
+  }
+
+  function initCiCoverage(){
+    var root = document.querySelector(".statistics-ci-coverage");
+    if (!root) return;
+
+    var controls = {
+      n: root.querySelector("#ci-n"),
+      noise: root.querySelector("#ci-noise")
+    };
+    var outs = {
+      n: root.querySelector("#ci-n-out"),
+      noise: root.querySelector("#ci-noise-out"),
+      covered: root.querySelector("#ci-covered"),
+      missed: root.querySelector("#ci-missed"),
+      observed: root.querySelector("#ci-observed"),
+      read: root.querySelector("#ci-read")
+    };
+    var plot = root.querySelector("#ci-plot");
+    var run = root.querySelector("#ci-run");
+    if (!controls.n || !controls.noise || !outs.read || !outs.covered || !outs.missed || !outs.observed || !plot || !run) return;
+
+    var runId = 0;
+    var TRUE_MEAN = 0;
+    var REPS = 100;
+
+    function normalFrom(rng){
+      var u = 0;
+      var v = 0;
+      while (u === 0) u = rng();
+      while (v === 0) v = rng();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+    }
+
+    function fmt(value){
+      return (value >= 0 ? "" : "-") + Math.abs(value).toFixed(2);
+    }
+
+    function makeInterval(rng,n,noise){
+      var values = [];
+      for (var i = 0; i < n; i++) values.push(TRUE_MEAN + normalFrom(rng) * noise);
+      var avg = mean(values);
+      var sd = Math.sqrt(variance(values, avg));
+      var margin = tCritical95(Math.max(1, n - 1)) * sd / Math.sqrt(n);
+      return {
+        mean: avg,
+        lo: avg - margin,
+        hi: avg + margin
+      };
+    }
+
+    function render(){
+      var n = Number(controls.n.value);
+      var noise = Number(controls.noise.value);
+      var rng = makeRng(80606 + runId * 7919 + n * 37 + Math.round(noise * 100));
+      var intervals = [];
+      for (var i = 0; i < REPS; i++) intervals.push(makeInterval(rng, n, noise));
+      var covered = intervals.filter(function(row){ return row.lo <= TRUE_MEAN && row.hi >= TRUE_MEAN; }).length;
+      var missed = REPS - covered;
+      var hiAbs = intervals.reduce(function(max,row){
+        return Math.max(max, Math.abs(row.lo), Math.abs(row.hi));
+      }, Math.max(0.5, noise / Math.sqrt(n) * 4));
+      hiAbs = Math.max(0.35, hiAbs * 1.08);
+      function xScale(x){ return 48 + (x + hiAbs) / (2 * hiAbs) * 584; }
+      function yScale(index){ return 28 + index * 2.34; }
+      var highlight = (runId * 17 + 11) % REPS;
+
+      var svg = '';
+      svg += '<rect x="28" y="18" width="624" height="252" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>';
+      svg += '<line x1="' + xScale(TRUE_MEAN).toFixed(1) + '" y1="22" x2="' + xScale(TRUE_MEAN).toFixed(1) + '" y2="274" stroke="var(--ink)" stroke-width="2.5"></line>';
+      svg += '<text x="' + xScale(TRUE_MEAN).toFixed(1) + '" y="292" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-soft)">' + (isZh ? "真实均值 0" : "true mean 0") + '</text>';
+      intervals.forEach(function(row,index){
+        var covers = row.lo <= TRUE_MEAN && row.hi >= TRUE_MEAN;
+        var isHighlight = index === highlight;
+        var y = yScale(index);
+        var color = covers ? "var(--ok)" : "var(--contested)";
+        svg += '<line x1="' + xScale(row.lo).toFixed(1) + '" y1="' + y.toFixed(1) + '" x2="' + xScale(row.hi).toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="' + color + '" stroke-width="' + (isHighlight ? 4.5 : 1.5) + '" opacity="' + (isHighlight ? 1 : 0.68) + '" stroke-linecap="round"></line>';
+        if (isHighlight) {
+          svg += '<circle cx="' + xScale(row.mean).toFixed(1) + '" cy="' + y.toFixed(1) + '" r="5" fill="' + color + '" stroke="var(--paper)" stroke-width="2"></circle>';
+        }
+      });
+      svg += '<text x="48" y="16" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + (isZh ? "100 次重复样本" : "100 repeated samples") + '</text>';
+      svg += '<text x="632" y="16" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + (isZh ? "绿色=覆盖，红色=漏掉" : "green=covers, red=misses") + '</text>';
+      plot.innerHTML = svg;
+
+      var observed = intervals[highlight];
+      var obsCovers = observed.lo <= TRUE_MEAN && observed.hi >= TRUE_MEAN;
+      outs.n.textContent = String(n);
+      outs.noise.textContent = noise.toFixed(2);
+      outs.covered.textContent = covered + " / " + REPS;
+      outs.missed.textContent = missed + " / " + REPS;
+      outs.observed.textContent = obsCovers ? (isZh ? "覆盖" : "covers") : (isZh ? "漏掉" : "misses");
+      outs.observed.classList.toggle("miss", !obsCovers);
+      outs.read.innerHTML = isZh
+        ? '这 100 个区间中，<strong>' + covered + '</strong> 个覆盖真实均值 0，<strong>' + missed + '</strong> 个漏掉。高亮区间为 <strong>[' + fmt(observed.lo) + ', ' + fmt(observed.hi) + ']</strong>，它' + (obsCovers ? '覆盖' : '漏掉') + '真值。95% 描述的是程序的长期表现，不是这一个区间的后验概率。'
+        : 'In these 100 intervals, <strong>' + covered + '</strong> cover the true mean 0 and <strong>' + missed + '</strong> miss it. The highlighted interval is <strong>[' + fmt(observed.lo) + ', ' + fmt(observed.hi) + ']</strong>; it ' + (obsCovers ? 'covers' : 'misses') + ' the truth. The 95% belongs to the procedure, not to this interval as a posterior probability.';
+    }
+
+    Object.keys(controls).forEach(function(key){
+      controls[key].addEventListener("input", render);
+    });
+    run.addEventListener("click", function(){
+      runId++;
+      render();
     });
     render();
   }
@@ -504,5 +684,6 @@
 
   initFactory();
   initEffectLab();
+  initCiCoverage();
   initSpecCurve();
 })();
