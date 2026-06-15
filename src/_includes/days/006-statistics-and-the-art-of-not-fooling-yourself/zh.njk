@@ -1,7 +1,7 @@
 <header class="hero wrap">
 <p class="eyebrow">第一单元 · 知识与推理的根基 · <span class="daymark">第 06 / 180 日</span></p>
 <h1>统计学与「不自我欺骗」的艺术</h1>
-<p class="sub">在你的数据中，总有一条通往 <span class="hl">p < .05</span> 的路径。这样的路，几乎总是存在的。而统计学这门学科的全部意义，就是为了不让你在无意间踏上它。</p>
+<p class="sub">在你的数据中，可能存在一条通往 <span class="hl">p < .05</span> 的路径。只要有足够多可辩护的选择，许多数据集里都会出现这样的路径。而统计学这门学科的全部意义，就是为了不让你在无意间踏上它。</p>
 
 <figure class="hero-fig">
 <svg viewBox="0 0 520 270" role="img" aria-label="分析选择的分岔花园：一份数据集分支出许多路径，大多数以无显著结果告终，少数被精心挑选的路径则通往显著结果。">
@@ -53,9 +53,9 @@
 <figcaption>分岔路径的花园。数据纯粹是噪声——但只要分支足够多，总能保证其中一个通向「发现」。</figcaption>
 </figure>
 
-<p class="lede"><span class="drop">2</span>011 年，三位心理学家决定证明一件不可能的事。他们找来 20 名本科生，给其中一半播放披头士的《当你六十四岁时》（When I'm Sixty-Four），另一半则播放一首对照曲目，然后询问了一系列问题——包括每个人的出生日期。在进行了一次完全常规的统计分析后，他们宣布了发现：听《当你六十四岁时》能让人<span class="hl">年轻一岁半</span>。不是感觉年轻，而是真的变年轻了——出生日期证明了这一点，且 <span class="hl">p = .04</span>。</p>
+<p class="lede dropcap">2011 年，三位心理学家决定证明一件不可能的事。他们找来 20 名本科生，给其中一半播放披头士的《当你六十四岁时》（When I'm Sixty-Four），另一半则播放一首对照曲目，然后询问了一系列问题——包括每个人的出生日期。在进行了一次完全常规的统计分析后，他们宣布了发现：听《当你六十四岁时》能让人<span class="hl">年轻一岁半</span>。不是感觉年轻，而是真的变年轻了——出生日期证明了这一点，且 <span class="hl">p = .04</span>。</p>
 
-<p>这当然是荒谬的。一首歌不可能跨越时空修改你的出生年份。而这恰恰是重点所在。约瑟夫·西蒙斯（Joseph Simmons）、莱夫·纳尔逊（Leif Nelson）和尤里·西蒙逊（Uri Simonsohn）使用的全是标准且受尊重的统计工具，做出的也全是任何在职科学家每周都会做的选择——却变戏法般地得出了一个统计学上显著的「不可能」。他们的论文是一篇化身为武器的自白书。今天，我们将了解它揭露了什么，以及科学界如何学会停止自我欺骗。</p>
+<p>这当然是荒谬的。一首歌不可能跨越时空修改你的出生年份。而这恰恰是重点所在。约瑟夫·西蒙斯（Joseph Simmons）、莱夫·纳尔逊（Leif Nelson）和尤里·西蒙逊（Uri Simonsohn）使用的全是标准且受尊重的统计工具，做出的也全是任何在职科学家每周都会做的选择——却变戏法般地得出了一个统计学上显著的「不可能」。他们的论文是一场刻意荒谬的演示，用来暴露统计流程中的脆弱点。今天，我们将了解它揭露了什么，以及科学界如何学会停止自我欺骗。</p>
 </header><div class="wrap">
 
 <div class="whereblock">
@@ -138,7 +138,7 @@
 <section>
 <p class="sec-eyebrow">核心模型</p>
 <h2>p 值到底在说什么（以及关于它的六种误读）</h2>
-<p>为了不被愚弄，你必须确切知道测量仪器报告的是什么。几乎没人能做到这一点——调查发现，包括大多数科学家和相当数量的统计学讲师在内，都对此存在误解。所以，请仔细阅读：</p>
+<p>为了不被愚弄，你必须确切知道测量仪器报告的是什么。许多读者，包括受过训练的科学家和相当数量的统计学讲师，都会在这里出错。所以，请仔细阅读：</p>
 
 <div class="def">
 <p class="h">定义 · p 值</p>
@@ -166,7 +166,7 @@
 <p>最后一点是无声的杀手，因此值得单独展开一节。</p>
 
 <h3>显著性不等于大小：认识效应量</h3>
-<p>p 值将两件完全不同的事情揉在了一起：<span class="hl">效应有多大</span>，以及<span class="hl">你收集了多少数据</span>。只要投入足够的参与者，即使是微小到毫无意义的差异也能跨过显著性门槛。因此，成熟的统计学坚持单独报告 <span class="term">效应量</span>（effect size）{% tip '效应量报告的是差异或关联的大小，而不只是它是否跨过了显著性门槛。' %}：例如 <span>Cohen’s d</span>{% tip 'Cohen’s d 以标准差为单位表示两个平均值之间的差异。' %}（以标准差为单位的均值差异）或相关系数 <span class="hl">r</span>。雅各布·科恩（Jacob Cohen）提供了粗略的分级——d ≈ 0.2 为小，0.5 为中，0.8 为大——同时也坦然承认这些分级是主观的：「虽然是主观的，但理性的人会发现这些提议的惯例是合理的。」重点不在于标签，而在于：如果一个数字没有附带效应量，它几乎没有告诉你任何值得了解的信息。</p>
+<p>p 值会把效应量、噪声、样本量和模型假设纠缠在一起。只要投入足够的参与者，即使是微小到毫无意义的差异也能跨过显著性门槛。因此，成熟的统计学坚持单独报告 <span class="term">效应量</span>（effect size）{% tip '效应量报告的是差异或关联的大小，而不只是它是否跨过了显著性门槛。' %}：例如 <span>Cohen’s d</span>{% tip 'Cohen’s d 以标准差为单位表示两个平均值之间的差异。' %}（以标准差为单位的均值差异）或相关系数 <span class="hl">r</span>。雅各布·科恩（Jacob Cohen）提供了粗略的分级——d ≈ 0.2 为小，0.5 为中，0.8 为大——同时也坦然承认这些分级是主观的：「虽然是主观的，但理性的人会发现这些提议的惯例是合理的。」重点不在于标签，而在于：如果一个数字没有附带效应量，它几乎没有告诉你任何值得了解的信息。</p>
 
 <div class="panel web-only statistics-effect-lab">
 <p class="ptitle">互动 · 显著性与大小</p>
@@ -227,8 +227,8 @@
 </div>
 <p>因此，人们自然会说「真实值在<span class="hl">这个</span>区间内的概率是 95%」——但在频率学派的世界里，这句话是错误的。你的区间要么包含真相，要么不包含；在你完成研究的那一刻，骰子就已经掷下了。（<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 提到的贝叶斯「可信区间」<span class="hl">确实</span>允许这种说法——但那是在你承诺了先验概率之后。工具不同，承诺也不同。）置信区间也不意味着你 95% 的数据都落在其中，更不意味着区间外的数值就不可能。它带给我们的清爽转变是：它给出了<span class="hl">与数据相容的效应量范围</span>。这种从「是/否」到「有多少、有多准」的框架转换，正是改革者所称的「新统计学」的核心。</p>
 
-<h3>为什么小样本研究不只是会遗漏，还会「撒谎」</h3>
-<p>犯错有两种方式：<span class="term">第一类错误</span>（Type I error）{% tip '第一类错误是假阳性：错误地拒绝了一个真实的零假设。' %}（假警报——宣称存在实际并不存在的效应）和 <span class="term">第二类错误</span>（Type II error）{% tip '第二类错误是假阴性：漏掉了真实的效应。' %}（漏报——未能发现确实存在的效应）。<span class="term">统计功效</span>（statistical power）{% tip '统计功效是指如果某种效应真实存在，研究能检测出该效应的概率。' %}是你捕捉到真实效应的机会；更多的数据意味着更高的功效。你可能会认为功效不足的研究只会得出「没有结果」的耸肩。但更糟的是：它会主动毒害科学文献。当功效较低时，只有那些由于运气好而被偶然性极度放大的估计值才能跨过显著性门槛——这就是 <span class="term">赢家诅咒</span>（winner’s curse）{% tip '赢家诅咒是指在充满噪声的研究中，被选中的显著估计值往往会夸大真实的效应。' %}。再加上期刊只发表「显著」发现的倾向，你就制造出了一份既夸大其词又脆弱不堪的研究记录。2013 年的一项清醒审计（Button 等人的《功效失败》）指出，神经科学研究的功效中位数仅为约 <span class="hl">21%</span>。平均而言，五分之四的真实效应未被发现——而浮出水面的那些，则全是被充了气的幻象。</p>
+<h3>为什么小样本研究会夸大它们侦测到的东西</h3>
+<p>犯错有两种方式：<span class="term">第一类错误</span>（Type I error）{% tip '第一类错误是假阳性：错误地拒绝了一个真实的零假设。' %}（假警报——宣称存在实际并不存在的效应）和 <span class="term">第二类错误</span>（Type II error）{% tip '第二类错误是假阴性：漏掉了真实的效应。' %}（漏报——未能发现确实存在的效应）。<span class="term">统计功效</span>（statistical power）{% tip '统计功效是指如果某种效应真实存在，研究能检测出该效应的概率。' %}是你捕捉到真实效应的机会；更多的数据意味着更高的功效。你可能会认为功效不足的研究只会得出「没有结果」的耸肩。但更糟的是：它会主动毒害科学文献。当功效较低时，只有那些由于运气好而被偶然性极度放大的估计值才能跨过显著性门槛——这就是 <span class="term">赢家诅咒</span>（winner’s curse）{% tip '赢家诅咒是指在充满噪声的研究中，被选中的显著估计值往往会夸大真实的效应。' %}。再加上偏好奖励「显著」发现的发表实践，你就制造出了一份既夸大其词又脆弱不堪的研究记录。2013 年的一项清醒审计（Button 等人的《功效失败》）指出，神经科学研究的功效中位数仅为约 <span class="hl">21%</span>；Nord 等人在 2017 年的再分析则有益地限定了这个头条数字：并非每个神经科学子领域都同样功效不足。这个限定不削弱今天的教训：在研究功效不足的地方，真实效应会被漏掉，而浮出水面的效应往往会被放大。</p>
 </section>
 
 <section>
@@ -240,7 +240,7 @@
 
 <div class="aside">
 <p class="h">针对病症的药方</p>
-<p>如果问题在于决策是在看到数据<span class="hl">之后</span>才做出的，那么最彻底的疗法就是在看到数据<span class="hl">之前</span>就做决策：<span class="term">研究预登记</span>（preregistration）{% tip '研究预登记意味着在查看结果之前，公开记录假设、数据处理和分析计划。' %}（提前公开记录分析计划）和 <span class="term">注册式报告</span>（Registered Reports）{% tip '注册式报告是在结果揭晓前，仅凭研究问题和方法通过同行评审并被期刊原则上接收的文章。' %}（期刊在结果出来前就评审并接收你的「计划」）。我们在 <a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a> 见过它们；现在我们明白了它们为何有效。它们并没有让你变得更聪明——它们只是切断了那些分岔路径，将一个「边看边选的合理选择花园」变成了一条唯一的承诺之路。其他一切仍然可以报告，但只能被诚实地贴上「探索性分析」的标签。</p>
+<p>如果问题在于决策是在看到数据<span class="hl">之后</span>才做出的，那么最彻底的疗法就是在看到数据<span class="hl">之前</span>就做决策：<span class="term">研究预登记</span>（preregistration）{% tip '研究预登记意味着在查看结果之前，公开记录假设、数据处理和分析计划。' %}（提前公开记录分析计划）和 <span class="term">注册式报告</span>（Registered Reports）{% tip '注册式报告是在结果揭晓前，仅凭研究问题和方法通过同行评审并被期刊原则上接收的文章。' %}（期刊在结果出来前就评审并接收你的「计划」）。我们在 <a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a> 见过它们；现在我们明白了它们为何有效。它们冻结的是验证性路径；偏离计划的分析仍可报告，但应标为探索性，而不是隐藏在确认性结论里。</p>
 </div>
 </section>
 
@@ -285,7 +285,7 @@
 <div class="k"><span>重定义</span> —— 本杰明（Benjamin）等 (2018) 保留了门槛的想法，但将其大幅下调：将 p < .005 称为「发现」，而 .005–.05 仅称为「有启发性」。简单直接，但批评者认为这只是治标不治本。</div>
 <div class="k"><span>论证你的 α</span> —— 拉肯斯（Lakens）等 (2018) 拒绝任何通用数字。他们认为应该根据具体情况，权衡「假警报」与「漏报」的真实成本，审慎选择你的门槛，并<span class="hl">展示你的推理过程</span>。</div>
 <div class="k"><span>弃用显著性</span> —— 阿姆瑞恩（Amrhein）、格陵兰和麦克沙恩（McShane）(2019) 在《自然》杂志上联合 800 多名签名者，呼吁废除「显著 / 不显著」这种二元对立的习惯——即不再把 p = .04 和 p = .06 看作两个不同的世界。这并不是禁止 p 值，而是禁止那条刚性的分界线。</div>
-<div class="k"><span>官方裁判</span> —— 美国统计协会（ASA）曾两度发声：先是在 2016 年发表了包含六项原则的审慎声明，随后在 2019 年发表了一篇更为激进的社论，敦促大家彻底停止使用「统计学显著」一词。（2019 年那篇是编辑观点，并非 ASA 的正式政策——这一区别本身也引发了一场争论。）</div>
+<div class="k"><span>统计学界的学会</span> —— 美国统计协会（ASA）曾两度发声：先是在 2016 年发表了包含六项原则的审慎声明，随后在 2019 年发表了一篇更为激进的社论，敦促大家彻底停止使用「统计学显著」一词。（2019 年那篇是编辑观点，并非 ASA 的正式政策——这一区别本身也引发了一场争论。）</div>
 </div>
 </div>
 
@@ -316,7 +316,7 @@
 <span class="chip ok" data-print="已确立"><i></i>经验现象 · 已确立</span>
 </div>
 <h3>多人同数：房间里最有力的证据</h3>
-<p>这项实验应该会改变你阅读每一条头条新闻的方式。拿出一份数据集，设定一个清晰的问题，然后将相同的副本分发给几十个专家团队。他们会殊途同归吗？答案是：不会。</p>
+<p>这项实验应该会改变你阅读每一条头条新闻的方式。拿出一份数据集，设定一个清晰的问题，然后将相同的副本分发给几十个专家团队。他们会得出同一个判定吗？很多时候，不会。</p>
 <p>在 Silberzahn 等 (2018) 的研究中，<span class="hl">29 个团队</span>（61 位分析师）被问了一个简单的问题：足球裁判是否更倾向于给深色皮肤的球员出示红牌？他们估计的优势比（OR）从 0.89 到 2.93 不等；20 个团队发现了显著的正向效应，9 个团队则没有。耐人寻味的是，分析师的先验信念甚至他们的统计专业知识都无法解释这种差异。在 Botvinik-Nezer 等 (2020) 的研究中，<span class="hl">70 个团队</span>（180 位研究者）针对同一份脑成像数据集分析了九个预设假设——结果没有两个团队使用了完全相同的流程；即使他们的基础统计图谱高度相关，他们的「是/否」结论也发生了严重分歧。Breznau 等 (2022) 将相同的数据和假设（移民是否会削弱对社会政策的支持？）交给 <span class="hl">73 个团队</span>，观察到估计值从明显的负相关一直散布到明显的正相关。甚至金融领域也有自己的版本：Menkveld 等人的《非标准误差》(2024) 让 <span class="hl">164 个团队</span>在相同的市场数据上测试相同的假设，发现团队间的变异性与普通的统计误差旗鼓相当——令人欣慰的是，当增加额外的同行评审环节时，这种变异性有所收缩。</p>
 <p>这就是 <a href="/zh/days/001-what-is-knowledge/">第 1 日</a> 提到的盖梯尔问题在单份数据集内部的具象化。每个团队的信念都被其专业的分析所「证成」；但它是否为「真」——即它是否连接到现实，而非仅仅连接到他们在花园中走过的那条特定路径——则因团队而异。一次分析只是一根树枝。请以此心态看待它们。</p>
 </div>
@@ -406,25 +406,32 @@
 <p class="sec-eyebrow">参考文献</p>
 <h2>来源与延伸阅读</h2>
 <ol>
+<li>Feynman, R. P. (1974). "Cargo Cult Science." <em>Engineering and Science</em> 37(7): 10–13. <span class="meta">加州理工学院 1974 年毕业典礼演讲；开篇引文来源。</span> <a href="https://calteches.library.caltech.edu/51/2/CargoCult.htm">calteches.library.caltech.edu</a></li>
+<li>Open Science Collaboration. (2015). "Estimating the reproducibility of psychological science." <em>Science</em> 349(6251): aac4716. <span class="meta">doi:10.1126/science.aac4716；97% 原研究显著 / 36% 复现显著统计的来源。</span> <a href="https://doi.org/10.1126/science.aac4716">doi.org/10.1126/science.aac4716</a></li>
 <li>Simmons, J. P., Nelson, L. D. &amp; Simonsohn, U. (2011). "False-Positive Psychology: Undisclosed Flexibility in Data Collection and Analysis Allows Presenting Anything as Significant." <em>Psychological Science</em> 22(11): 1359–1366. <span class="meta">doi:10.1177/0956797611417632。</span> <a href="https://doi.org/10.1177/0956797611417632">doi.org/10.1177/0956797611417632</a> <span class="meta">— 《当你六十四岁时》演示；5%→61% 的模拟。</span></li>
 <li>Gelman, A. &amp; Loken, E. (2014). "The Statistical Crisis in Science." <em>American Scientist</em> 102(6): 460–465. <span class="meta">— 「分岔路径的花园」；更早为 2013 年哥伦比亚大学工作论文。</span> <a href="https://www.americanscientist.org/article/the-statistical-crisis-in-science">americanscientist.org</a></li>
 <li>Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. &amp; Altman, D. G. (2016). "Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations." <em>European Journal of Epidemiology</em> 31(4): 337–350. <span class="meta">doi:10.1007/s10654-016-0149-3。</span> <a href="https://doi.org/10.1007/s10654-016-0149-3">doi.org/10.1007/s10654-016-0149-3</a> <span class="meta">— 25 种常见误读的权威清单。</span></li>
+<li>Haller, H. &amp; Krauss, S. (2002). "Misinterpretations of Significance: A Problem Students Share with Their Teachers?" <em>Methods of Psychological Research Online</em> 7(1): 1–20. <span class="meta">— p 值误解即使在统计学教师中也持续存在的调查证据。</span> <a href="https://epub.uni-regensburg.de/34338/">epub.uni-regensburg.de/34338</a></li>
+<li>Badenes-Ribera, L., Frias-Navarro, D., Iotti, B., Bonilla-Campos, A. &amp; Longobardi, C. (2016). "Misconceptions of the p-value among Chilean and Italian Academic Psychologists." <em>Frontiers in Psychology</em> 7: 1247. <span class="meta">doi:10.3389/fpsyg.2016.01247。</span> <a href="https://doi.org/10.3389/fpsyg.2016.01247">doi.org/10.3389/fpsyg.2016.01247</a></li>
 <li>Wasserstein, R. L. &amp; Lazar, N. A. (2016). "The ASA Statement on p-Values: Context, Process, and Purpose." <em>The American Statistician</em> 70(2): 129–133. <span class="meta">doi:10.1080/00031305.2016.1154108。</span> <a href="https://doi.org/10.1080/00031305.2016.1154108">doi.org/10.1080/00031305.2016.1154108</a> <span class="meta">— 六项基本原则。</span></li>
 <li>Wasserstein, R. L., Schirm, A. L. &amp; Lazar, N. A. (2019). "Moving to a World Beyond 'p &lt; 0.05'." <em>The American Statistician</em> 73(sup1): 1–19. <span class="meta">doi:10.1080/00031305.2019.1583913。</span> <a href="https://doi.org/10.1080/00031305.2019.1583913">doi.org/10.1080/00031305.2019.1583913</a> <span class="meta">— 43 篇文章特刊的社论；「停止说统计学显著」（编辑观点，非 ASA 正式政策）。</span></li>
 <li>Benjamin, D. J., Berger, J. O., Johannesson, M., et al. (2018). "Redefine statistical significance." <em>Nature Human Behaviour</em> 2(1): 6–10. <span class="meta">doi:10.1038/s41562-017-0189-z。</span> <a href="https://doi.org/10.1038/s41562-017-0189-z">doi.org/10.1038/s41562-017-0189-z</a></li>
 <li>Lakens, D., Adolfi, F. G., Albers, C. J., et al. (2018). "Justify your alpha." <em>Nature Human Behaviour</em> 2(3): 168–171. <span class="meta">doi:10.1038/s41562-018-0311-x。</span> <a href="https://doi.org/10.1038/s41562-018-0311-x">doi.org/10.1038/s41562-018-0311-x</a></li>
 <li>Amrhein, V., Greenland, S. &amp; McShane, B. (2019). "Scientists rise up against statistical significance." <em>Nature</em> 567(7748): 305–307. <span class="meta">doi:10.1038/d41586-019-00857-9；800 余名共同签名者。</span> <a href="https://doi.org/10.1038/d41586-019-00857-9">doi.org/10.1038/d41586-019-00857-9</a></li>
 <li>Button, K. S., Ioannidis, J. P. A., Mokrysz, C., et al. (2013). "Power failure: why small sample size undermines the reliability of neuroscience." <em>Nature Reviews Neuroscience</em> 14(5): 365–376. <span class="meta">doi:10.1038/nrn3475；功效中位数约 21%。</span> <a href="https://doi.org/10.1038/nrn3475">doi.org/10.1038/nrn3475</a></li>
+<li>Nord, C. L., Valton, V., Wood, J. &amp; Roiser, J. P. (2017). "Power-up: A Reanalysis of 'Power Failure' in Neuroscience Using Mixture Modeling." <em>The Journal of Neuroscience</em> 37(34): 8051–8061. <span class="meta">doi:10.1523/JNEUROSCI.3592-16.2017；关于神经科学低功效是否均匀分布的限定。</span> <a href="https://doi.org/10.1523/JNEUROSCI.3592-16.2017">doi.org/10.1523/JNEUROSCI.3592-16.2017</a></li>
+<li>Center for Open Science. "Registered Reports." <span class="meta">COS 官方说明和参与期刊列表；「300 多家期刊」说法的来源。</span> <a href="https://www.cos.io/initiatives/registered-reports">cos.io/initiatives/registered-reports</a></li>
 <li>Steegen, S., Tuerlinckx, F., Gelman, A. &amp; Vanpaemel, W. (2016). "Increasing Transparency Through a Multiverse Analysis." <em>Perspectives on Psychological Science</em> 11(5): 702–712. <span class="meta">doi:10.1177/1745691616658637。</span> <a href="https://doi.org/10.1177/1745691616658637">doi.org/10.1177/1745691616658637</a></li>
 <li>Simonsohn, U., Simmons, J. P. &amp; Nelson, L. D. (2020). "Specification curve analysis." <em>Nature Human Behaviour</em> 4(11): 1208–1214. <span class="meta">doi:10.1038/s41562-020-0912-z。</span> <a href="https://doi.org/10.1038/s41562-020-0912-z">doi.org/10.1038/s41562-020-0912-z</a></li>
 <li>Silberzahn, R., Uhlmann, E. L., Martin, D. P., et al. (2018). "Many Analysts, One Data Set." <em>Advances in Methods and Practices in Psychological Science</em> 1(3): 337–356. <span class="meta">doi:10.1177/2515245917747646；29 个团队，OR 0.89–2.93。</span> <a href="https://doi.org/10.1177/2515245917747646">doi.org/10.1177/2515245917747646</a></li>
 <li>Botvinik-Nezer, R., Holzmeister, F., Camerer, C. F., et al. (2020). "Variability in the analysis of a single neuroimaging dataset by many teams." <em>Nature</em> 582(7810): 84–88. <span class="meta">doi:10.1038/s41586-020-2314-9；70 个团队。</span> <a href="https://doi.org/10.1038/s41586-020-2314-9">doi.org/10.1038/s41586-020-2314-9</a></li>
 <li>Breznau, N., Rinke, E. M., Wuttke, A., et al. (2022). "Observing many researchers using the same data and hypothesis reveals a hidden universe of uncertainty." <em>PNAS</em> 119(44): e2203150119. <span class="meta">doi:10.1073/pnas.2203150119；73 个团队。</span> <a href="https://doi.org/10.1073/pnas.2203150119">doi.org/10.1073/pnas.2203150119</a></li>
+<li>Mathur, M. B., Covington, C. &amp; VanderWeele, T. J. (2023). "Variation across analysts in statistical significance, yet consistently small effect sizes." <em>PNAS</em> 120(3): e2218957120. <span class="meta">doi:10.1073/pnas.2218957120；提醒读者用效应量和区间、而不只是显著性标签来理解「多人同数」分歧。</span> <a href="https://doi.org/10.1073/pnas.2218957120">doi.org/10.1073/pnas.2218957120</a></li>
 <li>Menkveld, A. J., Dreber, A., Holzmeister, F., et al. (2024). "Nonstandard Errors." <em>The Journal of Finance</em> 79(3): 2339–2390. <span class="meta">doi:10.1111/jofi.13337；164 个团队。</span> <a href="https://doi.org/10.1111/jofi.13337">doi.org/10.1111/jofi.13337</a></li>
 <li>Girardi, P., Vesely, A., Lakens, D., et al. (2024). "Post-selection Inference in Multiverse Analysis (PIMA): An Inferential Framework Based on the Sign Flipping Score Test." <em>Psychometrika</em> 89(2): 542–568. <span class="meta">doi:10.1007/s11336-024-09973-6。</span> <a href="https://doi.org/10.1007/s11336-024-09973-6">doi.org/10.1007/s11336-024-09973-6</a></li>
+<li>Ramdas, A., Grünwald, P., Vovk, V. &amp; Shafer, G. (2023). "Game-theoretic statistics and safe anytime-valid inference." <em>Statistical Science</em> 38(4): 576–601. <span class="meta">doi:10.1214/23-STS894；e-process、testing by betting 与可选停止下仍有效的推断。</span> <a href="https://doi.org/10.1214/23-STS894">doi.org/10.1214/23-STS894</a></li>
 <li>Cohen, J. (1988). <em>Statistical Power Analysis for the Behavioral Sciences</em> (2nd ed.). Lawrence Erlbaum. <span class="meta">— 效应量分级惯例，作者本人也承认是刻意随意的。</span></li>
 </ol>
-<p class="meta" style="margin-top:1rem;">引用备注：研究过程中出现了一篇 2026 年的 arXiv 预印本，因课程规定无法验证而弃用；PIMA 的工作论文 ID（arXiv:2210.02794，2022）真实存在，且该工作已经过同行评议正式发表。</p>
 </section>
 
 <p class="endcap">第 06 日结束 · <span class="gleam">还剩 174 次深入</span></p>
