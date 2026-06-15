@@ -16,6 +16,7 @@ threads:
 content_template: days/006-statistics-and-the-art-of-not-fooling-yourself/zh.njk
 scripts:
   - /assets/js/interactions/statistics-lab.js
+  - /assets/js/interactions/statistics-appendices.js
 permalink: /zh/days/006-statistics-and-the-art-of-not-fooling-yourself/
 ---
 {% include content_template %}
