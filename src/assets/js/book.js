@@ -326,7 +326,7 @@
     var locale = lesson.getAttribute("data-reading-locale") || currentLocale();
     var record = {
       day: Number(lesson.getAttribute("data-reading-day")) || 0,
-      url: lesson.getAttribute("data-reading-url") || window.location.pathname,
+      url: currentLessonPath(lesson),
       label: lesson.getAttribute("data-reading-label") || "",
       title: lesson.getAttribute("data-reading-title") || "",
       summary: lesson.getAttribute("data-reading-summary") || "",
@@ -386,7 +386,7 @@
 
     var locale = lesson.getAttribute("data-reading-locale") || currentLocale();
     var saved = readReadingProgress()[locale];
-    if(!isValidReadingRecord(saved) || normalizePath(saved.url) !== window.location.pathname){
+    if(!isValidReadingRecord(saved) || normalizePath(saved.url) !== currentLessonPath(lesson)){
       return false;
     }
 
@@ -425,7 +425,7 @@
 
     var locale = lesson.getAttribute("data-reading-locale") || currentLocale();
     var saved = readReadingProgress()[locale];
-    if(!isValidReadingRecord(saved) || normalizePath(saved.url) !== window.location.pathname){
+    if(!isValidReadingRecord(saved) || normalizePath(saved.url) !== currentLessonPath(lesson)){
       return false;
     }
 
@@ -857,7 +857,7 @@
     }
 
     return {
-      href: saved.progress > 0 ? saved.url + readingResumeHash : saved.url,
+      href: normalizedSavedUrl(saved) + (saved.progress > 0 ? readingResumeHash : ""),
       label: saved.label,
       summary: saved.summary || ""
     };
@@ -938,11 +938,31 @@
   }
 
   function normalizePath(url){
+    var path = "";
     try{
-      return new URL(url, window.location.origin).pathname;
+      path = new URL(url, window.location.origin).pathname;
     }catch(error){
-      return String(url || "").split("#")[0].split("?")[0];
+      path = String(url || "").split("#")[0].split("?")[0];
     }
+
+    path = "/" + String(path || "").replace(/^\/+/, "");
+    path = path.replace(/\/{2,}/g, "/");
+    if(/^\/(?:zh\/)?days\/[0-9]{3}-[a-z0-9-]+$/.test(path)){
+      path += "/";
+    }
+    return path;
+  }
+
+  function currentLessonPath(lesson){
+    return normalizePath(
+      lesson && lesson.getAttribute("data-reading-url")
+        ? lesson.getAttribute("data-reading-url")
+        : window.location.pathname
+    );
+  }
+
+  function normalizedSavedUrl(record){
+    return normalizePath(record && record.url);
   }
 
   function isValidReadingRecord(record){
@@ -950,7 +970,7 @@
       record &&
       record.day > 0 &&
       typeof record.url === "string" &&
-      /^\/(?:zh\/)?days\/[0-9]{3}-[a-z0-9-]+\/$/.test(record.url) &&
+      /^\/(?:zh\/)?days\/[0-9]{3}-[a-z0-9-]+\/$/.test(normalizedSavedUrl(record)) &&
       typeof record.label === "string" &&
       record.label
     );
