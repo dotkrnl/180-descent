@@ -21,18 +21,18 @@
 <circle cx="106" cy="172" r="3" fill="var(--accent)"></circle>
 <circle cx="124" cy="184" r="3" fill="var(--ink-faint)"></circle>
 <line x1="168" y1="152" x2="210" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
-<rect x="218" y="82" width="190" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
-<text x="313" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">合理选择</text>
+<rect x="218" y="82" width="218" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
+<text x="327" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">合理选择</text>
 <g font-size="10.5">
-<text x="238" y="134" fill="var(--ink-soft)">离群值</text><text x="330" y="134" fill="var(--ink-faint)">保留 / 剔除</text>
-<text x="238" y="158" fill="var(--ink-soft)">协变量</text><text x="330" y="158" fill="var(--ink-faint)">无 / W</text>
-<text x="238" y="182" fill="var(--ink-soft)">尺度</text><text x="330" y="182" fill="var(--ink-faint)">原始 / 秩</text>
-<text x="238" y="206" fill="var(--ink-soft)">样本</text><text x="330" y="206" fill="var(--ink-faint)">全部 / 子组</text>
+<text x="240" y="134" fill="var(--ink-soft)">离群值</text><text x="338" y="134" fill="var(--ink-faint)">保留 / 剔除</text>
+<text x="240" y="158" fill="var(--ink-soft)">协变量</text><text x="338" y="158" fill="var(--ink-faint)">无 / W</text>
+<text x="240" y="182" fill="var(--ink-soft)">尺度</text><text x="338" y="182" fill="var(--ink-faint)">原始 / 秩</text>
+<text x="240" y="206" fill="var(--ink-soft)">样本</text><text x="338" y="206" fill="var(--ink-faint)">全部 / 子组</text>
 </g>
-<line x1="238" y1="143" x2="388" y2="143" stroke="var(--line)" stroke-width="1"></line>
-<line x1="238" y1="167" x2="388" y2="167" stroke="var(--line)" stroke-width="1"></line>
-<line x1="238" y1="191" x2="388" y2="191" stroke="var(--line)" stroke-width="1"></line>
-<line x1="416" y1="152" x2="456" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
+<line x1="240" y1="143" x2="416" y2="143" stroke="var(--line)" stroke-width="1"></line>
+<line x1="240" y1="167" x2="416" y2="167" stroke="var(--line)" stroke-width="1"></line>
+<line x1="240" y1="191" x2="416" y2="191" stroke="var(--line)" stroke-width="1"></line>
+<line x1="444" y1="152" x2="456" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
 <rect x="464" y="82" width="144" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
 <text x="536" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">报告结果</text>
 <rect x="484" y="122" width="104" height="26" rx="6" fill="color-mix(in srgb,var(--contested) 12%,var(--paper))" stroke="var(--contested)" stroke-width="1.8"></rect>
@@ -142,7 +142,7 @@
 <p>换成一个小例子：假设零模型说两组均值相同。如果在这个模型之下，出现当前这么大或更大的差异的概率是 3%，那么 p = .03。这绝不是「零假设为真的概率只有 3%」。</p>
 
 <figure class="lesson-figure pvalue-figure">
-<img src="/assets/images/open-license/p-value-statistical-significance-testing-zh.svg" width="800" height="460" loading="lazy" decoding="async" alt="课程风格的零模型钟形曲线图，阴影尾部标为 p 值，并强调 P(数据 | 零假设) 不是 P(零假设 | 数据)。">
+<img src="/assets/images/open-license/p-value-tail-area-v2-zh.svg" width="800" height="460" loading="lazy" decoding="async" alt="课程风格的零模型钟形曲线图，阴影尾部标为 p 值，并强调 P(数据 | 零假设) 不是 P(零假设 | 数据)。">
   <figcaption>阴影尾部就是 p 值：在零模型下，出现如此极端或更极端结果的频率。<span class="meta">改编自 Repapetilto 与 Chen-Pan Liao，经 Wikimedia Commons，CC BY-SA 3.0。</span></figcaption>
 </figure>
 
@@ -357,14 +357,14 @@
 <div class="panel web-only statistics-spec-curve">
 <p class="ptitle">互动 · 运行你自己的多元宇宙</p>
 <h3>设定曲线（Specification Curve）</h3>
-<p class="pnote">这是一个固定的合成数据集，X 和 Y 之间有一个较弱且受混杂影响的关联：基线模型一开始不会跨过通常的 <span class="term">p &lt; .05</span> 线，但某些可辩护的选择可以把它推过去。这里的 <strong>r</strong> 是皮尔逊相关系数，范围从 -1 到 +1；正的 <strong>r</strong> 表示 X 越大时 Y 往往也越大，接近 0 则表示关联较弱。画出这条曲线，是因为只报告一个模型可能很任意：问题是结论能否经受合理分析选择的扰动，还是只依赖某一条路径。开启某个选择，会把「使用它」和「不使用它」两个版本都加入多元宇宙，并不是强迫每个模型都使用它。青色点表示 <span class="term">p &lt; .05</span>，灰色点则不显著。下方打勾行显示每个设定用了哪些选择。切换「控制变量 W」可以看到调整第 5 日式混杂因素后会发生什么；再切换「挑选结果」，比较完整多元宇宙与有动机作者可能报告的单一路径。</p>
+<p class="pnote">这是一个固定的合成数据集，X 和 Y 之间有一个较弱且受混杂影响的关联：基线模型一开始不会跨过通常的 <span class="term">p &lt; .05</span> 线，但某些可辩护的选择可以把它推过去。这里的 <strong>r</strong> 是皮尔逊相关系数，范围从 -1 到 +1；正的 <strong>r</strong> 表示 X 越大时 Y 往往也越大，接近 0 则表示关联较弱。画出这条曲线，是因为只报告一个模型可能很任意：问题是结论能否经受合理分析选择的扰动，还是只依赖某一条路径。面板默认开启所有选择，并高亮「挑选结果」；关闭某个按钮会缩小多元宇宙。青色点表示 <span class="term">p &lt; .05</span>，灰色点则不显著。下方打勾行显示每个设定用了哪些选择，包括它是否控制了第 5 日式混杂因素 <strong>W</strong>。</p>
 
 <div class="mv-controls" id="mv-controls">
-<button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>剔除异常值</button>
-<button class="mvchip" id="mv-cov" aria-pressed="false"><i></i>控制变量 W</button>
-<button class="mvchip" id="mv-rank" aria-pressed="false"><i></i>秩变换</button>
-<button class="mvchip" id="mv-sub" aria-pressed="false"><i></i>删除子组</button>
-<button class="mvchip" id="mv-cherry" aria-pressed="false" style="margin-left:auto;border-style:dashed;"><i></i>挑选结果</button>
+<button class="mvchip" id="mv-trim" aria-pressed="true"><i></i>剔除异常值</button>
+<button class="mvchip" id="mv-cov" aria-pressed="true"><i></i>控制变量 W</button>
+<button class="mvchip" id="mv-rank" aria-pressed="true"><i></i>秩变换</button>
+<button class="mvchip" id="mv-sub" aria-pressed="true"><i></i>删除子组</button>
+<button class="mvchip" id="mv-cherry" aria-pressed="true" style="margin-left:auto;border-style:dashed;"><i></i>挑选结果</button>
 </div>
 
 <div class="mv-scroll">

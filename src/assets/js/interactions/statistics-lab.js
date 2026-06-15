@@ -670,16 +670,20 @@
       var best = rows.filter(function(row){ return row.p < 0.05; }).sort(function(a,b){ return Math.abs(b.r) - Math.abs(a.r); })[0];
       var covRows = rows.filter(function(row){ return row.choices.cov; });
       var covSig = covRows.filter(function(row){ return row.p < 0.05; }).length;
-      var x0 = 108;
-      var x1 = 426;
-      var top = 14;
-      var plotH = 142;
-      var rmax = Math.max(0.25, rows.reduce(function(max,row){ return Math.max(max, Math.abs(row.r)); }, 0));
-      function px(index){ return n === 1 ? (x0 + x1) / 2 : x0 + (x1 - x0) * index / (n - 1); }
-      function py(r){ return top + plotH / 2 - (r / rmax) * (plotH / 2 - 6); }
-      var svg = '<line x1="' + x0 + '" y1="' + py(0).toFixed(1) + '" x2="' + x1 + '" y2="' + py(0).toFixed(1) + '" stroke="var(--line-strong)" stroke-width="1" stroke-dasharray="3 4"></line>';
-      svg += '<text x="' + (x0 - 6) + '" y="' + (py(0) + 3).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">0</text>';
-      svg += '<text x="8" y="82" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)" transform="rotate(-90 14 82)">' + (isZh ? "效应 (r)" : "effect (r)") + '</text>';
+      var axisX = 102;
+      var pointX0 = 136;
+      var pointX1 = 404;
+      var top = 18;
+      var bottom = 156;
+      var rmax = Math.max(0.25, rows.reduce(function(max,row){ return Math.max(max, row.r); }, 0));
+      function px(index){ return n === 1 ? (pointX0 + pointX1) / 2 : pointX0 + (pointX1 - pointX0) * index / (n - 1); }
+      function py(r){ return bottom - (Math.max(0, r) / rmax) * (bottom - top - 8); }
+      var svg = '<line x1="' + axisX + '" y1="' + top + '" x2="' + axisX + '" y2="' + bottom + '" stroke="var(--line)" stroke-width="1.2"></line>';
+      svg += '<line x1="' + axisX + '" y1="' + bottom + '" x2="426" y2="' + bottom + '" stroke="var(--line-strong)" stroke-width="1" stroke-dasharray="3 4"></line>';
+      svg += '<line x1="' + axisX + '" y1="' + py(rmax).toFixed(1) + '" x2="426" y2="' + py(rmax).toFixed(1) + '" stroke="var(--line)" stroke-width="1" opacity=".75"></line>';
+      svg += '<text x="' + (axisX - 6) + '" y="' + (bottom + 3) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">0</text>';
+      svg += '<text x="' + (axisX - 6) + '" y="' + (py(rmax) + 3).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + rmax.toFixed(2) + '</text>';
+      svg += '<text x="8" y="88" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)" transform="rotate(-90 14 88)">' + (isZh ? "效应 (r)" : "effect (r)") + '</text>';
       rows.forEach(function(row,index){
         var isBest = cherry && best === row;
         var dim = cherry && !isBest;
@@ -692,7 +696,7 @@
         ["sub", isZh ? "剔除子组" : "drop subgroup", buttons.sub]
       ].filter(function(row){ return pressed(row[2]); }).forEach(function(choice,rowIndex){
         var y = 178 + rowIndex * 13;
-        svg += '<text x="' + (x0 - 6) + '" y="' + (y + 5) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + choice[1] + '</text>';
+        svg += '<text x="' + (axisX - 6) + '" y="' + (y + 5) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + choice[1] + '</text>';
         rows.forEach(function(row,index){
           if (row.choices[choice[0]]) {
             svg += '<text x="' + px(index).toFixed(1) + '" y="' + (y + 4) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="700" fill="var(--accent)" opacity="' + (cherry && best !== row ? 0.18 : 0.9) + '">✓</text>';

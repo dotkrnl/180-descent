@@ -21,18 +21,18 @@
 <circle cx="106" cy="172" r="3" fill="var(--accent)"></circle>
 <circle cx="124" cy="184" r="3" fill="var(--ink-faint)"></circle>
 <line x1="168" y1="152" x2="210" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
-<rect x="218" y="82" width="190" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
-<text x="313" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">reasonable choices</text>
+<rect x="218" y="82" width="218" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
+<text x="327" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">reasonable choices</text>
 <g font-size="10.5">
-<text x="238" y="134" fill="var(--ink-soft)">outliers</text><text x="330" y="134" fill="var(--ink-faint)">keep / trim</text>
-<text x="238" y="158" fill="var(--ink-soft)">covariate</text><text x="330" y="158" fill="var(--ink-faint)">none / W</text>
-<text x="238" y="182" fill="var(--ink-soft)">scale</text><text x="330" y="182" fill="var(--ink-faint)">raw / rank</text>
-<text x="238" y="206" fill="var(--ink-soft)">sample</text><text x="330" y="206" fill="var(--ink-faint)">all / subset</text>
+<text x="240" y="134" fill="var(--ink-soft)">outliers</text><text x="338" y="134" fill="var(--ink-faint)">keep / trim</text>
+<text x="240" y="158" fill="var(--ink-soft)">covariate</text><text x="338" y="158" fill="var(--ink-faint)">none / W</text>
+<text x="240" y="182" fill="var(--ink-soft)">scale</text><text x="338" y="182" fill="var(--ink-faint)">raw / rank</text>
+<text x="240" y="206" fill="var(--ink-soft)">sample</text><text x="338" y="206" fill="var(--ink-faint)">all / subset</text>
 </g>
-<line x1="238" y1="143" x2="388" y2="143" stroke="var(--line)" stroke-width="1"></line>
-<line x1="238" y1="167" x2="388" y2="167" stroke="var(--line)" stroke-width="1"></line>
-<line x1="238" y1="191" x2="388" y2="191" stroke="var(--line)" stroke-width="1"></line>
-<line x1="416" y1="152" x2="456" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
+<line x1="240" y1="143" x2="416" y2="143" stroke="var(--line)" stroke-width="1"></line>
+<line x1="240" y1="167" x2="416" y2="167" stroke="var(--line)" stroke-width="1"></line>
+<line x1="240" y1="191" x2="416" y2="191" stroke="var(--line)" stroke-width="1"></line>
+<line x1="444" y1="152" x2="456" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
 <rect x="464" y="82" width="144" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
 <text x="536" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">reported results</text>
 <rect x="484" y="122" width="104" height="26" rx="6" fill="color-mix(in srgb,var(--contested) 12%,var(--paper))" stroke="var(--contested)" stroke-width="1.8"></rect>
@@ -142,7 +142,7 @@
 <p>Concrete version: suppose the null model says two groups have the same mean. If a difference this large or larger would occur 3% of the time under that model, then <em>p</em> = .03. That is <em>not</em> a 3% chance the null is true.</p>
 
 <figure class="lesson-figure pvalue-figure">
-<img src="/assets/images/open-license/p-value-statistical-significance-testing.svg" width="800" height="460" loading="lazy" decoding="async" alt="Course-styled diagram of a null-model bell curve with a shaded tail area labeled p-value, emphasizing that P(data given null) is not P(null given data).">
+<img src="/assets/images/open-license/p-value-tail-area-v2.svg" width="800" height="460" loading="lazy" decoding="async" alt="Course-styled diagram of a null-model bell curve with a shaded tail area labeled p-value, emphasizing that P(data given null) is not P(null given data).">
 <figcaption>The shaded tail is the p-value: the frequency of results this extreme or more extreme under the null model. <span class="meta">Adapted from Repapetilto and Chen-Pan Liao, CC BY-SA 3.0 via Wikimedia Commons.</span></figcaption>
 </figure>
 
@@ -357,14 +357,14 @@
 <div class="panel web-only statistics-spec-curve">
 <p class="ptitle">Interactive · run your own multiverse</p>
 <h3>The Specification Curve</h3>
-<p class="pnote">A fixed synthetic dataset gives X and Y a weak, confounded association: the baseline model starts below the usual <em>p</em> &lt; .05 line, but some defensible choices can push it across. Here <strong>r</strong> is the Pearson correlation coefficient, from -1 to +1; positive <strong>r</strong> means larger X tends to come with larger Y, and values near 0 are weak. We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. Turning on a choice adds both versions of that choice to the multiverse; it does not force every model to use it. Teal dots are <em>p</em> &lt; .05, grey dots are not. The check rows show which choices each specification uses. Toggle <strong>control for W</strong> to see what happens when the lurking Day 5 confounder is adjusted for, then toggle <strong>cherry-pick</strong> to compare the whole multiverse with the single path a motivated author might report.</p>
+<p class="pnote">A fixed synthetic dataset gives X and Y a weak, confounded association: the baseline model starts below the usual <em>p</em> &lt; .05 line, but some defensible choices can push it across. Here <strong>r</strong> is the Pearson correlation coefficient, from -1 to +1; positive <strong>r</strong> means larger X tends to come with larger Y, and values near 0 are weak. We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. The panel opens with every choice included and cherry-pick highlighted; turning off a chip narrows the multiverse. Teal dots are <em>p</em> &lt; .05, grey dots are not. The check rows show which choices each specification uses, including whether it controls for the lurking Day 5 confounder <strong>W</strong>.</p>
 
 <div class="mv-controls" id="mv-controls">
-<button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>trim outliers</button>
-<button class="mvchip" id="mv-cov" aria-pressed="false"><i></i>control for W</button>
-<button class="mvchip" id="mv-rank" aria-pressed="false"><i></i>rank-transform</button>
-<button class="mvchip" id="mv-sub" aria-pressed="false"><i></i>drop subgroup</button>
-<button class="mvchip" id="mv-cherry" aria-pressed="false" style="margin-left:auto;border-style:dashed;"><i></i>cherry-pick</button>
+<button class="mvchip" id="mv-trim" aria-pressed="true"><i></i>trim outliers</button>
+<button class="mvchip" id="mv-cov" aria-pressed="true"><i></i>control for W</button>
+<button class="mvchip" id="mv-rank" aria-pressed="true"><i></i>rank-transform</button>
+<button class="mvchip" id="mv-sub" aria-pressed="true"><i></i>drop subgroup</button>
+<button class="mvchip" id="mv-cherry" aria-pressed="true" style="margin-left:auto;border-style:dashed;"><i></i>cherry-pick</button>
 </div>
 
 <div class="mv-scroll">
