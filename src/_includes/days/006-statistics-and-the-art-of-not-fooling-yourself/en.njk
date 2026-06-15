@@ -141,8 +141,8 @@
 
 <p>Concrete version: suppose the null model says two groups have the same mean. If a difference this large or larger would occur 3% of the time under that model, then <em>p</em> = .03. That is <em>not</em> a 3% chance the null is true.</p>
 
-<figure class="lesson-figure">
-<img src="/assets/images/open-license/p-value-statistical-significance-testing.svg" width="800" height="520" loading="lazy" decoding="async" alt="Course-styled diagram of a null-model bell curve with a shaded tail area labeled p-value, emphasizing that P(data given null) is not P(null given data).">
+<figure class="lesson-figure pvalue-figure">
+<img src="/assets/images/open-license/p-value-statistical-significance-testing.svg" width="800" height="460" loading="lazy" decoding="async" alt="Course-styled diagram of a null-model bell curve with a shaded tail area labeled p-value, emphasizing that P(data given null) is not P(null given data).">
 <figcaption>The shaded tail is the p-value: the frequency of results this extreme or more extreme under the null model. <span class="meta">Adapted from Repapetilto and Chen-Pan Liao, CC BY-SA 3.0 via Wikimedia Commons.</span></figcaption>
 </figure>
 
@@ -170,7 +170,7 @@
 <div class="panel web-only statistics-effect-lab">
 <p class="ptitle">Interactive · significance versus size</p>
 <h3>The Effect-Size Dial</h3>
-<p class="pnote">Set a true mean difference, a per-group sample size, and a noise level. The plot uses fixed x and y scales: mean difference from -3 to +3, and bucket frequency from repeated estimates. Finer bars show the estimate distribution; the curve is the matching sampling distribution; the horizontal bar is the 95% confidence interval on the same x scale.</p>
+<p class="pnote">Set a true mean difference, a per-group sample size, and a noise level. A group means one side of the two-group comparison, such as treatment versus control; n = 50 per group means 50 observations in each side, 100 total. The plot uses fixed x and y scales: mean difference from -3 to +3, and bucket frequency from repeated estimates. Finer bars show the estimate distribution; the curve is the matching sampling distribution; the horizontal bar is the 95% confidence interval on the same x scale.</p>
 <div class="se-grid">
 <div class="se-controls">
 <label for="se-effect"><span>True mean difference</span><output id="se-effect-out" for="se-effect">0.30</output></label>
@@ -181,17 +181,18 @@
 <input type="range" id="se-noise" min="0.4" max="2.5" step="0.05" value="1">
 </div>
 <div>
-<svg class="se-plot" id="se-plot" viewBox="0 0 420 240" role="img" aria-label="A fixed-scale sampling-frequency plot and confidence interval for the mean difference.">
-<rect x="28" y="28" width="364" height="168" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>
+<svg class="se-plot" id="se-plot" viewBox="0 0 420 310" role="img" aria-label="A fixed-scale sampling-frequency plot and confidence interval for the mean difference.">
+<rect x="28" y="24" width="364" height="226" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>
+<g id="se-y-ticks"></g>
 <g id="se-bars"></g>
 <path id="se-sampling-curve" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"></path>
-<line x1="52" y1="164" x2="368" y2="164" stroke="var(--line-strong)" stroke-width="1.4"></line>
+<line x1="58" y1="220" x2="370" y2="220" stroke="var(--line-strong)" stroke-width="1.4"></line>
 <g id="se-ticks"></g>
-<line id="se-zero" x1="210" y1="44" x2="210" y2="176" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 5"></line>
-<line id="se-ci-line" x1="160" y1="190" x2="260" y2="190" stroke="var(--brass)" stroke-width="8" stroke-linecap="round"></line>
-<circle id="se-est-dot" cx="210" cy="190" r="7" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
-<text id="se-width-label" x="210" y="218" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">95% CI width</text>
-<text x="38" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)" transform="rotate(-90 38 112)">bucket frequency</text>
+<line id="se-zero" x1="214" y1="38" x2="214" y2="220" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 5"></line>
+<line id="se-ci-line" x1="160" y1="272" x2="260" y2="272" stroke="var(--brass)" stroke-width="8" stroke-linecap="round"></line>
+<circle id="se-est-dot" cx="210" cy="272" r="7" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
+<text id="se-width-label" x="214" y="298" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">95% CI width</text>
+<text x="16" y="136" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)" transform="rotate(-90 16 136)">bucket frequency</text>
 </svg>
 <div class="se-read" id="se-read" aria-live="polite"></div>
 </div>
@@ -356,7 +357,7 @@
 <div class="panel web-only statistics-spec-curve">
 <p class="ptitle">Interactive · run your own multiverse</p>
 <h3>The Specification Curve</h3>
-<p class="pnote">A fixed synthetic dataset makes X and Y look related, mostly because a lurking background variable <strong>W</strong> drives both (a <strong>Day 5</strong> confounder). We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. Turn on choices to create more specifications. Teal dots are <em>p</em> &lt; .05, grey dots are not. The check rows show which choices each specification uses. Then toggle <strong>control for W</strong> and <strong>cherry-pick</strong> to compare the whole multiverse with the single path a motivated author might report.</p>
+<p class="pnote">A fixed synthetic dataset gives X and Y a weak, confounded association: the baseline model starts below the usual <em>p</em> &lt; .05 line, but some defensible choices can push it across. Here <strong>r</strong> is the Pearson correlation coefficient, from -1 to +1; positive <strong>r</strong> means larger X tends to come with larger Y, and values near 0 are weak. We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. Turning on a choice adds both versions of that choice to the multiverse; it does not force every model to use it. Teal dots are <em>p</em> &lt; .05, grey dots are not. The check rows show which choices each specification uses. Toggle <strong>control for W</strong> to see what happens when the lurking Day 5 confounder is adjusted for, then toggle <strong>cherry-pick</strong> to compare the whole multiverse with the single path a motivated author might report.</p>
 
 <div class="mv-controls" id="mv-controls">
 <button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>trim outliers</button>

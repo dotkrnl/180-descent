@@ -141,8 +141,8 @@
 
 <p>换成一个小例子：假设零模型说两组均值相同。如果在这个模型之下，出现当前这么大或更大的差异的概率是 3%，那么 p = .03。这绝不是「零假设为真的概率只有 3%」。</p>
 
-<figure class="lesson-figure">
-<img src="/assets/images/open-license/p-value-statistical-significance-testing-zh.svg" width="800" height="520" loading="lazy" decoding="async" alt="课程风格的零模型钟形曲线图，阴影尾部标为 p 值，并强调 P(数据 | 零假设) 不是 P(零假设 | 数据)。">
+<figure class="lesson-figure pvalue-figure">
+<img src="/assets/images/open-license/p-value-statistical-significance-testing-zh.svg" width="800" height="460" loading="lazy" decoding="async" alt="课程风格的零模型钟形曲线图，阴影尾部标为 p 值，并强调 P(数据 | 零假设) 不是 P(零假设 | 数据)。">
   <figcaption>阴影尾部就是 p 值：在零模型下，出现如此极端或更极端结果的频率。<span class="meta">改编自 Repapetilto 与 Chen-Pan Liao，经 Wikimedia Commons，CC BY-SA 3.0。</span></figcaption>
 </figure>
 
@@ -170,7 +170,7 @@
 <div class="panel web-only statistics-effect-lab">
 <p class="ptitle">互动 · 显著性与大小</p>
 <h3>效应量调节器</h3>
-<p class="pnote">设定真实均值差、每组样本量和噪声水平。图中使用固定的 x 轴和 y 轴：均值差从 -3 到 +3，y 轴是重复估计的分桶频数。更细的柱形显示估计分布，曲线表示对应的抽样分布，横条则是在同一 x 尺度上的 95% 置信区间。</p>
+<p class="pnote">设定真实均值差、每组样本量和噪声水平。这里的「组」指两组比较中的一边，例如处理组与对照组；每组 n = 50 意味着两边各 50 个观察值，总共 100 个。图中使用固定的 x 轴和 y 轴：均值差从 -3 到 +3，y 轴是重复估计的分桶频数。更细的柱形显示估计分布，曲线表示对应的抽样分布，横条则是在同一 x 尺度上的 95% 置信区间。</p>
 <div class="se-grid">
 <div class="se-controls">
 <label for="se-effect"><span>真实均值差</span><output id="se-effect-out" for="se-effect">0.30</output></label>
@@ -181,17 +181,18 @@
 <input type="range" id="se-noise" min="0.4" max="2.5" step="0.05" value="1">
 </div>
 <div>
-<svg class="se-plot" id="se-plot" viewBox="0 0 420 240" role="img" aria-label="均值差的固定尺度抽样频数图和置信区间图。">
-<rect x="28" y="28" width="364" height="168" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>
+<svg class="se-plot" id="se-plot" viewBox="0 0 420 310" role="img" aria-label="均值差的固定尺度抽样频数图和置信区间图。">
+<rect x="28" y="24" width="364" height="226" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>
+<g id="se-y-ticks"></g>
 <g id="se-bars"></g>
 <path id="se-sampling-curve" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"></path>
-<line x1="52" y1="164" x2="368" y2="164" stroke="var(--line-strong)" stroke-width="1.4"></line>
+<line x1="58" y1="220" x2="370" y2="220" stroke="var(--line-strong)" stroke-width="1.4"></line>
 <g id="se-ticks"></g>
-<line id="se-zero" x1="210" y1="44" x2="210" y2="176" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 5"></line>
-<line id="se-ci-line" x1="160" y1="190" x2="260" y2="190" stroke="var(--brass)" stroke-width="8" stroke-linecap="round"></line>
-<circle id="se-est-dot" cx="210" cy="190" r="7" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
-<text id="se-width-label" x="210" y="218" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">95% CI 宽度</text>
-<text x="38" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)" transform="rotate(-90 38 112)">分桶频数</text>
+<line id="se-zero" x1="214" y1="38" x2="214" y2="220" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 5"></line>
+<line id="se-ci-line" x1="160" y1="272" x2="260" y2="272" stroke="var(--brass)" stroke-width="8" stroke-linecap="round"></line>
+<circle id="se-est-dot" cx="210" cy="272" r="7" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
+<text id="se-width-label" x="214" y="298" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">95% CI 宽度</text>
+<text x="16" y="136" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)" transform="rotate(-90 16 136)">分桶频数</text>
 </svg>
 <div class="se-read" id="se-read" aria-live="polite"></div>
 </div>
@@ -356,7 +357,7 @@
 <div class="panel web-only statistics-spec-curve">
 <p class="ptitle">互动 · 运行你自己的多元宇宙</p>
 <h3>设定曲线（Specification Curve）</h3>
-<p class="pnote">这是一个固定的合成数据集，其中 X 和 Y 看起来相关，主要是因为潜伏的背景变量 <span class="hl">W</span> 同时驱动了两者（即 <a href="/zh/days/005-causation/">第 5 日</a> 提到的混杂因素）。画出这条曲线，是因为只报告一个模型可能很任意：问题是结论能否经受合理分析选择的扰动，还是只依赖某一条路径。开启选择会生成更多设定。青色点表示 <span class="term">p &lt; .05</span>，灰色点则不显著。下方打勾行显示每个设定用了哪些选择。再切换「控制变量 W」和「挑选结果」，比较完整多元宇宙与有动机作者可能报告的单一路径。</p>
+<p class="pnote">这是一个固定的合成数据集，X 和 Y 之间有一个较弱且受混杂影响的关联：基线模型一开始不会跨过通常的 <span class="term">p &lt; .05</span> 线，但某些可辩护的选择可以把它推过去。这里的 <strong>r</strong> 是皮尔逊相关系数，范围从 -1 到 +1；正的 <strong>r</strong> 表示 X 越大时 Y 往往也越大，接近 0 则表示关联较弱。画出这条曲线，是因为只报告一个模型可能很任意：问题是结论能否经受合理分析选择的扰动，还是只依赖某一条路径。开启某个选择，会把「使用它」和「不使用它」两个版本都加入多元宇宙，并不是强迫每个模型都使用它。青色点表示 <span class="term">p &lt; .05</span>，灰色点则不显著。下方打勾行显示每个设定用了哪些选择。切换「控制变量 W」可以看到调整第 5 日式混杂因素后会发生什么；再切换「挑选结果」，比较完整多元宇宙与有动机作者可能报告的单一路径。</p>
 
 <div class="mv-controls" id="mv-controls">
 <button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>剔除异常值</button>

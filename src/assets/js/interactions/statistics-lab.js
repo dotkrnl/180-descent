@@ -285,11 +285,12 @@
       bars: root.querySelector("#se-bars"),
       curve: root.querySelector("#se-sampling-curve"),
       ticks: root.querySelector("#se-ticks"),
+      yTicks: root.querySelector("#se-y-ticks"),
       ci: root.querySelector("#se-ci-line"),
       estimate: root.querySelector("#se-est-dot"),
       width: root.querySelector("#se-width-label")
     };
-    if (!controls.effect || !controls.n || !controls.noise || !outs.read || !svg.bars || !svg.curve || !svg.ticks || !svg.ci || !svg.estimate || !svg.width) return;
+    if (!controls.effect || !controls.n || !controls.noise || !outs.read || !svg.bars || !svg.curve || !svg.ticks || !svg.yTicks || !svg.ci || !svg.estimate || !svg.width) return;
 
     function pText(p){
       if (p < 0.001) return "< .001";
@@ -342,17 +343,17 @@
       var xMin = -3;
       var xMax = 3;
       function xScale(x){
-        return 52 + (Math.max(xMin, Math.min(xMax, x)) - xMin) / (xMax - xMin) * 316;
+        return 58 + (Math.max(xMin, Math.min(xMax, x)) - xMin) / (xMax - xMin) * 312;
       }
       var tickValues = [-3,-2,-1,0,1,2,3];
       svg.ticks.innerHTML = tickValues.map(function(value){
         var x = xScale(value).toFixed(1);
-        return '<line x1="' + x + '" y1="156" x2="' + x + '" y2="172" stroke="var(--line)" stroke-width="1"></line><text x="' + x + '" y="184" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + value + '</text>';
+        return '<line x1="' + x + '" y1="212" x2="' + x + '" y2="228" stroke="var(--line)" stroke-width="1"></line><text x="' + x + '" y="240" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + value + '</text>';
       }).join("");
 
-      var binCount = 56;
+      var binCount = 72;
       var reps = 420;
-      var yMax = 100;
+      var yMax = 300;
       var bins = new Array(binCount).fill(0);
       var rng = makeRng(6206 + Math.round(effect * 1000) + n * 17 + Math.round(noise * 100));
       for (var sample = 0; sample < reps; sample++) {
@@ -361,11 +362,16 @@
         var bin = Math.min(binCount - 1, Math.max(0, Math.floor((estimate - xMin) / (xMax - xMin) * binCount)));
         bins[bin]++;
       }
-      var yBase = 164;
-      var yTop = 48;
-      var binW = 316 / binCount;
+      var yBase = 220;
+      var yTop = 40;
+      var xWidth = 312;
+      var binW = xWidth / binCount;
+      svg.yTicks.innerHTML = [0,100,200,300].map(function(value){
+        var y = yBase - value / yMax * (yBase - yTop);
+        return '<line x1="54" y1="' + y.toFixed(1) + '" x2="370" y2="' + y.toFixed(1) + '" stroke="var(--line)" stroke-width="1" opacity="' + (value ? "0.7" : "1") + '"></line><text x="48" y="' + (y + 3).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">' + value + '</text>';
+      }).join("");
       svg.bars.innerHTML = bins.map(function(count,index){
-        var x = 52 + index * binW + 1;
+        var x = 58 + index * binW + 1;
         var h = Math.min(1, count / yMax) * (yBase - yTop);
         return '<rect x="' + x.toFixed(1) + '" y="' + (yBase - h).toFixed(1) + '" width="' + Math.max(1, binW - 2).toFixed(1) + '" height="' + h.toFixed(1) + '" fill="var(--accent)" opacity="0.22"></rect>';
       }).join("");
@@ -374,7 +380,7 @@
       for (var point = 0; point <= 120; point++) {
         var xValue = xMin + (xMax - xMin) * point / 120;
         var z = (xValue - effect) / curveSigma;
-        var expectedCount = reps * binW / 316 * (xMax - xMin) / (curveSigma * Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * z * z);
+        var expectedCount = reps * binW / xWidth * (xMax - xMin) / (curveSigma * Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * z * z);
         var y = yBase - Math.min(1, expectedCount / yMax) * (yBase - yTop);
         curve.push((point ? "L" : "M") + xScale(xValue).toFixed(1) + "," + y.toFixed(1));
       }
@@ -534,7 +540,7 @@
     var body = root.querySelector("#mv-cbody");
     if (!buttons.trim || !buttons.cov || !buttons.rank || !buttons.sub || !buttons.cherry || !canvas || !read || !box || !heading || !body) return;
 
-    var rng = makeRng(12345);
+    var rng = makeRng(71952);
     function seededNormal(){
       var u = 0;
       var v = 0;
@@ -544,11 +550,11 @@
     }
 
     var data = [];
-    for (var i = 0; i < 130; i++) {
+    for (var i = 0; i < 100; i++) {
       var w = seededNormal();
       var grp = i % 5 === 0 ? 1 : 0;
-      var x = 0.55 * w + seededNormal();
-      var y = 0.45 * w + 0.02 * x + seededNormal() * 1.08 + (grp ? 0.65 : 0);
+      var x = 0.53 * w + seededNormal();
+      var y = 0.44 * w + 0.004 * x + seededNormal() * 1.19 + (grp ? 0.69 : 0);
       data.push({ x: x, y: y, w: w, grp: grp });
     }
     data[3].y += 5.5;
@@ -662,6 +668,8 @@
       var med = median(rows.map(function(row){ return row.r; }));
       var cherry = pressed(buttons.cherry);
       var best = rows.filter(function(row){ return row.p < 0.05; }).sort(function(a,b){ return Math.abs(b.r) - Math.abs(a.r); })[0];
+      var covRows = rows.filter(function(row){ return row.choices.cov; });
+      var covSig = covRows.filter(function(row){ return row.p < 0.05; }).length;
       var x0 = 108;
       var x1 = 426;
       var top = 14;
@@ -692,9 +700,12 @@
         });
       });
       canvas.innerHTML = svg;
-      read.innerHTML = isZh
+      read.innerHTML = (isZh
         ? '<span><b>' + n + '</b> 个规范</span><span><b>' + sig + '</b> 个显著 (' + Math.round(sig / n * 100) + '%)</span><span>中位 r = <b>' + med.toFixed(3) + '</b></span>'
-        : '<span><b>' + n + '</b> specifications</span><span><b>' + sig + '</b> significant (' + Math.round(sig / n * 100) + '%)</span><span>median r = <b>' + med.toFixed(3) + '</b></span>';
+        : '<span><b>' + n + '</b> specifications</span><span><b>' + sig + '</b> significant (' + Math.round(sig / n * 100) + '%)</span><span>median r = <b>' + med.toFixed(3) + '</b></span>') +
+        (pressed(buttons.cov)
+          ? (isZh ? '<span>控制 W 的规范：<b>' + covSig + '/' + covRows.length + '</b> 显著</span>' : '<span>W-controlled specs: <b>' + covSig + '/' + covRows.length + '</b> significant</span>')
+          : '');
       box.className = "mv-cherry " + (cherry ? "cherry" : "honest");
       if (cherry) {
         heading.textContent = isZh ? "被动机驱使的作者会这样报告" : "What a motivated author reports";
@@ -702,14 +713,14 @@
           ? (isZh ? '现在只有一个基线规范，还没有可供挑选的多元宇宙。先开启一个或多个分析选择，再看「挑选结果」如何改变故事。' : 'With only the baseline specification, there is no multiverse to cherry-pick yet. Turn on one or more analytic choices, then watch how cherry-picking changes the story.')
           : best
           ? (isZh
-            ? '「我们发现 X 与 Y 存在显著关联，r = ' + best.r.toFixed(2) + '，p = ' + best.p.toFixed(3) + '。」这是真的，但只对 ' + n + ' 个同样可辩护规范中的一个成立。其他 ' + (n - 1) + ' 个规范不会出现在论文里。'
-            : '"We find a significant association between X and Y, r = ' + best.r.toFixed(2) + ', p = ' + best.p.toFixed(3) + '." True, for one of ' + n + ' equally defensible specifications. The other ' + (n - 1) + ' never make the paper.')
+            ? '「我们发现 X 与 Y 存在显著关联，r = ' + best.r.toFixed(2) + '，p = ' + best.p.toFixed(3) + '。」这是真的，但只对 ' + n + ' 个同样可辩护规范中的一个成立。其他 ' + (n - 1) + ' 个规范不会出现在论文里。' + (pressed(buttons.cov) && !best.choices.cov ? ' 注意：这个被挑中的路径没有控制 W。' : '')
+            : '"We find a significant association between X and Y, r = ' + best.r.toFixed(2) + ', p = ' + best.p.toFixed(3) + '." True, for one of ' + n + ' equally defensible specifications. The other ' + (n - 1) + ' never make the paper.' + (pressed(buttons.cov) && !best.choices.cov ? ' Notice that the selected path does not control for W.' : ''))
           : (isZh ? '即使挑选最漂亮的点也救不了：没有任何单一规范达到 p < .05。' : 'Not even cherry-picking saves it: no single specification reaches p < .05.');
       } else {
         heading.textContent = isZh ? "诚实读法" : "The honest reading";
         body.innerHTML = n === 1
           ? (isZh ? '只有基线规范：r = ' + rows[0].r.toFixed(3) + '，p = ' + rows[0].p.toFixed(3) + '。打开上方选择，看看多元宇宙如何展开。' : 'With no analytic choices enabled there is just the baseline specification: r = ' + rows[0].r.toFixed(3) + ', p = ' + rows[0].p.toFixed(3) + '. Switch on some choices above to grow the multiverse.')
-          : (isZh ? '在全部 <strong>' + n + '</strong> 个可辩护规范中，中位 r = <strong>' + med.toFixed(3) + '</strong>，' + sig + ' / ' + n + ' 跨过 p < .05。诚实摘要是整条曲线，不是最漂亮的点。' : 'Across all <strong>' + n + '</strong> defensible specifications, median r = <strong>' + med.toFixed(3) + '</strong>, with ' + sig + ' of ' + n + ' crossing p < .05. The honest summary is the whole curve, not its prettiest point.');
+          : (isZh ? '在全部 <strong>' + n + '</strong> 个可辩护规范中，中位 r = <strong>' + med.toFixed(3) + '</strong>，' + sig + ' / ' + n + ' 跨过 p < .05。' + (pressed(buttons.cov) ? '控制 W 的规范中有 ' + covSig + ' / ' + covRows.length + ' 个显著。' : '') + '诚实摘要是整条曲线，不是最漂亮的点。' : 'Across all <strong>' + n + '</strong> defensible specifications, median r = <strong>' + med.toFixed(3) + '</strong>, with ' + sig + ' of ' + n + ' crossing p < .05. ' + (pressed(buttons.cov) ? covSig + ' of ' + covRows.length + ' W-controlled specifications cross p < .05. ' : '') + 'The honest summary is the whole curve, not its prettiest point.');
       }
     }
 
