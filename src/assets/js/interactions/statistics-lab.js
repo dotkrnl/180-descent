@@ -350,8 +350,9 @@
         return '<line x1="' + x + '" y1="156" x2="' + x + '" y2="172" stroke="var(--line)" stroke-width="1"></line><text x="' + x + '" y="184" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + value + '</text>';
       }).join("");
 
-      var binCount = 28;
-      var reps = 220;
+      var binCount = 56;
+      var reps = 420;
+      var yMax = 100;
       var bins = new Array(binCount).fill(0);
       var rng = makeRng(6206 + Math.round(effect * 1000) + n * 17 + Math.round(noise * 100));
       for (var sample = 0; sample < reps; sample++) {
@@ -360,13 +361,12 @@
         var bin = Math.min(binCount - 1, Math.max(0, Math.floor((estimate - xMin) / (xMax - xMin) * binCount)));
         bins[bin]++;
       }
-      var maxCount = Math.max(1, bins.reduce(function(max,count){ return Math.max(max, count); }, 0));
       var yBase = 164;
       var yTop = 48;
       var binW = 316 / binCount;
       svg.bars.innerHTML = bins.map(function(count,index){
         var x = 52 + index * binW + 1;
-        var h = count / maxCount * (yBase - yTop);
+        var h = Math.min(1, count / yMax) * (yBase - yTop);
         return '<rect x="' + x.toFixed(1) + '" y="' + (yBase - h).toFixed(1) + '" width="' + Math.max(1, binW - 2).toFixed(1) + '" height="' + h.toFixed(1) + '" fill="var(--accent)" opacity="0.22"></rect>';
       }).join("");
       var curve = [];
@@ -374,8 +374,8 @@
       for (var point = 0; point <= 120; point++) {
         var xValue = xMin + (xMax - xMin) * point / 120;
         var z = (xValue - effect) / curveSigma;
-        var density = Math.exp(-0.5 * z * z);
-        var y = yBase - density * (yBase - yTop);
+        var expectedCount = reps * binW / 316 * (xMax - xMin) / (curveSigma * Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * z * z);
+        var y = yBase - Math.min(1, expectedCount / yMax) * (yBase - yTop);
         curve.push((point ? "L" : "M") + xScale(xValue).toFixed(1) + "," + y.toFixed(1));
       }
       svg.curve.setAttribute("d", curve.join(" "));
@@ -390,8 +390,8 @@
       svg.estimate.setAttribute("fill", sig ? "var(--accent)" : "var(--brass)");
       svg.width.textContent = isZh ? "95% CI 宽度: " + width.toFixed(2) : "95% CI width: " + width.toFixed(2);
       outs.read.innerHTML = isZh
-        ? '这个设定给出 <strong>p = ' + pText(p) + '</strong>，Cohen d = <strong>' + d.toFixed(2) + '</strong>（' + label + '）。x 轴是固定的均值差尺度（-3 到 +3）；y 轴是重复估计落入各区间的频数。横条是同一 x 轴上的 95% 置信区间，宽度约为 <strong>' + width.toFixed(2) + '</strong>。样本量变大时区间收窄，噪声变大时区间变宽。' + (sig ? '它跨过了 .05 门槛；' : '它没有跨过 .05 门槛；') + '但实际意义要看效应量、区间和研究场景，而不是只看 p 值。'
-        : 'This setting gives <strong>p = ' + pText(p) + '</strong> and Cohen d = <strong>' + d.toFixed(2) + '</strong> (' + label + '). The x-axis is a fixed mean-difference scale from -3 to +3; the y-axis is bucket frequency from repeated estimates. The bar is the 95% confidence interval on that same x-axis, about <strong>' + width.toFixed(2) + '</strong> units wide. Higher sample size narrows it; higher noise widens it. It ' + (sig ? 'crosses' : 'does not cross') + ' the .05 line, but practical meaning still depends on effect size, interval, and domain.';
+        ? '这个设定给出 <strong>p = ' + pText(p) + '</strong>，Cohen d = <strong>' + d.toFixed(2) + '</strong>（' + label + '）。x 轴是固定的均值差尺度（-3 到 +3）；y 轴也是固定的分桶频数尺度，所以样本量增加会显示为更窄、更高的估计分布。横条是同一 x 轴上的 95% 置信区间，宽度约为 <strong>' + width.toFixed(2) + '</strong>。噪声变大时分布和区间都会变宽。' + (sig ? '它跨过了 .05 门槛；' : '它没有跨过 .05 门槛；') + '但实际意义要看效应量、区间和研究场景，而不是只看 p 值。'
+        : 'This setting gives <strong>p = ' + pText(p) + '</strong> and Cohen d = <strong>' + d.toFixed(2) + '</strong> (' + label + '). The x-axis is a fixed mean-difference scale from -3 to +3; the y-axis is also fixed bucket frequency, so larger sample size shows up as a narrower, taller estimate distribution. The bar is the 95% confidence interval on that same x-axis, about <strong>' + width.toFixed(2) + '</strong> units wide. Higher noise widens both the distribution and the interval. It ' + (sig ? 'crosses' : 'does not cross') + ' the .05 line, but practical meaning still depends on effect size, interval, and domain.';
     }
 
     Object.keys(controls).forEach(function(key){
@@ -462,18 +462,21 @@
       var covered = intervals.filter(function(row){ return row.lo <= TRUE_MEAN && row.hi >= TRUE_MEAN; }).length;
       var missed = REPS - covered;
       var avgWidth = mean(intervals.map(function(row){ return row.hi - row.lo; }));
-      var hiAbs = intervals.reduce(function(max,row){
-        return Math.max(max, Math.abs(row.lo), Math.abs(row.hi));
-      }, Math.max(0.5, noise / Math.sqrt(n) * 4));
-      hiAbs = Math.max(0.35, hiAbs * 1.08);
-      function xScale(x){ return 48 + (x + hiAbs) / (2 * hiAbs) * 584; }
+      var xMin = -4;
+      var xMax = 4;
+      function xScale(x){ return 48 + (Math.max(xMin, Math.min(xMax, x)) - xMin) / (xMax - xMin) * 584; }
       function yScale(index){ return 28 + index * 2.34; }
       var highlight = (runId * 17 + 11) % REPS;
 
       var svg = '';
       svg += '<rect x="28" y="18" width="624" height="252" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>';
+      [-4,-2,0,2,4].forEach(function(value){
+        var tickX = xScale(value).toFixed(1);
+        svg += '<line x1="' + tickX + '" y1="22" x2="' + tickX + '" y2="274" stroke="var(--line)" stroke-width="1" opacity="' + (value === 0 ? 0 : 0.75) + '"></line>';
+        svg += '<text x="' + tickX + '" y="292" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + value + '</text>';
+      });
       svg += '<line x1="' + xScale(TRUE_MEAN).toFixed(1) + '" y1="22" x2="' + xScale(TRUE_MEAN).toFixed(1) + '" y2="274" stroke="var(--ink)" stroke-width="2.5"></line>';
-      svg += '<text x="' + xScale(TRUE_MEAN).toFixed(1) + '" y="292" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-soft)">' + (isZh ? "真实均值 0" : "true mean 0") + '</text>';
+      svg += '<text x="' + xScale(TRUE_MEAN).toFixed(1) + '" y="306" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-soft)">' + (isZh ? "真实均值 0 · 固定 x 轴" : "true mean 0 · fixed x-axis") + '</text>';
       intervals.forEach(function(row,index){
         var covers = row.lo <= TRUE_MEAN && row.hi >= TRUE_MEAN;
         var isHighlight = index === highlight;
@@ -499,8 +502,8 @@
       outs.observed.classList.toggle("miss", !obsCovers);
       outs.width.textContent = avgWidth.toFixed(2);
       outs.read.innerHTML = isZh
-        ? '这 100 个区间中，<strong>' + covered + '</strong> 个覆盖真实均值 0，<strong>' + missed + '</strong> 个漏掉。高亮区间为 <strong>[' + fmt(observed.lo) + ', ' + fmt(observed.hi) + ']</strong>，它' + (obsCovers ? '覆盖' : '漏掉') + '真值。置信水平滑块改变的是长期覆盖目标；样本量和噪声滑块主要改变区间宽度。'
-        : 'In these 100 intervals, <strong>' + covered + '</strong> cover the true mean 0 and <strong>' + missed + '</strong> miss it. The highlighted interval is <strong>[' + fmt(observed.lo) + ', ' + fmt(observed.hi) + ']</strong>; it ' + (obsCovers ? 'covers' : 'misses') + ' the truth. The confidence-level slider changes the long-run coverage target; sample size and noise mostly change interval width.';
+        ? '这 100 个区间中，<strong>' + covered + '</strong> 个覆盖真实均值 0，<strong>' + missed + '</strong> 个漏掉。高亮区间为 <strong>[' + fmt(observed.lo) + ', ' + fmt(observed.hi) + ']</strong>，它' + (obsCovers ? '覆盖' : '漏掉') + '真值。x 轴保持固定，因此样本量和噪声会真正显示为区间宽度变化，而不是被图形自动缩放抵消。'
+        : 'In these 100 intervals, <strong>' + covered + '</strong> cover the true mean 0 and <strong>' + missed + '</strong> miss it. The highlighted interval is <strong>[' + fmt(observed.lo) + ', ' + fmt(observed.hi) + ']</strong>; it ' + (obsCovers ? 'covers' : 'misses') + ' the truth. The x-axis stays fixed, so sample size and noise visibly change interval width instead of rescaling the plot.';
     }
 
     Object.keys(controls).forEach(function(key){
@@ -543,13 +546,14 @@
     var data = [];
     for (var i = 0; i < 130; i++) {
       var w = seededNormal();
+      var grp = i % 5 === 0 ? 1 : 0;
       var x = 0.55 * w + seededNormal();
-      var y = 0.55 * w + 0.05 * x + seededNormal();
-      data.push({ x: x, y: y, w: w, grp: i % 5 === 0 ? 1 : 0 });
+      var y = 0.45 * w + 0.02 * x + seededNormal() * 1.08 + (grp ? 0.65 : 0);
+      data.push({ x: x, y: y, w: w, grp: grp });
     }
-    data[3].y += 6;
+    data[3].y += 5.5;
     data[7].x += 5.5;
-    data[12].y -= 5.5;
+    data[12].y -= 5;
     data[20].x -= 5;
 
     function pressed(button){
@@ -604,10 +608,12 @@
       var ys = rows.map(function(row){ return row.y; });
       var ws = rows.map(function(row){ return row.w; });
       if (trim) {
+        var mx = mean(xs);
+        var sx = Math.sqrt(variance(xs, mx));
         var my = mean(ys);
-        var sd = Math.sqrt(variance(ys, my));
-        var keep = ys.map(function(value,index){ return { value: value, index: index }; }).filter(function(row){
-          return Math.abs((row.value - my) / sd) <= 2.5;
+        var sy = Math.sqrt(variance(ys, my));
+        var keep = xs.map(function(value,index){ return { x: value, y: ys[index], index: index }; }).filter(function(row){
+          return Math.abs((row.x - mx) / sx) <= 2.3 && Math.abs((row.y - my) / sy) <= 2.3;
         }).map(function(row){ return row.index; });
         xs = keep.map(function(index){ return xs[index]; });
         ys = keep.map(function(index){ return ys[index]; });
