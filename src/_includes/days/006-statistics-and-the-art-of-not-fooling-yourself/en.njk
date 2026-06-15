@@ -3,54 +3,61 @@
 <h1>Statistics &amp; the Art of <em>Not Fooling Yourself</em></h1>
 <p class="sub">Given enough defensible choices, many datasets contain a path to <em>p</em>&nbsp;&lt;&nbsp;.05. The whole discipline is the struggle not to walk it by accident.</p>
 
-<figure class="hero-fig">
-<svg viewBox="0 0 520 270" role="img" aria-label="A branching garden of analysis choices: one dataset forks into many paths, most ending in non-significant results, a few cherry-picked ones ending in a significant result.">
+<figure class="hero-fig forking-paths">
+<svg viewBox="0 0 640 340" role="img" aria-label="A branching garden of analysis choices: one noisy dataset forks into many plausible paths; most end in non-significant results, while one highlighted path is reported as significant.">
 <defs>
-<marker id="hx" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--line-strong)"></path></marker>
-<marker id="hxg" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--contested)"></path></marker>
+<marker id="garden-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"></path></marker>
+<marker id="garden-arrow-hot" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0,0 L11,5.5 L0,11 z" fill="var(--contested)"></path></marker>
 </defs>
-<!-- root -->
-<rect x="8" y="118" width="86" height="36" rx="8" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
-<text x="51" y="135" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="var(--ink)">your data</text>
-<text x="51" y="148" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">(pure noise)</text>
-<!-- tier 1 branches -->
-<g stroke="var(--line-strong)" stroke-width="1.5" fill="none" marker-end="url(#hx)">
-<path d="M94,128 C130,100 150,86 178,80"></path>
-<path d="M94,136 C130,136 150,136 178,136"></path>
-<path d="M94,144 C130,172 150,186 178,192"></path>
+<rect x="12" y="18" width="616" height="270" rx="18" fill="var(--raised)" stroke="var(--line)"></rect>
+<text x="42" y="48" font-family="IBM Plex Mono,monospace" font-size="12" letter-spacing="1.8" fill="var(--accent)">ONE DATASET, MANY REASONABLE ROUTES</text>
+
+<g font-family="IBM Plex Mono,monospace">
+<rect x="34" y="134" width="118" height="70" rx="14" fill="var(--paper)" stroke="var(--accent)" stroke-width="2.4"></rect>
+<text x="93" y="162" text-anchor="middle" font-size="16" fill="var(--ink)">same data</text>
+<text x="93" y="184" text-anchor="middle" font-size="12" fill="var(--ink-faint)">pure noise</text>
 </g>
-<g font-family="IBM Plex Mono,monospace" font-size="8.5" fill="var(--ink-faint)" text-anchor="middle">
-<text x="140" y="86">drop outlier?</text>
-<text x="140" y="128">add covariate?</text>
-<text x="140" y="200">stop now?</text>
+
+<g stroke="var(--line-strong)" stroke-width="2" fill="none" opacity=".72" marker-end="url(#garden-arrow)">
+<path d="M152,150 C178,112 190,86 208,76"></path>
+<path d="M152,169 C176,164 188,152 208,149"></path>
+<path d="M152,188 C178,218 188,224 208,224"></path>
+<path d="M320,75 C365,54 398,50 432,54"></path>
+<path d="M320,75 C370,89 398,104 432,124"></path>
+<path d="M320,149 C370,142 398,146 432,156"></path>
+<path d="M320,149 C368,178 398,198 432,216"></path>
+<path d="M320,224 C370,236 400,246 432,256"></path>
 </g>
-<!-- tier 2 fan -->
-<g stroke="var(--line-strong)" stroke-width="1.2" fill="none" marker-end="url(#hx)">
-<path d="M196,78 C240,60 270,52 312,50"></path>
-<path d="M196,82 C240,92 270,98 312,104"></path>
-<path d="M196,136 C240,124 270,118 312,116"></path>
-<path d="M196,138 C240,150 270,158 312,166"></path>
-<path d="M196,192 C240,206 270,214 312,220"></path>
+
+<g stroke="var(--contested)" stroke-width="4" fill="none" marker-end="url(#garden-arrow-hot)">
+<path d="M152,150 C178,112 190,86 208,76"></path>
+<path d="M320,75 C365,54 398,50 432,54"></path>
 </g>
-<!-- the cherry-picked path, highlighted -->
-<g stroke="var(--contested)" stroke-width="2.1" fill="none" marker-end="url(#hxg)">
-<path d="M94,130 C130,100 150,86 178,80"></path>
-<path d="M196,78 C240,60 270,52 312,50"></path>
+
+<g fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.4" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">
+<rect x="208" y="58" width="112" height="34" rx="17"></rect><text x="264" y="80" fill="var(--ink)">drop outlier?</text>
+<rect x="208" y="132" width="112" height="34" rx="17"></rect><text x="264" y="154" fill="var(--ink)">control W?</text>
+<rect x="208" y="206" width="112" height="34" rx="17"></rect><text x="264" y="228" fill="var(--ink)">stop now?</text>
 </g>
-<!-- endpoint nodes -->
-<g font-family="IBM Plex Mono,monospace" font-size="9">
-<g><rect x="316" y="38" width="92" height="24" rx="6" fill="color-mix(in srgb,var(--contested) 14%,transparent)" stroke="var(--contested)" stroke-width="1.6"></rect><text x="362" y="54" text-anchor="middle" fill="var(--contested)">p = .03 ✓</text></g>
-<g><rect x="316" y="92" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"></rect><text x="362" y="108" text-anchor="middle" fill="var(--ink-faint)">p = .61</text></g>
-<g><rect x="316" y="104" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2" opacity="0"></rect></g>
-<g><rect x="316" y="154" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"></rect><text x="362" y="170" text-anchor="middle" fill="var(--ink-faint)">p = .44</text></g>
-<g><rect x="316" y="208" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"></rect><text x="362" y="224" text-anchor="middle" fill="var(--ink-faint)">p = .78</text></g>
+
+<g font-family="IBM Plex Mono,monospace" font-size="14">
+<g><rect x="438" y="32" width="124" height="46" rx="12" fill="color-mix(in srgb,var(--contested) 13%,var(--paper))" stroke="var(--contested)" stroke-width="2.2"></rect><text x="500" y="61" text-anchor="middle" fill="var(--contested)">p = .03</text></g>
+<g opacity=".72"><rect x="438" y="104" width="124" height="42" rx="12" fill="var(--paper)" stroke="var(--line)" stroke-width="1.4"></rect><text x="500" y="131" text-anchor="middle" fill="var(--ink-faint)">p = .61</text></g>
+<g opacity=".72"><rect x="438" y="178" width="124" height="42" rx="12" fill="var(--paper)" stroke="var(--line)" stroke-width="1.4"></rect><text x="500" y="205" text-anchor="middle" fill="var(--ink-faint)">p = .44</text></g>
+<g opacity=".72"><rect x="438" y="238" width="124" height="42" rx="12" fill="var(--paper)" stroke="var(--line)" stroke-width="1.4"></rect><text x="500" y="265" text-anchor="middle" fill="var(--ink-faint)">p = .78</text></g>
 </g>
-<text x="430" y="54" font-family="Fraunces,serif" font-style="italic" font-size="13" fill="var(--contested)">report</text>
-<text x="430" y="70" font-family="Fraunces,serif" font-style="italic" font-size="13" fill="var(--contested)">this one.</text>
-<text x="430" y="170" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">forget</text>
-<text x="430" y="182" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">these.</text>
+
+<g font-family="Fraunces,serif" font-style="italic">
+<text x="572" y="48" font-size="16" fill="var(--contested)">reported</text>
+<text x="572" y="67" font-size="16" fill="var(--contested)">path</text>
+</g>
+<g font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">
+<text x="582" y="138">unseen</text>
+<text x="582" y="153">paths</text>
+</g>
+
 </svg>
-<figcaption>The garden of forking paths. The data are pure noise — yet enough branches guarantee one ends in a "discovery."</figcaption>
+<figcaption>The garden of forking paths. The data are pure noise — yet enough branches guarantee one ends in a "discovery." The danger is choosing after the data points the way.</figcaption>
 </figure>
 
 <p class="lede dropcap">In 2011 three psychologists set out to prove something impossible. They sat twenty undergraduates down, played half of them the Beatles' <em>"When I'm Sixty-Four"</em> and the other half a control tune, then asked a battery of questions — including each person's date of birth. After a perfectly ordinary statistical analysis, they announced their finding: listening to <em>"When I'm Sixty-Four"</em> made people <strong>a year and a half younger</strong>. Not feel younger. Be younger — their birth dates said so, at <em>p</em> = .04.</p>
@@ -149,7 +156,7 @@
 
 <figure class="lesson-figure">
 <img src="/assets/images/open-license/p-value-statistical-significance-testing.svg" width="800" height="520" loading="lazy" decoding="async" alt="Course-styled diagram of a null-model bell curve with a shaded tail area labeled p-value, emphasizing that P(data given null) is not P(null given data).">
-<figcaption>A p-value is a tail-area calculation under the null model: how often that model would produce a result this extreme or more extreme. <span class="meta">Adapted from Repapetilto and Chen-Pan Liao, CC BY-SA 3.0 via Wikimedia Commons.</span></figcaption>
+<figcaption>The shaded tail is the p-value: the frequency of results this extreme or more extreme under the null model. <span class="meta">Adapted from Repapetilto and Chen-Pan Liao, CC BY-SA 3.0 via Wikimedia Commons.</span></figcaption>
 </figure>
 
 <p>Read it twice. It is a statement about <em>data, assuming a hypothesis</em> — written P(data&nbsp;|&nbsp;null). It is emphatically <em>not</em> a statement about the hypothesis given the data, P(null&nbsp;|&nbsp;data). Confusing those two is the exact inversion <strong>Day 4</strong> warned about with the disease-test problem: P(positive&nbsp;|&nbsp;sick) is not P(sick&nbsp;|&nbsp;positive), and no amount of staring turns one into the other without a prior. Here are the six misreadings to burn out of your reflexes — drawn from Greenland and colleagues' field guide to <em>twenty-five</em> of them:</p>
@@ -176,7 +183,7 @@
 <div class="panel web-only statistics-effect-lab">
 <p class="ptitle">Interactive · significance versus size</p>
 <h3>The Effect-Size Dial</h3>
-<p class="pnote">Set a true mean difference, a per-group sample size, and a noise level. Sample size changes the calculation and the picture: higher <em>n</em> makes the dot cloud denser and the confidence interval narrower, even when the practical difference is unchanged.</p>
+<p class="pnote">Set a true mean difference, a per-group sample size, and a noise level. The plot uses one fixed x-axis: mean difference from -3 to +3. The bars show bucket frequencies from repeated estimates, the curve is the matching sampling distribution, and the horizontal bar is the 95% confidence interval on the same scale.</p>
 <div class="se-grid">
 <div class="se-controls">
 <label for="se-effect"><span>True mean difference</span><output id="se-effect-out" for="se-effect">0.30</output></label>
@@ -187,15 +194,17 @@
 <input type="range" id="se-noise" min="0.4" max="2.5" step="0.05" value="1">
 </div>
 <div>
-<svg class="se-plot" id="se-plot" viewBox="0 0 420 210" role="img" aria-label="Two normal curves, a confidence interval, and Galton-board-style sampling dots responding to the selected effect size, sample size, and noise.">
-<g id="se-dots"></g>
-<path id="se-null-curve" fill="none" stroke="var(--line-strong)" stroke-width="2"></path>
-<path id="se-effect-curve" fill="none" stroke="var(--accent)" stroke-width="2.4"></path>
-<line id="se-baseline" x1="34" y1="174" x2="386" y2="174" stroke="var(--line-strong)" stroke-width="1"></line>
-<line id="se-zero" x1="210" y1="28" x2="210" y2="178" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 5"></line>
-<line id="se-ci-line" x1="160" y1="192" x2="260" y2="192" stroke="var(--contested)" stroke-width="5" stroke-linecap="round"></line>
-<circle id="se-est-dot" cx="210" cy="192" r="6" fill="var(--contested)"></circle>
-<text x="34" y="201" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">CI for mean difference</text>
+<svg class="se-plot" id="se-plot" viewBox="0 0 420 240" role="img" aria-label="A fixed-scale sampling-frequency plot and confidence interval for the mean difference.">
+<rect x="28" y="28" width="364" height="168" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>
+<g id="se-bars"></g>
+<path id="se-sampling-curve" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"></path>
+<line x1="52" y1="164" x2="368" y2="164" stroke="var(--line-strong)" stroke-width="1.4"></line>
+<g id="se-ticks"></g>
+<line id="se-zero" x1="210" y1="44" x2="210" y2="176" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 5"></line>
+<line id="se-ci-line" x1="160" y1="190" x2="260" y2="190" stroke="var(--brass)" stroke-width="8" stroke-linecap="round"></line>
+<circle id="se-est-dot" cx="210" cy="190" r="7" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
+<text id="se-width-label" x="210" y="218" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">95% CI width</text>
+<text x="38" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)" transform="rotate(-90 38 112)">bucket frequency</text>
 </svg>
 <div class="se-read" id="se-read" aria-live="polite"></div>
 </div>
@@ -360,7 +369,7 @@
 <div class="panel web-only statistics-spec-curve">
 <p class="ptitle">Interactive · run your own multiverse</p>
 <h3>The Specification Curve</h3>
-<p class="pnote">A fixed synthetic dataset makes X and Y look related, mostly because a lurking background variable <strong>W</strong> drives both (a <strong>Day 5</strong> confounder). The goal is not to make every dot significant; it is to ask whether the conclusion survives reasonable choices. Turn on choices to create more specifications. Teal dots are <em>p</em> &lt; .05, grey dots are not. Then toggle <strong>control for W</strong> and <strong>cherry-pick</strong> to compare the whole multiverse with the single path a motivated author might report.</p>
+<p class="pnote">A fixed synthetic dataset makes X and Y look related, mostly because a lurking background variable <strong>W</strong> drives both (a <strong>Day 5</strong> confounder). We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. Turn on choices to create more specifications. Teal dots are <em>p</em> &lt; .05, grey dots are not. The check rows show which choices each specification uses. Then toggle <strong>control for W</strong> and <strong>cherry-pick</strong> to compare the whole multiverse with the single path a motivated author might report.</p>
 
 <div class="mv-controls" id="mv-controls">
 <button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>trim outliers</button>
@@ -371,7 +380,7 @@
 </div>
 
 <div class="mv-scroll">
-<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 640 240" role="img" aria-label="A specification curve: a sorted plot of effect estimates across all enabled analytic specifications."></svg>
+<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 440 240" role="img" aria-label="A specification curve: a sorted plot of effect estimates across all enabled analytic specifications."></svg>
 </div>
 
 <div class="mv-read" id="mv-read"></div>

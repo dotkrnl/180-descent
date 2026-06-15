@@ -3,54 +3,61 @@
 <h1>统计学与「不自我欺骗」的艺术</h1>
 <p class="sub">在你的数据中，可能存在一条通往 <span class="hl">p < .05</span> 的路径。只要有足够多可辩护的选择，许多数据集里都会出现这样的路径。而统计学这门学科的全部意义，就是为了不让你在无意间踏上它。</p>
 
-<figure class="hero-fig">
-<svg viewBox="0 0 520 270" role="img" aria-label="分析选择的分岔花园：一份数据集分支出许多路径，大多数以无显著结果告终，少数被精心挑选的路径则通往显著结果。">
+<figure class="hero-fig forking-paths">
+<svg viewBox="0 0 640 340" role="img" aria-label="分析选择的分岔花园：一份噪声数据分支出许多看似合理的路径，大多数以不显著结果告终，只有一条被高亮的路径被报告为显著。">
 <defs>
-<marker id="hx" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--line-strong)"></path></marker>
-<marker id="hxg" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--contested)"></path></marker>
+<marker id="garden-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"></path></marker>
+<marker id="garden-arrow-hot" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0,0 L11,5.5 L0,11 z" fill="var(--contested)"></path></marker>
 </defs>
-<!-- root -->
-<rect x="8" y="118" width="86" height="36" rx="8" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
-<text x="51" y="135" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="var(--ink)">你的数据</text>
-<text x="51" y="148" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">(纯噪声)</text>
-<!-- tier 1 branches -->
-<g stroke="var(--line-strong)" stroke-width="1.5" fill="none" marker-end="url(#hx)">
-<path d="M94,128 C130,100 150,86 178,80"></path>
-<path d="M94,136 C130,136 150,136 178,136"></path>
-<path d="M94,144 C130,172 150,186 178,192"></path>
+<rect x="12" y="18" width="616" height="270" rx="18" fill="var(--raised)" stroke="var(--line)"></rect>
+<text x="42" y="48" font-family="IBM Plex Mono,monospace" font-size="12" letter-spacing="1.8" fill="var(--accent)">同一份数据，许多条合理路径</text>
+
+<g font-family="IBM Plex Mono,monospace">
+<rect x="34" y="134" width="118" height="70" rx="14" fill="var(--paper)" stroke="var(--accent)" stroke-width="2.4"></rect>
+<text x="93" y="162" text-anchor="middle" font-size="16" fill="var(--ink)">同一数据</text>
+<text x="93" y="184" text-anchor="middle" font-size="12" fill="var(--ink-faint)">纯噪声</text>
 </g>
-<g font-family="IBM Plex Mono,monospace" font-size="8.5" fill="var(--ink-faint)" text-anchor="middle">
-<text x="140" y="86">剔除异常值？</text>
-<text x="140" y="128">添加协变量？</text>
-<text x="140" y="200">现在停止？</text>
+
+<g stroke="var(--line-strong)" stroke-width="2" fill="none" opacity=".72" marker-end="url(#garden-arrow)">
+<path d="M152,150 C178,112 190,86 208,76"></path>
+<path d="M152,169 C176,164 188,152 208,149"></path>
+<path d="M152,188 C178,218 188,224 208,224"></path>
+<path d="M320,75 C365,54 398,50 432,54"></path>
+<path d="M320,75 C370,89 398,104 432,124"></path>
+<path d="M320,149 C370,142 398,146 432,156"></path>
+<path d="M320,149 C368,178 398,198 432,216"></path>
+<path d="M320,224 C370,236 400,246 432,256"></path>
 </g>
-<!-- tier 2 fan -->
-<g stroke="var(--line-strong)" stroke-width="1.2" fill="none" marker-end="url(#hx)">
-<path d="M196,78 C240,60 270,52 312,50"></path>
-<path d="M196,82 C240,92 270,98 312,104"></path>
-<path d="M196,136 C240,124 270,118 312,116"></path>
-<path d="M196,138 C240,150 270,158 312,166"></path>
-<path d="M196,192 C240,206 270,214 312,220"></path>
+
+<g stroke="var(--contested)" stroke-width="4" fill="none" marker-end="url(#garden-arrow-hot)">
+<path d="M152,150 C178,112 190,86 208,76"></path>
+<path d="M320,75 C365,54 398,50 432,54"></path>
 </g>
-<!-- the cherry-picked path, highlighted -->
-<g stroke="var(--contested)" stroke-width="2.1" fill="none" marker-end="url(#hxg)">
-<path d="M94,130 C130,100 150,86 178,80"></path>
-<path d="M196,78 C240,60 270,52 312,50"></path>
+
+<g fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.4" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">
+<rect x="208" y="58" width="112" height="34" rx="17"></rect><text x="264" y="80" fill="var(--ink)">剔除异常值？</text>
+<rect x="208" y="132" width="112" height="34" rx="17"></rect><text x="264" y="154" fill="var(--ink)">控制 W？</text>
+<rect x="208" y="206" width="112" height="34" rx="17"></rect><text x="264" y="228" fill="var(--ink)">现在停止？</text>
 </g>
-<!-- endpoint nodes -->
-<g font-family="IBM Plex Mono,monospace" font-size="9">
-<g><rect x="316" y="38" width="92" height="24" rx="6" fill="color-mix(in srgb,var(--contested) 14%,transparent)" stroke="var(--contested)" stroke-width="1.6"></rect><text x="362" y="54" text-anchor="middle" fill="var(--contested)">p = .03 ✓</text></g>
-<g><rect x="316" y="92" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"></rect><text x="362" y="108" text-anchor="middle" fill="var(--ink-faint)">p = .61</text></g>
-<g><rect x="316" y="104" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2" opacity="0"></rect></g>
-<g><rect x="316" y="154" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"></rect><text x="362" y="170" text-anchor="middle" fill="var(--ink-faint)">p = .44</text></g>
-<g><rect x="316" y="208" width="92" height="24" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"></rect><text x="362" y="224" text-anchor="middle" fill="var(--ink-faint)">p = .78</text></g>
+
+<g font-family="IBM Plex Mono,monospace" font-size="14">
+<g><rect x="438" y="32" width="124" height="46" rx="12" fill="color-mix(in srgb,var(--contested) 13%,var(--paper))" stroke="var(--contested)" stroke-width="2.2"></rect><text x="500" y="61" text-anchor="middle" fill="var(--contested)">p = .03</text></g>
+<g opacity=".72"><rect x="438" y="104" width="124" height="42" rx="12" fill="var(--paper)" stroke="var(--line)" stroke-width="1.4"></rect><text x="500" y="131" text-anchor="middle" fill="var(--ink-faint)">p = .61</text></g>
+<g opacity=".72"><rect x="438" y="178" width="124" height="42" rx="12" fill="var(--paper)" stroke="var(--line)" stroke-width="1.4"></rect><text x="500" y="205" text-anchor="middle" fill="var(--ink-faint)">p = .44</text></g>
+<g opacity=".72"><rect x="438" y="238" width="124" height="42" rx="12" fill="var(--paper)" stroke="var(--line)" stroke-width="1.4"></rect><text x="500" y="265" text-anchor="middle" fill="var(--ink-faint)">p = .78</text></g>
 </g>
-<text x="430" y="54" font-family="Fraunces,serif" font-style="italic" font-size="13" fill="var(--contested)">报告</text>
-<text x="430" y="70" font-family="Fraunces,serif" font-style="italic" font-size="13" fill="var(--contested)">这一个</text>
-<text x="430" y="170" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">遗忘</text>
-<text x="430" y="182" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">这些</text>
+
+<g font-family="Fraunces,serif" font-style="italic">
+<text x="572" y="48" font-size="16" fill="var(--contested)">被报告</text>
+<text x="572" y="67" font-size="16" fill="var(--contested)">路径</text>
+</g>
+<g font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">
+<text x="582" y="138">未被看见</text>
+<text x="582" y="153">的路径</text>
+</g>
+
 </svg>
-<figcaption>分岔路径的花园。数据纯粹是噪声——但只要分支足够多，几乎总会有一条通向「发现」。</figcaption>
+<figcaption>分岔路径的花园。数据纯粹是噪声——但只要分支足够多，几乎总会有一条通向「发现」。危险在于看见数据之后再选择。</figcaption>
 </figure>
 
 <p class="lede dropcap">2011 年，三位心理学家决定证明一件不可能的事。他们找来 20 名本科生，给其中一半播放披头士的《当你六十四岁时》（When I'm Sixty-Four），另一半则播放一首对照曲目，然后询问了一系列问题——包括每个人的出生日期。在进行了一次完全常规的统计分析后，他们宣布了发现：听《当你六十四岁时》能让人<span class="hl">年轻一岁半</span>。不是感觉年轻，而是真的变年轻了——出生日期证明了这一点，且 <span class="hl">p = .04</span>。</p>
@@ -149,7 +156,7 @@
 
 <figure class="lesson-figure">
 <img src="/assets/images/open-license/p-value-statistical-significance-testing-zh.svg" width="800" height="520" loading="lazy" decoding="async" alt="课程风格的零模型钟形曲线图，阴影尾部标为 p 值，并强调 P(数据 | 零假设) 不是 P(零假设 | 数据)。">
-  <figcaption>p 值是在零假设模型下计算的尾部面积：它衡量该模型产生如此极端或更极端结果的频率。<span class="meta">改编自 Repapetilto 与 Chen-Pan Liao，经 Wikimedia Commons，CC BY-SA 3.0。</span></figcaption>
+  <figcaption>阴影尾部就是 p 值：在零模型下，出现如此极端或更极端结果的频率。<span class="meta">改编自 Repapetilto 与 Chen-Pan Liao，经 Wikimedia Commons，CC BY-SA 3.0。</span></figcaption>
 </figure>
 
 <p>请读两遍。它是关于「给定假设下的数据」的陈述——写作 <span class="hl">P(数据 | 零假设)</span>。它绝对不是关于「给定数据下的假设」的陈述，即 <span class="hl">P(零假设 | 数据)</span>。混淆这两者正是 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 在患病测试问题中警告过的「逆概率」错误：P(阳性 | 患病) 并不等于 P(患病 | 阳性)，而在没有先验概率的情况下，无论你盯着结果看多久，都无法将前者转化为后者。以下是需要从你的本能中清除的六种误读——摘自格陵兰（Greenland）及其同事列出的 25 种常见误读清单：</p>
@@ -176,7 +183,7 @@
 <div class="panel web-only statistics-effect-lab">
 <p class="ptitle">互动 · 显著性与大小</p>
 <h3>效应量调节器</h3>
-<p class="pnote">设定真实均值差、每组样本量和噪声水平。样本量会同时改变计算和图像：<span class="term">n</span> 越大，点云越密，置信区间越窄，即使实际差异本身没有变。</p>
+<p class="pnote">设定真实均值差、每组样本量和噪声水平。图中使用一条固定 x 轴：均值差从 -3 到 +3。柱形表示重复估计落入各区间的频数，曲线表示对应的抽样分布，横条则是在同一尺度上的 95% 置信区间。</p>
 <div class="se-grid">
 <div class="se-controls">
 <label for="se-effect"><span>真实均值差</span><output id="se-effect-out" for="se-effect">0.30</output></label>
@@ -187,15 +194,17 @@
 <input type="range" id="se-noise" min="0.4" max="2.5" step="0.05" value="1">
 </div>
 <div>
-<svg class="se-plot" id="se-plot" viewBox="0 0 420 210" role="img" aria-label="两条正态曲线、一个置信区间，以及随效应量、样本量和噪声变化的高尔顿板式采样点。">
-<g id="se-dots"></g>
-<path id="se-null-curve" fill="none" stroke="var(--line-strong)" stroke-width="2"></path>
-<path id="se-effect-curve" fill="none" stroke="var(--accent)" stroke-width="2.4"></path>
-<line id="se-baseline" x1="34" y1="174" x2="386" y2="174" stroke="var(--line-strong)" stroke-width="1"></line>
-<line id="se-zero" x1="210" y1="28" x2="210" y2="178" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 5"></line>
-<line id="se-ci-line" x1="160" y1="192" x2="260" y2="192" stroke="var(--contested)" stroke-width="5" stroke-linecap="round"></line>
-<circle id="se-est-dot" cx="210" cy="192" r="6" fill="var(--contested)"></circle>
-<text x="34" y="201" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">均值差的置信区间</text>
+<svg class="se-plot" id="se-plot" viewBox="0 0 420 240" role="img" aria-label="均值差的固定尺度抽样频数图和置信区间图。">
+<rect x="28" y="28" width="364" height="168" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>
+<g id="se-bars"></g>
+<path id="se-sampling-curve" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"></path>
+<line x1="52" y1="164" x2="368" y2="164" stroke="var(--line-strong)" stroke-width="1.4"></line>
+<g id="se-ticks"></g>
+<line id="se-zero" x1="210" y1="44" x2="210" y2="176" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 5"></line>
+<line id="se-ci-line" x1="160" y1="190" x2="260" y2="190" stroke="var(--brass)" stroke-width="8" stroke-linecap="round"></line>
+<circle id="se-est-dot" cx="210" cy="190" r="7" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
+<text id="se-width-label" x="210" y="218" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">95% CI 宽度</text>
+<text x="38" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)" transform="rotate(-90 38 112)">分桶频数</text>
 </svg>
 <div class="se-read" id="se-read" aria-live="polite"></div>
 </div>
@@ -360,7 +369,7 @@
 <div class="panel web-only statistics-spec-curve">
 <p class="ptitle">互动 · 运行你自己的多元宇宙</p>
 <h3>设定曲线（Specification Curve）</h3>
-<p class="pnote">这是一个固定的合成数据集，其中 X 和 Y 看起来相关，主要是因为潜伏的背景变量 <span class="hl">W</span> 同时驱动了两者（即 <a href="/zh/days/005-causation/">第 5 日</a> 提到的混杂因素）。目标不是让每个点都显著，而是看结论能否经受合理选择的扰动。开启选择会生成更多设定。青色点表示 <span class="term">p &lt; .05</span>，灰色点则不显著。再切换「控制变量 W」和「挑选结果」，比较完整多元宇宙与有动机作者可能报告的单一路径。</p>
+<p class="pnote">这是一个固定的合成数据集，其中 X 和 Y 看起来相关，主要是因为潜伏的背景变量 <span class="hl">W</span> 同时驱动了两者（即 <a href="/zh/days/005-causation/">第 5 日</a> 提到的混杂因素）。画出这条曲线，是因为只报告一个模型可能很任意：问题是结论能否经受合理分析选择的扰动，还是只依赖某一条路径。开启选择会生成更多设定。青色点表示 <span class="term">p &lt; .05</span>，灰色点则不显著。下方打勾行显示每个设定用了哪些选择。再切换「控制变量 W」和「挑选结果」，比较完整多元宇宙与有动机作者可能报告的单一路径。</p>
 
 <div class="mv-controls" id="mv-controls">
 <button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>剔除异常值</button>
@@ -371,7 +380,7 @@
 </div>
 
 <div class="mv-scroll">
-<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 640 240" role="img" aria-label="设定曲线：所有已启用的分析设定下的效应估计值排序图。"></svg>
+<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 440 240" role="img" aria-label="设定曲线：所有已启用的分析设定下的效应估计值排序图。"></svg>
 </div>
 
 <div class="mv-read" id="mv-read"></div>

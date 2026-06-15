@@ -282,13 +282,14 @@
       read: root.querySelector("#se-read")
     };
     var svg = {
-      dots: root.querySelector("#se-dots"),
-      nullCurve: root.querySelector("#se-null-curve"),
-      effectCurve: root.querySelector("#se-effect-curve"),
+      bars: root.querySelector("#se-bars"),
+      curve: root.querySelector("#se-sampling-curve"),
+      ticks: root.querySelector("#se-ticks"),
       ci: root.querySelector("#se-ci-line"),
-      estimate: root.querySelector("#se-est-dot")
+      estimate: root.querySelector("#se-est-dot"),
+      width: root.querySelector("#se-width-label")
     };
-    if (!controls.effect || !controls.n || !controls.noise || !outs.read || !svg.dots || !svg.nullCurve || !svg.effectCurve || !svg.ci || !svg.estimate) return;
+    if (!controls.effect || !controls.n || !controls.noise || !outs.read || !svg.bars || !svg.curve || !svg.ticks || !svg.ci || !svg.estimate || !svg.width) return;
 
     function pText(p){
       if (p < 0.001) return "< .001";
@@ -308,36 +309,12 @@
       return isZh ? "大" : "large";
     }
 
-    function curvePath(mu, sigma, xMin, xMax, xScale, yBase, yAmp){
-      var points = [];
-      for (var i = 0; i <= 90; i++) {
-        var x = xMin + (xMax - xMin) * i / 90;
-        var z = (x - mu) / sigma;
-        var y = Math.exp(-0.5 * z * z);
-        points.push((i ? "L" : "M") + xScale(x).toFixed(1) + "," + (yBase - y * yAmp).toFixed(1));
-      }
-      return points.join(" ");
-    }
-
-    function renderDots(effect, noise, n, xScale){
-      var bins = [0,0,0,0,0,0,0,0,0];
-      var rng = makeRng(6206);
-      var out = "";
-      var dotsPerGroup = Math.max(10, Math.min(90, Math.round(n / 9)));
-      var dotCount = dotsPerGroup * 2;
-      var radius = dotsPerGroup > 60 ? 2.2 : dotsPerGroup > 35 ? 2.7 : 3.2;
-      var step = dotsPerGroup > 60 ? 4.2 : dotsPerGroup > 35 ? 5.3 : 7;
-      for (var i = 0; i < dotCount; i++) {
-        var group = i % 2;
-        var value = (group ? effect : 0) + (rng() - 0.5) * noise * 2.2 + (rng() - 0.5) * noise;
-        var bin = Math.max(0, Math.min(bins.length - 1, Math.floor((value + 2.2) / 4.4 * bins.length)));
-        var cx = xScale(value);
-        var cy = 168 - bins[bin] * step;
-        bins[bin]++;
-        out += '<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="' + radius + '" fill="' + (group ? "var(--accent)" : "var(--ink-faint)") + '" opacity="' + (group ? "0.58" : "0.42") + '"></circle>';
-      }
-      out += '<text x="386" y="34" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">' + (isZh ? "点云随 n 变密" : "dot cloud scales with n") + '</text>';
-      svg.dots.innerHTML = out;
+    function seededNormal(rng){
+      var u = 0;
+      var v = 0;
+      while (u === 0) u = rng();
+      while (v === 0) v = rng();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
     }
 
     function render(){
@@ -362,24 +339,59 @@
       outs.d.textContent = d.toFixed(2);
       outs.importance.textContent = label;
 
-      var xMin = -2.2;
-      var xMax = 2.2;
+      var xMin = -3;
+      var xMax = 3;
       function xScale(x){
-        return 34 + (Math.max(xMin, Math.min(xMax, x)) - xMin) / (xMax - xMin) * 352;
+        return 52 + (Math.max(xMin, Math.min(xMax, x)) - xMin) / (xMax - xMin) * 316;
       }
-      var curveSigma = Math.max(0.35, noise);
-      svg.nullCurve.setAttribute("d", curvePath(0, curveSigma, xMin, xMax, xScale, 174, 72));
-      svg.effectCurve.setAttribute("d", curvePath(effect, curveSigma, xMin, xMax, xScale, 174, 72));
+      var tickValues = [-3,-2,-1,0,1,2,3];
+      svg.ticks.innerHTML = tickValues.map(function(value){
+        var x = xScale(value).toFixed(1);
+        return '<line x1="' + x + '" y1="156" x2="' + x + '" y2="172" stroke="var(--line)" stroke-width="1"></line><text x="' + x + '" y="184" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + value + '</text>';
+      }).join("");
+
+      var binCount = 28;
+      var reps = 220;
+      var bins = new Array(binCount).fill(0);
+      var rng = makeRng(6206 + Math.round(effect * 1000) + n * 17 + Math.round(noise * 100));
+      for (var sample = 0; sample < reps; sample++) {
+        var estimate = effect + seededNormal(rng) * se;
+        if (estimate < xMin || estimate > xMax) continue;
+        var bin = Math.min(binCount - 1, Math.max(0, Math.floor((estimate - xMin) / (xMax - xMin) * binCount)));
+        bins[bin]++;
+      }
+      var maxCount = Math.max(1, bins.reduce(function(max,count){ return Math.max(max, count); }, 0));
+      var yBase = 164;
+      var yTop = 48;
+      var binW = 316 / binCount;
+      svg.bars.innerHTML = bins.map(function(count,index){
+        var x = 52 + index * binW + 1;
+        var h = count / maxCount * (yBase - yTop);
+        return '<rect x="' + x.toFixed(1) + '" y="' + (yBase - h).toFixed(1) + '" width="' + Math.max(1, binW - 2).toFixed(1) + '" height="' + h.toFixed(1) + '" fill="var(--accent)" opacity="0.22"></rect>';
+      }).join("");
+      var curve = [];
+      var curveSigma = Math.max(se, 0.025);
+      for (var point = 0; point <= 120; point++) {
+        var xValue = xMin + (xMax - xMin) * point / 120;
+        var z = (xValue - effect) / curveSigma;
+        var density = Math.exp(-0.5 * z * z);
+        var y = yBase - density * (yBase - yTop);
+        curve.push((point ? "L" : "M") + xScale(xValue).toFixed(1) + "," + y.toFixed(1));
+      }
+      svg.curve.setAttribute("d", curve.join(" "));
+
       svg.ci.setAttribute("x1", xScale(lo).toFixed(1));
       svg.ci.setAttribute("x2", xScale(hi).toFixed(1));
       svg.estimate.setAttribute("cx", xScale(effect).toFixed(1));
-      renderDots(effect, noise, n, xScale);
 
       var sig = p < 0.05;
       var width = hi - lo;
+      svg.ci.setAttribute("stroke", sig ? "var(--accent)" : "var(--brass)");
+      svg.estimate.setAttribute("fill", sig ? "var(--accent)" : "var(--brass)");
+      svg.width.textContent = isZh ? "95% CI 宽度: " + width.toFixed(2) : "95% CI width: " + width.toFixed(2);
       outs.read.innerHTML = isZh
-        ? '这个设定给出 <strong>p = ' + pText(p) + '</strong>，Cohen d = <strong>' + d.toFixed(2) + '</strong>（' + label + '）。95% 区间宽度约为 <strong>' + width.toFixed(2) + '</strong>；样本量变大时，点云会变密，区间也会收窄。' + (sig ? '它跨过了 .05 门槛；' : '它没有跨过 .05 门槛；') + '但实际意义要看效应量、区间和研究场景，而不是只看 p 值。'
-        : 'This setting gives <strong>p = ' + pText(p) + '</strong> and Cohen d = <strong>' + d.toFixed(2) + '</strong> (' + label + '). The 95% interval is about <strong>' + width.toFixed(2) + '</strong> units wide; as sample size grows, the dot cloud gets denser and the interval narrows. It ' + (sig ? 'crosses' : 'does not cross') + ' the .05 line, but practical meaning still depends on effect size, interval, and domain.';
+        ? '这个设定给出 <strong>p = ' + pText(p) + '</strong>，Cohen d = <strong>' + d.toFixed(2) + '</strong>（' + label + '）。x 轴是固定的均值差尺度（-3 到 +3）；y 轴是重复估计落入各区间的频数。横条是同一 x 轴上的 95% 置信区间，宽度约为 <strong>' + width.toFixed(2) + '</strong>。样本量变大时区间收窄，噪声变大时区间变宽。' + (sig ? '它跨过了 .05 门槛；' : '它没有跨过 .05 门槛；') + '但实际意义要看效应量、区间和研究场景，而不是只看 p 值。'
+        : 'This setting gives <strong>p = ' + pText(p) + '</strong> and Cohen d = <strong>' + d.toFixed(2) + '</strong> (' + label + '). The x-axis is a fixed mean-difference scale from -3 to +3; the y-axis is bucket frequency from repeated estimates. The bar is the 95% confidence interval on that same x-axis, about <strong>' + width.toFixed(2) + '</strong> units wide. Higher sample size narrows it; higher noise widens it. It ' + (sig ? 'crosses' : 'does not cross') + ' the .05 line, but practical meaning still depends on effect size, interval, and domain.';
     }
 
     Object.keys(controls).forEach(function(key){
@@ -644,8 +656,8 @@
       var med = median(rows.map(function(row){ return row.r; }));
       var cherry = pressed(buttons.cherry);
       var best = rows.filter(function(row){ return row.p < 0.05; }).sort(function(a,b){ return Math.abs(b.r) - Math.abs(a.r); })[0];
-      var x0 = 118;
-      var x1 = 626;
+      var x0 = 108;
+      var x1 = 426;
       var top = 14;
       var plotH = 142;
       var rmax = Math.max(0.25, rows.reduce(function(max,row){ return Math.max(max, Math.abs(row.r)); }, 0));
@@ -668,7 +680,9 @@
         var y = 178 + rowIndex * 13;
         svg += '<text x="' + (x0 - 6) + '" y="' + (y + 5) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + choice[1] + '</text>';
         rows.forEach(function(row,index){
-          svg += '<circle cx="' + px(index).toFixed(1) + '" cy="' + y + '" r="3.2" fill="' + (row.choices[choice[0]] ? "var(--accent)" : "var(--line-strong)") + '" opacity="' + (cherry && best !== row ? 0.18 : 0.8) + '"></circle>';
+          if (row.choices[choice[0]]) {
+            svg += '<text x="' + px(index).toFixed(1) + '" y="' + (y + 4) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="700" fill="var(--accent)" opacity="' + (cherry && best !== row ? 0.18 : 0.9) + '">✓</text>';
+          }
         });
       });
       canvas.innerHTML = svg;
