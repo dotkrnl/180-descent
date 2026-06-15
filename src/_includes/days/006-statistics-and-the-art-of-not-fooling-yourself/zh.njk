@@ -67,6 +67,10 @@
 <p class="sec-eyebrow">引子</p>
 <h2>最容易被愚弄的人</h2>
 <blockquote>「首要原则是你不能欺骗自己——而你恰恰是最容易被自己愚弄的人。」—— 理查德·费曼，加州理工学院毕业典礼，1974 年</blockquote>
+<figure class="lesson-figure is-portrait">
+<img src="/assets/images/open-license/richard-feynman-1959.jpg" width="899" height="900" alt="1959 年，理查德·费曼站在黑板前。">
+<figcaption>1959 年，理查德·费曼站在黑板前。上方引文出自他 1974 年在加州理工学院关于「货物崇拜科学」的毕业典礼演讲。<span class="meta">图片：<em>The Big T</em> 1959，经 Wikimedia Commons，美国公有领域。</span></figcaption>
+</figure>
 <p>费曼谈论的是一种任何公式都无法提供的正直。现代统计学最残酷的转折在于，如果按照人类天生的倾向去使用那些公式，它们反而会成为共犯。它们为你想看到的一切结论，都披上了数学那层温暖而权威的外衣。</p>
 <p>这个陷阱有个学名：<span class="term">研究者自由度</span>（researcher degrees of freedom）{% tip '研究者自由度是指研究者在数据收集、清理、建模和报告过程中，可以做出的各种看起来合情合理的分析选择。' %}。每一项真实分析背后都隐藏着几十个微小但可辩护的决定。剔除哪些异常值？是否控制年龄？性别？两者都控制？是现在停止收集数据，还是再找 20 个参与者？你测量了三个指标，该报告哪一个？每一个选择单独看都是清白的。但如果是在瞥了一眼数据走向<span class="hl">之后</span>才做决定，它们加在一起就成了一台伪造「发现」的机器。</p>
 <p>西蒙斯、纳尔逊和西蒙逊在用披头士做实验之前，先用算术证明了这一点。通过模拟，他们展示了仅仅捆绑四个普通的「自由度」——偷看数据并在需要时增加样本；在两个相关的结果指标中二选一；添加或删去性别等协变量；剔除三个实验条件中的一个——就能将假阳性的概率从宣称的 <span class="hl">5%</span> 飙升至 <span class="hl">61%</span>。只要拨动足够多清白的开关，像抛硬币一样的随机噪声就能变成近乎确定的「成功」。</p>
@@ -138,10 +142,17 @@
 
 <div class="def">
 <p class="h">定义 · p 值</p>
-      <span class="term">p 值</span>（p-value）{% tip 'p 值是特定零模型下数据的尾部概率，而非零假设为真的概率。' %}是在<span class="hl">零假设</span>{% tip '零假设是正在被测试的基准断言，通常指没有效应或没有差异。' %}<span class="hl">及所有建模假设均成立</span>的前提下，获得与实际观察到的结果<span class="hl">至少同样极端</span>的结果的概率。
+      <span class="term">p 值</span>（p-value）{% tip 'p 值是特定零模型下数据的尾部概率，而非零假设为真的概率。' %}是在<span class="term">零模型</span>{% tip '零模型是 p 值计算所假定的世界，通常包括无效应模型以及所有抽样和建模假设。' %}、<span class="hl">零假设</span>{% tip '零假设是正在被测试的基准断言，通常指没有效应或没有差异。' %}<span class="hl">及所有建模假设均成立</span>的前提下，获得与实际观察到的结果<span class="hl">至少同样极端</span>的结果的概率。
 </div>
 
+<p>换成一个小例子：假设零模型说两组均值相同。如果在这个模型之下，出现当前这么大或更大的差异的概率是 3%，那么 p = .03。这绝不是「零假设为真的概率只有 3%」。</p>
+
 <p>请读两遍。它是关于「给定假设下的数据」的陈述——写作 <span class="hl">P(数据 | 零假设)</span>。它绝对不是关于「给定数据下的假设」的陈述，即 <span class="hl">P(零假设 | 数据)</span>。混淆这两者正是 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 在患病测试问题中警告过的「逆概率」错误：P(阳性 | 患病) 并不等于 P(患病 | 阳性)，而在没有先验概率的情况下，无论你盯着结果看多久，都无法将前者转化为后者。以下是需要从你的本能中清除的六种误读——摘自格陵兰（Greenland）及其同事列出的 25 种常见误读清单：</p>
+
+<div class="aside">
+<p class="h">人们最常混淆的三种概率</p>
+<p><span class="term">α 水平</span>{% tip 'α 水平是在查看数据之前承诺的假警报率：在零模型为真且检验程序已指定时，长期第一类错误率是多少。' %}说的是：如果零模型为真，一个检验程序的长期第一类错误率是多少；α = .05 意味着真实零假设的检验中大约 5% 会误过门槛。<span class="term">错误发现率</span>{% tip '错误发现率是在所有被宣布为发现的结果中，实际上为假的比例。' %}问的是另一个问题：在你宣布为「显著」的发现中，有多大比例是假的？这取决于基础率、功效和选择机制，而不只取决于 α。<span class="term">后验概率</span>{% tip '后验概率是在结合数据与先验信息之后，某个假设为真的概率。' %}又是第三件事，例如 P(零假设 | 数据)，它需要先验概率。5% 的 α 既不是 5% 的错误发现率，也不是零假设为真的概率为 5%。</p>
+</div>
 
 <ul class="mislist">
 <li><span>「p = .03 意味着零假设为真的概率只有 3%。」</span><span class="fix">错误。那是 P(零假设 | 数据)——这是一个需要先验概率的贝叶斯量。而 p 值本身就已经「假设」了零假设为真。</span></li>
@@ -156,6 +167,57 @@
 
 <h3>显著性不等于大小：认识效应量</h3>
 <p>p 值将两件完全不同的事情揉在了一起：<span class="hl">效应有多大</span>，以及<span class="hl">你收集了多少数据</span>。只要投入足够的参与者，即使是微小到毫无意义的差异也能跨过显著性门槛。因此，成熟的统计学坚持单独报告 <span class="term">效应量</span>（effect size）{% tip '效应量报告的是差异或关联的大小，而不只是它是否跨过了显著性门槛。' %}：例如 <span>Cohen’s d</span>{% tip 'Cohen’s d 以标准差为单位表示两个平均值之间的差异。' %}（以标准差为单位的均值差异）或相关系数 <span class="hl">r</span>。雅各布·科恩（Jacob Cohen）提供了粗略的分级——d ≈ 0.2 为小，0.5 为中，0.8 为大——同时也坦然承认这些分级是主观的：「虽然是主观的，但理性的人会发现这些提议的惯例是合理的。」重点不在于标签，而在于：如果一个数字没有附带效应量，它几乎没有告诉你任何值得了解的信息。</p>
+
+<div class="panel web-only statistics-effect-lab">
+<p class="ptitle">互动 · 显著性与大小</p>
+<h3>效应量调节器</h3>
+<p class="pnote">设定真实均值差、每组样本量和噪声水平。即使实际差异没有变，只要 n 增大或噪声变小，检验也会显得更「确定」。</p>
+<div class="se-grid">
+<div class="se-controls">
+<label for="se-effect"><span>真实均值差</span><output id="se-effect-out" for="se-effect">0.30</output></label>
+<input type="range" id="se-effect" min="0" max="1.2" step="0.05" value="0.3">
+<label for="se-n"><span>每组样本量</span><output id="se-n-out" for="se-n">50</output></label>
+<input type="range" id="se-n" min="10" max="800" step="10" value="50">
+<label for="se-noise"><span>噪声 / 标准差</span><output id="se-noise-out" for="se-noise">1.00</output></label>
+<input type="range" id="se-noise" min="0.4" max="2.5" step="0.05" value="1">
+</div>
+<div>
+<svg class="se-plot" id="se-plot" viewBox="0 0 420 210" role="img" aria-label="两条正态曲线、一个置信区间，以及随效应量、样本量和噪声变化的高尔顿板式采样点。">
+<g id="se-dots"></g>
+<path id="se-null-curve" fill="none" stroke="var(--line-strong)" stroke-width="2"></path>
+<path id="se-effect-curve" fill="none" stroke="var(--accent)" stroke-width="2.4"></path>
+<line id="se-baseline" x1="34" y1="174" x2="386" y2="174" stroke="var(--line-strong)" stroke-width="1"></line>
+<line id="se-zero" x1="210" y1="28" x2="210" y2="178" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 5"></line>
+<line id="se-ci-line" x1="160" y1="192" x2="260" y2="192" stroke="var(--contested)" stroke-width="5" stroke-linecap="round"></line>
+<circle id="se-est-dot" cx="210" cy="192" r="6" fill="var(--contested)"></circle>
+<text x="34" y="201" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">均值差的置信区间</text>
+</svg>
+<div class="se-read" id="se-read" aria-live="polite"></div>
+</div>
+</div>
+<div class="se-metrics" aria-label="计算出的统计量">
+<div><span>p 值</span><strong id="se-p">.03</strong></div>
+<div><span>95% CI</span><strong id="se-ci">[0.02, 0.58]</strong></div>
+<div><span>Cohen's d</span><strong id="se-d">0.30</strong></div>
+<div><span>实际大小</span><strong id="se-importance">小</strong></div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表</p>
+<h3>显著性与大小</h3>
+<p class="pnote">同一个真实效应，会随着样本量和噪声变化而呈现出非常不同的统计外观。</p>
+<table class="alt-table">
+<thead><tr><th>情境</th><th>p 值</th><th>均值差的 95% CI</th><th>Cohen's d</th><th>实际解读</th></tr></thead>
+<tbody>
+<tr><td>均值差 0.30，n = 20，噪声 = 1.00</td><td>.34</td><td>[-0.32, 0.92]</td><td>0.30</td><td>小效应，估计太不精确。</td></tr>
+<tr><td>均值差 0.30，n = 500，噪声 = 1.00</td><td>&lt; .001</td><td>[0.18, 0.42]</td><td>0.30</td><td>统计上清楚，但大小仍然很小。</td></tr>
+<tr><td>均值差 0.80，n = 50，噪声 = 1.00</td><td>&lt; .001</td><td>[0.41, 1.19]</td><td>0.80</td><td>按科恩惯例属于大效应。</td></tr>
+<tr><td>均值差 0.30，n = 50，噪声 = 2.00</td><td>.45</td><td>[-0.48, 1.08]</td><td>0.15</td><td>相对于噪声而言非常小。</td></tr>
+</tbody>
+</table>
+<p>要点不是「p 值越小越好」。p 值会变小，可能因为效应更大，也可能因为样本巨大、噪声更低，或三者同时改变。请同时报告效应量和区间。</p>
+</div>
 
 <h3>你也一直在误读的「区间」</h3>
 <p><span class="term">置信区间</span>（confidence intervals）{% tip '置信区间是由某种具有特定长期覆盖率（如 95%）的方法产生的范围。' %}通常被推销为 p 值的温和替代方案，它们确实更好——但也隐藏了自己的陷阱。</p>
@@ -244,6 +306,7 @@
 </div>
 <h3>多元宇宙分析与设定曲线分析</h3>
 <p>不再是只为一种分析辩护，而是列举出<span class="hl">每一种</span>合理的选择组合——保留还是剔除异常值、是否进行对数转换、控制这个还是那个协变量——并计算出每种组合下的结果。<span class="term">多元宇宙分析</span>（multiverse analysis）{% tip '多元宇宙分析运行多种可辩护的分析选择，并报告结果的分布，而非单一的推导路径。' %}（Steegen 等, 2016）展示了所有可能结果构成的云图。<span class="term">设定曲线分析</span>（specification-curve analysis）{% tip '设定曲线分析将许多可辩护的模型设定按估计效应排序，以揭示结果的稳健性或脆弱性。' %}（Simonsohn 等, 2020）则将数百种设定排列成一条曲线，并追问：在所有切分数据的合理方式中，效应是否依然稳固？还是只要稍微拨动一下选择就会烟消云散？这种方法诚实且直观，越来越多地受到审稿人的期待。下方的互动环节将让你切身体会这一点。</p>
+<p>这里还必须守住一条纪律：有些「合理设定」会改变<span class="term">估计目标</span>{% tip '估计目标是研究试图估计的精确量，例如原始关联、因果效应，或某个特定人群中的效应。' %}。控制 W 只有在 W 是有因果理由的控制变量时，才是在估计同一个问题；秩变换、剔除异常值或删除子组，可能把目标从均值差异改成有序关联、稳健效应，或某个特定人群中的效应。设定曲线能暴露这个分岔，但不能替你决定你原本想问的究竟是哪一个问题。</p>
 <p>不过，<span class="hl">前沿校准器</span>在这里也很重要。这些是绝佳的「透明度」工具，但作为「推断」工具则较为薄弱。设定曲线分析的作者们自己也承认了一个陷阱：决定哪些设定是「合理」的本身就是一个主观判断，算法无法代劳，而且「消除主观性的目标是无法实现的」。一个意志坚定的辩论者仍然可以精心挑选他的多元宇宙。目前也还没有一种公认的方法能从曲线中计算出单一的有效结论——这就是为什么 2024 年出现了新的工具（如 PIMA，见下文）试图填补这一空白。<span class="chip ok" style="margin-left:.2rem" data-print="已确立"><i></i>作为稳健性展示工具已确立</span> &nbsp;<span class="chip bad" data-print="争议/炒作"><i></i>如果被视为客观性机器则是过度承诺</span></p>
 </div>
 

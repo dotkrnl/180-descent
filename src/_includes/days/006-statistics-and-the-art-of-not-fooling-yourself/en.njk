@@ -67,6 +67,10 @@
 <p class="sec-eyebrow">The hook</p>
 <h2>The easiest person to fool</h2>
 <blockquote>"The first principle is that you must not fool yourself — and you are the easiest person to fool." — Richard Feynman, Caltech commencement, 1974</blockquote>
+<figure class="lesson-figure is-portrait">
+<img src="/assets/images/open-license/richard-feynman-1959.jpg" width="899" height="900" alt="Richard Feynman standing at a blackboard in 1959.">
+<figcaption>Richard Feynman at a blackboard in 1959. The quote above comes from his 1974 Caltech commencement address on "cargo cult science." <span class="meta">Image: <em>The Big T</em> 1959, public domain in the United States via Wikimedia Commons.</span></figcaption>
+</figure>
 <p>Feynman was talking about a kind of integrity that no formula can supply. The cruel twist of modern statistics is that the formulas, used the way humans naturally use them, become accomplices. They lend the warm authority of mathematics to whatever you were already hoping to find.</p>
 <p>The villain has a clinical name: <em class="term">researcher degrees of freedom</em>{% tip 'Researcher degrees of freedom are the legitimate-looking analytic choices a researcher can make about data collection, cleaning, modeling, and reporting.' %}. Every real analysis hides dozens of small, defensible decisions. Which outliers to exclude? Should you control for age? Sex? Both? Do you stop collecting data now, or run twenty more participants? You measured three outcomes — which do you report? Each choice, taken alone, is innocent. Taken together, made <em>after</em> you've glanced at how the numbers are leaning, they become a machine for minting false discoveries.</p>
 <p>Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved it with the Beatles. By simulation, they showed that bundling just four ordinary degrees of freedom — peeking at the data and adding more if needed; choosing between two related outcome measures; adding or dropping a covariate like gender; dropping one of three experimental conditions — can inflate your chance of a false positive from the advertised <strong>5%</strong> to as high as <strong>61%</strong>. Flip enough innocent switches and a coin-flip's worth of noise becomes a near-certainty of "success."</p>
@@ -138,10 +142,17 @@
 
 <div class="def">
 <p class="h">Definition · the p-value</p>
-      The <em class="term">p-value</em>{% tip 'A p-value is a tail probability for data under a specified null model, not the probability that the null hypothesis is true.' %} is the probability — <strong>computed on the assumption that the null hypothesis{% tip 'A null hypothesis is the baseline claim being tested, often that there is no effect or no difference.' %} and every modelling assumption are true</strong> — of getting a result <strong>at least as extreme</strong> as the one you actually observed.
+      The <em class="term">p-value</em>{% tip 'A p-value is a tail probability for data under a specified null model, not the probability that the null hypothesis is true.' %} is the probability — <strong>computed on the assumption that the <em class="term">null model</em>{% tip 'A null model is the world assumed by the p-value calculation, usually a model with no effect plus all stated sampling and modelling assumptions.' %}, the null hypothesis{% tip 'A null hypothesis is the baseline claim being tested, often that there is no effect or no difference.' %}, and every modelling assumption are true</strong> — of getting a result <strong>at least as extreme</strong> as the one you actually observed.
 </div>
 
+<p>Concrete version: suppose the null model says two groups have the same mean. If a difference this large or larger would occur 3% of the time under that model, then <em>p</em> = .03. That is <em>not</em> a 3% chance the null is true.</p>
+
 <p>Read it twice. It is a statement about <em>data, assuming a hypothesis</em> — written P(data&nbsp;|&nbsp;null). It is emphatically <em>not</em> a statement about the hypothesis given the data, P(null&nbsp;|&nbsp;data). Confusing those two is the exact inversion <strong>Day 4</strong> warned about with the disease-test problem: P(positive&nbsp;|&nbsp;sick) is not P(sick&nbsp;|&nbsp;positive), and no amount of staring turns one into the other without a prior. Here are the six misreadings to burn out of your reflexes — drawn from Greenland and colleagues' field guide to <em>twenty-five</em> of them:</p>
+
+<div class="aside">
+<p class="h">Three probabilities people confuse</p>
+<p><strong><em class="term">Alpha</em></strong>{% tip 'Alpha is the false-alarm rate you commit to before looking at the data, conditional on a true null model and a specified testing procedure.' %} is the long-run Type I error rate of a testing procedure if the null model is true: with α = .05, about 5% of true-null tests will falsely cross the line. The <strong><em class="term">false discovery rate</em></strong>{% tip 'The false discovery rate is the fraction of declared discoveries that are false.' %} asks a different question: among the claims you actually declare significant, what fraction are false? That depends on base rates, power, and selection, not just α. A <strong><em class="term">posterior probability</em></strong>{% tip 'A posterior probability is the probability of a hypothesis after combining data with prior information.' %}, such as P(null | data), is different again: it needs a prior. A 5% alpha is neither a 5% false discovery rate nor a 5% chance the null is true.</p>
+</div>
 
 <ul class="mislist">
 <li><b>"<em>p</em> = .03 means there's a 3% chance the null is true."</b><span class="fix">No. That's P(null | data) — a Bayesian quantity needing a prior. The <em>p</em>-value already <em>assumes</em> the null.</span></li>
@@ -156,6 +167,57 @@
 
 <h3>Significance is not size: meet the effect size</h3>
 <p>A <em>p</em>-value smushes together two utterly different things — <em>how big</em> an effect is and <em>how much data</em> you collected. Pour in enough participants and even a microscopic, meaningless difference crosses the line. So grown-up statistics insists on reporting the <em class="term">effect size</em>{% tip 'An effect size reports how large a difference or association is, instead of only whether it crossed a significance threshold.' %} separately: <em>Cohen's d</em>{% tip 'Cohen’s d expresses a difference between two means in units of standard deviation.' %} (a difference in means measured in standard deviations) or a correlation <em>r</em>. Jacob Cohen offered rough labels — <em>d</em> ≈ 0.2 small, 0.5 medium, 0.8 large — while cheerfully admitting they were arbitrary: "Although arbitrary, the proposed conventions will be found to be reasonable by reasonable people." The point is not the labels. The point is that a number with no effect size attached has told you almost nothing worth knowing.</p>
+
+<div class="panel web-only statistics-effect-lab">
+<p class="ptitle">Interactive · significance versus size</p>
+<h3>The Effect-Size Dial</h3>
+<p class="pnote">Set a true mean difference, a per-group sample size, and a noise level. The test gets more decisive as <em>n</em> grows or noise shrinks, even when the practical difference is unchanged.</p>
+<div class="se-grid">
+<div class="se-controls">
+<label for="se-effect"><span>True mean difference</span><output id="se-effect-out" for="se-effect">0.30</output></label>
+<input type="range" id="se-effect" min="0" max="1.2" step="0.05" value="0.3">
+<label for="se-n"><span>Sample size per group</span><output id="se-n-out" for="se-n">50</output></label>
+<input type="range" id="se-n" min="10" max="800" step="10" value="50">
+<label for="se-noise"><span>Noise / standard deviation</span><output id="se-noise-out" for="se-noise">1.00</output></label>
+<input type="range" id="se-noise" min="0.4" max="2.5" step="0.05" value="1">
+</div>
+<div>
+<svg class="se-plot" id="se-plot" viewBox="0 0 420 210" role="img" aria-label="Two normal curves, a confidence interval, and Galton-board-style sampling dots responding to the selected effect size, sample size, and noise.">
+<g id="se-dots"></g>
+<path id="se-null-curve" fill="none" stroke="var(--line-strong)" stroke-width="2"></path>
+<path id="se-effect-curve" fill="none" stroke="var(--accent)" stroke-width="2.4"></path>
+<line id="se-baseline" x1="34" y1="174" x2="386" y2="174" stroke="var(--line-strong)" stroke-width="1"></line>
+<line id="se-zero" x1="210" y1="28" x2="210" y2="178" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 5"></line>
+<line id="se-ci-line" x1="160" y1="192" x2="260" y2="192" stroke="var(--contested)" stroke-width="5" stroke-linecap="round"></line>
+<circle id="se-est-dot" cx="210" cy="192" r="6" fill="var(--contested)"></circle>
+<text x="34" y="201" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">CI for mean difference</text>
+</svg>
+<div class="se-read" id="se-read" aria-live="polite"></div>
+</div>
+</div>
+<div class="se-metrics" aria-label="Computed statistics">
+<div><span>p-value</span><strong id="se-p">.03</strong></div>
+<div><span>95% CI</span><strong id="se-ci">[0.02, 0.58]</strong></div>
+<div><span>Cohen's d</span><strong id="se-d">0.30</strong></div>
+<div><span>Practical size</span><strong id="se-importance">small</strong></div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h3>Significance versus size</h3>
+<p class="pnote">The same true effect can look very different as sample size and noise change.</p>
+<table class="alt-table">
+<thead><tr><th>Scenario</th><th>p-value</th><th>95% CI for mean difference</th><th>Cohen's d</th><th>Practical reading</th></tr></thead>
+<tbody>
+<tr><td>Mean difference 0.30, n = 20, noise = 1.00</td><td>.34</td><td>[-0.32, 0.92]</td><td>0.30</td><td>Small effect, too imprecise to trust.</td></tr>
+<tr><td>Mean difference 0.30, n = 500, noise = 1.00</td><td>&lt; .001</td><td>[0.18, 0.42]</td><td>0.30</td><td>Statistically clear, still small in size.</td></tr>
+<tr><td>Mean difference 0.80, n = 50, noise = 1.00</td><td>&lt; .001</td><td>[0.41, 1.19]</td><td>0.80</td><td>Large by Cohen's convention.</td></tr>
+<tr><td>Mean difference 0.30, n = 50, noise = 2.00</td><td>.45</td><td>[-0.48, 1.08]</td><td>0.15</td><td>Tiny relative to the noise.</td></tr>
+</tbody>
+</table>
+<p>The lesson is not "smaller p-values are better." A p-value can shrink because an effect is large, because the sample is huge, because noise is low, or because all three changed. Report the effect size and interval.</p>
+</div>
 
 <h3>The interval you've been misreading too</h3>
 <p><em class="term">Confidence intervals</em>{% tip 'A confidence interval is a range produced by a method with a stated long-run coverage rate, such as 95%.' %} are sold as the humane alternative to <em>p</em>-values, and they are better — but they hide their own trap.</p>
@@ -244,6 +306,7 @@
 </div>
 <h3>Multiverse &amp; specification-curve analysis</h3>
 <p>Instead of defending one analysis, you enumerate <em>every</em> reasonable combination of choices — keep outliers or trim them, log-transform or not, control for this covariate or that — and compute the result under each. <em class="term">Multiverse analysis</em>{% tip 'Multiverse analysis runs many defensible analysis choices and reports the distribution of results rather than one preferred path.' %} (Steegen, Tuerlinckx, Gelman &amp; Vanpaemel, <em>Perspectives on Psychological Science</em>, 2016) displays the whole cloud of outcomes. <em class="term">Specification-curve analysis</em>{% tip 'Specification-curve analysis sorts many defensible model specifications by their estimated effect to reveal robustness or fragility.' %} (Simonsohn, Simmons &amp; Nelson, <em>Nature Human Behaviour</em>, 2020) sorts hundreds of specifications into a single curve and asks: across all the defensible ways to slice this, does the effect hold up, or does it evaporate the moment you wiggle a choice? It's honest, vivid, and increasingly expected by reviewers. The interactive below lets you feel it.</p>
+<p>One discipline matters more than the picture suggests: some "reasonable specifications" change the <em class="term">estimand</em>{% tip 'An estimand is the exact quantity a study is trying to estimate, such as a raw association, a causal effect, or an effect for a specific population.' %}. Controlling for W is not just another estimate of the same question unless W is a causally justified control; rank-transforming, trimming outliers, or dropping a subgroup can shift the target from a mean difference to an ordinal association, a robust effect, or a population-specific effect. Specification curves expose that fork, but they do not decide which question you meant to ask.</p>
 <p>The <strong>hype filter</strong> matters here, though. These are superb <em>transparency</em> devices and weak <em>inferential</em> ones. The authors of specification-curve analysis concede the catch themselves: deciding which specifications are "reasonable" is a judgement call no algorithm can make, and "the goal to eliminate subjectivity is unattainable." A determined arguer can still curate the multiverse. And there is no settled way to compute a single valid conclusion from a curve — which is why 2024 brought new machinery (PIMA, below) trying to supply one. <span class="chip ok" style="margin-left:.2rem" data-print="established"><i></i>established as a robustness display</span> &nbsp;<span class="chip bad" data-print="review"><i></i>oversold if treated as an objectivity machine</span></p>
 </div>
 

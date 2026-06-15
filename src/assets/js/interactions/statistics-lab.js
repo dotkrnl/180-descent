@@ -185,6 +185,124 @@
     };
   }
 
+  function initEffectLab(){
+    var root = document.querySelector(".statistics-effect-lab");
+    if (!root) return;
+
+    var controls = {
+      effect: root.querySelector("#se-effect"),
+      n: root.querySelector("#se-n"),
+      noise: root.querySelector("#se-noise")
+    };
+    var outs = {
+      effect: root.querySelector("#se-effect-out"),
+      n: root.querySelector("#se-n-out"),
+      noise: root.querySelector("#se-noise-out"),
+      p: root.querySelector("#se-p"),
+      ci: root.querySelector("#se-ci"),
+      d: root.querySelector("#se-d"),
+      importance: root.querySelector("#se-importance"),
+      read: root.querySelector("#se-read")
+    };
+    var svg = {
+      dots: root.querySelector("#se-dots"),
+      nullCurve: root.querySelector("#se-null-curve"),
+      effectCurve: root.querySelector("#se-effect-curve"),
+      ci: root.querySelector("#se-ci-line"),
+      estimate: root.querySelector("#se-est-dot")
+    };
+    if (!controls.effect || !controls.n || !controls.noise || !outs.read || !svg.dots || !svg.nullCurve || !svg.effectCurve || !svg.ci || !svg.estimate) return;
+
+    function pText(p){
+      if (p < 0.001) return "< .001";
+      if (p < 0.01) return p.toFixed(3).replace(/^0/, "");
+      return p.toFixed(2).replace(/^0/, "");
+    }
+
+    function num(value){
+      return (value >= 0 ? "" : "-") + Math.abs(value).toFixed(2);
+    }
+
+    function importance(d){
+      var ad = Math.abs(d);
+      if (ad < 0.2) return isZh ? "很小" : "trivial";
+      if (ad < 0.5) return isZh ? "小" : "small";
+      if (ad < 0.8) return isZh ? "中等" : "medium";
+      return isZh ? "大" : "large";
+    }
+
+    function curvePath(mu, sigma, xMin, xMax, xScale, yBase, yAmp){
+      var points = [];
+      for (var i = 0; i <= 90; i++) {
+        var x = xMin + (xMax - xMin) * i / 90;
+        var z = (x - mu) / sigma;
+        var y = Math.exp(-0.5 * z * z);
+        points.push((i ? "L" : "M") + xScale(x).toFixed(1) + "," + (yBase - y * yAmp).toFixed(1));
+      }
+      return points.join(" ");
+    }
+
+    function renderDots(effect, noise, xScale){
+      var bins = [0,0,0,0,0,0,0,0,0];
+      var rng = makeRng(6206);
+      var out = "";
+      for (var i = 0; i < 70; i++) {
+        var group = i % 2;
+        var value = (group ? effect : 0) + (rng() - 0.5) * noise * 2.2 + (rng() - 0.5) * noise;
+        var bin = Math.max(0, Math.min(bins.length - 1, Math.floor((value + 2.2) / 4.4 * bins.length)));
+        var cx = xScale(value);
+        var cy = 168 - bins[bin] * 7;
+        bins[bin]++;
+        out += '<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="3.2" fill="' + (group ? "var(--accent)" : "var(--ink-faint)") + '" opacity="' + (group ? "0.58" : "0.42") + '"></circle>';
+      }
+      svg.dots.innerHTML = out;
+    }
+
+    function render(){
+      var effect = Number(controls.effect.value);
+      var n = Number(controls.n.value);
+      var noise = Number(controls.noise.value);
+      var d = noise > 0 ? effect / noise : 0;
+      var se = noise * Math.sqrt(2 / n);
+      var z = se > 0 ? Math.abs(effect / se) : 0;
+      var p = 2 * (1 - normalCdf(z));
+      var lo = effect - 1.96 * se;
+      var hi = effect + 1.96 * se;
+      var label = importance(d);
+
+      outs.effect.textContent = effect.toFixed(2);
+      outs.n.textContent = String(n);
+      outs.noise.textContent = noise.toFixed(2);
+      outs.p.textContent = pText(p);
+      outs.ci.textContent = "[" + num(lo) + ", " + num(hi) + "]";
+      outs.d.textContent = d.toFixed(2);
+      outs.importance.textContent = label;
+
+      var xMin = -2.2;
+      var xMax = 2.2;
+      function xScale(x){
+        return 34 + (Math.max(xMin, Math.min(xMax, x)) - xMin) / (xMax - xMin) * 352;
+      }
+      var curveSigma = Math.max(0.35, noise);
+      svg.nullCurve.setAttribute("d", curvePath(0, curveSigma, xMin, xMax, xScale, 174, 72));
+      svg.effectCurve.setAttribute("d", curvePath(effect, curveSigma, xMin, xMax, xScale, 174, 72));
+      svg.ci.setAttribute("x1", xScale(lo).toFixed(1));
+      svg.ci.setAttribute("x2", xScale(hi).toFixed(1));
+      svg.estimate.setAttribute("cx", xScale(effect).toFixed(1));
+      renderDots(effect, noise, xScale);
+
+      var sig = p < 0.05;
+      outs.read.innerHTML = isZh
+        ? '这个设定给出 <strong>p = ' + pText(p) + '</strong>，Cohen d = <strong>' + d.toFixed(2) + '</strong>（' + label + '）。' + (sig ? '它跨过了 .05 门槛；' : '它没有跨过 .05 门槛；') + '但实际意义要看效应量、区间和研究场景，而不是只看 p 值。'
+        : 'This setting gives <strong>p = ' + pText(p) + '</strong> and Cohen d = <strong>' + d.toFixed(2) + '</strong> (' + label + '). It ' + (sig ? 'crosses' : 'does not cross') + ' the .05 line; practical meaning still depends on the effect size, interval, and domain, not the p-value alone.';
+    }
+
+    Object.keys(controls).forEach(function(key){
+      controls[key].addEventListener("input", render);
+    });
+    render();
+  }
+
   function initSpecCurve(){
     var root = document.querySelector(".statistics-spec-curve");
     if (!root) return;
@@ -385,5 +503,6 @@
   }
 
   initFactory();
+  initEffectLab();
   initSpecCurve();
 })();
