@@ -176,7 +176,7 @@
 <div class="panel web-only statistics-effect-lab">
 <p class="ptitle">互动 · 显著性与大小</p>
 <h3>效应量调节器</h3>
-<p class="pnote">设定真实均值差、每组样本量和噪声水平。即使实际差异没有变，只要 n 增大或噪声变小，检验也会显得更「确定」。</p>
+<p class="pnote">设定真实均值差、每组样本量和噪声水平。样本量会同时改变计算和图像：<span class="term">n</span> 越大，点云越密，置信区间越窄，即使实际差异本身没有变。</p>
 <div class="se-grid">
 <div class="se-controls">
 <label for="se-effect"><span>真实均值差</span><output id="se-effect-out" for="se-effect">0.30</output></label>
@@ -235,13 +235,15 @@
 <div class="panel web-only statistics-ci-coverage">
 <p class="ptitle">互动 · 长期覆盖率</p>
 <h3>100 个区间测试</h3>
-<p class="pnote">从一个已知真实均值为 0 的世界中生成 100 次重复样本。每条线都是一个 95% 置信区间。绿色区间覆盖真值；红色区间漏掉真值。被高亮的一条就是一次观察到的研究：它要么覆盖，要么不覆盖。</p>
+<p class="pnote">从一个已知真实均值为 0 的世界中生成 100 次重复样本。置信水平滑块改变长期覆盖目标：置信水平越高，覆盖次数通常越多，但区间也越宽。样本量和噪声主要改变精度。被高亮的一条就是一次观察到的研究：它要么覆盖，要么不覆盖。</p>
 <div class="ci-grid">
 <div class="ci-controls">
 <label for="ci-n"><span>每项研究样本量</span><output id="ci-n-out" for="ci-n">30</output></label>
 <input type="range" id="ci-n" min="8" max="100" step="2" value="30">
 <label for="ci-noise"><span>噪声 / 标准差</span><output id="ci-noise-out" for="ci-noise">1.00</output></label>
 <input type="range" id="ci-noise" min="0.4" max="2.5" step="0.05" value="1">
+<label for="ci-level"><span>置信水平</span><output id="ci-level-out" for="ci-level">95%</output></label>
+<input type="range" id="ci-level" min="80" max="99" step="1" value="95">
 <button class="btn primary" id="ci-run">生成 100 个区间</button>
 </div>
 <div>
@@ -253,6 +255,7 @@
 <div><span>覆盖真值</span><strong id="ci-covered">95 / 100</strong></div>
 <div><span>漏掉真值</span><strong id="ci-missed">5 / 100</strong></div>
 <div><span>高亮区间</span><strong id="ci-observed">覆盖</strong></div>
+<div><span>典型宽度</span><strong id="ci-width">0.74</strong></div>
 </div>
 </div>
 
@@ -348,9 +351,34 @@
 <span class="chip hint" data-print="争议/炒作"><i></i>作为正式检验 · 存议</span>
 </div>
 <h3>多元宇宙分析与设定曲线分析</h3>
-<p>不再是只为一种分析辩护，而是列举出<span class="hl">每一种</span>合理的选择组合——保留还是剔除异常值、是否进行对数转换、控制这个还是那个协变量——并计算出每种组合下的结果。<span class="term">多元宇宙分析</span>（multiverse analysis）{% tip '多元宇宙分析运行多种可辩护的分析选择，并报告结果的分布，而非单一的推导路径。' %}（Steegen 等, 2016）展示了所有可能结果构成的云图。<span class="term">设定曲线分析</span>（specification-curve analysis）{% tip '设定曲线分析将许多可辩护的模型设定按估计效应排序，以揭示结果的稳健性或脆弱性。' %}（Simonsohn 等, 2020）则将数百种设定排列成一条曲线，并追问：在所有切分数据的合理方式中，效应是否依然稳固？还是只要稍微拨动一下选择就会烟消云散？这种方法诚实且直观，越来越多地受到审稿人的期待。下方的互动环节将让你切身体会这一点。</p>
+<p>不再是只为一种分析辩护，而是列举出<span class="hl">每一种</span>合理的选择组合——保留还是剔除异常值、是否进行对数转换、控制这个还是那个协变量——并计算出每种组合下的结果。<span class="term">多元宇宙分析</span>（multiverse analysis）{% tip '多元宇宙分析运行多种可辩护的分析选择，并报告结果的分布，而非单一的推导路径。' %}（Steegen 等, 2016）展示了所有可能结果构成的云图。<span class="term">设定曲线分析</span>（specification-curve analysis）{% tip '设定曲线分析将许多可辩护的模型设定按估计效应排序，以揭示结果的稳健性或脆弱性。' %}（Simonsohn 等, 2020）则将数百种设定排列成一条曲线，并追问：在所有切分数据的合理方式中，效应是否依然稳固？还是只要稍微拨动一下选择就会烟消云散？这种方法诚实且直观，越来越多地受到审稿人的期待。先试一下这条曲线，然后再继续看它的限定条件。</p>
 <p>这里还必须守住一条纪律：有些「合理设定」会改变<span class="term">估计目标</span>{% tip '估计目标是研究试图估计的精确量，例如原始关联、因果效应，或某个特定人群中的效应。' %}。控制 W 只有在 W 是有因果理由的控制变量时，才是在估计同一个问题；秩变换、剔除异常值或删除子组，可能把目标从均值差异改成有序关联、稳健效应，或某个特定人群中的效应。设定曲线能暴露这个分岔，但不能替你决定你原本想问的究竟是哪一个问题。</p>
 <p>不过，<span class="hl">前沿校准器</span>在这里也很重要。这些是绝佳的「透明度」工具，但作为「推断」工具则较为薄弱。设定曲线分析的作者们自己也承认了一个陷阱：决定哪些设定是「合理」的本身就是一个主观判断，算法无法代劳，而且「消除主观性的目标是无法实现的」。一个意志坚定的辩论者仍然可以精心挑选他的多元宇宙。目前也还没有一种公认的方法能从曲线中计算出单一的有效结论——这就是为什么 2024 年出现了新的工具（如 PIMA，见下文）试图填补这一空白。<span class="chip ok" style="margin-left:.2rem" data-print="已确立"><i></i>作为稳健性展示工具已确立</span> &nbsp;<span class="chip bad" data-print="争议/炒作"><i></i>如果被视为客观性机器则是过度承诺</span></p>
+</div>
+
+<!-- ===================== INTERACTIVE 3 ===================== -->
+<div class="panel web-only statistics-spec-curve">
+<p class="ptitle">互动 · 运行你自己的多元宇宙</p>
+<h3>设定曲线（Specification Curve）</h3>
+<p class="pnote">这是一个固定的合成数据集，其中 X 和 Y 看起来相关，主要是因为潜伏的背景变量 <span class="hl">W</span> 同时驱动了两者（即 <a href="/zh/days/005-causation/">第 5 日</a> 提到的混杂因素）。目标不是让每个点都显著，而是看结论能否经受合理选择的扰动。开启选择会生成更多设定。青色点表示 <span class="term">p &lt; .05</span>，灰色点则不显著。再切换「控制变量 W」和「挑选结果」，比较完整多元宇宙与有动机作者可能报告的单一路径。</p>
+
+<div class="mv-controls" id="mv-controls">
+<button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>剔除异常值</button>
+<button class="mvchip" id="mv-cov" aria-pressed="false"><i></i>控制变量 W</button>
+<button class="mvchip" id="mv-rank" aria-pressed="false"><i></i>秩变换</button>
+<button class="mvchip" id="mv-sub" aria-pressed="false"><i></i>删除子组</button>
+<button class="mvchip" id="mv-cherry" aria-pressed="false" style="margin-left:auto;border-style:dashed;"><i></i>挑选结果</button>
+</div>
+
+<div class="mv-scroll">
+<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 640 240" role="img" aria-label="设定曲线：所有已启用的分析设定下的效应估计值排序图。"></svg>
+</div>
+
+<div class="mv-read" id="mv-read"></div>
+<div class="mv-cherry honest" id="mv-cherrybox">
+<p class="lh" id="mv-clh">诚实的解读</p>
+<p id="mv-cbody" style="margin:0;"></p>
+</div>
 </div>
 
 <div class="claim">
@@ -375,29 +403,6 @@
 <p>与此同时，那些无聊但耐用的修补方案正在不断普及：「注册式报告」格式目前已有<span class="hl">数百家期刊</span>提供，研究预登记也正在从一种美德变为默认操作。还记得 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 提到的 <span class="term">e 值</span>（e-values）{% tip 'e 值通过针对零假设的投注策略的回报来衡量证据强度。' %}和「通过投注进行测试」吗？这种 p 值的替代方案即使在你「偷看」数据或随时停止实验时依然有效——这正对着你在上方的工厂中拨动的「选择性停止」自由度。目前这仍处于研究前沿而非主流实践——<span class="hl">前景可期</span>，值得持续关注。</p>
 </div>
 </section>
-
-<!-- ===================== INTERACTIVE 3 ===================== -->
-<div class="panel web-only statistics-spec-curve">
-<p class="ptitle">互动 · 运行你自己的多元宇宙</p>
-<h3>设定曲线（Specification Curve）</h3>
-<p class="pnote">这是一个固定的（合成）数据集，其中 X 和 Y 看起来相关——但这主要是因为潜伏的背景变量 <span class="hl">W</span> 同时驱动了两者（即 <a href="/zh/days/005-causation/">第 5 日</a> 提到的混杂因素）。开启你认为「合理」的分析选择。每种组合即为一个「设定」；曲线会将它们按效应大小排序。青色点表示「显著」（p < .05），灰色点则不显著。观察当你切换「控制 W」时会发生什么——然后开启「挑选结果」，看看一位有动机的作者会如何报告，而真实的多元宇宙又说了什么。</p>
-
-<div class="mv-controls" id="mv-controls">
-<button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>剔除异常值</button>
-<button class="mvchip" id="mv-cov" aria-pressed="false"><i></i>控制变量 W</button>
-<button class="mvchip" id="mv-rank" aria-pressed="false"><i></i>秩变换</button>
-<button class="mvchip" id="mv-sub" aria-pressed="false"><i></i>删除子组</button>
-<button class="mvchip" id="mv-cherry" aria-pressed="false" style="margin-left:auto;border-style:dashed;"><i></i>挑选结果</button>
-</div>
-
-<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 640 240" role="img" aria-label="设定曲线：所有已启用的分析设定下的效应估计值排序图。"></svg>
-
-<div class="mv-read" id="mv-read"></div>
-<div class="mv-cherry honest" id="mv-cherrybox">
-<p class="lh" id="mv-clh">诚实的解读</p>
-<p id="mv-cbody" style="margin:0;"></p>
-</div>
-</div>
 
 <div class="format-alt epub-only print-only">
 <p class="ptitle">参考表</p>

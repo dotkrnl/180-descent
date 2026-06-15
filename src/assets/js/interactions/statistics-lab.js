@@ -93,15 +93,20 @@
     return t >= 0 ? 1 - 0.5 * ib : 0.5 * ib;
   }
 
-  function tCritical95(df){
+  function tCritical(df, confidence){
+    var tail = 0.5 + Math.max(0.5, Math.min(0.999, confidence)) / 2;
     var lo = 0;
     var hi = 10;
     for (var i = 0; i < 50; i++) {
       var mid = (lo + hi) / 2;
-      if (studentTCdf(mid, df) < 0.975) lo = mid;
+      if (studentTCdf(mid, df) < tail) lo = mid;
       else hi = mid;
     }
     return (lo + hi) / 2;
+  }
+
+  function tCritical95(df){
+    return tCritical(df, 0.95);
   }
 
   function tTestP(a,b){
@@ -314,19 +319,24 @@
       return points.join(" ");
     }
 
-    function renderDots(effect, noise, xScale){
+    function renderDots(effect, noise, n, xScale){
       var bins = [0,0,0,0,0,0,0,0,0];
       var rng = makeRng(6206);
       var out = "";
-      for (var i = 0; i < 70; i++) {
+      var dotsPerGroup = Math.max(10, Math.min(90, Math.round(n / 9)));
+      var dotCount = dotsPerGroup * 2;
+      var radius = dotsPerGroup > 60 ? 2.2 : dotsPerGroup > 35 ? 2.7 : 3.2;
+      var step = dotsPerGroup > 60 ? 4.2 : dotsPerGroup > 35 ? 5.3 : 7;
+      for (var i = 0; i < dotCount; i++) {
         var group = i % 2;
         var value = (group ? effect : 0) + (rng() - 0.5) * noise * 2.2 + (rng() - 0.5) * noise;
         var bin = Math.max(0, Math.min(bins.length - 1, Math.floor((value + 2.2) / 4.4 * bins.length)));
         var cx = xScale(value);
-        var cy = 168 - bins[bin] * 7;
+        var cy = 168 - bins[bin] * step;
         bins[bin]++;
-        out += '<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="3.2" fill="' + (group ? "var(--accent)" : "var(--ink-faint)") + '" opacity="' + (group ? "0.58" : "0.42") + '"></circle>';
+        out += '<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="' + radius + '" fill="' + (group ? "var(--accent)" : "var(--ink-faint)") + '" opacity="' + (group ? "0.58" : "0.42") + '"></circle>';
       }
+      out += '<text x="386" y="34" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">' + (isZh ? "点云随 n 变密" : "dot cloud scales with n") + '</text>';
       svg.dots.innerHTML = out;
     }
 
@@ -363,12 +373,13 @@
       svg.ci.setAttribute("x1", xScale(lo).toFixed(1));
       svg.ci.setAttribute("x2", xScale(hi).toFixed(1));
       svg.estimate.setAttribute("cx", xScale(effect).toFixed(1));
-      renderDots(effect, noise, xScale);
+      renderDots(effect, noise, n, xScale);
 
       var sig = p < 0.05;
+      var width = hi - lo;
       outs.read.innerHTML = isZh
-        ? '这个设定给出 <strong>p = ' + pText(p) + '</strong>，Cohen d = <strong>' + d.toFixed(2) + '</strong>（' + label + '）。' + (sig ? '它跨过了 .05 门槛；' : '它没有跨过 .05 门槛；') + '但实际意义要看效应量、区间和研究场景，而不是只看 p 值。'
-        : 'This setting gives <strong>p = ' + pText(p) + '</strong> and Cohen d = <strong>' + d.toFixed(2) + '</strong> (' + label + '). It ' + (sig ? 'crosses' : 'does not cross') + ' the .05 line; practical meaning still depends on the effect size, interval, and domain, not the p-value alone.';
+        ? '这个设定给出 <strong>p = ' + pText(p) + '</strong>，Cohen d = <strong>' + d.toFixed(2) + '</strong>（' + label + '）。95% 区间宽度约为 <strong>' + width.toFixed(2) + '</strong>；样本量变大时，点云会变密，区间也会收窄。' + (sig ? '它跨过了 .05 门槛；' : '它没有跨过 .05 门槛；') + '但实际意义要看效应量、区间和研究场景，而不是只看 p 值。'
+        : 'This setting gives <strong>p = ' + pText(p) + '</strong> and Cohen d = <strong>' + d.toFixed(2) + '</strong> (' + label + '). The 95% interval is about <strong>' + width.toFixed(2) + '</strong> units wide; as sample size grows, the dot cloud gets denser and the interval narrows. It ' + (sig ? 'crosses' : 'does not cross') + ' the .05 line, but practical meaning still depends on effect size, interval, and domain.';
     }
 
     Object.keys(controls).forEach(function(key){
@@ -383,19 +394,22 @@
 
     var controls = {
       n: root.querySelector("#ci-n"),
-      noise: root.querySelector("#ci-noise")
+      noise: root.querySelector("#ci-noise"),
+      level: root.querySelector("#ci-level")
     };
     var outs = {
       n: root.querySelector("#ci-n-out"),
       noise: root.querySelector("#ci-noise-out"),
+      level: root.querySelector("#ci-level-out"),
       covered: root.querySelector("#ci-covered"),
       missed: root.querySelector("#ci-missed"),
       observed: root.querySelector("#ci-observed"),
+      width: root.querySelector("#ci-width"),
       read: root.querySelector("#ci-read")
     };
     var plot = root.querySelector("#ci-plot");
     var run = root.querySelector("#ci-run");
-    if (!controls.n || !controls.noise || !outs.read || !outs.covered || !outs.missed || !outs.observed || !plot || !run) return;
+    if (!controls.n || !controls.noise || !controls.level || !outs.read || !outs.covered || !outs.missed || !outs.observed || !outs.width || !plot || !run) return;
 
     var runId = 0;
     var TRUE_MEAN = 0;
@@ -413,12 +427,12 @@
       return (value >= 0 ? "" : "-") + Math.abs(value).toFixed(2);
     }
 
-    function makeInterval(rng,n,noise){
+    function makeInterval(rng,n,noise,confidence){
       var values = [];
       for (var i = 0; i < n; i++) values.push(TRUE_MEAN + normalFrom(rng) * noise);
       var avg = mean(values);
       var sd = Math.sqrt(variance(values, avg));
-      var margin = tCritical95(Math.max(1, n - 1)) * sd / Math.sqrt(n);
+      var margin = tCritical(Math.max(1, n - 1), confidence) * sd / Math.sqrt(n);
       return {
         mean: avg,
         lo: avg - margin,
@@ -429,11 +443,13 @@
     function render(){
       var n = Number(controls.n.value);
       var noise = Number(controls.noise.value);
-      var rng = makeRng(80606 + runId * 7919 + n * 37 + Math.round(noise * 100));
+      var confidence = Number(controls.level.value) / 100;
+      var rng = makeRng(80606 + runId * 7919 + n * 37 + Math.round(noise * 100) + Math.round(confidence * 1000));
       var intervals = [];
-      for (var i = 0; i < REPS; i++) intervals.push(makeInterval(rng, n, noise));
+      for (var i = 0; i < REPS; i++) intervals.push(makeInterval(rng, n, noise, confidence));
       var covered = intervals.filter(function(row){ return row.lo <= TRUE_MEAN && row.hi >= TRUE_MEAN; }).length;
       var missed = REPS - covered;
+      var avgWidth = mean(intervals.map(function(row){ return row.hi - row.lo; }));
       var hiAbs = intervals.reduce(function(max,row){
         return Math.max(max, Math.abs(row.lo), Math.abs(row.hi));
       }, Math.max(0.5, noise / Math.sqrt(n) * 4));
@@ -464,13 +480,15 @@
       var obsCovers = observed.lo <= TRUE_MEAN && observed.hi >= TRUE_MEAN;
       outs.n.textContent = String(n);
       outs.noise.textContent = noise.toFixed(2);
+      outs.level.textContent = Math.round(confidence * 100) + "%";
       outs.covered.textContent = covered + " / " + REPS;
       outs.missed.textContent = missed + " / " + REPS;
       outs.observed.textContent = obsCovers ? (isZh ? "覆盖" : "covers") : (isZh ? "漏掉" : "misses");
       outs.observed.classList.toggle("miss", !obsCovers);
+      outs.width.textContent = avgWidth.toFixed(2);
       outs.read.innerHTML = isZh
-        ? '这 100 个区间中，<strong>' + covered + '</strong> 个覆盖真实均值 0，<strong>' + missed + '</strong> 个漏掉。高亮区间为 <strong>[' + fmt(observed.lo) + ', ' + fmt(observed.hi) + ']</strong>，它' + (obsCovers ? '覆盖' : '漏掉') + '真值。95% 描述的是程序的长期表现，不是这一个区间的后验概率。'
-        : 'In these 100 intervals, <strong>' + covered + '</strong> cover the true mean 0 and <strong>' + missed + '</strong> miss it. The highlighted interval is <strong>[' + fmt(observed.lo) + ', ' + fmt(observed.hi) + ']</strong>; it ' + (obsCovers ? 'covers' : 'misses') + ' the truth. The 95% belongs to the procedure, not to this interval as a posterior probability.';
+        ? '这 100 个区间中，<strong>' + covered + '</strong> 个覆盖真实均值 0，<strong>' + missed + '</strong> 个漏掉。高亮区间为 <strong>[' + fmt(observed.lo) + ', ' + fmt(observed.hi) + ']</strong>，它' + (obsCovers ? '覆盖' : '漏掉') + '真值。置信水平滑块改变的是长期覆盖目标；样本量和噪声滑块主要改变区间宽度。'
+        : 'In these 100 intervals, <strong>' + covered + '</strong> cover the true mean 0 and <strong>' + missed + '</strong> miss it. The highlighted interval is <strong>[' + fmt(observed.lo) + ', ' + fmt(observed.hi) + ']</strong>; it ' + (obsCovers ? 'covers' : 'misses') + ' the truth. The confidence-level slider changes the long-run coverage target; sample size and noise mostly change interval width.';
     }
 
     Object.keys(controls).forEach(function(key){
@@ -626,7 +644,7 @@
       var med = median(rows.map(function(row){ return row.r; }));
       var cherry = pressed(buttons.cherry);
       var best = rows.filter(function(row){ return row.p < 0.05; }).sort(function(a,b){ return Math.abs(b.r) - Math.abs(a.r); })[0];
-      var x0 = 46;
+      var x0 = 118;
       var x1 = 626;
       var top = 14;
       var plotH = 142;
@@ -634,8 +652,8 @@
       function px(index){ return n === 1 ? (x0 + x1) / 2 : x0 + (x1 - x0) * index / (n - 1); }
       function py(r){ return top + plotH / 2 - (r / rmax) * (plotH / 2 - 6); }
       var svg = '<line x1="' + x0 + '" y1="' + py(0).toFixed(1) + '" x2="' + x1 + '" y2="' + py(0).toFixed(1) + '" stroke="var(--line-strong)" stroke-width="1" stroke-dasharray="3 4"></line>';
-      svg += '<text x="' + (x0 - 6) + '" y="' + (py(0) + 3).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">0</text>';
-      svg += '<text x="6" y="82" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)" transform="rotate(-90 12 82)">' + (isZh ? "效应 (r)" : "effect (r)") + '</text>';
+      svg += '<text x="' + (x0 - 6) + '" y="' + (py(0) + 3).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">0</text>';
+      svg += '<text x="8" y="82" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)" transform="rotate(-90 14 82)">' + (isZh ? "效应 (r)" : "effect (r)") + '</text>';
       rows.forEach(function(row,index){
         var isBest = cherry && best === row;
         var dim = cherry && !isBest;
@@ -648,9 +666,9 @@
         ["sub", isZh ? "剔除子组" : "drop subgroup", buttons.sub]
       ].filter(function(row){ return pressed(row[2]); }).forEach(function(choice,rowIndex){
         var y = 178 + rowIndex * 13;
-        svg += '<text x="' + (x0 - 6) + '" y="' + (y + 5) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)">' + choice[1] + '</text>';
+        svg += '<text x="' + (x0 - 6) + '" y="' + (y + 5) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + choice[1] + '</text>';
         rows.forEach(function(row,index){
-          svg += '<circle cx="' + px(index).toFixed(1) + '" cy="' + y + '" r="2.4" fill="' + (row.choices[choice[0]] ? "var(--accent)" : "var(--line-strong)") + '" opacity="' + (cherry && best !== row ? 0.18 : 0.8) + '"></circle>';
+          svg += '<circle cx="' + px(index).toFixed(1) + '" cy="' + y + '" r="3.2" fill="' + (row.choices[choice[0]] ? "var(--accent)" : "var(--line-strong)") + '" opacity="' + (cherry && best !== row ? 0.18 : 0.8) + '"></circle>';
         });
       });
       canvas.innerHTML = svg;
@@ -660,7 +678,9 @@
       box.className = "mv-cherry " + (cherry ? "cherry" : "honest");
       if (cherry) {
         heading.textContent = isZh ? "被动机驱使的作者会这样报告" : "What a motivated author reports";
-        body.innerHTML = best
+        body.innerHTML = n === 1
+          ? (isZh ? '现在只有一个基线规范，还没有可供挑选的多元宇宙。先开启一个或多个分析选择，再看「挑选结果」如何改变故事。' : 'With only the baseline specification, there is no multiverse to cherry-pick yet. Turn on one or more analytic choices, then watch how cherry-picking changes the story.')
+          : best
           ? (isZh
             ? '「我们发现 X 与 Y 存在显著关联，r = ' + best.r.toFixed(2) + '，p = ' + best.p.toFixed(3) + '。」这是真的，但只对 ' + n + ' 个同样可辩护规范中的一个成立。其他 ' + (n - 1) + ' 个规范不会出现在论文里。'
             : '"We find a significant association between X and Y, r = ' + best.r.toFixed(2) + ', p = ' + best.p.toFixed(3) + '." True, for one of ' + n + ' equally defensible specifications. The other ' + (n - 1) + ' never make the paper.')

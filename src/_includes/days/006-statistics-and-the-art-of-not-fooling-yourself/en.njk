@@ -176,7 +176,7 @@
 <div class="panel web-only statistics-effect-lab">
 <p class="ptitle">Interactive · significance versus size</p>
 <h3>The Effect-Size Dial</h3>
-<p class="pnote">Set a true mean difference, a per-group sample size, and a noise level. The test gets more decisive as <em>n</em> grows or noise shrinks, even when the practical difference is unchanged.</p>
+<p class="pnote">Set a true mean difference, a per-group sample size, and a noise level. Sample size changes the calculation and the picture: higher <em>n</em> makes the dot cloud denser and the confidence interval narrower, even when the practical difference is unchanged.</p>
 <div class="se-grid">
 <div class="se-controls">
 <label for="se-effect"><span>True mean difference</span><output id="se-effect-out" for="se-effect">0.30</output></label>
@@ -235,13 +235,15 @@
 <div class="panel web-only statistics-ci-coverage">
 <p class="ptitle">Interactive · long-run coverage</p>
 <h3>The 100-interval test</h3>
-<p class="pnote">Generate 100 repeated samples from a world where the true mean is known to be 0. Each line is one 95% confidence interval. Green intervals cover the truth; red intervals miss it. The highlighted interval is one observed study: it either covers or it does not.</p>
+<p class="pnote">Generate 100 repeated samples from a world where the true mean is known to be 0. The confidence-level dial changes the long-run target: higher confidence covers more often but makes wider intervals. Sample size and noise mostly change precision. The highlighted interval is one observed study: it either covers or it does not.</p>
 <div class="ci-grid">
 <div class="ci-controls">
 <label for="ci-n"><span>Sample size per study</span><output id="ci-n-out" for="ci-n">30</output></label>
 <input type="range" id="ci-n" min="8" max="100" step="2" value="30">
 <label for="ci-noise"><span>Noise / standard deviation</span><output id="ci-noise-out" for="ci-noise">1.00</output></label>
 <input type="range" id="ci-noise" min="0.4" max="2.5" step="0.05" value="1">
+<label for="ci-level"><span>Confidence level</span><output id="ci-level-out" for="ci-level">95%</output></label>
+<input type="range" id="ci-level" min="80" max="99" step="1" value="95">
 <button class="btn primary" id="ci-run">Generate 100 intervals</button>
 </div>
 <div>
@@ -253,6 +255,7 @@
 <div><span>covered truth</span><strong id="ci-covered">95 / 100</strong></div>
 <div><span>missed truth</span><strong id="ci-missed">5 / 100</strong></div>
 <div><span>highlighted interval</span><strong id="ci-observed">covers</strong></div>
+<div><span>typical width</span><strong id="ci-width">0.74</strong></div>
 </div>
 </div>
 
@@ -348,9 +351,34 @@
 <span class="chip hint" data-print="contested"><i></i>As a formal test · contested</span>
 </div>
 <h3>Multiverse &amp; specification-curve analysis</h3>
-<p>Instead of defending one analysis, you enumerate <em>every</em> reasonable combination of choices — keep outliers or trim them, log-transform or not, control for this covariate or that — and compute the result under each. <em class="term">Multiverse analysis</em>{% tip 'Multiverse analysis runs many defensible analysis choices and reports the distribution of results rather than one preferred path.' %} (Steegen, Tuerlinckx, Gelman &amp; Vanpaemel, <em>Perspectives on Psychological Science</em>, 2016) displays the whole cloud of outcomes. <em class="term">Specification-curve analysis</em>{% tip 'Specification-curve analysis sorts many defensible model specifications by their estimated effect to reveal robustness or fragility.' %} (Simonsohn, Simmons &amp; Nelson, <em>Nature Human Behaviour</em>, 2020) sorts hundreds of specifications into a single curve and asks: across all the defensible ways to slice this, does the effect hold up, or does it evaporate the moment you wiggle a choice? It's honest, vivid, and increasingly expected by reviewers. The interactive below lets you feel it.</p>
+<p>Instead of defending one analysis, you enumerate <em>every</em> reasonable combination of choices — keep outliers or trim them, log-transform or not, control for this covariate or that — and compute the result under each. <em class="term">Multiverse analysis</em>{% tip 'Multiverse analysis runs many defensible analysis choices and reports the distribution of results rather than one preferred path.' %} (Steegen, Tuerlinckx, Gelman &amp; Vanpaemel, <em>Perspectives on Psychological Science</em>, 2016) displays the whole cloud of outcomes. <em class="term">Specification-curve analysis</em>{% tip 'Specification-curve analysis sorts many defensible model specifications by their estimated effect to reveal robustness or fragility.' %} (Simonsohn, Simmons &amp; Nelson, <em>Nature Human Behaviour</em>, 2020) sorts hundreds of specifications into a single curve and asks: across all the defensible ways to slice this, does the effect hold up, or does it evaporate the moment you wiggle a choice? It's honest, vivid, and increasingly expected by reviewers. Try the curve now, before the caveats continue.</p>
 <p>One discipline matters more than the picture suggests: some "reasonable specifications" change the <em class="term">estimand</em>{% tip 'An estimand is the exact quantity a study is trying to estimate, such as a raw association, a causal effect, or an effect for a specific population.' %}. Controlling for W is not just another estimate of the same question unless W is a causally justified control; rank-transforming, trimming outliers, or dropping a subgroup can shift the target from a mean difference to an ordinal association, a robust effect, or a population-specific effect. Specification curves expose that fork, but they do not decide which question you meant to ask.</p>
 <p>The <strong>hype filter</strong> matters here, though. These are superb <em>transparency</em> devices and weak <em>inferential</em> ones. The authors of specification-curve analysis concede the catch themselves: deciding which specifications are "reasonable" is a judgment call no algorithm can make, and "the goal to eliminate subjectivity is unattainable." A determined arguer can still curate the multiverse. And there is no settled way to compute a single valid conclusion from a curve — which is why 2024 brought new machinery (PIMA, below) trying to supply one. <span class="chip ok" style="margin-left:.2rem" data-print="established"><i></i>established as a robustness display</span> &nbsp;<span class="chip bad" data-print="review"><i></i>oversold if treated as an objectivity machine</span></p>
+</div>
+
+<!-- ===================== INTERACTIVE 3 ===================== -->
+<div class="panel web-only statistics-spec-curve">
+<p class="ptitle">Interactive · run your own multiverse</p>
+<h3>The Specification Curve</h3>
+<p class="pnote">A fixed synthetic dataset makes X and Y look related, mostly because a lurking background variable <strong>W</strong> drives both (a <strong>Day 5</strong> confounder). The goal is not to make every dot significant; it is to ask whether the conclusion survives reasonable choices. Turn on choices to create more specifications. Teal dots are <em>p</em> &lt; .05, grey dots are not. Then toggle <strong>control for W</strong> and <strong>cherry-pick</strong> to compare the whole multiverse with the single path a motivated author might report.</p>
+
+<div class="mv-controls" id="mv-controls">
+<button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>trim outliers</button>
+<button class="mvchip" id="mv-cov" aria-pressed="false"><i></i>control for W</button>
+<button class="mvchip" id="mv-rank" aria-pressed="false"><i></i>rank-transform</button>
+<button class="mvchip" id="mv-sub" aria-pressed="false"><i></i>drop subgroup</button>
+<button class="mvchip" id="mv-cherry" aria-pressed="false" style="margin-left:auto;border-style:dashed;"><i></i>cherry-pick</button>
+</div>
+
+<div class="mv-scroll">
+<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 640 240" role="img" aria-label="A specification curve: a sorted plot of effect estimates across all enabled analytic specifications."></svg>
+</div>
+
+<div class="mv-read" id="mv-read"></div>
+<div class="mv-cherry honest" id="mv-cherrybox">
+<p class="lh" id="mv-clh">The honest reading</p>
+<p id="mv-cbody" style="margin:0;"></p>
+</div>
 </div>
 
 <div class="claim">
@@ -375,29 +403,6 @@
 <p>Meanwhile the boring, durable fixes keep spreading: the Registered Reports format — where journals accept your <em>plan</em> before your results exist — is now offered at <strong>several hundred journals</strong>, and preregistration is becoming a default rather than a virtue. And recall <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>'s <em class="term">e-values</em>{% tip 'E-values measure evidence as the payoff of a betting strategy against a null hypothesis.' %} and "testing by betting" (Grünwald, Ramdas, Shafer): an alternative to the <em>p</em>-value that stays valid even if you peek at your data and stop whenever you like — aimed squarely at the optional-stopping degree of freedom you toggled in the factory above. Still a research frontier rather than mainstream practice — <strong>promising</strong>, watch this space.</p>
 </div>
 </section>
-
-<!-- ===================== INTERACTIVE 3 ===================== -->
-<div class="panel web-only statistics-spec-curve">
-<p class="ptitle">Interactive · run your own multiverse</p>
-<h3>The Specification Curve</h3>
-<p class="pnote">A fixed (synthetic) dataset in which X and Y look related — but mostly because a lurking background variable <strong>W</strong> drives both (a <strong>Day 5</strong> confounder). Switch on the analytic choices you'd consider "reasonable." Each combination is one specification; the curve sorts them by effect size. Teal dots are "significant" (<em>p</em> &lt; .05), grey dots are not. Watch what happens when you toggle <em>control for W</em> — then flip <strong>Cherry-pick</strong> and see how a motivated author would report this versus what the whole multiverse actually says.</p>
-
-<div class="mv-controls" id="mv-controls">
-<button class="mvchip" id="mv-trim" aria-pressed="false"><i></i>trim outliers</button>
-<button class="mvchip" id="mv-cov" aria-pressed="false"><i></i>control for W</button>
-<button class="mvchip" id="mv-rank" aria-pressed="false"><i></i>rank-transform</button>
-<button class="mvchip" id="mv-sub" aria-pressed="false"><i></i>drop subgroup</button>
-<button class="mvchip" id="mv-cherry" aria-pressed="false" style="margin-left:auto;border-style:dashed;"><i></i>cherry-pick</button>
-</div>
-
-<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 640 240" role="img" aria-label="A specification curve: a sorted plot of effect estimates across all enabled analytic specifications."></svg>
-
-<div class="mv-read" id="mv-read"></div>
-<div class="mv-cherry honest" id="mv-cherrybox">
-<p class="lh" id="mv-clh">The honest reading</p>
-<p id="mv-cbody" style="margin:0;"></p>
-</div>
-</div>
 
 <div class="format-alt epub-only print-only">
 <p class="ptitle">Reference table</p>
