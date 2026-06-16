@@ -176,12 +176,13 @@
       var bh = count / max * ph;
       var x = padL + i * bw;
       var y = padT + ph - bh;
-      var color = i === 0 ? "var(--contested)" : "var(--accent)";
-      out += '<rect x="' + (x + 1).toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + (bw - 2).toFixed(1) + '" height="' + bh.toFixed(1) + '" rx="1.5" fill="' + color + '" opacity="0.85"/>';
+      var color = i === 0 ? "var(--contested)" : "var(--ink-faint)";
+      var opacity = i === 0 ? "0.88" : "0.32";
+      out += '<rect x="' + (x + 1).toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + (bw - 2).toFixed(1) + '" height="' + bh.toFixed(1) + '" rx="1.5" fill="' + color + '" opacity="' + opacity + '"/>';
     });
     var x05 = padL + pw * 0.05;
-    out += '<line x1="' + x05.toFixed(1) + '" y1="' + padT + '" x2="' + x05.toFixed(1) + '" y2="' + (padT + ph) + '" stroke="var(--brass)" stroke-width="1.4"/>';
-    out += '<text x="' + (x05 + 3).toFixed(1) + '" y="' + (padT + 10) + '" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="var(--brass)">.05</text>';
+    out += '<line x1="' + x05.toFixed(1) + '" y1="' + padT + '" x2="' + x05.toFixed(1) + '" y2="' + (padT + ph) + '" stroke="var(--contested)" stroke-width="1.5"/>';
+    out += '<text x="' + (x05 + 3).toFixed(1) + '" y="' + (padT + 10) + '" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="var(--contested)">p&lt;.05</text>';
     out += '<text x="' + padL + '" y="' + (h - 8) + '" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">p=0</text>';
     out += '<text x="' + (padL + pw * 0.5) + '" y="' + (h - 8) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">p=0.5</text>';
     out += '<text x="' + (w - padR) + '" y="' + (h - 8) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">p=1</text>';
