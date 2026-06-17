@@ -79,6 +79,7 @@ a:hover{border-bottom-color:var(--accent);}
 a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 68%,#fff);outline-offset:3px;box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 16%,transparent);}
 .topnav a:focus-visible,.course:focus-visible,.toggle:focus-visible,.lesson-nav-card:focus-visible,.day-card a:focus-visible,.download-card a:focus-visible,.all-days-link a:focus-visible{border-radius:8px;}
 .topnav a[aria-current="page"]{color:var(--ink);border-bottom-color:currentColor;}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
 .skip-link{position:absolute;left:-999px;top:.5rem;background:var(--raised);padding:.45rem .7rem;z-index:50;}
 .skip-link:focus{left:.5rem;}
 .wrap{max-width:var(--measure);margin:0 auto;padding:0 1.35rem;}
@@ -700,9 +701,11 @@ hr.div{border:none;border-top:1px solid var(--line);margin:3rem 0;}
 .tip-note{position:relative;display:inline-flex;align-items:center;vertical-align:super;margin:0 .08em;line-height:1;text-align:left;user-select:none;-webkit-user-select:none;}
 .tip-note-ref,.tip-footnotes{display:none;}
 .tip-note-mark{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:1.05rem;height:1.05rem;border:1px solid color-mix(in srgb,var(--accent) 48%,var(--line-strong));border-radius:50%;background:color-mix(in srgb,var(--accent) 9%,var(--raised));color:var(--accent-deep);font-family:"IBM Plex Mono",monospace;font-size:.66rem;font-weight:600;line-height:1;cursor:pointer;padding:0;}
+.tip-note-mark::before{content:"?";}
 .tip-note-mark:hover,.tip-note-mark:focus-visible,.tip-note[data-open="true"] .tip-note-mark{border-color:var(--accent);background:var(--accent);color:var(--raised);outline:none;}
 .tip-note-mark:focus-visible{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent);}
 .tip-note-box{display:none;position:absolute;z-index:35;left:50%;bottom:calc(100% + .48rem);transform:translateX(-50%) translateY(.16rem);width:min(18rem,calc(100vw - 2rem));max-width:18rem;max-height:min(18rem,calc(100vh - 6rem));overflow:auto;padding:.68rem .78rem;border:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));border-radius:8px;background:color-mix(in srgb,var(--raised) 98%,transparent);color:var(--ink-soft);box-shadow:0 14px 36px -22px rgba(23,37,48,.45),0 2px 8px rgba(23,37,48,.12);font-size:.86rem;line-height:1.45;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .16s ease,visibility .16s ease;}
+.tip-note-box::before{content:attr(data-tip);}
 .tip-note-box::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;transform:translateX(-50%) rotate(45deg);border-right:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));border-bottom:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));background:color-mix(in srgb,var(--raised) 98%,transparent);}
 .tip-note[data-open="true"] .tip-note-box{display:block;visibility:visible;opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
 .tip-note[data-positioned="true"] .tip-note-box{position:fixed;left:var(--tip-left);top:var(--tip-top);bottom:auto;transform:translateY(.16rem);}

@@ -516,7 +516,7 @@ function prepareTipFootnotesForPrint() {
       const refId = `${baseId}-tip-ref-${number}`;
       const noteId = `${baseId}-tip-note-${number}`;
       const box = note.querySelector(":scope > .tip-note-box");
-      const text = (box?.textContent || "").trim();
+      const text = (note.getAttribute("data-tip-text") || box?.getAttribute("data-tip") || box?.textContent || "").trim();
       if (!text) return;
 
       note.querySelector(":scope > .tip-note-mark")?.remove();

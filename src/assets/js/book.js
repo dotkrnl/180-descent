@@ -129,6 +129,15 @@
     if(!notes.length){
       return;
     }
+    var live = document.getElementById("tipNoteLive");
+    if(!live){
+      live = document.createElement("div");
+      live.id = "tipNoteLive";
+      live.className = "sr-only";
+      live.setAttribute("aria-live", "polite");
+      live.setAttribute("aria-atomic", "true");
+      document.body.appendChild(live);
+    }
 
     function closeAll(except){
       for(var i = 0; i < notes.length; i++){
@@ -147,6 +156,21 @@
           mark.setAttribute("aria-expanded", "false");
         }
       }
+      if(!except && live){
+        live.textContent = "";
+      }
+    }
+
+    function noteText(note){
+      if(!note){
+        return "";
+      }
+      var text = note.getAttribute("data-tip-text") || "";
+      if(text){
+        return text;
+      }
+      var box = note.querySelector(".tip-note-box");
+      return box ? (box.getAttribute("data-tip") || box.textContent || "").trim() : "";
     }
 
     function alignBox(note){
@@ -224,6 +248,9 @@
         if(shouldOpen){
           note.setAttribute("data-open", "true");
           this.setAttribute("aria-expanded", "true");
+          if(live){
+            live.textContent = noteText(note);
+          }
           alignBox(note);
           window.requestAnimationFrame(function(){
             alignBox(note);
@@ -237,6 +264,9 @@
           note.style.removeProperty("--tip-top");
           note.style.removeProperty("--tip-arrow-left");
           this.setAttribute("aria-expanded", "false");
+          if(live){
+            live.textContent = "";
+          }
         }
       });
 

@@ -361,7 +361,7 @@ function convertTipNotesToFootnotes($, language = "", selfHref = "document.xhtml
       used.add(noteElement);
       const note = $(noteElement);
       const box = note.children(".tip-note-box").first();
-      const text = box.text().trim();
+      const text = (note.attr("data-tip-text") || box.attr("data-tip") || box.text()).trim();
       if (!text) return;
 
       const number = noteIndex + 1;
