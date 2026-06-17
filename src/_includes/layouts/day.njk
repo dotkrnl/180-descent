@@ -54,6 +54,14 @@ layout: layouts/base.njk
       <a href="{{ dayDownloadPrefix }}.pdf">PDF</a>
     </div>
   </div>
+  {% if not nextDay %}
+  <aside class="latest-day-banner" aria-label="{{ "最新日课说明" if isZh else "Latest day note" }}">
+    <div class="wrap wide">
+      <strong>{{ "最新日课" if isZh else "Latest day" }}</strong>
+      <span>{{ "这是当前最新发布的日课，可能仍有人工编辑尚未完成审阅的粗糙之处。较早日课通常已经经过更多手动质量检查。" if isZh else "This is the latest released day, so it may still have sharp edges that the human editor has not finished reviewing yet. Earlier days have usually had more manual quality checks." }}</span>
+    </div>
+  </aside>
+  {% endif %}
   {{ dayNav("top") }}
   {{ content | safe }}
   {{ dayNav("bottom") }}

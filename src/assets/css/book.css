@@ -100,9 +100,9 @@ html[data-theme="dark"] .brand-mark-dark{opacity:1;}
 .toggle:hover{color:var(--ink);border-color:var(--accent);}
 .theme-toggle{gap:.18rem;min-width:2.7rem;padding:.34rem .45rem;}
 .theme-icon{width:.82rem;height:.82rem;display:block;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;flex:0 0 auto;}
-.release-banner{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--hint) 10%,var(--paper));}
-.release-banner .wide{display:flex;gap:.7rem;align-items:flex-start;padding-top:.55rem;padding-bottom:.55rem;font-family:"IBM Plex Mono",monospace;font-size:.68rem;line-height:1.45;letter-spacing:.05em;color:var(--ink-soft);}
-.release-banner strong{flex:0 0 auto;color:var(--hint);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;}
+.release-banner,.latest-day-banner{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--hint) 10%,var(--paper));}
+.release-banner .wide,.latest-day-banner .wide{display:flex;gap:.7rem;align-items:flex-start;padding-top:.55rem;padding-bottom:.55rem;font-family:"IBM Plex Mono",monospace;font-size:.68rem;line-height:1.45;letter-spacing:.05em;color:var(--ink-soft);}
+.release-banner strong,.latest-day-banner strong{flex:0 0 auto;color:var(--hint);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;}
 .download-strip{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--brass) 6%,transparent);font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;}
 .download-strip .wide{display:flex;gap:.8rem;align-items:center;padding-top:.45rem;padding-bottom:.45rem;color:var(--ink-faint);}
 
@@ -1146,6 +1146,7 @@ html[lang^="zh"] blockquote{
 }
 html[lang^="zh"] .topbar-row,
 html[lang^="zh"] .release-banner,
+html[lang^="zh"] .latest-day-banner,
 html[lang^="zh"] .download-strip,
 html[lang^="zh"] .panel,
 html[lang^="zh"] .download-card p,
@@ -1164,8 +1165,8 @@ html[lang^="zh"] .tip-note-box{
 @media(max-width:720px){
   .topbar-row{align-items:flex-start;flex-direction:column;gap:.5rem;}
   .topnav{font-size:.68rem;}
-  .release-banner .wide{display:block;}
-  .release-banner strong{display:block;margin-bottom:.18rem;}
+  .release-banner .wide,.latest-day-banner .wide{display:block;}
+  .release-banner strong,.latest-day-banner strong{display:block;margin-bottom:.18rem;}
   .download-strip .wide{flex-wrap:wrap;}
   .tip-note-box{width:min(17.5rem,calc(100vw - 1.5rem));}
   .oscrow{align-items:flex-start;flex-direction:column;gap:.25rem;}
@@ -1198,7 +1199,7 @@ html[lang^="zh"] .tip-note-box{
 @media print{
   :root{--paper:#fff;--raised:#fff;--ink:#111;--ink-soft:#333;--ink-faint:#666;--line:#ddd;--line-strong:#bbb;--shadow:none;}
   body{font-size:10.2pt;line-height:1.46;background:transparent;color:#111;}
-  .site-topbar,.site-footer,.release-banner,.download-strip,.web-only,.epub-only,.print-hide,.deep-dive,.codex-refiner{display:none!important;}
+  .site-topbar,.site-footer,.release-banner,.latest-day-banner,.download-strip,.web-only,.epub-only,.print-hide,.deep-dive,.codex-refiner{display:none!important;}
   .include-deep-dive .deep-dive{display:block!important;break-before:page;page-break-before:always;page:appendix;box-sizing:border-box;border:0;margin:-.78in -.55in -.86in;padding:.78in .55in .86in;background:#f2f2ef;}
   .include-deep-dive .deep-dive>summary{display:block;cursor:auto;padding:0 0 .24in;}
   .include-deep-dive .deep-dive>summary::before{display:none;}
