@@ -56,6 +56,7 @@
   function syncTheme(){
     syncThemeButton();
     syncThemeFavicon();
+    syncThemeImages();
   }
 
   function syncThemeButton(){
@@ -80,6 +81,18 @@
     var nextHref = themeFavicon.getAttribute(effectiveTheme() === "dark" ? "data-dark-href" : "data-light-href");
     if(nextHref && themeFavicon.getAttribute("href") !== nextHref){
       themeFavicon.setAttribute("href", nextHref);
+    }
+  }
+
+  function syncThemeImages(){
+    var themedImages = document.querySelectorAll("img[data-light-src][data-dark-src]");
+    var useDark = effectiveTheme() === "dark";
+    for(var i = 0; i < themedImages.length; i++){
+      var img = themedImages[i];
+      var nextSrc = img.getAttribute(useDark ? "data-dark-src" : "data-light-src");
+      if(nextSrc && img.getAttribute("src") !== nextSrc){
+        img.setAttribute("src", nextSrc);
+      }
     }
   }
 

@@ -89,6 +89,15 @@ the supplied lesson did not ask for images.
 5. If the user accepts a third-party image, switch to `180-descent-assets` for
    bundling, credits, compression, EPUB/PDF handling, and visual verification.
 
+## Dark Theme Gate
+
+Always consider the dark theme when adding or changing visual surfaces: recap
+boxes, asides, panels, cards, figures, SVG diagrams, image-backed SVGs,
+interactive components, and generated or bundled assets. Avoid hard-coded light
+backgrounds or dark ink that turn into bright blocks at night. Use theme tokens,
+dark-mode overrides, or explicit light/dark asset variants, and verify the
+affected page with the theme toggle before treating the day as complete.
+
 ## Explanatory Tip Gate
 
 Before any new day is considered ready, review the lesson as a smart

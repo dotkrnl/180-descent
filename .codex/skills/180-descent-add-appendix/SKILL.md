@@ -131,6 +131,15 @@ because they render in a browser.
    missing shell structure, escaped `.wrap` containers, inline styles,
    day-scoped CSS/classes, and raw spacing breaks that would cause style drift.
 
+## Dark Theme Gate
+
+Always consider the dark theme when adding or changing visual surfaces: recap
+boxes, asides, panels, cards, appendix figures, SVG diagrams, image-backed SVGs,
+interactive components, and generated or bundled assets. Avoid hard-coded light
+backgrounds or dark ink that turn into bright blocks at night. Use theme tokens,
+dark-mode overrides, or explicit light/dark asset variants, and verify the
+affected page with the theme toggle before treating the appendix as complete.
+
 ## SEO Preservation Gate
 
 Appendices do not normally create separate public URLs, but they can change the

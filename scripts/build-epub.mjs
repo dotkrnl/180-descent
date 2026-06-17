@@ -271,6 +271,8 @@ ${subtitleMarkup}
     el.attr("src", epubImage.href);
     el.removeAttr("srcset");
     el.removeAttr("sizes");
+    el.removeAttr("data-light-src");
+    el.removeAttr("data-dark-src");
   });
   const contentRoot = $("#content").length ? $("#content") : $("body");
   const body = contentRoot.contents().map((_, node) => $.xml(node)).get().join("\n");

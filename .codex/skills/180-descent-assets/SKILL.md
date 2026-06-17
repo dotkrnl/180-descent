@@ -53,6 +53,18 @@ Do not add decorative images just because they are available. Use images when th
 - For SVG figures, use `role="img"` plus `aria-label`/`aria-labelledby` for
   informative diagrams, or `aria-hidden="true"` for decorative SVGs.
 
+## Dark Theme Requirements
+
+- Always consider dark theme rendering before adding or changing any image,
+  SVG, figure frame, caption surface, card, or visual component.
+- Avoid hard-coded light backgrounds, white SVG documents, and dark-only strokes
+  or text that become eye-straining or unreadable in dark mode.
+- Prefer theme-token-driven SVG/HTML/CSS diagrams. For external or image-backed
+  SVGs with fixed colors, add explicit dark variants or a proven dark-mode
+  treatment and wire them to the site's theme toggle.
+- Verify the affected page in dark mode, not only with system preference or
+  light-mode screenshots.
+
 ## Artifact Handling
 
 - Use `/assets/images/...` for local site images.
