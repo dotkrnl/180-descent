@@ -240,6 +240,12 @@
         </div>
       </div>
     </header>
+    <aside class="release-banner" aria-label="{{ "发布说明" if isZh else "Release note" }}">
+      <div class="wrap wide">
+        <strong>{{ "发布说明" if isZh else "Release note" }}</strong>
+        <span>{{ "新内容不一定每天更新。人工编辑有时会暂停发布，以便手动检查内容质量；最新发布版本也可能仍有尚未完成审阅的粗糙之处。" if isZh else "New content may not arrive every day. The human editor sometimes pauses publishing to manually check quality, and the latest release may still have sharp edges that the human has not finished reviewing yet." }}</span>
+      </div>
+    </aside>
     <main id="content">
       {{ content | safe }}
     </main>
