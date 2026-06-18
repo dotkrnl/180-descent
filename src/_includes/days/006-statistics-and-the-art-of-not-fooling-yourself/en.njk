@@ -808,15 +808,6 @@
 </div>
 
 <section>
-<p class="sec-eyebrow">What changed from the draft</p>
-<h2>The frontier is wider than “AI plus intervals”</h2>
-<div class="delta">
-<div class="box"><b>More cutting edge</b><p>Adds anytime-valid inference, conformal risk control, post-selection inference after causal discovery, data thinning/fission, differential privacy inference, Bayesian workflow, LLM benchmark contamination, and autonomous AI-scientist systems.</p></div>
-<div class="box"><b>Deeper discussion</b><p>Each method now states the exact epistemic bargain: what guarantee survives, what assumption remains, and what kind of self-deception it prevents or creates.</p></div>
-<div class="box"><b>Richer interactivity</b><p>Five worked modules trace peeking, conformal set size, PPI interval shrinkage, AI-analyst forking paths, and benchmark contamination. On the web they are live controls; in static formats they become reference tables.</p></div>
-</div>
-</section>
-<section>
 <p class="sec-eyebrow">Field map</p>
 <h2>Ten waves, sorted by the failure mode they attack</h2>
 <p class="pnote web-only">Filter the atlas by maturity. Green means the core theory is established; amber means serious and promising but still settling; red means potentially transformative and currently dangerous.</p><p class="pnote epub-only print-only">The atlas below sorts ten post-2020 methods by the failure mode they attack and labels their maturity.</p>
@@ -899,7 +890,7 @@
 <h2>Conformal prediction becomes conformal risk control</h2>
 <div class="claim"><div class="ctop"><span class="cnum">Wave 02</span><span class="chip ok" data-print="established"><i></i>Core method established</span><span class="chip hint" data-print="promising"><i></i>Risk-control frontier</span></div></div>
 <p>Conformal prediction is the simplest profound idea in the current statistics/ML interface. Train any predictive model. Hold out calibration data. Measure how wrong the model is on those held-out cases. Use the empirical quantile of those errors to form a prediction set for the next case. Under exchangeability, the set covers the true answer at the advertised rate in finite samples, regardless of whether the model is linear, neural, brilliant, or embarrassing.</p>
-<p>The draft treated conformal prediction as “intervals for any model.” That is correct but incomplete. The post-2020 frontier is broader: <em class="term">conformal risk control</em> asks not merely “does the true label fall in the set?” but “can we control a chosen risk function?” In vision and language tasks, the useful error metric may be false negative rate, graph distance, abstention error, retrieval miss-rate, or token-level F1. Conformal risk control extends the conformal idea to monotone losses and gives finite-sample control of the expected risk.</p>
+<p>A common simplification treats conformal prediction as “intervals for any model.” That is correct but incomplete. The post-2020 frontier is broader: <em class="term">conformal risk control</em> asks not merely “does the true label fall in the set?” but “can we control a chosen risk function?” In vision and language tasks, the useful error metric may be false negative rate, graph distance, abstention error, retrieval miss-rate, or token-level F1. Conformal risk control extends the conformal idea to monotone losses and gives finite-sample control of the expected risk.</p>
 <p>That matters for AI systems because the output is often not a scalar. A chatbot answer, segmentation mask, medical image region, or structured extraction is not a single yes/no label. Risk control lets you build a calibrated <strong>ship / abstain / escalate / ask for review</strong> wrapper around a black-box model. In the safest version, the model remains a prediction engine; the conformal wrapper becomes the trust policy.</p>
 <p>The hype filter: marginal coverage is real; conditional coverage is hard. Under distribution shift, the classical exchangeability guarantee weakens. Recent work handles weighted and non-exchangeable settings, conditional-style guarantees, and e-value variants, but the practitioner still has to ask whether the calibration data resemble deployment. Conformal methods make uncertainty honest. They do not make a bad deployment context safe.</p>
 </section>

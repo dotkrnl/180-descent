@@ -223,7 +223,7 @@
         cell.className = "ppv-cell " + (idx < nFalse ? "fp" : "tp");
       });
       by(A1, "fprRead").innerHTML = zh
-        ? '在这些设定下，显著发现中有 <span class="hl">' + nFalse + '%</span> 是假警报。Alpha 并不是错误发现率。'
+        ? '在这些设定下，显著发现中有 <span class="hl">' + nFalse + '%</span> 是假警报。Alpha 并不是错误发现率，也不是后验概率。'
         : 'With these settings, <strong>' + nFalse + '%</strong> of significant findings are false alarms. Alpha is not the false-discovery rate.';
     }
     prior.addEventListener("input", render);
@@ -337,7 +337,7 @@
         if (el) el.style.left = "50%";
       });
       by(A2, "ppiRead").innerHTML = zh
-        ? '只有当预测确实携带信息时，PPI 才会缩窄仅靠标注数据得到的区间。偏差校正项负责防止廉价预测变成统计上的一厢情愿。'
+        ? '只有当预测确实携带信息时，PPI 才会缩窄仅靠标注数据得到的区间。偏差校正项负责防止低成本预测变成统计上的一厢情愿。'
         : 'PPI shrinks the labeled-only interval only when predictions are informative. The rectifier is what keeps cheap predictions from becoming statistical wishful thinking.';
     });
   }
