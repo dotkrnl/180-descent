@@ -1,0 +1,393 @@
+<header class="hero wrap">
+<p class="eyebrow">Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 07 / 180</span></p>
+<h1>Information <em>Theory</em></h1>
+<p class="sub">How many yes/no questions is a fact <em>worth</em>? And what does it cost, in heat, to forget one?</p>
+
+<figure class="hero-fig">
+<svg viewBox="0 0 520 230" role="img" aria-label="A branching tree of yes/no questions halving 16 possibilities down to one.">
+<defs>
+<marker id="hb" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path></marker>
+</defs>
+<!-- columns of dots collapsing 16 -> 8 -> 4 -> 2 -> 1 -->
+<g id="qtree"></g>
+<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
+<text x="40" y="222">16</text>
+<text x="160" y="222">8</text>
+<text x="280" y="222">4</text>
+<text x="400" y="222">2</text>
+<text x="486" y="222">1</text>
+</g>
+<g font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--accent)" text-anchor="middle" letter-spacing="0.05em">
+<text x="100" y="20">Q1</text>
+<text x="220" y="20">Q2</text>
+<text x="340" y="20">Q3</text>
+<text x="443" y="20">Q4</text>
+</g>
+</svg>
+<figcaption>Four good questions pin down one of sixteen things. log₂16 = 4 bits.</figcaption>
+</figure>
+
+<p class="lede"><span class="drop">P</span>ick a whole number between 1 and 16 and hold it in your head. I'll find it with four questions, and you may only answer yes or no. "Is it 9 or higher?" — that splits the field in half. "Within that half, is it in the upper part?" — half again. Two more cuts and I have your number, every time, with room to spare. Notice what just happened: a fact that felt fuzzy and personal turned out to have an exact <em>size</em>. It was worth four questions — no more, no fewer. Four <strong>bits</strong>.</p>
+
+<p>That a piece of knowledge can be <em>weighed</em> — measured in a unit as concrete as a kilogram — is one of the strangest and most consequential ideas of the twentieth century. It arrived almost fully formed in 1948, in a paper by a unicycle-riding Bell Labs engineer named Claude Shannon. And it carries a sting in its tail that took until the 1960s to feel and until 2012 to measure in a lab: if information is a real quantity, then <em class="term">erasing</em>{% tip 'Erasure means resetting a physical memory to a standard state, so information about its previous state is lost.' %} it is a physical act with a non-negotiable price, paid in heat. Today we earn both halves of that sentence.</p>
+</header><div class="wrap">
+
+<div class="whereblock">
+<p class="label">◆ Where we are</p>
+<p>We've spent six days building an epistemic toolkit; today we discover it has a <em>currency</em>. On <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a> we met <em>surprise</em> — Monty Hall's host opening a goat door was information, not noise — and the e-value as evidence you could literally bank. Today that intuition gets its unit. On <a href="/days/003-logic-and-valid-inference/"><strong>Day 3</strong></a>, Boole's logic became physical switches (Shannon's <em>other</em> famous paper, 1938); today the same man makes <em>information</em> physical too. And the graded belief of <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a> — credence, the Bayesian brain minimizing Friston's "free energy" — turns out to be minimizing exactly the quantity we define here: expected surprise. The <em>information</em> thread, traced quietly since Day 1, finally gets its hard number. Keep it ready: it reappears as the arrow of time on <strong>Day 33</strong> and as the thing life itself seems to defy on <strong>Days 83–85</strong>.</p>
+</div>
+
+<section>
+<p class="sec-eyebrow">The model</p>
+<h2>A bit is a halving</h2>
+<p>Before Shannon, "information" was a word for newspapers and telegrams — content, meaning, gossip. Shannon's radical move was to throw the <em>meaning</em> away. For an engineer trying to push messages down a noisy wire, what matters is not what a message <em>says</em> but how much it could have said: how much uncertainty it removes. Strip out meaning and you're left with something you can count.</p>
+<p>The unit is the <em class="term">bit</em>{% tip 'A bit is the amount of information carried by one perfectly balanced yes/no distinction.' %} — short for "binary digit," a contraction coined by Shannon's colleague John Tukey in a 1947 Bell Labs memo and credited by name in Shannon's paper. One bit is the amount of information in a single fair yes/no answer: the resolution of one perfectly balanced uncertainty. Two equally likely possibilities, one bit. Sixteen, four bits, because 2⁴ = 16. The bit is a <em>halving</em>.</p>
+<p>But real choices aren't always balanced. The genius of the theory is how it handles loaded dice. Shannon defined the information content — the <em class="term">surprise</em>{% tip 'In information theory, surprise is the information carried by a particular outcome, measured as negative log probability.' %} — of an outcome with probability <em>p</em> as:</p>
+
+<div class="formula">
+<div class="eq">surprise(p) = −log<sub>2</sub> <span class="v">p</span> &nbsp; bits</div>
+<p class="cap">A sure thing (p = 1) carries zero surprise. A one-in-a-million event carries about twenty bits.</p>
+</div>
+
+<p>It clicks the moment you test it. A coin you <em>know</em> is two-headed: calling "heads" right tells you nothing — p = 1, surprise = −log₂1 = 0 bits. A fair coin: p = ½, surprise = −log₂½ = 1 bit, the textbook halving. A weather forecaster who says "100% chance of rain" in a desert, and is right, has told you almost nothing; the same words in a place where rain is rare carry real information. <strong>Rare outcomes are surprising; surprising outcomes are informative.</strong> The logarithm is what makes surprises <em>add up</em> the way intuition demands: learn two independent facts and the surprises sum, just as the possibilities multiply.</p>
+
+<h3>Entropy: the average surprise</h3>
+<p>Now zoom out from one outcome to a whole source — a language, a die, a stream of symbols. How surprising is it <em>on average</em>? That average is the crown jewel of the theory, the <em class="term">Shannon entropy</em>{% tip 'Shannon entropy is the expected surprise of a source: the average information per symbol.' %}:</p>
+
+<div class="formula">
+<div class="eq">H = − <span class="v">Σ</span> p<sub>i</sub> log<sub>2</sub> p<sub>i</sub> &nbsp; bits per symbol</div>
+<p class="cap">Each outcome's surprise, weighted by how often it happens. The expected number of yes/no questions per symbol.</p>
+</div>
+
+<p>Entropy is the irreducible core of a message — the true number of questions you'd need, on average, to nail down each symbol with the smartest possible strategy. A fair coin has entropy 1; a fair eight-sided die, 3; the letter that follows "q" in English, almost 0 (it's nearly always "u," so you barely need to ask). It is, in a precise sense, the <strong>amount of genuine choice</strong> a source exercises, or equivalently the amount of your uncertainty it resolves. The same quantity, read from two ends.</p>
+
+<div class="aside">
+<p class="h">The most useful word he never quite chose</p>
+<p>Shannon's H has the exact algebraic shape — a sum of <em>p</em> log <em>p</em> — of a quantity physicists had used since the 1870s to measure disorder: <em>entropy</em>. The story, told decades later by Myron Tribus, is that Shannon was unsure what to call his new measure, and John von Neumann told him to call it entropy for two reasons — the formula already had that name in statistical mechanics, and "nobody knows what entropy really is, so in any debate you'll have the advantage." It's probably too good to be literally true (it surfaces in print only in 1971). But the coincidence it points at is real, deep, and still argued over — and it's the hinge the entire back half of this course will swing on. Hold that thought.</p>
+</div>
+</section>
+
+<p class="web-only">Use the live dial below to bend a coin from fair to nearly fixed and watch its information content collapse.</p>
+<p class="epub-only print-only">The reference table below shows the same entropy pattern without a live dial: maximum uncertainty carries the most information, while near-certainty carries almost none.</p>
+
+<!-- ===================== INTERACTIVE 1 ===================== -->
+<div class="panel web-only information-entropy">
+<p class="ptitle">Interactive · weigh a coin</p>
+<h4>The Entropy Dial</h4>
+<p class="pnote">Bend a coin from fair to fixed and watch its information content collapse. The curve is <em>H</em> for a two-outcome source; the bars are the surprise of each face. Maximum information lives at maximum doubt — the fair coin, peak 1 bit. Certainty carries nothing.</p>
+
+<div class="ent-grid">
+<div class="ent-curve">
+<svg viewBox="0 0 360 250" role="img" aria-label="Entropy curve peaking at probability one half.">
+<!-- axes -->
+<line x1="40" y1="210" x2="340" y2="210" stroke="var(--line-strong)" stroke-width="1.2"></line>
+<line x1="40" y1="210" x2="40" y2="24" stroke="var(--line-strong)" stroke-width="1.2"></line>
+<!-- y ticks -->
+<g font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)" text-anchor="end">
+<text x="34" y="34">1.0</text>
+<text x="34" y="125">0.5</text>
+<text x="34" y="214">0</text>
+</g>
+<line x1="40" y1="30" x2="340" y2="30" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 4"></line>
+<!-- x labels -->
+<g font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)" text-anchor="middle">
+<text x="40" y="226">0</text>
+<text x="190" y="226">0.5</text>
+<text x="340" y="226">1</text>
+<text x="190" y="244" fill="var(--ink-soft)">P(heads)</text>
+</g>
+<text x="14" y="120" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)" transform="rotate(-90 14 120)" text-anchor="middle">H (bits)</text>
+<polyline id="entCurve" fill="none" stroke="var(--accent)" stroke-width="2.4" points=""></polyline>
+<line id="entGuide" x1="190" y1="30" x2="190" y2="210" stroke="var(--brass)" stroke-width="1" stroke-dasharray="2 3" opacity=".8"></line>
+<circle id="entDot" cx="190" cy="30" r="5.5" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
+</svg>
+</div>
+
+<div class="ent-readouts">
+<div>
+<div class="bigH"><span id="hVal">1.00</span><small>bits / flip</small></div>
+</div>
+<div class="surprise-rows">
+<div class="srow">heads · p=<span id="pH">0.50</span> · surprise <span id="sH">1.00</span> b
+<div class="bar" id="barH" style="width:33%"></div></div>
+<div class="srow">tails · p=<span id="pT">0.50</span> · surprise <span id="sT">1.00</span> b
+<div class="bar t" id="barT" style="width:33%"></div></div>
+</div>
+<p class="ent-verdict" id="entVerdict" aria-live="polite">A fair coin: every flip is a genuine question with no shortcut. To send 1,000 flips you need 1,000 bits — there's nothing to compress.</p>
+</div>
+</div>
+
+<div class="slider-row" style="margin-top:1.1rem;">
+<label for="pSlider">P(heads) <span class="val" id="pLabel">0.50</span></label>
+<input type="range" id="pSlider" min="1" max="99" value="50">
+</div>
+<div class="presets">
+<p class="h">Load a source</p>
+<div class="pbtns">
+<button class="pbtn" data-p="50">Fair coin</button>
+<button class="pbtn" data-p="88">Loaded (88/12)</button>
+<button class="pbtn" data-p="99">Near-certain</button>
+<button class="pbtn" data-p="5">"q is followed by u"</button>
+</div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h4>The Entropy Dial</h4>
+<p class="pnote">A two-outcome source reaches its maximum entropy when both outcomes are equally likely.</p>
+<table class="alt-table">
+<thead><tr><th>Source</th><th>P(heads)</th><th>Entropy</th><th>Reading</th></tr></thead>
+<tbody>
+<tr><td>Fair coin</td><td>0.50</td><td class="num">1.00 bit/flip</td><td>Every flip answers a full yes/no question.</td></tr>
+<tr><td>Loaded coin</td><td>0.88</td><td class="num">0.53 bits/flip</td><td>The common face is cheap to encode; the rare face is expensive.</td></tr>
+<tr><td>Near-certain source</td><td>0.99</td><td class="num">0.08 bits/flip</td><td>The outcome is almost known in advance, so little information arrives.</td></tr>
+<tr><td>"q" followed by "u"</td><td>0.95</td><td class="num">0.29 bits/symbol</td><td>Language compresses because many symbols are strongly predictable from context.</td></tr>
+</tbody>
+</table>
+</div>
+
+<section>
+<p class="sec-eyebrow">Why it mattered</p>
+<h2>The theorem that built the modern world</h2>
+<p>Defining information would have been a nice piece of bookkeeping. What made Shannon's 1948 paper — modestly titled <em>"A Mathematical Theory of Communication"</em> and later dubbed the "Magna Carta of the Information Age" — a foundation stone was a single staggering result about <em>noise</em>.</p>
+<p>Every real channel corrupts its messages: static on a line, scratches on a disc, cosmic rays flipping bits in deep space. The folk wisdom of 1948 was that noise set a grim trade-off — to communicate more reliably, you had to slow down, and perfect reliability meant a crawl toward zero. Shannon proved the folk wisdom <em>wrong</em>. Every channel, he showed, has a fixed <em class="term">capacity</em>{% tip 'Channel capacity is the maximum reliable information rate a communication channel can support under its noise conditions.' %} <em>C</em>, a ceiling in bits per second. As long as you transmit <em>below</em> C, you can drive your error rate as close to zero as you like — not by shouting louder or going slower, but by encoding cleverly, wrapping your message in just enough mathematical redundancy to let the receiver reconstruct it perfectly. Above C, reliable communication is flatly impossible.</p>
+<blockquote>There is a hard wall called capacity. Below it, near-perfect communication is always achievable. The only question is whether we're clever enough to find the code.</blockquote>
+<p>Here's the kicker: Shannon proved the good codes <em>exist</em> without saying how to build them. He left engineers a treasure map with an X but no path. Chasing that X became one of the great quests of applied mathematics — Reed–Solomon codes (which armor your CDs, QR codes, and the data beamed back from Mars), then turbo codes (1993), then the low-density parity-check codes now humming inside Wi-Fi and 5G. Each crept closer to Shannon's wall. Every time you stream a movie over a flaky connection without a single glitch, you are watching a sixty-year-old theorem be cashed in. The shorter codeword for the commoner symbol — Morse's single dot for "E," the logic behind Huffman coding (1952) — is the same principle running underneath: spend your bits where the surprise is.</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">The debate</p>
+<h2>Is information <em>physical</em>?</h2>
+<p>So far, information sounds like mathematics — abstract, weightless, the stuff of probability and logarithms. A bit seems no more physical than the number 7. For a long time that was the consensus. And then a paradox more than a century old forced the issue, and the answer turned out to be <strong>no, a bit is not weightless — and forgetting one warms the room.</strong></p>
+
+<h3>A demon at the trapdoor</h3>
+<p>In 1867 James Clerk Maxwell dreamed up a troublemaker. Picture a box of gas split by a wall, with a tiny trapdoor and a tiny intelligent being — later christened <em class="term">Maxwell's demon</em> — guarding it. The demon watches the molecules. When a fast one approaches from the right, it opens the door and lets it through to the left; when a slow one approaches from the left, it lets that through to the right. It never does any work on the molecules — just opens and shuts a frictionless door at the right moments. Slowly, patiently, it sorts hot from cold, building a temperature difference out of a uniform gas.</p>
+<p>This should be impossible. Building order from equilibrium, for free, is exactly what the <em class="term">second law of thermodynamics</em>{% tip 'The second law says, roughly, that total entropy cannot decrease in an isolated system.' %} forbids — it's the law that says coffee cools, eggs don't unscramble, and entropy never spontaneously falls. The demon seems to break the deepest bookkeeping rule in physics using nothing but <em>information</em> about which molecules are which. For a hundred years it haunted the field. Leó Szilárd sharpened it in 1929 down to a single molecule in a box, and showed the demon could extract a tidy packet of work — exactly <em>kT</em>·ln2 — from one bit of "which side is it on?" knowledge. The arrow pointed somewhere uncomfortable: information could apparently be <em>converted into energy</em>.</p>
+
+<h3>The twist: it's not knowing, it's forgetting</h3>
+<p>The resolution is one of the most beautiful pieces of reasoning in twentieth-century physics, and it came from the people who built computers. In 1961, IBM's <strong>Rolf Landauer</strong> asked a question nobody had thought to ask: is computation <em>necessarily</em> dissipative? Must shuffling bits around always cost energy? His surprising answer: <em>no</em> — almost every logical step can in principle be done with arbitrarily little energy, run as slowly and gently as you like. <em>Almost.</em> There is exactly one exception, and it is <em class="term">erasure</em>.</p>
+
+<div class="formula">
+<div class="eq">Erase one bit &nbsp;⟶&nbsp; dissipate at least &nbsp;<span class="v">kT · ln2</span></div>
+<p class="cap">≈ 2.8 × 10⁻²¹ joules (2.8 zeptojoules ≈ 0.018 eV) at room temperature. <em class="term">Landauer's principle</em>{% tip 'Landauer’s principle says irreversible erasure of one bit must dissipate at least kT ln 2 of heat.' %}, 1961.</p>
+</div>
+
+<p>Why erasure specifically? Because erasure is the one logical operation you can't run backward. If I tell you a bit is now "0," you cannot recover whether it was "0" or "1" a moment ago — that history is gone, two possible pasts crushed into one present. <em class="term">Logically irreversible operations</em>{% tip 'A logically irreversible operation maps multiple possible inputs to one output, so the input cannot be reconstructed from the output alone.' %} <em>destroy</em> distinctions, and in a physical device, distinctions live in physical states. Crush two states into one and the "lost" possibility has to go somewhere; it flows out into the surrounding world as a minimum dollop of heat, <em>kT</em>·ln2 per bit. Landauer's slogan became a rallying cry: <strong>"Information is physical."</strong></p>
+<p>In 1982 his IBM colleague <strong>Charles Bennett</strong> closed the trap on Maxwell's demon with this insight. The demon's mistake was never <em>measuring</em> the molecules — measurement, Bennett showed, can be done reversibly, for free. The demon's mistake is that it has a <em>memory</em>, and that memory fills up. To keep sorting forever, it must eventually erase old observations to make room for new ones. And each erasure pays back, as heat, precisely the entropy the demon thought it was removing from the gas. The books balance to the last joule. The second law was never in danger; the demon was just running up a tab in a ledger nobody had been reading. The cost of the demon's cleverness isn't thinking — <em>it's forgetting.</em></p>
+</section>
+
+<p class="web-only">The live machine below steps through the irreversible reset that makes the heat meter climb.</p>
+<p class="epub-only print-only">The worked example below follows the same erasure cycle as a static sequence: protect a bit, remove its distinction, force it to 0, and pay the heat cost.</p>
+
+<!-- ===================== INTERACTIVE 2 ===================== -->
+<div class="panel web-only landauer-machine">
+<p class="ptitle">Interactive · pay the toll</p>
+<h4>The Landauer Erasure Machine</h4>
+<p class="pnote">A single bit, stored as a ball in a double-welled landscape: left = 0, right = 1. To <em>reset</em> it to 0 no matter where it started, you must lower the wall, tilt the world, and trap it left again — squeezing two possible pasts into one. Step through the cycle and watch the heat meter climb to the Landauer floor. Then try the move that's <em>free</em>.</p>
+
+<div class="lm-stage">
+<svg viewBox="0 0 440 210" role="img" aria-label="A double-well potential with a ball representing one bit of memory.">
+<!-- baseline -->
+<line x1="20" y1="180" x2="420" y2="180" stroke="var(--line)" stroke-width="1"></line>
+<text x="70" y="200" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)" text-anchor="middle">0</text>
+<text x="370" y="200" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)" text-anchor="middle">1</text>
+<!-- potential well path (morphs) -->
+<path id="wellPath" d="M20,40 C90,40 70,150 130,150 C175,150 165,70 220,70 C275,70 265,150 310,150 C370,150 350,40 420,40" fill="none" stroke="var(--accent)" stroke-width="2.6"></path>
+<!-- the ball -->
+<circle id="bitBall" cx="370" cy="138" r="13" fill="var(--brass)" stroke="var(--raised)" stroke-width="2.5"></circle>
+<text id="ballLbl" x="370" y="142" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">1</text>
+<!-- heat puffs -->
+<g id="heatPuffs" opacity="0"></g>
+</svg>
+</div>
+
+<div class="lm-controls">
+<button class="lm-btn" id="lmStep">Next step</button>
+<button class="lm-btn ghost" id="lmCopy">Try "copy" instead (free)</button>
+<button class="lm-btn ghost" id="lmReset">Reset bit to 1</button>
+</div>
+
+<div class="lm-readout" aria-label="Landauer machine readout">
+<div class="lm-card">
+<p class="lh">Logical state</p>
+<p class="lv" id="lmState">bit = 1</p>
+</div>
+<div class="lm-card heat">
+<p class="lh">Heat dissipated</p>
+<p class="lv"><span id="lmHeat" aria-live="polite">0.0</span> zJ</p>
+</div>
+</div>
+<p class="lm-caption" id="lmCaption" aria-live="polite"><b>Stage 0 — a bit at rest.</b> The ball sits in the right well: this memory holds a 1. Two wells, two possible values, the wall between them keeping the bit stable. Press <b>Next step</b> to begin erasing it to 0.</p>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Worked example</p>
+<h4>The Landauer Erasure Machine</h4>
+<table class="alt-table">
+<thead><tr><th>Step</th><th>Logical state</th><th>Physical move</th><th>Thermodynamic reading</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>Bit can be 0 or 1</td><td>A barrier separates two stable wells.</td><td>No heat cost is forced by the logic.</td></tr>
+<tr><td>1</td><td>Old value becomes unprotected</td><td>Lower the barrier between wells.</td><td>This can be done reversibly in principle.</td></tr>
+<tr><td>2</td><td>Drive toward 0</td><td>Tilt the landscape so both possible starts end left.</td><td>Thermal entropy is exported to the surroundings.</td></tr>
+<tr><td>3</td><td>Bit reads 0</td><td>Raise the barrier again.</td><td>Two possible pasts have become one present.</td></tr>
+<tr><td>4</td><td>One bit erased</td><td>Reset complete.</td><td>At least <em>kT</em> ln 2 of heat, about 2.8 zJ at room temperature, has been dissipated.</td></tr>
+</tbody>
+</table>
+</div>
+
+<section class="frontier">
+<p class="sec-eyebrow">The frontier · 2026</p>
+<h2>From a thought experiment to a zeptojoule on a bench</h2>
+<p>For fifty years Landauer's principle was a piece of theory so clean it felt almost philosophical. The numbers were absurd — a few <em>zeptojoules</em>, billionths of a billionth of a joule, lost in the thermal roar of any real device. Measuring it seemed hopeless. Then, beginning in 2012, a string of breathtaking experiments dragged the principle out of the realm of argument and onto the lab bench, across system after system. Here is where the hype filter earns its keep — and here, unusually, the boldest-sounding claims are the ones that <em>survived</em>.</p>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 01</span>
+<span class="chip ok" data-print="established"><i></i>Landauer's principle · established</span>
+</div>
+<h3>The bound, measured five ways</h3>
+<p>The first direct confirmation came from <strong>Bérut and colleagues</strong> (<em>Nature</em>, 8 March 2012): a single micron-sized glass bead held in a double-well optical trap — a physical one-bit memory — was erased over and over, and the average heat released settled onto the <em>kT</em>·ln2 floor as the erasure was done more gently. Two years later <strong>Jun, Gavrilov &amp; Bechhoefer</strong> (<em>Physical Review Letters</em>, 4 Nov 2014) pushed precision higher in a feedback trap, confirming that halving the number of accessible states costs at least <em>kT</em>·ln2 — with individual cycles dipping <em>below</em> the bound, exactly as the fluctuation theorems (a Day-85 preview) predict, while the <em>average</em> holds firm.</p>
+<p>What makes it <span class="chip ok" data-print="established"><i></i>established</span> is the sheer diversity of confirmations. A single <strong>electron</strong> in a box run as a Szilárd engine (Koski et al., <em>PNAS</em>, 2014). An array of nanoscale <strong>magnets</strong> — the closest thing yet to a real digital memory bit — pinned the cost near "2.8 zJ at 300 K," measuring (4.2 ± 0.9) zJ (Hong, Lambson, Dhuey &amp; Bokor, <em>Science Advances</em>, 11 March 2016). And a single trapped <strong>calcium ion</strong> extended the principle into the fully quantum regime (Yan et al., <em>Physical Review Letters</em>, 21 May 2018). Glass, electrons, magnets, atoms — wildly different stuff, one identical floor. That's what a real law looks like.</p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 02</span>
+<span class="chip ok" data-print="established"><i></i>Information engines · established</span>
+<span class="chip hint" data-print="review"><i></i>"Fastest engine" superlative · framing</span>
+</div>
+<h3>Running the demon in reverse: information as fuel</h3>
+<p>If erasing a bit <em>costs</em> energy, can measuring one <em>buy</em> energy? Szilárd said yes on paper; the lab now says yes in fact. <strong>Toyabe and colleagues</strong> (<em>Nature Physics</em>, 2010) built the first real information engine: a Brownian particle climbing a staircase, lifted against gravity using nothing but well-timed measurements of its position and a feedback ratchet — converting pure information into mechanical work, and validating a generalized form of the Jarzynski equality in the process. <strong>Koski's single-electron Szilárd engine</strong> (2014–2015) did it with one electron and even built an "information-powered refrigerator." More recently, the <strong>Bechhoefer lab</strong> (Saha et al., <em>PNAS</em>, 18 May 2021) optimized a colloidal information ratchet whose output power, they report, rivals the molecular machinery inside living cells — a genuinely striking result, though the "world's fastest information engine" billing comes from the press release, not the peer-reviewed claim, so treat that phrase as marketing, the underlying physics as solid.</p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 03</span>
+<span class="chip ok" data-print="established"><i></i>Stochastic thermodynamics · established framework</span>
+<span class="chip hint" data-print="review"><i></i>Energy cost of AI vs. the floor · live, not a wall yet</span>
+</div>
+<h3>The new physics of information — and what it says about your GPU</h3>
+<p>All of this now lives inside a mature framework called <em class="term">stochastic thermodynamics</em>, which extends the old laws of heat to tiny, jittering systems where fluctuations dominate. Its engine room is a pair of exact results — the <strong>Jarzynski equality</strong> (1997) and the <strong>Crooks fluctuation theorem</strong> (1999) — that let you write the second law as an <em>equality</em> with a correction term, and that correction term is <em>information</em> (mutual information, to be exact). The authoritative synthesis is Parrondo, Horowitz &amp; Sagawa's review, bluntly titled <em>"Thermodynamics of information"</em> (<em>Nature Physics</em>, 2015): information sits in the ledger of physics on equal footing with work and heat. In 2024, David H. Wolpert and collaborators at the Santa Fe Institute extended this to realistic finite-time computation (<em>Physical Review X</em>, 13 May 2024), quantifying the "mismatch cost" — how much any real computer must burn <em>above</em> the Landauer minimum.</p>
+<p>Which raises the question lurking behind every data center. How far above the floor are our machines? <strong>Very</strong>. A single transistor switch dissipates on the order of 10⁻¹⁸ joules — hundreds to thousands of times the Landauer bound at the device level, and millions of times more once you count memory traffic, cooling, and power conversion. We are nowhere near the wall. That's the honest framing: the energy appetite of large-scale AI — data centers drew about 1.5% of global electricity in 2024, on track to roughly double by 2030 (IEA, <em>Energy and AI</em>, April 2025) — is, for now, an <strong>engineering and economic</strong> problem, not a fundamental-physics one. There are several orders of magnitude of headroom before the laws of thermodynamics, rather than the laws of budgets, become the binding constraint. <span class="chip hint" data-print="review"><i></i>The "AI is about to hit the Landauer limit" headline is hype</span> — but the floor is real, it is getting closer every hardware generation, and it is why reversible and neuromorphic computing are suddenly interesting again.</p>
+</div>
+</section>
+
+<!-- ===================== VISUAL 3 ===================== -->
+<div class="panel landauer-ladder">
+<p class="ptitle">Diagram · orders of magnitude</p>
+<h4>The Landauer ladder — how far we are from the floor</h4>
+<p class="pnote">Energy dissipated per bit operation, on a logarithmic scale (each step is ×10). The experiments above kissed the floor; the chips in your pocket sit a thousand-fold higher; a full system, higher still. The gap is the room we have left to improve.</p>
+<svg viewBox="0 0 640 300" role="img" aria-label="Logarithmic chart of energy per bit from the Landauer floor up to a real logic operation.">
+<!-- vertical log axis -->
+<line x1="150" y1="30" x2="150" y2="262" stroke="var(--line-strong)" stroke-width="1.2"></line>
+<!-- gridlines + decade labels (zJ) -->
+<g font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--ink-faint)" text-anchor="end">
+<!-- map: y = 262 - (log10(zJ) - log10(2.8))*scale ; we lay out by hand -->
+<line x1="150" y1="248" x2="620" y2="248" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="252">~3 zJ</text>
+<line x1="150" y1="196" x2="620" y2="196" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="200">30 zJ</text>
+<line x1="150" y1="144" x2="620" y2="144" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="148">300 zJ</text>
+<line x1="150" y1="92" x2="620" y2="92" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="96">3 aJ</text>
+<line x1="150" y1="40" x2="620" y2="40" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="44">3 fJ</text>
+</g>
+<!-- the floor band -->
+<rect x="150" y="244" width="470" height="9" fill="color-mix(in srgb,var(--ok) 30%,transparent)"></rect>
+<text x="615" y="240" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--ok)" text-anchor="end">LANDAUER FLOOR · kT·ln2</text>
+
+<!-- markers -->
+<!-- lab experiments near floor -->
+<g>
+<circle cx="250" cy="248" r="7" fill="var(--accent)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="250" y="276" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)" text-anchor="middle">lab bit</text>
+<text x="250" y="288" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="middle">(Bérut, Hong…)</text>
+</g>
+<!-- single transistor ~ few aJ -->
+<g>
+<circle cx="400" cy="88" r="7" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="400" y="76" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)" text-anchor="middle">one transistor</text>
+<text x="400" y="64" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="middle">~10³× floor</text>
+</g>
+<!-- full logic op / system ~ fJ-pJ -->
+<g>
+<circle cx="540" cy="40" r="7" fill="var(--heat)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="540" y="28" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)" text-anchor="middle">real logic op</text>
+<text x="540" y="16" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="middle">~10⁶×+ floor</text>
+</g>
+<!-- connecting arc to dramatize the gap -->
+<path d="M250,244 C330,150 340,110 400,92" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
+<path d="M400,84 C470,60 500,48 540,42" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
+<text x="333" y="135" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)" transform="rotate(-32 333 135)">← headroom →</text>
+</svg>
+<p class="ladder-key">The lab experiments aren't <em>better engineered</em> than your laptop — they're run unimaginably slowly, one bit at a time, precisely to approach the thermodynamic limit. Speed costs energy; the floor is only reached in the limit of infinite patience. Real computing trades that patience for billions of operations per second, and pays in heat.</p>
+</div>
+
+<section class="frontier">
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 04</span>
+<span class="chip bad" data-print="contested"><i></i>"It from bit" / "infodynamics" · contested–hype</span>
+</div>
+<h3>Where the idea overreaches</h3>
+<p>"Information is physical" is established. The temptation is to sand off the qualifier and declare that information is <em>fundamental</em> — that reality is, at bottom, made of bits. The physicist John Archibald Wheeler gave this its slogan in 1989: <em class="term">"it from bit,"</em> the conjecture that every particle and field derives its very existence from yes/no answers, from information. It is a gorgeous, generative idea — and it is metaphysics, not a tested result. Critics note the obvious circularity: a bit has to be encoded in <em>something</em>, so information can't be the bottom turtle. Keep it in the "stimulating speculation" drawer, clearly labeled.</p>
+<p>Further out lies genuine fringe. Melvin Vopson's "mass–energy–information equivalence" claims information has rest mass; his "second law of infodynamics" claims information entropy must <em>decrease</em> over time; his 2025 paper deriving gravity from information drew a flat verdict from physicist Sabine Hossenfelder that it "makes no sense." When a frontier is hot, it grows a fringe — and learning to tell the two apart, using exactly the hype filter we've run all course, is the skill this whole project is really about. (Per the syllabus's standing rule: any citation to a future-dated preprint is treated as fabricated and discarded on sight.)</p>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">Open questions</p>
+<h2>What's genuinely unsettled</h2>
+<ul>
+<li><strong>Is Shannon entropy the <em>same thing</em> as thermodynamic entropy, or just shaped like it?</strong> The formula is identical; whether that's a deep physical identity (the maximum-entropy view of Jaynes) or a profound analogy is still argued. This is the question Day 33 and Days 83–85 will reopen with the stakes raised to "what is life?"</li>
+<li><strong>Can the demon ever truly be beaten?</strong> A minority of physicists (Earman &amp; Norton) argue the standard exorcism is subtly circular — using the second law to derive the erasure cost, then using that cost to defend the second law. A contested 2016 result even claimed a logically irreversible gate run below <em>kT</em>·ln2. The mainstream, backed by the experiments, says no — but the foundations aren't fully closed.</li>
+<li><strong>How low can real computation actually go?</strong> Reversible computing promises to dodge erasure costs almost entirely. Nobody has built a useful machine that does. Is the Landauer floor a practical target or a permanent curiosity?</li>
+<li><strong>And the question waiting in the AI block:</strong> when a model "knows" something, is that knowledge ultimately just bits arranged to reduce a loss — and does the thermodynamic cost of those bits tell us anything about what it would take to <em>think</em>? (Days 138–145.)</li>
+</ul>
+</section>
+
+<div class="recap">
+<p class="h">◆ The day in three sentences</p>
+<dl>
+<div><dt>Big idea</dt><dd>Information is a measurable quantity — the bit, defined as expected surprise H = −Σ p log₂ p — and it is not abstract but <em>physical</em>: erasing one bit must dissipate at least kT·ln2 of heat (Landauer), which is exactly how Maxwell's demon is exorcised and the second law saved.</dd></div>
+<div><dt>Best analogy</dt><dd>A fact's size is the number of yes/no questions it's worth; and a memory is a ball in a double well, so resetting it to a standard state — crushing two possible pasts into one present — is the act that leaks heat into the room.</dd></div>
+<div><dt>Live controversy</dt><dd>Whether Shannon's entropy and thermodynamic entropy are one thing or two; whether the demon is truly beaten; and how far the grand claim "information is fundamental" (Wheeler's "it from bit") overreaches into hype.</dd></div>
+</dl>
+<p class="threads"><b>Threads today ›</b> information (gets its hard unit at last — the bit, surprise, entropy) · energy (Landauer's kT·ln2 ties bits to heat) · computation (the thermodynamic cost of erasing, the demon as a memory device) — with first hints of emergence (a law that holds across glass, electrons, magnets, atoms) and a setup for evolution &amp; life on Days 83–85.</p>
+</div>
+
+<div class="tomorrow">
+<p class="h">Tomorrow <span class="arrow">→</span> Day 08</p>
+<h3>Complexity &amp; Emergence</h3>
+<p>Today a single number captured a whole source. Tomorrow we ask what happens when simple parts, following simple rules, conjure behavior that none of them contains — a murmuration of starlings wheeling like one animal, a market, a mind. We'll separate <em>weak</em> emergence (surprising but derivable) from <em>strong</em> (genuinely irreducible?), meet the brand-new attempts to <em>measure</em> complexity — and apply today's hardened hype filter to Assembly Theory, a 2020s claim that's drawn both excitement and serious fire. Bring your bits; complexity is, in part, information that resists compression.</p>
+</div>
+
+<hr class="div">
+
+<section class="sources">
+<p class="sec-eyebrow">Evidence</p>
+<h2>Sources &amp; further reading</h2>
+<ol>
+<li>Shannon, C. E. (1948). "A Mathematical Theory of Communication." <em>Bell System Technical Journal</em> 27: 379–423 (July) &amp; 623–656 (October). <span class="meta">— the founding paper: bit, entropy, channel capacity, noisy-channel coding theorem.</span> <a href="https://doi.org/10.1002/j.1538-7305.1948.tb01338.x">doi.org/10.1002/j.1538-7305.1948.tb01338.x</a></li>
+<li>Shannon, C. E. (1938). "A Symbolic Analysis of Relay and Switching Circuits." <em>Trans. AIEE</em> 57(12): 713–723 (MIT master's thesis, 1937). <span class="meta">— Boolean logic in physical switches; the Day-3 bridge.</span></li>
+<li>Soni, J. &amp; Goodman, R. (2017). <em>A Mind at Play: How Claude Shannon Invented the Information Age.</em> Simon &amp; Schuster. <span class="meta">— biography; the "Magna Carta" framing and the Tukey "bit" coinage.</span></li>
+<li>Landauer, R. (1961). "Irreversibility and Heat Generation in the Computing Process." <em>IBM Journal of Research and Development</em> 5(3): 183–191. <span class="meta">— the kT·ln2 erasure bound. doi:10.1147/rd.53.0183.</span> <a href="https://doi.org/10.1147/rd.53.0183">doi.org/10.1147/rd.53.0183</a></li>
+<li>Bennett, C. H. (1982). "The Thermodynamics of Computation — a Review." <em>International Journal of Theoretical Physics</em> 21(12): 905–940. <span class="meta">doi:10.1007/BF02084158; erasure, not measurement, exorcises Maxwell's demon.</span> <a href="https://doi.org/10.1007/BF02084158">doi.org/10.1007/BF02084158</a></li>
+<li>Szilárd, L. (1929). "Über die Entropieverminderung in einem thermodynamischen System bei Eingriffen intelligenter Wesen." <em>Zeitschrift für Physik</em> 53: 840–856. <span class="meta">doi:10.1007/BF01341281; the single-molecule engine; one bit ↔ kT·ln2 of work.</span> <a href="https://doi.org/10.1007/BF01341281">doi.org/10.1007/BF01341281</a></li>
+<li>Bérut, A., Arakelyan, A., Petrosyan, A., Ciliberto, S., Dillenschneider, R. &amp; Lutz, E. (2012). "Experimental verification of Landauer's principle linking information and thermodynamics." <em>Nature</em> 483: 187–189 (8 March 2012). <span class="meta">doi:10.1038/nature10872.</span> <a href="https://doi.org/10.1038/nature10872">doi.org/10.1038/nature10872</a></li>
+<li>Jun, Y., Gavrilov, M. &amp; Bechhoefer, J. (2014). "High-Precision Test of Landauer's Principle in a Feedback Trap." <em>Physical Review Letters</em> 113: 190601 (4 Nov 2014). <span class="meta">doi:10.1103/PhysRevLett.113.190601.</span> <a href="https://doi.org/10.1103/PhysRevLett.113.190601">doi.org/10.1103/PhysRevLett.113.190601</a></li>
+<li>Hong, J., Lambson, B., Dhuey, S. &amp; Bokor, J. (2016). "Experimental test of Landauer's principle in single-bit operations on nanomagnetic memory bits." <em>Science Advances</em> 2(3): e1501492 (11 March 2016). <span class="meta">doi:10.1126/sciadv.1501492; measured (4.2 ± 0.9) zJ; "2.8 zJ at 300 K."</span> <a href="https://doi.org/10.1126/sciadv.1501492">doi.org/10.1126/sciadv.1501492</a></li>
+<li>Yan, L. L. et al. (2018). "Single-Atom Demonstration of the Quantum Landauer Principle." <em>Physical Review Letters</em> 120: 210601 (21 May 2018). <span class="meta">— a trapped ⁴⁰Ca⁺ ion; the quantum regime.</span> <a href="https://doi.org/10.1103/PhysRevLett.120.210601">link.aps.org/doi/10.1103/PhysRevLett.120.210601</a></li>
+<li>Toyabe, S., Sagawa, T., Ueda, M., Muneyuki, E. &amp; Sano, M. (2010). "Experimental demonstration of information-to-energy conversion and validation of the generalized Jarzynski equality." <em>Nature Physics</em> 6: 988–992. <span class="meta">doi:10.1038/nphys1821.</span> <a href="https://doi.org/10.1038/nphys1821">doi.org/10.1038/nphys1821</a></li>
+<li>Koski, J. V., Maisi, V. F., Pekola, J. P. &amp; Averin, D. V. (2014). "Experimental realization of a Szilard engine with a single electron." <em>PNAS</em> 111(38): 13786–13789. <span class="meta">doi:10.1073/pnas.1406966111.</span> <a href="https://doi.org/10.1073/pnas.1406966111">doi.org/10.1073/pnas.1406966111</a> See also Koski et al., <em>PRL</em> 113: 030601 (2014) and <em>PRL</em> 115: 260602 (2015).</li>
+<li>Saha, T. K., Lucero, J. N. E., Ehrich, J., Sivak, D. A. &amp; Bechhoefer, J. (2021). "Maximizing power and velocity of an information engine." <em>PNAS</em> 118(20): e2023356118 (18 May 2021). <span class="meta">doi:10.1073/pnas.2023356118; optimized colloidal information ratchet ("fastest" is press framing).</span> <a href="https://doi.org/10.1073/pnas.2023356118">doi.org/10.1073/pnas.2023356118</a></li>
+<li>Jarzynski, C. (1997). "Nonequilibrium Equality for Free Energy Differences." <em>Physical Review Letters</em> 78: 2690. <span class="meta">doi:10.1103/PhysRevLett.78.2690.</span> <a href="https://doi.org/10.1103/PhysRevLett.78.2690">doi.org/10.1103/PhysRevLett.78.2690</a> · Crooks, G. E. (1999). "Entropy production fluctuation theorem and the nonequilibrium work relation for free energy differences." <em>Physical Review E</em> 60: 2721. <span class="meta">doi:10.1103/PhysRevE.60.2721.</span> <a href="https://doi.org/10.1103/PhysRevE.60.2721">doi.org/10.1103/PhysRevE.60.2721</a></li>
+<li>Parrondo, J. M. R., Horowitz, J. M. &amp; Sagawa, T. (2015). "Thermodynamics of information." <em>Nature Physics</em> 11: 131–139. <span class="meta">doi:10.1038/nphys3230.</span> <a href="https://doi.org/10.1038/nphys3230">doi.org/10.1038/nphys3230</a></li>
+<li>Manzano, G., Kardeş, G., Roldán, É. &amp; Wolpert, D. H. (2024). "Thermodynamics of Computations with Absolute Irreversibility, Unidirectional Transitions, and Stochastic Computation Times." <em>Physical Review X</em> 14: 021026 (13 May 2024). <span class="meta">doi:10.1103/PhysRevX.14.021026; the "mismatch cost" above the Landauer floor.</span> <a href="https://doi.org/10.1103/PhysRevX.14.021026">doi.org/10.1103/PhysRevX.14.021026</a></li>
+<li>International Energy Agency (2025). <em>Energy and AI.</em> (April 2025). <span class="meta">— data-center electricity ≈1.5% of global demand in 2024 (~415 TWh), projected ~945 TWh by 2030.</span> <a href="https://www.iea.org/reports/energy-and-ai">iea.org/reports/energy-and-ai</a></li>
+<li>Wheeler, J. A. (1990). "Information, Physics, Quantum: The Search for Links." In <em>Complexity, Entropy, and the Physics of Information.</em> <span class="meta">— "it from bit" (CONTESTED metaphysics).</span></li>
+<li>Vopson, M. M. (2023). "The second law of infodynamics and its implications for the simulated universe hypothesis." <em>AIP Advances</em> 13: 105308. <span class="meta">doi:10.1063/5.0173278; CONTESTED/HYPE.</span> <a href="https://doi.org/10.1063/5.0173278">doi.org/10.1063/5.0173278</a> See also Vopson (2025), "Is gravity evidence of a computational universe?", <em>AIP Advances</em> 15: 045035, <span class="meta">doi:10.1063/5.0264945, and Sabine Hossenfelder's 2025 public critique.</span> <a href="https://doi.org/10.1063/5.0264945">doi.org/10.1063/5.0264945</a></li>
+</ol>
+</section>
+
+<p class="endcap">End of Day 07 · <span class="gleam">173 descents remain</span></p>
+
+</div>
