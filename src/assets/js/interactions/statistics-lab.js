@@ -714,7 +714,7 @@
       if (cherry) {
         heading.textContent = isZh ? "被动机驱使的作者会这样报告" : "What a motivated author reports";
         body.innerHTML = n === 1
-          ? (isZh ? '现在只有一个基线规范，还没有可供挑选的多元宇宙。先开启一个或多个分析选择，再看「挑选结果」如何改变故事。' : 'With only the baseline specification, there is no multiverse to cherry-pick yet. Turn on one or more analytic choices, then watch how cherry-picking changes the story.')
+          ? (isZh ? '现在只有一个基线规范，还没有可供择优报告的多元宇宙。先开启一个或多个分析选择，再看「择优报告」如何改变故事。' : 'With only the baseline specification, there is no multiverse to cherry-pick yet. Turn on one or more analytic choices, then watch how cherry-picking changes the story.')
           : best
           ? (isZh
             ? '「我们发现 X 与 Y 存在显著关联，r = ' + best.r.toFixed(2) + '，p = ' + best.p.toFixed(3) + '。」这是真的，但只对 ' + n + ' 套合理分析设定中的一套成立。其他 ' + (n - 1) + ' 套设定不会出现在论文里。' + (pressed(buttons.cov) && !best.choices.cov ? ' 注意：这个被挑中的路径没有控制 W。' : '')
