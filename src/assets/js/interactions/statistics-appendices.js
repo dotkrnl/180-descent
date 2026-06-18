@@ -388,7 +388,7 @@
       by(A2, "benchPublicPct").textContent = Math.round(publicScore) + "%";
       by(A2, "benchGapPct").textContent = Math.round(gap) + "%";
       by(A2, "benchRead").innerHTML = zh
-        ? '公开榜单显示 <span class="hl">' + Math.round(publicScore) + '%</span>，而隐藏留出集仍接近 <span class="hl">' + Math.round(hidden) + '%</span>。请把排行榜名次当作带噪声的估计。'
+        ? '公开榜单显示 <span class="hl">' + Math.round(publicScore) + '%</span>，而隐藏测试集仍接近 <span class="hl">' + Math.round(hidden) + '%</span>。请把排行榜名次当作带噪声的估计。'
         : 'The public board reads <b>' + Math.round(publicScore) + '%</b>, while the hidden holdout stays near <b>' + Math.round(hidden) + '%</b>. Treat leaderboard rank like a noisy estimate.';
     });
   }

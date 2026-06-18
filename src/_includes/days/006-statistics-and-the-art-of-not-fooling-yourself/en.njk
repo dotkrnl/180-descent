@@ -67,7 +67,7 @@
 </figure>
 <p>Feynman was talking about a kind of integrity that no formula can supply. The cruel twist of modern statistics is that the formulas can still be correct, but after flexible searching they no longer protect the nominal error rate. They lend the warm authority of mathematics to whatever you were already hoping to find.</p>
 <p>The villain has a clinical name: <em class="term">researcher degrees of freedom</em>{% tip 'Researcher degrees of freedom are the legitimate-looking analytic choices a researcher can make about data collection, cleaning, modeling, and reporting.' %}. Every real analysis hides dozens of small, defensible decisions. Which outliers to exclude? Should you control for age? Sex? Both? Do you stop collecting data now, or run twenty more participants? You measured three outcomes — which do you report? Each choice, taken alone, is innocent. Taken together, made <em>after</em> you've glanced at how the numbers are leaning, they become a machine for minting false discoveries.</p>
-<p>Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved it with the Beatles. By simulation, they showed that bundling just four ordinary degrees of freedom — peeking at the data and adding more if needed; choosing between two related outcome measures; adding or dropping a covariate like gender; dropping one of three experimental conditions — can inflate your chance of a false positive from the advertised <strong>5%</strong> to as high as <strong>61%</strong>. Flip enough innocent switches and a coin-flip's worth of noise becomes a near-certainty of "success."</p>
+<p>Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved it with the Beatles. By simulation, they showed that bundling just four ordinary degrees of freedom — peeking at the data and adding more if needed; choosing between two related outcome measures; splitting the sample by a variable like gender; dropping one of three experimental conditions — can inflate your chance of a false positive from the advertised <strong>5%</strong> to as high as <strong>61%</strong>. Flip enough innocent switches and a coin-flip's worth of noise becomes a near-certainty of "success."</p>
 <p class="web-only">The next panel lets you run that machine yourself — with a live simulation, not a canned animation. Every "study" inside it is pure static, generated with no real effect whatsoever. Watch what your freedom does to the truth.</p>
 <p class="epub-only print-only">The reference table below shows the same machine in static form: each added research freedom gives pure noise another route to look like a discovery.</p>
 </section>
@@ -76,7 +76,7 @@
 <div class="panel web-only statistics-factory">
 <p class="ptitle">Interactive · live Monte-Carlo simulation</p>
 <h3>The False-Positive Factory</h3>
-<p class="pnote">Each run simulates <strong>~1,500 experiments</strong> in which there is <em>no real effect at all</em> — two groups drawn from the same distribution. With no tricks, about 5% will cross <em>p</em> &lt; .05 by chance (that's what 5% <em>means</em>). Now hand yourself some researcher degrees of freedom and re-run. The factory simply reports the prettiest result it can find among the analyses you've allowed.</p>
+<p class="pnote">Each run simulates <strong>~1,500 experiments</strong> in which there is <em>no real effect at all</em> — two groups drawn from the same distribution. If the null is true, the model assumptions hold, and you run one pre-specified test, about 5% will still cross <em>p</em> &lt; .05 by chance. Now hand yourself some researcher degrees of freedom and re-run. The factory simply reports the prettiest result it can find among the analyses you've allowed.</p>
 
 <div class="fp-grid">
 <div>
@@ -88,7 +88,7 @@
 <span class="knob"></span><span class="lab"><b>Optional stopping</b><span>Not significant at n=20? Add 10 more and re-test</span></span>
 </button>
 <button class="swbtn" id="fp-cov" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><b>A flexible covariate</b><span>Try it overall, then split by "gender" too</span></span>
+<span class="knob"></span><span class="lab"><b>Flexible subgroup analysis</b><span>Try it overall, then split by "gender" too</span></span>
 </button>
 <button class="swbtn" id="fp-drop" role="switch" aria-checked="false">
 <span class="knob"></span><span class="lab"><b>Drop a condition</b><span>Run three groups, report the best pair</span></span>
@@ -108,7 +108,7 @@
 </div>
 <div class="fp-bar"><div class="fill" id="fp-fill"></div><div class="honest"></div></div>
 <div class="fp-scale"><span>0%</span><span>↑ honest 5%</span><span>~65%</span></div>
-<div class="fp-read" id="fp-read">No tricks enabled. One test, one answer. This is the rate the system promises — and almost the only condition under which it keeps that promise.</div>
+<div class="fp-read" id="fp-read">No tricks enabled. If the null is true and the assumptions hold, one pre-specified test gives the error rate the system promises.</div>
 </div>
 </div>
 </div>
@@ -122,7 +122,7 @@
 <tbody>
 <tr><td>Two outcome measures</td><td>Measure two related results and report the one that works.</td><td>Noise gets two chances to cross <em>p</em> &lt; .05.</td></tr>
 <tr><td>Optional stopping</td><td>Peek at n=20, then add participants if needed.</td><td>The stopping rule itself becomes another path through the data.</td></tr>
-<tr><td>Flexible covariate</td><td>Try the overall result and subgroup splits.</td><td>Legitimate controls become multiple comparisons when chosen after seeing the data.</td></tr>
+<tr><td>Flexible subgroup analysis</td><td>Try the overall result and subgroup splits.</td><td>Legitimate subgroup checks become multiple comparisons when chosen after seeing the data.</td></tr>
 <tr><td>Drop a condition</td><td>Run three groups, then report the best pair.</td><td>The reported contrast is selected because it looks best.</td></tr>
 </tbody>
 </table>

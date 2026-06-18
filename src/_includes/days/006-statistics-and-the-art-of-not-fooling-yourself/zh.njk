@@ -10,8 +10,8 @@
 </defs>
 <rect x="8" y="10" width="624" height="284" rx="8" fill="var(--raised)" stroke="var(--line)"></rect>
 <g font-family="IBM Plex Mono,monospace">
-<text x="32" y="42" font-size="12" letter-spacing="1.6" fill="var(--accent)">分岔路径的花园</text>
-<text x="32" y="66" font-size="11" fill="var(--ink-faint)">同一份数据，许多种合理候选设定，一个诱人的标题</text>
+<text x="32" y="42" font-size="12" letter-spacing="1.6" fill="var(--accent)">分岔路径花园</text>
+<text x="32" y="66" font-size="11" fill="var(--ink-faint)">同一份数据，多套合理的分析设定，一个诱人的标题</text>
 <rect x="32" y="102" width="128" height="100" rx="8" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
 <text x="96" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">同一数据</text>
 <text x="96" y="148" text-anchor="middle" font-size="11" fill="var(--ink-faint)">只有噪声</text>
@@ -41,10 +41,10 @@
 <text x="536" y="187" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .44</text>
 <text x="536" y="209" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .78</text>
 <rect x="450" y="246" width="172" height="28" rx="6" fill="color-mix(in srgb,var(--contested) 10%,var(--raised))" stroke="var(--contested)"></rect>
-<text x="536" y="265" text-anchor="middle" font-size="11" font-weight="700" fill="var(--contested)">被报告分支</text>
+<text x="536" y="265" text-anchor="middle" font-size="11" font-weight="700" fill="var(--contested)">最终报告的分支</text>
 </g>
 </svg>
-<figcaption>分岔路径的花园。数据纯粹是噪声——但只要分支足够多，几乎总会有一条通向「发现」。危险在于看见数据之后再选择。</figcaption>
+<figcaption>分岔路径花园。数据只是噪声，但分支一多，总会有一条看起来像「发现」。真正的危险，是看过数据后再决定走哪条路。</figcaption>
 </figure>
 
 <p class="lede dropcap">2011 年，三位心理学家故意设计了一项荒诞的研究。他们让 20 名本科生分别听披头士的《当我六十四岁》（When I'm Sixty-Four）或一首对照曲目，再回答一系列问题，其中包括出生日期。经过一套看似普通的统计分析，他们得到一个显著结果：听这首歌的人按出生日期计算竟然年轻了约一岁半，<span class="hl">p = .04</span>。</p>
@@ -54,7 +54,8 @@
 
 <div class="whereblock">
 <p class="label">◆ 我们身在何处</p>
-<p>在 <a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>，我们通过一组触目惊心的数字了解了复现危机（原始心理学研究有 97% 报告显著效应，但复现实验中只有 36% 得到统计显著结果），并提到了 <span class="term">p 值操纵</span>（p-hacking）{% tip 'p 值操纵意味着尝试足够多的分析方式、剔除标准、结果指标或停止规则，直到随机噪声看起来具有统计学显著性。' %}，但尚未深入探讨。今天，我们将打开这个黑箱。这是危机背后的核心统计机制，也是 <a href="/zh/days/001-what-is-knowledge/">第 1 日</a> 提到的盖梯尔担忧（通过运气而非必然联系获得的真实信念）在整个科学文献规模上的体现。我们将深入理解 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 的教训：p 值并不是「零假设为真的概率」（这种混淆本质上是伪装后的基础率谬误）；并重温 <a href="/zh/days/005-causation/">第 5 日</a> 的警告：选择「控制哪些变量」本身就是路径的分岔口。今日线索：信息（信号与噪声）和计算（作为易错推理机的实验室），以及对涌现的初步预览——科学作为一个比任何单个分析师都更宏大的错误修正系统。</p>
+<p>在 <a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>，我们通过一组触目惊心的数字了解了复现危机：原始心理学研究中，97% 报告了统计显著效应；在复现实验中，只有 36% 得到了同方向的统计显著结果。我们当时提到过 <span class="term">p 值操纵</span>（p-hacking）{% tip 'p 值操纵意味着尝试足够多的分析方式、剔除标准、结果指标或停止规则，直到随机噪声看起来具有统计学显著性。' %}，但还没有解释它究竟如何发生。今天就来打开这个黑箱。</p>
+<p>这也是 <a href="/zh/days/001-what-is-knowledge/">第 1 日</a>「盖梯尔问题」的科学版：一个结论可能碰巧为真，却不是通过可靠方法得到。<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 提醒我们，p 值并不是零假设为真的概率；<a href="/zh/days/005-causation/">第 5 日</a> 则说明，选择控制哪些变量，本身就是分析路径的一部分。今日线索：信息（信号与噪声）和计算（作为易错推理机的实验室），以及对涌现的初步预览——科学作为一个超越任何单个分析者的错误修正系统。</p>
 </div>
 
 <section>
@@ -65,10 +66,10 @@
 <img src="/assets/images/open-license/richard-feynman-1959.jpg" width="899" height="900" alt="1959 年，理查德·费曼站在黑板前。">
 <figcaption>1959 年，理查德·费曼站在黑板前。上方引文出自他 1974 年在加州理工学院关于「货物崇拜科学」的毕业典礼演讲。<span class="meta">图片：<em>The Big T</em> 1959，经 Wikimedia Commons，美国公有领域。</span></figcaption>
 </figure>
-<p>费曼谈论的是公式无法替代的学术诚实。现代统计学最残酷的转折在于：公式本身仍然可能是正确的，但在灵活搜索之后，它们已经不再保护名义错误率。它们会给你想看到的结论披上数学权威的外衣。</p>
-<p>这个陷阱有个学名：<span class="term">研究者自由度</span>（researcher degrees of freedom）{% tip '研究者自由度是指研究者在数据收集、清理、建模和报告过程中，可以做出的各种看起来合情合理的分析选择。' %}。每一项真实分析背后都隐藏着几十个微小但看似合理的决定。剔除哪些异常值？是否控制年龄？性别？两者都控制？是现在停止收集数据，还是再找 20 个参与者？你测量了三个指标，该报告哪一个？每个选择单独看都无可厚非。但如果是在瞥了一眼数据走向<span class="hl">之后</span>才做决定，它们加在一起就成了一台伪造「发现」的机器。</p>
-<p>西蒙斯、纳尔逊和西蒙逊在用披头士做实验之前，先用模拟展示了这一点。通过模拟，他们展示了仅仅捆绑四个普通的「自由度」——偷看数据并在需要时增加样本；在两个相关的结果指标中二选一；添加或删去性别等协变量；剔除三个实验条件中的一个——就能将假阳性的概率从宣称的 <span class="hl">5%</span> 抬升至高达 <span class="hl">61%</span>。只要拨动足够多本身无可厚非的开关，纯粹的随机噪声就能变成近乎确定的「成功」。</p>
-<p class="web-only">接下来的面板将让你亲自运行这台机器——这是一个实时的蒙特卡洛模拟，而非预设的动画。其中的每一项「研究」都是纯噪声，没有任何真实效应。观察你的「自由」对真相做了什么。</p>
+<p>费曼谈论的是公式无法替代的、求真所需的诚实。现代统计学最残酷的转折在于：公式本身仍然可能是正确的，但在灵活搜索之后，错误率便无法再维持在名义水平。它们会给你想看到的结论披上数学权威的外衣。</p>
+<p>这个陷阱有个学名：<span class="term">研究者自由度</span>（researcher degrees of freedom）{% tip '研究者自由度是指研究者在数据收集、清理、建模和报告过程中，可以做出的各种看起来合情合理的分析选择。' %}。每项实际研究背后都隐藏着几十个微小但看似合理的决定。剔除哪些异常值？是否控制年龄？性别？两者都控制？是现在停止收集数据，还是再招募 20 名参与者？你测量了三个指标，该报告哪一个？每个选择单独看都无可厚非。但如果是在看过数据后才做决定，它们加在一起就成了一台伪造「发现」的机器。</p>
+<p>西蒙斯、纳尔逊和西蒙逊在用披头士做实验之前，先用模拟展示了这一点。通过模拟，他们展示了把四种常见的研究者自由度组合起来——偷看数据并在需要时增加样本；在两个相关的结果指标中二选一；按性别等变量拆分子组；剔除三个实验条件中的一个——就能将假阳性的概率从宣称的 <span class="hl">5%</span> 抬升至高达 <span class="hl">61%</span>。只要拨动足够多本身无可厚非的开关，纯粹的随机噪声就能变成近乎确定的「成功」。</p>
+<p class="web-only">接下来的面板将让你亲自运行这台机器——这是一个实时的蒙特卡洛模拟，而非预设的动画。其中的每一项「研究」都是纯噪声，没有任何真实效应。看看这些自由度会怎样扭曲结果。</p>
 <p class="epub-only print-only">下方参考表以静态形式展示同一台机器：每增加一种研究自由度，纯噪声就多了一条看起来像「发现」的路径。</p>
 </section>
 
@@ -76,7 +77,7 @@
 <div class="panel web-only statistics-factory">
 <p class="ptitle">互动 · 实时蒙特卡洛模拟</p>
 <h3>假阳性工厂</h3>
-<p class="pnote">每次运行都会模拟 <span class="hl">约 1500 次</span>完全没有真实效应的实验——两组数据均从同一分布中抽取。在不开启灵活分析的情况下，大约会有 5% 的实验仅凭运气跨过 <span class="hl">p < .05</span> 的门槛（这就是 5% 的定义）。现在，给自己一些「研究者自由度」并重新运行。工厂会在所有被允许的分析中，报告它能找到的最漂亮的结果。</p>
+<p class="pnote">每次运行都会模拟 <span class="hl">约 1500 次</span>完全没有真实效应的实验——两组数据均从同一分布中抽取。如果零假设成立、模型假设满足，而且你只做一项预先指定的检验，约 5% 的实验仍会偶然得到 <span class="hl">p < .05</span>。现在，给自己一些「研究者自由度」并重新运行。工厂会在所有被允许的分析中，报告它能找到的最有利结果。</p>
 
 <div class="fp-grid">
 <div>
@@ -85,10 +86,10 @@
 <span class="knob"></span><span class="lab"><span>两个结果指标</span><span>测量两个相关指标，只报告「成功」的那个</span></span>
 </button>
 <button class="swbtn" id="fp-stop" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><span>选择性停止</span><span>样本量 n=20 时不显著？再加 10 个试试</span></span>
+<span class="knob"></span><span class="lab"><span>可选停止</span><span>样本量 n=20 时不显著？再加 10 个试试</span></span>
 </button>
 <button class="swbtn" id="fp-cov" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><span>灵活的协变量</span><span>先看整体结果，再按「性别」拆分试试</span></span>
+<span class="knob"></span><span class="lab"><span>灵活的子组分析</span><span>先看整体结果，再按「性别」拆分试试</span></span>
 </button>
 <button class="swbtn" id="fp-drop" role="switch" aria-checked="false">
 <span class="knob"></span><span class="lab"><span>剔除实验条件</span><span>运行三个小组，只报告表现最好的那一对</span></span>
@@ -108,7 +109,7 @@
 </div>
 <div class="fp-bar"><div class="fill" id="fp-fill"></div><div class="honest"></div></div>
 <div class="fp-scale"><span>0%</span><span>↑ 诚实的 5%</span><span>~65%</span></div>
-<div class="fp-read" id="fp-read">未启用灵活分析。一次预先指定的检验，只报告一个结果。这是统计系统承诺的概率——也几乎是它能兑现承诺的唯一条件。</div>
+<div class="fp-read" id="fp-read">未启用灵活分析。如果零假设成立且模型假设满足，一次预先指定的检验会给出统计系统承诺的错误率。</div>
 </div>
 </div>
 </div>
@@ -121,8 +122,8 @@
 <thead><tr><th>分析自由度</th><th>具体变动</th><th>为何会抬高假阳性率</th></tr></thead>
 <tbody>
 <tr><td>两个结果指标</td><td>测量两个相关结果，只报告显著的那个。</td><td>噪声获得了两次跨过 p &lt; .05 的机会。</td></tr>
-<tr><td>选择性停止</td><td>在 n=20 时观察，需要时再增加参与者。</td><td>停止规则本身成了数据中的另一条路径。</td></tr>
-<tr><td>灵活的协变量</td><td>尝试整体结果及子组拆分。</td><td>如果在看到数据后才选择，合法的控制变量就变成了多次比较。</td></tr>
+<tr><td>可选停止</td><td>在 n=20 时观察，需要时再增加参与者。</td><td>停止规则本身成了数据中的另一条路径。</td></tr>
+<tr><td>灵活的子组分析</td><td>尝试整体结果及子组拆分。</td><td>如果在看到数据后才选择，合理的子组检查就变成了多次比较。</td></tr>
 <tr><td>剔除实验条件</td><td>运行三个小组，报告最好的一对。</td><td>报告的对比结果是被特意挑选出来的。</td></tr>
 </tbody>
 </table>
@@ -146,7 +147,7 @@
   <figcaption>阴影尾部就是 p 值：在零模型下，出现如此极端或更极端结果的频率。<span class="meta">改编自 Repapetilto 与 Chen-Pan Liao，经 Wikimedia Commons，CC BY-SA 3.0。</span></figcaption>
 </figure>
 
-<p>请读两遍。它是关于「给定假设下的数据」的陈述——写作 <span class="hl">P(数据 | 零假设)</span>。它绝对不是关于「给定数据下的假设」的陈述，即 <span class="hl">P(零假设 | 数据)</span>。混淆这两者正是 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 在患病测试问题中警告过的「逆概率」错误：P(阳性 | 患病) 并不等于 P(患病 | 阳性)，而在没有先验概率的情况下，无论你盯着结果看多久，都无法将前者转化为后者。下面六种误读尤其常见——摘自格陵兰（Greenland）及其同事列出的 25 种常见误读清单：</p>
+<p>请读两遍。它是关于「给定假设下的数据」的陈述——写作 <span class="hl">P(数据 | 零假设)</span>。它绝对不是关于「给定数据下的假设」的陈述，即 <span class="hl">P(零假设 | 数据)</span>。混淆这两者正是 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 在患病测试问题中警告过的「逆概率」错误：P(阳性 | 患病) 并不等于 P(患病 | 阳性)，而在没有先验概率的情况下，无论你盯着结果看多久，都无法将前者转化为后者。下面六种误读尤其常见——摘自格陵兰（Greenland）及其同事列出的 25 种常见误读：</p>
 
 <div class="aside">
 <p class="h">人们最常混淆的三种概率</p>
@@ -165,12 +166,12 @@
 <p>最后一种误读尤其隐蔽，因此值得单独展开一节。</p>
 
 <h3>显著性不等于大小：认识效应量</h3>
-<p>p 值会把效应量、噪声、样本量和模型假设纠缠在一起。只要样本量足够大，即使是微小到毫无意义的差异也能跨过显著性门槛。因此，规范的统计报告应同时给出 <span class="term">效应量</span>（effect size）{% tip '效应量报告的是差异或关联的大小，而不只是它是否跨过了显著性门槛。' %}：例如 <span class="term">Cohen’s d</span>{% tip 'Cohen’s d 以标准差为单位表示两个平均值之间的差异。' %}（以标准差为单位的均值差异）或相关系数 <span class="hl">r</span>。雅各布·科恩（Jacob Cohen）提供了粗略的分级——d ≈ 0.2 为小，0.5 为中，0.8 为大——同时也坦然承认这些分级是人为规定的：它们是供理性读者使用的惯例，而不是自然边界。重点不在于标签，而在于：只报告 p 值而不报告效应量，几乎无法判断结果是否具有实际意义。</p>
+<p>p 值由效应量、噪声、样本量和模型假设共同决定。只要样本量足够大，即使是微小到毫无意义的差异也能跨过显著性门槛。因此，规范的统计报告应同时给出 <span class="term">效应量</span>（effect size）{% tip '效应量报告的是差异或关联的大小，而不只是它是否跨过了显著性门槛。' %}：例如 <span class="term">Cohen’s d</span>{% tip 'Cohen’s d 以标准差为单位表示两个平均值之间的差异。' %}（以标准差为单位的均值差异）或相关系数 <span class="hl">r</span>。雅各布·科恩（Jacob Cohen）提供了粗略的分级——d ≈ 0.2 为小，0.5 为中，0.8 为大——同时也坦然承认这些只是经验性惯例，并非自然分界。重点不在于标签，而在于：只报告 p 值而不报告效应量，几乎无法判断结果是否具有实际意义。</p>
 
 <div class="panel web-only statistics-effect-lab">
 <p class="ptitle">互动 · 显著性与大小</p>
 <h3>效应量演示器</h3>
-<p class="pnote">设定真实均值差、每组样本量和噪声水平。这里的「组」指两组比较中的一边，例如处理组与对照组；每组 n = 50 意味着两边各 50 个观察值，总共 100 个。图中使用固定的 x 轴和 y 轴：均值差从 -3 到 +3，y 轴是重复估计的分箱频数。更细的柱形显示估计分布，曲线表示对应的抽样分布，横条则是在同一 x 尺度上的 95% 置信区间。</p>
+<p class="pnote">设定真实均值差、每组样本量和噪声水平。这里的「组」指两组比较中的一组，例如处理组与对照组；每组 n = 50 意味着两边各 50 个观察值，总共 100 个。图中使用固定的 x 轴和 y 轴：均值差从 -3 到 +3，y 轴是重复估计的分箱频数。更细的柱形显示估计分布，曲线表示对应的抽样分布，横条则是在同一 x 尺度上的 95% 置信区间。</p>
 <div class="se-grid">
 <div class="se-controls">
 <label for="se-effect"><span>真实均值差</span><output id="se-effect-out" for="se-effect">0.30</output></label>
@@ -208,7 +209,7 @@
 <div class="format-alt epub-only print-only">
 <p class="ptitle">参考表</p>
 <h3>显著性与大小</h3>
-<p class="pnote">同一个真实效应，会随着样本量和噪声变化而呈现出非常不同的统计外观。</p>
+<p class="pnote">同一个真实效应，会随着样本量和噪声变化而呈现出非常不同的统计表现。</p>
 <table class="alt-table">
 <thead><tr><th>情境</th><th>p 值</th><th>均值差的 95% CI</th><th>Cohen’s d</th><th>实际解读</th></tr></thead>
 <tbody>
@@ -232,7 +233,7 @@
 <div class="panel web-only statistics-ci-coverage">
 <p class="ptitle">互动 · 长期覆盖率</p>
 <h3>100 次置信区间覆盖实验</h3>
-<p class="pnote">从一个已知真实均值为 0 的世界中生成 100 次重复样本。x 轴固定为 -4 到 +4，这样区间宽度的变化不会被自动缩放掩盖。置信水平滑块改变长期覆盖目标：置信水平越高，覆盖次数通常越多，但区间也越宽。样本量和噪声主要改变精度。被高亮的一条就是一次观察到的研究：它要么覆盖，要么不覆盖。</p>
+<p class="pnote">从一个已知真实均值为 0 的世界中生成 100 次重复样本。x 轴固定为 -4 到 +4，这样区间宽度的变化不会被自动缩放掩盖。置信水平滑块改变长期覆盖目标：置信水平越高，覆盖次数通常越多，但区间也越宽。样本量和噪声主要改变精度。高亮区间代表一项具体研究：它要么覆盖，要么不覆盖。</p>
 <div class="ci-grid">
 <div class="ci-controls">
 <label for="ci-n"><span>每项研究样本量</span><output id="ci-n-out" for="ci-n">30</output></label>
@@ -277,8 +278,8 @@
 <section>
 <p class="sec-eyebrow">更深层的陷阱</p>
 <h2>即使没有故意操纵，也可能被误导</h2>
-<p>更值得警惕的是，即使研究者没有故意操纵分析，也可能得到偏高的假阳性率。你可能读完了上述内容，誓不操纵 p 值，只运行<span class="hl">一个</span>预先计划好的分析并忠实报告——但你的假阳性率依然可能超标。这就是安德鲁·格尔曼（Andrew Gelman）和埃里克·洛肯（Eric Loken）所说的 <span class="term">分岔路径的花园</span>（garden of forking paths）{% tip '分岔路径的花园是指研究者在看到同一份数据的不同模式后，本可以合理选择的所有分析路径的集合。' %}。</p>
-<p>他们的洞察细微而又令人不安。损害并不需要你运行多次分析，而只需要你运行的那唯一一次分析是<span class="hl">取决于你恰好看到的数据</span>。如果数据稍有不同——这里多点噪声，那里有个聚类，你可能会选择另一套同样合理的分析方案：控制年龄而不是收入，对比女性子组而不是全样本，使用中位数而不是平均值。其他分析路径是隐形的，因为你从未运行过它们。但这些未实际运行、却会随数据变化而改变的选择，推高了你的错误率。正如格尔曼和洛肯所言，即使假设是预先设定的，你没有进行数据钓鱼或 p 值操纵，也依然能得到假阳性结果。</p>
+<p>更值得警惕的是，即使研究者没有故意操纵分析，也可能得到偏高的假阳性率。你可能读完了上述内容，誓不操纵 p 值，只运行<span class="hl">一个</span>预先计划好的分析并忠实报告——但你的假阳性率依然可能超标。这就是安德鲁·格尔曼（Andrew Gelman）和埃里克·洛肯（Eric Loken）所说的 <span class="term">分岔路径花园</span>（garden of forking paths）{% tip '分岔路径花园是指研究者在看到同一份数据的不同模式后，本可以合理选择的所有分析路径的集合。' %}。这个说法借用了博尔赫斯《小径分岔的花园》的意象：数据一旦呈现出不同模样，研究者就可能走上另一条分析路径。</p>
+<p>他们的洞察细微而又令人不安。即使只运行一次分析，也可能存在分岔路径。关键在于：你会不会因为数据呈现出不同模样，就选择另一种分析方法。如果数据稍有不同——这里多点噪声，那里有个聚类，你可能会选择另一套同样合理的分析方案：控制年龄而不是收入，只分析女性子样本而不是全样本，使用中位数而不是平均值。其他分析路径是隐形的，因为你从未运行过它们。但这些未实际运行、却会随数据变化而改变的选择，推高了你的错误率。正如格尔曼和洛肯所言，即使假设是预先设定的，你没有进行数据钓鱼或 p 值操纵，也依然能得到假阳性结果。</p>
 <p>注意这与 <a href="/zh/days/005-causation/">第 5 日</a> 的呼应。在那里，潜伏的决定是「选择哪些变量进行条件化」——而对 <span class="term">对撞变量</span>（collider）{% tip '对撞变量是受两个其他变量影响的变量；对其进行条件化可能会在它的原因之间制造出误导性的关联。' %}进行条件化会无中生有地「制造」出相关性。分岔路径则是这种危险的泛化：每一个看似合理的分析选择都是一个交叉口，而数据会静静地把你推向那条更有利于你假设的分支。诚实的研究者和 p 值操纵者可能得出完全相同的错误结果，唯一的区别在于，前者并不知道自己是怎么做到的。</p>
 
 <div class="aside">
@@ -386,7 +387,7 @@
 <h3>同一份数据，众多分析师：最直观的证据</h3>
 <p>这项实验应该会改变你阅读每一条头条新闻的方式。拿出一份数据集，设定一个清晰的问题，然后将相同的副本分发给几十个专家团队。他们会得出同一个判定吗？很多时候，不会。</p>
 <p>在 Silberzahn 等 (2018) 的研究中，<span class="hl">29 个团队</span>（61 位分析师）被问了一个简单的问题：足球裁判是否更倾向于给深色皮肤的球员出示红牌？他们估计的优势比（OR）从 0.89 到 2.93 不等；20 个团队发现了显著的正向效应，9 个团队则没有。耐人寻味的是，分析师的先验信念甚至他们的统计专业知识都无法解释这种差异。在 Botvinik-Nezer 等 (2020) 的研究中，<span class="hl">70 个团队</span>（180 位研究者）针对同一份脑成像数据集分析了九个预设假设——结果没有两个团队使用了完全相同的流程；即使他们的基础统计图谱高度相关，他们的「是/否」结论也发生了严重分歧。Breznau 等 (2022) 将相同的数据和假设（移民是否会削弱对社会政策的支持？）交给 <span class="hl">73 个团队</span>，观察到估计效应从明显为负一直散布到明显为正。甚至金融领域也有自己的版本：Menkveld 等人的《非标准误差》(2024) 让 <span class="hl">164 个团队</span>在相同的市场数据上测试相同的假设，发现团队间的变异性与普通的统计误差旗鼓相当——令人欣慰的是，当增加额外的同行评审环节时，这种变异性有所收缩。</p>
-<p>这就是 <a href="/zh/days/001-what-is-knowledge/">第 1 日</a> 提到的盖梯尔问题在单份数据集内部的具象化。每个团队的信念都被其专业的分析所「证成」；但它是否为「真」——即它是否连接到现实，而非仅仅连接到他们在花园中走过的那条特定路径——则因团队而异。一次分析只是一根树枝。请以此心态看待它们。</p>
+<p>这就是 <a href="/zh/days/001-what-is-knowledge/">第 1 日</a> 提到的盖梯尔问题在单份数据集内部的具象化。每个团队的信念都被其专业的分析所「证成」；但它是否为「真」——即它是否捕捉到现实中的关系，而非仅仅连接到他们在花园中走过的那条特定路径——则因团队而异。一项分析只是花园中的一条路径。请以此心态看待它们。</p>
 </div>
 
 <div class="claim">
@@ -396,7 +397,7 @@
 <span class="chip ok" data-print="已确立"><i></i>改革基础设施 · 确立趋势</span>
 </div>
 <h3>填补推断鸿沟——以及第 4 日的低调替代方案</h3>
-<p>上述所有内容中尚未解决的问题是如何在多元宇宙中进行诚实的「推断」：你如何从一千个纠缠在一起的分析中得出一个有效的结论？2024 年的一项研究提出了 <span class="term">PIMA</span>（多元宇宙分析中的选择后推断；Girardi 等, 2024），它提供了一种符号翻转得分检验，旨在为多元宇宙提供真正的联合误差保证，跨越了 2020 年设定曲线的线性模型限制。虽然这是一个经过同行评审且极具意义的工具，但它还很新，尚未成为标准做法——这属于<span class="hl">有前景的线索</span>，而非定论。</p>
+<p>上述所有内容中尚未解决的问题是如何在多元宇宙中进行诚实的「推断」：你如何从一千个纠缠在一起的分析中得出一个有效的结论？2024 年的一项研究提出了 <span class="term">PIMA</span>（多元宇宙分析中的选择后推断；Girardi 等, 2024），它提供了一种符号翻转得分检验，旨在为多元宇宙提供真正的联合误差保证，跨越了 2020 年设定曲线的线性模型限制。虽然这是一个经过同行评审且值得关注的工具，但它还很新，尚未成为标准做法——这属于<span class="hl">有前景的线索</span>，而非定论。</p>
 <p>与此同时，那些朴素但可靠的改革措施正在不断普及：「注册式报告」格式目前已有<span class="hl">数百家期刊</span>提供，研究预登记也正在逐渐从倡议走向常规做法。还记得 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 提到的 <span class="term">e 值</span>（e-values）{% tip 'e 值通过针对零假设的投注策略的回报来衡量证据强度。' %}和「通过投注进行测试」吗？这种 p 值的替代方案在正确构造、且模型和技术条件成立时，允许研究者根据已观察数据决定是否继续采样，同时保持规定的错误率或证据保证。目前这仍处于研究前沿而非主流实践——<span class="hl">前景可期</span>，值得持续关注。</p>
 </div>
 </section>
@@ -404,7 +405,7 @@
 <div class="format-alt epub-only print-only">
 <p class="ptitle">参考表</p>
 <h3>设定曲线摘要</h3>
-<p class="pnote">同一份合成数据集可以通过多种合理候选设定进行分析。</p>
+<p class="pnote">同一份合成数据集可以通过多套合理的分析设定进行分析。</p>
 <table class="alt-table">
 <thead><tr><th>选择</th><th>对分析的影响</th><th>解读风险</th></tr></thead>
 <tbody>
@@ -414,7 +415,7 @@
 <tr><td>删除子组</td><td>仅分析数据的子集。</td><td>可以测试真实的边界条件，也可以制造出一个讨巧的子集。</td></tr>
 </tbody>
 </table>
-<p>诚实的报告是展示所有合理设定下的分布情况；而不诚实的报告则是只展示曲线上最漂亮的那一点。</p>
+<p>诚实的报告是展示所有合理设定下的分布情况；而不诚实的报告则是只展示曲线上最有利的那一点。</p>
 </div>
 
 <section>
@@ -424,7 +425,7 @@
 <li>「统计显著性」是否应该彻底消失？ 改革者在「约束门槛」和「废除门槛」之间摇摆不定。但决策总要在某个地方做出——一种药物要么获批要么不获批——废除派需要解释该如何进行这种决策。</li>
 <li>多元宇宙是否真能产生一个诚实的判定？ 还是说，对「合理设定」的选择本身就是一种无法消除的主观行为，只是将分岔路径向上传递了一个层级？PIMA 等工具是早期的尝试，目前尚无定论。</li>
 <li>结论的变异等同于现实的变异吗？ 2023 年的一项细致重分析指出，在一些「同一份数据，众多分析师」研究中，引人注目的分歧其实是关于「显著性」判定的，而底层的效应量其实相当一致且微小。对结论的分歧可能会超过对数字本身的分歧。不要过快得出「一切都毫无希望」的教训。</li>
-<li>未来更可能以 p 值还是 e 值为主？ 基于投注的工具优雅地解决了「选择性停止」问题，但可能需要更多数据，并引入了新的建模负担（该怎么下注？）。两者共存似乎比一方取代另一方更有可能。</li>
+<li>未来更可能以 p 值还是 e 值为主？ 基于投注的工具优雅地解决了「可选停止」问题，但可能需要更多数据，并引入了新的建模负担（该怎么下注？）。两者共存似乎比一方取代另一方更有可能。</li>
 <li>以及 AI 单元中等待着的问题： 当一个在数百万篇论文上训练出来的模型报告一个「稳健」的结果时，它是在推理证据，还是在模仿那些让我们陷入现状的「分岔路径」习惯？（见第 138–145 日）。</li>
 </ul>
 </section>
@@ -432,11 +433,11 @@
 <div class="recap">
 <p class="h">◆ 今日总结：三句话</p>
 <dl>
-<div><dt>核心理念</dt><dd>统计工具并不能保护你免于自我欺骗——如果带着人类天生的灵活性去使用，它们反而会放大偏差。因为任何分析中都存在几十个合情合理的选择（即「分岔路径的花园」），足以让噪声伪装成发现。因此，疗法在于透明度、研究预登记、附带不确定性的效应量，以及在多种合理分析下的稳健性，而非盯死一个魔术般的门槛。</dd></div>
-<div><dt>最佳类比</dt><dd>假阳性工厂：给自己足够的「自由」，就能让纯粹的随机噪声变成 61% 的「成功」机会；以及分岔路径的花园，即使你只运行了一个分析，数据稍有不同时本会采用的其他分析路径也会推高你的错误率。</dd></div>
+<div><dt>核心理念</dt><dd>统计工具并不能保护你免于自我欺骗——如果带着人类天生的灵活性去使用，它们反而会放大偏差。因为任何分析中都存在几十个合情合理的选择（即「分岔路径花园」），足以让噪声伪装成发现。因此，疗法在于透明度、研究预登记、附带不确定性的效应量，以及在多种合理分析下的稳健性，而非盯死一个魔术般的门槛。</dd></div>
+<div><dt>最佳类比</dt><dd>假阳性工厂：给自己足够的「自由」，就能让纯粹的随机噪声变成 61% 的「成功」机会；以及分岔路径花园，即使你只运行了一个分析，数据稍有不同时本会采用的其他分析路径也会推高你的错误率。</dd></div>
 <div><dt>前沿争议</dt><dd>是将显著性阈值收紧至 p < .005、按具体情况说明 α 的设定依据，还是彻底弃用「统计显著性」——多元宇宙和「同一份数据，众多分析师」研究揭示了单份数据集的结论是多么惊人地取决于分析它的人。</dd></div>
 </dl>
-<p class="threads"><span class="threads-label">今日线索 ›</span> 信息（将信号从噪声中分离；p 值作为一种常被误读的证据度量）· 计算（作为易错推理机的实验室；多元宇宙作为穷举法的应用）· 涌现（科学作为一个大于任何分析师的纠错系统——研究预登记、多团队分析、元分析）。</p>
+<p class="threads"><span class="threads-label">今日线索 ›</span> 信息（将信号从噪声中分离；p 值作为一种常被误读的证据度量）· 计算（作为易错推理机的实验室；多元宇宙作为穷举法的应用）· 涌现（科学作为一个超越任何单个分析者的纠错系统——研究预登记、多团队分析、元分析）。</p>
 </div>
 
 <div class="tomorrow">
@@ -454,7 +455,7 @@
 <li>Feynman, R. P. (1974). "Cargo Cult Science." <em>Engineering and Science</em> 37(7): 10–13. <span class="meta">加州理工学院 1974 年毕业典礼演讲；开篇引文来源。</span> <a href="https://calteches.library.caltech.edu/51/2/CargoCult.htm">calteches.library.caltech.edu</a></li>
 <li>Open Science Collaboration. (2015). "Estimating the reproducibility of psychological science." <em>Science</em> 349(6251): aac4716. <span class="meta">doi:10.1126/science.aac4716；97% 原研究显著 / 36% 复现显著统计的来源。</span> <a href="https://doi.org/10.1126/science.aac4716">doi.org/10.1126/science.aac4716</a></li>
 <li>Simmons, J. P., Nelson, L. D. &amp; Simonsohn, U. (2011). "False-Positive Psychology: Undisclosed Flexibility in Data Collection and Analysis Allows Presenting Anything as Significant." <em>Psychological Science</em> 22(11): 1359–1366. <span class="meta">doi:10.1177/0956797611417632。</span> <a href="https://doi.org/10.1177/0956797611417632">doi.org/10.1177/0956797611417632</a> <span class="meta">— 《当我六十四岁》演示；5%→61% 的模拟。</span></li>
-<li>Gelman, A. &amp; Loken, E. (2014). "The Statistical Crisis in Science." <em>American Scientist</em> 102(6): 460–465. <span class="meta">— 「分岔路径的花园」；更早为 2013 年哥伦比亚大学工作论文。</span> <a href="https://www.americanscientist.org/article/the-statistical-crisis-in-science">americanscientist.org</a></li>
+<li>Gelman, A. &amp; Loken, E. (2014). "The Statistical Crisis in Science." <em>American Scientist</em> 102(6): 460–465. <span class="meta">— 「分岔路径花园」；更早为 2013 年哥伦比亚大学工作论文。</span> <a href="https://www.americanscientist.org/article/the-statistical-crisis-in-science">americanscientist.org</a></li>
 <li>Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. &amp; Altman, D. G. (2016). "Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations." <em>European Journal of Epidemiology</em> 31(4): 337–350. <span class="meta">doi:10.1007/s10654-016-0149-3。</span> <a href="https://doi.org/10.1007/s10654-016-0149-3">doi.org/10.1007/s10654-016-0149-3</a> <span class="meta">— 25 种常见误读的权威清单。</span></li>
 <li>Haller, H. &amp; Krauss, S. (2002). "Misinterpretations of Significance: A Problem Students Share with Their Teachers?" <em>Methods of Psychological Research Online</em> 7(1): 1–20. <span class="meta">— p 值误解即使在统计学教师中也持续存在的调查证据。</span> <a href="https://epub.uni-regensburg.de/34338/">epub.uni-regensburg.de/34338</a></li>
 <li>Badenes-Ribera, L., Frias-Navarro, D., Iotti, B., Bonilla-Campos, A. &amp; Longobardi, C. (2016). "Misconceptions of the p-value among Chilean and Italian Academic Psychologists." <em>Frontiers in Psychology</em> 7: 1247. <span class="meta">doi:10.3389/fpsyg.2016.01247。</span> <a href="https://doi.org/10.3389/fpsyg.2016.01247">doi.org/10.3389/fpsyg.2016.01247</a></li>
@@ -488,14 +489,14 @@
 <p class="lede"><span class="drop">正</span>文还留下一个问题没有回答。我们曾随口提到，<span class="term">p 值</span>是科学界最被误读的数字之一，然后便匆匆转向那些著名的误读，仿佛这些混乱全是读者的错，而与数字本身无关。事实并非如此。今天常见的显著性检验，其实是两套不同统计传统的混合体：费舍尔式的证据衡量，与内曼-皮尔逊式的长期错误控制，被当作一套连贯思想来传授。它并不支持人们通常赋予它的那些解释。本附录将拆解这套统计机制：为什么反复搜索会使偶然显著变得越来越容易；一旦进行诚实的计算，一个「显著」的结果实际上有多离谱；一小群统计侦探是如何追踪这些蛛丝马迹的；以及研究者还可以使用哪些替代和补充工具。最后，我们将回到一个简洁的转换——它将 <span class="term">p 值</span> 转化为投掷硬币的次数，并带我们直达明天的课题。</p>
 <div class="continues">
 <p class="label">◆ 接续正文内容</p>
-<p>你已经见识过假阳性工厂、分岔路径的花园、改革光谱以及多重分析师对决。请特别关注这三条线索：<span class="hl">第 4 日</span>的贝叶斯（<span class="term">p 值</span> 并不是 P(假设 | 数据)，在这里我们将最终算出忘掉这一点的代价）、<span class="hl">第 2 日</span>的波普尔与约安尼迪斯（检验严苛度与「大多数发现都是错误的」），以及<span class="hl">第 1 日</span>的校准直觉。下文的一切都是这些思想赖以存在的底层结构。</p>
+<p>你已经见识过假阳性工厂、分岔路径花园、改革光谱以及多团队分析研究。请特别关注这三条线索：<span class="hl">第 4 日</span>的贝叶斯（<span class="term">p 值</span> 并不是 P(假设 | 数据)，在这里我们将最终算出忘掉这一点的代价）、<span class="hl">第 2 日</span>的波普尔与约安尼迪斯（检验严苛度与「大多数发现都是错误的」），以及<span class="hl">第 1 日</span>的校准直觉。下文将展开这些思想背后的统计结构。</p>
 </div>
 <section>
 <p class="sec-eyebrow"><span class="n">§1</span> 原罪</p>
 <h2>一个由两套不兼容逻辑拼接而成的工具</h2>
-<p>这里有一个事实，足以解释科学界惊人的痛苦：许多理工科学生都接触过的标准「假设检验」其实是一种混合体。它把费舍尔式的证据衡量与内曼-皮尔逊式的长期决策规则糅合在一起，而这种混合经常制造混乱。</p>
+<p>这里有一个事实，足以解释许多统计困惑：许多理工科学生都接触过的标准「假设检验」其实是一种混合体。它把费舍尔式的证据衡量与内曼-皮尔逊式的长期决策规则糅合在一起，而这种混合经常制造混乱。</p>
 
-<p>一派是以 <span class="term">罗纳德·费舍尔</span> (Ronald Fisher) 为首。在 1925 年的《研究工作者的统计方法》中，他提出了 <span class="term">p 值</span>，将其作为针对单一零假设的一种非正式的、连续的「证据衡量标准」，用来衡量如果什么都没发生，你的数据看起来会有多奇怪。他不需要<span class="term">备择假设</span>，不需要拒绝域，也不需要长期重复抽样。他建议将 <span class="term">p &lt; .05</span> 仅作为一个朴素的经验法则，即低于这一阈值时，巧合就开始显得不可信；他明确表示，如果你愿意，可以自选另一条界线。对于费舍尔来说，一个微小的 <span class="term">p</span> 是「思考」的诱因，而非必须「服从」的判决。他写道，零假设永远不会被证明，只是偶尔会「陷入尴尬」。</p>
+<p>一边是 <span class="term">罗纳德·费舍尔</span> (Ronald Fisher)。在 1925 年的《研究工作者的统计方法》中，他提出了 <span class="term">p 值</span>，将其作为针对单一零假设的一种非正式的、连续的「证据衡量标准」，用来衡量如果零假设成立，你的数据看起来会有多奇怪。他不需要<span class="term">备择假设</span>，不需要拒绝域，也不需要长期重复抽样。他建议将 <span class="term">p &lt; .05</span> 仅作为一个朴素的经验法则，即低于这一阈值时，巧合就开始显得不可信；他明确表示，如果你愿意，可以选择其他阈值。对于费舍尔来说，一个微小的 <span class="term">p</span> 是进一步研究的信号，而非必须「服从」的判决。他写道，零假设永远不会被证明，只是偶尔会「陷入尴尬」。</p>
 
 <p>另一派则是 <span class="term">耶日·内曼</span> (Jerzy Neyman) 与 <span class="term">埃贡·皮尔逊</span> (Egon Pearson)。到 1933 年，他们的一系列论文形成了较完整的框架：把整个体系重塑为一种「决策规则」，而非证据衡量标准。你预先指定两个假设，提前确定你可容忍的误报率（<span class="term">α</span>，第一类错误率）和漏报率（<span class="term">β</span>，第二类错误率；<span class="term">检验功效</span> = 1 − β），画一条线，随后按预先规定的决策规则行动：拒绝或接受，并承认在长期重复抽样中，你出错的概率就是你所选定的比例。重点在于，它对眼前的单一案例「不提供」任何证据衡量——它只是一套具有已知长期属性的程序。内曼认为费舍尔的归纳「证据」谈论含混不清；费舍尔则认为内曼把科学变成了工厂的质量控制。这场恩怨贯穿终生，且极为激烈。</p>
 </section>
@@ -523,7 +524,7 @@
 <li>在看到数据前就设定好 <span class="term">α</span>、<span class="term">β</span> 和 <span class="term">检验功效</span>。</li>
 <li><span class="term">.05</span> 是一个<span class="term">既定的门槛</span>，根据成本选择。</li>
 <li>一套用于<span class="term">指导行动</span>的规则 —— 拒绝或接受，然后继续。</li>
-<li>不对单一案例提供证据主张；只关注长期概率。</li>
+<li>不对单一案例提供证据主张；只关注长期错误率。</li>
 </ul>
 </div>
 </div>
@@ -534,7 +535,7 @@
 </div>
 </div>
 <section>
-<p>一旦你看清了这道接缝，整个复现危机读起来就完全不同了。我们取了一个灵活的、费舍尔式的「思考诱因」，将其冻结为内曼-皮尔逊式的「关卡」，剔除了内曼-皮尔逊体系中确保关卡诚实的部分（预先承诺的 <span class="term">α</span>、充足的功效、真正的备择假设），然后只发表那些过关的研究。令人惊讶的不是有这么多研究无法复现，而是竟然还有能存活下来的。</p>
+<p>一旦你看清了这道接缝，整个复现危机读起来就完全不同了。我们取了一个灵活的、费舍尔式的「进一步研究信号」，将其冻结为内曼-皮尔逊式的「关卡」，剔除了内曼-皮尔逊体系中确保关卡诚实的部分（预先承诺的 <span class="term">α</span>、充足的功效、真正的备择假设），然后只发表那些过关的研究。令人惊讶的不是有这么多研究无法复现，而是仍有部分结论经得起复现。</p>
 </section>
 <section>
 <p class="sec-eyebrow"><span class="n">§2</span> 为什么工厂总是能赢</p>
@@ -585,16 +586,16 @@
 <section>
 <p class="sec-eyebrow"><span class="n">§3</span> 识别指纹</p>
 <h2>统计取证的兴起</h2>
-<p>如果真实效应会留下许多极小的显著 <span class="term">p 值</span>，而 <span class="term">p-hacking</span> 更容易留下紧贴 .05 下方的堆积，那么你只需查看已发表的数字，就可以「审计整个学科领域」 —— 而无需重做任何一个实验。这一认识催生了一个充满活力的统计取证领域。</p>
+<p>如果真实效应会留下许多极小的显著 <span class="term">p 值</span>，而 <span class="term">p 值操纵</span> 更容易留下紧贴 .05 下方的堆积，那么你只需查看已发表的数字，就可以「审计整个学科领域」 —— 而无需重做任何一个实验。这一认识催生了一个充满活力的统计取证领域。</p>
 
-<p>其旗舰工具是 <span class="term">P-curve</span> (Simonsohn, Nelson &amp; Simmons, 2014 —— 没错，正是正文中提到的那三位)。收集关于某一效应的一组研究中的显著 <span class="term">p 值</span>，观察它们的形状。健康的 P-curve 中，极小的显著 <span class="term">p 值</span> 应多于勉强显著的 <span class="term">p 值</span>：.01 很多，.04 较少，因为真实信号大多会产生「令人信服」的极小 <span class="term">p 值</span>。而一个没有任何潜在效应、完全靠 <span class="term">p-hacking</span> 支撑的领域，会显出另一种可疑模式 —— 出现不自然的 .04 和 .049 过剩，这是研究人员为了跨过那条线而微调结果并在达标那一刻立即停止的典型残留。紧贴 .05 下方的堆积很可疑。</p>
+<p>其旗舰工具是 <span class="term">P-curve</span> (Simonsohn, Nelson &amp; Simmons, 2014 —— 没错，正是正文中提到的那三位)。收集关于某一效应的一组研究中的显著 <span class="term">p 值</span>，观察它们的形状。健康的 P-curve 中，极小的显著 <span class="term">p 值</span> 应多于勉强显著的 <span class="term">p 值</span>：.01 很多，.04 较少，因为真实信号大多会产生「令人信服」的极小 <span class="term">p 值</span>。而一个没有任何潜在效应、完全靠 <span class="term">p 值操纵</span> 支撑的领域，会显出另一种可疑模式 —— 出现不自然的 .04 和 .049 过剩，这是研究人员为了跨过那条线而微调结果并在达标那一刻立即停止的典型残留。紧贴 .05 下方的堆积很可疑。</p>
 
-<p>此外还有一些故意设计的反证式演示，旨在揭示多重比较问题不容回避：</p>
+<p>此外还有一些精心设计的反例演示，旨在揭示多重比较问题不容回避：</p>
 
 <div class="appendix-card-grid">
 <div class="appendix-card">
 <p class="ct"><span class="emoji">🐟</span> 死去的大西洋鲑</p>
-<p class="cy">Bennett et al., 2009 · 2012 搞笑诺贝尔奖</p>
+<p class="cy">Bennett et al., 2009 · 2012 搞笑诺贝尔奖（Ig Nobel Prize）</p>
 <p>研究者把一条死去的大西洋鲑放进 fMRI 扫描仪，并向它「展示」人类社交场景的照片。在不对约 130,000 个测试体素进行校正的情况下，死鱼脑中也会出现所谓「显著」区域。重点在于：只要测试的东西够多，噪声也能产生看似显著的结果。</p>
 </div>
 <div class="appendix-card">
@@ -669,8 +670,8 @@
 <p>「零假设几乎从不完全正确」 (Meehl 的杂质因子)。Paul Meehl 观察到，在大规模社会科学数据集中，「一切」都与「一切」存在微弱的相关性 —— 出生顺序与政治倾向、身高与幽默感 —— 因为世界是一个由微弱真实联系交织成的致密网络，他称之为<span class="term">杂质因子</span> (crud factor)。因此，一个「精确为零」的点零假设其实是一个稻草人；只要样本量够大，你就能拒绝任何一对变量之间的零假设。此时「统计学显著」仅证明了你的样本量够大，而非你发现了任何有意义的东西。这就是显著性与重要性是两码事的深层原因。</p>
 
 <div class="aside">
-<p class="h">当贝叶斯与频率派公开开战：杰弗里斯-林德利悖论</p>
-<p>这里有一个真正令人不安的现象。在样本量极大时，一个恰好为 <span class="term">p = .05</span> 的结果在贝叶斯分析中可能是支持零假设的证据——这两个框架不仅有差异，甚至指向了「相反的方向」 (Lindley, 1957)。频率学派检验可能拒绝 H<sub>0</sub>，而贝叶斯分析却可能支持 H<sub>0</sub>。解决方案并非哪一派更蠢，而是他们回答的问题不同：在样本量 n 很大时，「在零假设下令人惊讶」与「在备择假设下更可能」之间的鸿沟会变得巨大。现代贝叶斯派的答案是 <span class="term">贝叶斯因子</span>——这是衡量每个假设对数据预测能力的直接比例。它能做到 <span class="term">p 值</span> 从定义上无法做到的事：收集支持零假设的证据，而不仅仅是「未能拒绝」它。</p>
+<p class="h">当贝叶斯与频率派发生正面冲突：杰弗里斯-林德利悖论</p>
+<p>这里有一个真正令人不安的现象。在样本量极大时，一个恰好为 <span class="term">p = .05</span> 的结果在贝叶斯分析中可能是支持零假设的证据——这两个框架不仅有差异，甚至指向了「相反的方向」 (Lindley, 1957)。频率学派检验可能拒绝 H<sub>0</sub>，而贝叶斯分析却可能支持 H<sub>0</sub>。解决方案并非哪一派更蠢，而是他们回答的问题不同：在样本量 n 很大时，「在零假设下令人惊讶」与「在备择假设下更可能」之间的鸿沟会变得巨大。现代贝叶斯派的答案是 <span class="term">贝叶斯因子</span>——它比较数据在两个假设下的边际似然，也就是当前数据在两种假设下分别有多可能出现。它能做到 <span class="term">p 值</span> 从定义上无法做到的事：收集支持零假设的证据，而不仅仅是「未能拒绝」它。</p>
 </div>
 </section>
 <section>
@@ -681,11 +682,11 @@
 <h3>更好的错误分类：S 类与 M 类错误</h3>
 <p>Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效世界中，经典的第 I 类 / 第 II 类错误框架没有涵盖这里最关键的问题。另外两种更尖锐的失败更重要。<span class="term">S 类（符号）错误</span> (sign error) 是指搞错了「方向」——结论认为某种治疗有效，实则有害。<span class="term">M 类（幅度）错误</span> (magnitude error) 是指「夸大倍数」——你的「显著」估计值比真实值大了多少倍。他们的论点直指正文中的「赢家诅咒」：在低功效研究中，被筛选为显著的效应估计可能明显高于真实效应；在某些设定下，夸大程度可达到数倍。已发表效应可能是被系统性放大的版本。</p>
 
-<h3>证明否定：等效性检验</h3>
+<h3>如何为「无实质效应」提供证据：等效性检验</h3>
 <p>正文警告说「<span class="term">p &gt; .05</span>」并不意味着「没有效应」。但有时你确实想得出「这里没有什么有意义的东西」的结论，而你可以通过<span class="term">等效性检验</span> (equivalence testing; Lakens, 2017) 做到这一点。等效性检验先根据<span class="term">最小实际重要效应</span>设定上下<span class="term">等效界限</span>，再检验真实效应是否落在这一范围内。双单侧检验（TOST）是最常用的方法之一。它能合法地将「缺乏证据」转化为「不存在效应的证据」。一个不显著的结果加上通过等效性检验，才是一个真正的结论；而单凭不显著的结果只是得不出结论。</p>
 
 <h3>诚实处理多重性：控制错误发现率</h3>
-<p>当你确实必须运行许多检验（每一个基因、每一个脑区）时，旧的修复方法是 Bonferroni 校正——将 <span class="term">α</span> 除以检验次数。Bonferroni 校正控制的是一组检验中至少出现一次第一类错误的概率，即<span class="term">族错误率</span>。它通常较为保守，因此可能降低检验功效。Benjamini 与 Hochberg 于 1995 年提出的<span class="term">错误发现率</span>控制方法，来自统计学中引用极高的一篇论文。它改变了目标：错误发现率控制的是在所有被判为显著的结果中，假阳性比例的期望值。这是一种务实的交易，它让基因组学和神经影像学在统计上变得可以忍受——接受已知的一小部分次品，换取真正能发现东西的能力。</p>
+<p>当你确实必须运行许多检验（每一个基因、每一个脑区）时，传统方法之一是 Bonferroni 校正——将 <span class="term">α</span> 除以检验次数。Bonferroni 校正控制的是一组检验中至少出现一次第一类错误的概率，即<span class="term">族错误率</span>。它通常较为保守，因此可能降低检验功效。Benjamini 与 Hochberg 于 1995 年提出的<span class="term">错误发现率</span>控制方法，来自统计学中引用极高的一篇论文。它改变了目标：错误发现率控制的是在所有被判为显著的结果中，假阳性比例的期望值。这是一种务实的交易，它使大规模多重检验变得可行——接受少量错误发现，换取真正能发现东西的能力。</p>
 
 <h3>为区间重新命名，使其名副其实</h3>
 <p>最后是一个具有强大澄清能力的微小举措：Amrhein、Greenland 等人敦促将置信区间称为<span class="term">相容性区间</span> (compatibility interval) —— 即与你的数据和模型合理「相容」的效应量范围。这个词能同时消除两种错误：它能阻止你将区间内的数值视为已证明、将区间外的数值视为不可能，并促使你将整个区间作为一个关于「大小和不确定性」的陈述来报告，而非只看区间是否跨过零的二元判断。</p>
@@ -693,17 +694,17 @@
 <section>
 <p class="sec-eyebrow"><span class="n">§6</span> 辩方陈述</p>
 <h2>把显著性检验做严</h2>
-<p>如果以「p 值很坏，估计很好」作为结尾就太简单化了。公允和准确要求我们提供一个严肃的抗衡观点，而哲学家 <span class="term">德博拉·梅奥</span> (Deborah Mayo) 提供了这一点。在 2018 年的《统计推断作为严苛检验》中，她用一个苛刻的原则为<span class="term">误差统计学推理</span>辩护，对抗废除派和贝叶斯派。</p>
-  <blockquote>你对某项主张拥有证据，其程度取决于该主张通过了一项「如果该主张为假，则它很可能会失败」的检验。</blockquote>
-<p>这就是<span class="term">检验严苛性</span> (severity)。注意，这就是被量化后的<span class="hl">第 2 日</span>的波普尔思想：一个结果只有在检验确实「冒着」被证伪的风险时，才能佐证一个假设。从这个角度看，问题的根源不在于 <span class="term">p 值</span>，而在于对检验严苛性的背弃。从分岔路径中的数据钓鱼或反复尝试分析挤出的 <span class="term">p 值</span> 毫无价值，不是因为它是个 <span class="term">p 值</span>，而是因为那场「检验」从未严苛过：它几乎不可能得出其他结果。梅奥对改革者的警告很尖锐：如果丢掉所有门槛和错误控制，你得到的不是更细腻的科学，而是更缺乏问责的科学，对于一个主张何时可被认为经受住了较严苛的检验，将失去公共标准。正文所追求的较为稳妥的综合立场就存在于此：不是「废除」或「服从」，而是「要求检验严苛性」，报告大小和不确定性，并让错误假设有较大概率被检验排除。</p>
+<p>如果以「p 值很坏，估计很好」作为结尾就太简单化了。公允和准确要求我们提供一个有力的反方观点，而哲学家 <span class="term">德博拉·梅奥</span> (Deborah Mayo) 提供了这一点。在 2018 年的《统计推断作为严苛检验》中，她用一个苛刻的原则为<span class="term">误差统计学推理</span>辩护，回应废除派和贝叶斯派的批评。</p>
+  <blockquote>只有在一项主张为假时，检验很可能揭示其错误，而这项主张仍然通过了检验，我们才获得了支持它的证据。</blockquote>
+<p>这就是<span class="term">检验严苛性</span> (severity)。换句话说，证据的分量不仅取决于结果是否与主张相符，也取决于检验是否真的有能力发现主张是错的。注意，这就是被量化后的<span class="hl">第 2 日</span>的波普尔思想。从这个角度看，问题的根源不在于 <span class="term">p 值</span>，而在于对检验严苛性的背弃。从分岔路径中的数据钓鱼或反复尝试分析挤出的 <span class="term">p 值</span> 毫无价值，不是因为它是个 <span class="term">p 值</span>，而是因为那场「检验」从未严苛过：它几乎不可能得出其他结果。梅奥对改革者的警告很尖锐：如果丢掉所有门槛和错误控制，你得到的不是更细腻的科学，而是更缺乏问责的科学，对于一个主张何时可被认为经受住了较严苛的检验，将失去公共标准。正文所追求的较为稳妥的综合立场就存在于此：不是「废除」或「服从」，而是「要求检验严苛性」，报告大小和不确定性，并让错误假设有较大概率被检验排除。</p>
 </section>
 <section>
 <p class="sec-eyebrow"><span class="n">§7</span> 通往明天的桥梁</p>
 <h2>以硬币投掷计量的 p 值</h2>
-<p>最后介绍一个简洁的转换，因为它悄悄地翻开了第 7 日的内容。Sander Greenland (2019) 建议我们不要只盯着单独报告的 <span class="term">p 值</span>，而是取它的「惊奇度」 (surprisal)，这直接借用了信息论的概念：<span class="term">S-值</span>，定义为 S = −log₂(p)。S 值把 p 值转换为以比特表示的惊异度，用来描述数据与受检模型的不相容程度。</p>
-<p>这种转化非常具体。问：我要连续掷多少次公平硬币且「全部正面朝上」，才能达到这种惊奇程度？那个次数就是 <span class="term">S-值</span>。一个 <span class="term">p = .05</span> 的结果带有约 <span class="hl">4.3 比特</span>，大致相当于连续猜对四五次硬币投掷的惊奇感。一旦这样表达，魔力就消失了。连续四次正面朝上有点意思，但它算不上发现。</p>
-<p class="web-only">下方的滑块让你感受任何 <span class="term">p 值</span> 对应多少比特的惊奇度。</p>
-<p class="epub-only print-only">下方的参考表会把常见的 <span class="term">p 值</span> 转换为比特惊奇度。</p>
+<p>最后介绍一个简洁的转换，因为它悄悄地翻开了第 7 日的内容。Sander Greenland (2019) 建议我们不要只盯着单独报告的 <span class="term">p 值</span>，而是取它的「惊异度」 (surprisal)，这直接借用了信息论的概念：<span class="term">S-值</span>，定义为 S = −log₂(p)。S 值把 p 值转换为以比特表示的惊异度，用来描述数据与受检模型的不相容程度。</p>
+<p>这种转化非常具体。问：我要连续掷多少次公平硬币且「全部正面朝上」，才能达到这种罕见程度？那个次数就是 <span class="term">S-值</span>。一个 <span class="term">p = .05</span> 的结果带有约 <span class="hl">4.3 比特</span>，这一惊异度大致相当于公平硬币连续出现四至五次正面的罕见程度。一旦这样表达，魔力就消失了。连续四次正面朝上有点意思，但它算不上发现。</p>
+<p class="web-only">下方的滑块让你感受任何 <span class="term">p 值</span> 对应多少比特的惊异度。</p>
+<p class="epub-only print-only">下方的参考表会把常见的 <span class="term">p 值</span> 转换为比特惊异度。</p>
 </section>
 <div class="panel web-only statistics-appendix-lab">
 <p class="ptitle">交互式 · 以比特计量的惊奇感</p>
@@ -716,7 +717,7 @@
 </div>
 <div class="stat-inline-readout">
 <span class="sval-big" id="appendix-d006-the-deeper-machinery-sBig">4.3</span>
-<span class="stat-muted">比特的惊奇度 &nbsp;≈&nbsp; <span id="appendix-d006-the-deeper-machinery-coinTxt" class="mono">4–5</span> 枚硬币全部正面</span>
+<span class="stat-muted">比特的惊异度 &nbsp;≈&nbsp; <span id="appendix-d006-the-deeper-machinery-coinTxt" class="mono">4–5</span> 枚硬币全部正面</span>
 </div>
 <div class="coins" id="appendix-d006-the-deeper-machinery-coinRow"></div>
 <div class="readout" id="appendix-d006-the-deeper-machinery-sRead"></div>
@@ -725,7 +726,7 @@
 <div class="format-alt epub-only print-only">
 <p class="ptitle">参考表</p>
 <h3>S-值参考</h3>
-<p class="pnote">S-值将 p 值转化为比特惊奇度：S = -log2(p)。</p>
+<p class="pnote">S-值将 p 值转化为比特惊异度：S = -log2(p)。</p>
 <table class="alt-table">
 <thead><tr><th>p 值</th><th>S-值</th><th>硬币投掷类比</th></tr></thead>
 <tbody>
@@ -743,8 +744,8 @@
 <li><span class="hl">研究预登记验证性检验。</span> 在看到数据前明确主要结果变量、模型、样本量和停止规则。偏离方案或新增的分析应标为探索性分析。</li>
 <li><span class="hl">始终报告效应量及相容性区间。</span> 效应量及其不确定性「才是」结果；<span class="term">p 值</span> 只是个脚注。</li>
 <li><span class="hl">根据你关心的最小效应量来设定检验功效</span> —— 并记住，样本量不足的研究得出的「显著」结果很可能是虚高的（M 类错误）。</li>
-<li><span class="hl">将你的 p 值转化为比特。</span> 如果它只有几次硬币投掷的惊奇度，请如实说明，不要过度推销。</li>
-<li><span class="hl">检查跨合理分析的稳健性</span>（模型设定曲线），并询问结果是通过了严苛检验，还是仅仅通过了一个「方便」的检验。</li>
+<li><span class="hl">将你的 p 值转化为比特。</span> 如果它只有几次硬币投掷的惊异度，请如实说明，不要过度推销。</li>
+<li><span class="hl">检查跨合理分析的稳健性</span>（模型设定曲线），并询问结果是通过了严苛检验，还是仅仅通过了一个「有利」的检验。</li>
 <li><span class="hl">当必须测试许多事物时，控制错误发现率</span>，同时说明族错误率和功效之间的取舍。</li>
 <li><span class="hl">如果你想声称「没有效应」，请进行等效性检验。</span> 在你真正寻找过「不存在效应的证据」之前，缺乏证据并不能证明不存在。</li>
 </ul>
@@ -752,8 +753,8 @@
 <div class="recap">
 <p class="h">◆ 附录要点总结</p>
 <dl>
-<div><dt>最深层的思想</dt><dd>「<span class="term">p &lt; .05</span> 检验」是费舍尔的证据衡量标准与内曼-皮尔逊的决策规则的不连贯糅合，许多误读都是这一混合结构的症状。而两个简单的数学事实（连续精确零假设下 <span class="term">p 值</span> 是均匀的；未经校正地反复查看会使越过固定阈值越来越容易）解释了为什么 p-hacking 如此危险。</dd></div>
-<div><dt>最精彩的类比</dt><dd>将 <span class="term">p 值</span> 转化为投掷硬币：<span class="term">p = .05</span> 的惊奇度仅相当于连续四五次正面，有点意思，但远谈不上发现。在 Colquhoun 的特定先验概率、功效和模型设定下，刚好达到 <span class="term">p ≈ .05</span> 的结果可对应约 26% 的假阳性风险；这不是 p 值本身的固定含义。</dd></div>
+<div><dt>最深层的思想</dt><dd>「<span class="term">p &lt; .05</span> 检验」是费舍尔的证据衡量标准与内曼-皮尔逊的决策规则的不连贯糅合，许多误读都是这一混合结构的症状。而两个简单的数学事实（连续精确零假设下 <span class="term">p 值</span> 是均匀的；未经校正地反复查看会使越过固定阈值越来越容易）解释了为什么 p 值操纵如此危险。</dd></div>
+<div><dt>最精彩的类比</dt><dd>将 <span class="term">p 值</span> 转化为投掷硬币：<span class="term">p = .05</span> 的惊异度仅相当于连续四五次正面，有点意思，但远谈不上发现。在 Colquhoun 的特定先验概率、功效和模型设定下，刚好达到 <span class="term">p ≈ .05</span> 的结果可对应约 26% 的假阳性风险；这不是 p 值本身的固定含义。</dd></div>
 <div><dt>建设性的转向</dt><dd>解决之道是工具箱而非禁令：检验严苛性 (Mayo)、带有相容性区间的效应量、S 类 / M 类思维、等效性检验、错误发现率控制以及贝叶斯因子——此外还有能够从数字中审计学科领域的统计取证方法（P-curve、死鱼实验、statcheck）。</dd></div>
 </dl>
 </div>
@@ -770,7 +771,7 @@
 <li>Anscombe, F. J. (1954). "Fixed-Sample-Size Analysis of Sequential Observations." <em>Biometrics</em> 10(1): 89–100. <span class="meta">— 采样至预设结论。</span></li>
 <li>Armitage, P., McPherson, C. K. &amp; Rowe, B. C. (1969). "Repeated Significance Tests on Accumulating Data." <em>Journal of the Royal Statistical Society A</em> 132(2): 235–244. <span class="meta">— 在 H₀ 下，可选停止以概率 → 1 跨过任何阈值。</span></li>
 <li>Simonsohn, U., Nelson, L. D. &amp; Simmons, J. P. (2014). "P-curve: A Key to the File-Drawer." <em>Journal of Experimental Psychology: General</em> 143(2): 534–547. <span class="meta">doi:10.1037/a0033242.</span></li>
-<li>Bennett, C. M., Baird, A. A., Miller, M. B. &amp; Wolford, G. L. (2010). "Neural Correlates of Interspecies Perspective Taking in the Post-Mortem Atlantic Salmon." <em>Journal of Serendipitous and Unexpected Results</em> 1: 1–5. <span class="meta">(HBM 2009 海报; 2012 搞笑诺贝尔奖) — fMRI 中的多重比较。</span></li>
+<li>Bennett, C. M., Baird, A. A., Miller, M. B. &amp; Wolford, G. L. (2010). "Neural Correlates of Interspecies Perspective Taking in the Post-Mortem Atlantic Salmon." <em>Journal of Serendipitous and Unexpected Results</em> 1: 1–5. <span class="meta">(HBM 2009 海报; 2012 搞笑诺贝尔奖 / Ig Nobel Prize) — fMRI 中的多重比较。</span></li>
 <li>Vul, E., Harris, C., Winkielman, P. &amp; Pashler, H. (2009). "Puzzlingly High Correlations in fMRI Studies of Emotion, Personality, and Social Cognition." <em>Perspectives on Psychological Science</em> 4(3): 274–290. <span class="meta">— 「巫毒相关」；非独立性错误。</span></li>
 <li>Brown, N. J. L. &amp; Heathers, J. A. J. (2017). "The GRIM Test: A Simple Technique Detects Numerous Anomalies in the Reporting of Results in Psychology." <em>Social Psychological and Personality Science</em> 8(4): 363–369. <span class="meta">doi:10.1177/1948550616673876.</span></li>
 <li>Nuijten, M. B., Hartgerink, C. H. J., van Assen, M. A. L. M., Epskamp, S. &amp; Wicherts, J. M. (2016). "The prevalence of statistical reporting errors in psychology (1985–2013)." <em>Behavior Research Methods</em> 48: 1205–1226. <span class="meta">doi:10.3758/s13428-015-0664-2 — statcheck 审计。</span></li>
@@ -782,7 +783,7 @@
 <li>Lakens, D. (2017). "Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses." <em>Social Psychological and Personality Science</em> 8(4): 355–362. <span class="meta">doi:10.1177/1948550617697177 — TOST 程序。</span></li>
 <li>Benjamini, Y. &amp; Hochberg, Y. (1995). "Controlling the False Discovery Rate." <em>Journal of the Royal Statistical Society B</em> 57(1): 289–300. <span class="meta">— FDR 与全族错误率。</span></li>
 <li>Mayo, D. G. (2018). <em>Statistical Inference as Severe Testing: How to Get Beyond the Statistics Wars.</em> Cambridge University Press. <span class="meta">— 检验严苛性；误差统计学推理。</span></li>
-<li>Greenland, S. (2019). "Valid P-Values Behave Exactly as They Should: Some Misleading Criticisms of P-Values and Their Resolution With S-Values." <em>The American Statistician</em> 73(sup1): 106–114. <span class="meta">doi:10.1080/00031305.2018.1529625 — S-值 / 惊奇度，以比特为单位。</span></li>
+<li>Greenland, S. (2019). "Valid P-Values Behave Exactly as They Should: Some Misleading Criticisms of P-Values and Their Resolution With S-Values." <em>The American Statistician</em> 73(sup1): 106–114. <span class="meta">doi:10.1080/00031305.2018.1529625 — S-值 / 惊异度，以比特为单位。</span></li>
 </ol>
 </section>
 </div>
@@ -795,11 +796,11 @@
 <span class="deep-dive-sub">十类新兴方法，试图在黑盒模型、自动化分析师、隐私保护数据、模拟受试者和公开基准优化中建立可检验、可审计的统计保证。</span>
 </summary>
 <div class="deep-dive-body">
-<p class="lede"><span class="drop">正</span>文揭示了旧时代的危险：<span class="term">p 值</span>加上人类的灵活性，可以将噪声转化为文献。本附录则展望未来。2020 年后最尖锐的研究成果并非仅仅是「谨慎使用 AI」或「报告置信区间」。更深层的变化，是把统计保证落实到具体的工作流环节：停止规则、校准集、金标准标注、选择程序、隐私机制和审计日志。新方法可以在持续查看数据时维持错误率控制，用少量可靠标注校正大规模模型预测，或者把隐私机制产生的额外噪声计入不确定性。但每种方法都只在特定条件下有效，不能把它们当成万能保险。</p>
+<p class="lede"><span class="drop">正</span>文讨论的危险是：<span class="term">p 值</span>加上人类的灵活性，可以将噪声转化为文献。本附录则展望未来。2020 年后最值得关注的研究进展并非仅仅是「谨慎使用 AI」或「报告置信区间」。更深层的变化，是把统计保证落实到具体的工作流环节：停止规则、校准集、金标准标注、选择程序、隐私机制和审计日志。新方法可以在持续查看数据时维持错误率控制，用少量可靠标注校正大规模模型预测，或者把隐私机制产生的额外噪声计入不确定性。但每种方法都只在特定条件下有效，不能把它们当成万能保险。</p>
 <div class="dek-grid">
 <div class="continues">
 <p class="label">◆ 范围与基本规则</p>
-<p>本版本信守第 6 日的诺言：没有任何方法被视为灵丹妙药。每类方法都会贴上成熟度标签、滥用警告，并回溯第 1 至 5 日关于 p-hacking、先验率和因果关系的教训。只有当 2020 年后的方法改变了实践时，才会包含较旧的基础内容。</p>
+<p>本版本信守第 6 日的诺言：没有任何方法被视为灵丹妙药。每类方法都会贴上成熟度标签、滥用警告，并回溯第 1 至 5 日关于 p 值操纵、基础率和因果推断的教训。只有当 2020 年后的方法改变了实践时，才会包含较旧的基础内容。</p>
 </div>
 </div>
 
@@ -814,19 +815,19 @@
 <button data-filter="bad" aria-pressed="false">有争议</button>
 </div>
 <div class="atlas" id="appendix-d006-the-incoming-wave-revised-atlas">
-<article class="appendix-card" data-tier="ok"><div class="k">方法 01</div><h3>全时有效推断</h3><p>能经受住可选停止、持续监测和序贯积累考验的检验及区间。</p><span class="chip ok" data-print="已确立"><i></i>已确立</span><div class="maturity ok"><span></span></div></article>
-<article class="appendix-card" data-tier="ok"><div class="k">方法 02</div><h3>共形风险控制</h3><p>针对黑盒模型的预测集、拒答行为和通用风险指标的外层校准机制。</p><span class="chip ok" data-print="已确立"><i></i>核心已确立</span><div class="maturity ok"><span></span></div></article>
+<article class="appendix-card" data-tier="ok"><div class="k">方法 01</div><h3>任意时点有效推断</h3><p>能经受住可选停止、持续监测和序贯积累考验的检验及区间。</p><span class="chip ok" data-print="已确立"><i></i>已确立</span><div class="maturity ok"><span></span></div></article>
+<article class="appendix-card" data-tier="ok"><div class="k">方法 02</div><h3>共形风险控制</h3><p>针对黑盒模型的预测集、弃权机制和通用风险指标的外层校准机制。</p><span class="chip ok" data-print="已确立"><i></i>核心已确立</span><div class="maturity ok"><span></span></div></article>
 <article class="appendix-card" data-tier="ok"><div class="k">方法 03</div><h3>预测辅助推断</h3><p>利用廉价的 AI 预测提高估计效率，但通过少量金标准标注校正模型偏差。</p><span class="chip ok" data-print="需审查"><i></i>Science / PNAS</span><div class="maturity ok"><span></span></div></article>
-<article class="appendix-card" data-tier="ok"><div class="k">方法 04</div><h3>正交因果机器学习</h3><p>利用灵活的机器学习学习滋扰函数，同时利用正交分值保护因果估计。</p><span class="chip ok" data-print="需审查"><i></i>日趋成熟</span><div class="maturity ok"><span></span></div></article>
-<article class="appendix-card" data-tier="hint"><div class="k">方法 05</div><h3>发现后的推断</h3><p>后选择推断、数据裂变、数据稀化以及针对探索行为的因果发现修正，避免重复利用数据。</p><span class="chip hint" data-print="有前景"><i></i>快速发展前沿</span><div class="maturity hint"><span></span></div></article>
-<article class="appendix-card" data-tier="hint"><div class="k">方法 06</div><h3>隐私保护数据推断</h3><p>将差分隐私和合成数据发布所引入的不确定性包含在内的置信区间。</p><span class="chip hint" data-print="需审查"><i></i>增长中</span><div class="maturity hint"><span></span></div></article>
+<article class="appendix-card" data-tier="ok"><div class="k">方法 04</div><h3>正交因果机器学习</h3><p>利用灵活的机器学习学习滋扰函数，同时利用正交得分保护因果估计。</p><span class="chip ok" data-print="需审查"><i></i>日趋成熟</span><div class="maturity ok"><span></span></div></article>
+<article class="appendix-card" data-tier="hint"><div class="k">方法 05</div><h3>发现后的推断</h3><p>选择后推断、数据裂变、数据稀化以及针对探索行为的因果发现修正，避免重复利用数据。</p><span class="chip hint" data-print="有前景"><i></i>快速发展前沿</span><div class="maturity hint"><span></span></div></article>
+<article class="appendix-card" data-tier="hint"><div class="k">方法 06</div><h3>隐私保护数据推断</h3><p>将差分隐私和合成数据发布所引入的不确定性包含在内的置信区间。</p><span class="chip hint" data-print="需审查"><i></i>正在发展</span><div class="maturity hint"><span></span></div></article>
 <article class="appendix-card" data-tier="ok"><div class="k">方法 07</div><h3>贝叶斯工作流</h3><p>先验预测检查、后验预测检查、SBC、模型批判：将推断视为一种经过审计的工作流。</p><span class="chip ok" data-print="需审查"><i></i>实践转型</span><div class="maturity ok"><span></span></div></article>
 <article class="appendix-card" data-tier="hint"><div class="k">方法 08</div><h3>大规模统计取证</h3><p>数据侦探、决策市场、ML 复现性预测、论文工厂检测以及期刊层面的风险筛查。</p><span class="chip hint" data-print="有前景"><i></i>有前景</span><div class="maturity hint"><span></span></div></article>
 <article class="appendix-card" data-tier="bad"><div class="k">方法 09</div><h3>模拟受试者</h3><p>将 LLM 视为模拟的调查受访者或实验参与者：对初步研究有用，作为替代品则风险很高。</p><span class="chip bad" data-print="有争议"><i></i>有争议</span><div class="maturity bad"><span></span></div></article>
 <article class="appendix-card" data-tier="bad"><div class="k">方法 10</div><h3>AI 分析师与基准测试</h3><p>自动化分析智能体、基准测试污染、复现性漂移以及「AI 科学家」流水线。</p><span class="chip bad" data-print="有争议"><i></i>尚未定论</span><div class="maturity bad"><span></span></div></article>
 </div>
 <div class="jumpgrid web-only" aria-label="跳转至章节">
-<a href="#appendix-d006-the-incoming-wave-revised-anytime"><span class="hl">01</span><span>全时</span></a>
+<a href="#appendix-d006-the-incoming-wave-revised-anytime"><span class="hl">01</span><span>任意时点</span></a>
 <a href="#appendix-d006-the-incoming-wave-revised-conformal"><span class="hl">02</span><span>共形</span></a>
 <a href="#appendix-d006-the-incoming-wave-revised-ppi"><span class="hl">03</span><span>PPI</span></a>
 <a href="#appendix-d006-the-incoming-wave-revised-dml"><span class="hl">04</span><span>因果 ML</span></a>
@@ -840,20 +841,20 @@
 </section>
 <section id="appendix-d006-the-incoming-wave-revised-anytime">
 <p class="sec-eyebrow"><span class="n">§1</span> 经受得住刷新按钮考验的 p 值</p>
-<h2>全时有效推断：让重复查看不再破坏错误率控制</h2>
+<h2>任意时点有效推断：让重复查看不再破坏错误率控制</h2>
 <div class="claim"><div class="ctop"><span class="cnum">方法 01</span><span class="chip ok" data-print="已确立"><i></i>理论已确立</span><span class="chip hint" data-print="有前景"><i></i>普及尚不均衡</span></div></div>
 <p>传统的固定样本检验非常脆弱，因为它假设你在看到数据前就确定了样本量。但现代科学并非如此。A/B 测试每小时都在汇入数据。平台团队不断刷新仪表盘。临床试验有中期查看。实验室在第一批数据「几乎显著」时会增加受试者。普通的 <span class="term">p 值</span> 并非为这个世界而造。</p>
-<p><span class="term">任意时点有效推断</span> (anytime-valid inference，以下简称「全时有效推断」) 改变了统计程序。它不再使用仅在预设停止时间有效的 <span class="term">p 值</span>，而是使用 <span class="term">e-值</span> (e-values)、<span class="term">e-过程</span> (e-processes)、全时有效 <span class="term">p 值</span> 以及<span class="term">置信序列</span>：这些证据衡量标准和区间旨在对<span class="hl">任意停止时间</span>保持有效。在程序正确构造且假设成立时，研究者可以根据当前数据决定是否继续采样，同时保持规定的错误率或证据保证。</p>
-<p>这并非装饰性的升级。它直接针对第 6 日提到的欺骗自己的核心机制之一：可选停止。2020 年后的前沿是「博弈论统计 / 安全全时有效推断」语言的整合。它将证据视为与自然进行序贯博弈时的资本过程。如果零假设为真，这个资本过程就无法系统性地无限制增长；Ville 式不等式将这一逻辑转化为序贯检验和置信序列。</p>
-<p>前沿校准器：数学原理现在已非常严肃且成熟。实际风险在于文化层面。人们喜欢仪表盘，但讨厌更改他们报告的数字。如果一个团队运行着持续监测的实验，却仍在报告普通的固定时限 <span class="term">p 值</span>，那么其 UI 可能看起来很现代，但推断程序仍停留在 1930 年代的纸笔时代。</p>
+<p><span class="term">任意时点有效推断</span> (anytime-valid inference) 改变了统计程序。它不再使用仅在预设停止时间有效的 <span class="term">p 值</span>，而是使用 <span class="term">e-值</span> (e-values)、<span class="term">e-过程</span> (e-processes)、任意时点有效的 <span class="term">p 值</span> 以及<span class="term">置信序列</span>：这些证据衡量标准和区间旨在对<span class="hl">任意停止时间</span>保持有效。在程序正确构造且假设成立时，研究者可以根据当前数据决定是否继续采样，同时保持规定的错误率或证据保证。</p>
+<p>这并非装饰性的升级。它直接针对第 6 日提到的欺骗自己的核心机制之一：可选停止。2020 年后的前沿是「博弈论统计 / 安全任意时点有效推断」语言的整合。它将证据视为与自然进行序贯博弈时的资本过程。如果零假设为真，这个资本过程就无法系统性地无限制增长；Ville 式不等式将这一逻辑转化为序贯检验和置信序列。</p>
+<p>前沿校准器：相关理论已经相当成熟。实际风险在于文化层面：困难往往不在理论，而在团队仍沿用普通的固定样本 <span class="term">p 值</span>。如果一个团队运行着持续监测的实验，却仍在报告普通的固定样本 <span class="term">p 值</span>，那么其 UI 可能看起来很现代，但推断程序仍停留在 1930 年代的纸笔时代。</p>
 
-<div class="aside"><p class="h">第 6 日回溯</p><p>可选停止是假阳性工厂的开关之一。全时有效推断并不是说「永远不要偷看」。它说的是：如果偷看是工作流的一部分，请将偷看纳入统计程序，而非假装它没有发生。</p></div>
+<div class="aside"><p class="h">第 6 日回溯</p><p>可选停止是假阳性工厂的开关之一。任意时点有效推断并不是说「永远不要偷看」。它说的是：如果偷看是工作流的一部分，请将偷看纳入统计程序，而非假装它没有发生。</p></div>
 </section>
 
 <div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-peekPanel">
 <p class="ptitle">交互式 · 可选停止</p>
-<h3>偷看计</h3>
-<p class="pnote">一个简易模型：将每次查看视为一次跨过 <span class="term">p &lt; α</span> 的新机会。真实的序贯依赖性更微妙，但趋势才是重点。固定样本 p 值在重复查看下非常脆弱；而全时有效程序则是专为停止规则设计的。</p>
+<h3>重复查看风险</h3>
+<p class="pnote">一个简易模型：将每次查看视为一次跨过 <span class="term">p &lt; α</span> 的新机会。真实的序贯依赖性更微妙，但趋势才是重点。固定样本 p 值在重复查看下非常脆弱；而任意时点有效程序则是专为停止规则设计的。</p>
 <div class="grid2">
 <div class="ctrl">
 <div class="slider-row"><label>名义 <span class="term">α</span> <span class="val" id="appendix-d006-the-incoming-wave-revised-peekAlphaVal">0.05</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-peekAlpha" min="1" max="10" value="5"></div>
@@ -861,7 +862,7 @@
 </div>
 <div class="visbox">
 <div class="metric"><span class="lab">固定样本 p 值</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-peekFixedBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-peekFixedPct">46%</span></div>
-<div class="metric"><span class="lab">全时有效</span><div class="meter green"><span id="appendix-d006-the-incoming-wave-revised-peekAnyBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-peekAnyPct">5%</span></div>
+<div class="metric"><span class="lab">任意时点有效</span><div class="meter green"><span id="appendix-d006-the-incoming-wave-revised-peekAnyBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-peekAnyPct">5%</span></div>
 <p class="note">红色条是在简单的独立查看近似下，至少有一次查看产生虚假「发现」的概率。绿色条则保持在预设的假警报水平。</p>
 </div>
 </div>
@@ -872,7 +873,7 @@
 <h3>可选停止参考</h3>
 <p class="pnote">除非检验是为序贯监测而设计，否则重复查看会提高至少产生一次假警报的几率。</p>
 <table class="alt-table">
-<thead><tr><th>在 α = .05 下的查看次数</th><th>朴素假警报风险</th><th>全时有效目标</th></tr></thead>
+<thead><tr><th>在 α = .05 下的查看次数</th><th>朴素假警报风险</th><th>任意时点有效目标</th></tr></thead>
 <tbody>
 <tr><td>1</td><td>5%</td><td>5%</td></tr>
 <tr><td>12</td><td>约 46%</td><td>5%</td></tr>
@@ -887,7 +888,7 @@
 <div class="claim"><div class="ctop"><span class="cnum">方法 02</span><span class="chip ok" data-print="已确立"><i></i>核心方法已确立</span><span class="chip hint" data-print="有前景"><i></i>风险控制前沿</span></div></div>
 <p>共形预测 (conformal prediction) 是当前统计学 / 机器学习交界处一个简洁而重要的思想。研究者可以先训练预测模型，再留出校准数据，测量模型在这些留出数据上的错误程度，并利用这些错误的经验分位数为下一个案例构建预测集。在可交换性等条件成立时，共形预测可以在有限样本下提供边际覆盖保证。</p>
 <p>但它通常不保证每个子群、每个输入点或分布偏移后的条件覆盖，因此实际部署还需要分组诊断和压力测试。2020 年后的前沿更为广阔：<span class="term">共形风险控制</span> (conformal risk control) 不仅仅询问「真实标签是否落在集合内？」，而是询问「我们能否控制选定的风险函数？」。在视觉和语言任务中，有用的错误指标可能是漏报率、图距离、拒绝预测错误、检索遗漏率或词元级 F1。共形风险控制将共形思想扩展到单调损失，并实现了预期风险的有限样本控制。</p>
-<p>这对 AI 系统至关重要，因为输出通常不是标量。聊天机器人的回答、分割掩码、医学影像区域或结构化提取并非单一的是 / 否标签。风险控制让你能围绕黑盒模型构建一个经过校准的<span class="hl">直接输出 / 拒答 / 升级处理 / 转人工审核</span>的外层机制。在最安全的版本中，模型保持为预测引擎；而共形校准层则规定在什么条件下可以信任预测。</p>
+<p>这对 AI 系统至关重要，因为输出通常不是标量。聊天机器人的回答、分割掩码、医学影像区域或结构化提取并非单一的是 / 否标签。风险控制让你能围绕黑盒模型构建一个经过校准的<span class="hl">直接输出 / 弃权 / 升级 / 人工复核</span>的外层机制。在最安全的版本中，模型保持为预测引擎；而共形校准层则规定在什么条件下可以信任预测。</p>
 <p>前沿校准器：边际覆盖保证已经较为成熟；条件覆盖则很难实现。在分布偏移下，经典的可交换性保证会变弱。最近的研究处理了加权和非可交换设置、条件式保证以及 e-值变体，但从业者仍需追问校准数据是否与部署环境相似。共形方法可以校准预测不确定性，但它们无法让一个糟糕的部署环境变得安全。</p>
 </section>
 
@@ -897,7 +898,7 @@
 <p class="pnote">这只是一个概念性的拨盘，而非定理。更低的 <span class="term">α</span> 要求更高的覆盖率；模型预测性能越弱、部署分布偏移越大，预测集通常越大或越不可信。真实的保证取决于可交换性或经论证的偏移修正。</p>
 <div class="grid2">
 <div class="ctrl">
-<div class="slider-row"><label><span class="term">α</span>，可容忍的漏掉率 <span class="val" id="appendix-d006-the-incoming-wave-revised-confAlphaVal">0.10</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confAlpha" min="1" max="30" value="10"></div>
+<div class="slider-row"><label><span class="term">α</span>（允许的未覆盖率） <span class="val" id="appendix-d006-the-incoming-wave-revised-confAlphaVal">0.10</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confAlpha" min="1" max="30" value="10"></div>
 <div class="slider-row"><label>模型预测性能 <span class="val" id="appendix-d006-the-incoming-wave-revised-confSkillVal">0.70</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confSkill" min="10" max="95" value="70"></div>
 <div class="slider-row"><label>部署分布偏移 <span class="val" id="appendix-d006-the-incoming-wave-revised-confShiftVal">0.00</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confShift" min="0" max="80" value="0"></div>
 </div>
@@ -927,7 +928,7 @@
 <section id="appendix-d006-the-incoming-wave-revised-ppi">
 <p class="sec-eyebrow"><span class="n">§3</span> 利用 AI 预测而不全盘接受其错误</p>
 <h2>预测辅助推断：关键在于偏差校正</h2>
-<div class="claim"><div class="ctop"><span class="cnum">方法 03</span><span class="chip ok" data-print="需审查"><i></i>Science 2023</span><span class="chip ok" data-print="已确立"><i></i>PNAS 2024 扩展</span><span class="chip hint" data-print="有前景"><i></i>普及增长中</span></div></div>
+<div class="claim"><div class="ctop"><span class="cnum">方法 03</span><span class="chip ok" data-print="需审查"><i></i>Science 2023</span><span class="chip ok" data-print="已确立"><i></i>PNAS 2024 扩展</span><span class="chip hint" data-print="有前景"><i></i>普及中</span></div></div>
 <p>AI 可以标记一百万个星系、卫星瓦片、病理切片、蛋白质记录或临床笔记。但从这些预测中得出的统计估计并不会自动具备有效性，因为模型错误并非随机的录入错误。它们是有结构的，遵循模型的盲点。</p>
 <p><span class="term">预测辅助推断</span> (prediction-powered inference, PPI) 利用大量便宜的模型预测提高估计效率，再用一小批人工或仪器核验的金标准标注校正模型偏差。关键是不把模型预测直接当成真值。金标准样本用于估计模型对<span class="term">估计目标</span>造成的偏差，并形成一个<span class="term">偏差校正项</span> (rectifier)；大量预测则用于提高估计精度。模型预测越有用，区间通常越窄；如果模型表现较差，方法会退回到接近仅使用标注数据的结果，而不是让有偏预测主导结论。</p>
 <p>PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅助推断 (Cross-PPI) 则通过交叉拟合，在不同数据折中分别完成预测和偏差校正。其架构体现了一种典型模式：<span class="hl">利用黑盒预测提高精度，但在校正步骤中建立统计保证。</span></p>
@@ -936,14 +937,14 @@
 
 <div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-ppiPanel">
 <p class="ptitle">交互式 · PPI 权衡</p>
-<h3>廉价预测仅在金标准修正后才能换取精确度</h3>
+<h3>廉价预测仅在金标准校正后才能换取精确度</h3>
 <p class="pnote">移动滑块以比较三种区间：经典的仅标注、朴素地将 ML 视为真值、以及 PPI。未经校正的区间可能很窄但却是错的。PPI 旨在比仅标注区间更窄，同时通过偏差校正项保持统计有效性。</p>
 <div class="grid2">
 <div class="ctrl">
 <div class="slider-row"><label>金标准标注 <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiNVal">200</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiN" min="40" max="2000" value="200"></div>
 <div class="slider-row"><label>未标注预测 <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiUVal">20,000</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiU" min="1000" max="100000" step="1000" value="20000"></div>
-<div class="slider-row"><label>模型与标注的相关性 <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiRVal">0.70</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiR" min="0" max="95" value="70"></div>
-<div class="slider-row"><label>朴素模型偏差 <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiBiasVal">0.20</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiBias" min="0" max="60" value="20"></div>
+<div class="slider-row"><label>模型预测与真实标签的相关性 <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiRVal">0.70</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiR" min="0" max="95" value="70"></div>
+<div class="slider-row"><label>未经校正的模型偏差 <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiBiasVal">0.20</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiBias" min="0" max="60" value="20"></div>
 </div>
 <div class="visbox">
 <div class="ci-row"><span class="ci-label">仅标注</span><div class="ci-bar"><div class="ci-band classical" id="appendix-d006-the-incoming-wave-revised-ciClass"></div><div class="ci-truth" id="appendix-d006-the-incoming-wave-revised-truthClass"></div></div></div>
@@ -963,7 +964,7 @@
 <tbody>
 <tr><td>仅标注</td><td>依靠金标准标注保证统计有效性</td><td>标注稀缺时区间较宽。</td></tr>
 <tr><td>朴素地将 ML 视为真值</td><td>非常窄</td><td>模型有偏差时可能错过真值。</td></tr>
-<tr><td>PPI</td><td>修正后的精确度</td><td>需要具有代表性的金标准标注。</td></tr>
+<tr><td>PPI</td><td>校正后仍保持的精度</td><td>需要具有代表性的金标准标注。</td></tr>
 </tbody>
 </table>
 </div>
@@ -972,9 +973,9 @@
 <p class="sec-eyebrow"><span class="n">§4</span> 机器拟合辅助模型，人类负责因果假设</p>
 <h2>用于因果效应的双重 / 去偏机器学习</h2>
 <div class="claim"><div class="ctop"><span class="cnum">方法 04</span><span class="chip ok" data-print="已确立"><i></i>理论已确立</span><span class="chip ok" data-print="已确立"><i></i>工具链成熟</span></div></div>
-<p>第 5 日的警告直截了当：相关性不等于干预。要从观测数据中估计因果效应，你必须调整混杂因素，且必须在不对非线性世界强加幻想的线性模型的前提下完成。</p>
+<p>第 5 日的警告直截了当：相关性不等于干预。要从观测数据中估计因果效应，你必须调整混杂因素，同时又不能把复杂的非线性关系硬塞进线性模型。</p>
 <p>双重 / 去偏机器学习 (DML) 在机器学习最强的地方使用它：学习高维<span class="term">滋扰函数</span> (nuisance functions)，也就是为估计目标参数而引入的辅助模型，例如结果模型和倾向得分模型。然后，它在统计学最强的地方使用统计学：通过正交得分和交叉拟合，降低辅助模型中的小误差对目标参数估计的一阶影响。</p>
-<p>2020 年后的变化并不是 DML 在 2020 年后才被发明；事实并非如此。变化在于软件和应用实践赶了上来。Python 和 R 中的 DoubleML 实现、因果森林工作流以及生物医学异质性治疗效应综述，已经将「正交化滋扰项」从学术词汇变成了应用工作流。</p>
+<p>2020 年后的变化并不是 DML 在 2020 年后才被发明；事实并非如此。变化在于软件和应用实践赶了上来。Python 和 R 中的 DoubleML 实现、因果森林工作流以及生物医学异质性治疗效应综述，已经将「正交化滋扰项」从研讨会术语变成了应用工作流。</p>
 <p>前沿校准器必不可少：DML 降低了对辅助模型具体参数形式的依赖，但并不放宽因果识别所需的假设。如果后门调整集错误、存在未测量混杂，或处理分配受隐藏变量影响，即使正交得分计算得很精确，回答的仍可能是错误的因果问题。DML 解决的是<span class="hl">灵活调整</span>，不能替代因果识别。</p>
 
 <div class="aside"><p class="h">第 5 日回溯</p><p>只有在设计和识别论证表明目标可达时，DML 才能帮助估计 P(Y|do(X))。算法不能把相关关系硬说成因果关系。</p></div>
@@ -982,25 +983,25 @@
 
 <section id="appendix-d006-the-incoming-wave-revised-selection">
 <p class="sec-eyebrow"><span class="n">§5</span> 先探索，再推断：把选择代价计入分析</p>
-<h2>发现后的推断：后选择、因果发现与数据裂变</h2>
+<h2>发现后的推断：选择后、因果发现与数据裂变</h2>
 <div class="claim"><div class="ctop"><span class="cnum">方法 05</span><span class="chip hint" data-print="需审查"><i></i>快速变动的前沿</span><span class="chip ok" data-print="需审查"><i></i>核心理论较成熟</span></div></div>
-<p>分岔路径的花园不会消失。现代分析往往始于发现：对细胞进行聚类、寻找亚组、选择变量、学习因果图、选择图像区域、调优转换方式、要求 AI 分析师「找出重要的东西」。致命的错误在于使用同一份数据来发现目标，然后假装该目标是预先指定的。</p>
-<p><span class="term">后选择推断</span> (post-selection inference) 是统计学在诚实计入选择代价方面的尝试。经典方法包括以选择事件为条件、将数据拆分为发现集和确认集、或构建考虑选择过程后仍保持覆盖率的同时置信区间。2020 年后的前沿增加了三个特别相关的想法：</p>
+<p>分岔路径花园不会消失。现代分析往往始于发现：对细胞进行聚类、寻找亚组、选择变量、学习因果图、选择图像区域、调优转换方式、要求 AI 分析师「找出重要的东西」。致命的错误在于使用同一份数据来发现目标，然后假装该目标是预先指定的。</p>
+<p><span class="term">选择后推断</span> (post-selection inference) 是统计学在诚实计入选择代价方面的尝试。经典方法包括以选择事件为条件、将数据拆分为探索集和验证集、或构建考虑选择过程后仍保持覆盖率的同时置信区间。2020 年后的前沿增加了三个特别相关的想法：</p>
 <div class="mini-list">
-<div class="mini"><div class="num">A</div><p><span class="hl">算法稳定性。</span> 如果选择规则是随机且稳定的，那么它对任何单一观测值的敏感性就可以被量化。这种稳定性可以转化为后选择修正，借鉴了差分隐私和自适应数据分析的思想。</p></div>
-<div class="mini"><div class="num">B</div><p><span class="hl">数据裂变 (data fission) 与数据稀化 (data thinning)。</span> 与其拆分行，不如把单个观测所包含的统计信息拆分为选择部分和推断部分。一块用于探索；另一块用于检验。对于某些分布，最近的数据稀化方法可以产生独立的碎片，而无需丢弃整个观测值。</p></div>
-<div class="mini"><div class="num">C</div><p><span class="hl">因果发现后的有效推断。</span> 运行图发现算法然后在同一份数据上估计效应会破坏覆盖率。新工作对发现过程进行了随机化和修正，使随后的因果区间不再失去覆盖保证。</p></div>
+<div class="mini"><div class="num">A</div><p><span class="hl">算法稳定性。</span> 如果选择规则是随机且稳定的，那么它对任何单一观测值的敏感性就可以被量化。这种稳定性可以转化为选择后修正，借鉴了差分隐私和自适应数据分析的思想。</p></div>
+<div class="mini"><div class="num">B</div><p><span class="hl">数据裂变 (data fission) 与数据稀化 (data thinning)。</span> 与其拆分行，不如把单个观测所包含的统计信息拆分为选择部分和推断部分。一块用于探索；另一块用于检验。对于某些分布，最近的数据稀化方法可以产生相互独立的数据部分，而无需丢弃整个观测值。</p></div>
+<div class="mini"><div class="num">C</div><p><span class="hl">因果发现后的有效推断。</span> 运行图发现算法然后在同一份数据上估计效应会破坏覆盖率。新工作对发现过程进行了随机化和修正，使后续因果区间恢复有效覆盖。</p></div>
 </div>
-<p>前沿校准器：这并不容易，在研究预登记可行的情况下，它也不是研究预登记的替代品。但它是探索性科学值得继续发展的方向，因为「永远不探索」并不是一条严肃的规则。严肃的规则是：如果数据提示了问题，推断过程必须知晓这一点。</p>
+<p>前沿校准器：这并不容易，在研究预登记可行的情况下，它也不是研究预登记的替代品。但它是探索性科学值得继续发展的方向，因为「永远不探索」并不是一条严肃的规则。严肃的规则是：如果数据提示了问题，后续推断必须把这一选择过程计入。</p>
 </section>
 
 <div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-pathsPanel">
 <p class="ptitle">交互式 · AI 分析师多重宇宙</p>
 <h3>当分析成本低廉时，花园长得更快</h3>
-<p class="pnote">假定纯粹是噪声且名义 <span class="term">α = .05</span>。每次提示、模型、结果和清洗规则都会使可能的分析路径成倍增加。独立性近似虽显粗糙，但其中的警示意义不言自明。</p>
+<p class="pnote">假定纯粹是噪声且名义 <span class="term">α = .05</span>。每组提示词设定、模型、结果和清洗规则都会使可能的分析路径成倍增加。独立性近似虽显粗糙，但其中的警示意义不言自明。</p>
 <div class="grid2">
 <div class="ctrl">
-<div class="slider-row"><label>尝试的提示词 <span class="val" id="appendix-d006-the-incoming-wave-revised-pathPromptVal">4</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathPrompt" min="1" max="30" value="4"></div>
+<div class="slider-row"><label>尝试的提示词设定 <span class="val" id="appendix-d006-the-incoming-wave-revised-pathPromptVal">4</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathPrompt" min="1" max="30" value="4"></div>
 <div class="slider-row"><label>尝试的模型 / 智能体 <span class="val" id="appendix-d006-the-incoming-wave-revised-pathModelVal">3</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathModel" min="1" max="12" value="3"></div>
 <div class="slider-row"><label>考虑的结果变量 <span class="val" id="appendix-d006-the-incoming-wave-revised-pathOutcomeVal">5</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathOutcome" min="1" max="30" value="5"></div>
 <div class="slider-row"><label>清洗 / 协变量规则 <span class="val" id="appendix-d006-the-incoming-wave-revised-pathCleanVal">4</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathClean" min="1" max="20" value="4"></div>
@@ -1009,7 +1010,7 @@
 <div class="bigstat"><span id="appendix-d006-the-incoming-wave-revised-pathK">240</span> <small>条分析路径</small></div>
 <div class="metric"><span class="lab">假阳性风险</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-pathRiskBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-pathRiskPct">≈100%</span></div>
 <div class="metric"><span class="lab">研究预登记</span><div class="meter green"><span class="meter-five"></span></div><span>5%</span></div>
-<p class="note">一个报告完整多重宇宙的 AI 分析师可以是一台诚实机器。一个悄悄选择最漂亮路径的 AI 分析师，则是一个 <span class="term">p-hacking</span> 的加速器。</p>
+<p class="note">一个报告完整多重宇宙的 AI 分析师可以提高透明度。一个悄悄选择最有利路径的 AI 分析师，则是 <span class="term">p 值操纵</span> 的加速器。</p>
 </div>
 </div>
 <div class="readout" id="appendix-d006-the-incoming-wave-revised-pathsRead"></div>
@@ -1032,9 +1033,9 @@
 <p class="sec-eyebrow"><span class="n">§6</span> 当发布的数据并非原始数据</p>
 <h2>差分隐私：让隐私噪声成为数据发布设计的一部分</h2>
 <div class="claim"><div class="ctop"><span class="cnum">方法 06</span><span class="chip hint" data-print="需审查"><i></i>高风险前沿</span><span class="chip blue" data-print="需审查"><i></i>政策相关</span></div></div>
-<p>开放科学想要数据共享。人类受试者、公司、医院和政府则要求保密。差分隐私是一种成熟而有力的形式化框架：它通过添加随机噪声，使得加入或移除任意一个个体对发布结果的影响都被限制在一定范围内。</p>
-<p>对于第 6 日的内容，其中的统计要点在于：<span class="hl">隐私噪声并不是一个文件格式的细节</span>。如果你把经过差分隐私处理的统计数据或合成数据当成普通观测值来分析，你的区间可能会过窄，你的 <span class="term">p 值</span> 会显得过于自信，显著性判断和区间估计都可能失真。隐私机制本身就是数据生成过程的一部分，因此有效的推断必须将其包含在内。</p>
-<p>2020 年后的工作一直致力于构建噪声感知型置信区间、差分隐私自助法 (bootstrap)、从差分隐私合成数据中进行推断，以及评估所声称的隐私保证是否真的符合用户理解。这并不华丽，但至关重要。在未来的十年里，许多研究者将永远无法接触到原始的行政或医疗数据。他们接触到的是经过隐私过滤的输出。前沿问题变成了：我们如何在不暴露个人身份的前提下，让这些输出在科学上发挥作用？</p>
+<p>开放科学想要数据共享。研究参与者、公司、医院和政府则要求保密。差分隐私是一种成熟而有力的形式化框架：它通过添加随机噪声，使得加入或移除任意一个个体对发布结果的影响都被限制在一定范围内。</p>
+<p>对于第 6 日的内容，其中的统计要点在于：<span class="hl">隐私噪声并不是一个文件格式的细节</span>。如果你把经过差分隐私处理的统计数据或合成数据当成普通观测值来分析，你的区间可能会过窄，不确定性会被低估，显著性判断和区间估计都可能失真。隐私机制本身就是数据生成过程的一部分，因此有效的推断必须将其包含在内。</p>
+<p>2020 年后的工作一直致力于构建噪声感知型置信区间、差分隐私自助法 (bootstrap)、从差分隐私合成数据中进行推断，以及评估所声称的隐私保证是否真的符合用户理解。这并不华丽，但至关重要。在未来的十年里，许多研究者往往无法直接接触原始的行政或医疗数据。他们接触到的是经过隐私过滤的输出。前沿问题变成了：我们如何在不暴露个人身份的前提下，让这些输出在科学上发挥作用？</p>
 <p>前沿校准器：差分隐私通过牺牲某些分析的精确度来保护个人。一个有效的差分隐私置信区间可能会宽得多。这并不是失败，而是明确显示隐私保护带来的精度代价。真正危险的是忽略隐私噪声，只报告一个过窄的区间。</p>
 </section>
 
@@ -1053,17 +1054,17 @@
 <h2>大规模统计取证与复现性筛查</h2>
 <div class="claim"><div class="ctop"><span class="cnum">方法 08</span><span class="chip ok" data-print="已确立"><i></i>取证方法已验证</span><span class="chip hint" data-print="需审查"><i></i>规模化仍处于早期</span></div></div>
 <p>附录 I 中的统计取证工具箱还是手工作坊式的：GRIM 检验、statcheck、p-curve、数字异常、电子表格中的异常模式。而 2020 年后的变化是，代价和规模都大幅增加了。</p>
-<p>Francesca Gino / Data Colada 案例展示了这种力量与危险。Data Colada 在 2023 年发表了详细的异常分析；哈佛大学的调查结论认为存在研究不端行为；Gino 否认有错并提起诉讼。2024 年 9 月，联邦法官驳回了针对 Data Colada 被告的所有指控；2025 年 5 月，哈佛撤销了 Gino 的终身教职并解雇了她。这一科学教训并不是「博主应该接管大学」，而是透明的取证论证可以成为正式纠错系统的一部分。</p>
+<p>Francesca Gino / Data Colada 案例展示了这种力量与危险。Data Colada 在 2023 年发表了详细的异常分析；哈佛大学的调查结论认为存在研究不端行为；Gino 否认有错并提起诉讼。2024 年 9 月，联邦法官驳回了针对 Data Colada 被告的全部诉讼请求；2025 年 5 月，哈佛撤销了 Gino 的终身教职并解雇了她，与此同时，与哈佛有关的部分法律争议仍在继续。这一科学教训并不是「博主应该接管大学」，而是透明的取证论证可以成为正式纠错系统的一部分。</p>
 <p>下一层是风险筛查。我们无法复现每一项主张。决策市场已经表明，科学家们的集体预测可以识别出哪些发现更可能复现、更不可能复现：在《自然-人类行为》的一项研究中，市场看好的研究的复现率远高于不被看好的研究。开放科学中心的 Predicting Replicability Challenge 加入了基于数千项复现结果训练的机器学习模型。初步结果是发人深省的：第一轮在某些指标上表现较弱，第二轮有所提高。这种细微差别非常重要：复现性预测是一个很有前景的烟雾报警器，而非真理机器。</p>
-<p>前沿校准器：取证工具可能会被误用为自动定罪工具。奇怪的数据集并不自动等同于造假；低复现率预测也不是判决。统计取证适合发现值得核查的异常和确定复现优先级，不应被当成自动判定学术不端的工具。</p>
+<p>前沿校准器：取证工具可能会被误用为自动定罪工具。奇怪的数据集并不自动等同于造假；较低的可复现性评分也不是判决。统计取证适合发现值得核查的异常和确定复现优先级，不应被当成自动判定学术不端的工具。这类工具还需要公开代码、经过校准的误报率，以及同时保护举报者和被指控研究者的制度。</p>
 </section>
 <section>
 <div class="panel widepanel">
 <p class="ptitle">时间轴 · 成熟度与谨慎</p>
 <h3>成熟度一瞥</h3>
 <div class="timeline">
-<div class="tl-item"><div class="tl-dot ok"></div><div class="tl-body"><p class="yr">2021–2024</p><p class="tt">全时有效推断整合</p><p>全时有效 A/B 测试、e-过程、置信序列和安全检验成为序贯科学中一套连贯的后 p 值语言。</p></div></div>
-<div class="tl-item"><div class="tl-dot ok"></div><div class="tl-body"><p class="yr">2023–2025</p><p class="tt">共形预测离开课堂</p><p>通俗教程、超越可交换性的理论、共形风险控制、条件式保证以及 NLP/LLM 应用拓宽了使用场景。</p></div></div>
+<div class="tl-item"><div class="tl-dot ok"></div><div class="tl-body"><p class="yr">2021–2024</p><p class="tt">任意时点有效推断整合</p><p>任意时点有效 A/B 测试、e-过程、置信序列和安全检验成为面向序贯研究的新推断框架。</p></div></div>
+<div class="tl-item"><div class="tl-dot ok"></div><div class="tl-body"><p class="yr">2023–2025</p><p class="tt">共形预测开始走向实际应用</p><p>通俗教程、超越可交换性的理论、共形风险控制、条件式保证以及 NLP/LLM 应用拓宽了使用场景。</p></div></div>
 <div class="tl-item"><div class="tl-dot ok"></div><div class="tl-body"><p class="yr">2023–2024</p><p class="tt">预测辅助推断落地</p><p>Science 论文、PPI++ 和 Cross-PPI 实现了利用廉价模型预测加少量金标准标注的有效估计。</p></div></div>
 <div class="tl-item"><div class="tl-dot hint"></div><div class="tl-body"><p class="yr">2023–2025</p><p class="tt">发现后的推断进入实践</p><p>算法稳定性、数据裂变 / 数据稀化以及因果发现后的有效推断直接解决了探索性工作流中的重复利用数据问题。</p></div></div>
 <div class="tl-item"><div class="tl-dot hint"></div><div class="tl-body"><p class="yr">2022–2026</p><p class="tt">隐私感知型推断变得不可回避</p><p>DP 合成数据和差分隐私置信区间迫使分析师将隐私噪声包含在不确定性中，而非将发布的数据视为原始数据。</p></div></div>
@@ -1075,10 +1076,10 @@
 <p class="sec-eyebrow"><span class="n">§9</span> 模拟受试者不等于真实受试者</p>
 <h2>LLM 社交模拟与模拟受试者</h2>
 <div class="claim"><div class="ctop"><span class="cnum">方法 09</span><span class="chip hint" data-print="需审查"><i></i>对初步研究有用</span><span class="chip bad" data-print="有争议"><i></i>作为证据存在争议</span></div></div>
-<p>LLM 社交模拟提出了一个很有吸引力的问题：如果一个语言模型已经吸收了足够的社交文本，它能否扮演模拟调查受访者或实验参与者的角色？第一波结果令人兴奋。在给定人口统计背景的情况下，模型有时能大致复现群体层面的回答分布。基于智能体的模拟产生了可信的特定情境互动。大规模复现实验发现，在心理学和管理场景中，LLM 往往能匹配主要效应的<span class="hl">方向</span>。</p>
+<p>LLM 社交模拟提出了一个很有吸引力的问题：如果一个语言模型已经吸收了足够的有关社会互动与观点的数据，它能否扮演模拟调查受访者或实验参与者的角色？第一波结果令人兴奋。在给定人口统计背景的情况下，模型有时能大致复现群体层面的回答分布。基于智能体的模拟产生了可信的特定情境互动。大规模复现实验发现，在心理学和管理场景中，LLM 往往能匹配主要效应的<span class="hl">方向</span>。</p>
 <p>第二波则是警示。LLM 即使在边际分布看起来正确时也可能扭曲相关性。它们往往会将分布压缩向众数答案。它们可能会放大效应量。它们在社交敏感话题上的表现可能更糟。其模拟「人群」由训练数据、对齐方式、提示词和模型版本共同塑造。那不是抽样框，而是一面被机器塑造的镜子。</p>
-<p>因此，诚实的使用场景虽然狭窄但确实存在：初步测试问卷、调试模糊的调查表述、初步检查操纵材料是否表达清楚，以及在投入人类受试者预算前生成假设。LLM 模拟结果不应直接用来估计真实人群中的效应量，也不应据此规划正式研究的样本量。而不负责任的使用场景则是：在没有人类验证的情况下将其作为验证性证据。</p>
-<p>报告标准应当变得严苛：模型名称及版本、日期、系统提示词、角色构建、温度、采样方案、重复运行的变异性、针对人类数据的验证，以及一套研究预登记规则，用以规定何时可把模拟结果计入证据。否则，模拟受试者就会变成戴着人类面具的分岔路径花园。</p>
+<p>因此，诚实的使用场景虽然狭窄但确实存在：初步测试问卷、调试模糊的调查表述、初步检查操纵材料是否表达清楚，以及在投入研究参与者预算前生成假设。这类模拟至多可以帮助研究者形成关于效应方向和样本量的初步假设；正式的功效分析仍应以真实人类数据、可靠的既有研究或先导研究为依据。而不负责任的使用场景则是：在没有人类验证的情况下将其作为验证性证据。</p>
+<p>报告标准应当变得严苛：模型名称及版本、日期、系统提示词、角色设定、温度、采样方案、重复运行的变异性、针对人类数据的验证，以及一套研究预登记规则，用以规定何时可把模拟结果计入证据。否则，模拟受试者就会变成戴着人类面具的分岔路径花园。</p>
 </section>
 
 <section id="appendix-d006-the-incoming-wave-revised-ai">
@@ -1087,17 +1088,17 @@
 <div class="claim"><div class="ctop"><span class="cnum">方法 10</span><span class="chip bad" data-print="有争议"><i></i>结论仍高度不确定</span><span class="chip hint" data-print="需审查"><i></i>工具链进展飞速</span></div></div>
 <p>最危险的前沿并不是 AI 作为分析内部的一个模型，而是 AI 作为选择分析方案的主体。</p>
 <p>数据分析智能体可以清洗数据、编写代码、选择模型、运行检验、生成图表并叙述发现。StatLLM 等新基准测试评估统计代码；数据智能体基准测试则评估更长的工作流。对 LLM 数据分析的研究显示，跨模型、提示词、温度和重复执行存在变异；即便任务和数据集相同，也可能导致显著不同的估计结果。在更前沿的方向上，自主研究系统现在可以生成想法、编写代码、运行实验、绘制结果、起草论文并进行自我审阅。</p>
-<p>这并未使 AI 变得毫无用处。它只是使 AI 分析可能显著放大统计风险，且这种方式非常眼熟。多分析者问题如今可以在几秒钟内成倍复制。「研究者自由度」现在变成了提示词自由度、模型自由度、重试自由度、工具调用自由度和不可见的内部推理路径自由度。</p>
-<p>AI 基准测试在领域规模上也存在同样的病理。公开排行榜是反复测试。静态基准测试会泄露到训练数据中。开发者可以针对基准测试进行微调。分数上升可能是因为模型泛化能力更强，也可能是因为它们记住了更多，或者因为测试框架变了，亦或是因为基准测试已被过度优化、区分能力正在下降。统计对象不再是「在测试集上的准确率」；它是<span class="hl">模型构建者、基准测试维护者与隐藏评估数据之间的一场动态博弈</span>。</p>
-<p>更负责任的做法包括：提示词日志、容器化代码、重复的独立智能体运行、多重宇宙报告、隐藏的留出评估、污染审计、研究预登记的分析指令，以及对系统决策的人类审查。梦想是让 AI 分析师暴露每一个分岔路径。噩梦则是 AI 分析师悄悄选择那个能发表的路径。</p>
+<p>这并未使 AI 变得毫无用处。它只是使 AI 分析可能显著放大统计风险，且这种方式非常眼熟。多分析师问题如今可以以极低成本反复运行。「研究者自由度」现在变成了提示词自由度、模型自由度、重试自由度、工具调用自由度和不可见的内部推理路径自由度。</p>
+<p>AI 基准测试在领域规模上也存在同样的病理。公开排行榜相当于对同一测试集反复试验。静态基准测试会泄露到训练数据中。开发者可以针对基准测试进行微调。分数上升可能是因为模型泛化能力更强，也可能是因为它们记住了更多，或者因为测试框架变了，亦或是因为基准测试已被过度优化、区分能力正在下降。统计对象不再是「在测试集上的准确率」；它是<span class="hl">模型构建者、基准测试维护者与隐藏测试数据之间的一场动态博弈</span>。</p>
+<p>更负责任的做法包括：提示词日志、容器化代码、重复的独立智能体运行、多重宇宙报告、隐藏测试集评估、污染审计、研究预登记的分析指令，以及对系统决策的人类审查。梦想是让 AI 分析师暴露每一个分岔路径。噩梦则是 AI 分析师悄悄选择那个能发表的路径。</p>
 
-<div class="aside"><p class="h">第 1 日回溯</p><p>AI 会给人一种理解的幻觉：产出更多、表达更精致、语气更自信，但与支撑结论的可靠证据之间的联系却更少。不要把语言流畅、分析完整或排行榜分数漂亮，误当成结论已经得到可靠证据支持。</p></div>
+<div class="aside"><p class="h">第 1 日回溯</p><p>AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更自信，但与支撑结论的可靠证据之间的联系却更少。不要把语言流畅、分析完整或排行榜分数漂亮，误当成结论已经得到可靠证据支持。解药不是少做计算，而是加强审计。</p></div>
 </section>
 
 <div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-benchPanel">
 <p class="ptitle">交互式 · 公开基准分数</p>
 <h3>当排行榜并非真实部署</h3>
-<p class="pnote">一个公开基准分数虚高的简化模型。污染和重复提交可以提高公开分数，而不会改善隐藏的部署表现。</p>
+<p class="pnote">一个公开基准分数虚高的简化模型。污染和重复提交可以提高公开分数，而不会改善未公开测试集上的部署表现。</p>
 <div class="grid2">
 <div class="ctrl">
 <div class="slider-row"><label>真实部署表现 <span class="val" id="appendix-d006-the-incoming-wave-revised-benchSkillVal">72%</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-benchSkill" min="40" max="95" value="72"></div>
@@ -1105,7 +1106,7 @@
 <div class="slider-row"><label>排行榜提交次数 <span class="val" id="appendix-d006-the-incoming-wave-revised-benchSubVal">12</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-benchSub" min="1" max="200" value="12"></div>
 </div>
 <div class="visbox">
-<div class="metric"><span class="lab">隐藏留出集</span><div class="meter green"><span id="appendix-d006-the-incoming-wave-revised-benchHiddenBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-benchHiddenPct">72%</span></div>
+<div class="metric"><span class="lab">隐藏测试集</span><div class="meter green"><span id="appendix-d006-the-incoming-wave-revised-benchHiddenBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-benchHiddenPct">72%</span></div>
 <div class="metric"><span class="lab">公开排行榜</span><div class="meter"><span id="appendix-d006-the-incoming-wave-revised-benchPublicBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-benchPublicPct">80%</span></div>
 <div class="metric"><span class="lab">泛化差距</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-benchGapBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-benchGapPct">8%</span></div>
 <p class="note">稳健的评估体系会轮换或隐藏测试集、审计污染情况、限制排行榜过拟合，并报告排名差异的不确定性。</p>
@@ -1116,9 +1117,9 @@
 <div class="format-alt epub-only print-only">
 <p class="ptitle">参考表</p>
 <h3>基准测试污染参考</h3>
-<p class="pnote">当调优和污染累积时，公开基准测试分数可能会高估隐藏的部署表现。</p>
+<p class="pnote">当调优和污染累积时，公开基准测试分数可能会高估未公开测试集上的部署表现。</p>
 <table class="alt-table">
-<thead><tr><th>情况</th><th>公开分数</th><th>隐藏留出集</th></tr></thead>
+<thead><tr><th>情况</th><th>公开分数</th><th>隐藏测试集</th></tr></thead>
 <tbody>
 <tr><td>干净的留出集，少量提交</td><td>更接近实际部署</td><td>更可信。</td></tr>
 <tr><td>存在污染</td><td>虚高</td><td>如果真正隐藏则影响较小。</td></tr>
@@ -1135,24 +1136,24 @@
 <table class="throughline-table">
 <thead><tr><th>失效模式</th><th>旧有的诱惑</th><th>新的保障机制</th><th>何处仍会失效</th></tr></thead>
 <tbody>
-<tr><td data-label="失效模式">可选停止</td><td data-label="旧有的诱惑">偷看到 p &lt; .05 为止</td><td data-label="新的保障机制">全时有效 p 值、e-过程、置信序列</td><td data-label="何处仍会失效">功效、实施细节、以及人们是否真正使用了正确的程序</td></tr>
+<tr><td data-label="失效模式">可选停止</td><td data-label="旧有的诱惑">偷看到 p &lt; .05 为止</td><td data-label="新的保障机制">任意时点有效 p 值、e-过程、置信序列</td><td data-label="何处仍会失效">功效、实施细节、以及人们是否真正使用了正确的程序</td></tr>
 <tr><td data-label="失效模式">黑盒预测</td><td data-label="旧有的诱惑">将 AI 输出视为真值</td><td data-label="新的保障机制">共形集合、共形风险控制、PPI 偏差校正项</td><td data-label="何处仍会失效">可交换性、校准覆盖率、坏的金标准标注、部署分布偏移</td></tr>
-<tr><td data-label="失效模式">灵活因果调整</td><td data-label="旧有的诱惑">选择一个方便的回归模型</td><td data-label="新的保障机制">DML、正交分值、交叉拟合</td><td data-label="何处仍会失效">未测量的混杂因素和错误的识别论证</td></tr>
-<tr><td data-label="失效模式">探索性发现</td><td data-label="旧有的诱惑">筛选后假装是预先计划的推断</td><td data-label="新的保障机制">后选择推断、数据拆分 / 数据裂变 / 数据稀化、稳定性修正</td><td data-label="何处仍会失效">功效损失、适用范围窄、未报告的探索行为</td></tr>
+<tr><td data-label="失效模式">灵活因果调整</td><td data-label="旧有的诱惑">选择一个随手可用的回归模型</td><td data-label="新的保障机制">DML、正交得分、交叉拟合</td><td data-label="何处仍会失效">未测量的混杂因素和错误的识别论证</td></tr>
+<tr><td data-label="失效模式">探索性发现</td><td data-label="旧有的诱惑">筛选后假装是预先计划的推断</td><td data-label="新的保障机制">选择后推断、数据拆分 / 数据裂变 / 数据稀化、稳定性修正</td><td data-label="何处仍会失效">功效损失、适用范围窄、未报告的探索行为</td></tr>
 <tr><td data-label="失效模式">隐私过滤数据</td><td data-label="旧有的诱惑">将发布的输出视为原始观测值进行分析</td><td data-label="新的保障机制">噪声感知型 DP 推断、差分隐私自助法、有效的 DP 置信区间</td><td data-label="何处仍会失效">区间过宽、效用弱、被误解的隐私预算</td></tr>
-<tr><td data-label="失效模式">自动化科学</td><td data-label="旧有的诱惑">让智能体报告最漂亮的结果</td><td data-label="新的保障机制">提示词日志、重复运行、隐藏评估、多重宇宙报告、统计取证风险筛查</td><td data-label="何处仍会失效">不透明模型、围绕公开基准的策略性优化、发表激励</td></tr>
+<tr><td data-label="失效模式">自动化科学</td><td data-label="旧有的诱惑">让智能体报告最有利的结果</td><td data-label="新的保障机制">提示词日志、重复运行、隐藏测试集评估、多重宇宙报告、统计取证风险筛查</td><td data-label="何处仍会失效">不透明模型、围绕公开基准的策略性优化、发表激励</td></tr>
 </tbody>
 </table>
 </div>
-<p>最初的统计学危机并非由坏人引起。它是由灵活的人类在奖励「漂亮故事」的激励系统中，使用脆弱的程序所引起的。下一次危机也会有异曲同工之处：灵活的机器在奖励「惊人产出」的激励系统中，使用脆弱的评估方案。其解药在更高层面是一致的：使分岔路径可见，在合适环节建立统计保证，并拒绝将表达精致误认为已有可靠证据支撑。</p>
+<p>最初的统计学危机并非由坏人引起。它是由灵活的人类在奖励「漂亮故事」的激励系统中，使用脆弱的程序所引起的。下一次危机也会有异曲同工之处：灵活的机器在奖励「惊人产出」的激励系统中，使用脆弱的评估方案。其解药在更高层面是一致的：使分岔路径可见，在合适环节建立统计保证，并拒绝将呈现精美误认为已有可靠证据支撑。</p>
 </section>
 
 <div class="recap">
 <p class="h">◆ 附录要点总结</p>
 <dl>
-<div><dt>新工具箱</dt><dd>统计学正在为黑盒、流式、隐私过滤且 AI 辅助的科学进行重建：共形校准层、PPI 偏差校正项、正交因果分值、全时有效证据、后选择修正以及工作流级的审计。</dd></div>
+<div><dt>新工具箱</dt><dd>统计学正在为黑盒、流式、隐私过滤且 AI 辅助的科学进行重建：共形校准层、PPI 偏差校正项、正交因果得分、任意时点有效证据、选择后修正以及工作流级的审计。</dd></div>
 <div><dt>深刻的教训</dt><dd>统计保证必须移至工作流中真正能承载它的部分：停止规则、校准集、金标准标注、选择程序、隐私机制或审计日志。</dd></div>
-<div><dt>即时的危险</dt><dd>模拟受试者、AI 分析师和公开基准测试可以以机器速度重现 p-hacking，除非提示词、模型版本、重复运行、隐藏测试和完整的分析多重宇宙成为常规的科学记录。</dd></div>
+<div><dt>即时的危险</dt><dd>模拟受试者、AI 分析师和公开基准测试可以以机器速度重现 p 值操纵，除非提示词、模型版本、重复运行、隐藏测试和完整的分析多重宇宙成为常规的科学记录。</dd></div>
 </dl>
 </div>
 
