@@ -173,7 +173,7 @@
       fill.style.width = Math.min(100, rate / 0.65 * 100) + "%";
       if (nTests === 1) {
         read.innerHTML = isZh
-          ? '没有开启技巧。每项研究只做 <span class="fp-tests">1 次检验</span>，一个问题给一个答案。大约 5% 会纯靠偶然越过门槛，这也是系统承诺的错误率。'
+          ? '未启用灵活分析。每项研究只做 <span class="fp-tests">1 次预先指定的检验</span>，只报告一个结果。大约 5% 会纯靠偶然越过门槛，这也是系统承诺的错误率。'
           : 'No tricks enabled. <span class="fp-tests">1 test</span> per study, one answer. About 5% cross the line by pure chance; this is the rate the system promises.';
         return;
       }
@@ -396,7 +396,7 @@
       svg.estimate.setAttribute("fill", sig ? "var(--accent)" : "var(--brass)");
       svg.width.textContent = isZh ? "95% CI 宽度: " + width.toFixed(2) : "95% CI width: " + width.toFixed(2);
       outs.read.innerHTML = isZh
-        ? '这个设定给出 <strong>p = ' + pText(p) + '</strong>，Cohen d = <strong>' + d.toFixed(2) + '</strong>（' + label + '）。x 轴是固定的均值差尺度（-3 到 +3）；y 轴也是固定的分桶频数尺度，所以样本量增加会显示为更窄、更高的估计分布。横条是同一 x 轴上的 95% 置信区间，宽度约为 <strong>' + width.toFixed(2) + '</strong>。噪声变大时分布和区间都会变宽。' + (sig ? '它跨过了 .05 门槛；' : '它没有跨过 .05 门槛；') + '但实际意义要看效应量、区间和研究场景，而不是只看 p 值。'
+        ? '这个设定给出 <strong>p = ' + pText(p) + '</strong>，Cohen d = <strong>' + d.toFixed(2) + '</strong>（' + label + '）。x 轴是固定的均值差尺度（-3 到 +3）；y 轴也是固定的分箱频数尺度，所以样本量增加会显示为更窄、更高的估计分布。横条是同一 x 轴上的 95% 置信区间，宽度约为 <strong>' + width.toFixed(2) + '</strong>。噪声变大时分布和区间都会变宽。' + (sig ? '它跨过了 .05 门槛；' : '它没有跨过 .05 门槛；') + '但实际意义要看效应量、区间和研究场景，而不是只看 p 值。'
         : 'This setting gives <strong>p = ' + pText(p) + '</strong> and Cohen d = <strong>' + d.toFixed(2) + '</strong> (' + label + '). The x-axis is a fixed mean-difference scale from -3 to +3; the y-axis is also fixed bucket frequency, so larger sample size shows up as a narrower, taller estimate distribution. The bar is the 95% confidence interval on that same x-axis, about <strong>' + width.toFixed(2) + '</strong> units wide. Higher noise widens both the distribution and the interval. It ' + (sig ? 'crosses' : 'does not cross') + ' the .05 line, but practical meaning still depends on effect size, interval, and domain.';
     }
 
@@ -717,14 +717,14 @@
           ? (isZh ? '现在只有一个基线规范，还没有可供挑选的多元宇宙。先开启一个或多个分析选择，再看「挑选结果」如何改变故事。' : 'With only the baseline specification, there is no multiverse to cherry-pick yet. Turn on one or more analytic choices, then watch how cherry-picking changes the story.')
           : best
           ? (isZh
-            ? '「我们发现 X 与 Y 存在显著关联，r = ' + best.r.toFixed(2) + '，p = ' + best.p.toFixed(3) + '。」这是真的，但只对 ' + n + ' 个同样可辩护规范中的一个成立。其他 ' + (n - 1) + ' 个规范不会出现在论文里。' + (pressed(buttons.cov) && !best.choices.cov ? ' 注意：这个被挑中的路径没有控制 W。' : '')
+            ? '「我们发现 X 与 Y 存在显著关联，r = ' + best.r.toFixed(2) + '，p = ' + best.p.toFixed(3) + '。」这是真的，但只对 ' + n + ' 个合理候选设定中的一个成立。其他 ' + (n - 1) + ' 个设定不会出现在论文里。' + (pressed(buttons.cov) && !best.choices.cov ? ' 注意：这个被挑中的路径没有控制 W。' : '')
             : '"We find a significant association between X and Y, r = ' + best.r.toFixed(2) + ', p = ' + best.p.toFixed(3) + '." True, for one of ' + n + ' equally defensible specifications. The other ' + (n - 1) + ' never make the paper.' + (pressed(buttons.cov) && !best.choices.cov ? ' Notice that the selected path does not control for W.' : ''))
           : (isZh ? '即使挑选最漂亮的点也救不了：没有任何单一规范达到 p < .05。' : 'Not even cherry-picking saves it: no single specification reaches p < .05.');
       } else {
         heading.textContent = isZh ? "诚实读法" : "The honest reading";
         body.innerHTML = n === 1
           ? (isZh ? '只有基线规范：r = ' + rows[0].r.toFixed(3) + '，p = ' + rows[0].p.toFixed(3) + '。打开上方选择，看看多元宇宙如何展开。' : 'With no analytic choices enabled there is just the baseline specification: r = ' + rows[0].r.toFixed(3) + ', p = ' + rows[0].p.toFixed(3) + '. Switch on some choices above to grow the multiverse.')
-          : (isZh ? '在全部 <strong>' + n + '</strong> 个可辩护规范中，中位 r = <strong>' + med.toFixed(3) + '</strong>，' + sig + ' / ' + n + ' 跨过 p < .05。' + (pressed(buttons.cov) ? '控制 W 的规范中有 ' + covSig + ' / ' + covRows.length + ' 个显著。' : '') + '诚实摘要是整条曲线，不是最漂亮的点。' : 'Across all <strong>' + n + '</strong> defensible specifications, median r = <strong>' + med.toFixed(3) + '</strong>, with ' + sig + ' of ' + n + ' crossing p < .05. ' + (pressed(buttons.cov) ? covSig + ' of ' + covRows.length + ' W-controlled specifications cross p < .05. ' : '') + 'The honest summary is the whole curve, not its prettiest point.');
+          : (isZh ? '在全部 <strong>' + n + '</strong> 个合理候选设定中，中位 r = <strong>' + med.toFixed(3) + '</strong>，' + sig + ' / ' + n + ' 跨过 p < .05。' + (pressed(buttons.cov) ? '控制 W 的设定中有 ' + covSig + ' / ' + covRows.length + ' 个显著。' : '') + '诚实摘要是整条曲线，不是最漂亮的点。' : 'Across all <strong>' + n + '</strong> defensible specifications, median r = <strong>' + med.toFixed(3) + '</strong>, with ' + sig + ' of ' + n + ' crossing p < .05. ' + (pressed(buttons.cov) ? covSig + ' of ' + covRows.length + ' W-controlled specifications cross p < .05. ' : '') + 'The honest summary is the whole curve, not its prettiest point.');
       }
     }
 

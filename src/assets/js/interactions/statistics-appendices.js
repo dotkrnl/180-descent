@@ -190,8 +190,8 @@
     var pct = Math.round(frac * 100);
     by(A1, "histRead").innerHTML = zh
       ? (d < 0.01
-        ? '<span class="hl">这里没有真实效应。</span> 直方图是平的，但仍有 <span class="hl">' + pct + '%</span> 低于 .05。这正是 alpha 承诺会发生的事。'
-        : '真实效应 d=' + d.toFixed(2) + ' 会让分布向左倾斜：<span class="hl">' + pct + '%</span> 跨过 .05。这个比例就是此玩具设定下的检验效能。')
+        ? '<span class="hl">这里没有真实效应。</span> 直方图是平的，但仍有 <span class="hl">' + pct + '%</span> 低于 .05。这正是 α 承诺会发生的事。'
+        : '真实效应 d=' + d.toFixed(2) + ' 会让分布向左倾斜：<span class="hl">' + pct + '%</span> 跨过 .05。这个比例就是此玩具设定下的检验功效。')
       : (d < 0.01
         ? '<b>Nothing is real here.</b> The histogram is flat, yet <strong>' + pct + '%</strong> still falls below .05. That is alpha doing exactly what it promised.'
         : 'A real effect of d=' + d.toFixed(2) + ' tilts the distribution leftward: <strong>' + pct + '%</strong> clear .05. That share is the study power under this toy setup.');
@@ -251,7 +251,7 @@
       var n = Math.max(0, Math.min(14, Math.round(s)));
       by(A1, "coinRow").innerHTML = Array.from({ length: n }, function () { return '<span class="coin">' + (zh ? "正" : "H") + '</span>'; }).join("");
       by(A1, "sRead").innerHTML = zh
-        ? '<span class="hl">' + s.toFixed(1) + ' 比特</span> 的惊奇度反对受检模型。在 p=.05 时，这只相当于大约连续四五次正面。'
+        ? 'S 值把这个 p 值转换为 <span class="hl">' + s.toFixed(1) + ' 比特</span> 的惊异度，用来描述数据与受检模型的不相容程度。在 p=.05 时，这只相当于大约连续四五次正面。'
         : '<strong>' + s.toFixed(1) + ' bits</strong> of surprise against the tested model. At p=.05, that is only about four or five heads in a row.';
     }
     range.addEventListener("input", render);
@@ -337,7 +337,7 @@
         if (el) el.style.left = "50%";
       });
       by(A2, "ppiRead").innerHTML = zh
-        ? '只有当预测确实携带信息时，PPI 才会缩窄仅靠标注数据得到的区间。整流器负责防止廉价预测变成统计上的一厢情愿。'
+        ? '只有当预测确实携带信息时，PPI 才会缩窄仅靠标注数据得到的区间。偏差校正项负责防止廉价预测变成统计上的一厢情愿。'
         : 'PPI shrinks the labeled-only interval only when predictions are informative. The rectifier is what keeps cheap predictions from becoming statistical wishful thinking.';
     });
   }
