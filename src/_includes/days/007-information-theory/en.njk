@@ -34,7 +34,7 @@
 
 <div class="whereblock">
 <p class="label">◆ Where we are</p>
-<p>We've spent six days building an epistemic toolkit; today we discover it has a <em>currency</em>. On <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a> we met <em>surprise</em> — Monty Hall's host opening a goat door was information, not noise — and the e-value as evidence you could literally bank. Today that intuition gets its unit. On <a href="/days/003-logic-and-valid-inference/"><strong>Day 3</strong></a>, Boole's logic became physical switches (Shannon's <em>other</em> famous paper, 1938); today the same man makes <em>information</em> physical too. And the graded belief of <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a> — credence, the Bayesian brain minimizing Friston's "free energy" — turns out to be minimizing exactly the quantity we define here: expected surprise. The <em>information</em> thread, traced quietly since Day 1, finally gets its hard number. Keep it ready: it reappears as the arrow of time on <strong>Day 33</strong> and as the thing life itself seems to defy on <strong>Days 83–85</strong>.</p>
+<p>We've spent six days building an epistemic toolkit; today we discover it has a <em>currency</em>. On <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a> we met <em>surprise</em> — Monty Hall's host opening a goat door was information, not noise — and the e-value as evidence you could literally bank. Today that intuition gets its unit. On <a href="/days/003-logic-and-valid-inference/"><strong>Day 3</strong></a>, Boole's logic became physical switches (Shannon's <em>other</em> famous paper, 1938); today the same man makes <em>information</em> physical too. And the graded belief of <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a> connects to Friston's framework, where organisms are modeled as minimizing variational free energy — a tractable upper bound on surprisal under a generative model. The <em>information</em> thread, traced quietly since Day 1, finally gets its hard number. Keep it ready: it reappears as the arrow of time on <strong>Day 33</strong> and as the thing life itself seems to defy on <strong>Days 83–85</strong>.</p>
 </div>
 
 <section>
@@ -277,9 +277,9 @@
 <!-- ===================== VISUAL 3 ===================== -->
 <div class="panel landauer-ladder">
 <p class="ptitle">Diagram · orders of magnitude</p>
-<h4>The Landauer ladder — how far we are from the floor</h4>
-<p class="pnote">Energy dissipated per bit operation, on a logarithmic scale (each step is ×10). The experiments above kissed the floor; the chips in your pocket sit a thousand-fold higher; a full system, higher still. The gap is the room we have left to improve.</p>
-<svg viewBox="0 0 640 300" role="img" aria-label="Logarithmic chart of energy per bit from the Landauer floor up to a real logic operation.">
+<h4>Illustrative energy scales — not directly comparable</h4>
+<p class="pnote">Logarithmic energy scale for different operations and system boundaries. The rungs compare an ideal 300 K fair-bit reset, quasistatic single-bit erasure experiments, approximate transistor-switching energy, and full logic or system-level computation. They are orientation markers, not one clean historical efficiency curve.</p>
+<svg viewBox="0 0 640 300" role="img" aria-label="Illustrative logarithmic energy scales from the Landauer floor to device and system-level computing.">
 <!-- vertical log axis -->
 <line x1="150" y1="30" x2="150" y2="262" stroke="var(--line-strong)" stroke-width="1.2"></line>
 <!-- gridlines + decade labels (zJ) -->
@@ -293,33 +293,33 @@
 </g>
 <!-- the floor band -->
 <rect x="150" y="244" width="470" height="9" fill="color-mix(in srgb,var(--ok) 30%,transparent)"></rect>
-<text x="615" y="240" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ok)" text-anchor="end">LANDAUER FLOOR · kT·ln2</text>
+<text x="615" y="240" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ok)" text-anchor="end">IDEAL RESET · 300 K · kT·ln2</text>
 
 <!-- markers -->
 <!-- lab experiments near floor -->
 <g>
 <circle cx="250" cy="248" r="7" fill="var(--accent)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="250" y="276" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">lab bit</text>
+<text x="250" y="276" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">single-bit reset</text>
 <text x="250" y="288" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">(Bérut, Hong…)</text>
 </g>
 <!-- single transistor ~ few aJ -->
 <g>
 <circle cx="400" cy="88" r="7" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="414" y="78" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="start">one transistor</text>
-<text x="414" y="66" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="start">~10³× floor</text>
+<text x="420" y="112" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="start">device switch</text>
+<text x="420" y="124" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="start">~10³× floor</text>
 </g>
 <!-- full logic op / system ~ fJ-pJ -->
 <g>
 <circle cx="540" cy="40" r="7" fill="var(--heat)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="540" y="28" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">real logic op</text>
+<text x="540" y="28" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">logic/system op</text>
 <text x="540" y="16" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">~10⁶×+ floor</text>
 </g>
 <!-- connecting arc to dramatize the gap -->
 <path d="M250,244 C322,170 348,122 400,92" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
 <path d="M400,84 C470,60 500,48 540,42" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
-<text x="333" y="135" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-32 333 135)">← headroom →</text>
+<text x="333" y="135" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-32 333 135)">← different boundaries →</text>
 </svg>
-<p class="ladder-key">The lab experiments aren't <em>better engineered</em> than your laptop — they're run unimaginably slowly, one bit at a time, precisely to approach the thermodynamic limit. Speed costs energy; the floor is only reached in the limit of infinite patience. Real computing trades that patience for billions of operations per second, and pays in heat.</p>
+<p class="ladder-key">The lab experiments are not better general computers than your laptop: they isolate one erasure protocol and run it gently enough to approach the thermodynamic bound. Practical chips spend energy on speed, reliability, memory movement, control, cooling, and power delivery. The comparison is useful only if the boundary around each rung is kept visible.</p>
 </div>
 
 <section class="frontier">
@@ -480,9 +480,9 @@
 <section>
 <p class="sec-eyebrow"><span class="sec-num">03</span> · the ultimate compression</p>
 <h2>Kolmogorov complexity, where information meets computation</h2>
-<p>Shannon's entropy is a property of a <em>source</em> — a probability distribution. But here's a puzzle it can't touch. Consider two strings of a million digits: one is a million random coin-derived digits, the other is the first million digits of π. To Shannon, sampled from "uniform digit sources," they look equally dense with information. Yet one of them you can regenerate from a tiny program — "print the digits of π" — and the other you cannot compress at all. Something about the second string is <em>irreducibly</em> bigger.</p>
+<p>Shannon's entropy is a property of a <em>source</em> — a probability distribution. But here's a puzzle it can't touch. Consider two strings of a million digits: one is a million random coin-derived digits, the other is the first million digits of π. To Shannon, sampled from "uniform digit sources," they look equally dense with information. Yet π can be regenerated from a comparatively short program, while a typical random string cannot be compressed much at all. The random-looking string has the higher description complexity.</p>
 <p>That something is its <em class="term">Kolmogorov complexity</em> (Solomonoff, Kolmogorov, and Chaitin, independently, in the 1960s): the length of the <em>shortest computer program</em> that outputs the string. It is the compression limit measured not against a probability model but against computation itself, and it is machine-independent only up to an additive constant determined by the chosen universal machine. π is profoundly compressible (short program, infinite output); a typical long random string is <em>incompressible</em> in a precise counting sense — most strings have no description much shorter than themselves. In fact this becomes a <em>definition</em> of algorithmic randomness.</p>
-<p>And here the subject grows a sharp, beautiful tooth. Kolmogorov complexity is <strong>provably uncomputable</strong> <span class="chip ok" data-print="review"><i></i>proven</span>. There is no algorithm that, given any string, returns the length of its shortest program — a result that rhymes with the Gödel and Turing limits waiting on <strong>Days 27–28</strong>, and with Chaitin's eerie constant Ω, a specific, perfectly well-defined number. A suitable consistent formal system can determine some finite facts about Ω, but not arbitrarily many of its digits. We will meet this idea again tomorrow under a different name: <strong>complexity is, in part, information that resists compression</strong> — structure that is neither boringly ordered (like a crystal, hugely compressible) nor boringly random (incompressible but patternless), but interestingly, irreducibly itself.</p>
+<p>And here the subject grows a sharp, beautiful tooth. Kolmogorov complexity is <strong>provably uncomputable</strong> <span class="chip ok" data-print="review"><i></i>proven</span>. There is no algorithm that, given any string, returns the length of its shortest program — a result that rhymes with the Gödel and Turing limits waiting on <strong>Days 27–28</strong>, and with Chaitin's eerie constant Ω, a specific, perfectly well-defined number. A suitable consistent formal system can determine some finite facts about Ω, but not arbitrarily many of its digits. We will meet related ideas again tomorrow under the heading of complexity, but with an important warning: high description complexity alone does not measure meaningful or organized complexity. Typical random strings maximize it too.</p>
 </section>
 <section>
 <p class="sec-eyebrow"><span class="sec-num">04</span> · codes against the dark</p>
@@ -546,7 +546,7 @@
 <h2>Beating Landauer with reversible computing</h2>
 <p>The main page delivered Landauer's standard verdict: resetting an initially unknown fair bit in an isothermal cycle costs at least kT·ln2 because the operation crushes two possible pasts into one. But read the fine print and a loophole gleams. The fundamental cost is charged on <em>logically irreversible</em> steps — the ones you can't run backward. What if you simply <em>never erased anything?</em></p>
 <p>This is <em class="term">reversible computing</em>, and it is theoretically sound <span class="chip ok" data-print="established"><i></i>established in principle</span>. Charles Bennett showed in 1973 that any computation can be rebuilt as a sequence of reversible steps that never destroy information — instead of overwriting intermediate results, you keep them, run your computation, copy out the answer, then run the whole thing <em>backwards</em> to cleanly "uncompute" the garbage, returning every bit to its start with no net erasure. Special reversible logic gates make this concrete: the <strong>Toffoli gate</strong> (a controlled-controlled-NOT) and the <strong>Fredkin gate</strong> (a controlled swap) are universal — you can build any circuit from them — yet each is perfectly invertible, with the same number of outputs as inputs and nothing thrown away.</p>
-<p>In principle, then, a reversible computer could approach the Landauer floor as closely as you like, paying almost nothing per operation — the catch being that, like the lab experiments that touched the floor, it must run vanishingly slowly to avoid friction-like losses, and it must store all that uncomputed history along the way. No one has built a useful general-purpose reversible computer; it remains an exquisite idea more than a product. But it is exactly why the field is suddenly interesting again: as conventional chips press toward physical limits, <em>not forgetting</em> starts to look like an engineering strategy rather than a curiosity. The thread running into <strong>Day 47</strong>: quantum computation is necessarily reversible, which is both its power and its discipline.</p>
+<p>In principle, then, reversible computing can avoid the fundamental erasure toll until information is intentionally discarded. Physical implementations can reduce dissipation by using gentler, more nearly quasistatic protocols, but the speed-energy trade-off depends on the device model; logical reversibility by itself does not mean a computer must run vanishingly slowly. Reversible algorithms also involve time-space trade-offs rather than simply storing an unlimited history forever. No one has built a useful general-purpose reversible computer; it remains an exquisite idea more than a product. But it is exactly why the field is suddenly interesting again: as conventional chips press toward physical limits, <em>not forgetting</em> starts to look like an engineering strategy rather than a curiosity. The thread running into <strong>Day 47</strong>: ideal closed-system quantum gates are unitary and reversible, while initialization, measurement, error correction, control, and reset require their own thermodynamic accounting.</p>
 </section>
 <section>
 <p class="sec-eyebrow"><span class="sec-num">08</span> · the last wall</p>
@@ -559,55 +559,55 @@
 <p>The deepest hint that information is woven into physics at the ground floor comes from gravity. The <strong>Bekenstein bound</strong> (1981) is fundamentally an energy-radius bound on entropy, S ≤ 2πk<sub>B</sub>ER/(ℏc). Area scaling enters when gravitational collapse and black-hole entropy are brought into the story: black holes saturate the relevant bound, with entropy proportional to event-horizon area. That oddity — that the maximum information associated with a gravitational region can be controlled by its boundary — is the seed of the <strong>holographic principle</strong> ('t Hooft, Susskind, 1990s) <span class="chip hint" data-print="review"><i></i>leading theoretical idea, not confirmed</span>. In theories where holographic duality applies, a gravitational bulk can have a lower-dimensional boundary description. That is subtler than saying our universe is simply encoded on a distant 2D surface. It also sets up the <strong>black-hole information paradox</strong>, which we'll meet head-on on <strong>Day 40</strong>.</p>
 </div>
 
-<p>Push the same accounting to the largest scale and you can ask: how much has the <em>entire universe</em> computed since the Big Bang? Lloyd's estimate — treating every particle interaction as an operation — is about <strong>10¹²² operations on 10⁹² bits</strong>. Enormous, yes. But finite. There is a hard, countable ceiling on how much computation reality itself has performed. Whether that means the universe quite literally <em>is</em> a computer is a live and contested interpretation <span class="chip bad" data-print="contested"><i></i>contested — interpretation, not result</span>, a close relative of the "it from bit" overreach the main page flagged. The numbers are solid; the metaphysics is optional.</p>
+<p>Push the same accounting to the largest scale and you can ask: how much has the <em>entire universe</em> computed since the Big Bang? Lloyd's 2002 estimate is about <strong>10¹²⁰ elementary operations on 10⁹⁰ ordinary-matter bits</strong>, with a much larger information budget if gravitational degrees of freedom are included. Enormous, yes. But finite. There is a hard, countable ceiling on how much computation reality itself has performed. Whether that means the universe quite literally <em>is</em> a computer is a live and contested interpretation <span class="chip bad" data-print="contested"><i></i>contested — interpretation, not result</span>, a close relative of the "it from bit" overreach the main page flagged. The numerical bounds are physics; the metaphysics is optional.</p>
 </section>
 <div class="panel ladder">
-<p class="ptitle">Diagram · 120 orders of magnitude</p>
+<p class="ptitle">Diagram · rates and totals</p>
 <h3>The ladder of computational capacity</h3>
-<p class="pnote">Logarithmic scale: current and ultimate devices are shown as approximate rates, while the universe marker is Lloyd's cumulative estimate so far. The mixed units are deliberate; the point is the scale of the gap, not a single directly comparable benchmark.</p>
-<svg viewBox="0 0 640 250" role="img" aria-label="Logarithmic ladder of computational scale from a laptop rate to the universe's cumulative operations.">
+<p class="pnote">Two separate logarithmic scales: device rates in operations per second, then Lloyd's cumulative universe estimate in total operations. They are adjacent because both are physical bounds on computation, but they are not the same dimension.</p>
+<svg viewBox="0 0 640 300" role="img" aria-label="Separate logarithmic charts for device operation rates and the universe's cumulative operations.">
+<text x="60" y="26" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-soft)">Rates · operations per second</text>
 <line x1="60" y1="210" x2="610" y2="210" stroke="var(--line-strong)" stroke-width="1.2"></line>
-<!-- decade ticks: map log10(ops/s) from 10 to 130 across x 70..600 -->
+<!-- rate ticks: map log10(ops/s) from 10 to 55 across x 70..560 -->
 <g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
 <line x1="70" y1="206" x2="70" y2="214" stroke="var(--line-strong)"></line><text x="70" y="228">10¹⁰</text>
-<line x1="158" y1="206" x2="158" y2="214" stroke="var(--line-strong)"></line><text x="158" y="228">10³⁰</text>
-<line x1="246" y1="206" x2="246" y2="214" stroke="var(--line-strong)"></line><text x="246" y="228">10⁵⁰</text>
-<line x1="335" y1="206" x2="335" y2="214" stroke="var(--line-strong)"></line><text x="335" y="228">10⁷⁰</text>
-<line x1="423" y1="206" x2="423" y2="214" stroke="var(--line-strong)"></line><text x="423" y="228">10⁹⁰</text>
-<line x1="511" y1="206" x2="511" y2="214" stroke="var(--line-strong)"></line><text x="511" y="228">10¹¹⁰</text>
-<line x1="600" y1="206" x2="600" y2="214" stroke="var(--line-strong)"></line><text x="600" y="228">10¹³⁰</text>
-<text x="335" y="244" fill="var(--ink-soft)">operation count or rate scale (log)</text>
+<line x1="179" y1="206" x2="179" y2="214" stroke="var(--line-strong)"></line><text x="179" y="228">10²⁰</text>
+<line x1="288" y1="206" x2="288" y2="214" stroke="var(--line-strong)"></line><text x="288" y="228">10³⁰</text>
+<line x1="397" y1="206" x2="397" y2="214" stroke="var(--line-strong)"></line><text x="397" y="228">10⁴⁰</text>
+<line x1="506" y1="206" x2="506" y2="214" stroke="var(--line-strong)"></line><text x="506" y="228">10⁵⁰</text>
+<text x="335" y="244" fill="var(--ink-soft)">operations per second (log)</text>
 </g>
-<!-- markers: x = 70 + (log10 - 10)/120 * 530 -->
-<!-- laptop ~1e12 -> 70 + (12-10)/120*530 = 78.8 -->
 <g>
-<line x1="79" y1="210" x2="79" y2="95" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3"></line>
-<circle cx="79" cy="95" r="7" fill="var(--accent)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="79" y="83" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">your laptop</text>
-<text x="79" y="72" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">~10¹²</text>
+<line x1="92" y1="210" x2="92" y2="95" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="92" cy="95" r="7" fill="var(--accent)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="92" y="83" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">laptop</text>
+<text x="92" y="72" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">~10¹²/s</text>
 </g>
-<!-- biggest supercomputer ~1e18 -> 70 + (18-10)/120*530 = 105.3 -->
 <g>
-<line x1="105" y1="210" x2="105" y2="130" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3"></line>
-<circle cx="105" cy="130" r="6" fill="color-mix(in srgb,var(--accent) 60%,transparent)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="118" y="128" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="start">exascale super- computer ~10¹⁸</text>
+<line x1="157" y1="210" x2="157" y2="130" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="157" cy="130" r="6" fill="color-mix(in srgb,var(--accent) 60%,transparent)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="170" y="128" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="start">exascale ~10¹⁸/s</text>
 </g>
-<!-- ultimate laptop 1e51 -> 70 + (51-10)/120*530 = 251 -->
 <g>
-<line x1="251" y1="210" x2="251" y2="60" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="3 3"></line>
-<circle cx="251" cy="60" r="7" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="251" y="48" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">ultimate 1-kg laptop</text>
-<text x="251" y="37" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">~10⁵¹ (Lloyd 2000)</text>
+<line x1="517" y1="210" x2="517" y2="60" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="517" cy="60" r="7" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="517" y="48" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">ultimate 1-kg laptop</text>
+<text x="517" y="37" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">~10⁵¹/s</text>
 </g>
-<!-- universe 1e122 -> 70 + (122-10)/120*530 = 564.6 -->
+<text x="60" y="268" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-soft)">Cumulative · operations since Big Bang</text>
+<line x1="300" y1="266" x2="610" y2="266" stroke="var(--line-strong)" stroke-width="1.2"></line>
+<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
+<line x1="300" y1="262" x2="300" y2="270" stroke="var(--line-strong)"></line><text x="300" y="292">10⁹⁰</text>
+<line x1="455" y1="262" x2="455" y2="270" stroke="var(--line-strong)"></line><text x="455" y="292">10¹⁰⁵</text>
+<line x1="610" y1="262" x2="610" y2="270" stroke="var(--line-strong)"></line><text x="610" y="292">10¹²⁰</text>
+</g>
 <g>
-<line x1="565" y1="210" x2="565" y2="95" stroke="var(--heat)" stroke-width="1.4" stroke-dasharray="3 3"></line>
-<circle cx="565" cy="95" r="7" fill="var(--heat)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="565" y="83" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">the universe, so far</text>
-<text x="565" y="72" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">~10¹²² ops total</text>
+<circle cx="610" cy="266" r="7" fill="var(--heat)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="540" y="258" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="end">universe so far</text>
+<text x="540" y="279" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">~10¹²⁰ total ops</text>
 </g>
 </svg>
-<p class="ladder-key">The jump from your laptop to the ultimate laptop is ~10³⁹ — a thousand billion billion billion billion fold. We have, in the most literal sense, barely started. And yet even the universe's lifetime total is a finite number you can write down — which is itself a profound statement: computation, like everything else, is rationed by physics.</p>
+<p class="ladder-key">The jump from your laptop to the ultimate laptop is ~10³⁹ in rate. The universe marker is a separate cumulative estimate, not an operations-per-second benchmark. Both scales say the same sober thing: computation, like everything else, is rationed by physics.</p>
 </div>
 <section>
 <p class="sec-eyebrow"><span class="sec-num">09</span> · the thread, everywhere</p>
@@ -615,7 +615,7 @@
 <p>The quiet power of Shannon's idea is that the moment information became a number, it stopped belonging to telegraphy and started turning up in every field that deals with uncertainty, variety, or surprise. A quick tour of the thread's reach, each a doorway to a later day:</p>
 <ul>
 <li><strong>In ecology</strong>, the <em class="term">Shannon diversity index</em> — the very same H = −Σ p log p — measures biodiversity: a rainforest has high entropy (many species, evenly spread), a monoculture field has almost none. Surprise, applied to "which species is this?"</li>
-<li><strong>In machine learning</strong>, a model's quality is its <em class="term">perplexity</em> — literally 2 raised to its cross-entropy, "how surprised is the model, on average, by the next word?" Lower perplexity, better prediction. The training of every large language model (<strong>Days 138–145</strong>) is the minimization of exactly the relative entropy from Section 1.</li>
+<li><strong>In machine learning</strong>, autoregressive language-model pretraining commonly minimizes empirical token-level cross-entropy. <em class="term">Perplexity</em> is the exponential of that average loss and measures predictive fit on a specified dataset, but it is not a complete measure of model quality. Instruction tuning, preference optimization, reinforcement learning, distillation, and multimodal training can use other objectives.</li>
 <li><strong>In biology</strong>, DNA is a four-letter code carrying ~2 bits per base — heredity as literal digital information storage, a framing that runs straight into the central dogma on <strong>Day 77</strong> and the origin of life on <strong>Days 87–90</strong>.</li>
 <li><strong>In physics</strong>, the entropy we defined today and the thermodynamic entropy of heat engines turn out to be — perhaps — the same thing, the question the main page flagged and that <strong>Day 33</strong> will reopen as the <em>arrow of time</em>.</li>
 <li><strong>In life itself</strong>, Schrödinger's idea that organisms survive by feeding on "negative entropy" (Brillouin later called it <em>negentropy</em>) is information thermodynamics in embryo — the puzzle that <strong>Days 83–85</strong> are built around, where today's kT·ln2 returns to govern the living cell.</li>
@@ -629,7 +629,7 @@
 <div><dt>The widest view</dt><dd>Information's physicality doesn't stop at the warm room of erasure: it scales up to hard limits on the speed and density of computation, black-hole entropy, holographic boundary descriptions in theories where they apply, and a finite, countable estimate of the universe's cumulative operations.</dd></div>
 <div><dt>Why it matters</dt><dd>The instant Shannon made information a number, it escaped engineering — and now the same H shows up in biodiversity, neural-network training, DNA, the arrow of time, and the thermodynamics of life, which is exactly why it is one of the five threads this whole course is built to follow.</dd></div>
 </dl>
-<p class="threads"><b>Threads deepened ›</b> information (mutual information, KL divergence, Kolmogorov complexity) · energy (reversible computing, Margolus–Levitin, the ultimate laptop) · computation (codes, quantum information, limits of all computation) · emergence (complexity as incompressible structure → Day 8) · evolution &amp; life (DNA as bits, negentropy → Days 77, 83–85).</p>
+<p class="threads"><b>Threads deepened ›</b> information (mutual information, KL divergence, Kolmogorov complexity) · energy (reversible computing, Margolus–Levitin, the ultimate laptop) · computation (codes, quantum information, limits of all computation) · emergence (why compression is not the whole story → Day 8) · evolution &amp; life (DNA as bits, negentropy → Days 77, 83–85).</p>
 </div>
 
 <hr class="div">
@@ -651,7 +651,7 @@
 <li>Holevo, A. S. (1973). "Bounds for the quantity of information transmitted by a quantum communication channel." <em>Problems of Information Transmission</em> 9: 177–183. <span class="meta">— accessible classical information from quantum ensembles; ordinary unassisted qubit communication is resource-limited.</span></li>
 <li>Bennett, C. H. (1973). "Logical Reversibility of Computation." <em>IBM Journal of Research and Development</em> 17(6): 525–532. <span class="meta">— reversible computation; with Fredkin &amp; Toffoli (1982) reversible gates.</span></li>
 <li>Margolus, N. &amp; Levitin, L. B. (1998). "The maximum speed of dynamical evolution." <em>Physica D</em> 120: 188–195. <span class="meta">— the quantum speed limit, ~2E/(πℏ).</span></li>
-<li>Lloyd, S. (2000). "Ultimate physical limits to computation." <em>Nature</em> 406: 1047–1054 (31 Aug 2000). <span class="meta">doi:10.1038/35023282 — the "ultimate laptop": ~10⁵¹ ops/s, ~10³¹ bits.</span> <a href="https://doi.org/10.1038/35023282">doi.org/10.1038/35023282</a></li>
+<li>Lloyd, S. (2000). "Ultimate physical limits to computation." <em>Nature</em> 406: 1047–1054 (31 Aug 2000). <span class="meta">doi:10.1038/35023282 — the "ultimate laptop": ~10⁵¹ ops/s, ~10³¹ bits.</span> <a href="https://doi.org/10.1038/35023282">doi.org/10.1038/35023282</a> · Lloyd, S. (2002). "Computational capacity of the universe." <em>Physical Review Letters</em> 88: 237901. <span class="meta">— ~10¹²⁰ ops on ~10⁹⁰ ordinary-matter bits.</span></li>
 <li>Bekenstein, J. D. (1981). "Universal upper bound on the entropy-to-energy ratio…" <em>Physical Review D</em> 23: 287. <span class="meta">— the energy-radius entropy bound; with Hawking's black-hole entropy, one root of later holographic arguments. [Holographic principle: leading theoretical conjecture, not confirmed.]</span></li>
 <li>Brillouin, L. (1956). <em>Science and Information Theory.</em> Academic Press. <span class="meta">— negentropy; the information cost of measurement (later refined by Landauer–Bennett).</span></li>
 <li>Soni, J. &amp; Goodman, R. (2017). <em>A Mind at Play.</em> Simon &amp; Schuster. <span class="meta">— Shannon's life: Theseus, the Ultimate Machine, the roulette computer with Ed Thorp, the juggling unicyclist.</span></li>
@@ -664,14 +664,14 @@
 <summary>
 <span class="ptitle">Deep dive appendix</span>
 <span class="deep-dive-title">The Bleeding Edge</span>
-<span class="deep-dive-sub">Peer-reviewed work from the last five years that could redraw the map — labeled honestly for what's solid, what's promising, and what's hype.</span>
+<span class="deep-dive-sub">Recent frontier work that could redraw the map — labeled honestly for what's solid, what's promising, and what's hype.</span>
 </summary>
 <div class="deep-dive-body">
-<p class="lede"><span class="drop">T</span>he main page and the first appendix gave you the foundations: Shannon's bit, Landauer's toll, the full architecture. All of it rests on work decades old and thoroughly settled. This appendix is different. Everything here was published after 2020, much of it in the last two years, and some of it is still warm from the press. These are the results the people <em>building</em> the field consider most consequential: experiments, frameworks, and engineering gambles most likely to reshape what we think we know. Some will hold. Some won't. The hype filter earns its keep today more than ever.</p>
+<p class="lede"><span class="drop">T</span>he main page and the first appendix gave you the foundations: Shannon's bit, Landauer's toll, the full architecture. All of it rests on work decades old and thoroughly settled. This appendix is different: recent frontier work from roughly 2019–2026, much of it in the last two years, and some of it still warm from the press. These are the results the people <em>building</em> the field consider most consequential: experiments, frameworks, and engineering gambles most likely to reshape what we think we know. Some will hold. Some won't. The hype filter earns its keep today more than ever.</p>
 <div class="panel landscape">
 <p class="ptitle">Diagram · the frontier landscape</p>
 <h3>Seven frontiers, one field</h3>
-<p class="pnote">The post-2020 frontier of information physics branches into seven active programmes. Color indicates confidence: teal for established, amber for promising, red for contested or company-reported.</p>
+<p class="pnote">The recent frontier of information physics branches into seven active programmes. Color indicates confidence: teal for established, amber for promising, red for contested or company-reported.</p>
 <svg viewBox="0 0 640 330" role="img" aria-label="Seven frontier areas of information physics.">
 <defs><marker id="appendix-d007-the-bleeding-edge-fa" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path></marker></defs>
 <g font-family="IBM Plex Mono,monospace" font-size="10.5">
@@ -701,7 +701,7 @@
 <section>
 <p class="sec-eyebrow"><span class="sec-num">01</span> · the headline result</p>
 <h2>Measuring irreversibility inside a living cell</h2>
-<p>If we had to name one post-2020 result that could be remembered in twenty years, it is this: in 2024, a team led by <strong>Felix Ritort</strong> at the University of Barcelona published a way to infer the rate at which a living cell produces entropy — the quantitative arrow of time inside a single red blood cell — from microscopy plus force calibration and model assumptions.</p>
+<p>If we had to name one recent result that could be remembered in twenty years, it is this: in 2024, a team led by <strong>Felix Ritort</strong> at the University of Barcelona published a way to infer the rate at which a living cell produces entropy — the quantitative arrow of time inside a single red blood cell — from microscopy plus force calibration and model assumptions.</p>
 <p>The insight is a new mathematical identity called the <em class="term">Variance Sum Rule</em>. It connects fluctuation statistics of a probe with the restoring forces acting on it, allowing entropy production rate σ to be estimated under the model's conditions. No calorimeter, no complex perturbation protocol — but not just a bare microscope either.</p>
 <div class="formula">
 <p class="eq"><span class="v">σ</span> ∝ var(displacement) + var(force)</p>
@@ -721,8 +721,8 @@
 <div class="appendix-timeline">
 <div class="tl-item ok">
 <p class="tl-year">2022–23</p>
-<p class="tl-title">The TUR is overdamped, not universal</p>
-<p class="tl-body"><strong>Pietzonka</strong> showed a classical pendulum clock can <em>violate</em> the standard TUR (<em>PRL</em> 128, 130606, 2022) — the bound fails for underdamped dynamics. <strong>Dieball &amp; Godec</strong> then proved the TUR directly from the Langevin equation, pinpointing exactly when and why it holds (<em>PRL</em> 130, 087101, 2023). The TUR is now understood not as a law of nature but as a <em>property of overdamped stochastic dynamics</em> — astonishingly broad, but with known edges.</p>
+<p class="tl-title">The standard TUR is broad, not universal</p>
+<p class="tl-body">The standard steady-state TUR applies to Markov jump processes and overdamped Langevin systems. <strong>Pietzonka</strong> showed a classical pendulum clock can <em>violate</em> that simple entropy-production-only form (<em>PRL</em> 128, 130606, 2022), while <strong>Dieball &amp; Godec</strong> clarified its Langevin route and saturation conditions (<em>PRL</em> 130, 087101, 2023). Underdamped and non-Markovian systems may require modified bounds involving additional dynamical quantities.</p>
 <p class="tl-cite">Pietzonka, PRL 2022 · Dieball &amp; Godec, PRL 2023</p>
 </div>
 <div class="tl-item ok">
@@ -775,13 +775,13 @@
 <section>
 <p class="sec-eyebrow"><span class="sec-num">05</span> · demons, upgraded</p>
 <h2>Information engines go many-body, quantum, and autonomous</h2>
-<p>The single-particle engines of 2010–2021 were stunning proofs of concept. The post-2020 push is in three directions: <em>scale them up</em>, <em>make them quantum</em>, and <em>cut the external controller</em>.</p>
+<p>The single-particle engines of 2010–2021 were stunning proofs of concept. The recent push is in three directions: <em>scale them up</em>, <em>make them quantum</em>, and <em>embody more of the sensing and feedback inside the device</em>.</p>
 <h3>Many-body engines</h3>
 <p><strong>Chor, Sohachi, Rosen, Rahav &amp; Roichman</strong> (<em>Phys. Rev. Research</em> 5, 043193, December 2023) extended the Szilárd engine from a single particle to a <em>many-body colloidal suspension</em>, extracting work from collective number fluctuations. A follow-up (arXiv:2512.01942, December 2025, preprint) describes a "piston-like information engine" that harvests work from an <em>equilibrium</em> bath purely by conditional measurement — Maxwell's demon writ in a crowd. <span class="chip ok" data-print="established"><i></i>PRResearch paper established</span> <span class="chip hint" data-print="review"><i></i>piston preprint pending</span></p>
 <h3>A quantum engine charging a quantum battery</h3>
 <p><strong>Zhang et al.</strong> (Kim group, Tsinghua; <em>Phys. Rev. Lett.</em> 135, 140403, 2025) built a cyclic quantum information engine from a single ytterbium-171 ion, using rapid mid-circuit measurement to suppress measurement disturbance. The energy extracted per cycle was used to charge a "quantum battery." They report an information-to-ergotropy conversion efficiency of 67% of the theoretical maximum and information-to-work efficiency of 70%. <span class="chip ok" data-print="established"><i></i>established</span></p>
 <h3>Autonomous demons</h3>
-<p>All classic Maxwell-demon experiments required an <em>external</em> controller. A growing body of work — quantum-dot rectifiers (<em>PRR</em> 2019), stochastic-resetting demons (<em>PRR</em> 2023), transistor-based demons (<em>PRB</em> 2025) — removes that crutch, building demon-like asymmetric devices that sort fluctuations without external input. The demon thought experiment is becoming a <strong>design pattern for nanoscale energy harvesting</strong>. <span class="chip hint" data-print="established"><i></i>promising — individual realizations established</span></p>
+<p>Autonomous Maxwell demons have been demonstrated experimentally since at least the 2015 single-electron work of Koski and colleagues. In such systems, measurement and feedback are implemented internally rather than by an externally timed controller. That does <em>not</em> mean the device uses no nonequilibrium resources or produces no entropy: the energetic and entropic resources still have to be included in the full accounting. Newer quantum-dot rectifiers (<em>PRR</em> 2019), stochastic-resetting demons (<em>PRR</em> 2023), and transistor-based demons (<em>PRB</em> 2025) extend that design pattern for nanoscale energy harvesting. <span class="chip hint" data-print="established"><i></i>promising — individual realizations established</span></p>
 <h3>A real molecular motor as a demon</h3>
 <p><strong>Amano, Esposito, Kreidt, Leigh, Penocchio &amp; Roberts</strong> (<em>Nature Chemistry</em> 14, 530, 2022) performed a rigorous information-thermodynamic analysis of a <em>real chemically-driven synthetic rotary molecular motor</em> — one of the machines for which the 2016 Nobel in Chemistry was awarded — showing its operation decomposes into an information-processing cycle. The demon, it turns out, was always just a particularly well-designed molecule. <span class="chip ok" data-print="established"><i></i>established</span></p>
 </section>
@@ -813,7 +813,7 @@
 <div class="recap">
 <p class="h">◆ The frontier in three sentences</p>
 <dl>
-<div><dt>What's changed</dt><dd>Since 2020, information thermodynamics has moved from confirming old principles to building new ones: scoped trade-off laws (TURs, speed limits, cost of timekeeping and communication), new entropy-production measurements in living cells, quantum-cooperative erasure near the Landauer floor, and island-formula progress on the black-hole information paradox in controlled models.</dd></div>
+<div><dt>What's changed</dt><dd>Since roughly 2019, information thermodynamics and quantum-gravity-adjacent information theory have moved from confirming old principles to building new ones: scoped trade-off laws (TURs, speed limits, cost of timekeeping and communication), new entropy-production measurements in living cells, quantum-cooperative erasure near the Landauer floor, and island-formula progress on the black-hole information paradox in controlled models.</dd></div>
 <div><dt>What's betting big</dt><dd>Thermodynamic computing — turning thermal noise from enemy into computational substrate — is the field's highest-variance wager: elegant physics, early hardware, headline efficiency claims that remain unvalidated by independent benchmarks.</dd></div>
 <div><dt>The honest label</dt><dd>This frontier mixes peer-reviewed experiments, peer-reviewed theory, perspectives, preprints, and company-reported claims. The difference between a breakthrough and a footnote is independent replication, scale, and time — which is exactly what makes a frontier a frontier.</dd></div>
 </dl>
@@ -822,7 +822,7 @@
 <hr class="div">
 <section class="sources">
 <p class="sec-eyebrow">Sources · frontier appendix</p>
-<h2>Sources — all post-2020</h2>
+<h2>Sources — recent frontier work</h2>
 <ol>
 <li>Di Terlizzi, I. et al. (2024). "Variance Sum Rule for Entropy Production." <em>Science</em> 383: 971. <span class="meta">doi:10.1126/science.adh1823.</span></li>
 <li>Skinner, D. J. &amp; Dunkel, J. (2021). "Improved bounds on entropy production in living systems." <em>PNAS</em> 118: e2024300118.</li>
@@ -840,6 +840,7 @@
 <li>Chor, R. et al. (2023). "Many-body Szilard engine…" <em>Phys. Rev. Research</em> 5: 043193.</li>
 <li>Goerlich, R. et al. (2025). "Piston-Like Information Engine I: Universal Features in Equilibrium." <em>arXiv</em>:2512.01942. <span class="meta">Preprint.</span></li>
 <li>Zhang, Z. et al. (2025). "Single-Ion Information Engine for Charging Quantum Battery." <em>PRL</em> 135: 140403. <span class="meta">doi:10.1103/g45c-ssfx.</span></li>
+<li>Koski, J. V. et al. (2015). "On-Chip Maxwell's Demon as an Information-Powered Refrigerator." <em>Physical Review Letters</em> 115: 260602. <span class="meta">Autonomous single-electron demon.</span></li>
 <li>Amano, S. et al. (2022). "…information thermodynamics analysis of a synthetic molecular motor." <em>Nature Chemistry</em> 14: 530. <span class="meta">doi:10.1038/s41557-022-00899-z.</span></li>
 <li>Buffoni, L. &amp; Campisi, M. (2023). "Cooperative quantum information erasure." <em>Quantum</em> 7: 961. <span class="meta">doi:10.22331/q-2023-03-23-961.</span></li>
 <li>Almheiri, A. et al. (2021). "The entropy of Hawking radiation." <em>Rev. Mod. Phys.</em> 93: 035002.</li>
