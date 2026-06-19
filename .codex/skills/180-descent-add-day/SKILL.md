@@ -63,7 +63,8 @@ Before any new English day is considered ready, run a claim-level factual review
 6. Check numbers by recalculating when possible: percentages, sample sizes, score thresholds, table rows, totals, and "X of Y" statements. Note whether a count includes trivial cases or self-pairs.
 7. Audit wording for overclaiming. Soften unsupported superlatives, absolute guarantees, causal claims, and "settled" labels unless the cited source really supports them. Mark frontier items as established, promising hint, or contested/hype.
 8. Keep citations adjacent to the claims they support. If a source supports only part of a sentence, revise the sentence or add the missing source.
-9. When Chinese mirroring is required, mirror every factual correction into the Chinese route/include and manually verify dates, numbers, names, source metadata, URLs, DOI strings, and evidence labels after translation.
+9. Keep source-screening methodology out of audience-facing prose. Apply date, source, and credibility rules internally; do not add meta notes such as "per the syllabus's standing rule" to lesson copy. Use ordinary prose, evidence labels, or source-list metadata instead.
+10. When Chinese mirroring is required, mirror every factual correction into the Chinese route/include and manually verify dates, numbers, names, source metadata, URLs, DOI strings, and evidence labels after translation.
 
 Do not proceed to commit/publish until this gate has been completed and any issues have been fixed or explicitly reported to the user.
 
