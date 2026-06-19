@@ -284,7 +284,206 @@
     update();
   }
 
+  function initAppendixMutualInformation(){
+    var root = document.querySelector(".appendix-mutual-information");
+    if (!root) return;
+
+    var slider = root.querySelector("[id$='aSlider']");
+    var label = root.querySelector("[id$='aLbl']");
+    var circleX = root.querySelector("[id$='cX']");
+    var circleY = root.querySelector("[id$='cY']");
+    var labelX = root.querySelector("[id$='lblX']");
+    var labelY = root.querySelector("[id$='lblY']");
+    var labelI = root.querySelector("[id$='lblI']");
+    var miValue = root.querySelector("[id$='miVal']");
+    var conditional = root.querySelector("[id$='hcond']");
+    var caption = root.querySelector("[id$='miCap']");
+    if (!slider || !label || !circleX || !circleY || !labelX || !labelY || !labelI || !miValue || !conditional || !caption) return;
+
+    var radius = 86;
+    var midpoint = 180;
+
+    function entropyBinary(p){
+      if (p <= 0 || p >= 1) return 0;
+      return -(p * Math.log2(p) + (1 - p) * Math.log2(1 - p));
+    }
+
+    function render(){
+      var agreement = Number(slider.value) / 100;
+      var hConditional = entropyBinary(agreement);
+      var mutualInformation = 1 - hConditional;
+      var distance = 2 * radius * (1 - mutualInformation);
+      var x = midpoint - distance / 2;
+      var y = midpoint + distance / 2;
+
+      label.textContent = agreement.toFixed(2);
+      miValue.textContent = mutualInformation.toFixed(2);
+      conditional.textContent = hConditional.toFixed(2);
+      circleX.setAttribute("cx", x.toFixed(1));
+      circleY.setAttribute("cx", y.toFixed(1));
+      labelX.setAttribute("x", (x - 40).toFixed(1));
+      labelY.setAttribute("x", (y + 40).toFixed(1));
+      labelI.setAttribute("opacity", mutualInformation > 0.08 ? "1" : "0");
+
+      if (mutualInformation < 0.02) {
+        caption.textContent = text(
+          "Independent. The coins ignore each other; learning X leaves all of Y's uncertainty intact. The channel carries nothing.",
+          "相互独立。两枚硬币互不理会；知道 X 之后，Y 的不确定性仍然完整保留。这个信道没有携带信息。"
+        );
+      } else if (mutualInformation < 0.4) {
+        caption.textContent = text(
+          "Loosely linked. X now whispers about Y: a little surprise is removed, and a little shared overlap appears.",
+          "联系很弱。X 现在只是在低声提示 Y：一点惊奇被消除，一点共享重叠开始出现。"
+        );
+      } else if (mutualInformation < 0.9) {
+        caption.textContent = text(
+          "Strongly correlated. Most of Y's uncertainty collapses once you know X; the overlap is now most of each circle.",
+          "强相关。知道 X 之后，Y 的大部分不确定性都会塌缩；重叠部分已经占据两个圆的大半。"
+        );
+      } else if (mutualInformation < 0.999) {
+        caption.textContent = text(
+          "Almost a perfect wire. Knowing X tells you nearly everything about Y; only a sliver of independent surprise survives.",
+          "几乎是一根完美导线。知道 X 几乎就知道了 Y 的全部；只剩一丝独立惊奇还存活。"
+        );
+      } else {
+        caption.textContent = text(
+          "Identical. X and Y are the same coin. Knowing one tells you the other with certainty; I(X;Y) equals the full 1 bit.",
+          "完全相同。X 与 Y 是同一枚硬币。知道一个就能确定另一个；I(X;Y) 等于完整的 1 比特。"
+        );
+      }
+    }
+
+    slider.addEventListener("input", render);
+    render();
+  }
+
+  function initAppendixHammingCube(){
+    var root = document.querySelector(".appendix-hamming-cube");
+    if (!root) return;
+
+    var edges = root.querySelector("[id$='hamEdges']");
+    var vertices = root.querySelector("[id$='hamVerts']");
+    var readout = root.querySelector("[id$='hamRead']");
+    if (!edges || !vertices || !readout) return;
+
+    var ns = "http://www.w3.org/2000/svg";
+    var nodes = [];
+    var ring = null;
+
+    function position(b0,b1,b2){
+      return { x: 80 + b0 * 135 + b2 * 60, y: 205 - b1 * 135 - b2 * 60 };
+    }
+
+    function ones(value){
+      return (value & 1) + ((value >> 1) & 1) + ((value >> 2) & 1);
+    }
+
+    function decode(value){
+      return ones(value) >= 2 ? 7 : 0;
+    }
+
+    function codeword(value){
+      return value === 0 ? "000" : "111";
+    }
+
+    function addSvg(name){
+      return document.createElementNS(ns, name);
+    }
+
+    for (var value = 0; value < 8; value++) {
+      var b0 = value & 1;
+      var b1 = (value >> 1) & 1;
+      var b2 = (value >> 2) & 1;
+      var pos = position(b0, b1, b2);
+      nodes.push({ value: value, x: pos.x, y: pos.y, label: "" + b2 + b1 + b0 });
+    }
+
+    for (var i = 0; i < 8; i++) {
+      for (var j = i + 1; j < 8; j++) {
+        var diff = i ^ j;
+        if (diff === 1 || diff === 2 || diff === 4) {
+          var line = addSvg("line");
+          line.setAttribute("x1", nodes[i].x);
+          line.setAttribute("y1", nodes[i].y);
+          line.setAttribute("x2", nodes[j].x);
+          line.setAttribute("y2", nodes[j].y);
+          edges.appendChild(line);
+        }
+      }
+    }
+
+    function select(node){
+      if (ring) ring.remove();
+      var decoded = decode(node.value);
+      var distance = ones(node.value ^ decoded);
+      var decodedWord = codeword(decoded);
+      ring = addSvg("circle");
+      ring.setAttribute("cx", node.x);
+      ring.setAttribute("cy", node.y);
+      ring.setAttribute("r", node.value === 0 || node.value === 7 ? "20" : "17");
+      ring.setAttribute("fill", "none");
+      ring.setAttribute("stroke", decoded === 0 ? "var(--accent)" : "var(--brass)");
+      ring.setAttribute("stroke-width", "2.5");
+      ring.setAttribute("stroke-dasharray", "3 3");
+      vertices.appendChild(ring);
+
+      if (node.value === 0 || node.value === 7) {
+        readout.innerHTML = text(
+          "<b>Received <code>" + node.label + "</code>: already a valid codeword.</b> No error to correct; it decodes to itself.",
+          "<b>收到 <code>" + node.label + "</code>：它已经是有效码字。</b>无需纠错；它解码为自身。"
+        );
+      } else {
+        readout.innerHTML = text(
+          "<b>Received <code>" + node.label + "</code>: not a valid codeword.</b> It is " + distance + " flip" + (distance > 1 ? "s" : "") + " from <code>" + decodedWord + "</code>, so majority vote decodes it to <code>" + decodedWord + "</code>.",
+          "<b>收到 <code>" + node.label + "</code>：它不是有效码字。</b>它距离 <code>" + decodedWord + "</code> 为 " + distance + " 次翻转，因此多数表决把它解码为 <code>" + decodedWord + "</code>。"
+        );
+      }
+    }
+
+    nodes.forEach(function(node){
+      var group = addSvg("g");
+      var circle = addSvg("circle");
+      var label = addSvg("text");
+      var decoded = decode(node.value);
+      var fill = node.value === 0 || node.value === 7
+        ? "var(--accent)"
+        : (decoded === 0 ? "color-mix(in srgb,var(--accent) 38%,transparent)" : "color-mix(in srgb,var(--brass) 55%,transparent)");
+
+      circle.setAttribute("class", "vx");
+      circle.setAttribute("cx", node.x);
+      circle.setAttribute("cy", node.y);
+      circle.setAttribute("r", node.value === 0 || node.value === 7 ? "15" : "12");
+      circle.setAttribute("fill", fill);
+      circle.setAttribute("stroke", "var(--raised)");
+      circle.setAttribute("stroke-width", "2.5");
+      label.setAttribute("x", node.x);
+      label.setAttribute("y", node.y + 4);
+      label.setAttribute("text-anchor", "middle");
+      label.setAttribute("font-family", "IBM Plex Mono,monospace");
+      label.setAttribute("font-size", "11");
+      label.setAttribute("font-weight", "600");
+      label.setAttribute("fill", node.value === 0 || node.value === 7 ? "#fff" : "var(--ink)");
+      label.setAttribute("pointer-events", "none");
+      label.textContent = node.label;
+      group.setAttribute("role", "button");
+      group.setAttribute("tabindex", "0");
+      group.setAttribute("aria-label", text("Decode received word " + node.label, "解码收到的码字 " + node.label));
+      group.appendChild(circle);
+      group.appendChild(label);
+      group.addEventListener("click", function(){ select(node); });
+      group.addEventListener("keydown", function(event){
+        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+          event.preventDefault();
+          select(node);
+        }
+      });
+      vertices.appendChild(group);
+    });
+  }
+
   initQuestionTree();
   initEntropyDial();
   initLandauerMachine();
+  initAppendixMutualInformation();
+  initAppendixHammingCube();
 })();

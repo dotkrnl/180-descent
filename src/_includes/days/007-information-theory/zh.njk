@@ -389,6 +389,470 @@
 </ol>
 </section>
 
+<!-- deep-dive:start -->
+<details class="deep-dive" id="the-deeper-currents">
+<summary>
+<span class="ptitle">专题深入附录</span>
+<span class="deep-dive-title">深层暗流</span>
+<span class="deep-dive-sub">关于信息，所有我们未能放入主线课程的内容——比特之下的代数、战胜噪声的编码，以及最后的物理之墙。</span>
+</summary>
+<div class="deep-dive-body">
+<p class="lede"><span class="drop">我</span>们在主线页面中完成了两件非同寻常的事：我们用比特度量了事实的分量，并且支付了热量代价——以泽普托焦耳（zeptojoules）计——来遗忘它。这是这门学科的脊梁。然而，仅有脊梁并不能构成完整的躯体。在香农对比特的定义与兰道尔擦除比特的物理代价之间，横跨了我们此前飞速掠过的一个世纪的思想：第二个与熵同样基础的物理量，用于度量一件事物能透露多少关于另一件事物的信息；你的手机能将照片压缩 95% 且在有静电干扰的信道中无瑕传输的深层原因；一只会走迷宫的机械小鼠；以及一连串最终直达宇宙计算极限的物理限制链条。本附录是一场从容的旅程。这里的笔调与规则一如既往——在可行之处力求生动，在 <span class="chip ok" data-print="已确立"><i></i>已确立</span>、<span class="chip hint" data-print="初露曙光"><i></i>有前景</span>与 <span class="chip bad" data-print="待审"><i></i>炒作</span>之间保持诚实——但在这里，我们有更充裕的呼吸空间。</p>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">01</span> · 缺失的物理量</p>
+<h2>互信息，以及为错误信念付出的代价</h2>
+<p>熵衡量的是一个信源内部的不确定性。但通信——以及证据和感知——的全部意义，就在于一件事物能透露关于另一件事物的信息。雷声透露了闪电的信息；检测结果透露了疾病的信息；第 4 日开启的那扇羊门透露了跑车的信息。捕获这种关联的物理量是该理论中真正的劳模：<span class="term">互信息 (mutual information)</span>。</p>
+<p>先从两个更简单的部分开始。<span class="term">联合熵 (joint entropy)</span> H(X,Y) 是这一对变量的总不确定性。<span class="term">条件熵 (conditional entropy)</span> H(Y∣X) 是在已知 X 时 Y 遗留的不确定性——即存留的惊奇度。互信息就是它们之间的差值：已知 X 后，对 Y 的不确定性缩减了多少。</p>
+
+<div class="formula">
+<div class="eq">I(X;Y) = H(Y) − H(Y∣X) = <span class="v">H(X) + H(Y) − H(X,Y)</span></div>
+<p class="cap">对 Y 的不确定性，减去得知 X 后遗留的不确定性。具有对称性：X 透露关于 Y 的信息量，与 Y 透露关于 X 的信息量完全相同。</p>
+</div>
+
+<p class="web-only">它恰好是两个不确定性圆圈的重叠部分——这一图像并非比喻，而是字面上的精确记账。互信息是香农有损信道难题的解：容量就是输入与输出之间所能达到的最大互信息。它也是贯穿本课程其他所有内容的桥梁。因果图（第 5 日）是变量之间是否共享互信息的映射。一个设计良好的实验（第 2 日）旨在最大化假设与观测之间的互信息。从形式上看，证据就是互信息。</p>
+<p class="format-alt epub-only print-only">互信息是两个不确定性之间的重叠部分。香农信道容量就是输入与输出之间可达到的最大互信息；同一套记账方式也出现在证据、实验和因果图之中。</p>
+</section>
+<div class="panel web-only appendix-mutual-information">
+<p class="ptitle">交互式 · 两个不确定性的重叠</p>
+<h3>互信息的图示</h3>
+<p class="pnote">两枚均匀的硬币 X 和 Y，各携带 1 比特信息。将它们从“独立”（已知其中一枚无法透露另一枚的任何信息）滑动到“相同”（已知其中一枚便得知了另一枚的全部信息）。蓝绿色的重叠部分代表 I(X;Y)；两侧的外弯月代表存留的惊奇度——即条件熵。观察信道是如何“开启”的。</p>
+
+<div class="mi-grid">
+<div class="mi-venn">
+<svg viewBox="0 0 360 230" role="img" aria-label="两个重叠的圆圈，其重叠部分代表互信息。">
+<circle id="appendix-d007-the-deeper-currents-cX" cx="135" cy="115" r="86" fill="color-mix(in srgb,var(--accent) 14%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+<circle id="appendix-d007-the-deeper-currents-cY" cx="225" cy="115" r="86" fill="color-mix(in srgb,var(--brass) 14%,transparent)" stroke="var(--brass)" stroke-width="2"></circle>
+<text id="appendix-d007-the-deeper-currents-lblX" x="95" y="60" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--accent)">H(X)</text>
+<text id="appendix-d007-the-deeper-currents-lblY" x="265" y="60" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)" text-anchor="end">H(Y)</text>
+<text id="appendix-d007-the-deeper-currents-lblI" x="180" y="120" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="var(--ink)">I</text>
+</svg>
+</div>
+<div>
+<div class="mi-nums">
+<div class="row"><span>H(X) · H(Y)</span><b>1.00 · 1.00</b></div>
+<div class="row"><span>H(Y∣X) — 存留的惊奇度</span><b id="appendix-d007-the-deeper-currents-hcond">1.00</b></div>
+<div class="row big"><span>I(X;Y) — 共享部分</span><b id="appendix-d007-the-deeper-currents-miVal">0.00</b></div>
+</div>
+<p class="mi-caption" id="appendix-d007-the-deeper-currents-miCap">独立。硬币互不影响；得知 X 使得 Y 的所有不确定性完好无损。信道未传输任何信息。</p>
+</div>
+</div>
+<div class="slabel appendix-slider-label"><span>一致性 P(X = Y)</span><span class="val" id="appendix-d007-the-deeper-currents-aLbl">0.50</span></div>
+<input type="range" id="appendix-d007-the-deeper-currents-aSlider" min="50" max="100" value="50" aria-label="Agreement between X and Y">
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表格</p>
+<h4>互信息随一致性变化的对比</h4>
+<table class="alt-table">
+<thead><tr><th>一致性 P(X=Y)</th><th>H(Y|X)</th><th>I(X;Y)</th><th>物理阐释</th></tr></thead>
+<tbody>
+<tr><td>0.50</td><td>1.00 比特</td><td>0.00 比特</td><td>独立硬币；X 无法告诉你任何关于 Y 的信息。</td></tr>
+<tr><td>0.75</td><td>0.81 比特</td><td>0.19 比特</td><td>有噪信道；X 消除了少许关于 Y 的不确定性。</td></tr>
+<tr><td>0.90</td><td>0.47 比特</td><td>0.53 比特</td><td>强相关；得知 X 消除了关于 Y 的大部分不确定性。</td></tr>
+<tr><td>1.00</td><td>0.00 比特</td><td>1.00 比特</td><td>完全相同的变量；得知 X 即可完全确定 Y。</td></tr>
+</tbody>
+</table>
+</div>
+<section>
+<h3>惊奇税：相对熵</h3>
+<p>熵有一个与之关系密切的“亲戚”，它被证明是整个科学界最有用处的物理量之一，并且回答了一个尖锐的问题：相信错误的事情要付出什么代价？假设现实从分布 p 中产生结果，但你将世界建模为 q。每次你感到惊讶时，你所惊讶的程度都是错误的——你预算了 −log₂q 比特，但现实却根据 p 来收费。平均超额支付的代价即为<span class="term">相对熵 (relative entropy)</span>，或称<span class="term">KL 散度 (Kullback–Leibler divergence)</span>：</p>
+
+<div class="formula">
+<div class="eq">D(p ‖ q) = <span class="v">Σ p<sub>i</sub> log<sub>2</sub> (p<sub>i</sub> / q<sub>i</sub>)</span> &nbsp; ≥ 0</div>
+<p class="cap">当真实分布为 p 但你却针对 q 进行编码时，每个符号所浪费的额外比特数。只有当你的模型完全正确时才为零。永远不为负值。</p>
+</div>
+
+<p>这一个不等式在整门课程中承载了惊人的工作量。它是对糟糕先验的惩罚——这也正是它位于贝叶斯更新（第 1 日、第 4 日）核心的原因。它在另一个名字下——交叉熵 (cross-entropy)——是几乎所有现代神经网络训练时都要最小化的损失函数；对于语言模型来说，“学习”字面上就是稳步降低 D(reality ‖ model)，从而将浪费的惊奇度从其预测中挤压出去（这一线索我们将在第 138–145 日继续探讨）。它也是第 1 日 Friston 所谓的“自由能”之中的数学内核：在此视角下，大脑的作用是将它所预期的与它所感知到的之间的 KL 散度最小化。互信息本身不过是伪装起来的相对熵——即“真实的 X 与 Y”和“假装独立的 X 与 Y”之间的 KL 距离。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">02</span> · 压缩</p>
+<h2>挤出空气</h2>
+<p>熵不仅是一个抽象概念，更是你能触及的底线。香农的<span class="term">无失真信源编码定理 (source coding theorem)</span>——无噪信道定理相对低调的孪生兄弟——指出，一个每个符号熵为 H 比特的信源可以被压缩到平均每个符号 H 比特，且在不丢失信息的前提下绝不能比这更少。熵是不可约的余烬：是挤掉空气后的原始信息。超出这一底限的所有部分都是<span class="term">冗余 (redundancy)</span>，而冗余正是压缩技术所猎捕的对象。</p>
+
+<p>普通文本中含有多少“空气”？非常之多。如果使用 27 个符号（26 个字母加一个空格），一个完全随机的字符流每字母会携带 log₂27 ≈ 4.7 比特的信息。但英语是非常可预测的——q 后面总是跟着 u，th 和 he 反复出现，元音也是受限的。在 1951 年一个著名的实验中，香农让人们猜测隐藏文本的下一个字母，并测量他们猜对的概率，最终得出英语的熵大约为每字母 1 比特（他的估值范围约为 0.6 到 1.3 比特）。这个启示是惊人的：英语有大约四分之三的冗余。Yu cn prbbly rd ths sntnc wth th vwls rmvd（你大概仍能读懂这句去掉元音的话）——因为信息从来都不真正存在于元音之中。填字游戏、自动联想输入，以及在嘈杂的派对中听清别人说话的能力，全部依赖于这一冗余盈余。</p>
+
+<div class="aside">
+<p class="h">压缩阶梯</p>
+<p>霍夫曼编码 (Huffman coding)（1952 年）——为常见符号分配短码字——在每次只对单个符号编码时是最优的，但它无法捕获跨符号的模式。算术编码 (Arithmetic coding)（20 世纪 70 年代）表现得更好，它将整条消息编码为 [0, 1) 区间内的一个单一实数，直接紧贴着熵的物理底限。而 Lempel–Ziv 算法（1977–1978 年）则完全绕开了概率：它动态构建重复子串的字典，使得某种模式第二次出现时几乎不需要付出任何成本。后一种巧妙、自适应、不设任何前提条件的技巧，正是如今运行在 ZIP、gzip、PNG 以及你接触的大多数压缩格式之中的技术。它们谁也无法击败香农底限，只能无限逼近它。</p>
+</div>
+
+<p>上述所有都是无损压缩：解压后你能找回每一个比特。但你的眼睛和耳朵都是宽容的感官，而这种宽容非常值钱。<span class="term">率失真理论 (rate–distortion theory)</span>（香农，1959 年）提出了一个更难的问题：如果允许丢失一点点信息，在给定的可接受失真水平下，你最少可以花费多少比特？这是有损压缩的主导数学原理——JPEG 丢弃了你的视网膜无法分辨的细微色彩细节，MP3 舍弃了已被较响亮声音掩盖的微弱音调。这门艺术的关键在于，只在人类能察觉的地方花费比特，而让其余的部分蒸发。在线流媒体、视频通话以及现代互联网的整个视觉质感——全都是率失真理论的产物。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">03</span> · 终极压缩</p>
+<h2>柯尔莫哥洛夫复杂度：信息与意义的交汇</h2>
+<p>香农熵是信源（一个概率分布）的属性。但这里有一个它无法触及的谜题。考虑两个长度为一百万位的数字字符串：一个是投掷硬币产生的一百万个随机比特，另一个是 π 的前一百万位数字。在香农看来，如果它们是从“均匀分布的数字信源”中抽样出来的，它们看起来承载着同样密度的信息。然而，其中一个你可以通过一段极短的程序（“打印 π 的数字”）来重新生成，而另一个则完全无法压缩。第二个字符串在某些方面在本质上更为庞大。</p>
+<p>那个特征正是它的<span class="term">柯尔莫哥洛夫复杂度 (Kolmogorov complexity)</span>（由索洛莫诺夫、柯尔莫哥洛夫与蔡廷在 20 世纪 60 年代独立提出）：输出该字符串的最短计算机程序的长度。它是压缩技术绝对、终极且独立于具体机器的极限——是面对计算本身而非概率模型所进行的终极空气挤压。π 是极可压缩的（短程序，无限输出）；而一个真正随机的字符串是不可压缩的——输出它的最短程序本质上就是该字符串本身。事实上，这成为了随机性的一种定义：随机意味着“没有比自身更短的描述”。</p>
+<p>而在此处，该学科露出了它锋利而美丽的一面。柯尔莫哥洛夫复杂度是不可计算的 <span class="chip ok" data-print="待审"><i></i>已证实</span>。不存在任何算法能在给定任意字符串后，返回其最短程序的长度——这一结论与第 27–28 日等待着我们的哥德尔和图灵极限，以及蔡廷的怪异常数 Ω（一个特定、完全明确但其数字在证明上无法被知晓的数）产生了共鸣。我们明天将以另一个名字重温这一思想：复杂度在某种意义上就是无法被压缩的信息——它既非单调有序（如晶体，极易压缩），也非单调随机（不可压缩却毫无意义），而是有趣、不可约的结构本身。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">04</span> · 对抗黑暗的编码</p>
+<h2>信息如何在敌意重重的世界中幸存</h2>
+<p>主线页面曾承诺过，只要传输速率在信道容量之下，接近完美的通信始终是可能的——只要你能找到那组编码。这场寻宝之旅值得专门讲述，而它始于一个周五晚上在贝尔实验室里备受挫折的男人。</p>
+<p>1947 年，理查德·汉明 (Richard Hamming) 在周末可以使用一台继电器计算机，但它总是让他失望：每当它检测到输入中存在错误时，就会直接停机，静静等待周一才来上班的人类操作员。“如果机器能检测到错误，”汉明愤怒地质问，“为什么它不能定位并纠正它呢？”汉明码 (Hamming code)（发表于 1950 年）便诞生自这股怒火中，它是第一个真正的纠错码，并带来了一种从几何角度审视整个领域的全新方式。</p>
+<p>其核心思想是<span class="term">汉明距离 (Hamming distance)</span>：分隔两个码字所需的比特翻转次数。如果你的有效消息只有 <code>000</code> 和 <code>111</code>，它们在空间中的距离为 3。单比特错误会把 <code>000</code> 变成诸如 <code>010</code> 的字符串——但 <code>010</code> 仍然比 <code>111</code> 更接近 <code>000</code>，因此接收端可以通过多数表决来静默纠正它。在比特字符串的这一几何空间中，让你的有效码字拉开足够远的距离，你就能在每个码字周围划分出一个可以纠正错误的保护性“球体”。冗余，在这里被施以了几何学的诡计。</p>
+</section>
+<div class="panel web-only appendix-hamming-cube">
+<p class="ptitle">交互式 · 编码的几何学</p>
+<h3>汉明立方体</h3>
+<p class="pnote">每个 3 比特字符都是立方体的一个角；一条棱代表一次比特翻转。我们的编码仅使用两个有效码字——<code>000</code> 和 <code>111</code>，分别位于最遥远的对角（蓝绿色）。点击任意角，通过有噪信道“接收”它：解码器会通过多数表决将其拉回到最近的有效码字上。单比特错误总能被纠正；立方体向你展示了其中的原因。</p>
+
+<div class="ham-stage">
+<svg viewBox="0 0 360 260" role="img" aria-label="一个立方体，其八个顶点代表3比特字符串，其中 000 和 111 为码字。">
+<g id="appendix-d007-the-deeper-currents-hamEdges" stroke="var(--line-strong)" stroke-width="1.5"></g>
+<g id="appendix-d007-the-deeper-currents-hamVerts"></g>
+</svg>
+</div>
+<div class="ham-legend">
+<span><i class="legend-codeword"></i> 码字</span>
+<span><i class="legend-decodes-zero"></i> 解码为 → 000</span>
+<span><i class="legend-decodes-one"></i> 解码为 → 111</span>
+</div>
+<p class="ham-read" id="appendix-d007-the-deeper-currents-hamRead">点击任意角。两个码字分别位于立方体的对角两端，汉明距离为 3。这个间距是该编码的铠甲：任何单比特翻转都只会让你距离起点仅一步之遥，依然稳稳落在其中一个码字的势力范围内。</p>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表格</p>
+<h4>3 比特重复码的最近邻解码</h4>
+<table class="alt-table">
+<thead><tr><th>接收字</th><th>到 000 的距离</th><th>到 111 的距离</th><th>解码为</th></tr></thead>
+<tbody>
+<tr><td><code>000</code></td><td>0</td><td>3</td><td><code>000</code></td></tr>
+<tr><td><code>001</code>, <code>010</code>, <code>100</code></td><td>1</td><td>2</td><td><code>000</code></td></tr>
+<tr><td><code>011</code>, <code>101</code>, <code>110</code></td><td>2</td><td>1</td><td><code>111</code></td></tr>
+<tr><td><code>111</code></td><td>3</td><td>0</td><td><code>111</code></td></tr>
+</tbody>
+</table>
+<p>码字之间的汉明距离为 3，因此任何单比特错误仍会比另一个码字更接近原始码字。</p>
+</div>
+<section>
+<h3>从火星到你的口袋</h3>
+<p>汉明的几何学扩展成为了一项你时时刻刻依赖却浑然不觉的工程奇迹。里德-所罗门码 (Reed–Solomon codes)（1960 年）将数据视为多项式上的点，并且能够修复整段的突发损毁——这正是划伤的 CD 仍然可以播放、撕裂的二维码仍然可以扫描，以及旅行者号探测器能够在使用比冰箱灯泡还要微弱的发射机的情况下，横跨数十亿公里将外行星的图像低声传回地球的原因。深空任务将编码进行层层嵌套（级联），以从几近纯粹的噪声中剥离出它们的信号。</p>
+<p>但在数十年的时间里，香农所承诺的与工程师所能建造的之间一直存在着一道鸿沟。然而，这道鸿沟在一瞬间便被跨越了。Turbo 码（1993 年）通过让两个简单的编码器在互相交换猜测中进行工作，达到了与信道容量仅差零点几分贝的精度，从而震惊了该领域。低密度奇偶校验码 (LDPC)——由罗伯特·加拉格尔于 1960 年发明，因在当时对硬件计算要求过于苛刻而尘封了三十年，直到 20 世纪 90 年代末被重新发现——如今正为 Wi-Fi、5G 数据和存储设备保驾护航。而在 2009 年，埃尔达尔·阿里坎发明的极化码 (polar codes) 成为了在数学上被证明能以高效编解码达到香农极限的首个码族 <span class="chip ok" data-print="已确立"><i></i>已确立</span>。2016 年，全球 5G 标准采纳其作为控制信道的标准。在香农于地图上画下 X 的 68 年后，终于有人真正站在了那上面。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">05</span> · 巨人的肩膀与科学顽童</p>
+<h2>页面背后的先驱</h2>
+<p>香农并非凭空降临。两位贝尔实验室的前辈曾围绕这一思想做过探索。哈里·奈奎斯特 (Harry Nyquist)（1924 年）推算出了电报线传输信号的速度极限；拉尔夫·哈特利 (Ralph Hartley)（1928 年）在其实际名为《信息传输》的论文中，提出将信息量度量为可能消息数的对数——这正是比特的萌芽，唯独缺少了香农引入概率并抛弃意义的关键一步。香农对这一债务表示了敬意：在某些传统中，信息的度量单位仍被称为“哈特利”。</p>
+<p>香农本人则是科学史上的一大乐趣，值得花整整一段文字来细细品味。克劳德·香农曾在贝尔实验室的走廊里骑着独轮车，同时进行抛球杂耍。他建造了一只名叫忒修斯 (Theseus)（1950 年）的机械小鼠，这只小鼠能自己学会走出迷宫——这是最早呈现在他办公桌上的机器学习演示之一。他在马文·明斯基的建议下建造了“终极机器”：一个带有一个开关的盒子，当拨动开关时，盒子会打开，伸出一只机械手，把自己的开关拨回关闭状态，然后缩回。他与数学家爱德华·索普 (Ed Thorp) 合作建造了通常被称为首个可穿戴计算机的设备——一个香烟盒大小的装置，用于在轮盘赌中赢钱，并于 1961 年秘密带入拉斯维加斯。他让来访客人猜测句子中下一个字母的把戏并不是为了派对娱乐，而是他在实时测量英语的熵。这位奠定了工程学中最抽象、最具形而上学色彩物理量的人，其本尊却难以抑制地、极其纯粹地热爱动手实践。极其合适的是，他理论最后的点睛之笔——信息是物理的——就等在他出发的道路尽头。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">06</span> · 当信息走向量子化</p>
+<h2>比特更奇特的同胞</h2>
+<p>到目前为止，所有内容都假设比特是确定的 0 或 1。量子力学提供了一种更丰富的载体——<span class="term">量子比特 (qubit)</span>，而建立在其上的信息论是如此不同，以至于值得专门为其留出一个单元（第 47 日）。此处只介绍足以让你感受到其奇妙的知识。</p>
+<p>一个量子比特可以处于 0 和 1 的叠加态，对应整个布洛赫球面上的一点，而非只限于两极。你可能会因此认为它携带了无限量的信息。但它没有——其原因正是该学科中最深奥的事实之一。霍莱沃界 (Holevo's bound)（1973 年）证明，无论你如何准备单个量子比特，在对其进行测量时，你最多只能提取出一个经典比特。这一连续统是真实存在的，却十分害羞：它决定了量子比特是如何演化和干涉的，却在你观察的瞬间坍缩成一个单一的“是/否”。量子信息是你可以用之进行计算，却无法完全读取出来的东西。</p>
+<p>还有两个前瞻性的亮点。不可克隆定理 (no-cloning theorem)（Wootters 与 Zurek; Dieks, 1982 年） <span class="chip ok" data-print="已确立"><i></i>已确立</span> 指出，一个未知的量子态无法被复制——并不存在量子复印机——这正是量子密码学能够检测出任何窃听者、以及量子比特如此脆弱而难以保护的根源所在。而香农熵的量子对应物——冯·诺伊曼熵 (von Neumann entropy) S = −Tr(ρ log ρ)——则用于度量量子态中的不确定性，并成为了纠缠的货币——这是两个粒子可以共享的“幽灵般”的相关性（第 43 日），它本身就是一种比经典物理学所允许的任何关联都更强的互信息形式。事实证明，比特仅仅是最初的草稿。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">07</span> · 规避过路费</p>
+<h2>用可逆计算击败兰道尔极限</h2>
+<p>主线页面给出了兰道尔的审判：擦除一个比特必须耗散 kT·ln2 的热量，因为擦除将两种可能的过去压缩为了一个，而那段丢失的差异会以热量的形式释放出去。但仔细阅读其中的条文，一处漏洞便闪现出微光。这一成本仅在逻辑不可逆的步骤上被收取——即那些你无法反向运行的步骤。如果我们简单地从不擦除任何东西呢？</p>
+<p>这就是<span class="term">可逆计算 (reversible computing)</span>，而且它在理论上是完全成立的 <span class="chip ok" data-print="原则上已确立"><i></i>原则上已确立</span>。查尔斯·贝内特 (Charles Bennett) 于 1973 年证明，任何计算都可以被重构为一系列绝不毁灭信息的可逆步骤——你保留所有中间结果而不覆写，运行计算，复制答案，再将整个过程反向运行以干净地“撤销计算”那些垃圾信息，让每个比特都在净擦除为零的情况下回到它的起点。专门的可逆逻辑门让这一思想变得具体：托佛利门 (Toffoli gate)（一个受控-受控-非门）与弗雷德金门 (Fredkin gate)（一个受控交换门）是通用的——你可以用它们构建任意电路——然而每一个都是完全可逆的，输出端与输入端的数量完全相同，没有任何内容被丢弃。</p>
+<p>因此，在原则上，可逆计算机可以无限逼近兰道尔底限，使每次操作几乎不需要支付任何成本——其代价在于，就像触及这一底限的实验室实验一样，它必须以极缓慢的速度运行以避免类似摩擦的损耗，并且它在过程中必须储存所有这些未被撤销的历史记录。目前尚未有人建造出通用的实用可逆计算机；它与其说是一种产品，不如说是一个精妙的设想。但这关乎到该领域突然再次引人瞩目的原因：随着传统芯片逼近其物理极限，不遗忘开始看起来像是一种工程策略，而不再仅是一种猎奇。这条线索一直延伸到第 47 日：量子计算在本质上必须是可逆的，这既是它的力量源泉，也是它的纪律约束。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">08</span> · 最后一堵墙</p>
+<h2>计算的终极物理极限</h2>
+<p>兰道尔原理限制了遗忘的能量。但还有其他阻碍——在速度上、在密度上，以及一块物质所能进行的计算总量的极限上——而追溯它们会将你引向真正令人目眩神迷的方向。2000 年，麻省理工学院的塞斯·劳埃德 (Seth Lloyd) 针对一台“终极笔记本”进行了数值计算：这台笔记本拥有一公斤物质、一升体积，并以物理定律所允许的最高效率被组织起来（《自然》 (Nature)，2000 年 8 月 31 日）。</p>
+<p>速度的上限源自量子力学本身。马戈勒斯-列维京定理 (Margolus–Levitin theorem)（1998 年）指出，一个平均能量为 E 的系统，其经历不同状态的速率不能快于 ~2E/(πℏ)——能量就是时钟频率。将一公斤静止质量的全部能量（E = mc²，约为 10¹⁷ 焦耳）注入到计算中，你将得到一个约为每秒 10⁵¹ 次操作的物理天花板。而内存的上限则来自对该系统所能占据的状态数的统计：约为 10³¹ 比特。这些数字并非工程制造的目标；它们由基本常数 c、ℏ 和 kB 决定。劳埃德指出了一个显而易见的障碍——在这一极限下运行的设备会将它的一公斤物质转化为约十亿度的等离子体，“这是一个封装上的难题，”他冷冷地承认道。这种计算机密度最高的可能版本，实际上就是一个黑洞。</p>
+
+<div class="aside">
+<p class="h">信息存在于表面</p>
+<p>重力提供了一个最深奥的线索，暗示信息在最底层与物理学交织在一起。贝肯斯坦界限 (Bekenstein bound)（1981 年）限制了任何空间区域中所能包含的信息量——而且令人吃惊的是，该上限与该区域的表面积成正比，而非与其体积成正比。黑洞使这一极限达到了饱和：它们的熵（由贝肯斯坦与霍金在 20 世纪 70 年代提出）与事件视界的面积成正比，以普朗克大小的网格来度量。这种怪异性——即一部分空间所包含的信息量被写在它的边界上——成为了全息原理 (holographic principle)（由 't Hooft、Susskind 在 20 世纪 90 年代提出） <span class="chip hint" data-print="待审"><i></i>前沿理论猜想，尚未证实</span> 的温床，即猜想我们的三维现实可能被编码在一个遥远的二维表面上。它也引发了黑洞信息悖论——落入黑洞的信息是否会永远消失而违背量子力学？——这是理论物理学中最活跃的战场之一，我们将在第 40 日正面对抗它。</p>
+</div>
+
+<p>将同样的账目推算到最大尺度，你可以发问：自大爆炸以来，整个宇宙已经计算了多少？劳埃德的估计是——将每一个粒子的相互作用都视为一次操作——在 10⁹² 比特上进行了约 10¹²² 次操作。这固然是一个极其巨大的数字。但是有限的。现实本身所执行的计算量存在一个硬性的、可数的上限。这是否意味着宇宙字面上就是一个计算机，仍是一个充满争议的生动阐释 <span class="chip bad" data-print="争议/炒作"><i></i>存在争议——仅为解释，而非结论</span>，它是主线页面所标记的“万物源于比特”这一过度解读的近亲。数字是坚实的；而形而上学则是自选的。</p>
+</section>
+<div class="panel ladder">
+<p class="ptitle">图表 · 120 个数量级</p>
+<h3>计算能力天梯</h3>
+<p class="pnote">每秒操作次数，采用对数刻度，每个主标记相差一万倍。从你正在阅读本文的这台机器，越过一公斤重物理设备的绝对上限，直至宇宙所执行的计算总量。其中的差距是物理学为我们留出的发展空间。</p>
+<svg viewBox="0 0 640 250" role="img" aria-label="从笔记本电脑到宇宙的每秒操作次数的对数天梯。">
+<line x1="60" y1="210" x2="610" y2="210" stroke="var(--line-strong)" stroke-width="1.2"></line>
+<!-- decade ticks: map log10(ops/s) from 10 to 130 across x 70..600 -->
+<g font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)" text-anchor="middle">
+<line x1="70" y1="206" x2="70" y2="214" stroke="var(--line-strong)"></line><text x="70" y="228">10¹⁰</text>
+<line x1="158" y1="206" x2="158" y2="214" stroke="var(--line-strong)"></line><text x="158" y="228">10³⁰</text>
+<line x1="246" y1="206" x2="246" y2="214" stroke="var(--line-strong)"></line><text x="246" y="228">10⁵⁰</text>
+<line x1="335" y1="206" x2="335" y2="214" stroke="var(--line-strong)"></line><text x="335" y="228">10⁷⁰</text>
+<line x1="423" y1="206" x2="423" y2="214" stroke="var(--line-strong)"></line><text x="423" y="228">10⁹⁰</text>
+<line x1="511" y1="206" x2="511" y2="214" stroke="var(--line-strong)"></line><text x="511" y="228">10¹¹⁰</text>
+<line x1="600" y1="206" x2="600" y2="214" stroke="var(--line-strong)"></line><text x="600" y="228">10¹³⁰</text>
+<text x="335" y="244" fill="var(--ink-soft)">每秒操作次数（对数刻度）</text>
+</g>
+<!-- markers: x = 70 + (log10 - 10)/120 * 530 -->
+<!-- laptop ~1e12 -> 70 + (12-10)/120*530 = 78.8 -->
+<g>
+<line x1="79" y1="210" x2="79" y2="95" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="79" cy="95" r="7" fill="var(--accent)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="79" y="83" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)" text-anchor="middle">你的笔记本电脑</text>
+<text x="79" y="72" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="middle">~10¹²</text>
+</g>
+<!-- biggest supercomputer ~1e18 -> 70 + (18-10)/120*530 = 105.3 -->
+<g>
+<line x1="105" y1="210" x2="105" y2="130" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="105" cy="130" r="6" fill="color-mix(in srgb,var(--accent) 60%,transparent)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="118" y="128" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="start">百亿亿次级超算 ~10¹⁸</text>
+</g>
+<!-- ultimate laptop 1e51 -> 70 + (51-10)/120*530 = 251 -->
+<g>
+<line x1="251" y1="210" x2="251" y2="60" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="251" cy="60" r="7" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="251" y="48" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)" text-anchor="middle">1公斤终极笔记本</text>
+<text x="251" y="37" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="middle">~10⁵¹ (Lloyd 2000)</text>
+</g>
+<!-- universe 1e122 -> 70 + (122-10)/120*530 = 564.6 -->
+<g>
+<line x1="565" y1="210" x2="565" y2="95" stroke="var(--heat)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="565" cy="95" r="7" fill="var(--heat)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="565" y="83" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)" text-anchor="middle">宇宙至今的总量</text>
+<text x="565" y="72" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="middle">总计 ~10¹²² 次操作</text>
+</g>
+</svg>
+<p class="ladder-key">从你的笔记本电脑到终极笔记本电脑的跨越是约 10³⁹ 倍。在最字面的意义上，我们才刚刚起步。然而，即便宇宙一生的计算总量，也是一个你可以写下来的有限数字——这本身就是一个深刻的论断：计算和万事万物一样，都受物理定律的配给。</p>
+</div>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">09</span> · 无处不在的线索</p>
+<h2>一旦拥有了单位，你就会在万物中看见它</h2>
+<p>香农思想的隐秘力量在于，信息一旦化为一个数字，它便不再专属电信通信领域，而开始出现在处理不确定性、多样性或惊奇度的每一个学科之中。以下是对该线索延伸范围的快速巡览，每一项都是通往后文课题的入口：</p>
+<ul>
+<li>在生态学中，<span class="term">香农多样性指数 (Shannon diversity index)</span>——同样是那个 H = −Σ p log p——用于衡量生物多样性：热带雨林具有极高的熵（物种繁多且分布均匀），而单作物农田的熵几乎为零。这正是惊奇度被应用在“这属于哪个物种？”上的体现。</li>
+<li>在机器学习中，模型的质量由其<span class="term">困惑度 (perplexity)</span>——即 2 的交叉熵次方，意为“模型预测下一个词时平均有多惊讶”——来衡量。困惑度越低，预测就越好。每一个大语言模型的训练（第 138–145 日）本质上正是最小化第 1 节所讲的相对熵。</li>
+<li>在生物学中，DNA 是一个四字母编码，每碱基携带约 2 比特的信息——遗传在此被视作字面意义上的数字信息存储，这一框架将直接在第 77 日引入中心法则，并在第 87–90 日探寻生命的起源。</li>
+<li>在物理学中，我们今天所定义的信息熵与热机中的热力学熵被发现——或许——是同一种东西，这也是主线页面所标注的问题，且第 33 日将作为“时间之矢”重新讨论它。</li>
+<li>在生命本身中，薛定谔关于有机体通过摄入“负熵”（Brillouin 后来称之为 negentropy）来维持生存的思想是信息热力学的雏形——这正是第 83–85 日所围绕的核心谜题，届时今天所学的 kT·ln2 将重新回来主宰活细胞。</li>
+</ul>
+<p>这正是该主题为何在课程中处于目前位置的真实原因，即在 180 天中仅排第七。信息正是因为一旦被度量，便拒绝被禁锢在自身的领域，才与能量、演化、涌现和计算一同，成为了这门课程的五条核心线索之一。它是整张知识地图的结缔组织。</p>
+</section>
+<div class="recap">
+<p class="h">◆ 三句话总结本附录</p>
+<dl>
+<div><dt>内容增补</dt><dd>在比特之下蕴含着更完整的代数——互信息（共享的惊奇，也是信道容量的真实含义）和相对熵（错误模型的比特惩罚，即伪装起来的交叉熵损失与 Friston 的自由能）——此外还包括触及熵底线的压缩、最终达到香农极限的编码，以及有望规避兰道尔能耗关税的可逆计算。</dd></div>
+<div><dt>宏观视野</dt><dd>信息的物理性并不仅仅局限于擦除比特时的温热：它还向上延伸到所有计算速度与密度的硬性极限，最终止步于黑洞、全息表面，以及对宇宙至今执行的每一次操作的有限且可数的统计。</dd></div>
+<div><dt>其重要性</dt><dd>在香农将信息转化为数字的瞬间，它便超越了工程学的范畴——如今，同一个 H 同样出现在生物多样性、神经网络训练、DNA、时间之矢以及生命热力学中，这正是它成为本课程核心追踪的五条线索之一的原因。</dd></div>
+</dl>
+<p class="threads">深入线索 › 信息（互信息、KL 散度、柯尔莫哥洛夫复杂度）· 能量（可逆计算、Margolus–Levitin、终极笔记本）· 计算（编码、量子信息、全部计算的极限）· 涌现（复杂度作为不可压缩的结构 → 第 8 日）· 演化与生命（作为比特的 DNA、负熵 → 第 77、83–85 日）。</p>
+</div>
+
+<hr class="div">
+<section class="sources">
+<p class="sec-eyebrow">来源 · 附录</p>
+<h2>来源与延伸阅读</h2>
+<p class="source-note">（本附录新增；核心的香农/兰道尔文献见第 07 日正文页面。）</p>
+<ol>
+<li>Cover, T. M. &amp; Thomas, J. A. (2006). <em>Elements of Information Theory</em> (2nd ed.). Wiley. <span class="meta">—— 标准教科书：互信息、相对熵（KL 散度）、信源与信道编码、率失真。</span></li>
+<li>Shannon, C. E. (1951). "Prediction and Entropy of Printed English." <em>Bell System Technical Journal</em> 30: 50–64. <span class="meta">doi:10.1002/j.1538-7305.1951.tb01366.x —— 英语熵 ≈ 1 比特/字母；~75% 冗余度。</span></li>
+<li>Shannon, C. E. (1959). "Coding Theorems for a Discrete Source with a Fidelity Criterion." <em>IRE Nat. Conv. Rec.</em> <span class="meta">—— 率失真（有损压缩）理论的基石。</span></li>
+<li>Hamming, R. W. (1950). "Error Detecting and Error Correcting Codes." <em>Bell System Technical Journal</em> 29(2): 147–160. <span class="meta">—— 汉明距离与首个纠错码。</span></li>
+<li>Nyquist, H. (1924). "Certain Factors Affecting Telegraph Speed." · Hartley, R. V. L. (1928). "Transmission of Information." <em>Bell System Technical Journal</em>. <span class="meta">—— 香农的直接前驱工作。</span></li>
+<li>Ziv, J. &amp; Lempel, A. (1977, 1978). "A Universal Algorithm for Sequential Data Compression" &amp; "Compression of Individual Sequences…" <em>IEEE Trans. Information Theory</em>. <span class="meta">—— LZ77/LZ78，ZIP、gzip、PNG 的基础。</span></li>
+<li>Kolmogorov, A. N. (1965); Solomonoff, R. (1964); Chaitin, G. (1966). <span class="meta">—— 算法信息/柯尔莫哥洛夫复杂度；不可计算性；蔡廷常数 Ω。参见 Li &amp; Vitányi，《柯氏复杂度导论》（Springer 出版社）。</span></li>
+<li>Berrou, C., Glavieux, A. &amp; Thitimajshima, P. (1993). "Near Shannon Limit Error-Correcting Coding: Turbo Codes." <em>IEEE ICC</em>. · Gallager, R. G. (1962). "Low-Density Parity-Check Codes." <em>IRE Trans. Inf. Theory</em>.</li>
+<li>Arıkan, E. (2009). "Channel Polarization: A Method for Constructing Capacity-Achieving Codes…" <em>IEEE Trans. Information Theory</em> 55(7): 3051–3073 (July 2009). <span class="meta">—— 极化码；2016 年被 3GPP 采纳为 5G NR 控制信道标准。</span></li>
+<li>Wootters, W. K. &amp; Zurek, W. H. (1982). "A single quantum cannot be cloned." <em>Nature</em> 299: 802–803. <span class="meta">doi:10.1038/299802a0 —— 不可克隆定理（另见 Dieks, 1982）。</span></li>
+<li>Holevo, A. S. (1973). "Bounds for the quantity of information transmitted by a quantum communication channel." <em>Problems of Information Transmission</em> 9: 177–183. <span class="meta">—— 一个量子比特最多只能提取一个经典比特。</span></li>
+<li>Bennett, C. H. (1973). "Logical Reversibility of Computation." <em>IBM Journal of Research and Development</em> 17(6): 525–532. <span class="meta">—— 可逆计算；包含 Fredkin 与 Toffoli (1982) 可逆逻辑门。</span></li>
+<li>Margolus, N. &amp; Levitin, L. B. (1998). "The maximum speed of dynamical evolution." <em>Physica D</em> 120: 188–195. <span class="meta">—— 量子速度极限，~2E/(πℏ)。</span></li>
+<li>Lloyd, S. (2000). "Ultimate physical limits to computation." <em>Nature</em> 406: 1047–1054 (31 Aug 2000). <span class="meta">doi:10.1038/35023282 —— “终极笔记本”：~10⁵¹ 次操作/秒，~10³¹ 比特。</span> <a href="https://doi.org/10.1038/35023282">doi.org/10.1038/35023282</a></li>
+<li>Bekenstein, J. D. (1981). "Universal upper bound on the entropy-to-energy ratio…" <em>Physical Review D</em> 23: 287. <span class="meta">—— 贝肯斯坦界限；结合霍金的黑洞熵，构成了全息原理的根源（'t Hooft 1993; Susskind 1995）。[全息原理：前沿理论猜想，尚未证实。]</span></li>
+<li>Brillouin, L. (1956). <em>Science and Information Theory.</em> Academic Press. <span class="meta">—— 负熵；测量的信息成本（后由兰道尔-贝内特完善）。</span></li>
+<li>Soni, J. &amp; Goodman, R. (2017). <em>A Mind at Play.</em> Simon &amp; Schuster. <span class="meta">—— 香农生平：忒修斯小鼠、终极机器、与爱德华·索普合作的轮盘赌计算机、骑独轮车抛球杂耍。</span></li>
+</ol>
+</section>
+</div>
+</details>
+
+<details class="deep-dive" id="the-bleeding-edge">
+<summary>
+<span class="ptitle">专题深入附录</span>
+<span class="deep-dive-title">技术最前沿</span>
+<span class="deep-dive-sub">过去五年间可能重塑物理图景的同行评审成果——秉持客观，坦诚标注：哪些是坚实确凿的结论，哪些是初露曙光的线索，哪些又只是噱头和炒作。</span>
+</summary>
+<div class="deep-dive-body">
+<p class="lede"><span class="drop">主</span>页和第一篇附录已经为你奠定了坚实的基础：香农的信息比特、兰道尔的物理能耗，以及整个理论大厦。所有这一切，都建立在数十年前便已尘埃落定的研究之上。而本篇附录则截然不同。这里探讨的每一项成果都发表于 2020 年之后，绝大多数来自最近两年，有的甚至还带着墨香。这些是亲手拓荒该领域的学者们认为最关键的成果：最有可能颠覆和重塑我们既有知识的实验、理论框架以及工程豪赌。有些能立得住，有些则会被证伪。在今天，我们的「前沿校准器」比以往任何时候都更需要开足马力。</p>
+<div class="panel landscape">
+<p class="ptitle">示意图 · 前沿图景</p>
+<h3>七个前沿方向，同一个领域</h3>
+<p class="pnote">2020 年以后的信息物理前沿延伸出七大活跃方向。颜色指示可信度：青色代表已确立，琥珀色代表初露曙光，红色代表存在争议或仅由公司单方报告。</p>
+<svg viewBox="0 0 640 330" role="img" aria-label="信息物理学的七个前沿领域。">
+<defs><marker id="appendix-d007-the-bleeding-edge-fa" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path></marker></defs>
+<g font-family="IBM Plex Mono,monospace" font-size="10">
+<rect x="10" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--hint)" stroke-width="2"></rect><text x="95" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">热力学</text><text x="95" y="58" text-anchor="middle" fill="var(--ink-soft)">计算</text>
+<rect x="235" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="320" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">权衡法则</text><text x="320" y="58" text-anchor="middle" fill="var(--ink-soft)">TUR · 速度极限</text>
+<rect x="460" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="545" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">计时</text><text x="545" y="58" text-anchor="middle" fill="var(--ink-soft)">能耗成本</text>
+<rect x="10" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="95" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">信息引擎</text><text x="95" y="166" text-anchor="middle" fill="var(--ink-soft)">麦克斯韦妖</text>
+<rect x="235" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--hint)" stroke-width="2"></rect><text x="320" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">量子信息</text><text x="320" y="166" text-anchor="middle" fill="var(--ink-soft)">热力学</text>
+<rect x="460" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="545" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">生命系统</text><text x="545" y="166" text-anchor="middle" fill="var(--ink-soft)">细胞中的熵</text>
+<rect x="235" y="250" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-dasharray="4 3"></rect><text x="320" y="270" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">黑洞</text><text x="320" y="286" text-anchor="middle" fill="var(--ink-soft)">信息悖论</text>
+</g>
+<g stroke="var(--ink-faint)" stroke-width="1.2" fill="none" marker-end="url(#appendix-d007-the-bleeding-edge-fa)">
+<line x1="180" y1="46" x2="232" y2="46"></line><line x1="405" y1="46" x2="457" y2="46"></line>
+<line x1="95" y1="72" x2="95" y2="127"></line><line x1="320" y1="72" x2="320" y2="127"></line><line x1="545" y1="72" x2="545" y2="127"></line>
+<line x1="180" y1="156" x2="232" y2="156"></line><line x1="405" y1="156" x2="457" y2="156"></line>
+<line x1="320" y1="182" x2="320" y2="247"></line>
+<path d="M95,182 C95,230 232,265 232,270"></path><path d="M545,182 C545,230 408,265 408,270"></path>
+</g>
+<g font-family="IBM Plex Mono,monospace" font-size="9" transform="translate(470,250)">
+<circle cx="8" cy="6" r="5" fill="var(--ok)"></circle><text x="18" y="10" fill="var(--ink-faint)">已确立的成果</text>
+<circle cx="8" cy="24" r="5" fill="var(--hint)"></circle><text x="18" y="28" fill="var(--ink-faint)">初露曙光的线索</text>
+<circle cx="8" cy="42" r="5" fill="var(--contested)"></circle><text x="18" y="46" fill="var(--ink-faint)">存在争议 / 炒作</text>
+<rect x="2" y="56" width="12" height="10" rx="2" fill="none" stroke="var(--ink-faint)" stroke-dasharray="3 2"></rect><text x="18" y="64" fill="var(--ink-faint)">仅限理论（无实验）</text>
+</g>
+</svg>
+</div>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">01</span> · 焦点成果</p>
+<h2>在活细胞内部测量不可逆性</h2>
+<p>如果要在 2020 年后的成果中，选出一项在二十年后仍被人们铭记的突破，那无疑是它：2024 年，由巴塞罗那大学费利克斯·里托尔特（Felix Ritort）领衔的团队发表了一项研究，他们仅凭一台普通的显微镜，就成功测量出了活细胞产生熵的速率——这也是单个红细胞内时间之箭的定量表现。</p>
+<p>其核心原理是一个名为<span class="term">方差求和规则</span>（Variance Sum Rule）的全新数学恒等式。它将物体在涨落中的热位移方差，与作用在它身上的恢复力方差联系在一起，并表明两者的总和与熵产生率 σ 成正比。这两个方差，都可以通过用摄像机追踪微小探针小球来测得。无需热量计，也无需复杂的扰动协议——只需对热抖动进行耐心的观察即可。</p>
+<div class="formula">
+<div class="eq"><span class="v">σ</span> ∝ var(displacement) + var(force)</div>
+<p class="cap">简化示意——仅通过涨落统计推算熵产生率。Di Terlizzi et al., Science, 2024。</p>
+</div>
+<p>他们将这一工具对准人类红细胞，绘制出了横跨细胞膜的熵产生率分布图。其发现令人震惊：σ 呈现出明显的「空间非均匀性」，在细胞的不同位置均有不同，其关联长度约为 0.6 微米。其平均值与独立的热量计测量结果高度吻合。这是人类首次将抽象的热力学账本——自薛定谔以来一直困扰着生物物理学的「系统距离平衡态到底有多远？」这一问题——转化为了肉眼可见、具空间分辨率的图像。<span class="chip ok" data-print="已确立"><i></i>已确立</span></p>
+<div class="aside">
+<p class="h">本课程为何关注这一突破</p>
+<p>在第 83–85 日，我们会提问：生命看起来如此井然有序，究竟是如何与热力学第二定律达成妥协的？标准的回答——「有机体是输出熵的开放系统」——在定性上虽然没错，但在定量上却过于模糊。方差求和规则为这个模糊的答案提供了一把精密的量尺。如果能在光学显微镜的分辨率下映射出细胞内部的熵产生，我们就可以开始追问：究竟是哪些代谢途径制造了最多的不可逆性？热力学成本又集中在何处？这项技术将随机热力学从一个单纯的理论框架，升华为了一种全新的「显微成像手段」。</p>
+</div>
+<p>另外两项相关成果同样值得关注。斯金纳和敦克尔（Skinner &amp; Dunkel，PNAS，2021 年）开发了一套严密的优化框架，用于从部分观测中确定熵产生的界限，并将其应用于研究细菌鞭毛马达与生长中的微管。另一篇 2024 年的 PNAS 论文则使用「深度学习概率流」——即基于得分的生成模型——来估算高维活性物质系统中的熵产生，为解析手段无能为力的高维系统提供了一条计算路径。<span class="chip ok" data-print="已确立"><i></i>两项均已确立</span></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">02</span> · 新法则</p>
+<h2>通用权衡律：不确定性、速度与成本</h2>
+<p>自 2020 年以来，随机热力学最深刻的概念进展是一系列揭示了「高精度以熵为代价」的理论成果。如果分子马达运行时噪声极低、如果时钟走时节律稳定可靠、如果传感器测量浓度精准无误——必然有某种代价需要支付，而通用的结算货币就是耗散。这些<span class="term">热力学不确定性关系</span>（Thermodynamic Uncertainty Relations，简称 TUR）是非平衡态世界给出的海森堡式回答：它们是对任何运行在非平衡态的系统施加的普适约束。</p>
+<div class="appendix-timeline">
+<div class="tl-item ok">
+<p class="tl-year">2022–23</p>
+<p class="tl-title">TUR 适用于过阻尼系统，而非普适规律</p>
+<p class="tl-body">皮埃宗卡（Pietzonka）指出，经典的单摆钟可以打破标准的 TUR（PRL 128, 130606, 2022）——在欠阻尼动力学中，该界限失效了。随后，迪巴尔与戈德克（Dieball &amp; Godec）直接从朗之万方程出发推导了 TUR 的成立条件，精确指明了它在何时以及为何成立（PRL 130, 087101, 2023）。现在，人们不再将 TUR 视为一种自然的铁律，而是将其理解为「过阻尼随机动力学的一种属性」——虽然适用范围极其广泛，但边界十分明确。</p>
+<p class="tl-cite">Pietzonka, PRL 2022 · Dieball &amp; Godec, PRL 2023</p>
+</div>
+<div class="tl-item ok">
+<p class="tl-year">2023</p>
+<p class="tl-title">速度极限、耗散与最优输运的统一</p>
+<p class="tl-body">武文万与齐藤（Van Vu &amp; Saito）证明，TUR、最小耗散协议以及「热力学速度极限」实际上是建立在 Wasserstein 距离最优输运理论之上的单一结构的各个侧面（PRX 13, 011013, 2023）。另外，Lee、Lee、Kwon 与 Park 推导出了一个紧凑的有限时间兰道尔界限：即在固定时间内擦除一个比特所需的最小耗散，在速度与热能之间进行了权衡（PRL 129, 120603, 2022）。</p>
+<p class="tl-cite">Van Vu &amp; Saito, PRX 2023 · Lee et al., PRL 2022</p>
+</div>
+<div class="tl-item ok">
+<p class="tl-year">2025</p>
+<p class="tl-title">通信的热力学成本</p>
+<p class="tl-body">亚达夫与沃尔珀特（Yadav &amp; Wolpert）证明，在计算子系统之间传输信息存在不可避免的耗散成本——这是计算机发热账单中长期被忽视的一个组成部分，且随通信带宽的增加而增长。用他们的话来说就是：「沟通并非毫无代价。」（Phys. Rev. Research，2025 年。）</p>
+<p class="tl-cite">Yadav &amp; Wolpert, Phys. Rev. Research 2025</p>
+</div>
+</div>
+<p>总的来说，这些成果正在构建一种类似于「热力学编码」的体系——一套针对任何非平衡态过程的必然约束，就像香农信道容量限制任何通信系统一样。这种类比并非巧合：从事这一领域的学者们认为，香农时代的信息论与 21 世纪的随机热力学，本就是同一门学科的两个不同篇章。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">03</span> · 滴答声的代价</p>
+<h2>时钟运转依赖于熵</h2>
+<p>这听起来像是一个显而易见的常识，然而直到 2021 年才首次被实验精确测量证实：时钟走时越精准，消耗并耗散的能量就越多。这并非因为工程制造上的缺陷，而是物理定律的硬性要求。</p>
+<p>由来自牛津、维也纳与兰开斯特等地的联合研究团队——皮尔森、古里亚诺娃、埃尔克、莱尔德、布里格斯、胡伯与阿雷斯（Pearson, Guryanova, Erker, Laird, Briggs, Huber &amp; Ares）——建造了尽可能简单的时钟：一个在低温腔体中振动的纳米级机械薄膜，其振荡通过射频电路读取。通过调节驱动功率，他们将时钟的状态从模糊调整到精确，并同时测量了其准确度与熵产生。他们发现了一个明确的线性关系：准确度翻倍，耗散也随之翻倍。其时钟运行效率与理论极限相比，差距已在同一个数量级之内。<span class="chip ok" data-print="已确立"><i></i>已确立</span></p>
+<div class="formula">
+<div class="eq">准确度 &nbsp;∝&nbsp; <span class="v">熵产生</span></div>
+<p class="cap">更精准的计时需要更多的耗散。Pearson et al., Physical Review X, 2021。</p>
+</div>
+<p>后续的研究进一步深化了这一结论。迈尔、施瓦茨汉斯、埃尔克与胡伯（Meier, Schwarzhans, Erker &amp; Huber，PRL 131, 220201, 2023）表明，计时的代价可以拆分为「准确度」（规律性）和「分辨率」（滴答频率），这两者都需要以熵为代价，但作用方式不同。而 2025 年发表在 PRL 上的一篇关于从量子时钟中提取经典滴答信号的熵成本的论文则指出，最主要的成本不在于时钟本身的齿轮运转，而在于「测量」本身——即把微观的量子振荡放大为经典信号的过程。这又是麦克斯韦妖的影子：能耗的代价并不在于「知道」，而在于「让其被经典地知晓」。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">04</span> · 变数最大的豪赌</p>
+<h2>热力学计算：变噪声为特性</h2>
+<p>七十年来，工程界应对热噪声的唯一办法就是：压制它。每一个晶体管的设计初衷，都是为了用大出许多倍的清晰电压摆幅来盖过原子的随机抖动。而这部分的摆幅，正是绝大多数能量消耗和热量产生的源头。热力学计算计划则反其道而行之：如果我们不再与噪声为敌，而是直接利用它来进行计算呢？</p>
+<p>这个想法出人意料地直接。一个由耦合物理振荡器（如 RLC 电路、电阻网络）组成的系统，若任其自然，就会产生热涨落。这些涨落会自发地对系统能量图景的玻尔兹曼分布进行采样。只要精心设计这个能量图景，这些采样就可以用来求解特定的问题：如线性系统求解、贝叶斯推理、基于能量的生成模型等。在这里，计算不再是违背物理规律的逆行，计算本身就是物理过程。</p>
+<div class="claim">
+<div class="ctop"><span class="cnum">硬件 01</span><span class="chip hint" data-print="待审"><i></i>同行评审概念验证</span></div>
+<h3>Normal Computing 的随机处理单元</h3>
+<p>梅兰森、阿布·哈特尔、艾弗、多纳泰拉、戈登（Melanson, Abu Khater, Aifer, Donatella, Gordon）及其同事在《自然·通讯》（Nature Communications，16: 3757，2025 年 4 月）上发表了《用于人工智能应用的热力学计算系统》。它描述了一个随机处理单元（SPU）的原型：一块印制电路板上集成了八个完全耦合的模拟 RLC 振荡器节点，通过让该耦合系统达到热平衡，来进行高斯采样和矩阵求逆。一篇配套的理论论文（npj Unconventional Computing，2024 年）将线性代数原语映射到了热力学平衡采样上，并声称渐进加速比与矩阵维度呈线性比例关系。</p>
+<p>注意事项：这只是一个「八节点原型」。在实际工作负载中，相比于现代 GPU，它在端到端耗时或能耗上的优势「尚未得到证实」。理论虽然优雅且通过了同行评审，硬件也切实存在，但其性能宣称仍有待大规模验证。<span class="chip hint" data-print="初露曙光"><i></i>初露曙光</span></p>
+</div>
+<div class="claim">
+<div class="ctop"><span class="cnum">硬件 02</span><span class="chip bad" data-print="待审"><i></i>公司单方报告 · 未经证实</span></div>
+<h3>Extropic 的热力学采样单元</h3>
+<p>由纪尧姆·维尔东（Guillaume Verdon）创立的 Extropic 公司正在制造能够以物理速度对基于能量的模型进行原生采样的芯片。其 2025 年 10 月的公开材料展示了 XTR-0 硬件，并给出公司单方报告的模拟或小型基准结果，声称相对于 GPU/VAE 基线可节省约 10,000 倍能耗；但它并未独立证明硬件在生产级工作负载上实现了 GPU 同等性能。据报道，一款更大规模的后续芯片正在规划中。这些数据纯属公司单方报告，基于其内部基准测试，并且「没有经过独立的同行评审」。若被证实，这确实将是颠覆性的突破。但在那之前，该项目依然处于与所有创业公司宣传口号相同的认识论范畴中——有趣、未经证实，且承载着风投行业的巨大变数。请应用第 2 日的教训：超乎寻常的断言，需要超乎寻常的复现。</p>
+</div>
+<div class="aside">
+<p class="h">何时才能改变评级标签</p>
+<p>要将热力学计算的标签从 <span class="chip hint" data-print="初露曙光"><i></i>初露曙光</span> 升级为 <span class="chip ok" data-print="已确立"><i></i>已确立</span>，必须有「独立的、经同行评审的基准测试」，证明其在实际机器学习工作负载上——而非仅在孤立的计算原语中——相对于现代 GPU 具有端到端的优势（无论是实际运行时间还是能耗）。一份预印本论文（arXiv:2503.09980，2025 年）指出，模拟拟静态推理在原理上可以可逆地进行（不存在兰道尔能耗下限），而模型训练则依然存在基础的能耗下限。其物理学逻辑是自洽的，但工程实现仍处于极早期阶段。</p>
+</div>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">05</span> · 麦克斯韦妖的升级版</p>
+<h2>信息引擎迈向多体、量子与自主运行</h2>
+<p>2010 至 2021 年间的单粒子引擎是令人惊叹的概念验证。而 2020 年之后的研发工作主要指向三个方向：规模化、量子化以及摆脱外部控制器。</p>
+<h3>多体引擎</h3>
+<p>乔尔、庄八、罗森、拉哈夫与罗伊奇曼（Chor, Sohachi, Rosen, Rahav &amp; Roichman，Phys. Rev. Research，2023 年 12 月）将齐拉特引擎从单个粒子扩展到了「多体胶体悬浮液」中，利用集体数量涨落来提取有用功。后续的一项工作（arXiv:2512.01942，2025 年 12 月预印本）描述了一种「活塞式信息引擎」，它纯粹通过条件测量从平衡态热浴中收集功——这相当于在群体层面上实现麦克斯韦妖。<span class="chip ok" data-print="已确立"><i></i>PRResearch 论文已确立</span> <span class="chip hint" data-print="待审"><i></i>活塞引擎预印本待审</span></p>
+<h3>量子引擎为量子电池充电</h3>
+<p>清华大学金奇奂团队的张等人（Zhang et al.，PRL，2025 年）利用单个镱-171 离子构建了一个循环运行的量子信息引擎，通过快速的电路中途测量来抑制测量干扰。每个循环提取的能量被用来为一个「量子电池」充电。他们报告的信息到有效功（ergotropy）转化效率达到了理论上限的 67%，而信息到功的整体效率达到了 70%。<span class="chip ok" data-print="已确立"><i></i>已确立</span></p>
+<h3>自主麦克斯韦妖</h3>
+<p>所有经典的麦克斯韦妖实验都需要一个外部控制器。越来越多的一系列研究——包括量子点整流器（PRR，2019 年）、随机重置麦克斯韦妖（PRR，2023 年）以及基于晶体管的麦克斯韦妖（PRB，2025 年）——丢掉了这个拐杖，制造出能在没有外部输入的情况下对涨落进行分选的类妖非对称器件。麦克斯韦妖思想实验正在成为「纳米尺度能量收集的设计模式」。<span class="chip hint" data-print="已确立"><i></i>初露曙光——单体实现已确立</span></p>
+<h3>将真实的分子马达作为麦克斯韦妖</h3>
+<p>阿马诺、埃斯波西托、克赖特、利、佩诺基奥与罗伯茨（Amano, Esposito, Kreidt, Leigh, Penocchio &amp; Roberts，Nature Chemistry，2022 年）对一个真实的化学驱动合成旋转分子马达——这也是荣获 2016 年诺贝尔化学奖的机器之一——进行了严格的信息热力学分析，证明其运转可以分解为一个信息处理循环。原来，麦克斯韦妖一直都只是一个设计得特别精巧的分子。<span class="chip ok" data-print="已确立"><i></i>已确立</span></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">06</span> · 擦除走向量子化</p>
+<h2>协同擦除与突破兰道尔极限的方案</h2>
+<p>布丰尼与坎皮西（Buffoni &amp; Campisi，Quantum，2023 年）利用量子隧穿效应放大的自发对称性破缺，在 D-Wave Advantage 量子退火器上同时擦除了 256 个量子比特。这一集体翻转实现了接近 kT·ln2 的单比特擦除成本，成功率达 ~99.9%，而单比特的「作用量」（能量 × 时间）达到了 10⁻²² erg·s——其速度和能效都极其惊人。其关键在于：协同效应使系统能够集体越过势垒，而不是逐个比特地跨越。<span class="chip ok" data-print="已确立"><i></i>已确立</span></p>
+<p>另一个独立的理论项目则探索了<span class="term">辅助系统协助擦除</span>（ancilla-assisted erasure，arXiv:2402.15812，2024 年），即通过引入一个辅助量子系统来转移存储器中的熵，从而在特定的运行状态下，向局部热浴中释放「少于」 kT·ln2 的热量。作者强调，这并没有违反第二定律——包括辅助系统在内的总熵依然增加——但局部发热量确实能降到教科书上的经典下限之下。这为超低耗散量子计算的研究指引了方向，而非所谓的免费午餐。<span class="chip hint" data-print="初露曙光"><i></i>初露曙光——特定机制下适用，预印本</span></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">07</span> · 时空边缘的信息</p>
+<h2>孤岛公式与佩奇曲线</h2>
+<p>量子引力领域悬而未决最久的一个难题便是<span class="term">黑洞信息悖论</span>：被黑洞吞噬的信息，在黑洞蒸发后还能留存下来吗？霍金 1975 年的计算认为信息被彻底毁灭了；而量子力学则坚称任何信息都不会永久丢失。整整四十五年来，无人能给出一个令人满意的解释。</p>
+<p>在 2019–2020 年，一系列研究彻底改变了这一对话。佩宁顿（Penington，JHEP，2020 年），阿尔姆海里、恩格尔哈特、马罗夫与麦克斯菲尔德（Almheiri, Engelhardt, Marolf &amp; Maxfield，JHEP，2019 年），以及阿尔姆海里、哈特曼、马尔达西那、沙古里安与塔吉迪尼（Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini，JHEP，2020 年）发现，如果使用引力路径积分的一个技巧——<span class="term">副本虫洞</span>——来计算霍金辐射的熵，计算结果会自发地把黑洞内部被称为<span class="term">孤岛</span>的非连通时空区域的贡献包含在内。当这些「孤岛」开始发挥作用时，辐射的熵就会迎来拐点并开始减少，从而绘制出一条经典的<span class="term">佩奇曲线</span>——这恰恰是幺正（信息守恒）理论所预测的形状。信息逸出了。</p>
+<blockquote>半经典引力路径积分只要经过正确的求和，就已经蕴含了幺正性。不需要任何新的物理学——需要的只是一种全新的求和方法。</blockquote>
+<p>对此最权威的综述是 Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini 所著的《霍金辐射的熵》（"The entropy of Hawking radiation"，Reviews of Modern Physics 93, 035002, 2021 年）——这被广泛视作自 1997 年马尔达西那猜想（Maldacena's conjecture）提出以来，量子引力领域最举足轻重的突破。<span class="chip ok" data-print="已确立"><i></i>作为理论成果已确立</span></p>
+<p>注意事项：目前「没有任何实验或天文观测的测试」。该计算完全依赖于特定的理论框架，尚不清楚它是否适用于真实的、四维的、非反德西特（non-AdS）宇宙。这一结论在数学上与该领域的其他定理一样坚实，但该研究领域目前依然缺乏脚踏实地的实验检验。<span class="chip hint" data-print="待审"><i></i>尚无实验检验</span></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">08</span> · 宏观图景</p>
+<h2>计算的统一物理学？</h2>
+<p>对此最宏伟的整合尝试，见于沃尔珀特、科贝尔、林、塔斯尼姆、格罗肖、卡尔代什（Wolpert, Korbel, Lynn, Tasnim, Grochow, Kardeş）以及其他 17 位共同作者于 2024 年发表的 PNAS 展望论文：《随机热力学是理解计算能耗成本的关键吗？》（"Is stochastic thermodynamics the key to understanding the energy costs of computation?"）。他们的论点是：计算热力学不仅仅关于兰道尔极限——那仅仅是一个最低底线。在其之上，还包含着由失配成本、通信成本和非平衡约束所组成的丰富体系，它们共同构成了如同香农通信理论一样严密的「计算物理学完整框架」。</p>
+<p>该综述中给出的一个数据足以令人震撼：生物系统——即细胞的微观分子机器——在每次操作中的能效，大约比人类制造的性能最好的计算机「高出 10⁵ 倍」。不是 10 倍，不是 100 倍，而是整整十万倍！这一巨大差距绝非偶然，它衡量了我们的工程设计与经历了 40 亿年自然选择所塑造的演化杰作之间的遥远距离。主页的兰道尔阶梯图显示，芯片的运行功耗比热力学极限底线高出 10³–10⁶ 倍；而沃尔珀特的观察表明，生物系统距离这一底线要近得多，而探究其背后的实现机制，正是当下一个根本性的未解之谜。<span class="chip ok" data-print="已确立"><i></i>框架已确立</span></p>
+<div class="aside">
+<p class="h">通往第 83–85 日的桥梁</p>
+<p>这直接为我们接下来对生命物理学的深度探索做好了铺垫。当我们重新审视薛定谔提出的「生命是什么？」这一经典问题时，我们将拥有两个五年前尚不存在的利器：用于测量细胞内部熵产生率的方差求和规则，以及用于划定任何计算能耗界限的沃尔珀特框架。两者合力，开始缩窄「生命以负熵为生」（这只是一个口号）与「这是特定生化途径的热力学账本」（这能给出一个具体的数字）之间的鸿沟。</p>
+</div>
+</section>
+<div class="recap">
+<p class="h">◆ 三句话概括前沿地带</p>
+<dl>
+<div><dt>哪些被改变了</dt><dd>自 2020 年以来，信息热力学已从验证既有原理转向建立新法则：包括普适权衡律（TUR、速度极限、计时与通信成本）、活细胞内部的首次熵产生测量、兰道尔极限下的量子协同擦除，以及利用孤岛公式对黑洞信息悖论的解答。</dd></div>
+<div><dt>哪些是宏大赌注</dt><dd>热力学计算——即将热噪声从敌人转变为计算基底——是该领域最受瞩目的豪赌：物理学逻辑优雅，硬件尚处早期，那些引人注目的能效声明依然有待独立基准测试的验证。</dd></div>
+<div><dt>坦诚的评级标签</dt><dd>上述每一个方向都通过了同行评审，但还没有一个方向在大规模应用上被独立复现。是成为颠覆性的突破还是沦为历史的脚注，取决于未来五年的研究工作——而这，也正是前沿之所以被称为前沿的原因。</dd></div>
+</dl>
+<p class="threads">后续探索 › 热力学速度极限 → 第 33 日（热力学） · 细胞内的熵产生 → 第 83–85 日（生命物理学） · 热力学计算与沃尔珀特的 10⁵ 倍能效差 → 第 178–179 日（能源与 AI 经济） · 孤岛公式 → 第 40 日（黑洞） · TUR → 第 13 日（测量） · 量子擦除 → 第 47 日（量子计算）。</p>
+</div>
+<hr class="div">
+<section class="sources">
+<p class="sec-eyebrow">文献来源 · 前沿附录</p>
+<h2>文献来源——全部发表于 2020 年之后</h2>
+<ol>
+<li>Di Terlizzi, I. et al. (2024). "Variance Sum Rule for Entropy Production." <em>Science</em> 383: 971. <span class="meta">doi:10.1126/science.adh1823.</span></li>
+<li>Skinner, D. J. &amp; Dunkel, J. (2021). "Improved bounds on entropy production in living systems." <em>PNAS</em> 118: e2024300118.</li>
+<li>Pearson, A. N. et al. (2021). "Measuring the Thermodynamic Cost of Timekeeping." <em>Phys. Rev. X</em> 11: 021029.</li>
+<li>Meier, F. et al. (2023). "Fundamental accuracy–resolution trade-off for timekeeping devices." <em>PRL</em> 131: 220201.</li>
+<li>Wadhia, V. et al. (2025). "Entropic Costs of Extracting Classical Ticks from a Quantum Clock." <em>PRL</em> 135: 200407. <span class="meta">doi:10.1103/5rtj-djfk。</span></li>
+<li>Van Vu, T. &amp; Saito, K. (2023). "Thermodynamic Unification of Optimal Transport…" <em>Phys. Rev. X</em> 13: 011013.</li>
+<li>Lee, J. S. et al. (2022). "Speed Limit for a Highly Irreversible Process and Tight Finite-Time Landauer's Bound." <em>PRL</em> 129: 120603.</li>
+<li>Pietzonka, P. (2022). "Classical Pendulum Clocks Break the Thermodynamic Uncertainty Relation." <em>PRL</em> 128: 130606.</li>
+<li>Dieball, C. &amp; Godec, A. (2023). "Direct Route to TURs and Their Saturation." <em>PRL</em> 130: 087101.</li>
+<li>Yadav, A. C. &amp; Wolpert, D. H. (2025). "Minimal thermodynamic cost of communication." <em>Phys. Rev. Research</em> 7: 043324. <span class="meta">doi:10.1103/qvc2-32xr。</span></li>
+<li>Melanson, D. et al. (2025). "Thermodynamic Computing System for AI Applications." <em>Nature Communications</em> 16: 3757. <span class="meta">doi:10.1038/s41467-025-59011-x。</span></li>
+<li>Aifer, M. et al. (2024). "Thermodynamic Linear Algebra." <em>npj Unconventional Computing</em> 1: 13.</li>
+<li>Extropic (2025). XTR-0 announcement and thermodynamic-computing posts (extropic.ai, Oct 2025). <span class="meta">公司单方模拟/基准报告；未经独立验证。</span></li>
+<li>Chor, R. et al. (2023). "Many-body Szilard engine…" <em>Phys. Rev. Research</em> 5: 043193.</li>
+<li>Goerlich, R. et al. (2025). "Piston-Like Information Engine I: Universal Features in Equilibrium." <em>arXiv</em>:2512.01942. <span class="meta">预印本。</span></li>
+<li>Zhang, Z. et al. (2025). "Single-Ion Information Engine for Charging Quantum Battery." <em>PRL</em> 135: 140403. <span class="meta">doi:10.1103/g45c-ssfx。</span></li>
+<li>Amano, S. et al. (2022). "…information thermodynamics analysis of a synthetic molecular motor." <em>Nature Chemistry</em> 14: 530. <span class="meta">doi:10.1038/s41557-022-00899-z。</span></li>
+<li>Buffoni, L. &amp; Campisi, M. (2023). "Cooperative quantum information erasure." <em>Quantum</em> 7: 961. <span class="meta">doi:10.22331/q-2023-03-23-961。</span></li>
+<li>Almheiri, A. et al. (2021). "The entropy of Hawking radiation." <em>Rev. Mod. Phys.</em> 93: 035002.</li>
+<li>Penington, G. (2020). "Entanglement Wedge Reconstruction…" <em>JHEP</em> 09: 002. · Almheiri, A. et al. (2020). "Replica Wormholes…" <em>JHEP</em> 05: 013.</li>
+<li>Wolpert, D. H. et al. (2024). "Is stochastic thermodynamics the key…?" <em>PNAS</em> 121: e2321112121.</li>
+<li>Manzano, G. et al. (2024). "Thermodynamics of Computations…" <em>Phys. Rev. X</em> 14: 021026.</li>
+</ol>
+</section>
+</div>
+</details>
+<!-- deep-dive:end -->
+
+
 <p class="endcap">第 07 日完 · <span class="gleam">尚有 173 次深入</span></p>
 
 </div>

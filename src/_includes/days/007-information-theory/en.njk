@@ -388,6 +388,470 @@
 </ol>
 </section>
 
+<!-- deep-dive:start -->
+<details class="deep-dive" id="the-deeper-currents">
+<summary>
+<span class="ptitle">Deep dive appendix</span>
+<span class="deep-dive-title">The Deeper Currents</span>
+<span class="deep-dive-sub">Everything about information we couldn't fit in the main descent — the algebra under the bit, the codes that defeat noise, and the last wall of all.</span>
+</summary>
+<div class="deep-dive-body">
+<p class="lede"><span class="drop">W</span>e left the main page having done two remarkable things: we weighed a fact in bits, and we paid — in heat, in zeptojoules — to forget one. That is the spine of the subject. But a spine is not a body. Between Shannon's definition of the bit and Landauer's price for erasing it lies a century of ideas we sprinted past: a second quantity, just as fundamental as entropy, that measures how much one thing tells you about another; the deep reason your phone can shrink a photo by 95% and stream it through static without a flaw; a maze-solving mechanical mouse; and a chain of physical limits that ends, quite literally, at the computational capacity of the universe. This appendix is the unhurried tour. The voice and the rules are the same — vivid where we can be, honest about what's <span class="chip ok" data-print="established"><i></i>established</span> versus <span class="chip hint" data-print="promising"><i></i>promising</span> versus <span class="chip bad" data-print="review"><i></i>hype</span> — but here we have room to breathe.</p>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">01</span> · the missing quantity</p>
+<h2>Mutual information, and the tax for a wrong belief</h2>
+<p>Entropy measures the uncertainty <em>inside</em> one source. But the whole point of communication — and of evidence, and of perception — is that one thing tells you about <em>another</em>. The thunder tells you about the lightning; the test result tells you about the disease; the open goat door on <strong>Day 4</strong> told you about the car. The quantity that captures this is the true workhorse of the theory: <em class="term">mutual information</em>.</p>
+<p>Start with two simpler pieces. <em class="term">Joint entropy</em> H(X,Y) is the total uncertainty in the pair. <em class="term">Conditional entropy</em> H(Y∣X) is the uncertainty <em>left in Y once you already know X</em> — the surprise that survives. Mutual information is simply the gap between them: how much knowing X <em>shrinks</em> your uncertainty about Y.</p>
+
+<div class="formula">
+<div class="eq">I(X;Y) = H(Y) − H(Y∣X) = <span class="v">H(X) + H(Y) − H(X,Y)</span></div>
+<p class="cap">The uncertainty about Y, minus what's left after you learn X. Symmetric: X tells you exactly as much about Y as Y tells you about X.</p>
+</div>
+
+<p class="web-only">It is exactly the overlap of two circles of uncertainty — and that picture is not a metaphor, it's the literal accounting. Mutual information is the resolution of Shannon's noisy channel: <em>capacity is the maximum mutual information</em> you can force between what goes in and what comes out. It is also, quietly, the bridge to everything else in this course. A causal graph (<strong>Day 5</strong>) is a map of which variables share mutual information and which don't. A good experiment (<strong>Day 2</strong>) is one engineered to maximize the mutual information between a hypothesis and an observation. Evidence, formally, <em>is</em> mutual information.</p>
+<p class="format-alt epub-only print-only">Mutual information is the overlap between two uncertainties. Shannon channel capacity is the maximum mutual information achievable between input and output, and the same accounting appears in evidence, experiments, and causal graphs.</p>
+</section>
+<div class="panel web-only appendix-mutual-information">
+<p class="ptitle">Interactive · the overlap of two uncertainties</p>
+<h3>Mutual Information, drawn</h3>
+<p class="pnote">Two fair coins, X and Y, each carrying 1 bit. Slide them from <em>independent</em> (knowing one tells you nothing about the other) to <em>identical</em> (knowing one tells you everything). The teal overlap is I(X;Y); the outer crescents are the surprise that survives — the conditional entropies. Watch the channel "open."</p>
+
+<div class="mi-grid">
+<div class="mi-venn">
+<svg viewBox="0 0 360 230" role="img" aria-label="Two overlapping circles whose overlap represents mutual information.">
+<circle id="appendix-d007-the-deeper-currents-cX" cx="135" cy="115" r="86" fill="color-mix(in srgb,var(--accent) 14%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+<circle id="appendix-d007-the-deeper-currents-cY" cx="225" cy="115" r="86" fill="color-mix(in srgb,var(--brass) 14%,transparent)" stroke="var(--brass)" stroke-width="2"></circle>
+<text id="appendix-d007-the-deeper-currents-lblX" x="95" y="60" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--accent)">H(X)</text>
+<text id="appendix-d007-the-deeper-currents-lblY" x="265" y="60" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)" text-anchor="end">H(Y)</text>
+<text id="appendix-d007-the-deeper-currents-lblI" x="180" y="120" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="var(--ink)">I</text>
+</svg>
+</div>
+<div>
+<div class="mi-nums">
+<div class="row"><span>H(X) · H(Y)</span><b>1.00 · 1.00</b></div>
+<div class="row"><span>H(Y∣X) — surprise left</span><b id="appendix-d007-the-deeper-currents-hcond">1.00</b></div>
+<div class="row big"><span>I(X;Y) — shared</span><b id="appendix-d007-the-deeper-currents-miVal">0.00</b></div>
+</div>
+<p class="mi-caption" id="appendix-d007-the-deeper-currents-miCap">Independent. The coins ignore each other; learning X leaves all of Y's uncertainty intact. The channel carries nothing.</p>
+</div>
+</div>
+<div class="slabel appendix-slider-label"><span>agreement P(X = Y)</span><span class="val" id="appendix-d007-the-deeper-currents-aLbl">0.50</span></div>
+<input type="range" id="appendix-d007-the-deeper-currents-aSlider" min="50" max="100" value="50" aria-label="Agreement between X and Y">
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h4>Mutual information, as agreement changes</h4>
+<table class="alt-table">
+<thead><tr><th>Agreement P(X=Y)</th><th>H(Y|X)</th><th>I(X;Y)</th><th>Interpretation</th></tr></thead>
+<tbody>
+<tr><td>0.50</td><td>1.00 bit</td><td>0.00 bits</td><td>Independent coins; X tells you nothing about Y.</td></tr>
+<tr><td>0.75</td><td>0.81 bits</td><td>0.19 bits</td><td>A noisy channel; X removes a little uncertainty about Y.</td></tr>
+<tr><td>0.90</td><td>0.47 bits</td><td>0.53 bits</td><td>Strong correlation; knowing X removes most of Y's uncertainty.</td></tr>
+<tr><td>1.00</td><td>0.00 bits</td><td>1.00 bit</td><td>Identical variables; knowing X tells you Y completely.</td></tr>
+</tbody>
+</table>
+</div>
+<section>
+<h3>The surprise tax: relative entropy</h3>
+<p>There's a cousin of entropy that turns out to be one of the most useful quantities in all of science, and it answers a sharp question: <em>what does it cost to believe the wrong thing?</em> Suppose reality draws outcomes from a distribution <em>p</em>, but you've modeled the world as <em>q</em>. Every time you're surprised, you're surprised by the wrong amount — you budgeted −log₂q bits but reality charged you according to <em>p</em>. The average overpayment is the <em class="term">relative entropy</em>, or <em class="term">Kullback–Leibler divergence</em>:</p>
+
+<div class="formula">
+<div class="eq">D(p ‖ q) = <span class="v">Σ p<sub>i</sub> log<sub>2</sub> (p<sub>i</sub> / q<sub>i</sub>)</span> &nbsp; ≥ 0</div>
+<p class="cap">The extra bits per symbol you waste by coding for q when the truth is p. Zero only when your model is exactly right. Never negative.</p>
+</div>
+
+<p>This single inequality is doing astonishing amounts of work across the whole curriculum. It is the <em>penalty for a bad prior</em> — which is why it sits at the heart of Bayesian updating (<strong>Day 1</strong>, <strong>Day 4</strong>). It is, under another name — <em class="term">cross-entropy</em> — the loss function that virtually every modern neural network is trained to minimize; "learning," for a language model, is literally the steady reduction of D(reality ‖ model), squeezing wasted surprise out of its predictions (a thread we pick up on <strong>Days 138–145</strong>). And it is the mathematical bone inside Friston's "free energy" from Day 1: the brain, on that view, acts to minimize a KL divergence between what it expects and what it senses. Mutual information itself is just relative entropy in disguise — the KL distance between "X and Y as they really are" and "X and Y pretending to be independent."</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">02</span> · compression</p>
+<h2>Squeezing out the air</h2>
+<p>Entropy isn't just an abstraction; it's a <em>floor you can hit</em>. Shannon's <em class="term">source coding theorem</em> — the quieter twin of the noisy-channel theorem — says that a source of entropy H bits per symbol can be compressed to an average of H bits per symbol and <strong>no fewer</strong>, ever, without losing information. Entropy is the irreducible residue: the message with the air squeezed out. Everything above that floor is <em class="term">redundancy</em>, and redundancy is exactly what compression hunts.</p>
+
+<p>How much air is in ordinary text? A great deal. With 27 symbols (26 letters and a space), a perfectly random stream would carry log₂27 ≈ 4.7 bits per letter. But English is wildly predictable — <em>q</em> drags <em>u</em> behind it, <em>th</em> and <em>he</em> recur, vowels are forced. In a famous 1951 experiment, Shannon had people guess the next letter of a hidden text and measured how often they were right, arriving at an entropy of roughly <strong>one bit per letter</strong> (his estimates ranged about 0.6 to 1.3). The implication is startling: English is something like <strong>three-quarters redundant.</strong> Yu cn prbbly rd ths sntnc wth th vwls rmvd — because the information was never really in the vowels. Crossword puzzles, autocomplete, and the ability to hear someone at a noisy party all run on the same surplus.</p>
+
+<div class="aside">
+<p class="h">The compression ladder</p>
+<p><strong>Huffman coding</strong> (1952) — short codewords for common symbols — was optimal for coding symbols one at a time, but it can't capture patterns <em>across</em> symbols. <strong>Arithmetic coding</strong> (1970s) does better by encoding a whole message as a single number in [0,1), squeezing right up against the entropy floor. And <strong>Lempel–Ziv</strong> (1977–78) sidesteps probabilities entirely: it builds a dictionary of repeated substrings on the fly, so the second time a pattern appears it costs almost nothing. That last trick — clever, adaptive, assumption-free — is what's running inside ZIP, gzip, PNG, and most of the compressed bytes you'll touch today. None of them can beat Shannon's floor. They just get arbitrarily close to it.</p>
+</div>
+
+<p>All of that is <em>lossless</em>: unzip and you get back every bit. But your eyes and ears are forgiving instruments, and that forgiveness is worth money. <em class="term">Rate–distortion theory</em> (Shannon, 1959) asks the harder question: if you're <em>allowed</em> to lose a little, how few bits can you spend for a given level of acceptable distortion? This is the governing math of <strong>lossy</strong> compression — JPEG throwing away the fine color detail your retina can't resolve, MP3 discarding the quiet tones a louder one is already masking. The art is to spend your bits only where a human will notice, and to let the rest evaporate. Streaming, video calls, the entire visual texture of the modern internet — all of it is rate–distortion theory cashed in.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">03</span> · the ultimate compression</p>
+<h2>Kolmogorov complexity, where information meets meaning</h2>
+<p>Shannon's entropy is a property of a <em>source</em> — a probability distribution. But here's a puzzle it can't touch. Consider two strings of a million digits: one is a million random coin-derived digits, the other is the first million digits of π. To Shannon, sampled from "uniform digit sources," they look equally dense with information. Yet one of them you can regenerate from a tiny program — "print the digits of π" — and the other you cannot compress at all. Something about the second string is <em>irreducibly</em> bigger.</p>
+<p>That something is its <em class="term">Kolmogorov complexity</em> (Solomonoff, Kolmogorov, and Chaitin, independently, in the 1960s): the length of the <em>shortest computer program</em> that outputs the string. It is the absolute, final, machine-independent limit of compression — the ultimate squeezing-out of air, measured not against a probability model but against computation itself. π is profoundly compressible (short program, infinite output); a truly random string is <em>incompressible</em> — the shortest program that prints it is essentially the string itself. In fact this becomes a <em>definition</em> of randomness: random means "no description shorter than yourself."</p>
+<p>And here the subject grows a sharp, beautiful tooth. Kolmogorov complexity is <strong>uncomputable</strong> <span class="chip ok" data-print="review"><i></i>proven</span>. There is no algorithm that, given any string, returns the length of its shortest program — a result that rhymes with the Gödel and Turing limits waiting on <strong>Days 27–28</strong>, and with Chaitin's eerie constant Ω, a specific, perfectly well-defined number whose digits are provably unknowable. We will meet this idea again tomorrow under a different name: <strong>complexity is, in part, information that resists compression</strong> — structure that is neither boringly ordered (like a crystal, hugely compressible) nor boringly random (incompressible but meaningless), but interestingly, irreducibly itself.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">04</span> · codes against the dark</p>
+<h2>How information survives a hostile world</h2>
+<p>The main page promised that, below a channel's capacity, near-perfect communication is always possible <em>if you can find the code</em>. That treasure hunt deserves its own telling, and it starts with a frustrated man at Bell Labs on a Friday night.</p>
+<p>In 1947, <strong>Richard Hamming</strong> had weekend access to a relay computer, and it kept letting him down: whenever it detected an error in his input, it simply halted and waited for a human who wouldn't arrive until Monday. "If the machine can <em>detect</em> an error," Hamming fumed, "why can't it <em>locate</em> and <em>correct</em> it?" Out of that irritation came the <strong>Hamming code</strong> (published 1950), the first true error-<em>correcting</em> code, and with it a geometric way of seeing the whole field.</p>
+<p>The idea is <em class="term">Hamming distance</em>: the number of bit-flips separating two codewords. If your only valid messages are <code>000</code> and <code>111</code>, they sit distance 3 apart. A single error turns <code>000</code> into something like <code>010</code> — but <code>010</code> is still <em>closer</em> to <code>000</code> than to <code>111</code>, so the receiver can quietly correct it by majority vote. Spread your valid codewords far enough apart in this space of bit-strings, and you carve out a little protective "sphere" of correctable errors around each one. Redundancy, deployed with geometric cunning.</p>
+</section>
+<div class="panel web-only appendix-hamming-cube">
+<p class="ptitle">Interactive · the geometry of a code</p>
+<h3>The Hamming Cube</h3>
+<p class="pnote">Every 3-bit word is a corner of a cube; an edge is one bit-flip. Our code uses just two valid words — <code>000</code> and <code>111</code>, the far corners (teal). Click any corner to "receive" it through a noisy channel: the decoder snaps it to the nearest valid word by majority vote. One error is always corrected; the cube shows you why.</p>
+
+<div class="ham-stage">
+<svg viewBox="0 0 360 260" role="img" aria-label="A cube whose eight corners are the 3-bit strings, with 000 and 111 as codewords.">
+<g id="appendix-d007-the-deeper-currents-hamEdges" stroke="var(--line-strong)" stroke-width="1.5"></g>
+<g id="appendix-d007-the-deeper-currents-hamVerts"></g>
+</svg>
+</div>
+<div class="ham-legend">
+<span><i class="legend-codeword"></i> codeword</span>
+<span><i class="legend-decodes-zero"></i> decodes → 000</span>
+<span><i class="legend-decodes-one"></i> decodes → 111</span>
+</div>
+<p class="ham-read" id="appendix-d007-the-deeper-currents-hamRead"><b>Click a corner.</b> The two codewords sit at opposite ends of the cube, Hamming distance 3 apart. That gap is the code's armor: any single bit-flip lands you one step from where you started, still firmly inside one codeword's territory.</p>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h4>The 3-bit repetition code, as nearest-neighbor decoding</h4>
+<table class="alt-table">
+<thead><tr><th>Received word</th><th>Distance to 000</th><th>Distance to 111</th><th>Decodes as</th></tr></thead>
+<tbody>
+<tr><td><code>000</code></td><td>0</td><td>3</td><td><code>000</code></td></tr>
+<tr><td><code>001</code>, <code>010</code>, <code>100</code></td><td>1</td><td>2</td><td><code>000</code></td></tr>
+<tr><td><code>011</code>, <code>101</code>, <code>110</code></td><td>2</td><td>1</td><td><code>111</code></td></tr>
+<tr><td><code>111</code></td><td>3</td><td>0</td><td><code>111</code></td></tr>
+</tbody>
+</table>
+<p>The codewords are Hamming distance 3 apart, so any one-bit error remains closer to the original codeword than to the other one.</p>
+</div>
+<section>
+<h3>From Mars to your pocket</h3>
+<p>Hamming's geometry scaled into an engineering miracle that you rely on hourly without noticing. <strong>Reed–Solomon codes</strong> (1960) treat data as points on polynomials and can repair whole <em>bursts</em> of damage — which is why a scratched CD still plays, why a torn QR code still scans, and why the Voyager probes could whisper pictures of the outer planets across billions of kilometers on a transmitter weaker than a refrigerator bulb. Deep-space missions stacked codes inside codes (concatenation) to claw their signal out of almost pure noise.</p>
+<p>But for decades a gap remained between what Shannon <em>promised</em> and what engineers could <em>build</em>. That gap closed in a rush. <strong>Turbo codes</strong> (1993) stunned the field by getting within a fraction of a decibel of capacity using two simple coders trading guesses back and forth. <strong>Low-density parity-check codes</strong> — invented by Robert Gallager in 1960, then <em>forgotten for thirty years</em> as too demanding for the hardware of the day, and rediscovered in the late 1990s — now armor Wi-Fi, 5G data, and storage. And in 2009, Erdal Arıkan's <strong>polar codes</strong> became the first family <em>provably</em> proven to reach Shannon capacity with efficient encoding and decoding <span class="chip ok" data-print="established"><i></i>established</span>. In 2016 the global 5G standard adopted them for its control channels. Sixty-eight years after Shannon drew the X on the map, someone finally stood on it.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">05</span> · the shoulders &amp; the showman</p>
+<h2>The people behind the page</h2>
+<p>Shannon didn't arrive from nowhere. Two Bell Labs predecessors had circled the idea. <strong>Harry Nyquist</strong> (1924) worked out how fast a telegraph line could signal; <strong>Ralph Hartley</strong> (1928), in a paper actually titled <em>"Transmission of Information,"</em> proposed measuring information as the logarithm of the number of possible messages — the seed of the bit, missing only Shannon's crucial leap of bringing in <em>probability</em> and throwing out <em>meaning</em>. Shannon honored the debt: the unit of information in some conventions is still the "hartley."</p>
+<p>But the man himself is one of science's great delights, and worth a paragraph of pure pleasure. Claude Shannon rode a unicycle down the Bell Labs corridors <em>while juggling</em>. He built a mechanical mouse named <strong>Theseus</strong> (1950) that could learn its way through a maze — one of the first demonstrations of machine learning, sitting on his desk. He built, at Marvin Minsky's suggestion, the "<strong>Ultimate Machine</strong>": a box with a single switch that, when flipped on, opened, extended a mechanical hand, switched itself off, and withdrew. With the mathematician Ed Thorp he built what is often called the first wearable computer — a cigarette-pack-sized device to beat <em>roulette</em>, smuggled into Las Vegas in 1961. His parlor trick of having guests predict the next letter of a sentence wasn't a party game; it was him measuring the entropy of English in real time. The inventor of the most disembodied, abstract quantity in all of engineering was, in person, irrepressibly, gloriously physical. It is fitting that the punchline of his theory — <em>information is physical</em> — was waiting at the end of the road he started down.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">06</span> · when information goes quantum</p>
+<h2>The bit's stranger sibling</h2>
+<p>Everything so far assumed a bit is a definite 0 or 1. Quantum mechanics offers a richer carrier — the <em class="term">qubit</em> — and the information theory built on it is so different it deserves its own block (<strong>Day 47</strong>). Here is just enough to feel the strangeness.</p>
+<p>A qubit can hold a <em>superposition</em> of 0 and 1, a point on a whole sphere of possibilities rather than two poles. You might think it therefore carries infinitely more information. It doesn't — and the reason is one of the deepest facts in the subject. <strong>Holevo's bound</strong> (1973) proves that no matter how you prepare a single qubit, you can extract at most <em>one classical bit</em> by measuring it. The continuum is real but coy: it shapes how the qubit <em>evolves and interferes</em>, yet collapses to a single yes/no the instant you look. Quantum information is something you can <em>compute with</em> but not fully <em>read out</em>.</p>
+<p>Two more jewels, both forward-pointers. The <strong>no-cloning theorem</strong> (Wootters &amp; Zurek; Dieks, 1982) <span class="chip ok" data-print="established"><i></i>established</span> says an unknown quantum state cannot be copied — there is no quantum photocopier — which is precisely why quantum cryptography can detect any eavesdropper and why a qubit is so fragile to protect. And the quantum analogue of Shannon entropy, the <strong>von Neumann entropy</strong> S = −Tr(ρ log ρ), measures the uncertainty in a quantum state and becomes the currency of <em>entanglement</em> — the "spooky" correlation (<strong>Day 43</strong>) that two particles can share, which is itself a form of mutual information stronger than anything classical physics allows. The bit, it turns out, was only the first draft.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">07</span> · cheating the toll</p>
+<h2>Beating Landauer with reversible computing</h2>
+<p>The main page delivered Landauer's verdict: erasing a bit must dissipate kT·ln2, because erasure crushes two possible pasts into one and that lost distinction escapes as heat. But read the fine print and a loophole gleams. The cost is charged only on <em>logically irreversible</em> steps — the ones you can't run backward. What if you simply <em>never erased anything?</em></p>
+<p>This is <em class="term">reversible computing</em>, and it is theoretically sound <span class="chip ok" data-print="established"><i></i>established in principle</span>. Charles Bennett showed in 1973 that any computation can be rebuilt as a sequence of reversible steps that never destroy information — instead of overwriting intermediate results, you keep them, run your computation, copy out the answer, then run the whole thing <em>backwards</em> to cleanly "uncompute" the garbage, returning every bit to its start with no net erasure. Special reversible logic gates make this concrete: the <strong>Toffoli gate</strong> (a controlled-controlled-NOT) and the <strong>Fredkin gate</strong> (a controlled swap) are universal — you can build any circuit from them — yet each is perfectly invertible, with the same number of outputs as inputs and nothing thrown away.</p>
+<p>In principle, then, a reversible computer could approach the Landauer floor as closely as you like, paying almost nothing per operation — the catch being that, like the lab experiments that touched the floor, it must run vanishingly slowly to avoid friction-like losses, and it must store all that uncomputed history along the way. No one has built a useful general-purpose reversible computer; it remains an exquisite idea more than a product. But it is exactly why the field is suddenly interesting again: as conventional chips press toward physical limits, <em>not forgetting</em> starts to look like an engineering strategy rather than a curiosity. The thread running into <strong>Day 47</strong>: quantum computation is necessarily reversible, which is both its power and its discipline.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">08</span> · the last wall</p>
+<h2>The ultimate physical limits of computation</h2>
+<p>Landauer bounds the <em>energy</em> of forgetting. But there are other walls — on <em>speed</em>, on <em>density</em>, on how much computing a lump of matter can ever do — and tracing them out leads somewhere genuinely vertiginous. In 2000, MIT's <strong>Seth Lloyd</strong> ran the numbers for an "ultimate laptop": one kilogram of matter, one liter of volume, organized as efficiently as the laws of physics permit (<em>Nature</em>, 31 August 2000).</p>
+<p>The speed limit comes from quantum mechanics itself. The <strong>Margolus–Levitin theorem</strong> (1998) says a system with average energy E can pass through distinct states no faster than ~2E/(πℏ) — energy <em>is</em> clock speed. Pour all of one kilogram's rest-mass energy (E = mc², about 10¹⁷ joules) into computation, and you get a ceiling of roughly <strong>10⁵¹ operations per second</strong>. The memory limit comes from counting the states such a system can occupy: about <strong>10³¹ bits</strong>. These numbers are not engineering targets; they are made of c, ℏ, and kB, the bedrock constants. Lloyd notes the obvious snag — a device running at this limit has turned its kilogram into a roughly billion-degree plasma, "a packaging problem," he dryly concedes. The densest possible version of such a computer is, in fact, a <strong>black hole</strong>.</p>
+
+<div class="aside">
+<p class="h">Information lives on surfaces</p>
+<p>The deepest hint that information is woven into physics at the ground floor comes from gravity. The <strong>Bekenstein bound</strong> (1981) caps the information in any region of space — and astonishingly, the maximum scales with the region's <em>surface area</em>, not its volume. Black holes saturate this bound: their entropy (Bekenstein &amp; Hawking, 1970s) is proportional to the area of the event horizon, measured in Planck-sized patches. That oddity — that the information content of a chunk of space is written on its boundary — is the seed of the <strong>holographic principle</strong> ('t Hooft, Susskind, 1990s) <span class="chip hint" data-print="review"><i></i>leading theoretical idea, not confirmed</span>, the conjecture that our 3D reality might be encoded on a distant 2D surface. It also sets up the <strong>black-hole information paradox</strong> — does information that falls in vanish forever, violating quantum mechanics? — which is one of the liveliest battlegrounds in theoretical physics and which we'll meet head-on on <strong>Day 40</strong>.</p>
+</div>
+
+<p>Push the same accounting to the largest scale and you can ask: how much has the <em>entire universe</em> computed since the Big Bang? Lloyd's estimate — treating every particle interaction as an operation — is about <strong>10¹²² operations on 10⁹² bits</strong>. Enormous, yes. But finite. There is a hard, countable ceiling on how much computation reality itself has performed. Whether that means the universe quite literally <em>is</em> a computer is a live and contested interpretation <span class="chip bad" data-print="contested"><i></i>contested — interpretation, not result</span>, a close relative of the "it from bit" overreach the main page flagged. The numbers are solid; the metaphysics is optional.</p>
+</section>
+<div class="panel ladder">
+<p class="ptitle">Diagram · 120 orders of magnitude</p>
+<h3>The ladder of computational capacity</h3>
+<p class="pnote">Operations per second, on a logarithmic scale where every mark is a factor of ten thousand. From the machine you're reading this on, up past the absolute physical ceiling of a one-kilogram device, to the total computation performed by the universe. The gaps are the room physics leaves us.</p>
+<svg viewBox="0 0 640 250" role="img" aria-label="Logarithmic ladder of operations per second from a laptop to the universe.">
+<line x1="60" y1="210" x2="610" y2="210" stroke="var(--line-strong)" stroke-width="1.2"></line>
+<!-- decade ticks: map log10(ops/s) from 10 to 130 across x 70..600 -->
+<g font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)" text-anchor="middle">
+<line x1="70" y1="206" x2="70" y2="214" stroke="var(--line-strong)"></line><text x="70" y="228">10¹⁰</text>
+<line x1="158" y1="206" x2="158" y2="214" stroke="var(--line-strong)"></line><text x="158" y="228">10³⁰</text>
+<line x1="246" y1="206" x2="246" y2="214" stroke="var(--line-strong)"></line><text x="246" y="228">10⁵⁰</text>
+<line x1="335" y1="206" x2="335" y2="214" stroke="var(--line-strong)"></line><text x="335" y="228">10⁷⁰</text>
+<line x1="423" y1="206" x2="423" y2="214" stroke="var(--line-strong)"></line><text x="423" y="228">10⁹⁰</text>
+<line x1="511" y1="206" x2="511" y2="214" stroke="var(--line-strong)"></line><text x="511" y="228">10¹¹⁰</text>
+<line x1="600" y1="206" x2="600" y2="214" stroke="var(--line-strong)"></line><text x="600" y="228">10¹³⁰</text>
+<text x="335" y="244" fill="var(--ink-soft)">operations per second (log scale)</text>
+</g>
+<!-- markers: x = 70 + (log10 - 10)/120 * 530 -->
+<!-- laptop ~1e12 -> 70 + (12-10)/120*530 = 78.8 -->
+<g>
+<line x1="79" y1="210" x2="79" y2="95" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="79" cy="95" r="7" fill="var(--accent)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="79" y="83" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)" text-anchor="middle">your laptop</text>
+<text x="79" y="72" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="middle">~10¹²</text>
+</g>
+<!-- biggest supercomputer ~1e18 -> 70 + (18-10)/120*530 = 105.3 -->
+<g>
+<line x1="105" y1="210" x2="105" y2="130" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="105" cy="130" r="6" fill="color-mix(in srgb,var(--accent) 60%,transparent)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="118" y="128" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="start">exascale super- computer ~10¹⁸</text>
+</g>
+<!-- ultimate laptop 1e51 -> 70 + (51-10)/120*530 = 251 -->
+<g>
+<line x1="251" y1="210" x2="251" y2="60" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="251" cy="60" r="7" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="251" y="48" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)" text-anchor="middle">ultimate 1-kg laptop</text>
+<text x="251" y="37" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="middle">~10⁵¹ (Lloyd 2000)</text>
+</g>
+<!-- universe 1e122 -> 70 + (122-10)/120*530 = 564.6 -->
+<g>
+<line x1="565" y1="210" x2="565" y2="95" stroke="var(--heat)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+<circle cx="565" cy="95" r="7" fill="var(--heat)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="565" y="83" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)" text-anchor="middle">the universe, so far</text>
+<text x="565" y="72" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--ink-faint)" text-anchor="middle">~10¹²² ops total</text>
+</g>
+</svg>
+<p class="ladder-key">The jump from your laptop to the ultimate laptop is ~10³⁹ — a thousand billion billion billion billion fold. We have, in the most literal sense, barely started. And yet even the universe's lifetime total is a finite number you can write down — which is itself a profound statement: computation, like everything else, is rationed by physics.</p>
+</div>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">09</span> · the thread, everywhere</p>
+<h2>Once you have the unit, you see it everywhere</h2>
+<p>The quiet power of Shannon's idea is that the moment information became a number, it stopped belonging to telegraphy and started turning up in every field that deals with uncertainty, variety, or surprise. A quick tour of the thread's reach, each a doorway to a later day:</p>
+<ul>
+<li><strong>In ecology</strong>, the <em class="term">Shannon diversity index</em> — the very same H = −Σ p log p — measures biodiversity: a rainforest has high entropy (many species, evenly spread), a monoculture field has almost none. Surprise, applied to "which species is this?"</li>
+<li><strong>In machine learning</strong>, a model's quality is its <em class="term">perplexity</em> — literally 2 raised to its cross-entropy, "how surprised is the model, on average, by the next word?" Lower perplexity, better prediction. The training of every large language model (<strong>Days 138–145</strong>) is the minimization of exactly the relative entropy from Section 1.</li>
+<li><strong>In biology</strong>, DNA is a four-letter code carrying ~2 bits per base — heredity as literal digital information storage, a framing that runs straight into the central dogma on <strong>Day 77</strong> and the origin of life on <strong>Days 87–90</strong>.</li>
+<li><strong>In physics</strong>, the entropy we defined today and the thermodynamic entropy of heat engines turn out to be — perhaps — the same thing, the question the main page flagged and that <strong>Day 33</strong> will reopen as the <em>arrow of time</em>.</li>
+<li><strong>In life itself</strong>, Schrödinger's idea that organisms survive by feeding on "negative entropy" (Brillouin later called it <em>negentropy</em>) is information thermodynamics in embryo — the puzzle that <strong>Days 83–85</strong> are built around, where today's kT·ln2 returns to govern the living cell.</li>
+</ul>
+<p>That is the real reason this day sits where it does in the course, only seventh of a hundred and eighty. Information is one of the five threads — alongside energy, evolution, emergence, and computation — precisely because, once weighed, it refuses to stay in its lane. It is the connective tissue of the whole map.</p>
+</section>
+<div class="recap">
+<p class="h">◆ The appendix in three sentences</p>
+<dl>
+<div><dt>What we added</dt><dd>Beneath the bit lies a fuller algebra — mutual information (shared surprise, the real meaning of channel capacity) and relative entropy (the bit-tax for a wrong model, which is cross-entropy loss and Friston's free energy in disguise) — plus the compression that hits the entropy floor, the codes that finally reached Shannon's wall, and the reversible computing that might cheat Landauer's toll.</dd></div>
+<div><dt>The widest view</dt><dd>Information's physicality doesn't stop at the warm room of erasure: it scales up to hard limits on the speed and density of all computation, ending at a black hole, a holographic surface, and a finite, countable tally of every operation the universe has ever performed.</dd></div>
+<div><dt>Why it matters</dt><dd>The instant Shannon made information a number, it escaped engineering — and now the same H shows up in biodiversity, neural-network training, DNA, the arrow of time, and the thermodynamics of life, which is exactly why it is one of the five threads this whole course is built to follow.</dd></div>
+</dl>
+<p class="threads"><b>Threads deepened ›</b> information (mutual information, KL divergence, Kolmogorov complexity) · energy (reversible computing, Margolus–Levitin, the ultimate laptop) · computation (codes, quantum information, limits of all computation) · emergence (complexity as incompressible structure → Day 8) · evolution &amp; life (DNA as bits, negentropy → Days 77, 83–85).</p>
+</div>
+
+<hr class="div">
+<section class="sources">
+<p class="sec-eyebrow">Sources · appendix</p>
+<h2>Sources &amp; further reading</h2>
+<p class="source-note">(New to this appendix; the core Shannon/Landauer citations are on the main Day 07 page.)</p>
+<ol>
+<li>Cover, T. M. &amp; Thomas, J. A. (2006). <em>Elements of Information Theory</em> (2nd ed.). Wiley. <span class="meta">— the standard text: mutual information, relative entropy (KL), source &amp; channel coding, rate–distortion.</span></li>
+<li>Shannon, C. E. (1951). "Prediction and Entropy of Printed English." <em>Bell System Technical Journal</em> 30: 50–64. <span class="meta">doi:10.1002/j.1538-7305.1951.tb01366.x — entropy of English ≈ 1 bit/letter; ~75% redundancy.</span></li>
+<li>Shannon, C. E. (1959). "Coding Theorems for a Discrete Source with a Fidelity Criterion." <em>IRE Nat. Conv. Rec.</em> <span class="meta">— the foundation of rate–distortion (lossy compression) theory.</span></li>
+<li>Hamming, R. W. (1950). "Error Detecting and Error Correcting Codes." <em>Bell System Technical Journal</em> 29(2): 147–160. <span class="meta">— Hamming distance and the first error-correcting code.</span></li>
+<li>Nyquist, H. (1924). "Certain Factors Affecting Telegraph Speed." · Hartley, R. V. L. (1928). "Transmission of Information." <em>Bell System Technical Journal</em>. <span class="meta">— Shannon's direct precursors.</span></li>
+<li>Ziv, J. &amp; Lempel, A. (1977, 1978). "A Universal Algorithm for Sequential Data Compression" &amp; "Compression of Individual Sequences…" <em>IEEE Trans. Information Theory</em>. <span class="meta">— LZ77/LZ78, the basis of ZIP, gzip, PNG.</span></li>
+<li>Kolmogorov, A. N. (1965); Solomonoff, R. (1964); Chaitin, G. (1966). <span class="meta">— algorithmic information / Kolmogorov complexity; uncomputability; Chaitin's Ω. See Li &amp; Vitányi, <em>An Introduction to Kolmogorov Complexity</em> (Springer).</span></li>
+<li>Berrou, C., Glavieux, A. &amp; Thitimajshima, P. (1993). "Near Shannon Limit Error-Correcting Coding: Turbo Codes." <em>IEEE ICC</em>. · Gallager, R. G. (1962). "Low-Density Parity-Check Codes." <em>IRE Trans. Inf. Theory</em>.</li>
+<li>Arıkan, E. (2009). "Channel Polarization: A Method for Constructing Capacity-Achieving Codes…" <em>IEEE Trans. Information Theory</em> 55(7): 3051–3073 (July 2009). <span class="meta">— polar codes; adopted by 3GPP for 5G NR control channels, 2016.</span></li>
+<li>Wootters, W. K. &amp; Zurek, W. H. (1982). "A single quantum cannot be cloned." <em>Nature</em> 299: 802–803. <span class="meta">doi:10.1038/299802a0 — the no-cloning theorem (also Dieks, 1982).</span></li>
+<li>Holevo, A. S. (1973). "Bounds for the quantity of information transmitted by a quantum communication channel." <em>Problems of Information Transmission</em> 9: 177–183. <span class="meta">— a qubit yields at most one classical bit.</span></li>
+<li>Bennett, C. H. (1973). "Logical Reversibility of Computation." <em>IBM Journal of Research and Development</em> 17(6): 525–532. <span class="meta">— reversible computation; with Fredkin &amp; Toffoli (1982) reversible gates.</span></li>
+<li>Margolus, N. &amp; Levitin, L. B. (1998). "The maximum speed of dynamical evolution." <em>Physica D</em> 120: 188–195. <span class="meta">— the quantum speed limit, ~2E/(πℏ).</span></li>
+<li>Lloyd, S. (2000). "Ultimate physical limits to computation." <em>Nature</em> 406: 1047–1054 (31 Aug 2000). <span class="meta">doi:10.1038/35023282 — the "ultimate laptop": ~10⁵¹ ops/s, ~10³¹ bits.</span> <a href="https://doi.org/10.1038/35023282">doi.org/10.1038/35023282</a></li>
+<li>Bekenstein, J. D. (1981). "Universal upper bound on the entropy-to-energy ratio…" <em>Physical Review D</em> 23: 287. <span class="meta">— the Bekenstein bound; with Hawking's black-hole entropy, the root of the holographic principle ('t Hooft 1993; Susskind 1995). [Holographic principle: leading theoretical conjecture, not confirmed.]</span></li>
+<li>Brillouin, L. (1956). <em>Science and Information Theory.</em> Academic Press. <span class="meta">— negentropy; the information cost of measurement (later refined by Landauer–Bennett).</span></li>
+<li>Soni, J. &amp; Goodman, R. (2017). <em>A Mind at Play.</em> Simon &amp; Schuster. <span class="meta">— Shannon's life: Theseus, the Ultimate Machine, the roulette computer with Ed Thorp, the juggling unicyclist.</span></li>
+</ol>
+</section>
+</div>
+</details>
+
+<details class="deep-dive" id="the-bleeding-edge">
+<summary>
+<span class="ptitle">Deep dive appendix</span>
+<span class="deep-dive-title">The Bleeding Edge</span>
+<span class="deep-dive-sub">Peer-reviewed work from the last five years that could redraw the map — labeled honestly for what's solid, what's promising, and what's hype.</span>
+</summary>
+<div class="deep-dive-body">
+<p class="lede"><span class="drop">T</span>he main page and the first appendix gave you the foundations: Shannon's bit, Landauer's toll, the full architecture. All of it rests on work decades old and thoroughly settled. This appendix is different. Everything here was published after 2020, much of it in the last two years, and some of it is still warm from the press. These are the results the people <em>building</em> the field consider most consequential: experiments, frameworks, and engineering gambles most likely to reshape what we think we know. Some will hold. Some won't. The hype filter earns its keep today more than ever.</p>
+<div class="panel landscape">
+<p class="ptitle">Diagram · the frontier landscape</p>
+<h3>Seven frontiers, one field</h3>
+<p class="pnote">The post-2020 frontier of information physics branches into seven active programmes. Color indicates confidence: teal for established, amber for promising, red for contested or company-reported.</p>
+<svg viewBox="0 0 640 330" role="img" aria-label="Seven frontier areas of information physics.">
+<defs><marker id="appendix-d007-the-bleeding-edge-fa" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path></marker></defs>
+<g font-family="IBM Plex Mono,monospace" font-size="10">
+<rect x="10" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--hint)" stroke-width="2"></rect><text x="95" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Thermodynamic</text><text x="95" y="58" text-anchor="middle" fill="var(--ink-soft)">Computing</text>
+<rect x="235" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="320" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Trade-off Laws</text><text x="320" y="58" text-anchor="middle" fill="var(--ink-soft)">TURs · Speed Limits</text>
+<rect x="460" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="545" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Cost of</text><text x="545" y="58" text-anchor="middle" fill="var(--ink-soft)">Timekeeping</text>
+<rect x="10" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="95" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Information</text><text x="95" y="166" text-anchor="middle" fill="var(--ink-soft)">Engines · Demons</text>
+<rect x="235" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--hint)" stroke-width="2"></rect><text x="320" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Quantum Info</text><text x="320" y="166" text-anchor="middle" fill="var(--ink-soft)">Thermodynamics</text>
+<rect x="460" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="545" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Living Systems</text><text x="545" y="166" text-anchor="middle" fill="var(--ink-soft)">Entropy in Cells</text>
+<rect x="235" y="250" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2" stroke-dasharray="4 3"></rect><text x="320" y="270" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Black Hole</text><text x="320" y="286" text-anchor="middle" fill="var(--ink-soft)">Information Paradox</text>
+</g>
+<g stroke="var(--ink-faint)" stroke-width="1.2" fill="none" marker-end="url(#appendix-d007-the-bleeding-edge-fa)">
+<line x1="180" y1="46" x2="232" y2="46"></line><line x1="405" y1="46" x2="457" y2="46"></line>
+<line x1="95" y1="72" x2="95" y2="127"></line><line x1="320" y1="72" x2="320" y2="127"></line><line x1="545" y1="72" x2="545" y2="127"></line>
+<line x1="180" y1="156" x2="232" y2="156"></line><line x1="405" y1="156" x2="457" y2="156"></line>
+<line x1="320" y1="182" x2="320" y2="247"></line>
+<path d="M95,182 C95,230 232,265 232,270"></path><path d="M545,182 C545,230 408,265 408,270"></path>
+</g>
+<g font-family="IBM Plex Mono,monospace" font-size="9" transform="translate(470,250)">
+<circle cx="8" cy="6" r="5" fill="var(--ok)"></circle><text x="18" y="10" fill="var(--ink-faint)">established result</text>
+<circle cx="8" cy="24" r="5" fill="var(--hint)"></circle><text x="18" y="28" fill="var(--ink-faint)">promising hint</text>
+<circle cx="8" cy="42" r="5" fill="var(--contested)"></circle><text x="18" y="46" fill="var(--ink-faint)">contested / hype</text>
+<rect x="2" y="56" width="12" height="10" rx="2" fill="none" stroke="var(--ink-faint)" stroke-dasharray="3 2"></rect><text x="18" y="64" fill="var(--ink-faint)">theory only (no expt)</text>
+</g>
+</svg>
+</div>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">01</span> · the headline result</p>
+<h2>Measuring irreversibility inside a living cell</h2>
+<p>If we had to name one post-2020 result that could be remembered in twenty years, it is this: in 2024, a team led by <strong>Felix Ritort</strong> at the University of Barcelona published a way to <em>measure</em> the rate at which a living cell produces entropy — the quantitative arrow of time inside a single red blood cell — using nothing more than a microscope.</p>
+<p>The insight is a new mathematical identity called the <em class="term">Variance Sum Rule</em>. It connects the variance in the thermal displacements of a fluctuating object with the variance in the restoring forces acting on it, and shows their sum is proportional to the entropy production rate σ. Both variances are things you can measure with a video camera tracking a tiny probe bead. No calorimeter, no complex perturbation protocol — just patient observation of thermal jitter.</p>
+<div class="formula">
+<div class="eq"><span class="v">σ</span> ∝ var(displacement) + var(force)</div>
+<p class="cap">A simplified view — entropy production rate from fluctuation statistics alone. Di Terlizzi et al., Science, 2024.</p>
+</div>
+<p>They pointed this tool at human red blood cells and mapped the entropy production rate across the membrane. What they found was striking: σ is <strong>spatially heterogeneous</strong>, varying from spot to spot across the cell, with a finite correlation length of about 0.6 micrometres. The average agreed with independent calorimetry measurements. For the first time, someone had turned the abstract thermodynamic ledger — the "how far from equilibrium is this thing?" question that has haunted biophysics since Schrödinger — into a spatially resolved image you can see. <span class="chip ok" data-print="established"><i></i>established</span></p>
+<div class="aside">
+<p class="h">Why it matters for this course</p>
+<p>On <strong>Days 83–85</strong> we'll ask: how does life, which looks so orderly, square with the second law? The standard answer — organisms are open systems exporting entropy — is qualitatively right but quantitatively vague. The Variance Sum Rule hands that vague answer a ruler. If you can map entropy production inside cells with the resolution of a light microscope, you can start asking: which metabolic pathways generate the most irreversibility? Where is the thermodynamic cost concentrated? The technique turns stochastic thermodynamics from a framework into a <em>microscopy modality</em>.</p>
+</div>
+<p>Two companion results deserve note. <strong>Skinner &amp; Dunkel</strong> (<em>PNAS</em>, 2021) developed a rigorous optimization framework for bounding entropy production from partial observations and applied it to bacterial flagellar motors and growing microtubules. And a 2024 <em>PNAS</em> paper used <strong>deep-learning probability flows</strong> — score-based generative models — to estimate entropy production in high-dimensional active-matter systems, offering a computational path where the analytic rule runs out of dimensions. <span class="chip ok" data-print="established"><i></i>both established</span></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">02</span> · the new rules</p>
+<h2>Universal trade-offs: uncertainty, speed, and cost</h2>
+<p>The deepest conceptual advance in stochastic thermodynamics since 2020 is a family of results that say: <em>precision costs entropy.</em> If a molecular motor turns with low noise, if a clock ticks with reliable rhythm, if a sensor measures a concentration accurately — something has to pay, and the currency is dissipation. These <em class="term">thermodynamic uncertainty relations</em> (TURs) are the nonequilibrium world's answer to Heisenberg: universal constraints on any system operating out of equilibrium.</p>
+<div class="appendix-timeline">
+<div class="tl-item ok">
+<p class="tl-year">2022–23</p>
+<p class="tl-title">The TUR is overdamped, not universal</p>
+<p class="tl-body"><strong>Pietzonka</strong> showed a classical pendulum clock can <em>violate</em> the standard TUR (<em>PRL</em> 128, 130606, 2022) — the bound fails for underdamped dynamics. <strong>Dieball &amp; Godec</strong> then proved the TUR directly from the Langevin equation, pinpointing exactly when and why it holds (<em>PRL</em> 130, 087101, 2023). The TUR is now understood not as a law of nature but as a <em>property of overdamped stochastic dynamics</em> — astonishingly broad, but with known edges.</p>
+<p class="tl-cite">Pietzonka, PRL 2022 · Dieball &amp; Godec, PRL 2023</p>
+</div>
+<div class="tl-item ok">
+<p class="tl-year">2023</p>
+<p class="tl-title">Speed limits, dissipation, and optimal transport unified</p>
+<p class="tl-body"><strong>Van Vu &amp; Saito</strong> showed TURs, minimum-dissipation protocols, and <em>thermodynamic speed limits</em> are all aspects of a single structure built on Wasserstein-distance optimal transport (<em>PRX</em> 13, 011013, 2023). Separately, <strong>Lee, Lee, Kwon &amp; Park</strong> derived a tight finite-time Landauer bound: the minimum dissipation to erase a bit in a fixed time, trading speed for heat (<em>PRL</em> 129, 120603, 2022).</p>
+<p class="tl-cite">Van Vu &amp; Saito, PRX 2023 · Lee et al., PRL 2022</p>
+</div>
+<div class="tl-item ok">
+<p class="tl-year">2025</p>
+<p class="tl-title">The thermodynamic cost of communication</p>
+<p class="tl-body"><strong>Yadav &amp; Wolpert</strong> proved that transmitting information <em>between</em> computational subsystems has an unavoidable dissipative cost — an overlooked component of a computer's heat bill that grows with communication bandwidth. In their framing: "talk isn't cheap." (<em>Phys. Rev. Research</em>, 2025.)</p>
+<p class="tl-cite">Yadav &amp; Wolpert, Phys. Rev. Research 2025</p>
+</div>
+</div>
+<p>Taken together, these results are building something like a <em>thermodynamic code</em> — a body of necessary constraints on any nonequilibrium process, just as Shannon's channel capacity constrains any communication system. The analogy is deliberate: the people doing this work view Shannon-era information theory and 21st-century stochastic thermodynamics as two chapters of the same subject.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">03</span> · the cost of a tick</p>
+<h2>Clocks run on entropy</h2>
+<p>Here is a fact that, once you hear it, feels obvious and yet was measured for the first time only in 2021: <em>a more accurate clock dissipates more energy.</em> Not because of engineering imperfection — because the laws of physics <em>require</em> it.</p>
+<p>The team — <strong>Pearson, Guryanova, Erker, Laird, Briggs, Huber &amp; Ares</strong>, spanning Oxford, Vienna, and Lancaster — built the simplest possible clock: a nanometre-thick mechanical membrane vibrating in a cryogenic cavity, its oscillations read out by a radio-frequency circuit. By varying the drive power, they tuned the clock from sloppy to sharp and measured both accuracy and entropy production. They found a <em>linear</em> relationship: double the accuracy, double the dissipation. Their clock operated within an order of magnitude of the theoretical minimum. <span class="chip ok" data-print="established"><i></i>established</span></p>
+<div class="formula">
+<div class="eq">accuracy &nbsp;∝&nbsp; <span class="v">entropy production</span></div>
+<p class="cap">More precise timekeeping demands more dissipation. Pearson et al., Physical Review X, 2021.</p>
+</div>
+<p>Follow-up work has deepened this. <strong>Meier, Schwarzhans, Erker &amp; Huber</strong> (<em>PRL</em> 131, 220201, 2023) showed the cost splits into <em>accuracy</em> (regularity) and <em>resolution</em> (tick rate), both requiring entropy but in different ways. And a 2025 <em>PRL</em> paper on the entropic costs of extracting classical ticks from a quantum clock argued that the dominant cost is not the clockwork but the <em>measurement</em> — the act of amplifying a quantum oscillation into a classical signal. The demon's cousin again: the cost is not in the knowing, but in the <em>making-classically-known</em>.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">04</span> · the highest-variance bet</p>
+<h2>Thermodynamic computing: noise as a feature</h2>
+<p>For seventy years, engineering's response to thermal noise has been: suppress it. Every transistor is designed to overpower the random jitter of its atoms with a clean voltage swing many times larger. That swing is where most of the energy goes and most of the heat comes from. The thermodynamic-computing programme asks: <em>what if you stopped fighting the noise and started computing with it?</em></p>
+<p>The idea is surprisingly direct. A system of coupled physical oscillators — RLC circuits, resistor networks — will, if left alone, thermally fluctuate. Those fluctuations sample from the Boltzmann distribution of the system's energy landscape. Design the landscape carefully, and those samples solve problems: linear systems, Bayesian inference, energy-based generative models. The computation is not imposed <em>against</em> the physics; it <em>is</em> the physics.</p>
+<div class="claim">
+<div class="ctop"><span class="cnum">Hardware 01</span><span class="chip hint" data-print="review"><i></i>peer-reviewed proof of concept</span></div>
+<h3>Normal Computing's Stochastic Processing Unit</h3>
+<p><strong>Melanson, Abu Khater, Aifer, Donatella, Gordon</strong> and colleagues published <em>"Thermodynamic Computing System for AI Applications"</em> in <em>Nature Communications</em> (16, 3757, April 2025). It describes a prototype <em class="term">stochastic processing unit</em> (SPU): eight fully coupled analog RLC oscillator nodes on a printed circuit board, performing Gaussian sampling and matrix inversion by letting the coupled system thermalize. A companion theory paper (<em>npj Unconventional Computing</em>, 2024) maps linear-algebra primitives onto thermodynamic equilibrium sampling, claiming asymptotic speedups scaling linearly in matrix dimension.</p>
+<p>The caveat: this is an <strong>eight-node prototype</strong>. An end-to-end wall-clock or energy advantage over a modern GPU on a real workload <strong>has not been demonstrated</strong>. The theory is elegant and peer-reviewed; the hardware exists; the performance claims await validation at scale. <span class="chip hint" data-print="promising"><i></i>promising hint</span></p>
+</div>
+<div class="claim">
+<div class="ctop"><span class="cnum">Hardware 02</span><span class="chip bad" data-print="review"><i></i>company-reported · unvalidated</span></div>
+<h3>Extropic's thermodynamic sampling units</h3>
+<p><strong>Extropic</strong>, founded by Guillaume Verdon, builds chips that natively sample from energy-based models at physical speeds. Its October 2025 public material presented XTR-0 hardware and company-reported simulations or small benchmarks suggesting roughly 10,000× energy savings against GPU/VAE baselines; it did <em>not</em> independently demonstrate GPU-parity hardware on production workloads. A larger follow-on chip has been reported as planned. These figures are company-reported, based on internal benchmarks, and <strong>not independently peer-reviewed</strong>. If confirmed, they would be transformative. Until then, the project lives in the same epistemic category as any startup claim — interesting, unvalidated, carrying the full standard deviation of venture capital. Apply Day 2's lesson: extraordinary claims await extraordinary replication.</p>
+</div>
+<div class="aside">
+<p class="h">What would change the labels</p>
+<p>Upgrading thermodynamic computing from <span class="chip hint" data-print="promising"><i></i>promising</span> to <span class="chip ok" data-print="established"><i></i>established</span> requires one clear thing: an <strong>independent, peer-reviewed benchmark</strong> demonstrating an end-to-end advantage — wall-clock <em>or</em> energy — over a modern GPU on a real ML workload, not just an isolated primitive. A preprint (arXiv:2503.09980, 2025) argues that analog quasi-static inference could in principle be performed reversibly (no Landauer floor), while training retains a fundamental lower bound. The physics is sound; the engineering is early.</p>
+</div>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">05</span> · demons, upgraded</p>
+<h2>Information engines go many-body, quantum, and autonomous</h2>
+<p>The single-particle engines of 2010–2021 were stunning proofs of concept. The post-2020 push is in three directions: <em>scale them up</em>, <em>make them quantum</em>, and <em>cut the external controller</em>.</p>
+<h3>Many-body engines</h3>
+<p><strong>Chor, Sohachi, Rosen, Rahav &amp; Roichman</strong> (<em>Phys. Rev. Research</em> 5, 043193, December 2023) extended the Szilárd engine from a single particle to a <em>many-body colloidal suspension</em>, extracting work from collective number fluctuations. A follow-up (arXiv:2512.01942, December 2025, preprint) describes a "piston-like information engine" that harvests work from an <em>equilibrium</em> bath purely by conditional measurement — Maxwell's demon writ in a crowd. <span class="chip ok" data-print="established"><i></i>PRResearch paper established</span> <span class="chip hint" data-print="review"><i></i>piston preprint pending</span></p>
+<h3>A quantum engine charging a quantum battery</h3>
+<p><strong>Zhang et al.</strong> (Kim group, Tsinghua; <em>Phys. Rev. Lett.</em> 135, 140403, 2025) built a cyclic quantum information engine from a single ytterbium-171 ion, using rapid mid-circuit measurement to suppress measurement disturbance. The energy extracted per cycle was used to charge a "quantum battery." They report an information-to-ergotropy conversion efficiency of 67% of the theoretical maximum and information-to-work efficiency of 70%. <span class="chip ok" data-print="established"><i></i>established</span></p>
+<h3>Autonomous demons</h3>
+<p>All classic Maxwell-demon experiments required an <em>external</em> controller. A growing body of work — quantum-dot rectifiers (<em>PRR</em> 2019), stochastic-resetting demons (<em>PRR</em> 2023), transistor-based demons (<em>PRB</em> 2025) — removes that crutch, building demon-like asymmetric devices that sort fluctuations without external input. The demon thought experiment is becoming a <strong>design pattern for nanoscale energy harvesting</strong>. <span class="chip hint" data-print="established"><i></i>promising — individual realizations established</span></p>
+<h3>A real molecular motor as a demon</h3>
+<p><strong>Amano, Esposito, Kreidt, Leigh, Penocchio &amp; Roberts</strong> (<em>Nature Chemistry</em> 14, 530, 2022) performed a rigorous information-thermodynamic analysis of a <em>real chemically-driven synthetic rotary molecular motor</em> — one of the machines for which the 2016 Nobel in Chemistry was awarded — showing its operation decomposes into an information-processing cycle. The demon, it turns out, was always just a particularly well-designed molecule. <span class="chip ok" data-print="established"><i></i>established</span></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">06</span> · erasure goes quantum</p>
+<h2>Cooperative erasure and beyond-Landauer protocols</h2>
+<p><strong>Buffoni &amp; Campisi</strong> (<em>Quantum</em> 7, 961, 2023) erased 256 qubits <em>simultaneously</em> on a D-Wave Advantage quantum annealer by exploiting spontaneous symmetry breaking amplified by quantum tunnelling. The collective flip achieved a per-bit erasure cost approaching kT·ln2 with ~99.9% success rate, while the per-bit <em>action</em> (energy × time) reached 10⁻²² erg·s — extraordinarily fast and efficient. The key: cooperative effects let the system cross the energy barrier collectively rather than bit by bit. <span class="chip ok" data-print="established"><i></i>established</span></p>
+<p>A separate theoretical programme explores <em class="term">ancilla-assisted erasure</em> (arXiv:2402.15812, 2024), in which an auxiliary quantum system shuttles entropy away from the memory, releasing <em>less than</em> kT·ln2 of heat to the local bath in specific operating regimes. The authors stress the second law is not violated — the total entropy, including the ancilla, still increases — but the <em>local</em> heat can be reduced below the textbook floor. This is a pointer toward ultra-low-dissipation quantum computing, not a free lunch. <span class="chip hint" data-print="promising"><i></i>promising — regime-specific, preprint</span></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">07</span> · information at the edge of spacetime</p>
+<h2>The island formula and the Page curve</h2>
+<p>The longest-running open problem in quantum gravity is the <em class="term">black-hole information paradox</em>: does the information a black hole swallows survive its evaporation? Hawking's 1975 calculation said destroyed; quantum mechanics says nothing is permanently lost. For forty-five years, nobody had a satisfying resolution.</p>
+<p>In 2019–2020, a series of papers changed the conversation. <strong>Penington</strong> (<em>JHEP</em>, 2020), <strong>Almheiri, Engelhardt, Marolf &amp; Maxfield</strong> (<em>JHEP</em>, 2019), and <strong>Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini</strong> (<em>JHEP</em>, 2020) discovered that if you compute the entropy of Hawking radiation using a gravitational path-integral trick — <em class="term">replica wormholes</em> — the answer spontaneously includes contributions from disconnected regions of spacetime called <em class="term">"islands"</em> inside the black hole's interior. When these kick in, the radiation's entropy turns over and begins to <em>decrease</em>, tracing the <em class="term">Page curve</em> — exactly the shape a unitary (information-preserving) theory predicts. The information comes out.</p>
+<blockquote>The semiclassical gravitational path integral, properly summed, already encodes unitarity. No new physics required — only a new way of doing the sum.</blockquote>
+<p>The authoritative review is <strong>Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini</strong>, <em>"The entropy of Hawking radiation,"</em> <em>Reviews of Modern Physics</em> 93, 035002 (2021) — widely considered the most important development in quantum gravity since Maldacena's conjecture (1997). <span class="chip ok" data-print="established"><i></i>established as a theoretical result</span></p>
+<p>The caveat: there is <strong>no experimental or observational test</strong>. The calculation lives inside a specific theoretical framework, and it is not clear it applies to the real, four-dimensional, non-AdS universe. The result is as mathematically secure as anything in the field — but the field itself floats above experiment. <span class="chip hint" data-print="review"><i></i>no experimental test</span></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">08</span> · the big picture</p>
+<h2>A unified physics of computation?</h2>
+<p>The most ambitious attempt to pull this together is a 2024 <em>PNAS</em> perspective by <strong>Wolpert, Korbel, Lynn, Tasnim, Grochow, Kardeş</strong> and seventeen co-authors: <em>"Is stochastic thermodynamics the key to understanding the energy costs of computation?"</em> Their argument: the thermodynamics of computation is not just about Landauer's limit — that's merely the floor. Above it lies a rich structure of mismatch costs, communication costs, and nonequilibrium constraints that form a comprehensive physics of computation as rigorous as Shannon's theory of communication.</p>
+<p>One number from their review stops you in your tracks: biological systems — the molecular machinery of a cell — are roughly <strong>10⁵ times more energy-efficient</strong> per operation than the best human-built computers. Not ten times, not a hundred — a hundred thousand. That gap is not an accident; it measures how far our engineering is from the designs that four billion years of evolution have already found. The main page's Landauer-ladder diagram showed chips sitting 10³–10⁶× above the thermodynamic floor; Wolpert's observation is that biology sits far <em>closer</em>, and understanding <em>how</em> is a foundational open problem. <span class="chip ok" data-print="established"><i></i>established framework</span></p>
+<div class="aside">
+<p class="h">The bridge to Days 83–85</p>
+<p>This is the direct setup for the physics-of-life deep dive. When we return to Schrödinger's "what is life?" question, we'll have two new tools that didn't exist five years ago: the Variance Sum Rule for measuring entropy production inside cells, and Wolpert's framework for bounding the energy cost of any computation. Together, they begin to close the gap between "life feeds on negentropy" (a slogan) and "here is the thermodynamic ledger of a specific biochemical pathway" (a number).</p>
+</div>
+</section>
+<div class="recap">
+<p class="h">◆ The frontier in three sentences</p>
+<dl>
+<div><dt>What's changed</dt><dd>Since 2020, information thermodynamics has moved from confirming old principles to building new ones: universal trade-off laws (TURs, speed limits, cost of timekeeping and communication), the first entropy measurements inside living cells, quantum-cooperative erasure at the Landauer floor, and the island-formula resolution of the black-hole information paradox.</dd></div>
+<div><dt>What's betting big</dt><dd>Thermodynamic computing — turning thermal noise from enemy into computational substrate — is the field's highest-variance wager: elegant physics, early hardware, headline efficiency claims that remain unvalidated by independent benchmarks.</dd></div>
+<div><dt>The honest label</dt><dd>Every one of these threads has passed peer review; none has been independently replicated at scale. The difference between a breakthrough and a footnote is the next five years of work — which is exactly what makes a frontier a frontier.</dd></div>
+</dl>
+<p class="threads"><b>Threads forward ›</b> thermodynamic speed limits → <strong>Day 33</strong> (thermodynamics) · entropy production in cells → <strong>Days 83–85</strong> (physics of life) · thermodynamic computing + Wolpert's 10⁵ gap → <strong>Days 178–179</strong> (energy &amp; AI economy) · island formula → <strong>Day 40</strong> (black holes) · TURs → <strong>Day 13</strong> (measurement) · quantum erasure → <strong>Day 47</strong> (quantum computing).</p>
+</div>
+<hr class="div">
+<section class="sources">
+<p class="sec-eyebrow">Sources · frontier appendix</p>
+<h2>Sources — all post-2020</h2>
+<ol>
+<li>Di Terlizzi, I. et al. (2024). "Variance Sum Rule for Entropy Production." <em>Science</em> 383: 971. <span class="meta">doi:10.1126/science.adh1823.</span></li>
+<li>Skinner, D. J. &amp; Dunkel, J. (2021). "Improved bounds on entropy production in living systems." <em>PNAS</em> 118: e2024300118.</li>
+<li>Pearson, A. N. et al. (2021). "Measuring the Thermodynamic Cost of Timekeeping." <em>Phys. Rev. X</em> 11: 021029.</li>
+<li>Meier, F. et al. (2023). "Fundamental accuracy–resolution trade-off for timekeeping devices." <em>PRL</em> 131: 220201.</li>
+<li>Wadhia, V. et al. (2025). "Entropic Costs of Extracting Classical Ticks from a Quantum Clock." <em>PRL</em> 135: 200407. <span class="meta">doi:10.1103/5rtj-djfk.</span></li>
+<li>Van Vu, T. &amp; Saito, K. (2023). "Thermodynamic Unification of Optimal Transport…" <em>Phys. Rev. X</em> 13: 011013.</li>
+<li>Lee, J. S. et al. (2022). "Speed Limit for a Highly Irreversible Process and Tight Finite-Time Landauer's Bound." <em>PRL</em> 129: 120603.</li>
+<li>Pietzonka, P. (2022). "Classical Pendulum Clocks Break the Thermodynamic Uncertainty Relation." <em>PRL</em> 128: 130606.</li>
+<li>Dieball, C. &amp; Godec, A. (2023). "Direct Route to TURs and Their Saturation." <em>PRL</em> 130: 087101.</li>
+<li>Yadav, A. C. &amp; Wolpert, D. H. (2025). "Minimal thermodynamic cost of communication." <em>Phys. Rev. Research</em> 7: 043324. <span class="meta">doi:10.1103/qvc2-32xr.</span></li>
+<li>Melanson, D. et al. (2025). "Thermodynamic Computing System for AI Applications." <em>Nature Communications</em> 16: 3757. <span class="meta">doi:10.1038/s41467-025-59011-x.</span></li>
+<li>Aifer, M. et al. (2024). "Thermodynamic Linear Algebra." <em>npj Unconventional Computing</em> 1: 13.</li>
+<li>Extropic (2025). XTR-0 announcement and thermodynamic-computing posts (extropic.ai, Oct 2025). <span class="meta">Company-reported simulations/benchmarks; NOT independently validated.</span></li>
+<li>Chor, R. et al. (2023). "Many-body Szilard engine…" <em>Phys. Rev. Research</em> 5: 043193.</li>
+<li>Goerlich, R. et al. (2025). "Piston-Like Information Engine I: Universal Features in Equilibrium." <em>arXiv</em>:2512.01942. <span class="meta">Preprint.</span></li>
+<li>Zhang, Z. et al. (2025). "Single-Ion Information Engine for Charging Quantum Battery." <em>PRL</em> 135: 140403. <span class="meta">doi:10.1103/g45c-ssfx.</span></li>
+<li>Amano, S. et al. (2022). "…information thermodynamics analysis of a synthetic molecular motor." <em>Nature Chemistry</em> 14: 530. <span class="meta">doi:10.1038/s41557-022-00899-z.</span></li>
+<li>Buffoni, L. &amp; Campisi, M. (2023). "Cooperative quantum information erasure." <em>Quantum</em> 7: 961. <span class="meta">doi:10.22331/q-2023-03-23-961.</span></li>
+<li>Almheiri, A. et al. (2021). "The entropy of Hawking radiation." <em>Rev. Mod. Phys.</em> 93: 035002.</li>
+<li>Penington, G. (2020). "Entanglement Wedge Reconstruction…" <em>JHEP</em> 09: 002. · Almheiri, A. et al. (2020). "Replica Wormholes…" <em>JHEP</em> 05: 013.</li>
+<li>Wolpert, D. H. et al. (2024). "Is stochastic thermodynamics the key…?" <em>PNAS</em> 121: e2321112121.</li>
+<li>Manzano, G. et al. (2024). "Thermodynamics of Computations…" <em>Phys. Rev. X</em> 14: 021026.</li>
+</ol>
+</section>
+</div>
+</details>
+<!-- deep-dive:end -->
+
+
 <p class="endcap">End of Day 07 · <span class="gleam">173 descents remain</span></p>
 
 </div>
