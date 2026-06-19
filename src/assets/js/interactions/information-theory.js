@@ -194,6 +194,12 @@
     var floor = 2.8;
     var stage = 0;
     var heat = 0;
+    var ballPos = {
+      right: [310, 137],
+      merged: [220, 137],
+      biasedLeft: [150, 147],
+      left: [130, 137]
+    };
 
     var captions = [
       text("<b>Stage 0 - a bit at rest.</b> The ball sits in the right well: this memory holds a 1. Press <b>Next step</b> to begin erasing it to 0.","「阶段 0 — 静止的比特」小球停在右侧的势阱中：此存储状态为 1。两个势阱代表两个可能的取值，它们之间的壁障维持着比特的稳定。按「下一步」开始把它擦除为 0。"),
@@ -248,16 +254,16 @@
       stage += 1;
       if (stage === 1) {
         path.setAttribute("d", singleWell);
-        setBall(330, 150);
+        setBall(ballPos.merged[0], ballPos.merged[1]);
         showPuffs(false);
       } else if (stage === 2) {
         path.setAttribute("d", biasedWell);
-        setBall(150, 148);
+        setBall(ballPos.biasedLeft[0], ballPos.biasedLeft[1]);
         heat = 1.3;
         showPuffs(true);
       } else if (stage === 3) {
         path.setAttribute("d", doubleWell);
-        setBall(70, 138);
+        setBall(ballPos.left[0], ballPos.left[1]);
         label.textContent = "0";
         heat = 2.4;
         showPuffs(true);
@@ -280,7 +286,7 @@
       heat = 0;
       path.setAttribute("d", doubleWell);
       label.textContent = "1";
-      setBall(370, 138);
+      setBall(ballPos.right[0], ballPos.right[1]);
       showPuffs(false);
       update();
     });
