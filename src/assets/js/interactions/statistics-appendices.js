@@ -171,7 +171,8 @@
     var bw = pw / bins.length;
     var uniformY = padT + ph - (nExp / bins.length / max) * ph;
     var out = '<line x1="' + padL + '" y1="' + uniformY.toFixed(1) + '" x2="' + (w - padR) + '" y2="' + uniformY.toFixed(1) + '" stroke="var(--line-strong)" stroke-width="1" stroke-dasharray="3 4"/>';
-    out += '<text x="' + (w - padR) + '" y="' + (uniformY - 4).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="var(--ink-faint)">' + (zh ? "均匀" : "uniform") + '</text>';
+    out += '<rect x="' + (w - padR - 58) + '" y="' + (uniformY - 18).toFixed(1) + '" width="58" height="16" rx="5" fill="color-mix(in srgb,var(--paper) 92%,transparent)"/>';
+    out += '<text x="' + (w - padR - 4) + '" y="' + (uniformY - 6).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">' + (zh ? "均匀" : "uniform") + '</text>';
     bins.forEach(function (count, i) {
       var bh = count / max * ph;
       var x = padL + i * bw;
@@ -182,10 +183,11 @@
     });
     var x05 = padL + pw * 0.05;
     out += '<line x1="' + x05.toFixed(1) + '" y1="' + padT + '" x2="' + x05.toFixed(1) + '" y2="' + (padT + ph) + '" stroke="var(--contested)" stroke-width="1.5"/>';
-    out += '<text x="' + (x05 + 3).toFixed(1) + '" y="' + (padT + 10) + '" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="var(--contested)">p&lt;.05</text>';
-    out += '<text x="' + padL + '" y="' + (h - 8) + '" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">p=0</text>';
-    out += '<text x="' + (padL + pw * 0.5) + '" y="' + (h - 8) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">p=0.5</text>';
-    out += '<text x="' + (w - padR) + '" y="' + (h - 8) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">p=1</text>';
+    out += '<rect x="' + (x05 + 5).toFixed(1) + '" y="' + (padT + 3) + '" width="42" height="16" rx="5" fill="color-mix(in srgb,var(--paper) 92%,transparent)"/>';
+    out += '<text x="' + (x05 + 10).toFixed(1) + '" y="' + (padT + 15) + '" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--contested)">p&lt;.05</text>';
+    out += '<text x="' + padL + '" y="' + (h - 8) + '" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">p=0</text>';
+    out += '<text x="' + (padL + pw * 0.5) + '" y="' + (h - 8) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">p=0.5</text>';
+    out += '<text x="' + (w - padR) + '" y="' + (h - 8) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">p=1</text>';
     svg.innerHTML = out;
     var pct = Math.round(frac * 100);
     by(A1, "histRead").innerHTML = zh

@@ -348,7 +348,7 @@
       var tickValues = [-3,-2,-1,0,1,2,3];
       svg.ticks.innerHTML = tickValues.map(function(value){
         var x = xScale(value).toFixed(1);
-        return '<line x1="' + x + '" y1="212" x2="' + x + '" y2="228" stroke="var(--line)" stroke-width="1"></line><text x="' + x + '" y="240" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + value + '</text>';
+        return '<line x1="' + x + '" y1="212" x2="' + x + '" y2="228" stroke="var(--line)" stroke-width="1"></line><text x="' + x + '" y="240" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">' + value + '</text>';
       }).join("");
 
       var binCount = 72;
@@ -368,7 +368,7 @@
       var binW = xWidth / binCount;
       svg.yTicks.innerHTML = [0,100,200,300].map(function(value){
         var y = yBase - value / yMax * (yBase - yTop);
-        return '<line x1="54" y1="' + y.toFixed(1) + '" x2="370" y2="' + y.toFixed(1) + '" stroke="var(--line)" stroke-width="1" opacity="' + (value ? "0.7" : "1") + '"></line><text x="48" y="' + (y + 3).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-faint)">' + value + '</text>';
+        return '<line x1="54" y1="' + y.toFixed(1) + '" x2="370" y2="' + y.toFixed(1) + '" stroke="var(--line)" stroke-width="1" opacity="' + (value ? "0.7" : "1") + '"></line><text x="48" y="' + (y + 3).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">' + value + '</text>';
       }).join("");
       svg.bars.innerHTML = bins.map(function(count,index){
         var x = 58 + index * binW + 1;
@@ -479,10 +479,10 @@
       [-4,-2,0,2,4].forEach(function(value){
         var tickX = xScale(value).toFixed(1);
         svg += '<line x1="' + tickX + '" y1="22" x2="' + tickX + '" y2="274" stroke="var(--line)" stroke-width="1" opacity="' + (value === 0 ? 0 : 0.75) + '"></line>';
-        svg += '<text x="' + tickX + '" y="292" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + value + '</text>';
+        svg += '<text x="' + tickX + '" y="292" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">' + value + '</text>';
       });
       svg += '<line x1="' + xScale(TRUE_MEAN).toFixed(1) + '" y1="22" x2="' + xScale(TRUE_MEAN).toFixed(1) + '" y2="274" stroke="var(--ink)" stroke-width="2.5"></line>';
-      svg += '<text x="' + xScale(TRUE_MEAN).toFixed(1) + '" y="306" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-soft)">' + (isZh ? "真实均值 0 · 固定 x 轴" : "true mean 0 · fixed x-axis") + '</text>';
+      svg += '<text x="' + xScale(TRUE_MEAN).toFixed(1) + '" y="306" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">' + (isZh ? "真实均值 0 · 固定 x 轴" : "true mean 0 · fixed x-axis") + '</text>';
       intervals.forEach(function(row,index){
         var covers = row.lo <= TRUE_MEAN && row.hi >= TRUE_MEAN;
         var isHighlight = index === highlight;
@@ -493,8 +493,8 @@
           svg += '<circle cx="' + xScale(row.mean).toFixed(1) + '" cy="' + y.toFixed(1) + '" r="5" fill="' + color + '" stroke="var(--paper)" stroke-width="2"></circle>';
         }
       });
-      svg += '<text x="48" y="16" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + (isZh ? "100 次重复样本" : "100 repeated samples") + '</text>';
-      svg += '<text x="632" y="16" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + (isZh ? "绿色=覆盖，红色=漏掉" : "green=covers, red=misses") + '</text>';
+      svg += '<text x="48" y="16" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">' + (isZh ? "100 次重复样本" : "100 repeated samples") + '</text>';
+      svg += '<text x="632" y="16" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">' + (isZh ? "绿色=覆盖，红色=漏掉" : "green=covers, red=misses") + '</text>';
       plot.innerHTML = svg;
 
       var observed = intervals[highlight];
@@ -682,7 +682,7 @@
       svg += '<line x1="' + axisX + '" y1="' + bottom + '" x2="426" y2="' + bottom + '" stroke="var(--line-strong)" stroke-width="1" stroke-dasharray="3 4"></line>';
       svg += '<line x1="' + axisX + '" y1="' + py(rmax).toFixed(1) + '" x2="426" y2="' + py(rmax).toFixed(1) + '" stroke="var(--line)" stroke-width="1" opacity=".75"></line>';
       svg += '<text x="' + (axisX - 6) + '" y="' + (bottom + 3) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">0</text>';
-      svg += '<text x="' + (axisX - 6) + '" y="' + (py(rmax) + 3).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + rmax.toFixed(2) + '</text>';
+      svg += '<text x="' + (axisX - 6) + '" y="' + (py(rmax) + 3).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">' + rmax.toFixed(2) + '</text>';
       svg += '<text x="8" y="88" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)" transform="rotate(-90 14 88)">' + (isZh ? "效应 (r)" : "effect (r)") + '</text>';
       rows.forEach(function(row,index){
         var isBest = cherry && best === row;
@@ -696,7 +696,7 @@
         ["sub", isZh ? "剔除子组" : "drop subgroup", buttons.sub]
       ].filter(function(row){ return pressed(row[2]); }).forEach(function(choice,rowIndex){
         var y = 178 + rowIndex * 13;
-        svg += '<text x="' + (axisX - 6) + '" y="' + (y + 5) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-faint)">' + choice[1] + '</text>';
+        svg += '<text x="' + (axisX - 6) + '" y="' + (y + 5) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">' + choice[1] + '</text>';
         rows.forEach(function(row,index){
           if (row.choices[choice[0]]) {
             svg += '<text x="' + px(index).toFixed(1) + '" y="' + (y + 4) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="700" fill="var(--accent)" opacity="' + (cherry && best !== row ? 0.18 : 0.9) + '">✓</text>';

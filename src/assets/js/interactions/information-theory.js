@@ -230,7 +230,7 @@
       heatLabel.setAttribute("x", 172);
       heatLabel.setAttribute("y", 40);
       heatLabel.setAttribute("font-family", "IBM Plex Mono,monospace");
-      heatLabel.setAttribute("font-size", "10");
+      heatLabel.setAttribute("font-size", "10.5");
       heatLabel.setAttribute("fill", "var(--heat)");
       heatLabel.textContent = text("heat up", "热量上升");
       puffs.appendChild(heatLabel);
@@ -391,6 +391,10 @@
       return value === 0 ? "000" : "111";
     }
 
+    function vertexRadius(value){
+      return value === 0 || value === 7 ? 18 : 16;
+    }
+
     function addSvg(name){
       return document.createElementNS(ns, name);
     }
@@ -407,11 +411,16 @@
       for (var j = i + 1; j < 8; j++) {
         var diff = i ^ j;
         if (diff === 1 || diff === 2 || diff === 4) {
+          var dx = nodes[j].x - nodes[i].x;
+          var dy = nodes[j].y - nodes[i].y;
+          var distance = Math.sqrt(dx * dx + dy * dy) || 1;
+          var startOffset = vertexRadius(nodes[i].value) + 2;
+          var endOffset = vertexRadius(nodes[j].value) + 2;
           var line = addSvg("line");
-          line.setAttribute("x1", nodes[i].x);
-          line.setAttribute("y1", nodes[i].y);
-          line.setAttribute("x2", nodes[j].x);
-          line.setAttribute("y2", nodes[j].y);
+          line.setAttribute("x1", (nodes[i].x + dx / distance * startOffset).toFixed(1));
+          line.setAttribute("y1", (nodes[i].y + dy / distance * startOffset).toFixed(1));
+          line.setAttribute("x2", (nodes[j].x - dx / distance * endOffset).toFixed(1));
+          line.setAttribute("y2", (nodes[j].y - dy / distance * endOffset).toFixed(1));
           edges.appendChild(line);
         }
       }
@@ -425,7 +434,7 @@
       ring = addSvg("circle");
       ring.setAttribute("cx", node.x);
       ring.setAttribute("cy", node.y);
-      ring.setAttribute("r", node.value === 0 || node.value === 7 ? "20" : "17");
+      ring.setAttribute("r", node.value === 0 || node.value === 7 ? "24" : "22");
       ring.setAttribute("fill", "none");
       ring.setAttribute("stroke", decoded === 0 ? "var(--accent)" : "var(--brass)");
       ring.setAttribute("stroke-width", "2.5");
@@ -457,7 +466,7 @@
       circle.setAttribute("class", "vx");
       circle.setAttribute("cx", node.x);
       circle.setAttribute("cy", node.y);
-      circle.setAttribute("r", node.value === 0 || node.value === 7 ? "15" : "12");
+      circle.setAttribute("r", vertexRadius(node.value));
       circle.setAttribute("fill", fill);
       circle.setAttribute("stroke", "var(--raised)");
       circle.setAttribute("stroke-width", "2.5");

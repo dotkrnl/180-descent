@@ -67,7 +67,7 @@
         var circle = document.createElementNS(ns, "circle");
         circle.setAttribute("cx", x.toFixed(1));
         circle.setAttribute("cy", y.toFixed(1));
-        circle.setAttribute("r", "12");
+        circle.setAttribute("r", "14");
         circle.setAttribute("fill", isRed ? "color-mix(in srgb,var(--contested) 20%,transparent)" : "color-mix(in srgb,var(--ok) 18%,transparent)");
         circle.setAttribute("stroke", isRed ? "var(--contested)" : "var(--ok)");
         circle.setAttribute("stroke-width", "1.8");
@@ -78,7 +78,7 @@
         text.setAttribute("y", (y + 3.5).toFixed(1));
         text.setAttribute("text-anchor", "middle");
         text.setAttribute("font-family", "IBM Plex Mono, monospace");
-        text.setAttribute("font-size", "9");
+        text.setAttribute("font-size", "10.5");
         text.setAttribute("fill", isRed ? "var(--contested)" : "var(--ok)");
         text.textContent = isRed ? "x" : "✓";
         mrSat.appendChild(text);

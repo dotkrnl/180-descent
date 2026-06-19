@@ -227,12 +227,16 @@ interaction contract.
 8. Do not rely on color alone for meaning. Pair color/status with text labels,
    symbols, or structural copy, and keep small text/color-token choices within
    WCAG AA contrast.
-9. Keyboard focus must remain visible and logical through navigation,
+9. SVG figure labels must remain readable across outputs. Keep SVG `text` and
+   inherited SVG label sizes at or above the sitewide minimum enforced by
+   `rtk npm run check:svg-text`; widen spacing or simplify labels instead of
+   shrinking text below the gate.
+10. Keyboard focus must remain visible and logical through navigation,
    disclosure widgets, sliders, and lesson interactions.
-10. When Chinese mirroring is in scope, translate user-facing alt text,
+11. When Chinese mirroring is in scope, translate user-facing alt text,
    `aria-label`, `aria-labelledby` text, button labels, and fallback copy into
    idiomatic Simplified Chinese while preserving IDs, classes, and JS hooks.
-11. Run `rtk npm run check:a11y` directly or through `rtk npm run check` and fix
+12. Run `rtk npm run check:a11y` directly or through `rtk npm run check` and fix
    failures before treating the day as complete. The check gate enforces all
    generated images having `alt`, named `role="img"` SVGs, named links/buttons,
    visible-label/name matching, valid `aria-checked` roles, heading order,

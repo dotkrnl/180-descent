@@ -69,7 +69,7 @@
           echoMsg.className = "echo-msg neutral echo-message";
           echoMsg.innerHTML = "<span class=\"ttl\">" + copy.bubbleTitle + "</span>" + copy.bubbleBody;
         } else {
-          oNodes.forEach(function(node){ styleOut(node, "color-mix(in srgb,var(--ok) 22%,transparent)", "var(--ok)", "1", "\u2713", "var(--ok)"); });
+          oNodes.forEach(function(node){ styleOut(node, "color-mix(in srgb,var(--ok) 22%,var(--paper))", "var(--ok)", "1", "\u2713", "var(--ok)"); });
           outLinks.setAttribute("stroke", "var(--ok)");
           outLinks.style.opacity = "1";
           echoMsg.className = "echo-msg pop echo-message";
@@ -79,13 +79,13 @@
       }
 
       if(!echoExposed){
-        oNodes.forEach(function(node){ styleOut(node, "color-mix(in srgb,var(--contested) 16%,transparent)", "var(--contested)", "1", "\u2717", "var(--contested)"); });
+        oNodes.forEach(function(node){ styleOut(node, "color-mix(in srgb,var(--contested) 16%,var(--paper))", "var(--contested)", "1", "\u2717", "var(--contested)"); });
         outLinks.style.opacity = "0";
         echoMsg.className = "echo-msg neutral echo-message";
         echoMsg.innerHTML = "<span class=\"ttl\">" + copy.chamberTitle + "</span>" + copy.chamberBody;
       } else {
         oNodes.forEach(function(node){
-          styleOut(node, "color-mix(in srgb,var(--contested) 30%,transparent)", "var(--contested)", "1", "\u2717", "var(--contested)");
+          styleOut(node, "color-mix(in srgb,var(--contested) 30%,var(--paper))", "var(--contested)", "1", "\u2717", "var(--contested)");
           var circle = node.querySelector("circle");
           if(circle) circle.setAttribute("stroke-width", "3.2");
         });

@@ -184,13 +184,17 @@ the same public day pages and deep-dive artifacts.
 8. Do not rely on color alone for claims, verdicts, diagram keys, or state.
    Pair color with visible text, symbols, or structure, and keep small text at
    WCAG AA contrast.
-9. EPUB/PDF fallbacks must preserve the same information in accessible static
+9. SVG figure labels must remain readable across outputs. Keep SVG `text` and
+   inherited SVG label sizes at or above the sitewide minimum enforced by
+   `rtk npm run check:svg-text`; widen spacing or simplify labels instead of
+   shrinking text below the gate.
+10. EPUB/PDF fallbacks must preserve the same information in accessible static
    form: real tables, labelled diagrams, or worked examples rather than empty
    visual placeholders.
-10. If Chinese mirroring is in scope, translate alt text, accessible labels,
+11. If Chinese mirroring is in scope, translate alt text, accessible labels,
    button text, and fallback copy into idiomatic Simplified Chinese while
    preserving classes, IDs, and JS hooks.
-11. Run `rtk npm run check:a11y` directly or through `rtk npm run check` before
+12. Run `rtk npm run check:a11y` directly or through `rtk npm run check` before
    treating the appendix as complete.
 
 ## Output-Variant Copy Gate
