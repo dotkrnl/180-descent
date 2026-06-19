@@ -3,7 +3,7 @@ layout: layouts/day.njk
 tags: day
 day: 5
 title: "Causation"
-summary: "Ice cream, drowning, Simpson's paradox, and Pearl's do-operator show why causes are not correlations."
+summary: "Ice cream, drowning, Simpson's paradox, potential outcomes, and Pearl's do-operator show why causal effects are not correlations."
 block: Foundations of Knowledge & Reasoning
 slug: causation
 day_path: 005-causation

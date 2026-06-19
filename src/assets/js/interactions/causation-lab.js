@@ -126,7 +126,7 @@
         calc.innerHTML = room(
           isZh ? "汇总比较：忽略行，只看疗法" : "Pooled comparison: ignore row, compare treatment",
           [calcLine(pooledA, false), calcLine(pooledB, true)],
-          isZh ? "同一张图没有移动任何病例；这里只是把上排和下排一起计数。B 的列里小结石病例更多，因此汇总率被轻症病例抬高。" : "No case moved. This view counts the top and bottom rows together. B has many more easy small-stone cases, so its pooled rate is flattered."
+          isZh ? "同一张图没有移动任何病例；这里只是把上排和下排一起计数。B 的列里小结石病例更多，因此汇总率被轻症病例抬高。" : "No case moved. This view counts the top and bottom rows together. B has many more small-stone cases, so its pooled rate is lifted by the case mix."
         );
         grid.setAttribute("aria-label", isZh ? "700 名患者固定在同一位置，全部用方块表示；上排是小结石，下排是大结石。汇总视图按疗法 A 和疗法 B 的列比较所有病例。" : "Seven hundred patients stay fixed in place, all drawn as squares; the top row is small stones and the bottom row is large stones. The pooled view compares the Treatment A and Treatment B columns.");
         var aw = pct(poolA);
@@ -143,17 +143,17 @@
         calc.innerHTML = room(
           isZh ? "小结石：只比较上排" : "Small stones: compare only top row",
           [calcLine(smallA, true), calcLine(smallB, false)],
-          isZh ? "固定病例类型后，A 在小结石中更高。" : "Holding case type fixed, A is higher among small stones."
+          isZh ? "在小结石病例内，A 的观察成功率更高。" : "Within small-stone cases, A has the higher observed success rate."
         ) + room(
           isZh ? "大结石：只比较下排" : "Large stones: compare only bottom row",
           [calcLine(largeA, true), calcLine(largeB, false)],
-          isZh ? "固定病例类型后，A 在大结石中也更高。" : "Holding case type fixed, A is also higher among large stones."
+          isZh ? "在大结石病例内，A 的观察成功率也更高。" : "Within large-stone cases, A also has the higher observed success rate."
         );
         grid.setAttribute("aria-label", isZh ? "700 名患者仍固定在同一位置，全部用方块表示；分层视图在小结石上排和大结石下排内分别比较疗法。" : "The same seven hundred patients stay fixed in place, all drawn as squares; the conditioned view compares treatments within the top small-stone row and the bottom large-stone row.");
         winner.className = "simp-winner A";
         winner.innerHTML = isZh
-          ? "按结石大小条件化后，<span class=\"hl\">疗法 A 在两类病例中均胜出</span>。汇总结论反转，因为 B 接收了更多容易处理的小结石病例。"
-          : "Condition on stone size and <b>Treatment A wins both case types</b>. The pooled verdict reverses because B received more easy small-stone cases.";
+          ? "按结石大小分层后，<span class=\"hl\">疗法 A 在两类病例中的观察成功率都更高</span>。这说明发生了反转；是否应按此调整取决于因果问题。"
+          : "Stratify by stone size and <b>Treatment A has the higher observed rate in both case types</b>. This shows a reversal; whether this is the right adjustment depends on the causal question.";
       }
     }
 
@@ -175,12 +175,12 @@
 
     var data = isZh
       ? {
-        1: { name: "第 1 层 · 关联", expr: "<code>P(Y | X)</code>  —  「观察」", body: "世界以其本然之姿呈现：观察模式、寻找相关、执行回归。绝大多数机器学习皆止步于此。它精于预测，却分不清冰淇淋与夏天。" },
+        1: { name: "第 1 层 · 关联", expr: "<code>P(Y | X)</code>  —  「观察」", body: "世界以其本然之姿呈现：观察模式、寻找相关、执行回归。这里问的是服用阿司匹林者与未服用者的头痛改善率有何不同。它精于描述与预测，却不能单独回答干预问题。" },
         2: { name: "第 2 层 · 干预", expr: "<code>P(Y | do(X))</code>  —  「行动」", body: "现在你亲手改变世界。强行设定 X 会切断其原有的因果纽带，混杂因素便无法再伪装成效应。从「观察」到「干预」，正是今日的核心跨越。" },
         3: { name: "第 3 层 · 反事实", expr: "<code>P(Y<sub>x</sub> | X′, Y′)</code>  —  「想象」", body: "最高层级：在获知现实结果后，追问一个从未发生过的平行世界。这里 <code>Y<sub>x</sub></code> 指把 X 设为 x 的世界里的 Y；X′ 和 Y′ 是已经发生的现实事实。" }
       }
       : {
-        1: { name: "Rung 1 · Association", expr: '<code>P(Y | X)</code>  —  "seeing"', body: "The world as it presents itself. You observe and find patterns: correlation, regression, most of machine learning. Powerful for prediction, but it can never tell ice cream from summer." },
+        1: { name: "Rung 1 · Association", expr: '<code>P(Y | X)</code>  —  "seeing"', body: "The world as it presents itself. You compare headache improvement among people who did and did not take aspirin: correlation, regression, most of machine learning. Powerful for description and prediction, but not by itself an intervention answer." },
         2: { name: "Rung 2 · Intervention", expr: '<code>P(Y | do(X))</code>  —  "doing"', body: "Now you reach in and act. Forcing X severs X from its usual causes, so confounders cannot fake an effect. The leap from 1 to 2 is the whole day." },
         3: { name: "Rung 3 · Counterfactuals", expr: '<code>P(Y<sub>x</sub> | X′, Y′)</code>  —  "imagining"', body: "The highest rung: reasoning about what would have happened in a world that never was, given what actually did. Here <code>Y<sub>x</sub></code> means Y in the world where X is set to x; X′ and Y′ are the actual facts you condition on." }
       };
@@ -243,47 +243,153 @@
     var body = root.querySelector("#dovsBody");
     if (!rConf || !rTrue || !vConf || !vTrue || !numSee || !numDo || !equations || !verdict || !vh || !body) return;
 
-    function render(){
+    var table = root.querySelector("#dovsTable");
+    var presetButtons = root.querySelectorAll("[data-preset]");
+    var pRain = 0.45;
+    var a = -2.0;
+    var c = -2.2;
+    var rainWet = 4.1;
+
+    function logistic(x){
+      return 1 / (1 + Math.exp(-x));
+    }
+
+    function signed(x){
+      return (x >= 0 ? "+" : "") + x.toFixed(2);
+    }
+
+    function pct1(x){
+      return (100 * x).toFixed(1) + "%";
+    }
+
+    function model(){
       var conf = Number(rConf.value) / 100;
-      var tru = Number(rTrue.value) / 100;
-      vConf.textContent = conf.toFixed(2);
-      vTrue.textContent = tru.toFixed(2);
+      var protection = Number(rTrue.value) / 100;
+      var b = 4 * conf;
+      var d = -3.3 * protection;
 
-      var bias = 0.55 * conf * conf + 0.18 * conf;
-      if (bias > 0.62) bias = 0.62;
-      var seeEst = Math.min(tru + bias, 0.95);
-      var doEst = tru;
-      var signedTrue = (tru >= 0 ? "+" : "") + tru.toFixed(2);
-      var signedBias = (bias >= 0 ? "+" : "") + bias.toFixed(2);
-      var signedSee = (seeEst >= 0 ? "+" : "") + seeEst.toFixed(2);
-      var signedDo = (doEst >= 0 ? "+" : "") + doEst.toFixed(2);
+      function pS(s){ return s ? pRain : 1 - pRain; }
+      function pX(x, s){
+        var px = logistic(a + b * s);
+        return x ? px : 1 - px;
+      }
+      function pY(x, s){
+        return logistic(c + d * x + rainWet * s);
+      }
+      function pXMarginal(x){
+        return pX(x, 0) * pS(0) + pX(x, 1) * pS(1);
+      }
+      function pSGivenX(s, x){
+        return pX(x, s) * pS(s) / pXMarginal(x);
+      }
+      function observed(x){
+        return pY(x, 0) * pSGivenX(0, x) + pY(x, 1) * pSGivenX(1, x);
+      }
+      function intervention(x){
+        return pY(x, 0) * pS(0) + pY(x, 1) * pS(1);
+      }
 
-      numSee.innerHTML = signedSee + "<small>" + (isZh ? "表观效应" : "looks like the effect") + "</small>";
-      numDo.innerHTML = signedDo + "<small>" + (isZh ? "直接效应" : "direct effect") + "</small>";
+      var obs0 = observed(0);
+      var obs1 = observed(1);
+      var do0 = intervention(0);
+      var do1 = intervention(1);
+      var rows = [
+        { x: 1, y: 1, p: pY(1, 0) * pX(1, 0) * pS(0) + pY(1, 1) * pX(1, 1) * pS(1) },
+        { x: 1, y: 0, p: (1 - pY(1, 0)) * pX(1, 0) * pS(0) + (1 - pY(1, 1)) * pX(1, 1) * pS(1) },
+        { x: 0, y: 1, p: pY(0, 0) * pX(0, 0) * pS(0) + pY(0, 1) * pX(0, 1) * pS(1) },
+        { x: 0, y: 0, p: (1 - pY(0, 0)) * pX(0, 0) * pS(0) + (1 - pY(0, 1)) * pX(0, 1) * pS(1) }
+      ];
+      return {
+        conf: conf,
+        protection: protection,
+        observedDiff: obs1 - obs0,
+        doDiff: do1 - do0,
+        adjustedDiff: do1 - do0,
+        obs0: obs0,
+        obs1: obs1,
+        do0: do0,
+        do1: do1,
+        rows: rows
+      };
+    }
+
+    function count(p){
+      return Math.round(p * 1000);
+    }
+
+    function renderTable(m){
+      if (!table) return;
+      var wetUmbrella = count(m.rows[0].p);
+      var dryUmbrella = count(m.rows[1].p);
+      var wetNo = count(m.rows[2].p);
+      var dryNo = count(m.rows[3].p);
+      table.innerHTML =
+        '<table class="alt-table"><thead><tr><th>' + (isZh ? "观察表（每 1000 人）" : "Observed table per 1,000") + '</th><th>' +
+        (isZh ? "淋湿" : "Wet") + '</th><th>' + (isZh ? "干爽" : "Dry") + '</th><th>' +
+        (isZh ? "湿衣概率" : "Risk wet") + '</th></tr></thead><tbody>' +
+        '<tr><td>' + (isZh ? "带伞" : "Umbrella") + '</td><td>' + wetUmbrella + '</td><td>' + dryUmbrella + '</td><td>' + pct1(m.obs1) + '</td></tr>' +
+        '<tr><td>' + (isZh ? "不带伞" : "No umbrella") + '</td><td>' + wetNo + '</td><td>' + dryNo + '</td><td>' + pct1(m.obs0) + '</td></tr>' +
+        '</tbody></table>';
+    }
+
+    function render(){
+      var m = model();
+      vConf.textContent = signed(m.conf);
+      vTrue.textContent = m.protection.toFixed(2);
+      numSee.innerHTML = signed(m.observedDiff) + "<small>" + (isZh ? "观察关联" : "observed association") + "</small>";
+      numDo.innerHTML = signed(m.doDiff) + "<small>" + (isZh ? "因果效应" : "causal effect") + "</small>";
+      renderTable(m);
       equations.innerHTML = isZh
-        ? '<div class="dovs-eq see"><span class="tag">观察</span><code>直接效应 ' + signedTrue + ' + 夏季偏差 ' + signedBias + ' = ' + signedSee + '</code></div>' +
-          '<div class="dovs-eq do"><span class="tag">干预</span><code>直接效应 ' + signedTrue + ' + 已切断后门 +0.00 = ' + signedDo + '</code></div>'
-        : '<div class="dovs-eq see"><span class="tag">Seeing</span><code>direct effect ' + signedTrue + ' + summer bias ' + signedBias + ' = ' + signedSee + '</code></div>' +
-          '<div class="dovs-eq do"><span class="tag">Doing</span><code>direct effect ' + signedTrue + ' + cut backdoor +0.00 = ' + signedDo + '</code></div>';
+        ? '<div class="dovs-eq see"><span class="tag">观察</span><code>P(Y=1|X=1)-P(Y=1|X=0) = ' + signed(m.observedDiff) + '</code></div>' +
+          '<div class="dovs-eq do"><span class="tag">干预</span><code>Σ_s P(Y=1|X=x,S=s)P(S=s): do 差值 = ' + signed(m.doDiff) + '</code></div>' +
+          '<div class="dovs-eq adj"><span class="tag">调整</span><code>Σ_s [P(Y|X=1,S=s)-P(Y|X=0,S=s)]P(S=s) = ' + signed(m.adjustedDiff) + '</code></div>'
+        : '<div class="dovs-eq see"><span class="tag">Seeing</span><code>P(Y=1|X=1)-P(Y=1|X=0) = ' + signed(m.observedDiff) + '</code></div>' +
+          '<div class="dovs-eq do"><span class="tag">Doing</span><code>Σ_s P(Y=1|X=x,S=s)P(S=s): do contrast = ' + signed(m.doDiff) + '</code></div>' +
+          '<div class="dovs-eq adj"><span class="tag">Adjusted</span><code>Σ_s [P(Y|X=1,S=s)-P(Y|X=0,S=s)]P(S=s) = ' + signed(m.adjustedDiff) + '</code></div>';
 
-      var gap = seeEst - doEst;
-      if (gap < 0.02) {
+      var gap = m.observedDiff - m.doDiff;
+      var signReversal = (m.observedDiff > 0 && m.doDiff < 0) || (m.observedDiff < 0 && m.doDiff > 0);
+      if (Math.abs(gap) < 0.015) {
         verdict.className = "dovs-verdict match";
-        vh.textContent = isZh ? "无混杂：观察 = 干预" : "No confounding — seeing = doing";
+        vh.textContent = isZh ? "观察与干预近似重合" : "Seeing and doing nearly coincide";
         body.innerHTML = isZh
-          ? "当隐藏原因关闭时，朴素相关与真实因果效应重合。这是统计分析中有时会撞见的幸运特例。"
-          : "With the hidden cause switched off, the naive correlation and the true causal effect coincide. This is the lucky special case.";
+          ? "在这个参数组合下，观察关联和干预效应数值接近。但这不是因为二者同义，而是因为当前模型让混杂影响很小或相互抵消。"
+          : "With these parameters, the observed association and intervention effect are numerically close. That does not make them the same kind of quantity; this model just makes the bias small or cancel out.";
+      } else if (signReversal) {
+        verdict.className = "dovs-verdict gap";
+        vh.textContent = isZh ? "符号反转" : "Sign reversal";
+        body.innerHTML = isZh
+          ? "观察上看，带伞者似乎更容易淋湿；干预上看，给人一把伞会降低淋湿概率。雨改变了两组人的构成。"
+          : "Seeing says umbrella users are wetter; doing says giving an umbrella lowers wetness. Rain changed the mix of people in the observed umbrella and no-umbrella groups.";
       } else {
         verdict.className = "dovs-verdict gap";
-        vh.textContent = (isZh ? "混杂偏差 = " : "The confounding gap = ") + gap.toFixed(2);
+        vh.textContent = (isZh ? "混杂差距 = " : "Confounding gap = ") + signed(gap);
         body.innerHTML = isZh
-          ? "肉眼观察到的关联为 <span class=\"hl\">" + seeEst.toFixed(2) + "</span>；但真实的因果效应仅为 <span class=\"hl\">" + doEst.toFixed(2) + "</span>。其中的差额全由「夏季」贡献：一条后门路径成功地伪装成了因果。"
-          : "The eyeball sees <strong>" + seeEst.toFixed(2) + "</strong>; the true causal effect is only <strong>" + doEst.toFixed(2) + "</strong>. The difference is pure summer: a backdoor path masquerading as cause.";
+          ? "观察关联为 <span class=\"hl\">" + signed(m.observedDiff) + "</span>，干预效应为 <span class=\"hl\">" + signed(m.doDiff) + "</span>。二者差距来自开放的后门路径：雨同时影响带伞和淋湿。"
+          : "The observed association is <strong>" + signed(m.observedDiff) + "</strong>; the intervention effect is <strong>" + signed(m.doDiff) + "</strong>. The gap comes from the open back-door path: rain affects both umbrella use and wet clothes.";
       }
+    }
+
+    function setPreset(name){
+      var presets = {
+        none: { conf: 0, protect: 45 },
+        positive: { conf: 70, protect: 35 },
+        negative: { conf: -70, protect: 35 },
+        reversal: { conf: 90, protect: 50 },
+        zero: { conf: 80, protect: 0 }
+      };
+      var next = presets[name];
+      if (!next) return;
+      rConf.value = next.conf;
+      rTrue.value = next.protect;
+      render();
     }
 
     rConf.addEventListener("input", render);
     rTrue.addEventListener("input", render);
+    presetButtons.forEach(function(button){
+      button.addEventListener("click", function(){ setPreset(button.getAttribute("data-preset")); });
+    });
     render();
   }
 

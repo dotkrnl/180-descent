@@ -67,6 +67,19 @@ Before any new English day is considered ready, run a claim-level factual review
 
 Do not proceed to commit/publish until this gate has been completed and any issues have been fixed or explicitly reported to the user.
 
+### Causal-Inference Claim Addendum
+
+When a day discusses causation, causal inference, treatment effects, experiments, or observational adjustment, apply these extra checks before translation and publishing:
+
+1. State the causal question before the method: unit, exposure/treatment, outcome, timing, intervention, and estimand.
+2. Separate association, intervention, counterfactuals, causal-effect inference, causal discovery, and actual causation. Do not let one framework sound like a complete answer to all of them.
+3. Write `P(Y | do(X=x))` and `P(Y | X=x)` as different questions that need not be equal; never imply a universal inequality or universal equality.
+4. Treat Simpson reversals as subgroup-weight phenomena. Causal knowledge decides whether pooling or stratifying is relevant; the third variable may be a confounder, mediator, collider, selection variable, or descriptive partition.
+5. For observational examples, explicitly distinguish a table reversal from causal superiority. Note randomization, historical/nonrandomized design, case mix, selection, time-period differences, and support limits when relevant.
+6. Include minimum assumptions vocabulary when teaching adjustment: consistency, exchangeability, positivity/overlap, no interference, measurement/attrition/selection concerns, and sensitivity to violations.
+7. For do-calculus, front-door/back-door, causal discovery, LiNGAM/additive-noise models, faithfulness, RCTs, and LLM causal reasoning, keep scope clauses attached to claims. Do not convert identification results, model assumptions, or benchmark performance into unconditional guarantees.
+8. For causal interactives, generate displayed observational, adjusted, and interventional quantities from an explicit stated data-generating model or table; do not animate an arbitrary bias formula unless it is labeled as a purely illustrative heuristic.
+
 ## Image Candidate Gate
 
 Before any new day is considered ready, perform a proactive image pass even if

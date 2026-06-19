@@ -4,7 +4,7 @@ tags: zhDay
 locale: zh
 day: 5
 title: "因果性"
-summary: "从冰淇淋与溺水的虚假关联到辛普森悖论的数字反转，我们通过珀尔的因果之梯，学习如何区分「看到」与「干预」。"
+summary: "从冰淇淋与溺水、辛普森悖论，到潜在结果与珀尔的 do-算子，揭示因果效应为何不同于相关关系。"
 block: 知识与推理的根基
 slug: causation
 day_path: 005-causation

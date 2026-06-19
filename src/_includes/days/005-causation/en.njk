@@ -44,7 +44,7 @@
 
 <div class="whereblock">
 <p class="label">◆ Where we are</p>
-<p>Four days in, the toolkit is starting to interlock. <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a> warned us about beliefs that are true but only <em>by luck</em> — the stopped clock. A <em class="term">spurious correlation</em>{% tip 'A spurious correlation is a real statistical association caused by something other than a direct causal link between the two measured variables.' %} is exactly that at population scale: a number that's "right" for entirely the wrong reason. <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> introduced Hume and the problem of induction; today we meet the <em>same Hume</em>, because his attack on causation and his attack on induction are one and the same blade. <a href="/days/003-logic-and-valid-inference/"><strong>Day 3</strong></a> sorted reasoning into deduction, induction, and abduction — and causal discovery, we'll see, is abduction with teeth: inference to the best causal explanation. And <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a> gave us the do-versus-see distinction's parent, probability: today's punchline, <em>P(y|do(x)) ≠ P(y|x)</em>, is the most important inequality in the course so far.</p>
+<p>Four days in, the toolkit is starting to interlock. <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a> warned us about beliefs that are true but only <em>by luck</em> — the stopped clock. A <em class="term">spurious correlation</em>{% tip 'A spurious correlation is a real statistical association caused by something other than a direct causal link between the two measured variables.' %} is exactly that at population scale: a number that's "right" for entirely the wrong reason. <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> introduced Hume and the problem of induction; today we meet the same Hume because his accounts of causation and induction are tightly linked: both challenge our right to move from repeated observations to necessity or future regularity. <a href="/days/003-logic-and-valid-inference/"><strong>Day 3</strong></a> sorted reasoning into deduction, induction, and abduction — and causal discovery, as an analogy, often feels like abduction with teeth: inference to the best causal explanation under assumptions. And <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a> gave us the do-versus-see distinction's parent, probability: today's punchline is that <em>P(y|do(x))</em> and <em>P(y|x)</em> answer different questions and need not be equal.</p>
 </div>
 
 <section>
@@ -52,7 +52,7 @@
 <h2>Hume kicks out the leg</h2>
 <p>Start where the trouble starts. In 1739, in <em>A Treatise of Human Nature</em>, David Hume asked a deceptively simple question: when one billiard ball strikes another and the second rolls away, <em>what exactly do you see?</em> You see the first ball move. You see them touch. You see the second ball move. What you never see — look as hard as you like — is the <strong>causing</strong> itself: the necessary connection, the hidden force, the little arrow of <em>because</em> linking the two events.</p>
 <p>All we ever actually observe, Hume argued, is <em class="term">constant conjunction</em>{% tip 'Constant conjunction means one kind of event has repeatedly been followed by another kind of event.' %}: events of this type are reliably followed by events of that type. Add that the cause comes first (priority) and that the two events touch in space and time (contiguity), and you have everything experience delivers. The sense of <em>necessity</em> — the feeling that the second ball <em>had</em> to move — is not out in the world at all. It is a habit of mind, a customary expectation built up by repetition and then projected back onto the world like a film onto a screen. Hume found two definitions of "cause" tangled together in our heads: one about the world (constant conjunction) and one about us (the mind's practiced leap from one to the other).</p>
-<p>This should feel familiar. It <em>is</em> the <a href="/days/002-scientific-method-and-demarcation/"><strong>problem of induction from Day 2</strong></a>, wearing a different coat. If causation is just "this has always been followed by that," then claiming the next collision will behave like the last is precisely the unprovable bet on the uniformity of nature that Hume showed can never be justified non-circularly. Causation and induction are the same wound. For two centuries philosophy basically picked at it.</p>
+<p>This should feel familiar. It is closely related to the <a href="/days/002-scientific-method-and-demarcation/"><strong>problem of induction from Day 2</strong></a>, wearing a different coat. If causation is just "this has always been followed by that," then claiming the next collision will behave like the last is precisely the unprovable bet on the uniformity of nature that Hume showed can never be justified non-circularly. The challenge generated competing regularity, counterfactual, probabilistic, mechanistic, and interventionist accounts; none escapes every difficult case.</p>
 
 <div class="aside">
 <p class="h">Why "the cement of the universe"?</p>
@@ -69,20 +69,22 @@
 <div class="k"><span class="who2">Lewis · 1973</span><b><em class="term">Counterfactual</em>{% tip 'A counterfactual asks what would have happened if some fact had been different.' %}.</b> C causes E means: <em>had C not happened, E would not have happened.</em> Cash it out with "possible worlds" — picture the nearest world where C is absent and check whether E still occurs. Clean and intuitive, but it has to wrestle with backup causes and double-killings (preemption and overdetermination).</div>
 <div class="k"><span class="who2">Reichenbach · Suppes · Cartwright</span><b>Probabilistic.</b> Causes <em>raise the probability</em> of their effects. Reichenbach's <em class="term">common-cause principle</em>{% tip 'The common-cause principle says a surprising correlation often needs either a direct cause or a shared prior cause that explains it.' %}: if A and B are correlated but neither causes the other, a shared cause C "screens them off" — hold C fixed and the correlation dissolves. (Summer, exactly.)</div>
 <div class="k"><span class="who2">Woodward · 2003</span><b>Interventionist.</b> C causes E if <em>wiggling C — and only C — would change E.</em> No human needed: an <em class="term">intervention</em>{% tip 'An intervention is an idealized change that sets one variable while blocking the usual causes of that variable.' %} is a surgical nudge, so volcanoes cause ash even with no one to push the button. This is the philosophical twin of Pearl's machinery, arriving in the same era: below, Pearl turns the "wiggle C only" idea into <code>do(C)</code> and graph surgery.</div>
-<div class="k"><span class="who2">the through-line</span><b>One question, four lenses.</b> Counterfactual = "what if it hadn't?"; probabilistic = "does it raise the odds, holding rivals fixed?"; interventional = "what changes if I wiggle it?". Pearl's framework, next, gives all three a shared grammar.</div>
+<div class="k"><span class="who2">Mackie · 1974</span><b>INUS conditions.</b> A cause can be an insufficient but non-redundant part of an unnecessary but sufficient condition. A short circuit is not enough by itself to burn a house down; it matters because it is a non-redundant part of one sufficient package: short circuit plus oxygen plus flammable material plus no timely suppression.</div>
 </div>
 
-<p class="theory-note">Notice how <strong>Cartwright (1979)</strong> sharpened the probabilistic story, because her fix is the hinge of the whole day. Causes raise the probability of effects, yes — <em>but only inside a "causally homogeneous" background</em>, with all the other causes held fixed. Forget that proviso and you walk straight into the most beautiful trap in statistics.</p>
+<p class="theory-note">One question, several lenses: counterfactual = "what if it hadn't?"; probabilistic = "does it raise the odds, holding rivals fixed?"; INUS = "what role did this part play in a sufficient package?"; interventionist = "what changes if I wiggle it?". Pearl's framework, next, gives many of these intuitions a shared grammar. Notice how <strong>Cartwright (1979)</strong> sharpened the probabilistic story, because her fix is the hinge of the whole day. Causes raise the probability of effects, yes — <em>but only inside a "causally homogeneous" background</em>, with the relevant other causes held fixed. Forget that proviso and you walk straight into the most beautiful trap in statistics.</p>
 </section>
 
 <section>
 <p class="sec-eyebrow">The trap</p>
 <h2>Simpson's paradox: when the numbers literally reverse</h2>
-<p>Here is a fact that sounds impossible until you've seen it: a treatment can be <strong>better for small stones, better for large stones, and yet worse overall.</strong> Not "looks worse" — is, on the pooled numbers, worse. The real kidney-stone dataset below lets you watch the bars flip.</p>
+<p>Here is a fact that sounds impossible until you've seen it: a treatment can have a higher observed success rate among small stones, a higher observed success rate among large stones, and yet a lower observed success rate overall. The real kidney-stone dataset below lets you watch the bars flip.</p>
 
-<p>The mechanism is always a lurking variable that's distributed unevenly between the groups you're comparing. In the kidney-stone data (Charig et al., <em>BMJ</em>, 1986), surgeons gave the gentler treatment <strong>B</strong> mostly to the <em>easy</em> small stones and reserved old-fashioned open surgery <strong>A</strong> for the <em>hard</em> big ones. So B's overall success rate is flattered by an easier caseload. Split by stone size — hold the <em class="term">confounder</em>{% tip 'A confounder is a third variable that influences both the apparent cause and the apparent effect, making them move together.' %} fixed, exactly as Cartwright demanded — and A pulls ahead in both rooms.</p>
+<p>A Simpson reversal occurs because the groups being combined have different mixtures of subgroups. The reversal itself does <em>not</em> tell you which comparison is causally relevant. That depends on what the third variable is: a <em class="term">confounder</em>{% tip 'A confounder is a third variable that influences both the apparent cause and the apparent effect, making them move together.' %} that should be adjusted for; a mediator, where adjustment changes a total-effect question into a direct-effect question; a collider or selection variable, where adjustment can create bias; or merely a descriptive partition involved in algebraic or non-collapsibility behavior. Causal knowledge, not the reversal alone, decides whether pooling or stratifying answers the right question.</p>
 
-<p>The Reversal Machine below turns that into one picture. Each square is one patient and never moves. Color says which treatment they received; row says whether the case was small-stone or large-stone; fill says whether the treatment worked. The pooled view compares the two treatment columns. The conditioned view keeps the same picture but compares inside each row first. That is the foundation of <strong>conditioning</strong>: compare like with like before you call anything a cause.</p>
+<p>In the kidney-stone data (Charig et al., <em>BMJ</em>, 1986), this was a historical, nonrandomized comparison of open surgery <strong>A</strong> and percutaneous nephrolithotomy <strong>B</strong>. The B cases contained a much larger share of small stones. B therefore has the higher pooled success rate, while A has the higher observed success rate within each reported stone-size stratum. Those observational strata demonstrate unequal case mix and a reversal; by themselves, they do not establish that open surgery would have produced better outcomes for the same patients.</p>
+
+<p>The Reversal Machine below turns that into one picture. Each square is one patient and never moves. Color says which treatment they received; row says whether the case was small-stone or large-stone; fill says whether the treatment worked. The pooled view compares the two treatment columns. The stratified view keeps the same picture but compares inside each row first. In this example, stone size is a plausible baseline severity variable, so stratification is informative; in other graphs the same move could answer a different causal question or create bias.</p>
 </section>
 
 <!-- ===================== INTERACTIVE 1 : SIMPSON ===================== -->
@@ -113,7 +115,7 @@
 <div class="format-alt epub-only print-only">
 <p class="ptitle">Reference table</p>
 <h3>Kidney-Stone Simpson Reversal</h3>
-<p class="pnote">Treatment B looks better when every patient is pooled, but Treatment A does better inside each stone-size group.</p>
+<p class="pnote">Treatment B has the higher pooled observed rate, while Treatment A has the higher observed rate inside each stone-size group. This demonstrates a reversal, not a treatment recommendation.</p>
 <table class="alt-table">
 <thead><tr><th>View</th><th>Treatment A</th><th>Treatment B</th><th>Apparent winner</th></tr></thead>
 <tbody>
@@ -122,17 +124,17 @@
 <tr><td>Large stones</td><td>192 / 263 = 73.0%</td><td>55 / 80 = 68.8%</td><td>A</td></tr>
 </tbody>
 </table>
-<p>The pooled comparison reverses because B was used much more often on easier small-stone cases.</p>
+<p>The pooled comparison reverses because the treatment groups contain different mixtures of small- and large-stone cases.</p>
 </div>
 
 <section>
-<p>The lesson lands hard: <strong>you cannot read causation off a table of numbers.</strong> The very same digits support opposite conclusions depending on a variable that may not even be in the spreadsheet. Which raises the question that organizes everything after this — if the data alone won't tell you, what <em>will</em>? The answer, from a computer scientist who spent the 1980s building machines that reason under uncertainty, is that you need to add something the data doesn't contain: a <strong>model of which arrows point where.</strong></p>
+<p>The lesson lands hard: <strong>you cannot read causation off a table of numbers.</strong> The very same digits can support different summaries depending on a variable that may not even be in the spreadsheet. Which raises the question that organizes everything after this — if the data alone won't tell you, what <em>will</em>? The answer, from a computer scientist who spent the 1980s building machines that reason under uncertainty, is that you need to add something the data doesn't contain: a <strong>model of which arrows point where.</strong></p>
 </section>
 
 <section>
 <p class="sec-eyebrow">The causal revolution</p>
 <h2>Pearl's ladder, and the verb that changed everything</h2>
-<p>Judea Pearl won the 2011 Turing Award — often called computing's Nobel — "for fundamental contributions to artificial intelligence through the development of a calculus for probabilistic and causal reasoning." His central image, popularized in <em>The Book of Why</em> (2018), is a <em class="term">Ladder of Causation</em>{% tip 'Pearl’s ladder separates association, intervention, and counterfactual reasoning into increasingly demanding levels.' %} with three rungs, each demanding a stronger kind of question and a stronger kind of evidence than the one below. Most of statistics and nearly all of machine learning, Pearl likes to needle, never leaves the bottom rung.</p>
+<p>Judea Pearl won the 2011 Turing Award — often called computing's Nobel — "for fundamental contributions to artificial intelligence through the development of a calculus for probabilistic and causal reasoning." His central image, popularized in <em>The Book of Why</em> (2018), is the influential <em class="term">Ladder of Causation</em>{% tip 'Pearl’s ladder separates association, intervention, and counterfactual reasoning into increasingly demanding levels.' %}: association, intervention, and counterfactuals. It is a powerful conceptual hierarchy, not an uncontested taxonomy every causal-inference tradition states in exactly the same form.</p>
 <p>Climb it yourself:</p>
 </section>
 
@@ -154,7 +156,7 @@
 </button>
 <button class="rungbtn" type="button" data-rung="1" aria-pressed="false">
 <span class="num">1</span>
-<span class="lab"><span class="verb">Seeing</span><b>Association</b><span class="q">"How much does a headache make aspirin-buying <em>more likely</em> to be observed?"</span></span>
+<span class="lab"><span class="verb">Seeing</span><b>Association</b><span class="q">"Among people who took aspirin, how often did the headache improve compared with people who did not?"</span></span>
 </button>
 </div>
 
@@ -208,87 +210,114 @@
 <h3>The do-operator: seeing is not doing</h3>
 <p>Here is the conceptual hinge of the entire modern field, and it is worth saying slowly. There are two very different things you can do with a variable X.</p>
 <p>You can <strong>condition</strong>{% tip 'Conditioning means narrowing attention to cases where some variable already has a given value.' %} on it — written <code>P(Y | X = x)</code>. This means: among all the cases where X <em>happened</em> to equal x, what's the distribution of Y? You're filtering an existing population. This is <em>seeing</em>.</p>
-<p>Or you can <strong>intervene</strong> — written, in Pearl's notation, <code>P(Y | do(X = x))</code>. This means: reach in, <em>force</em> X to equal x for everyone, snipping X away from whatever usually causes it, and then watch Y. This is <em>doing</em> — it's what a randomized experiment performs.</p>
-<p>When there's a confounder, these two numbers come apart, and the gap between them <em>is</em> the bias. Among people who <em>happen</em> to buy lots of ice cream, drowning really is more common (because they're the summer people) — so the <em>seeing</em> quantity is high. But if you <em>force</em> a random sample of people to buy ice cream in, say, evenly distributed weather, drownings don't budge — the <em>doing</em> quantity is flat. The machine below lets you turn a confounder up and down and watch the two quantities diverge.</p>
+<p>Or you can <strong>intervene</strong> — written, in Pearl's notation, <code>P(Y | do(X = x))</code>. This means: reach in, <em>force</em> X to equal x for everyone, snipping X away from whatever usually causes it, and then watch Y. This is <em>doing</em>. In an ideal randomized trial, assignment is designed to approximate that severing operation.</p>
+<p>The two may coincide, but equality requires a design or causal assumptions; it does not follow from their numerical similarity. <code>P(Y | X=x)</code> describes outcomes among cases in which X was observed to equal x. <code>P(Y | do(X=x))</code> describes outcomes in a hypothetical regime that sets X to x. The machine below makes the difference auditable by calculating both quantities from an explicit structural model.</p>
 </section>
+
+<div class="aside">
+<p class="h">The potential-outcomes lens</p>
+<p>The other major language of modern causal inference writes the same idea at the level of units. For unit <code>i</code>, <em class="term">potential outcomes</em>{% tip 'Potential outcomes are the outcomes a unit would have under different treatment or intervention values, even though only one is observed.' %} are <code>Y<sub>i</sub>(1)</code> and <code>Y<sub>i</sub>(0)</code>: the outcome if treated and the outcome if untreated. A common <em class="term">causal estimand</em>{% tip 'An estimand is the precise causal quantity a study is trying to learn, such as an average treatment effect.' %} is the average treatment effect, <code>ATE = E[Y(1)-Y(0)]</code>. The catch is the fundamental problem of causal inference: for any one unit, only one of those two potential outcomes is observed. The other is counterfactual.</p>
+<p>Designs and assumptions connect this target to data. <em class="term">Consistency</em>{% tip 'Consistency says a unit observed under treatment value x has the same outcome as its potential outcome under x.' %} links observed outcomes to potential outcomes under the treatment actually received. <em class="term">Exchangeability</em>{% tip 'Exchangeability says treated and untreated groups are comparable with respect to the relevant potential outcomes, possibly after conditioning on covariates.' %} says the groups being compared are comparable with respect to the relevant potential outcomes. <em class="term">Positivity</em>{% tip 'Positivity, or overlap, means each relevant covariate group has a nonzero chance of receiving each treatment level being compared.' %} means every relevant covariate group has a chance of receiving each treatment level. <em class="term">No interference</em>{% tip 'No interference means one unit’s treatment does not change another unit’s outcome, unless such spillovers are explicitly modeled.' %} means one unit's treatment does not alter another unit's outcome, unless spillovers are part of the model.</p>
+<p>A safe causal workflow is: specify the unit, exposure, outcome, timing, and intervention; define the estimand; state the causal assumptions; determine whether the estimand is identified; estimate it statistically; then assess uncertainty, measurement, attrition, selection, overlap, and sensitivity to violations.</p>
+</div>
 
 <!-- ===================== INTERACTIVE 3 : DO vs SEE ===================== -->
 <div class="panel web-only causation-do-see">
 <p class="ptitle">Interactive · seeing vs doing</p>
-<h3>The do-operator vs the eyeball</h3>
-<p class="pnote">A toy world: a hidden cause (<strong>summer</strong>) pushes up both ice-cream buying and swimming-deaths. There's also a tiny <em>true</em> direct effect of ice cream on drowning you can set yourself (a full stomach before swimming, say). Slide the confounder's strength and watch the naïve "seeing" estimate balloon while the honest "doing" estimate tracks only the direct effect you set.</p>
+<h3>The do-operator as a calculation</h3>
+<p class="pnote">A toy structural model: rain makes umbrellas more likely and wet clothes more likely; umbrellas themselves reduce wetness. The sliders set the rain-to-umbrella link and the umbrella's causal protection. Every number below is computed from this stated model.</p>
+
+<div class="preset-row" role="group" aria-label="SCM presets">
+<button type="button" data-preset="none">No confounding</button>
+<button type="button" data-preset="positive">Positive confounding</button>
+<button type="button" data-preset="negative">Negative confounding</button>
+<button type="button" data-preset="reversal">Sign reversal</button>
+<button type="button" data-preset="zero">Zero causal effect</button>
+</div>
 
 <div class="dovs-controls">
 <div class="slider-row">
-<label for="rConf">Strength of the hidden confounder (summer → both) <span class="val" id="vConf">0.75</span></label>
-<input type="range" id="rConf" min="0" max="100" value="75" aria-label="Confounder strength">
+<label for="rConf">Rain's effect on umbrella use <span class="val" id="vConf">+0.70</span></label>
+<input type="range" id="rConf" min="-100" max="100" value="70" aria-label="Rain to umbrella link strength">
 </div>
 <div class="slider-row">
-<label for="rTrue">True direct effect: ice cream → drowning <span class="val" id="vTrue">0.05</span></label>
-<input type="range" id="rTrue" min="0" max="40" value="5" aria-label="True direct effect">
+<label for="rTrue">Umbrella's causal protection <span class="val" id="vTrue">0.45</span></label>
+<input type="range" id="rTrue" min="0" max="80" value="45" aria-label="Umbrella causal protection">
 </div>
 
 <div class="dovs-stage">
 <div class="dovs-card see">
 <p class="cap">Rung 1 · Seeing</p>
-<p class="expr">P(drown | buy) − P(drown | no buy)</p>
-<svg viewBox="0 0 200 96" role="img" aria-label="Graph with summer pointing to both ice cream and drowning; the spurious path is open.">
-<text x="100" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--brass)">☀ summer</text>
-<line x1="78" y1="22" x2="36" y2="58" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
-<line x1="122" y1="22" x2="164" y2="58" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
-<line x1="44" y1="68" x2="150" y2="68" stroke="var(--contested)" stroke-width="2" marker-end="url(#ah1)"></line>
-<text x="30" y="80" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">ice cream</text>
-<text x="172" y="80" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">drown</text>
+<p class="expr">P(wet | umbrella) − P(wet | no umbrella)</p>
+<svg viewBox="0 0 220 112" role="img" aria-label="Graph with rain pointing to umbrella use and wet clothes; the observational back-door path is open.">
+<text x="110" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--brass)">rain</text>
+<line x1="88" y1="24" x2="50" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
+<line x1="132" y1="24" x2="170" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
+<line x1="60" y1="76" x2="156" y2="76" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah1)"></line>
+<text x="47" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">umbrella</text>
+<text x="174" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">wet</text>
 <defs><marker id="ah1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
 </svg>
-<p class="dovs-num" id="numSee">—<small>looks like the effect</small></p>
+<p class="dovs-num" id="numSee">+0.23<small>observed association</small></p>
 </div>
 
 <div class="dovs-card do">
 <p class="cap">Rung 2 · Doing</p>
-<p class="expr">P(drown | do(buy)) − P(drown | do(no buy))</p>
-<svg viewBox="0 0 200 96" role="img" aria-label="Same graph but the arrow from summer to ice cream is cut by the intervention.">
-<text x="100" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--brass)">☀ summer</text>
-<line x1="78" y1="22" x2="36" y2="58" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="3 3"></line>
-<line x1="59" y1="36" x2="49" y2="46" stroke="var(--contested)" stroke-width="2.4"></line>
-<line x1="49" y1="36" x2="59" y2="46" stroke="var(--contested)" stroke-width="2.4"></line>
-<line x1="122" y1="22" x2="164" y2="58" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah2)"></line>
-<line x1="44" y1="68" x2="150" y2="68" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah2)"></line>
-<text x="30" y="80" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">ice cream</text>
-<text x="172" y="80" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">drown</text>
-<text x="54" y="32" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--contested)">cut</text>
+<p class="expr">P(wet | do(umbrella)) − P(wet | do(no umbrella))</p>
+<svg viewBox="0 0 220 112" role="img" aria-label="Same graph but the arrow from rain to umbrella use is cut by the intervention.">
+<text x="110" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--brass)">rain</text>
+<line x1="88" y1="24" x2="50" y2="62" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="3 3"></line>
+<line x1="65" y1="40" x2="55" y2="50" stroke="var(--contested)" stroke-width="2.4"></line>
+<line x1="55" y1="40" x2="65" y2="50" stroke="var(--contested)" stroke-width="2.4"></line>
+<line x1="132" y1="24" x2="170" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah2)"></line>
+<line x1="60" y1="76" x2="156" y2="76" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah2)"></line>
+<text x="47" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">umbrella</text>
+<text x="174" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--ink-soft)">wet</text>
+<text x="60" y="36" font-family="IBM Plex Mono,monospace" font-size="8" fill="var(--contested)">cut</text>
 <defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
 </svg>
-<p class="dovs-num" id="numDo">—<small>the real effect</small></p>
+<p class="dovs-num" id="numDo">−0.16<small>causal effect</small></p>
 </div>
+</div>
+
+<div class="dovs-table" id="dovsTable" aria-live="polite">
+<table class="alt-table">
+<thead><tr><th>Observed table</th><th>Wet</th><th>Dry</th><th>Risk wet</th></tr></thead>
+<tbody>
+<tr><td>Umbrella</td><td>189</td><td>187</td><td>50.2%</td></tr>
+<tr><td>No umbrella</td><td>170</td><td>454</td><td>27.2%</td></tr>
+</tbody>
+</table>
 </div>
 
 <div class="dovs-equations" id="dovsEquations" aria-live="polite"></div>
 
 <div class="dovs-verdict gap" id="dovsVerdict" aria-live="polite">
-<p class="vh" id="dovsVH">The confounding gap</p>
-<p id="dovsBody"></p>
+<p class="vh" id="dovsVH">Sign reversal</p>
+<p id="dovsBody">Seeing says umbrellas are associated with wetter clothes. Doing says umbrellas reduce wetness. Rain changed the mix of people in the observed umbrella and no-umbrella groups.</p>
 </div>
-<p class="pnote">How the numbers are made: the left card compares observed buyers with observed non-buyers, so summer changes the mix of people in the two groups. The right card recomputes after cutting <code>summer → ice cream</code>; everyone keeps the same summer mix, and only the slider's direct effect remains.</p>
+<p class="pnote">The model is: <code>S ~ Bernoulli(0.45)</code>; <code>P(X=1|S=s)=logit⁻¹(a+bs)</code>; <code>P(Y=1|X=x,S=s)=logit⁻¹(c+dx+es)</code>. Here <code>S</code> is rain, <code>X</code> is umbrella use, and <code>Y</code> is wet clothes.</p>
 </div>
 </div>
 
 <div class="format-alt epub-only print-only">
 <p class="ptitle">Worked example</p>
 <h3>Seeing Is Not Doing</h3>
-<p>In the toy world, the observed association equals the true direct effect plus a bias term from summer. With the default settings, the true direct effect is +0.05, but the observed association is much larger because summer pushes both ice-cream buying and swimming deaths upward.</p>
+<p>In the default toy structural model, rain makes umbrellas more common and wet clothes more common. Umbrellas reduce wetness, but umbrella users are wetter in the observed data because they are disproportionately standing in rain.</p>
 <table class="alt-table">
 <thead><tr><th>Quantity</th><th>What it asks</th><th>Default reading</th></tr></thead>
 <tbody>
-<tr><td>P(drown | buy) - P(drown | no buy)</td><td>Seeing: compare existing buyers with non-buyers.</td><td>True effect plus confounding bias.</td></tr>
-<tr><td>P(drown | do(buy)) - P(drown | do(no buy))</td><td>Doing: set buying directly and sever its usual causes.</td><td>Only the true direct effect.</td></tr>
+<tr><td><code>P(wet | umbrella) - P(wet | no umbrella)</code></td><td>Seeing: compare existing umbrella users with non-users.</td><td>+0.23 observed association.</td></tr>
+<tr><td><code>P(wet | do(umbrella)) - P(wet | do(no umbrella))</code></td><td>Doing: set umbrella use directly and sever its usual causes.</td><td>−0.16 causal effect.</td></tr>
+<tr><td>Back-door adjusted contrast</td><td>Average the rain-specific umbrella contrasts using the population rain mix.</td><td>−0.16, matching the intervention contrast under this model.</td></tr>
 </tbody>
 </table>
+<p>Formula: <code>P(Y=1 | do(X=x)) = Σ<sub>s</sub> P(Y=1 | X=x,S=s)P(S=s)</code>. The observed contrast instead uses <code>P(S=s | X=x)</code>, which changes when rain affects umbrella use.</p>
 </div>
 
 <section>
-<p>That severed arrow in the right-hand graph is the do-operator made visual. Intervening doesn't just <em>look</em> at X — it <strong>deletes the arrows pointing into X</strong> and replaces them with your hand. The summer→ice-cream link is cut, so summer can no longer use ice cream as a backdoor route to fake an effect on drowning. What survives is only the real thing.</p>
-<p>Pearl gave us a grammar for doing this on paper. A <em class="term">structural causal model</em>{% tip 'A structural causal model represents how variables are generated from other variables and from background noise.' %} draws the variables as a <em class="term">directed acyclic graph</em>{% tip 'A directed acyclic graph, or DAG, is a network of arrows with no directed loops.' %} — boxes and arrows, no loops — and three named patterns do most of the work. A <em class="term">fork</em> (X ← Z → Y) is a confounder; block it by conditioning on Z. A <em class="term">chain</em> (X → Z → Y) is a mediator. And a <em class="term">collider</em> (X → Z ← Y) is the trap: X and Y are unrelated until you condition on their shared effect Z, at which point a phantom correlation springs into being. This is why "controlling for everything you can measure" is not cautious but reckless — condition on a collider and you <em>manufacture</em> the very bias you were trying to remove.</p>
+<p>That severed arrow in the right-hand graph is the do-operator made visual. Intervening doesn't just <em>look</em> at X — it <strong>deletes the arrows pointing into X</strong> and replaces them with your hand. The rain→umbrella link is cut, so rain can no longer use umbrella use as a backdoor route to distort the umbrella→wetness contrast. Under this graph, the back-door-adjusted contrast recovers the intervention contrast.</p>
+<p>Pearl gave us a grammar for doing this on paper. The recursive or acyclic <em class="term">structural causal models</em>{% tip 'A structural causal model represents how variables are generated from other variables and from background noise.' %} used in this lesson are represented by <em class="term">directed acyclic graphs</em>{% tip 'A directed acyclic graph, or DAG, is a network of arrows with no directed loops.' %}: boxes and arrows with no directed loops. Cyclic and dynamic structural models also exist. In a DAG, a <em class="term">fork</em> (X ← Z → Y) can be a confounder; a <em class="term">chain</em> (X → Z → Y) can be a mediator; and a <em class="term">collider</em> (X → Z ← Y) is the trap. A path that enters a node through two arrowheads is normally closed at that collider. Conditioning on the collider — or sometimes one of its descendants — can open that path and induce an association along that route. This is why "controlling for everything you can measure" is not cautious but reckless.</p>
 <div class="dag-examples" role="group" aria-label="Concrete DAG examples: a fork, a chain, and a collider.">
 <figure class="dag-card">
 <svg viewBox="0 0 220 150" role="img" aria-label="Fork DAG: summer causes both ice-cream buying and drowning.">
@@ -344,14 +373,15 @@
 </div>
 <div class="aside">
 <p class="h">The front-door trick</p>
-<p>Pearl's <em class="term">front-door criterion</em>{% tip 'The front-door criterion identifies a causal effect through a measured mediator when the direct cause-effect path is confounded.' %} is one of the framework's neatest moves: sometimes you can estimate the effect of smoking on cancer <em>even with an unmeasured genetic confounder</em>, as long as you can measure a complete mediator in between (say, tar deposits in the lungs). The calculation has three moves: estimate how smoking changes tar; estimate how tar changes cancer while accounting for smoking; then average those pieces over the observed smoking mix. The hidden genetic confounder affects smoking and cancer, but it does not enter the measured smoking → tar and tar → cancer pieces in the final front-door expression. It is a genuine "get a causal answer from observational data" move — but only because you supplied the <em>graph</em> that says tar is a full mediator. No free lunch: the assumptions just moved from the spreadsheet into the diagram.</p>
+<p>Pearl's <em class="term">front-door criterion</em>{% tip 'The front-door criterion identifies a causal effect through a measured mediator when the direct cause-effect path is confounded and specific graphical conditions hold.' %} is one of the framework's neatest moves: sometimes you can identify a total effect even when the exposure-outcome path is confounded, by using a measured mediator. The usual textbook smoking → tar → cancer story is a stylized graph, not a settled description of the biological system. The standard criterion requires three graphical conditions: the mediator intercepts all directed paths from treatment to outcome; there is no unblocked back-door path from treatment to mediator; and treatment blocks all back-door paths from mediator to outcome. You still also need well-defined interventions, consistency, adequate support, and the usual measurement and selection cautions.</p>
+<p>When those conditions hold, the calculation has three moves: estimate how treatment changes the mediator; estimate how the mediator changes the outcome while accounting for treatment; then average those pieces over the observed treatment mix. It is a genuine "get a causal answer from observational data" move — but only because you supplied a graph strong enough to license the expression.</p>
 </div>
 </section>
 
 <section class="frontier">
 <p class="sec-eyebrow">The frontier · 2026</p>
 <h2>Three live edges — and the hype filter</h2>
-<p>Now the question that has launched a thousand papers and at least one industry: <strong>can you infer causation from observation alone?</strong> The honest 2026 answer is a precise "partly — and there's a proven wall." Each claim below is tagged for how much weight it can bear.</p>
+<p>Now the question that has launched a thousand papers and at least one industry: <strong>can you infer causation from observation alone?</strong> The honest 2026 answer is a precise "partly — and there's a proven wall." Each claim below is tagged for how much weight it can bear. <span class="meta">Last evidence review: June 2026.</span></p>
 
 <div class="claim">
 <div class="ctop">
@@ -360,17 +390,14 @@
 <span class="chip ok" data-print="established"><i></i>Markov-equivalence ceiling · proven</span>
 </div>
 <h3>The two theorems that fence the field</h3>
-<p>This is the most solid ground in the whole day — not empirical findings that could be overturned, but <em>mathematical proofs</em>. First, <strong>do-calculus is complete.</strong> Pearl's three rewrite rules turn <code>do()</code> expressions into ordinary probabilities whenever that's possible at all; and Shpitser &amp; Pearl (2006) and, independently, Huang &amp; Valtorta (2006) proved that if the rules <em>cannot</em> eliminate the do-operator, then <strong>no method can</strong> — the effect is genuinely unidentifiable from observational data plus that graph. Pearl called this closing "the chapter of nonparametric identification." A clean, permanent answer to "when can seeing substitute for doing?"</p>
+<p>This is the most solid ground in the whole day — not empirical findings that could be overturned, but <em>mathematical proofs</em>. First, <strong>do-calculus is complete</strong> for a scoped problem: given an assumed nonparametric causal graph and the available observational distribution, it is complete for identifying the specified intervention distribution. If identification fails in that problem, no alternative manipulation of the same observational information can identify it. Additional experiments, longitudinal information, parametric restrictions, valid proxies, or stronger functional assumptions change the information available and can change the answer.</p>
 <div class="aside">
 <p class="h">What a do-calculus rewrite looks like</p>
-<ul class="clean">
-<li><strong>Delete an irrelevant observation:</strong> if Z already blocks every open path from X to Y, then learning X adds no more information: <code>P(Y | X, Z) = P(Y | Z)</code>.</li>
-<li><strong>Swap an action for an observation:</strong> after the right adjustment, setting X and observing X can answer the same question: <code>P(Y | do(X), Z) = P(Y | X, Z)</code>.</li>
-<li><strong>Delete an irrelevant action:</strong> if intervening on Z cannot reach Y once X is fixed, drop it: <code>P(Y | do(X), do(Z)) = P(Y | do(X))</code>.</li>
-</ul>
-<p>Those are toy examples, not the full formal side-conditions. The point is the flavor: the graph licenses exactly which symbols may be erased or exchanged.</p>
+<p>For a simple back-door graph, where Z blocks every back-door path from X to Y and no element of Z is caused by X:</p>
+<p class="formula"><code>P(y | do(x)) = Σ<sub>z</sub> P(y | do(x), z)P(z | do(x)) = Σ<sub>z</sub> P(y | x, z)P(z)</code></p>
+<p>The first equality is ordinary total probability over Z. The second uses the graph twice: once to replace the intervention on X with observation of X after conditioning on the sufficient adjustment set Z, and once to say intervening on X does not change the pre-treatment distribution of Z. The graph licenses exactly which symbols may be erased or exchanged.</p>
 </div>
-<p>Second, the wall on the other side: <strong>the Markov-equivalence ceiling.</strong> Using only the conditional-independence patterns in observational data, certain different causal graphs are <em>provably indistinguishable</em>. X→Y→Z, X←Y←Z, and X←Y→Z all imply the exact same single fact ("X and Z are independent once you know Y"), so no amount of that data can tell them apart. They form a <em class="term">Markov equivalence class</em>{% tip 'A Markov equivalence class is a set of causal graphs that imply the same conditional independences, so observational data of that kind cannot choose among them.' %}. Only the collider X→Y←Z stands out, because X and Z are independent in the raw data but become dependent after you condition on their shared effect Y. The takeaway is stark: <strong>observation alone, assumption-free, can never deliver a unique causal graph</strong> — only a class of candidates. Both results are <span class="chip ok" data-print="established"><i></i>ESTABLISHED</span> in the strongest sense available: theorems.</p>
+<p>Second, the wall on the other side: <strong>the Markov-equivalence ceiling.</strong> Under causal Markov, faithfulness, and a specified treatment of latent variables and selection, conditional-independence patterns can rule out some graphs but not all. X→Y→Z, X←Y←Z, and X←Y→Z share a skeleton and have no differing unshielded colliders, so they imply the same conditional-independence pattern: X and Z are independent once you know Y. They form a <em class="term">Markov equivalence class</em>{% tip 'A Markov equivalence class is a set of causal graphs that imply the same conditional independences, so observational data of that kind cannot choose among them.' %}. The collider X→Y←Z differs because conditioning on Y can open the path through Y. The takeaway is stark but scoped: observational independence information alone cannot deliver a unique causal graph without assumptions — only a class of candidates. Both results are <span class="chip ok" data-print="established"><i></i>ESTABLISHED</span> in the strongest sense available: theorems.</p>
 </div>
 
 <div class="claim">
@@ -380,8 +407,8 @@
 <span class="chip ok" data-print="established"><i></i>RCTs &amp; the credibility revolution · established</span>
 </div>
 <h3>Squeezing direction out of still data — and why experiments still reign</h3>
-<p>So is the ceiling the end? Not quite — you can climb over it by importing extra assumptions the bare independence-tests don't use. <strong><em class="term">LiNGAM</em></strong>{% tip 'LiNGAM is a causal-discovery method whose name abbreviates linear non-Gaussian acyclic model.' %} (Shimizu et al., <em>JMLR</em>, 2006) showed that if relationships are linear, there are no hidden confounders, and the noise is <em>non-Gaussian</em>, the full direction becomes identifiable — the asymmetry of non-Gaussian noise breaks the X→Y / Y→X tie. In the true direction, the leftover noise is independent of the cause; in the wrong direction, the residuals still carry a telltale dependence. <strong><em class="term">Additive-noise models</em></strong>{% tip 'Additive-noise models assume the effect equals a function of the cause plus independent noise, an asymmetry that can sometimes identify direction.' %} (Hoyer, Janzing, Mooij, Peters &amp; Schölkopf, NeurIPS 2009) extended this to nonlinear cause-effect pairs. On the standard <strong>Tübingen Cause-Effect Pairs</strong>{% tip 'The Tübingen benchmark is a collection of real-world variable pairs with expert-labeled causal directions.' %} benchmark — 108 pairs with known ground truth, like altitude→temperature — one strong system reported about <strong>83% accuracy</strong> (Mosaic, Wu &amp; Fukumizu 2020), evidence that something "often thought impossible" is partly doable. But note the shape of the trick: you escape the ceiling only by <em>assuming</em> non-Gaussianity or additivity. Those assumptions are not testable from the same observational distribution alone — and the load-bearing one for the whole constraint-based program, <em class="term">faithfulness</em>{% tip 'Faithfulness says the independences in the data reflect graph structure, not exact cancellations among causal paths.' %}, can fail silently in finite samples. <span class="chip hint" data-print="promising"><i></i>PROMISING / works under assumptions.</span></p>
-<p>Which is why the gold standard remains brutally simple: <strong>run the experiment.</strong> A <em class="term">randomized controlled trial</em>{% tip 'A randomized controlled trial assigns participants to conditions by chance so background causes are balanced on average.' %} physically performs <code>do(X)</code> by assigning X at random, severing every backdoor at a stroke. When you can't randomize, economics' <em class="term">credibility revolution</em>{% tip 'The credibility revolution in economics moved emphasis from clever regressions to research designs that approximate randomized experiments: instruments, discontinuities, and policy changes that assign exposure as-if at random.' %} hunts for "natural experiments" that mimic randomization — instrumental variables, regression discontinuity, difference-in-differences. That program earned the <strong>2021 Nobel</strong> in economics for David Card, Joshua Angrist, and Guido Imbens (we'll spend real time here on <strong>Day 152</strong>). <span class="chip ok" data-print="established"><i></i>ESTABLISHED.</span></p>
+<p>So is the ceiling the end? Not quite — you can climb over it by importing extra assumptions the bare independence-tests don't use. <strong><em class="term">LiNGAM</em></strong>{% tip 'LiNGAM is a causal-discovery method whose name abbreviates linear non-Gaussian acyclic model.' %} (Shimizu et al., <em>JMLR</em>, 2006) showed that if relationships are linear, acyclic, have no hidden confounders, have mutually independent disturbances, and the disturbances are <em>non-Gaussian</em>, the full direction becomes identifiable — the asymmetry of non-Gaussian noise breaks the X→Y / Y→X tie. <strong><em class="term">Additive-noise models</em></strong>{% tip 'Additive-noise models assume the effect equals a function of the cause plus independent noise, an asymmetry that can sometimes identify direction.' %} (Hoyer, Janzing, Mooij, Peters &amp; Schölkopf, NIPS 2008 proceedings, published 2009) extended this to nonlinear cause-effect pairs. On the December 2017 Tübingen Cause-Effect Pairs benchmark version — using the eligible pairwise tasks with expert-assigned directions — Causal Mosaic reported about <strong>83% unweighted accuracy</strong> (Wu &amp; Fukumizu 2020). But note the shape of the trick: you escape the ceiling only by <em>assuming</em> non-Gaussianity, additivity, independence, or related structure. Some implications of these assumptions can be checked against data, but they cannot be fully established from finite observational samples. <span class="chip hint" data-print="promising"><i></i>PROMISING / works under assumptions.</span></p>
+<p>Which is why the strongest general design for assignable interventions remains simple: randomize assignment. A <em class="term">randomized controlled trial</em>{% tip 'A randomized controlled trial assigns participants to conditions by chance so background causes are balanced on average.' %} severs the ordinary causes of treatment assignment. In an ideal trial with adherence, no interference, a well-defined treatment, complete follow-up, and appropriate analysis, assignment and treatment coincide closely enough to estimate intervention effects directly. With noncompliance, the cleanest identified quantity may instead be the effect of assignment; effects of treatment received require additional assumptions. When you can't randomize, economics' <em class="term">credibility revolution</em>{% tip 'The credibility revolution in economics moved emphasis from clever regressions to research designs that approximate randomized experiments: instruments, discontinuities, and policy changes that assign exposure as-if at random.' %} hunts for designs that approximate random assignment — instruments, discontinuities, policy changes. That program earned the <strong>2021 Nobel</strong> in economics for David Card, Joshua Angrist, and Guido Imbens (we'll spend real time here on <strong>Day 152</strong>). <span class="chip ok" data-print="established"><i></i>ESTABLISHED.</span></p>
 </div>
 
 <div class="claim">
@@ -392,7 +419,7 @@
 </div>
 <h3>Can the machines do it? Causal ML and the "causal parrot"</h3>
 <p>The hottest and haziest edge. <strong><em class="term">Causal representation learning</em></strong>{% tip 'Causal representation learning tries to learn useful causal variables from raw data such as pixels, text, or sensor streams.' %} (Schölkopf et al., <em>Proceedings of the IEEE</em>, May 2021) asks the deep question: classical causal discovery assumes the variables are handed to you, but the real world arrives as pixels and words. Can a network <em>learn</em> the high-level causal variables — and would that buy robustness to <em class="term">distribution shift</em>{% tip 'Distribution shift means the data a model sees after deployment differ from the data it learned from.' %}, which today's models often lack? It's a serious, active program whose biggest promises remain <span class="chip hint" data-print="promising"><i></i>PROMISING HINT</span>, not yet delivered at scale.</p>
-<p>Then the lightning rod: <strong>can large language models reason about cause and effect?</strong> Kıcıman, Ness, Sharma &amp; Tan (2023) reported GPT-4 hitting <strong>97% on the Tübingen pairwise causal-direction task</strong> — a 13-point jump over the prior best — plus strong counterfactual scores, and argued memorization alone can't explain it. The rebuttal came fast: Zečević et al., "Causal Parrots" (TMLR, 2023), argued LLMs <em>talk</em> causality without <em>being</em> causal — they recite causal facts marinating in their training text rather than performing Pearl-style inference. The 2024–25 synthesis (e.g., Jin et al., ICLR 2024, "Can LLMs Infer Causation from Correlation?") splits the difference: models are strong causal-<em>knowledge retrievers</em> and often shine on Rung-1 questions, but the hard test is genuinely novel Rung-2/3 interventional and counterfactual structure. Recall the <a href="/days/001-what-is-knowledge/"><strong>Day 1 Gettier trap</strong></a> in a new guise: an LLM that outputs a true causal claim for reasons that have nothing to do with the causal structure is right, but does it <em>know</em>? And recall <a href="/days/003-logic-and-valid-inference/"><strong>Day 3</strong></a>: reciting a memorized fact isn't abduction. Verdict on "LLMs reason causally in Pearl's sense": <span class="chip bad" data-print="contested"><i></i>CONTESTED / HYPE.</span> Useful for <em>setting up</em> a causal analysis; not established as a causal reasoner. The open-source tooling underneath causal ML (DoWhy, EconML) is genuine and built on exactly the theorems above, but the sales pitch that causal AI will soon replace ordinary correlational ML is still ahead of the evidence.</p>
+<p>Then the lightning rod: <strong>can large language models reason about cause and effect?</strong> Kıcıman, Ness, Sharma &amp; Tan (TMLR 2024; initial arXiv preprint 2023) reported GPT-4 hitting <strong>97% on a natural-language Tübingen pairwise causal-direction task</strong> — a 13-point jump over the prior best — plus strong counterfactual scores. The rebuttal came fast: Zečević et al., "Causal Parrots" (TMLR, 2023), argued LLMs <em>talk</em> causality without <em>being</em> causal — they recite causal facts marinating in their training text rather than performing Pearl-style inference. Results are strongly task-dependent. Models can retrieve familiar causal facts and achieve high scores on semantically rich benchmarks, yet perform poorly when linguistic and world-knowledge shortcuts are removed or when causal mechanisms must be composed and transferred to novel settings. Recall the <a href="/days/001-what-is-knowledge/"><strong>Day 1 Gettier trap</strong></a> in a new guise: an LLM that outputs a true causal claim for reasons that have nothing to do with the causal structure is right, but does it <em>know</em>? Verdict on "LLMs reason causally in Pearl's sense": <span class="chip bad" data-print="contested"><i></i>CONTESTED / HYPE.</span> Useful for <em>setting up</em> a causal analysis; not established as a general causal reasoner. DoWhy and EconML are genuine tools in the modern ecosystem: DoWhy emphasizes graph-based identification, assumptions, and refutation; EconML emphasizes treatment-effect estimation with orthogonal and machine-learning methods. The sales pitch that causal AI will soon replace ordinary correlational ML is still ahead of the evidence.</p>
 </div>
 </section>
 
@@ -400,8 +427,8 @@
 <p class="sec-eyebrow">Open questions</p>
 <h2>What's genuinely unsettled</h2>
 <ul class="clean">
-<li><strong>Is there a "right" theory of causation at all,</strong> or are counterfactual, probabilistic, and interventionist accounts each capturing a different facet — with none reducible to the others? No analysis has escaped all the counterexamples (preemption, overdetermination, contextual unanimity).</li>
-<li><strong>How far can we trust faithfulness?</strong> The assumption that real systems never have exactly-cancelling causal paths is convenient and untestable — and biology, with its feedback and homeostasis, may violate it routinely.</li>
+<li><strong>Is there a "right" theory of causation at all,</strong> or are counterfactual, probabilistic, INUS, mechanistic, and interventionist accounts each capturing a different facet — with none reducible to the others? No analysis has escaped all the counterexamples, including early and late preemption, overdetermination, omissions, and prevention.</li>
+<li><strong>How far can we trust faithfulness?</strong> The assumption that real systems do not hide causal paths through exact cancellations is convenient. Some implications can be checked against data, but faithfulness cannot be fully established from finite observational samples — and biology, with its feedback and homeostasis, may violate it routinely.</li>
 <li><strong>Can causal variables be learned from raw data</strong> (pixels, language) rather than handed to the algorithm — and is that even well-posed, since the "right" carve-up of the world into variables may itself be perspective-dependent?</li>
 <li><strong>Do large models build internal causal world-models,</strong> or only ever statistics of causal talk? The answer reaches straight into <strong>Days 138–145</strong> and the question of whether prediction can ever amount to understanding.</li>
 <li><strong>Where do the arrows come from?</strong> Every method here needs <em>some</em> causal input — a graph, an assumption, an experiment. Hume's ghost still asks whether that input is ever read off the world, or always brought to it.</li>
@@ -411,17 +438,17 @@
 <div class="recap">
 <p class="h">◆ The day in three sentences</p>
 <dl>
-<div><dt>Big idea</dt><dd>Causation is not a stronger correlation but a different <em>kind</em> of thing, living on higher rungs of Pearl's ladder — <em>doing</em> and <em>imagining</em> above mere <em>seeing</em> — so that <code>P(Y|do(X)) ≠ P(Y|X)</code> whenever a confounder lurks, and no amount of staring at observational data alone can close that gap without importing causal assumptions.</dd></div>
+<div><dt>Big idea</dt><dd>Causal effects are contrasts between outcomes under specified interventions. Observational and interventional quantities may coincide, but their equality cannot be assumed merely from observational data; it requires a design or causal assumptions encoded in randomization, a graph, a potential-outcomes model, or another defensible identification strategy.</dd></div>
 <div><dt>Best analogy</dt><dd>Ice cream and drowning marching upward together while summer, off-stage, pulls both strings — and the do-operator as a pair of scissors that cuts the strings into a variable so you can see what it really drives.</dd></div>
-<div><dt>Live controversy</dt><dd>Whether causation can be inferred from observation alone — provably "only up to a Markov-equivalence class" without extra assumptions, partly recoverable with them (LiNGAM, additive noise) — and the noisy 2026 fight over whether LLMs genuinely reason causally or merely parrot causal talk.</dd></div>
+<div><dt>Live controversy</dt><dd>Whether causal structure can be inferred from observation alone — often only up to a Markov-equivalence class under standard assumptions, partly recoverable with stronger assumptions (LiNGAM, additive noise) — and the noisy 2026 fight over whether LLMs genuinely reason causally or mostly retrieve causal talk.</dd></div>
 </dl>
-<p class="threads"><b>Threads today ›</b> information (a graph is the extra information data lacks; the do-operator quantifies evidence vs intervention) · computation (do-calculus as a complete <em>algorithm</em>; causal discovery as search) · emergence (causal structure as a higher-level layer over raw correlation) — with callbacks to <a href="/days/001-what-is-knowledge/">Day 1</a> (true-by-luck), <a href="/days/002-scientific-method-and-demarcation/">Day 2</a> (Hume), <a href="/days/003-logic-and-valid-inference/">Day 3</a> (abduction), and <a href="/days/004-probability-as-extended-logic/">Day 4</a> (P(y|x)).</p>
+<p class="threads"><b>Threads today ›</b> information (a graph is the extra information data lacks; the do-operator distinguishes evidence from intervention) · computation (identification as an algorithmic problem; causal discovery as search under assumptions) · emergence (causal structure as a higher-level layer over raw correlation) — with callbacks to <a href="/days/001-what-is-knowledge/">Day 1</a> (true-by-luck), <a href="/days/002-scientific-method-and-demarcation/">Day 2</a> (Hume), <a href="/days/003-logic-and-valid-inference/">Day 3</a> (abduction), and <a href="/days/004-probability-as-extended-logic/">Day 4</a> (P(y|x)).</p>
 </div>
 
 <div class="tomorrow">
 <p class="h">Tomorrow <span class="arrow">→</span> Day 06</p>
 <h3><a href="/days/006-statistics-and-the-art-of-not-fooling-yourself/">Statistics &amp; the Art of Not Fooling Yourself</a></h3>
-<p>Today we saw how a confounder can flip a conclusion. Tomorrow the danger moves inside the analysis itself: <em>p</em>-values, researcher degrees of freedom, confidence intervals, effect sizes, power, and multiverse/specification-curve analysis show how honest methods can still manufacture false certainty unless the whole inferential path is made visible.</p>
+<p>Today we saw how subgroup mixtures and causal assumptions can flip a conclusion. Tomorrow the danger moves inside the analysis itself: <em>p</em>-values, researcher degrees of freedom, confidence intervals, effect sizes, power, and multiverse/specification-curve analysis show how honest methods can still manufacture false certainty unless the whole inferential path is made visible.</p>
 </div>
 
 <hr class="div">
@@ -437,18 +464,23 @@
 <li>Suppes, P. (1970). <em>A Probabilistic Theory of Causality.</em> North-Holland. <span class="meta">— prima facie vs spurious causes.</span></li>
 <li>Cartwright, N. (1979). "Causal Laws and Effective Strategies." <em>Noûs</em> 13(4): 419–437. <span class="meta">doi:10.2307/2215337.</span> <a href="https://doi.org/10.2307/2215337">doi.org/10.2307/2215337</a> <span class="meta">— probability-raising only within causally homogeneous contexts.</span> <a href="https://academic.oup.com/book/27605/chapter/197659592">overview</a></li>
 <li>Woodward, J. (2003). <em>Making Things Happen: A Theory of Causal Explanation.</em> Oxford University Press. <span class="meta">doi:10.1093/0195155270.001.0001.</span> <a href="https://doi.org/10.1093/0195155270.001.0001">doi.org/10.1093/0195155270.001.0001</a> <span class="meta">— the interventionist/manipulationist theory.</span></li>
-<li>Charig, C. R., Webb, D. R., Payne, S. R. &amp; Wickham, J. E. A. (1986). "Comparison of treatment of renal calculi by open surgery, percutaneous nephrolithotomy, and extracorporeal shockwave lithotripsy." <em>British Medical Journal</em> 292: 879–882. <span class="meta">doi:10.1136/bmj.292.6524.879.</span> <a href="https://doi.org/10.1136/bmj.292.6524.879">doi.org/10.1136/bmj.292.6524.879</a> <span class="meta">— the kidney-stone Simpson's-paradox data.</span></li>
+<li>Charig, C. R., Webb, D. R., Payne, S. R. &amp; Wickham, J. E. A. (1986). "Comparison of treatment of renal calculi by open surgery, percutaneous nephrolithotomy, and extracorporeal shockwave lithotripsy." <em>British Medical Journal</em> 292: 879–882. <span class="meta">doi:10.1136/bmj.292.6524.879.</span> <a href="https://doi.org/10.1136/bmj.292.6524.879">doi.org/10.1136/bmj.292.6524.879</a> <span class="meta">— the kidney-stone data; observational and historical, not randomized evidence of treatment superiority.</span></li>
 <li>Simpson, E. H. (1951). "The Interpretation of Interaction in Contingency Tables." <em>JRSS B</em> 13: 238–241. <span class="meta">doi:10.1111/j.2517-6161.1951.tb00088.x.</span> <a href="https://doi.org/10.1111/j.2517-6161.1951.tb00088.x">doi.org/10.1111/j.2517-6161.1951.tb00088.x</a> Blyth, C. R. (1972), <em>JASA</em> 67: 364–366, <span class="meta">doi:10.1080/01621459.1972.10482387</span> (coins "Simpson's paradox"). <a href="https://doi.org/10.1080/01621459.1972.10482387">doi.org/10.1080/01621459.1972.10482387</a> Yule, G. U. (1903) on spurious correlation, <span class="meta">doi:10.1093/biomet/2.2.121.</span> <a href="https://doi.org/10.1093/biomet/2.2.121">doi.org/10.1093/biomet/2.2.121</a></li>
 <li>Pearl, J. (2009). <em>Causality: Models, Reasoning, and Inference</em>, 2nd ed. Cambridge University Press. <span class="meta">doi:10.1017/CBO9780511803161.</span> <a href="https://doi.org/10.1017/CBO9780511803161">doi.org/10.1017/CBO9780511803161</a> And Pearl, J. &amp; Mackenzie, D. (2018). <em>The Book of Why.</em> Basic Books. <span class="meta">— the Ladder of Causation; do-calculus; back-door/front-door.</span></li>
-<li>Shpitser, I. &amp; Pearl, J. (2006). "Identification of Joint Interventional Distributions in Recursive Semi-Markovian Causal Models." <em>AAAI.</em> &amp; Huang, Y. &amp; Valtorta, M. (2006). "Pearl's Calculus of Intervention Is Complete." <em>UAI.</em> <span class="meta">— completeness of do-calculus (proven).</span></li>
+<li>Holland, P. W. (1986). "Statistics and Causal Inference." <em>JASA</em> 81(396): 945–960. <span class="meta">doi:10.1080/01621459.1986.10478354; potential outcomes and the fundamental problem of causal inference.</span> <a href="https://doi.org/10.1080/01621459.1986.10478354">doi.org/10.1080/01621459.1986.10478354</a> Rubin, D. B. (1974). "Estimating causal effects of treatments in randomized and nonrandomized studies." <em>Journal of Educational Psychology</em> 66(5): 688–701. <span class="meta">doi:10.1037/h0037350.</span> <a href="https://doi.org/10.1037/h0037350">doi.org/10.1037/h0037350</a></li>
+<li>Imbens, G. W. &amp; Rubin, D. B. (2015). <em>Causal Inference for Statistics, Social, and Biomedical Sciences.</em> Cambridge University Press. <span class="meta">doi:10.1017/CBO9781139025751.</span> <a href="https://doi.org/10.1017/CBO9781139025751">doi.org/10.1017/CBO9781139025751</a> Hernán, M. A. &amp; Robins, J. M. (2020/2024). <em>Causal Inference: What If.</em> Chapman &amp; Hall/CRC. <a href="https://miguelhernan.org/whatifbook">book site</a> <span class="meta">— estimands, consistency, exchangeability, positivity, interference, front-door/back-door.</span></li>
+<li>Shpitser, I. &amp; Pearl, J. (2006). "Identification of Joint Interventional Distributions in Recursive Semi-Markovian Causal Models." <em>AAAI.</em> <a href="https://cdn.aaai.org/AAAI/2006/AAAI06-191.pdf">AAAI PDF</a> &amp; Huang, Y. &amp; Valtorta, M. (2006). "Pearl's Calculus of Intervention Is Complete." <em>UAI.</em> <a href="https://arxiv.org/abs/1206.6831">arXiv</a> <span class="meta">— completeness of do-calculus within the stated identification problem.</span></li>
 <li>ACM (2012). 2011 A.M. Turing Award — Judea Pearl. <a href="https://amturing.acm.org/award_winners/pearl_2658896.cfm">amturing.acm.org/award_winners/pearl</a></li>
 <li>Spirtes, P., Glymour, C. &amp; Scheines, R. (2000). <em>Causation, Prediction, and Search</em>, 2nd ed. MIT Press. <span class="meta">doi:10.7551/mitpress/1754.001.0001.</span> <a href="https://doi.org/10.7551/mitpress/1754.001.0001">doi.org/10.7551/mitpress/1754.001.0001</a> <span class="meta">— the PC and FCI algorithms; Markov equivalence.</span></li>
-<li>Shimizu, S., Hoyer, P. O., Hyvärinen, A. &amp; Kerminen, A. (2006). "A Linear Non-Gaussian Acyclic Model for Causal Discovery." <em>JMLR</em> 7: 2003–2030. <a href="https://github.com/amber0309/LiNGAM">reference code</a></li>
-<li>Hoyer, P., Janzing, D., Mooij, J., Peters, J. &amp; Schölkopf, B. (2009). "Nonlinear causal discovery with additive noise models." <em>NeurIPS.</em> Mooij, J. et al. (2016). "Distinguishing Cause from Effect Using Observational Data." <em>JMLR</em> 17(32): 1–102. Wu, P. &amp; Fukumizu, K. (2020). "Causal Mosaic: Cause-Effect Inference via Nonlinear ICA and Ensemble Method." <em>Proceedings of Machine Learning Research</em> 108: 1157–1167. <span class="meta">— additive-noise models, the Tübingen pairs benchmark, and the Mosaic result.</span></li>
+<li>Shimizu, S., Hoyer, P. O., Hyvärinen, A. &amp; Kerminen, A. (2006). "A Linear Non-Gaussian Acyclic Model for Causal Discovery." <em>JMLR</em> 7: 2003–2030. <a href="https://www.jmlr.org/papers/v7/shimizu06a.html">JMLR</a> <span class="meta">— LiNGAM; linearity, acyclicity, no hidden confounders, mutually independent non-Gaussian disturbances.</span></li>
+<li>Hoyer, P., Janzing, D., Mooij, J., Peters, J. &amp; Schölkopf, B. (2008/2009). "Nonlinear causal discovery with additive noise models." <em>Advances in Neural Information Processing Systems 21.</em> Mooij, J. et al. (2016). "Distinguishing Cause from Effect Using Observational Data." <em>JMLR</em> 17(32): 1–102. Wu, P. &amp; Fukumizu, K. (2020). "Causal Mosaic: Cause-Effect Inference via Nonlinear ICA and Ensemble Method." <em>Proceedings of Machine Learning Research</em> 108: 1157–1167. <a href="https://proceedings.mlr.press/v108/wu20b.html">PMLR</a> <span class="meta">— additive-noise models, the Tübingen pairs benchmark, and Mosaic's reported result on eligible expert-labeled pairwise tasks.</span></li>
 <li>Schölkopf, B., Locatello, F., Bauer, S., Ke, N. R., Kalchbrenner, N., Goyal, A. &amp; Bengio, Y. (2021). "Toward Causal Representation Learning." <em>Proceedings of the IEEE</em> 109(5): 612–634. <span class="meta">doi:10.1109/JPROC.2021.3058954.</span> <a href="https://doi.org/10.1109/JPROC.2021.3058954">doi.org/10.1109/JPROC.2021.3058954</a></li>
-<li>Kıcıman, E., Ness, R., Sharma, A. &amp; Tan, C. (2023). "Causal Reasoning and Large Language Models." <span class="meta">arXiv:2305.00050; TMLR 2024.</span> &amp; Zečević, M., Willig, M., Dhami, D. S. &amp; Kersting, K. (2023). "Causal Parrots: Large Language Models May Talk Causality But Are Not Causal." <em>TMLR.</em> <span class="meta">arXiv:2308.13067.</span> &amp; Jin, Z. et al. (2024). "Can Large Language Models Infer Causation from Correlation?" <em>ICLR.</em></li>
+<li>Kıcıman, E., Ness, R., Sharma, A. &amp; Tan, C. (2024). "Causal Reasoning and Large Language Models." <em>TMLR.</em> <span class="meta">initial arXiv preprint 2023; reports 97% on a natural-language pairwise causal-direction task.</span> <a href="https://openreview.net/forum?id=mqoxLkX210">OpenReview</a> Zečević, M., Willig, M., Dhami, D. S. &amp; Kersting, K. (2023). "Causal Parrots: Large Language Models May Talk Causality But Are Not Causal." <em>TMLR.</em> <span class="meta">arXiv:2308.13067.</span> Jin, Z. et al. (2024). "Can Large Language Models Infer Causation from Correlation?" <em>ICLR.</em></li>
 <li>The Royal Swedish Academy of Sciences (2021). The Sveriges Riksbank Prize in Economic Sciences — Card, Angrist &amp; Imbens. <a href="https://www.nobelprize.org/prizes/economic-sciences/2021/summary/">nobelprize.org/prizes/economic-sciences/2021</a></li>
-<li>Stanford Encyclopedia of Philosophy: "Causation" / "Counterfactual Theories of Causation" / "Causal Models" / "Probabilistic Causation." <a href="https://plato.stanford.edu/entries/causation-counterfactual/">plato.stanford.edu/entries/causation-counterfactual</a></li>
+<li>Stanford Encyclopedia of Philosophy. "Causation." <a href="https://plato.stanford.edu/entries/causation-metaphysics/">plato.stanford.edu/entries/causation-metaphysics</a></li>
+<li>Stanford Encyclopedia of Philosophy. "Counterfactual Theories of Causation." <a href="https://plato.stanford.edu/entries/causation-counterfactual/">plato.stanford.edu/entries/causation-counterfactual</a></li>
+<li>Stanford Encyclopedia of Philosophy. "Causal Models." <a href="https://plato.stanford.edu/entries/causal-models/">plato.stanford.edu/entries/causal-models</a></li>
+<li>Stanford Encyclopedia of Philosophy. "Probabilistic Causation." <a href="https://plato.stanford.edu/entries/causation-probabilistic/">plato.stanford.edu/entries/causation-probabilistic</a></li>
 </ol>
 </section>
 
