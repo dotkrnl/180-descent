@@ -133,8 +133,8 @@
         var bw = pct(poolB);
         winner.className = "simp-winner B";
         winner.innerHTML = isZh
-          ? "汇总数据显示，<span class=\"hl\">疗法 B 胜出</span>，胜率 " + (bw * 100).toFixed(1) + "% 对 " + (aw * 100).toFixed(1) + "%。但注意：上下两排的病例分布并不均衡。"
-          : "Pooled, <b>Treatment B wins</b> — " + (bw * 100).toFixed(1) + "% vs " + (aw * 100).toFixed(1) + "%. But the row mix is not balanced.";
+          ? "汇总数据显示，<span class=\"hl\">疗法 B 的观测成功率更高</span>，为 " + (bw * 100).toFixed(1) + "% 对 " + (aw * 100).toFixed(1) + "%。但注意：上下两排的病例分布并不均衡。"
+          : "Pooled, <b>Treatment B has the higher observed success rate</b> — " + (bw * 100).toFixed(1) + "% vs " + (aw * 100).toFixed(1) + "%. But the row mix is not balanced.";
       } else {
         var smallA = group("A", "small");
         var smallB = group("B", "small");
@@ -176,7 +176,7 @@
     var data = isZh
       ? {
         1: { name: "第 1 层 · 关联", expr: "<code>P(Y | X)</code>  —  「观察」", body: "世界以其本然之姿呈现：观察模式、寻找相关、执行回归。这里问的是服用阿司匹林者与未服用者的头痛改善率有何不同。它精于描述与预测，却不能单独回答干预问题。" },
-        2: { name: "第 2 层 · 干预", expr: "<code>P(Y | do(X))</code>  —  「行动」", body: "现在你亲手改变世界。强行设定 X 会切断其原有的因果纽带，混杂因素便无法再伪装成效应。从「观察」到「干预」，正是今日的核心跨越。" },
+        2: { name: "第 2 层 · 干预", expr: "<code>P(Y | do(X))</code>  —  「行动」", body: "现在你亲手改变世界。设定 X 的制度会切断其原有的因果纽带，混杂因素便无法再伪装成效应。从「观察」到「干预」，正是今日的核心跨越。" },
         3: { name: "第 3 层 · 反事实", expr: "<code>P(Y<sub>x</sub> | X′, Y′)</code>  —  「想象」", body: "最高层级：在获知现实结果后，追问一个从未发生过的平行世界。这里 <code>Y<sub>x</sub></code> 指把 X 设为 x 的世界里的 Y；X′ 和 Y′ 是已经发生的现实事实。" }
       }
       : {
@@ -244,6 +244,7 @@
     if (!rConf || !rTrue || !vConf || !vTrue || !numSee || !numDo || !equations || !verdict || !vh || !body) return;
 
     var table = root.querySelector("#dovsTable");
+    var params = root.querySelector("#dovsParams");
     var presetButtons = root.querySelectorAll("[data-preset]");
     var pRain = 0.45;
     var a = -2.0;
@@ -255,7 +256,8 @@
     }
 
     function signed(x){
-      return (x >= 0 ? "+" : "") + x.toFixed(2);
+      var rounded = Math.round((x + (x < 0 ? -1e-10 : 1e-10)) * 100) / 100;
+      return (rounded >= 0 ? "+" : "") + rounded.toFixed(2);
     }
 
     function pct1(x){
@@ -302,6 +304,12 @@
       return {
         conf: conf,
         protection: protection,
+        a: a,
+        b: b,
+        c: c,
+        d: d,
+        e: rainWet,
+        pRain: pRain,
         observedDiff: obs1 - obs0,
         doDiff: do1 - do0,
         adjustedDiff: do1 - do0,
@@ -332,19 +340,34 @@
         '</tbody></table>';
     }
 
+    function renderParams(m){
+      if (!params) return;
+      params.innerHTML =
+        '<table class="alt-table"><thead><tr><th>' + (isZh ? "模型参数" : "Model parameter") + '</th><th>' +
+        (isZh ? "当前值" : "Current value") + '</th></tr></thead><tbody>' +
+        '<tr><td><code>P(S=1)</code></td><td>' + m.pRain.toFixed(2) + '</td></tr>' +
+        '<tr><td><code>a</code></td><td>' + signed(m.a) + '</td></tr>' +
+        '<tr><td><code>b</code></td><td>4 × ' + signed(m.conf) + ' = ' + signed(m.b) + '</td></tr>' +
+        '<tr><td><code>c</code></td><td>' + signed(m.c) + '</td></tr>' +
+        '<tr><td><code>d</code></td><td>-3.3 × ' + m.protection.toFixed(2) + ' = ' + signed(m.d) + '</td></tr>' +
+        '<tr><td><code>e</code></td><td>' + signed(m.e) + '</td></tr>' +
+        '</tbody></table>';
+    }
+
     function render(){
       var m = model();
-      vConf.textContent = signed(m.conf);
-      vTrue.textContent = m.protection.toFixed(2);
-      numSee.innerHTML = signed(m.observedDiff) + "<small>" + (isZh ? "观察关联" : "observed association") + "</small>";
-      numDo.innerHTML = signed(m.doDiff) + "<small>" + (isZh ? "因果效应" : "causal effect") + "</small>";
+      vConf.textContent = "b=" + signed(m.b);
+      vTrue.textContent = "d=" + signed(m.d);
+      numSee.innerHTML = signed(m.observedDiff) + "<small>" + (isZh ? "观测风险差" : "observed risk difference") + "</small>";
+      numDo.innerHTML = signed(m.doDiff) + "<small>" + (isZh ? "干预风险差" : "interventional risk difference") + "</small>";
       renderTable(m);
+      renderParams(m);
       equations.innerHTML = isZh
         ? '<div class="dovs-eq see"><span class="tag">观察</span><code>P(Y=1|X=1)-P(Y=1|X=0) = ' + signed(m.observedDiff) + '</code></div>' +
-          '<div class="dovs-eq do"><span class="tag">干预</span><code>Σ_s P(Y=1|X=x,S=s)P(S=s): do 差值 = ' + signed(m.doDiff) + '</code></div>' +
+          '<div class="dovs-eq do"><span class="tag">干预</span><code>Σ_s P(Y=1|X=x,S=s)P(S=s): 干预风险差 = ' + signed(m.doDiff) + '</code></div>' +
           '<div class="dovs-eq adj"><span class="tag">调整</span><code>Σ_s [P(Y|X=1,S=s)-P(Y|X=0,S=s)]P(S=s) = ' + signed(m.adjustedDiff) + '</code></div>'
         : '<div class="dovs-eq see"><span class="tag">Seeing</span><code>P(Y=1|X=1)-P(Y=1|X=0) = ' + signed(m.observedDiff) + '</code></div>' +
-          '<div class="dovs-eq do"><span class="tag">Doing</span><code>Σ_s P(Y=1|X=x,S=s)P(S=s): do contrast = ' + signed(m.doDiff) + '</code></div>' +
+          '<div class="dovs-eq do"><span class="tag">Doing</span><code>Σ_s P(Y=1|X=x,S=s)P(S=s): interventional risk difference = ' + signed(m.doDiff) + '</code></div>' +
           '<div class="dovs-eq adj"><span class="tag">Adjusted</span><code>Σ_s [P(Y|X=1,S=s)-P(Y|X=0,S=s)]P(S=s) = ' + signed(m.adjustedDiff) + '</code></div>';
 
       var gap = m.observedDiff - m.doDiff;
@@ -353,8 +376,8 @@
         verdict.className = "dovs-verdict match";
         vh.textContent = isZh ? "观察与干预近似重合" : "Seeing and doing nearly coincide";
         body.innerHTML = isZh
-          ? "在这个参数组合下，观察关联和干预效应数值接近。但这不是因为二者同义，而是因为当前模型让混杂影响很小或相互抵消。"
-          : "With these parameters, the observed association and intervention effect are numerically close. That does not make them the same kind of quantity; this model just makes the bias small or cancel out.";
+          ? "在这个参数组合下，观测风险差和干预风险差数值接近。但这不是因为二者同义，而是因为当前模型让混杂影响很小或相互抵消。"
+          : "With these parameters, the observed risk difference and interventional risk difference are numerically close. That does not make them the same kind of quantity; this model just makes the bias small or cancel out.";
       } else if (signReversal) {
         verdict.className = "dovs-verdict gap";
         vh.textContent = isZh ? "符号反转" : "Sign reversal";
@@ -365,8 +388,8 @@
         verdict.className = "dovs-verdict gap";
         vh.textContent = (isZh ? "混杂差距 = " : "Confounding gap = ") + signed(gap);
         body.innerHTML = isZh
-          ? "观察关联为 <span class=\"hl\">" + signed(m.observedDiff) + "</span>，干预效应为 <span class=\"hl\">" + signed(m.doDiff) + "</span>。二者差距来自开放的后门路径：雨同时影响带伞和淋湿。"
-          : "The observed association is <strong>" + signed(m.observedDiff) + "</strong>; the intervention effect is <strong>" + signed(m.doDiff) + "</strong>. The gap comes from the open back-door path: rain affects both umbrella use and wet clothes.";
+          ? "观测风险差为 <span class=\"hl\">" + signed(m.observedDiff) + "</span>，干预风险差为 <span class=\"hl\">" + signed(m.doDiff) + "</span>。二者差距来自开放的后门路径：雨同时影响带伞和淋湿。"
+          : "The observed risk difference is <strong>" + signed(m.observedDiff) + "</strong>; the interventional risk difference is <strong>" + signed(m.doDiff) + "</strong>. The gap comes from the open back-door path: rain affects both umbrella use and wet clothes.";
       }
     }
 
