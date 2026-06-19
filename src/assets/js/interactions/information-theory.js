@@ -277,8 +277,8 @@
     stepButton.addEventListener("click", step);
     copyButton.addEventListener("click", function(){
       caption.innerHTML = text(
-        "<b>Copying is free.</b> Writing this bit into a fresh blank register adds a distinction rather than destroying one, so it is logically reversible in principle. Landauer's toll is charged on erasure.",
-        "「复制是免费的」把这个比特写进一个空白寄存器，是在增加一个区分，而不是毁掉一个区分，因此原则上逻辑可逆。兰道尔的过路费，只收在擦除这一步。"
+        "<b>Copying can be reversible in principle.</b> Writing this bit into a fresh blank register adds a distinction rather than destroying one. Real apparatus still has ordinary losses; Landauer's unavoidable toll is charged on irreversible reset.",
+        "「复制原则上可以可逆。」把这个比特写进一个空白寄存器，是在增加一个区分，而不是毁掉一个区分。真实装置仍会有普通损耗；兰道尔不可避免的过路费收在不可逆重置这一步。"
       );
     });
     resetButton.addEventListener("click", function(){
