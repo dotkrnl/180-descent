@@ -75,11 +75,12 @@
     var sTails = root.querySelector("#sT");
     var barHeads = root.querySelector("#barH");
     var barTails = root.querySelector("#barT");
+    var calculation = root.querySelector("#entCalc");
     var verdict = root.querySelector("#entVerdict");
     var curve = root.querySelector("#entCurve");
     var dot = root.querySelector("#entDot");
     var guide = root.querySelector("#entGuide");
-    if (!slider || !pLabel || !hVal || !pHeads || !pTails || !sHeads || !sTails || !barHeads || !barTails || !verdict || !curve || !dot || !guide) return;
+    if (!slider || !pLabel || !hVal || !pHeads || !pTails || !sHeads || !sTails || !barHeads || !barTails || !calculation || !verdict || !curve || !dot || !guide) return;
 
     function entropy2(p){
       if (p <= 0 || p >= 1) return 0;
@@ -123,6 +124,10 @@
       sTails.textContent = surpriseTails.toFixed(2);
       barHeads.style.width = barWidth(surpriseHeads) + "%";
       barTails.style.width = barWidth(surpriseTails) + "%";
+      calculation.textContent = text(
+        "H = " + p.toFixed(2) + "×" + surpriseHeads.toFixed(2) + " + " + q.toFixed(2) + "×" + surpriseTails.toFixed(2) + " = " + h.toFixed(2) + " bits/flip.",
+        "H = " + p.toFixed(2) + "×" + surpriseHeads.toFixed(2) + " + " + q.toFixed(2) + "×" + surpriseTails.toFixed(2) + " = " + h.toFixed(2) + " 比特/投掷。"
+      );
       dot.setAttribute("cx", px.toFixed(1));
       dot.setAttribute("cy", py.toFixed(1));
       guide.setAttribute("x1", px.toFixed(1));
@@ -185,7 +190,7 @@
 
     var doubleWell = "M20,40 C90,40 70,150 130,150 C175,150 165,70 220,70 C275,70 265,150 310,150 C370,150 350,40 420,40";
     var singleWell = "M20,40 C120,40 150,150 220,150 C290,150 320,40 420,40";
-    var tiltedWell = "M20,30 C120,40 140,120 220,140 C300,158 330,150 420,165";
+    var biasedWell = "M20,42 C80,58 82,160 150,160 C220,160 250,105 320,72 C370,48 395,36 420,30";
     var floor = 2.8;
     var stage = 0;
     var heat = 0;
@@ -193,8 +198,8 @@
     var captions = [
       text("<b>Stage 0 - a bit at rest.</b> The ball sits in the right well: this memory holds a 1. Press <b>Next step</b> to begin erasing it to 0.","「阶段 0 — 静止的比特」小球停在右侧的势阱中：此存储状态为 1。两个势阱代表两个可能的取值，它们之间的壁障维持着比特的稳定。按「下一步」开始把它擦除为 0。"),
       text("<b>Stage 1 - lower the wall.</b> The old value is no longer protected. Lowering a barrier can in principle be done gently, with no minimum energy cost.","「阶段 1 — 降下壁障」旧值不再受保护。原则上，降下势垒可以做得足够缓慢温和，不存在任何最低能耗。"),
-      text("<b>Stage 2 - tilt the world left.</b> The ball is driven toward 0, pushing against thermal jostling. This is where heat begins to leak out.","「阶段 2 — 整个地貌向左倾斜」小球被推向 0，并顶住热涨落；热量正是在这里开始泄出。"),
-      text("<b>Stage 3 - raise the wall, release the tilt.</b> The bit reads 0 regardless of whether it started as 0 or 1. Two possible pasts have been crushed into one present.","「阶段 3 — 升起壁障，撤去倾斜」无论它起初是 0 还是 1，现在都读作 0。两个可能的过去被压成了一个现在。"),
+      text("<b>Stage 2 - bias the landscape toward 0.</b> The left well is made energetically favorable, so either possible starting state is driven toward the reset value. In an irreversible reset, the work put in is dissipated as heat.","「阶段 2 — 将地貌偏置向 0」左侧势阱在能量上变得更有利，因此任一起始状态都会被推向重置值。在不可逆重置中，输入的功会以热量形式耗散。"),
+      text("<b>Stage 3 - raise the wall and remove the bias.</b> The bit reads 0 regardless of whether it started as 0 or 1. Releasing the bias does not recover the erased distinction; two possible pasts have been crushed into one present.","「阶段 3 — 升起壁障并撤去偏置」无论它起初是 0 还是 1，现在都读作 0。撤去偏置并不会恢复被擦除的区分；两个可能的过去已经被压成了一个现在。"),
       text("<b>Done - one bit erased.</b> Heat dissipated has reached the Landauer floor, kT ln 2 ~= 2.8 zJ at room temperature.","「完成 — 一个比特已被擦除」散失的热量触及兰道尔底限：室温下 kT ln 2 ≈ 2.8 zJ。")
     ];
 
@@ -246,8 +251,8 @@
         setBall(330, 150);
         showPuffs(false);
       } else if (stage === 2) {
-        path.setAttribute("d", tiltedWell);
-        setBall(230, 138);
+        path.setAttribute("d", biasedWell);
+        setBall(150, 148);
         heat = 1.3;
         showPuffs(true);
       } else if (stage === 3) {
