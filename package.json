@@ -8,9 +8,9 @@
     "clean": "rm -rf _site dist",
     "postinstall": "playwright install chromium",
     "preflight": "node scripts/preflight.mjs",
-    "dev": "node scripts/prepare-fonts.mjs && eleventy --serve",
+    "dev": "node scripts/prepare-fonts.mjs && node scripts/prepare-css.mjs && eleventy --serve",
     "serve": "npm run dev",
-    "build:site": "node scripts/prepare-fonts.mjs && node scripts/generate-social-cards.mjs && eleventy",
+    "build:site": "node scripts/prepare-fonts.mjs && node scripts/prepare-css.mjs && node scripts/generate-social-cards.mjs && eleventy",
     "build:epub": "node scripts/build-epub.mjs",
     "build:pdf": "node scripts/build-pdf.mjs",
     "build": "node scripts/preflight.mjs && npm run build:site && npm run build:epub && npm run build:pdf",
@@ -39,6 +39,9 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
+    "lightningcss": "^1.32.0",
+    "postcss": "^8.5.15",
+    "postcss-import": "^16.1.1",
     "wrangler": "^4.99.0"
   }
 }

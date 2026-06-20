@@ -1,0 +1,28 @@
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+html[lang^="zh"]{
+  text-autospace: normal;
+}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Newsreader",Georgia,serif;
+  font-size:clamp(1.06rem,.55rem + 1.05vw,1.2rem);
+  line-height:1.78;
+  transition:background .3s ease,color .3s ease;
+}
+@media screen{
+  html,body{overflow-x:hidden;}
+}
+::selection{background:rgba(29,111,120,.22);}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent);}
+a:hover{border-bottom-color:var(--accent);}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 68%,#fff);outline-offset:3px;box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 16%,transparent);}
+.topnav a:focus-visible,.course:focus-visible,.toggle:focus-visible,.lesson-nav-card:focus-visible,.day-card a:focus-visible,.download-card a:focus-visible,.all-days-link a:focus-visible{border-radius:8px;}
+.topnav a[aria-current="page"]{color:var(--ink);border-bottom-color:currentColor;}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
+.skip-link{position:absolute;left:-999px;top:.5rem;background:var(--raised);padding:.45rem .7rem;z-index:50;}
+.skip-link:focus{left:.5rem;}
+.wrap{max-width:var(--measure);margin:0 auto;padding:0 1.35rem;}
+.wide{max-width:50rem;}

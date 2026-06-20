@@ -1,0 +1,101 @@
+@page{size:6in 9in;margin:.78in .55in .86in;background:#fff;}
+@page cover{size:6in 9in;margin:0;}
+@page block{size:6in 9in;margin:0;}
+@page appendix{size:6in 9in;margin:.78in .55in .86in;background:#f2f2ef;}
+@media print{
+  :root{--paper:#fff;--raised:#fff;--ink:#111;--ink-soft:#333;--ink-faint:#666;--line:#ddd;--line-strong:#bbb;--shadow:none;}
+  body{font-size:10.2pt;line-height:1.46;background:transparent;color:#111;}
+  .site-topbar,.site-footer,.release-banner,.latest-day-banner,.download-strip,.web-only,.epub-only,.print-hide,.deep-dive,.codex-refiner{display:none!important;}
+  .include-deep-dive .deep-dive{display:block!important;break-before:page;page-break-before:always;page:appendix;box-sizing:border-box;border:0;margin:-.78in -.55in -.86in;padding:.78in .55in .86in;background:#f2f2ef;}
+  .include-deep-dive .deep-dive>summary{display:block;cursor:auto;padding:0 0 .24in;}
+  .include-deep-dive .deep-dive>summary::before{display:none;}
+  .include-deep-dive .deep-dive .ptitle{display:block;font-family:"IBM Plex Mono",monospace;font-size:8.2pt;letter-spacing:.16em;text-transform:uppercase;color:#666;margin:0 0 .06in;}
+  .include-deep-dive .deep-dive-title{display:block;font-size:22pt;line-height:1.05;margin:.04in 0 .08in;}
+  .include-deep-dive .deep-dive-optional-note{display:block;font-style:italic;font-size:10.4pt;color:#444;margin:0 0 .1in;}
+  .include-deep-dive .deep-dive-sub{display:block;font-size:11pt;color:#333;}
+  .include-deep-dive .deep-dive-body{display:block;padding:0;}
+  .print-only,.format-alt{display:block!important;}
+  .deep-dive-edition-only.print-only{display:none!important;}
+  .include-deep-dive .deep-dive-edition-only.print-only{display:block!important;}
+  .print-cover,.block-divider{box-sizing:border-box;width:6in;height:9in;min-height:9in;max-height:9in;margin:0;background:var(--accent-deep);color:#fff;display:flex;align-items:center;padding:.78in .82in .86in;overflow:hidden;}
+  .print-cover{page:cover;break-before:auto;break-after:page;page-break-before:auto;page-break-after:always;flex-direction:column;justify-content:center;align-items:flex-start;}
+  .block-divider{page:block;break-before:page;break-after:page;page-break-before:always;page-break-after:always;}
+  .print-cover-logo{width:1.18in;height:1.18in;object-fit:contain;border-radius:50%;background:#f7f3ea;padding:.06in;margin:0 0 .34in;box-shadow:0 0 0 .012in rgba(255,255,255,.42);}
+  .print-cover .eyebrow,.block-divider p{font-family:"IBM Plex Mono",monospace;font-size:9pt;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);margin:0 0 .18in;}
+  .print-cover h1,.block-divider h1{font-size:29pt;line-height:1.05;color:#fff;margin:0;max-width:4.3in;}
+  .print-cover .sub{font-family:"Fraunces",serif;font-style:italic;font-size:14pt;color:rgba(255,255,255,.78);margin:.24in 0 0;}
+  .print-toc{break-before:page;break-after:page;page-break-before:always;page-break-after:always;}
+  .toc-list{margin:.24in 0 0;font-size:10.6pt;}
+  .toc-row{display:grid;grid-template-columns:minmax(0,1fr) .34in;gap:.12in;align-items:baseline;margin:.055in 0;}
+  .toc-row a{border:0;color:#111;display:flex;align-items:baseline;gap:.08in;min-width:0;}
+  .toc-title{min-width:0;}
+  .toc-leader{border-bottom:1px dotted #c8c8c8;flex:1;transform:translateY(-.04in);}
+  .toc-page{font-family:"IBM Plex Mono",monospace;font-size:8.2pt;color:#555;text-align:right;}
+  .toc-block{margin-top:.18in;font-family:"IBM Plex Mono",monospace;font-size:7.8pt;letter-spacing:.07em;text-transform:uppercase;color:#555;}
+  .toc-day{margin-left:.18in;}
+  .toc-kicker{flex:0 0 .46in;font-family:"IBM Plex Mono",monospace;font-size:7.8pt;letter-spacing:.05em;text-transform:uppercase;color:#666;}
+  .print-intro{break-before:page;break-after:page;page-break-before:always;page-break-after:always;}
+  .print-intro>.sub{margin-bottom:.3in;}
+  .block-divider-inner{max-width:4.2in;}
+  .print-dest{position:absolute;width:1px;height:1px;overflow:hidden;border:0;color:transparent;}
+  .print-page-marker{position:absolute;color:transparent;font:6pt/1 "IBM Plex Mono",monospace;letter-spacing:0;}
+  .wrap,.wide{max-width:none;padding:0;}
+  .print-cover{padding:.78in .82in .86in;}
+  header.hero,.page-hero{padding:0 0 .25in;break-after:auto;}
+  .print-cover.page-hero{padding:.78in .82in .86in;break-after:page;page-break-after:always;}
+  .hero-clock,.hero-sun{max-width:2.45in;margin:.26in auto;}
+  .lesson-figure{max-width:4.8in;margin:.24in auto;}
+  .lesson-figure.is-portrait{max-width:2.6in;}
+  .lesson-figure img{box-shadow:none;border-radius:0;border-color:#ddd;}
+  .lesson-figure figcaption{font-size:7pt;line-height:1.35;color:#666;margin-top:.06in;}
+  .lede{font-size:1.12em;line-height:1.5;color:var(--accent-deep);}
+  .lede .drop{font-size:3em;}
+  .lede.dropcap::first-letter{font-size:3em;}
+  h1{font-size:23pt;line-height:1.05;}
+  h2{font-size:16pt;break-after:avoid;}
+  h3{font-size:13pt;break-after:avoid;}
+  p,li{orphans:2;widows:2;}
+  .sec-eyebrow{break-after:avoid;}
+  .whereblock,.aside,.panel,.format-alt,.recap,.tomorrow,.appendix-card,.appendix-timeline li,figure,blockquote,table{break-inside:avoid;page-break-inside:avoid;}
+  .whereblock,.aside,.panel,.format-alt,.recap,.tomorrow,.appendix-card,.appendix-timeline li{box-shadow:none;border-radius:0;}
+  .whereblock{background:transparent;border:0!important;padding:.08in 0;margin:.18in 0;}
+  .whereblock .label{display:none!important;}
+  .aside,.tomorrow{background:transparent;border:0!important;padding:.08in 0;}
+  .format-alt{background:#fff;border:1px solid #ddd!important;padding:.18in .22in;margin:.28in 0;}
+  .format-alt .ptitle,.format-alt .pnote{display:none!important;}
+  .format-alt h3,.format-alt h4{font-size:12.5pt;margin:0 0 .12in;}
+  figure,.oscviz,.reptable,.alt-table,.tri-print{margin-top:.24in;margin-bottom:.24in;}
+  .panel{padding:.18in .22in;margin:.24in 0;border-color:#ddd;}
+  .claim .ctop{gap:.04in .12in;align-items:baseline;margin-bottom:.05in;}
+  .chip{display:inline;padding:0;border:0!important;border-radius:0;background:transparent!important;font-size:0;line-height:1.2;letter-spacing:0;white-space:normal;color:#444!important;}
+  .chip::before{content:"[" attr(data-print) "]";font-size:6.1pt;letter-spacing:.04em;}
+  .chip::after{content:none;}
+  .chip i,.chip-dot{display:none!important;}
+  .tip-note{display:inline;margin:0;vertical-align:baseline;color:inherit;}
+  .tip-note-mark{display:none!important;}
+  .tip-note-box{display:none!important;}
+  .tip-note-ref{display:inline!important;font-family:"IBM Plex Mono",monospace;font-size:.64em;font-weight:500;line-height:0;vertical-align:super;margin-left:.02in;color:#444;}
+  .tip-note-ref a{color:#444;border-bottom:0;text-decoration:none;}
+  .tip-footnotes{display:block!important;margin:.26in 0 .18in;padding-top:.08in;border-top:1px solid #d8d8d8;font-size:7.5pt;line-height:1.34;color:#444;break-inside:auto;page-break-inside:auto;}
+  .tip-footnotes h2{font-family:"IBM Plex Mono",monospace;font-size:7.2pt;letter-spacing:.12em;text-transform:uppercase;color:#666;margin:0 0 .06in;}
+  .tip-footnotes ol{margin:0;padding-left:.18in;}
+  .tip-footnotes li{margin:.035in 0;orphans:1;widows:1;}
+  .tip-footnotes p{margin:0;}
+  .tip-note-back{display:none!important;}
+  .tri svg{display:none!important;}
+  .tri-print{border-left:2px solid var(--accent);padding-left:.14in;margin:.1in 0 .14in;font-size:.94em;}
+  .tri-print p{margin:0 0 .07in;}
+  .tri-print ol{margin:0;padding-left:.2in;}
+  .tri-print li{margin:.03in 0;}
+  .tri-key{grid-template-columns:1fr 1fr;gap:.12in .2in;margin-top:.12in;}
+  .tri-key .k{font-size:.9em;break-inside:avoid;page-break-inside:avoid;}
+  .recap{background:transparent;color:#111;border:0!important;padding:.1in 0;}
+  .recap .h{margin-bottom:.16in;}
+  .recap strong{color:#111;}
+  .recap dt,.threads,.threads b,.threads-label{color:#333;}
+  .threads{border-top:1px solid #ddd;}
+  .sources a{color:#111;border-bottom:0;}
+  .print-document .lesson-print{break-before:page;page-break-before:always;}
+  .print-document .block-divider + .lesson-print{break-before:auto;page-break-before:auto;}
+  .print-document .lesson-print:first-child{break-before:auto;}
+}
