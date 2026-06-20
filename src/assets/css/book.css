@@ -99,7 +99,7 @@ body{
   margin:0;
   background:var(--paper);
   color:var(--ink);
-  font-family:"Newsreader",Georgia,serif;
+  font-family:var(--font-body);
   font-size:clamp(1.06rem,.55rem + 1.05vw,1.2rem);
   line-height:1.78;
   transition:background .3s ease,color .3s ease;
@@ -1257,6 +1257,19 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
     box-shadow:0 0 0 0 transparent;
   }
 }
+html[lang^="zh"]{
+  --measure:var(--measure-cjk);
+  --font-body:"LXGW WenKai","Newsreader",Georgia,serif;
+  --font-display:"LXGW WenKai","Fraunces",serif;
+}
+html[lang^="zh"] body{
+  line-height:1.9;
+  word-break:break-word;
+  font-feature-settings:"palt";
+}
+html[lang^="zh"] h1,html[lang^="zh"] h2,html[lang^="zh"] h3{
+  font-weight:700;
+}
 html[lang^="zh"] .wrap>p,
 html[lang^="zh"] .wrap section>p,
 html[lang^="zh"] .wrap section li,
@@ -1324,6 +1337,7 @@ html[lang^="zh"] .deep-dive>summary .ptitle{
 @page appendix{size:6in 9in;margin:.78in .55in .86in;background:#f2f2ef;}
 @media print{
   :root{--paper:#fff;--raised:#fff;--ink:#111;--ink-soft:#333;--ink-faint:#666;--line:#ddd;--line-strong:#bbb;--shadow:none;}
+  html[lang^="zh"]{--font-body:serif;--font-display:serif;}
   body{font-size:10.2pt;line-height:1.46;background:transparent;color:#111;}
   .site-topbar,.site-footer,.release-banner,.latest-day-banner,.download-strip,.web-only,.epub-only,.print-hide,.deep-dive,.codex-refiner{display:none!important;}
   .include-deep-dive .deep-dive{display:block!important;break-before:page;page-break-before:always;page:appendix;box-sizing:border-box;border:0;margin:-.78in -.55in -.86in;padding:.78in .55in .86in;background:#f2f2ef;}

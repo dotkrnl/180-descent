@@ -38,7 +38,7 @@ const editions = [
     dayBasePath: "/zh/days/",
     introPath: "/zh/introduction/",
     bookTitle: "180 Descent",
-    introTitle: "Chinese Edition",
+    introTitle: "Introduction",
     blockTitle: "Lessons"
   },
   {
@@ -47,7 +47,7 @@ const editions = [
     dayBasePath: "/zh/days/",
     introPath: "/zh/introduction/",
     bookTitle: "180 Descent",
-    introTitle: "Chinese Edition",
+    introTitle: "Introduction",
     blockTitle: "Lessons",
     includeDeepDive: true
   }
@@ -378,9 +378,7 @@ async function ghostscriptPageMarkers(pdfPath) {
 }
 
 function dayPdfHeaderTitle(day, config) {
-  return config.language.startsWith("zh")
-    ? `Lesson ${day.data.day}`
-    : `Day ${day.data.day}`;
+  return `Day ${day.data.day}`;
 }
 
 function markOptionalAppendices() {
