@@ -8,9 +8,14 @@ import { walk } from "./lib/fs.mjs";
 const htmlFiles = await walk("_site", { exts: ".html", ignored: [] });
 let failures = 0;
 
+const idCache = new Map();
 for (const file of htmlFiles) {
   const $ = cheerio.load(await readFile(file, "utf8"));
-  const ids = new Set($("[id]").map((_, el) => $(el).attr("id")).get());
+  idCache.set(file, new Set($("[id]").map((_, el) => $(el).attr("id")).get()));
+}
+
+for (const file of htmlFiles) {
+  const $ = cheerio.load(await readFile(file, "utf8"));
   for (const a of $("a[href]").toArray()) {
     const href = $(a).attr("href");
     if (!href || href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("#") || href.startsWith("urn:")) continue;
@@ -19,9 +24,12 @@ for (const file of htmlFiles) {
     const target = pathname.endsWith("/") ? path.join("_site", pathname, "index.html") : path.join("_site", pathname);
     try {
       await access(target);
-      if (anchor && file === target && !ids.has(anchor)) {
-        console.error(`Missing anchor ${href} in ${file}`);
-        failures++;
+      if (anchor) {
+        const targetIds = idCache.get(target);
+        if (targetIds && !targetIds.has(anchor)) {
+          console.error(`Missing anchor ${href} (anchor "${anchor}" not found in ${target}) referenced from ${file}`);
+          failures++;
+        }
       }
     } catch {
       console.error(`Broken internal link ${href} in ${file}`);

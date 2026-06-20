@@ -423,7 +423,7 @@ function navDocument(items, config) {
 }
 
 function contentOpf(meta, manifestItems, spine) {
-  const modified = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
+  const modified = "2026-06-19T00:00:00Z";
   return `<?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="3.0">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
