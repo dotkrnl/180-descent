@@ -37,9 +37,12 @@ function checkSegment(source, segment, file, offset = 0) {
   }
 }
 
+const generatedCss = new Set(['src/assets/css/book.css', 'src/assets/css/katex.css', 'src/assets/css/cjk.css']);
+
 for (const root of roots) {
   if (!fs.existsSync(root)) continue;
   for (const file of walkSync(root, { allowedExtensionsRegex: allowedExtensions })) {
+    if (generatedCss.has(file)) continue;
     const source = fs.readFileSync(file, 'utf8');
     if (file.endsWith('.css') || file.endsWith('.js')) {
       checkSegment(source, source, file);

@@ -2,6 +2,7 @@ const crypto = require("node:crypto");
 const fs = require("node:fs");
 const path = require("node:path");
 const yaml = require("yaml");
+const katex = require("katex");
 const { createCodexRefinerMiddleware } = require("./scripts/codex-refiner-middleware.cjs");
 
 const assetHashCache = new Map();
@@ -237,6 +238,14 @@ module.exports = function (eleventyConfig) {
     const label = isZh ? "?, 显示说明" : "?, Show note";
     const note = escapeHtml(text);
     return `<span class="tip-note" data-tip-text="${note}"><button class="tip-note-mark" type="button" aria-expanded="false" aria-label="${escapeHtml(label)}"></button><span class="tip-note-box" data-tip="${note}" aria-hidden="true"></span></span>`;
+  });
+
+  eleventyConfig.addPairedShortcode("math", function (latex = "") {
+    return katex.renderToString(latex.trim(), { displayMode: true, throwOnError: false, output: "html" });
+  });
+
+  eleventyConfig.addPairedShortcode("mathinline", function (latex = "") {
+    return katex.renderToString(latex.trim(), { displayMode: false, throwOnError: false, output: "html" });
   });
 
   eleventyConfig.addCollection("days", (collectionApi) => {
