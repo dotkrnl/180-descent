@@ -8,7 +8,6 @@ summary: "区分演绎、归纳与溯因三种推理引擎，厘清有效性与�
 block: 知识与推理的根基
 slug: logic-and-valid-inference
 day_path: 003-logic-and-valid-inference
-source_file: ../day-03-logic-and-valid-inference.html
 threads:
   - 信息
   - 计算

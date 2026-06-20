@@ -7,7 +7,6 @@ summary: "Shannon entropy, bits, channel capacity, Maxwell's demon, and Landauer
 block: Foundations of Knowledge & Reasoning
 slug: information-theory
 day_path: 007-information-theory
-source_file: ../day-07-information-theory.html
 threads:
   - information
   - energy

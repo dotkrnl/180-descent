@@ -1,3 +1,4 @@
+{% from "macros/chip.njk" import chip %}
 <header class="hero wrap">
 <p class="eyebrow">Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 02 / 180</span></p>
 <h1>The Scientific Method <em>&amp;</em> Demarcation</h1>
@@ -190,8 +191,8 @@
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Result 01</span>
-<span class="chip ok" data-print="established"><i></i>The headline numbers · established</span>
-<span class="chip hint" data-print="contested"><i></i>What they mean · contested</span>
+{{ chip("ok", "The headline numbers · established", "established") }}
+{{ chip("hint", "What they mean · contested", "contested") }}
 </div>
 <h3>The shot heard round psychology</h3>
 <p>The landmark is the <strong>Open Science Collaboration's "Estimating the Reproducibility of Psychological Science"</strong> (<em>Science</em>, 28 August 2015) — roughly 270 researchers, led by Brian Nosek, who repeated <strong>100</strong> studies from three top psychology journals, working with the original authors to get the methods right. The result detonated across the field. But the single most important lesson is buried in plain sight: <strong>there is no one "replication rate."</strong> The paper reported several, and they tell different stories. Watch.</p>
@@ -234,7 +235,7 @@
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Result 02</span>
-<span class="chip ok" data-print="established"><i></i>Not just psychology · established</span>
+{{ chip("ok", "Not just psychology · established", "established") }}
 </div>
 <h3>It isn't one field's embarrassment</h3>
 <p>The reflex defense — "soft sciences, what do you expect" — collapsed as the same exercise ran elsewhere and came back in the same unhappy range. The crisis is broad. Here are the verified anchor numbers; note the metric every time, because, as we just saw, the metric <em>is</em> the story.</p>
@@ -284,8 +285,8 @@
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Result 03</span>
-<span class="chip ok" data-print="established"><i></i>Famous casualties · established</span>
-<span class="chip hint" data-print="contested"><i></i>"Fully dead" · contested</span>
+{{ chip("ok", "Famous casualties · established", "established") }}
+{{ chip("hint", "\"Fully dead\" · contested", "contested") }}
 </div>
 <h3>The findings that evaporated — and the scientists who said so</h3>
 <p>Abstractions don't sting; named casualties do. A run of celebrated, TED-talk-famous effects buckled under high-powered, <em class="term">preregistered</em>{% tip 'Preregistration means stating the hypothesis, sample plan, and analysis before seeing the data, so later choices cannot quietly chase a pleasing result.' %} repetition — and, remarkably, in the cleanest cases an <em>insider</em> changed their mind in public:</p>
@@ -300,7 +301,7 @@
 <div class="claim">
 <div class="ctop">
 <span class="cnum">The turn</span>
-<span class="chip ok" data-print="optimistic"><i></i>Self-correction · the optimistic reading</span>
+{{ chip("ok", "Self-correction · the optimistic reading", "optimistic") }}
 </div>
 <h3>Is this science failing — or science working?</h3>
 <p>Here's the reframe that makes the whole crisis a hopeful story rather than a scandal. Every one of those numbers came from <em>scientists policing science</em> — using preregistered, high-powered, openly-shared methods to expose and discard claims that couldn't stand up. That is <strong>Popper's executioner's blade, finally turned inward.</strong> The crisis isn't evidence that the demarcation criteria are wrong. It's evidence of them <em>working</em>, painfully and in public.</p>
@@ -548,7 +549,7 @@
 <figcaption>Same photons, same retinas — two different sunrises. If observation is theory-laden, there is no neutral umpire to settle a clash of theories.</figcaption>
 </figure>
 
-<p>This is the quiet land-mine under the whole idea of a decisive experiment. The falsificationist picture needs a neutral observation language — facts both sides accept — to serve as referee between rival theories. Hanson (and then Kuhn, with his duck-rabbit and his student who sees "confused broken lines" where the physicist sees "a record of familiar subnuclear events") suggests the referee may be compromised before the match begins, quietly wearing one team's colors. <em>(Fairness check: Hanson himself admitted "something" in the two dawn experiences "is the same for both," so the strong claim — that they literally see different things — is genuinely contested. A minimal version is safe; the maximal version is a fight. <span class="chip hint" data-print="contested"><i></i>strength of the claim · contested</span>)</em></p>
+<p>This is the quiet land-mine under the whole idea of a decisive experiment. The falsificationist picture needs a neutral observation language — facts both sides accept — to serve as referee between rival theories. Hanson (and then Kuhn, with his duck-rabbit and his student who sees "confused broken lines" where the physicist sees "a record of familiar subnuclear events") suggests the referee may be compromised before the match begins, quietly wearing one team's colors. <em>(Fairness check: Hanson himself admitted "something" in the two dawn experiences "is the same for both," so the strong claim — that they literally see different things — is genuinely contested. A minimal version is safe; the maximal version is a fight. {{ chip("hint", "strength of the claim · contested", "contested") }})</em></p>
 
 <h3>Quine pulls the thread, and the whole sweater moves</h3>
 <p>If single observations are theory-laden, the philosopher <strong>W.V.O. Quine</strong> showed in 1951 that single <em>tests</em> are theory-laden too — and turned it into a deeply influential paper in modern philosophy, "Two Dogmas of Empiricism." We met its child in the main lesson (the Duhem–Quine thesis: no hypothesis is tested alone). Here is the parent idea in full, and it's wilder. Quine pictured all of human knowledge — from "there's a cup here" to the laws of logic — as a single vast <em class="term">web of belief</em>:</p>
@@ -591,14 +592,14 @@
 
 <h3>Laudan slams the brakes: possible ≠ reasonable</h3>
 <p>If you've been feeling the floor tilt toward "so anything goes, it's all just choice" — good, because that's the abyss, and <strong>Larry Laudan</strong> (yes, the same demolition man from the main lesson) is the one who pulls everyone back from it. In "Demystifying Underdetermination" (1990), he argues the dramatic conclusions people draw from Quine are smuggled in by a single bad equation: treating <em>logically possible</em> as if it meant <em>rationally reasonable</em>.</p>
-<p>Yes, Laudan concedes, pure deductive logic never <em>forces</em> a unique theory choice — you <em>can</em> always save a belief "come what may." But science was never running on deductive logic alone. It runs on logic <em>plus</em> a thick fabric of ampliative standards — simplicity, fruitfulness, consistency with established results, predictive track record. Quoting Duhem approvingly: "Pure logic is not the only rule for our judgments." That you <em>could</em> blame the telescope instead of the theory doesn't make it <em>reasonable</em> to; that you <em>could</em> hold the Earth flat by adding enough epicycles of excuse doesn't make it a live option for a sane inquirer. The web has no logical bedrock — but it has rational <em>tension</em>, and that tension is enough to do real work. Underdetermination is true and mostly toothless. It's the difference between "I can't prove with certainty you're not a brain in a vat" and "therefore all bets are off." The first is correct; the second doesn't follow. <span class="chip ok" data-print="review"><i></i>the standard rescue from relativism</span></p>
+<p>Yes, Laudan concedes, pure deductive logic never <em>forces</em> a unique theory choice — you <em>can</em> always save a belief "come what may." But science was never running on deductive logic alone. It runs on logic <em>plus</em> a thick fabric of ampliative standards — simplicity, fruitfulness, consistency with established results, predictive track record. Quoting Duhem approvingly: "Pure logic is not the only rule for our judgments." That you <em>could</em> blame the telescope instead of the theory doesn't make it <em>reasonable</em> to; that you <em>could</em> hold the Earth flat by adding enough epicycles of excuse doesn't make it a live option for a sane inquirer. The web has no logical bedrock — but it has rational <em>tension</em>, and that tension is enough to do real work. Underdetermination is true and mostly toothless. It's the difference between "I can't prove with certainty you're not a brain in a vat" and "therefore all bets are off." The first is correct; the second doesn't follow. {{ chip("ok", "the standard rescue from relativism", "review") }}</p>
 </section>
 <section>
 <p class="sec-eyebrow">Part 4 · a fairer trial for Freud</p>
 <h2>Grünbaum: psychoanalysis isn't un-science — it's failed science</h2>
 <p>In the main lesson we flagged that Popper may have caricatured Freud. The philosopher who turned that hunch into a forensic case was <strong>Adolf Grünbaum</strong>, in <em>The Foundations of Psychoanalysis</em> (1984) — and his verdict is far more interesting, and more damning, than Popper's.</p>
 <p>Popper said psychoanalysis was <em>unfalsifiable</em> — it explained everything, forbade nothing, so it never even entered the arena of science. Grünbaum said: nonsense, and not in Freud's favor. Freud's theory <em>does</em> make testable claims. If repressed homosexuality is a <em>necessary cause</em> of paranoia, then a society that grows more tolerant of homosexuality should see paranoia decline — a real, checkable prediction. More centrally, Grünbaum excavated what he called Freud's <em class="term">Tally Argument</em> (from Freud's 1917 lectures): Freud defended his method by claiming that <em>only</em> psychoanalytic interpretations that "tally with what is real" in the patient can produce a durable cure — so lasting therapeutic success would <em>vindicate</em> the interpretations.</p>
-<p>That's a genuine scientific bet. On Grünbaum's reading, it <em>loses</em>. Durable remission happens through other therapies and through spontaneous remission with no analysis at all — so therapeutic success can't certify Freudian interpretations as uniquely correct. He also argued that the "evidence from the couch" is contaminated by the analyst's own suggestion: patients can oblige their analysts by producing the very memories and associations the theory predicts. So the data can't bear the causal weight Freud put on it. Grünbaum's conclusion reframes the whole demarcation question: psychoanalysis is not <em>non</em>-science safely quarantined outside the arena — it's <strong>science that stepped into the ring and got knocked out</strong>. Bad science, not non-science. (A genuinely different and arguably more respectful verdict: it takes Freud seriously enough to test him. <span class="chip hint" data-print="contested"><i></i>Tally Argument reading · contested by Erwin &amp; others</span>) This distinction — <em>unfalsifiable</em> vs. <em>falsified</em> — is one you'll want in your pocket for every "is X a science?" fight to come.</p>
+<p>That's a genuine scientific bet. On Grünbaum's reading, it <em>loses</em>. Durable remission happens through other therapies and through spontaneous remission with no analysis at all — so therapeutic success can't certify Freudian interpretations as uniquely correct. He also argued that the "evidence from the couch" is contaminated by the analyst's own suggestion: patients can oblige their analysts by producing the very memories and associations the theory predicts. So the data can't bear the causal weight Freud put on it. Grünbaum's conclusion reframes the whole demarcation question: psychoanalysis is not <em>non</em>-science safely quarantined outside the arena — it's <strong>science that stepped into the ring and got knocked out</strong>. Bad science, not non-science. (A genuinely different and arguably more respectful verdict: it takes Freud seriously enough to test him. {{ chip("hint", "Tally Argument reading · contested by Erwin &amp; others", "contested") }}) This distinction — <em>unfalsifiable</em> vs. <em>falsified</em> — is one you'll want in your pocket for every "is X a science?" fight to come.</p>
 </section>
 <section class="frontier">
 <p class="sec-eyebrow">Part 5 · the engine room of the crisis</p>
@@ -671,8 +672,8 @@
 </table>
 </div>
 <section class="frontier">
-<p>Ioannidis's corollaries fall straight out of the machine, and they read like a map of where the replication crisis hit hardest: the smaller the studies, the smaller the true effects, the more analytical flexibility, the more financial interest, and the <em>hotter</em> the field (more teams racing the same question), the lower the chance any given published finding is true. It's not cynicism. It's the geometry of testing rare truths with imperfect instruments. <span class="chip ok" data-print="review"><i></i>the model · widely accepted in spirit</span></p>
-<p>It didn't go unchallenged, and the challenge is worth knowing. Statisticians <strong>Steven Goodman and Sander Greenland</strong> (2007) agreed with the broad moral but disputed the engineering: the model treats every significant <em>p</em> as if it were exactly 0.05 (throwing away evidence), bakes in its own bias parameters rather than measuring them, and the eye-catching "more teams → more falsehood" result is partly a modeling artifact. Ioannidis replied that the core stands and that even his own tables show findings can reach 85% credibility under good conditions. The honest takeaway: the <em>exact</em> false-positive rate of science is genuinely uncertain and field-dependent — but the <em>direction</em> of the argument, that low base rates plus low power can manufacture false positives, is hard to ignore. <span class="chip hint" data-print="contested"><i></i>exact rate · contested</span></p>
+<p>Ioannidis's corollaries fall straight out of the machine, and they read like a map of where the replication crisis hit hardest: the smaller the studies, the smaller the true effects, the more analytical flexibility, the more financial interest, and the <em>hotter</em> the field (more teams racing the same question), the lower the chance any given published finding is true. It's not cynicism. It's the geometry of testing rare truths with imperfect instruments. {{ chip("ok", "the model · widely accepted in spirit", "review") }}</p>
+<p>It didn't go unchallenged, and the challenge is worth knowing. Statisticians <strong>Steven Goodman and Sander Greenland</strong> (2007) agreed with the broad moral but disputed the engineering: the model treats every significant <em>p</em> as if it were exactly 0.05 (throwing away evidence), bakes in its own bias parameters rather than measuring them, and the eye-catching "more teams → more falsehood" result is partly a modeling artifact. Ioannidis replied that the core stands and that even his own tables show findings can reach 85% credibility under good conditions. The honest takeaway: the <em>exact</em> false-positive rate of science is genuinely uncertain and field-dependent — but the <em>direction</em> of the argument, that low base rates plus low power can manufacture false positives, is hard to ignore. {{ chip("hint", "exact rate · contested", "contested") }}</p>
 
 <h3>Gear two: flexibility — how to find anything (the Beatles experiment)</h3>
 <p>The base-rate trap assumes honest 5% testing. Real research is leakier, and in 2011 three psychologists — <strong>Simmons, Nelson, and Simonsohn</strong> — demonstrated how leaky with one of the great pieces of scientific theater. Their paper, "False-Positive Psychology," coined the phrase <em class="term">researcher degrees of freedom</em>: all the small, innocent-looking choices a scientist makes along the way — when to stop collecting data, which outliers to drop, which control variables to include, which conditions to compare. Each choice is defensible. Together, they're a machine for manufacturing significance.</p>
@@ -690,7 +691,7 @@
 <div class="claim">
 <div class="ctop">
 <span class="cnum">The verdict from the statisticians</span>
-<span class="chip ok" data-print="established"><i></i>ASA 2016 · established</span>
+{{ chip("ok", "ASA 2016 · established", "established") }}
 </div>
 <h3>What a <em>p</em>-value is not</h3>
 <p>In 2016, for the first time in its 177-year history, the <strong>American Statistical Association</strong> issued a formal public warning about a specific statistical practice — the <em class="term">p-value</em>{% tip 'A p-value is the probability, under a specified model such as the null hypothesis, of getting data at least this incompatible with that model.' %} (Wasserstein &amp; Lazar, <em>The American Statistician</em>). The fact that the field's central U.S. professional association broke its silence tells you how serious the problem had become. Its six principles are worth tattooing somewhere visible, because many misuses in the crisis violate one:</p>
@@ -702,7 +703,7 @@
 <li>A <em>p</em>-value says nothing about the <em>size</em> or importance of an effect.</li>
 <li>By itself, it is a poor measure of evidence for a hypothesis.</li>
 </ul>
-<p>The most common confusion — that <em>p</em> = 0.05 means "95% chance the finding is real" — is flatly false, and the base-rate engine above is why: the probability a discovery is true depends overwhelmingly on how rare true hypotheses are, which the <em>p</em>-value never sees. A 2019 follow-up went further still, with some statisticians urging the field to retire the phrase "statistically significant" altogether. The reform isn't finished. <span class="chip hint" data-print="review"><i></i>how far to go · ongoing</span></p>
+<p>The most common confusion — that <em>p</em> = 0.05 means "95% chance the finding is real" — is flatly false, and the base-rate engine above is why: the probability a discovery is true depends overwhelmingly on how rare true hypotheses are, which the <em>p</em>-value never sees. A 2019 follow-up went further still, with some statisticians urging the field to retire the phrase "statistically significant" altogether. The reform isn't finished. {{ chip("hint", "how far to go · ongoing", "review") }}</p>
 </div>
 </section>
 <section>

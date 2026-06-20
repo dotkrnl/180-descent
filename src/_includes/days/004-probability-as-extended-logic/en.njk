@@ -1,3 +1,4 @@
+{% from "macros/chip.njk" import chip %}
 <header class="hero wrap">
 <p class="eyebrow">Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 04 / 180</span></p>
 <h1>Probability as <em class="term">Extended Logic</em></h1>
@@ -309,7 +310,7 @@
 
 <div class="aside">
 <p class="h">The honest footnote</p>
-<p>Cox's original proof was a touch too quick. In 1999 the computer scientist <strong>Joseph Halpern</strong> showed it needs an extra technical assumption to be airtight (it can fail on certain finite domains), and later authors patched it properly. So the right thing to say is not "probability is the <em>only conceivable</em> logic of uncertainty" — that overstates it — but "under reasonable conditions, consistent graded belief is forced into the probability axioms." The theorem stands; it just wears a slightly smaller crown than Jaynes's prose sometimes suggests. <span class="chip ok" data-print="established"><i></i>Established w/ caveat</span></p>
+<p>Cox's original proof was a touch too quick. In 1999 the computer scientist <strong>Joseph Halpern</strong> showed it needs an extra technical assumption to be airtight (it can fail on certain finite domains), and later authors patched it properly. So the right thing to say is not "probability is the <em>only conceivable</em> logic of uncertainty" — that overstates it — but "under reasonable conditions, consistent graded belief is forced into the probability axioms." The theorem stands; it just wears a slightly smaller crown than Jaynes's prose sometimes suggests. {{ chip("ok", "Established w/ caveat", "established") }}</p>
 </div>
 </section>
 
@@ -359,7 +360,7 @@
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Edge 01</span>
-<span class="chip ok" data-print="established"><i></i>The mathematics · established</span>
+{{ chip("ok", "The mathematics · established", "established") }}
 </div>
 <h3>The e-value: test a hypothesis by betting against it</h3>
 <p>An <em class="term">e-value</em> is the payoff of a bet against the <em class="term">null hypothesis</em>{% tip 'The null hypothesis is the default claim a test tries to reject, often that there is no effect or no difference.' %}. You wager $1 that the null is false, under a betting contract designed to be <em>fair if the null is true</em> — meaning that if the null really holds, you can't expect to grow your money (in symbols, the expected value of an e-value under the null is at most \(1\)). So if you walk away having multiplied your stake twentyfold, something is off with the null: either it's false, or you got astronomically lucky. A large e-value is literally <strong>money won against the null</strong>, and your accumulated wealth <em>is</em> your evidence. The reciprocal \(1/e\) behaves like a conservative p-value, but the betting picture is the point.</p>
@@ -370,8 +371,8 @@
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Edge 02</span>
-<span class="chip ok" data-print="established"><i></i>Optional stopping · established</span>
-<span class="chip hint" data-print="contested"><i></i>"Replaces the p-value" · contested</span>
+{{ chip("ok", "Optional stopping · established", "established") }}
+{{ chip("hint", "\"Replaces the p-value\" · contested", "contested") }}
 </div>
 <h3>Why a bet beats a p-value: you can peek all you want</h3>
 <p>Bets compound. If you make a fair bet against the null, then another, then another, your running wealth forms what mathematicians call a <em class="term">martingale</em>{% tip 'A martingale is a mathematical model of a fair game: given the past, the next expected value is the current value.' %}, and a classical result (Ville's inequality{% tip 'Ville’s inequality bounds the chance that a fair-game wealth process ever becomes very large just by luck.' %}) guarantees it almost never balloons to huge values <em>if the null is true.</em> This gives e-values an almost magical property the p-value lacks: <em class="term">anytime validity.</em> You may watch the experiment unfold, stop whenever you like, collect more data if it looks promising — <strong>peek as often as you want</strong> — and your error guarantee still holds. Grünwald, de Heide &amp; Koolen call this <em>"safe testing"</em> (published in the RSS <em>Journal</em>, Series B, 2024); the broader machinery, including confidence intervals that are valid at every moment, is <em>"safe anytime-valid inference"</em> (Ramdas, Grünwald, Vovk &amp; Shafer, <em>Statistical Science</em>, 2023). E-values also combine trivially: <strong>multiply</strong> independent ones, or even <strong>average</strong> dependent ones, and you still have a valid e-value — which makes pooling studies clean where p-values turn into a multiple-comparisons minefield.</p>
@@ -455,13 +456,13 @@
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Edge 03</span>
-<span class="chip ok" data-print="established"><i></i>Industry adoption · established (narrow)</span>
-<span class="chip bad" data-print="review"><i></i>Sweeping science-wide replacement · hype</span>
+{{ chip("ok", "Industry adoption · established (narrow)", "established") }}
+{{ chip("bad", "Sweeping science-wide replacement · hype", "review") }}
 </div>
 <h3>How far has the mutiny actually spread?</h3>
-<p>Here's where the hype filter earns its keep. The <em class="term">mathematics</em> of e-values is settled and elegant — peer-reviewed in the field's very best journals (<em>Annals of Statistics</em>, both RSS <em>Journals</em>, <em>Statistical Science</em>), and gathered into a 390-page Foundations and Trends monograph by Ramdas &amp; Wang after its 2024 preprint. That part is <span class="chip ok" data-print="established"><i></i>established</span> beyond dispute.</p>
+<p>Here's where the hype filter earns its keep. The <em class="term">mathematics</em> of e-values is settled and elegant — peer-reviewed in the field's very best journals (<em>Annals of Statistics</em>, both RSS <em>Journals</em>, <em>Statistical Science</em>), and gathered into a 390-page Foundations and Trends monograph by Ramdas &amp; Wang after its 2024 preprint. That part is {{ chip("ok", "established") }} beyond dispute.</p>
 <p>Real-world <em class="term">adoption</em> is a narrower and more honest story. The clearest uptake is in <strong><em class="term">tech-company A/B testing</em></strong>{% tip 'A/B testing compares two product versions by randomly showing users variant A or B and measuring which performs better.' %}, where "peeking" is the entire business model: <strong>Optimizely</strong> rebuilt its platform around "always-valid inference" (Johari, Koomen, Pekelis &amp; Walsh), and <strong>Netflix</strong> and <strong>Adobe</strong> publicly run anytime-valid <em class="term">confidence sequences</em>{% tip 'A confidence sequence is a confidence interval that remains valid at every time point as data accumulate.' %} so product teams can monitor experiments continuously without cheating the statistics. That's genuine production use — but it's a long way from the world's biostatistics, psychology, and physics communities, where the p-value remains entrenched.</p>
-<p>And the new tool is no free lunch. In fixed-horizon comparisons, e-values can need <strong>more extreme data</strong> than p-values to reach the same rejection threshold; Shafer's reply is that this is the cost of making the evidential scale honest rather than a simple defect. The efficiency of your bet depends on choosing a good betting strategy — arguably the same modeling judgment a Bayesian makes in choosing a prior, reappearing in new clothes. Critics including Samuel Pawel and Leonhard Held warn that branding tests as "safe" or "always valid" can mislead, since the guarantees still rest on assumptions (a correctly specified model, no publication bias) that can fail like any other. The honest verdict: a <span class="chip hint" data-print="promising"><i></i>promising</span>, rigorous, genuinely useful complement to the p-value — emphatically <em>not</em> its science-wide replacement, at least not yet.</p>
+<p>And the new tool is no free lunch. In fixed-horizon comparisons, e-values can need <strong>more extreme data</strong> than p-values to reach the same rejection threshold; Shafer's reply is that this is the cost of making the evidential scale honest rather than a simple defect. The efficiency of your bet depends on choosing a good betting strategy — arguably the same modeling judgment a Bayesian makes in choosing a prior, reappearing in new clothes. Critics including Samuel Pawel and Leonhard Held warn that branding tests as "safe" or "always valid" can mislead, since the guarantees still rest on assumptions (a correctly specified model, no publication bias) that can fail like any other. The honest verdict: a {{ chip("hint", "promising") }}, rigorous, genuinely useful complement to the p-value — emphatically <em>not</em> its science-wide replacement, at least not yet.</p>
 <p style="font-size:.92em;color:var(--ink-soft);">What would move the needle? If a drug regulator like the FDA or EMA blessed e-value designs for confirmatory clinical trials, or a top general-science journal wrote them into its author guidelines, the "replacement" claim could graduate from hype to hint to reality. Watch those two signals.</p>
 </div>
 </section>

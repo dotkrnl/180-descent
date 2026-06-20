@@ -8,7 +8,6 @@ summary: "一座停摆的大钟揭示：即便拥有充分理由的真信念，�
 block: 知识与推理的根基
 slug: what-is-knowledge
 day_path: 001-what-is-knowledge
-source_file: ../day-01-what-is-knowledge.html
 threads:
   - 信息
   - 计算

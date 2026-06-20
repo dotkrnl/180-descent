@@ -7,7 +7,6 @@ summary: "Ice cream, drowning, Simpson's paradox, potential outcomes, and Pearl'
 block: Foundations of Knowledge & Reasoning
 slug: causation
 day_path: 005-causation
-source_file: ../day-05-causation.html
 threads:
   - information
   - computation

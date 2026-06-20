@@ -292,25 +292,6 @@ module.exports = function (eleventyConfig) {
   });
   eleventyConfig.addFilter("json", (value) => JSON.stringify(value));
 
-  eleventyConfig.addShortcode("statusChip", (label) => {
-    const text = String(label || "").trim();
-    const cls = text.toLowerCase().includes("established")
-      ? "ok"
-      : text.toLowerCase().includes("promising") || text.toLowerCase().includes("hint")
-        ? "hint"
-        : "bad";
-    const compact = text.toLowerCase().includes("superseded")
-      ? "superseded"
-      : text.toLowerCase().includes("established")
-        ? "established"
-        : text.toLowerCase().includes("promising")
-          ? "promising"
-          : text.toLowerCase().includes("contested")
-            ? "contested"
-            : "review";
-    return `<span class="chip ${cls}" data-print="${compact}"><i></i>${text}</span>`;
-  });
-
   eleventyConfig.addShortcode("tip", function (text = "") {
     const locale = this?.ctx?.locale || "";
     const pageUrl = this?.page?.url || "";

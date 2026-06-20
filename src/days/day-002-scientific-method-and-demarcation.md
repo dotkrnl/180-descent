@@ -7,7 +7,6 @@ summary: "Hume, Popper, Kuhn, Lakatos, and the replication crisis test how scien
 block: Foundations of Knowledge & Reasoning
 slug: scientific-method-and-demarcation
 day_path: 002-scientific-method-and-demarcation
-source_file: ../day-02-scientific-method-and-demarcation.html
 threads:
   - information
   - evolution

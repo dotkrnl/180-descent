@@ -8,7 +8,6 @@ summary: "从冰淇淋与溺水、辛普森悖论，到潜在结果与珀尔的 
 block: 知识与推理的根基
 slug: causation
 day_path: 005-causation
-source_file: ../day-05-causation.html
 threads:
   - 信息
   - 计算

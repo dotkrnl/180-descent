@@ -8,7 +8,6 @@ summary: "P-hacking, p-values, confidence intervals, effect sizes, and multivers
 block: Foundations of Knowledge & Reasoning
 slug: statistics-and-the-art-of-not-fooling-yourself
 day_path: 006-statistics-and-the-art-of-not-fooling-yourself
-source_file: ../day-06-statistics.html
 threads:
   - information
   - computation

@@ -8,7 +8,6 @@ summary: "休谟、波普尔、库恩、拉卡托斯与复现危机，共同检�
 block: 知识与推理的根基
 slug: scientific-method-and-demarcation
 day_path: 002-scientific-method-and-demarcation
-source_file: ../day-02-scientific-method-and-demarcation.html
 threads:
   - 信息
   - 演化

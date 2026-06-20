@@ -8,7 +8,6 @@ summary: "香农熵、比特、信道容量、麦克斯韦妖与兰道尔原理�
 block: 知识与推理的根基
 slug: information-theory
 day_path: 007-information-theory
-source_file: ../day-07-information-theory.html
 threads:
   - 信息
   - 能量

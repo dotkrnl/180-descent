@@ -7,7 +7,6 @@ summary: "Deduction, induction, and abduction separate valid form from truth whi
 block: Foundations of Knowledge & Reasoning
 slug: logic-and-valid-inference
 day_path: 003-logic-and-valid-inference
-source_file: ../day-03-logic-and-valid-inference.html
 threads:
   - information
   - computation

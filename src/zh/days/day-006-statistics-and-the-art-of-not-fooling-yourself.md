@@ -8,7 +8,6 @@ summary: "p 值操纵、p 值、置信区间、效应量与多元宇宙分析，
 block: 知识与推理的根基
 slug: statistics-and-the-art-of-not-fooling-yourself
 day_path: 006-statistics-and-the-art-of-not-fooling-yourself
-source_file: ../day-06-statistics.html
 threads:
   - 信息
   - 计算

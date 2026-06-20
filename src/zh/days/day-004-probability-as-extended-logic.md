@@ -8,7 +8,6 @@ summary: "蒙提霍尔问题与贝叶斯定理展示了部分信念的逻辑，�
 block: 知识与推理的根基
 slug: probability-as-extended-logic
 day_path: 004-probability-as-extended-logic
-source_file: ../day-04-probability-as-extended-logic.html
 threads:
   - 信息
   - 计算

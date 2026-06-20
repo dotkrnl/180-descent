@@ -7,7 +7,6 @@ summary: A stopped clock exposes why justified true belief is not enough for kno
 block: Foundations of Knowledge & Reasoning
 slug: what-is-knowledge
 day_path: 001-what-is-knowledge
-source_file: ../day-01-what-is-knowledge.html
 threads:
   - information
   - computation
