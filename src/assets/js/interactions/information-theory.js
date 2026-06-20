@@ -142,12 +142,12 @@
       } else if (h > 0.7) {
         verdict.textContent = text(
           "Still close to balanced. Most flips carry real news, but a smart code could already shave a little off because the common face needs fewer bits.",
-          "仍接近平衡。多数投掷都带来真实消息，但聪明的编码已经能略微省下一点，因为常见面需要更短的码字。"
+          "仍接近平衡。多数投掷都带来真实消息；不过只要一面稍微更常见，编码就可以把更短的码字分配给它，从而节省一点平均长度。"
         );
       } else if (h > 0.25) {
         verdict.textContent = text(
           "Now it is lopsided. The common outcome is cheap, the rare one expensive. A good code spends short codewords on the common face: Huffman's rule.",
-          "现在已经偏斜。常见结果很便宜，稀有结果很昂贵。好的编码会把短码字留给常见面：这正是霍夫曼规则。"
+          "硬币已经有偏。常见结果可以用短码表示，罕见结果则需要更长的码字。好的编码会把短码字留给常见面：这正是霍夫曼规则。"
         );
       } else if (h > 0.03) {
         verdict.textContent = text(
