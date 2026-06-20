@@ -375,7 +375,7 @@
     var ring = null;
 
     function position(b0,b1,b2){
-      return { x: 80 + b0 * 135 + b2 * 60, y: 205 - b1 * 135 - b2 * 60 };
+      return { x: 90 + b0 * 135 + b2 * 60, y: 230 - b1 * 135 - b2 * 60 };
     }
 
     function ones(value){

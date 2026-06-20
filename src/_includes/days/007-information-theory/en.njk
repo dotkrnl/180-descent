@@ -475,7 +475,7 @@
 
 <div class="aside">
 <p class="h">The compression ladder</p>
-<p><strong>Huffman coding</strong> (1952) — short codewords for common symbols — was optimal for coding symbols one at a time, but it can't capture patterns <em>across</em> symbols. <strong>Arithmetic coding</strong> (1970s) does better by encoding a whole message as a single number in [0,1), squeezing right up against the entropy floor. And <strong>Lempel–Ziv</strong> (1977–78) is adaptive: it builds a dictionary of repeated substrings on the fly, so the second time a pattern appears it costs almost nothing. LZ methods are universal for important source classes in asymptotic senses, not literally assumption-free. They run inside ZIP, gzip, PNG, and many everyday lossless formats, though audio, video, and modern image codecs also use transform, predictive, and entropy-coding machinery. None can beat Shannon's floor for the modeled source; good ones approach it under their assumptions.</p>
+<p><strong>Huffman coding</strong> (1952) — short codewords for common symbols — was optimal for coding symbols one at a time, but it can't capture patterns <em>across</em> symbols. <strong>Arithmetic coding</strong> (1970s) does better by encoding a whole message as a single number in [0,1), squeezing right up against the entropy floor. And <strong>Lempel–Ziv</strong> (1977–78) is adaptive: it builds a dictionary of repeated substrings on the fly, so the second time a pattern appears it costs almost nothing. LZ methods run inside ZIP, gzip, PNG, and many everyday lossless formats, though audio, video, and modern image codecs also use transform, predictive, and entropy-coding machinery. None can beat Shannon's floor for the modeled source; good ones approach it under their assumptions.</p>
 </div>
 
 <p>All of that is <em>lossless</em>: unzip and you get back every bit. But your eyes and ears are forgiving instruments, and that forgiveness is worth money. <em class="term">Rate–distortion theory</em> (Shannon, 1959) asks the harder question: if you're <em>allowed</em> to lose a little, how few bits can you spend for a given level of acceptable distortion? This is the governing math of <strong>lossy</strong> compression — JPEG throwing away the fine color detail your retina can't resolve, MP3 discarding the quiet tones a louder one is already masking. The art is to spend your bits only where a human will notice, and to let the rest evaporate. Streaming, video calls, the entire visual texture of the modern internet — all of it is rate–distortion theory cashed in.</p>
@@ -500,7 +500,7 @@
 <p class="pnote">Every 3-bit word is a corner of a cube; an edge is one bit-flip. Our code uses just two valid words — <code>000</code> and <code>111</code>, the far corners (teal). Click any corner to "receive" it through a noisy channel: the decoder snaps it to the nearest valid word by majority vote. One error is always corrected; the cube shows you why.</p>
 
 <div class="ham-stage">
-<svg viewBox="0 0 360 260" role="img" aria-label="A cube whose eight corners are the 3-bit strings, with 000 and 111 as codewords.">
+<svg viewBox="0 0 390 285" role="img" aria-label="A cube whose eight corners are the 3-bit strings, with 000 and 111 as codewords.">
 <g id="appendix-d007-the-deeper-currents-hamEdges" stroke="var(--line-strong)" stroke-width="1.5"></g>
 <g id="appendix-d007-the-deeper-currents-hamVerts"></g>
 </svg>
@@ -673,8 +673,8 @@
 <p class="lede"><span class="drop">T</span>he main page and the first appendix gave you the foundations: Shannon's bit, Landauer's toll, the full architecture. All of it rests on work decades old and thoroughly settled. This appendix is different: recent frontier work from roughly 2019–2026, much of it in the last two years, and some of it still warm from the press. These are the results the people <em>building</em> the field consider most consequential: experiments, frameworks, and engineering gambles most likely to reshape what we think we know. Some will hold. Some won't. The hype filter earns its keep today more than ever.</p>
 <div class="panel landscape">
 <p class="ptitle">Diagram · the frontier landscape</p>
-<h3>Seven frontiers, one field</h3>
-<p class="pnote">The recent frontier of information physics branches into seven active programmes. Color indicates confidence: teal for established, amber for promising, red for contested or company-reported.</p>
+<h3>Seven frontier threads, one set of questions</h3>
+<p class="pnote">The recent frontier of information physics branches into seven active programmes. Color indicates evidence status: teal for established, amber for promising; a dashed border marks work that remains theory-only, with no experimental test yet.</p>
 <svg viewBox="0 0 640 330" role="img" aria-label="Seven frontier areas of information physics.">
 <defs><marker id="appendix-d007-the-bleeding-edge-fa" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path></marker></defs>
 <g font-family="IBM Plex Mono,monospace" font-size="10.5">
@@ -696,8 +696,7 @@
 <g font-family="IBM Plex Mono,monospace" font-size="10.5" transform="translate(470,250)">
 <circle cx="8" cy="6" r="5" fill="var(--ok)"></circle><text x="18" y="10" fill="var(--ink-faint)">established result</text>
 <circle cx="8" cy="24" r="5" fill="var(--hint)"></circle><text x="18" y="28" fill="var(--ink-faint)">promising hint</text>
-<circle cx="8" cy="42" r="5" fill="var(--contested)"></circle><text x="18" y="46" fill="var(--ink-faint)">contested / hype</text>
-<rect x="2" y="56" width="12" height="10" rx="2" fill="none" stroke="var(--ink-faint)" stroke-dasharray="3 2"></rect><text x="18" y="64" fill="var(--ink-faint)">theory only (no expt)</text>
+<rect x="2" y="38" width="12" height="10" rx="2" fill="none" stroke="var(--ink-faint)" stroke-dasharray="3 2"></rect><text x="18" y="46" fill="var(--ink-faint)">theory only (no expt)</text>
 </g>
 </svg>
 </div>
@@ -786,7 +785,7 @@
 <h3>Autonomous demons</h3>
 <p>Autonomous Maxwell demons have been demonstrated experimentally since at least the 2015 single-electron work of Koski and colleagues. In such systems, measurement and feedback are implemented internally rather than by an externally timed controller. That does <em>not</em> mean the device uses no nonequilibrium resources or produces no entropy: the energetic and entropic resources still have to be included in the full accounting. Newer quantum-dot rectifiers (<em>PRR</em> 2019), stochastic-resetting demons (<em>PRR</em> 2023), and transistor-based demons (<em>PRB</em> 2025) extend that design pattern for nanoscale energy harvesting. <span class="chip hint" data-print="established"><i></i>promising — individual realizations established</span></p>
 <h3>A real molecular motor as a demon</h3>
-<p><strong>Amano, Esposito, Kreidt, Leigh, Penocchio &amp; Roberts</strong> (<em>Nature Chemistry</em> 14, 530, 2022) performed a rigorous information-thermodynamic analysis of a <em>real chemically-driven synthetic rotary molecular motor</em> — one of the machines for which the 2016 Nobel in Chemistry was awarded — showing its operation decomposes into an information-processing cycle. The demon, it turns out, was always just a particularly well-designed molecule. <span class="chip ok" data-print="established"><i></i>established</span></p>
+<p><strong>Amano, Esposito, Kreidt, Leigh, Penocchio &amp; Roberts</strong> (<em>Nature Chemistry</em> 14, 530, 2022) performed a rigorous information-thermodynamic analysis of a <em>real chemically-driven synthetic rotary molecular motor</em> from the synthetic molecular-machines tradition recognized by the 2016 Nobel Prize in Chemistry, showing its operation decomposes into an information-processing cycle. The demon, it turns out, was always just a particularly well-designed molecule. <span class="chip ok" data-print="established"><i></i>established</span></p>
 </section>
 <section>
 <p class="sec-eyebrow"><span class="sec-num">06</span> · erasure goes quantum</p>
