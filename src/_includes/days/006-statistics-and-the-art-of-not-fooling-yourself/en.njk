@@ -48,14 +48,14 @@
 <figcaption>The garden of forking paths. The data are pure noise — yet enough branches guarantee one ends in a "discovery." The danger is choosing after the data points the way.</figcaption>
 </figure>
 
-<p class="lede dropcap">In 2011 three psychologists set out to prove something impossible. They sat twenty undergraduates down, played half of them the Beatles' <em>"When I'm Sixty-Four"</em> and the other half a control tune, then asked a battery of questions — including each person's date of birth. After a perfectly ordinary statistical analysis, they announced their finding: listening to <em>"When I'm Sixty-Four"</em> made people <strong>a year and a half younger</strong>. Not feel younger. Be younger — their birth dates said so, at <em>p</em> = .04.</p>
+<p class="lede dropcap">In 2011 three psychologists set out to prove something impossible. They sat twenty undergraduates down, played half of them the Beatles' <em>"When I'm Sixty-Four"</em> and the other half a control tune, then asked a battery of questions — including each person's date of birth. After a perfectly ordinary statistical analysis, they announced their finding: listening to <em>"When I'm Sixty-Four"</em> made people <strong>a year and a half younger</strong>. Not feel younger. Be younger — their birth dates said so, at \(p = .04\).</p>
 
 <p>This is, of course, impossible. A song cannot reach back and edit the year you were born. And that was exactly the point. Joseph Simmons, Leif Nelson, and Uri Simonsohn had used only standard, respectable tools, made only choices that any working scientist makes every week — and produced a statistically significant impossibility. Their paper was a deliberately absurd demonstration designed to expose a vulnerability. Today we learn what it exposed, and how a science learns to stop fooling itself.</p>
 </header><div class="wrap">
 
 <div class="whereblock">
 <p class="label">◆ Where we are</p>
-<p>On <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> we met the replication crisis as a set of bruising numbers (97% of original psychology studies reported significant effects; only 36% replicated) and named <em class="term">p-hacking</em>{% tip 'P-hacking means trying enough analyses, exclusions, outcomes, or stopping rules that random noise can be made to look statistically significant.' %} without yet opening it up. Today we open it up. This is the statistical engine room beneath that crisis — and beneath <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a>'s Gettier worry (a belief that's true by luck, not connection) scaled up to entire literatures. We'll lean hard on <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>'s lesson that a <em>p</em>-value is not the probability the null is true (that confusion is the base-rate fallacy in disguise), and on <a href="/days/005-causation/"><strong>Day 5</strong></a>'s warning that <em>which variables you control for</em> is itself a fork in the road. Threads today: <em>information</em> (signal vs noise) and <em>computation</em> (the lab as a fallible inference machine), with a quiet preview of <em>emergence</em> — science as an error-correcting system bigger than any one analyst.</p>
+<p>On <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> we met the replication crisis as a set of bruising numbers (97% of original psychology studies reported significant effects; only 36% replicated) and named <em class="term">p-hacking</em>{% tip 'P-hacking means trying enough analyses, exclusions, outcomes, or stopping rules that random noise can be made to look statistically significant.' %} without yet opening it up. Today we open it up. This is the statistical engine room beneath that crisis — and beneath <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a>'s Gettier worry (a belief that's true by luck, not connection) scaled up to entire literatures. We'll lean hard on <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>'s lesson that a \(p\)-value is not the probability the null is true (that confusion is the base-rate fallacy in disguise), and on <a href="/days/005-causation/"><strong>Day 5</strong></a>'s warning that <em>which variables you control for</em> is itself a fork in the road. Threads today: <em>information</em> (signal vs noise) and <em>computation</em> (the lab as a fallible inference machine), with a quiet preview of <em>emergence</em> — science as an error-correcting system bigger than any one analyst.</p>
 </div>
 
 <section>
@@ -77,7 +77,7 @@
 <div class="panel web-only statistics-factory">
 <p class="ptitle">Interactive · live Monte-Carlo simulation</p>
 <h3>The False-Positive Factory</h3>
-<p class="pnote">Each run simulates <strong>~1,500 experiments</strong> in which there is <em>no real effect at all</em> — two groups drawn from the same distribution. If the null is true, the model assumptions hold, and you run one pre-specified test, about 5% will still cross <em>p</em> &lt; .05 by chance. Now hand yourself some researcher degrees of freedom and re-run. The factory simply reports the prettiest result it can find among the analyses you've allowed.</p>
+<p class="pnote">Each run simulates <strong>~1,500 experiments</strong> in which there is <em>no real effect at all</em> — two groups drawn from the same distribution. If the null is true, the model assumptions hold, and you run one pre-specified test, about 5% will still cross \(p < .05\) by chance. Now hand yourself some researcher degrees of freedom and re-run. The factory simply reports the prettiest result it can find among the analyses you've allowed.</p>
 
 <div class="fp-grid">
 <div>
@@ -121,7 +121,7 @@
 <table class="alt-table">
 <thead><tr><th>Analytic freedom</th><th>What changes</th><th>Why it inflates false positives</th></tr></thead>
 <tbody>
-<tr><td>Two outcome measures</td><td>Measure two related results and report the one that works.</td><td>Noise gets two chances to cross <em>p</em> &lt; .05.</td></tr>
+<tr><td>Two outcome measures</td><td>Measure two related results and report the one that works.</td><td>Noise gets two chances to cross \(p < .05\).</td></tr>
 <tr><td>Optional stopping</td><td>Peek at n=20, then add participants if needed.</td><td>The stopping rule itself becomes another path through the data.</td></tr>
 <tr><td>Flexible subgroup analysis</td><td>Try the overall result and subgroup splits.</td><td>Legitimate subgroup checks become multiple comparisons when chosen after seeing the data.</td></tr>
 <tr><td>Drop a condition</td><td>Run three groups, then report the best pair.</td><td>The reported contrast is selected because it looks best.</td></tr>
@@ -132,7 +132,7 @@
 
 <section>
 <p class="sec-eyebrow">The core model</p>
-<h2>What a <em>p</em>-value actually says (and the six lies people tell about it)</h2>
+<h2>What a \(p\)-value actually says (and the six lies people tell about it)</h2>
 <p>To not be fooled, you have to know precisely what the instrument reports. Many readers, including trained scientists and a worrying number of the statistics instructors teaching them, get this wrong. So, carefully:</p>
 
 <div class="def">
@@ -140,33 +140,33 @@
       The <em class="term">p-value</em>{% tip 'A p-value is a tail probability for data under a specified null model, not the probability that the null hypothesis is true.' %} is the probability — <strong>computed on the assumption that the <em class="term">null model</em>{% tip 'A null model is the world assumed by the p-value calculation, usually a model with no effect plus all stated sampling and modeling assumptions.' %}, the null hypothesis{% tip 'A null hypothesis is the baseline claim being tested, often that there is no effect or no difference.' %}, and every modeling assumption are true</strong> — of getting a result <strong>at least as extreme</strong> as the one you actually observed.
 </div>
 
-<p>Concrete version: suppose the null model says two groups have the same mean. If a difference this large or larger would occur 3% of the time under that model, then <em>p</em> = .03. That is <em>not</em> a 3% chance the null is true.</p>
+<p>Concrete version: suppose the null model says two groups have the same mean. If a difference this large or larger would occur 3% of the time under that model, then \(p = .03\). That is <em>not</em> a 3% chance the null is true.</p>
 
 <figure class="lesson-figure pvalue-figure">
 <img src="/assets/images/open-license/p-value-tail-area-v2.svg" data-light-src="/assets/images/open-license/p-value-tail-area-v2.svg" data-dark-src="/assets/images/open-license/p-value-tail-area-v2-dark.svg" width="800" height="460" loading="lazy" decoding="async" alt="Course-styled diagram of a null-model bell curve with a shaded tail area labeled p-value, emphasizing that P(data given null) is not P(null given data).">
 <figcaption>The shaded tail is the p-value: the frequency of results this extreme or more extreme under the null model. <span class="meta">Adapted from Repapetilto and Chen-Pan Liao, CC BY-SA 3.0 via Wikimedia Commons.</span></figcaption>
 </figure>
 
-<p>Read it twice. It is a statement about <em>data, assuming a hypothesis</em> — written P(data&nbsp;|&nbsp;null). It is emphatically <em>not</em> a statement about the hypothesis given the data, P(null&nbsp;|&nbsp;data). Confusing those two is the exact inversion <strong>Day 4</strong> warned about with the disease-test problem: P(positive&nbsp;|&nbsp;sick) is not P(sick&nbsp;|&nbsp;positive), and no amount of staring turns one into the other without a prior. Here are the six misreadings to burn out of your reflexes — drawn from Greenland and colleagues' field guide to <em>twenty-five</em> of them:</p>
+<p>Read it twice. It is a statement about <em>data, assuming a hypothesis</em> — written \(P(\text{data}\mid\text{null})\). It is emphatically <em>not</em> a statement about the hypothesis given the data, \(P(\text{null}\mid\text{data})\). Confusing those two is the exact inversion <strong>Day 4</strong> warned about with the disease-test problem: \(P(\text{positive}\mid\text{sick})\) is not \(P(\text{sick}\mid\text{positive})\), and no amount of staring turns one into the other without a prior. Here are the six misreadings to burn out of your reflexes — drawn from Greenland and colleagues' field guide to <em>twenty-five</em> of them:</p>
 
 <div class="aside">
 <p class="h">Three probabilities people confuse</p>
-<p><strong><em class="term">Alpha</em></strong>{% tip 'Alpha is the false-alarm rate you commit to before looking at the data, conditional on a true null model and a specified testing procedure.' %} is the long-run Type I error rate of a testing procedure if the null model is true: with α = .05, about 5% of true-null tests will falsely cross the line. The <strong><em class="term">false discovery rate</em></strong>{% tip 'The false discovery rate is the fraction of declared discoveries that are false.' %} asks a different question: among the claims you actually declare significant, what fraction are false? That depends on base rates, power, and selection, not just α. A <strong><em class="term">posterior probability</em></strong>{% tip 'A posterior probability is the probability of a hypothesis after combining data with prior information.' %}, such as P(null | data), is different again: it needs a prior. A 5% alpha is neither a 5% false discovery rate nor a 5% chance the null is true.</p>
+<p><strong><em class="term">Alpha</em></strong>{% tip 'Alpha is the false-alarm rate you commit to before looking at the data, conditional on a true null model and a specified testing procedure.' %} is the long-run Type I error rate of a testing procedure if the null model is true: with \(\alpha=.05\), about 5% of true-null tests will falsely cross the line. The <strong><em class="term">false discovery rate</em></strong>{% tip 'The false discovery rate is the fraction of declared discoveries that are false.' %} asks a different question: among the claims you actually declare significant, what fraction are false? That depends on base rates, power, and selection, not just \(\alpha\). A <strong><em class="term">posterior probability</em></strong>{% tip 'A posterior probability is the probability of a hypothesis after combining data with prior information.' %}, such as \(P(\text{null}\mid\text{data})\), is different again: it needs a prior. A 5% \(\alpha\) is neither a 5% false discovery rate nor a 5% chance the null is true.</p>
 </div>
 
 <ul class="mislist">
-<li><b>"<em>p</em> = .03 means there's a 3% chance the null is true."</b><span class="fix">No. That's P(null | data) — a Bayesian quantity needing a prior. The <em>p</em>-value already <em>assumes</em> the null.</span></li>
-<li><b>"<em>p</em> = .05 means a 5% chance the result is just chance."</b><span class="fix">No. Chance (the null) is the very assumption the calculation is built on; it can't also be the thing in doubt.</span></li>
-<li><b>"<em>p</em> &gt; .05 means there is no effect."</b><span class="fix">No. Absence of evidence is not evidence of absence — an underpowered study fails to detect real effects all the time.</span></li>
-<li><b>"1 − <em>p</em> is the probability the alternative is true."</b><span class="fix">No. Neither <em>p</em> nor its complement is a probability about any hypothesis.</span></li>
-<li><b>"<em>p</em> tells you the result will replicate."</b><span class="fix">No. A low <em>p</em> from one noisy study says little about the next study.</span></li>
+<li><b>"\(p = .03\) means there's a 3% chance the null is true."</b><span class="fix">No. That's \(P(\text{null}\mid\text{data})\) — a Bayesian quantity needing a prior. The \(p\)-value already <em>assumes</em> the null.</span></li>
+<li><b>"\(p = .05\) means a 5% chance the result is just chance."</b><span class="fix">No. Chance (the null) is the very assumption the calculation is built on; it can't also be the thing in doubt.</span></li>
+<li><b>"\(p > .05\) means there is no effect."</b><span class="fix">No. Absence of evidence is not evidence of absence — an underpowered study fails to detect real effects all the time.</span></li>
+<li><b>"\(1-p\) is the probability the alternative is true."</b><span class="fix">No. Neither \(p\) nor its complement is a probability about any hypothesis.</span></li>
+<li><b>"<em>p</em> tells you the result will replicate."</b><span class="fix">No. A low \(p\) from one noisy study says little about the next study.</span></li>
 <li><b>"A significant result is a large or important one."</b><span class="fix">No. With a big enough sample, a trivially small effect is "significant." Significance ≠ size ≠ importance.</span></li>
 </ul>
 
 <p>That last one is the quiet killer, so it gets its own model.</p>
 
 <h3>Significance is not size: meet the effect size</h3>
-<p>A <em>p</em>-value entangles effect size, noise, sample size, and model assumptions. Pour in enough participants and even a microscopic, meaningless difference crosses the line. So grown-up statistics insists on reporting the <em class="term">effect size</em>{% tip 'An effect size reports how large a difference or association is, instead of only whether it crossed a significance threshold.' %} separately: <em>Cohen's d</em>{% tip 'Cohen’s d expresses a difference between two means in units of standard deviation.' %} (a difference in means measured in standard deviations) or a correlation <em>r</em>. Jacob Cohen offered rough labels — <em>d</em> ≈ 0.2 small, 0.5 medium, 0.8 large — while cheerfully admitting they were arbitrary: "Although arbitrary, the proposed conventions will be found to be reasonable by reasonable people." The point is not the labels. The point is that a number with no effect size attached has told you almost nothing worth knowing.</p>
+<p>A \(p\)-value entangles effect size, noise, sample size, and model assumptions. Pour in enough participants and even a microscopic, meaningless difference crosses the line. So grown-up statistics insists on reporting the <em class="term">effect size</em>{% tip 'An effect size reports how large a difference or association is, instead of only whether it crossed a significance threshold.' %} separately: <em>Cohen's d</em>{% tip 'Cohen’s d expresses a difference between two means in units of standard deviation.' %} (a difference in means measured in standard deviations) or a correlation <em>r</em>. Jacob Cohen offered rough labels — <em>d</em> ≈ 0.2 small, 0.5 medium, 0.8 large — while cheerfully admitting they were arbitrary: "Although arbitrary, the proposed conventions will be found to be reasonable by reasonable people." The point is not the labels. The point is that a number with no effect size attached has told you almost nothing worth knowing.</p>
 
 <div class="panel web-only statistics-effect-lab">
 <p class="ptitle">Interactive · significance versus size</p>
@@ -223,7 +223,7 @@
 </div>
 
 <h3>The interval you've been misreading too</h3>
-<p><em class="term">Confidence intervals</em>{% tip 'A confidence interval is a range produced by a method with a stated long-run coverage rate, such as 95%.' %} are sold as the humane alternative to <em>p</em>-values, and they are better — but they hide their own trap.</p>
+<p><em class="term">Confidence intervals</em>{% tip 'A confidence interval is a range produced by a method with a stated long-run coverage rate, such as 95%.' %} are sold as the humane alternative to \(p\)-values, and they are better — but they hide their own trap.</p>
 <div class="def">
 <p class="h">Definition · the 95% confidence interval</p>
       A 95% CI is produced by a <strong>procedure</strong> that, across many hypothetical repeat experiments, brackets the true value 95% of the time. The "95%" describes the long-run reliability of the <em>method</em>, not the odds for your one particular interval.
@@ -291,7 +291,7 @@
 <section>
 <p class="sec-eyebrow">The debate</p>
 <h2>Burn the threshold, or just lower it?</h2>
-<p>If <em>p</em> &lt; .05 is so abusable, what should replace it? Here the field splits — not into crank versus expert, but into camps of serious statisticians who genuinely disagree. It helps to lay them on a single line, from "patch it" to "torch it."</p>
+<p>If \(p < .05\) is so abusable, what should replace it? Here the field splits — not into crank versus expert, but into camps of serious statisticians who genuinely disagree. It helps to lay them on a single line, from "patch it" to "torch it."</p>
 </section>
 
 <!-- ===================== VISUAL 2 ===================== -->
@@ -326,9 +326,9 @@
 <text x="600" y="146" text-anchor="end" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">…abolish the bright line</text>
 </svg>
 <div class="spec-key">
-<div class="k"><b>Redefine</b> — Benjamin et al. (2018) keep the threshold idea but move it: call <em>p</em> &lt; .005 a "discovery," and .005–.05 merely "suggestive." Simple, blunt, and (critics say) treats a symptom.</div>
+<div class="k"><b>Redefine</b> — Benjamin et al. (2018) keep the threshold idea but move it: call \(p < .005\) a "discovery," and .005–.05 merely "suggestive." Simple, blunt, and (critics say) treats a symptom.</div>
 <div class="k"><b>Justify your alpha</b> — Lakens et al. (2018) reject any universal number. Pick your threshold deliberately, case by case, weighing the real costs of false alarms versus misses, and <em>show your reasoning</em>.</div>
-<div class="k"><b>Retire significance</b> — Amrhein, Greenland &amp; McShane (2019), with 800+ co-signers in <em>Nature</em>, want to scrap the "significant / not significant" dichotomy itself — the habit of treating <em>p</em> = .04 and <em>p</em> = .06 as different worlds. Not a ban on <em>p</em>-values; a ban on the bright line.</div>
+<div class="k"><b>Retire significance</b> — Amrhein, Greenland &amp; McShane (2019), with 800+ co-signers in <em>Nature</em>, want to scrap the "significant / not significant" dichotomy itself — the habit of treating \(p = .04\) and <em>p</em> = .06 as different worlds. Not a ban on \(p\)-values; a ban on the bright line.</div>
 <div class="k"><b>The field's statistical society</b> — the American Statistical Association weighed in twice: a careful 2016 statement of six principles, then a more radical 2019 editorial urging us to stop saying "statistically significant" at all. (That 2019 piece was the editors' view, not formal ASA policy — a distinction that itself caused a row.)</div>
 </div>
 </div>
@@ -358,7 +358,7 @@
 <div class="panel web-only statistics-spec-curve">
 <p class="ptitle">Interactive · run your own multiverse</p>
 <h3>The Specification Curve</h3>
-<p class="pnote">A fixed synthetic dataset gives X and Y a weak, confounded association: the baseline model starts below the usual <em>p</em> &lt; .05 line, but some defensible choices can push it across. Here <strong>r</strong> is the Pearson correlation coefficient, from -1 to +1; positive <strong>r</strong> means larger X tends to come with larger Y, and values near 0 are weak. We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. The panel opens with every choice included and cherry-pick highlighted; turning off a chip narrows the multiverse. Teal dots are <em>p</em> &lt; .05, grey dots are not. The check rows show which choices each specification uses, including whether it controls for the lurking Day 5 confounder <strong>W</strong>.</p>
+<p class="pnote">A fixed synthetic dataset gives X and Y a weak, confounded association: the baseline model starts below the usual \(p < .05\) line, but some defensible choices can push it across. Here <strong>r</strong> is the Pearson correlation coefficient, from -1 to +1; positive <strong>r</strong> means larger X tends to come with larger Y, and values near 0 are weak. We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. The panel opens with every choice included and cherry-pick highlighted; turning off a chip narrows the multiverse. Teal dots are \(p < .05\), grey dots are not. The check rows show which choices each specification uses, including whether it controls for the lurking Day 5 confounder <strong>W</strong>.</p>
 
 <div class="mv-controls" id="mv-controls">
 <button class="mvchip" id="mv-trim" aria-pressed="true"><i></i>trim outliers</button>
@@ -398,7 +398,7 @@
 </div>
 <h3>Plugging the inference gap — and Day 4's quiet alternative</h3>
 <p>The open problem in all of the above is honest <em>inference</em> across a multiverse: how do you draw one valid conclusion from a thousand entangled analyses? A 2024 entry, <em class="term">PIMA</em> (Post-selection Inference in Multiverse Analysis; Girardi et al., <em>Psychometrika</em>, 2024), offers a sign-flipping test that aims to give the multiverse a proper joint error guarantee, reaching beyond the linear-model limits of the 2020 specification curve. It's peer-reviewed and genuinely interesting, but new and not yet standard practice — a <strong>promising hint</strong>, not a settled tool.</p>
-<p>Meanwhile the boring, durable fixes keep spreading: the Registered Reports format — where journals accept your <em>plan</em> before your results exist — is now offered at <strong>several hundred journals</strong>, and preregistration is becoming a default rather than a virtue. And recall <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>'s <em class="term">e-values</em>{% tip 'E-values measure evidence as the payoff of a betting strategy against a null hypothesis.' %} and "testing by betting" (Grünwald, Ramdas, Shafer): an alternative to the <em>p</em>-value that stays valid even if you peek at your data and stop whenever you like — aimed squarely at the optional-stopping degree of freedom you toggled in the factory above. Still a research frontier rather than mainstream practice — <strong>promising</strong>, watch this space.</p>
+<p>Meanwhile the boring, durable fixes keep spreading: the Registered Reports format — where journals accept your <em>plan</em> before your results exist — is now offered at <strong>several hundred journals</strong>, and preregistration is becoming a default rather than a virtue. And recall <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>'s <em class="term">e-values</em>{% tip 'E-values measure evidence as the payoff of a betting strategy against a null hypothesis.' %} and "testing by betting" (Grünwald, Ramdas, Shafer): an alternative to the \(p\)-value that stays valid even if you peek at your data and stop whenever you like — aimed squarely at the optional-stopping degree of freedom you toggled in the factory above. Still a research frontier rather than mainstream practice — <strong>promising</strong>, watch this space.</p>
 </div>
 </section>
 
@@ -425,7 +425,7 @@
 <li><strong>Should "statistical significance" survive at all?</strong> Reformers are split between disciplining the threshold and abolishing it. Decisions still have to be made somewhere — a drug is approved or it isn't — and abolitionists owe an account of how.</li>
 <li><strong>Can a multiverse ever yield a single honest verdict?</strong> Or is the choice of "reasonable specifications" an irreducibly subjective act that just relocates the forking paths one level up? PIMA and friends are early attempts; the jury is out.</li>
 <li><strong>Is variation in <em>conclusions</em> the same as variation in <em>reality</em>?</strong> A subtle 2023 reanalysis noted that in some many-analyst studies the headline-grabbing disagreement was about <em>significance</em>, while the underlying effect sizes were quietly consistent and small. Disagreement about a verdict can exceed disagreement about the number. Don't over-learn "everything is hopeless."</li>
-<li><strong>Do <em>p</em>-values or e-values deserve the future?</strong> The betting-based tools elegantly solve optional stopping but can demand more data and import a new modeling burden (which bet?). Coexistence looks likelier than conquest.</li>
+<li><strong>Do \(p\)-values or e-values deserve the future?</strong> The betting-based tools elegantly solve optional stopping but can demand more data and import a new modeling burden (which bet?). Coexistence looks likelier than conquest.</li>
 <li><strong>And the question waiting in the AI block:</strong> when a model trained on millions of papers reports a "robust" result, has it learned to reason about evidence — or to imitate the very forking-path habits that got us here? (<strong>Days 138–145</strong>.)</li>
 </ul>
 </section>
@@ -435,9 +435,9 @@
 <dl>
 <div><dt>Big idea</dt><dd>Statistical tools don't protect you from fooling yourself — used with ordinary human flexibility they help you do it, because the dozens of defensible choices in any analysis (the "garden of forking paths") let noise masquerade as discovery, so the cure is transparency, preregistration, effect sizes with uncertainty, and robustness across reasonable analyses rather than a verdict at a magic threshold.</dd></div>
 <div><dt>Best analogy</dt><dd>The False-Positive Factory: hand yourself enough innocent freedoms and a coin-flip's worth of nothing becomes a 61% chance of "success" — and the garden of forking paths, where the analyses you <em>would have</em> run in nearby worlds inflate your error even if you only ran one.</dd></div>
-<div><dt>Live controversy</dt><dd>Whether to lower the threshold (<em>p</em> &lt; .005), justify it case by case, or retire "statistical significance" altogether — with multiverse and many-analyst studies revealing how alarmingly a single dataset's verdict depends on who analyzes it.</dd></div>
+<div><dt>Live controversy</dt><dd>Whether to lower the threshold (\(p < .005\)), justify it case by case, or retire "statistical significance" altogether — with multiverse and many-analyst studies revealing how alarmingly a single dataset's verdict depends on who analyzes it.</dd></div>
 </dl>
-<p class="threads"><b>Threads today ›</b> information (separating signal from noise; the <em>p</em>-value as a misread evidence measure) · computation (the lab as a fallible inference engine; the multiverse as brute enumeration) · emergence (science as an error-correcting system larger than any analyst — preregistration, many-analyst crowds, meta-analysis).</p>
+<p class="threads"><b>Threads today ›</b> information (separating signal from noise; the \(p\)-value as a misread evidence measure) · computation (the lab as a fallible inference engine; the multiverse as brute enumeration) · emergence (science as an error-correcting system larger than any analyst — preregistration, many-analyst crowds, meta-analysis).</p>
 </div>
 
 <div class="tomorrow">
@@ -490,24 +490,24 @@
 <span class="deep-dive-sub">We learned how to be fooled. Now let's open the instrument, count its gears, and ask the rude question: where did this thing even come from, and why is it built so badly?</span>
 </summary>
 <div class="deep-dive-body">
-<p class="lede"><span class="drop">T</span>he main lesson left a debt unpaid. We said, almost in passing, that a <em>p</em>-value is one of the most misunderstood numbers in science — and then we hurried on to the famous misreadings, as if the confusion were everyone's fault but the number's. It isn't. The deeper truth is that the tool itself is a chimera: stitched together from two rival philosophies whose founders despised each other, taught as if it were one coherent idea, and quietly incapable of meaning what almost everyone takes it to mean. This appendix is the autopsy. We'll find out why p-hacking isn't just <em>possible</em> but mathematically <em>guaranteed</em>; how wrong a "significant" result really is once you do the honest arithmetic; how a small army of statistical detectives now hunts for the fingerprints; and what the people who actually know this stuff reach for instead. We close on a single, lovely idea that turns a <em>p</em>-value into a number of coin flips — and hands us straight to tomorrow.</p>
+<p class="lede"><span class="drop">T</span>he main lesson left a debt unpaid. We said, almost in passing, that a \(p\)-value is one of the most misunderstood numbers in science — and then we hurried on to the famous misreadings, as if the confusion were everyone's fault but the number's. It isn't. The deeper truth is that the tool itself is a chimera: stitched together from two rival philosophies whose founders despised each other, taught as if it were one coherent idea, and quietly incapable of meaning what almost everyone takes it to mean. This appendix is the autopsy. We'll find out why p-hacking isn't just <em>possible</em> but mathematically <em>guaranteed</em>; how wrong a "significant" result really is once you do the honest arithmetic; how a small army of statistical detectives now hunts for the fingerprints; and what the people who actually know this stuff reach for instead. We close on a single, lovely idea that turns a \(p\)-value into a number of coin flips — and hands us straight to tomorrow.</p>
 <div class="continues">
 <p class="label">◆ Continuing from the main lesson</p>
-<p>You've met the False-Positive Factory, the garden of forking paths, the reform spectrum, and the many-analysts duels. Hold onto three threads in particular: <strong>Day 4</strong>'s Bayes (a <em>p</em>-value is not P(hypothesis | data), and here we'll finally compute what it costs to forget that), <strong>Day 2</strong>'s Popper and Ioannidis (severity and "most findings false"), and <strong>Day 1</strong>'s calibration instinct. Everything below is the substructure those ideas were standing on.</p>
+<p>You've met the False-Positive Factory, the garden of forking paths, the reform spectrum, and the many-analysts duels. Hold onto three threads in particular: <strong>Day 4</strong>'s Bayes (a \(p\)-value is not P(hypothesis | data), and here we'll finally compute what it costs to forget that), <strong>Day 2</strong>'s Popper and Ioannidis (severity and "most findings false"), and <strong>Day 1</strong>'s calibration instinct. Everything below is the substructure those ideas were standing on.</p>
 </div>
 <section>
 <p class="sec-eyebrow"><span class="n">§1</span> The original sin</p>
 <h2>A tool built from two incompatible blueprints</h2>
 <p>Here is a fact that explains an astonishing amount of misery: the standard procedure every science student is taught as "hypothesis testing" is a hybrid. It welds Fisherian evidence to Neyman-Pearson long-run decision rules, and that hybrid often causes confusion.</p>
 
-<p>On one side stood <strong>Ronald Fisher</strong>. In <em>Statistical Methods for Research Workers</em> (1925), he offered the <em>p</em>-value as an informal, continuous gauge of <em>evidence against</em> a single null hypothesis — a measure of how strange your data would look if nothing were going on. He needed no alternative hypothesis, no rejection region, no long run. He suggested <em>p</em> &lt; .05 only as a homely rule of thumb, the rough point past which a coincidence starts to feel implausible, and explicitly said you could pick a different line if you preferred. For Fisher, a small <em>p</em> was a prompt to <em>think</em>, not a verdict to <em>obey</em>. The null, he wrote, is never proved — only, occasionally, embarrassed.</p>
+<p>On one side stood <strong>Ronald Fisher</strong>. In <em>Statistical Methods for Research Workers</em> (1925), he offered the \(p\)-value as an informal, continuous gauge of <em>evidence against</em> a single null hypothesis — a measure of how strange your data would look if nothing were going on. He needed no alternative hypothesis, no rejection region, no long run. He suggested \(p < .05\) only as a homely rule of thumb, the rough point past which a coincidence starts to feel implausible, and explicitly said you could pick a different line if you preferred. For Fisher, a small <em>p</em> was a prompt to <em>think</em>, not a verdict to <em>obey</em>. The null, he wrote, is never proved — only, occasionally, embarrassed.</p>
 
-<p>On the other side stood <strong>Jerzy Neyman and Egon Pearson</strong>. In a series of papers culminating in 1933, they rebuilt the whole enterprise as a <em>decision rule</em>, not a measure of evidence. You specify two hypotheses up front, fix in advance your tolerable rate of false alarms (<em class="term">α</em>, the Type I error rate) and misses (<em class="term">β</em>, the Type II rate; <em>power</em> = 1 − β), draw a line, and thereafter behave: reject or accept, accepting that over the long run you'll be wrong at the rates you chose. There is, pointedly, <em>no</em> measure of evidence for the case in front of you — only a procedure with known long-run properties. Neyman thought Fisher's inductive "evidence" talk was mush; Fisher thought Neyman had turned science into factory quality-control. The feud was lifelong and genuinely vicious.</p>
+<p>On the other side stood <strong>Jerzy Neyman and Egon Pearson</strong>. In a series of papers culminating in 1933, they rebuilt the whole enterprise as a <em>decision rule</em>, not a measure of evidence. You specify two hypotheses up front, fix in advance your tolerable rate of false alarms (<em class="term">α</em>, the Type I error rate) and misses (<em class="term">β</em>, the Type II rate; <em>power</em> = \(1-\beta\)), draw a line, and thereafter behave: reject or accept, accepting that over the long run you'll be wrong at the rates you chose. There is, pointedly, <em>no</em> measure of evidence for the case in front of you — only a procedure with known long-run properties. Neyman thought Fisher's inductive "evidence" talk was mush; Fisher thought Neyman had turned science into factory quality-control. The feud was lifelong and genuinely vicious.</p>
 </section>
 <div class="panel">
 <p class="ptitle">Diagram · two philosophies, forced into one box</p>
 <h3>Fisher vs Neyman–Pearson</h3>
-<p class="pnote">They answer different questions. The modern "<em>p</em> &lt; .05 test" pretends to answer both at once — which is exactly why it answers neither cleanly.</p>
+<p class="pnote">They answer different questions. The modern "\(p < .05\) test" pretends to answer both at once — which is exactly why it answers neither cleanly.</p>
 <div class="compare">
 <div class="ccard f">
 <p class="who">Fisher's significance test</p>
@@ -524,8 +524,8 @@
 <p class="who">Neyman–Pearson test</p>
 <p class="yr">1928–1933 · behavioural / decision</p>
 <ul>
-<li><b>Two hypotheses</b> fixed in advance (H<sub>0</sub> and H<sub>1</sub>).</li>
-<li>α, β and <b>power</b> set <em>before</em> seeing data.</li>
+<li><b>Two hypotheses</b> fixed in advance (\(H_0\) and \(H_1\)).</li>
+<li>\(\alpha\), \(\beta\), and <b>power</b> set <em>before</em> seeing data.</li>
 <li>.05 is a <b>committed threshold</b>, chosen for its costs.</li>
 <li>A rule to <b>act on</b> — reject or accept, and move on.</li>
 <li>No evidence claim about the single case; only long-run rates.</li>
@@ -535,11 +535,11 @@
 <div class="vs">— welded together —</div>
 <div class="hybrid">
 <p class="h">The null ritual (what's actually taught)</p>
-      Compute <em>p</em>. Compare to a sacred .05. Treat crossing it as <em>both</em> a Fisherian "the evidence is strong" <em>and</em> a Neyman–Pearson "the decision is made" — while reporting the exact <em>p</em> as if it graded the evidence, yet thresholding it as if it were a fixed-α decision. The psychologist Gerd Gigerenzer calls this incoherent mash-up the "null ritual," performed by rote and understood by few. The confusion you met in the main lesson isn't a failure of student attention. It's baked into a tool that was never designed.
+      Compute \(p\). Compare it to \(.05\). Treat crossing it as <em>both</em> a Fisherian "the evidence is strong" <em>and</em> a Neyman–Pearson "the decision is made" — while reporting the exact \(p\) as if it graded the evidence, yet thresholding it as if it were a fixed-\(\alpha\) decision. The psychologist Gerd Gigerenzer calls this incoherent mash-up the "null ritual," performed by rote and understood by few. The confusion you met in the main lesson isn't a failure of student attention. It's baked into a tool that was never designed.
 </div>
 </div>
 <section>
-<p>Once you see the seam, the whole replication crisis reads differently. We took a flexible Fisherian prompt-to-think, froze it into a Neyman–Pearson gate, stripped out the part of Neyman–Pearson that made the gate honest (pre-committed α, adequate power, a real alternative), and then published only what got through. The wonder is not that so much fails to replicate. It's that anything survives.</p>
+<p>Once you see the seam, the whole replication crisis reads differently. We took a flexible Fisherian prompt-to-think, froze it into a Neyman–Pearson gate, stripped out the part of Neyman–Pearson that made the gate honest (pre-committed \(\alpha\), adequate power, a real alternative), and then published only what got through. The wonder is not that so much fails to replicate. It's that anything survives.</p>
 </section>
 <section>
 <p class="sec-eyebrow"><span class="n">§2</span> Why the factory always wins</p>
@@ -547,14 +547,14 @@
 <p>The False-Positive Factory wasn't a trick of clever programming. It rests on two mathematical facts so simple they're almost insulting — and once you hold both, you understand why noise can <em>always</em> be tortured into a confession.</p>
 
 <h3>Fact one: under the null, small p-values still arrive by chance</h3>
-<p>Run an exact test with continuous data where nothing is happening, under the assumptions of the null model, and the <em>p</em>-value you get is a <strong>uniform random number between 0 and 1</strong>. For discrete, composite, or conservative tests, valid <em>p</em>-values are often <em>super-uniform</em>: P(<em>p</em> ≤ α) ≤ α, not necessarily exactly equal. The practical warning survives that qualification. In the calibrated continuous case, exactly 5% of the interval [0, 1] lies below .05; in conservative cases the rate is no larger than that. But flip it around and the menace appears: even honest, effect-free experiments sometimes hand you a "significant" result by raw luck. Run the experiment twenty ways — twenty outcomes, twenty covariates, twenty subgroups — and you've effectively bought many tickets on a small-probability prize. The expected number of "discoveries" in a drawer full of nothing is driven by how many times you looked.</p>
+<p>Run an exact test with continuous data where nothing is happening, under the assumptions of the null model, and the \(p\)-value you get is a <strong>uniform random number between 0 and 1</strong>. For discrete, composite, or conservative tests, valid \(p\)-values are often <em>super-uniform</em>: \(P(p \le \alpha) \le \alpha\), not necessarily exactly equal. The practical warning survives that qualification. In the calibrated continuous case, exactly 5% of the interval [0, 1] lies below .05; in conservative cases the rate is no larger than that. But flip it around and the menace appears: even honest, effect-free experiments sometimes hand you a "significant" result by raw luck. Run the experiment twenty ways — twenty outcomes, twenty covariates, twenty subgroups — and you've effectively bought many tickets on a small-probability prize. The expected number of "discoveries" in a drawer full of nothing is driven by how many times you looked.</p>
 
-<p class="web-only">The live panel below lets you watch the continuous exact-test idealization. With the true effect set to zero, the histogram of <em>p</em>-values is flat, with a stubborn 5% poking below the line. Now turn up a <em>real</em> effect and watch the pile move toward smaller values: genuine signal makes very small significant <em>p</em>-values more common than barely significant ones. That surplus of very small <em>p</em>-values is a literature's pulse. Its absence is a death certificate.</p>
+<p class="web-only">The live panel below lets you watch the continuous exact-test idealization. With the true effect set to zero, the histogram of \(p\)-values is flat, with a stubborn 5% poking below the line. Now turn up a <em>real</em> effect and watch the pile move toward smaller values: genuine signal makes very small significant \(p\)-values more common than barely significant ones. That surplus of very small \(p\)-values is a literature's pulse. Its absence is a death certificate.</p>
 </section>
 <div class="panel web-only statistics-appendix-lab">
 <p class="ptitle">Interactive · live simulation</p>
 <h3>The shape of a p-value</h3>
-<p class="pnote">Each run simulates <strong>4,000 experiments</strong> (two groups, n = 30 each) and bins their <em>p</em>-values. Slide the <em>true effect</em> from 0 (nothing is real) upward. In this continuous simulation, the null distribution is flat; as signal appears, small <em>p</em>-values become more common and the share below .05 climbs from about 5% (that's α) to your study's actual <em>power</em>.</p>
+<p class="pnote">Each run simulates <strong>4,000 experiments</strong> (two groups, n = 30 each) and bins their \(p\)-values. Slide the <em>true effect</em> from 0 (nothing is real) upward. In this continuous simulation, the null distribution is flat; as signal appears, small \(p\)-values become more common and the share below \(.05\) climbs from about 5% (that's \(\alpha\)) to your study's actual <em>power</em>.</p>
 <div class="ctrl">
 <div class="slider-row">
 <label>True effect size (Cohen's <em>d</em>) <span class="val" id="appendix-d006-the-deeper-machinery-dVal">0.00</span></label>
@@ -584,15 +584,15 @@
 </div>
 <section>
 <h3>Fact two: keep looking, and you're <em>certain</em> to win</h3>
-<p>The optional-stopping toggle in the main factory hid a result that ought to be more famous than it is. Suppose you test after every new subject and stop the instant <em>p</em> dips below .05. If there's a real effect, fine. But if there <em>isn't</em> — if the null is exactly true — and you're allowed to keep sampling indefinitely, then the probability that you <em>eventually</em> cross .05 is not 5%; in the mathematical idealization, it approaches <strong>100%</strong>. This is "sampling to a foregone conclusion," proved by Anscombe in 1954 and hammered home by Armitage and colleagues in 1969: the wandering <em>p</em>-value, given enough patience, is liable to stumble below any fixed line at some point, purely by chance, even when nothing is there.</p>
+<p>The optional-stopping toggle in the main factory hid a result that ought to be more famous than it is. Suppose you test after every new subject and stop the instant \(p\) dips below .05. If there's a real effect, fine. But if there <em>isn't</em> — if the null is exactly true — and you're allowed to keep sampling indefinitely, then the probability that you <em>eventually</em> cross .05 is not 5%; in the mathematical idealization, it approaches <strong>100%</strong>. This is "sampling to a foregone conclusion," proved by Anscombe in 1954 and hammered home by Armitage and colleagues in 1969: the wandering \(p\)-value, given enough patience, is liable to stumble below any fixed line at some point, purely by chance, even when nothing is there.</p>
 <p>This is why peeking is not a venial sin but a structural exploit — and why <strong>Day 4</strong>'s <em>e-values</em> and anytime-valid tests are such a clean fix: they're built so that the guarantee survives unlimited peeking. It's also why real clinical trials, which <em>must</em> monitor accumulating data for safety, use <em class="term">alpha-spending</em> and group-sequential designs — they pay a small statistical tax at each interim look so the total false-alarm budget still adds up to 5%. Optional stopping done lawlessly is cheating; done with a spending rule, it's one of the triumphs of 20th-century statistics.</p>
 </section>
 <section>
 <p class="sec-eyebrow"><span class="n">§3</span> Reading the fingerprints</p>
 <h2>The forensic turn</h2>
-<p>If a real effect leaves many very small significant <em>p</em>-values, while p-hacking leaves a pile-up just below .05, then you can <em>audit a whole literature</em> from its published numbers alone — without rerunning a single experiment. That realization launched a small, slightly gleeful field of statistical forensics.</p>
+<p>If a real effect leaves many very small significant \(p\)-values, while p-hacking leaves a pile-up just below .05, then you can <em>audit a whole literature</em> from its published numbers alone — without rerunning a single experiment. That realization launched a small, slightly gleeful field of statistical forensics.</p>
 
-<p>The flagship tool is <em class="term">p-curve</em> (Simonsohn, Nelson &amp; Simmons, 2014 — yes, the same trio from the main lesson). Collect the significant <em>p</em>-values from a set of studies on one effect and look at their shape. A healthy p-curve has more very small significant <em>p</em>-values than barely significant ones: many .01s, fewer .04s, because real signal mostly yields <em>convincingly</em> small <em>p</em>-values. A literature with no underlying effect, propped up entirely by p-hacking, shows the suspicious pattern instead — an unnatural surplus of .04s and .049s, the telltale residue of researchers nudging results just over the line and stopping the moment they cleared it. A pile-up just below .05 is suspicious.</p>
+<p>The flagship tool is <em class="term">p-curve</em> (Simonsohn, Nelson &amp; Simmons, 2014 — yes, the same trio from the main lesson). Collect the significant \(p\)-values from a set of studies on one effect and look at their shape. A healthy p-curve has more very small significant \(p\)-values than barely significant ones: many .01s, fewer .04s, because real signal mostly yields <em>convincingly</em> small \(p\)-values. A literature with no underlying effect, propped up entirely by p-hacking, shows the suspicious pattern instead — an unnatural surplus of .04s and .049s, the telltale residue of researchers nudging results just over the line and stopping the moment they cleared it. A pile-up just below .05 is suspicious.</p>
 
 <p>And then there are the sting operations — demonstrations built to make the multiple-comparisons problem impossible to wave away:</p>
 
@@ -615,7 +615,7 @@
 <div class="appendix-card">
 <p class="ct"><span class="emoji">🤖</span> statcheck</p>
 <p class="cy">Nuijten et al., 2016</p>
-<p>An algorithm that re-computes the <em>p</em>-values in psychology papers from the reported test statistics. Scanning a quarter-million results, it found that roughly <strong>half</strong> of papers contained at least one inconsistent <em>p</em>-value, and about <strong>one in eight</strong> an error large enough to potentially flip a conclusion.</p>
+<p>An algorithm that re-computes the \(p\)-values in psychology papers from the reported test statistics. Scanning a quarter-million results, it found that roughly <strong>half</strong> of papers contained at least one inconsistent \(p\)-value, and about <strong>one in eight</strong> an error large enough to potentially flip a conclusion.</p>
 </div>
 </div>
 <p class="mono">Hype filter: p-curve and these forensic tools are <span class="chip ok chip-inline" data-print="established"><i></i>established</span> as diagnostics — but they detect <em>patterns</em>, not guilt; an innocent literature with publication bias can mimic some signatures, so they flag suspicion, not proof.</p>
@@ -623,15 +623,15 @@
 <section>
 <p class="sec-eyebrow"><span class="n">§4</span> The honest arithmetic</p>
 <h2>How wrong is a "significant" result, really?</h2>
-<p>Now for the number that should be printed on the first page of every statistics textbook and almost never is. You ran a clean study, no hacking, and got <em>p</em> = .05. Intuition whispers: "about a 5% chance this is a fluke." Intuition is catastrophically wrong, and we can prove it with nothing more than <strong>Day 4</strong>'s Bayes.</p>
+<p>Now for the number that should be printed on the first page of every statistics textbook and almost never is. You ran a clean study, no hacking, and got \(p = .05\). Intuition whispers: "about a 5% chance this is a fluke." Intuition is catastrophically wrong, and we can prove it with nothing more than <strong>Day 4</strong>'s Bayes.</p>
 
-<p>A <em>p</em>-value lives in the world of P(data | null). What you actually care about is P(null | significant result) — the chance your shiny finding is bogus. Bridging the two requires a <em>prior</em>: how plausible was your hypothesis before the data? And the moment you supply a realistic prior, the picture darkens. The engine is the same one Ioannidis used in his famous <strong>Day 2</strong> essay "Why Most Published Research Findings Are False": combine the prior odds, the study's power, and α, and read off the <em class="term">false positive risk</em> — the share of your "significant" results that are false alarms.</p>
+<p>A \(p\)-value lives in the world of \(P(\text{data}\mid\text{null})\). What you actually care about is \(P(\text{null}\mid\text{significant result})\) — the chance your shiny finding is bogus. Bridging the two requires a <em>prior</em>: how plausible was your hypothesis before the data? And the moment you supply a realistic prior, the picture darkens. The engine is the same one Ioannidis used in his famous <strong>Day 2</strong> essay "Why Most Published Research Findings Are False": combine the prior odds, the study's power, and \(\alpha\), and read off the <em class="term">false positive risk</em> — the share of your "significant" results that are false alarms.</p>
 <p class="web-only">Use the live calculator below. You'll find that even with a coin-flip prior and decent power, a meaningful chunk of your significant findings are wrong — and with the long-shot hypotheses that make for exciting headlines, most of them are.</p>
 </section>
 <div class="panel web-only statistics-appendix-lab">
 <p class="ptitle">Interactive · the false-positive risk engine</p>
 <h3>Of 100 "discoveries," how many are false?</h3>
-<p class="pnote">Imagine many hypotheses tested at the usual <em>p</em> &lt; .05. Set how often your hypotheses are <em>really</em> true (the prior) and your study's power. The grid shows 100 results you'd call "significant," coloured by whether they're genuine (teal) or false alarms (red).</p>
+<p class="pnote">Imagine many hypotheses tested at the usual \(p < .05\). Set how often your hypotheses are <em>really</em> true (the prior) and your study's power. The grid shows 100 results you'd call "significant," coloured by whether they're genuine (teal) or false alarms (red).</p>
 <div class="ctrl">
 <div class="slider-row">
 <label>Prior: share of tested hypotheses that are truly real <span class="val" id="appendix-d006-the-deeper-machinery-priorVal">50%</span></label>
@@ -670,12 +670,12 @@
 </div>
 <section>
 <p>Two refinements make the news worse, not better — and they're the real essence here.</p>
-<p><strong>It's grimmer than the grid suggests (Colquhoun).</strong> The calculator above uses the whole .05 <em>tail</em> as the false-positive rate. But David Colquhoun (2014, 2017) pointed out that a result sitting <em>right at</em> <em>p</em> = .05 is barely more likely under a real effect than under the null, so its honest false-positive risk is higher than the tail suggests. His verdict, for an even-odds prior: observe <em>p</em> ≈ .05 and the minimum chance you're wrong is around <strong>26%</strong> — not 5%. Demand a genuine discovery rate, and <em>p</em> &lt; .05 simply isn't a high enough bar. This is the quantitative heart of the Benjamin et al. push toward .005 you met in the main lesson.</p>
+<p><strong>It's grimmer than the grid suggests (Colquhoun).</strong> The calculator above uses the whole .05 <em>tail</em> as the false-positive rate. But David Colquhoun (2014, 2017) pointed out that a result sitting <em>right at</em> \(p = .05\) is barely more likely under a real effect than under the null, so its honest false-positive risk is higher than the tail suggests. His verdict, for an even-odds prior: observe \(p \approx .05\) and the minimum chance you're wrong is around <strong>26%</strong> — not 5%. Demand a genuine discovery rate, and \(p < .05\) simply isn't a high enough bar. This is the quantitative heart of the Benjamin et al. push toward .005 you met in the main lesson.</p>
 <p><strong>The null is almost never exactly true anyway (Meehl's crud factor).</strong> Paul Meehl observed that in large social-science datasets, <em>everything</em> correlates a little with <em>everything</em> — birth order with politics, height with humor — because the world is a dense web of faint real connections he called the <em class="term">crud factor</em>. So a point null of "exactly zero" is a straw man; with a big enough sample you can reject it for any pair of variables you like. "Statistically significant" then certifies only that your sample was large, not that you found anything that matters. It's the deepest reason significance and importance are different animals.</p>
 
 <div class="aside">
 <p class="h">When Bayes and frequentism openly fight: the Jeffreys–Lindley paradox</p>
-<p>Here's a genuinely unsettling one. With a very large sample, a result at exactly <em>p</em> = .05 can be evidence <em>for</em> the null on a Bayesian analysis — the two frameworks don't just differ, they point in <em>opposite directions</em> (Lindley, 1957). The frequentist rejects; the Bayesian shrugs and leans toward H<sub>0</sub>. The resolution isn't that one side is dumb; it's that they're answering different questions, and at large <em>n</em> the gap between "surprising under the null" and "more probable under the alternative" yawns wide. The modern Bayesian answer is the <em class="term">Bayes factor</em> — a direct ratio of how well each hypothesis predicted the data, popularized in accessible software like JASP. It can do something a <em>p</em>-value constitutionally cannot: gather evidence <em>for</em> the null, not just fail to reject it.</p>
+<p>Here's a genuinely unsettling one. With a very large sample, a result at exactly \(p = .05\) can be evidence <em>for</em> the null on a Bayesian analysis — the two frameworks don't just differ, they point in <em>opposite directions</em> (Lindley, 1957). The frequentist rejects; the Bayesian shrugs and leans toward \(H_0\). The resolution isn't that one side is dumb; it's that they're answering different questions, and at large <em>n</em> the gap between "surprising under the null" and "more probable under the alternative" yawns wide. The modern Bayesian answer is the <em class="term">Bayes factor</em> — a direct ratio of how well each hypothesis predicted the data, popularized in accessible software like JASP. It can do something a \(p\)-value constitutionally cannot: gather evidence <em>for</em> the null, not just fail to reject it.</p>
 </div>
 </section>
 <section>
@@ -687,10 +687,10 @@
 <p>Andrew Gelman and John Carlin (2014) argue that in the low-power world we actually inhabit, the classic Type I / Type II framing asks the wrong question. Two sharper failures matter more. A <em class="term">Type S</em> ("sign") error is getting the <em>direction</em> wrong — concluding a treatment helps when it harms. A <em class="term">Type M</em> ("magnitude") error is the exaggeration ratio — how many times too large your "significant" estimate is. Their punchline ties straight to the main lesson's winner's curse: when power is low, the few estimates that reach significance aren't just uncertain, they're systematically <strong>inflated</strong>, often two- or threefold. The published effect isn't a slightly noisy truth; it's a funhouse-mirror enlargement of it.</p>
 
 <h3>Proving a negative: equivalence testing</h3>
-<p>The main lesson warned that "<em>p</em> &gt; .05" does not mean "no effect." But sometimes you genuinely want to conclude <em>there's nothing meaningful here</em> — and you can, with <em class="term">equivalence testing</em> (the TOST procedure; Lakens, 2017). You define the smallest effect you'd care about, then test whether the true effect is confidently <em>smaller</em> than that. It flips absence-of-evidence into evidence-of-absence, legitimately. A non-significant result plus a passed equivalence test is a real conclusion; a non-significant result alone is just a shrug.</p>
+<p>The main lesson warned that "\(p > .05\)" does not mean "no effect." But sometimes you genuinely want to conclude <em>there's nothing meaningful here</em> — and you can, with <em class="term">equivalence testing</em> (the TOST procedure; Lakens, 2017). You define the smallest effect you'd care about, then test whether the true effect is confidently <em>smaller</em> than that. It flips absence-of-evidence into evidence-of-absence, legitimately. A non-significant result plus a passed equivalence test is a real conclusion; a non-significant result alone is just a shrug.</p>
 
 <h3>Honest multiplicity: controlling the false discovery rate</h3>
-<p>When you really must run many tests (every gene, every brain region), the old fix was Bonferroni — divide α by the number of tests — which is correct but so brutal it leaves you no power. Benjamini and Hochberg's <em class="term">false discovery rate</em> (1995), one of the most-cited papers in all of science, changed the target: instead of guaranteeing <em>zero</em> false positives among <em>all</em> tests, control the expected <em>proportion</em> of false positives among the ones you <em>flag</em>. It's the pragmatic bargain that made genomics and neuroimaging statistically livable — accept a known, small fraction of duds in exchange for actually finding things.</p>
+<p>When you really must run many tests (every gene, every brain region), the old fix was Bonferroni — divide \(\alpha\) by the number of tests — which is correct but so brutal it leaves you no power. Benjamini and Hochberg's <em class="term">false discovery rate</em> (1995), one of the most-cited papers in all of science, changed the target: instead of guaranteeing <em>zero</em> false positives among <em>all</em> tests, control the expected <em>proportion</em> of false positives among the ones you <em>flag</em>. It's the pragmatic bargain that made genomics and neuroimaging statistically livable — accept a known, small fraction of duds in exchange for actually finding things.</p>
 
 <h3>Renaming the interval to mean what it is</h3>
 <p>Finally, a small move with large clarifying power: Amrhein, Greenland and colleagues urge calling a confidence interval a <em class="term">compatibility interval</em> — the range of effect sizes reasonably <em>compatible</em> with your data and model. The word kills two errors at once. It stops you treating values inside as proven and values outside as impossible, and it nudges you to report the whole interval as a statement about <em>magnitude and uncertainty</em> rather than a yes/no membership test for zero.</p>
@@ -700,23 +700,23 @@
 <h2>Significance testing, done severely</h2>
 <p>It would be too tidy to end with "p-values bad, estimation good." Evenhandedness — and accuracy — demand a serious counterweight, and the philosopher <strong>Deborah Mayo</strong> supplies it. In <em>Statistical Inference as Severe Testing</em> (2018), she defends error-statistical reasoning against both the abolitionists and the Bayesians, with a single demanding principle.</p>
 <blockquote>You have evidence for a claim only to the degree it has passed a test it would <em>probably have failed</em>, had the claim been false.</blockquote>
-<p>That is <em class="term">severity</em>, and notice it is <strong>Day 2</strong>'s Popper rendered quantitative: a result corroborates a hypothesis only if the test genuinely <em>risked</em> refuting it. On this view, the rot isn't the <em>p</em>-value — it's the abandonment of severity. A <em>p</em>-value squeezed out of a forking-paths fishing trip is worthless not because it's a <em>p</em>-value but because the "test" was never severe: it could hardly have come out any other way. Mayo's warning to the reformers is pointed: drop all thresholds and error-control, and you don't get more nuanced science — you get less accountable science, with no public standard for when a claim has actually earned its keep. The honest synthesis the main lesson reached for lives here: not "abolish" or "obey," but <em>demand severity</em>, report magnitude and uncertainty, and make the test one the hypothesis could have flunked.</p>
+<p>That is <em class="term">severity</em>, and notice it is <strong>Day 2</strong>'s Popper rendered quantitative: a result corroborates a hypothesis only if the test genuinely <em>risked</em> refuting it. On this view, the rot isn't the \(p\)-value — it's the abandonment of severity. A \(p\)-value squeezed out of a forking-paths fishing trip is worthless not because it's a \(p\)-value but because the "test" was never severe: it could hardly have come out any other way. Mayo's warning to the reformers is pointed: drop all thresholds and error-control, and you don't get more nuanced science — you get less accountable science, with no public standard for when a claim has actually earned its keep. The honest synthesis the main lesson reached for lives here: not "abolish" or "obey," but <em>demand severity</em>, report magnitude and uncertainty, and make the test one the hypothesis could have flunked.</p>
 </section>
 <section>
 <p class="sec-eyebrow"><span class="n">§7</span> The bridge to tomorrow</p>
 <h2>A p-value, measured in coin flips</h2>
-<p>One last idea, and it's a beauty — because it quietly turns the page to Day 7. Sander Greenland (2019) suggests we stop staring at the bare <em>p</em>-value and instead take its <em>surprisal</em>, borrowed straight from information theory: the <em class="term">S-value</em>, defined as S = −log₂(<em>p</em>). This converts a probability into <strong>bits of information against your model</strong> — and bits, as we'll see tomorrow, are the universal currency of surprise.</p>
-<p>The translation is wonderfully concrete. Ask: how many fair coins would I have to flip and get <em>all heads</em> to be this surprised? That count <em>is</em> the S-value. A result at <em>p</em> = .05 carries about <strong>4.3 bits</strong> — roughly the surprise of calling four or five coin tosses in a row. Stated that way, the spell breaks. Four heads in a row is mildly interesting; it is not a discovery, and you would never bet your reputation on it.</p>
-<p class="web-only">The slider below lets you feel any <em>p</em>-value's true evidential weight, in the honest units of Day 7.</p>
-<p class="epub-only print-only">The reference table below translates common <em>p</em>-values into the honest units of Day 7.</p>
+<p>One last idea, and it's a beauty — because it quietly turns the page to Day 7. Sander Greenland (2019) suggests we stop staring at the bare \(p\)-value and instead take its <em>surprisal</em>, borrowed straight from information theory: the <em class="term">S-value</em>, defined as \(S=-\log_2 p\). This converts a probability into <strong>bits of information against your model</strong> — and bits, as we'll see tomorrow, are the universal currency of surprise.</p>
+<p>The translation is wonderfully concrete. Ask: how many fair coins would I have to flip and get <em>all heads</em> to be this surprised? That count <em>is</em> the S-value. A result at \(p = .05\) carries about <strong>4.3 bits</strong> — roughly the surprise of calling four or five coin tosses in a row. Stated that way, the spell breaks. Four heads in a row is mildly interesting; it is not a discovery, and you would never bet your reputation on it.</p>
+<p class="web-only">The slider below lets you feel any \(p\)-value's true evidential weight, in the honest units of Day 7.</p>
+<p class="epub-only print-only">The reference table below translates common \(p\)-values into the honest units of Day 7.</p>
 </section>
 <div class="panel web-only statistics-appendix-lab">
 <p class="ptitle">Interactive · surprise in bits</p>
 <h3>The S-value</h3>
-<p class="pnote">Drag to set a <em>p</em>-value. The S-value, S = −log₂(<em>p</em>), tells you how many coins-all-heads worth of surprise it represents — the real evidence against the tested model, in bits.</p>
+<p class="pnote">Drag to set a \(p\)-value. The S-value, \(S=-\log_2 p\), tells you how many coins-all-heads worth of surprise it represents — the real evidence against the tested model, in bits.</p>
 <div class="ctrl">
 <div class="slider-row">
-<label><em>p</em>-value <span class="val mono" id="appendix-d006-the-deeper-machinery-pShow">0.050</span></label>
+<label>\(p\)-value <span class="val mono" id="appendix-d006-the-deeper-machinery-pShow">0.050</span></label>
 <input type="range" id="appendix-d006-the-deeper-machinery-pRange" min="0" max="100" value="33" aria-label="p-value (log scale)">
 </div>
 <div class="stat-inline-readout">
@@ -746,7 +746,7 @@
 <p>Distilled from everything above and in the main lesson — the moves that convert luck into knowledge:</p>
 <ul class="check">
 <li><b>Preregister the confirmatory test.</b> Freeze the confirmatory path before you see the data; label everything else exploratory and honest.</li>
-<li><b>Report the effect size with a compatibility interval</b>, always. The magnitude and its uncertainty <em>are</em> the result; the <em>p</em>-value is a footnote.</li>
+<li><b>Report the effect size with a compatibility interval</b>, always. The magnitude and its uncertainty <em>are</em> the result; the \(p\)-value is a footnote.</li>
 <li><b>Power the study for the smallest effect you'd care about</b> — and remember that a "significant" result from an underpowered study is probably inflated (Type M).</li>
 <li><b>Translate your <em>p</em> into bits.</b> If it's only a few coin flips' worth of surprise, say so, and don't oversell.</li>
 <li><b>Check robustness across reasonable analyses</b> (a specification curve), and ask whether the result survived a <em>severe</em> test or merely a convenient one.</li>
@@ -757,8 +757,8 @@
 <div class="recap">
 <p class="h">◆ The appendix in three sentences</p>
 <dl>
-<div><dt>Deepest idea</dt><dd>The "<em>p</em> &lt; .05 test" is an incoherent weld of Fisher's evidence-measure and Neyman–Pearson's decision-rule, and the misreadings everyone makes are symptoms of that original sin — while two simple facts (the <em>p</em>-value is uniform under the null; peeking eventually crosses any line with certainty) make p-hacking not merely possible but guaranteed.</dd></div>
-<div><dt>Best new analogy</dt><dd>A <em>p</em>-value translated into coin flips: <em>p</em> = .05 is the surprise of ~4–5 heads in a row — mildly interesting, never a discovery — which is why the honest false-positive risk of a fresh "significant" result is around 26%, not 5%.</dd></div>
+<div><dt>Deepest idea</dt><dd>The "\(p < .05\) test" is an incoherent weld of Fisher's evidence-measure and Neyman–Pearson's decision-rule, and the misreadings everyone makes are symptoms of that original sin — while two simple facts (the \(p\)-value is uniform under the null; peeking eventually crosses any line with certainty) make p-hacking not merely possible but guaranteed.</dd></div>
+<div><dt>Best new analogy</dt><dd>A \(p\)-value translated into coin flips: \(p = .05\) is the surprise of ~4–5 heads in a row — mildly interesting, never a discovery — which is why the honest false-positive risk of a fresh "significant" result is around 26%, not 5%.</dd></div>
 <div><dt>The constructive turn</dt><dd>The fix is a toolkit, not a ban: severity (Mayo), effect sizes with compatibility intervals, Type S/M thinking, equivalence tests, false-discovery-rate control, and Bayes factors — plus the forensic methods (p-curve, the dead salmon, statcheck) that audit a literature from its own numbers.</dd></div>
 </dl>
 </div>
@@ -780,7 +780,7 @@
 <li>Brown, N. J. L. &amp; Heathers, J. A. J. (2017). "The GRIM Test: A Simple Technique Detects Numerous Anomalies in the Reporting of Results in Psychology." <em>Social Psychological and Personality Science</em> 8(4): 363–369. <span class="meta">doi:10.1177/1948550616673876.</span></li>
 <li>Nuijten, M. B., Hartgerink, C. H. J., van Assen, M. A. L. M., Epskamp, S. &amp; Wicherts, J. M. (2016). "The prevalence of statistical reporting errors in psychology (1985–2013)." <em>Behavior Research Methods</em> 48: 1205–1226. <span class="meta">doi:10.3758/s13428-015-0664-2 — the statcheck audit.</span></li>
 <li>Ioannidis, J. P. A. (2005). "Why Most Published Research Findings Are False." <em>PLoS Medicine</em> 2(8): e124. <span class="meta">— the positive-predictive-value engine (revisited from Day 2).</span></li>
-<li>Colquhoun, D. (2014). "An investigation of the false discovery rate and the misinterpretation of p-values." <em>Royal Society Open Science</em> 1: 140216. <span class="meta">doi:10.1098/rsos.140216.</span> &nbsp;Colquhoun, D. (2017). "The reproducibility of research and the misinterpretation of p-values." <em>Royal Society Open Science</em> 4: 171085. <span class="meta">— observed p ≈ .05 ⇒ false-positive risk ≥ ~26%.</span></li>
+<li>Colquhoun, D. (2014). "An investigation of the false discovery rate and the misinterpretation of p-values." <em>Royal Society Open Science</em> 1: 140216. <span class="meta">doi:10.1098/rsos.140216.</span> &nbsp;Colquhoun, D. (2017). "The reproducibility of research and the misinterpretation of p-values." <em>Royal Society Open Science</em> 4: 171085. <span class="meta">— observed \(p \approx .05 \Rightarrow\) false-positive risk \(\ge \sim 26\%\).</span></li>
 <li>Lindley, D. V. (1957). "A Statistical Paradox." <em>Biometrika</em> 44(1–2): 187–192. <span class="meta">— the Jeffreys–Lindley divergence of p-values and Bayes factors at large n.</span></li>
 <li>Meehl, P. E. (1990). "Why Summaries of Research on Psychological Theories Are Often Uninterpretable." <em>Psychological Reports</em> 66(1): 195–244. <span class="meta">— the "crud factor"; the point null is almost never exactly true.</span></li>
 <li>Gelman, A. &amp; Carlin, J. (2014). "Beyond Power Calculations: Assessing Type S (Sign) and Type M (Magnitude) Errors." <em>Perspectives on Psychological Science</em> 9(6): 641–651. <span class="meta">doi:10.1177/1745691614551642.</span></li>
@@ -858,10 +858,10 @@
 <div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-peekPanel">
 <p class="ptitle">Interactive · optional stopping</p>
 <h3>The peek meter</h3>
-<p class="pnote">A toy approximation: treat each look as a fresh chance to cross p &lt; α. Real sequential dependence is subtler, but the direction is the point. Fixed-sample p-values are brittle under repeated looks; anytime-valid procedures are designed for the stopping rule.</p>
+<p class="pnote">A toy approximation: treat each look as a fresh chance to cross \(p < \alpha\). Real sequential dependence is subtler, but the direction is the point. Fixed-sample p-values are brittle under repeated looks; anytime-valid procedures are designed for the stopping rule.</p>
 <div class="grid2">
 <div class="ctrl">
-<div class="slider-row"><label>Nominal α <span class="val" id="appendix-d006-the-incoming-wave-revised-peekAlphaVal">0.05</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-peekAlpha" min="1" max="10" value="5"></div>
+<div class="slider-row"><label>Nominal \(\alpha\) <span class="val" id="appendix-d006-the-incoming-wave-revised-peekAlphaVal">0.05</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-peekAlpha" min="1" max="10" value="5"></div>
 <div class="slider-row"><label>Number of looks <span class="val" id="appendix-d006-the-incoming-wave-revised-peekLooksVal">12</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-peekLooks" min="1" max="100" value="12"></div>
 </div>
 <div class="visbox">
@@ -902,7 +902,7 @@
 <p class="pnote">This is a conceptual dial, not a theorem. Lower α asks for higher coverage; weaker model skill and more shift make the prediction set larger or less trustworthy. The real guarantee depends on exchangeability or a justified shift correction.</p>
 <div class="grid2">
 <div class="ctrl">
-<div class="slider-row"><label>α, tolerated miss-rate <span class="val" id="appendix-d006-the-incoming-wave-revised-confAlphaVal">0.10</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confAlpha" min="1" max="30" value="10"></div>
+<div class="slider-row"><label>\(\alpha\), tolerated miss-rate <span class="val" id="appendix-d006-the-incoming-wave-revised-confAlphaVal">0.10</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confAlpha" min="1" max="30" value="10"></div>
 <div class="slider-row"><label>Model skill <span class="val" id="appendix-d006-the-incoming-wave-revised-confSkillVal">0.70</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confSkill" min="10" max="95" value="70"></div>
 <div class="slider-row"><label>Deployment shift <span class="val" id="appendix-d006-the-incoming-wave-revised-confShiftVal">0.00</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confShift" min="0" max="80" value="0"></div>
 </div>
@@ -982,7 +982,7 @@
 <p>The post-2020 change is not that DML was invented after 2020; it was not. The change is that software and applied practice caught up. DoubleML implementations in Python and R, causal-forest workflows, and biomedical heterogeneous-treatment-effect reviews have turned “orthogonalize the nuisance” from a seminar phrase into an applied workflow.</p>
 <p>The hype filter is essential: DML weakens modeling assumptions; it does not remove causal identification assumptions. If the back-door set is wrong, if a confounder is unmeasured, if treatment assignment depends on hidden variables, a beautiful orthogonal score will compute a precise answer to the wrong causal question. DML solves <em>flexible adjustment</em>, not the metaphysics of causation.</p>
 
-<div class="aside"><p class="h">Day 5 callback</p><p>DML helps estimate P(Y|do(X)) only after the design and identification argument say that this target is reachable. It is not a machine for converting P(Y|X) into causation by force.</p></div>
+<div class="aside"><p class="h">Day 5 callback</p><p>DML helps estimate \(P(Y\mid\operatorname{do}(X))\) only after the design and identification argument say that this target is reachable. It is not a machine for converting \(P(Y\mid X)\) into causation by force.</p></div>
 </section>
 
 <section id="appendix-d006-the-incoming-wave-revised-selection">
@@ -1002,7 +1002,7 @@
 <div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-pathsPanel">
 <p class="ptitle">Interactive · AI analyst multiverse</p>
 <h3>The garden grows faster when analysis is cheap</h3>
-<p class="pnote">Assume pure noise and a nominal α = .05. Each prompt, model, outcome, and cleaning rule multiplies the number of possible analyses. The independence approximation is crude; the moral is not.</p>
+<p class="pnote">Assume pure noise and a nominal \(\alpha=.05\). Each prompt, model, outcome, and cleaning rule multiplies the number of possible analyses. The independence approximation is crude; the moral is not.</p>
 <div class="grid2">
 <div class="ctrl">
 <div class="slider-row"><label>Prompts tried <span class="val" id="appendix-d006-the-incoming-wave-revised-pathPromptVal">4</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathPrompt" min="1" max="30" value="4"></div>

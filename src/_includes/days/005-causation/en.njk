@@ -45,7 +45,7 @@
 
 <div class="whereblock">
 <p class="label">◆ Where we are</p>
-<p>Four days in, the toolkit is starting to interlock. <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a> warned us about beliefs that are true but only <em>by luck</em> — the stopped clock. A <em class="term">spurious correlation</em>{% tip 'A spurious correlation is a real statistical association caused by something other than a direct causal link between the two measured variables.' %} is exactly that at population scale: a number that's "right" for entirely the wrong reason. <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> introduced Hume and the problem of induction; today we meet the same Hume because his accounts of causation and induction are tightly linked: both challenge our right to move from repeated observations to necessity or future regularity. <a href="/days/003-logic-and-valid-inference/"><strong>Day 3</strong></a> sorted reasoning into deduction, induction, and abduction — and causal discovery, as an analogy, often feels like abduction with teeth: inference to the best causal explanation under assumptions. And <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a> gave us the do-versus-see distinction's parent, probability: today's punchline is that \(P(y\mid do(x))\) and \(P(y\mid x)\) answer different questions and need not be equal.</p>
+<p>Four days in, the toolkit is starting to interlock. <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a> warned us about beliefs that are true but only <em>by luck</em> — the stopped clock. A <em class="term">spurious correlation</em>{% tip 'A spurious correlation is a real statistical association caused by something other than a direct causal link between the two measured variables.' %} is exactly that at population scale: a number that's "right" for entirely the wrong reason. <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> introduced Hume and the problem of induction; today we meet the same Hume because his accounts of causation and induction are tightly linked: both challenge our right to move from repeated observations to necessity or future regularity. <a href="/days/003-logic-and-valid-inference/"><strong>Day 3</strong></a> sorted reasoning into deduction, induction, and abduction — and causal discovery, as an analogy, often feels like abduction with teeth: inference to the best causal explanation under assumptions. And <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a> gave us the do-versus-see distinction's parent, probability: today's punchline is that \(P(y\mid \operatorname{do}(x))\) and \(P(y\mid x)\) answer different questions and need not be equal.</p>
 </div>
 
 <section>
@@ -69,7 +69,7 @@
 <div class="theory-key">
 <div class="k"><span class="who2">Lewis · 1973</span><b><em class="term">Counterfactual</em>{% tip 'A counterfactual asks what would have happened if some fact had been different.' %}.</b> In simple cases, E counterfactually depends on C: <em>had C not happened, E would not have happened.</em> Lewis then analyzes causation more generally through chains of such causal dependence. Clean and intuitive, but it has to wrestle with backup causes and double-killings (preemption and overdetermination).</div>
 <div class="k"><span class="who2">Reichenbach · Suppes · Cartwright</span><b>Probabilistic.</b> These are different probabilistic programs, but the shared slogan is that causes <em>raise the probability</em> of their effects. Reichenbach's <em class="term">common-cause principle</em>{% tip 'The common-cause principle says a surprising correlation often needs either a direct cause or a shared prior cause that explains it.' %}: if A and B are correlated but neither causes the other, a shared cause C "screens them off" — hold C fixed and the correlation dissolves in the model. Summer is the intended common-cause explanation in the toy example.</div>
-<div class="k"><span class="who2">Woodward · 2003</span><b>Interventionist.</b> \(C\) is a cause of \(E\) when an appropriate <em class="term">intervention</em>{% tip 'An intervention is an idealized change that sets one variable while blocking the usual causes of that variable.' %} changes \(C\) while breaking \(C\)'s usual causes, avoiding independent routes to \(E\), and thereby changes \(E\). No human needed: volcanoes cause ash even with no one to push the button. This is closely aligned with the interventionist semantics of structural causal models: below, Pearl turns the idea into \(do(C)\) and graph surgery.</div>
+<div class="k"><span class="who2">Woodward · 2003</span><b>Interventionist.</b> \(C\) is a cause of \(E\) when an appropriate <em class="term">intervention</em>{% tip 'An intervention is an idealized change that sets one variable while blocking the usual causes of that variable.' %} changes \(C\) while breaking \(C\)'s usual causes, avoiding independent routes to \(E\), and thereby changes \(E\). No human needed: volcanoes cause ash even with no one to push the button. This is closely aligned with the interventionist semantics of structural causal models: below, Pearl turns the idea into \(\operatorname{do}(C)\) and graph surgery.</div>
 <div class="k"><span class="who2">Mackie · 1974</span><b>INUS conditions.</b> A cause can be an insufficient but non-redundant part of an unnecessary but sufficient condition. A short circuit is not enough by itself to burn a house down; it matters because it is a non-redundant part of one sufficient package: short circuit plus oxygen plus flammable material plus no timely suppression.</div>
 </div>
 
@@ -200,7 +200,7 @@
 <thead><tr><th>Rung</th><th>Verb</th><th>Notation</th><th>Question</th></tr></thead>
 <tbody>
 <tr><td>1. Association</td><td>Seeing</td><td>\(P(Y\mid X)\)</td><td>How do outcomes differ among cases where \(X\) is observed?</td></tr>
-<tr><td>2. Intervention</td><td>Doing</td><td>\(P(Y\mid do(X))\)</td><td>What would happen if \(X\) were set by intervention?</td></tr>
+<tr><td>2. Intervention</td><td>Doing</td><td>\(P(Y\mid \operatorname{do}(X))\)</td><td>What would happen if \(X\) were set by intervention?</td></tr>
 <tr><td>3. Counterfactuals</td><td>Imagining</td><td>\(P(Y_x\mid X',Y')\)</td><td>What would have happened in a different world, given what actually happened?</td></tr>
 </tbody>
 </table>
@@ -210,14 +210,14 @@
 <section>
 <h3>The do-operator: seeing is not doing</h3>
 <p>Here is the conceptual hinge of the entire modern field, and it is worth saying slowly. There are two very different things you can do with a variable X.</p>
-<p>You can <strong>condition</strong>{% tip 'Conditioning means narrowing attention to cases where some variable already has a given value.' %} on it — written <code>P(Y | X = x)</code>. This means: among all the cases where X <em>happened</em> to equal x, what's the distribution of Y? You're filtering an existing population. This is <em>seeing</em>.</p>
-<p>Or you can <strong>intervene</strong> — written, in Pearl's notation, <code>P(Y | do(X = x))</code>. This means: consider a regime that sets X to x in the target population, snipping X away from whatever usually causes it, and then watch Y. This is <em>doing</em>. In an ideal randomized trial, assignment is designed to approximate that severing operation.</p>
-<p>The two may coincide, but equality requires a design or causal assumptions; it does not follow from their numerical similarity. <code>P(Y | X=x)</code> describes outcomes among cases in which X was observed to equal x. <code>P(Y | do(X=x))</code> describes outcomes in a hypothetical regime that sets X to x. The machine below makes the difference auditable by calculating both quantities from an explicit structural model.</p>
+<p>You can <strong>condition</strong>{% tip 'Conditioning means narrowing attention to cases where some variable already has a given value.' %} on it — written \(P(Y \mid X = x)\). This means: among all the cases where X <em>happened</em> to equal x, what's the distribution of Y? You're filtering an existing population. This is <em>seeing</em>.</p>
+<p>Or you can <strong>intervene</strong> — written, in Pearl's notation, \(P(Y \mid \operatorname{do}(X = x))\). This means: consider a regime that sets X to x in the target population, snipping X away from whatever usually causes it, and then watch Y. This is <em>doing</em>. In an ideal randomized trial, assignment is designed to approximate that severing operation.</p>
+<p>The two may coincide, but equality requires a design or causal assumptions; it does not follow from their numerical similarity. \(P(Y \mid X=x)\) describes outcomes among cases in which X was observed to equal x. \(P(Y \mid \operatorname{do}(X=x))\) describes outcomes in a hypothetical regime that sets X to x. The machine below makes the difference auditable by calculating both quantities from an explicit structural model.</p>
 </section>
 
 <div class="aside">
 <p class="h">The potential-outcomes lens</p>
-<p>The other major language of modern causal inference writes the same idea at the level of units. For unit <code>i</code>, <em class="term">potential outcomes</em>{% tip 'Potential outcomes are the outcomes a unit would have under different treatment or intervention values, even though only one is observed.' %} are <code>Y<sub>i</sub>(1)</code> and <code>Y<sub>i</sub>(0)</code>: the outcome if treated and the outcome if untreated. A common <em class="term">causal estimand</em>{% tip 'An estimand is the precise causal quantity a study is trying to learn, such as an average treatment effect.' %} is the average treatment effect in a specified target population and time horizon, <code>ATE = E[Y(1)-Y(0)]</code>. The catch is the fundamental problem of causal inference: for any one unit, only one of those two potential outcomes is observed. The other is counterfactual.</p>
+<p>The other major language of modern causal inference writes the same idea at the level of units. For unit \(i\), <em class="term">potential outcomes</em>{% tip 'Potential outcomes are the outcomes a unit would have under different treatment or intervention values, even though only one is observed.' %} are \(Y_i(1)\) and \(Y_i(0)\): the outcome if treated and the outcome if untreated. A common <em class="term">causal estimand</em>{% tip 'An estimand is the precise causal quantity a study is trying to learn, such as an average treatment effect.' %} is the average treatment effect in a specified target population and time horizon, \(ATE = E[Y(1)-Y(0)]\). The catch is the fundamental problem of causal inference: for any one unit, only one of those two potential outcomes is observed. The other is counterfactual.</p>
 <p>Designs and assumptions connect this target to data. <em class="term">Consistency</em>{% tip 'Consistency says a unit observed under treatment value x has the same outcome as its potential outcome under x.' %} links observed outcomes to potential outcomes under the treatment actually received. <em class="term">Exchangeability</em>{% tip 'Exchangeability says treated and untreated groups are comparable with respect to the relevant potential outcomes, possibly after conditioning on covariates.' %} says the groups being compared are comparable with respect to the relevant potential outcomes. <em class="term">Positivity</em>{% tip 'Positivity, or overlap, means each relevant covariate group has a nonzero chance of receiving each treatment level being compared.' %} means every relevant covariate group has a chance of receiving each treatment level. <em class="term">No interference</em>{% tip 'No interference means one unit’s treatment does not change another unit’s outcome, unless such spillovers are explicitly modeled.' %} means one unit's treatment does not alter another unit's outcome, unless spillovers are part of the model.</p>
 <p>A safe causal workflow is: specify the unit, exposure, outcome, timing, and intervention; define the estimand; state the causal assumptions; determine whether the estimand is identified; estimate it statistically; then assess uncertainty, measurement, attrition, selection, overlap, and sensitivity to violations.</p>
 </div>
@@ -249,7 +249,7 @@
 <div class="dovs-stage">
 <div class="dovs-card see">
 <p class="cap">Rung 1 · Seeing</p>
-<p class="expr">P(wet | umbrella) − P(wet | no umbrella)</p>
+<p class="expr">\(P(\text{wet}\mid \text{umbrella}) - P(\text{wet}\mid \text{no umbrella})\)</p>
 <svg viewBox="0 0 220 112" role="img" aria-label="Graph with rain pointing to umbrella use and wet clothes; the observational back-door path is open.">
 <text x="110" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">rain</text>
 <line x1="88" y1="24" x2="50" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
@@ -264,7 +264,7 @@
 
 <div class="dovs-card do">
 <p class="cap">Rung 2 · Doing</p>
-<p class="expr">P(wet | do(umbrella)) − P(wet | do(no umbrella))</p>
+<p class="expr">\(P(\text{wet}\mid \operatorname{do}(\text{umbrella})) - P(\text{wet}\mid \operatorname{do}(\text{no umbrella}))\)</p>
 <svg viewBox="0 0 220 112" role="img" aria-label="Same graph but the arrow from rain to umbrella use is cut by the intervention.">
 <text x="110" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">rain</text>
 <line x1="88" y1="24" x2="50" y2="62" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="3 3"></line>
@@ -295,7 +295,7 @@
 <table class="alt-table">
 <thead><tr><th>Model parameter</th><th>Default</th></tr></thead>
 <tbody>
-<tr><td><code>P(S=1)</code></td><td>0.45</td></tr>
+<tr><td>\(P(S=1)\)</td><td>0.45</td></tr>
 <tr><td><code>a</code></td><td>−2.00</td></tr>
 <tr><td><code>b</code></td><td>4 × slider = +2.80</td></tr>
 <tr><td><code>c</code></td><td>−2.20</td></tr>
@@ -311,7 +311,7 @@
 <p class="vh" id="dovsVH">Sign reversal</p>
 <p id="dovsBody">Seeing says umbrellas are associated with wetter clothes. Doing says umbrellas reduce wetness. Rain changed the mix of people in the observed umbrella and no-umbrella groups.</p>
 </div>
-<p class="pnote">The model is: <code>S ~ Bernoulli(0.45)</code>; <code>P(X=1|S=s)=logit⁻¹(a+bs)</code>; <code>P(Y=1|X=x,S=s)=logit⁻¹(c+dx+es)</code>. Here <code>S</code> is rain, <code>X</code> is umbrella use, <code>Y</code> is wet clothes, and the fixed defaults are <code>a=-2.0</code>, <code>c=-2.2</code>, <code>e=4.1</code>.</p>
+<p class="pnote">The model is: \(S \sim \operatorname{Bernoulli}(0.45)\); \(P(X=1\mid S=s)=\operatorname{logit}^{-1}(a+bs)\); \(P(Y=1\mid X=x,S=s)=\operatorname{logit}^{-1}(c+dx+es)\). Here \(S\) is rain, \(X\) is umbrella use, \(Y\) is wet clothes, and the fixed defaults are \(a=-2.0\), \(c=-2.2\), \(e=4.1\).</p>
 </div>
 </div>
 
@@ -322,12 +322,12 @@
 <table class="alt-table">
 <thead><tr><th>Quantity</th><th>What it asks</th><th>Default reading</th></tr></thead>
 <tbody>
-<tr><td><code>P(wet | umbrella) - P(wet | no umbrella)</code></td><td>Seeing: compare existing umbrella users with non-users.</td><td>+0.23 observed risk difference.</td></tr>
-<tr><td><code>P(wet | do(umbrella)) - P(wet | do(no umbrella))</code></td><td>Doing: set umbrella use directly and sever its usual causes.</td><td>−0.16 interventional risk difference.</td></tr>
+<tr><td>\(P(\text{wet}\mid \text{umbrella}) - P(\text{wet}\mid \text{no umbrella})\)</td><td>Seeing: compare existing umbrella users with non-users.</td><td>+0.23 observed risk difference.</td></tr>
+<tr><td>\(P(\text{wet}\mid \operatorname{do}(\text{umbrella})) - P(\text{wet}\mid \operatorname{do}(\text{no umbrella}))\)</td><td>Doing: set umbrella use directly and sever its usual causes.</td><td>−0.16 interventional risk difference.</td></tr>
 <tr><td>Back-door adjusted contrast</td><td>Average the rain-specific umbrella contrasts using the population rain mix.</td><td>−0.16, matching the intervention contrast under this model.</td></tr>
 </tbody>
 </table>
-<p>Default parameters: <code>P(S=1)=0.45</code>, <code>a=-2.0</code>, <code>b=+2.8</code>, <code>c=-2.2</code>, <code>d=-1.485</code>, <code>e=+4.1</code>. Formula: <code>P(Y=1 | do(X=x)) = Σ<sub>s</sub> P(Y=1 | X=x,S=s)P(S=s)</code>. The observed contrast instead uses <code>P(S=s | X=x)</code>, which changes when rain affects umbrella use.</p>
+<p>Default parameters: \(P(S=1)=0.45\), \(a=-2.0\), \(b=+2.8\), \(c=-2.2\), \(d=-1.485\), \(e=+4.1\). Formula: \(P(Y=1 \mid \operatorname{do}(X=x)) = \sum_s P(Y=1 \mid X=x,S=s)P(S=s)\). The observed contrast instead uses \(P(S=s \mid X=x)\), which changes when rain affects umbrella use.</p>
 </div>
 
 <section>
@@ -390,7 +390,7 @@
 <p class="h">The front-door trick</p>
 <p>Pearl's <em class="term">front-door criterion</em>{% tip 'The front-door criterion identifies a causal effect through a measured mediator when the direct cause-effect path is confounded and specific graphical conditions hold.' %} is one of the framework's neatest moves: sometimes you can identify a total effect even when the exposure-outcome path is confounded, by using a measured mediator. The usual textbook smoking → tar → cancer story is a stylized graph, not a settled description of the biological system. The standard criterion requires three graphical conditions: the mediator intercepts all directed paths from treatment to outcome; there is no unblocked back-door path from treatment to mediator; and treatment blocks all back-door paths from mediator to outcome. You still also need well-defined interventions, consistency, adequate support, and the usual measurement and selection cautions.</p>
 <p>When those conditions hold, the calculation has three moves: estimate how treatment changes the mediator; estimate how the mediator changes the outcome while accounting for treatment; then average those pieces over the observed treatment mix.</p>
-<div class="formula">{% math %}P(y \mid do(x)) = \sum_m P(m \mid x) \sum_{x'} P(y \mid m, x') P(x'){% endmath %}</div>
+<div class="formula">{% math %}P(y \mid \operatorname{do}(x)) = \sum_m P(m \mid x) \sum_{x'} P(y \mid m, x') P(x'){% endmath %}</div>
 <p>It identifies an interventional distribution from observational data under the assumed graph — but only because you supplied a graph strong enough to license the expression.</p>
 </div>
 </section>
@@ -411,7 +411,7 @@
 <div class="aside">
 <p class="h">What a do-calculus rewrite looks like</p>
 <p>For a simple back-door graph, where Z blocks every back-door path from X to Y and no element of Z is caused by X:</p>
-<div class="formula">{% math %}P(y \mid do(x)) = \sum_z P(y \mid do(x), z) P(z \mid do(x)) = \sum_z P(y \mid x, z) P(z){% endmath %}</div>
+<div class="formula">{% math %}P(y \mid \operatorname{do}(x)) = \sum_z P(y \mid \operatorname{do}(x), z) P(z \mid \operatorname{do}(x)) = \sum_z P(y \mid x, z) P(z){% endmath %}</div>
 <p>The first equality is ordinary total probability over Z. The second uses the graph twice: once to replace the intervention on X with observation of X after conditioning on the sufficient adjustment set Z, and once to say intervening on X does not change the pre-treatment distribution of Z. The graph licenses exactly which symbols may be erased or exchanged.</p>
 </div>
 <p>Second, the wall on the other side: <strong>the Markov-equivalence ceiling.</strong> Under causal Markov, faithfulness, and a specified treatment of latent variables and selection, conditional-independence patterns can rule out some graphs but not all. X→Y→Z, X←Y←Z, and X←Y→Z share a skeleton and have no differing unshielded colliders, so they imply the same conditional-independence pattern: X and Z are independent once you know Y. They form a <em class="term">Markov equivalence class</em>{% tip 'A Markov equivalence class is a set of causal graphs that imply the same conditional independences, so observational data of that kind cannot choose among them.' %}. The collider X→Y←Z differs because conditioning on Y can open the path through Y. The takeaway is stark but scoped: observational independence information alone cannot deliver a unique causal graph without assumptions — only a class of candidates. Both results are {{ chip("ok", "ESTABLISHED", "established") }} in the strongest sense available: theorems.</p>
@@ -459,7 +459,7 @@
 <div><dt>Best analogy</dt><dd>Ice cream and drowning marching upward together while summer, off-stage, pulls both strings — and the do-operator as a pair of scissors that cuts the strings into a variable so you can see what it really drives.</dd></div>
 <div><dt>Live controversy</dt><dd>Whether causal structure can be inferred from observation alone — often only up to a Markov-equivalence class under standard assumptions, partly recoverable with stronger assumptions (LiNGAM, additive noise) — and the current dispute over whether LLMs do general causal reasoning or mostly retrieve causal talk.</dd></div>
 </dl>
-<p class="threads"><b>Threads today ›</b> information (a graph is the extra information data lacks; the do-operator distinguishes evidence from intervention) · computation (identification as an algorithmic problem; causal discovery as search under assumptions) · emergence (causal structure as a higher-level layer over raw correlation) — with callbacks to <a href="/days/001-what-is-knowledge/">Day 1</a> (true-by-luck), <a href="/days/002-scientific-method-and-demarcation/">Day 2</a> (Hume), <a href="/days/003-logic-and-valid-inference/">Day 3</a> (abduction), and <a href="/days/004-probability-as-extended-logic/">Day 4</a> (P(y|x)).</p>
+<p class="threads"><b>Threads today ›</b> information (a graph is the extra information data lacks; the do-operator distinguishes evidence from intervention) · computation (identification as an algorithmic problem; causal discovery as search under assumptions) · emergence (causal structure as a higher-level layer over raw correlation) — with callbacks to <a href="/days/001-what-is-knowledge/">Day 1</a> (true-by-luck), <a href="/days/002-scientific-method-and-demarcation/">Day 2</a> (Hume), <a href="/days/003-logic-and-valid-inference/">Day 3</a> (abduction), and <a href="/days/004-probability-as-extended-logic/">Day 4</a> (\(P(y\mid x)\)).</p>
 </div>
 
 <div class="tomorrow">
