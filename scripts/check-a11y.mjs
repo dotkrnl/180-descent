@@ -4,25 +4,10 @@ import path from "node:path";
 import { load } from "cheerio";
 import { chromium } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
+import { walk } from "./lib/fs.mjs";
+import { contentType, urlForHtml } from "./lib/url.mjs";
 
 const siteDir = path.resolve("_site");
-
-const mimeTypes = new Map([
-  [".css", "text/css; charset=utf-8"],
-  [".html", "text/html; charset=utf-8"],
-  [".ico", "image/x-icon"],
-  [".js", "text/javascript; charset=utf-8"],
-  [".json", "application/json; charset=utf-8"],
-  [".png", "image/png"],
-  [".svg", "image/svg+xml; charset=utf-8"],
-  [".txt", "text/plain; charset=utf-8"],
-  [".webmanifest", "application/manifest+json; charset=utf-8"],
-  [".woff2", "font/woff2"]
-]);
-
-function contentType(filePath) {
-  return mimeTypes.get(path.extname(filePath).toLowerCase()) || "application/octet-stream";
-}
 
 async function fileForUrl(urlPath) {
   const decoded = decodeURIComponent(urlPath.split("?")[0]);
@@ -76,24 +61,6 @@ function summarizeViolation(pagePath, violation) {
     `  ${violation.help}`,
     nodes
   ].filter(Boolean).join("\n");
-}
-
-async function walkHtml(dir) {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
-  const files = [];
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) files.push(...await walkHtml(fullPath));
-    else if (entry.name.endsWith(".html")) files.push(fullPath);
-  }
-  return files;
-}
-
-function htmlUrl(filePath) {
-  const rel = path.relative(siteDir, filePath).split(path.sep).join("/");
-  if (rel === "index.html") return "/";
-  if (rel.endsWith("/index.html")) return `/${rel.slice(0, -"index.html".length)}`;
-  return `/${rel}`;
 }
 
 function attrSelectorValue(value) {
@@ -171,10 +138,10 @@ function landmarkRole(el) {
 
 async function checkStaticAccessibility() {
   const errors = [];
-  const htmlFiles = await walkHtml(siteDir);
+  const htmlFiles = await walk(siteDir, { exts: ".html", ignored: [] });
 
   for (const filePath of htmlFiles) {
-    const url = htmlUrl(filePath);
+    const url = urlForHtml(siteDir, filePath);
     const html = await fs.readFile(filePath, "utf8");
     const $ = load(html);
 
@@ -239,7 +206,7 @@ async function checkStaticAccessibility() {
   }
 
   const axePages = htmlFiles
-    .map(htmlUrl)
+    .map((filePath) => urlForHtml(siteDir, filePath))
     .filter((url) => !/^\/(?:zh\/)?print(?:-deep)?\//.test(url));
 
   return { errors, axePages };

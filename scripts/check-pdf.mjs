@@ -1,11 +1,7 @@
-import { readFile, mkdtemp, rm } from "node:fs/promises";
-import { execFile } from "node:child_process";
-import { tmpdir } from "node:os";
-import path from "node:path";
-import { promisify } from "node:util";
+import { readFile } from "node:fs/promises";
 import { PDFDocument, PDFName } from "pdf-lib";
-
-const execFileAsync = promisify(execFile);
+import { ghostscriptAllPagesText, ghostscriptBoundingBox, ghostscriptPagePpm } from "./lib/ghostscript.mjs";
+import { escapeRegExp } from "./lib/escape.mjs";
 const debug = process.env.PDF_CHECK_DEBUG === "1";
 
 let failures = 0;
@@ -291,26 +287,7 @@ async function extractPdfText(pdfPath) {
 }
 
 async function extractPdfPageTexts(pdfPath, pageCount) {
-  const workDir = await mkdtemp(path.join(tmpdir(), "180-descent-pdf-text-"));
-  const outputPattern = path.join(workDir, "page-%03d.txt");
-  try {
-    await execFileAsync("gs", [
-      "-q",
-      "-dSAFER",
-      "-dBATCH",
-      "-dNOPAUSE",
-      "-sDEVICE=txtwrite",
-      `-sOutputFile=${outputPattern}`,
-      pdfPath
-    ], { maxBuffer: 1024 * 1024, timeout: 30000 });
-
-    return Promise.all(Array.from({ length: pageCount }, async (_, index) => {
-      const file = path.join(workDir, `page-${String(index + 1).padStart(3, "0")}.txt`);
-      return readFile(file, "utf8").catch(() => "");
-    }));
-  } finally {
-    await rm(workDir, { recursive: true, force: true });
-  }
+  return ghostscriptAllPagesText(pdfPath, pageCount);
 }
 
 function countPdfAnnotations({ pdf }) {
@@ -335,64 +312,16 @@ async function findFirstPageContaining(pdfPath, pattern) {
 }
 
 async function extractPageBoundingBox(pdfPath, pageNumber) {
-  const { stdout, stderr } = await execFileAsync("gs", [
-    "-q",
-    "-dSAFER",
-    "-dBATCH",
-    "-dNOPAUSE",
-    "-sDEVICE=bbox",
-    `-dFirstPage=${pageNumber}`,
-    `-dLastPage=${pageNumber}`,
-    pdfPath
-  ], { maxBuffer: 1024 * 1024, timeout: 15000 });
-  const match = `${stdout}\n${stderr}`.match(/%%HiResBoundingBox:\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)/);
-  if (!match) return [Infinity, Infinity, -Infinity, -Infinity];
-  return match.slice(1).map(Number);
+  return ghostscriptBoundingBox(pdfPath, pageNumber);
 }
 
 async function samplePdfPagePixel(pdfPath, pageNumber, xRatio, yRatio) {
-  const { stdout } = await execFileAsync("gs", [
-    "-q",
-    "-dSAFER",
-    "-dBATCH",
-    "-dNOPAUSE",
-    "-sDEVICE=ppmraw",
-    "-r12",
-    `-dFirstPage=${pageNumber}`,
-    `-dLastPage=${pageNumber}`,
-    "-o",
-    "-",
-    pdfPath
-  ], { encoding: "buffer", maxBuffer: 1024 * 1024, timeout: 15000 });
-
-  const parsed = parsePpm(stdout);
+  const parsed = await ghostscriptPagePpm(pdfPath, pageNumber);
   const x = Math.max(0, Math.min(parsed.width - 1, Math.floor(parsed.width * xRatio)));
   const y = Math.max(0, Math.min(parsed.height - 1, Math.floor(parsed.height * yRatio)));
   const offset = parsed.dataOffset + ((y * parsed.width + x) * 3);
-  return [stdout[offset], stdout[offset + 1], stdout[offset + 2]];
-}
-
-function parsePpm(buffer) {
-  let index = 0;
-  const tokens = [];
-  while (tokens.length < 4 && index < buffer.length) {
-    while (index < buffer.length) {
-      while (index < buffer.length && /\s/.test(String.fromCharCode(buffer[index]))) index++;
-      if (buffer[index] !== 35) break;
-      while (index < buffer.length && buffer[index] !== 10) index++;
-    }
-    const start = index;
-    while (index < buffer.length && !/\s/.test(String.fromCharCode(buffer[index]))) index++;
-    if (index > start) tokens.push(buffer.slice(start, index).toString("ascii"));
-  }
-  while (index < buffer.length && /\s/.test(String.fromCharCode(buffer[index]))) index++;
-  if (tokens[0] !== "P6") throw new Error(`Unsupported PPM header: ${tokens.join(" ")}`);
-  return {
-    width: Number(tokens[1]),
-    height: Number(tokens[2]),
-    max: Number(tokens[3]),
-    dataOffset: index
-  };
+  const buffer = parsed.buffer;
+  return [buffer[offset], buffer[offset + 1], buffer[offset + 2]];
 }
 
 function isFullPageBox([left, bottom, right, top]) {
@@ -401,8 +330,4 @@ function isFullPageBox([left, bottom, right, top]) {
 
 function isWhitePixel(sample) {
   return sample.every((channel) => channel > 250);
-}
-
-function escapeRegExp(value) {
-  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

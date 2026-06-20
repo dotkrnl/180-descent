@@ -1,7 +1,8 @@
-import { readFile, readdir, stat } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 import * as cheerio from "cheerio";
+import { walk } from "./lib/fs.mjs";
 
 let failures = 0;
 const dayGroups = [
@@ -103,7 +104,7 @@ if (!css.includes("@font-face")) {
 }
 
 const parentMarkdownPattern = /\.\.\/[^\s"'`)]+\.md\b/;
-for (const file of await walk(".", new Set([".cjs", ".css", ".html", ".json", ".md", ".mjs", ".njk", ".yaml", ".yml"]))) {
+for (const file of await walk(".", { exts: new Set([".cjs", ".css", ".html", ".json", ".md", ".mjs", ".njk", ".yaml", ".yml"]) })) {
   const text = await readFile(file, "utf8");
   if (parentMarkdownPattern.test(text)) {
     console.error(`${file} references a parent Markdown file; keep canonical project content inside this repo`);
@@ -134,17 +135,4 @@ function normalizeVisibleText(text) {
     .text()
     .replace(/\s+/g, " ")
     .trim();
-}
-
-async function walk(dir, exts) {
-  const ignored = new Set([".git", "_site", "dist", "node_modules"]);
-  const out = [];
-  for (const entry of await readdir(dir)) {
-    if (ignored.has(entry)) continue;
-    const full = path.join(dir, entry);
-    const info = await stat(full);
-    if (info.isDirectory()) out.push(...await walk(full, exts));
-    else if (exts.has(path.extname(entry))) out.push(full);
-  }
-  return out;
 }

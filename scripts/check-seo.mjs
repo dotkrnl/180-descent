@@ -1,37 +1,12 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { load } from "cheerio";
+import { walk, exists } from "./lib/fs.mjs";
+import { urlForHtml } from "./lib/url.mjs";
 
 const siteDir = path.resolve("_site");
 const siteUrl = "https://180d.io";
 const errors = [];
-
-async function exists(filePath) {
-  try {
-    await fs.access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-async function walk(dir) {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
-  const files = [];
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) files.push(...await walk(fullPath));
-    else files.push(fullPath);
-  }
-  return files;
-}
-
-function urlForHtml(filePath) {
-  const rel = path.relative(siteDir, filePath).split(path.sep).join("/");
-  if (rel === "index.html") return "/";
-  if (rel.endsWith("/index.html")) return `/${rel.slice(0, -"index.html".length)}`;
-  return `/${rel}`;
-}
 
 function localPathForUrl(url) {
   if (!url.startsWith(siteUrl)) return "";
@@ -65,7 +40,7 @@ function alternateUrl(url) {
 }
 
 async function checkHtml(filePath) {
-  const url = urlForHtml(filePath);
+  const url = urlForHtml(siteDir, filePath);
   const html = await fs.readFile(filePath, "utf8");
   const $ = load(html);
 
@@ -137,7 +112,7 @@ async function checkRobots() {
 
 async function main() {
   if (!await exists(siteDir)) throw new Error("_site does not exist; run npm run build:site first");
-  const htmlFiles = (await walk(siteDir)).filter((file) => file.endsWith(".html"));
+  const htmlFiles = (await walk(siteDir, { ignored: [] })).filter((file) => file.endsWith(".html"));
   for (const file of htmlFiles) await checkHtml(file);
   await checkSitemap();
   await checkRobots();

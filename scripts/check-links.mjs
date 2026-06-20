@@ -1,10 +1,11 @@
-import { access, readFile, readdir, stat } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
 import matter from "gray-matter";
 import YAML from "yaml";
+import { walk } from "./lib/fs.mjs";
 
-const htmlFiles = await walk("_site", ".html");
+const htmlFiles = await walk("_site", { exts: ".html", ignored: [] });
 let failures = 0;
 
 for (const file of htmlFiles) {
@@ -41,15 +42,4 @@ for (const link of futureLinks) {
 }
 
 if (failures) process.exit(1);
-
-async function walk(dir, ext) {
-  const out = [];
-  for (const entry of await readdir(dir)) {
-    const full = path.join(dir, entry);
-    const info = await stat(full);
-    if (info.isDirectory()) out.push(...await walk(full, ext));
-    else if (full.endsWith(ext)) out.push(full);
-  }
-  return out;
-}
 

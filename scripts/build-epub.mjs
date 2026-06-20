@@ -1,9 +1,10 @@
 import { mkdir, readFile, readdir, writeFile, copyFile } from "node:fs/promises";
 import path from "node:path";
-import matter from "gray-matter";
 import * as cheerio from "cheerio";
 import JSZip from "jszip";
 import YAML from "yaml";
+import { escapeXml } from "./lib/escape.mjs";
+import { loadDays } from "./lib/days.mjs";
 
 const book = YAML.parse(await readFile("src/_data/book.yaml", "utf8"));
 
@@ -128,7 +129,7 @@ await buildDayEpubs({
 });
 
 async function buildDayEpubs(config) {
-  const days = await loadDays(config.dayDir);
+  const days = await loadDays(config.dayDir, { xhtml: true });
   for (const day of days) {
     await buildEpub({
       ...config,
@@ -147,7 +148,7 @@ async function buildDayEpubs(config) {
 }
 
 async function buildEpub(config) {
-  const days = config.days || await loadDays(config.dayDir);
+  const days = config.days || await loadDays(config.dayDir, { xhtml: true });
 
   const zip = new JSZip();
   zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
@@ -498,14 +499,6 @@ function titlePageDocument(config) {
 </html>`;
 }
 
-async function loadDays(dayDir) {
-  const dayFiles = (await readdir(dayDir)).filter((file) => file.endsWith(".md")).sort();
-  return dayFiles.map((file) => {
-    const parsed = matter.read(path.join(dayDir, file));
-    return { file, data: parsed.data, xhtml: `day-${String(parsed.data.day).padStart(3, "0")}.xhtml` };
-  });
-}
-
 function dayDocumentTitle(day, config) {
   if (config.meta.language.startsWith("zh")) {
     return `${config.dayLabel} ${day.data.day} 日：${day.data.title}`;
@@ -528,12 +521,4 @@ function appendixLabels(language = "") {
     fallbackTitle: "Deep Dive",
     note: "This section is optional supplemental reading. You can skip it without losing the main lesson."
   };
-}
-
-function escapeXml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
 }

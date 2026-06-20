@@ -1,6 +1,7 @@
-import { readFile, readdir } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { load } from "cheerio";
+import { walk } from "./lib/fs.mjs";
 
 const includeRoot = "src/_includes/days";
 const cssFiles = ["src/assets/css/book.css"];
@@ -81,7 +82,7 @@ async function collectCssClasses() {
 
 async function collectJsClasses() {
   const out = new Set();
-  for (const file of await collectFiles(jsRoot, ".js")) {
+  for (const file of await walk(jsRoot, { exts: ".js", ignored: [] })) {
     const js = await readFile(file, "utf8");
     for (const match of js.matchAll(/querySelector(?:All)?\(\s*["'`]([^"'`]+)["'`]\s*\)/g)) {
       for (const selectorMatch of match[1].matchAll(/\.(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g)) {
@@ -98,18 +99,7 @@ async function collectJsClasses() {
 }
 
 async function collectIncludeFiles(root) {
-  return (await collectFiles(root, ".njk")).sort();
-}
-
-async function collectFiles(dir, ext) {
-  const entries = await readdir(dir, { withFileTypes: true });
-  const files = [];
-  for (const entry of entries) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) files.push(...await collectFiles(full, ext));
-    else if (entry.name.endsWith(ext)) files.push(full);
-  }
-  return files;
+  return (await walk(root, { exts: ".njk", ignored: [] })).sort();
 }
 
 function deepDiveBlocks(content, file) {

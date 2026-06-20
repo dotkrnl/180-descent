@@ -1,22 +1,9 @@
 import fs from 'node:fs';
-import path from 'node:path';
+import { walkSync } from './lib/fs.mjs';
 
 const MIN_SVG_FONT_SIZE = 10.5;
 const roots = ['src'];
 const allowedExtensions = /\.(css|html|js|md|njk|svg)$/i;
-const ignoredDirs = new Set(['.git', '_site', 'dist', 'node_modules']);
-
-function walk(dir, files = []) {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      if (!ignoredDirs.has(entry.name)) walk(fullPath, files);
-    } else if (allowedExtensions.test(entry.name)) {
-      files.push(fullPath);
-    }
-  }
-  return files;
-}
 
 function lineNumber(source, index) {
   return source.slice(0, index).split(/\r?\n/).length;
@@ -52,7 +39,7 @@ function checkSegment(source, segment, file, offset = 0) {
 
 for (const root of roots) {
   if (!fs.existsSync(root)) continue;
-  for (const file of walk(root)) {
+  for (const file of walkSync(root, { allowedExtensionsRegex: allowedExtensions })) {
     const source = fs.readFileSync(file, 'utf8');
     if (file.endsWith('.css') || file.endsWith('.js')) {
       checkSegment(source, source, file);

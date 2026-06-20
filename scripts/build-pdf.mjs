@@ -1,16 +1,13 @@
-import { mkdir, copyFile, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, copyFile, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createReadStream } from "node:fs";
-import { execFile } from "node:child_process";
 import http from "node:http";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { promisify } from "node:util";
 import { inflateSync } from "node:zlib";
-import matter from "gray-matter";
 import { PDFDocument, PDFName, StandardFonts, rgb } from "pdf-lib";
 import { chromium } from "playwright";
-
-const execFileAsync = promisify(execFile);
+import { loadDays } from "./lib/days.mjs";
+import { ghostscriptText, ghostscriptPageCount, postScriptString } from "./lib/ghostscript.mjs";
 
 await mkdir("_site/downloads", { recursive: true });
 await mkdir("dist/downloads", { recursive: true });
@@ -372,51 +369,12 @@ async function ghostscriptPageMarkers(pdfPath) {
   const pageCount = await ghostscriptPageCount(pdfPath);
   const markers = [];
   for (let pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
-    const text = await ghostscriptPageText(pdfPath, pageNumber);
+    const text = await ghostscriptText(pdfPath, { firstPage: pageNumber, lastPage: pageNumber });
     for (const match of text.matchAll(/\[\[toc:([^\]]+)\]\]/g)) {
       markers.push({ key: match[1], page: pageNumber });
     }
   }
   return markers;
-}
-
-async function ghostscriptPageCount(pdfPath) {
-  const { stdout } = await execFileAsync("gs", [
-    "-q",
-    "-dNOSAFER",
-    "-dNODISPLAY",
-    "-c",
-    `${postScriptString(path.resolve(pdfPath))} (r) file runpdfbegin pdfpagecount = quit`
-  ]);
-  return Number(stdout.trim());
-}
-
-async function ghostscriptPageText(pdfPath, pageNumber) {
-  const { stdout } = await execFileAsync("gs", [
-    "-q",
-    "-dSAFER",
-    "-dBATCH",
-    "-dNOPAUSE",
-    "-sDEVICE=txtwrite",
-    `-dFirstPage=${pageNumber}`,
-    `-dLastPage=${pageNumber}`,
-    "-o",
-    "-",
-    pdfPath
-  ], { maxBuffer: 1024 * 1024 });
-  return stdout;
-}
-
-function postScriptString(value) {
-  return `(${String(value).replaceAll("\\", "\\\\").replaceAll("(", "\\(").replaceAll(")", "\\)")})`;
-}
-
-async function loadDays(dayDir) {
-  const dayFiles = (await readdir(dayDir)).filter((file) => file.endsWith(".md")).sort();
-  return dayFiles.map((file) => {
-    const parsed = matter.read(path.join(dayDir, file));
-    return { file, data: parsed.data };
-  });
 }
 
 function dayPdfHeaderTitle(day, config) {

@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { chromium } from "playwright";
 import yaml from "yaml";
+import { escapeHtml } from "./lib/escape.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
@@ -11,14 +12,6 @@ const outDir = path.join(rootDir, "src/assets/images/social");
 const scriptPath = fileURLToPath(import.meta.url);
 const bookPath = path.join(rootDir, "src/_data/book.yaml");
 const brandMarkPath = path.join(rootDir, "src/assets/images/brand/180-descent-icon.png");
-
-function escapeHtml(value = "") {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
 
 function clamp(value = "", max = 160) {
   const text = String(value || "").replace(/\s+/g, " ").trim();
