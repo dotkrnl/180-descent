@@ -13,9 +13,11 @@
 .grid2{display:grid;grid-template-columns:1fr;gap:1rem;}
 @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr;}}
 .canvas{display:block;width:100%;height:auto;}
-.btn{cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.06em;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:8px;padding:.45rem .7rem;}
+.btn{cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.06em;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:8px;padding:.45rem .7rem;transition:border-color .2s,color .2s,background .2s;}
 .btn:hover{border-color:var(--accent);color:var(--ink);}
-.btn.primary{background:color-mix(in srgb,var(--accent) 14%,transparent);border-color:var(--accent);color:var(--ink);}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn.primary:hover{background:var(--accent-deep);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
 .readout{font-size:.92em;color:var(--ink-soft);margin-top:.8rem;border-top:1px dashed var(--line);padding-top:.8rem;min-height:3.2em;}
 .mono{font-family:"IBM Plex Mono",monospace;}
 .stat-inline-readout{display:flex;align-items:baseline;gap:.65rem;flex-wrap:wrap;}
@@ -28,9 +30,9 @@
 .ppv-cell{width:100%;aspect-ratio:1;border-radius:2px;background:var(--line-strong);}
 .ppv-cell.tp{background:var(--accent);}
 .ppv-cell.fp{background:var(--contested);}
-.ppv-legend,.legend{display:flex;gap:1rem;font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--ink-soft);flex-wrap:wrap;margin-top:.5rem;}
-.ppv-legend span,.legend span{display:inline-flex;align-items:center;gap:.4rem;}
-.ppv-legend i,.legend i{width:12px;height:11px;border-radius:2px;display:inline-block;}
+.ppv-legend{display:flex;gap:1rem;font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--ink-soft);flex-wrap:wrap;margin-top:.5rem;}
+.ppv-legend span{display:inline-flex;align-items:center;gap:.4rem;}
+.ppv-legend i{width:12px;height:11px;border-radius:2px;display:inline-block;}
 .legend-accent{background:var(--accent);}
 .legend-contested{background:var(--contested);}
 .legend-ppi{background:color-mix(in srgb,var(--accent) 45%,transparent);}
