@@ -181,12 +181,11 @@
     var label = root.querySelector("#ballLbl");
     var puffs = root.querySelector("#heatPuffs");
     var stepButton = root.querySelector("#lmStep");
-    var copyButton = root.querySelector("#lmCopy");
     var resetButton = root.querySelector("#lmReset");
     var stateEl = root.querySelector("#lmState");
     var heatEl = root.querySelector("#lmHeat");
     var caption = root.querySelector("#lmCaption");
-    if (!path || !ball || !label || !puffs || !stepButton || !copyButton || !resetButton || !stateEl || !heatEl || !caption) return;
+    if (!path || !ball || !label || !puffs || !stepButton || !resetButton || !stateEl || !heatEl || !caption) return;
 
     var doubleWell = "M20,40 C90,40 70,150 130,150 C175,150 165,70 220,70 C275,70 265,150 310,150 C370,150 350,40 420,40";
     var singleWell = "M20,40 C120,40 150,150 220,150 C290,150 320,40 420,40";
@@ -275,12 +274,6 @@
     }
 
     stepButton.addEventListener("click", step);
-    copyButton.addEventListener("click", function(){
-      caption.innerHTML = text(
-        "<b>Copying can be reversible in principle.</b> Writing this bit into a fresh blank register adds a distinction rather than destroying one. Real apparatus still has ordinary losses; Landauer's unavoidable toll is charged on irreversible reset.",
-        "「复制原则上可以可逆。」把这个比特写进一个空白寄存器，是在增加一个区分，而不是毁掉一个区分。真实装置仍会有普通损耗；兰道尔不可避免的过路费收在不可逆重置这一步。"
-      );
-    });
     resetButton.addEventListener("click", function(){
       stage = 0;
       heat = 0;
