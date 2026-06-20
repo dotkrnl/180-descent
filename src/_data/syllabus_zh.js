@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import YAML from "yaml";
 
-const data = YAML.parse(readFileSync(new URL("./syllabus.yaml", import.meta.url), "utf8"));
+const data = YAML.parse(readFileSync(new URL("./syllabus-data.yaml", import.meta.url), "utf8"));
 
 function project(value, locale) {
   if (value == null) return null;

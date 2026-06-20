@@ -19,7 +19,7 @@ Use adjacent skills when the workflow reaches their scope:
 
 ## First Files To Read
 
-1. `src/_data/syllabus.yaml`
+1. `src/_data/syllabus-data.yaml`
 2. The supplied day HTML file
 3. `src/_data/future-links.yaml`
 4. Existing nearby route shells in `src/days/` and lesson bodies in `src/_includes/days/`
@@ -265,7 +265,7 @@ for each output mode. Do not let web instructions leak into print or EPUB.
 
 ## Workflow
 
-1. Identify day number, title, block, entry analogy, model, debate, and frontier from `src/_data/syllabus.yaml`.
+1. Identify day number, title, block, entry analogy, model, debate, and frontier from `src/_data/syllabus-data.yaml`.
 2. Convert the supplied HTML into the two-file day structure:
    - route shell: `src/days/day-###-slug.md`
    - lesson body: `src/_includes/days/###-slug/en.njk`
