@@ -1,36 +1,47 @@
-{% set intro = collections.introduction[0] %}
-{% set coverSubtitle = book.deep_dive_subtitle if includeDeepDive and book.deep_dive_subtitle else book.subtitle %}
+{% set isZh = locale == "zh" %}
+{% set days = collections.zhDays if isZh else collections.days %}
+{% set introCollections = collections.zhIntroduction if isZh else collections.introduction %}
+{% set intro = introCollections[0] if introCollections else none %}
+{% set b = book.zh if isZh else book %}
+{% set coverSubtitle = b.deep_dive_subtitle if includeDeepDive and b.deep_dive_subtitle else b.subtitle %}
+{% set strContents = "目录" if isZh else "Contents" %}
+{% set strIntro = "引言" if isZh else "Introduction" %}
+{% set strBlock = "模块" if isZh else "Block" %}
 
 <section class="wrap wide page-hero print-cover">
   <img class="print-cover-logo" src="/assets/images/brand/180-descent-icon.png" width="768" height="768" alt="" decoding="async">
   <p class="eyebrow">{{ coverSubtitle }}</p>
-  <h1>{{ book.title }}</h1>
-  <p class="sub book-credit"><span class="credit-line">By {{ book.authors }}</span><span class="credit-line">Human editor: Jason Lau</span></p>
+  <h1>{{ b.title }}</h1>
+  <p class="sub book-credit">
+    <span class="credit-line">{{ "作者：" ~ b.authors if isZh else "By " ~ b.authors }}</span>
+    {% if isZh and b.translators %}<span class="credit-line">翻译：{{ b.translators }}</span>{% endif %}
+    <span class="credit-line">{{ "人工编辑：刘家昌" if isZh else "Human editor: Jason Lau" }}</span>
+  </p>
 </section>
 
-<nav class="wrap wide print-toc" id="toc" aria-label="Table of contents">
-  <p class="sec-eyebrow">Contents</p>
+<nav class="wrap wide print-toc" id="toc" aria-label="{{ strContents }}">
+  <p class="sec-eyebrow">{{ strContents }}</p>
   <div class="toc-list">
     {% if intro %}
       <div class="toc-row toc-front">
-        <a href="#intro"><span class="toc-title">Introduction</span><span class="toc-leader"></span></a>
+        <a href="#intro"><span class="toc-title">{{ strIntro }}</span><span class="toc-leader"></span></a>
         <span class="toc-page" data-toc-page-for="intro"></span>
       </div>
     {% endif %}
-    {% for day in collections.days %}
+    {% for day in days %}
       {% set previousBlock = "" %}
       {% if not loop.first %}
-        {% set previousBlock = collections.days[loop.index0 - 1].data.block %}
+        {% set previousBlock = days[loop.index0 - 1].data.block %}
       {% endif %}
       {% if loop.first or day.data.block != previousBlock %}
-        {% set blockNo = collections.days | blockOrdinal(loop.index0) %}
+        {% set blockNo = days | blockOrdinal(loop.index0) %}
         <div class="toc-row toc-block">
-          <a href="#block-{{ blockNo }}"><span class="toc-title">Block {{ blockNo | roman }} · {{ day.data.block }}</span><span class="toc-leader"></span></a>
+          <a href="#block-{{ blockNo }}"><span class="toc-title">{{ strBlock }} {{ blockNo | roman }} · {{ day.data.block }}</span><span class="toc-leader"></span></a>
           <span class="toc-page" data-toc-page-for="block-{{ blockNo }}"></span>
         </div>
       {% endif %}
       <div class="toc-row toc-day">
-        <a href="#day-{{ day.data.day | padDay }}"><span class="toc-kicker">Day {{ day.data.day }}</span><span class="toc-title">{{ day.data.title }}</span><span class="toc-leader"></span></a>
+        <a href="#day-{{ day.data.day | padDay }}"><span class="toc-kicker">{{ "第 " ~ day.data.day ~ " 日" if isZh else "Day " ~ day.data.day }}</span><span class="toc-title">{{ day.data.title }}</span><span class="toc-leader"></span></a>
         <span class="toc-page" data-toc-page-for="day-{{ day.data.day | padDay }}"></span>
       </div>
     {% endfor %}
@@ -38,32 +49,32 @@
 </nav>
 
 {% if intro %}
-  <article class="wrap wide print-intro" id="intro" data-print-title="Introduction">
+  <article class="wrap wide print-intro" id="intro" data-print-title="{{ strIntro }}">
     <span class="print-page-marker">[[toc:intro]]</span>
-    <p class="eyebrow">{{ intro.data.eyebrow or "Introduction" }}</p>
+    <p class="eyebrow">{{ intro.data.eyebrow or strIntro }}</p>
     <h1>{{ intro.data.title }}</h1>
     {% if intro.data.subtitle %}<p class="sub">{{ intro.data.subtitle }}</p>{% endif %}
     {{ intro.templateContent | safe }}
   </article>
 {% endif %}
 
-{% for day in collections.days %}
+{% for day in days %}
   {% set previousBlock = "" %}
   {% if not loop.first %}
-    {% set previousBlock = collections.days[loop.index0 - 1].data.block %}
+    {% set previousBlock = days[loop.index0 - 1].data.block %}
   {% endif %}
   {% if loop.first or day.data.block != previousBlock %}
-    {% set blockNo = collections.days | blockOrdinal(loop.index0) %}
-    <section class="block-divider" data-print-title="Block {{ blockNo | roman }}">
+    {% set blockNo = days | blockOrdinal(loop.index0) %}
+    <section class="block-divider" data-print-title="{{ strBlock }} {{ blockNo | roman }}">
       <a class="print-dest" id="block-{{ blockNo }}"></a>
       <span class="print-page-marker">[[toc:block-{{ blockNo }}]]</span>
       <div class="block-divider-inner">
-        <p>Block {{ blockNo | roman }}</p>
+        <p>{{ strBlock }} {{ blockNo | roman }}</p>
         <h1>{{ day.data.block }}</h1>
       </div>
     </section>
   {% endif %}
-  <article class="lesson-print" id="day-{{ day.data.day | padDay }}" data-day-path="{{ day.data.day_path }}" data-print-title="Day {{ day.data.day }} · {{ day.data.title }}" data-print-block="{{ day.data.block }}">
+  <article class="lesson-print" id="day-{{ day.data.day | padDay }}" data-day-path="{{ day.data.day_path }}" data-print-title="{{ "第 " ~ day.data.day ~ " 日" if isZh else "Day " ~ day.data.day }} · {{ day.data.title }}" data-print-block="{{ day.data.block }}">
     <span class="print-page-marker">[[toc:day-{{ day.data.day | padDay }}]]</span>
     {{ day.templateContent | safe }}
   </article>
