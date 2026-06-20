@@ -1,8 +1,10 @@
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import JSZip from "jszip";
+import { loadDays } from "./lib/days.mjs";
 
 const bookRequired = [
   "mimetype",
@@ -12,13 +14,6 @@ const bookRequired = [
   "OEBPS/introduction.xhtml",
   "OEBPS/day-001.xhtml",
   "OEBPS/day-002.xhtml"
-];
-const dayRequired = [
-  "mimetype",
-  "META-INF/container.xml",
-  "OEBPS/content.opf",
-  "OEBPS/nav.xhtml",
-  "OEBPS/day-001.xhtml"
 ];
 
 let failures = 0;
@@ -40,14 +35,43 @@ const chineseAppendixPatterns = [
   /[气⽓]泡与回声室：接触后的结果/,
   /准确性支配，表现为置信度几何/
 ];
+
 const editions = [
   { file: "_site/downloads/180-descent.epub", deepDive: false, appendixPatterns: englishAppendixPatterns, required: bookRequired },
   { file: "_site/downloads/180-descent-deep-dive.epub", deepDive: true, appendixPatterns: englishAppendixPatterns, optionalPattern: /Optional appendix/, required: bookRequired },
   { file: "_site/downloads/180-descent-zh.epub", deepDive: false, appendixPatterns: chineseAppendixPatterns, required: bookRequired },
   { file: "_site/downloads/180-descent-zh-deep-dive.epub", deepDive: true, appendixPatterns: chineseAppendixPatterns, optionalPattern: /可选附录/, required: bookRequired },
-  { file: "_site/downloads/180-descent-day-001-what-is-knowledge.epub", deepDive: true, appendixPatterns: englishAppendixPatterns, optionalPattern: /Optional appendix/, required: dayRequired },
-  { file: "_site/downloads/180-descent-zh-day-001-what-is-knowledge.epub", deepDive: true, appendixPatterns: chineseAppendixPatterns, optionalPattern: /可选附录/, required: dayRequired }
 ];
+
+// Dynamically add per-day EPUB checks for all published days
+const enDays = await loadDays("src/days");
+const zhDays = await loadDays("src/zh/days");
+for (const day of enDays) {
+  const file = `_site/downloads/180-descent-day-${day.data.day_path}.epub`;
+  if (!existsSync(file)) continue;
+  const isDayOne = Number(day.data.day) === 1;
+  const dayRequired = ["mimetype", "META-INF/container.xml", "OEBPS/content.opf", "OEBPS/nav.xhtml", `OEBPS/day-${String(day.data.day).padStart(3, "0")}.xhtml`];
+  editions.push({
+    file,
+    deepDive: true,
+    appendixPatterns: isDayOne ? englishAppendixPatterns : null,
+    optionalPattern: /Optional appendix/,
+    required: dayRequired,
+  });
+}
+for (const day of zhDays) {
+  const file = `_site/downloads/180-descent-zh-day-${day.data.day_path}.epub`;
+  if (!existsSync(file)) continue;
+  const isDayOne = Number(day.data.day) === 1;
+  const dayRequired = ["mimetype", "META-INF/container.xml", "OEBPS/content.opf", "OEBPS/nav.xhtml", `OEBPS/day-${String(day.data.day).padStart(3, "0")}.xhtml`];
+  editions.push({
+    file,
+    deepDive: true,
+    appendixPatterns: isDayOne ? chineseAppendixPatterns : null,
+    optionalPattern: /可选附录/,
+    required: dayRequired,
+  });
+}
 
 for (const { file: edition, deepDive, appendixPatterns, optionalPattern, required } of editions) {
   const data = await readFile(edition);

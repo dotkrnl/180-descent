@@ -1,19 +1,31 @@
 import { readFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { PDFDocument, PDFName } from "pdf-lib";
 import { ghostscriptAllPagesText, ghostscriptBoundingBox, ghostscriptPagePpm } from "./lib/ghostscript.mjs";
 import { escapeRegExp } from "./lib/escape.mjs";
+import { loadDays } from "./lib/days.mjs";
 const debug = process.env.PDF_CHECK_DEBUG === "1";
 
 let failures = 0;
 const pdfCache = new Map();
+
+// Build PDF list: 4 full editions + all per-day editions
 const pdfFiles = [
   "_site/downloads/180-descent.pdf",
   "_site/downloads/180-descent-deep-dive.pdf",
   "_site/downloads/180-descent-zh.pdf",
   "_site/downloads/180-descent-zh-deep-dive.pdf",
-  "_site/downloads/180-descent-day-001-what-is-knowledge.pdf",
-  "_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf"
 ];
+const enDays = await loadDays("src/days");
+const zhDays = await loadDays("src/zh/days");
+for (const day of enDays) {
+  const f = `_site/downloads/180-descent-day-${day.data.day_path}.pdf`;
+  if (existsSync(f)) pdfFiles.push(f);
+}
+for (const day of zhDays) {
+  const f = `_site/downloads/180-descent-zh-day-${day.data.day_path}.pdf`;
+  if (existsSync(f)) pdfFiles.push(f);
+}
 
 for (const file of pdfFiles) {
   debugStep(`load ${file}`);
