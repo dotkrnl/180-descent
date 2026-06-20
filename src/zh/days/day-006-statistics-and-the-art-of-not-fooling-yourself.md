@@ -4,7 +4,7 @@ tags: zhDay
 locale: zh
 day: 6
 title: "统计学与避免自欺的艺术"
-summary: "从 p 值操纵、效应量、分岔路径到多元宇宙分析，理解统计工具如何既会放大自欺，也能帮助科学抵御自欺。"
+summary: "p 值操纵、p 值、置信区间、效应量与多元宇宙分析，展示统计学如何保护探究免于自欺。"
 block: 知识与推理的根基
 slug: statistics-and-the-art-of-not-fooling-yourself
 day_path: 006-statistics-and-the-art-of-not-fooling-yourself

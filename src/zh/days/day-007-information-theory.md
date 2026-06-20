@@ -4,7 +4,7 @@ tags: zhDay
 locale: zh
 day: 7
 title: "信息论"
-summary: "香农熵、比特、信道容量、麦克斯韦妖与兰道尔原理：信息为何可以度量，以及擦除一个比特为何必须支付热量的物理代价。"
+summary: "香农熵、比特、信道容量、麦克斯韦妖与兰道尔原理，说明信息为何可以度量，以及擦除信息为何会产生物理耗散。"
 block: 知识与推理的根基
 slug: information-theory
 day_path: 007-information-theory

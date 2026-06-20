@@ -66,13 +66,13 @@ description: The complete 180-day course map, with published lessons linked as t
   <p class="sec-eyebrow">Continuation</p>
   <h2 id="what-comes-next">What Comes Next</h2>
   {% if nextDay %}
-  <p>The book has published through Day {{ publishedCount | padDay }}. The next lesson is <strong>Day {{ nextDay.day | padDay }}: {{ nextDay.title }}</strong>, in Block {{ nextDay.block_id }}. It continues the opening toolkit by sharpening the difference between valid inference, strong evidence, and persuasive error.</p>
+  <p>The book has published through Day {{ publishedCount | padDay }}. The next lesson is <strong>Day {{ nextDay.day | padDay }}: {{ nextDay.title }}</strong>, in Block {{ nextDay.block_id }}.{% if nextDay.entry and nextDay.model and nextDay.debate %} Syllabus entry point: {{ nextDay.entry }} Core model: {{ nextDay.model }} Live debate: {{ nextDay.debate }}{% elif nextDay.note %} {{ nextDay.note }}{% endif %}</p>
   <ol class="upcoming-list">
   {% for day in upcoming %}
     <li><span class="upcoming-day">Day {{ day.day | padDay }} · </span><span>{{ day.title }}</span></li>
   {% endfor %}
   </ol>
-  <p>After these opening moves, the course turns from how we know to the formal languages of knowledge: probability, information, systems, mathematics, and computation. Those tools become the launch rail for the later descents into physical law, living systems, minds, institutions, and the research frontier.</p>
+  <p>After the opening block, the course turns from how we know to the formal languages of knowledge: mathematics, probability, systems, information, and computation. Those tools become the launch rail for the later descents into physical law, living systems, minds, institutions, and the research frontier.</p>
   {% else %}
   <p>All 180 descents have been published. The next work is maintenance: tightening links, refreshing frontier claims, and keeping the evidence labels current as the research record changes.</p>
   {% endif %}

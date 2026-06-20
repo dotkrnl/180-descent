@@ -3,7 +3,7 @@ layout: layouts/page.njk
 permalink: /zh/syllabus/
 locale: zh
 title: 课程表
-subtitle: 一张按依赖关系排序的地图，从根基通向前沿。
+subtitle: 一张按依赖关系排序、从根基到前沿的地图。
 eyebrow: 地图
 description: 完整的 180 天课程地图，已发布的课程将在上线时链接。
 alternate_url: /syllabus/
@@ -68,13 +68,13 @@ alternate_url: /syllabus/
   <p class="sec-eyebrow">续篇</p>
   <h2 id="what-comes-next">接下来是什么</h2>
   {% if nextDay %}
-  <p>本书已发布至第 {{ publishedCount | padDay }} 日。下一日是第 {{ nextDay.day | padDay }} 日：{{ nextDay.title }}，位于模块 {{ nextDay.block_id }}。它延续开篇工具，把有效推理、强证据与看似有说服力的错误之间的区别打磨得更加锋利。</p>
+  <p>本书已发布至第 {{ publishedCount | padDay }} 日。下一日是第 {{ nextDay.day | padDay }} 日：{{ nextDay.title }}，位于模块 {{ nextDay.block_id }}。{% if nextDay.entry and nextDay.model and nextDay.debate %}课程表切入点：{{ nextDay.entry }} 核心模型：{{ nextDay.model }} 主要争论：{{ nextDay.debate }}{% elif nextDay.note %}{{ nextDay.note }}{% endif %}</p>
   <ol class="upcoming-list">
   {% for day in upcoming %}
     <li><span class="upcoming-day">第 {{ day.day | padDay }} 日 · </span><span>{{ day.title }}</span></li>
   {% endfor %}
   </ol>
-  <p>这些开篇动作之后，课程将从「我们如何知道」转向知识的形式语言：概率、信息、系统、数学与计算。这些工具将成为进入后续章节的轨道——通向物理定律、生命系统、心智、制度与研究前沿。</p>
+  <p>开篇模块之后，课程将从「我们如何知道」转向知识的形式语言：数学、概率、系统、信息与计算。这些工具将成为进入后续章节的轨道——通向物理定律、生命系统、心智、制度与研究前沿。</p>
   {% else %}
   <p>全部 180 天已发布。接下来的工作是维护：收紧链接，刷新前沿主张，并在研究记录变化时保持证据标签的时效性。</p>
   {% endif %}

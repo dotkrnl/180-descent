@@ -61,6 +61,23 @@ for (const { file, full, label } of allDayFiles) {
     }
   }
   const $ = cheerio.load(content);
+  const h1Html = $("h1").first().html();
+  if (!h1Html) {
+    console.error(`${label} ${file} has no lesson h1`);
+    failures++;
+  } else if (h1Html.includes("{{")) {
+    if (!h1Html.includes("title")) {
+      console.error(`${label} ${file} has a dynamic h1 that does not reference route title data`);
+      failures++;
+    }
+  } else {
+    const h1Text = normalizeVisibleText(h1Html);
+    const titleText = normalizeVisibleText(String(parsed.data.title));
+    if (h1Text !== titleText) {
+      console.error(`${label} ${file} h1 "${h1Text}" does not match route title "${titleText}"`);
+      failures++;
+    }
+  }
   const webPanels = $(".panel.web-only").length;
   const staticAlternates = $(".format-alt.print-only").length;
   if (staticAlternates < webPanels) {
@@ -106,6 +123,17 @@ async function readDayContent(parsed, sourceFile) {
     failures++;
     return parsed.content;
   }
+}
+
+function normalizeVisibleText(text) {
+  const withoutTemplate = text
+    .replace(/\{%[\s\S]*?%\}/g, "")
+    .replace(/\{\{[\s\S]*?\}\}/g, "");
+  return cheerio
+    .load(`<body>${withoutTemplate}</body>`)("body")
+    .text()
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 async function walk(dir, exts) {
