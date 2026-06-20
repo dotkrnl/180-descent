@@ -33,71 +33,9 @@
     fn();
   }
 
-  function gammaln(x) {
-    var c = [76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
-    var y = x;
-    var t = x + 5.5;
-    t -= (x + 0.5) * Math.log(t);
-    var s = 1.000000000190015;
-    for (var j = 0; j < 6; j += 1) {
-      y += 1;
-      s += c[j] / y;
-    }
-    return -t + Math.log(2.5066282746310005 * s / x);
-  }
-
-  function betacf(a, b, x) {
-    var mx = 200;
-    var eps = 3e-12;
-    var fp = 1e-300;
-    var qab = a + b;
-    var qap = a + 1;
-    var qam = a - 1;
-    var c = 1;
-    var d = 1 - qab * x / qap;
-    if (Math.abs(d) < fp) d = fp;
-    d = 1 / d;
-    var h = d;
-    for (var m = 1; m <= mx; m += 1) {
-      var m2 = 2 * m;
-      var aa = m * (b - m) * x / ((qam + m2) * (a + m2));
-      d = 1 + aa * d;
-      if (Math.abs(d) < fp) d = fp;
-      c = 1 + aa / c;
-      if (Math.abs(c) < fp) c = fp;
-      d = 1 / d;
-      h *= d * c;
-      aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
-      d = 1 + aa * d;
-      if (Math.abs(d) < fp) d = fp;
-      c = 1 + aa / c;
-      if (Math.abs(c) < fp) c = fp;
-      d = 1 / d;
-      var del = d * c;
-      h *= del;
-      if (Math.abs(del - 1) < eps) break;
-    }
-    return h;
-  }
-
-  function betai(a, b, x) {
-    if (x <= 0) return 0;
-    if (x >= 1) return 1;
-    var bt = Math.exp(gammaln(a + b) - gammaln(a) - gammaln(b) + a * Math.log(x) + b * Math.log(1 - x));
-    if (x < (a + 1) / (a + b + 2)) return bt * betacf(a, b, x) / a;
-    return 1 - bt * betacf(b, a, 1 - x) / b;
-  }
-
-  function mean(a) {
-    return a.reduce(function (sum, x) { return sum + x; }, 0) / a.length;
-  }
-
-  function variance(a, m) {
-    return a.reduce(function (sum, x) {
-      var d = x - m;
-      return sum + d * d;
-    }, 0) / (a.length - 1);
-  }
+  var C = window.DescentCore || {};
+  var gammaln = C.gammaln, betacf = C.betacf, betai = C.betai;
+  var mean = C.mean, variance = C.variance, randn = C.randn;
 
   function tP(a, b) {
     var na = a.length;
@@ -112,14 +50,6 @@
     var df = na + nb - 2;
     var x = df / (df + t * t);
     return betai(df / 2, 0.5, x);
-  }
-
-  function randn() {
-    var u = 0;
-    var v = 0;
-    while (u === 0) u = Math.random();
-    while (v === 0) v = Math.random();
-    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
   }
 
   function initHistogram() {

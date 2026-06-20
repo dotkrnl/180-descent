@@ -14,6 +14,7 @@ threads:
   - emergence
 content_template: days/006-statistics-and-the-art-of-not-fooling-yourself/en.njk
 scripts:
+  - /assets/js/interactions/core.js
   - /assets/js/interactions/statistics-lab.js
   - /assets/js/interactions/statistics-appendices.js
 permalink: /days/006-statistics-and-the-art-of-not-fooling-yourself/

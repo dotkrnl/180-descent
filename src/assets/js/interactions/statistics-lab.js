@@ -3,130 +3,14 @@
 
   var isZh = (document.documentElement.getAttribute("lang") || "").toLowerCase().indexOf("zh") === 0;
 
-  function mean(values){
-    return values.reduce(function(sum,value){ return sum + value; }, 0) / values.length;
-  }
-
-  function variance(values, avg){
-    return values.reduce(function(sum,value){
-      var delta = value - avg;
-      return sum + delta * delta;
-    }, 0) / Math.max(1, values.length - 1);
-  }
-
-  function erf(x){
-    var sign = x < 0 ? -1 : 1;
-    var a1 = 0.254829592;
-    var a2 = -0.284496736;
-    var a3 = 1.421413741;
-    var a4 = -1.453152027;
-    var a5 = 1.061405429;
-    var p = 0.3275911;
-    x = Math.abs(x);
-    var t = 1 / (1 + p * x);
-    var y = 1 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-    return sign * y;
-  }
-
-  function normalCdf(x){
-    return 0.5 * (1 + erf(x / Math.SQRT2));
-  }
-
-  function gammaln(x){
-    var c = [76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
-    var y = x;
-    var t = x + 5.5;
-    t -= (x + 0.5) * Math.log(t);
-    var s = 1.000000000190015;
-    for (var j = 0; j < 6; j++) {
-      y += 1;
-      s += c[j] / y;
-    }
-    return -t + Math.log(2.5066282746310005 * s / x);
-  }
-
-  function betacf(a,b,x){
-    var maxIterations = 200;
-    var eps = 3e-12;
-    var tiny = 1e-300;
-    var qab = a + b;
-    var qap = a + 1;
-    var qam = a - 1;
-    var c = 1;
-    var d = 1 - qab * x / qap;
-    if (Math.abs(d) < tiny) d = tiny;
-    d = 1 / d;
-    var h = d;
-    for (var m = 1; m <= maxIterations; m++) {
-      var m2 = 2 * m;
-      var aa = m * (b - m) * x / ((qam + m2) * (a + m2));
-      d = 1 + aa * d;
-      if (Math.abs(d) < tiny) d = tiny;
-      c = 1 + aa / c;
-      if (Math.abs(c) < tiny) c = tiny;
-      d = 1 / d;
-      h *= d * c;
-      aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
-      d = 1 + aa * d;
-      if (Math.abs(d) < tiny) d = tiny;
-      c = 1 + aa / c;
-      if (Math.abs(c) < tiny) c = tiny;
-      d = 1 / d;
-      var del = d * c;
-      h *= del;
-      if (Math.abs(del - 1) < eps) break;
-    }
-    return h;
-  }
-
-  function betai(a,b,x){
-    if (x <= 0) return 0;
-    if (x >= 1) return 1;
-    var bt = Math.exp(gammaln(a + b) - gammaln(a) - gammaln(b) + a * Math.log(x) + b * Math.log(1 - x));
-    if (x < (a + 1) / (a + b + 2)) return bt * betacf(a, b, x) / a;
-    return 1 - bt * betacf(b, a, 1 - x) / b;
-  }
-
-  function studentTCdf(t,df){
-    var x = df / (df + t * t);
-    var ib = betai(df / 2, 0.5, x);
-    return t >= 0 ? 1 - 0.5 * ib : 0.5 * ib;
-  }
-
-  function tCritical(df, confidence){
-    var tail = 0.5 + Math.max(0.5, Math.min(0.999, confidence)) / 2;
-    var lo = 0;
-    var hi = 10;
-    for (var i = 0; i < 50; i++) {
-      var mid = (lo + hi) / 2;
-      if (studentTCdf(mid, df) < tail) lo = mid;
-      else hi = mid;
-    }
-    return (lo + hi) / 2;
-  }
+  var C = window.DescentCore || {};
+  var mean = C.mean, variance = C.variance, erf = C.erf, normalCdf = C.normalCdf;
+  var gammaln = C.gammaln, betacf = C.betacf, betai = C.betai;
+  var studentTCdf = C.studentTCdf, tCritical = C.tCritical, tTestP = C.tTestP;
+  var randn = C.randn;
 
   function tCritical95(df){
     return tCritical(df, 0.95);
-  }
-
-  function tTestP(a,b){
-    if (a.length < 3 || b.length < 3) return 1;
-    var ma = mean(a);
-    var mb = mean(b);
-    var va = variance(a, ma);
-    var vb = variance(b, mb);
-    var se = Math.sqrt(va / a.length + vb / b.length);
-    if (!Number.isFinite(se) || se <= 0) return 1;
-    var z = Math.abs((ma - mb) / se);
-    return 2 * (1 - normalCdf(z));
-  }
-
-  function randn(){
-    var u = 0;
-    var v = 0;
-    while (u === 0) u = Math.random();
-    while (v === 0) v = Math.random();
-    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
   }
 
   function initFactory(){
