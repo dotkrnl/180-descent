@@ -248,6 +248,9 @@ module.exports = function (eleventyConfig) {
     return katex.renderToString(latex.trim(), { displayMode: false, throwOnError: false, output: "html" });
   });
 
+  eleventyConfig.addFilter("math", (latex = "") => katex.renderToString(String(latex).trim(), { displayMode: true, throwOnError: false, output: "html" }));
+  eleventyConfig.addFilter("mathinline", (latex = "") => katex.renderToString(String(latex).trim(), { displayMode: false, throwOnError: false, output: "html" }));
+
   eleventyConfig.addCollection("days", (collectionApi) => {
     return collectionApi
       .getFilteredByGlob("src/days/*.md")
