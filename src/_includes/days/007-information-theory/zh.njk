@@ -45,7 +45,7 @@
 <p>但现实中的选择并不总是均等的。该理论的精妙之处在于它如何处理不均匀的概率。香农将概率为 p 的某一特定结果所蕴含的自信息量（surprisal，本文简称<span class="term">惊奇度</span>{% tip '在信息论中，惊奇度是特定结果所承载的信息量，以负对数概率表示。' %}）定义为：</p>
 
 <div class="formula">
-<p class="eq">surprise(p) = −log<sub>2</sub> <span class="v">p</span> &nbsp; 比特</p>
+{% math %}\text{surprise}(p) = -\log_2 p \quad \text{比特}{% endmath %}
 <p class="cap">必然发生的事件（p = 1）带来的惊奇度为零。百万分之一概率的罕见事件则包含约 20 比特的信息。</p>
 </div>
 
@@ -55,7 +55,7 @@
 <p>现在，让我们从单一结果放大到整个信源——一种语言、一枚骰子或一串连续不断的符号。它的「平均」惊奇度是多少？这个平均值就是信息论的核心量：<span class="term">香农熵</span>{% tip '香农熵是信源的期望惊奇度：即每个符号的平均信息量。' %}。</p>
 
 <div class="formula">
-<p class="eq">H = − <span class="v">Σ</span> p<sub>i</sub> log<sub>2</sub> p<sub>i</sub> &nbsp; 比特/符号</p>
+{% math %}H = -\sum_i p_i \log_2 p_i \quad \text{比特/符号}{% endmath %}
 <p class="cap">每个结果的惊奇度乘以它发生的概率，再进行加权求和。即每个符号的期望是/否提问次数。</p>
 </div>
 
@@ -174,7 +174,7 @@
 <p>这个谜题的解决是 20 世纪物理学中最漂亮的推理之一，它由建造计算机的那群人完成。1961 年，IBM 的<span class="term">罗尔夫·兰道尔</span>（Rolf Landauer）提出了一个前人从未想过的问题：计算「必然」是耗散能量的吗？摆弄比特的操作是否总是要消耗能量？他给出了令人吃惊的答案：<span class="hl">并非如此</span>——原则上，逻辑可逆的步骤可以以任意接近零的耗散完成，只要操作进行得足够缓慢和轻柔。不可避免的下限附着在逻辑不可逆操作上，而最典型的例子就是「擦除」。</p>
 
 <div class="formula">
-<p class="eq">擦除 1 比特 &nbsp;⟶&nbsp; 至少耗散 &nbsp;<span class="v">k<sub>B</sub>T ln 2</span></p>
+{% math %}\text{擦除 1 比特} \quad \longrightarrow \quad \text{至少耗散} \quad k_B T \ln 2{% endmath %}
 <p class="cap">对于一个初始未知且等概率的比特，在无可用边信息的等温循环中重置时：室温下约为 2.8 zJ（1 zJ = 10⁻²¹ 焦耳，约 0.018 eV）。<span class="term">兰道尔原理</span>{% tip '兰道尔原理指出，逻辑不可逆擦除具有由被丢弃信息量决定的最低耗散下限。' %}，1961 年。</p>
 </div>
 
@@ -409,7 +409,7 @@
 <p>先从两个更简单的部分开始。<span class="term">联合熵 (joint entropy)</span> H(X,Y) 是这一对变量的总不确定性。<span class="term">条件熵 (conditional entropy)</span> H(Y∣X) 是在已知 X 时 Y 遗留的不确定性——即存留的惊奇度。互信息就是它们之间的差值：已知 X 后，对 Y 的不确定性缩减了多少。</p>
 
 <div class="formula">
-<p class="eq">I(X;Y) = H(Y) − H(Y∣X) = <span class="v">H(X) + H(Y) − H(X,Y)</span></p>
+{% math %}I(X;Y) = H(Y) - H(Y|X) = H(X) + H(Y) - H(X,Y){% endmath %}
 <p class="cap">对 Y 的不确定性，减去得知 X 后遗留的不确定性。具有对称性：X 透露关于 Y 的信息量，与 Y 透露关于 X 的信息量完全相同。</p>
 </div>
 
@@ -461,7 +461,7 @@
 <p>熵有一个关系密切的“亲戚”，也是科学中极有用的量。它回答的问题很尖锐：相信一个错误模型，会多消耗多少比特？假设现实从分布 p 中产生结果，而你把世界建模为 q。你每次都按 q 来预估惊奇度，但真实结果服从的是 p。由此增加的平均码长，就是<span class="term">相对熵 (relative entropy)</span>，或称<span class="term">KL 散度 (Kullback–Leibler divergence)</span>：</p>
 
 <div class="formula">
-<p class="eq">D(p ‖ q) = <span class="v">Σ p<sub>i</sub> log<sub>2</sub> (p<sub>i</sub> / q<sub>i</sub>)</span> &nbsp; ≥ 0</p>
+{% math %}D(p \| q) = \sum_i p_i \log_2 \frac{p_i}{q_i} \geq 0{% endmath %}
 <p class="cap">当真实分布为 p 但你却针对 q 进行编码时，每个符号所浪费的额外比特数。只有当你的模型完全正确时才为零。永远不为负值。</p>
 </div>
 
@@ -706,7 +706,7 @@
 <p>如果要在近期成果中，选出一项在二十年后仍被人们铭记的突破，那很可能是它：2024 年，由巴塞罗那大学费利克斯·里托尔特（Felix Ritort）领衔的团队发表了一项研究，他们利用显微成像、力的校准和模型假设，推断出了活细胞产生熵的速率——这也是单个红细胞内时间之箭的定量表现。</p>
 <p>其核心原理是一个名为<span class="term">方差求和规则</span>（Variance Sum Rule）的全新数学恒等式。它将探针涨落统计与作用在它身上的恢复力联系起来，使研究者能在模型条件下估计熵产生率 σ。无需热量计，也无需复杂的扰动协议——但也不是只靠一台裸显微镜。</p>
 <div class="formula">
-<p class="eq"><span class="v">σ</span> ∝ var(displacement) + var(force)</p>
+{% math %}\sigma \propto \text{var}(\text{displacement}) + \text{var}(\text{force}){% endmath %}
 <p class="cap">仅为示意——不是可直接通用的公式。Di Terlizzi et al., Science, 2024。</p>
 </div>
 <p>他们将这一工具对准人类红细胞，绘制出了横跨细胞膜的熵产生率分布图。其发现令人震惊：σ 呈现出明显的「空间非均匀性」，在细胞的不同位置均有不同，其关联长度约为 0.6 微米。其平均值与独立的热量计测量结果高度吻合。作者将其描述为活系统熵产生的第一张热图——这是从定性的“远离平衡”语言迈向空间分辨热力学测量的重要一步。<span class="chip ok" data-print="已确立"><i></i>在模型假设下已确立</span></p>
@@ -748,7 +748,7 @@
 <p>这听起来像是一个显而易见的常识：在许多重要时钟模型和实验中，走时越精准，耗散越高。</p>
 <p>由来自牛津、维也纳与兰开斯特等地的联合研究团队——皮尔森、古里亚诺娃、埃尔克、莱尔德、布里格斯、胡伯与阿雷斯（Pearson, Guryanova, Erker, Laird, Briggs, Huber &amp; Ares）——建造了尽可能简单的时钟：一个在低温腔体中振动的纳米级机械薄膜，其振荡通过射频电路读取。通过调节驱动功率，他们将时钟的状态从模糊调整到精确，并同时测量了其准确度与熵产生。他们发现了一个明确的线性关系：准确度翻倍，耗散也随之翻倍。其时钟运行效率与理论极限相比，差距已在同一个数量级之内。<span class="chip ok" data-print="已确立"><i></i>已确立</span></p>
 <div class="formula">
-<p class="eq">准确度 &nbsp;∝&nbsp; <span class="v">熵产生</span></p>
+{% math %}\text{准确度} \propto \text{熵产生}{% endmath %}
 <p class="cap">更精准的计时需要更多的耗散。Pearson et al., Physical Review X, 2021。</p>
 </div>
 <p>后续的研究进一步深化了这一结论。迈尔、施瓦茨汉斯、埃尔克与胡伯（Meier, Schwarzhans, Erker &amp; Huber，PRL 131, 220201, 2023）表明，在他们的框架中，计时的热力学限制可以拆分为「准确度」（规律性）和「分辨率」（滴答频率），这两者都需要更多熵产生，但作用方式不同。而 2025 年发表在 PRL 上的一篇关于从量子时钟中提取经典滴答信号的论文则指出，主要耗散可能不在于时钟本身的齿轮运转，而在于「测量」本身——即把微观的量子振荡放大为经典信号的过程。这又是麦克斯韦妖的影子：能耗问题并不在于「知道」，而在于「让其被经典地知晓」。</p>

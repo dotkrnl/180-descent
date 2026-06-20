@@ -49,6 +49,82 @@ function escapeHtml(value = "") {
     .replace(/"/g, "&quot;");
 }
 
+function renderLatex(latex = "", displayMode = false) {
+  return katex.renderToString(String(latex).trim(), {
+    displayMode,
+    throwOnError: false,
+    output: "html"
+  });
+}
+
+function renderDelimitedMath(content = "") {
+  const html = String(content);
+  if (!html.includes("\\(") && !html.includes("\\[")) return html;
+
+  const excludedTags = new Set(["code", "pre", "script", "style", "svg", "textarea"]);
+  const stack = [];
+  let excludedDepth = 0;
+  let out = "";
+  let i = 0;
+
+  while (i < html.length) {
+    if (html.startsWith("<!--", i)) {
+      const end = html.indexOf("-->", i + 4);
+      const next = end === -1 ? html.length : end + 3;
+      out += html.slice(i, next);
+      i = next;
+      continue;
+    }
+
+    if (html[i] === "<") {
+      const end = html.indexOf(">", i + 1);
+      if (end === -1) {
+        out += html.slice(i);
+        break;
+      }
+
+      const tag = html.slice(i, end + 1);
+      const close = tag.match(/^<\s*\/\s*([a-zA-Z0-9:-]+)/);
+      const open = tag.match(/^<\s*([a-zA-Z0-9:-]+)/);
+
+      if (close) {
+        const name = close[1].toLowerCase();
+        if (excludedTags.has(name) && stack[stack.length - 1] === name) {
+          stack.pop();
+          excludedDepth = Math.max(0, excludedDepth - 1);
+        }
+      } else if (open && !/\/\s*>$/.test(tag)) {
+        const name = open[1].toLowerCase();
+        if (excludedTags.has(name)) {
+          stack.push(name);
+          excludedDepth++;
+        }
+      }
+
+      out += tag;
+      i = end + 1;
+      continue;
+    }
+
+    if (excludedDepth === 0 && (html.startsWith("\\(", i) || html.startsWith("\\[", i))) {
+      const displayMode = html[i + 1] === "[";
+      const close = displayMode ? "\\]" : "\\)";
+      const end = html.indexOf(close, i + 2);
+
+      if (end !== -1) {
+        out += renderLatex(html.slice(i + 2, end), displayMode);
+        i = end + 2;
+        continue;
+      }
+    }
+
+    out += html[i];
+    i++;
+  }
+
+  return out;
+}
+
 function absoluteUrl(value = "", siteUrl = "") {
   const raw = String(value || "");
   if (/^https?:\/\//i.test(raw)) return raw;
@@ -114,6 +190,10 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
   eleventyConfig.addPassthroughCopy({ "src/favicon.ico": "favicon.ico" });
   eleventyConfig.addPassthroughCopy({ "src/site.webmanifest": "site.webmanifest" });
+
+  eleventyConfig.addTransform("katex-delimiters", function (content, outputPath) {
+    return outputPath && outputPath.endsWith(".html") ? renderDelimitedMath(content) : content;
+  });
 
   eleventyConfig.addFilter("assetUrl", assetUrl);
   eleventyConfig.addFilter("absoluteUrl", absoluteUrl);
@@ -241,15 +321,15 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addPairedShortcode("math", function (latex = "") {
-    return katex.renderToString(latex.trim(), { displayMode: true, throwOnError: false, output: "html" });
+    return renderLatex(latex, true);
   });
 
   eleventyConfig.addPairedShortcode("mathinline", function (latex = "") {
-    return katex.renderToString(latex.trim(), { displayMode: false, throwOnError: false, output: "html" });
+    return renderLatex(latex, false);
   });
 
-  eleventyConfig.addFilter("math", (latex = "") => katex.renderToString(String(latex).trim(), { displayMode: true, throwOnError: false, output: "html" }));
-  eleventyConfig.addFilter("mathinline", (latex = "") => katex.renderToString(String(latex).trim(), { displayMode: false, throwOnError: false, output: "html" }));
+  eleventyConfig.addFilter("math", (latex = "") => renderLatex(latex, true));
+  eleventyConfig.addFilter("mathinline", (latex = "") => renderLatex(latex, false));
 
   eleventyConfig.addCollection("days", (collectionApi) => {
     return collectionApi

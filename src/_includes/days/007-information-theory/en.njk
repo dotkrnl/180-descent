@@ -45,7 +45,7 @@
 <p>But real choices aren't always balanced. The genius of the theory is how it handles loaded dice. Shannon defined the information content — the <em class="term">surprise</em>{% tip 'In information theory, surprise is the information carried by a particular outcome, measured as negative log probability.' %} — of an outcome with probability <em>p</em> as:</p>
 
 <div class="formula">
-<p class="eq">surprise(p) = −log<sub>2</sub> <span class="v">p</span> &nbsp; bits</p>
+{% math %}\text{surprise}(p) = -\log_2 p \quad \text{bits}{% endmath %}
 <p class="cap">A sure thing (p = 1) carries zero surprise. A one-in-a-million event carries about twenty bits.</p>
 </div>
 
@@ -55,7 +55,7 @@
 <p>Now zoom out from one outcome to a whole source — a language, a die, a stream of symbols. How surprising is it <em>on average</em>? That average is the crown jewel of the theory, the <em class="term">Shannon entropy</em>{% tip 'Shannon entropy is the expected surprise of a source: the average information per symbol.' %}:</p>
 
 <div class="formula">
-<p class="eq">H = − <span class="v">Σ</span> p<sub>i</sub> log<sub>2</sub> p<sub>i</sub> &nbsp; bits per symbol</p>
+{% math %}H = -\sum_i p_i \log_2 p_i \quad \text{bits per symbol}{% endmath %}
 <p class="cap">Each outcome's surprise, weighted by how often it happens. The expected number of yes/no questions per symbol.</p>
 </div>
 
@@ -174,7 +174,7 @@
 <p>The resolution is one of the most beautiful pieces of reasoning in twentieth-century physics, and it came from the people who built computers. In 1961, IBM's <strong>Rolf Landauer</strong> asked a question nobody had thought to ask: is computation <em>necessarily</em> dissipative? Must shuffling bits around always cost energy? His surprising answer: <em>no</em> — logically reversible steps can in principle be done with arbitrarily little dissipation, run as slowly and gently as you like. The unavoidable lower bound attaches to logically irreversible operations. The canonical example is <em class="term">erasure</em>.</p>
 
 <div class="formula">
-<p class="eq">Erase one bit &nbsp;⟶&nbsp; dissipate at least &nbsp;<span class="v">kT · ln2</span></p>
+{% math %}\text{Erase one bit} \quad \longrightarrow \quad \text{dissipate at least} \quad kT \cdot \ln 2{% endmath %}
 <p class="cap">For an initially unknown, equiprobable bit reset in an isothermal cycle with no usable side information: ≈ 2.8 × 10⁻²¹ joules (2.8 zeptojoules ≈ 0.018 eV) at room temperature. <em class="term">Landauer's principle</em>{% tip 'Landauer’s principle says logically irreversible erasure has a minimum thermodynamic cost governed by the information discarded.' %}, 1961.</p>
 </div>
 
@@ -408,7 +408,7 @@
 <p>Start with two simpler pieces. <em class="term">Joint entropy</em> H(X,Y) is the total uncertainty in the pair. <em class="term">Conditional entropy</em> H(Y∣X) is the uncertainty <em>left in Y once you already know X</em> — the surprise that survives. Mutual information is simply the gap between them: how much knowing X <em>shrinks</em> your uncertainty about Y.</p>
 
 <div class="formula">
-<p class="eq">I(X;Y) = H(Y) − H(Y∣X) = <span class="v">H(X) + H(Y) − H(X,Y)</span></p>
+{% math %}I(X;Y) = H(Y) - H(Y|X) = H(X) + H(Y) - H(X,Y){% endmath %}
 <p class="cap">The uncertainty about Y, minus what's left after you learn X. Symmetric: X tells you exactly as much about Y as Y tells you about X.</p>
 </div>
 
@@ -460,7 +460,7 @@
 <p>There's a cousin of entropy that turns out to be one of the most useful quantities in all of science, and it answers a sharp question: <em>what does it cost to believe the wrong thing?</em> Suppose reality draws outcomes from a distribution <em>p</em>, but you've modeled the world as <em>q</em>. Every time you're surprised, you're surprised by the wrong amount — you budgeted −log₂q bits but reality charged you according to <em>p</em>. The average overpayment is the <em class="term">relative entropy</em>, or <em class="term">Kullback–Leibler divergence</em>:</p>
 
 <div class="formula">
-<p class="eq">D(p ‖ q) = <span class="v">Σ p<sub>i</sub> log<sub>2</sub> (p<sub>i</sub> / q<sub>i</sub>)</span> &nbsp; ≥ 0</p>
+{% math %}D(p \| q) = \sum_i p_i \log_2 \frac{p_i}{q_i} \geq 0{% endmath %}
 <p class="cap">The extra bits per symbol you waste by coding for q when the truth is p. Zero only when your model is exactly right. Never negative.</p>
 </div>
 
@@ -706,7 +706,7 @@
 <p>If we had to name one recent result that could be remembered in twenty years, it is this: in 2024, a team led by <strong>Felix Ritort</strong> at the University of Barcelona published a way to infer the rate at which a living cell produces entropy — the quantitative arrow of time inside a single red blood cell — from microscopy plus force calibration and model assumptions.</p>
 <p>The insight is a new mathematical identity called the <em class="term">Variance Sum Rule</em>. It connects fluctuation statistics of a probe with the restoring forces acting on it, allowing entropy production rate σ to be estimated under the model's conditions. No calorimeter, no complex perturbation protocol — but not just a bare microscope either.</p>
 <div class="formula">
-<p class="eq"><span class="v">σ</span> ∝ var(displacement) + var(force)</p>
+{% math %}\sigma \propto \text{var}(\text{displacement}) + \text{var}(\text{force}){% endmath %}
 <p class="cap">Schematic only — not a generally usable identity. Di Terlizzi et al., Science, 2024.</p>
 </div>
 <p>They pointed this tool at human red blood cells and mapped the entropy production rate across the membrane. What they found was striking: σ is <strong>spatially heterogeneous</strong>, varying from spot to spot across the cell, with a finite correlation length of about 0.6 micrometres. The average agreed with independent calorimetry measurements. The authors describe this as the first heat map of entropy production in a living system — a major step from qualitative "far from equilibrium" language toward spatially resolved thermodynamic accounting. <span class="chip ok" data-print="established"><i></i>established under model assumptions</span></p>
@@ -748,7 +748,7 @@
 <p>Here is a fact that, once you hear it, feels obvious: in important clock models and experiments, higher accuracy comes with higher dissipation.</p>
 <p>The team — <strong>Pearson, Guryanova, Erker, Laird, Briggs, Huber &amp; Ares</strong>, spanning Oxford, Vienna, and Lancaster — built the simplest possible clock: a nanometre-thick mechanical membrane vibrating in a cryogenic cavity, its oscillations read out by a radio-frequency circuit. By varying the drive power, they tuned the clock from sloppy to sharp and measured both accuracy and entropy production. They found a <em>linear</em> relationship: double the accuracy, double the dissipation. Their clock operated within an order of magnitude of the theoretical minimum. <span class="chip ok" data-print="established"><i></i>established</span></p>
 <div class="formula">
-<p class="eq">accuracy &nbsp;∝&nbsp; <span class="v">entropy production</span></p>
+{% math %}\text{accuracy} \propto \text{entropy production}{% endmath %}
 <p class="cap">More precise timekeeping demands more dissipation. Pearson et al., Physical Review X, 2021.</p>
 </div>
 <p>Follow-up work has deepened this. <strong>Meier, Schwarzhans, Erker &amp; Huber</strong> (<em>PRL</em> 131, 220201, 2023) showed the cost splits into <em>accuracy</em> (regularity) and <em>resolution</em> (tick rate), both requiring entropy in their framework but in different ways. And a 2025 <em>PRL</em> paper on the entropic costs of extracting classical ticks from a quantum clock argued that the dominant cost can be not the clockwork but the <em>measurement</em> — the act of amplifying a quantum oscillation into a classical signal. The demon's cousin again: the cost is not in the knowing, but in the <em>making-classically-known</em>.</p>

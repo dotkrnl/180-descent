@@ -181,67 +181,61 @@
 <figure class="bayes-sieve">
 <figcaption>
 <span class="bs-title">贝叶斯像一只筛子</span>
-<span class="bs-sub">证据 E =「主持人打开了 3 号门」。每个假设一开始都有同样的先验；随后，谁越能预言这个具体揭示，谁留下的权重就越大。</span>
+<span class="bs-sub">证据 \(E\) =「主持人打开了 3 号门」。每个假设一开始都有同样的先验；随后，谁越能预言这个具体揭示，谁留下的权重就越大。</span>
 </figcaption>
 <div class="bs-equation">
-<span class="post">P(H&nbsp;|&nbsp;E)</span>
-<span>=</span>
-<span class="prior">P(H)</span>
-<span>×</span>
-<span class="like">P(E&nbsp;|&nbsp;H)</span>
-<span>/</span>
-<span class="evidence">P(E)</span>
+{% math %}P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(E)}{% endmath %}
 </div>
 <div class="bs-table-wrap" role="region" aria-label="贝叶斯概率表" tabindex="0">
 <table class="bs-table">
 <thead>
 <tr>
-<th><span class="bs-symbol">H</span><small>本行的藏车位置假设</small></th>
-<th><span>P(H)</span><small>本行假设为真的先验概率</small></th>
-<th><span>P(E&nbsp;|&nbsp;H)</span><small>若本行假设为真，主持人打开 3 号门的概率</small></th>
-<th><span>P(H) × P(E&nbsp;|&nbsp;H)</span><small>本行留下的权重</small></th>
-<th><span>P(E)</span><small>主持人打开 3 号门的总体概率</small></th>
-<th><span>P(H&nbsp;|&nbsp;E)</span><small>开 3 号门后，本行假设为真的概率</small></th>
+<th><span class="bs-symbol">\(H\)</span><small>本行的藏车位置假设</small></th>
+<th><span>\(P(H)\)</span><small>本行假设为真的先验概率</small></th>
+<th><span>\(P(E \mid H)\)</span><small>若本行假设为真，主持人打开 3 号门的概率</small></th>
+<th><span>\(P(H)P(E \mid H)\)</span><small>本行留下的权重</small></th>
+<th><span>\(P(E)\)</span><small>主持人打开 3 号门的总体概率</small></th>
+<th><span>\(P(H \mid E)\)</span><small>开 3 号门后，本行假设为真的概率</small></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th><span class="bs-symbol">H：</span>车在你选的 1 号门后</th>
-<td class="bs-val bs-prior" data-label="P(H)：本行假设为真的先验概率"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H)：若本行假设为真，主持人打开 3 号门的概率"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H)：本行留下的权重"><b>1/6</b><span class="bs-note">仍可能，但证据只支持一半</span></td>
-<td class="bs-val bs-evidence" data-label="P(E)：主持人打开 3 号门的总体概率"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E)：开 3 号门后，本行假设为真的概率"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<th><span class="bs-symbol">\(H:\)</span>车在你选的 1 号门后</th>
+<td class="bs-val bs-prior" data-label="P(H)：本行假设为真的先验概率"><b>\(1/3\)</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H)：若本行假设为真，主持人打开 3 号门的概率"><b>\(1/2\)</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H)：本行留下的权重"><b>\(1/6\)</b><span class="bs-note">仍可能，但证据只支持一半</span></td>
+<td class="bs-val bs-evidence" data-label="P(E)：主持人打开 3 号门的总体概率"><b>\(1/2\)</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E)：开 3 号门后，本行假设为真的概率"><b>\(1/3\)</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
 </tr>
 <tr>
-<th><span class="bs-symbol">H：</span>车在 2 号门后</th>
-<td class="bs-val bs-prior" data-label="P(H)：本行假设为真的先验概率"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H)：若本行假设为真，主持人打开 3 号门的概率"><b>1</b><span class="bs-meter"><i style="width:100%"></i></span></td>
-<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H)：本行留下的权重"><b>1/3</b><span class="bs-note">最强幸存者：这个揭示是被迫的</span></td>
-<td class="bs-val bs-evidence" data-label="P(E)：主持人打开 3 号门的总体概率"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E)：开 3 号门后，本行假设为真的概率"><b>2/3</b><span class="bs-meter"><i style="width:66.67%"></i></span></td>
+<th><span class="bs-symbol">\(H:\)</span>车在 2 号门后</th>
+<td class="bs-val bs-prior" data-label="P(H)：本行假设为真的先验概率"><b>\(1/3\)</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H)：若本行假设为真，主持人打开 3 号门的概率"><b>\(1\)</b><span class="bs-meter"><i style="width:100%"></i></span></td>
+<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H)：本行留下的权重"><b>\(1/3\)</b><span class="bs-note">最强幸存者：这个揭示是被迫的</span></td>
+<td class="bs-val bs-evidence" data-label="P(E)：主持人打开 3 号门的总体概率"><b>\(1/2\)</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E)：开 3 号门后，本行假设为真的概率"><b>\(2/3\)</b><span class="bs-meter"><i style="width:66.67%"></i></span></td>
 </tr>
 <tr>
-<th><span class="bs-symbol">H：</span>车在 3 号门后</th>
-<td class="bs-val bs-prior" data-label="P(H)：本行假设为真的先验概率"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like zero" data-label="P(E&nbsp;|&nbsp;H)：若本行假设为真，主持人打开 3 号门的概率"><b>0</b><span class="bs-meter"><i style="width:0%"></i></span></td>
-<td class="bs-val zero" data-label="P(H) × P(E&nbsp;|&nbsp;H)：本行留下的权重"><b>0</b><span class="bs-note">被排除：主持人不能打开藏车的门</span></td>
-<td class="bs-val bs-evidence" data-label="P(E)：主持人打开 3 号门的总体概率"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post zero" data-label="P(H&nbsp;|&nbsp;E)：开 3 号门后，本行假设为真的概率"><b>0</b><span class="bs-meter"><i style="width:0%"></i></span></td>
+<th><span class="bs-symbol">\(H:\)</span>车在 3 号门后</th>
+<td class="bs-val bs-prior" data-label="P(H)：本行假设为真的先验概率"><b>\(1/3\)</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<td class="bs-val bs-like zero" data-label="P(E&nbsp;|&nbsp;H)：若本行假设为真，主持人打开 3 号门的概率"><b>\(0\)</b><span class="bs-meter"><i style="width:0%"></i></span></td>
+<td class="bs-val zero" data-label="P(H) × P(E&nbsp;|&nbsp;H)：本行留下的权重"><b>\(0\)</b><span class="bs-note">被排除：主持人不能打开藏车的门</span></td>
+<td class="bs-val bs-evidence" data-label="P(E)：主持人打开 3 号门的总体概率"><b>\(1/2\)</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val bs-post zero" data-label="P(H&nbsp;|&nbsp;E)：开 3 号门后，本行假设为真的概率"><b>\(0\)</b><span class="bs-meter"><i style="width:0%"></i></span></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p class="bs-total"><span>P(E)</span> 是证据筛过之后留下的总权重：<span class="hl">1/6 + 1/3 + 0 = 1/2</span>。把每个幸存权重都除以这个 1/2，未打开的 2 号门就拿走了剩余概率中的 <span class="hl">2/3</span>。</p>
+<p class="bs-total"><span>\(P(E)\)</span> 是证据筛过之后留下的总权重：<span class="hl">\(1/6 + 1/3 + 0 = 1/2\)</span>。把每个幸存权重都除以这个 \(1/2\)，未打开的 2 号门就拿走了剩余概率中的 <span class="hl">\(2/3\)</span>。</p>
 </figure>
 
 <div class="mathline">
-<span class="post">P(H&nbsp;|&nbsp;E)</span> = <span class="prior">P(H)</span> × <span class="like">P(E&nbsp;|&nbsp;H)</span> / <span class="evidence">P(E)</span>
-<small><span style="color:var(--accent-deep)">后验</span>（看到证据后的置信度）= <span style="color:var(--brass)">先验</span>（之前的置信度）× <span style="color:var(--contested)">似然</span>（H 预测 E 的能力），再用 <span style="color:var(--accent)">证据总量</span> 归一化</small>
+{% math %}P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(E)}{% endmath %}
+<small><span style="color:var(--accent-deep)">后验</span>（看到证据后的置信度）= <span style="color:var(--brass)">先验</span>（之前的置信度）× <span style="color:var(--contested)">似然</span>（\(H\) 预测 \(E\) 的能力），再用 <span style="color:var(--accent)">证据总量</span> 归一化</small>
 </div>
 
-<p>用一句话说：看到证据 E 后，你对假设 H 的<span class="term">后验</span>置信度，等于你的<span class="term">先验</span>置信度乘以<span class="term">似然</span>——即 H 预测你会看到 E 的力度——再除以 E 本身出现的总体预期。强有力的证据，是你的假设能预见、而对手却预见不到的东西。整台引擎就这么多。信念永远流向最能解释已发生之事的那一方。</p>
-<p>回到蒙提霍尔。令 H =「车在 2 号门后」，E =「主持人打开 3 号门」。如果车确实在 2 号门后，主持人只能开 3 号门（不能开你的门，也不能开藏车的门），所以似然为 1。但如果车在你选的 1 号门后，他本可以开 2 号或 3 号，所以开 3 号的似然只有 1/2。正是这个似然上的不对称，把后验推到了支持换门的 2/3。公式替我们做的，不过是直觉算不好的那笔账。</p>
+<p>用一句话说：看到证据 \(E\) 后，你对假设 \(H\) 的<span class="term">后验</span>置信度，等于你的<span class="term">先验</span>置信度乘以<span class="term">似然</span>——即 \(H\) 预测你会看到 \(E\) 的力度——再除以 \(E\) 本身出现的总体预期。强有力的证据，是你的假设能预见、而对手却预见不到的东西。整台引擎就这么多。信念永远流向最能解释已发生之事的那一方。</p>
+<p>回到蒙提霍尔。令 \(H\) =「车在 2 号门后」，\(E\) =「主持人打开 3 号门」。如果车确实在 2 号门后，主持人只能开 3 号门（不能开你的门，也不能开藏车的门），所以似然为 \(1\)。但如果车在你选的 1 号门后，他本可以开 2 号或 3 号，所以开 3 号的似然只有 \(1/2\)。正是这个似然上的不对称，把后验推到了支持换门的 \(2/3\)。公式替我们做的，不过是直觉算不好的那笔账。</p>
 
 <h3>连医生都会掉进去的陷阱</h3>
 <p>贝叶斯定理拯救的不只是游戏节目选手。它还能抓住一个著名研究中大多数医生都犯的错误。</p>
@@ -271,7 +265,7 @@
 </div>
 
 <div class="post-readout">
-<p class="lh">P( 患病 | 阳性 )</p>
+<p class="lh">\(P(\text{患病}\mid\text{阳性})\)</p>
 <div class="num" id="postNum">1.9%</div>
 <p id="postExpl"></p>
 </div>
@@ -288,7 +282,7 @@
 </div>
 </div>
 </div>
-<p style="font-size:.86em;color:var(--ink-soft);margin:1.1rem 0 0;">1978 年，Casscells、Schoenberger 与 Graboys 在《新英格兰医学杂志》发表的研究把本质相同的问题交给了 60 位哈佛医学院的师生。最常见的答案是 <span class="hl">95%</span>。正确答案约 <span class="hl">2%</span>。60 人中只有 11 人答对。罪魁祸首是混淆了 P(阳性&nbsp;|&nbsp;患病) 与 P(患病&nbsp;|&nbsp;阳性)——再加上一个事实：当疾病本身很罕见时，寥寥几个真阳性会被假阳性的汪洋淹没。</p>
+<p style="font-size:.86em;color:var(--ink-soft);margin:1.1rem 0 0;">1978 年，Casscells、Schoenberger 与 Graboys 在《新英格兰医学杂志》发表的研究把本质相同的问题交给了 60 位哈佛医学院的师生。最常见的答案是 <span class="hl">95%</span>。正确答案约 <span class="hl">2%</span>。60 人中只有 11 人答对。罪魁祸首是混淆了 \(P(\text{阳性}\mid\text{患病})\) 与 \(P(\text{患病}\mid\text{阳性})\)——再加上一个事实：当疾病本身很罕见时，寥寥几个真阳性会被假阳性的汪洋淹没。</p>
 </div>
 
 <div class="format-alt epub-only print-only">
@@ -303,14 +297,14 @@
 <tr><td>全部阳性</td><td>约 51</td><td>其中只有约 1 人真的患病</td></tr>
 </tbody>
 </table>
-<p>因此后验概率约为 0.99 / 50.94，即 1.9%——这就是 Casscells 结果，只是把灵敏度也明说出来。</p>
+<p>因此后验概率约为 \(0.99/50.94\)，即 \(1.9\%\)——这就是 Casscells 结果，只是把灵敏度也明说出来。</p>
 </div>
 
 <section>
 <p class="sec-eyebrow">深层思想</p>
 <h2>为什么叫「扩展的逻辑」，而不只是一个公式</h2>
 <p>这就引出了今天的主题。普通演绎逻辑——<a href="/zh/days/003-logic-and-valid-inference/">第 3 日</a>的三段论——是确定性的逻辑：凡人皆有死，苏格拉底是人，所以苏格拉底会死。到此为止，没有余地。但现实生活中几乎没有什么是确定的。我们需要一种逻辑，覆盖「肯定为真」（概率 1）与「肯定为假」（概率 0）之间那片辽阔的灰色地带。令人惊讶的结论是：这样的逻辑本质上只有一种，就是概率演算。</p>
-<p>物理学家 R. T. 考克斯在 1946 年把这一结论变成了定理。他问：假设你想给「在已知前提下，这件事有多可信？」指定一个数值，并且只坚持几条常识——可信度必须能用实数表示；同一件事用两种正确方法算出来必须得到同一个可信度（「一致性」）；「非 A」的可信度只取决于「A」的可信度。仅凭这几条<span class="term">朴素要求</span>{% tip '这里的要求指一套理论必须满足的基本条件。' %}，考克斯证明，你就「不得不」——不是被建议，而是被强迫——接受标准的概率规则。经过一次不改变实质的重新刻度后，否定必须像 1 - P(A) 那样运作，合取必须服从乘法规则，证据 E 到来时就必须对 E 做条件化。任何自洽的分级信念系统，换件马甲就是概率论。</p>
+<p>物理学家 R. T. 考克斯在 1946 年把这一结论变成了定理。他问：假设你想给「在已知前提下，这件事有多可信？」指定一个数值，并且只坚持几条常识——可信度必须能用实数表示；同一件事用两种正确方法算出来必须得到同一个可信度（「一致性」）；「非 \(A\)」的可信度只取决于「\(A\)」的可信度。仅凭这几条<span class="term">朴素要求</span>{% tip '这里的要求指一套理论必须满足的基本条件。' %}，考克斯证明，你就「不得不」——不是被建议，而是被强迫——接受标准的概率规则。经过一次不改变实质的重新刻度后，否定必须像 \(1 - P(A)\) 那样运作，合取必须服从乘法规则，证据 \(E\) 到来时就必须对 \(E\) 做条件化。任何自洽的分级信念系统，换件马甲就是概率论。</p>
 <p>物理学家 E. T. 杰恩斯的遗著《概率论：科学的逻辑》（2003）正建立在这块基石上。他的口号是：演绎逻辑不过是概率论的特例——所有概率恰好取 0 或 1 的那个特例。概率，就是把逻辑扩展到不确定性领域——也就是扩展到现实世界。请注意，这已经是通往同一终点的第三条独立路径：荷兰赌论证（<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>）从「别让人钻空子」出发；而决策论稍后将从「别做被支配的选择」也抵达此处。自洽、无确定损失、一致推理——三条路指向同一套演算。</p>
 
 <div class="aside">
@@ -360,7 +354,7 @@
 <section class="frontier">
 <p class="sec-eyebrow">前沿 · 2026</p>
 <h2>针对 p 值的静默兵变</h2>
-<p>一个世纪以来，频率派的 p 值一直是科学的守门人：跌破 0.05，结果便可称为「显著」。在<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>我们看到「显著」再也不是不可动摇的结论了——复现危机中，成山的「显著」发现一经复测便烟消云散。一个主要元凶是结构性的：p 值太脆弱。<span class="hl">实验做到一半查看一次数据，发现 p 已跌破 0.05 就立刻收手——你的假阳性率就这样被悄悄抬高。</span>这个过失太过常见，甚至有了专门名称：「选择性停止」（optional stopping）。如今统计学界正在流传一套新框架，从地基开始重建假设检验，正是为了解决这个问题。它的核心对象不是概率，而是一场「赌局」。</p>
+<p>一个世纪以来，频率派的 p 值一直是科学的守门人：跌破 \(0.05\)，结果便可称为「显著」。在<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>我们看到「显著」再也不是不可动摇的结论了——复现危机中，成山的「显著」发现一经复测便烟消云散。一个主要元凶是结构性的：p 值太脆弱。<span class="hl">实验做到一半查看一次数据，发现 \(p<0.05\) 就立刻收手——你的假阳性率就这样被悄悄抬高。</span>这个过失太过常见，甚至有了专门名称：「选择性停止」（optional stopping）。如今统计学界正在流传一套新框架，从地基开始重建假设检验，正是为了解决这个问题。它的核心对象不是概率，而是一场「赌局」。</p>
 
 <div class="claim">
 <div class="ctop">
@@ -368,8 +362,8 @@
 <span class="chip ok" data-print="已确立"><span class="chip-dot" aria-hidden="true"></span>数学理论 · 已确立</span>
 </div>
 <h3>e 值：用下注来检验假设</h3>
-<p><span class="term">e 值</span>是你对<span class="term">原假设</span>{% tip '原假设是统计检验试图拒绝的默认说法，通常是「没有效应」或「没有差异」。' %}下注后获得的回报。你押上 1 美元赌原假设为假，这份赌约被设计成「在原假设为真时公平」——也就是说，如果原假设确实成立，你便会亏得占不到任何长期便宜（用符号说：e 值在原假设下的期望值至多为 1）。所以，如果最终你的赌注翻了二十倍，那原假设一定哪里出了问题：要么它为假，要么你中了天文数字级别的头彩。一个很大的 e 值，字面意思就是<span class="hl">你从原假设身上赢到的真金白银</span>，而你累积的财富就是你的证据。它的倒数 1/e 行为上像个保守的 p 值，但下注的场景才是精髓。</p>
-<p>在硬币例子里，原假设很具体：「硬币公平，P(正面) = 0.5」。e 值是两张<span class="term">似然比</span>{% tip '似然比比较同一批数据在两个假设之下分别有多可能出现。' %}赌票合起来的财富。一张赌票押「正面偏多」的硬币，即 P(正面) = 0.60：每出现一次正面，这张票乘以 0.60 / 0.50 = 1.2；每出现一次反面，则乘以 0.40 / 0.50 = 0.8。另一张镜像赌票押「反面偏多」，即 P(正面) = 0.40，倍率正好反过来。把起始的 1 美元平均分到两张票上，无论硬币朝哪边持续偏，都可能让财富增长。如果硬币真的公平，每张票每轮的期望倍率都是 1；这场赌局在原假设下就是公平的。在这个玩具赌局里，「赢」就是财富大到足以拒绝「硬币公平」；「输」就是财富停滞或缩水，说明你还没有赢到反对公平的证据。</p>
+<p><span class="term">e 值</span>是你对<span class="term">原假设</span>{% tip '原假设是统计检验试图拒绝的默认说法，通常是「没有效应」或「没有差异」。' %}下注后获得的回报。你押上 1 美元赌原假设为假，这份赌约被设计成「在原假设为真时公平」——也就是说，如果原假设确实成立，你便会亏得占不到任何长期便宜（用符号说：e 值在原假设下的期望值至多为 \(1\)）。所以，如果最终你的赌注翻了二十倍，那原假设一定哪里出了问题：要么它为假，要么你中了天文数字级别的头彩。一个很大的 e 值，字面意思就是<span class="hl">你从原假设身上赢到的真金白银</span>，而你累积的财富就是你的证据。它的倒数 \(1/e\) 行为上像个保守的 p 值，但下注的场景才是精髓。</p>
+<p>在硬币例子里，原假设很具体：「硬币公平，\(P(\text{正面}) = 0.5\)」。e 值是两张<span class="term">似然比</span>{% tip '似然比比较同一批数据在两个假设之下分别有多可能出现。' %}赌票合起来的财富。一张赌票押「正面偏多」的硬币，即 \(P(\text{正面}) = 0.60\)：每出现一次正面，这张票乘以 \(0.60/0.50 = 1.2\)；每出现一次反面，则乘以 \(0.40/0.50 = 0.8\)。另一张镜像赌票押「反面偏多」，即 \(P(\text{正面}) = 0.40\)，倍率正好反过来。把起始的 1 美元平均分到两张票上，无论硬币朝哪边持续偏，都可能让财富增长。如果硬币真的公平，每张票每轮的期望倍率都是 \(1\)；这场赌局在原假设下就是公平的。在这个玩具赌局里，「赢」就是财富大到足以拒绝「硬币公平」；「输」就是财富停滞或缩水，说明你还没有赢到反对公平的证据。</p>
 <p>这不是松散的比喻，而是一套严格的纲领——「博弈论统计学」，由格伦·谢弗与弗拉基米尔·沃夫克用二十年时间建立，现由阿迪亚·拉姆达斯、彼得·格伦瓦尔德、王若度等人继续推进。谢弗的宣言《以赌注检验》于 2020 年在英国皇家统计学会宣读，2021 年发表于该会《期刊》A 辑。他抱怨 p 值的一个理由正是它太难向人解释；而「我赌这个假设不成立，赢了 20 块」——这话任何人都能听懂。</p>
 </div>
 
@@ -391,7 +385,7 @@
 <div class="panel web-only probability-evalue">
 <p class="ptitle">交互 · 赌徒的账本</p>
 <h3>对「公平」硬币下注</h3>
-<p class="pnote">这里要检验的命题是原假设：硬币公平，P(正面) = 0.5。滑块设置的是模拟器真正用来生成数据的 P(正面)；在真实实验里，这个值当然不会告诉检验者。设为 0.50 时，原假设为真；设为 0.65 或 0.35 时，原假设为假。这个小工具只问数据是否足以强烈反对「公平」，不负责估计精确偏差。e 值策略会逐次抛掷，对「公平」下注，用的正是上面那两张似然比赌票。若财富达到 <span class="hl">20</span>，这场赌就「赢」到足以在 0.05 水平拒绝公平；若财富停在 1 附近或下滑，就表示这场赌还没有找到反对公平的证据。</p>
+<p class="pnote">这里要检验的命题是原假设：硬币公平，\(P(\text{正面}) = 0.5\)。滑块设置的是模拟器真正用来生成数据的 \(P(\text{正面})\)；在真实实验里，这个值当然不会告诉检验者。设为 \(0.50\) 时，原假设为真；设为 \(0.65\) 或 \(0.35\) 时，原假设为假。这个小工具只问数据是否足以强烈反对「公平」，不负责估计精确偏差。e 值策略会逐次抛掷，对「公平」下注，用的正是上面那两张似然比赌票。若财富达到 <span class="hl">\(20\)</span>，这场赌就「赢」到足以在 \(0.05\) 水平拒绝公平；若财富停在 \(1\) 附近或下滑，就表示这场赌还没有找到反对公平的证据。</p>
 
 <div class="ev-controls">
 <label>
@@ -403,7 +397,7 @@
 <div class="ev-controls">
 <button class="btn" id="btnFlip">抛 25 次</button>
 <button class="btn ghost" id="btnEvReset">重置</button>
-<span class="note">原假设：硬币公平（p = 0.5）</span>
+<span class="note">原假设：硬币公平（\(p = 0.5\)）</span>
 </div>
 
 <div class="ev-chart">
@@ -437,7 +431,7 @@
 <div class="sub" id="evVerdictSub">需财富 ≥ 20</div>
 </div>
 </div>
-<p style="font-size:.82em;color:var(--ink-soft);margin:1rem 0 0;">把模拟中的真实 P(正面) 设为 0.50，原假设就为真：多数财富路径只会徘徊或缓缓下滑，只有极少数好运路径能爬到 20。拨到 0.65 或 0.35，数据就来自一枚有偏硬币，其中一张赌票往往会复利增长。向上冲的曲线，是下注策略赢了，也是反对公平的证据；持平或下滑的曲线，则是这场赌输了，意思是「继续收集」或「不拒绝」，不是「已经证明硬币公平」。</p>
+<p style="font-size:.82em;color:var(--ink-soft);margin:1rem 0 0;">把模拟中的真实 \(P(\text{正面})\) 设为 \(0.50\)，原假设就为真：多数财富路径只会徘徊或缓缓下滑，只有极少数好运路径能爬到 \(20\)。拨到 \(0.65\) 或 \(0.35\)，数据就来自一枚有偏硬币，其中一张赌票往往会复利增长。向上冲的曲线，是下注策略赢了，也是反对公平的证据；持平或下滑的曲线，则是这场赌输了，意思是「继续收集」或「不拒绝」，不是「已经证明硬币公平」。</p>
 </div>
 
 <div class="format-alt epub-only print-only">
@@ -447,9 +441,9 @@
 <table class="alt-table">
 <thead><tr><th>量</th><th>含义</th><th>用途</th></tr></thead>
 <tbody>
-<tr><td>E = 1</td><td>对原假设没有净赢面</td><td>起点</td></tr>
-<tr><td>硬币演示赌票</td><td>似然比回报：押中的一面出现时乘以 1.2，另一面出现时乘以 0.8</td><td>若硬币的真实 P(正面) = 0.5，则期望上公平</td></tr>
-<tr><td>E = 20</td><td>原假设下公平赌约的二十倍回报</td><td>0.05 水平的拒绝阈值，因为 1 / 20 = 0.05</td></tr>
+<tr><td>\(E = 1\)</td><td>对原假设没有净赢面</td><td>起点</td></tr>
+<tr><td>硬币演示赌票</td><td>似然比回报：押中的一面出现时乘以 \(1.2\)，另一面出现时乘以 \(0.8\)</td><td>若硬币的真实 \(P(\text{正面}) = 0.5\)，则期望上公平</td></tr>
+<tr><td>\(E = 20\)</td><td>原假设下公平赌约的二十倍回报</td><td>\(0.05\) 水平的拒绝阈值，因为 \(1/20 = 0.05\)</td></tr>
 <tr><td>滚动财富</td><td>检验鞅或 e 过程</td><td>可持续监控，同时控制第一类错误</td></tr>
 </tbody>
 </table>

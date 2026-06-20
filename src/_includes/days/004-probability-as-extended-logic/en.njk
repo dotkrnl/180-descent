@@ -181,67 +181,61 @@
 <figure class="bayes-sieve">
 <figcaption>
 <span class="bs-title">Bayes as a sieve</span>
-<span class="bs-sub">Evidence <em>E</em> = "the host opened Door 3." Each hypothesis starts with the same prior, then gets shrunk by how well it predicted that exact reveal.</span>
+<span class="bs-sub">Evidence \(E\) = "the host opened Door 3." Each hypothesis starts with the same prior, then gets shrunk by how well it predicted that exact reveal.</span>
 </figcaption>
 <div class="bs-equation">
-<span class="post">P(H&nbsp;|&nbsp;E)</span>
-<span>=</span>
-<span class="prior">P(H)</span>
-<span>×</span>
-<span class="like">P(E&nbsp;|&nbsp;H)</span>
-<span>/</span>
-<span class="evidence">P(E)</span>
+{% math %}P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(E)}{% endmath %}
 </div>
 <div class="bs-table-wrap" role="region" aria-label="Bayesian probability table" tabindex="0">
 <table class="bs-table">
 <thead>
 <tr>
-<th><span class="bs-symbol">H</span><small>this row's car-location claim</small></th>
-<th><span>P(H)</span><small>prior chance this row is true</small></th>
-<th><span>P(E&nbsp;|&nbsp;H)</span><small>chance host opens Door 3 if this row is true</small></th>
-<th><span>P(H) × P(E&nbsp;|&nbsp;H)</span><small>row's surviving weight</small></th>
-<th><span>P(E)</span><small>overall chance host opens Door 3</small></th>
-<th><span>P(H&nbsp;|&nbsp;E)</span><small>chance this row is true after Door 3 opens</small></th>
+<th><span class="bs-symbol">\(H\)</span><small>this row's car-location claim</small></th>
+<th><span>\(P(H)\)</span><small>prior chance this row is true</small></th>
+<th><span>\(P(E \mid H)\)</span><small>chance host opens Door 3 if this row is true</small></th>
+<th><span>\(P(H)P(E \mid H)\)</span><small>row's surviving weight</small></th>
+<th><span>\(P(E)\)</span><small>overall chance host opens Door 3</small></th>
+<th><span>\(P(H \mid E)\)</span><small>chance this row is true after Door 3 opens</small></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th><span class="bs-symbol">H:</span> Car behind your Door 1</th>
-<td class="bs-val bs-prior" data-label="P(H): prior chance this row is true"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H): chance host opens Door 3 if this row is true"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H): row's surviving weight"><b>1/6</b><span class="bs-note">possible, but only half as expected</span></td>
-<td class="bs-val bs-evidence" data-label="P(E): overall chance host opens Door 3"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E): chance this row is true after Door 3 opens"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<th><span class="bs-symbol">\(H:\)</span> Car behind your Door 1</th>
+<td class="bs-val bs-prior" data-label="P(H): prior chance this row is true"><b>\(1/3\)</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H): chance host opens Door 3 if this row is true"><b>\(1/2\)</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H): row's surviving weight"><b>\(1/6\)</b><span class="bs-note">possible, but only half as expected</span></td>
+<td class="bs-val bs-evidence" data-label="P(E): overall chance host opens Door 3"><b>\(1/2\)</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E): chance this row is true after Door 3 opens"><b>\(1/3\)</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
 </tr>
 <tr>
-<th><span class="bs-symbol">H:</span> Car behind Door 2</th>
-<td class="bs-val bs-prior" data-label="P(H): prior chance this row is true"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H): chance host opens Door 3 if this row is true"><b>1</b><span class="bs-meter"><i style="width:100%"></i></span></td>
-<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H): row's surviving weight"><b>1/3</b><span class="bs-note">best survivor: the reveal was forced</span></td>
-<td class="bs-val bs-evidence" data-label="P(E): overall chance host opens Door 3"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E): chance this row is true after Door 3 opens"><b>2/3</b><span class="bs-meter"><i style="width:66.67%"></i></span></td>
+<th><span class="bs-symbol">\(H:\)</span> Car behind Door 2</th>
+<td class="bs-val bs-prior" data-label="P(H): prior chance this row is true"><b>\(1/3\)</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H): chance host opens Door 3 if this row is true"><b>\(1\)</b><span class="bs-meter"><i style="width:100%"></i></span></td>
+<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H): row's surviving weight"><b>\(1/3\)</b><span class="bs-note">best survivor: the reveal was forced</span></td>
+<td class="bs-val bs-evidence" data-label="P(E): overall chance host opens Door 3"><b>\(1/2\)</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E): chance this row is true after Door 3 opens"><b>\(2/3\)</b><span class="bs-meter"><i style="width:66.67%"></i></span></td>
 </tr>
 <tr>
-<th><span class="bs-symbol">H:</span> Car behind Door 3</th>
-<td class="bs-val bs-prior" data-label="P(H): prior chance this row is true"><b>1/3</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like zero" data-label="P(E&nbsp;|&nbsp;H): chance host opens Door 3 if this row is true"><b>0</b><span class="bs-meter"><i style="width:0%"></i></span></td>
-<td class="bs-val zero" data-label="P(H) × P(E&nbsp;|&nbsp;H): row's surviving weight"><b>0</b><span class="bs-note">ruled out: the host cannot open the car</span></td>
-<td class="bs-val bs-evidence" data-label="P(E): overall chance host opens Door 3"><b>1/2</b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post zero" data-label="P(H&nbsp;|&nbsp;E): chance this row is true after Door 3 opens"><b>0</b><span class="bs-meter"><i style="width:0%"></i></span></td>
+<th><span class="bs-symbol">\(H:\)</span> Car behind Door 3</th>
+<td class="bs-val bs-prior" data-label="P(H): prior chance this row is true"><b>\(1/3\)</b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
+<td class="bs-val bs-like zero" data-label="P(E&nbsp;|&nbsp;H): chance host opens Door 3 if this row is true"><b>\(0\)</b><span class="bs-meter"><i style="width:0%"></i></span></td>
+<td class="bs-val zero" data-label="P(H) × P(E&nbsp;|&nbsp;H): row's surviving weight"><b>\(0\)</b><span class="bs-note">ruled out: the host cannot open the car</span></td>
+<td class="bs-val bs-evidence" data-label="P(E): overall chance host opens Door 3"><b>\(1/2\)</b><span class="bs-meter"><i style="width:50%"></i></span></td>
+<td class="bs-val bs-post zero" data-label="P(H&nbsp;|&nbsp;E): chance this row is true after Door 3 opens"><b>\(0\)</b><span class="bs-meter"><i style="width:0%"></i></span></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p class="bs-total"><span>P(E)</span> is the total weight that survived the evidence: <strong>1/6 + 1/3 + 0 = 1/2</strong>. Divide each surviving weight by that half, and the unopened Door 2 gets <strong>2/3</strong> of the remaining probability.</p>
+<p class="bs-total"><span>\(P(E)\)</span> is the total weight that survived the evidence: <strong>\(1/6 + 1/3 + 0 = 1/2\)</strong>. Divide each surviving weight by that half, and the unopened Door 2 gets <strong>\(2/3\)</strong> of the remaining probability.</p>
 </figure>
 
 <div class="mathline">
-<span class="post">P(H&nbsp;|&nbsp;E)</span> = <span class="prior">P(H)</span> × <span class="like">P(E&nbsp;|&nbsp;H)</span> / <span class="evidence">P(E)</span>
-<small><span style="color:var(--accent-deep)">posterior</span> (belief after evidence) = <span style="color:var(--brass)">prior</span> (belief before) × <span style="color:var(--contested)">likelihood</span> (how well H predicts E), normalized by <span style="color:var(--accent)">evidence</span></small>
+{% math %}P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(E)}{% endmath %}
+<small><span style="color:var(--accent-deep)">posterior</span> (belief after evidence) = <span style="color:var(--brass)">prior</span> (belief before) × <span style="color:var(--contested)">likelihood</span> (how well \(H\) predicts \(E\)), normalized by <span style="color:var(--accent)">evidence</span></small>
 </div>
 
-<p>In words: your <em class="term">posterior</em> belief in a hypothesis <em>H</em> after seeing evidence <em>E</em> equals your <em class="term">prior</em> belief, multiplied by the <em class="term">likelihood</em> — how strongly <em>H</em> predicted that you'd see <em>E</em> — divided by how expected <em>E</em> was overall. Strong evidence is evidence your hypothesis predicts and rival hypotheses don't. That's the entire engine. Belief flows toward whatever best predicted what actually happened.</p>
-<p>In Monty Hall, <em>H</em> = "the car is behind Door 2" and <em>E</em> = "the host opened Door 3." If the car really is behind Door 2, the host is <em>forced</em> to open Door 3 (he can't open your door or the car's), so the likelihood is 1. If the car is behind your Door 1, he could've opened either 2 or 3, so the likelihood of opening 3 is only 1/2. That asymmetry in the likelihoods is exactly what tips the posterior to 2/3 in favor of switching. The formula just does the bookkeeping our intuition botches.</p>
+<p>In words: your <em class="term">posterior</em> belief in a hypothesis \(H\) after seeing evidence \(E\) equals your <em class="term">prior</em> belief, multiplied by the <em class="term">likelihood</em> — how strongly \(H\) predicted that you'd see \(E\) — divided by how expected \(E\) was overall. Strong evidence is evidence your hypothesis predicts and rival hypotheses don't. That's the entire engine. Belief flows toward whatever best predicted what actually happened.</p>
+<p>In Monty Hall, \(H\) = "the car is behind Door 2" and \(E\) = "the host opened Door 3." If the car really is behind Door 2, the host is <em>forced</em> to open Door 3 (he can't open your door or the car's), so the likelihood is \(1\). If the car is behind your Door 1, he could've opened either 2 or 3, so the likelihood of opening 3 is only \(1/2\). That asymmetry in the likelihoods is exactly what tips the posterior to \(2/3\) in favor of switching. The formula just does the bookkeeping our intuition botches.</p>
 
 <h3>The trap that fools doctors</h3>
 <p>Bayes' theorem doesn't only rescue game-show contestants. It catches a mistake that, in one famous study, most <em>physicians</em> got wrong.</p>
@@ -271,7 +265,7 @@
 </div>
 
 <div class="post-readout">
-<p class="lh">P( sick | positive test )</p>
+<p class="lh">\(P(\text{sick}\mid\text{positive test})\)</p>
 <div class="num" id="postNum">1.9%</div>
 <p id="postExpl"></p>
 </div>
@@ -288,7 +282,7 @@
 </div>
 </div>
 </div>
-<p style="font-size:.86em;color:var(--ink-soft);margin:1.1rem 0 0;">In a 1978 study (Casscells, Schoenberger &amp; Graboys, <em>New England Journal of Medicine</em>), 60 Harvard medical staff and students were handed essentially this problem. The most common answer was <strong>95%</strong>. The correct answer was about <strong>2%</strong>. Only 11 of 60 got it right. The culprit is mixing up <em>P(positive&nbsp;|&nbsp;sick)</em> with <em>P(sick&nbsp;|&nbsp;positive)</em> — and forgetting that when a disease is rare, the few real cases drown in a sea of false alarms.</p>
+<p style="font-size:.86em;color:var(--ink-soft);margin:1.1rem 0 0;">In a 1978 study (Casscells, Schoenberger &amp; Graboys, <em>New England Journal of Medicine</em>), 60 Harvard medical staff and students were handed essentially this problem. The most common answer was <strong>95%</strong>. The correct answer was about <strong>2%</strong>. Only 11 of 60 got it right. The culprit is mixing up \(P(\text{positive}\mid\text{sick})\) with \(P(\text{sick}\mid\text{positive})\) — and forgetting that when a disease is rare, the few real cases drown in a sea of false alarms.</p>
 </div>
 
 <div class="format-alt epub-only print-only">
@@ -303,14 +297,14 @@
 <tr><td>All positive tests</td><td>About 51</td><td>Only about 1 is truly sick</td></tr>
 </tbody>
 </table>
-<p>The posterior is therefore about 0.99 / 50.94, or 1.9% — the Casscells result with the sensitivity made explicit.</p>
+<p>The posterior is therefore about \(0.99/50.94\), or \(1.9\%\) — the Casscells result with the sensitivity made explicit.</p>
 </div>
 
 <section>
 <p class="sec-eyebrow">The deep idea</p>
 <h2>Why "extended logic," not just a formula</h2>
 <p>Here's the claim that gives today its title. Ordinary deductive logic — the syllogisms of <a href="/days/003-logic-and-valid-inference/">Day 3</a> — is the logic of <em>certainty</em>: if all men are mortal and Socrates is a man, then Socrates is mortal, full stop. But almost nothing in real life is certain. We need a logic for the vast middle ground between "definitely true" (probability 1) and "definitely false" (probability 0). The startling result is that there is essentially <strong>only one</strong> such logic, and it is the probability calculus.</p>
-<p>This was made precise by the physicist <strong>R. T. Cox</strong> in 1946. Cox asked: suppose you want to attach a number to "how plausible is this, given what I know?" and you insist on just a few common-sense rules — plausibilities are real numbers; if you can compute a plausibility two valid ways you must get the same answer (<em>consistency</em>); and the plausibility of "not-A" should depend only on the plausibility of "A." From those bare <em class="term">desiderata</em>{% tip 'Desiderata are requirements or desired conditions a theory is supposed to satisfy.' %}, Cox proved, you are <em>forced</em> — not encouraged, forced — into the standard rules of probability. After a harmless rescaling, negation has to behave like 1 - P(A), conjunction has to obey the product rule, and learning evidence E has to mean conditionalizing on E. Any consistent system of graded belief <em>is</em> probability theory in disguise.</p>
+<p>This was made precise by the physicist <strong>R. T. Cox</strong> in 1946. Cox asked: suppose you want to attach a number to "how plausible is this, given what I know?" and you insist on just a few common-sense rules — plausibilities are real numbers; if you can compute a plausibility two valid ways you must get the same answer (<em>consistency</em>); and the plausibility of "not-\(A\)" should depend only on the plausibility of "\(A\)." From those bare <em class="term">desiderata</em>{% tip 'Desiderata are requirements or desired conditions a theory is supposed to satisfy.' %}, Cox proved, you are <em>forced</em> — not encouraged, forced — into the standard rules of probability. After a harmless rescaling, negation has to behave like \(1 - P(A)\), conjunction has to obey the product rule, and learning evidence \(E\) has to mean conditionalizing on \(E\). Any consistent system of graded belief <em>is</em> probability theory in disguise.</p>
 <p>The physicist <strong>E. T. Jaynes</strong> built his great posthumous book <em>Probability Theory: The Logic of Science</em> (2003) on exactly this foundation. His slogan: deductive logic is just the special case of probability theory where all the probabilities happen to be 0 or 1. Probability is logic <em>extended</em> to handle uncertainty — which is to say, extended to handle reality. Notice this is the <em>third</em> independent road to the same destination: the Dutch book argument (<a href="/days/001-what-is-knowledge/">Day 1</a>) got there from "don't be exploitable," and we'll see decision theory get there from "don't make dominated choices." Coherence, no-sure-loss, and consistent reasoning all point at one calculus.</p>
 
 <div class="aside">
@@ -360,7 +354,7 @@
 <section class="frontier">
 <p class="sec-eyebrow">The frontier · 2026</p>
 <h2>The quiet mutiny against the p-value</h2>
-<p>For a century, the frequentist p-value has been science's gatekeeper: get below 0.05 and you may call your result "significant." On <a href="/days/002-scientific-method-and-demarcation/">Day 2</a> we saw the bill come due — the replication crisis, in which mountains of "significant" findings simply evaporated on re-testing. A big culprit is structural: the p-value is fragile. <strong>Peek at your data midway and stop the moment you hit p&lt;0.05, and you've quietly inflated your false-positive rate</strong> — a sin so common it has a name, "optional stopping." A new framework now circulating through statistics rebuilds testing from the ground up to fix exactly this. Its central object isn't a probability. It's a <em>bet.</em></p>
+<p>For a century, the frequentist p-value has been science's gatekeeper: get below \(0.05\) and you may call your result "significant." On <a href="/days/002-scientific-method-and-demarcation/">Day 2</a> we saw the bill come due — the replication crisis, in which mountains of "significant" findings simply evaporated on re-testing. A big culprit is structural: the p-value is fragile. <strong>Peek at your data midway and stop the moment you hit \(p<0.05\), and you've quietly inflated your false-positive rate</strong> — a sin so common it has a name, "optional stopping." A new framework now circulating through statistics rebuilds testing from the ground up to fix exactly this. Its central object isn't a probability. It's a <em>bet.</em></p>
 
 <div class="claim">
 <div class="ctop">
@@ -368,8 +362,8 @@
 <span class="chip ok" data-print="established"><i></i>The mathematics · established</span>
 </div>
 <h3>The e-value: test a hypothesis by betting against it</h3>
-<p>An <em class="term">e-value</em> is the payoff of a bet against the <em class="term">null hypothesis</em>{% tip 'The null hypothesis is the default claim a test tries to reject, often that there is no effect or no difference.' %}. You wager $1 that the null is false, under a betting contract designed to be <em>fair if the null is true</em> — meaning that if the null really holds, you can't expect to grow your money (in symbols, the expected value of an e-value under the null is at most 1). So if you walk away having multiplied your stake twentyfold, something is off with the null: either it's false, or you got astronomically lucky. A large e-value is literally <strong>money won against the null</strong>, and your accumulated wealth <em>is</em> your evidence. The reciprocal 1/e behaves like a conservative p-value, but the betting picture is the point.</p>
-<p>In the coin example, the null is concrete: <strong>the coin is fair, P(heads) = 0.5.</strong> The e-value is the wealth from two <em class="term">likelihood-ratio</em>{% tip 'A likelihood ratio compares how probable the observed data are under one hypothesis versus another.' %} tickets. One ticket bets on a heads-heavy coin, P(heads) = 0.60: a head multiplies that ticket by 0.60 / 0.50 = 1.2, while a tail multiplies it by 0.40 / 0.50 = 0.8. The mirror ticket bets on a tails-heavy coin, P(heads) = 0.40, with the multipliers reversed. Split the starting $1 evenly between those two tickets, and either kind of sustained bias can make wealth grow. If the coin is actually fair, each ticket has expected multiplier 1 on every flip; the game is fair under the null. In this toy game, <em>winning</em> means your wealth gets large enough to reject "fair coin"; <em>losing</em> means the wealth stalls or shrinks, so you have not earned evidence against fairness.</p>
+<p>An <em class="term">e-value</em> is the payoff of a bet against the <em class="term">null hypothesis</em>{% tip 'The null hypothesis is the default claim a test tries to reject, often that there is no effect or no difference.' %}. You wager $1 that the null is false, under a betting contract designed to be <em>fair if the null is true</em> — meaning that if the null really holds, you can't expect to grow your money (in symbols, the expected value of an e-value under the null is at most \(1\)). So if you walk away having multiplied your stake twentyfold, something is off with the null: either it's false, or you got astronomically lucky. A large e-value is literally <strong>money won against the null</strong>, and your accumulated wealth <em>is</em> your evidence. The reciprocal \(1/e\) behaves like a conservative p-value, but the betting picture is the point.</p>
+<p>In the coin example, the null is concrete: <strong>the coin is fair, \(P(\text{heads}) = 0.5\).</strong> The e-value is the wealth from two <em class="term">likelihood-ratio</em>{% tip 'A likelihood ratio compares how probable the observed data are under one hypothesis versus another.' %} tickets. One ticket bets on a heads-heavy coin, \(P(\text{heads}) = 0.60\): a head multiplies that ticket by \(0.60/0.50 = 1.2\), while a tail multiplies it by \(0.40/0.50 = 0.8\). The mirror ticket bets on a tails-heavy coin, \(P(\text{heads}) = 0.40\), with the multipliers reversed. Split the starting $1 evenly between those two tickets, and either kind of sustained bias can make wealth grow. If the coin is actually fair, each ticket has expected multiplier \(1\) on every flip; the game is fair under the null. In this toy game, <em>winning</em> means your wealth gets large enough to reject "fair coin"; <em>losing</em> means the wealth stalls or shrinks, so you have not earned evidence against fairness.</p>
 <p>This isn't loose metaphor; it's a rigorous program — "game-theoretic statistics," built over two decades by <strong>Glenn Shafer</strong> and <strong>Vladimir Vovk</strong> and now carried forward by <strong>Aaditya Ramdas</strong>, <strong>Peter Grünwald</strong>, <strong>Ruodu Wang</strong> and others. Shafer's manifesto, "Testing by Betting," was read before the Royal Statistical Society in 2020 and published in its <em>Journal</em> (Series A) in 2021. His complaint about the p-value is partly that it's <em>too confusing to communicate</em>; "I won $20 betting against this hypothesis" is something a human can actually grasp.</p>
 </div>
 
@@ -392,11 +386,11 @@
 <div class="panel web-only probability-evalue">
 <p class="ptitle">Interactive · the gambler's ledger</p>
 <h3>Betting against a "fair" coin</h3>
-<p class="pnote">The claim being tested is the null: the coin is fair, P(heads) = 0.5. The slider sets the simulator's actual data-generating P(heads), hidden from the test in a real experiment. At 0.50 the null is true; at 0.65 or 0.35 the null is false. This widget is asking only whether the data give strong evidence against fairness, not what the exact bias is. The e-value strategy bets against fairness flip by flip, using the two likelihood-ratio tickets described above. If wealth reaches <strong>20</strong>, the bet has "won" enough to reject fairness at level 0.05; if wealth stays near 1 or falls, the bet has not found evidence against fairness.</p>
+<p class="pnote">The claim being tested is the null: the coin is fair, \(P(\text{heads}) = 0.5\). The slider sets the simulator's actual data-generating \(P(\text{heads})\), hidden from the test in a real experiment. At \(0.50\) the null is true; at \(0.65\) or \(0.35\) the null is false. This widget is asking only whether the data give strong evidence against fairness, not what the exact bias is. The e-value strategy bets against fairness flip by flip, using the two likelihood-ratio tickets described above. If wealth reaches <strong>\(20\)</strong>, the bet has "won" enough to reject fairness at level \(0.05\); if wealth stays near \(1\) or falls, the bet has not found evidence against fairness.</p>
 
 <div class="ev-controls">
 <label>
-        Actual P(heads):
+        Actual \(P(\text{heads})\):
 <input type="range" id="rBias" min="20" max="80" value="50">
 <span class="val" id="vBias">0.50</span>
 </label>
@@ -404,7 +398,7 @@
 <div class="ev-controls">
 <button class="btn" id="btnFlip">Flip 25×</button>
 <button class="btn ghost" id="btnEvReset">Reset</button>
-<span class="note">null: coin is fair (p = 0.5)</span>
+<span class="note">null: coin is fair (\(p = 0.5\))</span>
 </div>
 
 <div class="ev-chart">
@@ -438,7 +432,7 @@
 <div class="sub" id="evVerdictSub">need wealth ≥ 20</div>
 </div>
 </div>
-<p style="font-size:.82em;color:var(--ink-soft);margin:1rem 0 0;">Set actual P(heads) to exactly 0.50 and the null is true: most wealth paths hover or sag, and only rare lucky streaks reach 20. Nudge it to 0.65 or 0.35 and the data now come from a biased coin, so one of the two tickets tends to compound. The upward march is a win for the betting strategy and evidence against fairness; a flat or falling line is a loss for that bet, meaning "keep collecting" or "do not reject," not "the coin is proven fair."</p>
+<p style="font-size:.82em;color:var(--ink-soft);margin:1rem 0 0;">Set actual \(P(\text{heads})\) to exactly \(0.50\) and the null is true: most wealth paths hover or sag, and only rare lucky streaks reach \(20\). Nudge it to \(0.65\) or \(0.35\) and the data now come from a biased coin, so one of the two tickets tends to compound. The upward march is a win for the betting strategy and evidence against fairness; a flat or falling line is a loss for that bet, meaning "keep collecting" or "do not reject," not "the coin is proven fair."</p>
 </div>
 
 <div class="format-alt epub-only print-only">
@@ -448,9 +442,9 @@
 <table class="alt-table">
 <thead><tr><th>Quantity</th><th>Meaning</th><th>Use</th></tr></thead>
 <tbody>
-<tr><td>E = 1</td><td>No net betting gain against the null</td><td>Starting point</td></tr>
-<tr><td>Coin-demo ticket</td><td>A likelihood-ratio payoff: 1.2 for the favored outcome, 0.8 for the other</td><td>Fair in expectation if the coin is truly P(heads) = 0.5</td></tr>
-<tr><td>E = 20</td><td>A twentyfold payoff from a bet fair under the null</td><td>Level-0.05 rejection threshold because 1 / 20 = 0.05</td></tr>
+<tr><td>\(E = 1\)</td><td>No net betting gain against the null</td><td>Starting point</td></tr>
+<tr><td>Coin-demo ticket</td><td>A likelihood-ratio payoff: \(1.2\) for the favored outcome, \(0.8\) for the other</td><td>Fair in expectation if the coin is truly \(P(\text{heads}) = 0.5\)</td></tr>
+<tr><td>\(E = 20\)</td><td>A twentyfold payoff from a bet fair under the null</td><td>Level-\(0.05\) rejection threshold because \(1/20 = 0.05\)</td></tr>
 <tr><td>Running wealth</td><td>A test martingale or e-process</td><td>Can be monitored continuously while preserving Type I error control</td></tr>
 </tbody>
 </table>
