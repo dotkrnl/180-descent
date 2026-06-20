@@ -49,6 +49,7 @@
   }
 
   initLiveRegions();
+  initKeyboardActivation();
   initReadingProgress();
   initTipNotes();
   initCodexRefiner();
@@ -122,6 +123,19 @@
         regions[i].setAttribute("aria-atomic", "true");
       }
     }
+  }
+
+  function initKeyboardActivation(){
+    document.addEventListener("keydown", function(e){
+      var el = e.target;
+      if(!el || el.tagName === "BUTTON" || el.tagName === "A" || el.tagName === "INPUT") return;
+      var role = el.getAttribute("role");
+      if(role !== "button" && role !== "switch" && role !== "tab") return;
+      if(e.key === " " || e.key === "Enter"){
+        e.preventDefault();
+        el.click();
+      }
+    });
   }
 
   function initTipNotes(){
