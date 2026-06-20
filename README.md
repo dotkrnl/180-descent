@@ -33,7 +33,7 @@ The Cloudflare Pages project name is `180-descent`.
 
 ## Adding A Day
 
-Use the repo-local Codex skill at `.codex/skills/180-descent-add-day/`. It documents the day-ingestion workflow, required files, callback/future-link rules, and validation commands.
+Use the agent-agnostic workflow at `docs/workflows/180-descent-add-day/`. It documents the day-ingestion workflow, required files, callback/future-link rules, and validation commands. Codex skill shims live at `.codex/skills/`.
 
 Day source is split by responsibility:
 
