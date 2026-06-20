@@ -176,8 +176,9 @@
 
 <div class="formula">
 {% math %}\begin{aligned}
-\text{Erase one bit} &\longrightarrow \text{dissipate at least} \\
-& k_B T \ln 2
+\text{Erase one bit} \\
+\Longrightarrow \\
+\text{dissipate at least } k_B T \ln 2
 \end{aligned}{% endmath %}
 <p class="cap">For an initially unknown, equiprobable bit reset in an isothermal cycle with no usable side information: ≈ 2.8 × \(10^{-21}\) joules (2.8 zeptojoules ≈ 0.018 eV) at room temperature. <em class="term">Landauer's principle</em>{% tip 'Landauer’s principle says logically irreversible erasure has a minimum thermodynamic cost governed by the information discarded.' %}, 1961.</p>
 </div>
@@ -272,12 +273,12 @@
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Edge 03</span>
-{{ chip("ok", "Stochastic thermodynamics · established framework", "established") }}
-{{ chip("hint", "Energy cost of AI vs. the floor · live, not a wall yet", "review") }}
+{{ chip("ok", "established", "established") }}
+{{ chip("hint", "not a wall", "review") }}
 </div>
 <h3>The new physics of information — and what it says about your GPU</h3>
 <p>All of this now lives inside a mature framework called <em class="term">stochastic thermodynamics</em>, which extends the old laws of heat to tiny, jittering systems where fluctuations dominate. Its engine room includes exact fluctuation relations such as the <strong>Jarzynski equality</strong> (1997) and the <strong>Crooks fluctuation theorem</strong> (1999). Mutual-information terms enter their feedback-controlled generalizations, the Sagawa-Ueda lineage used in information-engine experiments. The authoritative synthesis is Parrondo, Horowitz &amp; Sagawa's review, bluntly titled <em>"Thermodynamics of information"</em> (<em>Nature Physics</em>, 2015): information belongs in the ledger alongside work, heat, measurement, feedback, controller memory, and reset. In 2024, David H. Wolpert and collaborators at the Santa Fe Institute extended finite-time stochastic-computation theory, adding to the older mismatch-cost story rather than inventing it from scratch.</p>
-<p>Which raises the question lurking behind every data center. How far above the floor are our machines? <strong>Very</strong>. A single transistor switch dissipates on the order of \(10^{-18}\) joules — hundreds to thousands of times the Landauer bound at the device level, and far more once you count memory traffic, cooling, and power conversion. We are nowhere near the wall. That's the honest framing: all data centers drew about 1.5% of global electricity in 2024, and AI is a rapidly growing workload expected to drive a substantial share of the increase through 2030 (IEA, <em>Energy and AI</em>, April 2025). For now this is an <strong>engineering and economic</strong> problem, not a fundamental-physics one. {{ chip("hint", "The \"AI is about to hit the Landauer limit\" headline is hype", "review") }} — but the floor is real, and it is one reason reversible, thermodynamic, and neuromorphic computing remain interesting.</p>
+<p>Which raises the question lurking behind every data center. How far above the floor are our machines? <strong>Very</strong>. A single transistor switch dissipates on the order of \(10^{-18}\) joules — hundreds to thousands of times the Landauer bound at the device level, and far more once you count memory traffic, cooling, and power conversion. We are nowhere near the wall. That's the honest framing: all data centers drew about 1.5% of global electricity in 2024, and AI is a rapidly growing workload expected to drive a substantial share of the increase through 2030 (IEA, <em>Energy and AI</em>, April 2025). For now this is an <strong>engineering and economic</strong> problem, not a fundamental-physics one. The "AI is about to hit the Landauer limit" headline is {{ chip("hint", "hype", "review") }} — but the floor is real, and it is one reason reversible, thermodynamic, and neuromorphic computing remain interesting.</p>
 </div>
 </section>
 
@@ -333,7 +334,7 @@
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Edge 04</span>
-{{ chip("bad", "\"It from bit\" / \"infodynamics\" · contested–hype", "contested") }}
+{{ chip("bad", "contested hype", "contested") }}
 </div>
 <h3>Where the idea overreaches</h3>
 <p>"Information is physical" is established. The temptation is to sand off the qualifier and declare that information is <em>fundamental</em> — that reality is, at bottom, made of bits. The physicist John Archibald Wheeler gave this its slogan in 1989: <em class="term">"it from bit,"</em> the conjecture that every particle and field derives its very existence from yes/no answers, from information. It is a gorgeous, generative idea — and it is metaphysics, not a tested result. Critics note the obvious circularity: a bit has to be encoded in <em>something</em>, so information can't be the bottom turtle. Keep it in the "stimulating speculation" drawer, clearly labeled.</p>
