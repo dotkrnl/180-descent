@@ -3,7 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const yaml = require("yaml");
 const katex = require("katex");
-const { createCodexRefinerMiddleware } = require("./scripts/codex-refiner-middleware.cjs");
+const { createRefineMiddleware } = require("./scripts/codex-refiner-middleware.cjs");
 
 const assetHashCache = new Map();
 
@@ -181,7 +181,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.setServerOptions({
     domDiff: false,
     middleware: [
-      createCodexRefinerMiddleware()
+      createRefineMiddleware()
     ]
   });
 

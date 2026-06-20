@@ -3,7 +3,7 @@ const { mkdtemp, readFile, readdir, rm, writeFile } = require("node:fs/promises"
 const { tmpdir } = require("node:os");
 const path = require("node:path");
 
-const ENDPOINT = "/__codex/refine-description";
+const ENDPOINT = "/__refine";
 const SRC_DIR = path.join(process.cwd(), "src");
 const MAX_BODY_BYTES = 5 * 1024 * 1024;
 const MAX_REASON_CHARS = 1000;
@@ -12,7 +12,7 @@ const CODEX_TIMEOUT_MS = 120000;
 const MAX_SOURCE_MATCHES = 50;
 const EDITABLE_EXTENSIONS = new Set([".md", ".njk", ".yaml", ".yml"]);
 
-function createCodexRefinerMiddleware(options = {}) {
+function createRefineMiddleware(options = {}) {
   const endpoint = options.endpoint || ENDPOINT;
 
   return async function codexRefinerMiddleware(req, res, next) {
@@ -206,7 +206,7 @@ function buildPrompt({ text, reason, context = {} }) {
 
 function runCodex(prompt, outputPath) {
   return new Promise((resolve, reject) => {
-    const child = spawn("codex", [
+    const child = spawn(process.env.REFINE_COMMAND || "codex", [
       "--ask-for-approval",
       "never",
       "exec",
@@ -605,7 +605,7 @@ function buildSourceEditPrompt({ pagePath, original, refined, reason, context = 
 
 function runCodexWorkspaceEdit(prompt, outputPath) {
   return new Promise((resolve, reject) => {
-    const child = spawn("codex", [
+    const child = spawn(process.env.REFINE_COMMAND || "codex", [
       "--ask-for-approval",
       "never",
       "exec",
@@ -687,6 +687,7 @@ function uniquePaths(paths) {
 }
 
 module.exports = {
-  createCodexRefinerMiddleware,
+  createRefineMiddleware,
+  createCodexRefinerMiddleware: createRefineMiddleware,
   applySourcePatch
 };

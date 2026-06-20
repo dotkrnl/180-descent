@@ -499,7 +499,7 @@
       return;
     }
 
-    fetch("/__codex/refine-description", {
+    fetch("/__refine", {
       method: "GET",
       cache: "no-store"
     }).then(function(response){
@@ -512,10 +512,10 @@
   }
 
   function mountCodexRefiner(){
-    if(window.__codexRefinerMounted){
+    if(window.__refinerMounted){
       return;
     }
-    window.__codexRefinerMounted = true;
+    window.__refinerMounted = true;
 
     var activeRange = null;
     var activeText = "";
@@ -642,7 +642,7 @@
       setHighlight("codex-refiner-running", activeRange);
 
       try{
-        var response = await fetch("/__codex/refine-description", {
+        var response = await fetch("/__refine", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
