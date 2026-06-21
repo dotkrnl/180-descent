@@ -68,8 +68,8 @@ const TOOLS = {
   },
   java: {
     label: "Java runtime",
-    category: "planned-durable",
-    usedBy: "official EPUBCheck once pinned",
+    category: "durable-required",
+    usedBy: "official EPUBCheck",
     installHint: "macOS: brew install openjdk | Debian/Ubuntu: apt-get install default-jre",
     check() {
       return checkCommandVersions([
@@ -79,16 +79,16 @@ const TOOLS = {
     }
   },
   epubcheck: {
-    label: "Pinned EPUBCheck jar",
-    category: "planned-durable",
-    usedBy: "official EPUB validation once pinned",
-    installHint: "Set EPUBCHECK_JAR or install tools/epubcheck/epubcheck.jar with the pinned checksum.",
+    label: "EPUBCheck 5.3.0",
+    category: "durable-required",
+    usedBy: "official EPUB validation",
+    installHint: "macOS: brew install epubcheck | or set EPUBCHECK_JAR / tools/epubcheck/epubcheck.jar",
     check() {
       const jar = EPUBCHECK_JAR_CANDIDATES.find((candidate) => existsSync(candidate));
       if (!jar) {
-        return commandVersion("epubcheck", ["--version"]);
+        return requireVersion("epubcheck", ["--version"], /EPUBCheck v5\.3\.0/);
       }
-      return jar;
+      return requireVersion(path.join(HOMEBREW_PREFIX, "opt/openjdk/bin/java"), ["-jar", jar, "--version"], /EPUBCheck v5\.3\.0/);
     }
   },
   texlive: {
@@ -154,8 +154,8 @@ const TOOLS = {
 };
 
 const TOOL_GROUPS = {
-  durable: ["node", "npm", "gs", "xmllint", "playwright"],
-  "epubcheck-planned": ["java", "epubcheck"],
+  durable: ["node", "npm", "gs", "xmllint", "playwright", "java", "epubcheck"],
+  epubcheck: ["java", "epubcheck"],
   "pdf-spike": ["texlive", "pandoc", "tectonic", "typst", "weasyprint", "vivliostyle", "playwright"]
 };
 
@@ -172,6 +172,14 @@ function commandVersion(command, args) {
     throw new Error((result.stderr || result.stdout || `${command} exited ${result.status}`).trim());
   }
   return firstLine(`${result.stdout || ""}\n${result.stderr || ""}`) || "available";
+}
+
+function requireVersion(command, args, pattern) {
+  const version = commandVersion(command, args);
+  if (!pattern.test(version)) {
+    throw new Error(`${command} version did not match ${pattern}: ${version}`);
+  }
+  return version;
 }
 
 function checkCommandVersions(commands) {

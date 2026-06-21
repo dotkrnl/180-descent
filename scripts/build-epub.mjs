@@ -1,4 +1,5 @@
 import { mkdir, readFile, readdir, writeFile, copyFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import * as cheerio from "cheerio";
 import JSZip from "jszip";
@@ -176,15 +177,18 @@ async function buildEpub(config) {
   ];
 
   if (config.introHtml && !config.singleDay) {
-    oebps.file("title.xhtml", titlePageDocument(config));
-    manifestItems.push(`<item id="titlepage" href="title.xhtml" media-type="application/xhtml+xml"/>`);
+    const titlePage = titlePageDocument(config);
+    oebps.file("title.xhtml", titlePage);
+    manifestItems.push(xhtmlManifestItem("titlepage", "title.xhtml", titlePage));
     spine.push(`<itemref idref="titlepage"/>`);
   }
+
+  spine.push(`<itemref idref="nav"/>`);
 
   if (config.introHtml) {
     const intro = await pageToXhtml(config.introHtml, config.introTitle, "introduction.xhtml", config, days, imageAssets);
     oebps.file("introduction.xhtml", intro);
-    manifestItems.push(`<item id="intro" href="introduction.xhtml" media-type="application/xhtml+xml"/>`);
+    manifestItems.push(xhtmlManifestItem("intro", "introduction.xhtml", intro));
     spine.push(`<itemref idref="intro"/>`);
   }
 
@@ -193,7 +197,7 @@ async function buildEpub(config) {
     const title = dayDocumentTitle(day, config);
     const xhtml = await pageToXhtml(htmlPath, title, day.xhtml, config, days, imageAssets);
     oebps.file(day.xhtml, xhtml);
-    manifestItems.push(`<item id="day${String(day.data.day).padStart(3, "0")}" href="${day.xhtml}" media-type="application/xhtml+xml"/>`);
+    manifestItems.push(xhtmlManifestItem(`day${String(day.data.day).padStart(3, "0")}`, day.xhtml, xhtml));
     spine.push(`<itemref idref="day${String(day.data.day).padStart(3, "0")}"/>`);
   }
 
@@ -424,10 +428,11 @@ function navDocument(items, config) {
 
 function contentOpf(meta, manifestItems, spine) {
   const modified = "2026-06-19T00:00:00Z";
+  const identifier = `urn:uuid:${uuidFromString(meta.epub_identifier)}`;
   return `<?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="3.0">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <dc:identifier id="bookid">${escapeXml(meta.epub_identifier)}</dc:identifier>
+    <dc:identifier id="bookid">${escapeXml(identifier)}</dc:identifier>
     <dc:title>${escapeXml(meta.title)}</dc:title>
     <dc:creator>${escapeXml(meta.authors)}</dc:creator>
     ${meta.translators ? `<dc:contributor id="translator">${escapeXml(meta.translators)}</dc:contributor>
@@ -443,6 +448,21 @@ function contentOpf(meta, manifestItems, spine) {
     ${spine.join("\n    ")}
   </spine>
 </package>`;
+}
+
+function xhtmlManifestItem(id, href, xhtml, properties = []) {
+  const allProperties = [...properties];
+  if (/<svg\b/i.test(xhtml)) allProperties.push("svg");
+  const propertyAttr = allProperties.length ? ` properties="${allProperties.join(" ")}"` : "";
+  return `<item id="${id}" href="${escapeXml(href)}" media-type="application/xhtml+xml"${propertyAttr}/>`;
+}
+
+function uuidFromString(value) {
+  const bytes = createHash("sha1").update(String(value)).digest();
+  bytes[6] = (bytes[6] & 0x0f) | 0x50;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = bytes.subarray(0, 16).toString("hex");
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20, 32)}`;
 }
 
 function registerEpubImage(src = "", imageAssets) {

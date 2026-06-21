@@ -163,6 +163,14 @@ for (const { file: edition, deepDive, appendixPatterns, optionalPattern, require
   }
 
   await rm(xmlTemp, { recursive: true, force: true });
+
+  const epubcheck = spawnSync("epubcheck", [edition], { encoding: "utf8" });
+  if (epubcheck.status !== 0) {
+    console.error(`${edition} failed official EPUBCheck`);
+    if (epubcheck.stdout) console.error(epubcheck.stdout.trim());
+    if (epubcheck.stderr) console.error(epubcheck.stderr.trim());
+    failures++;
+  }
 }
 
 if (failures) process.exit(1);
