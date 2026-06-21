@@ -1,12 +1,55 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
-import path from "node:path";
 import os from "node:os";
+import path from "node:path";
+
+export type ToolCategory = "durable-required" | "spike-only";
+
+interface ToolDefinition {
+  label: string;
+  category: ToolCategory;
+  usedBy: string;
+  installHint: string;
+  check: () => string;
+}
+
+interface ToolSuccess {
+  name: string;
+  label: string;
+  category: ToolCategory;
+  version: string;
+}
+
+export interface ToolFailure {
+  name: string;
+  label?: string;
+  category?: ToolCategory;
+  usedBy?: string;
+  installHint?: string;
+  error: Error;
+}
+
+export interface PreflightResult {
+  present: ToolSuccess[];
+  missing: ToolFailure[];
+}
+
+export interface PreflightOptions {
+  throwOnMissing?: boolean;
+}
+
+export interface PreflightArgs {
+  toolNames: string[];
+  optional: boolean;
+  list: boolean;
+}
+
+type CommandSpec = [command: string, args: string[]];
 
 const EPUBCHECK_JAR_CANDIDATES = [
   process.env.EPUBCHECK_JAR,
   path.join(process.cwd(), "tools/epubcheck/epubcheck.jar")
-].filter(Boolean);
+].filter((candidate): candidate is string => Boolean(candidate));
 
 const HOMEBREW_PREFIX = process.env.HOMEBREW_PREFIX || (existsSync("/opt/homebrew") ? "/opt/homebrew" : "/usr/local");
 const LOCAL_BIN = path.join(process.cwd(), "node_modules/.bin");
@@ -151,83 +194,29 @@ const TOOLS = {
       ]);
     }
   }
-};
+} satisfies Record<string, ToolDefinition>;
 
-const TOOL_GROUPS = {
+const TOOLS_BY_NAME: Record<string, ToolDefinition | undefined> = TOOLS;
+
+export const TOOL_GROUPS = {
   durable: ["node", "npm", "gs", "xmllint", "playwright", "java", "epubcheck"],
   epubcheck: ["java", "epubcheck"],
   "pdf-spike": ["texlive", "pandoc", "tectonic", "typst", "weasyprint", "vivliostyle", "playwright"]
-};
+} as const;
 
-function firstLine(value) {
-  return value.trim().split("\n")[0];
+export class PreflightError extends Error {
+  constructor(readonly missing: ToolFailure[]) {
+    super("Preflight check failed");
+  }
 }
 
-function commandVersion(command, args) {
-  const result = spawnSync(command, args, { encoding: "utf8" });
-  if (result.error) {
-    throw result.error;
-  }
-  if (result.status !== 0) {
-    throw new Error((result.stderr || result.stdout || `${command} exited ${result.status}`).trim());
-  }
-  return firstLine(`${result.stdout || ""}\n${result.stderr || ""}`) || "available";
-}
-
-function requireVersion(command, args, pattern) {
-  const version = commandVersion(command, args);
-  if (!pattern.test(version)) {
-    throw new Error(`${command} version did not match ${pattern}: ${version}`);
-  }
-  return version;
-}
-
-function checkCommandVersions(commands) {
-  const errors = [];
-  for (const [command, args] of commands) {
-    try {
-      return commandVersion(command, args);
-    } catch (error) {
-      errors.push(`${command}: ${error.message}`);
-    }
-  }
-  throw new Error(errors.join("; "));
-}
-
-function checkFirstCommand(commands) {
-  const errors = [];
-  for (const [command, args] of commands) {
-    try {
-      return firstLine(execFileSync(command, args, { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }));
-    } catch (error) {
-      errors.push(`${command}: ${error.message}`);
-    }
-  }
-  throw new Error(errors.join("; "));
-}
-
-function playwrightCacheDir() {
-  if (process.env.PLAYWRIGHT_BROWSERS_PATH) return process.env.PLAYWRIGHT_BROWSERS_PATH;
-  if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library", "Caches", "ms-playwright");
-  }
-  if (process.platform === "win32") {
-    return path.join(process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local"), "ms-playwright");
-  }
-  return path.join(os.homedir(), ".cache", "ms-playwright");
-}
-
-function resolveToolNames(requested = []) {
-  const names = requested.length ? requested : ["durable"];
-  return [...new Set(names.flatMap((name) => TOOL_GROUPS[name] ?? [name]))];
-}
-
-export function checkTools(required = TOOL_GROUPS.durable, { throwOnMissing = true } = {}) {
-  const missing = [];
-  const present = [];
+export function checkTools(required: string[] = [...TOOL_GROUPS.durable], options: PreflightOptions = {}): PreflightResult {
+  const throwOnMissing = options.throwOnMissing ?? true;
+  const missing: ToolFailure[] = [];
+  const present: ToolSuccess[] = [];
 
   for (const name of required) {
-    const tool = TOOLS[name];
+    const tool = TOOLS_BY_NAME[name];
     if (!tool) {
       missing.push({ name, error: new Error(`Unknown tool: ${name}`) });
       continue;
@@ -242,43 +231,28 @@ export function checkTools(required = TOOL_GROUPS.durable, { throwOnMissing = tr
         category: tool.category,
         usedBy: tool.usedBy,
         installHint: tool.installHint,
-        error
+        error: toError(error)
       });
     }
   }
 
   if (missing.length && throwOnMissing) {
-    const lines = ["Preflight check failed. The following required tools are missing:"];
-    for (const m of missing) {
-      lines.push("");
-      lines.push(`  ${m.label || m.name}`);
-      if (m.category) lines.push(`    category:  ${m.category}`);
-      if (m.usedBy) lines.push(`    needed by: ${m.usedBy}`);
-      if (m.installHint) lines.push(`    install:   ${m.installHint}`);
-      if (m.error?.message) lines.push(`    detail:    ${m.error.message}`);
-    }
-    lines.push("");
-    console.error(lines.join("\n"));
-    process.exit(1);
+    throw new PreflightError(missing);
   }
 
   return { present, missing };
 }
 
-function printToolList() {
-  console.log("Preflight groups:");
-  for (const [name, tools] of Object.entries(TOOL_GROUPS)) {
-    console.log(`  ${name}: ${tools.join(", ")}`);
-  }
-  console.log("");
-  console.log("Tools:");
-  for (const [name, tool] of Object.entries(TOOLS)) {
-    console.log(`  ${name} [${tool.category}] - ${tool.usedBy}`);
-  }
+export function resolveToolNames(requested: string[] = []): string[] {
+  const names = requested.length ? requested : ["durable"];
+  return [...new Set(names.flatMap((name) => {
+    const group = TOOL_GROUPS[name as keyof typeof TOOL_GROUPS];
+    return group ? [...group] : [name];
+  }))];
 }
 
-function parseArgs(args) {
-  const toolNames = [];
+export function parsePreflightArgs(args: string[]): PreflightArgs {
+  const toolNames: string[] = [];
   let optional = false;
   let list = false;
 
@@ -297,23 +271,91 @@ function parseArgs(args) {
   return { toolNames, optional, list };
 }
 
-const isCli = process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname;
+export function formatToolList(): string {
+  const lines = ["Preflight groups:"];
+  for (const [name, tools] of Object.entries(TOOL_GROUPS)) {
+    lines.push(`  ${name}: ${tools.join(", ")}`);
+  }
+  lines.push("");
+  lines.push("Tools:");
+  for (const [name, tool] of Object.entries(TOOLS)) {
+    lines.push(`  ${name} [${tool.category}] - ${tool.usedBy}`);
+  }
+  return lines.join("\n");
+}
 
-if (isCli) {
-  const { toolNames, optional, list } = parseArgs(process.argv.slice(2));
-  if (list) {
-    printToolList();
-  } else {
-    const names = resolveToolNames(toolNames);
-    const result = checkTools(names, { throwOnMissing: !optional });
-    for (const tool of result.present) {
-      console.log(`ok ${tool.name} (${tool.category}): ${tool.version}`);
-    }
-    for (const tool of result.missing) {
-      console.log(`missing ${tool.name} (${tool.category}): ${tool.error?.message}`);
-    }
-    if (result.missing.length && optional) {
-      console.log("Optional preflight completed with missing tools.");
+export function formatPreflightFailure(missing: ToolFailure[]): string {
+  const lines = ["Preflight check failed. The following required tools are missing:"];
+  for (const failure of missing) {
+    lines.push("");
+    lines.push(`  ${failure.label || failure.name}`);
+    if (failure.category) lines.push(`    category:  ${failure.category}`);
+    if (failure.usedBy) lines.push(`    needed by: ${failure.usedBy}`);
+    if (failure.installHint) lines.push(`    install:   ${failure.installHint}`);
+    if (failure.error.message) lines.push(`    detail:    ${failure.error.message}`);
+  }
+  lines.push("");
+  return lines.join("\n");
+}
+
+function firstLine(value: string): string {
+  return value.trim().split("\n")[0] || "";
+}
+
+function commandVersion(command: string, args: string[]): string {
+  const result = spawnSync(command, args, { encoding: "utf8" });
+  if (result.error) {
+    throw result.error;
+  }
+  if (result.status !== 0) {
+    throw new Error((result.stderr || result.stdout || `${command} exited ${result.status}`).trim());
+  }
+  return firstLine(`${result.stdout || ""}\n${result.stderr || ""}`) || "available";
+}
+
+function requireVersion(command: string, args: string[], pattern: RegExp): string {
+  const version = commandVersion(command, args);
+  if (!pattern.test(version)) {
+    throw new Error(`${command} version did not match ${pattern}: ${version}`);
+  }
+  return version;
+}
+
+function checkCommandVersions(commands: CommandSpec[]): string {
+  const errors: string[] = [];
+  for (const [command, args] of commands) {
+    try {
+      return commandVersion(command, args);
+    } catch (error) {
+      errors.push(`${command}: ${toError(error).message}`);
     }
   }
+  throw new Error(errors.join("; "));
+}
+
+function checkFirstCommand(commands: CommandSpec[]): string {
+  const errors: string[] = [];
+  for (const [command, args] of commands) {
+    try {
+      return firstLine(execFileSync(command, args, { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }));
+    } catch (error) {
+      errors.push(`${command}: ${toError(error).message}`);
+    }
+  }
+  throw new Error(errors.join("; "));
+}
+
+function playwrightCacheDir(): string {
+  if (process.env.PLAYWRIGHT_BROWSERS_PATH) return process.env.PLAYWRIGHT_BROWSERS_PATH;
+  if (process.platform === "darwin") {
+    return path.join(os.homedir(), "Library", "Caches", "ms-playwright");
+  }
+  if (process.platform === "win32") {
+    return path.join(process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local"), "ms-playwright");
+  }
+  return path.join(os.homedir(), ".cache", "ms-playwright");
+}
+
+function toError(error: unknown): Error {
+  return error instanceof Error ? error : new Error(String(error));
 }
