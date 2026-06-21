@@ -1,6 +1,6 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { loadContentRegistry } from "@lib/content";
+import { listRegistryDayLocaleEntries, loadContentRegistry } from "@lib/content";
 import { dayManifestSchema } from "@lib/schemas";
 
 const fixtureDaysDir = path.join(process.cwd(), "tests/fixtures/content/days");
@@ -45,5 +45,17 @@ describe("target content registry", () => {
       epub: "table",
       pdf: "static-figure"
     });
+  });
+
+  it("lists renderable locale entries for Astro routes", async () => {
+    const registry = await loadContentRegistry({ daysDir: fixtureDaysDir });
+    const routes = listRegistryDayLocaleEntries(registry);
+
+    expect(routes.map((route) => `${route.locale}/${route.day.manifest.path}`)).toEqual([
+      "en/001-fixture",
+      "zh/001-fixture"
+    ]);
+    expect(routes[0].title).toBe("Fixture Day");
+    expect(routes[1].summary).toBe("中文夹具摘要。");
   });
 });
