@@ -1,0 +1,30 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "ignoreDeprecations": "6.0",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "types": ["node", "vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@content/*": ["src/content/*"],
+      "@lib/*": ["src/lib/*"],
+      "@interactions/*": ["src/interactions/*"]
+    }
+  },
+  "include": [
+    "astro.config.mjs",
+    "src/**/*.astro",
+    "src/**/*.ts",
+    "scripts/**/*.ts",
+    "tests/**/*.ts"
+  ],
+  "exclude": [
+    "_site",
+    "dist",
+    "node_modules"
+  ]
+}

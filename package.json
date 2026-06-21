@@ -10,6 +10,10 @@
     "preflight": "node scripts/preflight.mjs",
     "refactor:inventory": "node scripts/refactor-inventory.mjs",
     "refactor:artifact-inventory": "node scripts/refactor-artifact-inventory.mjs",
+    "validate": "tsx scripts/cli/validate.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
     "dev": "node scripts/prepare-fonts.mjs && node scripts/prepare-cjk-fonts.mjs && node scripts/prepare-katex.mjs && node scripts/prepare-css.mjs && eleventy --serve",
     "serve": "npm run dev",
     "build:site": "node scripts/prepare-fonts.mjs && node scripts/prepare-cjk-fonts.mjs && node scripts/prepare-katex.mjs && node scripts/prepare-css.mjs && node scripts/generate-social-cards.mjs && eleventy",
@@ -31,9 +35,11 @@
   },
   "dependencies": {
     "@11ty/eleventy": "^3.1.6",
+    "@astrojs/mdx": "^6.0.3",
     "@fontsource/fraunces": "^5.2.9",
     "@fontsource/ibm-plex-mono": "^5.2.7",
     "@fontsource/newsreader": "^5.2.10",
+    "astro": "^6.4.8",
     "cheerio": "^1.1.2",
     "gray-matter": "^4.0.3",
     "jszip": "^3.10.1",
@@ -41,13 +47,19 @@
     "lxgw-wenkai-webfont": "^1.7.0",
     "pdf-lib": "^1.17.1",
     "playwright": "^1.60.0",
-    "yaml": "^2.8.1"
+    "sharp": "^0.35.2",
+    "yaml": "^2.8.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
+    "@types/node": "^26.0.0",
     "lightningcss": "^1.32.0",
     "postcss": "^8.5.15",
     "postcss-import": "^16.1.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9",
     "wrangler": "^4.99.0"
   }
 }

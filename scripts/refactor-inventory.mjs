@@ -119,8 +119,8 @@ async function buildInventory() {
   const englishShells = await loadShells("src/days", "en");
   const chineseShells = await loadShells("src/zh/days", "zh");
   const dayBodies = await listFiles(path.join(root, "src/_includes/days"), (file) => file.endsWith(".njk"));
-  const interactionScripts = await listFiles(path.join(root, "src/assets/js/interactions"), (file) => file.endsWith(".js"));
-  const sourceScripts = await listFiles(path.join(root, "scripts"), (file) => /\.(mjs|cjs|js)$/.test(file));
+  const interactionScripts = await listFiles(path.join(root, "src/assets/js/interactions"), (file) => /\.(?:js|ts)$/.test(file));
+  const sourceScripts = await listFiles(path.join(root, "scripts"), (file) => /\.(?:mjs|cjs|js|ts)$/.test(file));
   const workflowDocs = await listFiles(path.join(root, "docs/workflows"), (file) => file.endsWith(".md"));
   const imageAssets = await listFiles(path.join(root, "src/assets/images"));
   const generatedDownloads = await listFiles(path.join(root, "_site/downloads"));
