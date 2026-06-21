@@ -1,9 +1,13 @@
 ---
 name: 180-descent-add-day
-description: Add a new English day page to The 180-Day Descent repo from a supplied HTML lesson, using the route-shell plus lesson-include convention, refining imported prose, highlighting inline terms, reviewing factual claims and sources, adding callbacks, proactively searching useful image candidates, and providing web/EPUB/PDF component variants. Use when Codex needs to import or create a normal day lesson under src/days/ and src/_includes/days/.
+description: Legacy add-day workflow, paused during the clean-break Astro/MDX refactor. Do not create route shells, Nunjucks lesson includes, or importer-driven content. Use only as historical editorial guidance until the paired-MDX workflow replaces it.
 ---
 
 # Add A Day To 180 Descent
+
+## Refactor Freeze
+
+This legacy workflow is paused while the project migrates to the clean-break Astro/MDX paired content model. Do not add new days to `src/days/`, `src/zh/days/`, or `src/_includes/days/`. Do not use or recreate blind HTML importers. New content resumes only after the typed paired-MDX workflow is complete.
 
 Use this skill for the normal day-add workflow. The English route and lesson
 include are handled here; when the repo already has a Chinese edition, Chinese
@@ -266,11 +270,7 @@ for each output mode. Do not let web instructions leak into print or EPUB.
 ## Workflow
 
 1. Identify day number, title, block, entry analogy, model, debate, and frontier from `src/_data/syllabus-data.yaml`.
-2. Convert the supplied HTML into the two-file day structure:
-   - route shell: `src/days/day-###-slug.md`
-   - lesson body: `src/_includes/days/###-slug/en.njk`
-   Use `scripts/import-day-from-html.mjs` when it fits the source, then correct front matter from the syllabus as needed.
-   Confirm the route shell passes the SEO Gate before moving on.
+2. During the refactor freeze, do not convert the supplied HTML into the legacy route-shell plus Nunjucks include structure. Treat any source HTML as reference material for manual paired-MDX conversion under the new content registry.
 3. Review the lesson text:
    - preserve the teaching arc and voice
    - run the Text Refinement And Term Highlight Gate before treating imported HTML as finished text

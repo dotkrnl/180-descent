@@ -16,9 +16,12 @@ const FINAL_FORBIDDEN_PATHS = [
   ["eleventy.config.cjs", "Eleventy config must be removed after Astro cutover"],
   ["src/days", "English route shells must be removed after paired MDX migration"],
   ["src/zh/days", "Separate Chinese route shells must be removed after paired MDX migration"],
-  ["src/_includes/days", "Nunjucks day bodies must be removed after MDX migration"],
-  ["scripts/import-day-from-html.mjs", "Blind day importer must not remain in final repo"],
-  ["scripts/import-appendix-from-html.mjs", "Blind appendix importer must not remain in final repo"]
+  ["src/_includes/days", "Nunjucks day bodies must be removed after MDX migration"]
+] as const;
+
+const ALWAYS_FORBIDDEN_PATHS = [
+  ["scripts/import-day-from-html.mjs", "Blind day importer has been retired; use manual paired-MDX conversion"],
+  ["scripts/import-appendix-from-html.mjs", "Blind appendix importer has been retired; use manual paired-MDX conversion"]
 ] as const;
 
 const FINAL_FORBIDDEN_TRACKED_PATHS = [
@@ -34,6 +37,12 @@ const MIGRATION_ONLY_PATTERNS = [
 
 export async function checkCleanRepo(options: CleanCheckOptions): Promise<CleanCheckFailure[]> {
   const failures: CleanCheckFailure[] = [];
+
+  for (const [relativePath, reason] of ALWAYS_FORBIDDEN_PATHS) {
+    if (await pathExists(path.join(options.root, relativePath))) {
+      failures.push({ path: relativePath, reason });
+    }
+  }
 
   if (options.final) {
     for (const [relativePath, reason] of FINAL_FORBIDDEN_PATHS) {

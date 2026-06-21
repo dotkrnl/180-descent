@@ -28,4 +28,18 @@ describe("final cleanup gate", () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].path).toBe("scripts/renderer-spike-demo.ts");
   });
+
+  it("blocks retired blind importers in any mode", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
+    await mkdir(path.join(root, "scripts"), { recursive: true });
+    await writeFile(path.join(root, "scripts/import-day-from-html.mjs"), "");
+
+    const failures = await checkCleanRepo({ root, final: false });
+    expect(failures).toEqual([
+      {
+        path: "scripts/import-day-from-html.mjs",
+        reason: "Blind day importer has been retired; use manual paired-MDX conversion"
+      }
+    ]);
+  });
 });

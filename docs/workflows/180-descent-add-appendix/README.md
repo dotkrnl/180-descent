@@ -1,9 +1,13 @@
 ---
 name: 180-descent-add-appendix
-description: Add a deep-dive appendix to an existing The 180-Day Descent day from a supplied appendix HTML file, refining imported prose, highlighting inline terms, preserving standard versus deep-dive output separation, route shell scripts, static fallbacks, source/factual review, future callbacks, Chinese mirroring for days that have zh editions, and full artifact verification.
+description: Legacy appendix workflow, paused during the clean-break Astro/MDX refactor. Do not append imported HTML into Nunjucks lesson bodies. Use only as historical editorial guidance until the paired-MDX appendix workflow replaces it.
 ---
 
 # Add A Deep-Dive Appendix
+
+## Refactor Freeze
+
+This legacy workflow is paused while the project migrates to the clean-break Astro/MDX paired content model. Do not add appendices to `src/_includes/days/` and do not use or recreate blind HTML importers. New appendices resume only after the typed paired-MDX appendix workflow is complete.
 
 Use this when the user provides a `day-##-appendix-*.html` file for an already published day.
 
@@ -218,14 +222,9 @@ Appendix interactions must have separate copy for web and static outputs.
 
 ## Workflow
 
-1. Identify the target day from the filename or user message. Check whether the day already has `src/zh/days/day-###-*.md` and `src/_includes/days/###-*/zh.njk`.
-2. Import with:
-
-```sh
-node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix-*.html ##
-```
-
-3. Review the resulting `src/_includes/days/###-slug/en.njk` block marked by `<!-- deep-dive:start -->` and `<!-- deep-dive:end -->`:
+1. Identify the target day from the filename or user message, then stop unless the work is explicitly part of the paired-MDX migration.
+2. During the refactor freeze, treat any source HTML as reference material for manual paired-MDX conversion. Do not append imported HTML into legacy Nunjucks lesson bodies.
+3. When reviewing legacy appendix material for migration, inspect the existing `src/_includes/days/###-slug/en.njk` block marked by `<!-- deep-dive:start -->` and `<!-- deep-dive:end -->`:
    - web version is a folded `<details class="deep-dive">` section headed by the appendix title, usually "The Rest of the Map"
    - live web components are class-scoped, not ID-scoped, so repeated appendices do not conflict
    - live components have adjacent `.format-alt.epub-only.print-only` static fallbacks
