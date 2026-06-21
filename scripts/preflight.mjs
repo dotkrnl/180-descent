@@ -8,6 +8,9 @@ const EPUBCHECK_JAR_CANDIDATES = [
   path.join(process.cwd(), "tools/epubcheck/epubcheck.jar")
 ].filter(Boolean);
 
+const HOMEBREW_PREFIX = process.env.HOMEBREW_PREFIX || (existsSync("/opt/homebrew") ? "/opt/homebrew" : "/usr/local");
+const LOCAL_BIN = path.join(process.cwd(), "node_modules/.bin");
+
 const TOOLS = {
   node: {
     label: "Node.js",
@@ -69,7 +72,10 @@ const TOOLS = {
     usedBy: "official EPUBCheck once pinned",
     installHint: "macOS: brew install openjdk | Debian/Ubuntu: apt-get install default-jre",
     check() {
-      return commandVersion("java", ["-version"]);
+      return checkCommandVersions([
+        ["java", ["-version"]],
+        [path.join(HOMEBREW_PREFIX, "opt/openjdk/bin/java"), ["-version"]]
+      ]);
     }
   },
   epubcheck: {
@@ -80,7 +86,7 @@ const TOOLS = {
     check() {
       const jar = EPUBCHECK_JAR_CANDIDATES.find((candidate) => existsSync(candidate));
       if (!jar) {
-        throw new Error("No EPUBCheck jar found via EPUBCHECK_JAR or tools/epubcheck/epubcheck.jar");
+        return commandVersion("epubcheck", ["--version"]);
       }
       return jar;
     }
@@ -139,7 +145,10 @@ const TOOLS = {
     usedBy: "PDF renderer spike",
     installHint: "Install with npm or your package manager for the spike only.",
     check() {
-      return firstLine(execFileSync("vivliostyle", ["--version"], { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }));
+      return checkCommandVersions([
+        ["vivliostyle", ["--version"]],
+        [path.join(LOCAL_BIN, "vivliostyle"), ["--version"]]
+      ]);
     }
   }
 };
@@ -163,6 +172,18 @@ function commandVersion(command, args) {
     throw new Error((result.stderr || result.stdout || `${command} exited ${result.status}`).trim());
   }
   return firstLine(`${result.stdout || ""}\n${result.stderr || ""}`) || "available";
+}
+
+function checkCommandVersions(commands) {
+  const errors = [];
+  for (const [command, args] of commands) {
+    try {
+      return commandVersion(command, args);
+    } catch (error) {
+      errors.push(`${command}: ${error.message}`);
+    }
+  }
+  throw new Error(errors.join("; "));
 }
 
 function checkFirstCommand(commands) {
