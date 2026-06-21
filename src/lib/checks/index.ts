@@ -1,3 +1,4 @@
+export * from "./appendix-style";
 export * from "./clean";
 export * from "./links";
 export * from "./math";
