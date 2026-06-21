@@ -29,9 +29,21 @@ Deploy the current build to Cloudflare Pages:
 npm run deploy
 ```
 
+Deploy a preview build to the staging branch:
+
+```sh
+npm run deploy:staging
+```
+
 The Cloudflare Pages project name is `180-descent`.
 
+## Refactor Freeze
+
+New day publishing is paused during the clean-break refactor. See `docs/refactor/migration-status.md` and the inventory baseline under `docs/refactor/inventory/`.
+
 ## Adding A Day
+
+This workflow is frozen until the migrated system passes its cutover gates.
 
 Use the agent-agnostic workflow at `docs/workflows/180-descent-add-day/`. It documents the day-ingestion workflow, required files, callback/future-link rules, and validation commands. Codex skill shims live at `.codex/skills/`.
 

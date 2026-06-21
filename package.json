@@ -8,6 +8,7 @@
     "clean": "rm -rf _site dist",
     "postinstall": "playwright install chromium",
     "preflight": "node scripts/preflight.mjs",
+    "refactor:inventory": "node scripts/refactor-inventory.mjs",
     "dev": "node scripts/prepare-fonts.mjs && node scripts/prepare-cjk-fonts.mjs && node scripts/prepare-katex.mjs && node scripts/prepare-css.mjs && eleventy --serve",
     "serve": "npm run dev",
     "build:site": "node scripts/prepare-fonts.mjs && node scripts/prepare-cjk-fonts.mjs && node scripts/prepare-katex.mjs && node scripts/prepare-css.mjs && node scripts/generate-social-cards.mjs && eleventy",
@@ -24,7 +25,8 @@
     "check:epub": "node scripts/check-epub.mjs",
     "check:pdf": "node scripts/check-pdf.mjs",
     "check": "node scripts/preflight.mjs && npm run check:links && npm run check:content && npm run check:svg-text && npm run check:math && npm run check:appendix-style && npm run check:seo && npm run check:a11y && npm run check:epub && npm run check:pdf",
-    "deploy": "npm run build && npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent"
+    "deploy": "npm run build && npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent",
+    "deploy:staging": "npm run build && npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent --branch=staging"
   },
   "dependencies": {
     "@11ty/eleventy": "^3.1.6",
