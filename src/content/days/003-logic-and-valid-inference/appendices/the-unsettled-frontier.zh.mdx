@@ -1,6 +1,7 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import HypeFilterTrainer from "@app/components/lesson/interactives/HypeFilterTrainer.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -249,25 +250,7 @@ AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外�
 
 你已经观摩了六次校准器应用。现在请亲自动手。下面的每张卡片都是 2023 到 2026 年间前沿领域的真实主张，取自上述简报。请决定它属于哪一类——<StatusChip status={"ok"} label={"已确立"} />、<StatusChip status={"hint"} label={"有前景"} /> 或 <StatusChip status={"bad"} label={"炒作"} printLabel={"需审查"} />——然后揭晓答案与理由。目的不在于拿满分，而在于让这种校准变成一种本能。
 
-<Panel class="web-only hype-filter-trainer">
-<PanelTitle>互动 · 校准你的怀疑精神</PanelTitle>
-
-### 前沿校准器练习场
-
-<PanelNote>七个主张，每个主张只需一次判断。请仔细阅读——陷阱通常隐藏在措辞中。<span class="hf-score hype-score" id="appendix-d003-the-unsettled-frontier-hfScore"></span></PanelNote>
-
-<div class="hf-card">
-<span class="hf-tag hype-tag" id="appendix-d003-the-unsettled-frontier-hfTag">主张 1 / 7</span>
-<div class="hf-claim hype-claim" id="appendix-d003-the-unsettled-frontier-hfClaim">—</div>
-<div class="hf-opts">
-<button class="hfbtn b-ok hype-choice" data-pick="ok"><span class="chip-dot" aria-hidden="true"></span>已确立</button>
-<button class="hfbtn b-hint hype-choice" data-pick="hint"><span class="chip-dot" aria-hidden="true"></span>有前景</button>
-<button class="hfbtn b-bad hype-choice" data-pick="bad"><span class="chip-dot" aria-hidden="true"></span>炒作</button>
-</div>
-<div class="hf-explain hype-explain" id="appendix-d003-the-unsettled-frontier-hfExplain"></div>
-<button class="hf-next hype-next" id="appendix-d003-the-unsettled-frontier-hfNext" hidden>下一条主张 →</button>
-</div>
-</Panel>
+<HypeFilterTrainer locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>

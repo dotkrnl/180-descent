@@ -3,6 +3,7 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import InferenceInspector from "@app/components/lesson/interactives/InferenceInspector.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -159,39 +160,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<Panel class="web-only">
-<PanelTitle>交互演示 · 检查形式，而非文字</PanelTitle>
-
-### 推理检视器
-
-<PanelNote>选择一个条件论证形式。机器不关心句子说了什么——只关心形状是否保证结论。在两种有效招式与它们两个臭名昭著的替身之间切换，再载入一个现实例子，体会为什么残缺形式会骗过我们。</PanelNote>
-
-<div class="ii-grid">
-<div>
-<div class="ii-forms" id="iiForms">
-<button class="iibtn" data-form="ponens" aria-pressed="true">肯定前件式</button>
-<button class="iibtn" data-form="tollens" aria-pressed="false">否定后件式</button>
-<button class="iibtn" data-form="affirm" aria-pressed="false">肯定后件</button>
-<button class="iibtn" data-form="deny" aria-pressed="false">否定前件</button>
-</div>
-<div class="ii-examples">
-<p class="h">换上真实说法</p>
-<div class="pbtns">
-<button class="exbtn" data-ex="rain">下雨与湿地</button>
-<button class="exbtn" data-ex="dog">狗与四条腿</button>
-<button class="exbtn" data-ex="sd">圣迭戈与加利福尼亚</button>
-</div>
-</div>
-</div>
-<div class="ii-readout">
-<div class="ii-arg" id="iiArg"></div>
-<div class="ii-verdict" id="iiVerdict">
-<div class="ii-vstate" id="iiVState">—</div>
-<p class="ii-vexpl" id="iiVExpl"></p>
-</div>
-</div>
-</div>
-</Panel>
+<InferenceInspector locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>

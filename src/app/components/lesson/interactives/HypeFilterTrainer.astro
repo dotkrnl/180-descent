@@ -1,0 +1,55 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 校准你的怀疑精神",
+  heading: "前沿校准器练习场",
+  note: "七个主张，每个主张只需一次判断。请仔细阅读——陷阱通常隐藏在措辞中。",
+  tag: "主张 1 / 7",
+  buttons: [
+    ["ok", "已确立"],
+    ["hint", "有前景"],
+    ["bad", "炒作"]
+  ],
+  next: "下一条主张 →"
+} : {
+  panelTitle: "Interactive · calibrate your skepticism",
+  heading: "The Hype-Filter Trainer",
+  note: "Seven claims, one judgment each. Read carefully — the wording is where the trap usually hides.",
+  tag: "Claim 1 of 7",
+  buttons: [
+    ["ok", "Established"],
+    ["hint", "Promising"],
+    ["bad", "Hype"]
+  ],
+  next: "Next claim →"
+};
+---
+<Panel class="web-only hype-filter-trainer">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+
+  <h3>{copy.heading}</h3>
+
+  <PanelNote>{copy.note}<span class="hf-score hype-score" id="appendix-d003-the-unsettled-frontier-hfScore"></span></PanelNote>
+
+  <div class="hf-card">
+    <span class="hf-tag hype-tag" id="appendix-d003-the-unsettled-frontier-hfTag">{copy.tag}</span>
+    <div class="hf-claim hype-claim" id="appendix-d003-the-unsettled-frontier-hfClaim">—</div>
+    <div class="hf-opts">
+      {copy.buttons.map(([pick, label]) => (
+        <button class={`hfbtn b-${pick} hype-choice`} data-pick={pick}>
+          {zh ? <span class="chip-dot" aria-hidden="true"></span> : <i></i>}{label}
+        </button>
+      ))}
+    </div>
+    <div class="hf-explain hype-explain" id="appendix-d003-the-unsettled-frontier-hfExplain"></div>
+    <button class="hf-next hype-next" id="appendix-d003-the-unsettled-frontier-hfNext" hidden>{copy.next}</button>
+  </div>
+</Panel>

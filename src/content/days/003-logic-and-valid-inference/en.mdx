@@ -3,6 +3,7 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import InferenceInspector from "@app/components/lesson/interactives/InferenceInspector.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -159,39 +160,7 @@ These are *formal* fallacies — broken shapes. Their cousins, the *informal* fa
 </ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<Panel class="web-only">
-<PanelTitle>Interactive · test the form, not the words</PanelTitle>
-
-### The Inference Inspector
-
-<PanelNote>Pick a conditional argument form. The machine doesn't care what the sentences *say* — only whether the **shape** guarantees the conclusion. Flip between the two valid moves and their two notorious impostors, then load a real-world example to feel why the broken ones fool us.</PanelNote>
-
-<div class="ii-grid">
-<div>
-<div class="ii-forms" id="iiForms">
-<button class="iibtn" data-form="ponens" aria-pressed="true">Modus Ponens</button>
-<button class="iibtn" data-form="tollens" aria-pressed="false">Modus Tollens</button>
-<button class="iibtn" data-form="affirm" aria-pressed="false">Affirm Consequent</button>
-<button class="iibtn" data-form="deny" aria-pressed="false">Deny Antecedent</button>
-</div>
-<div class="ii-examples">
-<p class="h">Dress it in real words</p>
-<div class="pbtns">
-<button class="exbtn" data-ex="rain">Rain &amp; wet ground</button>
-<button class="exbtn" data-ex="dog">Dog &amp; four legs</button>
-<button class="exbtn" data-ex="sd">San Diego &amp; California</button>
-</div>
-</div>
-</div>
-<div class="ii-readout">
-<div class="ii-arg" id="iiArg"></div>
-<div class="ii-verdict" id="iiVerdict">
-<div class="ii-vstate" id="iiVState">—</div>
-<p class="ii-vexpl" id="iiVExpl"></p>
-</div>
-</div>
-</div>
-</Panel>
+<InferenceInspector locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>

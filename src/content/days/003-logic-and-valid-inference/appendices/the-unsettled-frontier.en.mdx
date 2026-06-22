@@ -1,6 +1,7 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import HypeFilterTrainer from "@app/components/lesson/interactives/HypeFilterTrainer.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -249,25 +250,7 @@ Finally, a frontier that is philosophical rather than technical, and that this w
 
 You've watched the filter applied six times. Now apply it yourself. Each card below is a real claim from the 2023–2026 frontier, drawn from the dispatches above. Decide where it lands — <StatusChip status={"ok"} label={"established"} />, <StatusChip status={"hint"} label={"promising"} />, or <StatusChip status={"bad"} label={"hype"} printLabel={"review"} /> — then reveal the verdict and the reasoning. The aim is not a perfect score. It's to feel the *weighing* become automatic.
 
-<Panel class="web-only hype-filter-trainer">
-<PanelTitle>Interactive · calibrate your skepticism</PanelTitle>
-
-### The Hype-Filter Trainer
-
-<PanelNote>Seven claims, one judgment each. Read carefully — the wording is where the trap usually hides.<span class="hf-score hype-score" id="appendix-d003-the-unsettled-frontier-hfScore"></span></PanelNote>
-
-<div class="hf-card">
-<span class="hf-tag hype-tag" id="appendix-d003-the-unsettled-frontier-hfTag">Claim 1 of 7</span>
-<div class="hf-claim hype-claim" id="appendix-d003-the-unsettled-frontier-hfClaim">—</div>
-<div class="hf-opts">
-<button class="hfbtn b-ok hype-choice" data-pick="ok"><i></i>Established</button>
-<button class="hfbtn b-hint hype-choice" data-pick="hint"><i></i>Promising</button>
-<button class="hfbtn b-bad hype-choice" data-pick="bad"><i></i>Hype</button>
-</div>
-<div class="hf-explain hype-explain" id="appendix-d003-the-unsettled-frontier-hfExplain"></div>
-<button class="hf-next hype-next" id="appendix-d003-the-unsettled-frontier-hfNext" hidden>Next claim →</button>
-</div>
-</Panel>
+<HypeFilterTrainer locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>

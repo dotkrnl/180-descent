@@ -1,6 +1,7 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import FallacySpotter from "@app/components/lesson/interactives/FallacySpotter.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -120,20 +121,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 有一对特殊的谬误值得单独关注，因为它们是逻辑与我们明天要在<Highlight>第 4 日</Highlight>遇到的概率论交汇的地方。<Term>赌徒谬误</Term> (gambler's fallacy)<TipNote text={"赌徒谬误是一种错误认知，认为在经历了一连串极端情况后，独立的随机事件必然会很快“平衡”回来。"} />是指坚信轮盘赌中连续出现红色会让黑色“快要出了”——仿佛轮盘有着记忆和良知。它没有；每一次转动都是独立的，球不欠你任何东西。与之对应的镜像是<Term>基础概率谬误</Term> (base-rate fallacy)<TipNote text={"基础概率谬误是在解释证据时，忽略了潜在情况本身的普遍或罕见程度。"} />，即在解读证据时忽略了某事的稀有程度：一种对于发病率万分之一的疾病有着“99% 准确度”的检测，依然会筛查出大量的健康人，因为稀有的真相被普遍的误差淹没了。这两者都是极其系统的概率直觉失败，以至于需要形式化的机器来强制修正——而这正是明天内容的开篇论点。
 
-<Panel class="web-only fallacy-spotter">
-<PanelTitle>互动 · 磨炼你的眼力</PanelTitle>
-
-### 谬误探查器
-
-<PanelNote>阅读每一段论证并指出其花招。共五轮，题目取自上述指南。重点不在于得分——而在于几轮过后，这些模式会开始在你眼前自动浮现。<span class="fs-score fallacy-score" id="appendix-d003-the-deeper-machinery-of-logic-fsScore"></span></PanelNote>
-
-<div class="fs-card">
-<div class="fs-claim fallacy-claim" id="appendix-d003-the-deeper-machinery-of-logic-fsClaim">—</div>
-<div class="fs-opts fallacy-options" id="appendix-d003-the-deeper-machinery-of-logic-fsOpts"></div>
-<div class="fs-explain fallacy-explain" id="appendix-d003-the-deeper-machinery-of-logic-fsExplain"></div>
-<button class="fs-next fallacy-next" id="appendix-d003-the-deeper-machinery-of-logic-fsNext" hidden>下一题 →</button>
-</div>
-</Panel>
+<FallacySpotter locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>课后练习</PanelTitle>

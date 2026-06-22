@@ -1,0 +1,72 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "交互演示 · 检查形式，而非文字",
+  heading: "推理检视器",
+  note: "选择一个条件论证形式。机器不关心句子说了什么——只关心形状是否保证结论。在两种有效招式与它们两个臭名昭著的替身之间切换，再载入一个现实例子，体会为什么残缺形式会骗过我们。",
+  forms: [
+    ["ponens", "肯定前件式"],
+    ["tollens", "否定后件式"],
+    ["affirm", "肯定后件"],
+    ["deny", "否定前件"]
+  ],
+  examplesTitle: "换上真实说法",
+  examples: [
+    ["rain", "下雨与湿地"],
+    ["dog", "狗与四条腿"],
+    ["sd", "圣迭戈与加利福尼亚"]
+  ]
+} : {
+  panelTitle: "Interactive · test the form, not the words",
+  heading: "The Inference Inspector",
+  note: "Pick a conditional argument form. The machine doesn't care what the sentences say — only whether the shape guarantees the conclusion. Flip between the two valid moves and their two notorious impostors, then load a real-world example to feel why the broken ones fool us.",
+  forms: [
+    ["ponens", "Modus Ponens"],
+    ["tollens", "Modus Tollens"],
+    ["affirm", "Affirm Consequent"],
+    ["deny", "Deny Antecedent"]
+  ],
+  examplesTitle: "Dress it in real words",
+  examples: [
+    ["rain", "Rain & wet ground"],
+    ["dog", "Dog & four legs"],
+    ["sd", "San Diego & California"]
+  ]
+};
+---
+<Panel class="web-only">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+
+  <h3>{copy.heading}</h3>
+
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="ii-grid">
+    <div>
+      <div class="ii-forms" id="iiForms">
+        {copy.forms.map(([form, label], index) => <button class="iibtn" data-form={form} aria-pressed={index === 0 ? "true" : "false"}>{label}</button>)}
+      </div>
+      <div class="ii-examples">
+        <p class="h">{copy.examplesTitle}</p>
+        <div class="pbtns">
+          {copy.examples.map(([example, label]) => <button class="exbtn" data-ex={example}>{label}</button>)}
+        </div>
+      </div>
+    </div>
+    <div class="ii-readout">
+      <div class="ii-arg" id="iiArg"></div>
+      <div class="ii-verdict" id="iiVerdict">
+        <div class="ii-vstate" id="iiVState">—</div>
+        <p class="ii-vexpl" id="iiVExpl"></p>
+      </div>
+    </div>
+  </div>
+</Panel>

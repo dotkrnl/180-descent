@@ -1,0 +1,36 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 磨炼你的眼力",
+  heading: "谬误探查器",
+  note: "阅读每一段论证并指出其花招。共五轮，题目取自上述指南。重点不在于得分——而在于几轮过后，这些模式会开始在你眼前自动浮现。",
+  next: "下一题 →"
+} : {
+  panelTitle: "Interactive · train your eye",
+  heading: "The Fallacy Spotter",
+  note: "Read each argument and name the move. Five rounds, drawn from the guide above. The point isn't the score — it's that after a few rounds, the shapes start to announce themselves.",
+  next: "Next argument →"
+};
+---
+<Panel class="web-only fallacy-spotter">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+
+  <h3>{copy.heading}</h3>
+
+  <PanelNote>{copy.note}<span class="fs-score fallacy-score" id="appendix-d003-the-deeper-machinery-of-logic-fsScore"></span></PanelNote>
+
+  <div class="fs-card">
+    <div class="fs-claim fallacy-claim" id="appendix-d003-the-deeper-machinery-of-logic-fsClaim">—</div>
+    <div class="fs-opts fallacy-options" id="appendix-d003-the-deeper-machinery-of-logic-fsOpts"></div>
+    <div class="fs-explain fallacy-explain" id="appendix-d003-the-deeper-machinery-of-logic-fsExplain"></div>
+    <button class="fs-next fallacy-next" id="appendix-d003-the-deeper-machinery-of-logic-fsNext" hidden>{copy.next}</button>
+  </div>
+</Panel>
