@@ -1,0 +1,53 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 观察反转",
+  heading: "反转机器",
+  note: "基于 1986 年肾结石真实数据，每种疗法样本量为 350。病例位置保持不变；切换按钮只改变围绕这些病例的比较框。",
+  mode: "视图模式",
+  pooled: "汇总（所有患者）",
+  split: "按结石大小拆分",
+  aria: "一张固定的 700 名肾结石患者图，使用行表示病例类型，并使用填充表示是否成功。",
+  legend: ["疗法 A — 开放手术", "疗法 B — 经皮肾镜取石术（PCNL）", "有效", "无效"]
+} : {
+  panelTitle: "Interactive · watch it flip",
+  heading: "The Reversal Machine",
+  note: "Real 1986 kidney-stone data, 350 patients per treatment. The cases stay fixed; the toggle changes which comparison frame is drawn around them.",
+  mode: "View mode",
+  pooled: "Pooled (all patients)",
+  split: "Split by stone size",
+  aria: "A fixed grid of 700 kidney-stone patients, using rows for case type and fill for success.",
+  legend: ["Treatment A — open surgery", "Treatment B — PCNL (minimally invasive)", "effective", "not effective"]
+};
+---
+<Panel class="web-only causation-simpson">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+  <h3>{copy.heading}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="simp-toggle" role="group" aria-label={copy.mode}>
+    <button id="simp-pooled" type="button" aria-pressed="true">{copy.pooled}</button>
+    <button id="simp-split" type="button" aria-pressed="false">{copy.split}</button>
+  </div>
+
+  <div class="simp-machine">
+    <svg class="simp-grid" id="simpGrid" viewBox="0 0 270 266" role="img" aria-label={copy.aria}></svg>
+    <div class="simp-calc" id="simpCalc" aria-live="polite"></div>
+  </div>
+
+  <div class="simp-winner A" id="simpWinner" aria-live="polite"></div>
+  <div class="legend">
+    <span><i class="A"></i> {copy.legend[0]}</span>
+    <span><i class="B"></i> {copy.legend[1]}</span>
+    <span><i class="effective"></i> {copy.legend[2]}</span>
+    <span><i class="not-effective"></i> {copy.legend[3]}</span>
+  </div>
+</Panel>

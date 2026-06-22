@@ -142,7 +142,7 @@ describe("target content registry", () => {
     expect(day005?.manifest.components.map((component) => component.id)).toEqual([
       "causation-lab"
     ]);
-    expect(day005?.bodies[0].source).toContain("causation-do-see");
+    expect(day005?.bodies[0].source).toContain("<DoSeeCalculator");
     expect(day005?.bodies[0].source).toContain("<MathBlock");
 
     expect(day006?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([

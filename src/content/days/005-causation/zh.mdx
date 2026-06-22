@@ -3,6 +3,9 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import DoSeeCalculator from "@app/components/lesson/interactives/DoSeeCalculator.astro";
+import CausalLadder from "@app/components/lesson/interactives/CausalLadder.astro";
+import SimpsonReversalMachine from "@app/components/lesson/interactives/SimpsonReversalMachine.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -135,31 +138,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </ContentSection>
 
 {/* ===================== INTERACTIVE 1 : SIMPSON ===================== */}
-<Panel class="web-only causation-simpson">
-<PanelTitle>互动 · 观察反转</PanelTitle>
-
-### 反转机器
-
-<PanelNote>基于 1986 年肾结石真实数据，每种疗法样本量为 350。病例位置保持不变；切换按钮只改变围绕这些病例的比较框。</PanelNote>
-
-<div class="simp-toggle" role="group" aria-label="视图模式">
-<button id="simp-pooled" type="button" aria-pressed="true">汇总（所有患者）</button>
-<button id="simp-split" type="button" aria-pressed="false">按结石大小拆分</button>
-</div>
-
-<div class="simp-machine">
-<svg class="simp-grid" id="simpGrid" viewBox="0 0 270 266" role="img" aria-label="一张固定的 700 名肾结石患者图，使用行表示病例类型，并使用填充表示是否成功。"></svg>
-<div class="simp-calc" id="simpCalc" aria-live="polite"></div>
-</div>
-
-<div class="simp-winner A" id="simpWinner" aria-live="polite"></div>
-<div class="legend">
-<span><i class="A"></i> 疗法 A — 开放手术</span>
-<span><i class="B"></i> 疗法 B — 经皮肾镜取石术（PCNL）</span>
-<span><i class="effective"></i> 有效</span>
-<span><i class="not-effective"></i> 无效</span>
-</div>
-</Panel>
+<SimpsonReversalMachine locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -193,60 +172,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </ContentSection>
 
 {/* ===================== INTERACTIVE 2 : LADDER ===================== */}
-<Panel class="web-only causation-ladder">
-<PanelTitle>互动 · 攀爬因果之梯</PanelTitle>
-
-### 因果性的三个阶梯
-
-<PanelNote>点击阶梯。每一层都增加了一个动词、一个记号以及一个下一层「无法」回答的问题。从第 1 层到第 2 层的跨越，正是今天我们要探讨的全部内容。</PanelNote>
-
-<div class="ladder-grid">
-<div class="rung-btns" id="rungBtns">
-<button class="rungbtn" type="button" data-rung="3" aria-pressed="false">
-<span class="num">3</span>
-<span class="lab"><span class="verb">想象</span><b>反事实</b><span class="q">「要是当时我服下了阿司匹林，头痛现在是不是已经好了？——考虑到我当时并没服药，且现在还在疼。」</span></span>
-</button>
-<button class="rungbtn" type="button" data-rung="2" aria-pressed="true">
-<span class="num">2</span>
-<span class="lab"><span class="verb">行动</span><b>干预</b><span class="q">「如果我服下这片阿司匹林，我的头痛会消失吗？」</span></span>
-</button>
-<button class="rungbtn" type="button" data-rung="1" aria-pressed="false">
-<span class="num">1</span>
-<span class="lab"><span class="verb">观察</span><b>关联</b><span class="q">「在服用阿司匹林的人群中，头痛得到改善的比例与未服用人群相比如何？」</span></span>
-</button>
-</div>
-
-<div class="ladder-vis">
-<svg viewBox="0 0 300 240" role="group" aria-label="一个三级阶梯；选择某一层会更新解释。">
-{/* rails */}
-<line x1="70" y1="20" x2="70" y2="226" stroke="var(--line-strong)" stroke-width="4" stroke-linecap="round"></line>
-<line x1="230" y1="20" x2="230" y2="226" stroke="var(--line-strong)" stroke-width="4" stroke-linecap="round"></line>
-{/* rung 3 (top) */}
-<g id="lr3" class="ladder-rung-hotspot" data-rung="3" role="button" tabindex="0" aria-label="选择第 3 层，反事实">
-<rect x="50" y="30" width="200" height="42" fill="transparent" pointer-events="all"></rect>
-<line x1="70" y1="56" x2="230" y2="56" stroke="var(--ink-faint)" stroke-width="6" stroke-linecap="round"></line>
-<text x="150" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">想象</text>
-</g>
-{/* rung 2 (mid) */}
-<g id="lr2" class="ladder-rung-hotspot" data-rung="2" role="button" tabindex="0" aria-label="选择第 2 层，干预">
-<rect x="50" y="102" width="200" height="42" fill="transparent" pointer-events="all"></rect>
-<line x1="70" y1="128" x2="230" y2="128" stroke="var(--ink-faint)" stroke-width="6" stroke-linecap="round"></line>
-<text x="150" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">干预</text>
-</g>
-{/* rung 1 (bottom) */}
-<g id="lr1" class="ladder-rung-hotspot" data-rung="1" role="button" tabindex="0" aria-label="选择第 1 层，关联">
-<rect x="50" y="174" width="200" height="42" fill="transparent" pointer-events="all"></rect>
-<line x1="70" y1="200" x2="230" y2="200" stroke="var(--ink-faint)" stroke-width="6" stroke-linecap="round"></line>
-<text x="150" y="184" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">观察</text>
-</g>
-{/* climber */}
-<circle id="climber" cx="150" cy="128" r="11" fill="var(--accent)" stroke="var(--raised)" stroke-width="3"></circle>
-</svg>
-
-<div class="rung-detail" id="rungDetail" aria-live="polite"></div>
-</div>
-</div>
-</Panel>
+<CausalLadder locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -290,96 +216,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </Aside>
 
 {/* ===================== INTERACTIVE 3 : DO vs SEE ===================== */}
-<Panel class="web-only causation-do-see">
-<PanelTitle>互动 · 观察与干预</PanelTitle>
-
-### do-算子作为一个具体演算
-
-<PanelNote>一个玩具结构模型：下雨会增加带伞的可能性和衣服淋湿的可能性；而带伞本身能减少被淋湿的概率。滑动条设定的是 logistic 系数强度，而不是风险差。下方的所有数值均从这一设定模型中计算得出。</PanelNote>
-
-<div class="preset-row" role="group" aria-label="结构因果模型预设">
-<button type="button" data-preset="none">无混杂</button>
-<button type="button" data-preset="positive">正混杂</button>
-<button type="button" data-preset="negative">负混杂</button>
-<button type="button" data-preset="reversal">符号反转</button>
-<button type="button" data-preset="zero">零因果效应</button>
-</div>
-
-<div class="dovs-controls">
-<div class="slider-row">
-<label for="rConf">下雨→带伞系数强度 <span class="val" id="vConf">b=+2.80</span></label>
-<input type="range" id="rConf" min="-100" max="100" value="70" aria-label="雨天到带伞强度的影响" />
-</div>
-<div class="slider-row">
-<label for="rTrue">带伞→淋湿系数 <span class="val" id="vTrue">d=−1.49</span></label>
-<input type="range" id="rTrue" min="0" max="80" value="45" aria-label="雨伞因果保护力" />
-</div>
-
-<div class="dovs-stage">
-<div class="dovs-card see">
-<p class="cap">第 1 层 · 观察</p>
-<p class="expr"><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \text{umbrella}) - \mathrm{P}(\text{wet}\mid \text{no umbrella})`} /></p>
-<svg viewBox="0 0 220 112" role="img" aria-label="下雨指向带伞与湿衣的有向图；观测后门路径处于开启状态。">
-<text x="110" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">下雨</text>
-<line x1="88" y1="24" x2="50" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
-<line x1="132" y1="24" x2="170" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
-<line x1="60" y1="76" x2="156" y2="76" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah1)"></line>
-<text x="47" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">带伞</text>
-<text x="174" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">淋湿</text>
-<defs><marker id="ah1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
-</svg>
-<p class="dovs-num" id="numSee">+0.23<small>观测风险差</small></p>
-</div>
-
-<div class="dovs-card do">
-<p class="cap">第 2 层 · 干预</p>
-<p class="expr"><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \operatorname{do}(\text{umbrella})) - \mathrm{P}(\text{wet}\mid \operatorname{do}(\text{no umbrella}))`} /></p>
-<svg viewBox="0 0 220 112" role="img" aria-label="相同有向图，但从下雨到带伞的箭头被干预操作切断。">
-<text x="110" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">下雨</text>
-<line x1="88" y1="24" x2="50" y2="62" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="3 3"></line>
-<line x1="65" y1="40" x2="55" y2="50" stroke="var(--contested)" stroke-width="2.4"></line>
-<line x1="55" y1="40" x2="65" y2="50" stroke="var(--contested)" stroke-width="2.4"></line>
-<line x1="132" y1="24" x2="170" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah2)"></line>
-<line x1="60" y1="76" x2="156" y2="76" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah2)"></line>
-<text x="47" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">带伞</text>
-<text x="174" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">淋湿</text>
-<text x="60" y="36" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--contested)">切断</text>
-<defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
-</svg>
-<p class="dovs-num" id="numDo">−0.16<small>干预风险差</small></p>
-</div>
-</div>
-
-<div class="dovs-table" id="dovsTable" aria-live="polite">
-<SimpleTable
-  headers={["观察表","淋湿","干爽","淋湿概率"]}
-  rows={[["带伞","189","187","50.2%"],["不带伞","170","454","27.2%"]]}
-/>
-</div>
-
-<div class="dovs-table" id="dovsParams" aria-live="polite">
-<table class="alt-table">
-<thead><tr><th>模型参数</th><th>默认值</th></tr></thead>
-<tbody>
-<tr><td><MathInline latex={String.raw`P(S=1)`} /></td><td>0.45</td></tr>
-<tr><td><code>a</code></td><td>−2.00</td></tr>
-<tr><td><code>b</code></td><td>4 × 滑块 = +2.80</td></tr>
-<tr><td><code>c</code></td><td>−2.20</td></tr>
-<tr><td><code>d</code></td><td>−3.3 × 滑块 = −1.49</td></tr>
-<tr><td><code>e</code></td><td>+4.10</td></tr>
-</tbody>
-</table>
-</div>
-
-<div class="dovs-equations" id="dovsEquations" aria-live="polite"></div>
-
-<div class="dovs-verdict gap" id="dovsVerdict" aria-live="polite">
-<p class="vh" id="dovsVH">符号反转</p>
-<p id="dovsBody">观察上看，带伞者似乎更容易淋湿；干预上看，给人一把伞会降低淋湿概率。雨改变了两组人的构成。</p>
-</div>
-<p class="pnote">模型公式为：<MathInline latex={String.raw`S \sim \operatorname{Bernoulli}(0.45)`} />；<MathInline latex={String.raw`P(X=1\mid S=s)=\operatorname{logit}^{-1}(a+bs)`} />；<MathInline latex={String.raw`P(Y=1\mid X=x,S=s)=\operatorname{logit}^{-1}(c+dx+es)`} />。此处 <MathInline latex={String.raw`S`} /> 代表下雨，<MathInline latex={String.raw`X`} /> 代表带伞，<MathInline latex={String.raw`Y`} /> 代表衣服湿；固定默认值为 <MathInline latex={String.raw`a=-2.0`} />、<MathInline latex={String.raw`c=-2.2`} />、<MathInline latex={String.raw`e=4.1`} />。</p>
-</div>
-</Panel>
+<DoSeeCalculator locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>案例详解</PanelTitle>

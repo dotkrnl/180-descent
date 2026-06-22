@@ -1,0 +1,147 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 观察与干预",
+  heading: "do-算子作为一个具体演算",
+  note: "一个玩具结构模型：下雨会增加带伞的可能性和衣服淋湿的可能性；而带伞本身能减少被淋湿的概率。滑动条设定的是 logistic 系数强度，而不是风险差。下方的所有数值均从这一设定模型中计算得出。",
+  presetsAria: "结构因果模型预设",
+  presets: [["none", "无混杂"], ["positive", "正混杂"], ["negative", "负混杂"], ["reversal", "符号反转"], ["zero", "零因果效应"]],
+  conf: "下雨→带伞系数强度",
+  confAria: "雨天到带伞强度的影响",
+  true: "带伞→淋湿系数",
+  trueAria: "雨伞因果保护力",
+  seeCap: "第 1 层 · 观察",
+  doCap: "第 2 层 · 干预",
+  seeAria: "下雨指向带伞与湿衣的有向图；观测后门路径处于开启状态。",
+  doAria: "相同有向图，但从下雨到带伞的箭头被干预操作切断。",
+  rain: "下雨",
+  umbrella: "带伞",
+  wet: "淋湿",
+  cut: "切断",
+  obs: "观测风险差",
+  inter: "干预风险差",
+  headers: ["观察表", "淋湿", "干爽", "淋湿概率"],
+  paramsHead: ["模型参数", "默认值"],
+  verdict: "符号反转",
+  body: "观察上看，带伞者似乎更容易淋湿；干预上看，给人一把伞会降低淋湿概率。雨改变了两组人的构成。",
+  model: "模型公式为：",
+  modelTail: "。此处 S 代表下雨，X 代表带伞，Y 代表衣服湿；固定默认值为 a=-2.0、c=-2.2、e=4.1。"
+} : {
+  panelTitle: "Interactive · seeing vs doing",
+  heading: "The do-operator as a calculation",
+  note: "A toy structural model: rain makes umbrellas more likely and wet clothes more likely; umbrellas themselves reduce wetness. The sliders set logistic-coefficient strengths, not risk differences. Every number below is computed from this stated model.",
+  presetsAria: "SCM presets",
+  presets: [["none", "No confounding"], ["positive", "Positive confounding"], ["negative", "Negative confounding"], ["reversal", "Sign reversal"], ["zero", "Zero causal effect"]],
+  conf: "Rain→umbrella coefficient strength",
+  confAria: "Rain to umbrella link strength",
+  true: "Umbrella→wetness coefficient",
+  trueAria: "Umbrella causal protection",
+  seeCap: "Rung 1 · Seeing",
+  doCap: "Rung 2 · Doing",
+  seeAria: "Graph with rain pointing to umbrella use and wet clothes; the observational back-door path is open.",
+  doAria: "Same graph but the arrow from rain to umbrella use is cut by the intervention.",
+  rain: "rain",
+  umbrella: "umbrella",
+  wet: "wet",
+  cut: "cut",
+  obs: "observed risk difference",
+  inter: "interventional risk difference",
+  headers: ["Observed table", "Wet", "Dry", "Risk wet"],
+  paramsHead: ["Model parameter", "Default"],
+  verdict: "Sign reversal",
+  body: "Seeing says umbrellas are associated with wetter clothes. Doing says umbrellas reduce wetness. Rain changed the mix of people in the observed umbrella and no-umbrella groups.",
+  model: "The model is:",
+  modelTail: ". Here S is rain, X is umbrella use, Y is wet clothes, and the fixed defaults are a=-2.0, c=-2.2, e=4.1."
+};
+---
+<Panel class="web-only causation-do-see">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+  <h3>{copy.heading}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="preset-row" role="group" aria-label={copy.presetsAria}>
+    {copy.presets.map(([preset, label]) => <button type="button" data-preset={preset}>{label}</button>)}
+  </div>
+
+  <div class="dovs-controls">
+    <div class="slider-row">
+      <label for="rConf">{copy.conf} <span class="val" id="vConf">b=+2.80</span></label>
+      <input type="range" id="rConf" min="-100" max="100" value="70" aria-label={copy.confAria} />
+    </div>
+    <div class="slider-row">
+      <label for="rTrue">{copy.true} <span class="val" id="vTrue">d=−1.49</span></label>
+      <input type="range" id="rTrue" min="0" max="80" value="45" aria-label={copy.trueAria} />
+    </div>
+
+    <div class="dovs-stage">
+      <div class="dovs-card see">
+        <p class="cap">{copy.seeCap}</p>
+        <p class="expr"><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \text{umbrella}) - \mathrm{P}(\text{wet}\mid \text{no umbrella})`} /></p>
+        <svg viewBox="0 0 220 112" role="img" aria-label={copy.seeAria}>
+          <text x="110" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">{copy.rain}</text>
+          <line x1="88" y1="24" x2="50" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
+          <line x1="132" y1="24" x2="170" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
+          <line x1="60" y1="76" x2="156" y2="76" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah1)"></line>
+          <text x="47" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">{copy.umbrella}</text>
+          <text x="174" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">{copy.wet}</text>
+          <defs><marker id="ah1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
+        </svg>
+        <p class="dovs-num" id="numSee">+0.23<small>{copy.obs}</small></p>
+      </div>
+
+      <div class="dovs-card do">
+        <p class="cap">{copy.doCap}</p>
+        <p class="expr"><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \operatorname{do}(\text{umbrella})) - \mathrm{P}(\text{wet}\mid \operatorname{do}(\text{no umbrella}))`} /></p>
+        <svg viewBox="0 0 220 112" role="img" aria-label={copy.doAria}>
+          <text x="110" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">{copy.rain}</text>
+          <line x1="88" y1="24" x2="50" y2="62" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="3 3"></line>
+          <line x1="65" y1="40" x2="55" y2="50" stroke="var(--contested)" stroke-width="2.4"></line>
+          <line x1="55" y1="40" x2="65" y2="50" stroke="var(--contested)" stroke-width="2.4"></line>
+          <line x1="132" y1="24" x2="170" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah2)"></line>
+          <line x1="60" y1="76" x2="156" y2="76" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah2)"></line>
+          <text x="47" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">{copy.umbrella}</text>
+          <text x="174" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">{copy.wet}</text>
+          <text x="60" y="36" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--contested)">{copy.cut}</text>
+          <defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
+        </svg>
+        <p class="dovs-num" id="numDo">−0.16<small>{copy.inter}</small></p>
+      </div>
+    </div>
+
+    <div class="dovs-table" id="dovsTable" aria-live="polite">
+      <SimpleTable headers={copy.headers} rows={zh ? [["带伞","189","187","50.2%"],["不带伞","170","454","27.2%"]] : [["Umbrella","189","187","50.2%"],["No umbrella","170","454","27.2%"]]} />
+    </div>
+
+    <div class="dovs-table" id="dovsParams" aria-live="polite">
+      <table class="alt-table">
+        <thead><tr><th>{copy.paramsHead[0]}</th><th>{copy.paramsHead[1]}</th></tr></thead>
+        <tbody>
+          <tr><td><MathInline latex={String.raw`P(S=1)`} /></td><td>0.45</td></tr>
+          <tr><td><code>a</code></td><td>−2.00</td></tr>
+          <tr><td><code>b</code></td><td>{zh ? "4 × 滑块 = +2.80" : "4 × slider = +2.80"}</td></tr>
+          <tr><td><code>c</code></td><td>−2.20</td></tr>
+          <tr><td><code>d</code></td><td>{zh ? "−3.3 × 滑块 = −1.49" : "−3.3 × slider = −1.49"}</td></tr>
+          <tr><td><code>e</code></td><td>+4.10</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dovs-equations" id="dovsEquations" aria-live="polite"></div>
+
+    <div class="dovs-verdict gap" id="dovsVerdict" aria-live="polite">
+      <p class="vh" id="dovsVH">{copy.verdict}</p>
+      <p id="dovsBody">{copy.body}</p>
+    </div>
+    <p class="pnote">{copy.model} <MathInline latex={String.raw`S \sim \operatorname{Bernoulli}(0.45)`} />; <MathInline latex={String.raw`P(X=1\mid S=s)=\operatorname{logit}^{-1}(a+bs)`} />; <MathInline latex={String.raw`P(Y=1\mid X=x,S=s)=\operatorname{logit}^{-1}(c+dx+es)`} />{copy.modelTail}</p>
+  </div>
+</Panel>

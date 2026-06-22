@@ -3,6 +3,9 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import DoSeeCalculator from "@app/components/lesson/interactives/DoSeeCalculator.astro";
+import CausalLadder from "@app/components/lesson/interactives/CausalLadder.astro";
+import SimpsonReversalMachine from "@app/components/lesson/interactives/SimpsonReversalMachine.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -136,31 +139,7 @@ The Reversal Machine below turns that into one picture. Each square is one patie
 </ContentSection>
 
 {/* ===================== INTERACTIVE 1 : SIMPSON ===================== */}
-<Panel class="web-only causation-simpson">
-<PanelTitle>Interactive · watch it flip</PanelTitle>
-
-### The Reversal Machine
-
-<PanelNote>Real 1986 kidney-stone data, 350 patients per treatment. The cases stay fixed; the toggle changes which comparison frame is drawn around them.</PanelNote>
-
-<div class="simp-toggle" role="group" aria-label="View mode">
-<button id="simp-pooled" type="button" aria-pressed="true">Pooled (all patients)</button>
-<button id="simp-split" type="button" aria-pressed="false">Split by stone size</button>
-</div>
-
-<div class="simp-machine">
-<svg class="simp-grid" id="simpGrid" viewBox="0 0 270 266" role="img" aria-label="A fixed grid of 700 kidney-stone patients, using rows for case type and fill for success."></svg>
-<div class="simp-calc" id="simpCalc" aria-live="polite"></div>
-</div>
-
-<div class="simp-winner A" id="simpWinner" aria-live="polite"></div>
-<div class="legend">
-<span><i class="A"></i> Treatment A — open surgery</span>
-<span><i class="B"></i> Treatment B — PCNL (minimally invasive)</span>
-<span><i class="effective"></i> effective</span>
-<span><i class="not-effective"></i> not effective</span>
-</div>
-</Panel>
+<SimpsonReversalMachine locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -194,60 +173,7 @@ Climb it yourself:
 </ContentSection>
 
 {/* ===================== INTERACTIVE 2 : LADDER ===================== */}
-<Panel class="web-only causation-ladder">
-<PanelTitle>Interactive · climb the ladder</PanelTitle>
-
-### The Three Rungs of Causation
-
-<PanelNote>Tap a rung. Each adds a verb, a piece of notation, and a question the rung below *cannot* answer. The jump from Rung 1 to Rung 2 is the entire subject of today.</PanelNote>
-
-<div class="ladder-grid">
-<div class="rung-btns" id="rungBtns">
-<button class="rungbtn" type="button" data-rung="3" aria-pressed="false">
-<span class="num">3</span>
-<span class="lab"><span class="verb">Imagining</span><b>Counterfactuals</b><span class="q">"Would my headache be gone <em>had</em> I taken the aspirin — given that I didn't, and it still hurts?"</span></span>
-</button>
-<button class="rungbtn" type="button" data-rung="2" aria-pressed="true">
-<span class="num">2</span>
-<span class="lab"><span class="verb">Doing</span><b>Intervention</b><span class="q">"If I <em>take</em> an aspirin, will my headache go away?"</span></span>
-</button>
-<button class="rungbtn" type="button" data-rung="1" aria-pressed="false">
-<span class="num">1</span>
-<span class="lab"><span class="verb">Seeing</span><b>Association</b><span class="q">"Among people who took aspirin, how often did the headache improve compared with people who did not?"</span></span>
-</button>
-</div>
-
-<div class="ladder-vis">
-<svg viewBox="0 0 300 240" role="group" aria-label="A three-rung ladder; select a rung to update the explanation.">
-{/* rails */}
-<line x1="70" y1="20" x2="70" y2="226" stroke="var(--line-strong)" stroke-width="4" stroke-linecap="round"></line>
-<line x1="230" y1="20" x2="230" y2="226" stroke="var(--line-strong)" stroke-width="4" stroke-linecap="round"></line>
-{/* rung 3 (top) */}
-<g id="lr3" class="ladder-rung-hotspot" data-rung="3" role="button" tabindex="0" aria-label="Select rung 3, counterfactuals">
-<rect x="50" y="30" width="200" height="42" fill="transparent" pointer-events="all"></rect>
-<line x1="70" y1="56" x2="230" y2="56" stroke="var(--ink-faint)" stroke-width="6" stroke-linecap="round"></line>
-<text x="150" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">imagine</text>
-</g>
-{/* rung 2 (mid) */}
-<g id="lr2" class="ladder-rung-hotspot" data-rung="2" role="button" tabindex="0" aria-label="Select rung 2, interventions">
-<rect x="50" y="102" width="200" height="42" fill="transparent" pointer-events="all"></rect>
-<line x1="70" y1="128" x2="230" y2="128" stroke="var(--ink-faint)" stroke-width="6" stroke-linecap="round"></line>
-<text x="150" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">do</text>
-</g>
-{/* rung 1 (bottom) */}
-<g id="lr1" class="ladder-rung-hotspot" data-rung="1" role="button" tabindex="0" aria-label="Select rung 1, association">
-<rect x="50" y="174" width="200" height="42" fill="transparent" pointer-events="all"></rect>
-<line x1="70" y1="200" x2="230" y2="200" stroke="var(--ink-faint)" stroke-width="6" stroke-linecap="round"></line>
-<text x="150" y="184" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">see</text>
-</g>
-{/* climber */}
-<circle id="climber" cx="150" cy="128" r="11" fill="var(--accent)" stroke="var(--raised)" stroke-width="3"></circle>
-</svg>
-
-<div class="rung-detail" id="rungDetail" aria-live="polite"></div>
-</div>
-</div>
-</Panel>
+<CausalLadder locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -291,96 +217,7 @@ A safe causal workflow is: specify the unit, exposure, outcome, timing, and inte
 </Aside>
 
 {/* ===================== INTERACTIVE 3 : DO vs SEE ===================== */}
-<Panel class="web-only causation-do-see">
-<PanelTitle>Interactive · seeing vs doing</PanelTitle>
-
-### The do-operator as a calculation
-
-<PanelNote>A toy structural model: rain makes umbrellas more likely and wet clothes more likely; umbrellas themselves reduce wetness. The sliders set logistic-coefficient strengths, not risk differences. Every number below is computed from this stated model.</PanelNote>
-
-<div class="preset-row" role="group" aria-label="SCM presets">
-<button type="button" data-preset="none">No confounding</button>
-<button type="button" data-preset="positive">Positive confounding</button>
-<button type="button" data-preset="negative">Negative confounding</button>
-<button type="button" data-preset="reversal">Sign reversal</button>
-<button type="button" data-preset="zero">Zero causal effect</button>
-</div>
-
-<div class="dovs-controls">
-<div class="slider-row">
-<label for="rConf">Rain→umbrella coefficient strength <span class="val" id="vConf">b=+2.80</span></label>
-<input type="range" id="rConf" min="-100" max="100" value="70" aria-label="Rain to umbrella link strength" />
-</div>
-<div class="slider-row">
-<label for="rTrue">Umbrella→wetness coefficient <span class="val" id="vTrue">d=−1.49</span></label>
-<input type="range" id="rTrue" min="0" max="80" value="45" aria-label="Umbrella causal protection" />
-</div>
-
-<div class="dovs-stage">
-<div class="dovs-card see">
-<p class="cap">Rung 1 · Seeing</p>
-<p class="expr"><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \text{umbrella}) - \mathrm{P}(\text{wet}\mid \text{no umbrella})`} /></p>
-<svg viewBox="0 0 220 112" role="img" aria-label="Graph with rain pointing to umbrella use and wet clothes; the observational back-door path is open.">
-<text x="110" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">rain</text>
-<line x1="88" y1="24" x2="50" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
-<line x1="132" y1="24" x2="170" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah1)"></line>
-<line x1="60" y1="76" x2="156" y2="76" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah1)"></line>
-<text x="47" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">umbrella</text>
-<text x="174" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">wet</text>
-<defs><marker id="ah1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
-</svg>
-<p class="dovs-num" id="numSee">+0.23<small>observed risk difference</small></p>
-</div>
-
-<div class="dovs-card do">
-<p class="cap">Rung 2 · Doing</p>
-<p class="expr"><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \operatorname{do}(\text{umbrella})) - \mathrm{P}(\text{wet}\mid \operatorname{do}(\text{no umbrella}))`} /></p>
-<svg viewBox="0 0 220 112" role="img" aria-label="Same graph but the arrow from rain to umbrella use is cut by the intervention.">
-<text x="110" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">rain</text>
-<line x1="88" y1="24" x2="50" y2="62" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="3 3"></line>
-<line x1="65" y1="40" x2="55" y2="50" stroke="var(--contested)" stroke-width="2.4"></line>
-<line x1="55" y1="40" x2="65" y2="50" stroke="var(--contested)" stroke-width="2.4"></line>
-<line x1="132" y1="24" x2="170" y2="62" stroke="var(--brass)" stroke-width="2" marker-end="url(#ah2)"></line>
-<line x1="60" y1="76" x2="156" y2="76" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah2)"></line>
-<text x="47" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">umbrella</text>
-<text x="174" y="94" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">wet</text>
-<text x="60" y="36" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--contested)">cut</text>
-<defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker></defs>
-</svg>
-<p class="dovs-num" id="numDo">−0.16<small>interventional risk difference</small></p>
-</div>
-</div>
-
-<div class="dovs-table" id="dovsTable" aria-live="polite">
-<SimpleTable
-  headers={["Observed table","Wet","Dry","Risk wet"]}
-  rows={[["Umbrella","189","187","50.2%"],["No umbrella","170","454","27.2%"]]}
-/>
-</div>
-
-<div class="dovs-table" id="dovsParams" aria-live="polite">
-<table class="alt-table">
-<thead><tr><th>Model parameter</th><th>Default</th></tr></thead>
-<tbody>
-<tr><td><MathInline latex={String.raw`P(S=1)`} /></td><td>0.45</td></tr>
-<tr><td><code>a</code></td><td>−2.00</td></tr>
-<tr><td><code>b</code></td><td>4 × slider = +2.80</td></tr>
-<tr><td><code>c</code></td><td>−2.20</td></tr>
-<tr><td><code>d</code></td><td>−3.3 × slider = −1.49</td></tr>
-<tr><td><code>e</code></td><td>+4.10</td></tr>
-</tbody>
-</table>
-</div>
-
-<div class="dovs-equations" id="dovsEquations" aria-live="polite"></div>
-
-<div class="dovs-verdict gap" id="dovsVerdict" aria-live="polite">
-<p class="vh" id="dovsVH">Sign reversal</p>
-<p id="dovsBody">Seeing says umbrellas are associated with wetter clothes. Doing says umbrellas reduce wetness. Rain changed the mix of people in the observed umbrella and no-umbrella groups.</p>
-</div>
-<p class="pnote">The model is: <MathInline latex={String.raw`S \sim \operatorname{Bernoulli}(0.45)`} />; <MathInline latex={String.raw`P(X=1\mid S=s)=\operatorname{logit}^{-1}(a+bs)`} />; <MathInline latex={String.raw`P(Y=1\mid X=x,S=s)=\operatorname{logit}^{-1}(c+dx+es)`} />. Here <MathInline latex={String.raw`S`} /> is rain, <MathInline latex={String.raw`X`} /> is umbrella use, <MathInline latex={String.raw`Y`} /> is wet clothes, and the fixed defaults are <MathInline latex={String.raw`a=-2.0`} />, <MathInline latex={String.raw`c=-2.2`} />, <MathInline latex={String.raw`e=4.1`} />.</p>
-</div>
-</Panel>
+<DoSeeCalculator locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Worked example</PanelTitle>
