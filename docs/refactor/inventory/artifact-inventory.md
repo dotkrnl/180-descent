@@ -1,6 +1,6 @@
 # Artifact Inventory Baseline
 
-Generated: 2026-06-21T22:15:18.768Z
+Generated: 2026-06-22T01:21:22.462Z
 
 This report records generated EPUB/PDF structure after the current build. It is a migration coverage baseline, not a filename or layout compatibility promise.
 
@@ -8,7 +8,7 @@ This report records generated EPUB/PDF structure after the current build. It is 
 
 - EPUB files: 18
 - PDF files: 18
-- Total artifact bytes: 61202809
+- Total artifact bytes: 61199208
 
 ## EPUBs
 
@@ -49,7 +49,7 @@ This report records generated EPUB/PDF structure after the current build. It is 
 | _site/downloads/180-descent-zh-day-002-scientific-method-and-demarcation.pdf | per-day | zh | 2 | true | 43 | 2791420 |
 | _site/downloads/180-descent-zh-day-003-logic-and-valid-inference.pdf | per-day | zh | 3 | true | 56 | 2946201 |
 | _site/downloads/180-descent-zh-day-004-probability-as-extended-logic.pdf | per-day | zh | 4 | true | 22 | 1621687 |
-| _site/downloads/180-descent-zh-day-005-causation.pdf | per-day | zh | 5 | true | 24 | 1457553 |
+| _site/downloads/180-descent-zh-day-005-causation.pdf | per-day | zh | 5 | true | 24 | 1453679 |
 | _site/downloads/180-descent-zh-day-006-statistics-and-the-art-of-not-fooling-yourself.pdf | per-day | zh | 6 | true | 59 | 3904761 |
 | _site/downloads/180-descent-zh-day-007-information-theory.pdf | per-day | zh | 7 | true | 46 | 2785696 |
 | _site/downloads/180-descent-zh-deep-dive.pdf | book | zh | - | true | 298 | 11940137 |
