@@ -1,0 +1,49 @@
+---
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  aria: "太阳正从地平线升起，而明日日出的位置却悬着一个问号。",
+  past: "…昨日",
+  today: "今日",
+  tomorrow: "明日",
+  tag: "● 每一次过往的日出都是证据——却证明不了下一次日出"
+} : {
+  aria: "A sun rising over a horizon with a question mark where tomorrow's sunrise should be.",
+  past: "…yesterday",
+  today: "today",
+  tomorrow: "tomorrow",
+  tag: "● every past sunrise is evidence — and proves nothing about the next one"
+};
+---
+<figure class="hero-sun">
+  <div class="sunwrap">
+    <svg viewBox="0 0 280 200" role="img" aria-label={copy.aria}>
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="color-mix(in srgb,var(--accent) 22%,transparent)"></stop>
+          <stop offset="100%" stop-color="transparent"></stop>
+        </linearGradient>
+        <radialGradient id="orb" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="var(--brass)"></stop>
+          <stop offset="100%" stop-color="color-mix(in srgb,var(--brass) 30%,transparent)"></stop>
+        </radialGradient>
+      </defs>
+      <rect x="0" y="0" width="280" height="150" fill="url(#sky)"></rect>
+      <circle cx="40" cy="120" r="13" fill="var(--brass)" opacity="0.18"></circle>
+      <circle cx="92" cy="98" r="15" fill="var(--brass)" opacity="0.34"></circle>
+      <circle cx="150" cy="84" r="17" fill="url(#orb)" opacity="0.85"></circle>
+      <circle cx="222" cy="74" r="20" fill="none" stroke="var(--brass)" stroke-width="1.6" stroke-dasharray="3 5"></circle>
+      <text x="222" y="82" text-anchor="middle" font-family="Fraunces,serif" font-size="26" font-weight={zh ? undefined : "600"} fill="var(--brass)">?</text>
+      <line x1="0" y1="150" x2="280" y2="150" stroke="var(--line-strong)" stroke-width="1.5"></line>
+      <g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
+        <text x="40" y="168">{copy.past}</text>
+        <text x="150" y="168">{copy.today}</text>
+        <text x="222" y="168">{copy.tomorrow}</text>
+      </g>
+    </svg>
+  </div>
+  <span class="sun-tag">{copy.tag}</span>
+</figure>

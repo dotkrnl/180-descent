@@ -1,0 +1,74 @@
+---
+import TipNote from "@app/components/lesson/TipNote.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<div class="oscviz" id="oscviz" aria-hidden="false">
+  {zh ? (
+    <>
+      <div class="oscrow">
+        <div class="lab">97% 的原始研究报告了统计显著效应</div>
+        <div class="bartrack"><div class="barfill orig" data-w="97"></div></div>
+        <div class="pct">97%</div>
+      </div>
+      <div class="oscrow">
+        <div class="lab">36% 的复现实验再次达到显著性 <span style="color:var(--contested)">← 那个著名而惊人的数字</span></div>
+        <div class="bartrack"><div class="barfill rep" data-w="36"></div></div>
+        <div class="pct">36%</div>
+      </div>
+      <div class="oscrow">
+        <div class="lab">47% 的原始效应落在复现实验的 <span class="term">95% 置信区间</span><TipNote text={"95% 置信区间指一种方法在反复使用时有 95% 的次数会覆盖真实值；它不是说这个具体区间有 95% 的概率包含真实值。"} />内</div>
+        <div class="bartrack"><div class="barfill mid" data-w="47"></div></div>
+        <div class="pct">47%</div>
+      </div>
+      <div class="oscrow">
+        <div class="lab">39% 被复现团队主观判定为已复现</div>
+        <div class="bartrack"><div class="barfill mid" data-w="39"></div></div>
+        <div class="pct">39%</div>
+      </div>
+      <div class="oscrow">
+        <div class="lab">≈50%——复现实验的<span class="term">效应量</span><TipNote text={"效应量是衡量一个效应有多大的标准化指标，不同于它是否刚好跨过显著性门槛。"} />平均约为原始大小的一半</div>
+        <div class="bartrack"><div class="barfill rep" data-w="50"></div></div>
+        <div class="pct">~50%</div>
+      </div>
+    </>
+  ) : (
+    <>
+      <div class="oscrow">
+        <div class="lab"><b>97%</b> of the <em>original</em> studies reported a statistically significant effect</div>
+        <div class="bartrack"><div class="barfill orig" data-w="97"></div></div>
+        <div class="pct">97%</div>
+      </div>
+      <div class="oscrow">
+        <div class="lab"><b>36%</b> of the <em>replications</em> reached significance again <span style="color:var(--contested)">← the famous, scary number</span></div>
+        <div class="bartrack"><div class="barfill rep" data-w="36"></div></div>
+        <div class="pct">36%</div>
+      </div>
+      <div class="oscrow">
+        <div class="lab"><b>47%</b> of original effects landed inside the replication's <em class="term">95% confidence interval</em><TipNote text={"A 95% confidence interval is the range a method would capture the true value in 95% of repeated uses, not a direct 95% probability that this particular interval contains it."} /></div>
+        <div class="bartrack"><div class="barfill mid" data-w="47"></div></div>
+        <div class="pct">47%</div>
+      </div>
+      <div class="oscrow">
+        <div class="lab"><b>39%</b> were <em>subjectively judged</em> by the replicating teams to have replicated</div>
+        <div class="bartrack"><div class="barfill mid" data-w="39"></div></div>
+        <div class="pct">39%</div>
+      </div>
+      <div class="oscrow">
+        <div class="lab"><b>≈50%</b> — replication <em class="term">effect sizes</em><TipNote text={"An effect size is a standardized measure of how large a reported effect is, apart from whether it merely clears a significance threshold."} /> were, on average, about <em>half</em> the original magnitude</div>
+        <div class="bartrack"><div class="barfill rep" data-w="50"></div></div>
+        <div class="pct">~50%</div>
+      </div>
+    </>
+  )}
+</div>
+
+{zh ? (
+  <p style="font-size:.92em;color:var(--ink-soft);margin-top:1rem;">每当你听见「只有三分之一的心理学是真实的」，便是有人抓起了 36% 而丢弃了其余。更诚实的概括要微妙得多，也更有意思：复现实验中的效应平均更弱——大约为首次报告的一半强度，且往往因复现实验<span class="term">功效不足</span><TipNote text={"功效不足的研究数据太少或噪声太大，无法可靠地检出相关大小的效应。"} />而未能检出。<span style="color:var(--accent-deep);">[核心数字已确立]</span>；这些数字究竟能在多大程度上说明哪些原始效应真实存在，<span style="color:var(--hint);">[解释仍有争议]</span>。</p>
+) : (
+  <p style="font-size:.92em;color:var(--ink-soft);margin-top:1rem;">Whenever you see "only a third of psychology is real," someone has grabbed the <em>36%</em> and dropped the rest. The honest summary is subtler and more interesting: replication effects were <strong>weaker on average</strong> — roughly half as strong as first reported, and often too weak for an <em class="term">underpowered</em><TipNote text={"An underpowered study has too little data, or too much noise, to reliably detect an effect of the relevant size."} /> repeat to catch. <span style="color:var(--accent-deep);font-weight:500;">[ESTABLISHED]</span> for the numbers themselves; <span style="color:var(--hint);font-weight:500;">[CONTESTED]</span> for how far they license claims about which original effects were real.</p>
+)}

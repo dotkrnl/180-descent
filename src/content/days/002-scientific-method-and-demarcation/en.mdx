@@ -3,6 +3,8 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import OpenScienceReplicationRates from "@app/components/lesson/figures/OpenScienceReplicationRates.astro";
+import SunriseInductionFigure from "@app/components/lesson/figures/SunriseInductionFigure.astro";
 import DemarcationLab from "@app/components/lesson/interactives/DemarcationLab.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
@@ -34,38 +36,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <HeroSubhead>The sun has risen every morning for 4.5 billion years. So it will rise tomorrow — right?</HeroSubhead>
 
-<figure class="hero-sun">
-<div class="sunwrap">
-<svg viewBox="0 0 280 200" role="img" aria-label="A sun rising over a horizon with a question mark where tomorrow's sunrise should be.">
-<defs>
-<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0%" stop-color="color-mix(in srgb,var(--accent) 22%,transparent)"></stop>
-<stop offset="100%" stop-color="transparent"></stop>
-</linearGradient>
-<radialGradient id="orb" cx="50%" cy="50%" r="50%">
-<stop offset="0%" stop-color="var(--brass)"></stop>
-<stop offset="100%" stop-color="color-mix(in srgb,var(--brass) 30%,transparent)"></stop>
-</radialGradient>
-</defs>
-<rect x="0" y="0" width="280" height="150" fill="url(#sky)"></rect>
-{/* past suns, faded */}
-<circle cx="40" cy="120" r="13" fill="var(--brass)" opacity="0.18"></circle>
-<circle cx="92" cy="98" r="15" fill="var(--brass)" opacity="0.34"></circle>
-<circle cx="150" cy="84" r="17" fill="url(#orb)" opacity="0.85"></circle>
-{/* tomorrow: a question */}
-<circle cx="222" cy="74" r="20" fill="none" stroke="var(--brass)" stroke-width="1.6" stroke-dasharray="3 5"></circle>
-<text x="222" y="82" text-anchor="middle" font-family="Fraunces,serif" font-size="26" font-weight="600" fill="var(--brass)">?</text>
-{/* horizon */}
-<line x1="0" y1="150" x2="280" y2="150" stroke="var(--line-strong)" stroke-width="1.5"></line>
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
-<text x="40" y="168">…yesterday</text>
-<text x="150" y="168">today</text>
-<text x="222" y="168">tomorrow</text>
-</g>
-</svg>
-</div>
-<span class="sun-tag">● every past sunrise is evidence — and proves nothing about the next one</span>
-</figure>
+<SunriseInductionFigure locale="en" />
 
 <Lead drop="A">sk a child whether the sun will rise tomorrow and they'll look at you as if you're slow. Of course it will — it always has. That confidence feels like the bedrock of knowledge itself. But press on *why* you believe it, and you walk straight off a cliff that a quiet Scottish philosopher dug in 1739, and that nobody has ever filled in. Your only reason is that the sun has risen before. You are arguing: *the future will resemble the past, because in the past, the future resembled the past.* Read that twice. It assumes the very thing it's trying to prove.</Lead>
 
@@ -235,34 +206,7 @@ If there's one criterion almost everyone agrees on — Popper, Kuhn, your high-s
 <h3>The shot heard round psychology</h3>
 <p>The landmark is the <strong>Open Science Collaboration's "Estimating the Reproducibility of Psychological Science"</strong> (<em>Science</em>, 28 August 2015) — roughly 270 researchers, led by Brian Nosek, who repeated <strong>100</strong> studies from three top psychology journals, working with the original authors to get the methods right. The result detonated across the field. But the single most important lesson is buried in plain sight: <strong>there is no one "replication rate."</strong> The paper reported several, and they tell different stories. Watch.</p>
 
-<div class="oscviz" id="oscviz" aria-hidden="false">
-<div class="oscrow">
-<div class="lab"><b>97%</b> of the <em>original</em> studies reported a statistically significant effect</div>
-<div class="bartrack"><div class="barfill orig" data-w="97"></div></div>
-<div class="pct">97%</div>
-</div>
-<div class="oscrow">
-<div class="lab"><b>36%</b> of the <em>replications</em> reached significance again <span style="color:var(--contested)">← the famous, scary number</span></div>
-<div class="bartrack"><div class="barfill rep" data-w="36"></div></div>
-<div class="pct">36%</div>
-</div>
-<div class="oscrow">
-<div class="lab"><b>47%</b> of original effects landed inside the replication's <em class="term">95% confidence interval</em><TipNote text={"A 95% confidence interval is the range a method would capture the true value in 95% of repeated uses, not a direct 95% probability that this particular interval contains it."} /></div>
-<div class="bartrack"><div class="barfill mid" data-w="47"></div></div>
-<div class="pct">47%</div>
-</div>
-<div class="oscrow">
-<div class="lab"><b>39%</b> were <em>subjectively judged</em> by the replicating teams to have replicated</div>
-<div class="bartrack"><div class="barfill mid" data-w="39"></div></div>
-<div class="pct">39%</div>
-</div>
-<div class="oscrow">
-<div class="lab"><b>≈50%</b> — replication <em class="term">effect sizes</em><TipNote text={"An effect size is a standardized measure of how large a reported effect is, apart from whether it merely clears a significance threshold."} /> were, on average, about <em>half</em> the original magnitude</div>
-<div class="bartrack"><div class="barfill rep" data-w="50"></div></div>
-<div class="pct">~50%</div>
-</div>
-</div>
-<p style="font-size:.92em;color:var(--ink-soft);margin-top:1rem;">Whenever you see "only a third of psychology is real," someone has grabbed the <em>36%</em> and dropped the rest. The honest summary is subtler and more interesting: replication effects were <strong>weaker on average</strong> — roughly half as strong as first reported, and often too weak for an <em class="term">underpowered</em><TipNote text={"An underpowered study has too little data, or too much noise, to reliably detect an effect of the relevant size."} /> repeat to catch. <span style="color:var(--accent-deep);font-weight:500;">[ESTABLISHED]</span> for the numbers themselves; <span style="color:var(--hint);font-weight:500;">[CONTESTED]</span> for how far they license claims about which original effects were real.</p>
+<OpenScienceReplicationRates locale="en" />
 
 <p>And the authors refused to let anyone — optimist or doom-monger — over-read it. Their own conclusion is a small masterpiece of calibration, and a direct callback to <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a>'s lesson that a true belief held for the wrong reasons isn't knowledge:</p>
 <blockquote>How many of the effects have we established are true? Zero. And how many of the effects have we established are false? Zero.
@@ -405,4 +349,3 @@ Two and a half thousand years in, the honest answer to "what makes something sci
 </Sources>
 
 </Wrap>
-

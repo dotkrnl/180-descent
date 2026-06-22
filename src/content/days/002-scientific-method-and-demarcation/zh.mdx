@@ -3,6 +3,8 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import OpenScienceReplicationRates from "@app/components/lesson/figures/OpenScienceReplicationRates.astro";
+import SunriseInductionFigure from "@app/components/lesson/figures/SunriseInductionFigure.astro";
 import DemarcationLab from "@app/components/lesson/interactives/DemarcationLab.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
@@ -34,38 +36,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <HeroSubhead>四十五亿年来，太阳每日准时东升。那么明日依旧会如期而至——对吗？</HeroSubhead>
 
-<figure class="hero-sun">
-<div class="sunwrap">
-<svg viewBox="0 0 280 200" role="img" aria-label="太阳正从地平线升起，而明日日出的位置却悬着一个问号。">
-<defs>
-<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0%" stop-color="color-mix(in srgb,var(--accent) 22%,transparent)"></stop>
-<stop offset="100%" stop-color="transparent"></stop>
-</linearGradient>
-<radialGradient id="orb" cx="50%" cy="50%" r="50%">
-<stop offset="0%" stop-color="var(--brass)"></stop>
-<stop offset="100%" stop-color="color-mix(in srgb,var(--brass) 30%,transparent)"></stop>
-</radialGradient>
-</defs>
-<rect x="0" y="0" width="280" height="150" fill="url(#sky)"></rect>
-{/* past suns, faded */}
-<circle cx="40" cy="120" r="13" fill="var(--brass)" opacity="0.18"></circle>
-<circle cx="92" cy="98" r="15" fill="var(--brass)" opacity="0.34"></circle>
-<circle cx="150" cy="84" r="17" fill="url(#orb)" opacity="0.85"></circle>
-{/* tomorrow: a question */}
-<circle cx="222" cy="74" r="20" fill="none" stroke="var(--brass)" stroke-width="1.6" stroke-dasharray="3 5"></circle>
-<text x="222" y="82" text-anchor="middle" font-family="Fraunces,serif" font-size="26" fill="var(--brass)">?</text>
-{/* horizon */}
-<line x1="0" y1="150" x2="280" y2="150" stroke="var(--line-strong)" stroke-width="1.5"></line>
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
-<text x="40" y="168">…昨日</text>
-<text x="150" y="168">今日</text>
-<text x="222" y="168">明日</text>
-</g>
-</svg>
-</div>
-<span class="sun-tag">● 每一次过往的日出都是证据——却证明不了下一次日出</span>
-</figure>
+<SunriseInductionFigure locale="zh" />
 
 <Lead drop="若">问一个孩子，明天太阳是否会升起，他多半会觉得你在无理取闹。当然会升——它一向如此。这份笃定，仿佛构成了知识最底层的基石。可若再深究一句「你凭什么相信」，你便一脚踏入了一座悬崖——那是 1739 年一位寡言的苏格兰哲学家悄然掘出的，至今无人能将其填平。你唯一的凭据，不过是太阳从前升起过。你的论证逻辑其实是：未来会与过去相似，因为在过去，未来曾与过去相似。请再读一遍——它预设了它恰恰想要证明的东西。</Lead>
 
@@ -235,34 +206,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <h3>震动心理学的一声枪响</h3>
 <p>里程碑是开放科学合作组织的《估计心理科学的可复现性》（Science，2015 年 8 月 28 日）——约 270 位研究者，在布莱恩·诺塞克领导下，复现了三本顶尖心理学期刊上的 100 项研究，并与原作者合作确保方法无误。结果在该领域引发爆炸。但唯一最重要的教训却藏于明处：并不存在单一的「复现率」。该论文报告了数个，而它们讲述着不同的故事。请看。</p>
 
-<div class="oscviz" id="oscviz" aria-hidden="false">
-<div class="oscrow">
-<div class="lab">97% 的原始研究报告了统计显著效应</div>
-<div class="bartrack"><div class="barfill orig" data-w="97"></div></div>
-<div class="pct">97%</div>
-</div>
-<div class="oscrow">
-<div class="lab">36% 的复现实验再次达到显著性 <span style="color:var(--contested)">← 那个著名而惊人的数字</span></div>
-<div class="bartrack"><div class="barfill rep" data-w="36"></div></div>
-<div class="pct">36%</div>
-</div>
-<div class="oscrow">
-<div class="lab">47% 的原始效应落在复现实验的 <span class="term">95% 置信区间</span><TipNote text={"95% 置信区间指一种方法在反复使用时有 95% 的次数会覆盖真实值；它不是说这个具体区间有 95% 的概率包含真实值。"} />内</div>
-<div class="bartrack"><div class="barfill mid" data-w="47"></div></div>
-<div class="pct">47%</div>
-</div>
-<div class="oscrow">
-<div class="lab">39% 被复现团队主观判定为已复现</div>
-<div class="bartrack"><div class="barfill mid" data-w="39"></div></div>
-<div class="pct">39%</div>
-</div>
-<div class="oscrow">
-<div class="lab">≈50%——复现实验的<span class="term">效应量</span><TipNote text={"效应量是衡量一个效应有多大的标准化指标，不同于它是否刚好跨过显著性门槛。"} />平均约为原始大小的一半</div>
-<div class="bartrack"><div class="barfill rep" data-w="50"></div></div>
-<div class="pct">~50%</div>
-</div>
-</div>
-<p style="font-size:.92em;color:var(--ink-soft);margin-top:1rem;">每当你听见「只有三分之一的心理学是真实的」，便是有人抓起了 36% 而丢弃了其余。更诚实的概括要微妙得多，也更有意思：复现实验中的效应平均更弱——大约为首次报告的一半强度，且往往因复现实验<span class="term">功效不足</span><TipNote text={"功效不足的研究数据太少或噪声太大，无法可靠地检出相关大小的效应。"} />而未能检出。<span style="color:var(--accent-deep);">[核心数字已确立]</span>；这些数字究竟能在多大程度上说明哪些原始效应真实存在，<span style="color:var(--hint);">[解释仍有争议]</span>。</p>
+<OpenScienceReplicationRates locale="zh" />
 
 <p>而作者拒绝让任何人——乐观者或唱衰者——过度解读。他们自己的结论是一篇校准的小杰作，也是对<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>教训的直接回响：基于错误理由而持有的真信念，并不等于知识：</p>
 <blockquote>我们已确立为真实的效应，有多少？零。而我们已确立为虚假的效应，有多少？零。
@@ -405,4 +349,3 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </Sources>
 
 </Wrap>
-
