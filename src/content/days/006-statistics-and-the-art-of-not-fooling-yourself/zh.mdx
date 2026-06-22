@@ -6,6 +6,8 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import ForkingPathsFigure from "@app/components/lesson/figures/ForkingPathsFigure.astro";
+import StatisticsReformSpectrum from "@app/components/lesson/figures/StatisticsReformSpectrum.astro";
 import SpecificationCurve from "@app/components/lesson/interactives/SpecificationCurve.astro";
 import ConfidenceIntervalCoverage from "@app/components/lesson/interactives/ConfidenceIntervalCoverage.astro";
 import EffectSizeDial from "@app/components/lesson/interactives/EffectSizeDial.astro";
@@ -42,49 +44,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <HeroSubhead>只要研究者手中有足够多看似合理的分析选择，许多数据集里都可能找到一条通往 <Highlight><MathInline latex={String.raw`p < .05`} /></Highlight> 的路。统计学要做的，正是防止我们在不知不觉中挑中那条路。</HeroSubhead>
 
-<figure class="hero-fig forking-paths">
-<svg viewBox="0 0 640 320" role="img" aria-label="一张有序图：同一份数据经过多个看似合理的分析选择，生成许多设定，其中一个显著结果被选择性报告。">
-<defs>
-<marker id="garden-arrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--line-strong)"></path></marker>
-</defs>
-<rect x="8" y="10" width="624" height="284" rx="8" fill="var(--raised)" stroke="var(--line)"></rect>
-<g font-family="IBM Plex Mono,monospace">
-<text x="32" y="42" font-size="12" letter-spacing="1.6" fill="var(--accent)">分岔路径花园</text>
-<text x="32" y="66" font-size="11" fill="var(--ink-faint)">同一份数据，多套合理的分析设定，一个诱人的标题</text>
-<rect x="32" y="102" width="128" height="100" rx="8" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
-<text x="96" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">同一数据</text>
-<text x="96" y="148" text-anchor="middle" font-size="11" fill="var(--ink-faint)">只有噪声</text>
-<line x1="62" y1="177" x2="130" y2="177" stroke="var(--line-strong)" stroke-width="1.4"></line>
-<circle cx="70" cy="169" r="3" fill="var(--accent)"></circle>
-<circle cx="88" cy="182" r="3" fill="var(--ink-faint)"></circle>
-<circle cx="106" cy="172" r="3" fill="var(--accent)"></circle>
-<circle cx="124" cy="184" r="3" fill="var(--ink-faint)"></circle>
-<line x1="168" y1="152" x2="210" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
-<rect x="218" y="82" width="218" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
-<text x="327" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">合理选择</text>
-<g font-size="10.5">
-<text x="240" y="134" fill="var(--ink-soft)">离群值</text><text x="338" y="134" fill="var(--ink-faint)">保留 / 剔除</text>
-<text x="240" y="158" fill="var(--ink-soft)">协变量</text><text x="338" y="158" fill="var(--ink-faint)">无 / W</text>
-<text x="240" y="182" fill="var(--ink-soft)">尺度</text><text x="338" y="182" fill="var(--ink-faint)">原始 / 秩</text>
-<text x="240" y="206" fill="var(--ink-soft)">样本</text><text x="338" y="206" fill="var(--ink-faint)">全部 / 子组</text>
-</g>
-<line x1="240" y1="143" x2="416" y2="143" stroke="var(--line)" stroke-width="1"></line>
-<line x1="240" y1="167" x2="416" y2="167" stroke="var(--line)" stroke-width="1"></line>
-<line x1="240" y1="191" x2="416" y2="191" stroke="var(--line)" stroke-width="1"></line>
-<line x1="444" y1="152" x2="456" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
-<rect x="464" y="82" width="144" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
-<text x="536" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">报告结果</text>
-<rect x="484" y="122" width="104" height="26" rx="6" fill="color-mix(in srgb,var(--contested) 12%,var(--paper))" stroke="var(--contested)" stroke-width="1.8"></rect>
-<text x="536" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="var(--contested)">p = .03</text>
-<text x="536" y="165" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .61</text>
-<text x="536" y="187" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .44</text>
-<text x="536" y="209" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .78</text>
-<rect x="450" y="246" width="172" height="28" rx="6" fill="color-mix(in srgb,var(--contested) 10%,var(--raised))" stroke="var(--contested)"></rect>
-<text x="536" y="265" text-anchor="middle" font-size="11" font-weight="700" fill="var(--contested)">最终报告的分支</text>
-</g>
-</svg>
-<figcaption>分岔路径花园。数据只有噪声；分支一多，就很容易冒出一条看似「发现」的路径。真正的危险，是看过数据后再决定走哪条路。</figcaption>
-</figure>
+<ForkingPathsFigure locale="zh" />
 
 <p class="lede dropcap">2011 年，三位心理学家故意设计了一项荒诞实验。他们让 20 名本科生分别听披头士的《当我六十四岁》（When I'm Sixty-Four）或一首对照曲目，然后回答包括出生日期在内的一系列问题。常规统计分析竟显示，听前一首歌的人「年轻」了约一岁半，<span class="hl"><MathInline latex={String.raw`p = .04`} /></span>。不是感觉更年轻，而是按出生日期算真的更年轻。</p>
 
@@ -277,47 +237,7 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 </ContentSection>
 
-{/* ===================== VISUAL 2 ===================== */}
-<Panel class="statistics-spectrum">
-<PanelTitle>图示 · 改革光谱</PanelTitle>
-
-### 与 p 值共存的四种方式
-
-<PanelNote>这条线上的所有人都同意现状已支离破碎。他们的分歧在于疗法需要多彻底。</PanelNote>
-
-<svg viewBox="0 0 640 168" role="img" aria-label="一个光谱：从保留 p < 0.05，到将其重新定义为 0.005，到为你的 α 提供依据，再到完全弃用统计显著性。">
-<line x1="40" y1="60" x2="600" y2="60" stroke="var(--line-strong)" stroke-width="2"></line>
-<g font-family="IBM Plex Mono,monospace">
-{/* stop 1 */}
-<circle cx="70" cy="60" r="7" fill="var(--paper)" stroke="var(--ink-faint)" stroke-width="2"></circle>
-<text x="70" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">保留 .05</text>
-<text x="70" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">现状派</text>
-{/* stop 2 */}
-<circle cx="230" cy="60" r="7" fill="color-mix(in srgb,var(--hint) 30%,transparent)" stroke="var(--hint)" stroke-width="2"></circle>
-<text x="230" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">重定义: .005</text>
-<text x="230" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">Benjamin 等 (2018)</text>
-<text x="230" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">(72 位作者)</text>
-{/* stop 3 */}
-<circle cx="400" cy="60" r="7" fill="color-mix(in srgb,var(--accent) 30%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<text x="400" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">说明 α 依据</text>
-<text x="400" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">Lakens 等 (2018)</text>
-<text x="400" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">(88 位作者)</text>
-{/* stop 4 */}
-<circle cx="568" cy="60" r="7" fill="color-mix(in srgb,var(--contested) 30%,transparent)" stroke="var(--contested)" stroke-width="2"></circle>
-<text x="568" y="40" text-anchor="middle" font-size="11" fill="var(--contested)">弃用显著性</text>
-<text x="568" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">Amrhein 等 (2019)</text>
-<text x="568" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">(800+ 签名者)</text>
-</g>
-<text x="40" y="146" text-anchor="start" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">修补规则……</text>
-<text x="600" y="146" text-anchor="end" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">……取消那条分界线</text>
-</svg>
-<div class="spec-key">
-<div class="k"><span>重定义</span> —— 本杰明（Benjamin）等 (2018) 保留了阈值的想法，但将显著性阈值收紧至 p < .005：低于 .005 才称为「发现」，而 .005–.05 仅称为「提示性证据」。简单直接，但批评者认为这只是治标不治本。</div>
-<div class="k"><span>说明 α 的设定依据</span> —— 拉肯斯（Lakens）等 (2018) 反对把任何单一数字当作通用阈值。他们认为应该根据具体情况，权衡「假警报」与「漏报」的真实成本，审慎选择阈值，并<span class="hl">展示你的推理过程</span>。</div>
-<div class="k"><span>弃用显著性</span> —— 阿姆瑞恩（Amrhein）、格陵兰和麦克沙恩（McShane）(2019) 在《自然》杂志上联合 800 多名签名者，呼吁废除「显著 / 不显著」这种二元对立的习惯——即不再把 p = .04 和 p = .06 看作两个不同的世界。他们并非主张禁用 p 值，而是反对用一条硬阈值把结果一分为二。</div>
-<div class="k"><span>统计学界的专业学会</span> —— 美国统计协会（ASA）曾两度发声：先是在 2016 年发表了包含六项原则的审慎声明，随后在 2019 年发表了一篇更为激进的社论，敦促大家停止把结果称为「统计显著」。（2019 年那篇是编辑观点，并非 ASA 的正式政策——这一区别本身也引发了一场争论。）</div>
-</div>
-</Panel>
+<StatisticsReformSpectrum locale="zh" />
 
 <ContentSection>
 这些改革立场不同，却都在推动同一转变：不再寄希望于通过一个单一阈值给出「是 / 否」的判定，而是转向<Highlight>报告效应的大小、不确定程度，以及结论对分析选择的敏感程度</Highlight>。最后这个「敏感程度」（或称结论的脆弱性），正是当前改革的重点之一。

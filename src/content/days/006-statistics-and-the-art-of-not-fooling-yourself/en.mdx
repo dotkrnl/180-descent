@@ -6,6 +6,8 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import ForkingPathsFigure from "@app/components/lesson/figures/ForkingPathsFigure.astro";
+import StatisticsReformSpectrum from "@app/components/lesson/figures/StatisticsReformSpectrum.astro";
 import SpecificationCurve from "@app/components/lesson/interactives/SpecificationCurve.astro";
 import ConfidenceIntervalCoverage from "@app/components/lesson/interactives/ConfidenceIntervalCoverage.astro";
 import EffectSizeDial from "@app/components/lesson/interactives/EffectSizeDial.astro";
@@ -41,49 +43,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <HeroSubhead>Given enough defensible choices, many datasets contain a path to *p*&nbsp;&lt;&nbsp;.05. The whole discipline is the struggle not to walk it by accident.</HeroSubhead>
 
-<figure class="hero-fig forking-paths">
-<svg viewBox="0 0 640 320" role="img" aria-label="An organized diagram showing one dataset, several defensible analysis choices, many resulting specifications, and one selectively reported significant result.">
-<defs>
-<marker id="garden-arrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--line-strong)"></path></marker>
-</defs>
-<rect x="8" y="10" width="624" height="284" rx="8" fill="var(--raised)" stroke="var(--line)"></rect>
-<g font-family="IBM Plex Mono,monospace">
-<text x="32" y="42" font-size="12" letter-spacing="1.6" fill="var(--accent)">THE GARDEN OF FORKING PATHS</text>
-<text x="32" y="66" font-size="11" fill="var(--ink-faint)">same data, many defensible specifications, one tempting headline</text>
-<rect x="32" y="102" width="128" height="100" rx="8" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
-<text x="96" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">same dataset</text>
-<text x="96" y="148" text-anchor="middle" font-size="11" fill="var(--ink-faint)">noise only</text>
-<line x1="62" y1="177" x2="130" y2="177" stroke="var(--line-strong)" stroke-width="1.4"></line>
-<circle cx="70" cy="169" r="3" fill="var(--accent)"></circle>
-<circle cx="88" cy="182" r="3" fill="var(--ink-faint)"></circle>
-<circle cx="106" cy="172" r="3" fill="var(--accent)"></circle>
-<circle cx="124" cy="184" r="3" fill="var(--ink-faint)"></circle>
-<line x1="168" y1="152" x2="210" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
-<rect x="218" y="82" width="218" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
-<text x="327" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">reasonable choices</text>
-<g font-size="10.5">
-<text x="240" y="134" fill="var(--ink-soft)">outliers</text><text x="338" y="134" fill="var(--ink-faint)">keep / trim</text>
-<text x="240" y="158" fill="var(--ink-soft)">covariate</text><text x="338" y="158" fill="var(--ink-faint)">none / W</text>
-<text x="240" y="182" fill="var(--ink-soft)">scale</text><text x="338" y="182" fill="var(--ink-faint)">raw / rank</text>
-<text x="240" y="206" fill="var(--ink-soft)">sample</text><text x="338" y="206" fill="var(--ink-faint)">all / subset</text>
-</g>
-<line x1="240" y1="143" x2="416" y2="143" stroke="var(--line)" stroke-width="1"></line>
-<line x1="240" y1="167" x2="416" y2="167" stroke="var(--line)" stroke-width="1"></line>
-<line x1="240" y1="191" x2="416" y2="191" stroke="var(--line)" stroke-width="1"></line>
-<line x1="444" y1="152" x2="456" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
-<rect x="464" y="82" width="144" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
-<text x="536" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">reported results</text>
-<rect x="484" y="122" width="104" height="26" rx="6" fill="color-mix(in srgb,var(--contested) 12%,var(--paper))" stroke="var(--contested)" stroke-width="1.8"></rect>
-<text x="536" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="var(--contested)">p = .03</text>
-<text x="536" y="165" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .61</text>
-<text x="536" y="187" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .44</text>
-<text x="536" y="209" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .78</text>
-<rect x="450" y="246" width="172" height="28" rx="6" fill="color-mix(in srgb,var(--contested) 10%,var(--raised))" stroke="var(--contested)"></rect>
-<text x="536" y="265" text-anchor="middle" font-size="11" font-weight="700" fill="var(--contested)">reported branch</text>
-</g>
-</svg>
-<figcaption>The garden of forking paths. The data are pure noise — yet enough branches guarantee one ends in a "discovery." The danger is choosing after the data points the way.</figcaption>
-</figure>
+<ForkingPathsFigure locale="en" />
 
 <p class="lede dropcap">In 2011 three psychologists set out to prove something impossible. They sat twenty undergraduates down, played half of them the Beatles' <em>"When I'm Sixty-Four"</em> and the other half a control tune, then asked a battery of questions — including each person's date of birth. After a perfectly ordinary statistical analysis, they announced their finding: listening to <em>"When I'm Sixty-Four"</em> made people <strong>a year and a half younger</strong>. Not feel younger. Be younger — their birth dates said so, at <MathInline latex={String.raw`p = .04`} />.</p>
 
@@ -268,47 +228,7 @@ If <MathInline latex={String.raw`p < .05`} /> is so abusable, what should replac
 
 </ContentSection>
 
-{/* ===================== VISUAL 2 ===================== */}
-<Panel class="statistics-spectrum">
-<PanelTitle>Diagram · the reform spectrum</PanelTitle>
-
-### Four ways to live with *p*
-
-<PanelNote>Everyone on this line agrees the status quo is broken. They disagree about how radical the cure must be.</PanelNote>
-
-<svg viewBox="0 0 640 168" role="img" aria-label="A spectrum from keeping p less than 0.05, to redefining it to 0.005, to justifying your alpha, to retiring statistical significance entirely.">
-<line x1="40" y1="60" x2="600" y2="60" stroke="var(--line-strong)" stroke-width="2"></line>
-<g font-family="IBM Plex Mono,monospace">
-{/* stop 1 */}
-<circle cx="70" cy="60" r="7" fill="var(--paper)" stroke="var(--ink-faint)" stroke-width="2"></circle>
-<text x="70" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">keep .05</text>
-<text x="70" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">status quo</text>
-{/* stop 2 */}
-<circle cx="230" cy="60" r="7" fill="color-mix(in srgb,var(--hint) 30%,transparent)" stroke="var(--hint)" stroke-width="2"></circle>
-<text x="230" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">redefine: .005</text>
-<text x="230" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">Benjamin+ 2018</text>
-<text x="230" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">(72 authors)</text>
-{/* stop 3 */}
-<circle cx="400" cy="60" r="7" fill="color-mix(in srgb,var(--accent) 30%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<text x="400" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">justify your α</text>
-<text x="400" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">Lakens+ 2018</text>
-<text x="400" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">(88 authors)</text>
-{/* stop 4 */}
-<circle cx="568" cy="60" r="7" fill="color-mix(in srgb,var(--contested) 30%,transparent)" stroke="var(--contested)" stroke-width="2"></circle>
-<text x="568" y="40" text-anchor="middle" font-size="11" fill="var(--contested)">retire it</text>
-<text x="568" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">Amrhein+ 2019</text>
-<text x="568" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">(800+ signatories)</text>
-</g>
-<text x="40" y="146" text-anchor="start" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">patch the rule…</text>
-<text x="600" y="146" text-anchor="end" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">…abolish the bright line</text>
-</svg>
-<div class="spec-key">
-<div class="k"><b>Redefine</b> — Benjamin et al. (2018) keep the threshold idea but move it: call <MathInline latex={String.raw`p < .005`} /> a "discovery," and .005–.05 merely "suggestive." Simple, blunt, and (critics say) treats a symptom.</div>
-<div class="k"><b>Justify your alpha</b> — Lakens et al. (2018) reject any universal number. Pick your threshold deliberately, case by case, weighing the real costs of false alarms versus misses, and <em>show your reasoning</em>.</div>
-<div class="k"><b>Retire significance</b> — Amrhein, Greenland &amp; McShane (2019), with 800+ co-signers in <em>Nature</em>, want to scrap the "significant / not significant" dichotomy itself — the habit of treating <MathInline latex={String.raw`p = .04`} /> and <em>p</em> = .06 as different worlds. Not a ban on <MathInline latex={String.raw`p`} />-values; a ban on the bright line.</div>
-<div class="k"><b>The field's statistical society</b> — the American Statistical Association weighed in twice: a careful 2016 statement of six principles, then a more radical 2019 editorial urging us to stop saying "statistically significant" at all. (That 2019 piece was the editors' view, not formal ASA policy — a distinction that itself caused a row.)</div>
-</div>
-</Panel>
+<StatisticsReformSpectrum locale="en" />
 
 <ContentSection>
 What unites the whole spectrum, from cautious to incendiary, is a single migration: away from a yes/no verdict at a magic number, toward *reporting how big an effect is, how uncertain you are, and how fragile the answer is to the choices you made*. That last idea — fragility — is where the live 2020s frontier lives.

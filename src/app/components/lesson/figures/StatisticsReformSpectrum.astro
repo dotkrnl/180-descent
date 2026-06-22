@@ -1,0 +1,55 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<Panel class="statistics-spectrum">
+  <PanelTitle>{zh ? "图示 · 改革光谱" : "Diagram · the reform spectrum"}</PanelTitle>
+  {zh ? <h3>与 p 值共存的四种方式</h3> : <h3>Four ways to live with <em>p</em></h3>}
+  <PanelNote>{zh ? "这条线上的所有人都同意现状已支离破碎。他们的分歧在于疗法需要多彻底。" : "Everyone on this line agrees the status quo is broken. They disagree about how radical the cure must be."}</PanelNote>
+
+  <svg viewBox="0 0 640 168" role="img" aria-label={zh ? "一个光谱：从保留 p < 0.05，到将其重新定义为 0.005，到为你的 α 提供依据，再到完全弃用统计显著性。" : "A spectrum from keeping p less than 0.05, to redefining it to 0.005, to justifying your alpha, to retiring statistical significance entirely."}>
+    <line x1="40" y1="60" x2="600" y2="60" stroke="var(--line-strong)" stroke-width="2"></line>
+    <g font-family="IBM Plex Mono,monospace">
+      <circle cx="70" cy="60" r="7" fill="var(--paper)" stroke="var(--ink-faint)" stroke-width="2"></circle>
+      <text x="70" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">{zh ? "保留 .05" : "keep .05"}</text>
+      <text x="70" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">{zh ? "现状派" : "status quo"}</text>
+      <circle cx="230" cy="60" r="7" fill="color-mix(in srgb,var(--hint) 30%,transparent)" stroke="var(--hint)" stroke-width="2"></circle>
+      <text x="230" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">{zh ? "重定义: .005" : "redefine: .005"}</text>
+      <text x="230" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">{zh ? "Benjamin 等 (2018)" : "Benjamin+ 2018"}</text>
+      <text x="230" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">{zh ? "(72 位作者)" : "(72 authors)"}</text>
+      <circle cx="400" cy="60" r="7" fill="color-mix(in srgb,var(--accent) 30%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+      <text x="400" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">{zh ? "说明 α 依据" : "justify your α"}</text>
+      <text x="400" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">{zh ? "Lakens 等 (2018)" : "Lakens+ 2018"}</text>
+      <text x="400" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">{zh ? "(88 位作者)" : "(88 authors)"}</text>
+      <circle cx="568" cy="60" r="7" fill="color-mix(in srgb,var(--contested) 30%,transparent)" stroke="var(--contested)" stroke-width="2"></circle>
+      <text x="568" y="40" text-anchor="middle" font-size="11" fill="var(--contested)">{zh ? "弃用显著性" : "retire it"}</text>
+      <text x="568" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">{zh ? "Amrhein 等 (2019)" : "Amrhein+ 2019"}</text>
+      <text x="568" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">{zh ? "(800+ 签名者)" : "(800+ signatories)"}</text>
+    </g>
+    <text x="40" y="146" text-anchor="start" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">{zh ? "修补规则……" : "patch the rule…"}</text>
+    <text x="600" y="146" text-anchor="end" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">{zh ? "……取消那条分界线" : "…abolish the bright line"}</text>
+  </svg>
+  {zh ? (
+    <div class="spec-key">
+      <div class="k"><span>重定义</span> —— 本杰明（Benjamin）等 (2018) 保留了阈值的想法，但将显著性阈值收紧至 p &lt; .005：低于 .005 才称为「发现」，而 .005–.05 仅称为「提示性证据」。简单直接，但批评者认为这只是治标不治本。</div>
+      <div class="k"><span>说明 α 的设定依据</span> —— 拉肯斯（Lakens）等 (2018) 反对把任何单一数字当作通用阈值。他们认为应该根据具体情况，权衡「假警报」与「漏报」的真实成本，审慎选择阈值，并<span class="hl">展示你的推理过程</span>。</div>
+      <div class="k"><span>弃用显著性</span> —— 阿姆瑞恩（Amrhein）、格陵兰和麦克沙恩（McShane）(2019) 在《自然》杂志上联合 800 多名签名者，呼吁废除「显著 / 不显著」这种二元对立的习惯——即不再把 p = .04 和 p = .06 看作两个不同的世界。他们并非主张禁用 p 值，而是反对用一条硬阈值把结果一分为二。</div>
+      <div class="k"><span>统计学界的专业学会</span> —— 美国统计协会（ASA）曾两度发声：先是在 2016 年发表了包含六项原则的审慎声明，随后在 2019 年发表了一篇更为激进的社论，敦促大家停止把结果称为「统计显著」。（2019 年那篇是编辑观点，并非 ASA 的正式政策——这一区别本身也引发了一场争论。）</div>
+    </div>
+  ) : (
+    <div class="spec-key">
+      <div class="k"><b>Redefine</b> — Benjamin et al. (2018) keep the threshold idea but move it: call <MathInline latex={String.raw`p < .005`} /> a "discovery," and .005–.05 merely "suggestive." Simple, blunt, and (critics say) treats a symptom.</div>
+      <div class="k"><b>Justify your alpha</b> — Lakens et al. (2018) reject any universal number. Pick your threshold deliberately, case by case, weighing the real costs of false alarms versus misses, and <em>show your reasoning</em>.</div>
+      <div class="k"><b>Retire significance</b> — Amrhein, Greenland &amp; McShane (2019), with 800+ co-signers in <em>Nature</em>, want to scrap the "significant / not significant" dichotomy itself — the habit of treating <MathInline latex={String.raw`p = .04`} /> and <em>p</em> = .06 as different worlds. Not a ban on <MathInline latex={String.raw`p`} />-values; a ban on the bright line.</div>
+      <div class="k"><b>The field's statistical society</b> — the American Statistical Association weighed in twice: a careful 2016 statement of six principles, then a more radical 2019 editorial urging us to stop saying "statistically significant" at all. (That 2019 piece was the editors' view, not formal ASA policy — a distinction that itself caused a row.)</div>
+    </div>
+  )}
+</Panel>
