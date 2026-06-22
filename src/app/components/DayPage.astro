@@ -3,11 +3,14 @@ import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import BookShell from "@app/layouts/BookShell.astro";
 import type { RegistryDayLocaleEntry } from "@lib/content";
 import accuracyDominationScript from "../../assets/js/interactions/accuracy-domination.js?url";
+import baseRateEngineScript from "../../assets/js/interactions/base-rate-engine.js?url";
 import clockTicksScript from "../../assets/js/interactions/clock-ticks.js?url";
 import closureMachineScript from "../../assets/js/interactions/closure-machine.js?url";
 import credenceDialScript from "../../assets/js/interactions/credence-dial.js?url";
+import demarcationLabScript from "../../assets/js/interactions/demarcation-lab.js?url";
 import echoChamberScript from "../../assets/js/interactions/echo-chamber.js?url";
 import gettierMachineScript from "../../assets/js/interactions/gettier-machine.js?url";
+import grueMachineScript from "../../assets/js/interactions/grue-machine.js?url";
 import modalRingsScript from "../../assets/js/interactions/modal-rings.js?url";
 import stakesDialScript from "../../assets/js/interactions/stakes-dial.js?url";
 
@@ -17,24 +20,35 @@ interface AppendixRenderEntry {
   Body: AstroComponentFactory;
 }
 
+interface DayNavEntry {
+  day: number;
+  path: string;
+  title: string;
+}
+
 interface Props {
   entry: RegistryDayLocaleEntry;
+  previous?: DayNavEntry;
+  next?: DayNavEntry;
   Body: AstroComponentFactory;
   appendices: AppendixRenderEntry[];
 }
 
 const interactionScriptModules: Record<string, string> = {
   "accuracy-domination": accuracyDominationScript,
+  "base-rate-engine": baseRateEngineScript,
   "clock-ticks": clockTicksScript,
   "closure-machine": closureMachineScript,
   "credence-dial": credenceDialScript,
+  "demarcation-lab": demarcationLabScript,
   "echo-chamber": echoChamberScript,
   "gettier-machine": gettierMachineScript,
+  "grue-machine": grueMachineScript,
   "modal-rings": modalRingsScript,
   "stakes-dial": stakesDialScript
 };
 
-const { entry, Body, appendices } = Astro.props;
+const { entry, previous, next, Body, appendices } = Astro.props;
 const isZh = entry.locale === "zh";
 const dayPath = entry.day.manifest.path;
 const canonicalPath = isZh ? `/zh/days/${dayPath}/` : `/days/${dayPath}/`;
@@ -42,6 +56,9 @@ const alternatePath = isZh ? `/days/${dayPath}/` : `/zh/days/${dayPath}/`;
 const downloadPrefix = isZh ? `/downloads/180-descent-zh-day-${dayPath}` : `/downloads/180-descent-day-${dayPath}`;
 const dayLabel = isZh ? `第${String(entry.day.manifest.day).padStart(2, "0")}日` : `Day ${String(entry.day.manifest.day).padStart(2, "0")}`;
 const remainingDays = 180 - entry.day.manifest.day;
+const navPrefix = isZh ? "/zh/days" : "/days";
+const navDayLabel = (day: number) => isZh ? `第${String(day).padStart(2, "0")}日` : `Day ${String(day).padStart(2, "0")}`;
+const navHref = (item: DayNavEntry) => `${navPrefix}/${item.path}/`;
 const scripts = entry.day.manifest.components.map((component) => {
   const script = interactionScriptModules[component.webEntry];
   if (!script) {
@@ -70,18 +87,32 @@ const scripts = entry.day.manifest.components.map((component) => {
       </div>
     </div>
     <nav class="lesson-nav lesson-nav-top wrap wide" aria-label={isZh ? "日课导航（顶部）" : "Top day navigation"}>
-      <span class="lesson-nav-card is-disabled">
-        <span>{isZh ? "上一篇" : "Previous"}</span>
-        <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
-      </span>
+      {previous ? (
+        <a class="lesson-nav-card" href={navHref(previous)}>
+          <span>{isZh ? "上一篇" : "Previous"}</span>
+          <strong>{navDayLabel(previous.day)} · {previous.title}</strong>
+        </a>
+      ) : (
+        <span class="lesson-nav-card is-disabled">
+          <span>{isZh ? "上一篇" : "Previous"}</span>
+          <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
+        </span>
+      )}
       <a class="lesson-nav-card is-syllabus" href={isZh ? "/zh/syllabus/" : "/syllabus/"}>
         <span>{isZh ? "课程表" : "Map"}</span>
         <strong>{isZh ? "完整课程表" : "Full syllabus"}</strong>
       </a>
-      <span class="lesson-nav-card is-disabled">
-        <span>{isZh ? "下一篇" : "Next"}</span>
-        <strong>{isZh ? "迁移中" : "Migration in progress"}</strong>
-      </span>
+      {next ? (
+        <a class="lesson-nav-card" href={navHref(next)}>
+          <span>{isZh ? "下一篇" : "Next"}</span>
+          <strong>{navDayLabel(next.day)} · {next.title}</strong>
+        </a>
+      ) : (
+        <span class="lesson-nav-card is-disabled">
+          <span>{isZh ? "下一篇" : "Next"}</span>
+          <strong>{isZh ? "下一篇暂不可用" : "Next day unavailable"}</strong>
+        </span>
+      )}
     </nav>
     <Body />
     <div class="wrap">
@@ -103,18 +134,32 @@ const scripts = entry.day.manifest.components.map((component) => {
       </p>
     </div>
     <nav class="lesson-nav lesson-nav-bottom wrap wide" aria-label={isZh ? "日课导航（底部）" : "Bottom day navigation"}>
-      <span class="lesson-nav-card is-disabled">
-        <span>{isZh ? "上一篇" : "Previous"}</span>
-        <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
-      </span>
+      {previous ? (
+        <a class="lesson-nav-card" href={navHref(previous)}>
+          <span>{isZh ? "上一篇" : "Previous"}</span>
+          <strong>{navDayLabel(previous.day)} · {previous.title}</strong>
+        </a>
+      ) : (
+        <span class="lesson-nav-card is-disabled">
+          <span>{isZh ? "上一篇" : "Previous"}</span>
+          <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
+        </span>
+      )}
       <a class="lesson-nav-card is-syllabus" href={isZh ? "/zh/syllabus/" : "/syllabus/"}>
         <span>{isZh ? "课程表" : "Map"}</span>
         <strong>{isZh ? "完整课程表" : "Full syllabus"}</strong>
       </a>
-      <span class="lesson-nav-card is-disabled">
-        <span>{isZh ? "下一篇" : "Next"}</span>
-        <strong>{isZh ? "迁移中" : "Migration in progress"}</strong>
-      </span>
+      {next ? (
+        <a class="lesson-nav-card" href={navHref(next)}>
+          <span>{isZh ? "下一篇" : "Next"}</span>
+          <strong>{navDayLabel(next.day)} · {next.title}</strong>
+        </a>
+      ) : (
+        <span class="lesson-nav-card is-disabled">
+          <span>{isZh ? "下一篇" : "Next"}</span>
+          <strong>{isZh ? "下一篇暂不可用" : "Next day unavailable"}</strong>
+        </span>
+      )}
     </nav>
   </article>
 </BookShell>

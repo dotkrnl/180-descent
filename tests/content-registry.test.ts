@@ -62,17 +62,31 @@ describe("target content registry", () => {
 
   it("loads migrated project day content with paired appendices and components", async () => {
     const registry = await loadContentRegistry({ daysDir: projectDaysDir });
-    const day = registry.days.find((entry) => entry.manifest.path === "001-what-is-knowledge");
+    const daysByPath = new Map(registry.days.map((day) => [day.manifest.path, day]));
+    const day001 = daysByPath.get("001-what-is-knowledge");
+    const day002 = daysByPath.get("002-scientific-method-and-demarcation");
 
-    expect(day).toBeDefined();
-    expect(day?.bodies.map((body) => body.locale).sort()).toEqual(["en", "zh"]);
-    expect(day?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+    expect([...daysByPath.keys()]).toEqual([
+      "001-what-is-knowledge",
+      "002-scientific-method-and-demarcation"
+    ]);
+
+    for (const day of registry.days) {
+      expect(day.bodies.map((body) => body.locale).sort()).toEqual(["en", "zh"]);
+      for (const body of [...day.bodies, ...day.appendixBodies]) {
+        expect(body.source).not.toContain("{%");
+        expect(body.source).not.toContain("{{");
+        expect(body.source).not.toContain("<!-- deep-dive");
+      }
+    }
+
+    expect(day001?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
       "rest-of-the-map:en",
       "rest-of-the-map:zh",
       "the-edge-of-the-map:en",
       "the-edge-of-the-map:zh"
     ]);
-    expect(day?.manifest.components.map((component) => component.id)).toEqual([
+    expect(day001?.manifest.components.map((component) => component.id)).toEqual([
       "clock-ticks",
       "gettier-machine",
       "credence-dial",
@@ -82,7 +96,17 @@ describe("target content registry", () => {
       "echo-chamber",
       "accuracy-domination"
     ]);
-    expect(day?.bodies[0].source).toContain("<StatusChip");
-    expect(day?.bodies[0].source).not.toContain("{%");
+    expect(day001?.bodies[0].source).toContain("<StatusChip");
+
+    expect(day002?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "foundations-without-bedrock:en",
+      "foundations-without-bedrock:zh"
+    ]);
+    expect(day002?.manifest.components.map((component) => component.id)).toEqual([
+      "demarcation-lab",
+      "grue-machine",
+      "base-rate-engine"
+    ]);
+    expect(day002?.bodies[0].source).toContain("blackSwan.src");
   });
 });

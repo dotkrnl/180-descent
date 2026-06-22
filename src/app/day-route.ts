@@ -13,21 +13,39 @@ export interface DayAppendixRenderEntry {
   Body: AstroComponentFactory;
 }
 
+export interface DayNavEntry {
+  day: number;
+  path: string;
+  title: string;
+}
+
 export interface DayPageModules {
   Body: AstroComponentFactory;
   appendices: DayAppendixRenderEntry[];
+}
+
+export interface RegistryDayRouteProps {
+  entry: RegistryDayLocaleEntry;
+  previous?: DayNavEntry;
+  next?: DayNavEntry;
 }
 
 const mdxModules = import.meta.glob<MdxModule>("/src/content/days/**/*.mdx");
 
 export async function getRegistryDayStaticPaths(locale: Locale) {
   const registry = await loadContentRegistry({ daysDir: path.join(process.cwd(), "src/content/days") });
-  return listRegistryDayLocaleEntries(registry)
+  const entries = listRegistryDayLocaleEntries(registry)
     .filter((entry) => entry.locale === locale)
-    .map((entry) => ({
-      params: { dayPath: entry.day.manifest.path },
-      props: { entry }
-    }));
+    .sort((a, b) => a.day.manifest.day - b.day.manifest.day);
+
+  return entries.map((entry, index) => ({
+    params: { dayPath: entry.day.manifest.path },
+    props: {
+      entry,
+      previous: toDayNavEntry(entries[index - 1]),
+      next: toDayNavEntry(entries[index + 1])
+    } satisfies RegistryDayRouteProps
+  }));
 }
 
 export async function loadDayPageModules(entry: RegistryDayLocaleEntry): Promise<DayPageModules> {
@@ -56,4 +74,13 @@ async function loadMdxBody(dayPath: string, bodyPath: string): Promise<AstroComp
   }
 
   return (await loadBody()).default;
+}
+
+function toDayNavEntry(entry: RegistryDayLocaleEntry | undefined): DayNavEntry | undefined {
+  if (!entry) return undefined;
+  return {
+    day: entry.day.manifest.day,
+    path: entry.day.manifest.path,
+    title: entry.title
+  };
 }
