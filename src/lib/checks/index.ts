@@ -1,3 +1,4 @@
+export * from "./a11y";
 export * from "./appendix-style";
 export * from "./clean";
 export * from "./content";
