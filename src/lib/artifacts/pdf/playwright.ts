@@ -6,7 +6,7 @@ import path from "node:path";
 import { inflateSync } from "node:zlib";
 import { PDFDocument, PDFName, StandardFonts, rgb } from "pdf-lib";
 import { chromium, type Browser, type Page } from "playwright";
-import { loadPublishedContentDays, type PublishedContentDay } from "@lib/content";
+import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { ghostscriptPageCount, ghostscriptText, postScriptString } from "@lib/pdf";
 import { contentType } from "@lib/static-site";
 import type { Locale } from "@lib/schemas";
@@ -228,13 +228,13 @@ async function loadPageImages(page: Page): Promise<void> {
 }
 
 async function buildDayPdfs(config: DayPdfConfig, context: PdfBuildContext): Promise<void> {
-  const days = await loadPublishedContentDays(context.root, config.locale);
+  const days = await loadArtifactBookDays(context.root, config.locale);
   for (const day of days) {
     await buildDayPdf(day, config, context);
   }
 }
 
-async function buildDayPdf(day: PublishedContentDay, config: DayPdfConfig, context: PdfBuildContext): Promise<void> {
+async function buildDayPdf(day: ArtifactBookDay, config: DayPdfConfig, context: PdfBuildContext): Promise<void> {
   const page = await context.browser.newPage({ viewport: { width: 900, height: 1350 } });
   try {
     await page.goto(`${context.server.url}${config.dayRoutePrefix}${dayPath(day)}/`, { waitUntil: "networkidle" });
@@ -452,7 +452,7 @@ async function ghostscriptPageMarkers(pdfPath: string): Promise<TocMarker[]> {
   return markers;
 }
 
-function dayPdfHeaderTitle(day: PublishedContentDay): string {
+function dayPdfHeaderTitle(day: ArtifactBookDay): string {
   return `Day ${day.day}`;
 }
 
@@ -642,6 +642,6 @@ function isInsideDirectory(directory: string, filePath: string): boolean {
   return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
 }
 
-function dayPath(day: PublishedContentDay): string {
+function dayPath(day: ArtifactBookDay): string {
   return day.path;
 }

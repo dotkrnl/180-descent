@@ -4,7 +4,7 @@ import path from "node:path";
 import { PDFDocument, PDFName } from "pdf-lib";
 import { ghostscriptAllPagesText, ghostscriptBoundingBox, ghostscriptPagePpm } from "@lib/pdf";
 import { escapeRegExp } from "@lib/text";
-import { loadPublishedContentDays } from "@lib/content";
+import { loadArtifactBookDays } from "@lib/artifacts/book";
 
 export interface PdfCheckOptions {
   root: string;
@@ -82,8 +82,8 @@ class PdfChecker {
       "_site/downloads/180-descent-zh.pdf",
       "_site/downloads/180-descent-zh-deep-dive.pdf"
     ];
-    const enDays = await loadPublishedContentDays(this.options.root, "en");
-    const zhDays = await loadPublishedContentDays(this.options.root, "zh");
+    const enDays = await loadArtifactBookDays(this.options.root, "en");
+    const zhDays = await loadArtifactBookDays(this.options.root, "zh");
     for (const day of enDays) {
       const file = `_site/downloads/180-descent-day-${day.path}.pdf`;
       if (existsSync(this.absolute(file))) pdfFiles.push(file);

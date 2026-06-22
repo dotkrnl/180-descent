@@ -4,7 +4,7 @@ import path from "node:path";
 import * as cheerio from "cheerio";
 import JSZip from "jszip";
 import YAML from "yaml";
-import { loadPublishedContentDays, type PublishedContentDay } from "@lib/content";
+import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import type { Locale } from "@lib/schemas";
 import { escapeXml } from "@lib/text";
 
@@ -55,7 +55,7 @@ interface EpubConfig {
   introLabel?: string;
   dayLabel: string;
   output: string;
-  days?: PublishedContentDay[];
+  days?: ArtifactBookDay[];
   includeDeepDive?: boolean;
   singleDay?: boolean;
 }
@@ -209,7 +209,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
 }
 
 async function buildDayEpubs(config: DayEpubConfig): Promise<void> {
-  const days = await loadPublishedContentDays(config.root, config.locale);
+  const days = await loadArtifactBookDays(config.root, config.locale);
   for (const day of days) {
     await buildEpub({
       ...config,
@@ -228,7 +228,7 @@ async function buildDayEpubs(config: DayEpubConfig): Promise<void> {
 }
 
 async function buildEpub(config: EpubConfig): Promise<void> {
-  const days = config.days ?? await loadPublishedContentDays(config.root, config.locale);
+  const days = config.days ?? await loadArtifactBookDays(config.root, config.locale);
 
   const zip = new JSZip();
   zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
@@ -306,7 +306,7 @@ async function pageToXhtml(
   title: string,
   selfHref: string,
   config: EpubConfig,
-  days: PublishedContentDay[],
+  days: ArtifactBookDay[],
   imageAssets: Map<string, EpubImage>
 ): Promise<string> {
   const html = await readFile(htmlPath, "utf8");
@@ -484,7 +484,7 @@ function epubNoteBaseId(scope: ReturnType<CheerioRoot>, selfHref: string, scopeI
   return `tip-${base || `section-${scopeIndex + 1}`}`;
 }
 
-function navDocument(items: PublishedContentDay[], config: EpubConfig): string {
+function navDocument(items: ArtifactBookDay[], config: EpubConfig): string {
   const titleLink = config.introHtml && !config.singleDay
     ? `<li><a href="title.xhtml">${escapeXml(config.meta.language.startsWith("zh") ? "书名页" : "Title Page")}</a></li>`
     : "";
@@ -617,7 +617,7 @@ export function titlePageDocument(config: Pick<EpubConfig, "meta">): string {
 </html>`;
 }
 
-function dayDocumentTitle(day: PublishedContentDay, config: Pick<EpubConfig | DayEpubConfig, "meta" | "dayLabel">): string {
+function dayDocumentTitle(day: ArtifactBookDay, config: Pick<EpubConfig | DayEpubConfig, "meta" | "dayLabel">): string {
   if (config.meta.language.startsWith("zh")) {
     return `${config.dayLabel} ${dayNumber(day)} 日：${dayTitle(day)}`;
   }
@@ -652,18 +652,18 @@ function requiredZipFolder(zip: JSZip, name: string): JSZip {
   return folder;
 }
 
-function dayNumber(day: PublishedContentDay): number {
+function dayNumber(day: ArtifactBookDay): number {
   return day.day;
 }
 
-function dayPath(day: PublishedContentDay): string {
+function dayPath(day: ArtifactBookDay): string {
   return day.path;
 }
 
-function dayTitle(day: PublishedContentDay): string {
+function dayTitle(day: ArtifactBookDay): string {
   return day.title;
 }
 
-function dayXhtml(day: PublishedContentDay): string {
+function dayXhtml(day: ArtifactBookDay): string {
   return day.xhtml;
 }

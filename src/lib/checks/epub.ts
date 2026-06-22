@@ -4,7 +4,7 @@ import { existsSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import JSZip from "jszip";
-import { loadPublishedContentDays, type PublishedContentDay } from "@lib/content";
+import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 
 export interface EpubCheckOptions {
   root: string;
@@ -87,14 +87,14 @@ async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
     { file: "_site/downloads/180-descent-zh-deep-dive.epub", deepDive: true, appendixPatterns: CHINESE_APPENDIX_PATTERNS, optionalPattern: /可选附录/, required: BOOK_REQUIRED }
   ];
 
-  const enDays = await loadPublishedContentDays(root, "en");
-  const zhDays = await loadPublishedContentDays(root, "zh");
+  const enDays = await loadArtifactBookDays(root, "en");
+  const zhDays = await loadArtifactBookDays(root, "zh");
   addPerDayEditions(root, editions, enDays, false);
   addPerDayEditions(root, editions, zhDays, true);
   return editions;
 }
 
-function addPerDayEditions(root: string, editions: EpubEdition[], days: PublishedContentDay[], zh: boolean): void {
+function addPerDayEditions(root: string, editions: EpubEdition[], days: ArtifactBookDay[], zh: boolean): void {
   for (const day of days) {
     const dayPath = day.path;
     const dayNumber = day.day;
