@@ -1,6 +1,6 @@
 # Refactor Inventory Baseline
 
-Generated: 2026-06-21T22:22:13.460Z
+Generated: 2026-06-22T01:19:36.818Z
 Status: migration-freeze-active
 
 This report captures source facts for the clean-break refactor. It is a coverage baseline, not a compatibility promise.
@@ -12,15 +12,15 @@ This report captures source facts for the clean-break refactor. It is a coverage
 - Paired day paths: 7
 - Nunjucks day bodies: 14
 - Interaction scripts: 20
-- Build/check scripts: 14
+- Build/check scripts: 19
 - Workflow docs: 7
 - Image assets: 41
 - Existing generated downloads: 37
 
 ## Build And Deploy Surface
 
-- Build scripts: build, build:epub, build:pdf, build:site
-- Check scripts: check, check:a11y, check:appendix-style, check:content, check:epub, check:links, check:math, check:pdf, check:seo, check:svg-text
+- Build scripts: build, build:astro, build:epub, build:pdf, build:site, build:social-cards
+- Check scripts: check, check:a11y, check:appendix-style, check:clean, check:clean:final, check:content, check:epub, check:links, check:math, check:pdf, check:seo, check:svg-text, check:workflows
 - Deploy scripts: deploy, deploy:staging
 
 ## Day Pairing Baseline
@@ -41,7 +41,7 @@ This report captures source facts for the clean-break refactor. It is a coverage
 - English route shells: 7
 - Chinese route shells: 7
 - Nunjucks day bodies: 14
-- Importer scripts: scripts/import-appendix-from-html.mjs, scripts/import-day-from-html.mjs
+- Importer scripts: none
 
 ## Generated Downloads Currently Present
 

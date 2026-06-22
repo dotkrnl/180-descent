@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21T22:22:13.460Z",
+  "generatedAt": "2026-06-22T01:19:36.818Z",
   "status": "migration-freeze-active",
   "package": {
     "name": "180-descent",
@@ -7,21 +7,26 @@
     "scripts": {
       "build": [
         "build",
+        "build:astro",
         "build:epub",
         "build:pdf",
-        "build:site"
+        "build:site",
+        "build:social-cards"
       ],
       "check": [
         "check",
         "check:a11y",
         "check:appendix-style",
+        "check:clean",
+        "check:clean:final",
         "check:content",
         "check:epub",
         "check:links",
         "check:math",
         "check:pdf",
         "check:seo",
-        "check:svg-text"
+        "check:svg-text",
+        "check:workflows"
       ],
       "deploy": [
         "deploy",
@@ -52,7 +57,7 @@
     "pairedDayPaths": 7,
     "nunjucksDayBodies": 14,
     "interactionScripts": 20,
-    "scripts": 28,
+    "scripts": 24,
     "workflowDocs": 7,
     "imageAssets": 41,
     "generatedDownloads": 37
@@ -186,34 +191,30 @@
     "src/assets/js/interactions/statistics-lab.js"
   ],
   "sourceScripts": [
-    "scripts/build-epub.mjs",
-    "scripts/build-pdf.mjs",
-    "scripts/check-a11y.mjs",
-    "scripts/check-appendix-style.mjs",
-    "scripts/check-content.mjs",
-    "scripts/check-epub.mjs",
-    "scripts/check-links.mjs",
-    "scripts/check-math.mjs",
-    "scripts/check-pdf.mjs",
-    "scripts/check-seo.mjs",
-    "scripts/check-svg-text-size.mjs",
+    "scripts/cli/build-epub.ts",
+    "scripts/cli/build-pdf.ts",
+    "scripts/cli/check-a11y.ts",
+    "scripts/cli/check-appendix-style.ts",
+    "scripts/cli/check-clean.ts",
+    "scripts/cli/check-content.ts",
+    "scripts/cli/check-epub.ts",
+    "scripts/cli/check-links.ts",
+    "scripts/cli/check-math.ts",
+    "scripts/cli/check-pdf.ts",
+    "scripts/cli/check-seo.ts",
+    "scripts/cli/check-svg-text-size.ts",
+    "scripts/cli/check-workflows.ts",
+    "scripts/cli/generate-social-cards.ts",
+    "scripts/cli/preflight.ts",
+    "scripts/cli/prepare-cjk-fonts.ts",
+    "scripts/cli/prepare-css.ts",
+    "scripts/cli/prepare-fonts.ts",
+    "scripts/cli/prepare-katex.ts",
+    "scripts/cli/refactor-inventory.ts",
     "scripts/cli/validate.ts",
     "scripts/codex-refiner-middleware.cjs",
-    "scripts/generate-social-cards.mjs",
-    "scripts/import-appendix-from-html.mjs",
-    "scripts/import-day-from-html.mjs",
-    "scripts/lib/days.mjs",
-    "scripts/lib/escape.mjs",
-    "scripts/lib/fs.mjs",
-    "scripts/lib/ghostscript.mjs",
-    "scripts/lib/url.mjs",
-    "scripts/preflight.mjs",
-    "scripts/prepare-cjk-fonts.mjs",
-    "scripts/prepare-css.mjs",
-    "scripts/prepare-fonts.mjs",
-    "scripts/prepare-katex.mjs",
     "scripts/refactor-artifact-inventory.mjs",
-    "scripts/refactor-inventory.mjs"
+    "scripts/refactor-pdf-renderer-smoke.mjs"
   ],
   "workflowDocs": [
     "docs/workflows/180-descent-add-appendix/README.md",
@@ -268,9 +269,6 @@
     "englishRouteShells": 7,
     "chineseRouteShells": 7,
     "nunjucksDayBodies": 14,
-    "importers": [
-      "scripts/import-appendix-from-html.mjs",
-      "scripts/import-day-from-html.mjs"
-    ]
+    "importers": []
   }
 }
