@@ -1,0 +1,12 @@
+---
+import { renderStatusChip } from "@lib/render/lesson-components";
+
+interface Props {
+  status: string;
+  label: string;
+  printLabel?: string;
+}
+
+const html = renderStatusChip(Astro.props);
+---
+<Fragment set:html={html} />

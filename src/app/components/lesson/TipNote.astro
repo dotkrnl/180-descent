@@ -1,0 +1,14 @@
+---
+import { renderTipNote } from "@lib/render/lesson-components";
+import type { Locale } from "@lib/schemas";
+
+interface Props {
+  text: string;
+  locale?: Locale;
+}
+
+const segments = Astro.url.pathname.split("/").filter(Boolean);
+const locale = Astro.props.locale ?? (segments.includes("zh") ? "zh" : "en");
+const html = renderTipNote({ text: Astro.props.text, locale });
+---
+<Fragment set:html={html} />

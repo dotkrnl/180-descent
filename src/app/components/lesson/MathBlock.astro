@@ -1,0 +1,11 @@
+---
+import { renderMathHtml } from "@lib/render/lesson-components";
+
+interface Props {
+  latex: string;
+}
+
+const { latex } = Astro.props;
+const html = renderMathHtml(latex, true);
+---
+<Fragment set:html={html} />
