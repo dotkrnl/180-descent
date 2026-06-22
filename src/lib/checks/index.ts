@@ -3,5 +3,6 @@ export * from "./clean";
 export * from "./content";
 export * from "./links";
 export * from "./math";
+export * from "./seo";
 export * from "./svg-text";
 export * from "./workflows";
