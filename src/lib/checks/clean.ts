@@ -25,7 +25,8 @@ const ALWAYS_FORBIDDEN_PATHS = [
 
 const FORBIDDEN_TRACKED_PATHS = [
   ["_site", "Generated site output must not be committed"],
-  ["dist", "Generated temporary output must not be committed"]
+  ["dist", "Generated temporary output must not be committed"],
+  ["src/assets/images/social", "Generated social-card PNGs must not be committed"]
 ] as const;
 
 const MIGRATION_ONLY_PATTERNS = [
@@ -50,7 +51,7 @@ export async function checkCleanRepo(options: CleanCheckOptions): Promise<CleanC
   }
 
   for (const [relativePath, reason] of FORBIDDEN_TRACKED_PATHS) {
-    if (isTracked(options.root, relativePath)) {
+    if (hasTrackedPath(options.root, relativePath)) {
       failures.push({ path: relativePath, reason });
     }
   }
@@ -100,11 +101,11 @@ function toPosix(value: string): string {
   return value.split(path.sep).join("/");
 }
 
-function isTracked(root: string, relativePath: string): boolean {
-  const result = spawnSync("git", ["ls-files", "--error-unmatch", relativePath], {
+function hasTrackedPath(root: string, relativePath: string): boolean {
+  const result = spawnSync("git", ["ls-files", relativePath], {
     cwd: root,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
   });
-  return result.status === 0;
+  return result.status === 0 && result.stdout.trim().length > 0;
 }

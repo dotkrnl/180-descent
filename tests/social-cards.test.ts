@@ -3,7 +3,7 @@ import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { clampSocialText, loadSocialCards, renderSocialCardHtml } from "@lib/assets";
+import { clampSocialText, loadSocialCards, renderSocialCardSvg, wrapSocialText } from "@lib/assets";
 
 describe("social cards", () => {
   it("loads root and paired day cards from source metadata", async () => {
@@ -33,8 +33,8 @@ describe("social cards", () => {
     expect(cards[3]).toMatchObject({ locale: "zh", kicker: "中文书名", title: "Chinese Fixture" });
   });
 
-  it("escapes card html and clamps long summaries", () => {
-    const html = renderSocialCardHtml({
+  it("escapes card svg and clamps long summaries", () => {
+    const svg = renderSocialCardSvg({
       locale: "en",
       day: 7,
       title: "A <B>",
@@ -42,14 +42,26 @@ describe("social cards", () => {
       outPath: "unused.png"
     }, "brand");
 
-    expect(html).toContain("A &lt;B&gt;");
-    expect(html).toContain("Day 007");
-    expect(html).not.toContain("one ".repeat(80));
+    expect(svg).toContain("<svg");
+    expect(svg).toContain("A &lt;B&gt;");
+    expect(svg).toContain("Day 007");
+    expect(svg).not.toContain("one ".repeat(80));
   });
 
   it("normalizes whitespace before clamping", () => {
     expect(clampSocialText("  alpha\n\nbeta\tgamma  ", 20)).toBe("alpha beta gamma");
     expect(clampSocialText("abcdef", 4)).toBe("abc...");
+  });
+
+  it("wraps latin and Chinese text without a browser layout engine", () => {
+    expect(wrapSocialText("alpha beta gamma delta", { maxLines: 2, maxChars: 12 })).toEqual([
+      "alpha beta",
+      "gamma delta"
+    ]);
+    expect(wrapSocialText("中文标题需要换行", { maxLines: 2, maxChars: 4 })).toEqual([
+      "中文标题",
+      "需要换行"
+    ]);
   });
 });
 

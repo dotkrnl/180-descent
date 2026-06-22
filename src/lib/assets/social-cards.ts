@@ -1,11 +1,10 @@
 import { mkdir, readFile, stat, utimes, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { chromium, type Page } from "playwright";
 import sharp from "sharp";
 import yaml from "yaml";
 import { loadContentRegistry } from "@lib/content";
-import { escapeHtml } from "@lib/text/escape";
+import { escapeXml } from "@lib/text/escape";
 
 export interface GenerateSocialCardsOptions {
   root: string;
@@ -51,6 +50,8 @@ interface DayData {
 }
 
 const rendererPath = fileURLToPath(import.meta.url);
+const CARD_WIDTH = 1200;
+const CARD_HEIGHT = 630;
 
 export function clampSocialText(value = "", max = 160): string {
   const text = String(value || "").replace(/\s+/g, " ").trim();
@@ -95,20 +96,14 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
 
   const generated: string[] = [];
   const preserved: string[] = [];
-  const browser = await chromium.launch({ args: ["--no-sandbox"] });
-  try {
-    const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
-    for (const card of pending) {
-      const changed = await renderCard(page, card, brandMarkBase64);
-      const relativePath = path.relative(root, card.outPath);
-      if (changed) {
-        generated.push(relativePath);
-      } else {
-        preserved.push(relativePath);
-      }
+  for (const card of pending) {
+    const changed = await renderCard(card, brandMarkBase64);
+    const relativePath = path.relative(root, card.outPath);
+    if (changed) {
+      generated.push(relativePath);
+    } else {
+      preserved.push(relativePath);
     }
-  } finally {
-    await browser.close();
   }
 
   return {
@@ -155,102 +150,36 @@ export async function loadSocialCards(options: {
   ];
 }
 
-export function renderSocialCardHtml(card: SocialCard, brandMarkBase64: string): string {
+export function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string {
   const isZh = card.locale === "zh";
   const kicker = card.kicker || (isZh ? "深入一百八十日" : "The 180-Day Descent");
   const label = card.day
     ? (isZh ? `第 ${String(card.day).padStart(3, "0")} 日` : `Day ${String(card.day).padStart(3, "0")}`)
     : (isZh ? "从根基到 2026 年研究前沿" : "Foundations to the 2026 research frontier");
   const summary = clampSocialText(card.summary || card.description || "", isZh ? 132 : 150);
+  const titleLines = wrapSocialText(card.title, { maxLines: isZh ? 2 : 3, maxChars: isZh ? 15 : 22 });
+  const summaryLines = summary ? wrapSocialText(summary, { maxLines: 3, maxChars: isZh ? 28 : 48 }) : [];
+  const titleSize = isZh ? 70 : 78;
+  const summarySize = isZh ? 34 : 32;
 
-  return `<!doctype html>
-<html lang="${isZh ? "zh-Hans" : "en"}">
-<head>
-<meta charset="utf-8">
-<style>
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    width: 1200px;
-    height: 630px;
-    background: #f7f3ea;
-    color: #191815;
-    font-family: ui-serif, Georgia, "Times New Roman", "Noto Serif CJK SC", serif;
-  }
-  .card {
-    position: relative;
-    width: 1200px;
-    height: 630px;
-    padding: 72px 84px;
-    overflow: hidden;
-    background:
-      linear-gradient(90deg, #1e4942 0 18px, transparent 18px),
-      linear-gradient(180deg, rgba(197, 72, 64, .18), transparent 38%),
-      #f7f3ea;
-  }
-  .rule {
-    width: 100%;
-    height: 2px;
-    margin: 0 0 52px;
-    background: linear-gradient(90deg, #bd8a38 0 28%, #c54840 28% 44%, #1e4942 44% 100%);
-  }
-  .kicker {
-    margin: 0 0 20px;
-    color: #6d4d18;
-    font: 700 30px/1.15 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    text-transform: uppercase;
-  }
-  h1 {
-    margin: 0;
-    max-width: 970px;
-    font-size: ${isZh ? "70px" : "78px"};
-    line-height: 1.03;
-    font-weight: 760;
-  }
-  .summary {
-    max-width: 930px;
-    margin: 34px 0 0;
-    color: #34312b;
-    font: 400 ${isZh ? "34px" : "32px"}/1.32 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  }
-  .footer {
-    position: absolute;
-    left: 84px;
-    right: 84px;
-    bottom: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    color: #5b574e;
-    font: 700 25px/1 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  }
-  .mark {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .footer-mark {
-    width: 76px;
-    height: 76px;
-    display: block;
-    object-fit: contain;
-  }
-</style>
-</head>
-<body>
-  <main class="card">
-    <div class="rule"></div>
-    <p class="kicker">${escapeHtml(kicker)}</p>
-    <h1>${escapeHtml(card.title)}</h1>
-    ${summary ? `<p class="summary">${escapeHtml(summary)}</p>` : ""}
-    <div class="footer">
-      <span>${escapeHtml(label)}</span>
-      <span class="mark"><img class="footer-mark" src="data:image/png;base64,${brandMarkBase64}" alt=""><span>180d.io</span></span>
-    </div>
-  </main>
-</body>
-</html>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${CARD_WIDTH}" height="${CARD_HEIGHT}" viewBox="0 0 ${CARD_WIDTH} ${CARD_HEIGHT}">
+  <rect width="${CARD_WIDTH}" height="${CARD_HEIGHT}" fill="#f7f3ea"/>
+  <rect width="18" height="${CARD_HEIGHT}" fill="#1e4942"/>
+  <linearGradient id="warmFade" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#c54840" stop-opacity=".18"/>
+    <stop offset=".38" stop-color="#c54840" stop-opacity="0"/>
+  </linearGradient>
+  <rect width="${CARD_WIDTH}" height="${CARD_HEIGHT}" fill="url(#warmFade)"/>
+  <rect x="84" y="72" width="289" height="2" fill="#bd8a38"/>
+  <rect x="373" y="72" width="166" height="2" fill="#c54840"/>
+  <rect x="539" y="72" width="577" height="2" fill="#1e4942"/>
+  <text x="84" y="145" fill="#6d4d18" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing=".5">${escapeXml(kicker.toUpperCase())}</text>
+  ${svgMultilineText(titleLines, { x: 84, y: 224, size: titleSize, lineHeight: titleSize * 1.04, color: "#191815", weight: 760, family: socialTitleFont(isZh) })}
+  ${svgMultilineText(summaryLines, { x: 84, y: 224 + titleLines.length * titleSize * 1.04 + 40, size: summarySize, lineHeight: summarySize * 1.32, color: "#34312b", weight: 400, family: socialBodyFont(isZh) })}
+  <text x="84" y="584" fill="#5b574e" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">${escapeXml(label)}</text>
+  <image x="897" y="515" width="76" height="76" href="data:image/png;base64,${brandMarkBase64}"/>
+  <text x="990" y="564" fill="#5b574e" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">180d.io</text>
+</svg>`;
 }
 
 async function readBookData(bookPath: string): Promise<BookData> {
@@ -288,9 +217,9 @@ async function isSocialCardStale(outPath: string, sourceMtimeMs: number): Promis
   }
 }
 
-async function renderCard(page: Page, card: SocialCard, brandMarkBase64: string): Promise<boolean> {
-  await page.setContent(renderSocialCardHtml(card, brandMarkBase64), { waitUntil: "load" });
-  const png = await page.screenshot({ type: "png" });
+async function renderCard(card: SocialCard, brandMarkBase64: string): Promise<boolean> {
+  const svg = renderSocialCardSvg(card, brandMarkBase64);
+  const png = await sharp(Buffer.from(svg)).png().toBuffer();
 
   if (await isSameRenderedImage(card.outPath, png)) {
     const now = new Date();
@@ -300,6 +229,68 @@ async function renderCard(page: Page, card: SocialCard, brandMarkBase64: string)
 
   await writeFile(card.outPath, png);
   return true;
+}
+
+function socialTitleFont(isZh: boolean): string {
+  return isZh
+    ? "LXGW WenKai, Noto Serif CJK SC, Songti SC, SimSun, serif"
+    : "Georgia, Times New Roman, serif";
+}
+
+function socialBodyFont(isZh: boolean): string {
+  return isZh
+    ? "LXGW WenKai, Noto Sans CJK SC, PingFang SC, Microsoft YaHei, sans-serif"
+    : "Arial, Helvetica, sans-serif";
+}
+
+function svgMultilineText(lines: string[], options: {
+  x: number;
+  y: number;
+  size: number;
+  lineHeight: number;
+  color: string;
+  weight: number;
+  family: string;
+}): string {
+  if (!lines.length) return "";
+  const tspans = lines.map((line, index) => {
+    const y = options.y + index * options.lineHeight;
+    return `<tspan x="${options.x}" y="${y}">${escapeXml(line)}</tspan>`;
+  }).join("");
+  return `<text fill="${options.color}" font-family="${escapeXml(options.family)}" font-size="${options.size}" font-weight="${options.weight}">${tspans}</text>`;
+}
+
+export function wrapSocialText(value: string, options: { maxLines: number; maxChars: number }): string[] {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  if (!text) return [];
+
+  const tokens = /[\u3400-\u9fff]/.test(text)
+    ? [...text]
+    : text.split(" ");
+  const lines: string[] = [];
+  let line = "";
+
+  for (const token of tokens) {
+    const joiner = /[\u3400-\u9fff]/.test(text) ? "" : (line ? " " : "");
+    const candidate = `${line}${joiner}${token}`;
+    if (candidate.length > options.maxChars && line) {
+      lines.push(line);
+      line = token;
+      if (lines.length === options.maxLines) break;
+    } else {
+      line = candidate;
+    }
+  }
+
+  if (line && lines.length < options.maxLines) {
+    lines.push(line);
+  }
+
+  if (lines.length && tokens.join(/[\u3400-\u9fff]/.test(text) ? "" : " ").length > lines.join(/[\u3400-\u9fff]/.test(text) ? "" : " ").length) {
+    lines[lines.length - 1] = `${lines[lines.length - 1].replace(/\.{3}$/, "").trim()}...`;
+  }
+
+  return lines;
 }
 
 async function isSameRenderedImage(outPath: string, candidate: Buffer): Promise<boolean> {
