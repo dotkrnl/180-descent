@@ -4,7 +4,7 @@ import { existsSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import JSZip from "jszip";
-import { loadLegacyDays, type LegacyDay } from "@lib/content";
+import { loadPublishedContentDays, type PublishedContentDay } from "@lib/content";
 
 export interface EpubCheckOptions {
   root: string;
@@ -87,17 +87,17 @@ async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
     { file: "_site/downloads/180-descent-zh-deep-dive.epub", deepDive: true, appendixPatterns: CHINESE_APPENDIX_PATTERNS, optionalPattern: /可选附录/, required: BOOK_REQUIRED }
   ];
 
-  const enDays = await loadLegacyDays(path.join(root, "src/days"));
-  const zhDays = await loadLegacyDays(path.join(root, "src/zh/days"));
+  const enDays = await loadPublishedContentDays(root, "en");
+  const zhDays = await loadPublishedContentDays(root, "zh");
   addPerDayEditions(root, editions, enDays, false);
   addPerDayEditions(root, editions, zhDays, true);
   return editions;
 }
 
-function addPerDayEditions(root: string, editions: EpubEdition[], days: LegacyDay[], zh: boolean): void {
+function addPerDayEditions(root: string, editions: EpubEdition[], days: PublishedContentDay[], zh: boolean): void {
   for (const day of days) {
-    const dayPath = String(day.data.day_path);
-    const dayNumber = Number(day.data.day);
+    const dayPath = day.path;
+    const dayNumber = day.day;
     const file = zh
       ? `_site/downloads/180-descent-zh-day-${dayPath}.epub`
       : `_site/downloads/180-descent-day-${dayPath}.epub`;

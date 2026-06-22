@@ -4,7 +4,7 @@ import path from "node:path";
 import { PDFDocument, PDFName } from "pdf-lib";
 import { ghostscriptAllPagesText, ghostscriptBoundingBox, ghostscriptPagePpm } from "@lib/pdf";
 import { escapeRegExp } from "@lib/text";
-import { loadLegacyDays } from "@lib/content";
+import { loadPublishedContentDays } from "@lib/content";
 
 export interface PdfCheckOptions {
   root: string;
@@ -82,14 +82,14 @@ class PdfChecker {
       "_site/downloads/180-descent-zh.pdf",
       "_site/downloads/180-descent-zh-deep-dive.pdf"
     ];
-    const enDays = await loadLegacyDays(path.join(this.options.root, "src/days"));
-    const zhDays = await loadLegacyDays(path.join(this.options.root, "src/zh/days"));
+    const enDays = await loadPublishedContentDays(this.options.root, "en");
+    const zhDays = await loadPublishedContentDays(this.options.root, "zh");
     for (const day of enDays) {
-      const file = `_site/downloads/180-descent-day-${String(day.data.day_path)}.pdf`;
+      const file = `_site/downloads/180-descent-day-${day.path}.pdf`;
       if (existsSync(this.absolute(file))) pdfFiles.push(file);
     }
     for (const day of zhDays) {
-      const file = `_site/downloads/180-descent-zh-day-${String(day.data.day_path)}.pdf`;
+      const file = `_site/downloads/180-descent-zh-day-${day.path}.pdf`;
       if (existsSync(this.absolute(file))) pdfFiles.push(file);
     }
     return pdfFiles;

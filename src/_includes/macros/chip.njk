@@ -1,8 +1,0 @@
-{# Status chip macro — replaces 278 hand-written chip spans
-    Usage: {% from "macros/chip.njk" import chip %}
-           {% chip("ok", "established") %}
-           {% chip("hint", "promising hint", "promising") %}
-           {% chip("ok", "已确立") %} #}
-{% macro chip(status, label, printLabel) -%}
-<span class="chip {{ status }}" data-print="{{ printLabel or label }}"><i></i>{{ label }}</span>
-{%- endmacro %}

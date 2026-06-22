@@ -6,9 +6,10 @@ import path from "node:path";
 import { inflateSync } from "node:zlib";
 import { PDFDocument, PDFName, StandardFonts, rgb } from "pdf-lib";
 import { chromium, type Browser, type Page } from "playwright";
-import { loadLegacyDays, type LegacyDay } from "@lib/content";
+import { loadPublishedContentDays, type PublishedContentDay } from "@lib/content";
 import { ghostscriptPageCount, ghostscriptText, postScriptString } from "@lib/pdf";
 import { contentType } from "@lib/static-site";
+import type { Locale } from "@lib/schemas";
 
 export interface BuildAllPdfsOptions {
   root: string;
@@ -44,7 +45,7 @@ interface TocBlock {
 }
 
 interface DayPdfConfig {
-  dayDir: string;
+  locale: Locale;
   dayRoutePrefix: string;
   outputPrefix: string;
   bookTitle: string;
@@ -109,14 +110,14 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
       await buildEdition(edition, context);
     }
     await buildDayPdfs({
-      dayDir: path.join(root, "src/days"),
+      locale: "en",
       dayRoutePrefix: "/days/",
       outputPrefix: "180-descent-day",
       bookTitle: "The 180-Day Descent",
       language: "en"
     }, context);
     await buildDayPdfs({
-      dayDir: path.join(root, "src/zh/days"),
+      locale: "zh",
       dayRoutePrefix: "/zh/days/",
       outputPrefix: "180-descent-zh-day",
       bookTitle: "180 Descent",
@@ -227,13 +228,13 @@ async function loadPageImages(page: Page): Promise<void> {
 }
 
 async function buildDayPdfs(config: DayPdfConfig, context: PdfBuildContext): Promise<void> {
-  const days = await loadLegacyDays(config.dayDir);
+  const days = await loadPublishedContentDays(context.root, config.locale);
   for (const day of days) {
     await buildDayPdf(day, config, context);
   }
 }
 
-async function buildDayPdf(day: LegacyDay, config: DayPdfConfig, context: PdfBuildContext): Promise<void> {
+async function buildDayPdf(day: PublishedContentDay, config: DayPdfConfig, context: PdfBuildContext): Promise<void> {
   const page = await context.browser.newPage({ viewport: { width: 900, height: 1350 } });
   try {
     await page.goto(`${context.server.url}${config.dayRoutePrefix}${dayPath(day)}/`, { waitUntil: "networkidle" });
@@ -451,8 +452,8 @@ async function ghostscriptPageMarkers(pdfPath: string): Promise<TocMarker[]> {
   return markers;
 }
 
-function dayPdfHeaderTitle(day: LegacyDay): string {
-  return `Day ${dayNumber(day)}`;
+function dayPdfHeaderTitle(day: PublishedContentDay): string {
+  return `Day ${day.day}`;
 }
 
 const markOptionalAppendicesScript = String.raw`(() => {
@@ -641,10 +642,6 @@ function isInsideDirectory(directory: string, filePath: string): boolean {
   return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
 }
 
-function dayNumber(day: LegacyDay): number {
-  return Number(day.data.day);
-}
-
-function dayPath(day: LegacyDay): string {
-  return String(day.data.day_path);
+function dayPath(day: PublishedContentDay): string {
+  return day.path;
 }

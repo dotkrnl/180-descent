@@ -3,7 +3,7 @@ import { existsSync, readdirSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-export type ToolCategory = "durable-required" | "spike-only";
+export type ToolCategory = "durable-required";
 
 interface ToolDefinition {
   label: string;
@@ -52,7 +52,6 @@ const EPUBCHECK_JAR_CANDIDATES = [
 ].filter((candidate): candidate is string => Boolean(candidate));
 
 const HOMEBREW_PREFIX = process.env.HOMEBREW_PREFIX || (existsSync("/opt/homebrew") ? "/opt/homebrew" : "/usr/local");
-const LOCAL_BIN = path.join(process.cwd(), "node_modules/.bin");
 
 const TOOLS = {
   node: {
@@ -133,66 +132,6 @@ const TOOLS = {
       }
       return requireVersion(path.join(HOMEBREW_PREFIX, "opt/openjdk/bin/java"), ["-jar", jar, "--version"], /EPUBCheck v5\.3\.0/);
     }
-  },
-  texlive: {
-    label: "TeX Live XeLaTeX/LuaLaTeX",
-    category: "spike-only",
-    usedBy: "PDF renderer spike",
-    installHint: "macOS: brew install --cask mactex-no-gui | Debian/Ubuntu: apt-get install texlive-xetex texlive-luatex",
-    check() {
-      return checkFirstCommand([
-        ["xelatex", ["--version"]],
-        ["lualatex", ["--version"]]
-      ]);
-    }
-  },
-  pandoc: {
-    label: "Pandoc",
-    category: "spike-only",
-    usedBy: "PDF renderer spike",
-    installHint: "macOS: brew install pandoc | Debian/Ubuntu: apt-get install pandoc",
-    check() {
-      return firstLine(execFileSync("pandoc", ["--version"], { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }));
-    }
-  },
-  tectonic: {
-    label: "Tectonic",
-    category: "spike-only",
-    usedBy: "PDF renderer spike",
-    installHint: "macOS: brew install tectonic | see https://tectonic-typesetting.github.io/",
-    check() {
-      return firstLine(execFileSync("tectonic", ["--version"], { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }));
-    }
-  },
-  typst: {
-    label: "Typst",
-    category: "spike-only",
-    usedBy: "PDF renderer spike",
-    installHint: "macOS: brew install typst | see https://typst.app/open-source/",
-    check() {
-      return firstLine(execFileSync("typst", ["--version"], { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }));
-    }
-  },
-  weasyprint: {
-    label: "WeasyPrint",
-    category: "spike-only",
-    usedBy: "PDF renderer spike",
-    installHint: "Install with pipx or your OS package manager.",
-    check() {
-      return firstLine(execFileSync("weasyprint", ["--version"], { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }));
-    }
-  },
-  vivliostyle: {
-    label: "Vivliostyle CLI",
-    category: "spike-only",
-    usedBy: "PDF renderer spike",
-    installHint: "Install with npm or your package manager for the spike only.",
-    check() {
-      return checkCommandVersions([
-        ["vivliostyle", ["--version"]],
-        [path.join(LOCAL_BIN, "vivliostyle"), ["--version"]]
-      ]);
-    }
   }
 } satisfies Record<string, ToolDefinition>;
 
@@ -200,8 +139,7 @@ const TOOLS_BY_NAME: Record<string, ToolDefinition | undefined> = TOOLS;
 
 export const TOOL_GROUPS = {
   durable: ["node", "npm", "gs", "xmllint", "playwright", "java", "epubcheck"],
-  epubcheck: ["java", "epubcheck"],
-  "pdf-spike": ["texlive", "pandoc", "tectonic", "typst", "weasyprint", "vivliostyle", "playwright"]
+  epubcheck: ["java", "epubcheck"]
 } as const;
 
 export class PreflightError extends Error {
@@ -326,18 +264,6 @@ function checkCommandVersions(commands: CommandSpec[]): string {
   for (const [command, args] of commands) {
     try {
       return commandVersion(command, args);
-    } catch (error) {
-      errors.push(`${command}: ${toError(error).message}`);
-    }
-  }
-  throw new Error(errors.join("; "));
-}
-
-function checkFirstCommand(commands: CommandSpec[]): string {
-  const errors: string[] = [];
-  for (const [command, args] of commands) {
-    try {
-      return firstLine(execFileSync(command, args, { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }));
     } catch (error) {
       errors.push(`${command}: ${toError(error).message}`);
     }

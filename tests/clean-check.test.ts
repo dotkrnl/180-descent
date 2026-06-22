@@ -5,16 +5,15 @@ import { describe, expect, it } from "vitest";
 import { checkCleanRepo } from "@lib/checks";
 
 describe("final cleanup gate", () => {
-  it("flags legacy Eleventy paths only in final mode", async () => {
+  it("flags retired static-site paths", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
     await writeFile(path.join(root, "eleventy.config.cjs"), "module.exports = {};");
     await mkdir(path.join(root, "scripts"), { recursive: true });
 
-    await expect(checkCleanRepo({ root, final: false })).resolves.toEqual([]);
-    await expect(checkCleanRepo({ root, final: true })).resolves.toEqual([
+    await expect(checkCleanRepo({ root })).resolves.toEqual([
       {
         path: "eleventy.config.cjs",
-        reason: "Eleventy config must be removed after Astro cutover"
+        reason: "Retired static-site config must not exist"
       }
     ]);
   });
@@ -24,7 +23,7 @@ describe("final cleanup gate", () => {
     await mkdir(path.join(root, "scripts"), { recursive: true });
     await writeFile(path.join(root, "scripts/renderer-spike-demo.ts"), "");
 
-    const failures = await checkCleanRepo({ root, final: false });
+    const failures = await checkCleanRepo({ root });
     expect(failures).toHaveLength(1);
     expect(failures[0].path).toBe("scripts/renderer-spike-demo.ts");
   });
@@ -34,7 +33,7 @@ describe("final cleanup gate", () => {
     await mkdir(path.join(root, "scripts"), { recursive: true });
     await writeFile(path.join(root, "scripts/import-day-from-html.mjs"), "");
 
-    const failures = await checkCleanRepo({ root, final: false });
+    const failures = await checkCleanRepo({ root });
     expect(failures).toEqual([
       {
         path: "scripts/import-day-from-html.mjs",

@@ -30,7 +30,7 @@ Do not add decorative images just because they are available. Use images when th
 - Update `src/_data/credits.yaml` for every added asset: creator, title/description, source URL, license name/version, local asset path, and whether it was modified.
 - Note modifications such as "Locally resized and compressed from the Wikimedia Commons original."
 - Social-card PNGs under `src/assets/images/social/` are generated first-party
-  build assets from route-shell front matter by
+  build assets from registry manifests by
   `npm run build:social-cards`; do not hand-edit or credit them as
   third-party assets.
 - If a user explicitly wants a custom third-party image as `seo_image`, treat it

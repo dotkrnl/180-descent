@@ -1,2 +1,2 @@
-export * from "./legacy-days";
+export * from "./published-days";
 export * from "./registry";

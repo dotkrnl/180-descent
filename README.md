@@ -37,31 +37,20 @@ npm run deploy:staging
 
 The Cloudflare Pages project name is `180-descent`.
 
-## Refactor Freeze
-
-New day publishing is paused during the clean-break refactor. See `docs/refactor/migration-status.md` and the inventory baseline under `docs/refactor/inventory/`.
-
 ## Adding A Day
 
-This workflow is frozen until the migrated system passes its cutover gates.
-
-Use the agent-agnostic workflow at `docs/workflows/180-descent-add-day/`. It documents the day-ingestion workflow, required files, callback/future-link rules, and validation commands. Codex skill shims live at `.codex/skills/`.
+Use the agent-agnostic workflow at `docs/workflows/180-descent-add-day/`. It documents the registry-MDX day workflow, required files, paired Chinese content, appendices, artifact variants, and validation commands. Codex skill shims live at `.codex/skills/`.
 
 Day source is split by responsibility:
 
-- `src/days/day-###-slug.md` and `src/zh/days/day-###-slug.md` are Eleventy route shells: frontmatter, permalink, `content_template`, and optional page `scripts`.
-- `src/_includes/days/###-slug/en.njk` and `src/_includes/days/###-slug/zh.njk` hold the lesson bodies.
-- Reusable interaction code lives in `src/assets/js/interactions/` and is loaded only by day frontmatter that lists it.
+- `src/content/days/###-slug/day.yaml` is the typed day manifest.
+- `src/content/days/###-slug/en.mdx` and `src/content/days/###-slug/zh.mdx` hold the paired lesson bodies.
+- `src/content/days/###-slug/appendices/*.mdx` holds optional deep-dive content declared in the manifest.
+- Reusable interaction code lives in `src/assets/js/interactions/` and is registered by manifest `components[].webEntry`.
 
 ## Adding A Deep Dive Appendix
 
-Use the same repo-local skill. For an English appendix HTML file, import it into the existing day with:
-
-```sh
-node scripts/import-appendix-from-html.mjs /absolute/path/to/day-##-appendix-*.html ##
-```
-
-Then run `npm run build` and `npm run check`. Standard EPUB/PDF outputs omit appendices; deep-dive EPUB/PDF outputs include them with static PDF fallbacks for live web components.
+Use the same repo-local workflow. Add the appendix body under the day directory, declare it in `day.yaml`, and provide static EPUB/PDF variants for any live web components. Standard EPUB/PDF outputs omit appendices; deep-dive EPUB/PDF outputs include them.
 
 ## Licenses
 

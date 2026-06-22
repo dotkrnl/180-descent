@@ -4,7 +4,6 @@ import path from "node:path";
 
 export interface CleanCheckOptions {
   root: string;
-  final: boolean;
 }
 
 export interface CleanCheckFailure {
@@ -12,11 +11,11 @@ export interface CleanCheckFailure {
   reason: string;
 }
 
-const FINAL_FORBIDDEN_PATHS = [
-  ["eleventy.config.cjs", "Eleventy config must be removed after Astro cutover"],
-  ["src/days", "English route shells must be removed after paired MDX migration"],
-  ["src/zh/days", "Separate Chinese route shells must be removed after paired MDX migration"],
-  ["src/_includes/days", "Nunjucks day bodies must be removed after MDX migration"]
+const FORBIDDEN_PATHS = [
+  ["eleventy.config.cjs", "Retired static-site config must not exist"],
+  ["src/days", "Retired English day shell directory must not exist"],
+  ["src/zh/days", "Retired Chinese day shell directory must not exist"],
+  ["src/_includes/days", "Retired day body directory must not exist"]
 ] as const;
 
 const ALWAYS_FORBIDDEN_PATHS = [
@@ -24,7 +23,7 @@ const ALWAYS_FORBIDDEN_PATHS = [
   ["scripts/import-appendix-from-html.mjs", "Blind appendix importer has been retired; use manual paired-MDX conversion"]
 ] as const;
 
-const FINAL_FORBIDDEN_TRACKED_PATHS = [
+const FORBIDDEN_TRACKED_PATHS = [
   ["_site", "Generated site output must not be committed"],
   ["dist", "Generated temporary output must not be committed"]
 ] as const;
@@ -38,22 +37,21 @@ const MIGRATION_ONLY_PATTERNS = [
 export async function checkCleanRepo(options: CleanCheckOptions): Promise<CleanCheckFailure[]> {
   const failures: CleanCheckFailure[] = [];
 
+  for (const [relativePath, reason] of FORBIDDEN_PATHS) {
+    if (await pathExists(path.join(options.root, relativePath))) {
+      failures.push({ path: relativePath, reason });
+    }
+  }
+
   for (const [relativePath, reason] of ALWAYS_FORBIDDEN_PATHS) {
     if (await pathExists(path.join(options.root, relativePath))) {
       failures.push({ path: relativePath, reason });
     }
   }
 
-  if (options.final) {
-    for (const [relativePath, reason] of FINAL_FORBIDDEN_PATHS) {
-      if (await pathExists(path.join(options.root, relativePath))) {
-        failures.push({ path: relativePath, reason });
-      }
-    }
-    for (const [relativePath, reason] of FINAL_FORBIDDEN_TRACKED_PATHS) {
-      if (isTracked(options.root, relativePath)) {
-        failures.push({ path: relativePath, reason });
-      }
+  for (const [relativePath, reason] of FORBIDDEN_TRACKED_PATHS) {
+    if (isTracked(options.root, relativePath)) {
+      failures.push({ path: relativePath, reason });
     }
   }
 

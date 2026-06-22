@@ -14,8 +14,8 @@ describe("typed preflight", () => {
   });
 
   it("parses optional, list, and group arguments", () => {
-    expect(parsePreflightArgs(["--optional", "--list", "--group=pdf-spike", "node"])).toEqual({
-      toolNames: ["pdf-spike", "node"],
+    expect(parsePreflightArgs(["--optional", "--list", "--group=epubcheck", "node"])).toEqual({
+      toolNames: ["epubcheck", "node"],
       optional: true,
       list: true
     });

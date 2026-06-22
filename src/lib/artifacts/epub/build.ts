@@ -4,7 +4,8 @@ import path from "node:path";
 import * as cheerio from "cheerio";
 import JSZip from "jszip";
 import YAML from "yaml";
-import { loadLegacyDays, type LegacyDay } from "@lib/content";
+import { loadPublishedContentDays, type PublishedContentDay } from "@lib/content";
+import type { Locale } from "@lib/schemas";
 import { escapeXml } from "@lib/text";
 
 type CheerioRoot = ReturnType<typeof cheerio.load>;
@@ -44,8 +45,8 @@ interface EpubMeta {
 
 interface EpubConfig {
   root: string;
+  locale: Locale;
   meta: EpubMeta;
-  dayDir: string;
   siteDayDir: string;
   dayUrlPrefix: string;
   introHtml: string | null;
@@ -54,15 +55,15 @@ interface EpubConfig {
   introLabel?: string;
   dayLabel: string;
   output: string;
-  days?: LegacyDay[];
+  days?: PublishedContentDay[];
   includeDeepDive?: boolean;
   singleDay?: boolean;
 }
 
 interface DayEpubConfig {
   root: string;
+  locale: Locale;
   meta: EpubMeta;
-  dayDir: string;
   siteDayDir: string;
   dayUrlPrefix: string;
   dayLabel: string;
@@ -85,6 +86,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
 
   await buildEpub({
     root,
+    locale: "en",
     meta: {
       title: book.title,
       subtitle: book.subtitle,
@@ -93,7 +95,6 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epub_identifier: book.epub_identifier
     },
-    dayDir: path.join(root, "src/days"),
     siteDayDir: path.join(root, "_site/days"),
     dayUrlPrefix: "/days/",
     introHtml: path.join(root, "_site/introduction/index.html"),
@@ -106,6 +107,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
 
   await buildEpub({
     root,
+    locale: "en",
     meta: {
       title: `${book.title}: Deep Dive Edition`,
       subtitle: book.deep_dive_subtitle,
@@ -114,7 +116,6 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epub_identifier: `${book.epub_identifier}-deep-dive`
     },
-    dayDir: path.join(root, "src/days"),
     siteDayDir: path.join(root, "_site/days"),
     dayUrlPrefix: "/days/",
     introHtml: path.join(root, "_site/introduction/index.html"),
@@ -128,6 +129,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
 
   await buildEpub({
     root,
+    locale: "zh",
     meta: {
       title: book.zh.title,
       subtitle: book.zh.subtitle,
@@ -137,7 +139,6 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epub_identifier: book.zh.epub_identifier
     },
-    dayDir: path.join(root, "src/zh/days"),
     siteDayDir: path.join(root, "_site/zh/days"),
     dayUrlPrefix: "/zh/days/",
     introHtml: path.join(root, "_site/zh/introduction/index.html"),
@@ -150,6 +151,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
 
   await buildEpub({
     root,
+    locale: "zh",
     meta: {
       title: `${book.zh.title}：专题深入版`,
       subtitle: book.zh.deep_dive_subtitle,
@@ -159,7 +161,6 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epub_identifier: `${book.zh.epub_identifier}-deep-dive`
     },
-    dayDir: path.join(root, "src/zh/days"),
     siteDayDir: path.join(root, "_site/zh/days"),
     dayUrlPrefix: "/zh/days/",
     introHtml: path.join(root, "_site/zh/introduction/index.html"),
@@ -173,6 +174,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
 
   await buildDayEpubs({
     root,
+    locale: "en",
     meta: {
       title: book.title,
       subtitle: book.subtitle,
@@ -181,7 +183,6 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epub_identifier: `${book.epub_identifier}-day`
     },
-    dayDir: path.join(root, "src/days"),
     siteDayDir: path.join(root, "_site/days"),
     dayUrlPrefix: "/days/",
     dayLabel: "Day",
@@ -190,6 +191,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
 
   await buildDayEpubs({
     root,
+    locale: "zh",
     meta: {
       title: book.zh.title,
       subtitle: book.zh.subtitle,
@@ -199,7 +201,6 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epub_identifier: `${book.zh.epub_identifier}-day`
     },
-    dayDir: path.join(root, "src/zh/days"),
     siteDayDir: path.join(root, "_site/zh/days"),
     dayUrlPrefix: "/zh/days/",
     dayLabel: "第",
@@ -208,7 +209,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
 }
 
 async function buildDayEpubs(config: DayEpubConfig): Promise<void> {
-  const days = await loadLegacyDays(config.dayDir, { xhtml: true });
+  const days = await loadPublishedContentDays(config.root, config.locale);
   for (const day of days) {
     await buildEpub({
       ...config,
@@ -227,7 +228,7 @@ async function buildDayEpubs(config: DayEpubConfig): Promise<void> {
 }
 
 async function buildEpub(config: EpubConfig): Promise<void> {
-  const days = config.days ?? await loadLegacyDays(config.dayDir, { xhtml: true });
+  const days = config.days ?? await loadPublishedContentDays(config.root, config.locale);
 
   const zip = new JSZip();
   zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
@@ -305,7 +306,7 @@ async function pageToXhtml(
   title: string,
   selfHref: string,
   config: EpubConfig,
-  days: LegacyDay[],
+  days: PublishedContentDay[],
   imageAssets: Map<string, EpubImage>
 ): Promise<string> {
   const html = await readFile(htmlPath, "utf8");
@@ -483,7 +484,7 @@ function epubNoteBaseId(scope: ReturnType<CheerioRoot>, selfHref: string, scopeI
   return `tip-${base || `section-${scopeIndex + 1}`}`;
 }
 
-function navDocument(items: LegacyDay[], config: EpubConfig): string {
+function navDocument(items: PublishedContentDay[], config: EpubConfig): string {
   const titleLink = config.introHtml && !config.singleDay
     ? `<li><a href="title.xhtml">${escapeXml(config.meta.language.startsWith("zh") ? "书名页" : "Title Page")}</a></li>`
     : "";
@@ -616,7 +617,7 @@ export function titlePageDocument(config: Pick<EpubConfig, "meta">): string {
 </html>`;
 }
 
-function dayDocumentTitle(day: LegacyDay, config: Pick<EpubConfig | DayEpubConfig, "meta" | "dayLabel">): string {
+function dayDocumentTitle(day: PublishedContentDay, config: Pick<EpubConfig | DayEpubConfig, "meta" | "dayLabel">): string {
   if (config.meta.language.startsWith("zh")) {
     return `${config.dayLabel} ${dayNumber(day)} 日：${dayTitle(day)}`;
   }
@@ -651,18 +652,18 @@ function requiredZipFolder(zip: JSZip, name: string): JSZip {
   return folder;
 }
 
-function dayNumber(day: LegacyDay): number {
-  return Number(day.data.day);
+function dayNumber(day: PublishedContentDay): number {
+  return day.day;
 }
 
-function dayPath(day: LegacyDay): string {
-  return String(day.data.day_path);
+function dayPath(day: PublishedContentDay): string {
+  return day.path;
 }
 
-function dayTitle(day: LegacyDay): string {
-  return String(day.data.title);
+function dayTitle(day: PublishedContentDay): string {
+  return day.title;
 }
 
-function dayXhtml(day: LegacyDay): string {
-  return day.xhtml ?? `day-${String(dayNumber(day)).padStart(3, "0")}.xhtml`;
+function dayXhtml(day: PublishedContentDay): string {
+  return day.xhtml;
 }
