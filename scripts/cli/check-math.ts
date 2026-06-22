@@ -8,7 +8,7 @@ for (const failure of result.failures) {
 
 if (result.failures.length) {
   console.error(`\nMath lint failed. ${result.failures.length} problem(s) found.`);
-  console.error("Use {% math %}...{% endmath %} for display equations.");
+  console.error("Use <MathBlock> for display equations and <MathInline> for inline equations.");
   process.exit(1);
 }
 

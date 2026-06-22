@@ -554,7 +554,8 @@ export function epubUuidFromString(value: string): string {
 
 function registerEpubImage(src = "", imageAssets: Map<string, EpubImage>, root: string): EpubImage | null {
   const pathOnly = src.split(/[?#]/)[0];
-  if (!pathOnly.startsWith("/assets/images/")) return null;
+  const href = epubImageHref(pathOnly);
+  if (!href) return null;
 
   const extension = path.extname(pathOnly).toLowerCase();
   const mediaTypes: Record<string, string> = {
@@ -567,7 +568,6 @@ function registerEpubImage(src = "", imageAssets: Map<string, EpubImage>, root: 
   const mediaType = mediaTypes[extension];
   if (!mediaType) return null;
 
-  const href = pathOnly.replace(/^\/assets\/images\//, "images/");
   if (!imageAssets.has(href)) {
     imageAssets.set(href, {
       href,
@@ -578,6 +578,16 @@ function registerEpubImage(src = "", imageAssets: Map<string, EpubImage>, root: 
   }
 
   return imageAssets.get(href) ?? null;
+}
+
+function epubImageHref(pathOnly: string): string {
+  if (pathOnly.startsWith("/assets/images/")) {
+    return pathOnly.replace(/^\/assets\/images\//, "images/");
+  }
+  if (pathOnly.startsWith("/_astro/")) {
+    return `images/astro/${path.basename(pathOnly)}`;
+  }
+  return "";
 }
 
 export function titlePageDocument(config: Pick<EpubConfig, "meta">): string {

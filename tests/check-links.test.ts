@@ -45,9 +45,22 @@ describe("link checks", () => {
 async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-check-links-"));
   await mkdir(path.join(root, "_site"), { recursive: true });
-  await mkdir(path.join(root, "src/days"), { recursive: true });
+  await mkdir(path.join(root, "src/content/days/001-fixture"), { recursive: true });
   await mkdir(path.join(root, "src/_data"), { recursive: true });
-  await writeFile(path.join(root, "src/days/day-001.md"), "---\nday: 1\n---\n");
+  await writeFile(path.join(root, "src/content/days/001-fixture/day.yaml"), [
+    "day: 1",
+    "slug: fixture",
+    "path: 001-fixture",
+    "block: Fixture",
+    "published: true",
+    "locales:",
+    "  en:",
+    "    title: Fixture",
+    "    summary: Fixture summary.",
+    "    body: en.mdx",
+    "    status: reviewed"
+  ].join("\n"));
+  await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), "");
   await writeFile(path.join(root, "src/_data/future-links.yaml"), "[]\n");
   return root;
 }

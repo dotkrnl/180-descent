@@ -72,6 +72,7 @@ const dayPath = entry.day.manifest.path;
 const canonicalPath = isZh ? `/zh/days/${dayPath}/` : `/days/${dayPath}/`;
 const alternatePath = isZh ? `/days/${dayPath}/` : `/zh/days/${dayPath}/`;
 const downloadPrefix = isZh ? `/downloads/180-descent-zh-day-${dayPath}` : `/downloads/180-descent-day-${dayPath}`;
+const socialImagePath = isZh ? `/assets/images/social/zh-day-${dayPath}.png` : `/assets/images/social/day-${dayPath}.png`;
 const dayLabel = isZh ? `第${String(entry.day.manifest.day).padStart(2, "0")}日` : `Day ${String(entry.day.manifest.day).padStart(2, "0")}`;
 const remainingDays = 180 - entry.day.manifest.day;
 const navPrefix = isZh ? "/zh/days" : "/days";
@@ -85,7 +86,7 @@ const scripts = entry.day.manifest.components.map((component) => {
   return script;
 });
 ---
-<BookShell title={entry.title} description={entry.summary} locale={entry.locale} canonicalPath={canonicalPath} alternatePath={alternatePath} scripts={scripts}>
+<BookShell title={entry.title} description={entry.summary} locale={entry.locale} canonicalPath={canonicalPath} alternatePath={alternatePath} socialImagePath={socialImagePath} scripts={scripts}>
   <article
     class="lesson"
     data-day={entry.day.manifest.day}

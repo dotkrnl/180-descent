@@ -1,17 +1,17 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { load } from "cheerio";
+import { loadContentRegistry } from "@lib/content";
 import { pathExists, walkFiles } from "@lib/fs";
 
 export interface AppendixStyleCheckOptions {
   root: string;
-  includeRoot?: string;
+  daysDir?: string;
   cssFiles?: string[];
   jsRoot?: string;
 }
 
 export interface AppendixStyleCheckResult {
-  checkedIncludeFiles: number;
+  checkedAppendixFiles: number;
   errors: string[];
 }
 
@@ -60,19 +60,14 @@ export async function checkAppendixStyle(options: AppendixStyleCheckOptions): Pr
   const errors: string[] = [];
   const cssClasses = await collectCssClasses(options, errors);
   const jsClasses = await collectJsClasses(options);
-  const includeFiles = await collectIncludeFiles(options);
+  const appendixFiles = await collectAppendixFiles(options);
 
-  for (const file of includeFiles) {
-    const content = await readFile(file, "utf8");
-    checkDeepDiveWrap(options.root, file, content, errors);
-    const blocks = deepDiveBlocks(options.root, content, file, errors);
-    for (const block of blocks) {
-      checkBlock(options.root, file, block, cssClasses, jsClasses, errors);
-    }
+  for (const file of appendixFiles) {
+    checkBlock(options.root, file, await readFile(file, "utf8"), cssClasses, jsClasses, errors);
   }
 
   return {
-    checkedIncludeFiles: includeFiles.length,
+    checkedAppendixFiles: appendixFiles.length,
     errors
   };
 }
@@ -113,28 +108,14 @@ async function collectJsClasses(options: AppendixStyleCheckOptions): Promise<Set
   return out;
 }
 
-async function collectIncludeFiles(options: AppendixStyleCheckOptions): Promise<string[]> {
-  const includeRoot = path.join(options.root, options.includeRoot ?? "src/_includes/days");
-  if (!await pathExists(includeRoot)) return [];
-  return (await walkFiles(includeRoot, { exts: ".njk", ignored: [] })).sort();
-}
+async function collectAppendixFiles(options: AppendixStyleCheckOptions): Promise<string[]> {
+  const daysDir = path.join(options.root, options.daysDir ?? "src/content/days");
+  if (!await pathExists(daysDir)) return [];
 
-function deepDiveBlocks(root: string, content: string, file: string, errors: string[]): string[] {
-  const blocks: string[] = [];
-  let searchFrom = 0;
-  while (true) {
-    const start = content.indexOf("<!-- deep-dive:start -->", searchFrom);
-    if (start < 0) break;
-    const end = content.indexOf("<!-- deep-dive:end -->", start);
-    if (end < 0) {
-      errors.push(`${toRelative(root, file)}: missing <!-- deep-dive:end --> marker`);
-      blocks.push(content.slice(start));
-      break;
-    }
-    blocks.push(content.slice(start, end));
-    searchFrom = end + "<!-- deep-dive:end -->".length;
-  }
-  return blocks;
+  const registry = await loadContentRegistry({ daysDir });
+  return registry.days
+    .flatMap((day) => day.appendixBodies.map((body) => path.join(day.directory, body.path)))
+    .sort();
 }
 
 function checkBlock(
@@ -146,15 +127,6 @@ function checkBlock(
   errors: string[]
 ): void {
   const relativeFile = toRelative(root, file);
-  if (!/<details\s+class="deep-dive"[\s>]/.test(block)) {
-    errors.push(`${relativeFile}: deep-dive block has no <details class="deep-dive"> shell`);
-  }
-  if (!/<summary>[\s\S]*class="ptitle"[\s\S]*class="deep-dive-title"[\s\S]*class="deep-dive-sub"[\s\S]*<\/summary>/.test(block)) {
-    errors.push(`${relativeFile}: deep-dive summary is missing the standard title/subtitle structure`);
-  }
-  if (!/<div\s+class="deep-dive-body">/.test(block)) {
-    errors.push(`${relativeFile}: deep-dive block has no .deep-dive-body wrapper`);
-  }
   if (/<br\s*\/?>\s*<blockquote\b/i.test(block)) {
     errors.push(`${relativeFile}: raw <br> used as spacing before a blockquote inside an appendix`);
   }
@@ -196,22 +168,9 @@ function isDayScopedClass(className: string): boolean {
   return /^(?:appendix-d\d{3}|day-\d{3}|d\d{3}(?:[-_]|$))/i.test(className);
 }
 
-function checkDeepDiveWrap(root: string, file: string, content: string, errors: string[]): void {
-  if (!content.includes("<!-- deep-dive:start -->")) return;
-
-  const $ = load(content, undefined, false);
-  const allDetails = $("details.deep-dive").length;
-  if (!allDetails) return;
-
-  const wrappedDetails = $("div.wrap details.deep-dive").length;
-  if (wrappedDetails !== allDetails) {
-    errors.push(`${toRelative(root, file)}: ${allDetails - wrappedDetails} deep-dive section(s) outside the standard .wrap content container`);
-  }
-}
-
 function classNames(block: string): Set<string> {
   const out = new Set<string>();
-  for (const match of block.matchAll(/class="([^"]+)"/g)) {
+  for (const match of block.matchAll(/class(?:Name)?="([^"]+)"/g)) {
     for (const className of match[1].trim().split(/\s+/)) {
       if (className) out.add(className);
     }

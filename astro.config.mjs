@@ -10,7 +10,7 @@ export default defineConfig({
       rehypePlugins: [[rehypeKatex, { output: "html" }]]
     })
   ],
-  outDir: "_site-astro",
+  outDir: "_site",
   srcDir: "src/app",
   publicDir: "public"
 });

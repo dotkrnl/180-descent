@@ -6,40 +6,34 @@ import { describe, expect, it } from "vitest";
 import { checkContent } from "@lib/checks";
 
 describe("content check", () => {
-  it("accepts a minimal legacy day shell and include", async () => {
+  it("accepts minimal paired registry content", async () => {
     const root = await createFixtureRoot();
-    await writeLegacyDay(root, {
-      title: "Fixture Day",
-      include: [
-        "<h1>Fixture Day</h1>",
-        '<span class="chip ok" data-print="ok">ok</span>',
-        '<section class="sources"></section>'
-      ].join("\n")
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: body("夹具日", "zh")
     });
 
     await expect(checkContent({ root })).resolves.toEqual([]);
   });
 
-  it("reports missing scripts and mismatched h1 text", async () => {
+  it("reports mismatched h1 text and missing sources", async () => {
     const root = await createFixtureRoot();
-    await writeLegacyDay(root, {
-      title: "Fixture Day",
-      scripts: ["/assets/js/interactions/missing.js"],
-      include: [
+    await writeRegistryDay(root, {
+      en: [
         "<h1>Different</h1>",
-        '<span class="chip ok" data-print="ok">ok</span>',
-        '<section class="sources"></section>'
-      ].join("\n")
+        '<StatusChip status={"ok"} label={"ok"} />'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
     });
 
     const failures = await checkContent({ root });
 
     expect(failures).toEqual([
       {
-        message: "English day-001-fixture.md references missing script: /assets/js/interactions/missing.js"
+        message: "EN 001-fixture has no sources section"
       },
       {
-        message: 'English day-001-fixture.md h1 "Different" does not match route title "Fixture Day"'
+        message: 'EN 001-fixture h1 "Different" does not match manifest title "Fixture Day"'
       }
     ]);
   });
@@ -47,33 +41,48 @@ describe("content check", () => {
 
 async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-content-check-"));
-  await mkdir(path.join(root, "src/days"), { recursive: true });
-  await mkdir(path.join(root, "src/_includes/days/001-fixture"), { recursive: true });
+  await mkdir(path.join(root, "src/content/days/001-fixture"), { recursive: true });
   await mkdir(path.join(root, "src/assets/css"), { recursive: true });
   await writeFile(path.join(root, "src/assets/css/book.css"), "@font-face { font-family: Fixture; }\n");
   return root;
 }
 
-async function writeLegacyDay(
+async function writeRegistryDay(
   root: string,
   options: {
-    title: string;
-    include: string;
-    scripts?: string[];
+    en: string;
+    zh: string;
   }
 ): Promise<void> {
-  await writeFile(path.join(root, "src/_includes/days/001-fixture/en.njk"), options.include);
-  await writeFile(path.join(root, "src/days/day-001-fixture.md"), [
-    "---",
+  const dayDir = path.join(root, "src/content/days/001-fixture");
+  await writeFile(path.join(dayDir, "day.yaml"), [
     "day: 1",
-    `title: ${options.title}`,
-    "summary: Fixture summary.",
-    "threads:",
-    "  - information",
-    "content_template: days/001-fixture/en.njk",
-    "permalink: /days/001-fixture/",
-    ...(options.scripts?.length ? ["scripts:", ...options.scripts.map((script) => `  - ${script}`)] : []),
-    "---",
-    "{% include content_template %}"
+    "slug: fixture",
+    "path: 001-fixture",
+    "block: Fixture Block",
+    "published: true",
+    "locales:",
+    "  en:",
+    "    title: Fixture Day",
+    "    summary: Fixture summary.",
+    "    body: en.mdx",
+    "    status: reviewed",
+    "  zh:",
+    "    title: 夹具日",
+    "    summary: 中文夹具摘要。",
+    "    body: zh.mdx",
+    "    status: reviewed"
   ].join("\n"));
+  await writeFile(path.join(dayDir, "en.mdx"), options.en);
+  await writeFile(path.join(dayDir, "zh.mdx"), options.zh);
+}
+
+function body(title: string, locale: "en" | "zh" = "en"): string {
+  return [
+    `<h1>${title}</h1>`,
+    locale === "zh"
+      ? '<StatusChip status={"ok"} label={"已确立"} />'
+      : '<StatusChip status={"ok"} label={"established"} />',
+    '<section class="sources"></section>'
+  ].join("\n");
 }

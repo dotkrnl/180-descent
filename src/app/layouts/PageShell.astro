@@ -1,0 +1,37 @@
+---
+import BookShell from "@app/layouts/BookShell.astro";
+import { getBookData } from "@app/site-data";
+import type { Locale } from "@lib/schemas";
+
+interface Props {
+  locale: Locale;
+  title: string;
+  subtitle?: string;
+  eyebrow?: string;
+  description: string;
+  canonicalPath: string;
+  alternatePath?: string;
+  releaseBanner?: boolean;
+}
+
+const book = await getBookData();
+const { locale, title, subtitle, eyebrow, description, canonicalPath, alternatePath, releaseBanner = false } = Astro.props;
+const isZh = locale === "zh";
+---
+<BookShell
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalPath={canonicalPath}
+  alternatePath={alternatePath}
+  releaseBanner={releaseBanner}
+>
+  <article class="page wrap wide">
+    <header class="page-hero">
+      <p class="eyebrow">{eyebrow ?? (isZh ? book.zh.subtitle : book.subtitle)}</p>
+      <h1>{title}</h1>
+      {subtitle && <p class="sub">{subtitle}</p>}
+    </header>
+    <slot />
+  </article>
+</BookShell>

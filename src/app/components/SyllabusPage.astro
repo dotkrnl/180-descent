@@ -1,0 +1,100 @@
+---
+import PageShell from "@app/layouts/PageShell.astro";
+import {
+  getBookData,
+  getPublishedDays,
+  getSyllabus,
+  nextSyllabusDay,
+  padDay,
+  publishedByDay,
+  totalSyllabusDays,
+  upcomingSyllabusDays
+} from "@app/site-data";
+import type { Locale } from "@lib/schemas";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const isZh = locale === "zh";
+const [book, syllabus, days] = await Promise.all([
+  getBookData(),
+  getSyllabus(locale),
+  getPublishedDays(locale)
+]);
+const totalDays = totalSyllabusDays(syllabus);
+const published = publishedByDay(days);
+const nextDay = nextSyllabusDay(syllabus, days);
+const upcoming = upcomingSyllabusDays(syllabus, days, 6);
+---
+<PageShell
+  locale={locale}
+  title={isZh ? "课程表" : "Syllabus"}
+  subtitle={isZh ? "一张按依赖关系排序、从根基到前沿的地图。" : "A dependency-ordered map from foundations to the frontier."}
+  eyebrow={isZh ? "地图" : "The map"}
+  description={isZh ? "完整的 180 天课程地图，已发布的课程将在上线时链接。" : "The complete 180-day course map, with published lessons linked as they arrive."}
+  canonicalPath={isZh ? "/zh/syllabus/" : "/syllabus/"}
+  alternatePath={isZh ? "/syllabus/" : "/zh/syllabus/"}
+>
+  <p class="lede">{isZh ? "课程表是本书穿越世界的路线：它不是一堆互不相关的主题陈列，而是一连串逐级深入的台阶，每一天都为下一天铺就更坚实的地基。它始于追问信念如何赢得信任，继而横跨数学、物理、化学、生命科学、医学、神经科学、人工智能、经济学、社会制度、伦理以及正在塑造未来的种种力量。" : "The syllabus is the book's route through the world: not a shelf of unrelated topics, but a sequence of descents where each day gives the next one firmer ground. It begins by asking how belief earns trust, then moves through mathematics, physics, chemistry, life, medicine, mind, artificial intelligence, economics, societies, ethics, and the future."}</p>
+
+  <p>{isZh ? "每一课都保持着严整的叙事结构：一个通俗易懂的切入点、一个核心模型、一场仍在进行的辩论，以及一段走向新近研究的旅程。前沿观点将被标注为「已确立」、「线索」或「争议/炒作」。我们审慎对待尚未定论的研究：目的不在于兜售新奇，而在于呈现证据的演变，并赋予其应有的认知权重。" : "Every lesson keeps the same internal shape: an accessible entry point, a core model, a live debate, and a walk toward recent research. The frontier is treated with discipline. Claims are marked as established, promising hints, or contested hype; the goal is not to make novelty feel certain, but to show how evidence changes its weight."}</p>
+
+  <div class="syllabus-progress" aria-label={isZh ? "课程进度" : "Syllabus progress"}>
+    <div>
+      <p class="progress-label">{isZh ? "已发布" : "Published now"}</p>
+      <p class="progress-number">{isZh ? `${days.length} / ${totalDays} 天` : `${days.length} of ${totalDays} days`}</p>
+    </div>
+    {nextDay && (
+      <div>
+        <p class="progress-label">{isZh ? "下一日" : "Next descent"}</p>
+        <p class="progress-next">{isZh ? `第 ${padDay(nextDay.day)} 日 · ${nextDay.title}` : `Day ${padDay(nextDay.day)} · ${nextDay.title}`}</p>
+      </div>
+    )}
+  </div>
+
+  <nav class="syllabus-block-nav" aria-label={isZh ? "课程模块" : "Syllabus blocks"}>
+    {syllabus.blocks.map((block) => (
+      <a href={`#block-${block.id.toLowerCase()}`}>{isZh ? `模块 ${block.id}` : `Block ${block.id}`}</a>
+    ))}
+  </nav>
+
+  {syllabus.blocks.map((block) => (
+    <section class="syllabus-block" id={`block-${block.id.toLowerCase()}`}>
+      <p class="sec-eyebrow">{isZh ? `模块 ${block.id} · 第 ${block.start_day}-${block.end_day} 日` : `Block ${block.id} · Days ${block.start_day}-${block.end_day}`}</p>
+      <h2>{block.title}</h2>
+      <p>{block.summary}</p>
+      <div class="syllabus-days">
+        {block.days.map((day) => {
+          const publishedDay = published.get(day.day);
+          return (
+            <article class:list={["day-card syllabus-card", { "is-published": Boolean(publishedDay) }]}>
+              <p class="card-kicker">{isZh ? `第 ${padDay(day.day)} 日 / ${book.total_days}${publishedDay ? "" : " · 计划中"}` : `Day ${padDay(day.day)} / ${book.total_days}${publishedDay ? "" : " · Planned"}`}</p>
+              <h3>{publishedDay ? <a href={publishedDay.url}>{publishedDay.title}</a> : day.title}</h3>
+              {publishedDay && <p>{publishedDay.summary}</p>}
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  ))}
+
+  <section class="next-summary" aria-labelledby="what-comes-next">
+    <p class="sec-eyebrow">{isZh ? "续篇" : "Continuation"}</p>
+    <h2 id="what-comes-next">{isZh ? "接下来是什么" : "What Comes Next"}</h2>
+    {nextDay ? (
+      <>
+        <p>{isZh ? `本书已发布至第 ${padDay(days.length)} 日。下一日是第 ${padDay(nextDay.day)} 日：${nextDay.title}，位于模块 ${nextDay.block_id}。` : `The book has published through Day ${padDay(days.length)}. The next lesson is Day ${padDay(nextDay.day)}: ${nextDay.title}, in Block ${nextDay.block_id}.`}{nextDay.entry && nextDay.model && nextDay.debate ? (isZh ? `课程表切入点：${nextDay.entry} 核心模型：${nextDay.model} 主要争论：${nextDay.debate}` : ` Syllabus entry point: ${nextDay.entry} Core model: ${nextDay.model} Live debate: ${nextDay.debate}`) : nextDay.note ? ` ${nextDay.note}` : ""}</p>
+        <ol class="upcoming-list">
+          {upcoming.map((day) => (
+            <li><span class="upcoming-day">{isZh ? `第 ${padDay(day.day)} 日 · ` : `Day ${padDay(day.day)} · `}</span><span>{day.title}</span></li>
+          ))}
+        </ol>
+        <p>{isZh ? "开篇模块之后，课程将从「我们如何知道」转向知识的形式语言：数学、概率、系统、信息与计算。这些工具将成为进入后续章节的轨道——通向物理定律、生命系统、心智、制度与研究前沿。" : "After the opening block, the course turns from how we know to the formal languages of knowledge: mathematics, probability, systems, information, and computation. Those tools become the launch rail for the later descents into physical law, living systems, minds, institutions, and the research frontier."}</p>
+      </>
+    ) : (
+      <p>{isZh ? "全部 180 天已发布。接下来的工作是维护：收紧链接，刷新前沿主张，并在研究记录变化时保持证据标签的时效性。" : "All 180 descents have been published. The next work is maintenance: tightening links, refreshing frontier claims, and keeping the evidence labels current as the research record changes."}</p>
+    )}
+  </section>
+</PageShell>

@@ -1,0 +1,77 @@
+---
+import BookShell from "@app/layouts/BookShell.astro";
+import DayCard from "@app/components/DayCard.astro";
+import { getBookData, getPublishedDays, latestDays, padDay } from "@app/site-data";
+import type { Locale } from "@lib/schemas";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const book = await getBookData();
+const days = await getPublishedDays(locale);
+const isZh = locale === "zh";
+const homePath = isZh ? "/zh/" : "/";
+const alternatePath = isZh ? "/" : "/zh/";
+const downloads = isZh ? book.zh.downloads : book.downloads;
+const readingDays = days.map((day) => ({
+  day: day.day,
+  url: day.url,
+  label: isZh ? `第${padDay(day.day)}日 · ${day.title}` : `Day ${padDay(day.day)} · ${day.title}`,
+  title: day.title,
+  summary: day.summary
+}));
+---
+<BookShell
+  title={isZh ? "首页" : "Home"}
+  description={isZh ? "浏览并下载《深入一百八十日》。" : "Browse and download The 180-Day Descent."}
+  locale={locale}
+  canonicalPath={homePath}
+  alternatePath={alternatePath}
+  releaseBanner
+>
+  <section class="page-hero wrap wide">
+    <p class="eyebrow">{isZh ? book.zh.subtitle : book.subtitle}</p>
+    <h1>{isZh ? book.zh.title : book.title}</h1>
+    {isZh ? (
+      <p class="sub book-credit">
+        <span class="credit-line">作者：{book.zh.authors}</span>
+        <span class="credit-line">翻译：{book.zh.translators}</span>
+      </p>
+    ) : (
+      <p class="sub">A 180-day map of knowledge by {book.authors}.</p>
+    )}
+  </section>
+
+  <section class="wrap wide">
+    <div class="download-grid home-actions">
+      <article class="download-card" data-reading-card data-reading-locale={locale} data-reading-continue-kicker={isZh ? "继续上次阅读" : "Continue where you left off"}>
+        <p class="card-kicker" data-reading-kicker>{isZh ? "在线阅读" : "Read online"}</p>
+        <h2><a href={isZh ? "/zh/days/001-what-is-knowledge/" : "/days/001-what-is-knowledge/"} data-reading-link>{isZh ? "从第 1 日开始" : "Start Day 1"}</a></h2>
+        <p data-reading-summary>{isZh ? "从原点出发，横跨数学、物理、生命、心智、智能与文明，直抵研究前沿。" : "A descent from first reasons through mathematics, physics, life, mind, intelligence, civilization, and the research frontier."}</p>
+      </article>
+      <script type="application/json" data-reading-days data-reading-locale={locale} set:html={JSON.stringify(readingDays)} />
+      <div class="download-stack">
+        <article class="download-card">
+          <p class="card-kicker">{isZh ? "离线版" : "Offline"}</p>
+          <h2><a href={downloads.epub}>{isZh ? "下载 EPUB" : "Download EPUB"}</a></h2>
+        </article>
+        <article class="download-card">
+          <p class="card-kicker">{isZh ? "印刷版" : "Print"}</p>
+          <h2><a href={downloads.pdf}>{isZh ? "下载 PDF" : "Download PDF"}</a></h2>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap wide">
+    <p class="sec-eyebrow">{isZh ? "最新发布" : "Latest descents"}</p>
+    <div class="toc-grid">
+      {latestDays(days, 10).map((day) => (
+        <DayCard day={day} locale={locale} totalDays={book.total_days} />
+      ))}
+    </div>
+    <p class="all-days-link"><a href={isZh ? "/zh/syllabus/" : "/syllabus/"}>{isZh ? "查看完整课程表" : "View the full syllabus"}</a></p>
+  </section>
+</BookShell>

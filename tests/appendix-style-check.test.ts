@@ -8,38 +8,31 @@ import { checkAppendixStyle } from "@lib/checks";
 describe("appendix style check", () => {
   it("reports forbidden appendix-local classes", async () => {
     const root = await createFixtureRoot();
-    await writeFile(path.join(root, "src/_includes/days/day/en.njk"), deepDive('<div class="movement"></div>'));
+    await writeAppendix(root, '<div class="movement"></div>');
 
     const result = await checkAppendixStyle({ root });
 
-    expect(result.checkedIncludeFiles).toBe(1);
+    expect(result.checkedAppendixFiles).toBe(1);
     expect(result.errors).toEqual([
-      'src/_includes/days/day/en.njk: forbidden appendix class "movement". Use <section> with .sec-eyebrow instead of appendix-local section wrappers.'
+      'src/content/days/001-fixture/appendices/appendix-a.en.mdx: forbidden appendix class "movement". Use <section> with .sec-eyebrow instead of appendix-local section wrappers.'
     ]);
   });
 
-  it("reports missing standard deep-dive structure", async () => {
+  it("reports missing shared CSS ownership", async () => {
     const root = await createFixtureRoot();
-    await writeFile(path.join(root, "src/_includes/days/day/en.njk"), [
-      '<div class="wrap">',
-      "<!-- deep-dive:start -->",
-      '<details class="deep-dive"><summary>Title</summary></details>',
-      "<!-- deep-dive:end -->",
-      "</div>"
-    ].join("\n"));
+    await writeAppendix(root, '<div class="unknown-appendix-class"></div>');
 
     const result = await checkAppendixStyle({ root });
 
     expect(result.errors).toEqual([
-      "src/_includes/days/day/en.njk: deep-dive summary is missing the standard title/subtitle structure",
-      "src/_includes/days/day/en.njk: deep-dive block has no .deep-dive-body wrapper"
+      'src/content/days/001-fixture/appendices/appendix-a.en.mdx: appendix class "unknown-appendix-class" has no shared CSS rule or JS owner'
     ]);
   });
 });
 
 async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-appendix-style-"));
-  await mkdir(path.join(root, "src/_includes/days/day"), { recursive: true });
+  await mkdir(path.join(root, "src/content/days/001-fixture/appendices"), { recursive: true });
   await mkdir(path.join(root, "src/assets/css"), { recursive: true });
   await mkdir(path.join(root, "src/assets/js/interactions"), { recursive: true });
   await writeFile(path.join(root, "src/assets/css/book.css"), [
@@ -50,24 +43,30 @@ async function createFixtureRoot(): Promise<string> {
     ".deep-dive-sub{}",
     ".deep-dive-body{}"
   ].join("\n"));
+  await writeFile(path.join(root, "src/content/days/001-fixture/day.yaml"), [
+    "day: 1",
+    "slug: fixture",
+    "path: 001-fixture",
+    "block: Fixture",
+    "published: true",
+    "locales:",
+    "  en:",
+    "    title: Fixture",
+    "    summary: Fixture summary.",
+    "    body: en.mdx",
+    "    status: reviewed",
+    "appendices:",
+    "  - id: appendix-a",
+    "    locales:",
+    "      en:",
+    "        title: Appendix A",
+    "        body: appendices/appendix-a.en.mdx",
+    "        status: reviewed"
+  ].join("\n"));
+  await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), "");
   return root;
 }
 
-function deepDive(body: string): string {
-  return [
-    '<div class="wrap">',
-    "<!-- deep-dive:start -->",
-    '<details class="deep-dive">',
-    "<summary>",
-    '<p class="ptitle">Deep dive</p>',
-    '<h2 class="deep-dive-title">Title</h2>',
-    '<p class="deep-dive-sub">Subtitle</p>',
-    "</summary>",
-    '<div class="deep-dive-body">',
-    body,
-    "</div>",
-    "</details>",
-    "<!-- deep-dive:end -->",
-    "</div>"
-  ].join("\n");
+async function writeAppendix(root: string, body: string): Promise<void> {
+  await writeFile(path.join(root, "src/content/days/001-fixture/appendices/appendix-a.en.mdx"), body);
 }

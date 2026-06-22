@@ -10,4 +10,4 @@ if (result.errors.length) {
   process.exit(1);
 }
 
-console.log(`Appendix style check passed for ${result.checkedIncludeFiles} include files.`);
+console.log(`Appendix style check passed for ${result.checkedAppendixFiles} appendix files.`);

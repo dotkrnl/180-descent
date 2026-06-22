@@ -34,7 +34,7 @@ const BOOK_REQUIRED = [
 
 const ENGLISH_APPENDIX_PATTERNS = [
   /The Rest of the Map/,
-  /The Skeptic&apos;s Syllogism, as four exits|The Skeptic's Syllogism, as four exits/,
+  /The Skeptic['’]s Syllogism, as four exits/,
   /The Bank Cases/,
   /Safe vs\. Lucky, as nearby-worlds cases/,
   /The Edge of the Map/,

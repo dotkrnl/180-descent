@@ -6,17 +6,17 @@ import { describe, expect, it } from "vitest";
 import { checkMath } from "@lib/checks";
 
 describe("math check", () => {
-  it("reports legacy display math patterns in lesson includes", async () => {
+  it("reports raw display math patterns in MDX content", async () => {
     const root = await createFixtureRoot();
-    await writeFile(path.join(root, "src/_includes/days/day/en.njk"), '<p class="formula"><code>x</code></p>');
+    await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), '<p class="formula"><code>x</code></p>');
 
     const result = await checkMath({ root });
 
     expect(result.checkedSourceFiles).toBe(1);
     expect(result.failures).toEqual([
       {
-        file: "src/_includes/days/day/en.njk",
-        label: "raw <p class=formula><code> (use {% math %} instead)"
+        file: "src/content/days/001-fixture/en.mdx",
+        label: "raw <p class=formula><code> (use <MathBlock> instead)"
       }
     ]);
   });
@@ -38,7 +38,7 @@ describe("math check", () => {
 
 async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-math-check-"));
-  await mkdir(path.join(root, "src/_includes/days/day"), { recursive: true });
+  await mkdir(path.join(root, "src/content/days/001-fixture"), { recursive: true });
   await mkdir(path.join(root, "_site"), { recursive: true });
   return root;
 }

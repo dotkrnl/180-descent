@@ -1,0 +1,173 @@
+---
+import path from "node:path";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import PrintShell from "@app/layouts/PrintShell.astro";
+import IntroEn from "@app/content/introduction.en.mdx";
+import IntroZh from "@app/content/introduction.zh.mdx";
+import {
+  getBookData,
+  padDay,
+  roman
+} from "@app/site-data";
+import { loadContentRegistry } from "@lib/content";
+import type { Locale } from "@lib/schemas";
+import coverLogo from "../../assets/images/brand/180-descent-icon.png";
+
+interface Props {
+  locale: Locale;
+  includeDeepDive: boolean;
+}
+
+type MdxModule = {
+  default: AstroComponentFactory;
+};
+
+interface PrintDay {
+  day: number;
+  path: string;
+  title: string;
+  block: string;
+  blockNumber: number;
+  startsBlock: boolean;
+  Body: AstroComponentFactory;
+  appendices: {
+    id: string;
+    title: string;
+    Body: AstroComponentFactory;
+  }[];
+}
+
+const mdxModules = import.meta.glob<MdxModule>("/src/content/days/**/*.mdx");
+const { locale, includeDeepDive } = Astro.props;
+const isZh = locale === "zh";
+const book = await getBookData();
+const Intro = isZh ? IntroZh : IntroEn;
+const edition = isZh ? book.zh : book;
+const coverSubtitle = includeDeepDive && edition.deep_dive_subtitle ? edition.deep_dive_subtitle : edition.subtitle;
+const registry = await loadContentRegistry({ daysDir: path.join(process.cwd(), "src/content/days") });
+const printDays: PrintDay[] = [];
+let currentBlock = "";
+let blockNumber = 0;
+
+for (const day of registry.days.filter((entry) => entry.manifest.published)) {
+  const localeEntry = day.manifest.locales[locale];
+  const body = day.bodies.find((candidate) => candidate.locale === locale);
+  if (!localeEntry || !body) continue;
+
+  const startsBlock = day.manifest.block !== currentBlock;
+  if (startsBlock) {
+    currentBlock = day.manifest.block;
+    blockNumber++;
+  }
+
+  const appendices = [];
+  for (const appendix of day.manifest.appendices) {
+    const appendixLocale = appendix.locales[locale];
+    if (!appendixLocale) continue;
+    appendices.push({
+      id: appendix.id,
+      title: appendixLocale.title ?? appendix.title?.[locale] ?? appendix.id,
+      Body: await loadMdx(day.manifest.path, appendixLocale.body)
+    });
+  }
+
+  printDays.push({
+    day: day.manifest.day,
+    path: day.manifest.path,
+    title: localeEntry.title,
+    block: day.manifest.block,
+    blockNumber,
+    startsBlock,
+    Body: await loadMdx(day.manifest.path, body.path),
+    appendices
+  });
+}
+
+async function loadMdx(dayPath: string, bodyPath: string): Promise<AstroComponentFactory> {
+  const modulePath = `/src/content/days/${dayPath}/${bodyPath}`;
+  const loadBody = mdxModules[modulePath];
+  if (!loadBody) throw new Error(`Missing MDX module for ${modulePath}`);
+  return (await loadBody()).default;
+}
+---
+<PrintShell title={isZh ? (includeDeepDive ? "印刷版（专题深入）" : "印刷版") : (includeDeepDive ? "Print Edition With Deep Dives" : "Print Edition")} locale={locale} includeDeepDive={includeDeepDive}>
+  <section class="wrap wide page-hero print-cover">
+    <img class="print-cover-logo" src={coverLogo.src} width="768" height="768" alt="" decoding="async" />
+    <p class="eyebrow">{coverSubtitle}</p>
+    <h1>{edition.title}</h1>
+    <p class="sub book-credit">
+      <span class="credit-line">{isZh ? `作者：${edition.authors}` : `By ${edition.authors}`}</span>
+      {isZh && <span class="credit-line">翻译：{book.zh.translators}</span>}
+      <span class="credit-line">{isZh ? "人工编辑：刘家昌" : "Human editor: Jason Lau"}</span>
+    </p>
+  </section>
+
+  <nav class="wrap wide print-toc" id="toc" aria-label={isZh ? "目录" : "Contents"}>
+    <p class="sec-eyebrow">{isZh ? "目录" : "Contents"}</p>
+    <div class="toc-list">
+      <div class="toc-row toc-front">
+        <a href="#intro"><span class="toc-title">{isZh ? "引言" : "Introduction"}</span><span class="toc-leader"></span></a>
+        <span class="toc-page" data-toc-page-for="intro"></span>
+      </div>
+      {printDays.map((day) => (
+        <>
+          {day.startsBlock && (
+            <div class="toc-row toc-block">
+              <a href={`#block-${day.blockNumber}`}><span class="toc-title">{isZh ? `模块 ${roman(day.blockNumber)} · ${day.block}` : `Block ${roman(day.blockNumber)} · ${day.block}`}</span><span class="toc-leader"></span></a>
+              <span class="toc-page" data-toc-page-for={`block-${day.blockNumber}`}></span>
+            </div>
+          )}
+          <div class="toc-row toc-day">
+            <a href={`#day-${padDay(day.day)}`}><span class="toc-kicker">{isZh ? `第 ${day.day} 日` : `Day ${day.day}`}</span><span class="toc-title">{day.title}</span><span class="toc-leader"></span></a>
+            <span class="toc-page" data-toc-page-for={`day-${padDay(day.day)}`}></span>
+          </div>
+        </>
+      ))}
+    </div>
+  </nav>
+
+  <article class="wrap wide print-intro" id="intro" data-print-title={isZh ? "引言" : "Introduction"}>
+    <span class="print-page-marker">[[toc:intro]]</span>
+    <p class="eyebrow">{isZh ? "一百八十日地图" : "The 180-day map"}</p>
+    <h1>{isZh ? "引言" : "Introduction"}</h1>
+    <p class="sub">{isZh ? "如何阅读一张从根基走向前沿的地图。" : "How to read a map that descends from foundations to the frontier."}</p>
+    <Intro />
+  </article>
+
+  {printDays.map((day) => {
+    const Body = day.Body;
+    return (
+      <>
+        {day.startsBlock && (
+          <section class="block-divider" data-print-title={isZh ? `模块 ${roman(day.blockNumber)}` : `Block ${roman(day.blockNumber)}`}>
+            <a class="print-dest" id={`block-${day.blockNumber}`}></a>
+            <span class="print-page-marker">{`[[toc:block-${day.blockNumber}]]`}</span>
+            <div class="block-divider-inner">
+              <p>{isZh ? `模块 ${roman(day.blockNumber)}` : `Block ${roman(day.blockNumber)}`}</p>
+              <h1>{day.block}</h1>
+            </div>
+          </section>
+        )}
+        <article class="lesson-print" id={`day-${padDay(day.day)}`} data-day-path={day.path} data-print-title={isZh ? `第 ${day.day} 日 · ${day.title}` : `Day ${day.day} · ${day.title}`} data-print-block={day.block}>
+          <span class="print-page-marker">{`[[toc:day-${padDay(day.day)}]]`}</span>
+          <Body />
+          {includeDeepDive && day.appendices.map((appendix) => {
+            const AppendixBody = appendix.Body;
+            return (
+              <details class="deep-dive" id={appendix.id} open>
+                <summary>
+                  <span class="ptitle">{isZh ? "专题深入附录" : "Deep dive appendix"}</span>
+                  <span class="deep-dive-title">{appendix.title}</span>
+                  <span class="deep-dive-sub">{isZh ? "可选延伸阅读。" : "Optional extension."}</span>
+                </summary>
+                <div class="deep-dive-body">
+                  <AppendixBody />
+                </div>
+              </details>
+            );
+          })}
+        </article>
+      </>
+    );
+  })}
+</PrintShell>

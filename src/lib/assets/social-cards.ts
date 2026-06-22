@@ -1,10 +1,10 @@
-import { mkdir, readFile, readdir, stat, utimes, writeFile } from "node:fs/promises";
+import { mkdir, readFile, stat, utimes, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import matter from "gray-matter";
 import { chromium, type Page } from "playwright";
 import sharp from "sharp";
 import yaml from "yaml";
+import { loadContentRegistry } from "@lib/content";
 import { escapeHtml } from "@lib/text/escape";
 
 export interface GenerateSocialCardsOptions {
@@ -125,8 +125,8 @@ export async function loadSocialCards(options: {
   outDir: string;
 }): Promise<SocialCard[]> {
   const [enDays, zhDays] = await Promise.all([
-    readDays(path.join(options.root, "src/days"), "en"),
-    readDays(path.join(options.root, "src/zh/days"), "zh")
+    readRegistryDays(options.root, "en"),
+    readRegistryDays(options.root, "zh")
   ]);
 
   return [
@@ -257,23 +257,22 @@ async function readBookData(bookPath: string): Promise<BookData> {
   return yaml.parse(await readFile(bookPath, "utf8")) as BookData;
 }
 
-async function readDays(dir: string, locale: "en" | "zh"): Promise<DayData[]> {
-  const files = (await readdir(dir))
-    .filter((fileName) => fileName.endsWith(".md"))
-    .sort();
-
-  const days: DayData[] = [];
-  for (const fileName of files) {
-    const sourcePath = path.join(dir, fileName);
-    const parsed = matter(await readFile(sourcePath, "utf8"));
-    days.push({
-      ...(parsed.data as Omit<DayData, "locale" | "sourcePath">),
-      locale,
-      sourcePath
+async function readRegistryDays(root: string, locale: "en" | "zh"): Promise<DayData[]> {
+  const registry = await loadContentRegistry({ daysDir: path.join(root, "src/content/days") });
+  return registry.days
+    .filter((day) => day.manifest.published && Boolean(day.manifest.locales[locale]))
+    .map((day) => {
+      const localeEntry = day.manifest.locales[locale];
+      if (!localeEntry) throw new Error(`Missing ${locale} locale for ${day.manifest.path}`);
+      return {
+        locale,
+        title: localeEntry.title,
+        summary: localeEntry.summary,
+        day: day.manifest.day,
+        day_path: day.manifest.path,
+        sourcePath: day.manifestPath
+      };
     });
-  }
-
-  return days;
 }
 
 async function latestMtime(files: readonly string[]): Promise<number> {

@@ -1,0 +1,38 @@
+---
+import PageShell from "@app/layouts/PageShell.astro";
+import { getCreditsData } from "@app/site-data";
+import type { Locale } from "@lib/schemas";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const credits = await getCreditsData();
+const isZh = locale === "zh";
+---
+<PageShell
+  locale={locale}
+  title={isZh ? "致谢与许可" : "Credits"}
+  subtitle={isZh ? "随附资源的许可协议与来源归属。" : "Licenses and source attribution for bundled assets."}
+  eyebrow={isZh ? "来源说明" : "Attribution"}
+  description={isZh ? "字体与素材的来源说明。" : "Credits for fonts and assets."}
+  canonicalPath={isZh ? "/zh/credits/" : "/credits/"}
+  alternatePath={isZh ? "/credits/" : "/zh/credits/"}
+>
+  <h2>{isZh ? "字体" : "Fonts"}</h2>
+  <ul>
+    {credits.fonts.map((font) => (
+      <li><strong>{font.name}</strong>{isZh ? "：" : ": "}{font.license}, <a href={font.source}>{isZh ? "来源" : "source"}</a></li>
+    ))}
+  </ul>
+
+  <h2>{isZh ? "图片" : "Images"}</h2>
+  <ul>
+    {credits.images.map((image) => (
+      <li>
+        <strong>{image.title}</strong>{isZh ? "，作者：" : " by "}{image.creator}{isZh ? "；" : ": "}{image.license}, <a href={image.source}>{isZh ? "来源" : "source"}</a>{isZh ? "。" : ". "}{image.notes}
+      </li>
+    ))}
+  </ul>
+</PageShell>

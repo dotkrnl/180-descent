@@ -36,10 +36,12 @@ interface Props {
   canonicalPath: string;
   alternatePath?: string;
   scripts?: string[];
+  socialImagePath?: string;
+  releaseBanner?: boolean;
 }
 
 const book = parseYaml(fs.readFileSync(path.join(process.cwd(), "src/_data/book.yaml"), "utf8")) as BookData;
-const { title, description, locale, canonicalPath, alternatePath, scripts = [] } = Astro.props;
+const { title, description, locale, canonicalPath, alternatePath, scripts = [], socialImagePath, releaseBanner = false } = Astro.props;
 const isZh = locale === "zh";
 const uiTitle = isZh ? book.zh.title : book.title;
 const uiSubtitle = isZh ? book.zh.subtitle : book.subtitle;
@@ -48,11 +50,28 @@ const pageTitle = title ? `${title} · ${uiTitle}` : uiTitle;
 const metaDescription = description ?? uiDescription;
 const canonicalUrl = new URL(canonicalPath, book.site_url).href;
 const alternateUrl = alternatePath ? new URL(alternatePath, book.site_url).href : undefined;
+const enUrl = alternateUrl ? (isZh ? alternateUrl : canonicalUrl) : undefined;
+const zhUrl = alternateUrl ? (isZh ? canonicalUrl : alternateUrl) : undefined;
+const socialPath = socialImagePath ?? (isZh ? "/assets/images/social/180-descent-zh.png" : "/assets/images/social/180-descent.png");
+const socialImageUrl = new URL(socialPath, book.site_url).href;
 const homeUrl = isZh ? "/zh/" : "/";
 const introUrl = isZh ? "/zh/introduction/" : "/introduction/";
 const syllabusUrl = isZh ? "/zh/syllabus/" : "/syllabus/";
 const downloadsUrl = isZh ? "/zh/downloads/" : "/downloads/";
 const creditsUrl = isZh ? "/zh/credits/" : "/credits/";
+const currentPath = Astro.url.pathname;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": title ? "WebPage" : "WebSite",
+  "name": pageTitle,
+  "url": canonicalUrl,
+  "description": metaDescription,
+  "inLanguage": isZh ? book.zh.language : book.language,
+  "publisher": {
+    "@type": "Organization",
+    "name": book.publisher
+  }
+};
 ---
 <!doctype html>
 <html lang={isZh ? book.zh.language : book.language} data-theme="auto">
@@ -64,13 +83,16 @@ const creditsUrl = isZh ? "/zh/credits/" : "/credits/";
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
     <meta name="robots" content="index, follow" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link id="themeFavicon" rel="icon" type="image/png" sizes="32x32" href={faviconLight.src} data-light-href={faviconLight.src} data-dark-href={faviconDark.src} />
     <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon.src} />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={canonicalUrl} />
-    {alternateUrl && (
+    {alternateUrl && enUrl && zhUrl && (
       <>
-        <link rel="alternate" hreflang={isZh ? book.language : book.zh.language} href={alternateUrl} />
-        <link rel="alternate" hreflang="x-default" href={isZh ? alternateUrl : canonicalUrl} />
+        <link rel="alternate" hreflang={book.language} href={enUrl} />
+        <link rel="alternate" hreflang={book.zh.language} href={zhUrl} />
+        <link rel="alternate" hreflang="x-default" href={enUrl} />
       </>
     )}
     <meta property="og:type" content={title ? "article" : "website"} />
@@ -78,10 +100,15 @@ const creditsUrl = isZh ? "/zh/credits/" : "/credits/";
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={metaDescription} />
     <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content={isZh ? "zh_CN" : "en_US"} />
+    {alternateUrl && <meta property="og:locale:alternate" content={isZh ? "en_US" : "zh_CN"} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={socialImageUrl} />
     <script is:inline>
       (function(){
         try{
@@ -94,6 +121,7 @@ const creditsUrl = isZh ? "/zh/credits/" : "/credits/";
     </script>
     <script src={bookScriptUrl} defer></script>
     {scripts.map((script) => <script src={script} defer></script>)}
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
     <a class="skip-link" href="#content">{isZh ? "跳到正文" : "Skip to content"}</a>
@@ -107,9 +135,9 @@ const creditsUrl = isZh ? "/zh/credits/" : "/credits/";
           {uiTitle}
         </a>
         <nav class="topnav" aria-label={isZh ? "主导航" : "Primary"}>
-          <a href={introUrl}>{isZh ? "引言" : "Intro"}</a>
-          <a href={syllabusUrl}>{isZh ? "课程表" : "Syllabus"}</a>
-          <a href={downloadsUrl}>{isZh ? "下载" : "Downloads"}</a>
+          <a href={introUrl} aria-current={currentPath === introUrl ? "page" : undefined}>{isZh ? "引言" : "Intro"}</a>
+          <a href={syllabusUrl} aria-current={currentPath === syllabusUrl ? "page" : undefined}>{isZh ? "课程表" : "Syllabus"}</a>
+          <a href={downloadsUrl} aria-current={currentPath === downloadsUrl ? "page" : undefined}>{isZh ? "下载" : "Downloads"}</a>
         </nav>
         <div class="top-actions">
           {alternatePath && (
@@ -136,6 +164,14 @@ const creditsUrl = isZh ? "/zh/credits/" : "/credits/";
         </div>
       </div>
     </header>
+    {releaseBanner && (
+      <aside class="release-banner" aria-label={isZh ? "发布说明" : "Release note"}>
+        <div class="wrap wide">
+          <strong>{isZh ? "发布说明" : "Release note"}</strong>
+          <span>{isZh ? "新内容不一定每天更新。人工编辑有时会暂停发布，以便手动检查内容质量；最新发布版本也可能仍有尚未完成审阅的粗糙之处。" : "New content may not arrive every day. The human editor sometimes pauses publishing to manually check quality, and the latest release may still have sharp edges that the human has not finished reviewing yet."}</span>
+        </div>
+      </aside>
+    )}
     <main id="content">
       <slot />
     </main>

@@ -1,8 +1,8 @@
-import { access, readFile, readdir } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
-import matter from "gray-matter";
 import YAML from "yaml";
+import { loadContentRegistry } from "@lib/content";
 import { walkFiles } from "@lib/fs";
 
 export interface LinkCheckOptions {
@@ -24,7 +24,7 @@ interface FutureLinkEntry {
 
 export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFailure[]> {
   const siteDir = path.join(options.root, options.siteDir ?? "_site");
-  const daysDir = path.join(options.root, options.daysDir ?? "src/days");
+  const daysDir = path.join(options.root, options.daysDir ?? "src/content/days");
   const futureLinksPath = path.join(options.root, options.futureLinksPath ?? "src/_data/future-links.yaml");
   const failures: LinkCheckFailure[] = [];
   const htmlFiles = await walkFiles(siteDir, { exts: ".html", ignored: [] });
@@ -43,6 +43,7 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
       if (!href.startsWith("/")) continue;
 
       const [pathname, anchor] = href.split("#");
+      if (isArtifactDownloadPath(pathname)) continue;
       const target = pathname.endsWith("/") ? path.join(siteDir, pathname, "index.html") : path.join(siteDir, pathname);
 
       try {
@@ -68,8 +69,8 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
 }
 
 async function checkFutureLinks(root: string, daysDir: string, futureLinksPath: string): Promise<LinkCheckFailure[]> {
-  const dayFiles = (await readdir(daysDir)).filter((file) => file.endsWith(".md"));
-  const days = dayFiles.map((file) => Number(matter.read(path.join(daysDir, file)).data.day)).filter(Number.isFinite);
+  const registry = await loadContentRegistry({ daysDir });
+  const days = registry.days.filter((day) => day.manifest.published).map((day) => day.manifest.day);
   const maxDay = days.length ? Math.max(...days) : 0;
   const parsed = YAML.parse(await readFile(futureLinksPath, "utf8"));
   const futureLinks = Array.isArray(parsed) ? parsed as FutureLinkEntry[] : [];
@@ -85,6 +86,10 @@ async function checkFutureLinks(root: string, daysDir: string, futureLinksPath: 
   }
 
   return failures;
+}
+
+function isArtifactDownloadPath(pathname: string): boolean {
+  return /^\/downloads\/.+\.(?:epub|pdf)$/.test(pathname);
 }
 
 function toRelative(root: string, filePath: string): string {

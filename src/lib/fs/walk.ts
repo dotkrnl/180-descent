@@ -8,7 +8,7 @@ export interface WalkOptions {
   allowedExtensionsRegex?: RegExp;
 }
 
-const DEFAULT_IGNORED = new Set([".git", "_site", "dist", "node_modules"]);
+const DEFAULT_IGNORED = new Set([".git", "_site", "_site-astro", "dist", "node_modules"]);
 
 export async function walkFiles(dir: string, options: WalkOptions = {}): Promise<string[]> {
   const exts = normalizeExts(options.exts);

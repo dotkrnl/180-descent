@@ -1,0 +1,22 @@
+---
+import { padDay, type PublishedDay } from "@app/site-data";
+
+interface Props {
+  day: PublishedDay;
+  locale: "en" | "zh";
+  totalDays: number;
+  headingLevel?: "h2" | "h3";
+  planned?: boolean;
+}
+
+const { day, locale, totalDays, headingLevel = "h2", planned = false } = Astro.props;
+const Heading = headingLevel;
+const kicker = locale === "zh"
+  ? `第 ${padDay(day.day)} 日 / ${totalDays}${planned ? " · 计划中" : ""}`
+  : `Day ${padDay(day.day)} / ${totalDays}${planned ? " · Planned" : ""}`;
+---
+<article class:list={["day-card", { "syllabus-card": headingLevel === "h3", "is-published": !planned }]}>
+  <p class="card-kicker">{kicker}</p>
+  <Heading><a href={day.url}>{day.title}</a></Heading>
+  {day.summary && <p>{day.summary}</p>}
+</article>

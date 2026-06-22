@@ -4,7 +4,7 @@ import { pathExists, walkFiles } from "@lib/fs";
 
 export interface MathCheckOptions {
   root: string;
-  includeDir?: string;
+  sourceDir?: string;
   siteDir?: string;
 }
 
@@ -19,9 +19,9 @@ export interface MathCheckResult {
 }
 
 const LEGACY_PATTERNS = [
-  { pattern: /class="formula"[^>]*>[\s\S]*?<p\s+class="eq"/, label: "raw .formula .eq (use {% math %} instead)" },
-  { pattern: /<p\s+class="formula"><code>/, label: "raw <p class=formula><code> (use {% math %} instead)" },
-  { pattern: /\\\[.*\\\]/, label: "raw \\[ \\] delimiters (use {% math %} instead)" },
+  { pattern: /class="formula"[^>]*>[\s\S]*?<p\s+class="eq"/, label: "raw .formula .eq (use <MathBlock> instead)" },
+  { pattern: /<p\s+class="formula"><code>/, label: "raw <p class=formula><code> (use <MathBlock> instead)" },
+  { pattern: /\\\[.*\\\]/, label: "raw \\[ \\] delimiters (use <MathBlock> instead)" },
   { pattern: /<text[^>]*>[^<]*\\\(/, label: "KaTeX delimiter inside SVG text (SVG text cannot render KaTeX)" }
 ] as const;
 
@@ -31,11 +31,11 @@ const BUILT_PATTERNS = [
 ] as const;
 
 export async function checkMath(options: MathCheckOptions): Promise<MathCheckResult> {
-  const includeDir = path.join(options.root, options.includeDir ?? "src/_includes/days");
+  const sourceDir = path.join(options.root, options.sourceDir ?? "src/content/days");
   const siteDir = path.join(options.root, options.siteDir ?? "_site");
   const failures: MathCheckFailure[] = [];
-  const sourceFiles = await pathExists(includeDir)
-    ? await walkFiles(includeDir, { exts: ".njk", ignored: [] })
+  const sourceFiles = await pathExists(sourceDir)
+    ? await walkFiles(sourceDir, { exts: ".mdx", ignored: [] })
     : [];
 
   for (const file of sourceFiles) {

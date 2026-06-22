@@ -1,43 +1,86 @@
-import { readFile, readdir } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
-import matter, { type GrayMatterFile } from "gray-matter";
-import { pathExists, walkFiles } from "@lib/fs";
+import { loadContentRegistry } from "@lib/content";
+import { walkFiles } from "@lib/fs";
+import type { Locale } from "@lib/schemas";
 
 export interface ContentCheckOptions {
   root: string;
+  daysDir?: string;
 }
 
 export interface ContentCheckFailure {
   message: string;
 }
 
-const DAY_GROUPS = [
-  { dir: "src/days", label: "English" },
-  { dir: "src/zh/days", label: "Chinese" }
-] as const;
-
-const REQUIRED_FRONTMATTER_KEYS = ["day", "title", "summary", "threads", "content_template", "permalink"] as const;
 const PRINT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
-const PROJECT_TEXT_EXTS = new Set([".cjs", ".css", ".html", ".json", ".md", ".mjs", ".njk", ".yaml", ".yml"]);
+const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".njk", ".yaml", ".yml"]);
 const PARENT_MARKDOWN_PATTERN = /\.\.\/[^\s"'`)]+\.md\b/;
 
-interface DayFile {
-  file: string;
-  full: string;
+interface RegistryContentFile {
   label: string;
+  relativePath: string;
+  source: string;
+  locale: Locale;
+  title?: string;
+  requiresTitle: boolean;
 }
 
 export async function checkContent(options: ContentCheckOptions): Promise<ContentCheckFailure[]> {
   const failures: ContentCheckFailure[] = [];
-  const allDayFiles = await collectDayFiles(options.root);
+  const daysDir = path.join(options.root, options.daysDir ?? "src/content/days");
+  const registry = await loadContentRegistry({ daysDir });
 
-  if (!allDayFiles.length) {
-    failures.push({ message: "No day files found" });
+  if (!registry.days.length) {
+    failures.push({ message: "No registry days found" });
   }
 
-  for (const dayFile of allDayFiles) {
-    await checkDayFile(options.root, dayFile, failures);
+  for (const day of registry.days) {
+    for (const locale of ["en", "zh"] as const) {
+      if (!day.manifest.locales[locale]) {
+        failures.push({ message: `${day.manifest.path} missing ${locale} locale` });
+      }
+    }
+
+    const declaredBodyPaths = new Set<string>();
+    for (const body of day.bodies) {
+      const localeData = day.manifest.locales[body.locale];
+      declaredBodyPaths.add(body.path);
+      checkContentFile({
+        label: `${body.locale.toUpperCase()} ${day.manifest.path}`,
+        relativePath: toRelative(options.root, path.join(day.directory, body.path)),
+        source: body.source,
+        locale: body.locale,
+        title: localeData?.title,
+        requiresTitle: true
+      }, failures);
+    }
+
+    for (const appendixBody of day.appendixBodies) {
+      declaredBodyPaths.add(appendixBody.path);
+      checkContentFile({
+        label: `${appendixBody.locale.toUpperCase()} ${day.manifest.path} appendix ${appendixBody.appendixId}`,
+        relativePath: toRelative(options.root, path.join(day.directory, appendixBody.path)),
+        source: appendixBody.source,
+        locale: appendixBody.locale,
+        requiresTitle: false
+      }, failures);
+    }
+
+    for (const component of day.manifest.components) {
+      if (!component.artifactVariants.epub || !component.artifactVariants.pdf) {
+        failures.push({ message: `${day.manifest.path} component ${component.id} must declare EPUB and PDF artifact variants` });
+      }
+    }
+
+    for (const asset of day.manifest.assets) {
+      for (const assetPath of Object.values(asset.files)) {
+        if (assetPath && !declaredBodyPaths.has(assetPath) && assetPath.startsWith("..")) {
+          failures.push({ message: `${day.manifest.path} asset ${asset.id} escapes the day directory: ${assetPath}` });
+        }
+      }
+    }
   }
 
   await checkCssFonts(options.root, failures);
@@ -46,125 +89,61 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
   return failures;
 }
 
-async function collectDayFiles(root: string): Promise<DayFile[]> {
-  const allDayFiles: DayFile[] = [];
-
-  for (const group of DAY_GROUPS) {
-    const dir = path.join(root, group.dir);
-    if (!await pathExists(dir)) continue;
-
-    const files = (await readdir(dir)).filter((file) => file.endsWith(".md")).sort();
-    for (const file of files) {
-      allDayFiles.push({
-        file,
-        full: path.join(dir, file),
-        label: group.label
-      });
-    }
+function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  if (/[{]%|%}/.test(file.source)) {
+    failures.push({ message: `${file.relativePath} contains template syntax; use MDX components instead` });
   }
 
-  return allDayFiles;
-}
-
-async function checkDayFile(root: string, dayFile: DayFile, failures: ContentCheckFailure[]): Promise<void> {
-  const parsed = matter.read(dayFile.full);
-
-  for (const key of REQUIRED_FRONTMATTER_KEYS) {
-    if (!parsed.data[key]) {
-      failures.push({ message: `${dayFile.label} ${dayFile.file} missing frontmatter key: ${key}` });
-    }
+  if (/content_template|eleventy|<\/?script\b/i.test(file.source)) {
+    failures.push({ message: `${file.relativePath} contains legacy route/template surface` });
   }
 
-  const content = await readDayContent(root, parsed, dayFile.full, failures);
-
-  for (const script of parsed.data.scripts || []) {
-    const scriptPath = path.join(root, String(script).replace(/^\//, "src/"));
-    if (!await pathExists(scriptPath)) {
-      failures.push({ message: `${dayFile.label} ${dayFile.file} references missing script: ${script}` });
-    }
+  if (!file.source.includes('class="sources"') && !file.source.includes("className=\"sources\"")) {
+    failures.push({ message: `${file.label} has no sources section` });
   }
 
-  if (!content.includes('class="sources"')) {
-    failures.push({ message: `${dayFile.label} ${dayFile.file} has no sources section` });
+  if (!file.source.includes("<StatusChip")) {
+    failures.push({ message: `${file.label} has no frontier status chips` });
   }
 
-  const firstSources = content.indexOf('class="sources"');
-  const deepDiveStart = content.indexOf("<!-- deep-dive:start -->");
-  if (deepDiveStart >= 0 && (firstSources < 0 || firstSources > deepDiveStart)) {
-    failures.push({ message: `${dayFile.label} ${dayFile.file} places main lesson sources after the appendix` });
-  }
-
-  if (!content.includes("chip ")) {
-    failures.push({ message: `${dayFile.label} ${dayFile.file} has no frontier status chips` });
-  }
-
-  if (content.includes("fonts.googleapis.com")) {
-    failures.push({ message: `${dayFile.label} ${dayFile.file} references remote Google Fonts` });
+  if (file.source.includes("fonts.googleapis.com")) {
+    failures.push({ message: `${file.relativePath} references remote Google Fonts` });
   }
 
   for (const phrase of PRINT_UNFRIENDLY_PHRASES) {
-    if (content.includes(phrase)) {
-      failures.push({ message: `${dayFile.label} ${dayFile.file} contains print-unfriendly phrase: ${phrase}` });
+    if (file.source.includes(phrase)) {
+      failures.push({ message: `${file.relativePath} contains print-unfriendly phrase: ${phrase}` });
     }
   }
 
-  checkHtmlContent(dayFile, parsed, content, failures);
+  if (file.requiresTitle) {
+    checkMainTitle(file, failures);
+    checkStaticAlternates(file, failures);
+  }
 }
 
-function checkHtmlContent(
-  dayFile: DayFile,
-  parsed: GrayMatterFile<string>,
-  content: string,
-  failures: ContentCheckFailure[]
-): void {
-  const $ = cheerio.load(content);
-  const h1Html = $("h1").first().html();
-  if (!h1Html) {
-    failures.push({ message: `${dayFile.label} ${dayFile.file} has no lesson h1` });
-  } else if (h1Html.includes("{{")) {
-    if (!h1Html.includes("title")) {
-      failures.push({ message: `${dayFile.label} ${dayFile.file} has a dynamic h1 that does not reference route title data` });
-    }
-  } else {
-    const h1Text = normalizeVisibleText(h1Html);
-    const titleText = normalizeVisibleText(String(parsed.data.title));
-    if (h1Text !== titleText) {
-      failures.push({ message: `${dayFile.label} ${dayFile.file} h1 "${h1Text}" does not match route title "${titleText}"` });
-    }
+function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  const h1 = file.source.match(/<h1(?:\s[^>]*)?>([\s\S]*?)<\/h1>/);
+  if (!h1) {
+    failures.push({ message: `${file.label} has no lesson h1` });
+    return;
   }
 
-  const webPanels = $(".panel.web-only").length;
-  const staticAlternates = $(".format-alt.print-only").length;
+  if (!file.title) return;
+  const h1Text = normalizeVisibleText(h1[1]);
+  const titleText = normalizeVisibleText(file.title);
+  if (h1Text !== titleText) {
+    failures.push({ message: `${file.label} h1 "${h1Text}" does not match manifest title "${titleText}"` });
+  }
+}
+
+function checkStaticAlternates(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  const webPanels = countMatches(file.source, /class="[^"]*\bpanel\b[^"]*\bweb-only\b[^"]*"/g);
+  const staticAlternates = countMatches(file.source, /class="[^"]*\bformat-alt\b[^"]*\b(?:print-only|epub-only)\b[^"]*"/g);
   if (staticAlternates < webPanels) {
     failures.push({
-      message: `${dayFile.label} ${dayFile.file} has ${webPanels} web-only panels but only ${staticAlternates} static print/EPUB alternates`
+      message: `${file.label} has ${webPanels} web-only panels but only ${staticAlternates} static print/EPUB alternates`
     });
-  }
-
-  $(".chip").each((_, el) => {
-    if (!$(el).attr("data-print")) {
-      failures.push({ message: `${dayFile.label} ${dayFile.file} has a status chip without data-print="${$(el).text().trim()}"` });
-    }
-    if (dayFile.label === "Chinese" && /[A-Za-z]/.test($(el).attr("data-print") || "")) {
-      failures.push({ message: `${dayFile.label} ${dayFile.file} has untranslated print chip data-print="${$(el).attr("data-print")}"` });
-    }
-  });
-}
-
-async function readDayContent(
-  root: string,
-  parsed: GrayMatterFile<string>,
-  sourceFile: string,
-  failures: ContentCheckFailure[]
-): Promise<string> {
-  if (!parsed.data.content_template) return parsed.content;
-
-  const includePath = path.join(root, "src/_includes", parsed.data.content_template);
-  try {
-    return await readFile(includePath, "utf8");
-  } catch {
-    failures.push({ message: `${toRelative(root, sourceFile)} points to missing content_template: ${parsed.data.content_template}` });
-    return parsed.content;
   }
 }
 
@@ -185,6 +164,10 @@ async function checkParentMarkdownReferences(root: string, failures: ContentChec
       });
     }
   }
+}
+
+function countMatches(text: string, pattern: RegExp): number {
+  return [...text.matchAll(pattern)].length;
 }
 
 function normalizeVisibleText(text: string): string {
