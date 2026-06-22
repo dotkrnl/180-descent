@@ -1,0 +1,57 @@
+---
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  eyebrow: "桥梁 · 命题即类型",
+  aria: "柯里–霍华德对应：逻辑一侧映射到计算一侧。",
+  logic: "逻辑",
+  computation: "计算",
+  rows: [["命题", "类型"], ["证明", "程序"], ["「存在一个 x……」", "构造该 x 的代码"]],
+} : {
+  eyebrow: "The bridge · propositions as types",
+  aria: "Curry-Howard correspondence: logic side mapped to computation side.",
+  logic: "LOGIC",
+  computation: "COMPUTATION",
+  rows: [["proposition", "type"], ["proof", "program"], ['"there exists an x..."', "code that builds the x"]],
+};
+---
+<div class="ch-box">
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .3rem;">{copy.eyebrow}</p>
+  {zh ? (
+    <p style="font-size:.92em;margin:0 0 .8rem;color:var(--ink-soft);">直觉主义逻辑之所以重要的根本原因，是<span class="term">柯里–霍华德对应</span>：在适当的形式系统中，命题对应类型，证明对应程序。证明一个定理，可以被看作构造一个居于相应类型之中的程序式对象——反过来也一样。</p>
+  ) : (
+    <p style="font-size:.92em;margin:0 0 .8rem;color:var(--ink-soft);">The deepest reason intuitionistic logic matters is the <strong><em class="term">Curry–Howard correspondence</em></strong>: in suitable formal systems, propositions correspond to types and proofs correspond to programs. Proving a theorem can be treated as constructing the program-like object that inhabits its type — and vice versa.</p>
+  )}
+  <svg viewBox="0 0 480 150" role="img" aria-label={copy.aria}>
+    <g font-family="IBM Plex Mono,monospace" font-size="12">
+      <text x="120" y="22" text-anchor="middle" fill="var(--accent)" letter-spacing="1.5">{copy.logic}</text>
+      <text x="360" y="22" text-anchor="middle" fill="var(--brass)" letter-spacing="1.5">{copy.computation}</text>
+      <rect x="24" y="38" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+      <text x="120" y="55" text-anchor="middle" fill="var(--ink-soft)">{copy.rows[0][0]}</text>
+      <rect x="264" y="38" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+      <text x="360" y="55" text-anchor="middle" fill="var(--ink-soft)">{copy.rows[0][1]}</text>
+      <rect x="24" y="72" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+      <text x="120" y="89" text-anchor="middle" fill="var(--ink-soft)">{copy.rows[1][0]}</text>
+      <rect x="264" y="72" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+      <text x="360" y="89" text-anchor="middle" fill="var(--ink-soft)">{copy.rows[1][1]}</text>
+      <rect x="24" y="106" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+      <text x="120" y="123" text-anchor="middle" fill="var(--ink-soft)">{copy.rows[2][0]}</text>
+      <rect x="264" y="106" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+      <text x="360" y="123" text-anchor="middle" fill="var(--ink-soft)">{copy.rows[2][1]}</text>
+      <line x1="218" y1="51" x2="262" y2="51" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
+      <line x1="218" y1="85" x2="262" y2="85" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
+      <line x1="218" y1="119" x2="262" y2="119" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
+      <text x="240" y="48" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
+      <text x="240" y="82" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
+      <text x="240" y="116" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
+    </g>
+  </svg>
+  {zh ? (
+    <p style="font-size:.86em;margin:.7rem 0 0;color:var(--ink-faint);">这就是为什么下面若干证明助手建立在<span class="term">类型论</span>基础之上——也是为何逻辑与计算，我们五条线索之二，并非彼此相邻的邻域，而是同一片疆域的两面视图。（将在第 27–29 日继续展开。）</p>
+  ) : (
+    <p style="font-size:.86em;margin:.7rem 0 0;color:var(--ink-faint);">This is why several proof assistants below are built on <em class="term">type-theoretic</em> foundations — and why <em>logic and computation</em>, one of our five threads, are not neighbors but the same country seen from two sides. (Picked up on <strong>Days 27–29</strong>.)</p>
+  )}
+</div>

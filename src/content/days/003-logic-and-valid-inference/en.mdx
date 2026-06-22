@@ -3,6 +3,8 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import CurryHowardBridge from "@app/components/lesson/figures/CurryHowardBridge.astro";
+import InferenceModesFigure from "@app/components/lesson/figures/InferenceModesFigure.astro";
 import InferenceInspector from "@app/components/lesson/interactives/InferenceInspector.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
@@ -34,49 +36,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <HeroSubhead>Three ways to move from premises<TipNote text={"Premises are the starting statements an argument assumes or asks you to grant."} /> to conclusions — and only one of them is safe.</HeroSubhead>
 
-<figure class="hero-art">
-<svg viewBox="0 0 460 250" role="img" aria-label="Three arrows of inference: deduction pointing inward and certain, induction reaching beyond the dots, abduction leaping to an explanation.">
-<defs>
-<marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--accent)"></path></marker>
-<marker id="ahb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--brass)"></path></marker>
-<marker id="ahc" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--contested)"></path></marker>
-</defs>
-{/* DEDUCTION */}
-<g font-family="IBM Plex Mono,monospace" font-size="10.5">
-<text x="73" y="24" text-anchor="middle" fill="var(--accent)" letter-spacing="1.5">DEDUCTION</text>
-<rect x="20" y="40" width="106" height="74" rx="9" fill="none" stroke="var(--accent)" stroke-width="1.5"></rect>
-<text x="73" y="66" text-anchor="middle" fill="var(--ink-soft)">all M are P</text>
-<text x="73" y="82" text-anchor="middle" fill="var(--ink-soft)">s is M</text>
-<line x1="35" y1="90" x2="111" y2="90" stroke="var(--line-strong)" stroke-width="1"></line>
-<text x="73" y="106" text-anchor="middle" fill="var(--ink)">∴ s is P</text>
-<text x="73" y="135" text-anchor="middle" fill="var(--ok)" font-size="10.5">truth-preserving</text>
-<text x="73" y="149" text-anchor="middle" fill="var(--ink-faint)" font-size="10.5">entailed</text>
-</g>
-{/* INDUCTION */}
-<g font-family="IBM Plex Mono,monospace" font-size="10.5">
-<text x="230" y="24" text-anchor="middle" fill="var(--brass)" letter-spacing="1.5">INDUCTION</text>
-<circle cx="196" cy="58" r="5" fill="var(--ink-soft)"></circle>
-<circle cx="214" cy="74" r="5" fill="var(--ink-soft)"></circle>
-<circle cx="190" cy="80" r="5" fill="var(--ink-soft)"></circle>
-<circle cx="210" cy="94" r="5" fill="var(--ink-soft)"></circle>
-<path d="M222,86 C250,80 258,70 270,62" fill="none" stroke="var(--brass)" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#ahb)"></path>
-<text x="248" y="116" text-anchor="middle" fill="var(--ink-soft)" font-size="10.5">…so all of them?</text>
-<text x="230" y="135" text-anchor="middle" fill="var(--brass)" font-size="10.5">reaches beyond</text>
-<text x="230" y="149" text-anchor="middle" fill="var(--contested)" font-size="10.5">next case may break it</text>
-</g>
-{/* ABDUCTION */}
-<g font-family="IBM Plex Mono,monospace" font-size="10.5">
-<text x="388" y="24" text-anchor="middle" fill="var(--contested)" letter-spacing="1.5">ABDUCTION</text>
-<text x="388" y="60" text-anchor="middle" fill="var(--ink-soft)" font-size="10.5">surprising clue</text>
-<circle cx="388" cy="74" r="4" fill="var(--contested)"></circle>
-<path d="M388,82 Q360,100 388,116" fill="none" stroke="var(--contested)" stroke-width="1.6" marker-end="url(#ahc)"></path>
-<text x="388" y="132" text-anchor="middle" fill="var(--ink)" font-size="10.5">best story that</text>
-<text x="388" y="146" text-anchor="middle" fill="var(--ink)" font-size="10.5">would explain it</text>
-</g>
-<text x="230" y="182" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" letter-spacing="1">three engines of inference — guarantee shrinks left → right</text>
-</svg>
-<figcaption>Deduction keeps you safe but locked in the room. Induction and abduction get you out — at the price of certainty.</figcaption>
-</figure>
+<InferenceModesFigure locale="en" />
 
 <Lead drop="A"> stranger walks into a London consulting room. Within seconds Sherlock Holmes announces, to Watson's astonishment, that the man is a retired army doctor, recently invalided home from Afghanistan. The skin is tanned but the wrists are pale — a sunburn caught abroad, not at the seaside. He holds his arm stiffly, war-wounded. The face is haggard with hardship and fever. Holmes calls this *deduction*, and the word has clung to him for over a century. He is wrong about the word. What Holmes performs — and what made him immortal — is not deduction at all. It is a humbler, riskier, far more creative thing.</Lead>
 
@@ -244,35 +204,7 @@ Every day in this course ends at the research frontier, with each claim tagged f
 <p><strong><em class="term">Paraconsistent logic</em></strong> drops <em>explosion</em>. In classical logic a single contradiction is apocalyptic: from "P and not-P" you can derive <em>literally anything</em> (the principle <em>ex contradictione quodlibet</em>) — one inconsistency and the whole system goes up in flames. Paraconsistent logics refuse this, letting you reason sensibly even when some contradiction has crept in — useful for large databases, legal codes, or any messy body of information that's locally inconsistent but not therefore worthless. The stronger philosophical cousin, <em class="term">dialetheism</em> — Graham Priest's view that some contradictions are <em>actually true</em>, like the Liar sentence "this sentence is false" — is far more controversial. Keep them separate: you can adopt a paraconsistent logic (a technical choice about explosion) without being a dialetheist (a metaphysical claim about true contradictions). The first is a tool; the second is a worldview.</p>
 <p><strong><em class="term">Fuzzy logic</em></strong> drops the two-value restriction entirely. Lotfi Zadeh (1965) let truth slide along the whole interval from 0 to 1 to handle vagueness — "the water is warm" is 0.7 true — building on the many-valued logics of Łukasiewicz from the 1920s. It runs in control systems and appliances. And <strong><em class="term">modal logic</em></strong> — the logic of <em>necessity</em> and <em>possibility</em> (□ and ◇) — together with carefully chosen temporal logics underpins the <em class="term">formal verification</em> of hardware and software: specific fragments are expressive enough to say useful things while remaining <em class="term">decidable</em><TipNote text={"A decidable logic has an algorithm that can always determine, in finite time, whether a statement follows from the rules."} /> enough for <em class="term">model checking</em><TipNote text={"Model checking automatically explores the possible states of a system to verify that a formal property always holds."} />. These aren't museum pieces. They're the working logics of the modern technical world.</p>
 
-<div class="ch-box">
-<p style="font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .3rem;">The bridge · propositions as types</p>
-<p style="font-size:.92em;margin:0 0 .8rem;color:var(--ink-soft);">The deepest reason intuitionistic logic matters is the <strong><em class="term">Curry–Howard correspondence</em></strong>: in suitable formal systems, propositions correspond to types and proofs correspond to programs. Proving a theorem can be treated as constructing the program-like object that inhabits its type — and vice versa.</p>
-<svg viewBox="0 0 480 150" role="img" aria-label="Curry-Howard correspondence: logic side mapped to computation side.">
-<g font-family="IBM Plex Mono,monospace" font-size="12">
-<text x="120" y="22" text-anchor="middle" fill="var(--accent)" letter-spacing="1.5">LOGIC</text>
-<text x="360" y="22" text-anchor="middle" fill="var(--brass)" letter-spacing="1.5">COMPUTATION</text>
-<rect x="24" y="38" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
-<text x="120" y="55" text-anchor="middle" fill="var(--ink-soft)">proposition</text>
-<rect x="264" y="38" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
-<text x="360" y="55" text-anchor="middle" fill="var(--ink-soft)">type</text>
-<rect x="24" y="72" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
-<text x="120" y="89" text-anchor="middle" fill="var(--ink-soft)">proof</text>
-<rect x="264" y="72" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
-<text x="360" y="89" text-anchor="middle" fill="var(--ink-soft)">program</text>
-<rect x="24" y="106" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
-<text x="120" y="123" text-anchor="middle" fill="var(--ink-soft)">"there exists an x..."</text>
-<rect x="264" y="106" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
-<text x="360" y="123" text-anchor="middle" fill="var(--ink-soft)">code that builds the x</text>
-<line x1="218" y1="51" x2="262" y2="51" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
-<line x1="218" y1="85" x2="262" y2="85" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
-<line x1="218" y1="119" x2="262" y2="119" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
-<text x="240" y="48" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
-<text x="240" y="82" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
-<text x="240" y="116" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
-</g>
-</svg>
-<p style="font-size:.86em;margin:.7rem 0 0;color:var(--ink-faint);">This is why several proof assistants below are built on <em class="term">type-theoretic</em> foundations — and why <em>logic and computation</em>, one of our five threads, are not neighbors but the same country seen from two sides. (Picked up on <strong>Days 27–29</strong>.)</p>
-</div>
+<CurryHowardBridge locale="en" />
 </div>
 
 <div class="claim">
