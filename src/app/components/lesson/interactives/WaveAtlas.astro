@@ -1,0 +1,59 @@
+---
+import StatusChip from "../StatusChip.astro";
+
+interface Wave {
+  number: string;
+  title: string;
+  summary: string;
+  tier: "ok" | "hint" | "bad";
+  label: string;
+  printLabel?: string;
+}
+
+interface Jump {
+  href: string;
+  number: string;
+  label: string;
+}
+
+interface Props {
+  waves: Wave[];
+  jumps: Jump[];
+  id: string;
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const filters = zh
+  ? [
+      ["all", "全部"],
+      ["ok", "已确立"],
+      ["hint", "有前景"],
+      ["bad", "有争议"]
+    ]
+  : [
+      ["all", "All"],
+      ["ok", "Established"],
+      ["hint", "Promising"],
+      ["bad", "Contested"]
+    ];
+---
+<div class="filterbar web-only" aria-label={zh ? "按成熟度筛选波次卡片" : "Filter wave cards by maturity"}>
+  {filters.map(([filter, label], index) => <button data-filter={filter} aria-pressed={index === 0 ? "true" : "false"}>{label}</button>)}
+</div>
+<div class="atlas" id={Astro.props.id}>
+  {Astro.props.waves.map((wave) => (
+    <article class="appendix-card" data-tier={wave.tier}>
+      <div class="k">{wave.number}</div>
+      <h3>{wave.title}</h3>
+      <p>{wave.summary}</p>
+      <StatusChip status={wave.tier} label={wave.label} printLabel={wave.printLabel} />
+      <div class={`maturity ${wave.tier}`}><span></span></div>
+    </article>
+  ))}
+</div>
+<div class="jumpgrid web-only" aria-label={zh ? "跳转到章节" : "Jump to sections"}>
+  {Astro.props.jumps.map((jump) => (
+    <a href={jump.href}><b>{jump.number}</b><span>{jump.label}</span></a>
+  ))}
+</div>

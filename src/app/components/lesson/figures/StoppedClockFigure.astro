@@ -1,0 +1,33 @@
+---
+interface Props {
+  ariaLabel: string;
+  tag: string;
+}
+---
+<figure class="hero-clock">
+  <div class="clockwrap">
+    <svg viewBox="0 0 240 240" role="img" aria-label={Astro.props.ariaLabel}>
+      <defs>
+        <radialGradient id="face" cx="50%" cy="42%" r="70%">
+          <stop offset="0%" stop-color="var(--raised)"></stop>
+          <stop offset="100%" stop-color="var(--paper)"></stop>
+        </radialGradient>
+      </defs>
+      <circle cx="120" cy="120" r="108" fill="url(#face)" stroke="var(--line-strong)" stroke-width="2"></circle>
+      <circle cx="120" cy="120" r="100" fill="none" stroke="var(--line)" stroke-width="1"></circle>
+      <g id="ticks" stroke="var(--ink-faint)"></g>
+      <g fill="var(--ink-soft)" font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="middle">
+        <text x="120" y="34">12</text>
+        <text x="208" y="125">3</text>
+        <text x="120" y="216">6</text>
+        <text x="33" y="125">9</text>
+      </g>
+      <line x1="120" y1="120" x2="68.3" y2="114.6" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"></line>
+      <line x1="120" y1="120" x2="194.2" y2="95.9" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"></line>
+      <line x1="120" y1="120" x2="150" y2="180" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"></line>
+      <circle cx="120" cy="120" r="5.5" fill="var(--ink)"></circle>
+      <circle cx="120" cy="120" r="2" fill="var(--accent)"></circle>
+    </svg>
+  </div>
+  <span class="stopped-tag">{Astro.props.tag}</span>
+</figure>

@@ -1,6 +1,8 @@
 import blackSwan from "../../../assets/images/open-license/black-swan-cygnus-atratus-cygnets.jpg";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import ImageFigure from "@app/components/lesson/ImageFigure.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -99,10 +101,9 @@ This is the wound the scientific method is born trying to dress. If we can never
 
 Europeans were so sure all swans were white that "black swan" was a centuries-old idiom for *something that doesn't exist* — like "when pigs fly." Then in 1697, Dutch explorers reached western Australia and found rivers full of **black swans** (*Cygnus atratus*). A million confirming sightings had built a rock-solid law; a single bird in Perth shattered it. Hold that asymmetry in your mind — it's about to become the hinge of the whole day.
 
-<figure class="lesson-figure">
-<img src={blackSwan.src} width="1200" height="600" loading="lazy" decoding="async" alt="A black swan with grey cygnets swimming on water." />
-<figcaption>A single black swan makes the asymmetry visible: confirmations can pile up for centuries, and one counterexample can still break the law.</figcaption>
-</figure>
+<ImageFigure src={blackSwan.src} width="1200" height="600" alt="A black swan with grey cygnets swimming on water.">
+A single black swan makes the asymmetry visible: confirmations can pile up for centuries, and one counterexample can still break the law.
+</ImageFigure>
 </Aside>
 
 </ContentSection>
@@ -250,16 +251,10 @@ Which sets up the punchline of the entire day. All of this — Popper, Kuhn, Lak
 
 ### Demarcation Criteria
 
-<table class="alt-table">
-<thead><tr><th>Claim</th><th>Popper</th><th>Kuhn</th><th>Lakatos</th><th>Cluster view</th></tr></thead>
-<tbody>
-<tr><td>Starlight bends by 1.75 arcseconds</td><td>Science</td><td>Science</td><td>Progressive</td><td>Strong scientific profile</td></tr>
-<tr><td>Mercury retrograde disrupts communication</td><td>Not science</td><td>Not mature science</td><td>Degenerating</td><td>Weak profile</td></tr>
-<tr><td>Class struggle drives history</td><td>Often unfalsifiable as used</td><td>It depends</td><td>Can degenerate</td><td>Mixed social science and philosophy</td></tr>
-<tr><td>String theory</td><td>Not yet testable in key forms</td><td>Normal science without decisive tests</td><td>Open question</td><td>Live border case</td></tr>
-<tr><td>Common descent</td><td>Falsifiable</td><td>Central biological paradigm</td><td>Progressive</td><td>Strong scientific profile</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Claim","Popper","Kuhn","Lakatos","Cluster view"]}
+  rows={[["Starlight bends by 1.75 arcseconds","Science","Science","Progressive","Strong scientific profile"],["Mercury retrograde disrupts communication","Not science","Not mature science","Degenerating","Weak profile"],["Class struggle drives history","Often unfalsifiable as used","It depends","Can degenerate","Mixed social science and philosophy"],["String theory","Not yet testable in key forms","Normal science without decisive tests","Open question","Live border case"],["Common descent","Falsifiable","Central biological paradigm","Progressive","Strong scientific profile"]]}
+/>
 </FormatAlt>
 
 <ContentSection class="frontier">

@@ -1,5 +1,7 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import StoppedClockFigure from "@app/components/lesson/figures/StoppedClockFigure.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -31,38 +33,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <HeroSubhead>You looked at the clock. You were right. Did you *know*?</HeroSubhead>
 
-<figure class="hero-clock">
-<div class="clockwrap">
-<svg viewBox="0 0 240 240" role="img" aria-label="An analog clock showing 9:12, which has secretly stopped.">
-<defs>
-<radialGradient id="face" cx="50%" cy="42%" r="70%">
-<stop offset="0%" stop-color="var(--raised)"></stop>
-<stop offset="100%" stop-color="var(--paper)"></stop>
-</radialGradient>
-</defs>
-<circle cx="120" cy="120" r="108" fill="url(#face)" stroke="var(--line-strong)" stroke-width="2"></circle>
-<circle cx="120" cy="120" r="100" fill="none" stroke="var(--line)" stroke-width="1"></circle>
-{/* ticks */}
-<g id="ticks" stroke="var(--ink-faint)"></g>
-{/* 12 / 3 / 6 / 9 numerals */}
-<g fill="var(--ink-soft)" font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="middle">
-<text x="120" y="34">12</text>
-<text x="208" y="125">3</text>
-<text x="120" y="216">6</text>
-<text x="33" y="125">9</text>
-</g>
-{/* hour hand 9:12 (276deg) */}
-<line x1="120" y1="120" x2="68.3" y2="114.6" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"></line>
-{/* minute hand 12 min (72deg) */}
-<line x1="120" y1="120" x2="194.2" y2="95.9" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"></line>
-{/* frozen second hand */}
-<line x1="120" y1="120" x2="150" y2="180" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"></line>
-<circle cx="120" cy="120" r="5.5" fill="var(--ink)"></circle>
-<circle cx="120" cy="120" r="2" fill="var(--accent)"></circle>
-</svg>
-</div>
-<span class="stopped-tag">● stopped 12 h ago — but right, for this one minute</span>
-</figure>
+<StoppedClockFigure ariaLabel="An analog clock showing 9:12, which has secretly stopped." tag="● stopped 12 h ago — but right, for this one minute" />
 
 <Lead drop="I">t is 9:12 in the morning and you are late. You glance up at the great station clock as you rush past, read **9:12**, and think: *fine — three minutes to spare.* You are right. It really is 9:12. And yet the clock you trusted died at 9:12 exactly twelve hours ago, somewhere in the small hours, and has hung there frozen ever since. You consulted a broken instrument at the single instant in the day it happened to be correct.</Lead>
 
@@ -188,15 +159,10 @@ Gettier wasn't first. Bertrand Russell had the stopped-clock case in *Human Know
 
 <PanelNote>Key cases:</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Case</th><th>Belief</th><th>Truth</th><th>Justification</th><th>Luck</th><th>Verdict</th></tr></thead>
-<tbody>
-<tr><td>Plain knowing</td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td><td>Knowledge on the classic view</td></tr>
-<tr><td>Stopped clock</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Not knowledge: truth arrives by coincidence</td></tr>
-<tr><td>Lucky guess</td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td><td>Not knowledge: no justification</td></tr>
-<tr><td>Confident error</td><td>Yes</td><td>No</td><td>Yes</td><td>No</td><td>Not knowledge: the claim is false</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Case","Belief","Truth","Justification","Luck","Verdict"]}
+  rows={[["Plain knowing","Yes","Yes","Yes","No","Knowledge on the classic view"],["Stopped clock","Yes","Yes","Yes","Yes","Not knowledge: truth arrives by coincidence"],["Lucky guess","Yes","Yes","No","Yes","Not knowledge: no justification"],["Confident error","Yes","No","Yes","No","Not knowledge: the claim is false"]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -349,14 +315,10 @@ Every day in this course ends at the research frontier, with each claim tagged f
 
 If your credence in *S* and your credence in *not-S* sum to 1.00, the pair is coherent. If they sum above 1.00, you will overpay for bets where exactly one can win. If they sum below 1.00, a bookie can reverse the bets and still guarantee a profit.
 
-<table class="alt-table">
-<thead><tr><th>Credence in S</th><th>Credence in not-S</th><th>Sum</th><th>Result</th></tr></thead>
-<tbody>
-<tr><td>0.50</td><td>0.50</td><td class="num">1.00</td><td>Coherent</td></tr>
-<tr><td>0.70</td><td>0.60</td><td class="num">1.30</td><td>Guaranteed 0.30 loss if you buy both $1 bets</td></tr>
-<tr><td>0.30</td><td>0.40</td><td class="num">0.70</td><td>Guaranteed 0.30 loss if the bookie buys both bets from you</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Credence in S","Credence in not-S","Sum","Result"]}
+  rows={[["0.50","0.50","1.00","Coherent"],["0.70","0.60","1.30","Guaranteed 0.30 loss if you buy both $1 bets"],["0.30","0.40","0.70","Guaranteed 0.30 loss if the bookie buys both bets from you"]]}
+/>
 </FormatAlt>
 
 <ContentSection class="frontier">
@@ -427,4 +389,3 @@ Sixty years on, the honest answer to "what is knowledge?" includes a healthy lis
 </Sources>
 
 </Wrap>
-

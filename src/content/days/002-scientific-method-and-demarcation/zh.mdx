@@ -1,6 +1,8 @@
 import blackSwan from "../../../assets/images/open-license/black-swan-cygnus-atratus-cygnets.jpg";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import ImageFigure from "@app/components/lesson/ImageFigure.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -99,10 +101,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 欧洲人曾如此确信所有天鹅皆白，以至于「黑天鹅」成了数个世纪以来的习语，意指不存在之物——好比「太阳从西边出来」。然而 1697 年，荷兰探险家抵达西澳大利亚，发现河湾中满是黑天鹅（Cygnus atratus）。百万次确认的目击筑起了一条坚不可摧的定律；珀斯的一只孤鸟却将其击得粉碎。请在心中持守这一不对等——它即将成为今日全篇的枢轴。
 
-<figure class="lesson-figure">
-<img src={blackSwan.src} width="1200" height="600" loading="lazy" decoding="async" alt="一只黑天鹅带着几只灰色幼雏在水面上游动。" />
-<figcaption>一只黑天鹅让这种不对等变得一目了然：确认案例可以堆积数百年，而一个反例仍足以击碎定律。</figcaption>
-</figure>
+<ImageFigure src={blackSwan.src} width="1200" height="600" alt="一只黑天鹅带着几只灰色幼雏在水面上游动。">
+一只黑天鹅让这种不对等变得一目了然：确认案例可以堆积数百年，而一个反例仍足以击碎定律。
+</ImageFigure>
 </Aside>
 
 </ContentSection>
@@ -250,16 +251,10 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 ### 划界标准表
 
-<table class="alt-table">
-<thead><tr><th>主张</th><th>波普尔</th><th>库恩</th><th>拉卡托斯</th><th>簇群视角</th></tr></thead>
-<tbody>
-<tr><td>星光弯折 1.75 角秒</td><td>科学</td><td>科学</td><td>进步</td><td>强科学画像</td></tr>
-<tr><td>水星逆行扰乱通讯</td><td>非科学</td><td>非成熟科学</td><td>退化</td><td>弱画像</td></tr>
-<tr><td>阶级斗争驱动历史</td><td>按常用方式往往不可证伪</td><td>视情况而定</td><td>可能退化</td><td>社会科学兼哲学的混合</td></tr>
-<tr><td>弦理论</td><td>关键形式尚未可检验</td><td>无决定性检验的常规科学</td><td>开放问题</td><td>鲜活的边界案例</td></tr>
-<tr><td>共同祖先</td><td>可证伪</td><td>生物学核心范式</td><td>进步</td><td>强科学画像</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["主张","波普尔","库恩","拉卡托斯","簇群视角"]}
+  rows={[["星光弯折 1.75 角秒","科学","科学","进步","强科学画像"],["水星逆行扰乱通讯","非科学","非成熟科学","退化","弱画像"],["阶级斗争驱动历史","按常用方式往往不可证伪","视情况而定","可能退化","社会科学兼哲学的混合"],["弦理论","关键形式尚未可检验","无决定性检验的常规科学","开放问题","鲜活的边界案例"],["共同祖先","可证伪","生物学核心范式","进步","强科学画像"]]}
+/>
 </FormatAlt>
 
 <ContentSection class="frontier">

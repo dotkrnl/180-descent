@@ -1,5 +1,6 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -273,18 +274,10 @@ AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外�
 
 ### 前沿校准器练习场：校准答案
 
-<table class="alt-table">
-<thead><tr><th>主张</th><th>最佳标签</th><th>校准说明</th></tr></thead>
-<tbody>
-<tr><td>一个开放权重的 32B Lean 证明器在 miniF2F 上达到约 90%。</td><td>已确立</td><td>Lean 的检查功能使正确性可审计；采样预算依然重要。</td></tr>
-<tr><td>GPT-5 解决了 10 个此前未解的埃尔多什问题。</td><td>炒作</td><td>引起争议的公开说法实则是文献检索，而非 10 个新成果。</td></tr>
-<tr><td>FunSearch 改进了 8 维盖集的构造。</td><td>已确立</td><td>该构造已发表且可直接验证，尽管它属于搜索而非洞察。</td></tr>
-<tr><td>o3 在 FrontierMath 上得分超过 25%。</td><td>炒作</td><td>考虑到基准测试的访问权限及后续较低的独立测试得分，该数字是脆弱的。</td></tr>
-<tr><td>埃尔多什问题 #728 基本上由 AI 自主推进并经过 Lean 验证。</td><td>有前景</td><td>真实且有趣，但仍处于早期阶段，且有部分人类反馈参与。</td></tr>
-<tr><td>变体应用题的失败证明了 LLM 无法推理。</td><td>有前景</td><td>脆弱性结果是真实的，但其普适性结论仍存争议。</td></tr>
-<tr><td>思维链转录忠实地报告了模型的实际推理过程。</td><td>炒作</td><td>证据表明，这些解释可能只是事后合理化的产物。</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["主张","最佳标签","校准说明"]}
+  rows={[["一个开放权重的 32B Lean 证明器在 miniF2F 上达到约 90%。","已确立","Lean 的检查功能使正确性可审计；采样预算依然重要。"],["GPT-5 解决了 10 个此前未解的埃尔多什问题。","炒作","引起争议的公开说法实则是文献检索，而非 10 个新成果。"],["FunSearch 改进了 8 维盖集的构造。","已确立","该构造已发表且可直接验证，尽管它属于搜索而非洞察。"],["o3 在 FrontierMath 上得分超过 25%。","炒作","考虑到基准测试的访问权限及后续较低的独立测试得分，该数字是脆弱的。"],["埃尔多什问题 #728 基本上由 AI 自主推进并经过 Lean 验证。","有前景","真实且有趣，但仍处于早期阶段，且有部分人类反馈参与。"],["变体应用题的失败证明了 LLM 无法推理。","有前景","脆弱性结果是真实的，但其普适性结论仍存争议。"],["思维链转录忠实地报告了模型的实际推理过程。","炒作","证据表明，这些解释可能只是事后合理化的产物。"]]}
+/>
 </FormatAlt>
 
 </ContentSection>

@@ -3,6 +3,10 @@ import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import HeroDoorsFigure from "@app/components/lesson/figures/HeroDoorsFigure.astro";
+import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import MontyHallMachine from "@app/components/lesson/interactives/MontyHallMachine.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -37,37 +41,14 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 <HeroSubhead>主持人打开一扇门。你的直觉说：换不换无所谓。但直觉这东西，三分之二的概率是错的。</HeroSubhead>
 
-<figure class="hero-doors">
-<div class="doors-row">
-<div class="hdoor">
-<svg viewBox="0 0 80 130" role="img" aria-label="一扇关着的门，编号 1。">
-<rect x="6" y="6" width="68" height="118" rx="4" fill="var(--raised)" stroke="var(--line-strong)" stroke-width="2"></rect>
-<rect x="12" y="12" width="56" height="48" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
-<rect x="12" y="66" width="56" height="52" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
-<circle cx="60" cy="92" r="3" fill="var(--brass)"></circle>
-<text x="40" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="16" fill="var(--ink-faint)">1</text>
-</svg>
-</div>
-<div class="hdoor">
-<svg viewBox="0 0 80 130" role="img" aria-label="一扇关着的门，编号 2。">
-<rect x="6" y="6" width="68" height="118" rx="4" fill="var(--raised)" stroke="var(--accent)" stroke-width="2.5"></rect>
-<rect x="12" y="12" width="56" height="48" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
-<rect x="12" y="66" width="56" height="52" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
-<circle cx="60" cy="92" r="3" fill="var(--brass)"></circle>
-<text x="40" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="16" fill="var(--accent)">2</text>
-</svg>
-</div>
-<div class="hdoor">
-<svg viewBox="0 0 80 130" role="img" aria-label="一扇打开的门，编号 3，后面是一只山羊。">
-<rect x="6" y="6" width="68" height="118" rx="4" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="4 4"></rect>
-<text x="40" y="78" text-anchor="middle" font-size="34">🐐</text>
-<text x="40" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="16" fill="var(--ink-faint)">3</text>
-</svg>
-</div>
-</div>
-<span class="doors-tag">● 你选了 1 号门 · 主持人打开 3 号门 · 该换到 2 号门吗？</span>
-<figcaption>一档七十年代的电视游戏节目，竟把整个贝叶斯推理的精要藏在了门后。</figcaption>
-</figure>
+<HeroDoorsFigure
+  door1Label="一扇关着的门，编号 1。"
+  door2Label="一扇关着的门，编号 2。"
+  door3Label="一扇打开的门，编号 3，后面是一只山羊。"
+  goat="🐐"
+  tag="● 你选了 1 号门 · 主持人打开 3 号门 · 该换到 2 号门吗？"
+  caption="一档七十年代的电视游戏节目，竟把整个贝叶斯推理的精要藏在了门后。"
+/>
 
 <Lead drop="你">选了 1 号门。三扇门后，一辆跑车静待赢家，另外两扇各拴一只山羊。主持人心中有数，踱到 3 号门前，轻轻一推，露出一只羊，然后笑意盈盈地问：「要不要换到 2 号门？」此时剩下两扇门，一辆车。你的直觉告诉你，概率已经变成了五五开，换与不换，不过是运气使然。</Lead>
 
@@ -91,10 +72,15 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 1990 年 9 月，玛丽莲·沃斯·莎凡特——《吉尼斯世界纪录》认证的最高 IQ 纪录保持者，在《Parade》杂志<TipNote text={"《Parade》是美国发行范围很广的周日报纸副刊杂志；「问玛丽莲」是莎凡特的问答专栏。"} />主持「问玛丽莲」专栏——回答了一位读者关于游戏节目的提问。换门，她写道，三分之二的概率赢。答案没错。随后，她的信箱炸了。
 
-<figure class="lesson-figure is-portrait">
-<img src={montyHall.src} width="692" height="744" loading="lazy" decoding="async" alt="1974 年宣传照中，蒙提·霍尔、卡罗尔·梅里尔、杰伊·斯图尔特和参赛者站在《Let's Make a Deal》舞台上。" />
-<figcaption>蒙提·霍尔的真实现场说明，这个谜题远非文字游戏：主持人不是随机开门的旁观者，而是掌握内情的行动者——他的每一步都在泄露信息。</figcaption>
-</figure>
+<ImageFigure
+  src={montyHall.src}
+  width="692"
+  height="744"
+  class="is-portrait"
+  alt="1974 年宣传照中，蒙提·霍尔、卡罗尔·梅里尔、杰伊·斯图尔特和参赛者站在《Let's Make a Deal》舞台上。"
+>
+蒙提·霍尔的真实现场说明，这个谜题远非文字游戏：主持人不是随机开门的旁观者，而是掌握内情的行动者——他的每一步都在泄露信息。
+</ImageFigure>
 
 据她自己统计，来信将近<Highlight>一万封</Highlight>，绝大多数在告诉她错了——其中约<Highlight>一千封</Highlight>来自博士。数学家写信训诫她。一位教授留下了那句「经典」评语：
 
@@ -120,77 +106,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 <PanelNote>选一扇门。主持人会打开另一扇——永远是山羊，不是你选的，也不是藏车的。然后点原来的门表示坚持，点另一扇未打开的门表示换门。先手动玩几把，再点「自动运行 1000 次」，看两种策略的胜率如何分道扬镳。数字不会说谎。</PanelNote>
 
-<div class="mh-machine" id="mhMachine">
-<div class="mh-odds" aria-label="策略胜率">
-<div class="mh-odd stay"><span>坚持保留第一次选择</span><span class="mh-odd-value">1/3</span></div>
-<div class="mh-odd switch"><span>换门接住未选的组合</span><span class="mh-odd-value">2/3</span></div>
-</div>
-
-<div class="mh-stage" id="mhStage">
-<button class="mh-door" data-door="0" id="door0" type="button">
-<span class="mh-door-face" aria-hidden="true">
-<span class="mh-door-number">1</span>
-<span class="mh-door-panel top"></span>
-<span class="mh-door-panel bottom"></span>
-<span class="mh-door-knob"></span>
-<span class="prizeholder"></span>
-</span>
-<span class="dlab">1 号门</span>
-<span class="daction" aria-hidden="true">选择</span>
-</button>
-<button class="mh-door" data-door="1" id="door1" type="button">
-<span class="mh-door-face" aria-hidden="true">
-<span class="mh-door-number">2</span>
-<span class="mh-door-panel top"></span>
-<span class="mh-door-panel bottom"></span>
-<span class="mh-door-knob"></span>
-<span class="prizeholder"></span>
-</span>
-<span class="dlab">2 号门</span>
-<span class="daction" aria-hidden="true">选择</span>
-</button>
-<button class="mh-door" data-door="2" id="door2" type="button">
-<span class="mh-door-face" aria-hidden="true">
-<span class="mh-door-number">3</span>
-<span class="mh-door-panel top"></span>
-<span class="mh-door-panel bottom"></span>
-<span class="mh-door-knob"></span>
-<span class="prizeholder"></span>
-</span>
-<span class="dlab">3 号门</span>
-<span class="daction" aria-hidden="true">选择</span>
-</button>
-</div>
-
-<div class="mh-status">
-<span class="mh-step" id="mhStep">步骤 1</span>
-<span class="mh-mode" id="mhMode">先选门</span>
-<p class="mh-say" id="mhSay" aria-live="polite"><span class="hl">选一扇门</span>开始。</p>
-</div>
-
-<div class="mh-controls" id="mhNextWrap" style="display:none;">
-<button class="btn ghost" id="btnNext" type="button">再来一局 →</button>
-</div>
-
-<div class="mh-tally">
-<div class="tcard stay">
-<p class="th">如果每次都坚持</p>
-<div class="big"><span id="stayWins">0</span> / <span id="stayPlays">0</span></div>
-<div class="pct" id="stayPct">— 胜率</div>
-</div>
-<div class="tcard switch">
-<p class="th">如果每次都换门</p>
-<div class="big"><span id="switchWins">0</span> / <span id="switchPlays">0</span></div>
-<div class="pct" id="switchPct">— 胜率</div>
-</div>
-</div>
-
-<div class="mh-auto">
-<span class="h">大规模实验（教师实验法的自动化版本）</span>
-<button class="btn" id="btnAuto" type="button">自动运行 1000 次</button>
-<button class="btn ghost" id="btnReset" type="button">重置计数</button>
-</div>
-</div>
+<MontyHallMachine locale="zh" />
 </Panel>
 
 <FormatAlt class="epub-only print-only">
@@ -200,13 +116,13 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 <PanelNote>在标准规则下，只要第一次选错了，换门就赢。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>初次选择</th><th>主持人动作</th><th>坚持</th><th>换门</th></tr></thead>
-<tbody>
-<tr><td>跑车，概率 1/3</td><td>打开任意一扇山羊门</td><td>赢</td><td>输</td></tr>
-<tr><td>山羊，概率 2/3</td><td>被迫打开另一扇山羊门</td><td>输</td><td>赢</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["初次选择", "主持人动作", "坚持", "换门"]}
+  rows={[
+    ["跑车，概率 1/3", "打开任意一扇山羊门", "赢", "输"],
+    ["山羊，概率 2/3", "被迫打开另一扇山羊门", "输", "赢"]
+  ]}
+/>
 因此，坚持保持最初的 1/3；换门则收割了「第一次选错」那 2/3 的概率。
 
 </FormatAlt>
@@ -359,14 +275,10 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 <PanelNote>默认假设：患病率 0.1%，灵敏度 99%，假阳性率 5%。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>组别</th><th>每 1000 人</th><th>阳性数</th></tr></thead>
-<tbody>
-<tr><td>患病者</td><td>1</td><td>约 1 个真阳性</td></tr>
-<tr><td>健康者</td><td>999</td><td>约 50 个假阳性</td></tr>
-<tr><td>全部阳性</td><td>约 51</td><td>其中只有约 1 人真的患病</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["组别","每 1000 人","阳性数"]}
+  rows={[["患病者","1","约 1 个真阳性"],["健康者","999","约 50 个假阳性"],["全部阳性","约 51","其中只有约 1 人真的患病"]]}
+/>
 因此后验概率约为 <MathInline latex={String.raw`0.99/50.94`} />，即 <MathInline latex={String.raw`1.9\%`} />——这就是 Casscells 结果，只是把灵敏度也明说出来。
 
 </FormatAlt>
@@ -615,4 +527,3 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </Sources>
 
 </Wrap>
-

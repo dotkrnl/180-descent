@@ -1,5 +1,6 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -125,14 +126,10 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 ### 绿色 vs. 绿蓝，投影表
 
-<table class="alt-table">
-<thead><tr><th>时期</th><th>观察到的证据</th><th>「全绿」预测</th><th>「全绿蓝」预测</th><th>启示</th></tr></thead>
-<tbody>
-<tr><td>2050 年之前</td><td>已检查的祖母绿全是绿色。</td><td>绿色祖母绿。</td><td>绿色祖母绿。</td><td>证据同等支持两种描述。</td></tr>
-<tr><td>2050 年之后</td><td>新观察终于进入分歧区域。</td><td>绿色祖母绿。</td><td>蓝色祖母绿。</td><td>只有越过截止线，现实才能打破平局。</td></tr>
-<tr><td>古德曼的要点</td><td>仅凭过去的规律性，无法选出可投射的谓词。</td><td>投射绿色。</td><td>投射绿蓝。</td><td>归纳需要关于哪些谓词自然、哪些已扎根的背景习惯。</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["时期","观察到的证据","「全绿」预测","「全绿蓝」预测","启示"]}
+  rows={[["2050 年之前","已检查的祖母绿全是绿色。","绿色祖母绿。","绿色祖母绿。","证据同等支持两种描述。"],["2050 年之后","新观察终于进入分歧区域。","绿色祖母绿。","蓝色祖母绿。","只有越过截止线，现实才能打破平局。"],["古德曼的要点","仅凭过去的规律性，无法选出可投射的谓词。","投射绿色。","投射绿蓝。","归纳需要关于哪些谓词自然、哪些已扎根的背景习惯。"]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -371,14 +368,10 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 ### 发现纯度引擎，基础率场景
 
-<table class="alt-table">
-<thead><tr><th>场景</th><th>真实假说</th><th>功效</th><th>偏倚</th><th>发表的阳性结果</th><th>PPV</th></tr></thead>
-<tbody>
-<tr><td>乐观基线</td><td>100 / 1,000</td><td>80%</td><td>0%</td><td>80 个真阳性 + 45 个假阳性</td><td>64% 为真</td></tr>
-<tr><td>低基础率</td><td>20 / 1,000</td><td>80%</td><td>0%</td><td>16 个真阳性 + 49 个假阳性</td><td>25% 为真</td></tr>
-<tr><td>加入偏倚</td><td>100 / 1,000</td><td>80%</td><td>20%</td><td>84 个真阳性 + 216 个假阳性</td><td>28% 为真</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["场景","真实假说","功效","偏倚","发表的阳性结果","PPV"]}
+  rows={[["乐观基线","100 / 1,000","80%","0%","80 个真阳性 + 45 个假阳性","64% 为真"],["低基础率","20 / 1,000","80%","0%","16 个真阳性 + 49 个假阳性","25% 为真"],["加入偏倚","100 / 1,000","80%","20%","84 个真阳性 + 216 个假阳性","28% 为真"]]}
+/>
 </FormatAlt>
 
 <ContentSection class="frontier">

@@ -1,0 +1,41 @@
+---
+interface Props {
+  tag: string;
+  caption: string;
+  door1Label: string;
+  door2Label: string;
+  door3Label: string;
+  goat: string;
+}
+---
+<figure class="hero-doors">
+  <div class="doors-row">
+    <div class="hdoor">
+      <svg viewBox="0 0 80 130" role="img" aria-label={Astro.props.door1Label}>
+        <rect x="6" y="6" width="68" height="118" rx="4" fill="var(--raised)" stroke="var(--line-strong)" stroke-width="2"></rect>
+        <rect x="12" y="12" width="56" height="48" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
+        <rect x="12" y="66" width="56" height="52" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
+        <circle cx="60" cy="92" r="3" fill="var(--brass)"></circle>
+        <text x="40" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="16" fill="var(--ink-faint)">1</text>
+      </svg>
+    </div>
+    <div class="hdoor">
+      <svg viewBox="0 0 80 130" role="img" aria-label={Astro.props.door2Label}>
+        <rect x="6" y="6" width="68" height="118" rx="4" fill="var(--raised)" stroke="var(--accent)" stroke-width="2.5"></rect>
+        <rect x="12" y="12" width="56" height="48" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
+        <rect x="12" y="66" width="56" height="52" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
+        <circle cx="60" cy="92" r="3" fill="var(--brass)"></circle>
+        <text x="40" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="16" fill="var(--accent)">2</text>
+      </svg>
+    </div>
+    <div class="hdoor">
+      <svg viewBox="0 0 80 130" role="img" aria-label={Astro.props.door3Label}>
+        <rect x="6" y="6" width="68" height="118" rx="4" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="4 4"></rect>
+        <text x="40" y="78" text-anchor="middle" font-size="34">{Astro.props.goat}</text>
+        <text x="40" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="16" fill="var(--ink-faint)">3</text>
+      </svg>
+    </div>
+  </div>
+  <span class="doors-tag">{Astro.props.tag}</span>
+  <figcaption>{Astro.props.caption}</figcaption>
+</figure>

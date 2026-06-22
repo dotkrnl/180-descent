@@ -1,6 +1,7 @@
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -125,14 +126,10 @@ Run an exact test with continuous data where nothing is happening, under the ass
 
 <PanelNote>The table summarizes the same lesson as the simulation: under the continuous exact-test idealization, null p-values are uniform; under a real effect, small p-values become more common.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Setting</th><th>Expected shape</th><th>Interpretation</th></tr></thead>
-<tbody>
-<tr><td>True effect = 0</td><td>Flat across 0 to 1</td><td>About 5% fall below .05 by construction.</td></tr>
-<tr><td>Small real effect</td><td>Left-leaning but noisy</td><td>Power rises slowly; many real effects are missed.</td></tr>
-<tr><td>Large real effect</td><td>Many very small p-values</td><td>High power and a healthy p-curve signature.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Setting","Expected shape","Interpretation"]}
+  rows={[["True effect = 0","Flat across 0 to 1","About 5% fall below .05 by construction."],["Small real effect","Left-leaning but noisy","Power rises slowly; many real effects are missed."],["Large real effect","Many very small p-values","High power and a healthy p-curve signature."]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -231,14 +228,10 @@ A <MathInline latex={String.raw`p`} />-value lives in the world of <MathInline l
 
 <PanelNote>The worked example separates alpha from false-positive risk among published discoveries.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Prior real effects</th><th>Power</th><th>Alpha</th><th>False among significant</th></tr></thead>
-<tbody>
-<tr><td>50%</td><td>50%</td><td>.05</td><td>About 9% false alarms.</td></tr>
-<tr><td>10%</td><td>50%</td><td>.05</td><td>About 47% false alarms.</td></tr>
-<tr><td>2%</td><td>50%</td><td>.05</td><td>About 83% false alarms.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Prior real effects","Power","Alpha","False among significant"]}
+  rows={[["50%","50%",".05","About 9% false alarms."],["10%","50%",".05","About 47% false alarms."],["2%","50%",".05","About 83% false alarms."]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -337,14 +330,10 @@ The translation is wonderfully concrete. Ask: how many fair coins would I have t
 
 <PanelNote>The S-value converts a p-value into bits of surprise: S = -log2(p).</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>p-value</th><th>S-value</th><th>Coin-flip analogy</th></tr></thead>
-<tbody>
-<tr><td>.05</td><td>4.3 bits</td><td>About 4 to 5 heads in a row.</td></tr>
-<tr><td>.01</td><td>6.6 bits</td><td>About 7 heads in a row.</td></tr>
-<tr><td>.005</td><td>7.6 bits</td><td>About 8 heads in a row.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["p-value","S-value","Coin-flip analogy"]}
+  rows={[[".05","4.3 bits","About 4 to 5 heads in a row."],[".01","6.6 bits","About 7 heads in a row."],[".005","7.6 bits","About 8 heads in a row."]]}
+/>
 </FormatAlt>
 
 <ContentSection>

@@ -1,5 +1,6 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -139,16 +140,10 @@ import Term from "@app/components/lesson/Term.astro";
 
 ### 谬误探查器（答案版）
 
-<table class="alt-table">
-<thead><tr><th>论证形态</th><th>对应名称</th><th>解析</th></tr></thead>
-<tbody>
-<tr><td>通过攻击发言者的私生活来否定其气候计划。</td><td>诉诸人身</td><td>人身攻击无法验证计划本身是否合理。</td></tr>
-<tr><td>宣称要么削减全部预算，要么面临破产。</td><td>虚假两难</td><td>论证隐藏了两个极端之间的中间选项。</td></tr>
-<tr><td>将背痛归咎于新装的红绿灯，因为红绿灯先出现。</td><td>事后归因</td><td>先后顺序并不等同于因果关系。</td></tr>
-<tr><td>信任这本书，因为书里说它说的是真的。</td><td>循环论证</td><td>结论被偷换成了前提。</td></tr>
-<tr><td>从两个人的表现推断整个城市都很粗鲁。</td><td>以偏概全</td><td>样本量太小，不足以推导出普遍规律。</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["论证形态","对应名称","解析"]}
+  rows={[["通过攻击发言者的私生活来否定其气候计划。","诉诸人身","人身攻击无法验证计划本身是否合理。"],["宣称要么削减全部预算，要么面临破产。","虚假两难","论证隐藏了两个极端之间的中间选项。"],["将背痛归咎于新装的红绿灯，因为红绿灯先出现。","事后归因","先后顺序并不等同于因果关系。"],["信任这本书，因为书里说它说的是真的。","循环论证","结论被偷换成了前提。"],["从两个人的表现推断整个城市都很粗鲁。","以偏概全","样本量太小，不足以推导出普遍规律。"]]}
+/>
 </FormatAlt>
 
 </ContentSection>

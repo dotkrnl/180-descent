@@ -1,0 +1,54 @@
+---
+import WaveAtlas from "./WaveAtlas.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+  id: string;
+}
+
+const zh = Astro.props.locale === "zh";
+const waves = zh ? [
+  { number: "Wave 01", title: "随时有效推断", summary: "能承受可选停止、连续监控和顺序累积的检验与区间。", tier: "ok", label: "已确立" },
+  { number: "Wave 02", title: "保形风险控制", summary: "围绕黑箱模型，为预测集、弃权和一般风险指标提供分布无关的外包装。", tier: "ok", label: "核心已确立", printLabel: "已确立" },
+  { number: "Wave 03", title: "预测驱动推断", summary: "使用廉价 AI 预测，但不把它们当真值；用少量金标准样本校正。", tier: "ok", label: "Science / PNAS", printLabel: "综述" },
+  { number: "Wave 04", title: "正交因果机器学习", summary: "让灵活机器学习拟合辅助函数，同时用正交得分保护因果估计。", tier: "ok", label: "正在成熟", printLabel: "综述" },
+  { number: "Wave 05", title: "发现之后的推断", summary: "选择后推断、数据裂变和因果发现校正，让探索不再双重使用数据。", tier: "hint", label: "快速前沿", printLabel: "有前景" },
+  { number: "Wave 06", title: "私有数据推断", summary: "把差分隐私和合成数据释放引入的不确定性纳入置信区间。", tier: "hint", label: "正在成长", printLabel: "综述" },
+  { number: "Wave 07", title: "贝叶斯工作流", summary: "先验预测检查、后验预测检查、SBC、模型批评：把推断当作可审计流程。", tier: "ok", label: "实践迁移", printLabel: "综述" },
+  { number: "Wave 08", title: "大规模取证", summary: "数据侦探、决策市场、机器学习复现预测、论文工厂检测和期刊层面分诊。", tier: "hint", label: "有前景" },
+  { number: "Wave 09", title: "硅基样本", summary: "把 LLM 当作模拟受访者或实验参与者：可用于试运行，危险在于替代真人。", tier: "bad", label: "有争议" },
+  { number: "Wave 10", title: "AI 分析师与基准", summary: "自动分析代理、基准污染、复现漂移和“AI 科学家”流水线。", tier: "bad", label: "未定", printLabel: "有争议" }
+] as const : [
+  { number: "Wave 01", title: "Anytime-valid inference", summary: "Tests and intervals that survive optional stopping, continuous monitoring, and sequential accumulation.", tier: "ok", label: "established" },
+  { number: "Wave 02", title: "Conformal risk control", summary: "Distribution-free wrappers for prediction sets, abstention, and general risk metrics around black-box models.", tier: "ok", label: "core established", printLabel: "established" },
+  { number: "Wave 03", title: "Prediction-powered inference", summary: "Use cheap AI predictions without pretending they are truth; correct them with a small gold-standard sample.", tier: "ok", label: "Science / PNAS", printLabel: "review" },
+  { number: "Wave 04", title: "Orthogonal causal ML", summary: "Let flexible ML learn nuisance functions while orthogonal scores protect the causal estimate.", tier: "ok", label: "maturing", printLabel: "review" },
+  { number: "Wave 05", title: "Inference after discovery", summary: "Post-selection inference, data fission, and causal-discovery corrections for exploration without double dipping.", tier: "hint", label: "fast frontier", printLabel: "promising" },
+  { number: "Wave 06", title: "Private-data inference", summary: "Confidence intervals that include the uncertainty induced by differential privacy and synthetic-data release.", tier: "hint", label: "growing", printLabel: "review" },
+  { number: "Wave 07", title: "Bayesian workflow", summary: "Prior predictive checks, posterior predictive checks, SBC, model criticism: inference as an audited workflow.", tier: "ok", label: "practice shift", printLabel: "review" },
+  { number: "Wave 08", title: "Forensics at scale", summary: "Data detectives, decision markets, ML replicability forecasts, paper-mill detection, and journal-level triage.", tier: "hint", label: "promising" },
+  { number: "Wave 09", title: "Silicon samples", summary: "LLMs as simulated survey respondents or experimental participants: useful for piloting, dangerous as replacement.", tier: "bad", label: "contested" },
+  { number: "Wave 10", title: "AI analysts & benchmarks", summary: "Automated analysis agents, benchmark contamination, reproducibility drift, and “AI scientist” pipelines.", tier: "bad", label: "unsettled", printLabel: "contested" }
+] as const;
+
+const suffixes = ["anytime", "conformal", "ppi", "dml", "selection", "privacy", "bayes", "forensics", "silicon", "ai"];
+const jumpLabels = zh
+  ? ["随时", "保形", "PPI", "因果 ML", "发现后", "隐私", "工作流", "取证", "硅基", "AI 分析师"]
+  : ["Anytime", "Conformal", "PPI", "Causal ML", "After discovery", "Privacy", "Workflow", "Forensics", "Silicon", "AI analysts"];
+const jumps = suffixes.map((suffix, index) => ({
+  href: `#${Astro.props.id.replace(/-atlas$/, "")}-${suffix}`,
+  number: String(index + 1).padStart(2, "0"),
+  label: jumpLabels[index]
+}));
+---
+<p class="pnote web-only">
+  {zh
+    ? "按成熟度筛选这张图谱。绿色表示核心理论已经确立；琥珀色表示严肃且有前景但仍在沉淀；红色表示可能很重要，但当前也很危险。"
+    : "Filter the atlas by maturity. Green means the core theory is established; amber means serious and promising but still settling; red means potentially transformative and currently dangerous."}
+</p>
+<p class="pnote epub-only print-only">
+  {zh
+    ? "下方图谱按十种 2020 年后方法所攻击的失败模式排序，并标出成熟度。"
+    : "The atlas below sorts ten post-2020 methods by the failure mode they attack and labels their maturity."}
+</p>
+<WaveAtlas waves={waves} jumps={jumps} id={Astro.props.id} locale={Astro.props.locale} />

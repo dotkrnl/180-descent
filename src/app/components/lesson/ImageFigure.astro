@@ -1,0 +1,28 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width: number | string;
+  height: number | string;
+  class?: string;
+  loading?: "eager" | "lazy";
+  decoding?: "async" | "auto" | "sync";
+  lightSrc?: string;
+  darkSrc?: string;
+}
+
+const className = ["lesson-figure", Astro.props.class].filter(Boolean).join(" ");
+---
+<figure class={className}>
+  <img
+    src={Astro.props.src}
+    data-light-src={Astro.props.lightSrc}
+    data-dark-src={Astro.props.darkSrc}
+    width={Astro.props.width}
+    height={Astro.props.height}
+    loading={Astro.props.loading ?? "lazy"}
+    decoding={Astro.props.decoding ?? "async"}
+    alt={Astro.props.alt}
+  />
+  <figcaption><slot /></figcaption>
+</figure>

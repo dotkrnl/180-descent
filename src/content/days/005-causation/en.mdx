@@ -2,6 +2,7 @@ import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -168,14 +169,10 @@ The Reversal Machine below turns that into one picture. Each square is one patie
 
 <PanelNote>Treatment B has the higher pooled observed rate, while Treatment A has the higher observed rate inside each stone-size group. This demonstrates a reversal, not a treatment recommendation.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>View</th><th>Treatment A</th><th>Treatment B</th><th>Higher observed rate</th></tr></thead>
-<tbody>
-<tr><td>All patients</td><td>273 / 350 = 78.0%</td><td>289 / 350 = 82.6%</td><td>B</td></tr>
-<tr><td>Small stones</td><td>81 / 87 = 93.1%</td><td>234 / 270 = 86.7%</td><td>A</td></tr>
-<tr><td>Large stones</td><td>192 / 263 = 73.0%</td><td>55 / 80 = 68.8%</td><td>A</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["View","Treatment A","Treatment B","Higher observed rate"]}
+  rows={[["All patients","273 / 350 = 78.0%","289 / 350 = 82.6%","B"],["Small stones","81 / 87 = 93.1%","234 / 270 = 86.7%","A"],["Large stones","192 / 263 = 73.0%","55 / 80 = 68.8%","A"]]}
+/>
 The pooled comparison reverses because the treatment groups contain different mixtures of small- and large-stone cases.
 
 </FormatAlt>
@@ -355,13 +352,10 @@ A safe causal workflow is: specify the unit, exposure, outcome, timing, and inte
 </div>
 
 <div class="dovs-table" id="dovsTable" aria-live="polite">
-<table class="alt-table">
-<thead><tr><th>Observed table</th><th>Wet</th><th>Dry</th><th>Risk wet</th></tr></thead>
-<tbody>
-<tr><td>Umbrella</td><td>189</td><td>187</td><td>50.2%</td></tr>
-<tr><td>No umbrella</td><td>170</td><td>454</td><td>27.2%</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Observed table","Wet","Dry","Risk wet"]}
+  rows={[["Umbrella","189","187","50.2%"],["No umbrella","170","454","27.2%"]]}
+/>
 </div>
 
 <div class="dovs-table" id="dovsParams" aria-live="polite">

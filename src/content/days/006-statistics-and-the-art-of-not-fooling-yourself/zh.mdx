@@ -4,6 +4,8 @@ import pValueTailAreaZhDark from "../../../assets/images/open-license/p-value-ta
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import ImageFigure from "@app/components/lesson/ImageFigure.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -103,10 +105,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 ## 最容易被愚弄的人
 
 <blockquote>「首要原则是你不能欺骗自己——而你恰恰是最容易被自己愚弄的人。」——理查德·费曼，加州理工学院毕业典礼，1974 年</blockquote>
-<figure class="lesson-figure is-portrait">
-<img src={feynman1959.src} width="899" height="900" alt="1959 年，理查德·费曼站在黑板前。" />
-<figcaption>1959 年，理查德·费曼站在黑板前。上方引文出自他 1974 年在加州理工学院关于「货物崇拜科学」的毕业典礼演讲。<span class="meta">图片：<em>The Big T</em> 1959，经 Wikimedia Commons，美国公有领域。</span></figcaption>
-</figure>
+<ImageFigure src={feynman1959.src} width="899" height="900" class="is-portrait" alt="1959 年，理查德·费曼站在黑板前。">
+1959 年，理查德·费曼站在黑板前。上方引文出自他 1974 年在加州理工学院关于「货物崇拜科学」的毕业典礼演讲。<span class="meta">图片：<em>The Big T</em> 1959，经 Wikimedia Commons，美国公有领域。</span>
+</ImageFigure>
 费曼谈论的是公式无法替代的、求真所需的诚实。现代统计学最残酷的转折在于：公式本身仍然可能是正确的，但在灵活搜索之后，错误率便无法再维持在名义水平。它们会给你想看到的结论披上数学权威的外衣。
 
 这个陷阱有个学名：<Term>研究者自由度</Term>（researcher degrees of freedom）<TipNote text={String.raw`研究者自由度是指研究者在数据收集、清理、建模和报告过程中，可以做出的各种看起来合情合理的分析选择。`} />。每项实际研究背后都隐藏着几十个微小但看似合理的决定。剔除哪些异常值？是否控制年龄？性别？两者都控制？是现在停止收集数据，还是再招募 20 名参与者？你测量了三个指标，该报告哪一个？每个选择单独看都无可厚非。但如果是在看过数据后才做决定，它们加在一起就成了一台伪造「发现」的机器。
@@ -196,10 +197,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 换成一个小例子：假设零模型认为两组均值相同。如果在这个模型下，观察到当前这么大、甚至更大的差异的概率为 3%，那么 p = .03。这并不表示零假设为真的概率是 3%。
 
-<figure class="lesson-figure pvalue-figure">
-<img src={pValueTailAreaZh.src} data-light-src={pValueTailAreaZh.src} data-dark-src={pValueTailAreaZhDark.src} width="800" height="460" loading="lazy" decoding="async" alt="课程风格的零模型钟形曲线图，阴影尾部标为 p 值，并强调 P(数据 | 零假设) 不是 P(零假设 | 数据)。" />
-  <figcaption>阴影尾部就是 p 值：在零模型下，出现如此极端或更极端结果的频率。<span class="meta">改编自 Repapetilto 与 Chen-Pan Liao，经 Wikimedia Commons，CC BY-SA 3.0。</span></figcaption>
-</figure>
+<ImageFigure src={pValueTailAreaZh.src} lightSrc={pValueTailAreaZh.src} darkSrc={pValueTailAreaZhDark.src} width="800" height="460" class="pvalue-figure" alt="课程风格的零模型钟形曲线图，阴影尾部标为 p 值，并强调 P(数据 | 零假设) 不是 P(零假设 | 数据)。">
+阴影尾部就是 p 值：在零模型下，出现如此极端或更极端结果的频率。<span class="meta">改编自 Repapetilto 与 Chen-Pan Liao，经 Wikimedia Commons，CC BY-SA 3.0。</span>
+</ImageFigure>
 
 这句话值得再读一遍。它是关于「给定假设下的数据」的陈述——写作 <Highlight><MathInline latex={String.raw`\mathrm{P}(\text{数据}\mid\text{零假设})`} /></Highlight>。它绝对不是关于「给定数据下的假设」的陈述，即 <Highlight><MathInline latex={String.raw`\mathrm{P}(\text{零假设}\mid\text{数据})`} /></Highlight>。混淆这两者正是 [第 4 日](/zh/days/004-probability-as-extended-logic/) 在患病测试问题中警告过的「逆概率」错误：<MathInline latex={String.raw`\mathrm{P}(\text{阳性}\mid\text{患病})`} /> 并不等于 <MathInline latex={String.raw`\mathrm{P}(\text{患病}\mid\text{阳性})`} />，而在没有先验概率的情况下，无论你盯着结果看多久，都无法将前者转化为后者。下面六种误读尤其常见——摘自格陵兰（Greenland）及其同事列出的 25 种常见误读：
 
@@ -335,14 +335,10 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 <PanelNote>该表概括了长期教训：95% 置信区间程序在 100 次重复使用中大约 95 次覆盖真值，但任何单个区间只会覆盖或漏掉。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>对象</th><th>重复使用时会发生什么</th><th>正确读法</th></tr></thead>
-<tbody>
-<tr><td>100 个重复生成的 95% 区间，真实均值 = 0</td><td>大约 95 个覆盖 0；大约 5 个漏掉 0。</td><td>这个程序具有约 95% 的长期覆盖率。</td></tr>
-<tr><td>一个观察到的区间，例如 [-0.31, 0.41]</td><td>它覆盖真实均值 0。</td><td>观察之后，这个区间要么包含 0，要么不包含；95% 属于方法。</td></tr>
-<tr><td>一个观察到的区间，例如 [0.04, 0.76]</td><td>它漏掉真实均值 0。</td><td>即使是 95% 的方法，在重复使用中也会产生未覆盖真值的区间。</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["对象","重复使用时会发生什么","正确读法"]}
+  rows={[["100 个重复生成的 95% 区间，真实均值 = 0","大约 95 个覆盖 0；大约 5 个漏掉 0。","这个程序具有约 95% 的长期覆盖率。"],["一个观察到的区间，例如 [-0.31, 0.41]","它覆盖真实均值 0。","观察之后，这个区间要么包含 0，要么不包含；95% 属于方法。"],["一个观察到的区间，例如 [0.04, 0.76]","它漏掉真实均值 0。","即使是 95% 的方法，在重复使用中也会产生未覆盖真值的区间。"]]}
+/>
 </FormatAlt>
 
 ### 为什么小样本研究会夸大检测到的效应
@@ -507,15 +503,10 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 <PanelNote>同一份合成数据集可以通过多套合理的分析设定进行分析。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>选择</th><th>对分析的影响</th><th>解读风险</th></tr></thead>
-<tbody>
-<tr><td>剔除异常值</td><td>在估计关联之前排除极端值。</td><td>可能使结果更稳定，也可能选择性地移除不利的数据点。</td></tr>
-<tr><td>控制变量 W</td><td>调整同时驱动 X 和 Y 的背景混杂变量。</td><td>通常会缩减虚假关联，但这种控制必须有因果论证支持。</td></tr>
-<tr><td>秩变换</td><td>在计算关联之前用排名代替原始值。</td><td>可以降低对分布形状的敏感性，但也会改变估计的目标。</td></tr>
-<tr><td>仅分析某个子组</td><td>仅分析数据的子集。</td><td>可以测试真实的边界条件，也可以制造出一个讨巧的子集。</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["选择","对分析的影响","解读风险"]}
+  rows={[["剔除异常值","在估计关联之前排除极端值。","可能使结果更稳定，也可能选择性地移除不利的数据点。"],["控制变量 W","调整同时驱动 X 和 Y 的背景混杂变量。","通常会缩减虚假关联，但这种控制必须有因果论证支持。"],["秩变换","在计算关联之前用排名代替原始值。","可以降低对分布形状的敏感性，但也会改变估计的目标。"],["仅分析某个子组","仅分析数据的子集。","可以测试真实的边界条件，也可以制造出一个讨巧的子集。"]]}
+/>
 诚实的报告是展示所有合理设定下的分布情况；而不诚实的报告则是只展示曲线上最有利的那一点。
 
 </FormatAlt>
@@ -581,4 +572,3 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 </Sources>
 
 </Wrap>
-

@@ -1,5 +1,6 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -138,16 +139,10 @@ A special pair deserves its own spotlight, because they are where logic meets th
 
 ### The Fallacy Spotter, as an answer key
 
-<table class="alt-table">
-<thead><tr><th>Argument shape</th><th>Better name</th><th>Why</th></tr></thead>
-<tbody>
-<tr><td>Dismiss the climate plan by attacking the speaker's private life.</td><td>Ad hominem</td><td>The personal attack does not test whether the plan is sound.</td></tr>
-<tr><td>Offer only total budget cuts or bankruptcy.</td><td>False dilemma</td><td>The argument hides partial options between the two extremes.</td></tr>
-<tr><td>Blame a new traffic light for back pain because it came first.</td><td>Post hoc</td><td>Sequence alone is not causation.</td></tr>
-<tr><td>Trust the book because the book says it is true.</td><td>Begging the question</td><td>The conclusion is smuggled into the premise.</td></tr>
-<tr><td>Infer that a whole city is rude from two people.</td><td>Hasty generalization</td><td>The sample is too thin for the sweeping rule.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Argument shape","Better name","Why"]}
+  rows={[["Dismiss the climate plan by attacking the speaker's private life.","Ad hominem","The personal attack does not test whether the plan is sound."],["Offer only total budget cuts or bankruptcy.","False dilemma","The argument hides partial options between the two extremes."],["Blame a new traffic light for back pain because it came first.","Post hoc","Sequence alone is not causation."],["Trust the book because the book says it is true.","Begging the question","The conclusion is smuggled into the premise."],["Infer that a whole city is rude from two people.","Hasty generalization","The sample is too thin for the sweeping rule."]]}
+/>
 </FormatAlt>
 
 </ContentSection>

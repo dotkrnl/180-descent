@@ -4,6 +4,8 @@ import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import ImageFigure from "@app/components/lesson/ImageFigure.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -197,15 +199,10 @@ Shannon's H has the exact algebraic shape — a sum of *p* log *p* — of a quan
 
 <PanelNote>A two-outcome source reaches its maximum entropy when both outcomes are equally likely.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Source</th><th>P(heads)</th><th>Entropy</th><th>Reading</th></tr></thead>
-<tbody>
-<tr><td>Fair coin</td><td>0.50</td><td class="num">1.00 bit/flip</td><td>Every flip answers a full yes/no question.</td></tr>
-<tr><td>Loaded coin</td><td>0.88</td><td class="num">0.53 bits/flip</td><td>The common face is cheap to encode; the rare face is expensive.</td></tr>
-<tr><td>Near-certain source</td><td>0.99</td><td class="num">0.08 bits/flip</td><td>The outcome is almost known in advance, so little information arrives.</td></tr>
-<tr><td>"u follows q?"</td><td>0.95</td><td class="num">0.29 bits/event</td><td>This is the entropy of a binary event, not the full next-character distribution.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Source","P(heads)","Entropy","Reading"]}
+  rows={[["Fair coin","0.50","1.00 bit/flip","Every flip answers a full yes/no question."],["Loaded coin","0.88","0.53 bits/flip","The common face is cheap to encode; the rare face is expensive."],["Near-certain source","0.99","0.08 bits/flip","The outcome is almost known in advance, so little information arrives."],["\"u follows q?\"","0.95","0.29 bits/event","This is the entropy of a binary event, not the full next-character distribution."]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -233,10 +230,9 @@ So far, information sounds like mathematics — abstract, dimensionless, the stu
 
 In 1867 James Clerk Maxwell dreamed up a troublemaker. Picture a box of gas split by a wall, with a tiny trapdoor and a tiny intelligent being — later christened <Term as="em">Maxwell's demon</Term> — guarding it. The demon watches the molecules. When a fast one approaches from the right, it opens the door and lets it through to the left; when a slow one approaches from the left, it lets that through to the right. It never does any work on the molecules — just opens and shuts a frictionless door at the right moments. Slowly, patiently, it sorts hot from cold, building a temperature difference out of a uniform gas.
 
-<figure class="lesson-figure">
-<img src={maxwellsDemon.src} data-light-src={maxwellsDemon.src} data-dark-src={maxwellsDemonDark.src} width="608" height="224" loading="lazy" decoding="async" alt="Schematic of Maxwell's demon opening a trapdoor between two gas chambers to separate slow blue particles from fast red particles." />
-<figcaption>Maxwell's demon as a sorting thought experiment: a trapdoor keeper separates slower and faster molecules, apparently creating a temperature difference from information alone. <span class="meta">Image: Htkym, Wikimedia Commons, CC BY 2.5; colors adapted locally.</span></figcaption>
-</figure>
+<ImageFigure src={maxwellsDemon.src} lightSrc={maxwellsDemon.src} darkSrc={maxwellsDemonDark.src} width="608" height="224" alt="Schematic of Maxwell's demon opening a trapdoor between two gas chambers to separate slow blue particles from fast red particles.">
+Maxwell's demon as a sorting thought experiment: a trapdoor keeper separates slower and faster molecules, apparently creating a temperature difference from information alone. <span class="meta">Image: Htkym, Wikimedia Commons, CC BY 2.5; colors adapted locally.</span>
+</ImageFigure>
 This should be impossible. Building order from equilibrium, for free, is exactly what the <Term as="em">second law of thermodynamics</Term><TipNote text={"The second law says, roughly, that macroscopic entropy overwhelmingly tends to increase in an isolated system, though small systems can fluctuate."} /> forbids — it's the statistical law behind coffee cooling and eggs not unscrambling. The demon seems to break the deepest bookkeeping rule in physics using nothing but *information* about which molecules are which. For a hundred years it haunted the field. Leó Szilárd sharpened it in 1929 down to a single molecule in a box, and showed the demon could extract a tidy packet of work — exactly <MathInline latex={String.raw`k_B T \ln 2`} /> — from one bit of "which side is it on?" knowledge. The arrow pointed somewhere uncomfortable: information could apparently be used to extract work.
 
 ### The twist: it's not knowing, it's forgetting

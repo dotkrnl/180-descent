@@ -1,5 +1,7 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import StoppedClockFigure from "@app/components/lesson/figures/StoppedClockFigure.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -31,38 +33,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <HeroSubhead>你看了钟。你说对了。但你真的知道吗？</HeroSubhead>
 
-<figure class="hero-clock">
-<div class="clockwrap">
-<svg viewBox="0 0 240 240" role="img" aria-label="一座模拟时钟显示 9:12，它已在暗中停走。">
-<defs>
-<radialGradient id="face" cx="50%" cy="42%" r="70%">
-<stop offset="0%" stop-color="var(--raised)"></stop>
-<stop offset="100%" stop-color="var(--paper)"></stop>
-</radialGradient>
-</defs>
-<circle cx="120" cy="120" r="108" fill="url(#face)" stroke="var(--line-strong)" stroke-width="2"></circle>
-<circle cx="120" cy="120" r="100" fill="none" stroke="var(--line)" stroke-width="1"></circle>
-{/* 刻度 */}
-<g id="ticks" stroke="var(--ink-faint)"></g>
-{/* 12 / 3 / 6 / 9 数字 */}
-<g fill="var(--ink-soft)" font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="middle">
-<text x="120" y="34">12</text>
-<text x="208" y="125">3</text>
-<text x="120" y="216">6</text>
-<text x="33" y="125">9</text>
-</g>
-{/* 时针 9:12 (276 度) */}
-<line x1="120" y1="120" x2="68.3" y2="114.6" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"></line>
-{/* 分针 12 分 (72 度) */}
-<line x1="120" y1="120" x2="194.2" y2="95.9" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"></line>
-{/* 停走的秒针 */}
-<line x1="120" y1="120" x2="150" y2="180" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"></line>
-<circle cx="120" cy="120" r="5.5" fill="var(--ink)"></circle>
-<circle cx="120" cy="120" r="2" fill="var(--accent)"></circle>
-</svg>
-</div>
-<span class="stopped-tag">● 已在 12 小时前停走——但就在这一分钟，它恰好正确</span>
-</figure>
+<StoppedClockFigure ariaLabel="一座模拟时钟显示 9:12，它已在暗中停走。" tag="● 已在 12 小时前停走——但就在这一分钟，它恰好正确" />
 
 <Lead drop="早">上九点十二分，你快迟到了。你匆匆经过车站大钟，抬头一看：9:12。你心想：「还好，还有三分钟。」你没看错。现在确实是 9:12。可那座钟早在十二小时前就停在了 9:12。它每天只有两次会碰巧显示正确；你恰好撞上了其中一次。</Lead>
 
@@ -188,15 +159,10 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <PanelNote>关键案例：</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>案例</th><th>信念</th><th>为真</th><th>证成</th><th>运气</th><th>判断</th></tr></thead>
-<tbody>
-<tr><td>普通的知识</td><td>是</td><td>是</td><td>是</td><td>否</td><td>在经典 JTB（Justified True Belief，证成的真信念）观点下，这是知识</td></tr>
-<tr><td>停摆的钟</td><td>是</td><td>是</td><td>是</td><td>是</td><td>非知识：事实只是碰巧成立</td></tr>
-<tr><td>幸运的猜测</td><td>是</td><td>是</td><td>否</td><td>是</td><td>非知识：缺乏证成</td></tr>
-<tr><td>自信的错误</td><td>是</td><td>否</td><td>是</td><td>否</td><td>非知识：命题为假</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["案例","信念","为真","证成","运气","判断"]}
+  rows={[["普通的知识","是","是","是","否","在经典 JTB（Justified True Belief，证成的真信念）观点下，这是知识"],["停摆的钟","是","是","是","是","非知识：事实只是碰巧成立"],["幸运的猜测","是","是","否","是","非知识：缺乏证成"],["自信的错误","是","否","是","否","非知识：命题为假"]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -349,14 +315,10 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 若你给 S 与非-S 分配的置信度之和为 1.00，则这对置信度是融贯的。若总和大于 1.00，你会为两场不可能同时获胜的赌约过度付费。若总和小于 1.00，庄家可以反向购买赌约，依然保证获利。
 
-<table class="alt-table">
-<thead><tr><th>S 置信度</th><th>非-S 置信度</th><th>总和</th><th>结果</th></tr></thead>
-<tbody>
-<tr><td>0.50</td><td>0.50</td><td class="num">1.00</td><td>融贯</td></tr>
-<tr><td>0.70</td><td>0.60</td><td class="num">1.30</td><td>若你同时购买两场 1 美元赌约，必定损失 0.30</td></tr>
-<tr><td>0.30</td><td>0.40</td><td class="num">0.70</td><td>你把两张赌票卖得太便宜；无论红牌是否出现，庄家都能让你亏 0.30</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["S 置信度","非-S 置信度","总和","结果"]}
+  rows={[["0.50","0.50","1.00","融贯"],["0.70","0.60","1.30","若你同时购买两场 1 美元赌约，必定损失 0.30"],["0.30","0.40","0.70","你把两张赌票卖得太便宜；无论红牌是否出现，庄家都能让你亏 0.30"]]}
+/>
 </FormatAlt>
 
 <ContentSection class="frontier">
@@ -428,4 +390,3 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </Sources>
 
 </Wrap>
-

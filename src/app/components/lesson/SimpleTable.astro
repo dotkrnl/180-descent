@@ -1,0 +1,19 @@
+---
+interface Props {
+  headers: string[];
+  rows: string[][];
+  class?: string;
+}
+
+const className = Astro.props.class ?? "alt-table";
+---
+<table class={className}>
+  <thead>
+    <tr>{Astro.props.headers.map((header) => <th>{header}</th>)}</tr>
+  </thead>
+  <tbody>
+    {Astro.props.rows.map((row) => (
+      <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+    ))}
+  </tbody>
+</table>

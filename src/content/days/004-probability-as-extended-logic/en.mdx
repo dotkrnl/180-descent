@@ -3,6 +3,10 @@ import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import HeroDoorsFigure from "@app/components/lesson/figures/HeroDoorsFigure.astro";
+import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import MontyHallMachine from "@app/components/lesson/interactives/MontyHallMachine.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -36,37 +40,14 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 <HeroSubhead>A game show host opens a door. Your gut says it can't matter. Your gut is about to lose two out of three times.</HeroSubhead>
 
-<figure class="hero-doors">
-<div class="doors-row">
-<div class="hdoor">
-<svg viewBox="0 0 80 130" role="img" aria-label="A closed door, number 1.">
-<rect x="6" y="6" width="68" height="118" rx="4" fill="var(--raised)" stroke="var(--line-strong)" stroke-width="2"></rect>
-<rect x="12" y="12" width="56" height="48" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
-<rect x="12" y="66" width="56" height="52" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
-<circle cx="60" cy="92" r="3" fill="var(--brass)"></circle>
-<text x="40" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="16" fill="var(--ink-faint)">1</text>
-</svg>
-</div>
-<div class="hdoor">
-<svg viewBox="0 0 80 130" role="img" aria-label="A closed door, number 2.">
-<rect x="6" y="6" width="68" height="118" rx="4" fill="var(--raised)" stroke="var(--accent)" stroke-width="2.5"></rect>
-<rect x="12" y="12" width="56" height="48" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
-<rect x="12" y="66" width="56" height="52" rx="2" fill="none" stroke="var(--line)" stroke-width="1.5"></rect>
-<circle cx="60" cy="92" r="3" fill="var(--brass)"></circle>
-<text x="40" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="16" fill="var(--accent)">2</text>
-</svg>
-</div>
-<div class="hdoor">
-<svg viewBox="0 0 80 130" role="img" aria-label="An open door, number 3, revealing a goat.">
-<rect x="6" y="6" width="68" height="118" rx="4" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="4 4"></rect>
-<text x="40" y="78" text-anchor="middle" font-size="34">🐐</text>
-<text x="40" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="16" fill="var(--ink-faint)">3</text>
-</svg>
-</div>
-</div>
-<span class="doors-tag">● you picked 1 · host opened 3 · should you switch to 2?</span>
-<figcaption>The whole of Bayesian reasoning, hiding inside a 1970s game show.</figcaption>
-</figure>
+<HeroDoorsFigure
+  door1Label="A closed door, number 1."
+  door2Label="A closed door, number 2."
+  door3Label="An open door, number 3, revealing a goat."
+  goat="🐐"
+  tag="● you picked 1 · host opened 3 · should you switch to 2?"
+  caption="The whole of Bayesian reasoning, hiding inside a 1970s game show."
+/>
 
 <Lead drop="Y">ou pick Door 1. Somewhere behind these three doors sits a car; behind the other two, goats. The host — who knows exactly where the car is — strolls over to Door 3, swings it open to reveal a goat, and asks, almost kindly: *would you like to switch to Door 2?* Two doors left, one car. Fifty-fifty, surely. Switching can't possibly matter.</Lead>
 
@@ -90,10 +71,15 @@ On **[Day 1](/days/001-what-is-knowledge/)** we met <Term as="em">credence</Term
 
 In September 1990, Marilyn vos Savant — listed in the *Guinness Book* for the highest recorded IQ, writing the "Ask Marilyn" column in *Parade* magazine<TipNote text={"Parade was a widely syndicated U.S. Sunday newspaper magazine supplement; Ask Marilyn was vos Savant’s question-and-answer column."} /> — answered a reader's question about a game show. Switch doors, she wrote; you'll win two-thirds of the time. The answer is correct. The response was apocalyptic.
 
-<figure class="lesson-figure is-portrait">
-<img src={montyHall.src} width="692" height="744" loading="lazy" decoding="async" alt="Monty Hall, Carol Merrill, Jay Stewart, and contestants on the Let's Make a Deal set in a 1974 publicity photo." />
-<figcaption>Monty Hall's actual stage makes the puzzle less like a parlor trick: the host was never a random door-opener, but a knowledgeable agent whose action carried information.</figcaption>
-</figure>
+<ImageFigure
+  src={montyHall.src}
+  width="692"
+  height="744"
+  class="is-portrait"
+  alt="Monty Hall, Carol Merrill, Jay Stewart, and contestants on the Let's Make a Deal set in a 1974 publicity photo."
+>
+Monty Hall's actual stage makes the puzzle less like a parlor trick: the host was never a random door-opener, but a knowledgeable agent whose action carried information.
+</ImageFigure>
 
 By her own count she received some **10,000 letters**, the overwhelming majority telling her she was wrong — and roughly **1,000 of them signed by people with PhDs**. Mathematicians wrote in to scold her. One professor offered the immortal line:
 
@@ -119,77 +105,7 @@ Here's the thing the meltdown reveals. The Monty Hall problem isn't a trick or a
 
 <PanelNote>Pick a door. The host opens a different one — always a goat, never your pick, never the car. Then click your original door to stay, or click the other closed door to switch. Play a few by hand, then hit **auto-run 1,000×** and watch the two strategies separate. The tallies don't lie.</PanelNote>
 
-<div class="mh-machine" id="mhMachine">
-<div class="mh-odds" aria-label="Strategy odds">
-<div class="mh-odd stay"><span>Stay keeps the first pick</span><b>1/3</b></div>
-<div class="mh-odd switch"><span>Switch takes the unchosen pair</span><b>2/3</b></div>
-</div>
-
-<div class="mh-stage" id="mhStage">
-<button class="mh-door" data-door="0" id="door0" type="button">
-<span class="mh-door-face" aria-hidden="true">
-<span class="mh-door-number">1</span>
-<span class="mh-door-panel top"></span>
-<span class="mh-door-panel bottom"></span>
-<span class="mh-door-knob"></span>
-<span class="prizeholder"></span>
-</span>
-<span class="dlab">Door 1</span>
-<span class="daction" aria-hidden="true">Pick</span>
-</button>
-<button class="mh-door" data-door="1" id="door1" type="button">
-<span class="mh-door-face" aria-hidden="true">
-<span class="mh-door-number">2</span>
-<span class="mh-door-panel top"></span>
-<span class="mh-door-panel bottom"></span>
-<span class="mh-door-knob"></span>
-<span class="prizeholder"></span>
-</span>
-<span class="dlab">Door 2</span>
-<span class="daction" aria-hidden="true">Pick</span>
-</button>
-<button class="mh-door" data-door="2" id="door2" type="button">
-<span class="mh-door-face" aria-hidden="true">
-<span class="mh-door-number">3</span>
-<span class="mh-door-panel top"></span>
-<span class="mh-door-panel bottom"></span>
-<span class="mh-door-knob"></span>
-<span class="prizeholder"></span>
-</span>
-<span class="dlab">Door 3</span>
-<span class="daction" aria-hidden="true">Pick</span>
-</button>
-</div>
-
-<div class="mh-status">
-<span class="mh-step" id="mhStep">Step 1</span>
-<span class="mh-mode" id="mhMode">Pick first</span>
-<p class="mh-say" id="mhSay" aria-live="polite"><b>Pick a door</b> to begin.</p>
-</div>
-
-<div class="mh-controls" id="mhNextWrap" style="display:none;">
-<button class="btn ghost" id="btnNext" type="button">Play again →</button>
-</div>
-
-<div class="mh-tally">
-<div class="tcard stay">
-<p class="th">If you always STAY</p>
-<div class="big"><span id="stayWins">0</span> / <span id="stayPlays">0</span></div>
-<div class="pct" id="stayPct">— wins</div>
-</div>
-<div class="tcard switch">
-<p class="th">If you always SWITCH</p>
-<div class="big"><span id="switchWins">0</span> / <span id="switchPlays">0</span></div>
-<div class="pct" id="switchPct">— wins</div>
-</div>
-</div>
-
-<div class="mh-auto">
-<span class="h">Run the experiment at scale (the schoolteachers' method, automated)</span>
-<button class="btn" id="btnAuto" type="button">Auto-run 1,000×</button>
-<button class="btn ghost" id="btnReset" type="button">Reset tallies</button>
-</div>
-</div>
+<MontyHallMachine locale="en" />
 </Panel>
 
 <FormatAlt class="epub-only print-only">
@@ -199,13 +115,13 @@ Here's the thing the meltdown reveals. The Monty Hall problem isn't a trick or a
 
 <PanelNote>Under the standard host rule, switching wins exactly when the first pick was wrong.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>First pick</th><th>Host action</th><th>Stay</th><th>Switch</th></tr></thead>
-<tbody>
-<tr><td>Car, probability 1/3</td><td>Opens either goat door</td><td>Win</td><td>Lose</td></tr>
-<tr><td>Goat, probability 2/3</td><td>Forced to open the other goat door</td><td>Lose</td><td>Win</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["First pick", "Host action", "Stay", "Switch"]}
+  rows={[
+    ["Car, probability 1/3", "Opens either goat door", "Win", "Lose"],
+    ["Goat, probability 2/3", "Forced to open the other goat door", "Lose", "Win"]
+  ]}
+/>
 So staying keeps the original 1/3 chance; switching captures the 2/3 chance that the first choice was wrong.
 
 </FormatAlt>
@@ -358,14 +274,10 @@ Bayes' theorem doesn't only rescue game-show contestants. It catches a mistake t
 
 <PanelNote>For the default assumptions: 0.1% prevalence, 99% sensitivity, and a 5% false-positive rate.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Group</th><th>Count out of 1,000</th><th>Positive tests</th></tr></thead>
-<tbody>
-<tr><td>Sick people</td><td>1</td><td>About 1 true positive</td></tr>
-<tr><td>Healthy people</td><td>999</td><td>About 50 false positives</td></tr>
-<tr><td>All positive tests</td><td>About 51</td><td>Only about 1 is truly sick</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Group","Count out of 1,000","Positive tests"]}
+  rows={[["Sick people","1","About 1 true positive"],["Healthy people","999","About 50 false positives"],["All positive tests","About 51","Only about 1 is truly sick"]]}
+/>
 The posterior is therefore about <MathInline latex={String.raw`0.99/50.94`} />, or <MathInline latex={String.raw`1.9\%`} /> — the Casscells result with the sensitivity made explicit.
 
 </FormatAlt>
@@ -610,4 +522,3 @@ The tradeoff is conservatism: an anytime-valid ledger can need stronger or more 
 </Sources>
 
 </Wrap>
-

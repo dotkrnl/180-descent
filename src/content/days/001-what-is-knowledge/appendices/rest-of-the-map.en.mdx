@@ -1,5 +1,6 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -113,15 +114,10 @@ Each line looks reasonable; together they seem to show that you know nothing abo
 
 ### The Skeptic's Syllogism, as four exits
 
-<table class="alt-table">
-<thead><tr><th>Move</th><th>Line refused</th><th>Representative view</th><th>Cost</th></tr></thead>
-<tbody>
-<tr><td>Accept all three</td><td>None</td><td>Skepticism</td><td>You do not know you have hands, or much about the external world.</td></tr>
-<tr><td>Reject P1</td><td>You do not know you are not a vat-brain</td><td>Moore's common-sense reply</td><td>Can feel like insisting rather than explaining.</td></tr>
-<tr><td>Reject P2</td><td>Closure</td><td>Dretske / Nozick relevant alternatives</td><td>Closure is deeply intuitive and useful elsewhere.</td></tr>
-<tr><td>Change the standard</td><td>A fixed meaning of "know"</td><td>Contextualism</td><td>The skeptic wins in the seminar; ordinary speakers win in ordinary life.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Move","Line refused","Representative view","Cost"]}
+  rows={[["Accept all three","None","Skepticism","You do not know you have hands, or much about the external world."],["Reject P1","You do not know you are not a vat-brain","Moore's common-sense reply","Can feel like insisting rather than explaining."],["Reject P2","Closure","Dretske / Nozick relevant alternatives","Closure is deeply intuitive and useful elsewhere."],["Change the standard","A fixed meaning of \"know\"","Contextualism","The skeptic wins in the seminar; ordinary speakers win in ordinary life."]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -184,14 +180,10 @@ It's Friday. You drive past your bank, which has a long Saturday line, and decid
 
 ### The Bank Cases
 
-<table class="alt-table">
-<thead><tr><th>Case</th><th>Evidence</th><th>Stakes</th><th>Natural verdict</th><th>What it tests</th></tr></thead>
-<tbody>
-<tr><td>Low stakes</td><td>You were there two Saturdays ago.</td><td>A minor errand.</td><td>"I know it is open."</td><td>Ordinary standards are easy to meet.</td></tr>
-<tr><td>High stakes</td><td>The same memory.</td><td>A mortgage deadline.</td><td>"I had better check."</td><td>Whether practical stakes affect knowledge.</td></tr>
-<tr><td>Error raised</td><td>The same memory plus a live doubt.</td><td>Any serious consequence.</td><td>The claim to know weakens.</td><td>Whether context shifts the word or the knower's state.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Case","Evidence","Stakes","Natural verdict","What it tests"]}
+  rows={[["Low stakes","You were there two Saturdays ago.","A minor errand.","\"I know it is open.\"","Ordinary standards are easy to meet."],["High stakes","The same memory.","A mortgage deadline.","\"I had better check.\"","Whether practical stakes affect knowledge."],["Error raised","The same memory plus a live doubt.","Any serious consequence.","The claim to know weakens.","Whether context shifts the word or the knower's state."]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -245,14 +237,10 @@ This is the deep content of the "safety" idea, and it's worth *seeing*. Picture 
 
 ### Safe vs. Lucky, as nearby-worlds cases
 
-<table class="alt-table">
-<thead><tr><th>Scenario</th><th>Actual world</th><th>Nearby worlds</th><th>Verdict</th></tr></thead>
-<tbody>
-<tr><td>Working clock</td><td>Your belief is true.</td><td>Small variations still leave you right.</td><td>Safe: knowledge-grade.</td></tr>
-<tr><td>Stopped clock</td><td>Your belief is true at 9:12.</td><td>A minute earlier or later, the same belief is false.</td><td>Unsafe: veritic luck.</td></tr>
-<tr><td>Fake-barn country</td><td>You see the one real barn.</td><td>Most nearby looks would have landed on facades.</td><td>Unsafe: environmental luck.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Scenario","Actual world","Nearby worlds","Verdict"]}
+  rows={[["Working clock","Your belief is true.","Small variations still leave you right.","Safe: knowledge-grade."],["Stopped clock","Your belief is true at 9:12.","A minute earlier or later, the same belief is false.","Unsafe: veritic luck."],["Fake-barn country","You see the one real barn.","Most nearby looks would have landed on facades.","Unsafe: environmental luck."]]}
+/>
 </FormatAlt>
 
 <ContentSection>

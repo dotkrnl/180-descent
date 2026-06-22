@@ -1,5 +1,6 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -125,14 +126,10 @@ The evidence cannot choose between them, because *every observation confirms bot
 
 ### Green vs. Grue Projection
 
-<table class="alt-table">
-<thead><tr><th>Period</th><th>Observed evidence</th><th>"All green" predicts</th><th>"All grue" predicts</th><th>Lesson</th></tr></thead>
-<tbody>
-<tr><td>Before 2050</td><td>Every examined emerald is green.</td><td>Green emeralds.</td><td>Green emeralds.</td><td>The evidence confirms both descriptions equally.</td></tr>
-<tr><td>After 2050</td><td>New observations finally enter the divergent region.</td><td>Green emeralds.</td><td>Blue emeralds.</td><td>Reality can break the tie only after the cutoff is crossed.</td></tr>
-<tr><td>Goodman's point</td><td>Past regularity alone does not choose a projectible predicate.</td><td>Project green.</td><td>Project grue.</td><td>Induction needs background habits about which predicates are natural or entrenched.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Period","Observed evidence","\"All green\" predicts","\"All grue\" predicts","Lesson"]}
+  rows={[["Before 2050","Every examined emerald is green.","Green emeralds.","Green emeralds.","The evidence confirms both descriptions equally."],["After 2050","New observations finally enter the divergent region.","Green emeralds.","Blue emeralds.","Reality can break the tie only after the cutoff is crossed."],["Goodman's point","Past regularity alone does not choose a projectible predicate.","Project green.","Project grue.","Induction needs background habits about which predicates are natural or entrenched."]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -371,14 +368,10 @@ That last number is the killer, and it's the one researchers forget. Here's the 
 
 ### The Discovery-Purity Engine, as base-rate scenarios
 
-<table class="alt-table">
-<thead><tr><th>Scenario</th><th>True hypotheses</th><th>Power</th><th>Bias</th><th>Published positives</th><th>PPV</th></tr></thead>
-<tbody>
-<tr><td>Rosy baseline</td><td>100 of 1,000</td><td>80%</td><td>0%</td><td>80 true positives + 45 false positives</td><td>64% real</td></tr>
-<tr><td>Low base rate</td><td>20 of 1,000</td><td>80%</td><td>0%</td><td>16 true positives + 49 false positives</td><td>25% real</td></tr>
-<tr><td>Bias added</td><td>100 of 1,000</td><td>80%</td><td>20%</td><td>84 true positives + 216 false positives</td><td>28% real</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Scenario","True hypotheses","Power","Bias","Published positives","PPV"]}
+  rows={[["Rosy baseline","100 of 1,000","80%","0%","80 true positives + 45 false positives","64% real"],["Low base rate","20 of 1,000","80%","0%","16 true positives + 49 false positives","25% real"],["Bias added","100 of 1,000","80%","20%","84 true positives + 216 false positives","28% real"]]}
+/>
 </FormatAlt>
 
 <ContentSection class="frontier">

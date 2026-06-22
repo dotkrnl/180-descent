@@ -1,11 +1,14 @@
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
+import IncomingWaveAtlas from "@app/components/lesson/interactives/IncomingWaveAtlas.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
@@ -33,37 +36,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 ## 十类新方法：按所针对的失效问题分类
 
-<p class="pnote web-only">按成熟度过滤地图。绿色表示核心理论已确立；琥珀色表示严肃且有前景但仍处于磨合期；红色表示具有潜在变革性但目前极具风险。</p><p class="pnote epub-only print-only">下方的地图按所针对的失效问题对十种 2020 年后的方法进行了排序，并标注了它们的成熟度。</p>
-<div class="filterbar web-only" aria-label="按成熟度过滤方法卡片">
-<button data-filter="all" aria-pressed="true">全部</button>
-<button data-filter="ok" aria-pressed="false">已确立</button>
-<button data-filter="hint" aria-pressed="false">有前景</button>
-<button data-filter="bad" aria-pressed="false">有争议</button>
-</div>
-<div class="atlas" id="appendix-d006-the-incoming-wave-revised-atlas">
-<article class="appendix-card" data-tier="ok"><div class="k">方法 01</div><h3>任意时点有效推断</h3><p>能经受住可选停止、持续监测和序贯积累考验的检验及区间。</p><StatusChip status={"ok"} label={"已确立"} /><div class="maturity ok"><span></span></div></article>
-<article class="appendix-card" data-tier="ok"><div class="k">方法 02</div><h3>共形风险控制</h3><p>针对黑盒模型的预测集、暂缓决策机制和通用风险指标的外层校准机制。</p><StatusChip status={"ok"} label={"核心已确立"} printLabel={"已确立"} /><div class="maturity ok"><span></span></div></article>
-<article class="appendix-card" data-tier="ok"><div class="k">方法 03</div><h3>预测辅助推断</h3><p>利用低成本 AI 预测提高估计效率，但通过少量金标准标注校正模型偏差。</p><StatusChip status={"ok"} label={"Science / PNAS"} printLabel={"需审查"} /><div class="maturity ok"><span></span></div></article>
-<article class="appendix-card" data-tier="ok"><div class="k">方法 04</div><h3>正交因果机器学习</h3><p>利用灵活的机器学习学习辅助函数（滋扰函数），同时利用正交得分保护因果估计。</p><StatusChip status={"ok"} label={"日趋成熟"} printLabel={"需审查"} /><div class="maturity ok"><span></span></div></article>
-<article class="appendix-card" data-tier="hint"><div class="k">方法 05</div><h3>发现后的推断</h3><p>选择后推断、数据裂变、数据稀化以及针对探索行为的因果发现修正，避免重复利用数据。</p><StatusChip status={"hint"} label={"快速发展前沿"} printLabel={"有前景"} /><div class="maturity hint"><span></span></div></article>
-<article class="appendix-card" data-tier="hint"><div class="k">方法 06</div><h3>隐私保护数据推断</h3><p>将差分隐私和合成数据发布所引入的不确定性包含在内的置信区间。</p><StatusChip status={"hint"} label={"正在发展"} printLabel={"需审查"} /><div class="maturity hint"><span></span></div></article>
-<article class="appendix-card" data-tier="ok"><div class="k">方法 07</div><h3>贝叶斯工作流</h3><p>先验预测检查、后验预测检查、SBC、模型批判：将推断视为一种经过审计的工作流。</p><StatusChip status={"ok"} label={"实践转型"} printLabel={"需审查"} /><div class="maturity ok"><span></span></div></article>
-<article class="appendix-card" data-tier="hint"><div class="k">方法 08</div><h3>大规模统计取证</h3><p>数据侦探、决策市场、ML 复现性预测、论文工厂检测以及期刊层面的风险筛查。</p><StatusChip status={"hint"} label={"有前景"} /><div class="maturity hint"><span></span></div></article>
-<article class="appendix-card" data-tier="bad"><div class="k">方法 09</div><h3>模拟受试者</h3><p>将 LLM 视为模拟的调查受访者或实验参与者：对初步研究有用，作为替代品则风险很高。</p><StatusChip status={"bad"} label={"有争议"} /><div class="maturity bad"><span></span></div></article>
-<article class="appendix-card" data-tier="bad"><div class="k">方法 10</div><h3>AI 分析师与基准测试</h3><p>自动化分析智能体、基准测试污染、复现性漂移以及「AI 科学家」流水线。</p><StatusChip status={"bad"} label={"尚未定论"} printLabel={"有争议"} /><div class="maturity bad"><span></span></div></article>
-</div>
-<div class="jumpgrid web-only" aria-label="跳转至章节">
-<a href="#appendix-d006-the-incoming-wave-revised-anytime"><span class="hl">01</span><span>任意时点</span></a>
-<a href="#appendix-d006-the-incoming-wave-revised-conformal"><span class="hl">02</span><span>共形</span></a>
-<a href="#appendix-d006-the-incoming-wave-revised-ppi"><span class="hl">03</span><span>PPI</span></a>
-<a href="#appendix-d006-the-incoming-wave-revised-dml"><span class="hl">04</span><span>因果 ML</span></a>
-<a href="#appendix-d006-the-incoming-wave-revised-selection"><span class="hl">05</span><span>发现之后</span></a>
-<a href="#appendix-d006-the-incoming-wave-revised-privacy"><span class="hl">06</span><span>隐私</span></a>
-<a href="#appendix-d006-the-incoming-wave-revised-bayes"><span class="hl">07</span><span>工作流</span></a>
-<a href="#appendix-d006-the-incoming-wave-revised-forensics"><span class="hl">08</span><span>取证</span></a>
-<a href="#appendix-d006-the-incoming-wave-revised-silicon"><span class="hl">09</span><span>模拟受试者</span></a>
-<a href="#appendix-d006-the-incoming-wave-revised-ai"><span class="hl">10</span><span>AI 分析师</span></a>
-</div>
+<IncomingWaveAtlas id="appendix-d006-the-incoming-wave-revised-atlas" locale="zh" />
 </ContentSection>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-anytime">
@@ -71,7 +44,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 ## 任意时点有效推断：让重复查看不再破坏错误率控制
 
-<div class="claim"><div class="ctop"><span class="cnum">方法 01</span><StatusChip status={"ok"} label={"理论已确立"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"普及尚不均衡"} printLabel={"有前景"} /></div></div>
+<Claim label="方法 01"><StatusChip status={"ok"} label={"理论已确立"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"普及尚不均衡"} printLabel={"有前景"} /></Claim>
 传统的固定样本检验非常脆弱，因为它假设你在看到数据前就确定了样本量。但现代科学并非如此。A/B 测试的数据持续流入。平台团队不断刷新仪表盘。临床试验有中期查看。实验室在第一批数据「几乎显著」时会增加受试者。传统固定样本 <Term>p 值</Term> 并不适用于这种持续监测环境。
 
 <Term>任意时点有效推断</Term> (anytime-valid inference) 改写了统计保证的适用条件。它不再使用仅在预设停止时点有效的 <Term>p 值</Term>，而是使用 <Term>e 值</Term> (e-values)、<Term>e 过程</Term> (e-processes)、任意时点有效的 <Term>p 值</Term> 以及<Term>置信序列</Term>：这些证据衡量标准和区间旨在对<Highlight>任意停止时点</Highlight>保持有效。在程序正确构造且假设成立时，研究者可以根据当前数据决定是否继续采样，同时保持规定的错误率或证据保证。
@@ -131,7 +104,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 ## 从共形预测到共形风险控制
 
-<div class="claim"><div class="ctop"><span class="cnum">方法 02</span><StatusChip status={"ok"} label={"核心方法已确立"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"风险控制前沿"} printLabel={"有前景"} /></div></div>
+<Claim label="方法 02"><StatusChip status={"ok"} label={"核心方法已确立"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"风险控制前沿"} printLabel={"有前景"} /></Claim>
 共形预测 (conformal prediction) 是当前统计学 / 机器学习交界处一个简洁而重要的思想。研究者可以先训练预测模型，再留出校准数据，测量模型在这些留出数据上的错误程度，并利用这些错误的经验分位数为下一个案例构建预测集。无论底层预测器是线性模型、神经网络还是其他黑盒，只要校准数据和可交换性等条件成立，共形预测就可以在有限样本下提供边际覆盖保证。
 
 但它通常不保证每个子群、每个输入点或分布偏移后的条件覆盖，因此实际部署还需要分组诊断和压力测试。2020 年后的前沿更为广阔：<Term>共形风险控制</Term> (conformal risk control) 不仅仅询问「真实标签是否落在集合内？」，而是询问「我们能否控制选定的风险函数？」。在视觉和语言任务中，有用的错误指标可能是漏报率、图距离、暂缓决策的风险、检索遗漏率或词元级 F1。共形风险控制将共形思想扩展到单调损失，并实现了预期风险的有限样本控制。
@@ -187,7 +160,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 ## 预测辅助推断：关键在于偏差校正
 
-<div class="claim"><div class="ctop"><span class="cnum">方法 03</span><StatusChip status={"ok"} label={"Science 2023"} printLabel={"需审查"} /><StatusChip status={"ok"} label={"PNAS 2024 扩展"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"普及中"} printLabel={"有前景"} /></div></div>
+<Claim label="方法 03"><StatusChip status={"ok"} label={"Science 2023"} printLabel={"需审查"} /><StatusChip status={"ok"} label={"PNAS 2024 扩展"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"普及中"} printLabel={"有前景"} /></Claim>
 AI 可以标记一百万个星系、卫星图像切片、病理切片、蛋白质记录或临床笔记。但从这些预测中得出的统计估计并不会自动具备有效性，因为模型误差不是无规律的录入噪声，而会沿着模型的盲区系统性出现。
 
 <Term>预测辅助推断</Term> (prediction-powered inference, PPI) 利用大量低成本模型预测提高估计效率，再用一小批人工或仪器核验的金标准标注校正模型偏差。关键是不把模型预测直接当成真值。金标准样本用于估计模型对<Term>估计目标</Term>造成的偏差，并形成一个<Term>偏差校正项</Term> (rectifier)；大量预测则用于提高估计精度。模型预测越有用，区间通常越窄；如果模型表现较差，方法会退回到接近仅使用标注数据的结果，而不是让有偏预测主导结论。
@@ -229,14 +202,10 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 <PanelNote>PPI 利用模型预测提高精度，依靠金标准标注保证统计有效性。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>估计量</th><th>优势</th><th>失效模式</th></tr></thead>
-<tbody>
-<tr><td>仅标注</td><td>依靠金标准标注保证统计有效性</td><td>标注稀缺时区间较宽。</td></tr>
-<tr><td>朴素地将 ML 视为真值</td><td>非常窄</td><td>模型有偏差时可能错过真值。</td></tr>
-<tr><td>PPI</td><td>校正后仍保持的精度</td><td>需要具有代表性的金标准标注。</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["估计量","优势","失效模式"]}
+  rows={[["仅标注","依靠金标准标注保证统计有效性","标注稀缺时区间较宽。"],["朴素地将 ML 视为真值","非常窄","模型有偏差时可能错过真值。"],["PPI","校正后仍保持的精度","需要具有代表性的金标准标注。"]]}
+/>
 </FormatAlt>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-dml">
@@ -244,7 +213,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 ## 用于因果效应的双重 / 去偏机器学习
 
-<div class="claim"><div class="ctop"><span class="cnum">方法 04</span><StatusChip status={"ok"} label={"理论已确立"} printLabel={"已确立"} /><StatusChip status={"ok"} label={"工具链成熟"} printLabel={"已确立"} /></div></div>
+<Claim label="方法 04"><StatusChip status={"ok"} label={"理论已确立"} printLabel={"已确立"} /><StatusChip status={"ok"} label={"工具链成熟"} printLabel={"已确立"} /></Claim>
 第 5 日的警告直截了当：相关性不等于干预。要从观测数据中估计因果效应，你必须调整混杂因素，同时又不能把复杂的非线性关系硬塞进线性模型。
 
 双重 / 去偏机器学习 (DML) 让机器学习负责拟合高维<Term>辅助函数</Term>（统计文献中也称滋扰函数，nuisance functions），也就是为估计目标参数而引入的辅助模型，例如结果模型和倾向得分模型；再以正交得分和交叉拟合保护目标参数估计，降低辅助模型中的小误差对最终结果的一阶影响。
@@ -266,7 +235,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 ## 发现后的推断：选择后、因果发现与数据裂变
 
-<div class="claim"><div class="ctop"><span class="cnum">方法 05</span><StatusChip status={"hint"} label={"快速变动的前沿"} printLabel={"需审查"} /><StatusChip status={"ok"} label={"核心理论较成熟"} printLabel={"需审查"} /></div></div>
+<Claim label="方法 05"><StatusChip status={"hint"} label={"快速变动的前沿"} printLabel={"需审查"} /><StatusChip status={"ok"} label={"核心理论较成熟"} printLabel={"需审查"} /></Claim>
 分岔路径花园不会消失。现代分析往往始于发现：对细胞进行聚类、寻找亚组、选择变量、学习因果图、选择图像区域、选择变量变换方式、要求 AI 分析师「找出重要的东西」。关键错误在于使用同一份数据来发现目标，然后假装该目标是预先指定的。
 
 <Term>选择后推断</Term> (post-selection inference) 是统计学在诚实计入选择代价方面的尝试。经典方法包括以选择事件为条件、将数据拆分为探索集和验证集、或构建考虑选择过程后仍保持覆盖率的同时置信区间。2020 年后的前沿增加了三个特别相关的想法：
@@ -311,14 +280,10 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 <PanelNote>更多的提示词、模型、结果和清洗规则会使可能的分析路径成倍增加。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>提示词</th><th>模型</th><th>结果变量</th><th>清洗规则</th><th>路径数</th></tr></thead>
-<tbody>
-<tr><td>4</td><td>3</td><td>5</td><td>4</td><td>240</td></tr>
-<tr><td>10</td><td>5</td><td>10</td><td>5</td><td>2,500</td></tr>
-<tr><td>单一研究预登记方案</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["提示词","模型","结果变量","清洗规则","路径数"]}
+  rows={[["4","3","5","4","240"],["10","5","10","5","2,500"],["单一研究预登记方案","1","1","1","1"]]}
+/>
 </FormatAlt>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-privacy">
@@ -326,7 +291,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 ## 差分隐私：让隐私噪声成为数据发布设计的一部分
 
-<div class="claim"><div class="ctop"><span class="cnum">方法 06</span><StatusChip status={"hint"} label={"高风险前沿"} printLabel={"需审查"} /><StatusChip status={"blue"} label={"政策相关"} printLabel={"需审查"} /></div></div>
+<Claim label="方法 06"><StatusChip status={"hint"} label={"高风险前沿"} printLabel={"需审查"} /><StatusChip status={"blue"} label={"政策相关"} printLabel={"需审查"} /></Claim>
 开放科学想要数据共享。研究参与者、公司、医院和政府则要求保密。差分隐私是一种成熟而有力的形式化框架：它通过添加随机噪声，使得加入或移除任意一个个体对发布结果的影响都被限制在一定范围内。
 
 对于第 6 日的内容，其中的统计要点在于：<Highlight>隐私噪声并不是一个文件格式的细节</Highlight>。如果你把经过差分隐私处理的统计数据或合成数据当成普通观测值来分析，你的区间可能会过窄，不确定性会被低估，显著性判断和区间估计都可能失真。隐私机制本身就是数据生成过程的一部分，因此有效的推断必须将其包含在内。
@@ -342,7 +307,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 ## 贝叶斯工作流与基于模拟的校准
 
-<div class="claim"><div class="ctop"><span class="cnum">方法 07</span><StatusChip status={"ok"} label={"实践转型"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"计算敏感"} printLabel={"需审查"} /></div></div>
+<Claim label="方法 07"><StatusChip status={"ok"} label={"实践转型"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"计算敏感"} printLabel={"需审查"} /></Claim>
 贝叶斯统计常被描述为比 <Term>p 值</Term> 更直接的替代方案：给未知量设定先验，计算后验，报告关于参数的概率。这很有吸引力，但如果先验未经审视、模型设定错误且采样算法未收敛或诊断失败，它也会变成另一种形式的仪式。
 
 2020 年后的贝叶斯工作流运动提出：真正值得信任的，不是一个孤立的后验分布，而是生成、检查并修正它的完整工作流。先验预测检查会询问模型在看到数据前能否生成合理的数据；后验预测检查会询问拟合后的模型仍然无法复现哪些特征；交叉验证会询问预测在留出数据上是否仍然表现良好；而基于模拟的校准 (SBC) 则会检查当数据从模型模拟出来时，推断算法是否能恢复已知的参数。
@@ -358,7 +323,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 ## 大规模统计取证与复现性筛查
 
-<div class="claim"><div class="ctop"><span class="cnum">方法 08</span><StatusChip status={"ok"} label={"取证方法已验证"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"规模化仍处于早期"} printLabel={"需审查"} /></div></div>
+<Claim label="方法 08"><StatusChip status={"ok"} label={"取证方法已验证"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"规模化仍处于早期"} printLabel={"需审查"} /></Claim>
 附录 I 中的统计取证工具箱还是手工作坊式的：GRIM 检验、statcheck、p-curve、数字异常、电子表格中的异常模式。而 2020 年后的变化是，自动化程度和覆盖规模都显著提高了。
 
 Francesca Gino / Data Colada 案例展示了这种力量与危险。Data Colada 在 2023 年发表了详细的异常分析；哈佛大学的调查结论认为存在研究不端行为；Gino 否认有错并提起诉讼。2024 年 9 月，联邦法官驳回了针对 Data Colada 被告的全部诉讼请求；2025 年 5 月，哈佛撤销了 Gino 的终身教职并解雇了她，与此同时，与哈佛有关的部分法律争议仍在继续。这一科学教训并不是「博主应该接管大学」，而是透明的取证论证可以成为正式纠错系统的一部分。
@@ -392,7 +357,7 @@ Francesca Gino / Data Colada 案例展示了这种力量与危险。Data Colada 
 
 ## LLM 社交模拟与模拟受试者
 
-<div class="claim"><div class="ctop"><span class="cnum">方法 09</span><StatusChip status={"hint"} label={"对初步研究有用"} printLabel={"需审查"} /><StatusChip status={"bad"} label={"作为证据存在争议"} printLabel={"有争议"} /></div></div>
+<Claim label="方法 09"><StatusChip status={"hint"} label={"对初步研究有用"} printLabel={"需审查"} /><StatusChip status={"bad"} label={"作为证据存在争议"} printLabel={"有争议"} /></Claim>
 LLM 社交模拟提出了一个很有吸引力的问题：如果一个语言模型已经吸收了足够的有关社会互动与观点的数据，它能否扮演模拟调查受访者或实验参与者的角色？第一波结果令人兴奋。在给定人口统计背景的情况下，模型有时能大致复现群体层面的回答分布。基于智能体的模拟产生了看起来合理的局部互动模式。大规模复现实验发现，在心理学和管理场景中，LLM 往往能匹配主要效应的<Highlight>方向</Highlight>。
 
 第二波则是警示。LLM 即使在边际分布看起来正确时也可能扭曲相关性。它们往往会把回答过度集中到最常见的选项。它们可能会放大效应量。它们在社会敏感话题上的表现可能更糟。其模拟「人群」由训练数据、对齐方式、提示词和模型版本共同塑造。那不是抽样框，而是一面被机器塑造的镜子。
@@ -408,7 +373,7 @@ LLM 社交模拟提出了一个很有吸引力的问题：如果一个语言模�
 
 ## AI 分析师、自动化科学与基准测试污染
 
-<div class="claim"><div class="ctop"><span class="cnum">方法 10</span><StatusChip status={"bad"} label={"结论仍高度不确定"} printLabel={"有争议"} /><StatusChip status={"hint"} label={"工具链进展飞速"} printLabel={"需审查"} /></div></div>
+<Claim label="方法 10"><StatusChip status={"bad"} label={"结论仍高度不确定"} printLabel={"有争议"} /><StatusChip status={"hint"} label={"工具链进展飞速"} printLabel={"需审查"} /></Claim>
 真正危险的前沿，并不是把 AI 用作分析中的一个模型，而是让 AI 决定采用哪套分析方案。
 
 数据分析智能体可以清洗数据、编写代码、选择模型、运行检验、生成图表并撰写结果说明。StatLLM 等新基准测试评估统计代码；数据智能体基准测试则评估更长的工作流。对 LLM 数据分析的研究显示，更换模型、提示词或温度，或重复运行同一任务，都可能产生不同结果；即便任务和数据集相同，也可能得到实质上不同的估计值。在更前沿的方向上，自主研究系统现在可以生成想法、编写代码、运行实验、绘制结果、起草论文并进行自我审阅。
@@ -457,14 +422,10 @@ AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更�
 
 <PanelNote>当调优和污染累积时，公开基准测试分数可能会高估未公开测试集上的部署表现。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>情况</th><th>公开分数</th><th>隐藏测试集</th></tr></thead>
-<tbody>
-<tr><td>干净的留出集，少量提交</td><td>更接近实际部署</td><td>更可信。</td></tr>
-<tr><td>存在污染</td><td>虚高</td><td>如果真正隐藏则影响较小。</td></tr>
-<tr><td>重复的排行榜调优</td><td>无需新能力即可上升</td><td>差距揭示了过拟合。</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["情况","公开分数","隐藏测试集"]}
+  rows={[["干净的留出集，少量提交","更接近实际部署","更可信。"],["存在污染","虚高","如果真正隐藏则影响较小。"],["重复的排行榜调优","无需新能力即可上升","差距揭示了过拟合。"]]}
+/>
 </FormatAlt>
 
 <ContentSection>

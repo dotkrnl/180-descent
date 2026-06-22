@@ -1,6 +1,8 @@
 import sherlockHolmes from "../../../assets/images/open-license/sherlock-holmes-watson-sidney-paget.jpg";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import ImageFigure from "@app/components/lesson/ImageFigure.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -90,10 +92,9 @@ Two days in, we have circled reasoning from the outside. On **[Day 1](/days/001-
 
 </WhereBlock>
 
-<figure class="lesson-figure is-portrait">
-<img src={sherlockHolmes.src} width="760" height="843" loading="lazy" decoding="async" alt="Sidney Paget illustration of Sherlock Holmes and Dr. Watson, with Holmes holding a watch." />
-<figcaption>Paget's Holmes became the public face of "deduction," even though the famous diagnostic leaps are usually abductive: clues first, best explanation second.</figcaption>
-</figure>
+<ImageFigure src={sherlockHolmes.src} width="760" height="843" class="is-portrait" alt="Sidney Paget illustration of Sherlock Holmes and Dr. Watson, with Holmes holding a watch.">
+Paget's Holmes became the public face of "deduction," even though the famous diagnostic leaps are usually abductive: clues first, best explanation second.
+</ImageFigure>
 
 <ContentSection>
 <SectionEyebrow>The model<TipNote text={"A model is a simplified structure that helps us reason about a more complicated subject."} /></SectionEyebrow>
@@ -199,15 +200,10 @@ These are *formal* fallacies — broken shapes. Their cousins, the *informal* fa
 
 <PanelNote>Conditional arguments can be sorted by form before their content is judged.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Form</th><th>Pattern</th><th>Verdict</th><th>Why</th></tr></thead>
-<tbody>
-<tr><td>Modus ponens</td><td>If P then Q; P; therefore Q</td><td>Valid</td><td>Affirming the sufficient condition forces the consequent.</td></tr>
-<tr><td>Modus tollens</td><td>If P then Q; not-Q; therefore not-P</td><td>Valid</td><td>If Q must follow from P, the absence of Q rules P out.</td></tr>
-<tr><td>Affirming the consequent</td><td>If P then Q; Q; therefore P</td><td>Invalid</td><td>Q may have other causes: Joe can live in California without living in San Diego.</td></tr>
-<tr><td>Denying the antecedent</td><td>If P then Q; not-P; therefore not-Q</td><td>Invalid</td><td>Removing one sufficient cause does not remove every route to Q: sprinklers can wet the ground.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Form","Pattern","Verdict","Why"]}
+  rows={[["Modus ponens","If P then Q; P; therefore Q","Valid","Affirming the sufficient condition forces the consequent."],["Modus tollens","If P then Q; not-Q; therefore not-P","Valid","If Q must follow from P, the absence of Q rules P out."],["Affirming the consequent","If P then Q; Q; therefore P","Invalid","Q may have other causes: Joe can live in California without living in San Diego."],["Denying the antecedent","If P then Q; not-P; therefore not-Q","Invalid","Removing one sufficient cause does not remove every route to Q: sprinklers can wet the ground."]]}
+/>
 </FormatAlt>
 
 <ContentSection>

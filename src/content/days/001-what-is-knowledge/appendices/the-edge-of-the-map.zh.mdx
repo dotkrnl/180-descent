@@ -1,5 +1,6 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -229,13 +230,10 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 
 ### 气泡与回声室：接触后的结果
 
-<table class="alt-table">
-<thead><tr><th>结构</th><th>外部声音</th><th>接触后的结果</th><th>启示</th></tr></thead>
-<tbody>
-<tr><td>认知气泡</td><td>缺席，未被反驳。</td><td>新来源可以建立连接并戳破气泡。</td><td>当问题在于信息缺失时，接触可能奏效。</td></tr>
-<tr><td>回声室</td><td>存在，但预先被质疑。</td><td>接触可能强化不信任，因为回声室预言了充满敌意的局外人。</td><td>当不信任被内置于结构中时，显而易见的修复手段可能会适得其反。</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["结构","外部声音","接触后的结果","启示"]}
+  rows={[["认知气泡","缺席，未被反驳。","新来源可以建立连接并戳破气泡。","当问题在于信息缺失时，接触可能奏效。"],["回声室","存在，但预先被质疑。","接触可能强化不信任，因为回声室预言了充满敌意的局外人。","当不信任被内置于结构中时，显而易见的修复手段可能会适得其反。"]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -326,14 +324,10 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 
 ### 准确性支配，表现为置信度几何
 
-<table class="alt-table">
-<thead><tr><th>置信度</th><th>总和</th><th>几何位置</th><th>判断</th></tr></thead>
-<tbody>
-<tr><td>P(S)=0.50, P(not-S)=0.50</td><td>1.00</td><td>位于融贯线上。</td><td>未被支配：在每个世界中，没有其他置信度更接近事实。</td></tr>
-<tr><td>P(S)=0.80, P(not-S)=0.80</td><td>1.60</td><td>位于融贯线上方。</td><td>被一个更接近两个真值角的融贯投影所支配。</td></tr>
-<tr><td>P(S)=0.20, P(not-S)=0.20</td><td>0.40</td><td>位于融贯线下方。</td><td>被一个更接近两个真值角的融贯投影所支配。</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["置信度","总和","几何位置","判断"]}
+  rows={[["P(S)=0.50, P(not-S)=0.50","1.00","位于融贯线上。","未被支配：在每个世界中，没有其他置信度更接近事实。"],["P(S)=0.80, P(not-S)=0.80","1.60","位于融贯线上方。","被一个更接近两个真值角的融贯投影所支配。"],["P(S)=0.20, P(not-S)=0.20","0.40","位于融贯线下方。","被一个更接近两个真值角的融贯投影所支配。"]]}
+/>
 </FormatAlt>
 
 <ContentSection>

@@ -2,6 +2,7 @@ import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -167,14 +168,10 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <PanelNote>当所有患者汇总时，疗法 B 观测成功率更高；但在小结石和大结石分层内部，疗法 A 的观测成功率都更高。这展示了比例反转，而非疗法优劣的直接因果推荐。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>视图</th><th>疗法 A</th><th>疗法 B</th><th>更高观测率</th></tr></thead>
-<tbody>
-<tr><td>所有患者</td><td>273 / 350 = 78.0%</td><td>289 / 350 = 82.6%</td><td>B</td></tr>
-<tr><td>小结石</td><td>81 / 87 = 93.1%</td><td>234 / 270 = 86.7%</td><td>A</td></tr>
-<tr><td>大结石</td><td>192 / 263 = 73.0%</td><td>55 / 80 = 68.8%</td><td>A</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["视图","疗法 A","疗法 B","更高观测率"]}
+  rows={[["所有患者","273 / 350 = 78.0%","289 / 350 = 82.6%","B"],["小结石","81 / 87 = 93.1%","234 / 270 = 86.7%","A"],["大结石","192 / 263 = 73.0%","55 / 80 = 68.8%","A"]]}
+/>
 汇总比较发生反转，是因为两种疗法的分组中包含了不同比例的小结石和大结石病例。
 
 </FormatAlt>
@@ -354,13 +351,10 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </div>
 
 <div class="dovs-table" id="dovsTable" aria-live="polite">
-<table class="alt-table">
-<thead><tr><th>观察表</th><th>淋湿</th><th>干爽</th><th>淋湿概率</th></tr></thead>
-<tbody>
-<tr><td>带伞</td><td>189</td><td>187</td><td>50.2%</td></tr>
-<tr><td>不带伞</td><td>170</td><td>454</td><td>27.2%</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["观察表","淋湿","干爽","淋湿概率"]}
+  rows={[["带伞","189","187","50.2%"],["不带伞","170","454","27.2%"]]}
+/>
 </div>
 
 <div class="dovs-table" id="dovsParams" aria-live="polite">

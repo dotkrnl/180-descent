@@ -4,6 +4,8 @@ import pValueTailAreaDark from "../../../assets/images/open-license/p-value-tail
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import ImageFigure from "@app/components/lesson/ImageFigure.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -100,10 +102,9 @@ On **[Day 2](/days/002-scientific-method-and-demarcation/)** we met the replicat
 ## The easiest person to fool
 
 <blockquote>"The first principle is that you must not fool yourself — and you are the easiest person to fool." — Richard Feynman, Caltech commencement, 1974</blockquote>
-<figure class="lesson-figure is-portrait">
-<img src={feynman1959.src} width="899" height="900" alt="Richard Feynman standing at a blackboard in 1959." />
-<figcaption>Richard Feynman at a blackboard in 1959. The quote above comes from his 1974 Caltech commencement address on "cargo cult science." <span class="meta">Image: <em>The Big T</em> 1959, public domain in the United States via Wikimedia Commons.</span></figcaption>
-</figure>
+<ImageFigure src={feynman1959.src} width="899" height="900" class="is-portrait" alt="Richard Feynman standing at a blackboard in 1959.">
+Richard Feynman at a blackboard in 1959. The quote above comes from his 1974 Caltech commencement address on "cargo cult science." <span class="meta">Image: <em>The Big T</em> 1959, public domain in the United States via Wikimedia Commons.</span>
+</ImageFigure>
 Feynman was talking about a kind of integrity that no formula can supply. The cruel twist of modern statistics is that the formulas can still be correct, but after flexible searching they no longer protect the nominal error rate. They lend the warm authority of mathematics to whatever you were already hoping to find.
 
 The villain has a clinical name: <Term as="em">researcher degrees of freedom</Term><TipNote text={String.raw`Researcher degrees of freedom are the legitimate-looking analytic choices a researcher can make about data collection, cleaning, modeling, and reporting.`} />. Every real analysis hides dozens of small, defensible decisions. Which outliers to exclude? Should you control for age? Sex? Both? Do you stop collecting data now, or run twenty more participants? You measured three outcomes — which do you report? Each choice, taken alone, is innocent. Taken together, made *after* you've glanced at how the numbers are leaning, they become a machine for minting false discoveries.
@@ -193,10 +194,9 @@ To not be fooled, you have to know precisely what the instrument reports. Many r
 
 Concrete version: suppose the null model says two groups have the same mean. If a difference this large or larger would occur 3% of the time under that model, then <MathInline latex={String.raw`p = .03`} />. That is *not* a 3% chance the null is true.
 
-<figure class="lesson-figure pvalue-figure">
-<img src={pValueTailArea.src} data-light-src={pValueTailArea.src} data-dark-src={pValueTailAreaDark.src} width="800" height="460" loading="lazy" decoding="async" alt="Course-styled diagram of a null-model bell curve with a shaded tail area labeled p-value, emphasizing that P(data given null) is not P(null given data)." />
-<figcaption>The shaded tail is the p-value: the frequency of results this extreme or more extreme under the null model. <span class="meta">Adapted from Repapetilto and Chen-Pan Liao, CC BY-SA 3.0 via Wikimedia Commons.</span></figcaption>
-</figure>
+<ImageFigure src={pValueTailArea.src} lightSrc={pValueTailArea.src} darkSrc={pValueTailAreaDark.src} width="800" height="460" class="pvalue-figure" alt="Course-styled diagram of a null-model bell curve with a shaded tail area labeled p-value, emphasizing that P(data given null) is not P(null given data).">
+The shaded tail is the p-value: the frequency of results this extreme or more extreme under the null model. <span class="meta">Adapted from Repapetilto and Chen-Pan Liao, CC BY-SA 3.0 via Wikimedia Commons.</span>
+</ImageFigure>
 
 Read it twice. It is a statement about *data, assuming a hypothesis* — written <MathInline latex={String.raw`\mathrm{P}(\text{data}\mid\text{null})`} />. It is emphatically *not* a statement about the hypothesis given the data, <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{data})`} />. Confusing those two is the exact inversion **Day 4** warned about with the disease-test problem: <MathInline latex={String.raw`\mathrm{P}(\text{positive}\mid\text{sick})`} /> is not <MathInline latex={String.raw`\mathrm{P}(\text{sick}\mid\text{positive})`} />, and no amount of staring turns one into the other without a prior. Here are the six misreadings to burn out of your reflexes — drawn from Greenland and colleagues' field guide to *twenty-five* of them:
 
@@ -330,14 +330,10 @@ So the natural sentence — "there's a 95% chance the true value is in *this* in
 
 <PanelNote>The table summarizes the long-run lesson: a 95% confidence-interval procedure covers the true value about 95 times in 100 repeated uses, but any single interval either covers or misses.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Object</th><th>What happens over repeated use</th><th>Correct reading</th></tr></thead>
-<tbody>
-<tr><td>100 repeated 95% intervals, true mean = 0</td><td>About 95 cover 0; about 5 miss 0.</td><td>The procedure has about 95% long-run coverage.</td></tr>
-<tr><td>One observed interval, for example [-0.31, 0.41]</td><td>It covers the true mean 0.</td><td>After observing it, this interval contains 0 or it does not; the 95% belongs to the method.</td></tr>
-<tr><td>One observed interval, for example [0.04, 0.76]</td><td>It misses the true mean 0.</td><td>A 95% method still produces misses in repeated use.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Object","What happens over repeated use","Correct reading"]}
+  rows={[["100 repeated 95% intervals, true mean = 0","About 95 cover 0; about 5 miss 0.","The procedure has about 95% long-run coverage."],["One observed interval, for example [-0.31, 0.41]","It covers the true mean 0.","After observing it, this interval contains 0 or it does not; the 95% belongs to the method."],["One observed interval, for example [0.04, 0.76]","It misses the true mean 0.","A 95% method still produces misses in repeated use."]]}
+/>
 </FormatAlt>
 
 ### Why small studies can exaggerate what they detect
@@ -498,15 +494,10 @@ If a single analysis can mislead, the modern move is brutally simple: *run them 
 
 <PanelNote>The same synthetic dataset can be analyzed through multiple defensible specifications.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Choice</th><th>Effect on the analysis</th><th>Interpretive risk</th></tr></thead>
-<tbody>
-<tr><td>Trim outliers</td><td>Exclude extreme values before estimating the association.</td><td>May stabilize a result or selectively remove inconvenient points.</td></tr>
-<tr><td>Control for W</td><td>Adjust for a lurking background variable that drives both X and Y.</td><td>Often shrinks a spurious association, but the control must be justified causally.</td></tr>
-<tr><td>Rank-transform</td><td>Replace raw values with ranks before computing the association.</td><td>Can reduce sensitivity to distribution shape while changing the estimand.</td></tr>
-<tr><td>Drop subgroup</td><td>Analyse only a subset of the data.</td><td>Can test a real boundary condition or create a flattering subset.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Choice","Effect on the analysis","Interpretive risk"]}
+  rows={[["Trim outliers","Exclude extreme values before estimating the association.","May stabilize a result or selectively remove inconvenient points."],["Control for W","Adjust for a lurking background variable that drives both X and Y.","Often shrinks a spurious association, but the control must be justified causally."],["Rank-transform","Replace raw values with ranks before computing the association.","Can reduce sensitivity to distribution shape while changing the estimand."],["Drop subgroup","Analyse only a subset of the data.","Can test a real boundary condition or create a flattering subset."]]}
+/>
 The honest report is the distribution across reasonable specifications; the dishonest report is the prettiest point on the curve.
 
 </FormatAlt>

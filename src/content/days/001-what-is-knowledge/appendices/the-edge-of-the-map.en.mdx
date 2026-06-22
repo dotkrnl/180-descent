@@ -1,5 +1,6 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -219,13 +220,10 @@ The first is a distinction that sounds academic and turns out to be the key to e
 
 ### Bubble vs. Chamber, as exposure outcomes
 
-<table class="alt-table">
-<thead><tr><th>Structure</th><th>Outside voices</th><th>Exposure outcome</th><th>Lesson</th></tr></thead>
-<tbody>
-<tr><td>Epistemic bubble</td><td>Absent, not refuted.</td><td>New sources can connect and puncture the bubble.</td><td>Exposure can work when the problem is missing information.</td></tr>
-<tr><td>Echo chamber</td><td>Present but pre-discredited.</td><td>Exposure can reinforce distrust because the chamber predicted hostile outsiders.</td><td>The obvious repair can backfire when distrust is built into the structure.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Structure","Outside voices","Exposure outcome","Lesson"]}
+  rows={[["Epistemic bubble","Absent, not refuted.","New sources can connect and puncture the bubble.","Exposure can work when the problem is missing information."],["Echo chamber","Present but pre-discredited.","Exposure can reinforce distrust because the chamber predicted hostile outsiders.","The obvious repair can backfire when distrust is built into the structure."]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -316,14 +314,10 @@ The idea (seeded by James Joyce's 1998 "Nonpragmatic Vindication of Probabilism"
 
 ### Accuracy domination, as credence geometry
 
-<table class="alt-table">
-<thead><tr><th>Credences</th><th>Sum</th><th>Geometry</th><th>Verdict</th></tr></thead>
-<tbody>
-<tr><td>P(S)=0.50, P(not-S)=0.50</td><td>1.00</td><td>On the coherence line.</td><td>Undominated: no other credence is closer in every world.</td></tr>
-<tr><td>P(S)=0.80, P(not-S)=0.80</td><td>1.60</td><td>Above the coherence line.</td><td>Dominated by a coherent projection closer to both truth-corners.</td></tr>
-<tr><td>P(S)=0.20, P(not-S)=0.20</td><td>0.40</td><td>Below the coherence line.</td><td>Dominated by a coherent projection closer to both truth-corners.</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["Credences","Sum","Geometry","Verdict"]}
+  rows={[["P(S)=0.50, P(not-S)=0.50","1.00","On the coherence line.","Undominated: no other credence is closer in every world."],["P(S)=0.80, P(not-S)=0.80","1.60","Above the coherence line.","Dominated by a coherent projection closer to both truth-corners."],["P(S)=0.20, P(not-S)=0.20","0.40","Below the coherence line.","Dominated by a coherent projection closer to both truth-corners."]]}
+/>
 </FormatAlt>
 
 <ContentSection>

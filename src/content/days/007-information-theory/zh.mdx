@@ -4,6 +4,8 @@ import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import ImageFigure from "@app/components/lesson/ImageFigure.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -198,15 +200,10 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <PanelNote>双结果源在两个结果等可能性发生时达到其最大熵。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>信源</th><th>P(正面)</th><th>熵</th><th>解读</th></tr></thead>
-<tbody>
-<tr><td>公平硬币</td><td>0.50</td><td class="num">1.00 比特/投掷</td><td>每次投掷都完整回答了一个是/否问题。</td></tr>
-<tr><td>有偏硬币</td><td>0.88</td><td class="num">0.53 比特/投掷</td><td>常见结果可以用短码表示；罕见结果则需要更长的码字。</td></tr>
-<tr><td>接近确定源</td><td>0.99</td><td class="num">0.08 比特/投掷</td><td>结果几乎预先已知，因此带来的新信息极少。</td></tr>
-<tr><td>「q 后是否跟 u？」</td><td>0.95</td><td class="num">0.29 比特/事件</td><td>这是二元事件的熵，不是完整的下一个字符分布。</td></tr>
-</tbody>
-</table>
+<SimpleTable
+  headers={["信源","P(正面)","熵","解读"]}
+  rows={[["公平硬币","0.50","1.00 比特/投掷","每次投掷都完整回答了一个是/否问题。"],["有偏硬币","0.88","0.53 比特/投掷","常见结果可以用短码表示；罕见结果则需要更长的码字。"],["接近确定源","0.99","0.08 比特/投掷","结果几乎预先已知，因此带来的新信息极少。"],["「q 后是否跟 u？」","0.95","0.29 比特/事件","这是二元事件的熵，不是完整的下一个字符分布。"]]}
+/>
 </FormatAlt>
 
 <ContentSection>
@@ -234,10 +231,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 1867 年，詹姆斯·克拉克·麦克斯韦（James Clerk Maxwell）构想出了一个捣蛋鬼。想象一个被隔断墙分成两半、装有气体的箱子，墙上有一道微型闸门，由一个微小的智能实体——后来被命名为<Term>麦克斯韦妖</Term>（Maxwell's demon）——把守着。妖观察着每一个分子。当一个运动快的分子从右侧逼近时，妖打开闸门让它穿行到左侧；当一个运动慢的分子从左侧逼近时，妖让它穿过到右侧。它在分子上不做任何物理功——仅仅是在恰当的时刻开启和关闭一个无摩擦的闸门。慢慢地、耐心地，它把高速分子与低速分子分开，从而在两侧形成温差。
 
-<figure class="lesson-figure">
-<img src={maxwellsDemon.src} data-light-src={maxwellsDemon.src} data-dark-src={maxwellsDemonDark.src} width="608" height="224" loading="lazy" decoding="async" alt="麦克斯韦妖在两个气体腔室之间打开闸门，将较慢的蓝色粒子与较快的红色粒子分开的示意图。" />
-<figcaption>作为筛选思想实验的麦克斯韦妖：守门者把较慢与较快的分子分开，看起来似乎只凭信息就在制造温差。<span class="meta">图片：Htkym，经 Wikimedia Commons，CC BY 2.5；配色为本项目本地改编。</span></figcaption>
-</figure>
+<ImageFigure src={maxwellsDemon.src} lightSrc={maxwellsDemon.src} darkSrc={maxwellsDemonDark.src} width="608" height="224" alt="麦克斯韦妖在两个气体腔室之间打开闸门，将较慢的蓝色粒子与较快的红色粒子分开的示意图。">
+作为筛选思想实验的麦克斯韦妖：守门者把较慢与较快的分子分开，看起来似乎只凭信息就在制造温差。<span class="meta">图片：Htkym，经 Wikimedia Commons，CC BY 2.5；配色为本项目本地改编。</span>
+</ImageFigure>
 这在物理上应该是不可能的。从热平衡状态中无偿制造出秩序，恰恰违背了<Term>热力学第二定律</Term><TipNote text={"热力学第二定律大致是说：在孤立系统中，宏观熵以压倒性概率趋于增加，尽管小系统可能出现涨落。"} />的禁令——正是这条统计定律解释了热咖啡会变凉、打破的鸡蛋无法复原。然而，这个妖似乎仅凭关于分子速度和位置的「信息」，就绕过了热力学最基本的熵增限制。一百年来，这一难题一直困扰着物理学界。1929 年，利奥·西拉德（Leó Szilárd）将这一场景简化为箱子中的单个分子，并证明妖可以从「分子在左侧还是右侧」这 1 比特的知识中，得到恰好为 <MathInline latex={String.raw`k_B T \ln 2`} /> 的净功。物理学的指向开始令人感到不安：信息似乎可以用来输出有用功。
 
 ### 反转：关键不在于获取，而在于遗忘
