@@ -6,6 +6,8 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import InformationQuestionTree from "@app/components/lesson/figures/InformationQuestionTree.astro";
+import LandauerEnergyLadder from "@app/components/lesson/figures/LandauerEnergyLadder.astro";
 import LandauerMachine from "@app/components/lesson/interactives/LandauerMachine.astro";
 import EntropyDial from "@app/components/lesson/interactives/EntropyDial.astro";
 
@@ -42,29 +44,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <HeroSubhead>How many yes/no questions is a fact *worth*? And what does it cost, in heat, to forget one?</HeroSubhead>
 
-<figure class="hero-fig">
-<svg viewBox="0 0 520 230" role="img" aria-label="A branching tree of yes/no questions halving 16 possibilities down to one.">
-<defs>
-<marker id="hb" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path></marker>
-</defs>
-{/* columns of dots collapsing 16 -> 8 -> 4 -> 2 -> 1 */}
-<g id="qtree"></g>
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
-<text x="40" y="222">16</text>
-<text x="160" y="222">8</text>
-<text x="280" y="222">4</text>
-<text x="400" y="222">2</text>
-<text x="486" y="222">1</text>
-</g>
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--accent)" text-anchor="middle" letter-spacing="0.05em">
-<text x="100" y="20">Q1</text>
-<text x="220" y="20">Q2</text>
-<text x="340" y="20">Q3</text>
-<text x="443" y="20">Q4</text>
-</g>
-</svg>
-<figcaption>Four good questions pin down one of sixteen things. <MathInline latex={String.raw`\log_2 16 = 4`} /> bits.</figcaption>
-</figure>
+<InformationQuestionTree locale="en" />
 
 <Lead drop="P">ick a whole number between 1 and 16 and hold it in your head. Assume each number is equally likely. I'll find it with four balanced yes/no questions: "Is it 9 or higher?" — that splits the field in half. "Within that half, is it in the upper part?" — half again. Two more cuts and I have your number, every time. Notice what just happened: a fact that felt fuzzy and personal turned out to have an exact *size*. Four questions are sufficient — and in the worst case necessary — because <MathInline latex={String.raw`2^4 = 16`} />. Four **bits**.</Lead>
 
@@ -254,56 +234,7 @@ For fifty years Landauer's principle was a piece of theory so clean it felt almo
 </div>
 </ContentSection>
 
-{/* ===================== VISUAL 3 ===================== */}
-<Panel class="landauer-ladder">
-<PanelTitle>Diagram · orders of magnitude</PanelTitle>
-
-#### Illustrative energy scales — not directly comparable
-
-<PanelNote>Logarithmic energy scale for different operations and system boundaries. The rungs compare an ideal 300 K fair-bit reset, quasistatic single-bit erasure experiments, approximate transistor-switching energy, and full logic or system-level computation. They are orientation markers, not one clean historical efficiency curve.</PanelNote>
-
-<svg viewBox="0 0 640 300" role="img" aria-label="Illustrative logarithmic energy scales from the Landauer floor to device and system-level computing.">
-{/* vertical log axis */}
-<line x1="150" y1="30" x2="150" y2="262" stroke="var(--line-strong)" stroke-width="1.2"></line>
-{/* gridlines + decade labels (zJ) */}
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">
-{/* map: y = 262 - (log10(zJ) - log10(2.8))*scale ; we lay out by hand */}
-<line x1="150" y1="248" x2="620" y2="248" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="252">~3 zJ</text>
-<line x1="150" y1="196" x2="620" y2="196" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="200">30 zJ</text>
-<line x1="150" y1="144" x2="620" y2="144" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="148">300 zJ</text>
-<line x1="150" y1="92" x2="620" y2="92" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="96">3 aJ</text>
-<line x1="150" y1="40" x2="620" y2="40" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="44">3 fJ</text>
-</g>
-{/* the floor band */}
-<rect x="150" y="244" width="470" height="9" fill="color-mix(in srgb,var(--ok) 30%,transparent)"></rect>
-<text x="615" y="240" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ok)" text-anchor="end">IDEAL RESET · 300 K · k_B T ln 2</text>
-
-{/* markers */}
-{/* lab experiments near floor */}
-<g>
-<circle cx="250" cy="248" r="7" fill="var(--accent)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="250" y="276" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">single-bit reset</text>
-<text x="250" y="288" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">(Bérut, Hong…)</text>
-</g>
-{/* single transistor ~ few aJ */}
-<g>
-<circle cx="400" cy="88" r="7" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="420" y="112" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="start">device switch</text>
-<text x="420" y="124" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="start">~10³× floor</text>
-</g>
-{/* full logic op / system ~ fJ-pJ */}
-<g>
-<circle cx="540" cy="40" r="7" fill="var(--heat)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="540" y="28" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">logic/system op</text>
-<text x="540" y="16" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">~10⁶×+ floor</text>
-</g>
-{/* connecting arc to dramatize the gap */}
-<path d="M250,244 C322,170 348,122 400,92" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
-<path d="M400,84 C470,60 500,48 540,42" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
-<text x="333" y="135" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-32 333 135)">← different boundaries →</text>
-</svg>
-<p class="ladder-key">The lab experiments are not better general computers than your laptop: they isolate one erasure protocol and run it gently enough to approach the thermodynamic bound. Practical chips spend energy on speed, reliability, memory movement, control, cooling, and power delivery. The comparison is useful only if the boundary around each rung is kept visible.</p>
-</Panel>
+<LandauerEnergyLadder locale="en" />
 
 <ContentSection class="frontier">
 <div class="claim">

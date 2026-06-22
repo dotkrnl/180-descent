@@ -1,0 +1,48 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<Panel class="landauer-ladder">
+  <PanelTitle>{zh ? "示意图 · 数量级对比" : "Diagram · orders of magnitude"}</PanelTitle>
+  <h4>{zh ? "示意性能量尺度 —— 不能直接等同比较" : "Illustrative energy scales — not directly comparable"}</h4>
+  <PanelNote>{zh ? "不同操作和系统边界下的对数能量尺度。各层分别表示 300 K 下理想公平比特重置、准静态单比特擦除实验、近似晶体管开关能量，以及完整逻辑或系统级计算。它们是方位标记，不是一条干净的历史效率曲线。" : "Logarithmic energy scale for different operations and system boundaries. The rungs compare an ideal 300 K fair-bit reset, quasistatic single-bit erasure experiments, approximate transistor-switching energy, and full logic or system-level computation. They are orientation markers, not one clean historical efficiency curve."}</PanelNote>
+
+  <svg viewBox="0 0 640 300" role="img" aria-label={zh ? "从兰道尔下限到器件与系统级计算的示意性对数能量尺度。" : "Illustrative logarithmic energy scales from the Landauer floor to device and system-level computing."}>
+    <line x1="150" y1="30" x2="150" y2="262" stroke="var(--line-strong)" stroke-width="1.2"></line>
+    <g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">
+      <line x1="150" y1="248" x2="620" y2="248" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="252">~3 zJ</text>
+      <line x1="150" y1="196" x2="620" y2="196" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="200">30 zJ</text>
+      <line x1="150" y1="144" x2="620" y2="144" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="148">300 zJ</text>
+      <line x1="150" y1="92" x2="620" y2="92" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="96">3 aJ</text>
+      <line x1="150" y1="40" x2="620" y2="40" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="44">3 fJ</text>
+    </g>
+    <rect x="150" y="244" width="470" height="9" fill="color-mix(in srgb,var(--ok) 30%,transparent)"></rect>
+    <text x="615" y="240" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ok)" text-anchor="end">{zh ? "理想重置 · 300 K · k_B T ln 2" : "IDEAL RESET · 300 K · k_B T ln 2"}</text>
+    <g>
+      <circle cx="250" cy="248" r="7" fill="var(--accent)" stroke="var(--raised)" stroke-width="2"></circle>
+      <text x="250" y="276" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">{zh ? "单比特重置" : "single-bit reset"}</text>
+      <text x="250" y="288" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">{zh ? "（Bérut, Hong…）" : "(Bérut, Hong…)"}</text>
+    </g>
+    <g>
+      <circle cx="400" cy="88" r="7" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
+      <text x="420" y="112" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="start">{zh ? "器件开关" : "device switch"}</text>
+      <text x="420" y="124" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="start">{zh ? "~10³ 倍底限" : "~10³× floor"}</text>
+    </g>
+    <g>
+      <circle cx="540" cy="40" r="7" fill="var(--heat)" stroke="var(--raised)" stroke-width="2"></circle>
+      <text x="540" y="28" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">{zh ? "逻辑/系统操作" : "logic/system op"}</text>
+      <text x="540" y="16" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">{zh ? "~10⁶ 倍以上底限" : "~10⁶×+ floor"}</text>
+    </g>
+    <path d="M250,244 C322,170 348,122 400,92" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
+    <path d="M400,84 C470,60 500,48 540,42" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
+    <text x="333" y="135" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-32 333 135)">{zh ? "← 边界不同 →" : "← different boundaries →"}</text>
+  </svg>
+  <p class="ladder-key">{zh ? "实验室装置并不是比你的笔记本更好的通用计算机：它们隔离的是一个擦除协议，并以足够温和的方式运行来逼近热力学界限。实际芯片还要为速度、可靠性、内存移动、控制、冷却和供电付费。只有始终看清每一层的系统边界，这种比较才有用。" : "The lab experiments are not better general computers than your laptop: they isolate one erasure protocol and run it gently enough to approach the thermodynamic bound. Practical chips spend energy on speed, reliability, memory movement, control, cooling, and power delivery. The comparison is useful only if the boundary around each rung is kept visible."}</p>
+</Panel>

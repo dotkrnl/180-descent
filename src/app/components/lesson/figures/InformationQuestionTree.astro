@@ -1,0 +1,35 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<figure class="hero-fig">
+  <svg viewBox="0 0 520 230" role="img" aria-label={zh ? "一个是/否问题的分支树，将 16 种可能性逐次减半，最终锁定为一个。" : "A branching tree of yes/no questions halving 16 possibilities down to one."}>
+    <defs>
+      <marker id="hb" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path></marker>
+    </defs>
+    <g id="qtree"></g>
+    <g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
+      <text x="40" y="222">16</text>
+      <text x="160" y="222">8</text>
+      <text x="280" y="222">4</text>
+      <text x="400" y="222">2</text>
+      <text x="486" y="222">1</text>
+    </g>
+    <g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--accent)" text-anchor="middle" letter-spacing="0.05em">
+      <text x="100" y="20">Q1</text>
+      <text x="220" y="20">Q2</text>
+      <text x="340" y="20">Q3</text>
+      <text x="443" y="20">Q4</text>
+    </g>
+  </svg>
+  {zh ? (
+    <figcaption>四个好问题即可锁定 16 种可能中的一种。<MathInline latex={String.raw`\log_2 16 = 4`} /> 比特。</figcaption>
+  ) : (
+    <figcaption>Four good questions pin down one of sixteen things. <MathInline latex={String.raw`\log_2 16 = 4`} /> bits.</figcaption>
+  )}
+</figure>
