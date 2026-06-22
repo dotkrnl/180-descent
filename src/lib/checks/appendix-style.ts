@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { compileCss } from "@lib/assets";
 import { loadContentRegistry } from "@lib/content";
 import { pathExists, walkFiles } from "@lib/fs";
 
@@ -74,17 +75,28 @@ export async function checkAppendixStyle(options: AppendixStyleCheckOptions): Pr
 
 async function collectCssClasses(options: AppendixStyleCheckOptions, errors: string[]): Promise<Set<string>> {
   const out = new Set<string>();
-  for (const relativeFile of options.cssFiles ?? ["src/assets/css/book.css"]) {
+  if (!options.cssFiles) {
+    const css = await compileCss({ root: options.root });
+    checkCssForDayScopedSelectors(options.root, "src/assets/scss/book.scss", css, errors);
+    collectClassesFromCss(css, out);
+    return out;
+  }
+
+  for (const relativeFile of options.cssFiles) {
     const file = path.join(options.root, relativeFile);
     if (!await pathExists(file)) continue;
 
     const css = await readFile(file, "utf8");
     checkCssForDayScopedSelectors(options.root, file, css, errors);
-    for (const match of css.matchAll(/\.(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g)) {
-      out.add(match[1]);
-    }
+    collectClassesFromCss(css, out);
   }
   return out;
+}
+
+function collectClassesFromCss(css: string, out: Set<string>): void {
+  for (const match of css.matchAll(/\.(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g)) {
+    out.add(match[1]);
+  }
 }
 
 async function collectJsClasses(options: AppendixStyleCheckOptions): Promise<Set<string>> {
@@ -131,7 +143,7 @@ function checkBlock(
     errors.push(`${relativeFile}: raw <br> used as spacing before a blockquote inside an appendix`);
   }
   if (/\sstyle\s*=/.test(block)) {
-    errors.push(`${relativeFile}: inline style attributes are not allowed inside appendices; add a shared class in book.css`);
+    errors.push(`${relativeFile}: inline style attributes are not allowed inside appendices; add a shared class in the SCSS style system`);
   }
 
   for (const className of classNames(block)) {

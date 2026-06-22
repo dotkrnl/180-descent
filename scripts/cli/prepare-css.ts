@@ -1,8 +1,8 @@
 import { buildCss } from "@lib/assets";
 
 try {
-  const { bytes } = await buildCss({ root: process.cwd() });
-  console.log(`SCSS bundled: scss/book.scss → css/book.css (${bytes} bytes)`);
+  const { bytes, outFile } = await buildCss({ root: process.cwd() });
+  console.log(`SCSS compiled: scss/book.scss → ${outFile} (${bytes} bytes)`);
 } catch (error) {
   console.error(error);
   process.exit(1);

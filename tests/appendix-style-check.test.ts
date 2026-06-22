@@ -33,9 +33,9 @@ describe("appendix style check", () => {
 async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-appendix-style-"));
   await mkdir(path.join(root, "src/content/days/001-fixture/appendices"), { recursive: true });
-  await mkdir(path.join(root, "src/assets/css"), { recursive: true });
+  await mkdir(path.join(root, "src/assets/scss"), { recursive: true });
   await mkdir(path.join(root, "src/assets/js/interactions"), { recursive: true });
-  await writeFile(path.join(root, "src/assets/css/book.css"), [
+  await writeFile(path.join(root, "src/assets/scss/book.scss"), [
     ".wrap{}",
     ".deep-dive{}",
     ".ptitle{}",

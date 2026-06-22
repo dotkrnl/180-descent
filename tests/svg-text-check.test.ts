@@ -20,10 +20,10 @@ describe("svg text size check", () => {
     ]);
   });
 
-  it("ignores generated CSS outputs", async () => {
+  it("ignores generated SCSS partials", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-svg-text-"));
-    await mkdir(path.join(root, "src/assets/css"), { recursive: true });
-    await writeFile(path.join(root, "src/assets/css/book.css"), ".chart { font-size: 8px; }");
+    await mkdir(path.join(root, "src/assets/scss/generated"), { recursive: true });
+    await writeFile(path.join(root, "src/assets/scss/generated/_vendor.scss"), ".chart { font-size: 8px; }");
 
     expect(checkSvgTextSize({ root })).toEqual([]);
   });

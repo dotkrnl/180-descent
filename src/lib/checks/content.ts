@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
+import { compileCss } from "@lib/assets";
 import { loadContentRegistry } from "@lib/content";
 import { walkFiles } from "@lib/fs";
 import type { Locale } from "@lib/schemas";
@@ -15,7 +16,7 @@ export interface ContentCheckFailure {
 }
 
 const PRINT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
-const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".yaml", ".yml"]);
+const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".scss", ".yaml", ".yml"]);
 const PARENT_MARKDOWN_PATTERN = /\.\.\/[^\s"'`)]+\.md\b/;
 
 interface RegistryContentFile {
@@ -148,8 +149,7 @@ function checkStaticAlternates(file: RegistryContentFile, failures: ContentCheck
 }
 
 async function checkCssFonts(root: string, failures: ContentCheckFailure[]): Promise<void> {
-  const cssPath = path.join(root, "src/assets/css/book.css");
-  const css = await readFile(cssPath, "utf8");
+  const css = await compileCss({ root });
   if (!css.includes("@font-face")) {
     failures.push({ message: "CSS does not declare local fonts" });
   }

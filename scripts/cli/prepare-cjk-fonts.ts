@@ -5,7 +5,7 @@ try {
   for (const weight of result.weights) {
     console.log(`  ${weight.prefix}: ${weight.subsets} subsets`);
   }
-  console.log(`CJK fonts prepared -> ${result.cssOut}`);
+  console.log(`CJK fonts prepared -> ${result.scssOut}`);
 } catch (error) {
   console.error(error);
   process.exit(1);

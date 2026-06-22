@@ -42,8 +42,8 @@ describe("content check", () => {
 async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-content-check-"));
   await mkdir(path.join(root, "src/content/days/001-fixture"), { recursive: true });
-  await mkdir(path.join(root, "src/assets/css"), { recursive: true });
-  await writeFile(path.join(root, "src/assets/css/book.css"), "@font-face { font-family: Fixture; }\n");
+  await mkdir(path.join(root, "src/assets/scss"), { recursive: true });
+  await writeFile(path.join(root, "src/assets/scss/book.scss"), "@font-face { font-family: Fixture; }\n");
   return root;
 }
 

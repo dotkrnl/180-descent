@@ -5,6 +5,7 @@ import * as cheerio from "cheerio";
 import JSZip from "jszip";
 import YAML from "yaml";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
+import { compileCss } from "@lib/assets";
 import type { Locale } from "@lib/schemas";
 import { escapeXml } from "@lib/text";
 
@@ -390,8 +391,8 @@ ${subtitleMarkup}
 }
 
 async function epubCss(root: string): Promise<string> {
-  const css = await readFile(path.join(root, "src/assets/css/book.css"), "utf8");
-  return stripUnbundledKatexTtfSources(stripCjkFontFaces(css))
+  const css = await compileCss({ root });
+  return normalizeEpubFontUrls(stripUnbundledKatexTtfSources(stripCjkFontFaces(css)))
     .replaceAll("@media print", "@media amzn-mobi")
     .replaceAll(".epub-only,.print-only,.format-alt{display:none;}", ".print-only{display:none;}.epub-alt{display:block;}")
     .replaceAll(".site-topbar,.site-footer,.download-strip,.web-only,.epub-only,.print-hide{display:none!important;}", ".site-topbar,.site-footer,.download-strip,.web-only,.print-only{display:none!important;}")
@@ -435,7 +436,11 @@ function stripCjkFontFaces(css: string): string {
 }
 
 function stripUnbundledKatexTtfSources(css: string): string {
-  return css.replace(/,url\(\.\.\/fonts\/katex\/[^)]*?\.ttf\)\s*format\("truetype"\)/g, "");
+  return css.replace(/,url\((?:\.\.\/){1,2}fonts\/katex\/[^)]*?\.ttf\)\s*format\("truetype"\)/g, "");
+}
+
+function normalizeEpubFontUrls(css: string): string {
+  return css.replaceAll("../../fonts/", "../fonts/");
 }
 
 async function collectEpubFonts(root: string): Promise<EpubFont[]> {

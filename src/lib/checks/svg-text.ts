@@ -15,12 +15,8 @@ export interface SvgTextCheckFailure {
   value: number;
 }
 
-const ALLOWED_EXTENSIONS = /\.(css|html|js|md|njk|svg)$/i;
-const GENERATED_CSS = new Set([
-  "src/assets/css/book.css",
-  "src/assets/css/katex.css",
-  "src/assets/css/cjk.css"
-]);
+const ALLOWED_EXTENSIONS = /\.(css|html|js|md|njk|scss|svg)$/i;
+const GENERATED_STYLE_PATTERN = /^src\/assets\/scss\/generated\//;
 
 export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFailure[] {
   const roots = options.roots ?? ["src"];
@@ -32,10 +28,10 @@ export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFail
 
     for (const file of walkFilesSync(absoluteRoot, { allowedExtensionsRegex: ALLOWED_EXTENSIONS })) {
       const relativeFile = toRelative(options.root, file);
-      if (GENERATED_CSS.has(relativeFile)) continue;
+      if (GENERATED_STYLE_PATTERN.test(relativeFile)) continue;
 
       const source = readFileSync(file, "utf8");
-      if (file.endsWith(".css") || file.endsWith(".js")) {
+      if (file.endsWith(".css") || file.endsWith(".js") || file.endsWith(".scss")) {
         checkSegment(source, source, relativeFile, failures);
         continue;
       }
