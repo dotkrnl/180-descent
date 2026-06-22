@@ -1,0 +1,149 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import { parse as parseYaml } from "yaml";
+import "../../assets/css/book.css";
+import bookScriptUrl from "../../assets/js/book.js?url";
+import brandLight from "../../assets/images/brand/180-descent-icon-96.png";
+import brandDark from "../../assets/images/brand/180-descent-icon-dark-96.png";
+import faviconLight from "../../assets/images/brand/favicon-32.png";
+import faviconDark from "../../assets/images/brand/favicon-32-dark.png";
+import appleTouchIcon from "../../assets/images/brand/apple-touch-icon.png";
+
+interface BookData {
+  title: string;
+  subtitle: string;
+  authors: string;
+  description: string;
+  site_url: string;
+  repo: string;
+  language: string;
+  publisher: string;
+  zh: {
+    language: string;
+    title: string;
+    subtitle: string;
+    authors: string;
+    translators: string;
+    description: string;
+  };
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  locale: "en" | "zh";
+  canonicalPath: string;
+  alternatePath?: string;
+  scripts?: string[];
+}
+
+const book = parseYaml(fs.readFileSync(path.join(process.cwd(), "src/_data/book.yaml"), "utf8")) as BookData;
+const { title, description, locale, canonicalPath, alternatePath, scripts = [] } = Astro.props;
+const isZh = locale === "zh";
+const uiTitle = isZh ? book.zh.title : book.title;
+const uiSubtitle = isZh ? book.zh.subtitle : book.subtitle;
+const uiDescription = isZh ? book.zh.description : book.description;
+const pageTitle = title ? `${title} · ${uiTitle}` : uiTitle;
+const metaDescription = description ?? uiDescription;
+const canonicalUrl = new URL(canonicalPath, book.site_url).href;
+const alternateUrl = alternatePath ? new URL(alternatePath, book.site_url).href : undefined;
+const homeUrl = isZh ? "/zh/" : "/";
+const introUrl = isZh ? "/zh/introduction/" : "/introduction/";
+const syllabusUrl = isZh ? "/zh/syllabus/" : "/syllabus/";
+const downloadsUrl = isZh ? "/zh/downloads/" : "/downloads/";
+const creditsUrl = isZh ? "/zh/credits/" : "/credits/";
+---
+<!doctype html>
+<html lang={isZh ? book.zh.language : book.language} data-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f3ec" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <meta name="robots" content="index, follow" />
+    <link id="themeFavicon" rel="icon" type="image/png" sizes="32x32" href={faviconLight.src} data-light-href={faviconLight.src} data-dark-href={faviconDark.src} />
+    <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon.src} />
+    <link rel="canonical" href={canonicalUrl} />
+    {alternateUrl && (
+      <>
+        <link rel="alternate" hreflang={isZh ? book.language : book.zh.language} href={alternateUrl} />
+        <link rel="alternate" hreflang="x-default" href={isZh ? alternateUrl : canonicalUrl} />
+      </>
+    )}
+    <meta property="og:type" content={title ? "article" : "website"} />
+    <meta property="og:site_name" content={uiTitle} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={isZh ? "zh_CN" : "en_US"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <script is:inline>
+      (function(){
+        try{
+          var theme = window.localStorage && window.localStorage.getItem("180-descent-theme");
+          if(theme === "light" || theme === "dark"){
+            document.documentElement.setAttribute("data-theme", theme);
+          }
+        }catch(error){}
+      })();
+    </script>
+    <script src={bookScriptUrl} defer></script>
+    {scripts.map((script) => <script src={script} defer></script>)}
+  </head>
+  <body>
+    <a class="skip-link" href="#content">{isZh ? "跳到正文" : "Skip to content"}</a>
+    <header class="site-topbar">
+      <div class="topbar-row">
+        <a class="course" href={homeUrl}>
+          <span class="brand-mark-shell" aria-hidden="true">
+            <img class="brand-mark brand-mark-light" src={brandLight.src} width="28" height="28" alt="" decoding="async" />
+            <img class="brand-mark brand-mark-dark" src={brandDark.src} width="28" height="28" alt="" decoding="async" />
+          </span>
+          {uiTitle}
+        </a>
+        <nav class="topnav" aria-label={isZh ? "主导航" : "Primary"}>
+          <a href={introUrl}>{isZh ? "引言" : "Intro"}</a>
+          <a href={syllabusUrl}>{isZh ? "课程表" : "Syllabus"}</a>
+          <a href={downloadsUrl}>{isZh ? "下载" : "Downloads"}</a>
+        </nav>
+        <div class="top-actions">
+          {alternatePath && (
+            <a class="toggle" href={alternatePath} hreflang={isZh ? book.language : book.zh.language} lang={isZh ? book.language : book.zh.language} aria-label={isZh ? "EN，切换到英文" : "中文, Switch to Chinese"}>
+              {isZh ? "EN" : "中文"}
+            </a>
+          )}
+          <button class="toggle theme-toggle" id="themeBtn" type="button" aria-pressed="false" aria-label={isZh ? "切换到深色主题" : "Switch to dark theme"} data-label-dark={isZh ? "切换到深色主题" : "Switch to dark theme"} data-label-light={isZh ? "切换到浅色主题" : "Switch to light theme"}>
+            <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+            <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap wide footer-grid">
+        <p><strong>{uiTitle}</strong><br />{uiSubtitle}<br />{isZh ? `作者：${book.zh.authors}` : `By ${book.authors}`}{isZh ? <><br />{`翻译：${book.zh.translators}`}</> : null}</p>
+        <p><a href={book.repo}>GitHub</a><br /><a href={downloadsUrl}>{isZh ? "EPUB 与 PDF 下载" : "EPUB and PDF downloads"}</a><br /><a href={creditsUrl}>{isZh ? "鸣谢" : "Credits"}</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

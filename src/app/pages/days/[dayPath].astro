@@ -1,0 +1,13 @@
+---
+import DayPage from "@app/components/DayPage.astro";
+import { getRegistryDayStaticPaths, loadDayPageModules } from "@app/day-route";
+import type { RegistryDayLocaleEntry } from "@lib/content";
+
+export async function getStaticPaths() {
+  return getRegistryDayStaticPaths("en");
+}
+
+const { entry } = Astro.props as { entry: RegistryDayLocaleEntry };
+const { Body, appendices } = await loadDayPageModules(entry);
+---
+<DayPage entry={entry} Body={Body} appendices={appendices} />

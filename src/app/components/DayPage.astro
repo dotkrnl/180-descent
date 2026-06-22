@@ -1,0 +1,120 @@
+---
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import BookShell from "@app/layouts/BookShell.astro";
+import type { RegistryDayLocaleEntry } from "@lib/content";
+import accuracyDominationScript from "../../assets/js/interactions/accuracy-domination.js?url";
+import clockTicksScript from "../../assets/js/interactions/clock-ticks.js?url";
+import closureMachineScript from "../../assets/js/interactions/closure-machine.js?url";
+import credenceDialScript from "../../assets/js/interactions/credence-dial.js?url";
+import echoChamberScript from "../../assets/js/interactions/echo-chamber.js?url";
+import gettierMachineScript from "../../assets/js/interactions/gettier-machine.js?url";
+import modalRingsScript from "../../assets/js/interactions/modal-rings.js?url";
+import stakesDialScript from "../../assets/js/interactions/stakes-dial.js?url";
+
+interface AppendixRenderEntry {
+  id: string;
+  title: string;
+  Body: AstroComponentFactory;
+}
+
+interface Props {
+  entry: RegistryDayLocaleEntry;
+  Body: AstroComponentFactory;
+  appendices: AppendixRenderEntry[];
+}
+
+const interactionScriptModules: Record<string, string> = {
+  "accuracy-domination": accuracyDominationScript,
+  "clock-ticks": clockTicksScript,
+  "closure-machine": closureMachineScript,
+  "credence-dial": credenceDialScript,
+  "echo-chamber": echoChamberScript,
+  "gettier-machine": gettierMachineScript,
+  "modal-rings": modalRingsScript,
+  "stakes-dial": stakesDialScript
+};
+
+const { entry, Body, appendices } = Astro.props;
+const isZh = entry.locale === "zh";
+const dayPath = entry.day.manifest.path;
+const canonicalPath = isZh ? `/zh/days/${dayPath}/` : `/days/${dayPath}/`;
+const alternatePath = isZh ? `/days/${dayPath}/` : `/zh/days/${dayPath}/`;
+const downloadPrefix = isZh ? `/downloads/180-descent-zh-day-${dayPath}` : `/downloads/180-descent-day-${dayPath}`;
+const dayLabel = isZh ? `第${String(entry.day.manifest.day).padStart(2, "0")}日` : `Day ${String(entry.day.manifest.day).padStart(2, "0")}`;
+const remainingDays = 180 - entry.day.manifest.day;
+const scripts = entry.day.manifest.components.map((component) => {
+  const script = interactionScriptModules[component.webEntry];
+  if (!script) {
+    throw new Error(`Missing interaction script for ${component.webEntry}`);
+  }
+  return script;
+});
+---
+<BookShell title={entry.title} description={entry.summary} locale={entry.locale} canonicalPath={canonicalPath} alternatePath={alternatePath} scripts={scripts}>
+  <article
+    class="lesson"
+    data-day={entry.day.manifest.day}
+    data-reading-progress
+    data-reading-locale={entry.locale}
+    data-reading-day={entry.day.manifest.day}
+    data-reading-url={canonicalPath}
+    data-reading-label={`${dayLabel} · ${entry.title}`}
+    data-reading-title={entry.title}
+    data-reading-summary={entry.summary}
+  >
+    <div class="download-strip">
+      <div class="wrap wide">
+        <span>{isZh ? "下载本日：" : "Download this day:"}</span>
+        <a href={`${downloadPrefix}.epub`}>EPUB</a>
+        <a href={`${downloadPrefix}.pdf`}>PDF</a>
+      </div>
+    </div>
+    <nav class="lesson-nav lesson-nav-top wrap wide" aria-label={isZh ? "日课导航（顶部）" : "Top day navigation"}>
+      <span class="lesson-nav-card is-disabled">
+        <span>{isZh ? "上一篇" : "Previous"}</span>
+        <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
+      </span>
+      <a class="lesson-nav-card is-syllabus" href={isZh ? "/zh/syllabus/" : "/syllabus/"}>
+        <span>{isZh ? "课程表" : "Map"}</span>
+        <strong>{isZh ? "完整课程表" : "Full syllabus"}</strong>
+      </a>
+      <span class="lesson-nav-card is-disabled">
+        <span>{isZh ? "下一篇" : "Next"}</span>
+        <strong>{isZh ? "迁移中" : "Migration in progress"}</strong>
+      </span>
+    </nav>
+    <Body />
+    <div class="wrap">
+      {appendices.map(({ id, title, Body: AppendixBody }) => (
+        <details class="deep-dive" id={id}>
+          <summary>
+            <span class="ptitle">{isZh ? "专题深入附录" : "Deep dive appendix"}</span>
+            <span class="deep-dive-title">{title}</span>
+            <span class="deep-dive-sub">{isZh ? "可选延伸阅读。" : "Optional extension."}</span>
+          </summary>
+          <div class="deep-dive-body">
+            <AppendixBody />
+          </div>
+        </details>
+      ))}
+      <p class="endcap">
+        {isZh ? `第 ${String(entry.day.manifest.day).padStart(2, "0")} 日终 · ` : `End of Day ${String(entry.day.manifest.day).padStart(2, "0")} · `}
+        <span class="gleam">{isZh ? `还有 ${remainingDays} 日等待深入` : `${remainingDays} descents remain`}</span>
+      </p>
+    </div>
+    <nav class="lesson-nav lesson-nav-bottom wrap wide" aria-label={isZh ? "日课导航（底部）" : "Bottom day navigation"}>
+      <span class="lesson-nav-card is-disabled">
+        <span>{isZh ? "上一篇" : "Previous"}</span>
+        <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
+      </span>
+      <a class="lesson-nav-card is-syllabus" href={isZh ? "/zh/syllabus/" : "/syllabus/"}>
+        <span>{isZh ? "课程表" : "Map"}</span>
+        <strong>{isZh ? "完整课程表" : "Full syllabus"}</strong>
+      </a>
+      <span class="lesson-nav-card is-disabled">
+        <span>{isZh ? "下一篇" : "Next"}</span>
+        <strong>{isZh ? "迁移中" : "Migration in progress"}</strong>
+      </span>
+    </nav>
+  </article>
+</BookShell>
