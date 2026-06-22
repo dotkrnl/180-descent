@@ -1,0 +1,8 @@
+---
+interface Props {
+  class?: string;
+}
+
+const className = ["meta", Astro.props.class].filter(Boolean).join(" ");
+---
+<span class={className}><slot /></span>

@@ -2,7 +2,25 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-<p class="lede"><span class="drop">T</span>he main lesson taught the old danger: a p-value plus human flexibility can turn noise into literature. This appendix looks forward. The sharpest post-2020 work is not merely “use AI carefully” or “report confidence intervals.” It is a deeper shift: <strong>validity is being moved outside the model, outside the analyst’s discretion, and sometimes outside the raw data itself.</strong> The new tools wrap black boxes in guarantees, split exploration from inference, keep tests valid while people peek, correct AI labels with human truth, quantify privacy noise, and audit the research machine itself. They are powerful. They are also easy to oversell.</p>
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import Divider from "@app/components/lesson/Divider.astro";
+import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import Term from "@app/components/lesson/Term.astro";
+
+<Lead drop="T">he main lesson taught the old danger: a p-value plus human flexibility can turn noise into literature. This appendix looks forward. The sharpest post-2020 work is not merely “use AI carefully” or “report confidence intervals.” It is a deeper shift: **validity is being moved outside the model, outside the analyst’s discretion, and sometimes outside the raw data itself.** The new tools wrap black boxes in guarantees, split exploration from inference, keep tests valid while people peek, correct AI labels with human truth, quantify privacy noise, and audit the research machine itself. They are powerful. They are also easy to oversell.</Lead>
+
 <div class="dek-grid">
 <div class="continues">
 <p class="label">◆ Scope and ground rules</p>
@@ -10,9 +28,10 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 </div>
 
-<section>
-<p class="sec-eyebrow">Field map</p>
-<h2>Ten waves, sorted by the failure mode they attack</h2>
+<SectionEyebrow>Field map</SectionEyebrow>
+
+## Ten waves, sorted by the failure mode they attack
+
 <p class="pnote web-only">Filter the atlas by maturity. Green means the core theory is established; amber means serious and promising but still settling; red means potentially transformative and currently dangerous.</p><p class="pnote epub-only print-only">The atlas below sorts ten post-2020 methods by the failure mode they attack and labels their maturity.</p>
 <div class="filterbar web-only" aria-label="Filter wave cards by maturity">
 <button data-filter="all" aria-pressed="true">All</button>
@@ -44,23 +63,35 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <a href="#appendix-d006-the-incoming-wave-revised-silicon"><b>09</b><span>Silicon</span></a>
 <a href="#appendix-d006-the-incoming-wave-revised-ai"><b>10</b><span>AI analysts</span></a>
 </div>
-</section>
-<section id="appendix-d006-the-incoming-wave-revised-anytime">
-<p class="sec-eyebrow"><span class="n">§1</span> The p-value that survives the refresh button</p>
-<h2>Anytime-valid inference: the end of illegal peeking</h2>
+<ContentSection id="appendix-d006-the-incoming-wave-revised-anytime">
+<SectionEyebrow number="§1"> The p-value that survives the refresh button</SectionEyebrow>
+
+## Anytime-valid inference: the end of illegal peeking
+
 <div class="claim"><div class="ctop"><span class="cnum">Wave 01</span><StatusChip status={"ok"} label={"Theory established"} printLabel={"established"} /><StatusChip status={"hint"} label={"Adoption still uneven"} printLabel={"promising"} /></div></div>
-<p>The old fixed-sample test is fragile because it assumes you decided the sample size before seeing the data. But modern science does not behave like that. A/B tests stream in hourly. Platform teams refresh dashboards. Clinical trials have interim looks. Labs add subjects when the first batch is “almost significant.” The ordinary p-value is not built for this world.</p>
-<p><em class="term">Anytime-valid inference</em> changes the contract. Instead of a p-value that is valid only at a pre-fixed stopping time, it uses e-values, e-processes, always-valid p-values, and confidence sequences: evidence measures and intervals designed to remain valid at <strong>arbitrary stopping times</strong>. You can look early, look often, stop when the evidence is decisive, or continue when it is ambiguous, without silently inflating the false-positive rate.</p>
-<p>This is not a decorative upgrade. It attacks one of Day 6’s central machines for fooling yourself: optional stopping. The frontier after 2020 is the consolidation of a “game-theoretic statistics / safe anytime-valid inference” language. It treats evidence as a capital process in a game against nature. If the null is true, your evidence wealth cannot systematically grow without bound; Ville-style inequalities turn that into sequential tests and confidence sequences.</p>
-<p>The hype filter: the mathematics is now serious and mature. The practical risk is cultural. People like dashboards but dislike changing the number they report. If a team runs a continuously monitored experiment and still reports ordinary fixed-horizon p-values, the UI may look modern while the inferential contract is 1930s paper-and-pencil.</p>
+The old fixed-sample test is fragile because it assumes you decided the sample size before seeing the data. But modern science does not behave like that. A/B tests stream in hourly. Platform teams refresh dashboards. Clinical trials have interim looks. Labs add subjects when the first batch is “almost significant.” The ordinary p-value is not built for this world.
 
-<div class="aside"><p class="h">Day 6 callback</p><p>Optional stopping was one of the False-Positive Factory switches. Anytime-valid inference does not say “never peek.” It says: if peeking is part of the workflow, put peeking into the statistical procedure rather than pretending it did not happen.</p></div>
-</section>
+<Term as="em">Anytime-valid inference</Term> changes the contract. Instead of a p-value that is valid only at a pre-fixed stopping time, it uses e-values, e-processes, always-valid p-values, and confidence sequences: evidence measures and intervals designed to remain valid at **arbitrary stopping times**. You can look early, look often, stop when the evidence is decisive, or continue when it is ambiguous, without silently inflating the false-positive rate.
 
-<div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-peekPanel">
-<p class="ptitle">Interactive · optional stopping</p>
-<h3>The peek meter</h3>
-<p class="pnote">A toy approximation: treat each look as a fresh chance to cross <MathInline latex={String.raw`p < \alpha`} />. Real sequential dependence is subtler, but the direction is the point. Fixed-sample p-values are brittle under repeated looks; anytime-valid procedures are designed for the stopping rule.</p>
+This is not a decorative upgrade. It attacks one of Day 6’s central machines for fooling yourself: optional stopping. The frontier after 2020 is the consolidation of a “game-theoretic statistics / safe anytime-valid inference” language. It treats evidence as a capital process in a game against nature. If the null is true, your evidence wealth cannot systematically grow without bound; Ville-style inequalities turn that into sequential tests and confidence sequences.
+
+The hype filter: the mathematics is now serious and mature. The practical risk is cultural. People like dashboards but dislike changing the number they report. If a team runs a continuously monitored experiment and still reports ordinary fixed-horizon p-values, the UI may look modern while the inferential contract is 1930s paper-and-pencil.
+
+<Aside>
+<BlockTitle>Day 6 callback</BlockTitle>
+
+Optional stopping was one of the False-Positive Factory switches. Anytime-valid inference does not say “never peek.” It says: if peeking is part of the workflow, put peeking into the statistical procedure rather than pretending it did not happen.
+</Aside>
+
+</ContentSection>
+
+<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-peekPanel">
+<PanelTitle>Interactive · optional stopping</PanelTitle>
+
+### The peek meter
+
+<PanelNote>A toy approximation: treat each look as a fresh chance to cross <MathInline latex={String.raw`p < \alpha`} />. Real sequential dependence is subtler, but the direction is the point. Fixed-sample p-values are brittle under repeated looks; anytime-valid procedures are designed for the stopping rule.</PanelNote>
+
 <div class="grid2">
 <div class="ctrl">
 <div class="slider-row"><label>Nominal <MathInline latex={String.raw`\alpha`} /> <span class="val" id="appendix-d006-the-incoming-wave-revised-peekAlphaVal">0.05</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-peekAlpha" min="1" max="10" value="5" /></div>
@@ -73,11 +104,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 </div>
 <div class="readout" id="appendix-d006-the-incoming-wave-revised-peekRead"></div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>Optional-stopping reference</h3>
-<p class="pnote">Repeated looks raise the chance of at least one false alarm unless the test is designed for sequential monitoring.</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### Optional-stopping reference
+
+<PanelNote>Repeated looks raise the chance of at least one false alarm unless the test is designed for sequential monitoring.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Looks at alpha .05</th><th>Naive false-alarm risk</th><th>Anytime-valid target</th></tr></thead>
 <tbody>
@@ -86,22 +121,31 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>100</td><td>About 99%</td><td>5%</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<section id="appendix-d006-the-incoming-wave-revised-conformal">
-<p class="sec-eyebrow"><span class="n">§2</span> The guarantee that wraps a black box</p>
-<h2>Conformal prediction becomes conformal risk control</h2>
+<ContentSection id="appendix-d006-the-incoming-wave-revised-conformal">
+<SectionEyebrow number="§2"> The guarantee that wraps a black box</SectionEyebrow>
+
+## Conformal prediction becomes conformal risk control
+
 <div class="claim"><div class="ctop"><span class="cnum">Wave 02</span><StatusChip status={"ok"} label={"Core method established"} printLabel={"established"} /><StatusChip status={"hint"} label={"Risk-control frontier"} printLabel={"promising"} /></div></div>
-<p>Conformal prediction is the simplest profound idea in the current statistics/ML interface. Train any predictive model. Hold out calibration data. Measure how wrong the model is on those held-out cases. Use the empirical quantile of those errors to form a prediction set for the next case. Under exchangeability, the set covers the true answer at the advertised rate in finite samples, regardless of whether the model is linear, neural, brilliant, or embarrassing.</p>
-<p>A common simplification treats conformal prediction as “intervals for any model.” That is correct but incomplete. The post-2020 frontier is broader: <em class="term">conformal risk control</em> asks not merely “does the true label fall in the set?” but “can we control a chosen risk function?” In vision and language tasks, the useful error metric may be false negative rate, graph distance, abstention error, retrieval miss-rate, or token-level F1. Conformal risk control extends the conformal idea to monotone losses and gives finite-sample control of the expected risk.</p>
-<p>That matters for AI systems because the output is often not a scalar. A chatbot answer, segmentation mask, medical image region, or structured extraction is not a single yes/no label. Risk control lets you build a calibrated <strong>ship / abstain / escalate / ask for review</strong> wrapper around a black-box model. In the safest version, the model remains a prediction engine; the conformal wrapper becomes the trust policy.</p>
-<p>The hype filter: marginal coverage is real; conditional coverage is hard. Under distribution shift, the classical exchangeability guarantee weakens. Recent work handles weighted and non-exchangeable settings, conditional-style guarantees, and e-value variants, but the practitioner still has to ask whether the calibration data resemble deployment. Conformal methods make uncertainty honest. They do not make a bad deployment context safe.</p>
-</section>
+Conformal prediction is the simplest profound idea in the current statistics/ML interface. Train any predictive model. Hold out calibration data. Measure how wrong the model is on those held-out cases. Use the empirical quantile of those errors to form a prediction set for the next case. Under exchangeability, the set covers the true answer at the advertised rate in finite samples, regardless of whether the model is linear, neural, brilliant, or embarrassing.
 
-<div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-confPanel">
-<p class="ptitle">Interactive · conformal bargain</p>
-<h3>Coverage is bought with set size</h3>
-<p class="pnote">This is a conceptual dial, not a theorem. Lower α asks for higher coverage; weaker model skill and more shift make the prediction set larger or less trustworthy. The real guarantee depends on exchangeability or a justified shift correction.</p>
+A common simplification treats conformal prediction as “intervals for any model.” That is correct but incomplete. The post-2020 frontier is broader: <Term as="em">conformal risk control</Term> asks not merely “does the true label fall in the set?” but “can we control a chosen risk function?” In vision and language tasks, the useful error metric may be false negative rate, graph distance, abstention error, retrieval miss-rate, or token-level F1. Conformal risk control extends the conformal idea to monotone losses and gives finite-sample control of the expected risk.
+
+That matters for AI systems because the output is often not a scalar. A chatbot answer, segmentation mask, medical image region, or structured extraction is not a single yes/no label. Risk control lets you build a calibrated **ship / abstain / escalate / ask for review** wrapper around a black-box model. In the safest version, the model remains a prediction engine; the conformal wrapper becomes the trust policy.
+
+The hype filter: marginal coverage is real; conditional coverage is hard. Under distribution shift, the classical exchangeability guarantee weakens. Recent work handles weighted and non-exchangeable settings, conditional-style guarantees, and e-value variants, but the practitioner still has to ask whether the calibration data resemble deployment. Conformal methods make uncertainty honest. They do not make a bad deployment context safe.
+
+</ContentSection>
+
+<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-confPanel">
+<PanelTitle>Interactive · conformal bargain</PanelTitle>
+
+### Coverage is bought with set size
+
+<PanelNote>This is a conceptual dial, not a theorem. Lower α asks for higher coverage; weaker model skill and more shift make the prediction set larger or less trustworthy. The real guarantee depends on exchangeability or a justified shift correction.</PanelNote>
+
 <div class="grid2">
 <div class="ctrl">
 <div class="slider-row"><label><MathInline latex={String.raw`\alpha`} />, tolerated miss-rate <span class="val" id="appendix-d006-the-incoming-wave-revised-confAlphaVal">0.10</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confAlpha" min="1" max="30" value="10" /></div>
@@ -116,11 +160,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 </div>
 <div class="readout" id="appendix-d006-the-incoming-wave-revised-confRead"></div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>Conformal-risk reference</h3>
-<p class="pnote">Conformal guarantees trade coverage against set size and depend on calibration data resembling deployment.</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### Conformal-risk reference
+
+<PanelNote>Conformal guarantees trade coverage against set size and depend on calibration data resembling deployment.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Choice</th><th>What improves</th><th>What can fail</th></tr></thead>
 <tbody>
@@ -129,22 +177,31 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>Deployment shift</td><td>Nothing automatically</td><td>Exchangeability can break.</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<section id="appendix-d006-the-incoming-wave-revised-ppi">
-<p class="sec-eyebrow"><span class="n">§3</span> Using AI predictions without swallowing their errors</p>
-<h2>Prediction-powered inference: the rectifier is the point</h2>
+<ContentSection id="appendix-d006-the-incoming-wave-revised-ppi">
+<SectionEyebrow number="§3"> Using AI predictions without swallowing their errors</SectionEyebrow>
+
+## Prediction-powered inference: the rectifier is the point
+
 <div class="claim"><div class="ctop"><span class="cnum">Wave 03</span><StatusChip status={"ok"} label={"Science 2023"} printLabel={"review"} /><StatusChip status={"ok"} label={"PNAS 2024 extensions"} printLabel={"established"} /><StatusChip status={"hint"} label={"Adoption growing"} printLabel={"promising"} /></div></div>
-<p>AI can label a million galaxies, satellite tiles, pathology patches, protein records, or clinical notes. But a statistical estimate from those predictions is not automatically valid, because model errors are not random clerical typos. They are structured. They follow the model’s blind spots.</p>
-<p><em class="term">Prediction-powered inference</em> (PPI) solves the problem by refusing to trust the model alone. You combine a small labeled sample, where humans or instruments provide gold-standard truth, with a much larger unlabeled sample on which the model predicts. The labeled sample estimates a <strong>rectifier</strong>: the correction for the model’s bias on the estimand you actually care about. The unlabeled sample supplies cheap precision; the labeled sample supplies validity.</p>
-<p>PPI++ improves the efficiency of this idea by adapting to prediction quality. If the model is useful, the interval shrinks. If the model is weak, the method falls back toward the labeled-only interval rather than letting bad predictions poison the estimate. Cross-prediction-powered inference goes further by distributing prediction and correction across folds. The architecture is exactly the incoming-wave pattern: <strong>use the black box for power, but put the guarantee in the wrapper.</strong></p>
-<p>The limitation is practical, not philosophical. You still need a gold-standard labeled sample drawn from the right target population. You still need to define the estimand before the model seduces you into measuring whatever it can label. And if the labeled set misses the subgroup where the model fails, the rectifier can inherit that blind spot.</p>
-</section>
+AI can label a million galaxies, satellite tiles, pathology patches, protein records, or clinical notes. But a statistical estimate from those predictions is not automatically valid, because model errors are not random clerical typos. They are structured. They follow the model’s blind spots.
 
-<div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-ppiPanel">
-<p class="ptitle">Interactive · the PPI bargain</p>
-<h3>Cheap predictions buy precision only after gold-standard correction</h3>
-<p class="pnote">Move the sliders to compare three intervals: classical labeled-only, naive ML-as-truth, and PPI. The naive interval can be narrow and wrong. PPI aims to be narrower than labeled-only while retaining validity through the rectifier.</p>
+<Term as="em">Prediction-powered inference</Term> (PPI) solves the problem by refusing to trust the model alone. You combine a small labeled sample, where humans or instruments provide gold-standard truth, with a much larger unlabeled sample on which the model predicts. The labeled sample estimates a **rectifier**: the correction for the model’s bias on the estimand you actually care about. The unlabeled sample supplies cheap precision; the labeled sample supplies validity.
+
+PPI++ improves the efficiency of this idea by adapting to prediction quality. If the model is useful, the interval shrinks. If the model is weak, the method falls back toward the labeled-only interval rather than letting bad predictions poison the estimate. Cross-prediction-powered inference goes further by distributing prediction and correction across folds. The architecture is exactly the incoming-wave pattern: **use the black box for power, but put the guarantee in the wrapper.**
+
+The limitation is practical, not philosophical. You still need a gold-standard labeled sample drawn from the right target population. You still need to define the estimand before the model seduces you into measuring whatever it can label. And if the labeled set misses the subgroup where the model fails, the rectifier can inherit that blind spot.
+
+</ContentSection>
+
+<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-ppiPanel">
+<PanelTitle>Interactive · the PPI bargain</PanelTitle>
+
+### Cheap predictions buy precision only after gold-standard correction
+
+<PanelNote>Move the sliders to compare three intervals: classical labeled-only, naive ML-as-truth, and PPI. The naive interval can be narrow and wrong. PPI aims to be narrower than labeled-only while retaining validity through the rectifier.</PanelNote>
+
 <div class="grid2">
 <div class="ctrl">
 <div class="slider-row"><label>Gold labels <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiNVal">200</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiN" min="40" max="2000" value="200" /></div>
@@ -160,11 +217,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 </div>
 <div class="readout" id="appendix-d006-the-incoming-wave-revised-ppiRead"></div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>Prediction-powered inference reference</h3>
-<p class="pnote">PPI uses model predictions for precision and gold labels for validity.</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### Prediction-powered inference reference
+
+<PanelNote>PPI uses model predictions for precision and gold labels for validity.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Estimator</th><th>Strength</th><th>Failure mode</th></tr></thead>
 <tbody>
@@ -173,38 +234,56 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>PPI</td><td>Corrected precision</td><td>Needs representative gold labels.</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<section id="appendix-d006-the-incoming-wave-revised-dml">
-<p class="sec-eyebrow"><span class="n">§4</span> Machines for nuisance, humans for assumptions</p>
-<h2>Double / debiased machine learning for causal effects</h2>
+<ContentSection id="appendix-d006-the-incoming-wave-revised-dml">
+<SectionEyebrow number="§4"> Machines for nuisance, humans for assumptions</SectionEyebrow>
+
+## Double / debiased machine learning for causal effects
+
 <div class="claim"><div class="ctop"><span class="cnum">Wave 04</span><StatusChip status={"ok"} label={"Theory established"} printLabel={"established"} /><StatusChip status={"ok"} label={"Tooling mature"} printLabel={"established"} /></div></div>
-<p>Day 5’s warning was blunt: association is not intervention. To estimate a causal effect from observational data, you must adjust for confounders, and you must do it without imposing a fantasy linear model on a nonlinear world.</p>
-<p>Double/debiased machine learning (DML) uses ML where ML is strongest: learning high-dimensional nuisance functions such as outcome regressions and propensity scores. Then it uses orthogonal scores and cross-fitting where statistics is strongest: protecting a low-dimensional target estimate from first-order errors in those nuisance fits. You let the random forest, gradient booster, or neural net approximate the messy parts, then construct the causal estimator so that small nuisance mistakes wash out.</p>
-<p>The post-2020 change is not that DML was invented after 2020; it was not. The change is that software and applied practice caught up. DoubleML implementations in Python and R, causal-forest workflows, and biomedical heterogeneous-treatment-effect reviews have turned “orthogonalize the nuisance” from a seminar phrase into an applied workflow.</p>
-<p>The hype filter is essential: DML weakens modeling assumptions; it does not remove causal identification assumptions. If the back-door set is wrong, if a confounder is unmeasured, if treatment assignment depends on hidden variables, a beautiful orthogonal score will compute a precise answer to the wrong causal question. DML solves <em>flexible adjustment</em>, not the metaphysics of causation.</p>
+Day 5’s warning was blunt: association is not intervention. To estimate a causal effect from observational data, you must adjust for confounders, and you must do it without imposing a fantasy linear model on a nonlinear world.
 
-<div class="aside"><p class="h">Day 5 callback</p><p>DML helps estimate <MathInline latex={String.raw`P(Y\mid\operatorname{do}(X))`} /> only after the design and identification argument say that this target is reachable. It is not a machine for converting <MathInline latex={String.raw`P(Y\mid X)`} /> into causation by force.</p></div>
-</section>
+Double/debiased machine learning (DML) uses ML where ML is strongest: learning high-dimensional nuisance functions such as outcome regressions and propensity scores. Then it uses orthogonal scores and cross-fitting where statistics is strongest: protecting a low-dimensional target estimate from first-order errors in those nuisance fits. You let the random forest, gradient booster, or neural net approximate the messy parts, then construct the causal estimator so that small nuisance mistakes wash out.
 
-<section id="appendix-d006-the-incoming-wave-revised-selection">
-<p class="sec-eyebrow"><span class="n">§5</span> Explore first, infer second, pay the bill</p>
-<h2>Inference after discovery: post-selection, causal discovery, and data fission</h2>
+The post-2020 change is not that DML was invented after 2020; it was not. The change is that software and applied practice caught up. DoubleML implementations in Python and R, causal-forest workflows, and biomedical heterogeneous-treatment-effect reviews have turned “orthogonalize the nuisance” from a seminar phrase into an applied workflow.
+
+The hype filter is essential: DML weakens modeling assumptions; it does not remove causal identification assumptions. If the back-door set is wrong, if a confounder is unmeasured, if treatment assignment depends on hidden variables, a beautiful orthogonal score will compute a precise answer to the wrong causal question. DML solves *flexible adjustment*, not the metaphysics of causation.
+
+<Aside>
+<BlockTitle>Day 5 callback</BlockTitle>
+
+DML helps estimate <MathInline latex={String.raw`P(Y\mid\operatorname{do}(X))`} /> only after the design and identification argument say that this target is reachable. It is not a machine for converting <MathInline latex={String.raw`P(Y\mid X)`} /> into causation by force.
+</Aside>
+
+</ContentSection>
+
+<ContentSection id="appendix-d006-the-incoming-wave-revised-selection">
+<SectionEyebrow number="§5"> Explore first, infer second, pay the bill</SectionEyebrow>
+
+## Inference after discovery: post-selection, causal discovery, and data fission
+
 <div class="claim"><div class="ctop"><span class="cnum">Wave 05</span><StatusChip status={"hint"} label={"Fast-moving frontier"} printLabel={"review"} /><StatusChip status={"ok"} label={"Core problem settled"} printLabel={"review"} /></div></div>
-<p>The garden of forking paths is not going away. Modern analysis often begins with discovery: cluster the cells, find the subgroup, select the variables, learn the causal graph, choose the image region, tune the transformation, ask the AI analyst to “find what matters.” The fatal mistake is to use the same data to discover a target and then pretend the target was specified in advance.</p>
-<p><em class="term">Post-selection inference</em> is the statistical attempt to pay that bill honestly. The classical approaches condition on the selection event, split the data into discovery and confirmation sets, or build simultaneous intervals wide enough to survive selection. The post-2020 frontier adds three especially relevant ideas.</p>
+The garden of forking paths is not going away. Modern analysis often begins with discovery: cluster the cells, find the subgroup, select the variables, learn the causal graph, choose the image region, tune the transformation, ask the AI analyst to “find what matters.” The fatal mistake is to use the same data to discover a target and then pretend the target was specified in advance.
+
+<Term as="em">Post-selection inference</Term> is the statistical attempt to pay that bill honestly. The classical approaches condition on the selection event, split the data into discovery and confirmation sets, or build simultaneous intervals wide enough to survive selection. The post-2020 frontier adds three especially relevant ideas.
+
 <div class="mini-list">
 <div class="mini"><div class="num">A</div><p><strong>Algorithmic stability.</strong> If the selection rule is randomized and stable, its sensitivity to any one observation can be quantified. That stability can be turned into post-selection corrections, borrowing ideas from differential privacy and adaptive data analysis.</p></div>
 <div class="mini"><div class="num">B</div><p><strong>Data fission and data thinning.</strong> Instead of splitting rows, split the statistical information inside the data into pieces. One piece explores; the other tests. For some distributions, recent thinning methods produce independent pieces without throwing away whole observations.</p></div>
 <div class="mini"><div class="num">C</div><p><strong>Valid inference after causal discovery.</strong> Running a graph-discovery algorithm and then estimating effects on the same data can break coverage. New work randomizes and corrects discovery so the subsequent causal intervals are not fantasy intervals.</p></div>
 </div>
-<p>The hype filter: this is not easy, and it is not a substitute for preregistration when preregistration is possible. But it is the right frontier for exploratory science because “never explore” is not a serious rule. The serious rule is: if the data suggested the question, the inference must know that.</p>
-</section>
+The hype filter: this is not easy, and it is not a substitute for preregistration when preregistration is possible. But it is the right frontier for exploratory science because “never explore” is not a serious rule. The serious rule is: if the data suggested the question, the inference must know that.
 
-<div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-pathsPanel">
-<p class="ptitle">Interactive · AI analyst multiverse</p>
-<h3>The garden grows faster when analysis is cheap</h3>
-<p class="pnote">Assume pure noise and a nominal <MathInline latex={String.raw`\alpha=.05`} />. Each prompt, model, outcome, and cleaning rule multiplies the number of possible analyses. The independence approximation is crude; the moral is not.</p>
+</ContentSection>
+
+<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-pathsPanel">
+<PanelTitle>Interactive · AI analyst multiverse</PanelTitle>
+
+### The garden grows faster when analysis is cheap
+
+<PanelNote>Assume pure noise and a nominal <MathInline latex={String.raw`\alpha=.05`} />. Each prompt, model, outcome, and cleaning rule multiplies the number of possible analyses. The independence approximation is crude; the moral is not.</PanelNote>
+
 <div class="grid2">
 <div class="ctrl">
 <div class="slider-row"><label>Prompts tried <span class="val" id="appendix-d006-the-incoming-wave-revised-pathPromptVal">4</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathPrompt" min="1" max="30" value="4" /></div>
@@ -220,11 +299,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 </div>
 <div class="readout" id="appendix-d006-the-incoming-wave-revised-pathsRead"></div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>AI-analysis multiverse reference</h3>
-<p class="pnote">More prompts, models, outcomes, and cleaning rules multiply possible analysis paths.</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### AI-analysis multiverse reference
+
+<PanelNote>More prompts, models, outcomes, and cleaning rules multiply possible analysis paths.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Prompts</th><th>Models</th><th>Outcomes</th><th>Cleaning rules</th><th>Paths</th></tr></thead>
 <tbody>
@@ -233,41 +316,61 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>One preregistered plan</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<section id="appendix-d006-the-incoming-wave-revised-privacy">
-<p class="sec-eyebrow"><span class="n">§6</span> When the released data are not the data</p>
-<h2>Differential privacy turns uncertainty into a public design problem</h2>
+<ContentSection id="appendix-d006-the-incoming-wave-revised-privacy">
+<SectionEyebrow number="§6"> When the released data are not the data</SectionEyebrow>
+
+## Differential privacy turns uncertainty into a public design problem
+
 <div class="claim"><div class="ctop"><span class="cnum">Wave 06</span><StatusChip status={"hint"} label={"High-stakes frontier"} printLabel={"review"} /><StatusChip status={"blue"} label={"Policy-relevant"} printLabel={"review"} /></div></div>
-<p>Open science wants data sharing. Human subjects, firms, hospitals, and governments want confidentiality. Differential privacy is the strongest modern language for this tradeoff: random noise is added so that one person’s presence or absence has bounded influence on the released output.</p>
-<p>For Day 6, the statistical sting is this: <strong>privacy noise is not a file-format detail.</strong> If you analyze differentially private statistics or synthetic data as if they were ordinary observations, your intervals can be too narrow, your p-values too confident, and your null findings too frequent. The privacy mechanism is part of the data-generating process, so valid inference has to include it.</p>
-<p>Post-2020 work has been building noise-aware confidence intervals, private bootstraps, inference from DP synthetic data, and guidelines for evaluating whether a claimed privacy guarantee means what users think it means. This is not glamorous, but it is central. In the next decade, many researchers will never touch the raw administrative or medical data. They will touch privacy-filtered outputs. The frontier question becomes: can we make those outputs scientifically useful without making people identifiable?</p>
-<p>The hype filter: differential privacy protects individuals by making some analyses less precise. A valid private interval may be much wider. That is not failure; that is the price tag made visible. The dangerous failure is a narrow interval that forgot the noise.</p>
-</section>
+Open science wants data sharing. Human subjects, firms, hospitals, and governments want confidentiality. Differential privacy is the strongest modern language for this tradeoff: random noise is added so that one person’s presence or absence has bounded influence on the released output.
 
-<section id="appendix-d006-the-incoming-wave-revised-bayes">
-<p class="sec-eyebrow"><span class="n">§7</span> The model is a workflow, not a formula</p>
-<h2>Bayesian workflow and simulation-based calibration</h2>
+For Day 6, the statistical sting is this: **privacy noise is not a file-format detail.** If you analyze differentially private statistics or synthetic data as if they were ordinary observations, your intervals can be too narrow, your p-values too confident, and your null findings too frequent. The privacy mechanism is part of the data-generating process, so valid inference has to include it.
+
+Post-2020 work has been building noise-aware confidence intervals, private bootstraps, inference from DP synthetic data, and guidelines for evaluating whether a claimed privacy guarantee means what users think it means. This is not glamorous, but it is central. In the next decade, many researchers will never touch the raw administrative or medical data. They will touch privacy-filtered outputs. The frontier question becomes: can we make those outputs scientifically useful without making people identifiable?
+
+The hype filter: differential privacy protects individuals by making some analyses less precise. A valid private interval may be much wider. That is not failure; that is the price tag made visible. The dangerous failure is a narrow interval that forgot the noise.
+
+</ContentSection>
+
+<ContentSection id="appendix-d006-the-incoming-wave-revised-bayes">
+<SectionEyebrow number="§7"> The model is a workflow, not a formula</SectionEyebrow>
+
+## Bayesian workflow and simulation-based calibration
+
 <div class="claim"><div class="ctop"><span class="cnum">Wave 07</span><StatusChip status={"ok"} label={"Practice shift"} printLabel={"established"} /><StatusChip status={"hint"} label={"Computation-sensitive"} printLabel={"review"} /></div></div>
-<p>Bayesian statistics is often sold as a clean alternative to p-values: put a prior on the unknowns, compute a posterior, report probabilities about parameters. That is attractive, but it can become another ritual if the prior is unexamined, the model is misspecified, and the sampler is silently broken.</p>
-<p>The post-2020 Bayesian workflow movement says: the unit of trust is not the posterior; it is the <strong>workflow that produced and criticized the posterior</strong>. Prior predictive checks ask whether the model could generate plausible data before seeing the data. Posterior predictive checks ask what the fitted model still cannot reproduce. Cross-validation asks whether predictions survive held-out cases. Simulation-based calibration checks whether the inference algorithm can recover known parameters when the data are simulated from the model.</p>
-<p>This belongs in the cutting-edge appendix because it is a direct answer to Day 1’s stopped-clock worry. A posterior can be numerically impressive for accidental reasons. A workflow makes the path visible: what was assumed, what was simulated, what failed, what changed, and what uncertainty remains.</p>
-<p>The hype filter: model checking is not model proof. Posterior predictive checks can miss the discrepancy that matters. SBC validates computation under the assumed generative model, not the truth of the model itself. But compared with a lone posterior interval, a documented workflow is a much harder machine to fool.</p>
-</section>
+Bayesian statistics is often sold as a clean alternative to p-values: put a prior on the unknowns, compute a posterior, report probabilities about parameters. That is attractive, but it can become another ritual if the prior is unexamined, the model is misspecified, and the sampler is silently broken.
 
-<section id="appendix-d006-the-incoming-wave-revised-forensics">
-<p class="sec-eyebrow"><span class="n">§8</span> The error-correction system grows teeth</p>
-<h2>Statistical forensics and replicability triage at scale</h2>
+The post-2020 Bayesian workflow movement says: the unit of trust is not the posterior; it is the **workflow that produced and criticized the posterior**. Prior predictive checks ask whether the model could generate plausible data before seeing the data. Posterior predictive checks ask what the fitted model still cannot reproduce. Cross-validation asks whether predictions survive held-out cases. Simulation-based calibration checks whether the inference algorithm can recover known parameters when the data are simulated from the model.
+
+This belongs in the cutting-edge appendix because it is a direct answer to Day 1’s stopped-clock worry. A posterior can be numerically impressive for accidental reasons. A workflow makes the path visible: what was assumed, what was simulated, what failed, what changed, and what uncertainty remains.
+
+The hype filter: model checking is not model proof. Posterior predictive checks can miss the discrepancy that matters. SBC validates computation under the assumed generative model, not the truth of the model itself. But compared with a lone posterior interval, a documented workflow is a much harder machine to fool.
+
+</ContentSection>
+
+<ContentSection id="appendix-d006-the-incoming-wave-revised-forensics">
+<SectionEyebrow number="§8"> The error-correction system grows teeth</SectionEyebrow>
+
+## Statistical forensics and replicability triage at scale
+
 <div class="claim"><div class="ctop"><span class="cnum">Wave 08</span><StatusChip status={"ok"} label={"Forensics validated"} printLabel={"established"} /><StatusChip status={"hint"} label={"Scale still early"} printLabel={"review"} /></div></div>
-<p>Appendix I’s forensic toolkit was artisanal: GRIM checks, statcheck, p-curve, digit anomalies, spreadsheet oddities. The post-2020 change is that the stakes and scale have grown.</p>
-<p>The Francesca Gino / Data Colada case showed both the power and the danger. Data Colada published detailed anomaly analyses in 2023. Harvard’s investigation concluded research misconduct; Gino denied wrongdoing and sued. In September 2024, a federal judge dismissed all claims against the Data Colada defendants; in May 2025 Harvard revoked Gino’s tenure and terminated her employment, while some legal disputes involving Harvard continued. The scientific lesson is not “bloggers should run universities.” It is that transparent forensic arguments can become part of the formal error-correction system.</p>
-<p>The next layer is triage. We cannot replicate every claim. Decision markets have shown that scientists’ aggregated forecasts can identify high- and low-replicability findings: in one Nature Human Behaviour study, top-market studies replicated far more often than bottom-market studies. The Center for Open Science’s Predicting Replicability Challenge adds machine-learning models trained on thousands of prior replication outcomes. The early results are sobering: Round 1 was weak by some metrics; Round 2 improved. That nuance matters. Replicability prediction is a promising smoke alarm, not a truth machine.</p>
-<p>The hype filter: forensic tools can be misused as accusation engines. A weird dataset is not automatically fraud; a low replicability forecast is not a verdict. The frontier needs transparent code, calibrated false-alarm rates, and institutional protections for both whistleblowers and accused researchers.</p>
-</section>
-<section>
-<div class="panel widepanel">
-<p class="ptitle">Timeline · maturity and caution</p>
-<h3>The wave at a glance</h3>
+Appendix I’s forensic toolkit was artisanal: GRIM checks, statcheck, p-curve, digit anomalies, spreadsheet oddities. The post-2020 change is that the stakes and scale have grown.
+
+The Francesca Gino / Data Colada case showed both the power and the danger. Data Colada published detailed anomaly analyses in 2023. Harvard’s investigation concluded research misconduct; Gino denied wrongdoing and sued. In September 2024, a federal judge dismissed all claims against the Data Colada defendants; in May 2025 Harvard revoked Gino’s tenure and terminated her employment, while some legal disputes involving Harvard continued. The scientific lesson is not “bloggers should run universities.” It is that transparent forensic arguments can become part of the formal error-correction system.
+
+The next layer is triage. We cannot replicate every claim. Decision markets have shown that scientists’ aggregated forecasts can identify high- and low-replicability findings: in one Nature Human Behaviour study, top-market studies replicated far more often than bottom-market studies. The Center for Open Science’s Predicting Replicability Challenge adds machine-learning models trained on thousands of prior replication outcomes. The early results are sobering: Round 1 was weak by some metrics; Round 2 improved. That nuance matters. Replicability prediction is a promising smoke alarm, not a truth machine.
+
+The hype filter: forensic tools can be misused as accusation engines. A weird dataset is not automatically fraud; a low replicability forecast is not a verdict. The frontier needs transparent code, calibrated false-alarm rates, and institutional protections for both whistleblowers and accused researchers.
+
+</ContentSection>
+
+<Panel class="widepanel">
+<PanelTitle>Timeline · maturity and caution</PanelTitle>
+
+### The wave at a glance
+
 <div class="timeline">
 <div class="tl-item"><div class="tl-dot ok"></div><div class="tl-body"><p class="yr">2021–2024</p><p class="tt">Anytime-valid inference consolidates</p><p>Always-valid A/B testing, e-processes, confidence sequences, and safe testing become a coherent post-p-value language for sequential science.</p></div></div>
 <div class="tl-item"><div class="tl-dot ok"></div><div class="tl-body"><p class="yr">2023–2025</p><p class="tt">Conformal leaves the classroom</p><p>Gentle tutorials, beyond-exchangeability theory, conformal risk control, conditional-style guarantees, and NLP/LLM applications widen the use case.</p></div></div>
@@ -276,35 +379,55 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <div class="tl-item"><div class="tl-dot hint"></div><div class="tl-body"><p class="yr">2022–2026</p><p class="tt">Privacy-aware inference becomes unavoidable</p><p>DP synthetic data and private confidence intervals force analysts to include privacy noise in uncertainty, rather than treating released data as raw data.</p></div></div>
 <div class="tl-item"><div class="tl-dot bad"></div><div class="tl-body"><p class="yr">2023–2026</p><p class="tt">LLMs enter the research pipeline</p><p>Silicon samples, AI data analysts, benchmark contamination, and AI-scientist systems create a new replication problem: not just what did humans choose, but what did the machine choose?</p></div></div>
 </div>
-</div>
-</section>
-<section id="appendix-d006-the-incoming-wave-revised-silicon">
-<p class="sec-eyebrow"><span class="n">§9</span> Synthetic humans are not humans</p>
-<h2>Silicon samples and LLM social simulations</h2>
+</Panel>
+
+<ContentSection id="appendix-d006-the-incoming-wave-revised-silicon">
+<SectionEyebrow number="§9"> Synthetic humans are not humans</SectionEyebrow>
+
+## Silicon samples and LLM social simulations
+
 <div class="claim"><div class="ctop"><span class="cnum">Wave 09</span><StatusChip status={"hint"} label={"Useful for piloting"} printLabel={"review"} /><StatusChip status={"bad"} label={"Contested as evidence"} printLabel={"contested"} /></div></div>
-<p>Silicon sampling asks an irresistible question: if a language model has absorbed enough social text, can it act as a simulated survey respondent or experimental participant? The first wave of results was exciting. Conditioned on demographic backstories, models sometimes reproduced aggregate opinion patterns. Agent-based simulations produced believable local interactions. Large-scale replications of psychology and management scenarios found that LLMs often matched the <em>direction</em> of main effects.</p>
-<p>The second wave is the caution. LLMs can distort correlations even when margins look right. They often compress distributions toward modal answers. They may amplify effect sizes. They can perform worse on socially sensitive topics. Their “population” is a residue of training data, alignment tuning, prompt wording, and model version. That is not a sample frame. It is a machine-shaped mirror.</p>
-<p>The honest use case is therefore narrow but real: pilot instruments, debug ambiguous survey wording, estimate rough sample-size needs, test whether a manipulation is even legible, and generate hypotheses before spending human-subjects budgets. The reckless use case is confirmatory evidence without human validation.</p>
-<p>Reporting standards should become severe: model name and version, date, system prompt, persona construction, temperature, sampling scheme, repeated-run variability, validation against human data, and a preregistered rule for when the simulation is allowed to count. Otherwise silicon samples become the garden of forking paths wearing a human mask.</p>
-</section>
+Silicon sampling asks an irresistible question: if a language model has absorbed enough social text, can it act as a simulated survey respondent or experimental participant? The first wave of results was exciting. Conditioned on demographic backstories, models sometimes reproduced aggregate opinion patterns. Agent-based simulations produced believable local interactions. Large-scale replications of psychology and management scenarios found that LLMs often matched the *direction* of main effects.
 
-<section id="appendix-d006-the-incoming-wave-revised-ai">
-<p class="sec-eyebrow"><span class="n">§10</span> When the analyst is silicon too</p>
-<h2>AI analysts, automated science, and benchmark contamination</h2>
+The second wave is the caution. LLMs can distort correlations even when margins look right. They often compress distributions toward modal answers. They may amplify effect sizes. They can perform worse on socially sensitive topics. Their “population” is a residue of training data, alignment tuning, prompt wording, and model version. That is not a sample frame. It is a machine-shaped mirror.
+
+The honest use case is therefore narrow but real: pilot instruments, debug ambiguous survey wording, estimate rough sample-size needs, test whether a manipulation is even legible, and generate hypotheses before spending human-subjects budgets. The reckless use case is confirmatory evidence without human validation.
+
+Reporting standards should become severe: model name and version, date, system prompt, persona construction, temperature, sampling scheme, repeated-run variability, validation against human data, and a preregistered rule for when the simulation is allowed to count. Otherwise silicon samples become the garden of forking paths wearing a human mask.
+
+</ContentSection>
+
+<ContentSection id="appendix-d006-the-incoming-wave-revised-ai">
+<SectionEyebrow number="§10"> When the analyst is silicon too</SectionEyebrow>
+
+## AI analysts, automated science, and benchmark contamination
+
 <div class="claim"><div class="ctop"><span class="cnum">Wave 10</span><StatusChip status={"bad"} label={"Deeply unsettled"} printLabel={"contested"} /><StatusChip status={"hint"} label={"Tooling advancing fast"} printLabel={"review"} /></div></div>
-<p>The most dangerous frontier is not AI as a model inside an analysis. It is AI as the entity that chooses the analysis.</p>
-<p>Data-analysis agents can clean data, write code, choose models, run tests, generate plots, and narrate findings. New benchmarks such as StatLLM evaluate statistical code; data-agent benchmarks evaluate longer workflows. Studies of LLM data analysis show variation across models, prompts, temperatures, and repeated executions; even the same task and dataset can lead to meaningfully different estimates. At the far edge, autonomous research systems now generate ideas, write code, run experiments, plot results, draft papers, and perform self-review.</p>
-<p>This does not make AI useless. It makes AI analysis statistically dangerous in a very familiar way. The many-analysts problem has become cheap enough to run in seconds. The “researcher degrees of freedom” are now prompt degrees of freedom, model degrees of freedom, retry degrees of freedom, tool-call degrees of freedom, and hidden chain-of-reasoning degrees of freedom.</p>
-<p>AI benchmarking has the same pathology at field scale. Public leaderboards are repeated tests. Static benchmarks leak into training data. Developers can tune to the benchmark. Scores can rise because models generalize better, because they memorized more, because the harness changed, or because the benchmark itself is exhausted. The statistical object is no longer “accuracy on a test set”; it is <strong>a dynamic game between model builders, benchmark maintainers, and hidden evaluation data</strong>.</p>
-<p>The responsible frontier looks like this: prompt logs, containerized code, repeated independent agent runs, multiverse reports, hidden holdout evaluations, contamination audits, preregistered analysis instructions, and human review of the decisions the system made. The dream is an AI analyst that exposes every fork. The nightmare is an AI analyst that silently chooses the fork that gets published.</p>
+The most dangerous frontier is not AI as a model inside an analysis. It is AI as the entity that chooses the analysis.
 
-<div class="aside"><p class="h">Day 1 callback</p><p>AI can give an illusion of understanding: more outputs, more polish, more confidence, less actual contact with why the claim is true. The antidote is not less computation. It is more audit.</p></div>
-</section>
+Data-analysis agents can clean data, write code, choose models, run tests, generate plots, and narrate findings. New benchmarks such as StatLLM evaluate statistical code; data-agent benchmarks evaluate longer workflows. Studies of LLM data analysis show variation across models, prompts, temperatures, and repeated executions; even the same task and dataset can lead to meaningfully different estimates. At the far edge, autonomous research systems now generate ideas, write code, run experiments, plot results, draft papers, and perform self-review.
 
-<div class="panel web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-benchPanel">
-<p class="ptitle">Interactive · benchmark games</p>
-<h3>When the leaderboard is not deployment</h3>
-<p class="pnote">A toy model of benchmark inflation. Contamination and repeated submissions can raise a public score without improving hidden deployment performance.</p>
+This does not make AI useless. It makes AI analysis statistically dangerous in a very familiar way. The many-analysts problem has become cheap enough to run in seconds. The “researcher degrees of freedom” are now prompt degrees of freedom, model degrees of freedom, retry degrees of freedom, tool-call degrees of freedom, and hidden chain-of-reasoning degrees of freedom.
+
+AI benchmarking has the same pathology at field scale. Public leaderboards are repeated tests. Static benchmarks leak into training data. Developers can tune to the benchmark. Scores can rise because models generalize better, because they memorized more, because the harness changed, or because the benchmark itself is exhausted. The statistical object is no longer “accuracy on a test set”; it is **a dynamic game between model builders, benchmark maintainers, and hidden evaluation data**.
+
+The responsible frontier looks like this: prompt logs, containerized code, repeated independent agent runs, multiverse reports, hidden holdout evaluations, contamination audits, preregistered analysis instructions, and human review of the decisions the system made. The dream is an AI analyst that exposes every fork. The nightmare is an AI analyst that silently chooses the fork that gets published.
+
+<Aside>
+<BlockTitle>Day 1 callback</BlockTitle>
+
+AI can give an illusion of understanding: more outputs, more polish, more confidence, less actual contact with why the claim is true. The antidote is not less computation. It is more audit.
+</Aside>
+
+</ContentSection>
+
+<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-benchPanel">
+<PanelTitle>Interactive · benchmark games</PanelTitle>
+
+### When the leaderboard is not deployment
+
+<PanelNote>A toy model of benchmark inflation. Contamination and repeated submissions can raise a public score without improving hidden deployment performance.</PanelNote>
+
 <div class="grid2">
 <div class="ctrl">
 <div class="slider-row"><label>True deployment skill <span class="val" id="appendix-d006-the-incoming-wave-revised-benchSkillVal">72%</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-benchSkill" min="40" max="95" value="72" /></div>
@@ -319,11 +442,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 </div>
 <div class="readout" id="appendix-d006-the-incoming-wave-revised-benchRead"></div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>Benchmark-contamination reference</h3>
-<p class="pnote">Public benchmark scores can overstate hidden deployment performance when tuning and contamination accumulate.</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### Benchmark-contamination reference
+
+<PanelNote>Public benchmark scores can overstate hidden deployment performance when tuning and contamination accumulate.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Condition</th><th>Public score</th><th>Hidden holdout</th></tr></thead>
 <tbody>
@@ -332,12 +459,14 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>Repeated leaderboard tuning</td><td>Can rise without new ability</td><td>Gap reveals overfitting.</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<section>
-<p class="sec-eyebrow">The through-line</p>
-<h2>The incoming wave is not “trust AI.” It is “wrap discretion.”</h2>
-<p>The strongest post-2020 methods share a pattern. They accept that the model may be a black box, the analyst may explore, the experiment may be monitored continuously, the data may be privatized, and the research system may be too large for manual checking. Then they ask: <strong>where can a guarantee still be attached?</strong></p>
+<SectionEyebrow>The through-line</SectionEyebrow>
+
+## The incoming wave is not “trust AI.” It is “wrap discretion.”
+
+The strongest post-2020 methods share a pattern. They accept that the model may be a black box, the analyst may explore, the experiment may be monitored continuously, the data may be privatized, and the research system may be too large for manual checking. Then they ask: **where can a guarantee still be attached?**
+
 <div class="table-wrap throughline-wrap">
 <table class="throughline-table">
 <thead><tr><th>Failure mode</th><th>Old temptation</th><th>New wrapper</th><th>What still can fail</th></tr></thead>
@@ -351,63 +480,65 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </tbody>
 </table>
 </div>
-<p>The original statistics crisis was not caused by evil people. It was caused by flexible humans using brittle procedures in incentive systems that rewarded clean stories. The next crisis will rhyme: flexible machines using brittle evaluations in incentive systems that reward impressive outputs. The cure is the same at a higher level: make the forks visible, attach guarantees where they belong, and refuse to mistake polish for contact with truth.</p>
-</section>
+The original statistics crisis was not caused by evil people. It was caused by flexible humans using brittle procedures in incentive systems that rewarded clean stories. The next crisis will rhyme: flexible machines using brittle evaluations in incentive systems that reward impressive outputs. The cure is the same at a higher level: make the forks visible, attach guarantees where they belong, and refuse to mistake polish for contact with truth.
 
-<div class="recap">
-<p class="h">◆ The appendix in three sentences</p>
+<Recap>
+<BlockTitle>◆ The appendix in three sentences</BlockTitle>
+
 <dl>
 <div><dt>The wave</dt><dd>Statistics is being rebuilt for black-box, streaming, privacy-filtered, AI-assisted science: conformal wrappers, PPI rectifiers, orthogonal causal scores, anytime-valid evidence, post-selection correction, and workflow-level audits.</dd></div>
 <div><dt>The hard lesson</dt><dd>The guarantee has to move to the part of the workflow that can actually bear it: the stopping rule, the calibration set, the gold-standard labels, the selection procedure, the privacy mechanism, or the audit log.</dd></div>
 <div><dt>The immediate danger</dt><dd>LLM participants, AI analysts, and public benchmarks can recreate p-hacking at machine speed unless prompts, model versions, reruns, hidden tests, and full analytic multiverses become ordinary scientific records.</dd></div>
 </dl>
-</div>
+</Recap>
 
-<hr class="div" />
+<Divider />
 
-<section class="sources">
-<p class="sec-eyebrow">Sources · appendix II</p>
-<h2>Sources &amp; further reading</h2>
-<ol>
-<li>Ramdas, A., Grünwald, P., Vovk, V. &amp; Shafer, G. (2023). “Game-Theoretic Statistics and Safe Anytime-Valid Inference.” <em>Statistical Science</em>. <a href="https://doi.org/10.1214/23-STS894">doi</a>. <span class="meta">Core survey of e-processes and confidence sequences.</span></li>
-<li>“Game-Theoretic Statistics and Safe Anytime-Valid Inference” editorial (2024), <em>New England Journal of Statistics in Data Science</em>. <a href="https://nejsds.nestat.org/journal/NEJSDS/article/76/text">journal page</a>.</li>
-<li>Johari, R., Pekelis, L. &amp; Walsh, D. J. “Always Valid Inference: Continuous Monitoring of A/B Tests.” <em>Operations Research</em>. <a href="https://pubsonline.informs.org/doi/10.1287/opre.2021.2135">doi</a>.</li>
-<li>Angelopoulos, A. N. &amp; Bates, S. (2023). “Conformal Prediction: A Gentle Introduction.” <em>Foundations and Trends in Machine Learning</em> 16(4):494–591. <a href="https://doi.org/10.1561/2200000101">doi</a>.</li>
-<li>Barber, R. F., Candès, E. J., Ramdas, A. &amp; Tibshirani, R. J. (2023). “Conformal Prediction Beyond Exchangeability.” <em>Annals of Statistics</em>. <a href="https://doi.org/10.1214/23-AOS2276">doi</a>.</li>
-<li>Angelopoulos, A. N., Bates, S., Fisch, A., Lei, L. &amp; Schuster, T. (2024). “Conformal Risk Control.” <em>ICLR</em>. <a href="https://openreview.net/forum?id=33XGfHLtZg">OpenReview</a>.</li>
-<li>Gibbs, I., Cherian, J. J. &amp; Candès, E. J. (2025). “Conformal Prediction with Conditional Guarantees.” <em>JRSS-B</em>. <a href="https://doi.org/10.1093/jrsssb/qkaf008">doi</a>.</li>
-<li>Gauthier, E., Bach, F. &amp; Jordan, M. I. (2025). “E-Values Expand the Scope of Conformal Prediction.” <span class="meta">preprint.</span> <a href="https://arxiv.org/abs/2503.13050">arXiv</a>.</li>
-<li>Campos, M. et al. (2024). “Conformal Prediction for Natural Language Processing: A Survey.” <em>TACL</em>. <a href="https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00715/125278/Conformal-Prediction-for-Natural-Language">journal page</a>.</li>
-<li>Angelopoulos, A. N., Bates, S., Fannjiang, C., Jordan, M. I. &amp; Zrnic, T. (2023). “Prediction-Powered Inference.” <em>Science</em> 382:669–674. <a href="https://doi.org/10.1126/science.adi6000">doi</a>.</li>
-<li>Angelopoulos, A. N., Duchi, J. C. &amp; Zrnic, T. (2023). “PPI++: Efficient Prediction-Powered Inference.” <a href="https://arxiv.org/abs/2311.01453">arXiv</a>.</li>
-<li>Zrnic, T. et al. (2024). “Cross-Prediction-Powered Inference.” <em>PNAS</em>. <a href="https://www.pnas.org/doi/10.1073/pnas.2322083121">doi</a>.</li>
-<li>Chernozhukov, V. et al. (2018). “Double/Debiased Machine Learning for Treatment and Structural Parameters.” <em>The Econometrics Journal</em>. <a href="https://doi.org/10.1111/ectj.12097">doi</a>.</li>
-<li>Bach, P., Chernozhukov, V., Kurz, M. S. &amp; Spindler, M. (2022). “DoubleML — An Object-Oriented Implementation of Double Machine Learning in Python.” <em>JMLR</em>. <a href="https://www.jmlr.org/papers/v23/21-0862.html">journal page</a>.</li>
-<li>Bach, P. et al. (2024). “DoubleML — An Object-Oriented Implementation of Double Machine Learning in R.” <em>Journal of Statistical Software</em>. <a href="https://www.jstatsoft.org/article/view/v108i03">journal page</a>.</li>
-<li>Abécassis, J. et al. (2025). “From Prediction to Prescription: Machine Learning and Causal Inference for the Heterogeneous Treatment Effect.” <em>Annual Review of Biomedical Data Science</em>. <a href="https://doi.org/10.1146/annurev-biodatasci-103123-095750">doi</a>.</li>
-<li>Gradu, P., Zrnic, T., Wang, Y. &amp; Jordan, M. I. (2025). “Valid Inference After Causal Discovery.” <em>JASA</em>. <a href="https://doi.org/10.1080/01621459.2024.2402089">doi</a>.</li>
-<li>Zrnic, T. &amp; Jordan, M. I. (2023). “Post-Selection Inference via Algorithmic Stability.” <em>Annals of Statistics</em>. <a href="https://doi.org/10.1214/23-AOS2303">doi</a>.</li>
-<li>Dharamshi, A. et al. (2025). “Generalized Data Thinning Using Sufficient Statistics.” <em>JASA</em>. <a href="https://doi.org/10.1080/01621459.2024.2353948">doi</a>.</li>
-<li>Neufeld, A., Dharamshi, A., Gao, L. L. &amp; Witten, D. (2024). “Data Thinning for Convolution-Closed Distributions.” <em>JMLR</em>. <a href="https://www.jmlr.org/papers/volume25/23-0446/23-0446.pdf">pdf</a>.</li>
-<li>Räisä, O. et al. (2023). “Noise-Aware Statistical Inference with Differentially Private Synthetic Data.” <em>AISTATS</em>. <a href="https://proceedings.mlr.press/v206/raisa23a.html">PMLR</a>.</li>
-<li>Drechsler, J. et al. (2022). “Nonparametric Differentially Private Confidence Intervals for the Median.” <em>Journal of Survey Statistics and Methodology</em>. <a href="https://academic.oup.com/jssam/article/10/3/804/6609829">journal page</a>.</li>
-<li>NIST (2025). <em>Guidelines for Evaluating Differential Privacy Guarantees</em>, SP 800-226. <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-226.pdf">pdf</a>.</li>
-<li>Gelman, A. et al. (2026). <em>Bayesian Workflow</em>. <a href="https://avehtari.github.io/Bayesian-Workflow/">book site</a>.</li>
-<li>Modrák, M. et al. “Simulation-Based Calibration Checking for Bayesian Computation.” <em>Bayesian Analysis</em>. <a href="https://doi.org/10.1214/23-BA1404">doi</a>.</li>
-<li>Säilynoja, T., Schmitt, M., Bürkner, P.-C. &amp; Vehtari, A. (2026). “Posterior SBC: Simulation-Based Calibration Checking Conditional on Data.” <em>Statistics and Computing</em>. <a href="https://doi.org/10.1007/s11222-026-10825-9">doi</a>.</li>
-<li>Argyle, L. P. et al. (2023). “Out of One, Many: Using Language Models to Simulate Human Samples.” <em>Political Analysis</em>. <a href="https://doi.org/10.1017/pan.2023.2">doi</a>.</li>
-<li>Bisbee, J., Clinton, J., Dorff, C., Kenkel, B. &amp; Larson, J. (2024). “Synthetic Replacements for Human Survey Data? The Perils of Large Language Models.” <em>Political Analysis</em>. <a href="https://doi.org/10.1017/pan.2024.5">doi</a>.</li>
-<li>Cui, Z., Li, N. &amp; Zhou, H. (2025). “A Large-Scale Replication of Scenario-Based Experiments in Psychology and Management Using Large Language Models.” <em>Nature Computational Science</em>. <a href="https://doi.org/10.1038/s43588-025-00840-7">doi</a>.</li>
-<li>Messeri, L. &amp; Crockett, M. J. (2024). “Artificial Intelligence and Illusions of Understanding in Scientific Research.” <em>Nature</em>. <a href="https://doi.org/10.1038/s41586-024-07146-0">doi</a>.</li>
-<li>Holzmeister, F. et al. (2025). “Examining the Replicability of Online Experiments Selected by a Decision Market.” <em>Nature Human Behaviour</em>. <a href="https://doi.org/10.1038/s41562-024-02062-9">doi</a>.</li>
-<li>Center for Open Science (2026). “Predicting Replicability Challenge: Round 2 Results.” <a href="https://www.cos.io/blog/predicting-replicability-challenge-round-2-results">COS blog</a>.</li>
-<li>Science (2024). “Honesty Researcher’s Lawsuit Against Data Sleuths Dismissed.” <a href="https://www.science.org/content/article/honesty-researcher-s-lawsuit-against-data-sleuths-dismissed">news</a>.</li>
-<li>The Guardian (2025). “Harvard Professor Fired Following Claims She Falsified Ethics Research Data.” <a href="https://www.theguardian.com/education/2025/may/27/harvard-professor-on-leave-falsified-ethics-data">news</a>.</li>
-<li>Lu, C. et al. (2026). “Towards End-to-End Automation of AI Research.” <em>Nature</em>. <a href="https://doi.org/10.1038/s41586-026-10265-5">doi</a>.</li>
-<li>Song, X. et al. (2026). “StatLLM: A Dataset for Evaluating the Performance of Large Language Models in Statistical Analysis.” <em>Scientific Data</em>. <a href="https://doi.org/10.1038/s41597-026-06731-4">doi</a>.</li>
-<li>Cui, J. &amp; Alexander, R. (2026). “Same Prompt, Different Outcomes: Evaluating the Reproducibility of Data Analysis by LLMs.” <a href="https://arxiv.org/html/2602.14349">arXiv</a>.</li>
-<li>Deng, C. et al. (2024). “Investigating Data Contamination in Modern Benchmarks for Large Language Models.” <em>NAACL</em>. <a href="https://aclanthology.org/2024.naacl-long.482/">ACL Anthology</a>.</li>
-<li>Xu, C. et al. (2024). “Benchmark Data Contamination of Large Language Models: A Survey.” <a href="https://arxiv.org/abs/2406.04244">arXiv</a>.</li>
-<li>Choi, H. K. et al. (2025). “How Contaminated Is Your Benchmark? Measuring Dataset Leakage in Large Language Models with Kernel Divergence.” <em>ICML</em>. <a href="https://proceedings.mlr.press/v267/choi25b.html">PMLR</a>.</li>
-</ol>
-</section>
+<Sources>
+<SectionEyebrow>Sources · appendix II</SectionEyebrow>
+
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. Ramdas, A., Grünwald, P., Vovk, V. &amp; Shafer, G. (2023). “Game-Theoretic Statistics and Safe Anytime-Valid Inference.” *Statistical Science*. [doi](https://doi.org/10.1214/23-STS894). <Meta>Core survey of e-processes and confidence sequences.</Meta>
+1. “Game-Theoretic Statistics and Safe Anytime-Valid Inference” editorial (2024), *New England Journal of Statistics in Data Science*. [journal page](https://nejsds.nestat.org/journal/NEJSDS/article/76/text).
+1. Johari, R., Pekelis, L. &amp; Walsh, D. J. “Always Valid Inference: Continuous Monitoring of A/B Tests.” *Operations Research*. [doi](https://pubsonline.informs.org/doi/10.1287/opre.2021.2135).
+1. Angelopoulos, A. N. &amp; Bates, S. (2023). “Conformal Prediction: A Gentle Introduction.” *Foundations and Trends in Machine Learning* 16(4):494–591. [doi](https://doi.org/10.1561/2200000101).
+1. Barber, R. F., Candès, E. J., Ramdas, A. &amp; Tibshirani, R. J. (2023). “Conformal Prediction Beyond Exchangeability.” *Annals of Statistics*. [doi](https://doi.org/10.1214/23-AOS2276).
+1. Angelopoulos, A. N., Bates, S., Fisch, A., Lei, L. &amp; Schuster, T. (2024). “Conformal Risk Control.” *ICLR*. [OpenReview](https://openreview.net/forum?id=33XGfHLtZg).
+1. Gibbs, I., Cherian, J. J. &amp; Candès, E. J. (2025). “Conformal Prediction with Conditional Guarantees.” *JRSS-B*. [doi](https://doi.org/10.1093/jrsssb/qkaf008).
+1. Gauthier, E., Bach, F. &amp; Jordan, M. I. (2025). “E-Values Expand the Scope of Conformal Prediction.” <Meta>preprint.</Meta> [arXiv](https://arxiv.org/abs/2503.13050).
+1. Campos, M. et al. (2024). “Conformal Prediction for Natural Language Processing: A Survey.” *TACL*. [journal page](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00715/125278/Conformal-Prediction-for-Natural-Language).
+1. Angelopoulos, A. N., Bates, S., Fannjiang, C., Jordan, M. I. &amp; Zrnic, T. (2023). “Prediction-Powered Inference.” *Science* 382:669–674. [doi](https://doi.org/10.1126/science.adi6000).
+1. Angelopoulos, A. N., Duchi, J. C. &amp; Zrnic, T. (2023). “PPI++: Efficient Prediction-Powered Inference.” [arXiv](https://arxiv.org/abs/2311.01453).
+1. Zrnic, T. et al. (2024). “Cross-Prediction-Powered Inference.” *PNAS*. [doi](https://www.pnas.org/doi/10.1073/pnas.2322083121).
+1. Chernozhukov, V. et al. (2018). “Double/Debiased Machine Learning for Treatment and Structural Parameters.” *The Econometrics Journal*. [doi](https://doi.org/10.1111/ectj.12097).
+1. Bach, P., Chernozhukov, V., Kurz, M. S. &amp; Spindler, M. (2022). “DoubleML — An Object-Oriented Implementation of Double Machine Learning in Python.” *JMLR*. [journal page](https://www.jmlr.org/papers/v23/21-0862.html).
+1. Bach, P. et al. (2024). “DoubleML — An Object-Oriented Implementation of Double Machine Learning in R.” *Journal of Statistical Software*. [journal page](https://www.jstatsoft.org/article/view/v108i03).
+1. Abécassis, J. et al. (2025). “From Prediction to Prescription: Machine Learning and Causal Inference for the Heterogeneous Treatment Effect.” *Annual Review of Biomedical Data Science*. [doi](https://doi.org/10.1146/annurev-biodatasci-103123-095750).
+1. Gradu, P., Zrnic, T., Wang, Y. &amp; Jordan, M. I. (2025). “Valid Inference After Causal Discovery.” *JASA*. [doi](https://doi.org/10.1080/01621459.2024.2402089).
+1. Zrnic, T. &amp; Jordan, M. I. (2023). “Post-Selection Inference via Algorithmic Stability.” *Annals of Statistics*. [doi](https://doi.org/10.1214/23-AOS2303).
+1. Dharamshi, A. et al. (2025). “Generalized Data Thinning Using Sufficient Statistics.” *JASA*. [doi](https://doi.org/10.1080/01621459.2024.2353948).
+1. Neufeld, A., Dharamshi, A., Gao, L. L. &amp; Witten, D. (2024). “Data Thinning for Convolution-Closed Distributions.” *JMLR*. [pdf](https://www.jmlr.org/papers/volume25/23-0446/23-0446.pdf).
+1. Räisä, O. et al. (2023). “Noise-Aware Statistical Inference with Differentially Private Synthetic Data.” *AISTATS*. [PMLR](https://proceedings.mlr.press/v206/raisa23a.html).
+1. Drechsler, J. et al. (2022). “Nonparametric Differentially Private Confidence Intervals for the Median.” *Journal of Survey Statistics and Methodology*. [journal page](https://academic.oup.com/jssam/article/10/3/804/6609829).
+1. NIST (2025). *Guidelines for Evaluating Differential Privacy Guarantees*, SP 800-226. [pdf](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-226.pdf).
+1. Gelman, A. et al. (2026). *Bayesian Workflow*. [book site](https://avehtari.github.io/Bayesian-Workflow/).
+1. Modrák, M. et al. “Simulation-Based Calibration Checking for Bayesian Computation.” *Bayesian Analysis*. [doi](https://doi.org/10.1214/23-BA1404).
+1. Säilynoja, T., Schmitt, M., Bürkner, P.-C. &amp; Vehtari, A. (2026). “Posterior SBC: Simulation-Based Calibration Checking Conditional on Data.” *Statistics and Computing*. [doi](https://doi.org/10.1007/s11222-026-10825-9).
+1. Argyle, L. P. et al. (2023). “Out of One, Many: Using Language Models to Simulate Human Samples.” *Political Analysis*. [doi](https://doi.org/10.1017/pan.2023.2).
+1. Bisbee, J., Clinton, J., Dorff, C., Kenkel, B. &amp; Larson, J. (2024). “Synthetic Replacements for Human Survey Data? The Perils of Large Language Models.” *Political Analysis*. [doi](https://doi.org/10.1017/pan.2024.5).
+1. Cui, Z., Li, N. &amp; Zhou, H. (2025). “A Large-Scale Replication of Scenario-Based Experiments in Psychology and Management Using Large Language Models.” *Nature Computational Science*. [doi](https://doi.org/10.1038/s43588-025-00840-7).
+1. Messeri, L. &amp; Crockett, M. J. (2024). “Artificial Intelligence and Illusions of Understanding in Scientific Research.” *Nature*. [doi](https://doi.org/10.1038/s41586-024-07146-0).
+1. Holzmeister, F. et al. (2025). “Examining the Replicability of Online Experiments Selected by a Decision Market.” *Nature Human Behaviour*. [doi](https://doi.org/10.1038/s41562-024-02062-9).
+1. Center for Open Science (2026). “Predicting Replicability Challenge: Round 2 Results.” [COS blog](https://www.cos.io/blog/predicting-replicability-challenge-round-2-results).
+1. Science (2024). “Honesty Researcher’s Lawsuit Against Data Sleuths Dismissed.” [news](https://www.science.org/content/article/honesty-researcher-s-lawsuit-against-data-sleuths-dismissed).
+1. The Guardian (2025). “Harvard Professor Fired Following Claims She Falsified Ethics Research Data.” [news](https://www.theguardian.com/education/2025/may/27/harvard-professor-on-leave-falsified-ethics-data).
+1. Lu, C. et al. (2026). “Towards End-to-End Automation of AI Research.” *Nature*. [doi](https://doi.org/10.1038/s41586-026-10265-5).
+1. Song, X. et al. (2026). “StatLLM: A Dataset for Evaluating the Performance of Large Language Models in Statistical Analysis.” *Scientific Data*. [doi](https://doi.org/10.1038/s41597-026-06731-4).
+1. Cui, J. &amp; Alexander, R. (2026). “Same Prompt, Different Outcomes: Evaluating the Reproducibility of Data Analysis by LLMs.” [arXiv](https://arxiv.org/html/2602.14349).
+1. Deng, C. et al. (2024). “Investigating Data Contamination in Modern Benchmarks for Large Language Models.” *NAACL*. [ACL Anthology](https://aclanthology.org/2024.naacl-long.482/).
+1. Xu, C. et al. (2024). “Benchmark Data Contamination of Large Language Models: A Survey.” [arXiv](https://arxiv.org/abs/2406.04244).
+1. Choi, H. K. et al. (2025). “How Contaminated Is Your Benchmark? Measuring Dataset Leakage in Large Language Models with Kernel Divergence.” *ICML*. [PMLR](https://proceedings.mlr.press/v267/choi25b.html).
+
+</Sources>
+

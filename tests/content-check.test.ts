@@ -20,7 +20,7 @@ describe("content check", () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {
       en: [
-        "<h1>Different</h1>",
+        "# Different",
         '<StatusChip status={"ok"} label={"ok"} />'
       ].join("\n"),
       zh: body("夹具日", "zh")
@@ -79,10 +79,10 @@ async function writeRegistryDay(
 
 function body(title: string, locale: "en" | "zh" = "en"): string {
   return [
-    `<h1>${title}</h1>`,
+    `# ${title}`,
     locale === "zh"
       ? '<StatusChip status={"ok"} label={"已确立"} />'
       : '<StatusChip status={"ok"} label={"established"} />',
-    '<section class="sources"></section>'
+    "<Sources></Sources>"
   ].join("\n");
 }

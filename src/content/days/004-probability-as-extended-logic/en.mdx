@@ -4,12 +4,38 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+
 export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(E)}`;
 
-<header class="hero wrap">
-<p class="eyebrow">Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 04 / 180</span></p>
-<h1>Probability as <em class="term">Extended Logic</em></h1>
-<p class="sub">A game show host opens a door. Your gut says it can't matter. Your gut is about to lose two out of three times.</p>
+<Hero>
+<HeroEyebrow>Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 04 / 180</span></HeroEyebrow>
+
+# Probability as <Term as="em">Extended Logic</Term>
+
+<HeroSubhead>A game show host opens a door. Your gut says it can't matter. Your gut is about to lose two out of three times.</HeroSubhead>
 
 <figure class="hero-doors">
 <div class="doors-row">
@@ -43,43 +69,53 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <figcaption>The whole of Bayesian reasoning, hiding inside a 1970s game show.</figcaption>
 </figure>
 
-<p class="lede"><span class="drop">Y</span>ou pick Door 1. Somewhere behind these three doors sits a car; behind the other two, goats. The host — who knows exactly where the car is — strolls over to Door 3, swings it open to reveal a goat, and asks, almost kindly: <em>would you like to switch to Door 2?</em> Two doors left, one car. Fifty-fifty, surely. Switching can't possibly matter.</p>
+<Lead drop="Y">ou pick Door 1. Somewhere behind these three doors sits a car; behind the other two, goats. The host — who knows exactly where the car is — strolls over to Door 3, swings it open to reveal a goat, and asks, almost kindly: *would you like to switch to Door 2?* Two doors left, one car. Fifty-fifty, surely. Switching can't possibly matter.</Lead>
 
-<p>It matters enormously. Stay, and you win the car one time in three. Switch, and you win <strong>two times in three</strong> — you double your odds by doing nothing but changing your mind. This is the Monty Hall problem, and when it ran in a magazine in 1990 it triggered one of the great public meltdowns in the history of mathematics. Today we'll see why the answer is not just correct but <em>inevitable</em> — and how the same machine that solves it turns out to be the deepest available theory of what it means to reason under uncertainty at all.</p>
-</header><div class="wrap">
+It matters enormously. Stay, and you win the car one time in three. Switch, and you win **two times in three** — you double your odds by doing nothing but changing your mind. This is the Monty Hall problem, and when it ran in a magazine in 1990 it triggered one of the great public meltdowns in the history of mathematics. Today we'll see why the answer is not just correct but *inevitable* — and how the same machine that solves it turns out to be the deepest available theory of what it means to reason under uncertainty at all.
 
-<div class="whereblock">
-<p class="label">◆ Where we are</p>
-<p>On <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a> we met <em class="term">credence</em> — belief as a dial from 0 to 1 — and the Dutch book argument showing that incoherent dials can be turned into a guaranteed loss. Today we learn the law that says how the dial must <em>move</em> when evidence arrives: <em class="term">Bayes' theorem</em>. On <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> we watched science struggle to draw the line between signal and noise, and saw the replication crisis as that struggle under live fire; today's frontier — a quiet revolution replacing the p-value with a <em>bet</em> — is aimed squarely at fixing it. Threads lit today: <em class="term">information</em> (evidence as bits that update belief), <em class="term">computation</em> (the mind and the lab as inference engines), and a flicker of <em class="term">energy</em> when the "Bayesian brain" returns.</p>
-</div>
+</Hero>
 
-<section>
-<p class="sec-eyebrow">The meltdown</p>
-<h2>The smartest people in the country, all wrong at once</h2>
-<p>In September 1990, Marilyn vos Savant — listed in the <em>Guinness Book</em> for the highest recorded IQ, writing the "Ask Marilyn" column in <em>Parade</em> magazine<TipNote text={"Parade was a widely syndicated U.S. Sunday newspaper magazine supplement; Ask Marilyn was vos Savant’s question-and-answer column."} /> — answered a reader's question about a game show. Switch doors, she wrote; you'll win two-thirds of the time. The answer is correct. The response was apocalyptic.</p>
+<Wrap>
+
+<WhereBlock>
+<Label>◆ Where we are</Label>
+
+On **[Day 1](/days/001-what-is-knowledge/)** we met <Term as="em">credence</Term> — belief as a dial from 0 to 1 — and the Dutch book argument showing that incoherent dials can be turned into a guaranteed loss. Today we learn the law that says how the dial must *move* when evidence arrives: <Term as="em">Bayes' theorem</Term>. On **[Day 2](/days/002-scientific-method-and-demarcation/)** we watched science struggle to draw the line between signal and noise, and saw the replication crisis as that struggle under live fire; today's frontier — a quiet revolution replacing the p-value with a *bet* — is aimed squarely at fixing it. Threads lit today: <Term as="em">information</Term> (evidence as bits that update belief), <Term as="em">computation</Term> (the mind and the lab as inference engines), and a flicker of <Term as="em">energy</Term> when the "Bayesian brain" returns.
+
+</WhereBlock>
+
+<SectionEyebrow>The meltdown</SectionEyebrow>
+
+## The smartest people in the country, all wrong at once
+
+In September 1990, Marilyn vos Savant — listed in the *Guinness Book* for the highest recorded IQ, writing the "Ask Marilyn" column in *Parade* magazine<TipNote text={"Parade was a widely syndicated U.S. Sunday newspaper magazine supplement; Ask Marilyn was vos Savant’s question-and-answer column."} /> — answered a reader's question about a game show. Switch doors, she wrote; you'll win two-thirds of the time. The answer is correct. The response was apocalyptic.
 
 <figure class="lesson-figure is-portrait">
 <img src={montyHall.src} width="692" height="744" loading="lazy" decoding="async" alt="Monty Hall, Carol Merrill, Jay Stewart, and contestants on the Let's Make a Deal set in a 1974 publicity photo." />
 <figcaption>Monty Hall's actual stage makes the puzzle less like a parlor trick: the host was never a random door-opener, but a knowledgeable agent whose action carried information.</figcaption>
 </figure>
 
-<p>By her own count she received some <strong>10,000 letters</strong>, the overwhelming majority telling her she was wrong — and roughly <strong>1,000 of them signed by people with PhDs</strong>. Mathematicians wrote in to scold her. One professor offered the immortal line:</p>
+By her own count she received some **10,000 letters**, the overwhelming majority telling her she was wrong — and roughly **1,000 of them signed by people with PhDs**. Mathematicians wrote in to scold her. One professor offered the immortal line:
+
 <blockquote>"You blew it, and you blew it big! … There is enough mathematical illiteracy in this country, and we don't need the world's highest IQ propagating more. Shame!"<span class="src">— Scott Smith, Ph.D., University of Florida, in a letter to Parade (1990)</span></blockquote>
-<p>He was the one who'd blown it. So had, by the strict statistics of the thing, most of his colleagues. Vos Savant held her ground across three more columns, eventually asking schoolteachers across the country to run the experiment with paper cups and a coin. They did. The data came back exactly as she'd said: switching wins twice as often. The professors, slowly and not always graciously, retreated.</p>
+He was the one who'd blown it. So had, by the strict statistics of the thing, most of his colleagues. Vos Savant held her ground across three more columns, eventually asking schoolteachers across the country to run the experiment with paper cups and a coin. They did. The data came back exactly as she'd said: switching wins twice as often. The professors, slowly and not always graciously, retreated.
 
-<div class="aside">
-<p class="h">The man who needed to see it to believe it</p>
-<p>Even <strong>Paul Erdős</strong><TipNote text={"Erdős wrote about 1,500 papers, helped shape combinatorics, graph theory, number theory, and the probabilistic method, and inspired the Erdős number collaboration metric."} /> — one of the most prolific mathematicians who ever lived, a man who proved theorems most of us can't even read — refused to accept the answer. When his friend Andrew Vázsonyi laid out the logic, Erdős was unconvinced. Only when Vázsonyi ran a <em>computer simulation</em>, playing the game hundreds of times and watching switching win about two-thirds of the rounds, did Erdős concede. And even then he was annoyed: the simulation showed him <em>that</em> it was true without showing him <em>why</em>. (Recounted in Paul Hoffman's biography <em>The Man Who Loved Only Numbers</em>, 1998.) If it tripped Erdős, you are in excellent company.</p>
-</div>
+<Aside>
+<BlockTitle>The man who needed to see it to believe it</BlockTitle>
 
-<p>Here's the thing the meltdown reveals. The Monty Hall problem isn't a trick or a word game — its answer is provably, simulation-confirmably true. What it exposes is that human intuition about uncertainty is <em>systematically</em> miscalibrated, and that we badly need a formal tool to override it. That tool is the subject of today's descent. But first, let's actually break our intuition on the rocks — and then rebuild it.</p>
-</section>
+Even **Paul Erdős**<TipNote text={"Erdős wrote about 1,500 papers, helped shape combinatorics, graph theory, number theory, and the probabilistic method, and inspired the Erdős number collaboration metric."} /> — one of the most prolific mathematicians who ever lived, a man who proved theorems most of us can't even read — refused to accept the answer. When his friend Andrew Vázsonyi laid out the logic, Erdős was unconvinced. Only when Vázsonyi ran a *computer simulation*, playing the game hundreds of times and watching switching win about two-thirds of the rounds, did Erdős concede. And even then he was annoyed: the simulation showed him *that* it was true without showing him *why*. (Recounted in Paul Hoffman's biography *The Man Who Loved Only Numbers*, 1998.) If it tripped Erdős, you are in excellent company.
+
+</Aside>
+
+Here's the thing the meltdown reveals. The Monty Hall problem isn't a trick or a word game — its answer is provably, simulation-confirmably true. What it exposes is that human intuition about uncertainty is *systematically* miscalibrated, and that we badly need a formal tool to override it. That tool is the subject of today's descent. But first, let's actually break our intuition on the rocks — and then rebuild it.
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<div class="panel web-only probability-monty">
-<p class="ptitle">Interactive · play it yourself</p>
-<h3>The Monty Hall Machine</h3>
-<p class="pnote">Pick a door. The host opens a different one — always a goat, never your pick, never the car. Then click your original door to stay, or click the other closed door to switch. Play a few by hand, then hit <strong>auto-run 1,000×</strong> and watch the two strategies separate. The tallies don't lie.</p>
+<Panel class="web-only probability-monty">
+<PanelTitle>Interactive · play it yourself</PanelTitle>
+
+### The Monty Hall Machine
+
+<PanelNote>Pick a door. The host opens a different one — always a goat, never your pick, never the car. Then click your original door to stay, or click the other closed door to switch. Play a few by hand, then hit **auto-run 1,000×** and watch the two strategies separate. The tallies don't lie.</PanelNote>
 
 <div class="mh-machine" id="mhMachine">
 <div class="mh-odds" aria-label="Strategy odds">
@@ -152,12 +188,15 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <button class="btn ghost" id="btnReset" type="button">Reset tallies</button>
 </div>
 </div>
-</div>
+</Panel>
 
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>Monty Hall Outcomes</h3>
-<p class="pnote">Under the standard host rule, switching wins exactly when the first pick was wrong.</p>
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### Monty Hall Outcomes
+
+<PanelNote>Under the standard host rule, switching wins exactly when the first pick was wrong.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>First pick</th><th>Host action</th><th>Stay</th><th>Switch</th></tr></thead>
 <tbody>
@@ -165,26 +204,32 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <tr><td>Goat, probability 2/3</td><td>Forced to open the other goat door</td><td>Lose</td><td>Win</td></tr>
 </tbody>
 </table>
-<p>So staying keeps the original 1/3 chance; switching captures the 2/3 chance that the first choice was wrong.</p>
-</div>
+So staying keeps the original 1/3 chance; switching captures the 2/3 chance that the first choice was wrong.
 
-<section>
-<p class="sec-eyebrow">Why it works</p>
-<h2>The host is doing you a favor (and leaking information)</h2>
-<p>The cleanest way to feel the answer: <strong>your first pick is right one time in three.</strong> That number never changes. When you pointed at Door 1, there was a 1/3 chance the car was behind it and a 2/3 chance it was behind "one of the other two." The host then opens a goat door — but crucially, the host is <em>not</em> choosing at random. He knows where the car is, and he is <em>required</em> to reveal a goat. So all of that 2/3 probability, which used to be smeared across two doors, gets <strong>concentrated onto the single door he didn't open.</strong></p>
-<p>The host's reveal isn't noise. It's <em class="term">information</em> — the first appearance of one of our five recurring threads in hard quantitative form. <a href="/days/001-what-is-knowledge/">Day 1</a>'s stopped clock taught that being right by luck is not knowledge; here, the host's constrained, knowledgeable action is evidence that moves the credence dial. Switch, and you're betting on that fat 2/3. Stay, and you're clinging to your original lonely 1/3.</p>
-<p>If your intuition still resists, blow the problem up. Imagine <strong>a thousand doors.</strong> You pick one — a 1-in-1,000 shot. The host, who knows, then opens 998 other doors, every single one a goat, leaving just your door and one other. Do you really still think it's a coin flip? Almost certainly the car is behind <em>that</em> one door the host so pointedly avoided. The three-door version is the same logic, merely too small to feel.</p>
+</FormatAlt>
 
-<div class="aside">
-<p class="h">Older than the game show</p>
-<p>The puzzle didn't start with Monty Hall. The statistician <strong>Steve Selvin</strong> posed it in a 1975 letter to <em>The American Statistician</em> — and his follow-up was the first place the phrase "the Monty Hall problem" ever appeared in print. Its skeleton is older still: it's identical to <strong><em class="term">Bertrand's box paradox</em></strong><TipNote text={"The box version has boxes GG, SS, and GS; after drawing one gold coin, the chance the other coin is gold is 2/3, not 1/2."} /> (Joseph Bertrand, 1889) and Martin Gardner's <strong><em class="term">Three Prisoners problem</em></strong><TipNote text={"Three Prisoners has one of three condemned prisoners secretly pardoned; learning which other prisoner will die tempts the same mistaken 1/2 update."} /> (1959). Mathematicians call this a <em class="term">veridical paradox</em> — an answer that looks impossible but is provably true. Convergent re-discovery again, exactly like the Gettier case on <a href="/days/001-what-is-knowledge/">Day 1</a>: when minds keep tripping over the same stone for a century, the stone is real.</p>
-</div>
-</section>
+<SectionEyebrow>Why it works</SectionEyebrow>
 
-<section>
-<p class="sec-eyebrow">The model</p>
-<h2>Bayes' theorem: the law of belief revision</h2>
-<p>What we did to those doors by hand has a name and a formula. The formula looks colder than the idea. Bayes' theorem is just a rule for reweighing live possibilities after evidence arrives:</p>
+## The host is doing you a favor (and leaking information)
+
+The cleanest way to feel the answer: **your first pick is right one time in three.** That number never changes. When you pointed at Door 1, there was a 1/3 chance the car was behind it and a 2/3 chance it was behind "one of the other two." The host then opens a goat door — but crucially, the host is *not* choosing at random. He knows where the car is, and he is *required* to reveal a goat. So all of that 2/3 probability, which used to be smeared across two doors, gets **concentrated onto the single door he didn't open.**
+
+The host's reveal isn't noise. It's <Term as="em">information</Term> — the first appearance of one of our five recurring threads in hard quantitative form. [Day 1](/days/001-what-is-knowledge/)'s stopped clock taught that being right by luck is not knowledge; here, the host's constrained, knowledgeable action is evidence that moves the credence dial. Switch, and you're betting on that fat 2/3. Stay, and you're clinging to your original lonely 1/3.
+
+If your intuition still resists, blow the problem up. Imagine **a thousand doors.** You pick one — a 1-in-1,000 shot. The host, who knows, then opens 998 other doors, every single one a goat, leaving just your door and one other. Do you really still think it's a coin flip? Almost certainly the car is behind *that* one door the host so pointedly avoided. The three-door version is the same logic, merely too small to feel.
+
+<Aside>
+<BlockTitle>Older than the game show</BlockTitle>
+
+The puzzle didn't start with Monty Hall. The statistician **Steve Selvin** posed it in a 1975 letter to *The American Statistician* — and his follow-up was the first place the phrase "the Monty Hall problem" ever appeared in print. Its skeleton is older still: it's identical to <strong><Term as="em">Bertrand's box paradox</Term></strong><TipNote text={"The box version has boxes GG, SS, and GS; after drawing one gold coin, the chance the other coin is gold is 2/3, not 1/2."} /> (Joseph Bertrand, 1889) and Martin Gardner's <strong><Term as="em">Three Prisoners problem</Term></strong><TipNote text={"Three Prisoners has one of three condemned prisoners secretly pardoned; learning which other prisoner will die tempts the same mistaken 1/2 update."} /> (1959). Mathematicians call this a <Term as="em">veridical paradox</Term> — an answer that looks impossible but is provably true. Convergent re-discovery again, exactly like the Gettier case on [Day 1](/days/001-what-is-knowledge/): when minds keep tripping over the same stone for a century, the stone is real.
+
+</Aside>
+
+<SectionEyebrow>The model</SectionEyebrow>
+
+## Bayes' theorem: the law of belief revision
+
+What we did to those doors by hand has a name and a formula. The formula looks colder than the idea. Bayes' theorem is just a rule for reweighing live possibilities after evidence arrives:
 
 <figure class="bayes-sieve">
 <figcaption>
@@ -242,20 +287,25 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <small><span style="color:var(--accent-deep)">posterior</span> (belief after evidence) = <span style="color:var(--brass)">prior</span> (belief before) × <span style="color:var(--contested)">likelihood</span> (how well <MathInline latex={String.raw`H`} /> predicts <MathInline latex={String.raw`E`} />), normalized by <span style="color:var(--accent)">evidence</span></small>
 </div>
 
-<p>In words: your <em class="term">posterior</em> belief in a hypothesis <MathInline latex={String.raw`H`} /> after seeing evidence <MathInline latex={String.raw`E`} /> equals your <em class="term">prior</em> belief, multiplied by the <em class="term">likelihood</em> — how strongly <MathInline latex={String.raw`H`} /> predicted that you'd see <MathInline latex={String.raw`E`} /> — divided by how expected <MathInline latex={String.raw`E`} /> was overall. Strong evidence is evidence your hypothesis predicts and rival hypotheses don't. That's the entire engine. Belief flows toward whatever best predicted what actually happened.</p>
-<p>In Monty Hall, <MathInline latex={String.raw`H`} /> = "the car is behind Door 2" and <MathInline latex={String.raw`E`} /> = "the host opened Door 3." If the car really is behind Door 2, the host is <em>forced</em> to open Door 3 (he can't open your door or the car's), so the likelihood is <MathInline latex={String.raw`1`} />. If the car is behind your Door 1, he could've opened either 2 or 3, so the likelihood of opening 3 is only <MathInline latex={String.raw`1/2`} />. That asymmetry in the likelihoods is exactly what tips the posterior to <MathInline latex={String.raw`2/3`} /> in favor of switching. The formula just does the bookkeeping our intuition botches.</p>
+In words: your <Term as="em">posterior</Term> belief in a hypothesis <MathInline latex={String.raw`H`} /> after seeing evidence <MathInline latex={String.raw`E`} /> equals your <Term as="em">prior</Term> belief, multiplied by the <Term as="em">likelihood</Term> — how strongly <MathInline latex={String.raw`H`} /> predicted that you'd see <MathInline latex={String.raw`E`} /> — divided by how expected <MathInline latex={String.raw`E`} /> was overall. Strong evidence is evidence your hypothesis predicts and rival hypotheses don't. That's the entire engine. Belief flows toward whatever best predicted what actually happened.
 
-<h3>The trap that fools doctors</h3>
-<p>Bayes' theorem doesn't only rescue game-show contestants. It catches a mistake that, in one famous study, most <em>physicians</em> got wrong.</p>
-<p class="web-only">Play with it below — it's worth feeling this one in your bones, because it governs every medical test, spam filter, and airport screening you'll ever encounter.</p>
-<p class="epub-only print-only">The table below walks through the default medical-test case, which is worth keeping in your bones because it governs every medical test, spam filter, and airport screening you'll ever encounter.</p>
-</section>
+In Monty Hall, <MathInline latex={String.raw`H`} /> = "the car is behind Door 2" and <MathInline latex={String.raw`E`} /> = "the host opened Door 3." If the car really is behind Door 2, the host is *forced* to open Door 3 (he can't open your door or the car's), so the likelihood is <MathInline latex={String.raw`1`} />. If the car is behind your Door 1, he could've opened either 2 or 3, so the likelihood of opening 3 is only <MathInline latex={String.raw`1/2`} />. That asymmetry in the likelihoods is exactly what tips the posterior to <MathInline latex={String.raw`2/3`} /> in favor of switching. The formula just does the bookkeeping our intuition botches.
+
+### The trap that fools doctors
+
+Bayes' theorem doesn't only rescue game-show contestants. It catches a mistake that, in one famous study, most *physicians* got wrong.
+
+<FormatOnly media="web">Play with it below — it's worth feeling this one in your bones, because it governs every medical test, spam filter, and airport screening you'll ever encounter.</FormatOnly>
+
+<FormatOnly media="print-epub">The table below walks through the default medical-test case, which is worth keeping in your bones because it governs every medical test, spam filter, and airport screening you'll ever encounter.</FormatOnly>
 
 {/* ===================== INTERACTIVE 2 ===================== */}
-<div class="panel web-only probability-bayes">
-<p class="ptitle">Interactive · the base-rate trap</p>
-<h3>A 99%-sensitive test for a rare disease</h3>
-<p class="pnote">A disease affects a small slice of the population. The test is excellent. You test positive. <strong>What's the chance you're actually sick?</strong> Drag the sliders and watch the grid of 1,000 people sort itself into the four outcomes. The answer is almost always far lower than people guess.</p>
+<Panel class="web-only probability-bayes">
+<PanelTitle>Interactive · the base-rate trap</PanelTitle>
+
+### A 99%-sensitive test for a rare disease
+
+<PanelNote>A disease affects a small slice of the population. The test is excellent. You test positive. **What's the chance you're actually sick?** Drag the sliders and watch the grid of 1,000 people sort itself into the four outcomes. The answer is almost always far lower than people guess.</PanelNote>
 
 <div class="bayes-grid">
 <div>
@@ -291,12 +341,15 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </div>
 </div>
 <p style="font-size:.86em;color:var(--ink-soft);margin:1.1rem 0 0;">In a 1978 study (Casscells, Schoenberger &amp; Graboys, <em>New England Journal of Medicine</em>), 60 Harvard medical staff and students were handed essentially this problem. The most common answer was <strong>95%</strong>. The correct answer was about <strong>2%</strong>. Only 11 of 60 got it right. The culprit is mixing up <MathInline latex={String.raw`\mathrm{P}(\text{positive}\mid\text{sick})`} /> with <MathInline latex={String.raw`\mathrm{P}(\text{sick}\mid\text{positive})`} /> — and forgetting that when a disease is rare, the few real cases drown in a sea of false alarms.</p>
-</div>
+</Panel>
 
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>The base-rate trap</h3>
-<p class="pnote">For the default assumptions: 0.1% prevalence, 99% sensitivity, and a 5% false-positive rate.</p>
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### The base-rate trap
+
+<PanelNote>For the default assumptions: 0.1% prevalence, 99% sensitivity, and a 5% false-positive rate.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Group</th><th>Count out of 1,000</th><th>Positive tests</th></tr></thead>
 <tbody>
@@ -305,26 +358,32 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <tr><td>All positive tests</td><td>About 51</td><td>Only about 1 is truly sick</td></tr>
 </tbody>
 </table>
-<p>The posterior is therefore about <MathInline latex={String.raw`0.99/50.94`} />, or <MathInline latex={String.raw`1.9\%`} /> — the Casscells result with the sensitivity made explicit.</p>
-</div>
+The posterior is therefore about <MathInline latex={String.raw`0.99/50.94`} />, or <MathInline latex={String.raw`1.9\%`} /> — the Casscells result with the sensitivity made explicit.
 
-<section>
-<p class="sec-eyebrow">The deep idea</p>
-<h2>Why "extended logic," not just a formula</h2>
-<p>Here's the claim that gives today its title. Ordinary deductive logic — the syllogisms of <a href="/days/003-logic-and-valid-inference/">Day 3</a> — is the logic of <em>certainty</em>: if all men are mortal and Socrates is a man, then Socrates is mortal, full stop. But almost nothing in real life is certain. We need a logic for the vast middle ground between "definitely true" (probability 1) and "definitely false" (probability 0). The startling result is that there is essentially <strong>only one</strong> such logic, and it is the probability calculus.</p>
-<p>This was made precise by the physicist <strong>R. T. Cox</strong> in 1946. Cox asked: suppose you want to attach a number to "how plausible is this, given what I know?" and you insist on just a few common-sense rules — plausibilities are real numbers; if you can compute a plausibility two valid ways you must get the same answer (<em>consistency</em>); and the plausibility of "not-<MathInline latex={String.raw`A`} />" should depend only on the plausibility of "<MathInline latex={String.raw`A`} />." From those bare <em class="term">desiderata</em><TipNote text={"Desiderata are requirements or desired conditions a theory is supposed to satisfy."} />, Cox proved, you are <em>forced</em> — not encouraged, forced — into the standard rules of probability. After a harmless rescaling, negation has to behave like <MathInline latex={String.raw`1 - P(A)`} />, conjunction has to obey the product rule, and learning evidence <MathInline latex={String.raw`E`} /> has to mean conditionalizing on <MathInline latex={String.raw`E`} />. Any consistent system of graded belief <em>is</em> probability theory in disguise.</p>
-<p>The physicist <strong>E. T. Jaynes</strong> built his great posthumous book <em>Probability Theory: The Logic of Science</em> (2003) on exactly this foundation. His slogan: deductive logic is just the special case of probability theory where all the probabilities happen to be 0 or 1. Probability is logic <em>extended</em> to handle uncertainty — which is to say, extended to handle reality. Notice this is the <em>third</em> independent road to the same destination: the Dutch book argument (<a href="/days/001-what-is-knowledge/">Day 1</a>) got there from "don't be exploitable," and we'll see decision theory get there from "don't make dominated choices." Coherence, no-sure-loss, and consistent reasoning all point at one calculus.</p>
+</FormatAlt>
 
-<div class="aside">
-<p class="h">The honest footnote</p>
-<p>Cox's original proof was a touch too quick. In 1999 the computer scientist <strong>Joseph Halpern</strong> showed it needs an extra technical assumption to be airtight (it can fail on certain finite domains), and later authors patched it properly. So the right thing to say is not "probability is the <em>only conceivable</em> logic of uncertainty" — that overstates it — but "under reasonable conditions, consistent graded belief is forced into the probability axioms." The theorem stands; it just wears a slightly smaller crown than Jaynes's prose sometimes suggests. <StatusChip status={"ok"} label={"Established w/ caveat"} printLabel={"established"} /></p>
-</div>
-</section>
+<SectionEyebrow>The deep idea</SectionEyebrow>
 
-<section>
-<p class="sec-eyebrow">The debate</p>
-<h2>Two tribes, one equation</h2>
-<p>If probability is this beautiful and unified, why has it been the site of a century-long civil war? Because the equation is agreed on; what's fought over is <em>what the numbers mean.</em> Both tribes use the very same calculus — the axioms <strong>Andrey Kolmogorov</strong> wrote down in 1933, which deliberately decline to say what probability <em>is</em> and only fix how it must behave. Onto that neutral skeleton, two interpretations are draped.</p>
+## Why "extended logic," not just a formula
+
+Here's the claim that gives today its title. Ordinary deductive logic — the syllogisms of [Day 3](/days/003-logic-and-valid-inference/) — is the logic of *certainty*: if all men are mortal and Socrates is a man, then Socrates is mortal, full stop. But almost nothing in real life is certain. We need a logic for the vast middle ground between "definitely true" (probability 1) and "definitely false" (probability 0). The startling result is that there is essentially **only one** such logic, and it is the probability calculus.
+
+This was made precise by the physicist **R. T. Cox** in 1946. Cox asked: suppose you want to attach a number to "how plausible is this, given what I know?" and you insist on just a few common-sense rules — plausibilities are real numbers; if you can compute a plausibility two valid ways you must get the same answer (*consistency*); and the plausibility of "not-<MathInline latex={String.raw`A`} />" should depend only on the plausibility of "<MathInline latex={String.raw`A`} />." From those bare <Term as="em">desiderata</Term><TipNote text={"Desiderata are requirements or desired conditions a theory is supposed to satisfy."} />, Cox proved, you are *forced* — not encouraged, forced — into the standard rules of probability. After a harmless rescaling, negation has to behave like <MathInline latex={String.raw`1 - P(A)`} />, conjunction has to obey the product rule, and learning evidence <MathInline latex={String.raw`E`} /> has to mean conditionalizing on <MathInline latex={String.raw`E`} />. Any consistent system of graded belief *is* probability theory in disguise.
+
+The physicist **E. T. Jaynes** built his great posthumous book *Probability Theory: The Logic of Science* (2003) on exactly this foundation. His slogan: deductive logic is just the special case of probability theory where all the probabilities happen to be 0 or 1. Probability is logic *extended* to handle uncertainty — which is to say, extended to handle reality. Notice this is the *third* independent road to the same destination: the Dutch book argument ([Day 1](/days/001-what-is-knowledge/)) got there from "don't be exploitable," and we'll see decision theory get there from "don't make dominated choices." Coherence, no-sure-loss, and consistent reasoning all point at one calculus.
+
+<Aside>
+<BlockTitle>The honest footnote</BlockTitle>
+
+Cox's original proof was a touch too quick. In 1999 the computer scientist **Joseph Halpern** showed it needs an extra technical assumption to be airtight (it can fail on certain finite domains), and later authors patched it properly. So the right thing to say is not "probability is the *only conceivable* logic of uncertainty" — that overstates it — but "under reasonable conditions, consistent graded belief is forced into the probability axioms." The theorem stands; it just wears a slightly smaller crown than Jaynes's prose sometimes suggests. <StatusChip status={"ok"} label={"Established w/ caveat"} printLabel={"established"} />
+
+</Aside>
+
+<SectionEyebrow>The debate</SectionEyebrow>
+
+## Two tribes, one equation
+
+If probability is this beautiful and unified, why has it been the site of a century-long civil war? Because the equation is agreed on; what's fought over is *what the numbers mean.* Both tribes use the very same calculus — the axioms **Andrey Kolmogorov** wrote down in 1933, which deliberately decline to say what probability *is* and only fix how it must behave. Onto that neutral skeleton, two interpretations are draped.
 
 <div class="camps">
 <div class="camp freq">
@@ -349,20 +408,23 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </div>
 </div>
 
-<p>Frequentism dominated the 20th century partly for a good reason and partly for an accident. The good reason: its founders craved <em>objectivity</em> and distrusted the Bayesian <em>prior</em> as a smuggled-in opinion. (Fisher dismissed "inverse probability" as something that "must be wholly rejected.") The accident: Bayesian methods need heavy computation, which didn't exist until cheap computers arrived. The central Bayesian sore point remains the prior — where does your "before" belief come from, and why should anyone trust yours? Objective Bayesians (Jeffreys, Jaynes) hunt for rule-based priors; subjective Bayesians shrug and say all reasoning starts somewhere.</p>
+Frequentism dominated the 20th century partly for a good reason and partly for an accident. The good reason: its founders craved *objectivity* and distrusted the Bayesian *prior* as a smuggled-in opinion. (Fisher dismissed "inverse probability" as something that "must be wholly rejected.") The accident: Bayesian methods need heavy computation, which didn't exist until cheap computers arrived. The central Bayesian sore point remains the prior — where does your "before" belief come from, and why should anyone trust yours? Objective Bayesians (Jeffreys, Jaynes) hunt for rule-based priors; subjective Bayesians shrug and say all reasoning starts somewhere.
 
-<div class="aside">
-<p class="h">"Probability does not exist"</p>
-<p>The Italian Bruno de Finetti opened his treatise with those four words, in capitals. His point was deliberately provocative: there is no probability "out there" in the world like mass or charge — there is only the coherent betting behavior of a reasoning agent. He backed the slogan with a real theorem (his 1937 <em>representation theorem</em>): if you treat a sequence of observations as <em>exchangeable</em> — order doesn't matter to you — then you are mathematically obliged to act <em>as if</em> there's some fixed unknown frequency with a prior over it. Subjective belief and objective-looking parameters turn out to be two views of one structure. A truce, written in math.</p>
-</div>
+<Aside>
+<BlockTitle>"Probability does not exist"</BlockTitle>
 
-<p>And note the practical wisdom that falls out: <strong><em class="term">Cromwell's rule</em></strong> (named by Dennis Lindley after Oliver Cromwell's 1650 plea, "think it possible that you may be mistaken"). Never set a prior to exactly 0 or 1, because Bayes' theorem can never budge it afterward — a belief held with absolute certainty is, by construction, unteachable. Leave a sliver of doubt for the moon being green cheese, Lindley wrote, or no returning astronaut's cheese samples will ever move you. Calibration, again — the through-line of this whole block.</p>
-</section>
+The Italian Bruno de Finetti opened his treatise with those four words, in capitals. His point was deliberately provocative: there is no probability "out there" in the world like mass or charge — there is only the coherent betting behavior of a reasoning agent. He backed the slogan with a real theorem (his 1937 *representation theorem*): if you treat a sequence of observations as *exchangeable* — order doesn't matter to you — then you are mathematically obliged to act *as if* there's some fixed unknown frequency with a prior over it. Subjective belief and objective-looking parameters turn out to be two views of one structure. A truce, written in math.
 
-<section class="frontier">
-<p class="sec-eyebrow">The frontier · 2026</p>
-<h2>The quiet mutiny against the p-value</h2>
-<p>For a century, the frequentist p-value has been science's gatekeeper: get below <MathInline latex={String.raw`0.05`} /> and you may call your result "significant." On <a href="/days/002-scientific-method-and-demarcation/">Day 2</a> we saw the bill come due — the replication crisis, in which mountains of "significant" findings simply evaporated on re-testing. A big culprit is structural: the p-value is fragile. <strong>Peek at your data midway and stop the moment you hit <MathInline latex={String.raw`p<0.05`} />, and you've quietly inflated your false-positive rate</strong> — a sin so common it has a name, "optional stopping." A new framework now circulating through statistics rebuilds testing from the ground up to fix exactly this. Its central object isn't a probability. It's a <em>bet.</em></p>
+</Aside>
+
+And note the practical wisdom that falls out: <strong><Term as="em">Cromwell's rule</Term></strong> (named by Dennis Lindley after Oliver Cromwell's 1650 plea, "think it possible that you may be mistaken"). Never set a prior to exactly 0 or 1, because Bayes' theorem can never budge it afterward — a belief held with absolute certainty is, by construction, unteachable. Leave a sliver of doubt for the moon being green cheese, Lindley wrote, or no returning astronaut's cheese samples will ever move you. Calibration, again — the through-line of this whole block.
+
+<ContentSection class="frontier">
+<SectionEyebrow>The frontier · 2026</SectionEyebrow>
+
+## The quiet mutiny against the p-value
+
+For a century, the frequentist p-value has been science's gatekeeper: get below <MathInline latex={String.raw`0.05`} /> and you may call your result "significant." On [Day 2](/days/002-scientific-method-and-demarcation/) we saw the bill come due — the replication crisis, in which mountains of "significant" findings simply evaporated on re-testing. A big culprit is structural: the p-value is fragile. **Peek at your data midway and stop the moment you hit <MathInline latex={String.raw`p<0.05`} />, and you've quietly inflated your false-positive rate** — a sin so common it has a name, "optional stopping." A new framework now circulating through statistics rebuilds testing from the ground up to fix exactly this. Its central object isn't a probability. It's a *bet.*
 
 <div class="claim">
 <div class="ctop">
@@ -388,13 +450,15 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <p>The toy task is intentionally narrow: it is trying to reject one claim, <em>"this coin is fair,"</em> not estimate the exact bias or prove unfairness with certainty.</p>
 <p>What does this look like in science? In a <em class="term">living clinical meta-analysis</em><TipNote text={"A meta-analysis statistically combines results from multiple studies; a living one is updated as new studies arrive."} />, the null might be <em>"BCG vaccination has no clinically relevant effect on COVID-19 infection in healthcare workers."</em> New randomized trials report at different times, and researchers want to update the synthesis whenever fresh data arrive without letting the false-positive risk creep upward every time they look. The ALL-IN meta-analysis framework was built for exactly that kind of setting: it lets evidence from successive trials be added while preserving type-I error and interval-coverage guarantees. In one BCG/COVID application, "winning" for the evidence process would have meant accumulating strong enough evidence for a clinically relevant benefit; the anytime-valid analysis instead found no clinically relevant reduction in infections, and left hospitalization too sparse for a firm conclusion. That is the same structure as the coin toy, with medical endpoints and trial streams replacing heads and tails.</p>
 </div>
-</section>
+</ContentSection>
 
 {/* ===================== INTERACTIVE 3 ===================== */}
-<div class="panel web-only probability-evalue">
-<p class="ptitle">Interactive · the gambler's ledger</p>
-<h3>Betting against a "fair" coin</h3>
-<p class="pnote">The claim being tested is the null: the coin is fair, <MathInline latex={String.raw`\mathrm{P}(\text{heads}) = 0.5`} />. The slider sets the simulator's actual data-generating <MathInline latex={String.raw`\mathrm{P}(\text{heads})`} />, hidden from the test in a real experiment. At <MathInline latex={String.raw`0.50`} /> the null is true; at <MathInline latex={String.raw`0.65`} /> or <MathInline latex={String.raw`0.35`} /> the null is false. This widget is asking only whether the data give strong evidence against fairness, not what the exact bias is. The e-value strategy bets against fairness flip by flip, using the two likelihood-ratio tickets described above. If wealth reaches <strong><MathInline latex={String.raw`20`} /></strong>, the bet has "won" enough to reject fairness at level <MathInline latex={String.raw`0.05`} />; if wealth stays near <MathInline latex={String.raw`1`} /> or falls, the bet has not found evidence against fairness.</p>
+<Panel class="web-only probability-evalue">
+<PanelTitle>Interactive · the gambler's ledger</PanelTitle>
+
+### Betting against a "fair" coin
+
+<PanelNote>The claim being tested is the null: the coin is fair, <MathInline latex={String.raw`\mathrm{P}(\text{heads}) = 0.5`} />. The slider sets the simulator's actual data-generating <MathInline latex={String.raw`\mathrm{P}(\text{heads})`} />, hidden from the test in a real experiment. At <MathInline latex={String.raw`0.50`} /> the null is true; at <MathInline latex={String.raw`0.65`} /> or <MathInline latex={String.raw`0.35`} /> the null is false. This widget is asking only whether the data give strong evidence against fairness, not what the exact bias is. The e-value strategy bets against fairness flip by flip, using the two likelihood-ratio tickets described above. If wealth reaches **<MathInline latex={String.raw`20`} />**, the bet has "won" enough to reject fairness at level <MathInline latex={String.raw`0.05`} />; if wealth stays near <MathInline latex={String.raw`1`} /> or falls, the bet has not found evidence against fairness.</PanelNote>
 
 <div class="ev-controls">
 <label>
@@ -441,12 +505,15 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </div>
 </div>
 <p style="font-size:.82em;color:var(--ink-soft);margin:1rem 0 0;">Set actual <MathInline latex={String.raw`\mathrm{P}(\text{heads})`} /> to exactly <MathInline latex={String.raw`0.50`} /> and the null is true: most wealth paths hover or sag, and only rare lucky streaks reach <MathInline latex={String.raw`20`} />. Nudge it to <MathInline latex={String.raw`0.65`} /> or <MathInline latex={String.raw`0.35`} /> and the data now come from a biased coin, so one of the two tickets tends to compound. The upward march is a win for the betting strategy and evidence against fairness; a flat or falling line is a loss for that bet, meaning "keep collecting" or "do not reject," not "the coin is proven fair."</p>
-</div>
+</Panel>
 
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>The e-value ledger</h3>
-<p class="pnote">An e-value is a nonnegative payoff whose expectation under the null is at most 1.</p>
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### The e-value ledger
+
+<PanelNote>An e-value is a nonnegative payoff whose expectation under the null is at most 1.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Quantity</th><th>Meaning</th><th>Use</th></tr></thead>
 <tbody>
@@ -456,10 +523,11 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <tr><td>Running wealth</td><td>A test martingale or e-process</td><td>Can be monitored continuously while preserving Type I error control</td></tr>
 </tbody>
 </table>
-<p>The tradeoff is conservatism: an anytime-valid ledger can need stronger or more sustained evidence than a <em class="term">fixed-horizon</em><TipNote text={"A fixed-horizon test fixes the sample size in advance and analyzes once at the planned endpoint."} /> test when all modeling assumptions are exactly right.</p>
-</div>
+The tradeoff is conservatism: an anytime-valid ledger can need stronger or more sustained evidence than a <Term as="em">fixed-horizon</Term><TipNote text={"A fixed-horizon test fixes the sample size in advance and analyzes once at the planned endpoint."} /> test when all modeling assumptions are exactly right.
 
-<section class="frontier">
+</FormatAlt>
+
+<ContentSection class="frontier">
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Edge 03</span>
@@ -472,55 +540,57 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <p>And the new tool is no free lunch. In fixed-horizon comparisons, e-values can need <strong>more extreme data</strong> than p-values to reach the same rejection threshold; Shafer's reply is that this is the cost of making the evidential scale honest rather than a simple defect. The efficiency of your bet depends on choosing a good betting strategy — arguably the same modeling judgment a Bayesian makes in choosing a prior, reappearing in new clothes. Critics including Samuel Pawel and Leonhard Held warn that branding tests as "safe" or "always valid" can mislead, since the guarantees still rest on assumptions (a correctly specified model, no publication bias) that can fail like any other. The honest verdict: a <StatusChip status={"hint"} label={"promising"} />, rigorous, genuinely useful complement to the p-value — emphatically <em>not</em> its science-wide replacement, at least not yet.</p>
 <p style="font-size:.92em;color:var(--ink-soft);">What would move the needle? If a drug regulator like the FDA or EMA blessed e-value designs for confirmatory clinical trials, or a top general-science journal wrote them into its author guidelines, the "replacement" claim could graduate from hype to hint to reality. Watch those two signals.</p>
 </div>
-</section>
+</ContentSection>
 
-<section>
-<p class="sec-eyebrow">Open questions</p>
-<h2>What's genuinely unsettled</h2>
-<ul>
-<li><strong>What <em>is</em> a probability, really?</strong> A frequency in the world, a degree of belief in a mind, or a fair betting rate? Three centuries on, the interpretation war has truces (de Finetti) but no surrender.</li>
-<li><strong>Where do priors come from?</strong> Is there a principled, objective way to set your "before" belief, or does all reasoning rest on a choice no math can justify?</li>
-<li><strong>Will betting-based statistics actually take over?</strong> Or settle in as a specialist tool for sequential experiments while the p-value rules on — and is "choose your bet" any less subjective than "choose your prior"?</li>
-<li><strong>Is the brain <em>literally</em> running Bayes?</strong> <a href="/days/001-what-is-knowledge/">Day 1's</a> predictive-processing thread says perception is Bayesian inference in neural tissue. Today gives that claim its normative backbone — but "the brain approximates Bayes" and "the brain <em>is</em> Bayesian" are very different bets, and we'll return to them on <strong>Day 119</strong>.</li>
-<li><strong>Does Cox's theorem truly force probability on any rational agent</strong> — including an artificial one — or only on agents that already accept his consistency axioms? (A question with teeth for the AI block, <strong>Days 138–145</strong>.)</li>
-</ul>
-</section>
+<SectionEyebrow>Open questions</SectionEyebrow>
 
-<div class="recap">
-<p class="h">◆ The day in three sentences</p>
+## What's genuinely unsettled
+
+- **What *is* a probability, really?** A frequency in the world, a degree of belief in a mind, or a fair betting rate? Three centuries on, the interpretation war has truces (de Finetti) but no surrender.
+- **Where do priors come from?** Is there a principled, objective way to set your "before" belief, or does all reasoning rest on a choice no math can justify?
+- **Will betting-based statistics actually take over?** Or settle in as a specialist tool for sequential experiments while the p-value rules on — and is "choose your bet" any less subjective than "choose your prior"?
+- **Is the brain *literally* running Bayes?** [Day 1's](/days/001-what-is-knowledge/) predictive-processing thread says perception is Bayesian inference in neural tissue. Today gives that claim its normative backbone — but "the brain approximates Bayes" and "the brain *is* Bayesian" are very different bets, and we'll return to them on **Day 119**.
+- **Does Cox's theorem truly force probability on any rational agent** — including an artificial one — or only on agents that already accept his consistency axioms? (A question with teeth for the AI block, **Days 138–145**.)
+
+<Recap>
+<BlockTitle>◆ The day in three sentences</BlockTitle>
+
 <dl>
 <div><dt>Big idea</dt><dd>Probability isn't merely a tool for dice and coins — it's the unique extension of logic into the realm of uncertainty (Cox, Jaynes), and Bayes' theorem is its law of motion: belief flows toward whatever best predicted what you actually saw.</dd></div>
 <div><dt>Best analogy</dt><dd>Monty Hall opening a goat door — a knowledgeable agent's choice pours 2/3 of the probability onto one remaining door — and the gambler's ledger, where evidence against a hypothesis is literally money won betting against it.</dd></div>
 <div><dt>Live controversy</dt><dd>The frequentist–Bayesian split over what probability <em>means</em>, now joined by a 2020s mutiny that would replace the fragile, peek-sensitive p-value with the e-value — established as math, adopted in tech, but not (yet) the science-wide revolution its boldest fans promise.</dd></div>
 </dl>
-<p class="threads"><b>Threads today ›</b> information (the host's reveal and the e-value both as evidence that updates belief) · computation (mind and lab as inference engines) · energy (a light callback to the Bayesian brain) — with calibration carried straight from <a href="/days/001-what-is-knowledge/">Day 1</a> and <a href="/days/002-scientific-method-and-demarcation/">Day 2</a>, and the intervention question opening into <a href="/days/005-causation/">Causation</a>.</p>
-</div>
+<Threads>**Threads today ›** information (the host's reveal and the e-value both as evidence that updates belief) · computation (mind and lab as inference engines) · energy (a light callback to the Bayesian brain) — with calibration carried straight from [Day 1](/days/001-what-is-knowledge/) and [Day 2](/days/002-scientific-method-and-demarcation/), and the intervention question opening into [Causation](/days/005-causation/).</Threads>
 
-<section class="sources">
-<p class="sec-eyebrow">Sources</p>
-<h2>Sources &amp; further reading</h2>
-<ol>
-<li>Selvin, S. (1975). "A Problem in Probability" (Letter to the Editor). <em>The American Statistician</em> 29(1): 67. <span class="meta">doi:10.1080/00031305.1975.10479121.</span> <a href="https://doi.org/10.1080/00031305.1975.10479121">doi.org/10.1080/00031305.1975.10479121</a> <span class="meta">— and the follow-up, "On the Monty Hall Problem," 29(3): 134, doi:10.1080/00031305.1975.10477398, the first print use of the name.</span> <a href="https://doi.org/10.1080/00031305.1975.10477398">doi.org/10.1080/00031305.1975.10477398</a></li>
-<li>vos Savant, M. "Ask Marilyn." <em>Parade</em> (Sept 9, 1990, and follow-ups 1990–91). <a href="https://web.archive.org/web/20130121183432/http://marilynvossavant.com/game-show-problem/">marilynvossavant.com/game-show-problem</a> <span class="meta">— the column, reader letters, and the ~10,000-letter / ~1,000-PhD estimates (vos Savant's own).</span></li>
-<li>Tierney, J. (July 21, 1991). "Behind Monty Hall's Doors: Puzzle, Debate and Answer?" <em>The New York Times.</em> <a href="https://www.nytimes.com/1991/07/21/us/behind-monty-hall-s-doors-puzzle-debate-and-answer.html">nytimes.com</a> <span class="meta">— includes Monty Hall and Persi Diaconis on the host-protocol caveat.</span></li>
-<li>Hoffman, P. (1998). <em>The Man Who Loved Only Numbers.</em> Hyperion. <span class="meta">— the Erdős / Vázsonyi simulation anecdote.</span></li>
-<li>Bertrand, J. (1889). <em>Calcul des probabilités.</em> Gauthier-Villars. <span class="meta">— Bertrand's box paradox, the structural ancestor.</span> See also Gardner, M. (1959), "Mathematical Games," <em>Scientific American</em> (Three Prisoners).</li>
-<li>Casscells, W., Schoenberger, A. &amp; Graboys, T. B. (1978). "Interpretation by Physicians of Clinical Laboratory Results." <em>New England Journal of Medicine</em> 299(18): 999–1001. <span class="meta">doi:10.1056/NEJM197811022991808.</span> <a href="https://doi.org/10.1056/NEJM197811022991808">doi.org/10.1056/NEJM197811022991808</a> <span class="meta">— only 11 of 60 clinicians gave the ~2% answer.</span></li>
-<li>Cox, R. T. (1946). "Probability, Frequency and Reasonable Expectation." <em>American Journal of Physics</em> 14(1): 1–13. <span class="meta">doi:10.1119/1.1990764.</span> <a href="https://doi.org/10.1119/1.1990764">doi.org/10.1119/1.1990764</a> <span class="meta">— the desiderata forcing the probability rules.</span></li>
-<li>Jaynes, E. T. (2003). <em>Probability Theory: The Logic of Science.</em> Cambridge University Press (ed. G. L. Bretthorst). <span class="meta">doi:10.1017/CBO9780511790423.</span> <a href="https://doi.org/10.1017/CBO9780511790423">doi.org/10.1017/CBO9780511790423</a> <span class="meta">— probability as extended logic.</span></li>
-<li>Halpern, J. Y. (1999). "A Counterexample to Theorems of Cox and Fine." <em>Journal of Artificial Intelligence Research</em> 10: 67–85. <span class="meta">doi:10.1613/jair.536.</span> <a href="https://doi.org/10.1613/jair.536">doi.org/10.1613/jair.536</a> <span class="meta">— the rigor caveat on Cox's theorem.</span></li>
-<li>Kolmogorov, A. N. (1933). <em>Grundbegriffe der Wahrscheinlichkeitsrechnung</em> (Foundations of the Theory of Probability). Springer. <span class="meta">— the interpretation-neutral axioms.</span></li>
-<li>de Finetti, B. (1937 / 1974). "La prévision…"; <em>Theory of Probability</em> (Eng. trans.). <span class="meta">— "PROBABILITY DOES NOT EXIST"; the representation theorem.</span></li>
-<li>Lindley, D. V. (1991). <em>Making Decisions</em>, 2nd ed. Wiley. <span class="meta">— Cromwell's rule (p. 104).</span></li>
-<li>Shafer, G. (2021). "Testing by Betting: A Strategy for Statistical and Scientific Communication." <em>Journal of the Royal Statistical Society Series A</em> 184(2): 407–431. <span class="meta">doi:10.1111/rssa.12647.</span> <a href="https://doi.org/10.1111/rssa.12647">doi.org/10.1111/rssa.12647</a> <span class="meta">— with published discussion (incl. Vovk's comment, JRSS-A 184(2): 445–446).</span></li>
-<li>Vovk, V. &amp; Wang, R. (2021). "E-values: Calibration, combination, and applications." <em>The Annals of Statistics</em> 49(3): 1736–1754. <span class="meta">doi:10.1214/20-AOS2020.</span> <a href="https://doi.org/10.1214/20-AOS2020">doi.org/10.1214/20-AOS2020</a> <a href="https://sas.uwaterloo.ca/~wang/papers/2020Vovk-Wang-AOS.pdf">pdf</a></li>
-<li>Grünwald, P., de Heide, R. &amp; Koolen, W. (2024). "Safe Testing." <em>Journal of the Royal Statistical Society Series B</em> 86(5): 1091–1128. <span class="meta">doi:10.1093/jrsssb/qkae011.</span> <a href="https://doi.org/10.1093/jrsssb/qkae011">doi.org/10.1093/jrsssb/qkae011</a> (read paper, with discussion incl. Shafer, Pawel &amp; Held).</li>
-<li>Ramdas, A., Grünwald, P., Vovk, V. &amp; Shafer, G. (2023). "Game-Theoretic Statistics and Safe Anytime-Valid Inference." <em>Statistical Science</em> 38(4): 576–601. <span class="meta">doi:10.1214/23-STS894.</span> <a href="https://doi.org/10.1214/23-STS894">doi.org/10.1214/23-STS894</a> <a href="https://arxiv.org/pdf/2210.01948">arXiv:2210.01948</a></li>
-<li>Ramdas, A. &amp; Wang, R. (2025; first posted 2024). "Hypothesis Testing with E-values." <em>Foundations and Trends in Statistics</em> 1(1–2): 1–390. <span class="meta">doi:10.1561/3600000002.</span> <a href="https://doi.org/10.1561/3600000002">doi.org/10.1561/3600000002</a> <span class="meta">— the comprehensive monograph.</span></li>
-<li>ter Schure, J., Ly, A., Belin, L. et al. (2022). "Bacillus Calmette-Guérin vaccine to reduce COVID-19 infections and hospitalisations in healthcare workers." <span class="meta">Prospective ALL-IN meta-analysis preprint.</span> <a href="https://pure.amsterdamumc.nl/en/publications/bacillus-calmette-gu%C3%A9rin-vaccine-to-reduce-covid-19-infections-an/">Amsterdam UMC</a> <span class="meta">— exact e-value logrank tests and anytime-valid CIs in a living clinical meta-analysis.</span></li>
-<li>Johari, R., Koomen, P., Pekelis, L. &amp; Walsh, D. (2022). "Always Valid Inference: Continuous Monitoring of A/B Tests." <em>Operations Research</em> 70(3): 1806–1821. <span class="meta">doi:10.1287/opre.2021.2135.</span> <a href="https://doi.org/10.1287/opre.2021.2135">doi.org/10.1287/opre.2021.2135</a> <span class="meta">— Optimizely's deployment; cf. Netflix Research on <a href="https://research.netflix.com/publication/anytime-valid-inference-for-multinomial-count-data">anytime-valid inference</a> and Adobe's <a href="https://experienceleague.adobe.com/en/docs/journey-optimizer/using/content-management/content-experiment/technotes/experiment-calculations">Experience Platform confidence sequences</a>.</span></li>
-<li>Wasserstein, R. L. &amp; Lazar, N. A. (2016). "The ASA Statement on p-Values." <em>The American Statistician</em> 70(2): 129–133. <span class="meta">doi:10.1080/00031305.2016.1154108.</span> <a href="https://doi.org/10.1080/00031305.2016.1154108">doi.org/10.1080/00031305.2016.1154108</a> <span class="meta">— and Amrhein, Greenland &amp; McShane (2019), "Retire statistical significance," <em>Nature</em> 567: 305–307, doi:10.1038/d41586-019-00857-9.</span> <a href="https://doi.org/10.1038/d41586-019-00857-9">doi.org/10.1038/d41586-019-00857-9</a></li>
-</ol>
-</section>
+</Recap>
 
-</div>
+<Sources>
+<SectionEyebrow>Sources</SectionEyebrow>
+
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. Selvin, S. (1975). "A Problem in Probability" (Letter to the Editor). *The American Statistician* 29(1): 67. <Meta>doi:10.1080/00031305.1975.10479121.</Meta> [doi.org/10.1080/00031305.1975.10479121](https://doi.org/10.1080/00031305.1975.10479121) <Meta>— and the follow-up, "On the Monty Hall Problem," 29(3): 134, doi:10.1080/00031305.1975.10477398, the first print use of the name.</Meta> [doi.org/10.1080/00031305.1975.10477398](https://doi.org/10.1080/00031305.1975.10477398)
+1. vos Savant, M. "Ask Marilyn." *Parade* (Sept 9, 1990, and follow-ups 1990–91). [marilynvossavant.com/game-show-problem](https://web.archive.org/web/20130121183432/http://marilynvossavant.com/game-show-problem/) <Meta>— the column, reader letters, and the ~10,000-letter / ~1,000-PhD estimates (vos Savant's own).</Meta>
+1. Tierney, J. (July 21, 1991). "Behind Monty Hall's Doors: Puzzle, Debate and Answer?" *The New York Times.* [nytimes.com](https://www.nytimes.com/1991/07/21/us/behind-monty-hall-s-doors-puzzle-debate-and-answer.html) <Meta>— includes Monty Hall and Persi Diaconis on the host-protocol caveat.</Meta>
+1. Hoffman, P. (1998). *The Man Who Loved Only Numbers.* Hyperion. <Meta>— the Erdős / Vázsonyi simulation anecdote.</Meta>
+1. Bertrand, J. (1889). *Calcul des probabilités.* Gauthier-Villars. <Meta>— Bertrand's box paradox, the structural ancestor.</Meta> See also Gardner, M. (1959), "Mathematical Games," *Scientific American* (Three Prisoners).
+1. Casscells, W., Schoenberger, A. &amp; Graboys, T. B. (1978). "Interpretation by Physicians of Clinical Laboratory Results." *New England Journal of Medicine* 299(18): 999–1001. <Meta>doi:10.1056/NEJM197811022991808.</Meta> [doi.org/10.1056/NEJM197811022991808](https://doi.org/10.1056/NEJM197811022991808) <Meta>— only 11 of 60 clinicians gave the ~2% answer.</Meta>
+1. Cox, R. T. (1946). "Probability, Frequency and Reasonable Expectation." *American Journal of Physics* 14(1): 1–13. <Meta>doi:10.1119/1.1990764.</Meta> [doi.org/10.1119/1.1990764](https://doi.org/10.1119/1.1990764) <Meta>— the desiderata forcing the probability rules.</Meta>
+1. Jaynes, E. T. (2003). *Probability Theory: The Logic of Science.* Cambridge University Press (ed. G. L. Bretthorst). <Meta>doi:10.1017/CBO9780511790423.</Meta> [doi.org/10.1017/CBO9780511790423](https://doi.org/10.1017/CBO9780511790423) <Meta>— probability as extended logic.</Meta>
+1. Halpern, J. Y. (1999). "A Counterexample to Theorems of Cox and Fine." *Journal of Artificial Intelligence Research* 10: 67–85. <Meta>doi:10.1613/jair.536.</Meta> [doi.org/10.1613/jair.536](https://doi.org/10.1613/jair.536) <Meta>— the rigor caveat on Cox's theorem.</Meta>
+1. Kolmogorov, A. N. (1933). *Grundbegriffe der Wahrscheinlichkeitsrechnung* (Foundations of the Theory of Probability). Springer. <Meta>— the interpretation-neutral axioms.</Meta>
+1. de Finetti, B. (1937 / 1974). "La prévision…"; *Theory of Probability* (Eng. trans.). <Meta>— "PROBABILITY DOES NOT EXIST"; the representation theorem.</Meta>
+1. Lindley, D. V. (1991). *Making Decisions*, 2nd ed. Wiley. <Meta>— Cromwell's rule (p. 104).</Meta>
+1. Shafer, G. (2021). "Testing by Betting: A Strategy for Statistical and Scientific Communication." *Journal of the Royal Statistical Society Series A* 184(2): 407–431. <Meta>doi:10.1111/rssa.12647.</Meta> [doi.org/10.1111/rssa.12647](https://doi.org/10.1111/rssa.12647) <Meta>— with published discussion (incl. Vovk's comment, JRSS-A 184(2): 445–446).</Meta>
+1. Vovk, V. &amp; Wang, R. (2021). "E-values: Calibration, combination, and applications." *The Annals of Statistics* 49(3): 1736–1754. <Meta>doi:10.1214/20-AOS2020.</Meta> [doi.org/10.1214/20-AOS2020](https://doi.org/10.1214/20-AOS2020) [pdf](https://sas.uwaterloo.ca/~wang/papers/2020Vovk-Wang-AOS.pdf)
+1. Grünwald, P., de Heide, R. &amp; Koolen, W. (2024). "Safe Testing." *Journal of the Royal Statistical Society Series B* 86(5): 1091–1128. <Meta>doi:10.1093/jrsssb/qkae011.</Meta> [doi.org/10.1093/jrsssb/qkae011](https://doi.org/10.1093/jrsssb/qkae011) (read paper, with discussion incl. Shafer, Pawel &amp; Held).
+1. Ramdas, A., Grünwald, P., Vovk, V. &amp; Shafer, G. (2023). "Game-Theoretic Statistics and Safe Anytime-Valid Inference." *Statistical Science* 38(4): 576–601. <Meta>doi:10.1214/23-STS894.</Meta> [doi.org/10.1214/23-STS894](https://doi.org/10.1214/23-STS894) [arXiv:2210.01948](https://arxiv.org/pdf/2210.01948)
+1. Ramdas, A. &amp; Wang, R. (2025; first posted 2024). "Hypothesis Testing with E-values." *Foundations and Trends in Statistics* 1(1–2): 1–390. <Meta>doi:10.1561/3600000002.</Meta> [doi.org/10.1561/3600000002](https://doi.org/10.1561/3600000002) <Meta>— the comprehensive monograph.</Meta>
+1. ter Schure, J., Ly, A., Belin, L. et al. (2022). "Bacillus Calmette-Guérin vaccine to reduce COVID-19 infections and hospitalisations in healthcare workers." <Meta>Prospective ALL-IN meta-analysis preprint.</Meta> [Amsterdam UMC](https://pure.amsterdamumc.nl/en/publications/bacillus-calmette-gu%C3%A9rin-vaccine-to-reduce-covid-19-infections-an/) <Meta>— exact e-value logrank tests and anytime-valid CIs in a living clinical meta-analysis.</Meta>
+1. Johari, R., Koomen, P., Pekelis, L. &amp; Walsh, D. (2022). "Always Valid Inference: Continuous Monitoring of A/B Tests." *Operations Research* 70(3): 1806–1821. <Meta>doi:10.1287/opre.2021.2135.</Meta> [doi.org/10.1287/opre.2021.2135](https://doi.org/10.1287/opre.2021.2135) <Meta>— Optimizely's deployment; cf. Netflix Research on [anytime-valid inference](https://research.netflix.com/publication/anytime-valid-inference-for-multinomial-count-data) and Adobe's [Experience Platform confidence sequences](https://experienceleague.adobe.com/en/docs/journey-optimizer/using/content-management/content-experiment/technotes/experiment-calculations).</Meta>
+1. Wasserstein, R. L. &amp; Lazar, N. A. (2016). "The ASA Statement on p-Values." *The American Statistician* 70(2): 129–133. <Meta>doi:10.1080/00031305.2016.1154108.</Meta> [doi.org/10.1080/00031305.2016.1154108](https://doi.org/10.1080/00031305.2016.1154108) <Meta>— and Amrhein, Greenland &amp; McShane (2019), "Retire statistical significance," *Nature* 567: 305–307, doi:10.1038/d41586-019-00857-9.</Meta> [doi.org/10.1038/d41586-019-00857-9](https://doi.org/10.1038/d41586-019-00857-9)
+
+</Sources>
+
+</Wrap>
+

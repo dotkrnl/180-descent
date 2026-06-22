@@ -5,10 +5,36 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-<header class="hero wrap">
-<p class="eyebrow">Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 06 / 180</span></p>
-<h1>Statistics &amp; the Art of <em>Not Fooling Yourself</em></h1>
-<p class="sub">Given enough defensible choices, many datasets contain a path to <em>p</em>&nbsp;&lt;&nbsp;.05. The whole discipline is the struggle not to walk it by accident.</p>
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import Divider from "@app/components/lesson/Divider.astro";
+import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+
+<Hero>
+<HeroEyebrow>Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 06 / 180</span></HeroEyebrow>
+
+# Statistics &amp; the Art of *Not Fooling Yourself*
+
+<HeroSubhead>Given enough defensible choices, many datasets contain a path to *p*&nbsp;&lt;&nbsp;.05. The whole discipline is the struggle not to walk it by accident.</HeroSubhead>
 
 <figure class="hero-fig forking-paths">
 <svg viewBox="0 0 640 320" role="img" aria-label="An organized diagram showing one dataset, several defensible analysis choices, many resulting specifications, and one selectively reported significant result.">
@@ -56,34 +82,45 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 
 <p class="lede dropcap">In 2011 three psychologists set out to prove something impossible. They sat twenty undergraduates down, played half of them the Beatles' <em>"When I'm Sixty-Four"</em> and the other half a control tune, then asked a battery of questions — including each person's date of birth. After a perfectly ordinary statistical analysis, they announced their finding: listening to <em>"When I'm Sixty-Four"</em> made people <strong>a year and a half younger</strong>. Not feel younger. Be younger — their birth dates said so, at <MathInline latex={String.raw`p = .04`} />.</p>
 
-<p>This is, of course, impossible. A song cannot reach back and edit the year you were born. And that was exactly the point. Joseph Simmons, Leif Nelson, and Uri Simonsohn had used only standard, respectable tools, made only choices that any working scientist makes every week — and produced a statistically significant impossibility. Their paper was a deliberately absurd demonstration designed to expose a vulnerability. Today we learn what it exposed, and how a science learns to stop fooling itself.</p>
-</header><div class="wrap">
+This is, of course, impossible. A song cannot reach back and edit the year you were born. And that was exactly the point. Joseph Simmons, Leif Nelson, and Uri Simonsohn had used only standard, respectable tools, made only choices that any working scientist makes every week — and produced a statistically significant impossibility. Their paper was a deliberately absurd demonstration designed to expose a vulnerability. Today we learn what it exposed, and how a science learns to stop fooling itself.
 
-<div class="whereblock">
-<p class="label">◆ Where we are</p>
-<p>On <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> we met the replication crisis as a set of bruising numbers (97% of original psychology studies reported significant effects; only 36% replicated) and named <em class="term">p-hacking</em><TipNote text={String.raw`P-hacking means trying enough analyses, exclusions, outcomes, or stopping rules that random noise can be made to look statistically significant.`} /> without yet opening it up. Today we open it up. This is the statistical engine room beneath that crisis — and beneath <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a>'s Gettier worry (a belief that's true by luck, not connection) scaled up to entire literatures. We'll lean hard on <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>'s lesson that a <MathInline latex={String.raw`p`} />-value is not the probability the null is true (that confusion is the base-rate fallacy in disguise), and on <a href="/days/005-causation/"><strong>Day 5</strong></a>'s warning that <em>which variables you control for</em> is itself a fork in the road. Threads today: <em>information</em> (signal vs noise) and <em>computation</em> (the lab as a fallible inference machine), with a quiet preview of <em>emergence</em> — science as an error-correcting system bigger than any one analyst.</p>
-</div>
+</Hero>
 
-<section>
-<p class="sec-eyebrow">The hook</p>
-<h2>The easiest person to fool</h2>
+<Wrap>
+
+<WhereBlock>
+<Label>◆ Where we are</Label>
+
+On **[Day 2](/days/002-scientific-method-and-demarcation/)** we met the replication crisis as a set of bruising numbers (97% of original psychology studies reported significant effects; only 36% replicated) and named <Term as="em">p-hacking</Term><TipNote text={String.raw`P-hacking means trying enough analyses, exclusions, outcomes, or stopping rules that random noise can be made to look statistically significant.`} /> without yet opening it up. Today we open it up. This is the statistical engine room beneath that crisis — and beneath **[Day 1](/days/001-what-is-knowledge/)**'s Gettier worry (a belief that's true by luck, not connection) scaled up to entire literatures. We'll lean hard on **[Day 4](/days/004-probability-as-extended-logic/)**'s lesson that a <MathInline latex={String.raw`p`} />-value is not the probability the null is true (that confusion is the base-rate fallacy in disguise), and on **[Day 5](/days/005-causation/)**'s warning that *which variables you control for* is itself a fork in the road. Threads today: *information* (signal vs noise) and *computation* (the lab as a fallible inference machine), with a quiet preview of *emergence* — science as an error-correcting system bigger than any one analyst.
+
+</WhereBlock>
+
+<SectionEyebrow>The hook</SectionEyebrow>
+
+## The easiest person to fool
+
 <blockquote>"The first principle is that you must not fool yourself — and you are the easiest person to fool." — Richard Feynman, Caltech commencement, 1974</blockquote>
 <figure class="lesson-figure is-portrait">
 <img src={feynman1959.src} width="899" height="900" alt="Richard Feynman standing at a blackboard in 1959." />
 <figcaption>Richard Feynman at a blackboard in 1959. The quote above comes from his 1974 Caltech commencement address on "cargo cult science." <span class="meta">Image: <em>The Big T</em> 1959, public domain in the United States via Wikimedia Commons.</span></figcaption>
 </figure>
-<p>Feynman was talking about a kind of integrity that no formula can supply. The cruel twist of modern statistics is that the formulas can still be correct, but after flexible searching they no longer protect the nominal error rate. They lend the warm authority of mathematics to whatever you were already hoping to find.</p>
-<p>The villain has a clinical name: <em class="term">researcher degrees of freedom</em><TipNote text={String.raw`Researcher degrees of freedom are the legitimate-looking analytic choices a researcher can make about data collection, cleaning, modeling, and reporting.`} />. Every real analysis hides dozens of small, defensible decisions. Which outliers to exclude? Should you control for age? Sex? Both? Do you stop collecting data now, or run twenty more participants? You measured three outcomes — which do you report? Each choice, taken alone, is innocent. Taken together, made <em>after</em> you've glanced at how the numbers are leaning, they become a machine for minting false discoveries.</p>
-<p>Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved it with the Beatles. By simulation, they showed that bundling just four ordinary degrees of freedom — peeking at the data and adding more if needed; choosing between two related outcome measures; splitting the sample by a variable like gender; dropping one of three experimental conditions — can inflate your chance of a false positive from the advertised <strong>5%</strong> to as high as <strong>61%</strong>. Flip enough innocent switches and a coin-flip's worth of noise becomes a near-certainty of "success."</p>
-<p class="web-only">The next panel lets you run that machine yourself — with a live simulation, not a canned animation. Every "study" inside it is pure static, generated with no real effect whatsoever. Watch what your freedom does to the truth.</p>
-<p class="epub-only print-only">The reference table below shows the same machine in static form: each added research freedom gives pure noise another route to look like a discovery.</p>
-</section>
+Feynman was talking about a kind of integrity that no formula can supply. The cruel twist of modern statistics is that the formulas can still be correct, but after flexible searching they no longer protect the nominal error rate. They lend the warm authority of mathematics to whatever you were already hoping to find.
+
+The villain has a clinical name: <Term as="em">researcher degrees of freedom</Term><TipNote text={String.raw`Researcher degrees of freedom are the legitimate-looking analytic choices a researcher can make about data collection, cleaning, modeling, and reporting.`} />. Every real analysis hides dozens of small, defensible decisions. Which outliers to exclude? Should you control for age? Sex? Both? Do you stop collecting data now, or run twenty more participants? You measured three outcomes — which do you report? Each choice, taken alone, is innocent. Taken together, made *after* you've glanced at how the numbers are leaning, they become a machine for minting false discoveries.
+
+Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved it with the Beatles. By simulation, they showed that bundling just four ordinary degrees of freedom — peeking at the data and adding more if needed; choosing between two related outcome measures; splitting the sample by a variable like gender; dropping one of three experimental conditions — can inflate your chance of a false positive from the advertised **5%** to as high as **61%**. Flip enough innocent switches and a coin-flip's worth of noise becomes a near-certainty of "success."
+
+<FormatOnly media="web">The next panel lets you run that machine yourself — with a live simulation, not a canned animation. Every "study" inside it is pure static, generated with no real effect whatsoever. Watch what your freedom does to the truth.</FormatOnly>
+
+<FormatOnly media="print-epub">The reference table below shows the same machine in static form: each added research freedom gives pure noise another route to look like a discovery.</FormatOnly>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<div class="panel web-only statistics-factory">
-<p class="ptitle">Interactive · live Monte-Carlo simulation</p>
-<h3>The False-Positive Factory</h3>
-<p class="pnote">Each run simulates <strong>~1,500 experiments</strong> in which there is <em>no real effect at all</em> — two groups drawn from the same distribution. If the null is true, the model assumptions hold, and you run one pre-specified test, about 5% will still cross <MathInline latex={String.raw`p < .05`} /> by chance. Now hand yourself some researcher degrees of freedom and re-run. The factory simply reports the prettiest result it can find among the analyses you've allowed.</p>
+<Panel class="web-only statistics-factory">
+<PanelTitle>Interactive · live Monte-Carlo simulation</PanelTitle>
+
+### The False-Positive Factory
+
+<PanelNote>Each run simulates **~1,500 experiments** in which there is *no real effect at all* — two groups drawn from the same distribution. If the null is true, the model assumptions hold, and you run one pre-specified test, about 5% will still cross <MathInline latex={String.raw`p < .05`} /> by chance. Now hand yourself some researcher degrees of freedom and re-run. The factory simply reports the prettiest result it can find among the analyses you've allowed.</PanelNote>
 
 <div class="fp-grid">
 <div>
@@ -118,12 +155,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <div class="fp-read" id="fp-read">No tricks enabled. If the null is true and the assumptions hold, one pre-specified test gives the error rate the system promises.</div>
 </div>
 </div>
-</div>
+</Panel>
 
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>The False-Positive Factory</h3>
-<p class="pnote">Each ordinary analytic freedom multiplies the number of chances to report a chance result.</p>
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### The False-Positive Factory
+
+<PanelNote>Each ordinary analytic freedom multiplies the number of chances to report a chance result.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Analytic freedom</th><th>What changes</th><th>Why it inflates false positives</th></tr></thead>
 <tbody>
@@ -133,32 +173,36 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>Drop a condition</td><td>Run three groups, then report the best pair.</td><td>The reported contrast is selected because it looks best.</td></tr>
 </tbody>
 </table>
-<p>Simmons, Nelson, and Simonsohn showed that combining four such freedoms can raise a nominal 5% false-positive rate to about 61% even when the data contain no real effect.</p>
-</div>
+Simmons, Nelson, and Simonsohn showed that combining four such freedoms can raise a nominal 5% false-positive rate to about 61% even when the data contain no real effect.
 
-<section>
-<p class="sec-eyebrow">The core model</p>
-<h2>What a <MathInline latex={String.raw`p`} />-value actually says (and the six lies people tell about it)</h2>
-<p>To not be fooled, you have to know precisely what the instrument reports. Many readers, including trained scientists and a worrying number of the statistics instructors teaching them, get this wrong. So, carefully:</p>
+</FormatAlt>
+
+<SectionEyebrow>The core model</SectionEyebrow>
+
+## What a <MathInline latex={String.raw`p`} />-value actually says (and the six lies people tell about it)
+
+To not be fooled, you have to know precisely what the instrument reports. Many readers, including trained scientists and a worrying number of the statistics instructors teaching them, get this wrong. So, carefully:
 
 <div class="def">
 <p class="h">Definition · the p-value</p>
       The <em class="term">p-value</em><TipNote text={String.raw`A p-value is a tail probability for data under a specified null model, not the probability that the null hypothesis is true.`} /> is the probability — <strong>computed on the assumption that the <em class="term">null model</em><TipNote text={String.raw`A null model is the world assumed by the p-value calculation, usually a model with no effect plus all stated sampling and modeling assumptions.`} />, the null hypothesis<TipNote text={String.raw`A null hypothesis is the baseline claim being tested, often that there is no effect or no difference.`} />, and every modeling assumption are true</strong> — of getting a result <strong>at least as extreme</strong> as the one you actually observed.
 </div>
 
-<p>Concrete version: suppose the null model says two groups have the same mean. If a difference this large or larger would occur 3% of the time under that model, then <MathInline latex={String.raw`p = .03`} />. That is <em>not</em> a 3% chance the null is true.</p>
+Concrete version: suppose the null model says two groups have the same mean. If a difference this large or larger would occur 3% of the time under that model, then <MathInline latex={String.raw`p = .03`} />. That is *not* a 3% chance the null is true.
 
 <figure class="lesson-figure pvalue-figure">
 <img src={pValueTailArea.src} data-light-src={pValueTailArea.src} data-dark-src={pValueTailAreaDark.src} width="800" height="460" loading="lazy" decoding="async" alt="Course-styled diagram of a null-model bell curve with a shaded tail area labeled p-value, emphasizing that P(data given null) is not P(null given data)." />
 <figcaption>The shaded tail is the p-value: the frequency of results this extreme or more extreme under the null model. <span class="meta">Adapted from Repapetilto and Chen-Pan Liao, CC BY-SA 3.0 via Wikimedia Commons.</span></figcaption>
 </figure>
 
-<p>Read it twice. It is a statement about <em>data, assuming a hypothesis</em> — written <MathInline latex={String.raw`\mathrm{P}(\text{data}\mid\text{null})`} />. It is emphatically <em>not</em> a statement about the hypothesis given the data, <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{data})`} />. Confusing those two is the exact inversion <strong>Day 4</strong> warned about with the disease-test problem: <MathInline latex={String.raw`\mathrm{P}(\text{positive}\mid\text{sick})`} /> is not <MathInline latex={String.raw`\mathrm{P}(\text{sick}\mid\text{positive})`} />, and no amount of staring turns one into the other without a prior. Here are the six misreadings to burn out of your reflexes — drawn from Greenland and colleagues' field guide to <em>twenty-five</em> of them:</p>
+Read it twice. It is a statement about *data, assuming a hypothesis* — written <MathInline latex={String.raw`\mathrm{P}(\text{data}\mid\text{null})`} />. It is emphatically *not* a statement about the hypothesis given the data, <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{data})`} />. Confusing those two is the exact inversion **Day 4** warned about with the disease-test problem: <MathInline latex={String.raw`\mathrm{P}(\text{positive}\mid\text{sick})`} /> is not <MathInline latex={String.raw`\mathrm{P}(\text{sick}\mid\text{positive})`} />, and no amount of staring turns one into the other without a prior. Here are the six misreadings to burn out of your reflexes — drawn from Greenland and colleagues' field guide to *twenty-five* of them:
 
-<div class="aside">
-<p class="h">Three probabilities people confuse</p>
-<p><strong><em class="term">Alpha</em></strong><TipNote text={String.raw`Alpha is the false-alarm rate you commit to before looking at the data, conditional on a true null model and a specified testing procedure.`} /> is the long-run Type I error rate of a testing procedure if the null model is true: with <MathInline latex={String.raw`\alpha=.05`} />, about 5% of true-null tests will falsely cross the line. The <strong><em class="term">false discovery rate</em></strong><TipNote text={String.raw`The false discovery rate is the fraction of declared discoveries that are false.`} /> asks a different question: among the claims you actually declare significant, what fraction are false? That depends on base rates, power, and selection, not just <MathInline latex={String.raw`\alpha`} />. A <strong><em class="term">posterior probability</em></strong><TipNote text={String.raw`A posterior probability is the probability of a hypothesis after combining data with prior information.`} />, such as <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{data})`} />, is different again: it needs a prior. A 5% <MathInline latex={String.raw`\alpha`} /> is neither a 5% false discovery rate nor a 5% chance the null is true.</p>
-</div>
+<Aside>
+<BlockTitle>Three probabilities people confuse</BlockTitle>
+
+<strong><Term as="em">Alpha</Term></strong><TipNote text={String.raw`Alpha is the false-alarm rate you commit to before looking at the data, conditional on a true null model and a specified testing procedure.`} /> is the long-run Type I error rate of a testing procedure if the null model is true: with <MathInline latex={String.raw`\alpha=.05`} />, about 5% of true-null tests will falsely cross the line. The <strong><Term as="em">false discovery rate</Term></strong><TipNote text={String.raw`The false discovery rate is the fraction of declared discoveries that are false.`} /> asks a different question: among the claims you actually declare significant, what fraction are false? That depends on base rates, power, and selection, not just <MathInline latex={String.raw`\alpha`} />. A <strong><Term as="em">posterior probability</Term></strong><TipNote text={String.raw`A posterior probability is the probability of a hypothesis after combining data with prior information.`} />, such as <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{data})`} />, is different again: it needs a prior. A 5% <MathInline latex={String.raw`\alpha`} /> is neither a 5% false discovery rate nor a 5% chance the null is true.
+
+</Aside>
 
 <ul class="mislist">
 <li><b>"<MathInline latex={String.raw`p = .03`} /> means there's a 3% chance the null is true."</b><span class="fix">No. That's <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{data})`} /> — a Bayesian quantity needing a prior. The <MathInline latex={String.raw`p`} />-value already <em>assumes</em> the null.</span></li>
@@ -169,15 +213,19 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <li><b>"A significant result is a large or important one."</b><span class="fix">No. With a big enough sample, a trivially small effect is "significant." Significance ≠ size ≠ importance.</span></li>
 </ul>
 
-<p>That last one is the quiet killer, so it gets its own model.</p>
+That last one is the quiet killer, so it gets its own model.
 
-<h3>Significance is not size: meet the effect size</h3>
-<p>A <MathInline latex={String.raw`p`} />-value entangles effect size, noise, sample size, and model assumptions. Pour in enough participants and even a microscopic, meaningless difference crosses the line. So grown-up statistics insists on reporting the <em class="term">effect size</em><TipNote text={String.raw`An effect size reports how large a difference or association is, instead of only whether it crossed a significance threshold.`} /> separately: <em>Cohen's d</em><TipNote text={String.raw`Cohen’s d expresses a difference between two means in units of standard deviation.`} /> (a difference in means measured in standard deviations) or a correlation <em>r</em>. Jacob Cohen offered rough labels — <em>d</em> ≈ 0.2 small, 0.5 medium, 0.8 large — while cheerfully admitting they were arbitrary: "Although arbitrary, the proposed conventions will be found to be reasonable by reasonable people." The point is not the labels. The point is that a number with no effect size attached has told you almost nothing worth knowing.</p>
+### Significance is not size: meet the effect size
 
-<div class="panel web-only statistics-effect-lab">
-<p class="ptitle">Interactive · significance versus size</p>
-<h3>The Effect-Size Dial</h3>
-<p class="pnote">Set a true mean difference, a per-group sample size, and a noise level. A group means one side of the two-group comparison, such as treatment versus control; n = 50 per group means 50 observations in each side, 100 total. The plot uses fixed x and y scales: mean difference from -3 to +3, and bucket frequency from repeated estimates. Finer bars show the estimate distribution; the curve is the matching sampling distribution; the horizontal bar is the 95% confidence interval on the same x scale.</p>
+A <MathInline latex={String.raw`p`} />-value entangles effect size, noise, sample size, and model assumptions. Pour in enough participants and even a microscopic, meaningless difference crosses the line. So grown-up statistics insists on reporting the <Term as="em">effect size</Term><TipNote text={String.raw`An effect size reports how large a difference or association is, instead of only whether it crossed a significance threshold.`} /> separately: *Cohen's d*<TipNote text={String.raw`Cohen’s d expresses a difference between two means in units of standard deviation.`} /> (a difference in means measured in standard deviations) or a correlation *r*. Jacob Cohen offered rough labels — *d* ≈ 0.2 small, 0.5 medium, 0.8 large — while cheerfully admitting they were arbitrary: "Although arbitrary, the proposed conventions will be found to be reasonable by reasonable people." The point is not the labels. The point is that a number with no effect size attached has told you almost nothing worth knowing.
+
+<Panel class="web-only statistics-effect-lab">
+<PanelTitle>Interactive · significance versus size</PanelTitle>
+
+### The Effect-Size Dial
+
+<PanelNote>Set a true mean difference, a per-group sample size, and a noise level. A group means one side of the two-group comparison, such as treatment versus control; n = 50 per group means 50 observations in each side, 100 total. The plot uses fixed x and y scales: mean difference from -3 to +3, and bucket frequency from repeated estimates. Finer bars show the estimate distribution; the curve is the matching sampling distribution; the horizontal bar is the 95% confidence interval on the same x scale.</PanelNote>
+
 <div class="se-grid">
 <div class="se-controls">
 <label for="se-effect"><span>True mean difference</span><output id="se-effect-out" for="se-effect">0.30</output></label>
@@ -210,12 +258,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <div><span>Cohen's d</span><strong id="se-d">0.30</strong></div>
 <div><span>Practical size</span><strong id="se-importance">small</strong></div>
 </div>
-</div>
+</Panel>
 
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>Significance versus size</h3>
-<p class="pnote">The same true effect can look very different as sample size and noise change.</p>
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### Significance versus size
+
+<PanelNote>The same true effect can look very different as sample size and noise change.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Scenario</th><th>p-value</th><th>95% CI for mean difference</th><th>Cohen's d</th><th>Practical reading</th></tr></thead>
 <tbody>
@@ -225,21 +276,27 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>Mean difference 0.30, n = 50 per group, noise = 2.00</td><td>.46</td><td>[-0.49, 1.09]</td><td>0.15</td><td>Tiny relative to the noise.</td></tr>
 </tbody>
 </table>
-<p>The lesson is not "smaller p-values are better." A p-value can shrink because an effect is large, because the sample is huge, because noise is low, or because all three changed. Report the effect size and interval.</p>
-</div>
+The lesson is not "smaller p-values are better." A p-value can shrink because an effect is large, because the sample is huge, because noise is low, or because all three changed. Report the effect size and interval.
 
-<h3>The interval you've been misreading too</h3>
-<p><em class="term">Confidence intervals</em><TipNote text={String.raw`A confidence interval is a range produced by a method with a stated long-run coverage rate, such as 95%.`} /> are sold as the humane alternative to <MathInline latex={String.raw`p`} />-values, and they are better — but they hide their own trap.</p>
+</FormatAlt>
+
+### The interval you've been misreading too
+
+<Term as="em">Confidence intervals</Term><TipNote text={String.raw`A confidence interval is a range produced by a method with a stated long-run coverage rate, such as 95%.`} /> are sold as the humane alternative to <MathInline latex={String.raw`p`} />-values, and they are better — but they hide their own trap.
+
 <div class="def">
 <p class="h">Definition · the 95% confidence interval</p>
       A 95% CI is produced by a <strong>procedure</strong> that, across many hypothetical repeat experiments, brackets the true value 95% of the time. The "95%" describes the long-run reliability of the <em>method</em>, not the odds for your one particular interval.
 </div>
-<p>So the natural sentence — "there's a 95% chance the true value is in <em>this</em> interval" — is, in the frequentist world, simply false. Your interval either contains the truth or it doesn't; the dice were thrown when you ran the study. (A <strong>Day 4</strong> Bayesian <em>credible</em> interval <em>does</em> license that sentence — but only after you've committed to a prior. Different tool, different promise.) Nor does a CI mean 95% of your data live inside it, nor that values just outside are impossible. What it gives you, refreshingly, is a <em>range of effect sizes compatible with your data</em> — and that reframing, from "yes/no" to "how much, how precisely," is the heart of what reformers call the <em>new statistics</em>.</p>
+So the natural sentence — "there's a 95% chance the true value is in *this* interval" — is, in the frequentist world, simply false. Your interval either contains the truth or it doesn't; the dice were thrown when you ran the study. (A **Day 4** Bayesian *credible* interval *does* license that sentence — but only after you've committed to a prior. Different tool, different promise.) Nor does a CI mean 95% of your data live inside it, nor that values just outside are impossible. What it gives you, refreshingly, is a *range of effect sizes compatible with your data* — and that reframing, from "yes/no" to "how much, how precisely," is the heart of what reformers call the *new statistics*.
 
-<div class="panel web-only statistics-ci-coverage">
-<p class="ptitle">Interactive · long-run coverage</p>
-<h3>The 100-interval test</h3>
-<p class="pnote">Generate 100 repeated samples from a world where the true mean is known to be 0. The x-axis is fixed from -4 to +4 so width changes stay visually honest. The confidence-level dial changes the long-run target: higher confidence covers more often but makes wider intervals. Sample size and noise mostly change precision. The highlighted interval is one observed study: it either covers or it does not.</p>
+<Panel class="web-only statistics-ci-coverage">
+<PanelTitle>Interactive · long-run coverage</PanelTitle>
+
+### The 100-interval test
+
+<PanelNote>Generate 100 repeated samples from a world where the true mean is known to be 0. The x-axis is fixed from -4 to +4 so width changes stay visually honest. The confidence-level dial changes the long-run target: higher confidence covers more often but makes wider intervals. Sample size and noise mostly change precision. The highlighted interval is one observed study: it either covers or it does not.</PanelNote>
+
 <div class="ci-grid">
 <div class="ci-controls">
 <label for="ci-n"><span>Sample size per study</span><output id="ci-n-out" for="ci-n">30</output></label>
@@ -261,12 +318,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <div><span>highlighted interval</span><strong id="ci-observed">covers</strong></div>
 <div><span>typical width</span><strong id="ci-width">0.74</strong></div>
 </div>
-</div>
+</Panel>
 
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Worked example</p>
-<h3>Confidence-interval coverage</h3>
-<p class="pnote">The table summarizes the long-run lesson: a 95% confidence-interval procedure covers the true value about 95 times in 100 repeated uses, but any single interval either covers or misses.</p>
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Worked example</PanelTitle>
+
+### Confidence-interval coverage
+
+<PanelNote>The table summarizes the long-run lesson: a 95% confidence-interval procedure covers the true value about 95 times in 100 repeated uses, but any single interval either covers or misses.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Object</th><th>What happens over repeated use</th><th>Correct reading</th></tr></thead>
 <tbody>
@@ -275,36 +335,43 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>One observed interval, for example [0.04, 0.76]</td><td>It misses the true mean 0.</td><td>A 95% method still produces misses in repeated use.</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<h3>Why small studies can exaggerate what they detect</h3>
-<p>Two ways to be wrong: a <em class="term">Type I error</em><TipNote text={String.raw`A Type I error is a false positive: rejecting a true null hypothesis.`} /> (false alarm — declaring an effect that isn't there) and a <em class="term">Type II error</em><TipNote text={String.raw`A Type II error is a false negative: missing a real effect.`} /> (a miss — failing to see one that is). <em class="term">Statistical power</em><TipNote text={String.raw`Statistical power is the probability that a study will detect an effect of a given size if that effect is real.`} /> is your chance of catching a real effect; more data buys more power. You'd assume an underpowered study just yields shrugs and "no result." Worse: it actively poisons the literature. When power is low, the only estimates lucky enough to clear the significance bar are the substantially inflated ones — the <em class="term">winner's curse</em><TipNote text={String.raw`The winner’s curse is the tendency for selected significant estimates from noisy studies to exaggerate the true effect.`} />. Pair that with publication practices that preferentially reward significant findings, and you manufacture a published record of effects that are both exaggerated and fragile. A sobering 2013 audit ("Power failure," Button et al.) put the median power across neuroscience at roughly <strong>21%</strong>; a 2017 reanalysis by Nord and colleagues usefully qualifies the headline, arguing that power is not uniformly low across every neuroscience subfield. The lesson survives the caveat: where studies are underpowered, real effects are missed and the effects that surface are often inflated.</p>
-</section>
+### Why small studies can exaggerate what they detect
 
-<section>
-<p class="sec-eyebrow">The deeper trap</p>
-<h2>You don't have to cheat to be fooled</h2>
-<p>Here is the part that should keep honest people up at night. You might read all of the above, swear off p-hacking, run exactly <strong>one</strong> pre-planned analysis, and report it faithfully — and <em>still</em> have an inflated false-positive rate. This is Andrew Gelman and Eric Loken's <em class="term">garden of forking paths</em><TipNote text={String.raw`The garden of forking paths is the set of analyses a researcher might reasonably have chosen after seeing different patterns in the same data.`} />.</p>
-<p>Their insight is subtle and a little haunting. The damage doesn't require running many analyses. It only requires that the single analysis you ran was <em>contingent on the data you happened to see</em>. Suppose your data had come out slightly differently — a touch noisier here, a cluster there. You'd have made a different, equally reasonable choice: controlled for age instead of income, compared women instead of the whole sample, used a median instead of a mean. The other analyses are invisible because you never ran them. But the universe of paths you <em>would have</em> taken, in nearby worlds, is exactly the multiplicity that inflates your error rate. As Gelman and Loken put it, you can get a false positive with no "fishing expedition" and no p-hacking at all, even with the hypothesis fixed in advance.</p>
-<p>Notice how this rhymes with <a href="/days/005-causation/"><strong>Day 5</strong></a>. There, the lurking decision was <em>which variables to condition on</em> — and conditioning on a <em class="term">collider</em><TipNote text={String.raw`A collider is a variable influenced by two other variables; conditioning on it can create a misleading association between its causes.`} /> could <em>manufacture</em> a correlation out of nothing. The forking paths are the same hazard generalized: every defensible analytic choice is a junction, and the data quietly nudge you down the branch that flatters your hypothesis. The honest analyst and the p-hacker can produce the identical false result. The difference is only that one of them knows they did it.</p>
+Two ways to be wrong: a <Term as="em">Type I error</Term><TipNote text={String.raw`A Type I error is a false positive: rejecting a true null hypothesis.`} /> (false alarm — declaring an effect that isn't there) and a <Term as="em">Type II error</Term><TipNote text={String.raw`A Type II error is a false negative: missing a real effect.`} /> (a miss — failing to see one that is). <Term as="em">Statistical power</Term><TipNote text={String.raw`Statistical power is the probability that a study will detect an effect of a given size if that effect is real.`} /> is your chance of catching a real effect; more data buys more power. You'd assume an underpowered study just yields shrugs and "no result." Worse: it actively poisons the literature. When power is low, the only estimates lucky enough to clear the significance bar are the substantially inflated ones — the <Term as="em">winner's curse</Term><TipNote text={String.raw`The winner’s curse is the tendency for selected significant estimates from noisy studies to exaggerate the true effect.`} />. Pair that with publication practices that preferentially reward significant findings, and you manufacture a published record of effects that are both exaggerated and fragile. A sobering 2013 audit ("Power failure," Button et al.) put the median power across neuroscience at roughly **21%**; a 2017 reanalysis by Nord and colleagues usefully qualifies the headline, arguing that power is not uniformly low across every neuroscience subfield. The lesson survives the caveat: where studies are underpowered, real effects are missed and the effects that surface are often inflated.
 
-<div class="aside">
-<p class="h">The fix that names the disease</p>
-<p>If the problem is that choices get made <em>after</em> seeing the data, the cleanest cure is to make them <em>before</em>: <em class="term">preregistration</em><TipNote text={String.raw`Preregistration means recording hypotheses, data handling, and analysis plans before looking at the results.`} /> (write down your analysis plan, publicly, in advance) and <em class="term">Registered Reports</em><TipNote text={String.raw`Registered Reports are journal articles accepted in principle after peer review of the research question and method, before the results are known.`} /> (journals peer-review and accept the <em>plan</em>, before any results exist). We met these on <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a>; here's <em>why</em> they bite. They freeze the confirmatory path; deviations become exploratory rather than hidden, converting a garden of "reasonable choices I made while peeking" into a single committed road.</p>
-</div>
-</section>
+<SectionEyebrow>The deeper trap</SectionEyebrow>
 
-<section>
-<p class="sec-eyebrow">The debate</p>
-<h2>Burn the threshold, or just lower it?</h2>
-<p>If <MathInline latex={String.raw`p < .05`} /> is so abusable, what should replace it? Here the field splits — not into crank versus expert, but into camps of serious statisticians who genuinely disagree. It helps to lay them on a single line, from "patch it" to "torch it."</p>
-</section>
+## You don't have to cheat to be fooled
+
+Here is the part that should keep honest people up at night. You might read all of the above, swear off p-hacking, run exactly **one** pre-planned analysis, and report it faithfully — and *still* have an inflated false-positive rate. This is Andrew Gelman and Eric Loken's <Term as="em">garden of forking paths</Term><TipNote text={String.raw`The garden of forking paths is the set of analyses a researcher might reasonably have chosen after seeing different patterns in the same data.`} />.
+
+Their insight is subtle and a little haunting. The damage doesn't require running many analyses. It only requires that the single analysis you ran was *contingent on the data you happened to see*. Suppose your data had come out slightly differently — a touch noisier here, a cluster there. You'd have made a different, equally reasonable choice: controlled for age instead of income, compared women instead of the whole sample, used a median instead of a mean. The other analyses are invisible because you never ran them. But the universe of paths you *would have* taken, in nearby worlds, is exactly the multiplicity that inflates your error rate. As Gelman and Loken put it, you can get a false positive with no "fishing expedition" and no p-hacking at all, even with the hypothesis fixed in advance.
+
+Notice how this rhymes with **[Day 5](/days/005-causation/)**. There, the lurking decision was *which variables to condition on* — and conditioning on a <Term as="em">collider</Term><TipNote text={String.raw`A collider is a variable influenced by two other variables; conditioning on it can create a misleading association between its causes.`} /> could *manufacture* a correlation out of nothing. The forking paths are the same hazard generalized: every defensible analytic choice is a junction, and the data quietly nudge you down the branch that flatters your hypothesis. The honest analyst and the p-hacker can produce the identical false result. The difference is only that one of them knows they did it.
+
+<Aside>
+<BlockTitle>The fix that names the disease</BlockTitle>
+
+If the problem is that choices get made *after* seeing the data, the cleanest cure is to make them *before*: <Term as="em">preregistration</Term><TipNote text={String.raw`Preregistration means recording hypotheses, data handling, and analysis plans before looking at the results.`} /> (write down your analysis plan, publicly, in advance) and <Term as="em">Registered Reports</Term><TipNote text={String.raw`Registered Reports are journal articles accepted in principle after peer review of the research question and method, before the results are known.`} /> (journals peer-review and accept the *plan*, before any results exist). We met these on **[Day 2](/days/002-scientific-method-and-demarcation/)**; here's *why* they bite. They freeze the confirmatory path; deviations become exploratory rather than hidden, converting a garden of "reasonable choices I made while peeking" into a single committed road.
+
+</Aside>
+
+<SectionEyebrow>The debate</SectionEyebrow>
+
+## Burn the threshold, or just lower it?
+
+If <MathInline latex={String.raw`p < .05`} /> is so abusable, what should replace it? Here the field splits — not into crank versus expert, but into camps of serious statisticians who genuinely disagree. It helps to lay them on a single line, from "patch it" to "torch it."
 
 {/* ===================== VISUAL 2 ===================== */}
-<div class="panel statistics-spectrum">
-<p class="ptitle">Diagram · the reform spectrum</p>
-<h3>Four ways to live with <em>p</em></h3>
-<p class="pnote">Everyone on this line agrees the status quo is broken. They disagree about how radical the cure must be.</p>
+<Panel class="statistics-spectrum">
+<PanelTitle>Diagram · the reform spectrum</PanelTitle>
+
+### Four ways to live with *p*
+
+<PanelNote>Everyone on this line agrees the status quo is broken. They disagree about how radical the cure must be.</PanelNote>
+
 <svg viewBox="0 0 640 168" role="img" aria-label="A spectrum from keeping p less than 0.05, to redefining it to 0.005, to justifying your alpha, to retiring statistical significance entirely.">
 <line x1="40" y1="60" x2="600" y2="60" stroke="var(--line-strong)" stroke-width="2"></line>
 <g font-family="IBM Plex Mono,monospace">
@@ -337,16 +404,16 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <div class="k"><b>Retire significance</b> — Amrhein, Greenland &amp; McShane (2019), with 800+ co-signers in <em>Nature</em>, want to scrap the "significant / not significant" dichotomy itself — the habit of treating <MathInline latex={String.raw`p = .04`} /> and <em>p</em> = .06 as different worlds. Not a ban on <MathInline latex={String.raw`p`} />-values; a ban on the bright line.</div>
 <div class="k"><b>The field's statistical society</b> — the American Statistical Association weighed in twice: a careful 2016 statement of six principles, then a more radical 2019 editorial urging us to stop saying "statistically significant" at all. (That 2019 piece was the editors' view, not formal ASA policy — a distinction that itself caused a row.)</div>
 </div>
-</div>
+</Panel>
 
-<section>
-<p>What unites the whole spectrum, from cautious to incendiary, is a single migration: away from a yes/no verdict at a magic number, toward <em>reporting how big an effect is, how uncertain you are, and how fragile the answer is to the choices you made</em>. That last idea — fragility — is where the live 2020s frontier lives.</p>
-</section>
+What unites the whole spectrum, from cautious to incendiary, is a single migration: away from a yes/no verdict at a magic number, toward *reporting how big an effect is, how uncertain you are, and how fragile the answer is to the choices you made*. That last idea — fragility — is where the live 2020s frontier lives.
 
-<section class="frontier">
-<p class="sec-eyebrow">The frontier · 2024–2026</p>
-<h2>Making fragility visible — and the hype filter</h2>
-<p>If a single analysis can mislead, the modern move is brutally simple: <em>run them all</em>, and show the spread. Two named methods do this, and a third line of work tests the whole idea by turning loose armies of real scientists on the same data. As always, each claim gets a label.</p>
+<ContentSection class="frontier">
+<SectionEyebrow>The frontier · 2024–2026</SectionEyebrow>
+
+## Making fragility visible — and the hype filter
+
+If a single analysis can mislead, the modern move is brutally simple: *run them all*, and show the spread. Two named methods do this, and a third line of work tests the whole idea by turning loose armies of real scientists on the same data. As always, each claim gets a label.
 
 <div class="claim">
 <div class="ctop">
@@ -361,10 +428,12 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 
 {/* ===================== INTERACTIVE 3 ===================== */}
-<div class="panel web-only statistics-spec-curve">
-<p class="ptitle">Interactive · run your own multiverse</p>
-<h3>The Specification Curve</h3>
-<p class="pnote">A fixed synthetic dataset gives X and Y a weak, confounded association: the baseline model starts below the usual <MathInline latex={String.raw`p < .05`} /> line, but some defensible choices can push it across. Here <strong>r</strong> is the Pearson correlation coefficient, from -1 to +1; positive <strong>r</strong> means larger X tends to come with larger Y, and values near 0 are weak. We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. The panel opens with every choice included and cherry-pick highlighted; turning off a chip narrows the multiverse. Teal dots are <MathInline latex={String.raw`p < .05`} />, grey dots are not. The check rows show which choices each specification uses, including whether it controls for the lurking Day 5 confounder <strong>W</strong>.</p>
+<Panel class="web-only statistics-spec-curve">
+<PanelTitle>Interactive · run your own multiverse</PanelTitle>
+
+### The Specification Curve
+
+<PanelNote>A fixed synthetic dataset gives X and Y a weak, confounded association: the baseline model starts below the usual <MathInline latex={String.raw`p < .05`} /> line, but some defensible choices can push it across. Here **r** is the Pearson correlation coefficient, from -1 to +1; positive **r** means larger X tends to come with larger Y, and values near 0 are weak. We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. The panel opens with every choice included and cherry-pick highlighted; turning off a chip narrows the multiverse. Teal dots are <MathInline latex={String.raw`p < .05`} />, grey dots are not. The check rows show which choices each specification uses, including whether it controls for the lurking Day 5 confounder **W**.</PanelNote>
 
 <div class="mv-controls" id="mv-controls">
 <button class="mvchip" id="mv-trim" aria-pressed="true"><i></i>trim outliers</button>
@@ -383,7 +452,7 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <p class="lh" id="mv-clh">The honest reading</p>
 <p id="mv-cbody" style="margin:0;"></p>
 </div>
-</div>
+</Panel>
 
 <div class="claim">
 <div class="ctop">
@@ -406,12 +475,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <p>The open problem in all of the above is honest <em>inference</em> across a multiverse: how do you draw one valid conclusion from a thousand entangled analyses? A 2024 entry, <em class="term">PIMA</em> (Post-selection Inference in Multiverse Analysis; Girardi et al., <em>Psychometrika</em>, 2024), offers a sign-flipping test that aims to give the multiverse a proper joint error guarantee, reaching beyond the linear-model limits of the 2020 specification curve. It's peer-reviewed and genuinely interesting, but new and not yet standard practice — a <strong>promising hint</strong>, not a settled tool.</p>
 <p>Meanwhile the boring, durable fixes keep spreading: the Registered Reports format — where journals accept your <em>plan</em> before your results exist — is now offered at <strong>several hundred journals</strong>, and preregistration is becoming a default rather than a virtue. And recall <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>'s <em class="term">e-values</em><TipNote text={String.raw`E-values measure evidence as the payoff of a betting strategy against a null hypothesis.`} /> and "testing by betting" (Grünwald, Ramdas, Shafer): an alternative to the <MathInline latex={String.raw`p`} />-value that stays valid even if you peek at your data and stop whenever you like — aimed squarely at the optional-stopping degree of freedom you toggled in the factory above. Still a research frontier rather than mainstream practice — <strong>promising</strong>, watch this space.</p>
 </div>
-</section>
+</ContentSection>
 
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>Specification Curve Summary</h3>
-<p class="pnote">The same synthetic dataset can be analyzed through multiple defensible specifications.</p>
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### Specification Curve Summary
+
+<PanelNote>The same synthetic dataset can be analyzed through multiple defensible specifications.</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Choice</th><th>Effect on the analysis</th><th>Interpretive risk</th></tr></thead>
 <tbody>
@@ -421,62 +493,66 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>Drop subgroup</td><td>Analyse only a subset of the data.</td><td>Can test a real boundary condition or create a flattering subset.</td></tr>
 </tbody>
 </table>
-<p>The honest report is the distribution across reasonable specifications; the dishonest report is the prettiest point on the curve.</p>
-</div>
+The honest report is the distribution across reasonable specifications; the dishonest report is the prettiest point on the curve.
 
-<section>
-<p class="sec-eyebrow">Open questions</p>
-<h2>What's genuinely unsettled</h2>
-<ul>
-<li><strong>Should "statistical significance" survive at all?</strong> Reformers are split between disciplining the threshold and abolishing it. Decisions still have to be made somewhere — a drug is approved or it isn't — and abolitionists owe an account of how.</li>
-<li><strong>Can a multiverse ever yield a single honest verdict?</strong> Or is the choice of "reasonable specifications" an irreducibly subjective act that just relocates the forking paths one level up? PIMA and friends are early attempts; the jury is out.</li>
-<li><strong>Is variation in <em>conclusions</em> the same as variation in <em>reality</em>?</strong> A subtle 2023 reanalysis noted that in some many-analyst studies the headline-grabbing disagreement was about <em>significance</em>, while the underlying effect sizes were quietly consistent and small. Disagreement about a verdict can exceed disagreement about the number. Don't over-learn "everything is hopeless."</li>
-<li><strong>Do <MathInline latex={String.raw`p`} />-values or e-values deserve the future?</strong> The betting-based tools elegantly solve optional stopping but can demand more data and import a new modeling burden (which bet?). Coexistence looks likelier than conquest.</li>
-<li><strong>And the question waiting in the AI block:</strong> when a model trained on millions of papers reports a "robust" result, has it learned to reason about evidence — or to imitate the very forking-path habits that got us here? (<strong>Days 138–145</strong>.)</li>
-</ul>
-</section>
+</FormatAlt>
 
-<div class="recap">
-<p class="h">◆ The day in three sentences</p>
+<SectionEyebrow>Open questions</SectionEyebrow>
+
+## What's genuinely unsettled
+
+- **Should "statistical significance" survive at all?** Reformers are split between disciplining the threshold and abolishing it. Decisions still have to be made somewhere — a drug is approved or it isn't — and abolitionists owe an account of how.
+- **Can a multiverse ever yield a single honest verdict?** Or is the choice of "reasonable specifications" an irreducibly subjective act that just relocates the forking paths one level up? PIMA and friends are early attempts; the jury is out.
+- **Is variation in *conclusions* the same as variation in *reality*?** A subtle 2023 reanalysis noted that in some many-analyst studies the headline-grabbing disagreement was about *significance*, while the underlying effect sizes were quietly consistent and small. Disagreement about a verdict can exceed disagreement about the number. Don't over-learn "everything is hopeless."
+- **Do <MathInline latex={String.raw`p`} />-values or e-values deserve the future?** The betting-based tools elegantly solve optional stopping but can demand more data and import a new modeling burden (which bet?). Coexistence looks likelier than conquest.
+- **And the question waiting in the AI block:** when a model trained on millions of papers reports a "robust" result, has it learned to reason about evidence — or to imitate the very forking-path habits that got us here? (**Days 138–145**.)
+
+<Recap>
+<BlockTitle>◆ The day in three sentences</BlockTitle>
+
 <dl>
 <div><dt>Big idea</dt><dd>Statistical tools don't protect you from fooling yourself — used with ordinary human flexibility they help you do it, because the dozens of defensible choices in any analysis (the "garden of forking paths") let noise masquerade as discovery, so the cure is transparency, preregistration, effect sizes with uncertainty, and robustness across reasonable analyses rather than a verdict at a magic threshold.</dd></div>
 <div><dt>Best analogy</dt><dd>The False-Positive Factory: hand yourself enough innocent freedoms and a coin-flip's worth of nothing becomes a 61% chance of "success" — and the garden of forking paths, where the analyses you <em>would have</em> run in nearby worlds inflate your error even if you only ran one.</dd></div>
 <div><dt>Live controversy</dt><dd>Whether to lower the threshold (<MathInline latex={String.raw`p < .005`} />), justify it case by case, or retire "statistical significance" altogether — with multiverse and many-analyst studies revealing how alarmingly a single dataset's verdict depends on who analyzes it.</dd></div>
 </dl>
-<p class="threads"><b>Threads today ›</b> information (separating signal from noise; the <MathInline latex={String.raw`p`} />-value as a misread evidence measure) · computation (the lab as a fallible inference engine; the multiverse as brute enumeration) · emergence (science as an error-correcting system larger than any analyst — preregistration, many-analyst crowds, meta-analysis), leading directly into <a href="/days/007-information-theory/">Information Theory</a>.</p>
-</div>
+<Threads>**Threads today ›** information (separating signal from noise; the <MathInline latex={String.raw`p`} />-value as a misread evidence measure) · computation (the lab as a fallible inference engine; the multiverse as brute enumeration) · emergence (science as an error-correcting system larger than any analyst — preregistration, many-analyst crowds, meta-analysis), leading directly into [Information Theory](/days/007-information-theory/).</Threads>
 
-<hr class="div" />
+</Recap>
 
-<section class="sources">
-<p class="sec-eyebrow">Sources</p>
-<h2>Sources &amp; further reading</h2>
-<ol>
-<li>Feynman, R. P. (1974). "Cargo Cult Science." <em>Engineering and Science</em> 37(7): 10–13. <span class="meta">Caltech's 1974 commencement address; source of the opening quote.</span> <a href="https://calteches.library.caltech.edu/51/2/CargoCult.htm">calteches.library.caltech.edu</a></li>
-<li>Open Science Collaboration. (2015). "Estimating the reproducibility of psychological science." <em>Science</em> 349(6251): aac4716. <span class="meta">doi:10.1126/science.aac4716; source for the 97% original significant / 36% significant replication statistic.</span> <a href="https://doi.org/10.1126/science.aac4716">doi.org/10.1126/science.aac4716</a></li>
-<li>Simmons, J. P., Nelson, L. D. &amp; Simonsohn, U. (2011). "False-Positive Psychology: Undisclosed Flexibility in Data Collection and Analysis Allows Presenting Anything as Significant." <em>Psychological Science</em> 22(11): 1359–1366. <span class="meta">doi:10.1177/0956797611417632.</span> <a href="https://doi.org/10.1177/0956797611417632">doi.org/10.1177/0956797611417632</a> <span class="meta">— the "When I'm Sixty-Four" demonstration; the 5%→61% simulation.</span></li>
-<li>Gelman, A. &amp; Loken, E. (2014). "The Statistical Crisis in Science." <em>American Scientist</em> 102(6): 460–465. <span class="meta">— the "garden of forking paths"; earlier as a 2013 Columbia working paper.</span> <a href="https://www.americanscientist.org/article/the-statistical-crisis-in-science">americanscientist.org</a></li>
-<li>Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. &amp; Altman, D. G. (2016). "Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations." <em>European Journal of Epidemiology</em> 31(4): 337–350. <span class="meta">doi:10.1007/s10654-016-0149-3.</span> <a href="https://doi.org/10.1007/s10654-016-0149-3">doi.org/10.1007/s10654-016-0149-3</a> <span class="meta">— the canonical list of 25 misreadings.</span></li>
-<li>Haller, H. &amp; Krauss, S. (2002). "Misinterpretations of Significance: A Problem Students Share with Their Teachers?" <em>Methods of Psychological Research Online</em> 7(1): 1–20. <span class="meta">— survey evidence that p-value misunderstandings persist even among instructors teaching statistics.</span> <a href="https://epub.uni-regensburg.de/34338/">epub.uni-regensburg.de/34338</a></li>
-<li>Badenes-Ribera, L., Frias-Navarro, D., Iotti, B., Bonilla-Campos, A. &amp; Longobardi, C. (2016). "Misconceptions of the p-value among Chilean and Italian Academic Psychologists." <em>Frontiers in Psychology</em> 7: 1247. <span class="meta">doi:10.3389/fpsyg.2016.01247.</span> <a href="https://doi.org/10.3389/fpsyg.2016.01247">doi.org/10.3389/fpsyg.2016.01247</a></li>
-<li>Wasserstein, R. L. &amp; Lazar, N. A. (2016). "The ASA Statement on p-Values: Context, Process, and Purpose." <em>The American Statistician</em> 70(2): 129–133. <span class="meta">doi:10.1080/00031305.2016.1154108.</span> <a href="https://doi.org/10.1080/00031305.2016.1154108">doi.org/10.1080/00031305.2016.1154108</a> <span class="meta">— the six principles.</span></li>
-<li>Wasserstein, R. L., Schirm, A. L. &amp; Lazar, N. A. (2019). "Moving to a World Beyond 'p &lt; 0.05'." <em>The American Statistician</em> 73(sup1): 1–19. <span class="meta">doi:10.1080/00031305.2019.1583913.</span> <a href="https://doi.org/10.1080/00031305.2019.1583913">doi.org/10.1080/00031305.2019.1583913</a> <span class="meta">— editorial to a 43-article special issue; "stop saying statistically significant" (editors' view, not ASA policy).</span></li>
-<li>Benjamin, D. J., Berger, J. O., Johannesson, M., et al. (2018). "Redefine statistical significance." <em>Nature Human Behaviour</em> 2(1): 6–10. <span class="meta">doi:10.1038/s41562-017-0189-z.</span> <a href="https://doi.org/10.1038/s41562-017-0189-z">doi.org/10.1038/s41562-017-0189-z</a></li>
-<li>Lakens, D., Adolfi, F. G., Albers, C. J., et al. (2018). "Justify your alpha." <em>Nature Human Behaviour</em> 2(3): 168–171. <span class="meta">doi:10.1038/s41562-018-0311-x.</span> <a href="https://doi.org/10.1038/s41562-018-0311-x">doi.org/10.1038/s41562-018-0311-x</a></li>
-<li>Amrhein, V., Greenland, S. &amp; McShane, B. (2019). "Scientists rise up against statistical significance." <em>Nature</em> 567(7748): 305–307. <span class="meta">doi:10.1038/d41586-019-00857-9; 800+ signatories.</span> <a href="https://doi.org/10.1038/d41586-019-00857-9">doi.org/10.1038/d41586-019-00857-9</a></li>
-<li>Button, K. S., Ioannidis, J. P. A., Mokrysz, C., et al. (2013). "Power failure: why small sample size undermines the reliability of neuroscience." <em>Nature Reviews Neuroscience</em> 14(5): 365–376. <span class="meta">doi:10.1038/nrn3475; median power ≈ 21%.</span> <a href="https://doi.org/10.1038/nrn3475">doi.org/10.1038/nrn3475</a></li>
-<li>Nord, C. L., Valton, V., Wood, J. &amp; Roiser, J. P. (2017). "Power-up: A Reanalysis of 'Power Failure' in Neuroscience Using Mixture Modeling." <em>The Journal of Neuroscience</em> 37(34): 8051–8061. <span class="meta">doi:10.1523/JNEUROSCI.3592-16.2017; caveat on the uniformity of low power across neuroscience.</span> <a href="https://doi.org/10.1523/JNEUROSCI.3592-16.2017">doi.org/10.1523/JNEUROSCI.3592-16.2017</a></li>
-<li>Center for Open Science. "Registered Reports." <span class="meta">Official COS overview and participating-journal list; source for "over 300 journals."</span> <a href="https://www.cos.io/initiatives/registered-reports">cos.io/initiatives/registered-reports</a></li>
-<li>Steegen, S., Tuerlinckx, F., Gelman, A. &amp; Vanpaemel, W. (2016). "Increasing Transparency Through a Multiverse Analysis." <em>Perspectives on Psychological Science</em> 11(5): 702–712. <span class="meta">doi:10.1177/1745691616658637.</span> <a href="https://doi.org/10.1177/1745691616658637">doi.org/10.1177/1745691616658637</a></li>
-<li>Simonsohn, U., Simmons, J. P. &amp; Nelson, L. D. (2020). "Specification curve analysis." <em>Nature Human Behaviour</em> 4(11): 1208–1214. <span class="meta">doi:10.1038/s41562-020-0912-z.</span> <a href="https://doi.org/10.1038/s41562-020-0912-z">doi.org/10.1038/s41562-020-0912-z</a></li>
-<li>Silberzahn, R., Uhlmann, E. L., Martin, D. P., et al. (2018). "Many Analysts, One Data Set." <em>Advances in Methods and Practices in Psychological Science</em> 1(3): 337–356. <span class="meta">doi:10.1177/2515245917747646; 29 teams, ORs 0.89–2.93.</span> <a href="https://doi.org/10.1177/2515245917747646">doi.org/10.1177/2515245917747646</a></li>
-<li>Botvinik-Nezer, R., Holzmeister, F., Camerer, C. F., et al. (2020). "Variability in the analysis of a single neuroimaging dataset by many teams." <em>Nature</em> 582(7810): 84–88. <span class="meta">doi:10.1038/s41586-020-2314-9; 70 teams.</span> <a href="https://doi.org/10.1038/s41586-020-2314-9">doi.org/10.1038/s41586-020-2314-9</a></li>
-<li>Breznau, N., Rinke, E. M., Wuttke, A., et al. (2022). "Observing many researchers using the same data and hypothesis reveals a hidden universe of uncertainty." <em>PNAS</em> 119(44): e2203150119. <span class="meta">doi:10.1073/pnas.2203150119; 73 teams.</span> <a href="https://doi.org/10.1073/pnas.2203150119">doi.org/10.1073/pnas.2203150119</a></li>
-<li>Mathur, M. B., Covington, C. &amp; VanderWeele, T. J. (2023). "Variation across analysts in statistical significance, yet consistently small effect sizes." <em>PNAS</em> 120(3): e2218957120. <span class="meta">doi:10.1073/pnas.2218957120; caveat on reading many-analyst disagreement through effect sizes and intervals, not significance labels alone.</span> <a href="https://doi.org/10.1073/pnas.2218957120">doi.org/10.1073/pnas.2218957120</a></li>
-<li>Menkveld, A. J., Dreber, A., Holzmeister, F., et al. (2024). "Nonstandard Errors." <em>The Journal of Finance</em> 79(3): 2339–2390. <span class="meta">doi:10.1111/jofi.13337; 164 teams.</span> <a href="https://doi.org/10.1111/jofi.13337">doi.org/10.1111/jofi.13337</a></li>
-<li>Girardi, P., Vesely, A., Lakens, D., et al. (2024). "Post-selection Inference in Multiverse Analysis (PIMA): An Inferential Framework Based on the Sign Flipping Score Test." <em>Psychometrika</em> 89(2): 542–568. <span class="meta">doi:10.1007/s11336-024-09973-6.</span> <a href="https://doi.org/10.1007/s11336-024-09973-6">doi.org/10.1007/s11336-024-09973-6</a></li>
-<li>Ramdas, A., Grünwald, P., Vovk, V. &amp; Shafer, G. (2023). "Game-theoretic statistics and safe anytime-valid inference." <em>Statistical Science</em> 38(4): 576–601. <span class="meta">doi:10.1214/23-STS894; e-processes, testing by betting, and optional-stopping validity.</span> <a href="https://doi.org/10.1214/23-STS894">doi.org/10.1214/23-STS894</a></li>
-<li>Cohen, J. (1988). <em>Statistical Power Analysis for the Behavioral Sciences</em> (2nd ed.). Lawrence Erlbaum. <span class="meta">— effect-size conventions, offered as deliberately arbitrary.</span></li>
-</ol>
-</section>
-</div>
+<Divider />
+
+<Sources>
+<SectionEyebrow>Sources</SectionEyebrow>
+
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. Feynman, R. P. (1974). "Cargo Cult Science." *Engineering and Science* 37(7): 10–13. <Meta>Caltech's 1974 commencement address; source of the opening quote.</Meta> [calteches.library.caltech.edu](https://calteches.library.caltech.edu/51/2/CargoCult.htm)
+1. Open Science Collaboration. (2015). "Estimating the reproducibility of psychological science." *Science* 349(6251): aac4716. <Meta>doi:10.1126/science.aac4716; source for the 97% original significant / 36% significant replication statistic.</Meta> [doi.org/10.1126/science.aac4716](https://doi.org/10.1126/science.aac4716)
+1. Simmons, J. P., Nelson, L. D. &amp; Simonsohn, U. (2011). "False-Positive Psychology: Undisclosed Flexibility in Data Collection and Analysis Allows Presenting Anything as Significant." *Psychological Science* 22(11): 1359–1366. <Meta>doi:10.1177/0956797611417632.</Meta> [doi.org/10.1177/0956797611417632](https://doi.org/10.1177/0956797611417632) <Meta>— the "When I'm Sixty-Four" demonstration; the 5%→61% simulation.</Meta>
+1. Gelman, A. &amp; Loken, E. (2014). "The Statistical Crisis in Science." *American Scientist* 102(6): 460–465. <Meta>— the "garden of forking paths"; earlier as a 2013 Columbia working paper.</Meta> [americanscientist.org](https://www.americanscientist.org/article/the-statistical-crisis-in-science)
+1. Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. &amp; Altman, D. G. (2016). "Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations." *European Journal of Epidemiology* 31(4): 337–350. <Meta>doi:10.1007/s10654-016-0149-3.</Meta> [doi.org/10.1007/s10654-016-0149-3](https://doi.org/10.1007/s10654-016-0149-3) <Meta>— the canonical list of 25 misreadings.</Meta>
+1. Haller, H. &amp; Krauss, S. (2002). "Misinterpretations of Significance: A Problem Students Share with Their Teachers?" *Methods of Psychological Research Online* 7(1): 1–20. <Meta>— survey evidence that p-value misunderstandings persist even among instructors teaching statistics.</Meta> [epub.uni-regensburg.de/34338](https://epub.uni-regensburg.de/34338/)
+1. Badenes-Ribera, L., Frias-Navarro, D., Iotti, B., Bonilla-Campos, A. &amp; Longobardi, C. (2016). "Misconceptions of the p-value among Chilean and Italian Academic Psychologists." *Frontiers in Psychology* 7: 1247. <Meta>doi:10.3389/fpsyg.2016.01247.</Meta> [doi.org/10.3389/fpsyg.2016.01247](https://doi.org/10.3389/fpsyg.2016.01247)
+1. Wasserstein, R. L. &amp; Lazar, N. A. (2016). "The ASA Statement on p-Values: Context, Process, and Purpose." *The American Statistician* 70(2): 129–133. <Meta>doi:10.1080/00031305.2016.1154108.</Meta> [doi.org/10.1080/00031305.2016.1154108](https://doi.org/10.1080/00031305.2016.1154108) <Meta>— the six principles.</Meta>
+1. Wasserstein, R. L., Schirm, A. L. &amp; Lazar, N. A. (2019). "Moving to a World Beyond 'p &lt; 0.05'." *The American Statistician* 73(sup1): 1–19. <Meta>doi:10.1080/00031305.2019.1583913.</Meta> [doi.org/10.1080/00031305.2019.1583913](https://doi.org/10.1080/00031305.2019.1583913) <Meta>— editorial to a 43-article special issue; "stop saying statistically significant" (editors' view, not ASA policy).</Meta>
+1. Benjamin, D. J., Berger, J. O., Johannesson, M., et al. (2018). "Redefine statistical significance." *Nature Human Behaviour* 2(1): 6–10. <Meta>doi:10.1038/s41562-017-0189-z.</Meta> [doi.org/10.1038/s41562-017-0189-z](https://doi.org/10.1038/s41562-017-0189-z)
+1. Lakens, D., Adolfi, F. G., Albers, C. J., et al. (2018). "Justify your alpha." *Nature Human Behaviour* 2(3): 168–171. <Meta>doi:10.1038/s41562-018-0311-x.</Meta> [doi.org/10.1038/s41562-018-0311-x](https://doi.org/10.1038/s41562-018-0311-x)
+1. Amrhein, V., Greenland, S. &amp; McShane, B. (2019). "Scientists rise up against statistical significance." *Nature* 567(7748): 305–307. <Meta>doi:10.1038/d41586-019-00857-9; 800+ signatories.</Meta> [doi.org/10.1038/d41586-019-00857-9](https://doi.org/10.1038/d41586-019-00857-9)
+1. Button, K. S., Ioannidis, J. P. A., Mokrysz, C., et al. (2013). "Power failure: why small sample size undermines the reliability of neuroscience." *Nature Reviews Neuroscience* 14(5): 365–376. <Meta>doi:10.1038/nrn3475; median power ≈ 21%.</Meta> [doi.org/10.1038/nrn3475](https://doi.org/10.1038/nrn3475)
+1. Nord, C. L., Valton, V., Wood, J. &amp; Roiser, J. P. (2017). "Power-up: A Reanalysis of 'Power Failure' in Neuroscience Using Mixture Modeling." *The Journal of Neuroscience* 37(34): 8051–8061. <Meta>doi:10.1523/JNEUROSCI.3592-16.2017; caveat on the uniformity of low power across neuroscience.</Meta> [doi.org/10.1523/JNEUROSCI.3592-16.2017](https://doi.org/10.1523/JNEUROSCI.3592-16.2017)
+1. Center for Open Science. "Registered Reports." <Meta>Official COS overview and participating-journal list; source for "over 300 journals."</Meta> [cos.io/initiatives/registered-reports](https://www.cos.io/initiatives/registered-reports)
+1. Steegen, S., Tuerlinckx, F., Gelman, A. &amp; Vanpaemel, W. (2016). "Increasing Transparency Through a Multiverse Analysis." *Perspectives on Psychological Science* 11(5): 702–712. <Meta>doi:10.1177/1745691616658637.</Meta> [doi.org/10.1177/1745691616658637](https://doi.org/10.1177/1745691616658637)
+1. Simonsohn, U., Simmons, J. P. &amp; Nelson, L. D. (2020). "Specification curve analysis." *Nature Human Behaviour* 4(11): 1208–1214. <Meta>doi:10.1038/s41562-020-0912-z.</Meta> [doi.org/10.1038/s41562-020-0912-z](https://doi.org/10.1038/s41562-020-0912-z)
+1. Silberzahn, R., Uhlmann, E. L., Martin, D. P., et al. (2018). "Many Analysts, One Data Set." *Advances in Methods and Practices in Psychological Science* 1(3): 337–356. <Meta>doi:10.1177/2515245917747646; 29 teams, ORs 0.89–2.93.</Meta> [doi.org/10.1177/2515245917747646](https://doi.org/10.1177/2515245917747646)
+1. Botvinik-Nezer, R., Holzmeister, F., Camerer, C. F., et al. (2020). "Variability in the analysis of a single neuroimaging dataset by many teams." *Nature* 582(7810): 84–88. <Meta>doi:10.1038/s41586-020-2314-9; 70 teams.</Meta> [doi.org/10.1038/s41586-020-2314-9](https://doi.org/10.1038/s41586-020-2314-9)
+1. Breznau, N., Rinke, E. M., Wuttke, A., et al. (2022). "Observing many researchers using the same data and hypothesis reveals a hidden universe of uncertainty." *PNAS* 119(44): e2203150119. <Meta>doi:10.1073/pnas.2203150119; 73 teams.</Meta> [doi.org/10.1073/pnas.2203150119](https://doi.org/10.1073/pnas.2203150119)
+1. Mathur, M. B., Covington, C. &amp; VanderWeele, T. J. (2023). "Variation across analysts in statistical significance, yet consistently small effect sizes." *PNAS* 120(3): e2218957120. <Meta>doi:10.1073/pnas.2218957120; caveat on reading many-analyst disagreement through effect sizes and intervals, not significance labels alone.</Meta> [doi.org/10.1073/pnas.2218957120](https://doi.org/10.1073/pnas.2218957120)
+1. Menkveld, A. J., Dreber, A., Holzmeister, F., et al. (2024). "Nonstandard Errors." *The Journal of Finance* 79(3): 2339–2390. <Meta>doi:10.1111/jofi.13337; 164 teams.</Meta> [doi.org/10.1111/jofi.13337](https://doi.org/10.1111/jofi.13337)
+1. Girardi, P., Vesely, A., Lakens, D., et al. (2024). "Post-selection Inference in Multiverse Analysis (PIMA): An Inferential Framework Based on the Sign Flipping Score Test." *Psychometrika* 89(2): 542–568. <Meta>doi:10.1007/s11336-024-09973-6.</Meta> [doi.org/10.1007/s11336-024-09973-6](https://doi.org/10.1007/s11336-024-09973-6)
+1. Ramdas, A., Grünwald, P., Vovk, V. &amp; Shafer, G. (2023). "Game-theoretic statistics and safe anytime-valid inference." *Statistical Science* 38(4): 576–601. <Meta>doi:10.1214/23-STS894; e-processes, testing by betting, and optional-stopping validity.</Meta> [doi.org/10.1214/23-STS894](https://doi.org/10.1214/23-STS894)
+1. Cohen, J. (1988). *Statistical Power Analysis for the Behavioral Sciences* (2nd ed.). Lawrence Erlbaum. <Meta>— effect-size conventions, offered as deliberately arbitrary.</Meta>
+
+</Sources>
+
+</Wrap>
+

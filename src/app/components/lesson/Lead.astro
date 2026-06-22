@@ -1,0 +1,9 @@
+---
+interface Props {
+  class?: string;
+  drop?: string;
+}
+
+const className = ["lede", Astro.props.drop ? undefined : undefined, Astro.props.class].filter(Boolean).join(" ");
+---
+<p class={className}>{Astro.props.drop && <span class="drop">{Astro.props.drop}</span>}<slot /></p>

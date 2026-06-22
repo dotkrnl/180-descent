@@ -2,25 +2,52 @@ import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 
-<p class="lede"><span class="drop">W</span>e left the main page having done two remarkable things: we weighed a fact in bits, and we paid — in heat, in zeptojoules — to forget one. That is the spine of the subject. But a spine is not a body. Between Shannon's definition of the bit and Landauer's price for erasing it lies a century of ideas we sprinted past: a second quantity, just as fundamental as entropy, that measures how much one thing tells you about another; the deep reason your phone can shrink a photo by 95% and stream it through static without a flaw; a maze-solving mechanical mouse; and a chain of physical limits that ends, quite literally, at the computational capacity of the universe. This appendix is the unhurried tour.</p>
-<section>
-<p class="sec-eyebrow"><span class="sec-num">01</span> · the missing quantity</p>
-<h2>Mutual information, and the tax for a wrong belief</h2>
-<p>Entropy measures the uncertainty <em>inside</em> one source. But the whole point of communication — and of evidence, and of perception — is that one thing tells you about <em>another</em>. The thunder tells you about the lightning; the test result tells you about the disease; the open goat door on <strong>Day 4</strong> told you about the car. The quantity that captures this is the true workhorse of the theory: <em class="term">mutual information</em>.</p>
-<p>Start with two simpler pieces. <em class="term">Joint entropy</em> <MathInline latex={String.raw`H(X,Y)`} /> is the total uncertainty in the pair. <em class="term">Conditional entropy</em> <MathInline latex={String.raw`H(Y\mid X)`} /> is the uncertainty <em>left in Y once you already know X</em> — the surprise that survives. Mutual information is simply the gap between them: how much knowing X <em>shrinks</em> your uncertainty about Y.</p>
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 
-<div class="formula">
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Caption from "@app/components/lesson/Caption.astro";
+import Divider from "@app/components/lesson/Divider.astro";
+import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Formula from "@app/components/lesson/Formula.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+
+<Lead drop="W">e left the main page having done two remarkable things: we weighed a fact in bits, and we paid — in heat, in zeptojoules — to forget one. That is the spine of the subject. But a spine is not a body. Between Shannon's definition of the bit and Landauer's price for erasing it lies a century of ideas we sprinted past: a second quantity, just as fundamental as entropy, that measures how much one thing tells you about another; the deep reason your phone can shrink a photo by 95% and stream it through static without a flaw; a maze-solving mechanical mouse; and a chain of physical limits that ends, quite literally, at the computational capacity of the universe. This appendix is the unhurried tour.</Lead>
+
+<SectionEyebrow number="01"> · the missing quantity</SectionEyebrow>
+
+## Mutual information, and the tax for a wrong belief
+
+Entropy measures the uncertainty *inside* one source. But the whole point of communication — and of evidence, and of perception — is that one thing tells you about *another*. The thunder tells you about the lightning; the test result tells you about the disease; the open goat door on **Day 4** told you about the car. The quantity that captures this is the true workhorse of the theory: <Term as="em">mutual information</Term>.
+
+Start with two simpler pieces. <Term as="em">Joint entropy</Term> <MathInline latex={String.raw`H(X,Y)`} /> is the total uncertainty in the pair. <Term as="em">Conditional entropy</Term> <MathInline latex={String.raw`H(Y\mid X)`} /> is the uncertainty *left in Y once you already know X* — the surprise that survives. Mutual information is simply the gap between them: how much knowing X *shrinks* your uncertainty about Y.
+
+<Formula>
 <MathBlock latex={String.raw`I(X;Y) = H(Y) - H(Y\mid X) = H(X) + H(Y) - H(X,Y)`} />
-<p class="cap">The uncertainty about Y, minus what's left after you learn X. Symmetric: X tells you exactly as much about Y as Y tells you about X.</p>
-</div>
+<Caption>The uncertainty about Y, minus what's left after you learn X. Symmetric: X tells you exactly as much about Y as Y tells you about X.</Caption>
 
-<p class="web-only">For two variables, the overlap of two circles is a useful accounting picture. Do not push it too far: with three or more variables, information diagrams can contain signed interaction regions. Mutual information measures statistical dependence, not causation. A causal graph (<strong>Day 5</strong>) encodes structural assumptions and conditional independences; two variables can share information because one causes the other, because they share a cause, or because of selection. In Bayesian experimental design (<strong>Day 2</strong>), expected information gain about a hypothesis is one useful objective and can be written as a mutual information. A realized observation is evidence through likelihood ratios, Bayes factors, log scores, or posterior updates.</p>
-<p class="format-alt epub-only print-only">Mutual information measures statistical dependence. Channel capacity is the maximum mutual information rate achievable under a specified channel model and constraints. Causation and realized evidence require additional structure beyond mutual information alone.</p>
-</section>
-<div class="panel web-only appendix-mutual-information">
-<p class="ptitle">Interactive · the overlap of two uncertainties</p>
-<h3>Mutual Information, drawn</h3>
-<p class="pnote">Two fair coins, X and Y, each carrying 1 bit. Slide them from <em>independent</em> (knowing one tells you nothing about the other) to <em>identical</em> (knowing one tells you everything). The teal overlap is <MathInline latex={String.raw`I(X;Y)`} />; the outer crescents are the surprise that survives — the conditional entropies. Watch the channel "open."</p>
+</Formula>
+
+<FormatOnly media="web">For two variables, the overlap of two circles is a useful accounting picture. Do not push it too far: with three or more variables, information diagrams can contain signed interaction regions. Mutual information measures statistical dependence, not causation. A causal graph (**Day 5**) encodes structural assumptions and conditional independences; two variables can share information because one causes the other, because they share a cause, or because of selection. In Bayesian experimental design (**Day 2**), expected information gain about a hypothesis is one useful objective and can be written as a mutual information. A realized observation is evidence through likelihood ratios, Bayes factors, log scores, or posterior updates.</FormatOnly>
+
+<FormatOnly media="print-epub" class="format-alt">Mutual information measures statistical dependence. Channel capacity is the maximum mutual information rate achievable under a specified channel model and constraints. Causation and realized evidence require additional structure beyond mutual information alone.</FormatOnly>
+
+<Panel class="web-only appendix-mutual-information">
+<PanelTitle>Interactive · the overlap of two uncertainties</PanelTitle>
+
+### Mutual Information, drawn
+
+<PanelNote>Two fair coins, X and Y, each carrying 1 bit. Slide them from *independent* (knowing one tells you nothing about the other) to *identical* (knowing one tells you everything). The teal overlap is <MathInline latex={String.raw`I(X;Y)`} />; the outer crescents are the surprise that survives — the conditional entropies. Watch the channel "open."</PanelNote>
 
 <div class="mi-grid">
 <div class="mi-venn">
@@ -43,10 +70,13 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 </div>
 <div class="slabel appendix-slider-label"><span>agreement P(X = Y)</span><span class="val" id="appendix-d007-the-deeper-currents-aLbl">0.50</span></div>
 <input type="range" id="appendix-d007-the-deeper-currents-aSlider" min="50" max="100" value="50" aria-label="Agreement between X and Y" />
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h4>Mutual information, as agreement changes</h4>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+#### Mutual information, as agreement changes
+
 <table class="alt-table">
 <thead><tr><th>Agreement <MathInline latex={String.raw`P(X=Y)`} /></th><th><MathInline latex={String.raw`H(Y\mid X)`} /></th><th><MathInline latex={String.raw`I(X;Y)`} /></th><th>Interpretation</th></tr></thead>
 <tbody>
@@ -56,50 +86,63 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 <tr><td>1.00</td><td>0.00 bits</td><td>1.00 bit</td><td>Identical variables; knowing X tells you Y completely.</td></tr>
 </tbody>
 </table>
-</div>
-<section>
-<h3>The surprise tax: relative entropy</h3>
-<p>There's a cousin of entropy that turns out to be one of the most useful quantities in all of science, and it answers a sharp question: <em>what does it cost to believe the wrong thing?</em> Suppose reality draws outcomes from a distribution <MathInline latex={String.raw`p`} />, but you've modeled the world as <MathInline latex={String.raw`q`} />. Every time you're surprised, you're surprised by the wrong amount — you budgeted <MathInline latex={String.raw`-\log_2 q`} /> bits but reality charged you according to <MathInline latex={String.raw`p`} />. The average overpayment is the <em class="term">relative entropy</em>, or <em class="term">Kullback–Leibler divergence</em>:</p>
+</FormatAlt>
 
-<div class="formula">
+### The surprise tax: relative entropy
+
+There's a cousin of entropy that turns out to be one of the most useful quantities in all of science, and it answers a sharp question: *what does it cost to believe the wrong thing?* Suppose reality draws outcomes from a distribution <MathInline latex={String.raw`p`} />, but you've modeled the world as <MathInline latex={String.raw`q`} />. Every time you're surprised, you're surprised by the wrong amount — you budgeted <MathInline latex={String.raw`-\log_2 q`} /> bits but reality charged you according to <MathInline latex={String.raw`p`} />. The average overpayment is the <Term as="em">relative entropy</Term>, or <Term as="em">Kullback–Leibler divergence</Term>:
+
+<Formula>
 <MathBlock latex={String.raw`D(p \| q) = \sum_i p_i \log_2 \frac{p_i}{q_i} \geq 0`} />
-<p class="cap">The extra bits per symbol you waste by coding for q when the truth is p. Zero only when your model is exactly right. Never negative.</p>
-</div>
+<Caption>The extra bits per symbol you waste by coding for q when the truth is p. Zero only when your model is exactly right. Never negative.</Caption>
 
-<p>This single inequality is doing astonishing amounts of work across the whole curriculum. It is the <em>penalty for a bad prior</em> — which is why it sits at the heart of Bayesian updating (<strong>Day 1</strong>, <strong>Day 4</strong>). KL is a divergence, not a true distance: it is asymmetric and lacks the triangle inequality. Cross-entropy is related but not identical: <MathInline latex={String.raw`H(p,q)=H(p)+D_{\mathrm{KL}}(p\|q)`} />, so minimizing cross-entropy is equivalent to minimizing KL only when the true distribution p is fixed. Language-model training can be idealized as minimizing an empirical estimate of expected cross-entropy, not as literally accessing <MathInline latex={String.raw`D(\text{reality}\|\text{model})`} />. Friston's variational free energy is also subtler: it upper-bounds surprisal under a generative model and contains a KL term between an approximate posterior and the model posterior. Mutual information itself can be written as a KL divergence between the joint distribution P(X,Y) and the product P(X)P(Y).</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="sec-num">02</span> · compression</p>
-<h2>Squeezing out the air</h2>
-<p>Entropy isn't just an abstraction; it's an asymptotic <em>floor you can approach</em>. Shannon's <em class="term">source coding theorem</em> — the quieter twin of the noisy-channel theorem — says that long blocks from a specified source can be compressed to an average rate arbitrarily close to H bits per symbol, and not below H without losing information or exploiting structure outside the source model. Entropy is the irreducible residue relative to that model: the message with the air squeezed out. Everything above that floor is <em class="term">redundancy</em>, and redundancy is exactly what compression hunts.</p>
+</Formula>
 
-<p>How much air is in ordinary text? A great deal. With 27 symbols (26 letters and a space), a perfectly random stream would carry <MathInline latex={String.raw`\log_2 27 \approx 4.7`} /> bits per letter. But English is wildly predictable — <em>q</em> often drags <em>u</em> behind it, <em>th</em> and <em>he</em> recur, vowels are partly constrained. In a famous 1951 experiment, Shannon had people guess the next letter of a hidden text and measured how often they were right, arriving at an entropy of roughly <strong>one bit per letter</strong> (his estimates ranged about 0.6 to 1.3). The implication is startling: English is something like <strong>three-quarters redundant.</strong> Yu cn prbbly rd ths sntnc wth th vwls rmvd — because context already supplied much of the information needed to recover the vowels. Crossword puzzles, autocomplete, and the ability to hear someone at a noisy party all run on the same surplus.</p>
+This single inequality is doing astonishing amounts of work across the whole curriculum. It is the *penalty for a bad prior* — which is why it sits at the heart of Bayesian updating (**Day 1**, **Day 4**). KL is a divergence, not a true distance: it is asymmetric and lacks the triangle inequality. Cross-entropy is related but not identical: <MathInline latex={String.raw`H(p,q)=H(p)+D_{\mathrm{KL}}(p\|q)`} />, so minimizing cross-entropy is equivalent to minimizing KL only when the true distribution p is fixed. Language-model training can be idealized as minimizing an empirical estimate of expected cross-entropy, not as literally accessing <MathInline latex={String.raw`D(\text{reality}\|\text{model})`} />. Friston's variational free energy is also subtler: it upper-bounds surprisal under a generative model and contains a KL term between an approximate posterior and the model posterior. Mutual information itself can be written as a KL divergence between the joint distribution P(X,Y) and the product P(X)P(Y).
 
-<div class="aside">
-<p class="h">The compression ladder</p>
-<p><strong>Huffman coding</strong> (1952) — short codewords for common symbols — was optimal for coding symbols one at a time, but it can't capture patterns <em>across</em> symbols. <strong>Arithmetic coding</strong> (1970s) does better by encoding a whole message as a single number in [0,1), squeezing right up against the entropy floor. And <strong>Lempel–Ziv</strong> (1977–78) is adaptive: it builds a dictionary of repeated substrings on the fly, so the second time a pattern appears it costs almost nothing. LZ methods run inside ZIP, gzip, PNG, and many everyday lossless formats, though audio, video, and modern image codecs also use transform, predictive, and entropy-coding machinery. None can beat Shannon's floor for the modeled source; good ones approach it under their assumptions.</p>
-</div>
+<SectionEyebrow number="02"> · compression</SectionEyebrow>
 
-<p>All of that is <em>lossless</em>: unzip and you get back every bit. But your eyes and ears are forgiving instruments, and that forgiveness is worth money. <em class="term">Rate–distortion theory</em> (Shannon, 1959) asks the harder question: if you're <em>allowed</em> to lose a little, how few bits can you spend for a given level of acceptable distortion? This is the governing math of <strong>lossy</strong> compression — JPEG throwing away the fine color detail your retina can't resolve, MP3 discarding the quiet tones a louder one is already masking. The art is to spend your bits only where a human will notice, and to let the rest evaporate. Streaming, video calls, the entire visual texture of the modern internet — all of it is rate–distortion theory cashed in.</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="sec-num">03</span> · the ultimate compression</p>
-<h2>Kolmogorov complexity, where information meets computation</h2>
-<p>Shannon's entropy is a property of a <em>source</em> — a probability distribution. But here's a puzzle it can't touch. Consider two strings of a million digits: one is a million random coin-derived digits, the other is the first million digits of <MathInline latex={String.raw`\pi`} />. To Shannon, sampled from "uniform digit sources," they look equally dense with information. Yet <MathInline latex={String.raw`\pi`} /> can be regenerated from a comparatively short program, while a typical random string cannot be compressed much at all. The random-looking string has the higher description complexity.</p>
-<p>That something is its <em class="term">Kolmogorov complexity</em> (Solomonoff, Kolmogorov, and Chaitin, independently, in the 1960s): the length of the <em>shortest computer program</em> that outputs the string. It is the compression limit measured not against a probability model but against computation itself, and it is machine-independent only up to an additive constant determined by the chosen universal machine. <MathInline latex={String.raw`\pi`} /> is profoundly compressible (short program, infinite output); a typical long random string is <em>incompressible</em> in a precise counting sense — most strings have no description much shorter than themselves. In fact this becomes a <em>definition</em> of algorithmic randomness.</p>
-<p>And here the subject grows a sharp, beautiful tooth. Kolmogorov complexity is <strong>provably uncomputable</strong> <StatusChip status={"ok"} label={"proven"} printLabel={"review"} />. There is no algorithm that, given any string, returns the length of its shortest program — a result that rhymes with the Gödel and Turing limits waiting on <strong>Days 27–28</strong>, and with Chaitin's eerie constant Ω, a specific, perfectly well-defined number. A suitable consistent formal system can determine some finite facts about Ω, but not arbitrarily many of its digits. We will meet related ideas again tomorrow under the heading of complexity, but with an important warning: high description complexity alone does not measure meaningful or organized complexity. Typical random strings maximize it too.</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="sec-num">04</span> · codes against the dark</p>
-<h2>How information survives a hostile world</h2>
-<p>The main page promised that, below a specified channel's capacity, vanishing error is asymptotically possible <em>if you can find sufficiently long codes</em>. That treasure hunt deserves its own telling, and it starts with a frustrated man at Bell Labs on a Friday night.</p>
-<p>In 1947, <strong>Richard Hamming</strong> had weekend access to a relay computer, and it kept letting him down: whenever it detected an error in his input, it simply halted and waited for a human who wouldn't arrive until Monday. "If the machine can <em>detect</em> an error," Hamming fumed, "why can't it <em>locate</em> and <em>correct</em> it?" Out of that irritation came the <strong>Hamming code</strong> (published 1950), the first true error-<em>correcting</em> code, and with it a geometric way of seeing the whole field.</p>
-<p>The idea is <em class="term">Hamming distance</em>: the number of bit-flips separating two codewords. If your only valid messages are <code>000</code> and <code>111</code>, they sit distance 3 apart. A single error turns <code>000</code> into something like <code>010</code> — but <code>010</code> is still <em>closer</em> to <code>000</code> than to <code>111</code>, so the receiver can quietly correct it by majority vote. Spread your valid codewords far enough apart in this space of bit-strings, and you carve out a little protective "sphere" of correctable errors around each one. Redundancy, deployed with geometric cunning.</p>
-</section>
-<div class="panel web-only appendix-hamming-cube">
-<p class="ptitle">Interactive · the geometry of a code</p>
-<h3>The Hamming Cube</h3>
-<p class="pnote">Every 3-bit word is a corner of a cube; an edge is one bit-flip. Our code uses just two valid words — <code>000</code> and <code>111</code>, the far corners (teal). Click any corner to "receive" it through a noisy channel: the decoder snaps it to the nearest valid word by majority vote. One error is always corrected; the cube shows you why.</p>
+## Squeezing out the air
+
+Entropy isn't just an abstraction; it's an asymptotic *floor you can approach*. Shannon's <Term as="em">source coding theorem</Term> — the quieter twin of the noisy-channel theorem — says that long blocks from a specified source can be compressed to an average rate arbitrarily close to H bits per symbol, and not below H without losing information or exploiting structure outside the source model. Entropy is the irreducible residue relative to that model: the message with the air squeezed out. Everything above that floor is <Term as="em">redundancy</Term>, and redundancy is exactly what compression hunts.
+
+How much air is in ordinary text? A great deal. With 27 symbols (26 letters and a space), a perfectly random stream would carry <MathInline latex={String.raw`\log_2 27 \approx 4.7`} /> bits per letter. But English is wildly predictable — *q* often drags *u* behind it, *th* and *he* recur, vowels are partly constrained. In a famous 1951 experiment, Shannon had people guess the next letter of a hidden text and measured how often they were right, arriving at an entropy of roughly **one bit per letter** (his estimates ranged about 0.6 to 1.3). The implication is startling: English is something like **three-quarters redundant.** Yu cn prbbly rd ths sntnc wth th vwls rmvd — because context already supplied much of the information needed to recover the vowels. Crossword puzzles, autocomplete, and the ability to hear someone at a noisy party all run on the same surplus.
+
+<Aside>
+<BlockTitle>The compression ladder</BlockTitle>
+
+**Huffman coding** (1952) — short codewords for common symbols — was optimal for coding symbols one at a time, but it can't capture patterns *across* symbols. **Arithmetic coding** (1970s) does better by encoding a whole message as a single number in [0,1), squeezing right up against the entropy floor. And **Lempel–Ziv** (1977–78) is adaptive: it builds a dictionary of repeated substrings on the fly, so the second time a pattern appears it costs almost nothing. LZ methods run inside ZIP, gzip, PNG, and many everyday lossless formats, though audio, video, and modern image codecs also use transform, predictive, and entropy-coding machinery. None can beat Shannon's floor for the modeled source; good ones approach it under their assumptions.
+
+</Aside>
+
+All of that is *lossless*: unzip and you get back every bit. But your eyes and ears are forgiving instruments, and that forgiveness is worth money. <Term as="em">Rate–distortion theory</Term> (Shannon, 1959) asks the harder question: if you're *allowed* to lose a little, how few bits can you spend for a given level of acceptable distortion? This is the governing math of **lossy** compression — JPEG throwing away the fine color detail your retina can't resolve, MP3 discarding the quiet tones a louder one is already masking. The art is to spend your bits only where a human will notice, and to let the rest evaporate. Streaming, video calls, the entire visual texture of the modern internet — all of it is rate–distortion theory cashed in.
+
+<SectionEyebrow number="03"> · the ultimate compression</SectionEyebrow>
+
+## Kolmogorov complexity, where information meets computation
+
+Shannon's entropy is a property of a *source* — a probability distribution. But here's a puzzle it can't touch. Consider two strings of a million digits: one is a million random coin-derived digits, the other is the first million digits of <MathInline latex={String.raw`\pi`} />. To Shannon, sampled from "uniform digit sources," they look equally dense with information. Yet <MathInline latex={String.raw`\pi`} /> can be regenerated from a comparatively short program, while a typical random string cannot be compressed much at all. The random-looking string has the higher description complexity.
+
+That something is its <Term as="em">Kolmogorov complexity</Term> (Solomonoff, Kolmogorov, and Chaitin, independently, in the 1960s): the length of the *shortest computer program* that outputs the string. It is the compression limit measured not against a probability model but against computation itself, and it is machine-independent only up to an additive constant determined by the chosen universal machine. <MathInline latex={String.raw`\pi`} /> is profoundly compressible (short program, infinite output); a typical long random string is *incompressible* in a precise counting sense — most strings have no description much shorter than themselves. In fact this becomes a *definition* of algorithmic randomness.
+
+And here the subject grows a sharp, beautiful tooth. Kolmogorov complexity is **provably uncomputable** <StatusChip status={"ok"} label={"proven"} printLabel={"review"} />. There is no algorithm that, given any string, returns the length of its shortest program — a result that rhymes with the Gödel and Turing limits waiting on **Days 27–28**, and with Chaitin's eerie constant Ω, a specific, perfectly well-defined number. A suitable consistent formal system can determine some finite facts about Ω, but not arbitrarily many of its digits. We will meet related ideas again tomorrow under the heading of complexity, but with an important warning: high description complexity alone does not measure meaningful or organized complexity. Typical random strings maximize it too.
+
+<SectionEyebrow number="04"> · codes against the dark</SectionEyebrow>
+
+## How information survives a hostile world
+
+The main page promised that, below a specified channel's capacity, vanishing error is asymptotically possible *if you can find sufficiently long codes*. That treasure hunt deserves its own telling, and it starts with a frustrated man at Bell Labs on a Friday night.
+
+In 1947, **Richard Hamming** had weekend access to a relay computer, and it kept letting him down: whenever it detected an error in his input, it simply halted and waited for a human who wouldn't arrive until Monday. "If the machine can *detect* an error," Hamming fumed, "why can't it *locate* and *correct* it?" Out of that irritation came the **Hamming code** (published 1950), the first true error-*correcting* code, and with it a geometric way of seeing the whole field.
+
+The idea is <Term as="em">Hamming distance</Term>: the number of bit-flips separating two codewords. If your only valid messages are `000` and `111`, they sit distance 3 apart. A single error turns `000` into something like `010` — but `010` is still *closer* to `000` than to `111`, so the receiver can quietly correct it by majority vote. Spread your valid codewords far enough apart in this space of bit-strings, and you carve out a little protective "sphere" of correctable errors around each one. Redundancy, deployed with geometric cunning.
+
+<Panel class="web-only appendix-hamming-cube">
+<PanelTitle>Interactive · the geometry of a code</PanelTitle>
+
+### The Hamming Cube
+
+<PanelNote>Every 3-bit word is a corner of a cube; an edge is one bit-flip. Our code uses just two valid words — `000` and `111`, the far corners (teal). Click any corner to "receive" it through a noisy channel: the decoder snaps it to the nearest valid word by majority vote. One error is always corrected; the cube shows you why.</PanelNote>
 
 <div class="ham-stage">
 <svg viewBox="0 0 390 285" role="img" aria-label="A cube whose eight corners are the 3-bit strings, with 000 and 111 as codewords.">
@@ -113,10 +156,13 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 <span><i class="legend-decodes-one"></i> decodes → 111</span>
 </div>
 <p class="ham-read" id="appendix-d007-the-deeper-currents-hamRead"><b>Click a corner.</b> The two codewords sit at opposite ends of the cube, Hamming distance 3 apart. That gap is the code's armor: any single bit-flip lands you one step from where you started, still firmly inside one codeword's territory.</p>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h4>The 3-bit repetition code, as nearest-neighbor decoding</h4>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+#### The 3-bit repetition code, as nearest-neighbor decoding
+
 <table class="alt-table">
 <thead><tr><th>Received word</th><th>Distance to 000</th><th>Distance to 111</th><th>Decodes as</th></tr></thead>
 <tbody>
@@ -126,50 +172,68 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 <tr><td><code>111</code></td><td>3</td><td>0</td><td><code>111</code></td></tr>
 </tbody>
 </table>
-<p>The codewords are Hamming distance 3 apart, so any one-bit error remains closer to the original codeword than to the other one.</p>
-</div>
-<section>
-<h3>From Mars to your pocket</h3>
-<p>Hamming's geometry scaled into an engineering miracle that you rely on hourly without noticing. <strong>Reed–Solomon codes</strong> (1960) treat data as points on polynomials and can repair whole <em>bursts</em> of damage — which is why a scratched CD still plays, why a torn QR code still scans, and why the Voyager probes could whisper pictures of the outer planets across billions of kilometers on a transmitter weaker than a refrigerator bulb. Deep-space missions stacked codes inside codes (concatenation) to claw their signal out of almost pure noise.</p>
-<p>But for decades a gap remained between what Shannon <em>promised</em> and what engineers could <em>build</em>. That gap closed in a rush. <strong>Turbo codes</strong> (1993) stunned the field by getting within a fraction of a decibel of capacity using two simple coders trading guesses back and forth. <strong>Low-density parity-check codes</strong> — invented by Robert Gallager in 1960, then <em>forgotten for thirty years</em> as too demanding for the hardware of the day, and rediscovered in the late 1990s — now armor Wi-Fi, 5G data channels, and storage. And in 2009, Erdal Arıkan's <strong>polar codes</strong> became the first explicitly constructed family proved to achieve the symmetric capacity of binary-input memoryless channels asymptotically, with efficient encoding and decoding <StatusChip status={"ok"} label={"established"} />. In 2016 the global 5G standard adopted polar coding for control-related channels, while LDPC carries much of the data-channel burden. Sixty-eight years after Shannon drew the X on the map, engineers had practical paths toward it.</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="sec-num">05</span> · the shoulders &amp; the showman</p>
-<h2>The people behind the page</h2>
-<p>Shannon didn't arrive from nowhere. Two Bell Labs predecessors had circled the idea. <strong>Harry Nyquist</strong> (1924) worked out how fast a telegraph line could signal; <strong>Ralph Hartley</strong> (1928), in a paper actually titled <em>"Transmission of Information,"</em> proposed measuring information as the logarithm of the number of possible messages — the seed of the bit, missing only Shannon's crucial leap of bringing in <em>probability</em> and throwing out <em>meaning</em>. Shannon honored the debt: the unit of information in some conventions is still the "hartley."</p>
-<p>But the man himself is one of science's great delights, and worth a paragraph of pure pleasure. Claude Shannon rode a unicycle down the Bell Labs corridors <em>while juggling</em>. He built a mechanical mouse named <strong>Theseus</strong> (1950) that could learn its way through a maze — one of the first demonstrations of machine learning, sitting on his desk. He built, at Marvin Minsky's suggestion, the "<strong>Ultimate Machine</strong>": a box with a single switch that, when flipped on, opened, extended a mechanical hand, switched itself off, and withdrew. With the mathematician Ed Thorp he built what is often called the first wearable computer — a cigarette-pack-sized device to beat <em>roulette</em>, smuggled into Las Vegas in 1961. His parlor trick of having guests predict the next letter of a sentence wasn't a party game; it was him measuring the entropy of English in real time. The inventor of the most disembodied, abstract quantity in all of engineering was, in person, irrepressibly, gloriously physical. It is fitting that the punchline of his theory — <em>information is physical</em> — was waiting at the end of the road he started down.</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="sec-num">06</span> · when information goes quantum</p>
-<h2>The bit's stranger sibling</h2>
-<p>Everything so far assumed a bit is a definite 0 or 1. Quantum mechanics offers a richer carrier — the <em class="term">qubit</em> — and the information theory built on it is so different it deserves its own block (<strong>Day 47</strong>). Here is just enough to feel the strangeness.</p>
-<p>A qubit can hold a <em>superposition</em> of 0 and 1, a point on a whole sphere of possibilities rather than two poles. You might think it therefore carries infinitely more information. It doesn't — and the reason is one of the deepest facts in the subject. <strong>Holevo's bound</strong> (1973) limits the accessible classical information from a quantum ensemble; in the ordinary unassisted setting, one transmitted qubit cannot reveal an arbitrary continuum of classical data. Entanglement-assisted protocols such as superdense coding change the resources being counted. Quantum measurement can also have more than two outcomes, so "yes/no" is a simplification. The continuum is real but coy: it shapes how the qubit <em>evolves and interferes</em>, yet cannot be fully read out as ordinary classical information.</p>
-<p>Two more jewels, both forward-pointers. The <strong>no-cloning theorem</strong> (Wootters &amp; Zurek; Dieks, 1982) <StatusChip status={"ok"} label={"established"} /> says an unknown quantum state cannot be copied — there is no quantum photocopier — which helps explain why eavesdropping can disturb quantum-cryptographic protocols, though security requires a full protocol proof, not no-cloning alone. And the quantum analogue of Shannon entropy, the <strong>von Neumann entropy</strong> <MathInline latex={String.raw`S=-\operatorname{Tr}(\rho \log \rho)`} />, measures uncertainty in a quantum state and equals entanglement entropy for a pure bipartite state. Mixed-state entanglement needs other measures. The bit, it turns out, was only the first draft.</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="sec-num">07</span> · cheating the toll</p>
-<h2>Beating Landauer with reversible computing</h2>
-<p>The main page delivered Landauer's standard verdict: resetting an initially unknown fair bit in an isothermal cycle costs at least <MathInline latex={String.raw`k_B T \ln 2`} /> because the operation crushes two possible pasts into one. But read the fine print and a loophole gleams. The fundamental cost is charged on <em>logically irreversible</em> steps — the ones you can't run backward. What if you simply <em>never erased anything?</em></p>
-<p>This is <em class="term">reversible computing</em>, and it is theoretically sound <StatusChip status={"ok"} label={"established in principle"} printLabel={"established"} />. Charles Bennett showed in 1973 that any computation can be rebuilt as a sequence of reversible steps that never destroy information — instead of overwriting intermediate results, you keep them, run your computation, copy out the answer, then run the whole thing <em>backwards</em> to cleanly "uncompute" the garbage, returning every bit to its start with no net erasure. Special reversible logic gates make this concrete: the <strong>Toffoli gate</strong> (a controlled-controlled-NOT) and the <strong>Fredkin gate</strong> (a controlled swap) are universal — you can build any circuit from them — yet each is perfectly invertible, with the same number of outputs as inputs and nothing thrown away.</p>
-<p>In principle, then, reversible computing can avoid the fundamental erasure toll until information is intentionally discarded. Physical implementations can reduce dissipation by using gentler, more nearly quasistatic protocols, but the speed-energy trade-off depends on the device model; logical reversibility by itself does not mean a computer must run vanishingly slowly. Reversible algorithms also involve time-space trade-offs rather than simply storing an unlimited history forever. No one has built a useful general-purpose reversible computer; it remains an exquisite idea more than a product. But it is exactly why the field is suddenly interesting again: as conventional chips press toward physical limits, <em>not forgetting</em> starts to look like an engineering strategy rather than a curiosity. The thread running into <strong>Day 47</strong>: ideal closed-system quantum gates are unitary and reversible, while initialization, measurement, error correction, control, and reset require their own thermodynamic accounting.</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="sec-num">08</span> · the last wall</p>
-<h2>The ultimate physical limits of computation</h2>
-<p>Landauer bounds the <em>energy</em> of forgetting. But there are other walls — on <em>speed</em>, on <em>density</em>, on how much computing a lump of matter can ever do — and tracing them out leads somewhere genuinely vertiginous. In 2000, MIT's <strong>Seth Lloyd</strong> estimated an "ultimate laptop": one kilogram of matter, one liter of volume, organized as efficiently as the laws of physics permit (<em>Nature</em>, 31 August 2000). These are model-dependent upper bounds, not a practical device specification.</p>
-<p>The speed limit comes from quantum mechanics itself. The <strong>Margolus–Levitin theorem</strong> (1998) bounds how fast a system can pass through distinguishable states in terms of energy above its ground state, with the exact interpretation depending on what is counted as an operation. Pour all of one kilogram's rest-mass energy (<MathInline latex={String.raw`E=mc^2`} />, about <MathInline latex={String.raw`10^{17}`} /> joules) into Lloyd's idealized computation, and you get a ceiling of roughly <strong><MathInline latex={String.raw`10^{51}`} /> operations per second</strong>. The memory limit comes from counting the states such a system can occupy: about <strong><MathInline latex={String.raw`10^{31}`} /> bits</strong>. These numbers are not engineering targets; they are made of <MathInline latex={String.raw`c`} />, <MathInline latex={String.raw`\hbar`} />, and <MathInline latex={String.raw`k_B`} />, the bedrock constants. Lloyd notes the obvious snag — a device running at this limit has turned its kilogram into a roughly billion-degree plasma, "a packaging problem," he dryly concedes.</p>
+The codewords are Hamming distance 3 apart, so any one-bit error remains closer to the original codeword than to the other one.
 
-<div class="aside">
-<p class="h">Information lives on surfaces</p>
-<p>The deepest hint that information is woven into physics at the ground floor comes from gravity. The <strong>Bekenstein bound</strong> (1981) is fundamentally an energy-radius bound on entropy, <MathInline latex={String.raw`S \le 2\pi k_B E R/(\hbar c)`} />. Area scaling enters when gravitational collapse and black-hole entropy are brought into the story: black holes saturate the relevant bound, with entropy proportional to event-horizon area. That oddity — that the maximum information associated with a gravitational region can be controlled by its boundary — is the seed of the <strong>holographic principle</strong> ('t Hooft, Susskind, 1990s) <StatusChip status={"hint"} label={"leading theoretical idea, not confirmed"} printLabel={"review"} />. In theories where holographic duality applies, a gravitational bulk can have a lower-dimensional boundary description. That is subtler than saying our universe is simply encoded on a distant 2D surface. It also sets up the <strong>black-hole information paradox</strong>, which we'll meet head-on on <strong>Day 40</strong>.</p>
-</div>
+</FormatAlt>
 
-<p>Push the same accounting to the largest scale and you can ask: how much has the <em>entire universe</em> computed since the Big Bang? Lloyd's 2002 estimate is about <strong><MathInline latex={String.raw`10^{120}`} /> elementary operations on <MathInline latex={String.raw`10^{90}`} /> ordinary-matter bits</strong>, with a much larger information budget if gravitational degrees of freedom are included. Enormous, yes. But finite. There is a hard, countable ceiling on how much computation reality itself has performed. Whether that means the universe quite literally <em>is</em> a computer is a live and contested interpretation <StatusChip status={"bad"} label={"contested — interpretation, not result"} printLabel={"contested"} />, a close relative of the "it from bit" overreach the main page flagged. The numerical bounds are physics; the metaphysics is optional.</p>
-</section>
-<div class="panel ladder">
-<p class="ptitle">Diagram · rates and totals</p>
-<h3>The ladder of computational capacity</h3>
-<p class="pnote">Two separate logarithmic scales: device rates in operations per second, then Lloyd's cumulative universe estimate in total operations. They are adjacent because both are physical bounds on computation, but they are not the same dimension.</p>
+### From Mars to your pocket
+
+Hamming's geometry scaled into an engineering miracle that you rely on hourly without noticing. **Reed–Solomon codes** (1960) treat data as points on polynomials and can repair whole *bursts* of damage — which is why a scratched CD still plays, why a torn QR code still scans, and why the Voyager probes could whisper pictures of the outer planets across billions of kilometers on a transmitter weaker than a refrigerator bulb. Deep-space missions stacked codes inside codes (concatenation) to claw their signal out of almost pure noise.
+
+But for decades a gap remained between what Shannon *promised* and what engineers could *build*. That gap closed in a rush. **Turbo codes** (1993) stunned the field by getting within a fraction of a decibel of capacity using two simple coders trading guesses back and forth. **Low-density parity-check codes** — invented by Robert Gallager in 1960, then *forgotten for thirty years* as too demanding for the hardware of the day, and rediscovered in the late 1990s — now armor Wi-Fi, 5G data channels, and storage. And in 2009, Erdal Arıkan's **polar codes** became the first explicitly constructed family proved to achieve the symmetric capacity of binary-input memoryless channels asymptotically, with efficient encoding and decoding <StatusChip status={"ok"} label={"established"} />. In 2016 the global 5G standard adopted polar coding for control-related channels, while LDPC carries much of the data-channel burden. Sixty-eight years after Shannon drew the X on the map, engineers had practical paths toward it.
+
+<SectionEyebrow number="05"> · the shoulders &amp; the showman</SectionEyebrow>
+
+## The people behind the page
+
+Shannon didn't arrive from nowhere. Two Bell Labs predecessors had circled the idea. **Harry Nyquist** (1924) worked out how fast a telegraph line could signal; **Ralph Hartley** (1928), in a paper actually titled *"Transmission of Information,"* proposed measuring information as the logarithm of the number of possible messages — the seed of the bit, missing only Shannon's crucial leap of bringing in *probability* and throwing out *meaning*. Shannon honored the debt: the unit of information in some conventions is still the "hartley."
+
+But the man himself is one of science's great delights, and worth a paragraph of pure pleasure. Claude Shannon rode a unicycle down the Bell Labs corridors *while juggling*. He built a mechanical mouse named **Theseus** (1950) that could learn its way through a maze — one of the first demonstrations of machine learning, sitting on his desk. He built, at Marvin Minsky's suggestion, the "**Ultimate Machine**": a box with a single switch that, when flipped on, opened, extended a mechanical hand, switched itself off, and withdrew. With the mathematician Ed Thorp he built what is often called the first wearable computer — a cigarette-pack-sized device to beat *roulette*, smuggled into Las Vegas in 1961. His parlor trick of having guests predict the next letter of a sentence wasn't a party game; it was him measuring the entropy of English in real time. The inventor of the most disembodied, abstract quantity in all of engineering was, in person, irrepressibly, gloriously physical. It is fitting that the punchline of his theory — *information is physical* — was waiting at the end of the road he started down.
+
+<SectionEyebrow number="06"> · when information goes quantum</SectionEyebrow>
+
+## The bit's stranger sibling
+
+Everything so far assumed a bit is a definite 0 or 1. Quantum mechanics offers a richer carrier — the <Term as="em">qubit</Term> — and the information theory built on it is so different it deserves its own block (**Day 47**). Here is just enough to feel the strangeness.
+
+A qubit can hold a *superposition* of 0 and 1, a point on a whole sphere of possibilities rather than two poles. You might think it therefore carries infinitely more information. It doesn't — and the reason is one of the deepest facts in the subject. **Holevo's bound** (1973) limits the accessible classical information from a quantum ensemble; in the ordinary unassisted setting, one transmitted qubit cannot reveal an arbitrary continuum of classical data. Entanglement-assisted protocols such as superdense coding change the resources being counted. Quantum measurement can also have more than two outcomes, so "yes/no" is a simplification. The continuum is real but coy: it shapes how the qubit *evolves and interferes*, yet cannot be fully read out as ordinary classical information.
+
+Two more jewels, both forward-pointers. The **no-cloning theorem** (Wootters &amp; Zurek; Dieks, 1982) <StatusChip status={"ok"} label={"established"} /> says an unknown quantum state cannot be copied — there is no quantum photocopier — which helps explain why eavesdropping can disturb quantum-cryptographic protocols, though security requires a full protocol proof, not no-cloning alone. And the quantum analogue of Shannon entropy, the **von Neumann entropy** <MathInline latex={String.raw`S=-\operatorname{Tr}(\rho \log \rho)`} />, measures uncertainty in a quantum state and equals entanglement entropy for a pure bipartite state. Mixed-state entanglement needs other measures. The bit, it turns out, was only the first draft.
+
+<SectionEyebrow number="07"> · cheating the toll</SectionEyebrow>
+
+## Beating Landauer with reversible computing
+
+The main page delivered Landauer's standard verdict: resetting an initially unknown fair bit in an isothermal cycle costs at least <MathInline latex={String.raw`k_B T \ln 2`} /> because the operation crushes two possible pasts into one. But read the fine print and a loophole gleams. The fundamental cost is charged on *logically irreversible* steps — the ones you can't run backward. What if you simply *never erased anything?*
+
+This is <Term as="em">reversible computing</Term>, and it is theoretically sound <StatusChip status={"ok"} label={"established in principle"} printLabel={"established"} />. Charles Bennett showed in 1973 that any computation can be rebuilt as a sequence of reversible steps that never destroy information — instead of overwriting intermediate results, you keep them, run your computation, copy out the answer, then run the whole thing *backwards* to cleanly "uncompute" the garbage, returning every bit to its start with no net erasure. Special reversible logic gates make this concrete: the **Toffoli gate** (a controlled-controlled-NOT) and the **Fredkin gate** (a controlled swap) are universal — you can build any circuit from them — yet each is perfectly invertible, with the same number of outputs as inputs and nothing thrown away.
+
+In principle, then, reversible computing can avoid the fundamental erasure toll until information is intentionally discarded. Physical implementations can reduce dissipation by using gentler, more nearly quasistatic protocols, but the speed-energy trade-off depends on the device model; logical reversibility by itself does not mean a computer must run vanishingly slowly. Reversible algorithms also involve time-space trade-offs rather than simply storing an unlimited history forever. No one has built a useful general-purpose reversible computer; it remains an exquisite idea more than a product. But it is exactly why the field is suddenly interesting again: as conventional chips press toward physical limits, *not forgetting* starts to look like an engineering strategy rather than a curiosity. The thread running into **Day 47**: ideal closed-system quantum gates are unitary and reversible, while initialization, measurement, error correction, control, and reset require their own thermodynamic accounting.
+
+<SectionEyebrow number="08"> · the last wall</SectionEyebrow>
+
+## The ultimate physical limits of computation
+
+Landauer bounds the *energy* of forgetting. But there are other walls — on *speed*, on *density*, on how much computing a lump of matter can ever do — and tracing them out leads somewhere genuinely vertiginous. In 2000, MIT's **Seth Lloyd** estimated an "ultimate laptop": one kilogram of matter, one liter of volume, organized as efficiently as the laws of physics permit (*Nature*, 31 August 2000). These are model-dependent upper bounds, not a practical device specification.
+
+The speed limit comes from quantum mechanics itself. The **Margolus–Levitin theorem** (1998) bounds how fast a system can pass through distinguishable states in terms of energy above its ground state, with the exact interpretation depending on what is counted as an operation. Pour all of one kilogram's rest-mass energy (<MathInline latex={String.raw`E=mc^2`} />, about <MathInline latex={String.raw`10^{17}`} /> joules) into Lloyd's idealized computation, and you get a ceiling of roughly **<MathInline latex={String.raw`10^{51}`} /> operations per second**. The memory limit comes from counting the states such a system can occupy: about **<MathInline latex={String.raw`10^{31}`} /> bits**. These numbers are not engineering targets; they are made of <MathInline latex={String.raw`c`} />, <MathInline latex={String.raw`\hbar`} />, and <MathInline latex={String.raw`k_B`} />, the bedrock constants. Lloyd notes the obvious snag — a device running at this limit has turned its kilogram into a roughly billion-degree plasma, "a packaging problem," he dryly concedes.
+
+<Aside>
+<BlockTitle>Information lives on surfaces</BlockTitle>
+
+The deepest hint that information is woven into physics at the ground floor comes from gravity. The **Bekenstein bound** (1981) is fundamentally an energy-radius bound on entropy, <MathInline latex={String.raw`S \le 2\pi k_B E R/(\hbar c)`} />. Area scaling enters when gravitational collapse and black-hole entropy are brought into the story: black holes saturate the relevant bound, with entropy proportional to event-horizon area. That oddity — that the maximum information associated with a gravitational region can be controlled by its boundary — is the seed of the **holographic principle** ('t Hooft, Susskind, 1990s) <StatusChip status={"hint"} label={"leading theoretical idea, not confirmed"} printLabel={"review"} />. In theories where holographic duality applies, a gravitational bulk can have a lower-dimensional boundary description. That is subtler than saying our universe is simply encoded on a distant 2D surface. It also sets up the **black-hole information paradox**, which we'll meet head-on on **Day 40**.
+
+</Aside>
+
+Push the same accounting to the largest scale and you can ask: how much has the *entire universe* computed since the Big Bang? Lloyd's 2002 estimate is about **<MathInline latex={String.raw`10^{120}`} /> elementary operations on <MathInline latex={String.raw`10^{90}`} /> ordinary-matter bits**, with a much larger information budget if gravitational degrees of freedom are included. Enormous, yes. But finite. There is a hard, countable ceiling on how much computation reality itself has performed. Whether that means the universe quite literally *is* a computer is a live and contested interpretation <StatusChip status={"bad"} label={"contested — interpretation, not result"} printLabel={"contested"} />, a close relative of the "it from bit" overreach the main page flagged. The numerical bounds are physics; the metaphysics is optional.
+
+<Panel class="ladder">
+<PanelTitle>Diagram · rates and totals</PanelTitle>
+
+### The ladder of computational capacity
+
+<PanelNote>Two separate logarithmic scales: device rates in operations per second, then Lloyd's cumulative universe estimate in total operations. They are adjacent because both are physical bounds on computation, but they are not the same dimension.</PanelNote>
+
 <svg viewBox="0 0 640 300" role="img" aria-label="Separate logarithmic charts for device operation rates and the universe's cumulative operations.">
 <text x="60" y="26" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-soft)">Rates · operations per second</text>
 <line x1="60" y1="210" x2="610" y2="210" stroke="var(--line-strong)" stroke-width="1.2"></line>
@@ -213,52 +277,60 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 </g>
 </svg>
 <p class="ladder-key">The jump from your laptop to the ultimate laptop is ~10³⁹ in rate. The universe marker is a separate cumulative estimate, not an operations-per-second benchmark. Both scales say the same sober thing: computation, like everything else, is rationed by physics.</p>
-</div>
-<section>
-<p class="sec-eyebrow"><span class="sec-num">09</span> · the thread, everywhere</p>
-<h2>Once you have the unit, you see it everywhere</h2>
-<p>The quiet power of Shannon's idea is that the moment information became a number, it stopped belonging to telegraphy and started turning up in every field that deals with uncertainty, variety, or surprise. A quick tour of the thread's reach, each a doorway to a later day:</p>
-<ul>
-<li><strong>In ecology</strong>, the <em class="term">Shannon diversity index</em> — the very same H = −Σ p log p — measures biodiversity: a rainforest has high entropy (many species, evenly spread), a monoculture field has almost none. Surprise, applied to "which species is this?"</li>
-<li><strong>In machine learning</strong>, autoregressive language-model pretraining commonly minimizes empirical token-level cross-entropy. <em class="term">Perplexity</em> is the exponential of that average loss and measures predictive fit on a specified dataset, but it is not a complete measure of model quality. Instruction tuning, preference optimization, reinforcement learning, distillation, and multimodal training can use other objectives.</li>
-<li><strong>In biology</strong>, DNA is a four-letter code carrying ~2 bits per base — heredity as literal digital information storage, a framing that runs straight into the central dogma on <strong>Day 77</strong> and the origin of life on <strong>Days 87–90</strong>.</li>
-<li><strong>In physics</strong>, the entropy we defined today and the thermodynamic entropy of heat engines turn out to be — perhaps — the same thing, the question the main page flagged and that <strong>Day 33</strong> will reopen as the <em>arrow of time</em>.</li>
-<li><strong>In life itself</strong>, Schrödinger's idea that organisms survive by feeding on "negative entropy" (Brillouin later called it <em>negentropy</em>) is information thermodynamics in embryo — the puzzle that <strong>Days 83–85</strong> are built around, where today's <MathInline latex={String.raw`k_B T \ln 2`} /> returns to govern the living cell.</li>
-</ul>
-<p>That is the real reason this day sits where it does in the course, only seventh of a hundred and eighty. Information is one of the five threads — alongside energy, evolution, emergence, and computation — precisely because, once weighed, it refuses to stay in its lane. It is the connective tissue of the whole map.</p>
-</section>
-<div class="recap">
-<p class="h">◆ The appendix in three sentences</p>
+</Panel>
+
+<SectionEyebrow number="09"> · the thread, everywhere</SectionEyebrow>
+
+## Once you have the unit, you see it everywhere
+
+The quiet power of Shannon's idea is that the moment information became a number, it stopped belonging to telegraphy and started turning up in every field that deals with uncertainty, variety, or surprise. A quick tour of the thread's reach, each a doorway to a later day:
+
+- **In ecology**, the <Term as="em">Shannon diversity index</Term> — the very same H = −Σ p log p — measures biodiversity: a rainforest has high entropy (many species, evenly spread), a monoculture field has almost none. Surprise, applied to "which species is this?"
+- **In machine learning**, autoregressive language-model pretraining commonly minimizes empirical token-level cross-entropy. <Term as="em">Perplexity</Term> is the exponential of that average loss and measures predictive fit on a specified dataset, but it is not a complete measure of model quality. Instruction tuning, preference optimization, reinforcement learning, distillation, and multimodal training can use other objectives.
+- **In biology**, DNA is a four-letter code carrying ~2 bits per base — heredity as literal digital information storage, a framing that runs straight into the central dogma on **Day 77** and the origin of life on **Days 87–90**.
+- **In physics**, the entropy we defined today and the thermodynamic entropy of heat engines turn out to be — perhaps — the same thing, the question the main page flagged and that **Day 33** will reopen as the *arrow of time*.
+- **In life itself**, Schrödinger's idea that organisms survive by feeding on "negative entropy" (Brillouin later called it *negentropy*) is information thermodynamics in embryo — the puzzle that **Days 83–85** are built around, where today's <MathInline latex={String.raw`k_B T \ln 2`} /> returns to govern the living cell.
+
+That is the real reason this day sits where it does in the course, only seventh of a hundred and eighty. Information is one of the five threads — alongside energy, evolution, emergence, and computation — precisely because, once weighed, it refuses to stay in its lane. It is the connective tissue of the whole map.
+
+<Recap>
+<BlockTitle>◆ The appendix in three sentences</BlockTitle>
+
 <dl>
 <div><dt>What we added</dt><dd>Beneath the bit lies a fuller algebra — mutual information (statistical dependence and the core of channel capacity under a specified model) and relative entropy (the excess code length for a wrong model, related to but not identical with cross-entropy and variational free energy) — plus asymptotic compression limits, practical error-correcting codes, and reversible computing as a way to avoid unnecessary erasure.</dd></div>
 <div><dt>The widest view</dt><dd>Information's physicality doesn't stop at the warm room of erasure: it scales up to hard limits on the speed and density of computation, black-hole entropy, holographic boundary descriptions in theories where they apply, and a finite, countable estimate of the universe's cumulative operations.</dd></div>
 <div><dt>Why it matters</dt><dd>The instant Shannon made information a number, it escaped engineering — and now the same H shows up in biodiversity, neural-network training, DNA, the arrow of time, and the thermodynamics of life, which is exactly why it is one of the five threads this whole course is built to follow.</dd></div>
 </dl>
-<p class="threads"><b>Threads deepened ›</b> information (mutual information, KL divergence, Kolmogorov complexity) · energy (reversible computing, Margolus–Levitin, the ultimate laptop) · computation (codes, quantum information, limits of all computation) · emergence (why compression is not the whole story → Day 8) · evolution &amp; life (DNA as bits, negentropy → Days 77, 83–85).</p>
-</div>
+<Threads>**Threads deepened ›** information (mutual information, KL divergence, Kolmogorov complexity) · energy (reversible computing, Margolus–Levitin, the ultimate laptop) · computation (codes, quantum information, limits of all computation) · emergence (why compression is not the whole story → Day 8) · evolution &amp; life (DNA as bits, negentropy → Days 77, 83–85).</Threads>
 
-<hr class="div" />
-<section class="sources">
-<p class="sec-eyebrow">Sources · appendix</p>
-<h2>Sources &amp; further reading</h2>
+</Recap>
+
+<Divider />
+
+<Sources>
+<SectionEyebrow>Sources · appendix</SectionEyebrow>
+
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
 <p class="source-note">(New to this appendix; the core Shannon/Landauer citations are on the main Day 07 page.)</p>
-<ol>
-<li>Cover, T. M. &amp; Thomas, J. A. (2006). <em>Elements of Information Theory</em> (2nd ed.). Wiley. <span class="meta">— the standard text: mutual information, relative entropy (KL), source &amp; channel coding, rate–distortion.</span></li>
-<li>Shannon, C. E. (1951). "Prediction and Entropy of Printed English." <em>Bell System Technical Journal</em> 30: 50–64. <span class="meta">doi:10.1002/j.1538-7305.1951.tb01366.x — entropy of English <MathInline latex={String.raw`\approx 1`} /> bit/letter; <MathInline latex={String.raw`\sim75\%`} /> redundancy.</span></li>
-<li>Shannon, C. E. (1959). "Coding Theorems for a Discrete Source with a Fidelity Criterion." <em>IRE Nat. Conv. Rec.</em> <span class="meta">— the foundation of rate–distortion (lossy compression) theory.</span></li>
-<li>Hamming, R. W. (1950). "Error Detecting and Error Correcting Codes." <em>Bell System Technical Journal</em> 29(2): 147–160. <span class="meta">— Hamming distance and the first error-correcting code.</span></li>
-<li>Nyquist, H. (1924). "Certain Factors Affecting Telegraph Speed." · Hartley, R. V. L. (1928). "Transmission of Information." <em>Bell System Technical Journal</em>. <span class="meta">— Shannon's direct precursors.</span></li>
-<li>Ziv, J. &amp; Lempel, A. (1977, 1978). "A Universal Algorithm for Sequential Data Compression" &amp; "Compression of Individual Sequences…" <em>IEEE Trans. Information Theory</em>. <span class="meta">— LZ77/LZ78, the basis of ZIP, gzip, PNG.</span></li>
-<li>Kolmogorov, A. N. (1965); Solomonoff, R. (1964); Chaitin, G. (1966). <span class="meta">— algorithmic information / Kolmogorov complexity; uncomputability; Chaitin's Ω. See Li &amp; Vitányi, <em>An Introduction to Kolmogorov Complexity</em> (Springer).</span></li>
-<li>Berrou, C., Glavieux, A. &amp; Thitimajshima, P. (1993). "Near Shannon Limit Error-Correcting Coding: Turbo Codes." <em>IEEE ICC</em>. · Gallager, R. G. (1962). "Low-Density Parity-Check Codes." <em>IRE Trans. Inf. Theory</em>.</li>
-<li>Arıkan, E. (2009). "Channel Polarization: A Method for Constructing Capacity-Achieving Codes…" <em>IEEE Trans. Information Theory</em> 55(7): 3051–3073 (July 2009). <span class="meta">— polar codes; adopted by 3GPP for 5G NR control channels, 2016.</span></li>
-<li>Wootters, W. K. &amp; Zurek, W. H. (1982). "A single quantum cannot be cloned." <em>Nature</em> 299: 802–803. <span class="meta">doi:10.1038/299802a0 — the no-cloning theorem (also Dieks, 1982).</span></li>
-<li>Holevo, A. S. (1973). "Bounds for the quantity of information transmitted by a quantum communication channel." <em>Problems of Information Transmission</em> 9: 177–183. <span class="meta">— accessible classical information from quantum ensembles; ordinary unassisted qubit communication is resource-limited.</span></li>
-<li>Bennett, C. H. (1973). "Logical Reversibility of Computation." <em>IBM Journal of Research and Development</em> 17(6): 525–532. <span class="meta">— reversible computation; with Fredkin &amp; Toffoli (1982) reversible gates.</span></li>
-<li>Margolus, N. &amp; Levitin, L. B. (1998). "The maximum speed of dynamical evolution." <em>Physica D</em> 120: 188–195. <span class="meta">— the quantum speed limit, <MathInline latex={String.raw`\sim 2E/(\pi\hbar)`} />.</span></li>
-<li>Lloyd, S. (2000). "Ultimate physical limits to computation." <em>Nature</em> 406: 1047–1054 (31 Aug 2000). <span class="meta">doi:10.1038/35023282 — the "ultimate laptop": ~<MathInline latex={String.raw`10^{51}`} /> ops/s, ~<MathInline latex={String.raw`10^{31}`} /> bits.</span> <a href="https://doi.org/10.1038/35023282">doi.org/10.1038/35023282</a> · Lloyd, S. (2002). "Computational capacity of the universe." <em>Physical Review Letters</em> 88: 237901. <span class="meta">— ~<MathInline latex={String.raw`10^{120}`} /> ops on ~<MathInline latex={String.raw`10^{90}`} /> ordinary-matter bits.</span></li>
-<li>Bekenstein, J. D. (1981). "Universal upper bound on the entropy-to-energy ratio…" <em>Physical Review D</em> 23: 287. <span class="meta">— the energy-radius entropy bound; with Hawking's black-hole entropy, one root of later holographic arguments. [Holographic principle: leading theoretical conjecture, not confirmed.]</span></li>
-<li>Brillouin, L. (1956). <em>Science and Information Theory.</em> Academic Press. <span class="meta">— negentropy; the information cost of measurement (later refined by Landauer–Bennett).</span></li>
-<li>Soni, J. &amp; Goodman, R. (2017). <em>A Mind at Play.</em> Simon &amp; Schuster. <span class="meta">— Shannon's life: Theseus, the Ultimate Machine, the roulette computer with Ed Thorp, the juggling unicyclist.</span></li>
-</ol>
-</section>
+
+1. Cover, T. M. &amp; Thomas, J. A. (2006). *Elements of Information Theory* (2nd ed.). Wiley. <Meta>— the standard text: mutual information, relative entropy (KL), source &amp; channel coding, rate–distortion.</Meta>
+1. Shannon, C. E. (1951). "Prediction and Entropy of Printed English." *Bell System Technical Journal* 30: 50–64. <Meta>doi:10.1002/j.1538-7305.1951.tb01366.x — entropy of English <MathInline latex={String.raw`\approx 1`} /> bit/letter; <MathInline latex={String.raw`\sim75\%`} /> redundancy.</Meta>
+1. Shannon, C. E. (1959). "Coding Theorems for a Discrete Source with a Fidelity Criterion." *IRE Nat. Conv. Rec.* <Meta>— the foundation of rate–distortion (lossy compression) theory.</Meta>
+1. Hamming, R. W. (1950). "Error Detecting and Error Correcting Codes." *Bell System Technical Journal* 29(2): 147–160. <Meta>— Hamming distance and the first error-correcting code.</Meta>
+1. Nyquist, H. (1924). "Certain Factors Affecting Telegraph Speed." · Hartley, R. V. L. (1928). "Transmission of Information." *Bell System Technical Journal*. <Meta>— Shannon's direct precursors.</Meta>
+1. Ziv, J. &amp; Lempel, A. (1977, 1978). "A Universal Algorithm for Sequential Data Compression" &amp; "Compression of Individual Sequences…" *IEEE Trans. Information Theory*. <Meta>— LZ77/LZ78, the basis of ZIP, gzip, PNG.</Meta>
+1. Kolmogorov, A. N. (1965); Solomonoff, R. (1964); Chaitin, G. (1966). <Meta>— algorithmic information / Kolmogorov complexity; uncomputability; Chaitin's Ω. See Li &amp; Vitányi, *An Introduction to Kolmogorov Complexity* (Springer).</Meta>
+1. Berrou, C., Glavieux, A. &amp; Thitimajshima, P. (1993). "Near Shannon Limit Error-Correcting Coding: Turbo Codes." *IEEE ICC*. · Gallager, R. G. (1962). "Low-Density Parity-Check Codes." *IRE Trans. Inf. Theory*.
+1. Arıkan, E. (2009). "Channel Polarization: A Method for Constructing Capacity-Achieving Codes…" *IEEE Trans. Information Theory* 55(7): 3051–3073 (July 2009). <Meta>— polar codes; adopted by 3GPP for 5G NR control channels, 2016.</Meta>
+1. Wootters, W. K. &amp; Zurek, W. H. (1982). "A single quantum cannot be cloned." *Nature* 299: 802–803. <Meta>doi:10.1038/299802a0 — the no-cloning theorem (also Dieks, 1982).</Meta>
+1. Holevo, A. S. (1973). "Bounds for the quantity of information transmitted by a quantum communication channel." *Problems of Information Transmission* 9: 177–183. <Meta>— accessible classical information from quantum ensembles; ordinary unassisted qubit communication is resource-limited.</Meta>
+1. Bennett, C. H. (1973). "Logical Reversibility of Computation." *IBM Journal of Research and Development* 17(6): 525–532. <Meta>— reversible computation; with Fredkin &amp; Toffoli (1982) reversible gates.</Meta>
+1. Margolus, N. &amp; Levitin, L. B. (1998). "The maximum speed of dynamical evolution." *Physica D* 120: 188–195. <Meta>— the quantum speed limit, <MathInline latex={String.raw`\sim 2E/(\pi\hbar)`} />.</Meta>
+1. Lloyd, S. (2000). "Ultimate physical limits to computation." *Nature* 406: 1047–1054 (31 Aug 2000). <Meta>doi:10.1038/35023282 — the "ultimate laptop": ~<MathInline latex={String.raw`10^{51}`} /> ops/s, ~<MathInline latex={String.raw`10^{31}`} /> bits.</Meta> [doi.org/10.1038/35023282](https://doi.org/10.1038/35023282) · Lloyd, S. (2002). "Computational capacity of the universe." *Physical Review Letters* 88: 237901. <Meta>— ~<MathInline latex={String.raw`10^{120}`} /> ops on ~<MathInline latex={String.raw`10^{90}`} /> ordinary-matter bits.</Meta>
+1. Bekenstein, J. D. (1981). "Universal upper bound on the entropy-to-energy ratio…" *Physical Review D* 23: 287. <Meta>— the energy-radius entropy bound; with Hawking's black-hole entropy, one root of later holographic arguments. [Holographic principle: leading theoretical conjecture, not confirmed.]</Meta>
+1. Brillouin, L. (1956). *Science and Information Theory.* Academic Press. <Meta>— negentropy; the information cost of measurement (later refined by Landauer–Bennett).</Meta>
+1. Soni, J. &amp; Goodman, R. (2017). *A Mind at Play.* Simon &amp; Schuster. <Meta>— Shannon's life: Theseus, the Ultimate Machine, the roulette computer with Ed Thorp, the juggling unicyclist.</Meta>
+
+</Sources>
+

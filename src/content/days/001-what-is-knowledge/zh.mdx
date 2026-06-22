@@ -1,10 +1,36 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-<header class="hero wrap">
-<p class="eyebrow">模块一 · 知识与推理的根基 · <span class="daymark">第 01 日 / 180</span></p>
-<h1>知识是什么？</h1>
-<p class="sub">你看了钟。你说对了。但你真的知道吗？</p>
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import Divider from "@app/components/lesson/Divider.astro";
+import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+
+<Hero>
+<HeroEyebrow>模块一 · 知识与推理的根基 · <span class="daymark">第 01 日 / 180</span></HeroEyebrow>
+
+# 知识是什么？
+
+<HeroSubhead>你看了钟。你说对了。但你真的知道吗？</HeroSubhead>
 
 <figure class="hero-clock">
 <div class="clockwrap">
@@ -39,44 +65,60 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <span class="stopped-tag">● 已在 12 小时前停走——但就在这一分钟，它恰好正确</span>
 </figure>
 
-<p class="lede"><span class="drop">早</span>上九点十二分，你快迟到了。你匆匆经过车站大钟，抬头一看：9:12。你心想：「还好，还有三分钟。」你没看错。现在确实是 9:12。可那座钟早在十二小时前就停在了 9:12。它每天只有两次会碰巧显示正确；你恰好撞上了其中一次。</p>
+<Lead drop="早">上九点十二分，你快迟到了。你匆匆经过车站大钟，抬头一看：9:12。你心想：「还好，还有三分钟。」你没看错。现在确实是 9:12。可那座钟早在十二小时前就停在了 9:12。它每天只有两次会碰巧显示正确；你恰好撞上了其中一次。</Lead>
 
-<p>你的信念是真的，也有理由支持：钟本来就是用来看时间的，你过去无数次看钟都没出过错。你也真心相信它。那么，你真的知道现在是 9:12 吗？仔细追问，几乎所有人都会摇头——总觉得缺了什么。但缺的究竟是什么？哲学家们为此争论了六十年；而类似的困惑，如我们将看到的，早在千年前便已浮现。</p>
-</header><div class="wrap">
+你的信念是真的，也有理由支持：钟本来就是用来看时间的，你过去无数次看钟都没出过错。你也真心相信它。那么，你真的知道现在是 9:12 吗？仔细追问，几乎所有人都会摇头——总觉得缺了什么。但缺的究竟是什么？哲学家们为此争论了六十年；而类似的困惑，如我们将看到的，早在千年前便已浮现。
 
-<div class="whereblock">
-<p class="label">◆ 我们身在何处</p>
-<p>这是第一天，还没有前文可回顾；日志仍是空白。今天先埋下几颗种子。今天引入的几件工具——分级信念、依证据更新、心智作为推理引擎——会支撑后面整门课。请留意它们将在<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>（科学如何判定什么才算数）、<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>（概率如何成为部分信念的逻辑）、<a href="/zh/days/007-information-theory/">第 7 日</a>（信息）、第 119 日（预测性大脑）以及第 149 日（著名发现为何在复现中消散）中重新浮现。我们将贯穿全部 180 天的五条线索——信息、能量、演化、涌现、计算——都在此处悄然首演。</p>
-</div>
-<section>
-<p class="sec-eyebrow">模型</p>
-<h2>三脚凳模型</h2>
-<p>在常见的教科书叙事里，西方哲学长期有一个简洁答案：知识是<span class="term">证成的真信念</span>，也就是 JTB（Justified True Belief）。</p>
-<p>要说一个人知道某事，至少要满足三点。第一，他相信它；第二，它是真的；第三，他有充分理由这样相信。少一条都不行。不相信，就谈不上知道；命题为假，也不能叫知道；只是走运猜中，同样不算知道。</p>
-<p>依此观点，JTB 就像一张稳固的三脚凳。抽掉任何一条腿，它都会倾倒。人们通常把这一观点追溯到柏拉图：他在《泰阿泰德篇》中提出，知识是「带有说明的真判断」。有趣的是，柏拉图本人也许并不认可这个后来归到他名下的说法。正是在那篇对话中，苏格拉底随后拆解了这个定义。正如一位学者所言，这就像一位杰出的批评家在摧毁某个传统的瞬间，竟又创造了它。</p>
-<p>尽管如此，这一粗略的共识还是维系了下来。凳子看似稳固。然后，一位时年三十五岁的哲学家——据说他此前发表寥寥，又恰好有些发表的压力——写了一篇三页纸的论文。</p>
-</section>
+</Hero>
 
-<section>
-<p class="sec-eyebrow">转折</p>
-<h2>盖梯尔的三页论文</h2>
-<p>1963 年，埃德蒙·盖梯尔（Edmund Gettier）在期刊 Analysis 上发表了一篇论文，标题直白得近乎挑战：《知识是证成的真信念吗？》（Is Justified True Belief Knowledge?）。全文仅三页。此后它被引用了数千次，并催生了数个子领域。在现代哲学中，鲜有文献能以如此精简的篇幅带来如此大的震动。</p>
-<p>盖梯尔的做法简单得近乎冷酷。他构造了一些小故事，其中三脚凳的三条腿都稳稳立在地上——信念、真实、证成——但你绝不会说那个人「知道」。以下是他第一个案例的现代化版本：</p>
+<Wrap>
+
+<WhereBlock>
+<Label>◆ 我们身在何处</Label>
+
+这是第一天，还没有前文可回顾；日志仍是空白。今天先埋下几颗种子。今天引入的几件工具——分级信念、依证据更新、心智作为推理引擎——会支撑后面整门课。请留意它们将在[第 2 日](/zh/days/002-scientific-method-and-demarcation/)（科学如何判定什么才算数）、[第 4 日](/zh/days/004-probability-as-extended-logic/)（概率如何成为部分信念的逻辑）、[第 7 日](/zh/days/007-information-theory/)（信息）、第 119 日（预测性大脑）以及第 149 日（著名发现为何在复现中消散）中重新浮现。我们将贯穿全部 180 天的五条线索——信息、能量、演化、涌现、计算——都在此处悄然首演。
+
+</WhereBlock>
+
+<SectionEyebrow>模型</SectionEyebrow>
+
+## 三脚凳模型
+
+在常见的教科书叙事里，西方哲学长期有一个简洁答案：知识是<Term>证成的真信念</Term>，也就是 JTB（Justified True Belief）。
+
+要说一个人知道某事，至少要满足三点。第一，他相信它；第二，它是真的；第三，他有充分理由这样相信。少一条都不行。不相信，就谈不上知道；命题为假，也不能叫知道；只是走运猜中，同样不算知道。
+
+依此观点，JTB 就像一张稳固的三脚凳。抽掉任何一条腿，它都会倾倒。人们通常把这一观点追溯到柏拉图：他在《泰阿泰德篇》中提出，知识是「带有说明的真判断」。有趣的是，柏拉图本人也许并不认可这个后来归到他名下的说法。正是在那篇对话中，苏格拉底随后拆解了这个定义。正如一位学者所言，这就像一位杰出的批评家在摧毁某个传统的瞬间，竟又创造了它。
+
+尽管如此，这一粗略的共识还是维系了下来。凳子看似稳固。然后，一位时年三十五岁的哲学家——据说他此前发表寥寥，又恰好有些发表的压力——写了一篇三页纸的论文。
+
+<SectionEyebrow>转折</SectionEyebrow>
+
+## 盖梯尔的三页论文
+
+1963 年，埃德蒙·盖梯尔（Edmund Gettier）在期刊 Analysis 上发表了一篇论文，标题直白得近乎挑战：《知识是证成的真信念吗？》（Is Justified True Belief Knowledge?）。全文仅三页。此后它被引用了数千次，并催生了数个子领域。在现代哲学中，鲜有文献能以如此精简的篇幅带来如此大的震动。
+
+盖梯尔的做法简单得近乎冷酷。他构造了一些小故事，其中三脚凳的三条腿都稳稳立在地上——信念、真实、证成——但你绝不会说那个人「知道」。以下是他第一个案例的现代化版本：
+
 <blockquote>史密斯与琼斯申请同一份工作。老板告诉史密斯：「琼斯会得到这个职位。」史密斯还闲来无事数了琼斯口袋里的硬币：十枚。于是史密斯形成了一个理由充分的信念：「得到这份工作的人，口袋里有十枚硬币。」</blockquote>
-<p>转折出现了。老板其实弄错了（或者改变了主意）：得到工作的是史密斯。而且——史密斯本人完全不知情——他自己的口袋里恰好也躺着十枚硬币。来看他的信念，「得到这份工作的人，口袋里有十枚硬币」：它是真的（获胜者史密斯确实有十枚硬币），它也有充分证成（绝佳的证据——老板的承诺，以及实打实的硬币清点），而且他确实诚挚地相信这一点。JTB（证成的真信念）三要素齐全。然而，史密斯显然并不「知道」这件事。他追踪的是琼斯，却在错误的人身上得出了正确的结论。</p>
-<p>这便是<span class="term">盖梯尔案例</span>的基本结构：你的推理链条依赖了一个假命题（「琼斯会得到这份工作」），而你的信念又被一桩无关的巧合（「史密斯恰好也有十枚硬币」）带向了真实。理由和事实并没有真正接上。停摆的大钟只是同一种结构更纯粹的版本：你的理由（那座钟）失效了，而事实（此刻是 9:12）全凭运气成立。</p>
+转折出现了。老板其实弄错了（或者改变了主意）：得到工作的是史密斯。而且——史密斯本人完全不知情——他自己的口袋里恰好也躺着十枚硬币。来看他的信念，「得到这份工作的人，口袋里有十枚硬币」：它是真的（获胜者史密斯确实有十枚硬币），它也有充分证成（绝佳的证据——老板的承诺，以及实打实的硬币清点），而且他确实诚挚地相信这一点。JTB（证成的真信念）三要素齐全。然而，史密斯显然并不「知道」这件事。他追踪的是琼斯，却在错误的人身上得出了正确的结论。
 
-<div class="aside">
-<p class="h">比名字更古老的转折</p>
-<p>盖梯尔并非首创。伯特兰·罗素在 Human Knowledge: Its Scope and Limits（1948）中就已提出停钟案例。再往前追溯，这个问题堪称古老：大约在公元&nbsp;770&nbsp;年，佛教逻辑学家法上（Dharmottara）描述了一位旅人，他看到山丘上仿佛有烟，推断有火，而且确实有火——只不过那「烟」其实是一群昆虫。同一种结构，早了十二个世纪。十四世纪的印度，甘格沙（Gaṅgeśa）为处理此类案例建立了一整套因果知识理论。「盖梯尔问题」是哲学中趋同发现的绝佳实例——那种心智会独立地一再绊倒的东西，而它本身就在暗示：那里有某种真实的东西。</p>
-</div>
-</section>
+这便是<Term>盖梯尔案例</Term>的基本结构：你的推理链条依赖了一个假命题（「琼斯会得到这份工作」），而你的信念又被一桩无关的巧合（「史密斯恰好也有十枚硬币」）带向了真实。理由和事实并没有真正接上。停摆的大钟只是同一种结构更纯粹的版本：你的理由（那座钟）失效了，而事实（此刻是 9:12）全凭运气成立。
+
+<Aside>
+<BlockTitle>比名字更古老的转折</BlockTitle>
+
+盖梯尔并非首创。伯特兰·罗素在 Human Knowledge: Its Scope and Limits（1948）中就已提出停钟案例。再往前追溯，这个问题堪称古老：大约在公元&nbsp;770&nbsp;年，佛教逻辑学家法上（Dharmottara）描述了一位旅人，他看到山丘上仿佛有烟，推断有火，而且确实有火——只不过那「烟」其实是一群昆虫。同一种结构，早了十二个世纪。十四世纪的印度，甘格沙（Gaṅgeśa）为处理此类案例建立了一整套因果知识理论。「盖梯尔问题」是哲学中趋同发现的绝佳实例——那种心智会独立地一再绊倒的东西，而它本身就在暗示：那里有某种真实的东西。
+
+</Aside>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<div class="panel web-only">
-<p class="ptitle">交互演示 · 搭建与拆毁</p>
-<h3>盖梯尔机器</h3>
-<p class="pnote">切换三个经典条件。当三者重叠时，图表中央亮起——那便是证成的真信念。然后打开红色的「运气」开关，看着 JTB（Justified True Belief，证成的真信念）依旧满足，知识却悄然溜走。你也可以点击加载一个经典情景。</p>
+<Panel class="web-only">
+<PanelTitle>交互演示 · 搭建与拆毁</PanelTitle>
+
+### 盖梯尔机器
+
+<PanelNote>切换三个经典条件。当三者重叠时，图表中央亮起——那便是证成的真信念。然后打开红色的「运气」开关，看着 JTB（Justified True Belief，证成的真信念）依旧满足，知识却悄然溜走。你也可以点击加载一个经典情景。</PanelNote>
 
 <div class="gm-grid">
 <div>
@@ -132,11 +174,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 </div>
 </div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">参考表格</p>
-<h3>盖梯尔案例表</h3>
-<p class="pnote">关键案例：</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>参考表格</PanelTitle>
+
+### 盖梯尔案例表
+
+<PanelNote>关键案例：</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>案例</th><th>信念</th><th>为真</th><th>证成</th><th>运气</th><th>判断</th></tr></thead>
 <tbody>
@@ -146,33 +192,42 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>自信的错误</td><td>是</td><td>否</td><td>是</td><td>否</td><td>非知识：命题为假</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<section>
-<p class="sec-eyebrow">补丁战</p>
-<h2>给凳子加上第四条腿</h2>
-<p>面对盖梯尔，最自然的回应是：增设第四项条件，把运气筛除。几十年来，认识论家们不断尝试修补——而每个漂亮补丁，很快都会撞上更刁钻的反例。这场修补竞赛越走越难。</p>
-<p>无假前提。最初的想法是：知识不能经由一个假命题推理得出。史密斯的信念倚赖于「琼斯会得到这份工作」，而这是假的；禁绝它，你便安全了。干净利落——直到阿尔文·戈德曼提出假谷仓之国（1976）。你驾车穿过一片区域，那里有人恶作剧，把每一座「谷仓」都做成平板电影布景——除了一座例外。你恰好瞥见了那座真谷仓，心想「那是座谷仓」。你的信念为真，也有充分证成，且不依赖任何假前提。然而你并不知道那是谷仓：你本可以如此轻易地在百米之外被布景板愚弄。</p>
-<p>追踪真值。那么，也许知识关乎你的信念在<span class="term">邻近可能世界</span>中<TipNote text={"邻近可能世界指与现实只有小差异的可行情形，而不是极端遥远的幻想场景。"} />如何表现。罗伯特·诺齐克（1981）提出了<span class="term">敏感性</span>：你知道命题 p，仅当若 p 为假，你便不会相信它。优雅——却在边缘情形中产出古怪的结论。索萨式<span class="term">安全性</span>把这道模态测试换了问法：不是「如果它是假的，你还会相信吗？」而是「你是不是很容易就会错信它？」二者是近亲，却不是双胞胎：敏感性问的是，如果命题为假，你的信念会不会随之消失；安全性问的是，你形成信念的方式是否离错误太近。停摆的钟在安全性上惨败（早一分钟或晚一分钟你便错了）；正常运转的钟不会让你轻易出错，因此通过安全性测试。假谷仓前的你同样未能通过安全测试。</p>
-<p>随后，琳达·扎格泽布斯基（1994）把这个麻烦推进了一步。她指出，许多「JTB + 第四条件」方案都会遇到同一种反例配方：先找一个有证成但仍可能为假的信念，再让它的理由在某处失准，最后用巧合把结论救回为真。只要第四条件没有强到保证为真，运气就可能重新钻进缝隙。因此，问题也许不只是某个补丁不够好，而是这类补丁本身很难完成任务。</p>
+<SectionEyebrow>补丁战</SectionEyebrow>
 
-<h3>两种退出战场的方式</h3>
-<p>宣布知识为原初概念。蒂莫西·威廉森在 Knowledge and Its Limits（2000）中迈出了激进的一步：停止试图用更简单的零件拼凑知识。也许它根本无从分析。在他的<span class="term">知识优先</span>图景中，知道是一种基本的心智状态——最普遍的<span class="term">事实性心智状态</span><TipNote text={"事实性心智状态只有在其内容为真时才成立：你可以错误地相信，却不能错误地知道。"} />——而我们应当用知识去解释信念、证据与证成，而非反其道而行。你无法把氢或约翰·F·肯尼迪拆解成更简单的概念；也许知识同样是基石。六十年来失败的定义，看起来不再像一个谜题，而更像一条线索。</p>
-<p>把重点转向能力。另一条出路来自<span class="term">德性认识论</span>；这里仍以索萨的版本为代表。知识是适切的信念：信念之所以为真，是因为认知者具有相应能力，而不是碰巧。想象一位弓箭手。一箭中的，仅当箭矢命中靶心是因为射手瞄准精妙——而非一阵风把劣射吹回了靶心。盖梯尔化的认知者正是那位弓箭手：第一阵风将箭吹离靶心，第二阵风又把它吹了回来。准确命中，但不是出于能力，也因而不是适切。索萨说，靠运气命中的结果不算知识。</p>
-</section>
+## 给凳子加上第四条腿
 
-<section>
-<p class="sec-eyebrow">辩论</p>
-<h2>信念究竟何以获得证成？</h2>
-<p>从「这是知识吗？」退后一步，回到那条更谦卑的凳腿：一个信念最初如何获得证成？每当你追问一个理由，就不得不退向更深的理由。现在是 9:12，因为钟这么显示。信赖钟，因为钟是可靠的。相信那一点，又因为……于是你一路后退，无处停步。古代怀疑论者认为，每一条理由链最终都会落入三种不安的结局之一——<span class="term">阿格里帕三难困境</span>：它无限延伸，或陷入循环，或止于某个你只能武断宣布的终点。</p>
-<p>三个现代学派各自选择拥抱哪一个结局——而第四个学派索性改变了话题。</p>
-</section>
+面对盖梯尔，最自然的回应是：增设第四项条件，把运气筛除。几十年来，认识论家们不断尝试修补——而每个漂亮补丁，很快都会撞上更刁钻的反例。这场修补竞赛越走越难。
+
+无假前提。最初的想法是：知识不能经由一个假命题推理得出。史密斯的信念倚赖于「琼斯会得到这份工作」，而这是假的；禁绝它，你便安全了。干净利落——直到阿尔文·戈德曼提出假谷仓之国（1976）。你驾车穿过一片区域，那里有人恶作剧，把每一座「谷仓」都做成平板电影布景——除了一座例外。你恰好瞥见了那座真谷仓，心想「那是座谷仓」。你的信念为真，也有充分证成，且不依赖任何假前提。然而你并不知道那是谷仓：你本可以如此轻易地在百米之外被布景板愚弄。
+
+追踪真值。那么，也许知识关乎你的信念在<Term>邻近可能世界</Term>中<TipNote text={"邻近可能世界指与现实只有小差异的可行情形，而不是极端遥远的幻想场景。"} />如何表现。罗伯特·诺齐克（1981）提出了<Term>敏感性</Term>：你知道命题 p，仅当若 p 为假，你便不会相信它。优雅——却在边缘情形中产出古怪的结论。索萨式<Term>安全性</Term>把这道模态测试换了问法：不是「如果它是假的，你还会相信吗？」而是「你是不是很容易就会错信它？」二者是近亲，却不是双胞胎：敏感性问的是，如果命题为假，你的信念会不会随之消失；安全性问的是，你形成信念的方式是否离错误太近。停摆的钟在安全性上惨败（早一分钟或晚一分钟你便错了）；正常运转的钟不会让你轻易出错，因此通过安全性测试。假谷仓前的你同样未能通过安全测试。
+
+随后，琳达·扎格泽布斯基（1994）把这个麻烦推进了一步。她指出，许多「JTB + 第四条件」方案都会遇到同一种反例配方：先找一个有证成但仍可能为假的信念，再让它的理由在某处失准，最后用巧合把结论救回为真。只要第四条件没有强到保证为真，运气就可能重新钻进缝隙。因此，问题也许不只是某个补丁不够好，而是这类补丁本身很难完成任务。
+
+### 两种退出战场的方式
+
+宣布知识为原初概念。蒂莫西·威廉森在 Knowledge and Its Limits（2000）中迈出了激进的一步：停止试图用更简单的零件拼凑知识。也许它根本无从分析。在他的<Term>知识优先</Term>图景中，知道是一种基本的心智状态——最普遍的<Term>事实性心智状态</Term><TipNote text={"事实性心智状态只有在其内容为真时才成立：你可以错误地相信，却不能错误地知道。"} />——而我们应当用知识去解释信念、证据与证成，而非反其道而行。你无法把氢或约翰·F·肯尼迪拆解成更简单的概念；也许知识同样是基石。六十年来失败的定义，看起来不再像一个谜题，而更像一条线索。
+
+把重点转向能力。另一条出路来自<Term>德性认识论</Term>；这里仍以索萨的版本为代表。知识是适切的信念：信念之所以为真，是因为认知者具有相应能力，而不是碰巧。想象一位弓箭手。一箭中的，仅当箭矢命中靶心是因为射手瞄准精妙——而非一阵风把劣射吹回了靶心。盖梯尔化的认知者正是那位弓箭手：第一阵风将箭吹离靶心，第二阵风又把它吹了回来。准确命中，但不是出于能力，也因而不是适切。索萨说，靠运气命中的结果不算知识。
+
+<SectionEyebrow>辩论</SectionEyebrow>
+
+## 信念究竟何以获得证成？
+
+从「这是知识吗？」退后一步，回到那条更谦卑的凳腿：一个信念最初如何获得证成？每当你追问一个理由，就不得不退向更深的理由。现在是 9:12，因为钟这么显示。信赖钟，因为钟是可靠的。相信那一点，又因为……于是你一路后退，无处停步。古代怀疑论者认为，每一条理由链最终都会落入三种不安的结局之一——<Term>阿格里帕三难困境</Term>：它无限延伸，或陷入循环，或止于某个你只能武断宣布的终点。
+
+三个现代学派各自选择拥抱哪一个结局——而第四个学派索性改变了话题。
 
 {/* ===================== VISUAL 2 ===================== */}
-<div class="panel tri">
-<p class="ptitle">图示 · 回溯难题</p>
-<h3>阿格里帕三难困境——三条穷途，四条出路</h3>
-<p class="pnote">你的信念为何有证成？对「……那又为何？」的每一个诚实回答，终将撞上三面高墙之一。</p>
+<Panel class="tri">
+<PanelTitle>图示 · 回溯难题</PanelTitle>
+
+### 阿格里帕三难困境——三条穷途，四条出路
+
+<PanelNote>你的信念为何有证成？对「……那又为何？」的每一个诚实回答，终将撞上三面高墙之一。</PanelNote>
+
 <div class="regress-map print-hide" role="img" aria-label="一条理由链最终走向无穷回溯、循环或武断止步。">
 <div class="regress-chain">
 <div class="rnode strong">信念<span>「现在是 9:12」</span></div>
@@ -201,16 +256,16 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <div class="k">无穷主义——勇敢的少数派：接受证成是一条永无尽头的理由之链，从不触底。</div>
 <div class="k">可靠主义——改换问题。一个信念只要由可靠的过程产生——良好的视觉、健全的记忆——就算有证成，无论你是否能道出一番辩护。这是外在主义：证成可以是你认知机制的事实，而非你头脑中的故事。</div>
 </div>
-</div>
+</Panel>
 
-<section>
-<p>内在与外在的分裂，其重要性远超表象。内在主义者主张，证成必须是你经由反思即可触及的东西——「从内部」可得的理由。可靠主义通常属于外在主义阵营：它认为，重要的是你的信念事实上由可靠地产出真信念的方式产生，无论你是否能够触及。请将这一张力存于心中：这正是旧日的扶手椅问题与关于大脑如何真正形成信念的新科学正面相撞之处。</p>
-</section>
+内在与外在的分裂，其重要性远超表象。内在主义者主张，证成必须是你经由反思即可触及的东西——「从内部」可得的理由。可靠主义通常属于外在主义阵营：它认为，重要的是你的信念事实上由可靠地产出真信念的方式产生，无论你是否能够触及。请将这一张力存于心中：这正是旧日的扶手椅问题与关于大脑如何真正形成信念的新科学正面相撞之处。
 
-<section class="frontier">
-<p class="sec-eyebrow">前沿 · 2026</p>
-<h2>三条活跃前沿——以及一层前沿校准器</h2>
-<p>本课程的每一天都在研究前沿收束，每一项主张都标注着它究竟能承载多少分量。知识正处在一个迷人的交汇点上：哲学家、心理学家与神经科学家正从不同方向环绕着同一组问题。</p>
+<ContentSection class="frontier">
+<SectionEyebrow>前沿 · 2026</SectionEyebrow>
+
+## 三条活跃前沿——以及一层前沿校准器
+
+本课程的每一天都在研究前沿收束，每一项主张都标注着它究竟能承载多少分量。知识正处在一个迷人的交汇点上：哲学家、心理学家与神经科学家正从不同方向环绕着同一组问题。
 
 <div class="claim">
 <div class="ctop">
@@ -236,13 +291,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <p class="epub-only print-only">下方表格把同一个陷阱整理成三个基准案例：融贯、过度自信、信心不足。</p>
 <p>仍属争议的是，分级的置信度究竟是取代了日常的是/否信念，还是仅仅与之并置。（彩票悖论向你提问：你有 99.9% 的把握自己的彩票会输——但你真的相信它会输吗？）我们将在<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>正式拾起这条线索。</p>
 </div>
-</section>
+</ContentSection>
 
 {/* ===================== INTERACTIVE 3 ===================== */}
-<div class="panel web-only">
-<p class="ptitle">交互演示 · 感受陷阱</p>
-<h3>置信度刻度盘与荷兰赌</h3>
-<p class="pnote">设定你对下一张牌为红色（S）以及非红色（¬S）的置信度。两者之和应当恰好为 1。将它们推离一致，看着庄家把你的不融贯转化为稳赚不赔的利润——代价由你承担。</p>
+<Panel class="web-only">
+<PanelTitle>交互演示 · 感受陷阱</PanelTitle>
+
+### 置信度刻度盘与荷兰赌
+
+<PanelNote>设定你对下一张牌为红色（S）以及非红色（¬S）的置信度。两者之和应当恰好为 1。将它们推离一致，看着庄家把你的不融贯转化为稳赚不赔的利润——代价由你承担。</PanelNote>
 
 <div class="cred-controls">
 <div class="slider-row">
@@ -269,11 +326,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 <button class="snap" id="snapBtn">↳ 将 ¬S 对齐至 1 − S（恢复融贯）</button>
 </div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">参考表格</p>
-<h3>置信度融贯表</h3>
-<p>若你给 S 与非-S 分配的置信度之和为 1.00，则这对置信度是融贯的。若总和大于 1.00，你会为两场不可能同时获胜的赌约过度付费。若总和小于 1.00，庄家可以反向购买赌约，依然保证获利。</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>参考表格</PanelTitle>
+
+### 置信度融贯表
+
+若你给 S 与非-S 分配的置信度之和为 1.00，则这对置信度是融贯的。若总和大于 1.00，你会为两场不可能同时获胜的赌约过度付费。若总和小于 1.00，庄家可以反向购买赌约，依然保证获利。
+
 <table class="alt-table">
 <thead><tr><th>S 置信度</th><th>非-S 置信度</th><th>总和</th><th>结果</th></tr></thead>
 <tbody>
@@ -282,9 +343,9 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>0.30</td><td>0.40</td><td class="num">0.70</td><td>你把两张赌票卖得太便宜；无论红牌是否出现，庄家都能让你亏 0.30</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<section class="frontier">
+<ContentSection class="frontier">
 <div class="claim">
 <div class="ctop">
 <span class="cnum">前沿 03</span>
@@ -296,54 +357,58 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <p>预测加工理论给出了一种答案：大脑不是被动接收世界的海绵，而是不断预测输入的<span class="term">预测机器</span>。在许多<span class="term">预测加工</span><TipNote text={"预测加工是一类理论：大脑持续预测感觉输入，并在预测误差出现时更新模型。"} />模型中（安迪·克拉克，Behavioral and Brain Sciences, 2013；雅各布·霍维，2013），大脑不断把预测同输入拿来对照；<span class="term">预测误差</span>信号帮助它更新模型。感知因此像是大脑实时给出的最佳猜测，被误差不断校准；用阿尼尔·塞思那句著名的话说，是一场「受控的幻觉」。信念更新开始看起来像是神经元中实现的贝叶斯推理——即所谓的「贝叶斯大脑」，将前沿 02 与生物硬件统一起来。</p>
 <p>卡尔·弗里斯顿以<span class="term">自由能原理</span><TipNote text={"弗里斯顿的自由能原理认为，生命系统会行动以最小化预测误差或不确定性，并用一个名为自由能的形式量来表达。"} />（Nature Reviews Neuroscience, 2010）将这一观念推向极致：生命系统之所以能持续存在，恰恰在于最小化一个量——「自由能」，也就是一个与「惊讶」密切相关的信息论<TipNote text={"信息论用数学方式描述信息、不确定性与意外。"} />量——它将感知、行动乃至生物自组织编织进同一框架。我们先来给这一研究贴上校准的标签。预测编码确实解释了真实的感知现象，是一个严肃而多产的研究纲领——前景可期。但宏大的自由能原理，作为统摄心智与生命的单一法则，依然争议重重：批评者认为，其宽泛版本会变得难以直接检验；拥护者则常把它视为一种数学框架，只有落到更具体的模型上，才真正拿出可由经验检验的赌注。我们将在感知（第 119 日）与意识（第 123–126 日）中继续讨论这一问题，它的「自由能」与我们将在第 33 日和第 83–85 日遇见的热力学如何遥相呼应。信息、能量、计算、涌现——我们五条线索中的四条，被编织进神经元安静的运算之中。</p>
 </div>
-</section>
+</ContentSection>
 
-<section>
-<p class="sec-eyebrow">悬而未决的问题</p>
-<h2>真正尚未落定</h2>
-<p>六十年过去，对「知识是什么？」的诚实回答中，仍有一长串没有定论的问题：</p>
-<ul>
-<li>知识究竟可否被分析？还是威廉森说得对，它是基石——一个我们用以解释其他事物、而非由他物派生而来的原初概念？</li>
-<li>内在还是外在？证成是否要求你能经由反思触及的理由，抑或只需那些倾向于产出真信念的认知机制？</li>
-<li>一种货币还是两种？理性信念在根本上是分级的（置信度）、全有或全无的，抑或二者以某种方式调和？</li>
-<li>是否真的存在一种普世的人类认识论——若有，是否是演化植入了那种「靠运气得来的知道不算数」的本能？（留待第 74 日的线索。）</li>
-<li>大脑在严格意义上就是贝叶斯的吗，还是说「大脑在做推理」仅仅是一种从外部描述它的有用方式？</li>
-<li>而那个将萦绕人工智能领域的问题：当像起草这一主题初稿的 AI 输出一个为真且证据充分的断言时，它是否知道任何东西——抑或它是终极的盖梯尔案例，正确的原因与事实毫无关联？（第 138–145 日。）</li>
-</ul>
-</section>
+<SectionEyebrow>悬而未决的问题</SectionEyebrow>
 
-<div class="recap">
-<p class="h">◆ 一日三句话</p>
+## 真正尚未落定
+
+六十年过去，对「知识是什么？」的诚实回答中，仍有一长串没有定论的问题：
+
+- 知识究竟可否被分析？还是威廉森说得对，它是基石——一个我们用以解释其他事物、而非由他物派生而来的原初概念？
+- 内在还是外在？证成是否要求你能经由反思触及的理由，抑或只需那些倾向于产出真信念的认知机制？
+- 一种货币还是两种？理性信念在根本上是分级的（置信度）、全有或全无的，抑或二者以某种方式调和？
+- 是否真的存在一种普世的人类认识论——若有，是否是演化植入了那种「靠运气得来的知道不算数」的本能？（留待第 74 日的线索。）
+- 大脑在严格意义上就是贝叶斯的吗，还是说「大脑在做推理」仅仅是一种从外部描述它的有用方式？
+- 而那个将萦绕人工智能领域的问题：当像起草这一主题初稿的 AI 输出一个为真且证据充分的断言时，它是否知道任何东西——抑或它是终极的盖梯尔案例，正确的原因与事实毫无关联？（第 138–145 日。）
+
+<Recap>
+<BlockTitle>◆ 一日三句话</BlockTitle>
+
 <dl>
 <div><dt>核心洞见</dt><dd>两千三百年来，知识看上去就像证成的真信念——直到盖梯尔用三页论文指出，你可以三者俱备却仍不算「知道」，因为你的理由与事实可能只是因运气相遇，而非真正相连。</dd></div>
 <div><dt>最佳隐喻</dt><dd>那座一天只对两次的停钟——以及那位弓箭手，箭被吹离靶心，又被吹回正中：准确，却不适切。</dd></div>
 <div><dt>仍在争论</dt><dd>修补方案能否找到第四条件（以及是哪一个）；知识是否是不可分析的基石；「信念」是否应当让位于分级的贝叶斯置信度——而「大脑是一台预测机器」这一断言，正构成一条真正的科学前沿。</dd></div>
 </dl>
-<p class="threads">今日线索 › 信息（置信度与贝叶斯大脑） · 能量（Friston 的自由能） · 计算（心智作为推理引擎）——并略微讨论了涌现与演化。</p>
-</div>
-<hr class="div" />
+<Threads>今日线索 › 信息（置信度与贝叶斯大脑） · 能量（Friston 的自由能） · 计算（心智作为推理引擎）——并略微讨论了涌现与演化。</Threads>
 
-<section class="sources">
-<p class="sec-eyebrow">来源</p>
-<h2>来源与延伸阅读</h2>
-<ol>
-<li>Gettier, E. L. (1963). "Is Justified True Belief Knowledge?" Analysis 23(6): 121–123. <span class="meta">doi:10.1093/analys/23.6.121.</span> <a href="https://doi.org/10.1093/analys/23.6.121">doi.org/10.1093/analys/23.6.121</a></li>
-<li>Ichikawa, J. J. &amp; Steup, M. "The Analysis of Knowledge." Stanford Encyclopedia of Philosophy（2026 年 1 月 21 日实质修订）. <a href="https://plato.stanford.edu/entries/knowledge-analysis/">plato.stanford.edu/entries/knowledge-analysis</a> <span class="meta">—— JTB（Justified True Belief，证成的真信念）、盖梯尔案例、安全性/敏感性，以及知识优先转向。</span></li>
-<li>"Gettier problem." Wikipedia (accessed 2026). <a href="https://en.wikipedia.org/wiki/Gettier_problem">en.wikipedia.org/wiki/Gettier_problem</a> <span class="meta">—— Russell（1948）、法上（约公元 770 年）与 Gaṅgeśa（14 世纪）的先例。</span></li>
-<li>Russell, B. (1948). Human Knowledge: Its Scope and Limits. London: Allen &amp; Unwin. <span class="meta">——停钟案例（第 ~170–171 页）。</span></li>
-<li>Goldman, A. (1976). "Discrimination and Perceptual Knowledge." Journal of Philosophy 73(20): 771–791. <span class="meta">doi:10.2307/2025679.</span> <a href="https://doi.org/10.2307/2025679">doi.org/10.2307/2025679</a> <span class="meta">——假谷仓案例；可靠主义。</span></li>
-<li>Nozick, R. (1981). Philosophical Explanations. Harvard University Press. <span class="meta">——真值追踪 / 敏感性。</span></li>
-<li>Sosa, E. (1999). "How to Defeat Opposition to Moore." Noûs 33(s13)，增刊：Philosophical Perspectives 13, Epistemology: 141–153. <span class="meta">doi:10.1111/0029-4624.33.s13.7.</span> <a href="https://doi.org/10.1111/0029-4624.33.s13.7">doi.org/10.1111/0029-4624.33.s13.7</a> <span class="meta">——安全性条件。</span> 参见 Sosa (2007), A Virtue Epistemology（适切信念），<span class="meta">doi:10.1093/acprof:oso/9780199297023.001.0001。</span> <a href="https://doi.org/10.1093/acprof:oso/9780199297023.001.0001">doi.org/10.1093/acprof:oso/9780199297023.001.0001</a></li>
-<li>Zagzebski, L. (1994). "The Inescapability of Gettier Problems." The Philosophical Quarterly 44(174): 65–73. <span class="meta">doi:10.2307/2220147.</span> <a href="https://doi.org/10.2307/2220147">doi.org/10.2307/2220147</a> <span class="meta">——关于许多「JTB 加额外条件」分析会结构性重现盖梯尔问题的论证。</span></li>
-<li>Williamson, T. (2000). Knowledge and Its Limits. Oxford University Press. <span class="meta">doi:10.1093/019925656X.001.0001.</span> <a href="https://doi.org/10.1093/019925656X.001.0001">doi.org/10.1093/019925656X.001.0001</a> <a href="https://en.wikipedia.org/wiki/Knowledge_and_Its_Limits">overview</a> <span class="meta">——知识优先认识论；知识作为最普遍的事实性心智状态。</span></li>
-<li>Weinberg, J. M., Nichols, S. &amp; Stich, S. (2001). "Normativity and Epistemic Intuitions." Philosophical Topics 29(1–2): 429–460. <span class="meta">doi:10.5840/philtopics2001291/217.</span> <a href="https://doi.org/10.5840/philtopics2001291/217">doi.org/10.5840/philtopics2001291/217</a> <span class="meta">——奠基性的跨文化实验哲学研究（后来受到争议）。</span></li>
-<li>Machery, E., Stich, S., Rose, D., Chatterjee, A., Karasawa, K., Struchiner, N., Sirker, S., Usui, N. &amp; Hashimoto, T. (2017). "Gettier Across Cultures." Noûs 51(3): 645–664. <span class="meta">doi:10.1111/nous.12110.</span> <a href="https://doi.org/10.1111/nous.12110">doi.org/10.1111/nous.12110</a></li>
-<li>Kim, M. &amp; Yuan, Y. (2015). "No cross-cultural differences in the Gettier car case intuition: A replication study of Weinberg et al. 2001." Episteme 12(3): 355–361. <span class="meta">doi:10.1017/epi.2015.17.</span> <a href="https://doi.org/10.1017/epi.2015.17">doi.org/10.1017/epi.2015.17</a></li>
-<li>Weisberg, J. "Bayesian Epistemology." Stanford Encyclopedia of Philosophy. <a href="https://plato.stanford.edu/entries/epistemology-bayesian/">plato.stanford.edu/entries/epistemology-bayesian</a> <span class="meta">——置信度、条件化，以及荷兰赌论证（Ramsey 1926; de Finetti 1937）。</span></li>
-<li>Clark, A. (2013). "Whatever next? Predictive brains, situated agents, and the future of cognitive science." Behavioral and Brain Sciences 36(3): 181–204. <span class="meta">doi:10.1017/S0140525X12000477.</span> <a href="https://doi.org/10.1017/S0140525X12000477">doi.org/10.1017/S0140525X12000477</a> 参见 Clark, Surfing Uncertainty (OUP, 2016), <span class="meta">doi:10.1093/acprof:oso/9780190217013.001.0001。</span> <a href="https://doi.org/10.1093/acprof:oso/9780190217013.001.0001">doi.org/10.1093/acprof:oso/9780190217013.001.0001</a></li>
-<li>Friston, K. (2010). "The free-energy principle: a unified brain theory?" Nature Reviews Neuroscience 11(2): 127–138. <span class="meta">doi:10.1038/nrn2787.</span> <a href="https://doi.org/10.1038/nrn2787">doi.org/10.1038/nrn2787</a></li>
-<li>Hohwy, J. (2013). The Predictive Mind. Oxford University Press. <span class="meta">doi:10.1093/acprof:oso/9780199682737.001.0001.</span> <a href="https://doi.org/10.1093/acprof:oso/9780199682737.001.0001">doi.org/10.1093/acprof:oso/9780199682737.001.0001</a></li>
-</ol>
-</section>
+</Recap>
 
-</div>
+<Divider />
+
+<Sources>
+<SectionEyebrow>来源</SectionEyebrow>
+
+<SourcesTitle>来源与延伸阅读</SourcesTitle>
+
+1. Gettier, E. L. (1963). "Is Justified True Belief Knowledge?" Analysis 23(6): 121–123. <Meta>doi:10.1093/analys/23.6.121.</Meta> [doi.org/10.1093/analys/23.6.121](https://doi.org/10.1093/analys/23.6.121)
+1. Ichikawa, J. J. &amp; Steup, M. "The Analysis of Knowledge." Stanford Encyclopedia of Philosophy（2026 年 1 月 21 日实质修订）. [plato.stanford.edu/entries/knowledge-analysis](https://plato.stanford.edu/entries/knowledge-analysis/) <Meta>—— JTB（Justified True Belief，证成的真信念）、盖梯尔案例、安全性/敏感性，以及知识优先转向。</Meta>
+1. "Gettier problem." Wikipedia (accessed 2026). [en.wikipedia.org/wiki/Gettier_problem](https://en.wikipedia.org/wiki/Gettier_problem) <Meta>—— Russell（1948）、法上（约公元 770 年）与 Gaṅgeśa（14 世纪）的先例。</Meta>
+1. Russell, B. (1948). Human Knowledge: Its Scope and Limits. London: Allen &amp; Unwin. <Meta>——停钟案例（第 ~170–171 页）。</Meta>
+1. Goldman, A. (1976). "Discrimination and Perceptual Knowledge." Journal of Philosophy 73(20): 771–791. <Meta>doi:10.2307/2025679.</Meta> [doi.org/10.2307/2025679](https://doi.org/10.2307/2025679) <Meta>——假谷仓案例；可靠主义。</Meta>
+1. Nozick, R. (1981). Philosophical Explanations. Harvard University Press. <Meta>——真值追踪 / 敏感性。</Meta>
+1. Sosa, E. (1999). "How to Defeat Opposition to Moore." Noûs 33(s13)，增刊：Philosophical Perspectives 13, Epistemology: 141–153. <Meta>doi:10.1111/0029-4624.33.s13.7.</Meta> [doi.org/10.1111/0029-4624.33.s13.7](https://doi.org/10.1111/0029-4624.33.s13.7) <Meta>——安全性条件。</Meta> 参见 Sosa (2007), A Virtue Epistemology（适切信念），<Meta>doi:10.1093/acprof:oso/9780199297023.001.0001。</Meta> [doi.org/10.1093/acprof:oso/9780199297023.001.0001](https://doi.org/10.1093/acprof:oso/9780199297023.001.0001)
+1. Zagzebski, L. (1994). "The Inescapability of Gettier Problems." The Philosophical Quarterly 44(174): 65–73. <Meta>doi:10.2307/2220147.</Meta> [doi.org/10.2307/2220147](https://doi.org/10.2307/2220147) <Meta>——关于许多「JTB 加额外条件」分析会结构性重现盖梯尔问题的论证。</Meta>
+1. Williamson, T. (2000). Knowledge and Its Limits. Oxford University Press. <Meta>doi:10.1093/019925656X.001.0001.</Meta> [doi.org/10.1093/019925656X.001.0001](https://doi.org/10.1093/019925656X.001.0001) [overview](https://en.wikipedia.org/wiki/Knowledge_and_Its_Limits) <Meta>——知识优先认识论；知识作为最普遍的事实性心智状态。</Meta>
+1. Weinberg, J. M., Nichols, S. &amp; Stich, S. (2001). "Normativity and Epistemic Intuitions." Philosophical Topics 29(1–2): 429–460. <Meta>doi:10.5840/philtopics2001291/217.</Meta> [doi.org/10.5840/philtopics2001291/217](https://doi.org/10.5840/philtopics2001291/217) <Meta>——奠基性的跨文化实验哲学研究（后来受到争议）。</Meta>
+1. Machery, E., Stich, S., Rose, D., Chatterjee, A., Karasawa, K., Struchiner, N., Sirker, S., Usui, N. &amp; Hashimoto, T. (2017). "Gettier Across Cultures." Noûs 51(3): 645–664. <Meta>doi:10.1111/nous.12110.</Meta> [doi.org/10.1111/nous.12110](https://doi.org/10.1111/nous.12110)
+1. Kim, M. &amp; Yuan, Y. (2015). "No cross-cultural differences in the Gettier car case intuition: A replication study of Weinberg et al. 2001." Episteme 12(3): 355–361. <Meta>doi:10.1017/epi.2015.17.</Meta> [doi.org/10.1017/epi.2015.17](https://doi.org/10.1017/epi.2015.17)
+1. Weisberg, J. "Bayesian Epistemology." Stanford Encyclopedia of Philosophy. [plato.stanford.edu/entries/epistemology-bayesian](https://plato.stanford.edu/entries/epistemology-bayesian/) <Meta>——置信度、条件化，以及荷兰赌论证（Ramsey 1926; de Finetti 1937）。</Meta>
+1. Clark, A. (2013). "Whatever next? Predictive brains, situated agents, and the future of cognitive science." Behavioral and Brain Sciences 36(3): 181–204. <Meta>doi:10.1017/S0140525X12000477.</Meta> [doi.org/10.1017/S0140525X12000477](https://doi.org/10.1017/S0140525X12000477) 参见 Clark, Surfing Uncertainty (OUP, 2016), <Meta>doi:10.1093/acprof:oso/9780190217013.001.0001。</Meta> [doi.org/10.1093/acprof:oso/9780190217013.001.0001](https://doi.org/10.1093/acprof:oso/9780190217013.001.0001)
+1. Friston, K. (2010). "The free-energy principle: a unified brain theory?" Nature Reviews Neuroscience 11(2): 127–138. <Meta>doi:10.1038/nrn2787.</Meta> [doi.org/10.1038/nrn2787](https://doi.org/10.1038/nrn2787)
+1. Hohwy, J. (2013). The Predictive Mind. Oxford University Press. <Meta>doi:10.1093/acprof:oso/9780199682737.001.0001.</Meta> [doi.org/10.1093/acprof:oso/9780199682737.001.0001](https://doi.org/10.1093/acprof:oso/9780199682737.001.0001)
+
+</Sources>
+
+</Wrap>
+

@@ -18,6 +18,13 @@ export interface ContentCheckFailure {
 const PRINT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
 const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".scss", ".yaml", ".yml"]);
 const PARENT_MARKDOWN_PATTERN = /\.\.\/[^\s"'`)]+\.md\b/;
+const LEGACY_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
+  [/<header class="hero wrap">/, "use <Hero>"],
+  [/<\/header>/, "use </Hero>"],
+  [/<section(?:\s|>)/, "use Markdown structure, <ContentSection>, or <Sources>"],
+  [/<\/section>/, "use Markdown structure, </ContentSection>, or </Sources>"],
+  [/<div class="(?:aside|formula|recap|whereblock|wrap|format-alt epub-only print-only|panel)\b/, "use shared lesson components"]
+];
 
 interface RegistryContentFile {
   label: string;
@@ -99,7 +106,7 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
     failures.push({ message: `${file.relativePath} contains retired route/template surface` });
   }
 
-  if (!file.source.includes('class="sources"') && !file.source.includes("className=\"sources\"")) {
+  if (!file.source.includes("<Sources") && !file.source.includes('class="sources"') && !file.source.includes("className=\"sources\"")) {
     failures.push({ message: `${file.label} has no sources section` });
   }
 
@@ -121,17 +128,19 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
     checkMainTitle(file, failures);
     checkStaticAlternates(file, failures);
   }
+
+  checkLegacyMdxWrappers(file, failures);
 }
 
 function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  const h1 = file.source.match(/<h1(?:\s[^>]*)?>([\s\S]*?)<\/h1>/);
-  if (!h1) {
+  const titleMatch = file.source.match(/^#\s+(.+)$/m) ?? file.source.match(/<h1(?:\s[^>]*)?>([\s\S]*?)<\/h1>/);
+  if (!titleMatch) {
     failures.push({ message: `${file.label} has no lesson h1` });
     return;
   }
 
   if (!file.title) return;
-  const h1Text = normalizeVisibleText(h1[1]);
+  const h1Text = normalizeVisibleText(titleMatch[1]);
   const titleText = normalizeVisibleText(file.title);
   if (h1Text !== titleText) {
     failures.push({ message: `${file.label} h1 "${h1Text}" does not match manifest title "${titleText}"` });
@@ -139,12 +148,24 @@ function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure
 }
 
 function checkStaticAlternates(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  const webPanels = countMatches(file.source, /class="[^"]*\bpanel\b[^"]*\bweb-only\b[^"]*"/g);
-  const staticAlternates = countMatches(file.source, /class="[^"]*\bformat-alt\b[^"]*\b(?:print-only|epub-only)\b[^"]*"/g);
+  const webPanels =
+    countMatches(file.source, /class="[^"]*\bpanel\b[^"]*\bweb-only\b[^"]*"/g) +
+    countMatches(file.source, /<Panel\b[^>]*class="[^"]*\bweb-only\b[^"]*"/g);
+  const staticAlternates =
+    countMatches(file.source, /class="[^"]*\bformat-alt\b[^"]*\b(?:print-only|epub-only)\b[^"]*"/g) +
+    countMatches(file.source, /<FormatAlt\b[^>]*class="[^"]*\b(?:print-only|epub-only)\b[^"]*"/g);
   if (staticAlternates < webPanels) {
     failures.push({
       message: `${file.label} has ${webPanels} web-only panels but only ${staticAlternates} static print/EPUB alternates`
     });
+  }
+}
+
+function checkLegacyMdxWrappers(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  for (const [pattern, replacement] of LEGACY_MDX_WRAPPER_PATTERNS) {
+    if (pattern.test(file.source)) {
+      failures.push({ message: `${file.relativePath} contains legacy MDX wrapper markup; ${replacement}` });
+    }
   }
 }
 
@@ -173,7 +194,8 @@ function countMatches(text: string, pattern: RegExp): number {
 function normalizeVisibleText(text: string): string {
   const withoutTemplate = text
     .replace(/\{%[\s\S]*?%\}/g, "")
-    .replace(/\{\{[\s\S]*?\}\}/g, "");
+    .replace(/\{\{[\s\S]*?\}\}/g, "")
+    .replace(/[*_`]/g, "");
   return cheerio
     .load(`<body>${withoutTemplate}</body>`)("body")
     .text()

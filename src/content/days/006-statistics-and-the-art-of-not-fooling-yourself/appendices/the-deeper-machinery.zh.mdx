@@ -2,24 +2,48 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-<p class="lede"><span class="drop">正</span>文还留下一个问题没有回答。我们曾随口提到，<span class="term">p 值</span>是科学界最被误读的数字之一，然后便匆匆转向那些著名的误读，仿佛这些混乱全是读者的错，而与数字本身无关。事实并非如此。今天常见的显著性检验，其实是两套不同统计传统的混合体：费舍尔式的证据衡量，与内曼-皮尔逊式的长期错误控制，被当作一套连贯思想来传授。它并不支持人们通常赋予它的那些解释。本附录将拆解这套统计机制：为什么反复搜索会使偶然显著变得越来越容易；一旦进行诚实的计算，一个「显著」的结果实际上有多离谱；一小群统计侦探是如何追踪这些蛛丝马迹的；以及研究者还可以使用哪些替代和补充工具。最后，我们将回到一个简洁的转换——它将 <span class="term">p 值</span> 转化为投掷硬币的次数，并带我们直达明天的课题。</p>
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Divider from "@app/components/lesson/Divider.astro";
+import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Highlight from "@app/components/lesson/Highlight.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import Term from "@app/components/lesson/Term.astro";
+
+<Lead drop="正">文还留下一个问题没有回答。我们曾随口提到，<Term>p 值</Term>是科学界最被误读的数字之一，然后便匆匆转向那些著名的误读，仿佛这些混乱全是读者的错，而与数字本身无关。事实并非如此。今天常见的显著性检验，其实是两套不同统计传统的混合体：费舍尔式的证据衡量，与内曼-皮尔逊式的长期错误控制，被当作一套连贯思想来传授。它并不支持人们通常赋予它的那些解释。本附录将拆解这套统计机制：为什么反复搜索会使偶然显著变得越来越容易；一旦进行诚实的计算，一个「显著」的结果实际上有多离谱；一小群统计侦探是如何追踪这些蛛丝马迹的；以及研究者还可以使用哪些替代和补充工具。最后，我们将回到一个简洁的转换——它将 <Term>p 值</Term> 转化为投掷硬币的次数，并带我们直达明天的课题。</Lead>
+
 <div class="continues">
 <p class="label">◆ 接续正文内容</p>
 <p>你已经见识过假阳性工厂、分岔路径花园、改革光谱以及多团队分析研究。请特别关注这三条线索：<span class="hl">第 4 日</span>的贝叶斯（<span class="term">p 值</span> 并不是 <MathInline latex={String.raw`\mathrm{P}(\text{假设}\mid\text{数据})`} />，在这里我们将最终算出忘掉这一点的代价）、<span class="hl">第 2 日</span>的波普尔与约安尼迪斯（检验严苛度与「大多数发现都是错误的」），以及<span class="hl">第 1 日</span>的校准直觉。下文将展开这些思想背后的统计结构。</p>
 </div>
-<section>
-<p class="sec-eyebrow"><span class="n">§1</span> 原罪</p>
-<h2>一个由两套不兼容逻辑拼接而成的工具</h2>
-<p>这里有一个事实，足以解释许多统计困惑：许多理工科学生都接触过的标准「假设检验」其实是一种混合体。它把费舍尔式的证据衡量与内曼-皮尔逊式的长期决策规则糅合在一起，而这种混合经常制造混乱。</p>
 
-<p>一边是 <span class="term">罗纳德·费舍尔</span> (Ronald Fisher)。在 1925 年的《研究工作者的统计方法》中，他提出了 <span class="term">p 值</span>，将其作为针对单一零假设的一种非正式、连续的证据强弱指标，用来衡量数据与零假设有多不相容。他不需要<span class="term">备择假设</span>，不需要拒绝域，也不需要长期重复抽样。他建议将 <span class="term"><MathInline latex={String.raw`p < .05`} /></span> 仅作为一个朴素的经验法则，即低于这一阈值时，结果开始值得进一步调查；他明确表示，如果你愿意，可以选择其他阈值。对于费舍尔来说，一个微小的 <span class="term"><MathInline latex={String.raw`p`} /></span> 是进一步研究的信号，而非必须「服从」的判决。他写道，零假设永远不会被证明，只是偶尔会「陷入尴尬」。</p>
+<SectionEyebrow number="§1"> 原罪</SectionEyebrow>
 
-<p>另一派则是 <span class="term">耶日·内曼</span> (Jerzy Neyman) 与 <span class="term">埃贡·皮尔逊</span> (Egon Pearson)。到 1933 年，他们的一系列论文形成了较完整的框架：把整个体系重塑为一种「决策规则」，而非证据衡量标准。你预先指定两个假设，提前确定你要控制的误报率（<span class="term"><MathInline latex={String.raw`\alpha`} /></span>，第一类错误率）和漏报率（<span class="term"><MathInline latex={String.raw`\beta`} /></span>，第二类错误率；<span class="term">检验功效</span> = <MathInline latex={String.raw`1-\beta`} />），事先设定决策阈值或拒绝域，随后按预先规定的决策规则行动：拒绝或接受。在预先规定的检验程序下，<MathInline latex={String.raw`\alpha`} /> 和 <MathInline latex={String.raw`\beta`} /> 控制相应的长期错误率；它们并不保证每一批研究中恰好有相同比例的错误。重点在于，它对眼前的单一案例「不提供」任何证据衡量——它只是一套具有已知长期属性的程序。内曼认为费舍尔的归纳「证据」谈论含混不清；费舍尔则认为内曼把科学变成了工厂的质量控制。两人的尖锐分歧持续了一生。</p>
-</section>
-<div class="panel">
-<p class="ptitle">图表 · 被强行塞进同一个盒子的两种哲学</p>
-<h3>费舍尔 vs. 内曼-皮尔逊</h3>
-<p class="pnote">他们回答的是不同的问题。现代的「<span class="term"><MathInline latex={String.raw`p < .05`} /></span> 检验」假装同时回答了这两者 —— 这也正是它无法清晰回答任何一个问题的原因。</p>
+## 一个由两套不兼容逻辑拼接而成的工具
+
+这里有一个事实，足以解释许多统计困惑：许多理工科学生都接触过的标准「假设检验」其实是一种混合体。它把费舍尔式的证据衡量与内曼-皮尔逊式的长期决策规则糅合在一起，而这种混合经常制造混乱。
+
+一边是 <Term>罗纳德·费舍尔</Term> (Ronald Fisher)。在 1925 年的《研究工作者的统计方法》中，他提出了 <Term>p 值</Term>，将其作为针对单一零假设的一种非正式、连续的证据强弱指标，用来衡量数据与零假设有多不相容。他不需要<Term>备择假设</Term>，不需要拒绝域，也不需要长期重复抽样。他建议将 <Term><MathInline latex={String.raw`p < .05`} /></Term> 仅作为一个朴素的经验法则，即低于这一阈值时，结果开始值得进一步调查；他明确表示，如果你愿意，可以选择其他阈值。对于费舍尔来说，一个微小的 <Term><MathInline latex={String.raw`p`} /></Term> 是进一步研究的信号，而非必须「服从」的判决。他写道，零假设永远不会被证明，只是偶尔会「陷入尴尬」。
+
+另一派则是 <Term>耶日·内曼</Term> (Jerzy Neyman) 与 <Term>埃贡·皮尔逊</Term> (Egon Pearson)。到 1933 年，他们的一系列论文形成了较完整的框架：把整个体系重塑为一种「决策规则」，而非证据衡量标准。你预先指定两个假设，提前确定你要控制的误报率（<Term><MathInline latex={String.raw`\alpha`} /></Term>，第一类错误率）和漏报率（<Term><MathInline latex={String.raw`\beta`} /></Term>，第二类错误率；<Term>检验功效</Term> = <MathInline latex={String.raw`1-\beta`} />），事先设定决策阈值或拒绝域，随后按预先规定的决策规则行动：拒绝或接受。在预先规定的检验程序下，<MathInline latex={String.raw`\alpha`} /> 和 <MathInline latex={String.raw`\beta`} /> 控制相应的长期错误率；它们并不保证每一批研究中恰好有相同比例的错误。重点在于，它对眼前的单一案例「不提供」任何证据衡量——它只是一套具有已知长期属性的程序。内曼认为费舍尔的归纳「证据」谈论含混不清；费舍尔则认为内曼把科学变成了工厂的质量控制。两人的尖锐分歧持续了一生。
+
+<Panel>
+<PanelTitle>图表 · 被强行塞进同一个盒子的两种哲学</PanelTitle>
+
+### 费舍尔 vs. 内曼-皮尔逊
+
+<PanelNote>他们回答的是不同的问题。现代的「<Term><MathInline latex={String.raw`p < .05`} /></Term> 检验」假装同时回答了这两者 —— 这也正是它无法清晰回答任何一个问题的原因。</PanelNote>
+
 <div class="compare">
 <div class="ccard f">
 <p class="who">费舍尔的显著性检验</p>
@@ -49,24 +73,29 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <p class="h">零假设仪式（实际教导的内容）</p>
       计算 <span class="term"><MathInline latex={String.raw`p`} /></span>。将其与神圣的 <span class="term">.05</span> 进行比较。将低于这一阈值的行为同时视为费舍尔式的「证据充分」和内曼-皮尔逊式的「已做决策」——在报告精确的 <span class="term"><MathInline latex={String.raw`p`} /></span> 值时，既把它当成证据等级，又像固定 <span class="term"><MathInline latex={String.raw`\alpha`} /></span> 决策那样给它设限。心理学家格尔德·吉仁泽 (Gerd Gigerenzer) 将这种不连贯的混杂体称为「零假设仪式」，它被机械地执行，却很少有人真正理解。你在正文中遇到的混乱并不是因为学生注意力不集中，而是因为它本身就被植入了一个从未被设计好的工具中。
 </div>
-</div>
-<section>
-<p>一旦你看清了这道接缝，整个复现危机读起来就完全不同了。我们取了一个灵活的、费舍尔式的「进一步研究信号」，将其冻结为内曼-皮尔逊式的「关卡」，剔除了内曼-皮尔逊体系中保证决策规则具有预定错误率的部分（预先承诺的 <span class="term"><MathInline latex={String.raw`\alpha`} /></span>、充足的功效、真正的备择假设），然后只发表那些过关的研究。令人惊讶的不是有这么多研究无法复现，而是仍有部分结论经得起复现。</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="n">§2</span> 为什么工厂总是能赢</p>
-<h2>使偶然显著越来越容易的两个事实</h2>
-<p>假阳性工厂并不是某种聪明的编程技巧。它建立在两个数学事实之上。只要掌握这两点，你就会明白为什么反复检验最终能让纯噪声产生看似显著的结果。</p>
+</Panel>
 
-<h3>事实一：在零假设下，小 p 值仍会由偶然产生</h3>
-<p>在零假设模型成立且其假设满足时，如果你对连续数据运行一个精确检验，得到的 <span class="term">p 值</span> 就是一个 <span class="term">0 到 1 之间的均匀随机数</span>。对于离散、复合或保守的检验，有效的 <span class="term">p 值</span> 往往是<span class="term">超均匀</span>的：<MathInline latex={String.raw`P(p \le \alpha) \le \alpha`} />，而不一定正好相等。这个限定并不会改变实际警告。在连续且校准良好的理想情形中，区间 [0, 1] 中正好有 5% 位于 .05 以下；在保守情形中，这个比例不会更大。但换个角度看，威胁就出现了：诚实、无效应的实验也会纯靠运气交给你一个「显著」结果。以二十种方式运行实验——二十个结果变量、二十个协变量、二十个亚组——你实际上就是买了许多张小概率彩票。在一批不存在真实效应的检验中，预期能得到的「发现」数量，会被你查看的次数推动。</p>
+一旦你看清了这道接缝，整个复现危机读起来就完全不同了。我们取了一个灵活的、费舍尔式的「进一步研究信号」，将其冻结为内曼-皮尔逊式的「关卡」，剔除了内曼-皮尔逊体系中保证决策规则具有预定错误率的部分（预先承诺的 <Term><MathInline latex={String.raw`\alpha`} /></Term>、充足的功效、真正的备择假设），然后只发表那些过关的研究。令人惊讶的不是有这么多研究无法复现，而是仍有部分结论经得起复现。
 
-<p class="web-only">下方的实时面板展示的是连续精确检验的理想化情形。当真实效应设定为零时，<span class="term">p 值</span> 的直方图是平坦的，并且约有 5% 会落到 .05 以下。现在调高「真实效应」看看 p 值分布如何向较小数值移动：真实信号会让极小的显著 <span class="term">p 值</span> 多于勉强显著的 <span class="term">p 值</span>。真实效应通常会使极小 <span class="term">p 值</span> 更常见；如果这种富集完全不存在，就应怀疑文献中究竟有多少真实信号。</p>
-</section>
-<div class="panel web-only statistics-appendix-lab">
-<p class="ptitle">交互式 · 实时模拟</p>
-<h3>p 值的形状</h3>
-<p class="pnote">每次运行都会模拟 <span class="hl">4,000 次实验</span>（两组，每组 n = 30）并对其 <span class="term">p 值</span> 进行分桶。将「真实效应」从 0（无真实效应）向上滑动。在这个连续模拟中，零假设下的分布是平坦的；随着信号出现，小 <span class="term">p 值</span> 会更常见，低于 .05 的比例也会从约 5%（即 <span class="term"><MathInline latex={String.raw`\alpha`} /></span>）攀升至你研究的实际「检验功效」。</p>
+<SectionEyebrow number="§2"> 为什么工厂总是能赢</SectionEyebrow>
+
+## 使偶然显著越来越容易的两个事实
+
+假阳性工厂并不是某种聪明的编程技巧。它建立在两个数学事实之上。只要掌握这两点，你就会明白为什么反复检验最终能让纯噪声产生看似显著的结果。
+
+### 事实一：在零假设下，小 p 值仍会由偶然产生
+
+在零假设模型成立且其假设满足时，如果你对连续数据运行一个精确检验，得到的 <Term>p 值</Term> 就是一个 <Term>0 到 1 之间的均匀随机数</Term>。对于离散、复合或保守的检验，有效的 <Term>p 值</Term> 往往是<Term>超均匀</Term>的：<MathInline latex={String.raw`P(p \le \alpha) \le \alpha`} />，而不一定正好相等。这个限定并不会改变实际警告。在连续且校准良好的理想情形中，区间 [0, 1] 中正好有 5% 位于 .05 以下；在保守情形中，这个比例不会更大。但换个角度看，威胁就出现了：诚实、无效应的实验也会纯靠运气交给你一个「显著」结果。以二十种方式运行实验——二十个结果变量、二十个协变量、二十个亚组——你实际上就是买了许多张小概率彩票。在一批不存在真实效应的检验中，预期能得到的「发现」数量，会被你查看的次数推动。
+
+<FormatOnly media="web">下方的实时面板展示的是连续精确检验的理想化情形。当真实效应设定为零时，<Term>p 值</Term> 的直方图是平坦的，并且约有 5% 会落到 .05 以下。现在调高「真实效应」看看 p 值分布如何向较小数值移动：真实信号会让极小的显著 <Term>p 值</Term> 多于勉强显著的 <Term>p 值</Term>。真实效应通常会使极小 <Term>p 值</Term> 更常见；如果这种富集完全不存在，就应怀疑文献中究竟有多少真实信号。</FormatOnly>
+
+<Panel class="web-only statistics-appendix-lab">
+<PanelTitle>交互式 · 实时模拟</PanelTitle>
+
+### p 值的形状
+
+<PanelNote>每次运行都会模拟 <Highlight>4,000 次实验</Highlight>（两组，每组 n = 30）并对其 <Term>p 值</Term> 进行分桶。将「真实效应」从 0（无真实效应）向上滑动。在这个连续模拟中，零假设下的分布是平坦的；随着信号出现，小 <Term>p 值</Term> 会更常见，低于 .05 的比例也会从约 5%（即 <Term><MathInline latex={String.raw`\alpha`} /></Term>）攀升至你研究的实际「检验功效」。</PanelNote>
+
 <div class="ctrl">
 <div class="slider-row">
 <label>真实效应量 (Cohen’s <span class="term"><MathInline latex={String.raw`d`} /></span>) <span class="val" id="appendix-d006-the-deeper-machinery-dVal">0.00</span></label>
@@ -80,11 +109,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 <div class="readout" id="appendix-d006-the-deeper-machinery-histRead"></div>
 </div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">参考表</p>
-<h3>p 值形状参考</h3>
-<p class="pnote">该表概括了与模拟实验相同的教训：在连续精确检验的理想化情形中，零假设下的 p 值是均匀的；在存在真实效应时，小 p 值变得更常见。</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>参考表</PanelTitle>
+
+### p 值形状参考
+
+<PanelNote>该表概括了与模拟实验相同的教训：在连续精确检验的理想化情形中，零假设下的 p 值是均匀的；在存在真实效应时，小 p 值变得更常见。</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>设定</th><th>预期形状</th><th>解读</th></tr></thead>
 <tbody>
@@ -93,20 +126,23 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>显著真实效应</td><td>极小 p 值明显增多</td><td>高检验功效，呈现健康的 P-curve 特征。</td></tr>
 </tbody>
 </table>
-</div>
-<section>
-  <h3>事实二：一直找下去，越过门槛会越来越容易</h3>
-<p>正文中「假阳性工厂」的「可选停止」开关隐藏了一个本该更加著名的结论。假设你在每增加一名受试者后就进行一次检验，并在 <span class="term"><MathInline latex={String.raw`p`} /></span> 跌破 .05 的那一刻立即停止。无论是否存在真实效应，未经校正的反复查看都会改变检验程序的长期性质；在零假设成立时，假阳性风险尤其清楚地暴露出来。更准确地说，在零假设成立、反复查看结果且不作校正的理想化条件下，随着查看次数增加，最终越过固定显著性阈值的概率可以趋近于 1，而不是保持在 5%。Anscombe 在 1954 年证明了这一点，Armitage 等人在 1969 年进一步强调了它：只要反复查看的次数足够多，随样本增加而不断波动的 <span class="term">p 值</span> 即使在零假设成立时，也很可能仅仅由于运气而跌破任何固定界线。</p>
-<p>这就是为什么反复查看中间结果不仅是某种轻微的过失，而是一种结构性的漏洞——也是为什么<span class="hl">第 4 日</span>提到的 <span class="term">e 值</span> 和任意时点有效检验是如此优雅的解决方案：经过正确构造的任意时点有效程序，在其模型和技术条件成立时，允许研究者根据已观察的数据决定是否继续采样，同时保持规定的错误率或证据保证。这也是为什么必须监测积累数据以确保安全的真实临床试验会使用<span class="term"><MathInline latex={String.raw`\alpha`} /> 支出</span> (alpha spending) 和成组序贯设计——它们在每次中期查看时支付少量的统计税，从而使总的第一类错误预算仍维持在 5%。未经校正的可选停止会破坏错误率控制；而通过支出规则进行的停止，则是 20 世纪统计学的重要成就之一。</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="n">§3</span> 识别指纹</p>
-<h2>统计取证的兴起</h2>
-<p>如果真实效应存在且研究具有一定功效，显著 <span class="term">p 值</span> 的分布通常会包含较多的小 <span class="term">p 值</span>；而 <span class="term">p 值操纵</span> 更容易留下紧贴 .05 下方的堆积。于是，只需查看已发表的数字，就可以审查一个研究领域的已发表结果，而无需重做任何一个实验。这一认识催生了一个充满活力的统计取证领域。</p>
+</FormatAlt>
 
-<p>其旗舰工具是 <span class="term">P-curve</span> (Simonsohn, Nelson &amp; Simmons, 2014 —— 没错，正是正文中提到的那三位)。收集关于某一效应的一组研究中的显著 <span class="term">p 值</span>，观察它们的形状。当真实效应存在且研究具有一定功效时，较小的显著 <span class="term">p 值</span> 通常会更常见：.01 较多，.04 较少。紧贴 .05 的异常堆积可能提示选择性报告或分析灵活性，例如不自然的 .04 和 .049 过剩；但这种模式本身不是研究不端的证据。</p>
+### 事实二：一直找下去，越过门槛会越来越容易
 
-<p>此外还有一些精心设计的反例演示，旨在揭示多重比较问题不容回避：</p>
+正文中「假阳性工厂」的「可选停止」开关隐藏了一个本该更加著名的结论。假设你在每增加一名受试者后就进行一次检验，并在 <Term><MathInline latex={String.raw`p`} /></Term> 跌破 .05 的那一刻立即停止。无论是否存在真实效应，未经校正的反复查看都会改变检验程序的长期性质；在零假设成立时，假阳性风险尤其清楚地暴露出来。更准确地说，在零假设成立、反复查看结果且不作校正的理想化条件下，随着查看次数增加，最终越过固定显著性阈值的概率可以趋近于 1，而不是保持在 5%。Anscombe 在 1954 年证明了这一点，Armitage 等人在 1969 年进一步强调了它：只要反复查看的次数足够多，随样本增加而不断波动的 <Term>p 值</Term> 即使在零假设成立时，也很可能仅仅由于运气而跌破任何固定界线。
+
+这就是为什么反复查看中间结果不仅是某种轻微的过失，而是一种结构性的漏洞——也是为什么<Highlight>第 4 日</Highlight>提到的 <Term>e 值</Term> 和任意时点有效检验是如此优雅的解决方案：经过正确构造的任意时点有效程序，在其模型和技术条件成立时，允许研究者根据已观察的数据决定是否继续采样，同时保持规定的错误率或证据保证。这也是为什么必须监测积累数据以确保安全的真实临床试验会使用<Term><MathInline latex={String.raw`\alpha`} /> 支出</Term> (alpha spending) 和成组序贯设计——它们在每次中期查看时支付少量的统计税，从而使总的第一类错误预算仍维持在 5%。未经校正的可选停止会破坏错误率控制；而通过支出规则进行的停止，则是 20 世纪统计学的重要成就之一。
+
+<SectionEyebrow number="§3"> 识别指纹</SectionEyebrow>
+
+## 统计取证的兴起
+
+如果真实效应存在且研究具有一定功效，显著 <Term>p 值</Term> 的分布通常会包含较多的小 <Term>p 值</Term>；而 <Term>p 值操纵</Term> 更容易留下紧贴 .05 下方的堆积。于是，只需查看已发表的数字，就可以审查一个研究领域的已发表结果，而无需重做任何一个实验。这一认识催生了一个充满活力的统计取证领域。
+
+其旗舰工具是 <Term>P-curve</Term> (Simonsohn, Nelson &amp; Simmons, 2014 —— 没错，正是正文中提到的那三位)。收集关于某一效应的一组研究中的显著 <Term>p 值</Term>，观察它们的形状。当真实效应存在且研究具有一定功效时，较小的显著 <Term>p 值</Term> 通常会更常见：.01 较多，.04 较少。紧贴 .05 的异常堆积可能提示选择性报告或分析灵活性，例如不自然的 .04 和 .049 过剩；但这种模式本身不是研究不端的证据。
+
+此外还有一些精心设计的反例演示，旨在揭示多重比较问题不容回避：
 
 <div class="appendix-card-grid">
 <div class="appendix-card">
@@ -131,19 +167,24 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 </div>
 <p class="mono">前沿校准器：P-curve 和这些取证工具被<StatusChip status={"ok"} label={"确立"} printLabel={"已确立"} />为诊断手段 —— 但它们检测的是「模式」而非罪行；即使不存在研究不端，发表偏差也可能产生类似模式，因此它们发出的是可疑信号，而非铁证。</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="n">§4</span> 诚实的算术</p>
-<h2>显著结果的误报风险究竟有多高？</h2>
-<p>现在我们来看一个本该印在每本统计教科书首页却几乎从未出现的数字。你进行了一项干净的研究，没有操纵，得到了 <span class="term"><MathInline latex={String.raw`p = .05`} /></span>。人们很容易误以为：「只有约 5% 的概率这是个意外。」这个直觉是大错特错的，我们仅凭<span class="hl">第 4 日</span>的贝叶斯就能证明这一点。</p>
 
-<p><span class="term">p 值</span> 回答的是 <MathInline latex={String.raw`\mathrm{P}(\text{数据}\mid\text{零假设})`} />，而研究者真正关心的往往是 <MathInline latex={String.raw`\mathrm{P}(\text{零假设}\mid\text{显著结果})`} /> —— 也就是看似亮眼的发现其实是假阳性的概率。架起这两者之间的桥梁需要一个「先验」：在看到数据之前，你的假设有多大的可信度？一旦你提供了一个现实的先验，误报风险往往会明显高于 5%。其逻辑与约安尼迪斯在其著名的<span class="hl">第 2 日</span>文章《为什么大多数发表的研究发现都是错误的》中所使用的一致：在给定先验概率、功效和 <span class="term"><MathInline latex={String.raw`\alpha`} /></span> 的模型下，<span class="term">误报风险</span> (false positive risk) 表示显著结果为误报的条件概率。</p>
-<p class="web-only">使用下方的实时计算器。你会发现，即便先验概率为 50% 且具备不错的功效，仍有相当一部分显著发现是错误的——而对于那些能够登上头条的惊人假设，误报比例可能很高。</p>
-</section>
-<div class="panel web-only statistics-appendix-lab">
-<p class="ptitle">交互式 · 误报风险引擎</p>
-<h3>在 100 项「发现」中，有多少是假的？</h3>
-<p class="pnote">想象许多假设都在常用的 <span class="term"><MathInline latex={String.raw`p < .05`} /></span> 下进行检验。设定你的假设<span class="hl">真正</span>为真的频率（先验）以及你的研究功效。网格显示了 100 个你会称为「显著」的结果，颜色区分了它们是货真价实的（青色）还是误报（红色）。</p>
+<SectionEyebrow number="§4"> 诚实的算术</SectionEyebrow>
+
+## 显著结果的误报风险究竟有多高？
+
+现在我们来看一个本该印在每本统计教科书首页却几乎从未出现的数字。你进行了一项干净的研究，没有操纵，得到了 <Term><MathInline latex={String.raw`p = .05`} /></Term>。人们很容易误以为：「只有约 5% 的概率这是个意外。」这个直觉是大错特错的，我们仅凭<Highlight>第 4 日</Highlight>的贝叶斯就能证明这一点。
+
+<Term>p 值</Term> 回答的是 <MathInline latex={String.raw`\mathrm{P}(\text{数据}\mid\text{零假设})`} />，而研究者真正关心的往往是 <MathInline latex={String.raw`\mathrm{P}(\text{零假设}\mid\text{显著结果})`} /> —— 也就是看似亮眼的发现其实是假阳性的概率。架起这两者之间的桥梁需要一个「先验」：在看到数据之前，你的假设有多大的可信度？一旦你提供了一个现实的先验，误报风险往往会明显高于 5%。其逻辑与约安尼迪斯在其著名的<Highlight>第 2 日</Highlight>文章《为什么大多数发表的研究发现都是错误的》中所使用的一致：在给定先验概率、功效和 <Term><MathInline latex={String.raw`\alpha`} /></Term> 的模型下，<Term>误报风险</Term> (false positive risk) 表示显著结果为误报的条件概率。
+
+<FormatOnly media="web">使用下方的实时计算器。你会发现，即便先验概率为 50% 且具备不错的功效，仍有相当一部分显著发现是错误的——而对于那些能够登上头条的惊人假设，误报比例可能很高。</FormatOnly>
+
+<Panel class="web-only statistics-appendix-lab">
+<PanelTitle>交互式 · 误报风险引擎</PanelTitle>
+
+### 在 100 项「发现」中，有多少是假的？
+
+<PanelNote>想象许多假设都在常用的 <Term><MathInline latex={String.raw`p < .05`} /></Term> 下进行检验。设定你的假设<Highlight>真正</Highlight>为真的频率（先验）以及你的研究功效。网格显示了 100 个你会称为「显著」的结果，颜色区分了它们是货真价实的（青色）还是误报（红色）。</PanelNote>
+
 <div class="ctrl">
 <div class="slider-row">
 <label>先验：被检假设中真正为真的比例 <span class="val" id="appendix-d006-the-deeper-machinery-priorVal">50%</span></label>
@@ -166,11 +207,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 <div class="readout" id="appendix-d006-the-deeper-machinery-fprRead"></div>
 </div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">参考表</p>
-<h3>误报风险参考</h3>
-<p class="pnote">该示例将 <MathInline latex={String.raw`\alpha`} /> 与已发表发现中的误报风险区分开来。</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>参考表</PanelTitle>
+
+### 误报风险参考
+
+<PanelNote>该示例将 <MathInline latex={String.raw`\alpha`} /> 与已发表发现中的误报风险区分开来。</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>先验真实效应</th><th>功效</th><th><MathInline latex={String.raw`\alpha`} /></th><th>显著结果中的错误比例</th></tr></thead>
 <tbody>
@@ -179,53 +224,71 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>2%</td><td>50%</td><td>.05</td><td>约 83% 的误报。</td></tr>
 </tbody>
 </table>
-</div>
-<section>
-<p>有两个细节让情况变得更糟，而非更好 —— 而它们正是这里的核心本质。</p>
-<p>「情况比网格显示的更严峻」 (Colquhoun)。上述计算器使用整个 .05 「尾部」作为误报率。但 David Colquhoun (2014, 2017) 指出，一个<span class="hl">恰好</span>位于 <span class="term"><MathInline latex={String.raw`p = .05`} /></span> 的结果，在真实效应下发生的可能性几乎不比在零假设下更高，因此其误报风险比尾部显示的更高。在 Colquhoun 所采用的特定先验概率、功效和模型设定下，刚好达到 <span class="term"><MathInline latex={String.raw`p \approx .05`} /></span> 的结果可对应约 <span class="hl">26%</span> 的假阳性风险。这个数字不是 p 值本身的固定含义。如果要求真正的发现率，<span class="term"><MathInline latex={String.raw`p < .05`} /></span> 的阈值实在不够严格。这就是正文中提到的 Benjamin 等人推动将阈值收紧至 .005 的量化核心。</p>
-<p>「零假设几乎从不完全正确」 (Meehl 的普遍微弱相关现象)。Paul Meehl 观察到，在大规模社会科学数据集中，「一切」都与「一切」存在微弱的相关性 —— 出生顺序与政治倾向、身高与幽默感 —— 因为世界是一个由微弱真实联系交织成的致密网络，他称之为<span class="term">普遍微弱相关现象</span> (crud factor)。因此，一个「精确为零」的点零假设其实是一个稻草人；只要样本量够大，你就能拒绝任何一对变量之间的零假设。此时「统计显著」仅证明了你的样本量够大，而非你发现了任何有意义的东西。这就是显著性与重要性是两码事的深层原因。</p>
+</FormatAlt>
 
-<div class="aside">
-<p class="h">当贝叶斯与频率派发生正面冲突：杰弗里斯-林德利悖论</p>
-<p>这里有一个真正令人不安的现象。在样本量极大时，一个恰好为 <span class="term"><MathInline latex={String.raw`p = .05`} /></span> 的结果在贝叶斯分析中可能是支持零假设的证据——这两个框架不仅有差异，甚至指向了「相反的方向」 (Lindley, 1957)。频率学派检验可能拒绝 <MathInline latex={String.raw`H_0`} />，而贝叶斯分析却可能支持 <MathInline latex={String.raw`H_0`} />。这并不意味着某个框架更荒谬，而是他们回答的问题不同：在样本量 n 很大时，「在零假设下令人惊讶」与「在备择假设下更可能」之间的鸿沟会变得巨大。现代贝叶斯派的答案是 <span class="term">贝叶斯因子</span>——它比较数据在两个假设下的边际似然，也就是当前数据在两种假设下分别有多可能出现。它能做到 <span class="term">p 值</span> 从定义上无法做到的事：收集支持零假设的证据，而不仅仅是「未能拒绝」它。</p>
-</div>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="n">§5</span> 更好的工具箱</p>
-<h2>有哪些更稳健的替代与补充工具</h2>
-<p>指出问题还不够，还需要给出可用的替代方案。以效应估计为中心的工具箱并不神秘——它由分别针对上述问题的一组方法组成。</p>
+有两个细节让情况变得更糟，而非更好 —— 而它们正是这里的核心本质。
 
-<h3>更好的错误分类：S 类与 M 类错误</h3>
-<p>Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效世界中，经典的第 I 类 / 第 II 类错误框架没有涵盖这里最关键的问题。另外两种更尖锐的失败更重要。<span class="term">S 类（方向）错误</span> (Type S / sign error) 是指搞错了「方向」——结论认为某种治疗有效，实则有害。<span class="term">M 类（幅度）错误</span> (Type M / magnitude error) 是指「夸大倍数」——你的「显著」估计值比真实值大了多少倍。他们的论点直指正文中的「赢家诅咒」：在低功效研究中，被筛选为显著的效应估计可能明显高于真实效应；在某些设定下，夸大程度可达到数倍。已发表效应可能是被系统性放大的版本。</p>
+「情况比网格显示的更严峻」 (Colquhoun)。上述计算器使用整个 .05 「尾部」作为误报率。但 David Colquhoun (2014, 2017) 指出，一个<Highlight>恰好</Highlight>位于 <Term><MathInline latex={String.raw`p = .05`} /></Term> 的结果，在真实效应下发生的可能性几乎不比在零假设下更高，因此其误报风险比尾部显示的更高。在 Colquhoun 所采用的特定先验概率、功效和模型设定下，刚好达到 <Term><MathInline latex={String.raw`p \approx .05`} /></Term> 的结果可对应约 <Highlight>26%</Highlight> 的假阳性风险。这个数字不是 p 值本身的固定含义。如果要求真正的发现率，<Term><MathInline latex={String.raw`p < .05`} /></Term> 的阈值实在不够严格。这就是正文中提到的 Benjamin 等人推动将阈值收紧至 .005 的量化核心。
 
-<h3>如何为「无实质效应」提供证据：等效性检验</h3>
-<p>正文警告说「<span class="term">p &gt; .05</span>」并不意味着「没有效应」。但有时你确实想得出「这里没有什么有意义的东西」的结论，而你可以通过<span class="term">等效性检验</span> (equivalence testing; Lakens, 2017) 做到这一点。等效性检验先根据<span class="term">最小有实际意义的效应量</span>设定上下<span class="term">等效界限</span>，再检验真实效应是否落在这一范围内。双单侧检验（TOST）是最常用的方法之一。只有当等效性检验支持效应落在事先设定的等效界限内，才可据此排除具有实质意义的效应；单凭 p &gt; .05 仍不能这样做。</p>
+「零假设几乎从不完全正确」 (Meehl 的普遍微弱相关现象)。Paul Meehl 观察到，在大规模社会科学数据集中，「一切」都与「一切」存在微弱的相关性 —— 出生顺序与政治倾向、身高与幽默感 —— 因为世界是一个由微弱真实联系交织成的致密网络，他称之为<Term>普遍微弱相关现象</Term> (crud factor)。因此，一个「精确为零」的点零假设其实是一个稻草人；只要样本量够大，你就能拒绝任何一对变量之间的零假设。此时「统计显著」仅证明了你的样本量够大，而非你发现了任何有意义的东西。这就是显著性与重要性是两码事的深层原因。
 
-<h3>诚实处理多重性：控制错误发现率</h3>
-<p>当你确实必须运行许多检验（每一个基因、每一个脑区）时，传统方法之一是 Bonferroni 校正——将 <span class="term"><MathInline latex={String.raw`\alpha`} /></span> 除以检验次数。Bonferroni 校正控制的是一组检验中至少出现一次第一类错误的概率，即<span class="term">族错误率</span>。它通常较为保守，因此可能降低检验功效。Benjamini 与 Hochberg 于 1995 年提出的<span class="term">错误发现率</span>控制方法，来自统计学中引用极高的一篇论文。它改变了目标：错误发现率控制的是反复采用同一程序时，在所有被判为显著的结果中，假阳性比例的期望值。这是一种务实的交易，它使大规模多重检验变得可行——接受少量错误发现，换取真正能发现东西的能力。</p>
+<Aside>
+<BlockTitle>当贝叶斯与频率派发生正面冲突：杰弗里斯-林德利悖论</BlockTitle>
 
-<h3>为区间重新命名，使其名副其实</h3>
-<p>最后是一个具有强大澄清能力的微小举措：Amrhein、Greenland 等人敦促将置信区间称为<span class="term">相容性区间</span> (compatibility interval) —— 即与你的数据和模型合理「相容」的效应量范围。这个词能同时消除两种错误：它能阻止你将区间内的数值视为已证明、将区间外的数值视为不可能，并促使你将整个区间作为一个关于「大小和不确定性」的陈述来报告，而非只看区间是否跨过零的二元判断。</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="n">§6</span> 辩方陈述</p>
-<h2>把显著性检验做严</h2>
-<p>如果以「p 值很坏，估计很好」作为结尾就太简单化了。公允和准确要求我们提供一个有力的反方观点，而哲学家 <span class="term">德博拉·梅奥</span> (Deborah Mayo) 提供了这一点。在 2018 年的《统计推断作为严苛检验》中，她用一个苛刻的原则为<span class="term">误差统计学推理</span>辩护，回应废除派和贝叶斯派的批评。</p>
+这里有一个真正令人不安的现象。在样本量极大时，一个恰好为 <Term><MathInline latex={String.raw`p = .05`} /></Term> 的结果在贝叶斯分析中可能是支持零假设的证据——这两个框架不仅有差异，甚至指向了「相反的方向」 (Lindley, 1957)。频率学派检验可能拒绝 <MathInline latex={String.raw`H_0`} />，而贝叶斯分析却可能支持 <MathInline latex={String.raw`H_0`} />。这并不意味着某个框架更荒谬，而是他们回答的问题不同：在样本量 n 很大时，「在零假设下令人惊讶」与「在备择假设下更可能」之间的鸿沟会变得巨大。现代贝叶斯派的答案是 <Term>贝叶斯因子</Term>——它比较数据在两个假设下的边际似然，也就是当前数据在两种假设下分别有多可能出现。它能做到 <Term>p 值</Term> 从定义上无法做到的事：收集支持零假设的证据，而不仅仅是「未能拒绝」它。
+
+</Aside>
+
+<SectionEyebrow number="§5"> 更好的工具箱</SectionEyebrow>
+
+## 有哪些更稳健的替代与补充工具
+
+指出问题还不够，还需要给出可用的替代方案。以效应估计为中心的工具箱并不神秘——它由分别针对上述问题的一组方法组成。
+
+### 更好的错误分类：S 类与 M 类错误
+
+Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效世界中，经典的第 I 类 / 第 II 类错误框架没有涵盖这里最关键的问题。另外两种更尖锐的失败更重要。<Term>S 类（方向）错误</Term> (Type S / sign error) 是指搞错了「方向」——结论认为某种治疗有效，实则有害。<Term>M 类（幅度）错误</Term> (Type M / magnitude error) 是指「夸大倍数」——你的「显著」估计值比真实值大了多少倍。他们的论点直指正文中的「赢家诅咒」：在低功效研究中，被筛选为显著的效应估计可能明显高于真实效应；在某些设定下，夸大程度可达到数倍。已发表效应可能是被系统性放大的版本。
+
+### 如何为「无实质效应」提供证据：等效性检验
+
+正文警告说「<Term>p &gt; .05</Term>」并不意味着「没有效应」。但有时你确实想得出「这里没有什么有意义的东西」的结论，而你可以通过<Term>等效性检验</Term> (equivalence testing; Lakens, 2017) 做到这一点。等效性检验先根据<Term>最小有实际意义的效应量</Term>设定上下<Term>等效界限</Term>，再检验真实效应是否落在这一范围内。双单侧检验（TOST）是最常用的方法之一。只有当等效性检验支持效应落在事先设定的等效界限内，才可据此排除具有实质意义的效应；单凭 p &gt; .05 仍不能这样做。
+
+### 诚实处理多重性：控制错误发现率
+
+当你确实必须运行许多检验（每一个基因、每一个脑区）时，传统方法之一是 Bonferroni 校正——将 <Term><MathInline latex={String.raw`\alpha`} /></Term> 除以检验次数。Bonferroni 校正控制的是一组检验中至少出现一次第一类错误的概率，即<Term>族错误率</Term>。它通常较为保守，因此可能降低检验功效。Benjamini 与 Hochberg 于 1995 年提出的<Term>错误发现率</Term>控制方法，来自统计学中引用极高的一篇论文。它改变了目标：错误发现率控制的是反复采用同一程序时，在所有被判为显著的结果中，假阳性比例的期望值。这是一种务实的交易，它使大规模多重检验变得可行——接受少量错误发现，换取真正能发现东西的能力。
+
+### 为区间重新命名，使其名副其实
+
+最后是一个具有强大澄清能力的微小举措：Amrhein、Greenland 等人敦促将置信区间称为<Term>相容性区间</Term> (compatibility interval) —— 即与你的数据和模型合理「相容」的效应量范围。这个词能同时消除两种错误：它能阻止你将区间内的数值视为已证明、将区间外的数值视为不可能，并促使你将整个区间作为一个关于「大小和不确定性」的陈述来报告，而非只看区间是否跨过零的二元判断。
+
+<SectionEyebrow number="§6"> 辩方陈述</SectionEyebrow>
+
+## 把显著性检验做严
+
+如果以「p 值很坏，估计很好」作为结尾就太简单化了。公允和准确要求我们提供一个有力的反方观点，而哲学家 <Term>德博拉·梅奥</Term> (Deborah Mayo) 提供了这一点。在 2018 年的《统计推断作为严苛检验》中，她用一个苛刻的原则为<Term>误差统计学推理</Term>辩护，回应废除派和贝叶斯派的批评。
+
   <blockquote>只有在一项主张为假时，检验很可能揭示其错误，而这项主张仍然通过了检验，我们才获得了支持它的证据。</blockquote>
-<p>这就是<span class="term">检验严苛性</span> (severity)。换句话说，证据的分量不仅取决于结果是否与主张相符，也取决于检验是否真的有能力发现主张是错的。注意，这就是被量化后的<span class="hl">第 2 日</span>的波普尔思想。从这个角度看，问题的根源不在于 <span class="term">p 值</span>，而在于对检验严苛性的背弃。通过数据钓鱼或反复尝试才得到的 <span class="term">p 值</span> 毫无价值，不是因为它是个 <span class="term">p 值</span>，而是因为那场「检验」从未严苛过：它几乎不可能得出其他结果。梅奥对改革者的警告很尖锐：如果丢掉所有门槛和错误控制，你得到的不是更细腻的科学，而是更缺乏问责的科学，对于一个主张何时可被认为经受住了较严苛的检验，将失去公共标准。正文所追求的较为稳妥的综合立场就存在于此：既不迷信 p 值，也不一概弃用，而是要求检验严苛性，报告大小和不确定性，并让错误假设有较大概率被检验排除。</p>
-</section>
-<section>
-<p class="sec-eyebrow"><span class="n">§7</span> 通往明天的桥梁</p>
-<h2>以硬币投掷计量的 p 值</h2>
-<p>最后介绍一个简洁的转换，因为它悄悄地翻开了第 7 日的内容。Sander Greenland (2019) 建议我们不要只盯着单独报告的 <span class="term">p 值</span>，而是取它的「惊异度」 (surprisal)，这直接借用了信息论的概念：<span class="term">S-值</span>，定义为 <MathInline latex={String.raw`S=-\log_2 p`} />。S 值把 p 值转换为以比特表示的惊异度，用来描述数据与受检模型的不相容程度。</p>
-<p>这种转化非常具体。问：同一枚公平硬币要连续出现多少次正面，才能达到这种罕见程度？那个次数就是 <span class="term">S-值</span>。一个 <span class="term"><MathInline latex={String.raw`p = .05`} /></span> 的结果带有约 <span class="hl">4.3 比特</span>，这一惊异度大致相当于公平硬币连续出现四至五次正面的罕见程度。一旦这样表达，魔力就消失了。连续四次正面朝上有点意思，但它算不上发现。</p>
-<p class="web-only">下方的滑块让你感受任何 <span class="term">p 值</span> 对应多少比特的惊异度。</p>
-<p class="epub-only print-only">下方的参考表会把常见的 <span class="term">p 值</span> 转换为比特惊异度。</p>
-</section>
-<div class="panel web-only statistics-appendix-lab">
-<p class="ptitle">交互式 · 以比特计量的惊异度</p>
-<h3>S-值</h3>
-<p class="pnote">拖动以设定 <span class="term">p 值</span>。<span class="term">S-值</span> (<MathInline latex={String.raw`S=-\log_2 p`} />) 会告诉你它代表多少次「硬币全正面」的惊异度，也就是以比特表示数据在受检模型下有多出人意料。</p>
+这就是<Term>检验严苛性</Term> (severity)。换句话说，证据的分量不仅取决于结果是否与主张相符，也取决于检验是否真的有能力发现主张是错的。注意，这就是被量化后的<Highlight>第 2 日</Highlight>的波普尔思想。从这个角度看，问题的根源不在于 <Term>p 值</Term>，而在于对检验严苛性的背弃。通过数据钓鱼或反复尝试才得到的 <Term>p 值</Term> 毫无价值，不是因为它是个 <Term>p 值</Term>，而是因为那场「检验」从未严苛过：它几乎不可能得出其他结果。梅奥对改革者的警告很尖锐：如果丢掉所有门槛和错误控制，你得到的不是更细腻的科学，而是更缺乏问责的科学，对于一个主张何时可被认为经受住了较严苛的检验，将失去公共标准。正文所追求的较为稳妥的综合立场就存在于此：既不迷信 p 值，也不一概弃用，而是要求检验严苛性，报告大小和不确定性，并让错误假设有较大概率被检验排除。
+
+<SectionEyebrow number="§7"> 通往明天的桥梁</SectionEyebrow>
+
+## 以硬币投掷计量的 p 值
+
+最后介绍一个简洁的转换，因为它悄悄地翻开了第 7 日的内容。Sander Greenland (2019) 建议我们不要只盯着单独报告的 <Term>p 值</Term>，而是取它的「惊异度」 (surprisal)，这直接借用了信息论的概念：<Term>S-值</Term>，定义为 <MathInline latex={String.raw`S=-\log_2 p`} />。S 值把 p 值转换为以比特表示的惊异度，用来描述数据与受检模型的不相容程度。
+
+这种转化非常具体。问：同一枚公平硬币要连续出现多少次正面，才能达到这种罕见程度？那个次数就是 <Term>S-值</Term>。一个 <Term><MathInline latex={String.raw`p = .05`} /></Term> 的结果带有约 <Highlight>4.3 比特</Highlight>，这一惊异度大致相当于公平硬币连续出现四至五次正面的罕见程度。一旦这样表达，魔力就消失了。连续四次正面朝上有点意思，但它算不上发现。
+
+<FormatOnly media="web">下方的滑块让你感受任何 <Term>p 值</Term> 对应多少比特的惊异度。</FormatOnly>
+
+<FormatOnly media="print-epub">下方的参考表会把常见的 <Term>p 值</Term> 转换为比特惊异度。</FormatOnly>
+
+<Panel class="web-only statistics-appendix-lab">
+<PanelTitle>交互式 · 以比特计量的惊异度</PanelTitle>
+
+### S-值
+
+<PanelNote>拖动以设定 <Term>p 值</Term>。<Term>S-值</Term> (<MathInline latex={String.raw`S=-\log_2 p`} />) 会告诉你它代表多少次「硬币全正面」的惊异度，也就是以比特表示数据在受检模型下有多出人意料。</PanelNote>
+
 <div class="ctrl">
 <div class="slider-row">
 <label><span class="term">p 值</span> <span class="val mono" id="appendix-d006-the-deeper-machinery-pShow">0.050</span></label>
@@ -238,11 +301,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <div class="coins" id="appendix-d006-the-deeper-machinery-coinRow"></div>
 <div class="readout" id="appendix-d006-the-deeper-machinery-sRead"></div>
 </div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">参考表</p>
-<h3>S-值参考</h3>
-<p class="pnote">S-值将 p 值转化为比特惊异度：S = -log2(p)。</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>参考表</PanelTitle>
+
+### S-值参考
+
+<PanelNote>S-值将 p 值转化为比特惊异度：S = -log2(p)。</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>p 值</th><th>S-值</th><th>硬币投掷类比</th></tr></thead>
 <tbody>
@@ -251,11 +318,14 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>.005</td><td>7.6 比特</td><td>约连续 8 次正面。</td></tr>
 </tbody>
 </table>
-</div>
-<section>
-<p class="sec-eyebrow">实际行动指南</p>
-<h2>科研人员的统计防错工具箱</h2>
-<p>从上文及正文中提炼出的精髓 —— 将运气转化为知识的举措：</p>
+</FormatAlt>
+
+<SectionEyebrow>实际行动指南</SectionEyebrow>
+
+## 科研人员的统计防错工具箱
+
+从上文及正文中提炼出的精髓 —— 将运气转化为知识的举措：
+
 <ul class="check">
 <li><span class="hl">研究预登记验证性检验。</span> 在看到数据前明确主要结果变量、模型、样本量和停止规则。偏离方案或新增的分析应标为探索性分析。</li>
 <li><span class="hl">始终报告效应量及相容性区间。</span> 效应量及其不确定性「才是」结果；<span class="term">p 值</span> 只是个脚注。</li>
@@ -265,40 +335,43 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <li><span class="hl">当必须测试许多事物时，控制错误发现率</span>，同时说明族错误率和功效之间的取舍。</li>
 <li><span class="hl">如果你想排除具有实质意义的效应，请进行等效性检验。</span> 在你真正寻找过「不存在具有实质意义的效应」的证据之前，缺乏证据并不能证明不存在。</li>
 </ul>
-</section>
-<div class="recap">
-<p class="h">◆ 附录要点总结</p>
+<Recap>
+<BlockTitle>◆ 附录要点总结</BlockTitle>
+
 <dl>
 <div><dt>最深层的思想</dt><dd>「<span class="term"><MathInline latex={String.raw`p < .05`} /></span> 检验」是费舍尔的证据衡量标准与内曼-皮尔逊的决策规则的不连贯糅合，许多误读都是这一混合结构的症状。而两个简单的数学事实（连续精确零假设下 <span class="term">p 值</span> 是均匀的；未经校正地反复查看会使越过固定阈值越来越容易）解释了为什么 p 值操纵如此危险。</dd></div>
 <div><dt>最精彩的类比</dt><dd>将 <span class="term">p 值</span> 转化为投掷硬币：<span class="term"><MathInline latex={String.raw`p = .05`} /></span> 的惊异度仅相当于连续四五次正面，有点意思，但远谈不上发现。在 Colquhoun 的特定先验概率、功效和模型设定下，刚好达到 <span class="term"><MathInline latex={String.raw`p \approx .05`} /></span> 的结果可对应约 26% 的假阳性风险；这不是 p 值本身的固定含义。</dd></div>
 <div><dt>建设性的转向</dt><dd>解决之道是工具箱而非禁令：检验严苛性 (Mayo)、带有相容性区间的效应量、S 类 / M 类思维、等效性检验、错误发现率控制以及贝叶斯因子——此外还有能够从数字中审计学科领域的统计取证方法（P-curve、死鱼实验、statcheck）。</dd></div>
 </dl>
-</div>
+</Recap>
 
-<hr class="div" />
-<section class="sources">
-<p class="sec-eyebrow">来源 · 附录</p>
-<h2>来源与延伸阅读</h2>
-<ol>
-<li>Fisher, R. A. (1925). <em>Statistical Methods for Research Workers.</em> Oliver &amp; Boyd. <span class="meta">— p 值作为连续证据衡量标准；.05 作为灵活惯例。</span></li>
-<li>Neyman, J. &amp; Pearson, E. S. (1933). "On the Problem of the Most Efficient Tests of Statistical Hypotheses." <em>Philosophical Transactions of the Royal Society A</em> 231: 289–337. <span class="meta">— 将检验视为具有 α、β 和功效的决策规则。</span></li>
-<li>Gigerenzer, G. (2004). "Mindless statistics." <em>The Journal of Socio-Economics</em> 33(5): 587–606. <span class="meta">— 将「零假设仪式」视为不连贯的费舍尔/内曼-皮尔逊混合体。</span></li>
-<li>Goodman, S. N. (1999). "Toward Evidence-Based Medical Statistics. 1: The P Value Fallacy." <em>Annals of Internal Medicine</em> 130(12): 995–1004. <span class="meta">doi:10.7326/0003-4819-130-12-199906150-00008.</span></li>
-<li>Anscombe, F. J. (1954). "Fixed-Sample-Size Analysis of Sequential Observations." <em>Biometrics</em> 10(1): 89–100. <span class="meta">— 采样至预设结论。</span></li>
-<li>Armitage, P., McPherson, C. K. &amp; Rowe, B. C. (1969). "Repeated Significance Tests on Accumulating Data." <em>Journal of the Royal Statistical Society A</em> 132(2): 235–244. <span class="meta">— 在 H₀ 下，可选停止以概率 → 1 跨过任何阈值。</span></li>
-<li>Simonsohn, U., Nelson, L. D. &amp; Simmons, J. P. (2014). "P-curve: A Key to the File-Drawer." <em>Journal of Experimental Psychology: General</em> 143(2): 534–547. <span class="meta">doi:10.1037/a0033242.</span></li>
-<li>Bennett, C. M., Baird, A. A., Miller, M. B. &amp; Wolford, G. L. (2010). "Neural Correlates of Interspecies Perspective Taking in the Post-Mortem Atlantic Salmon." <em>Journal of Serendipitous and Unexpected Results</em> 1: 1–5. <span class="meta">(HBM 2009 海报; 2012 搞笑诺贝尔奖 / Ig Nobel Prize) — fMRI 中的多重比较。</span></li>
-<li>Vul, E., Harris, C., Winkielman, P. &amp; Pashler, H. (2009). "Puzzlingly High Correlations in fMRI Studies of Emotion, Personality, and Social Cognition." <em>Perspectives on Psychological Science</em> 4(3): 274–290. <span class="meta">— 「巫毒相关」；非独立性错误。</span></li>
-<li>Brown, N. J. L. &amp; Heathers, J. A. J. (2017). "The GRIM Test: A Simple Technique Detects Numerous Anomalies in the Reporting of Results in Psychology." <em>Social Psychological and Personality Science</em> 8(4): 363–369. <span class="meta">doi:10.1177/1948550616673876.</span></li>
-<li>Nuijten, M. B., Hartgerink, C. H. J., van Assen, M. A. L. M., Epskamp, S. &amp; Wicherts, J. M. (2016). "The prevalence of statistical reporting errors in psychology (1985–2013)." <em>Behavior Research Methods</em> 48: 1205–1226. <span class="meta">doi:10.3758/s13428-015-0664-2 — statcheck 审计。</span></li>
-<li>Ioannidis, J. P. A. (2005). "Why Most Published Research Findings Are False." <em>PLoS Medicine</em> 2(8): e124. <span class="meta">— 阳性预测值引擎（重温第 2 日内容）。</span></li>
-<li>Colquhoun, D. (2014). "An investigation of the false discovery rate and the misinterpretation of p-values." <em>Royal Society Open Science</em> 1: 140216. <span class="meta">doi:10.1098/rsos.140216.</span> &nbsp;Colquhoun, D. (2017). "The reproducibility of research and the misinterpretation of p-values." <em>Royal Society Open Science</em> 4: 171085. <span class="meta">— 在特定先验概率、功效和模型设定下，<MathInline latex={String.raw`p \approx .05`} /> 可对应约 <MathInline latex={String.raw`26\%`} /> 的误报风险。</span></li>
-<li>Lindley, D. V. (1957). "A Statistical Paradox." <em>Biometrika</em> 44(1–2): 187–192. <span class="meta">— 在大 n 下，p 值与贝叶斯因子的杰弗里斯-林德利分歧。</span></li>
-<li>Meehl, P. E. (1990). "Why Summaries of Research on Psychological Theories Are Often Uninterpretable." <em>Psychological Reports</em> 66(1): 195–244. <span class="meta">— 普遍微弱相关现象（crud factor）；点零假设几乎从不完全正确。</span></li>
-<li>Gelman, A. &amp; Carlin, J. (2014). "Beyond Power Calculations: Assessing Type S (Sign) and Type M (Magnitude) Errors." <em>Perspectives on Psychological Science</em> 9(6): 641–651. <span class="meta">doi:10.1177/1745691614551642.</span></li>
-<li>Lakens, D. (2017). "Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses." <em>Social Psychological and Personality Science</em> 8(4): 355–362. <span class="meta">doi:10.1177/1948550617697177 — TOST 程序。</span></li>
-<li>Benjamini, Y. &amp; Hochberg, Y. (1995). "Controlling the False Discovery Rate." <em>Journal of the Royal Statistical Society B</em> 57(1): 289–300. <span class="meta">— FDR 与全族错误率。</span></li>
-<li>Mayo, D. G. (2018). <em>Statistical Inference as Severe Testing: How to Get Beyond the Statistics Wars.</em> Cambridge University Press. <span class="meta">— 检验严苛性；误差统计学推理。</span></li>
-<li>Greenland, S. (2019). "Valid P-Values Behave Exactly as They Should: Some Misleading Criticisms of P-Values and Their Resolution With S-Values." <em>The American Statistician</em> 73(sup1): 106–114. <span class="meta">doi:10.1080/00031305.2018.1529625 — S-值 / 惊异度，以比特为单位。</span></li>
-</ol>
-</section>
+<Divider />
+
+<Sources>
+<SectionEyebrow>来源 · 附录</SectionEyebrow>
+
+<SourcesTitle>来源与延伸阅读</SourcesTitle>
+
+1. Fisher, R. A. (1925). *Statistical Methods for Research Workers.* Oliver &amp; Boyd. <Meta>— p 值作为连续证据衡量标准；.05 作为灵活惯例。</Meta>
+1. Neyman, J. &amp; Pearson, E. S. (1933). "On the Problem of the Most Efficient Tests of Statistical Hypotheses." *Philosophical Transactions of the Royal Society A* 231: 289–337. <Meta>— 将检验视为具有 α、β 和功效的决策规则。</Meta>
+1. Gigerenzer, G. (2004). "Mindless statistics." *The Journal of Socio-Economics* 33(5): 587–606. <Meta>— 将「零假设仪式」视为不连贯的费舍尔/内曼-皮尔逊混合体。</Meta>
+1. Goodman, S. N. (1999). "Toward Evidence-Based Medical Statistics. 1: The P Value Fallacy." *Annals of Internal Medicine* 130(12): 995–1004. <Meta>doi:10.7326/0003-4819-130-12-199906150-00008.</Meta>
+1. Anscombe, F. J. (1954). "Fixed-Sample-Size Analysis of Sequential Observations." *Biometrics* 10(1): 89–100. <Meta>— 采样至预设结论。</Meta>
+1. Armitage, P., McPherson, C. K. &amp; Rowe, B. C. (1969). "Repeated Significance Tests on Accumulating Data." *Journal of the Royal Statistical Society A* 132(2): 235–244. <Meta>— 在 H₀ 下，可选停止以概率 → 1 跨过任何阈值。</Meta>
+1. Simonsohn, U., Nelson, L. D. &amp; Simmons, J. P. (2014). "P-curve: A Key to the File-Drawer." *Journal of Experimental Psychology: General* 143(2): 534–547. <Meta>doi:10.1037/a0033242.</Meta>
+1. Bennett, C. M., Baird, A. A., Miller, M. B. &amp; Wolford, G. L. (2010). "Neural Correlates of Interspecies Perspective Taking in the Post-Mortem Atlantic Salmon." *Journal of Serendipitous and Unexpected Results* 1: 1–5. <Meta>(HBM 2009 海报; 2012 搞笑诺贝尔奖 / Ig Nobel Prize) — fMRI 中的多重比较。</Meta>
+1. Vul, E., Harris, C., Winkielman, P. &amp; Pashler, H. (2009). "Puzzlingly High Correlations in fMRI Studies of Emotion, Personality, and Social Cognition." *Perspectives on Psychological Science* 4(3): 274–290. <Meta>— 「巫毒相关」；非独立性错误。</Meta>
+1. Brown, N. J. L. &amp; Heathers, J. A. J. (2017). "The GRIM Test: A Simple Technique Detects Numerous Anomalies in the Reporting of Results in Psychology." *Social Psychological and Personality Science* 8(4): 363–369. <Meta>doi:10.1177/1948550616673876.</Meta>
+1. Nuijten, M. B., Hartgerink, C. H. J., van Assen, M. A. L. M., Epskamp, S. &amp; Wicherts, J. M. (2016). "The prevalence of statistical reporting errors in psychology (1985–2013)." *Behavior Research Methods* 48: 1205–1226. <Meta>doi:10.3758/s13428-015-0664-2 — statcheck 审计。</Meta>
+1. Ioannidis, J. P. A. (2005). "Why Most Published Research Findings Are False." *PLoS Medicine* 2(8): e124. <Meta>— 阳性预测值引擎（重温第 2 日内容）。</Meta>
+1. Colquhoun, D. (2014). "An investigation of the false discovery rate and the misinterpretation of p-values." *Royal Society Open Science* 1: 140216. <Meta>doi:10.1098/rsos.140216.</Meta> &nbsp;Colquhoun, D. (2017). "The reproducibility of research and the misinterpretation of p-values." *Royal Society Open Science* 4: 171085. <Meta>— 在特定先验概率、功效和模型设定下，<MathInline latex={String.raw`p \approx .05`} /> 可对应约 <MathInline latex={String.raw`26\%`} /> 的误报风险。</Meta>
+1. Lindley, D. V. (1957). "A Statistical Paradox." *Biometrika* 44(1–2): 187–192. <Meta>— 在大 n 下，p 值与贝叶斯因子的杰弗里斯-林德利分歧。</Meta>
+1. Meehl, P. E. (1990). "Why Summaries of Research on Psychological Theories Are Often Uninterpretable." *Psychological Reports* 66(1): 195–244. <Meta>— 普遍微弱相关现象（crud factor）；点零假设几乎从不完全正确。</Meta>
+1. Gelman, A. &amp; Carlin, J. (2014). "Beyond Power Calculations: Assessing Type S (Sign) and Type M (Magnitude) Errors." *Perspectives on Psychological Science* 9(6): 641–651. <Meta>doi:10.1177/1745691614551642.</Meta>
+1. Lakens, D. (2017). "Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses." *Social Psychological and Personality Science* 8(4): 355–362. <Meta>doi:10.1177/1948550617697177 — TOST 程序。</Meta>
+1. Benjamini, Y. &amp; Hochberg, Y. (1995). "Controlling the False Discovery Rate." *Journal of the Royal Statistical Society B* 57(1): 289–300. <Meta>— FDR 与全族错误率。</Meta>
+1. Mayo, D. G. (2018). *Statistical Inference as Severe Testing: How to Get Beyond the Statistics Wars.* Cambridge University Press. <Meta>— 检验严苛性；误差统计学推理。</Meta>
+1. Greenland, S. (2019). "Valid P-Values Behave Exactly as They Should: Some Misleading Criticisms of P-Values and Their Resolution With S-Values." *The American Statistician* 73(sup1): 106–114. <Meta>doi:10.1080/00031305.2018.1529625 — S-值 / 惊异度，以比特为单位。</Meta>
+
+</Sources>
+

@@ -3,10 +3,34 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-<header class="hero wrap">
-<p class="eyebrow">模块一 · 知识与推理的根基 · <span class="daymark">第 05 日 / 180</span></p>
-<h1>因果性</h1>
-<p class="sub">冰淇淋销量与溺水人数同步起伏。但这种相关性本身并不证明因果。那么，「规律」与「因果」之间的区别究竟在何处？</p>
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import Formula from "@app/components/lesson/Formula.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+
+<Hero>
+<HeroEyebrow>模块一 · 知识与推理的根基 · <span class="daymark">第 05 日 / 180</span></HeroEyebrow>
+
+# 因果性
+
+<HeroSubhead>冰淇淋销量与溺水人数同步起伏。但这种相关性本身并不证明因果。那么，「规律」与「因果」之间的区别究竟在何处？</HeroSubhead>
 
 <figure class="hero-fig">
 <svg viewBox="0 0 460 300" role="img" aria-label="散点图显示冰淇淋销量与溺水人数同步上升，且有一个隐藏的「夏季」变量同时影响两者。">
@@ -42,33 +66,43 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <figcaption>这是一张示意性的玩具散点图：散点同步上行——这是典型的相关性。它们的颜色代表了图上没有显示的变量：<span class="hl">季节</span>。高温既催生了甜筒销量，又让更多人下水消暑。</figcaption>
 </figure>
 
-<p class="lede"><span class="drop">每</span>年夏天，都有两个数字在同步攀升。随着冰淇淋销量的上扬，溺水人数也随之增加；而当秋凉萧瑟、甜筒不再畅销时，溺水事件也随之平息。将二者绘制在图表上，你会得到一条清晰且笃定的上升曲线——这种典型的相关性足以让粗心的分析师抛出惊悚的标题：「取缔冰淇淋，拯救生命」。然而关键点更窄：这种相关性本身并不说明吃冰淇淋会导致溺水。</p>
+<Lead drop="每">年夏天，都有两个数字在同步攀升。随着冰淇淋销量的上扬，溺水人数也随之增加；而当秋凉萧瑟、甜筒不再畅销时，溺水事件也随之平息。将二者绘制在图表上，你会得到一条清晰且笃定的上升曲线——这种典型的相关性足以让粗心的分析师抛出惊悚的标题：「取缔冰淇淋，拯救生命」。然而关键点更窄：这种相关性本身并不说明吃冰淇淋会导致溺水。</Lead>
 
-<p>你这种「骨子里的直觉」，正是科学中最难诉诸笔墨的事物之一。在这个玩具图中，这场戏的幕后潜伏着第三个角色——夏季——它正同时牵动着两根丝线。酷热驱使人们排队购买冰淇淋，同时也驱使人们跳入湖泊与海洋，于是悲剧在其中偶发。这两个可见的数字之所以共舞，仅仅是因为一个不可见的指挥家在幕后调度。今日的主题，便是如何捕捉这位隐形的指挥家，以及现代科学的一项重大发现：<span class="term">因果性</span>（Causation）不仅仅是「加强版」的相关性。它位于因果之梯的更高处，而观测分布若没有额外因果假设，并不能自行决定这层结构。</p>
-</header><div class="wrap">
+你这种「骨子里的直觉」，正是科学中最难诉诸笔墨的事物之一。在这个玩具图中，这场戏的幕后潜伏着第三个角色——夏季——它正同时牵动着两根丝线。酷热驱使人们排队购买冰淇淋，同时也驱使人们跳入湖泊与海洋，于是悲剧在其中偶发。这两个可见的数字之所以共舞，仅仅是因为一个不可见的指挥家在幕后调度。今日的主题，便是如何捕捉这位隐形的指挥家，以及现代科学的一项重大发现：<Term>因果性</Term>（Causation）不仅仅是「加强版」的相关性。它位于因果之梯的更高处，而观测分布若没有额外因果假设，并不能自行决定这层结构。
 
-<div class="whereblock">
-<p class="label">◆ 课程进度</p>
-<p>历经四日，我们的认知工具箱开始严密咬合。<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>警示我们留意那些仅凭运气偶然命中的真信念——如停摆的钟。而<span class="term">虚假相关</span>（Spurious Correlation）<TipNote text={String.raw`虚假相关是指两个被测变量之间存在真实的统计关联，但这种关联并非源于直接的因果纽带，而是由其他因素诱发的。`} />正是群体尺度上的「坏钟」：数据虽然「对」得上，原因却错得离谱。<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>引入了休谟及其归纳问题；今日我们再次邂逅这位思想家，因为他对因果性的解构与对归纳的抨击紧密相连：二者都对我们从重复观测推导必然性或未来规律性的权利提出了挑战。<a href="/zh/days/003-logic-and-valid-inference/">第 3 日</a>理顺了推理的三种模式：演绎、归纳和溯因——因果发现，作为一种类比，感觉就像是「带有锋芒的溯因」：在假设前提下对最佳因果解释的推断。而<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>为我们奠定了「干预」与「观察」之别的概率底座：今日的核心结论是，<MathInline latex={String.raw`P(y \mid \operatorname{do}(x))`} /> 与 <MathInline latex={String.raw`P(y \mid x)`} /> 回答的是不同的问题，它们可能相等，也可能不等。</p>
-</div>
+</Hero>
 
-<section>
-<p class="sec-eyebrow">最古老的问题</p>
-<h2>休谟踢翻了支撑</h2>
-<p>从麻烦开始的地方谈起。1739 年，大卫·休谟在《人性论》（A Treatise of Human Nature）中提出了一个看似简单得离谱的问题：当一个台球撞击另一个台球，第二个球滚走时，你究竟看到了什么？你看到第一个球在移动。你看到它们相互接触。你看到第二个球开始移动。无论你多么努力地观察，你永远无法看到的，是「因果作用」本身：即连接这两个事件的必然联系、隐藏的力，或是那个代表「因为」的小箭头。</p>
-<p>休谟主张，我们实际观察到的只有<span class="term">恒常结合</span>（Constant Conjunction）<TipNote text={String.raw`恒常结合意味着某种类型的事件反复紧随另一种类型的事件发生。`} />：一类事件总是稳定地紧随另一类事件之后出现。再加上原因在先（先后性）以及两个事件在时空上接触（接近性），你便拥有了经验所能提供的一切。按照一种标准的休谟式读法，那种「必然性」的感觉——即第二个球「不得不」移动的感觉——来自惯常预期，而不是来自对必然联系本身的感知。休谟发现，「原因」的两个定义在我们的脑海中纠缠在一起：一个是关于世界的（恒常结合），一个是关于我们的（思维从一个跳跃到另一个的熟练过程）。</p>
-<p>这听起来应该很耳熟。这与<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日的归纳问题</a>密切相关，只是换了件外衣。如果因果性仅仅是「此事件总在彼事件之后发生」，那么声称下一次碰撞会与上一次表现一致，就正是对「自然统一性」的一场无法证明的豪赌，而休谟论证说，这种赌法永远也无法在不陷入循环论证的前提下得到辩护。这一挑战催生了相互竞争的规则性、反事实、概率性和干预主义的解释路径；没有哪一种理论被普遍认为能解决所有主要类型的棘手案例。</p>
+<Wrap>
 
-<div class="aside">
-<p class="h">为什么叫「宇宙的粘合剂」？</p>
-<p>这个短语常与休谟联系在一起，但最好将其视为麦基的标题和意象：J. L. 麦基 1974 年的著作《宇宙的粘合剂》（The Cement of the Universe）。这种「粘合剂」是我们永远无法看到的。我们推断出胶水的存在，仅仅是因为砖块总能粘在一起。</p>
-</div>
-</section>
+<WhereBlock>
+<Label>◆ 课程进度</Label>
 
-<section>
-<p class="sec-eyebrow">四种修正</p>
-<h2>阐明「更多」的含义</h2>
-<p>如果因果性不仅仅是恒常结合，那么最直接的修正就是说明这「更多」究竟是什么。20 世纪给出了几种严肃答案：它们用不同方式补完「C 导致 E 意味着……」这个句子。它们与其说是彼此排斥的对手，不如说是现代因果模型反复借用的几副透镜。</p>
+历经四日，我们的认知工具箱开始严密咬合。[第 1 日](/zh/days/001-what-is-knowledge/)警示我们留意那些仅凭运气偶然命中的真信念——如停摆的钟。而<Term>虚假相关</Term>（Spurious Correlation）<TipNote text={String.raw`虚假相关是指两个被测变量之间存在真实的统计关联，但这种关联并非源于直接的因果纽带，而是由其他因素诱发的。`} />正是群体尺度上的「坏钟」：数据虽然「对」得上，原因却错得离谱。[第 2 日](/zh/days/002-scientific-method-and-demarcation/)引入了休谟及其归纳问题；今日我们再次邂逅这位思想家，因为他对因果性的解构与对归纳的抨击紧密相连：二者都对我们从重复观测推导必然性或未来规律性的权利提出了挑战。[第 3 日](/zh/days/003-logic-and-valid-inference/)理顺了推理的三种模式：演绎、归纳和溯因——因果发现，作为一种类比，感觉就像是「带有锋芒的溯因」：在假设前提下对最佳因果解释的推断。而[第 4 日](/zh/days/004-probability-as-extended-logic/)为我们奠定了「干预」与「观察」之别的概率底座：今日的核心结论是，<MathInline latex={String.raw`P(y \mid \operatorname{do}(x))`} /> 与 <MathInline latex={String.raw`P(y \mid x)`} /> 回答的是不同的问题，它们可能相等，也可能不等。
+
+</WhereBlock>
+
+<SectionEyebrow>最古老的问题</SectionEyebrow>
+
+## 休谟踢翻了支撑
+
+从麻烦开始的地方谈起。1739 年，大卫·休谟在《人性论》（A Treatise of Human Nature）中提出了一个看似简单得离谱的问题：当一个台球撞击另一个台球，第二个球滚走时，你究竟看到了什么？你看到第一个球在移动。你看到它们相互接触。你看到第二个球开始移动。无论你多么努力地观察，你永远无法看到的，是「因果作用」本身：即连接这两个事件的必然联系、隐藏的力，或是那个代表「因为」的小箭头。
+
+休谟主张，我们实际观察到的只有<Term>恒常结合</Term>（Constant Conjunction）<TipNote text={String.raw`恒常结合意味着某种类型的事件反复紧随另一种类型的事件发生。`} />：一类事件总是稳定地紧随另一类事件之后出现。再加上原因在先（先后性）以及两个事件在时空上接触（接近性），你便拥有了经验所能提供的一切。按照一种标准的休谟式读法，那种「必然性」的感觉——即第二个球「不得不」移动的感觉——来自惯常预期，而不是来自对必然联系本身的感知。休谟发现，「原因」的两个定义在我们的脑海中纠缠在一起：一个是关于世界的（恒常结合），一个是关于我们的（思维从一个跳跃到另一个的熟练过程）。
+
+这听起来应该很耳熟。这与[第 2 日的归纳问题](/zh/days/002-scientific-method-and-demarcation/)密切相关，只是换了件外衣。如果因果性仅仅是「此事件总在彼事件之后发生」，那么声称下一次碰撞会与上一次表现一致，就正是对「自然统一性」的一场无法证明的豪赌，而休谟论证说，这种赌法永远也无法在不陷入循环论证的前提下得到辩护。这一挑战催生了相互竞争的规则性、反事实、概率性和干预主义的解释路径；没有哪一种理论被普遍认为能解决所有主要类型的棘手案例。
+
+<Aside>
+<BlockTitle>为什么叫「宇宙的粘合剂」？</BlockTitle>
+
+这个短语常与休谟联系在一起，但最好将其视为麦基的标题和意象：J. L. 麦基 1974 年的著作《宇宙的粘合剂》（The Cement of the Universe）。这种「粘合剂」是我们永远无法看到的。我们推断出胶水的存在，仅仅是因为砖块总能粘在一起。
+
+</Aside>
+
+<SectionEyebrow>四种修正</SectionEyebrow>
+
+## 阐明「更多」的含义
+
+如果因果性不仅仅是恒常结合，那么最直接的修正就是说明这「更多」究竟是什么。20 世纪给出了几种严肃答案：它们用不同方式补完「C 导致 E 意味着……」这个句子。它们与其说是彼此排斥的对手，不如说是现代因果模型反复借用的几副透镜。
 
 <div class="theory-key">
 <div class="k"><span class="who2">Lewis · 1973</span><b><span class="term">反事实</span>（Counterfactual）<TipNote text={String.raw`反事实探讨的是如果过去某些事实发生了改变，原本的结果会如何变化。`} />。</b>在简单情形中，E 反事实地依赖于 C：若 C 未发生，E 就不会发生。刘易斯进一步通过这种因果依赖的链条来分析更一般的因果关系。该定义简洁直观，但需要应对备用原因和双重击杀（预截和过度决定）等复杂场景的挑战。</div>
@@ -78,25 +112,26 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 
 <p class="theory-note">同一个问题有多种审视透镜：反事实关注「若非如此会怎样？」；概率关注「在固定竞争项时是否增加了概率？」；INUS 关注「这一部分在充足组合中扮演了什么角色？」；干预主义关注「在合适干预下会改变什么？」。结构因果模型为许多反事实和干预主义问题提供了精确语言，但并不解决关于因果性的每一种哲学说明。接下来的统计框架提出的是一个更窄的操作性问题：一旦指定了干预和目标效应，哪些假设能让数据识别该效应？注意南希·卡特赖特（Nancy Cartwright, 1979）是如何完善概率说法的，因为她的修正正是今日的核心枢纽。原因确实提高了结果发生的概率，但必须是在「因果同质」的背景下，即保持其他相关原因固定不变。忽略这个前提，你就会直接掉进统计学中最精妙的陷阱。</p>
-</section>
 
-<section>
-<p class="sec-eyebrow">陷阱</p>
-<h2>辛普森悖论：当数字发生彻底反转</h2>
-<p>这是一个听起来不可思议、但除非亲眼所见否则难以置信的事实：一种疗法在小结石患者中的观测成功率更高，在大结石患者中的观测成功率也更高，然而汇总起来的总体观测成功率却更低。下方真实的肾结石数据集可以让你直观看到这种比例的反转。</p>
+<SectionEyebrow>陷阱</SectionEyebrow>
 
-<p>辛普森反转的发生是因为合并的组别中含有不同比例的子组（即权重反转）。反转本身并不告诉你哪种比较在因果上是相关的。这取决于第三个变量的性质：它可能是一个需要进行调整控制的<span class="term">混杂因素</span>（Confounder）<TipNote text={String.raw`混杂因素是同时影响所关注的原因和结果的第三个变量，会导致二者产生虚假的同步变动。`} />；也可能是一个中介因子，此时进行调整会把总体效应问题转化为直接效应问题；还可能是一个对撞因子或选择变量，此时进行调整反而会引入偏差；或者仅仅是一个涉及代数或非可压缩性（non-collapsibility）表现的描述性分组变量。究竟是汇总还是分层能回答正确的因果问题，取决于因果知识，而非反转现象本身。</p>
+## 辛普森悖论：当数字发生彻底反转
 
-<p>在肾结石数据（Charig 等，《英国医学杂志》（BMJ），1986 年）中，这是一项对开放手术 A 和经皮肾镜取石术（PCNL）B 的历史性、非随机化比较。接受疗法 B 的病例中包含比例大得多的小结石患者。因此，B 拥有更高的汇总成功率，而 A 在每个报告的结石大小分层内部都拥有更高的观测成功率。这些观测分层展示了病例构成的不均和比例反转；它们本身并不证明开放手术对同一批患者的因果效果更优。</p>
+这是一个听起来不可思议、但除非亲眼所见否则难以置信的事实：一种疗法在小结石患者中的观测成功率更高，在大结石患者中的观测成功率也更高，然而汇总起来的总体观测成功率却更低。下方真实的肾结石数据集可以让你直观看到这种比例的反转。
 
-<p>下方的反转机器将这一切凝炼成一张图。每个方块代表一名患者，且位置永远保持不变。颜色表示所接受的疗法；行表示病例是小结石还是大结石；填充表示治疗是否有效。汇总视图比较两个疗法列。分层视图保留同一张图，但首先在每一行内部进行比较。在这个例子中，结石大小是一个合理的基线严重程度变量，因此分层比较是有信息量的；但在其他因果图中，相同的分层操作可能会回答不同的因果问题，甚至引入新的偏差。</p>
-</section>
+辛普森反转的发生是因为合并的组别中含有不同比例的子组（即权重反转）。反转本身并不告诉你哪种比较在因果上是相关的。这取决于第三个变量的性质：它可能是一个需要进行调整控制的<Term>混杂因素</Term>（Confounder）<TipNote text={String.raw`混杂因素是同时影响所关注的原因和结果的第三个变量，会导致二者产生虚假的同步变动。`} />；也可能是一个中介因子，此时进行调整会把总体效应问题转化为直接效应问题；还可能是一个对撞因子或选择变量，此时进行调整反而会引入偏差；或者仅仅是一个涉及代数或非可压缩性（non-collapsibility）表现的描述性分组变量。究竟是汇总还是分层能回答正确的因果问题，取决于因果知识，而非反转现象本身。
+
+在肾结石数据（Charig 等，《英国医学杂志》（BMJ），1986 年）中，这是一项对开放手术 A 和经皮肾镜取石术（PCNL）B 的历史性、非随机化比较。接受疗法 B 的病例中包含比例大得多的小结石患者。因此，B 拥有更高的汇总成功率，而 A 在每个报告的结石大小分层内部都拥有更高的观测成功率。这些观测分层展示了病例构成的不均和比例反转；它们本身并不证明开放手术对同一批患者的因果效果更优。
+
+下方的反转机器将这一切凝炼成一张图。每个方块代表一名患者，且位置永远保持不变。颜色表示所接受的疗法；行表示病例是小结石还是大结石；填充表示治疗是否有效。汇总视图比较两个疗法列。分层视图保留同一张图，但首先在每一行内部进行比较。在这个例子中，结石大小是一个合理的基线严重程度变量，因此分层比较是有信息量的；但在其他因果图中，相同的分层操作可能会回答不同的因果问题，甚至引入新的偏差。
 
 {/* ===================== INTERACTIVE 1 : SIMPSON ===================== */}
-<div class="panel web-only causation-simpson">
-<p class="ptitle">互动 · 观察反转</p>
-<h3>反转机器</h3>
-<p class="pnote">基于 1986 年肾结石真实数据，每种疗法样本量为 350。病例位置保持不变；切换按钮只改变围绕这些病例的比较框。</p>
+<Panel class="web-only causation-simpson">
+<PanelTitle>互动 · 观察反转</PanelTitle>
+
+### 反转机器
+
+<PanelNote>基于 1986 年肾结石真实数据，每种疗法样本量为 350。病例位置保持不变；切换按钮只改变围绕这些病例的比较框。</PanelNote>
 
 <div class="simp-toggle" role="group" aria-label="视图模式">
 <button id="simp-pooled" type="button" aria-pressed="true">汇总（所有患者）</button>
@@ -115,12 +150,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <span><i class="effective"></i> 有效</span>
 <span><i class="not-effective"></i> 无效</span>
 </div>
-</div>
+</Panel>
 
-<div class="format-alt epub-only print-only">
-<p class="ptitle">参考表</p>
-<h3>肾结石辛普森反转</h3>
-<p class="pnote">当所有患者汇总时，疗法 B 观测成功率更高；但在小结石和大结石分层内部，疗法 A 的观测成功率都更高。这展示了比例反转，而非疗法优劣的直接因果推荐。</p>
+<FormatAlt class="epub-only print-only">
+<PanelTitle>参考表</PanelTitle>
+
+### 肾结石辛普森反转
+
+<PanelNote>当所有患者汇总时，疗法 B 观测成功率更高；但在小结石和大结石分层内部，疗法 A 的观测成功率都更高。这展示了比例反转，而非疗法优劣的直接因果推荐。</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>视图</th><th>疗法 A</th><th>疗法 B</th><th>更高观测率</th></tr></thead>
 <tbody>
@@ -129,25 +167,27 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>大结石</td><td>192 / 263 = 73.0%</td><td>55 / 80 = 68.8%</td><td>A</td></tr>
 </tbody>
 </table>
-<p>汇总比较发生反转，是因为两种疗法的分组中包含了不同比例的小结石和大结石病例。</p>
-</div>
+汇总比较发生反转，是因为两种疗法的分组中包含了不同比例的小结石和大结石病例。
 
-<section>
-<p>教训是深刻的：你无法单凭一张数据表读出因果关系。完全相同的数字，根据一个甚至可能不在电子表格中的变量，可以支持截然相反的结论。这引出了一个统领后续所有内容的问题——如果数据本身无法告诉你答案，那么什么可以？答案来自一位在 20 世纪 80 年代致力于让机器在不确定性下进行推理的计算机科学家：你需要添加一些数据本身并不包含的东西——一个关于「箭头指向何处」的模型。</p>
-</section>
+</FormatAlt>
 
-<section>
-<p class="sec-eyebrow">因果革命</p>
-<h2>珀尔的梯子，以及改变一切的动词</h2>
-<p>朱迪亚·珀尔（Judea Pearl）获得了 2011 年的图灵奖，「因其通过开发概率与因果推理演算，对人工智能做出的基础性贡献」。他在《为什么》（The Book of Why, 2018）中普及的核心意象，便是极具影响力的<span class="term">因果之梯</span>（Ladder of Causation）<TipNote text={String.raw`珀尔的因果之梯将关联、干预和反事实推理划分到三个要求逐渐提高的层级中。`} />。这是一个强有力的概念层级结构，但并非每个因果推断流派都以完全相同的形式来表述这一分类。</p>
-<p>亲自攀爬：</p>
-</section>
+教训是深刻的：你无法单凭一张数据表读出因果关系。完全相同的数字，根据一个甚至可能不在电子表格中的变量，可以支持截然相反的结论。这引出了一个统领后续所有内容的问题——如果数据本身无法告诉你答案，那么什么可以？答案来自一位在 20 世纪 80 年代致力于让机器在不确定性下进行推理的计算机科学家：你需要添加一些数据本身并不包含的东西——一个关于「箭头指向何处」的模型。
+
+<SectionEyebrow>因果革命</SectionEyebrow>
+
+## 珀尔的梯子，以及改变一切的动词
+
+朱迪亚·珀尔（Judea Pearl）获得了 2011 年的图灵奖，「因其通过开发概率与因果推理演算，对人工智能做出的基础性贡献」。他在《为什么》（The Book of Why, 2018）中普及的核心意象，便是极具影响力的<Term>因果之梯</Term>（Ladder of Causation）<TipNote text={String.raw`珀尔的因果之梯将关联、干预和反事实推理划分到三个要求逐渐提高的层级中。`} />。这是一个强有力的概念层级结构，但并非每个因果推断流派都以完全相同的形式来表述这一分类。
+
+亲自攀爬：
 
 {/* ===================== INTERACTIVE 2 : LADDER ===================== */}
-<div class="panel web-only causation-ladder">
-<p class="ptitle">互动 · 攀爬因果之梯</p>
-<h3>因果性的三个阶梯</h3>
-<p class="pnote">点击阶梯。每一层都增加了一个动词、一个记号以及一个下一层「无法」回答的问题。从第 1 层到第 2 层的跨越，正是今天我们要探讨的全部内容。</p>
+<Panel class="web-only causation-ladder">
+<PanelTitle>互动 · 攀爬因果之梯</PanelTitle>
+
+### 因果性的三个阶梯
+
+<PanelNote>点击阶梯。每一层都增加了一个动词、一个记号以及一个下一层「无法」回答的问题。从第 1 层到第 2 层的跨越，正是今天我们要探讨的全部内容。</PanelNote>
 
 <div class="ladder-grid">
 <div class="rung-btns" id="rungBtns">
@@ -195,11 +235,13 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <div class="rung-detail" id="rungDetail" aria-live="polite"></div>
 </div>
 </div>
-</div>
+</Panel>
 
-<div class="format-alt epub-only print-only">
-<p class="ptitle">参考表</p>
-<h3>珀尔的因果之梯</h3>
+<FormatAlt class="epub-only print-only">
+<PanelTitle>参考表</PanelTitle>
+
+### 珀尔的因果之梯
+
 <table class="alt-table">
 <thead><tr><th>层级</th><th>动词</th><th>记号</th><th>问题</th></tr></thead>
 <tbody>
@@ -208,29 +250,38 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>3. 反事实</td><td>想象</td><td><MathInline latex={String.raw`P(Y_x \mid X',Y')`} /></td><td>在已知现实结果的前提下，若过去的操作有所不同，平行世界的结果会如何？</td></tr>
 </tbody>
 </table>
-<p>在最后一行的记号中，<MathInline latex={String.raw`Y_x`} /> 代表在 X 被干预设定为 x 的平行世界里 Y 的潜在值；<MathInline latex={String.raw`X'`} /> 与 <MathInline latex={String.raw`Y'`} /> 是我们已经观测到的现实事实。</p>
-</div>
+在最后一行的记号中，<MathInline latex={String.raw`Y_x`} /> 代表在 X 被干预设定为 x 的平行世界里 Y 的潜在值；<MathInline latex={String.raw`X'`} /> 与 <MathInline latex={String.raw`Y'`} /> 是我们已经观测到的现实事实。
 
-<section>
-<h3>do-算子：观察不等于干预</h3>
-<p>这是整个现代因果领域的概念枢纽，值得仔细体味。对于变量 X，你可以进行两种截然不同的操作。</p>
-<p>你可以对它进行<span class="term">条件化</span>（Conditioning）<TipNote text={String.raw`条件化（或称取条件）意味着将分析视角收窄至该变量已具有特定观测值的子样本上。`} />——记作 <MathInline latex={String.raw`P(Y \mid X = x)`} />。这代表：在所有 X 「恰好」等于 x 的既定案例中，Y 的分布如何？你只是在筛选现有的数据池。这就是「观察」（Seeing）。</p>
-<p>或者你可以进行干预——在珀尔的记号中写为 <MathInline latex={String.raw`P(Y \mid \operatorname{do}(X = x))`} />。这意味着：考虑一种在目标人群中把 X 设为 x 的制度，将 X 与其通常的原因切断，然后观察 Y。这就是「干预」（Doing）。在理想随机试验中，随机化处理分配被设计用来近似这种切断操作。</p>
-<p>二者在数值上可能重合，但相等需要特定的实验设计或因果假设；仅凭数据上的接近不能推出二者等价。<MathInline latex={String.raw`P(Y \mid X=x)`} /> 描述的是在观测到 X 等于 x 的情况下结果 Y 的分布；<MathInline latex={String.raw`P(Y \mid \operatorname{do}(X=x))`} /> 则描述了一个假想制度下将 X 设为 x 时 Y 的分布。下方的交互机器通过一个显式的结构模型来计算这两个量，使它们的区别清晰可见。</p>
-</section>
+</FormatAlt>
 
-<div class="aside">
-<p class="h">潜在结果的视角</p>
-<p>现代因果推断的另一套主要语言是从个体（Unit）层面来描述相同想法。对于个体 <MathInline latex={String.raw`i`} />，<span class="term">潜在结果</span>（Potential Outcomes）<TipNote text={String.raw`潜在结果是指个体在接受不同处理或干预值时可能呈现的结果，尽管对该个体而言最终只能观测到其中一种。`} />写为 <MathInline latex={String.raw`Y_i(1)`} /> 和 <MathInline latex={String.raw`Y_i(0)`} />：分别代表接受处理和未接受处理时的结果。一个常见的<span class="term">估计目标</span>（Causal Estimand）<TipNote text={String.raw`估计目标是研究所要推断的精确因果数量，例如平均处理效应。`} />是在指定目标人群和时间范围内的平均处理效应，即 <MathInline latex={String.raw`ATE = E[Y(1)-Y(0)]`} />。然而，这里存在「因果推断根本问题」：对于任何一个个体，我们只能观测到这两个潜在结果之中的一个，另一个则是反事实的。</p>
-<p>实验设计与假设能将上述估计目标与观测数据连接起来。<span class="term">一致性</span>（Consistency）<TipNote text={String.raw`一致性是指，若个体在现实中接受的处理值为 x，那么它所呈现的观测结果就等同于其在处理值 x 下的潜在结果。`} />将观测结果与在实际接受的处理水平下的潜在结果联系起来。<span class="term">可交换性</span>（Exchangeability）<TipNote text={String.raw`可交换性是指，被比较的处理组与对照组在相关的潜在结果分布上是可比的（可能需要在控制协变量的前提下）。`} />指被比较的组别在潜在结果上是可比的。<span class="term">正值性</span>（Positivity）<TipNote text={String.raw`正值性或称重叠性，指每个协变量分组中的个体都有非零概率接受所比较的任意一种处理水平。`} />（又称重叠性）指每一个协变量分组都有非零概率接受各个处理水平。<span class="term">无干扰</span>（No Interference）<TipNote text={String.raw`无干扰是指一个个体接受的处理不会改变另一个个体的结果，除非模型中显式包含了这种溢出效应。`} />意味着一个个体受到的处理不会影响其他个体的结果（除非显式对这种溢出效应建模）。</p>
-<p>一条可靠的因果分析流程是：明确定义分析对象（个体）、暴露（Exposure）、结果、时间顺序与具体干预措施；定义估计目标；列出因果假设；判断该估计目标在图或模型中是否可识别；进行统计估计；最后评估不确定性、测量误差、失访偏倚、选择偏差、重叠度以及对假设违背的敏感性分析。</p>
-</div>
+### do-算子：观察不等于干预
+
+这是整个现代因果领域的概念枢纽，值得仔细体味。对于变量 X，你可以进行两种截然不同的操作。
+
+你可以对它进行<Term>条件化</Term>（Conditioning）<TipNote text={String.raw`条件化（或称取条件）意味着将分析视角收窄至该变量已具有特定观测值的子样本上。`} />——记作 <MathInline latex={String.raw`P(Y \mid X = x)`} />。这代表：在所有 X 「恰好」等于 x 的既定案例中，Y 的分布如何？你只是在筛选现有的数据池。这就是「观察」（Seeing）。
+
+或者你可以进行干预——在珀尔的记号中写为 <MathInline latex={String.raw`P(Y \mid \operatorname{do}(X = x))`} />。这意味着：考虑一种在目标人群中把 X 设为 x 的制度，将 X 与其通常的原因切断，然后观察 Y。这就是「干预」（Doing）。在理想随机试验中，随机化处理分配被设计用来近似这种切断操作。
+
+二者在数值上可能重合，但相等需要特定的实验设计或因果假设；仅凭数据上的接近不能推出二者等价。<MathInline latex={String.raw`P(Y \mid X=x)`} /> 描述的是在观测到 X 等于 x 的情况下结果 Y 的分布；<MathInline latex={String.raw`P(Y \mid \operatorname{do}(X=x))`} /> 则描述了一个假想制度下将 X 设为 x 时 Y 的分布。下方的交互机器通过一个显式的结构模型来计算这两个量，使它们的区别清晰可见。
+
+<Aside>
+<BlockTitle>潜在结果的视角</BlockTitle>
+
+现代因果推断的另一套主要语言是从个体（Unit）层面来描述相同想法。对于个体 <MathInline latex={String.raw`i`} />，<Term>潜在结果</Term>（Potential Outcomes）<TipNote text={String.raw`潜在结果是指个体在接受不同处理或干预值时可能呈现的结果，尽管对该个体而言最终只能观测到其中一种。`} />写为 <MathInline latex={String.raw`Y_i(1)`} /> 和 <MathInline latex={String.raw`Y_i(0)`} />：分别代表接受处理和未接受处理时的结果。一个常见的<Term>估计目标</Term>（Causal Estimand）<TipNote text={String.raw`估计目标是研究所要推断的精确因果数量，例如平均处理效应。`} />是在指定目标人群和时间范围内的平均处理效应，即 <MathInline latex={String.raw`ATE = E[Y(1)-Y(0)]`} />。然而，这里存在「因果推断根本问题」：对于任何一个个体，我们只能观测到这两个潜在结果之中的一个，另一个则是反事实的。
+
+实验设计与假设能将上述估计目标与观测数据连接起来。<Term>一致性</Term>（Consistency）<TipNote text={String.raw`一致性是指，若个体在现实中接受的处理值为 x，那么它所呈现的观测结果就等同于其在处理值 x 下的潜在结果。`} />将观测结果与在实际接受的处理水平下的潜在结果联系起来。<Term>可交换性</Term>（Exchangeability）<TipNote text={String.raw`可交换性是指，被比较的处理组与对照组在相关的潜在结果分布上是可比的（可能需要在控制协变量的前提下）。`} />指被比较的组别在潜在结果上是可比的。<Term>正值性</Term>（Positivity）<TipNote text={String.raw`正值性或称重叠性，指每个协变量分组中的个体都有非零概率接受所比较的任意一种处理水平。`} />（又称重叠性）指每一个协变量分组都有非零概率接受各个处理水平。<Term>无干扰</Term>（No Interference）<TipNote text={String.raw`无干扰是指一个个体接受的处理不会改变另一个个体的结果，除非模型中显式包含了这种溢出效应。`} />意味着一个个体受到的处理不会影响其他个体的结果（除非显式对这种溢出效应建模）。
+
+一条可靠的因果分析流程是：明确定义分析对象（个体）、暴露（Exposure）、结果、时间顺序与具体干预措施；定义估计目标；列出因果假设；判断该估计目标在图或模型中是否可识别；进行统计估计；最后评估不确定性、测量误差、失访偏倚、选择偏差、重叠度以及对假设违背的敏感性分析。
+
+</Aside>
 
 {/* ===================== INTERACTIVE 3 : DO vs SEE ===================== */}
-<div class="panel web-only causation-do-see">
-<p class="ptitle">互动 · 观察与干预</p>
-<h3>do-算子作为一个具体演算</h3>
-<p class="pnote">一个玩具结构模型：下雨会增加带伞的可能性和衣服淋湿的可能性；而带伞本身能减少被淋湿的概率。滑动条设定的是 logistic 系数强度，而不是风险差。下方的所有数值均从这一设定模型中计算得出。</p>
+<Panel class="web-only causation-do-see">
+<PanelTitle>互动 · 观察与干预</PanelTitle>
+
+### do-算子作为一个具体演算
+
+<PanelNote>一个玩具结构模型：下雨会增加带伞的可能性和衣服淋湿的可能性；而带伞本身能减少被淋湿的概率。滑动条设定的是 logistic 系数强度，而不是风险差。下方的所有数值均从这一设定模型中计算得出。</PanelNote>
 
 <div class="preset-row" role="group" aria-label="结构因果模型预设">
 <button type="button" data-preset="none">无混杂</button>
@@ -317,12 +368,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 <p class="pnote">模型公式为：<MathInline latex={String.raw`S \sim \operatorname{Bernoulli}(0.45)`} />；<MathInline latex={String.raw`P(X=1\mid S=s)=\operatorname{logit}^{-1}(a+bs)`} />；<MathInline latex={String.raw`P(Y=1\mid X=x,S=s)=\operatorname{logit}^{-1}(c+dx+es)`} />。此处 <MathInline latex={String.raw`S`} /> 代表下雨，<MathInline latex={String.raw`X`} /> 代表带伞，<MathInline latex={String.raw`Y`} /> 代表衣服湿；固定默认值为 <MathInline latex={String.raw`a=-2.0`} />、<MathInline latex={String.raw`c=-2.2`} />、<MathInline latex={String.raw`e=4.1`} />。</p>
 </div>
-</div>
+</Panel>
 
-<div class="format-alt epub-only print-only">
-<p class="ptitle">案例详解</p>
-<h3>观察不等于干预</h3>
-<p>在这个玩具结构模型中，下雨会让带伞和衣服湿的现象都变得更加常见。带伞本身确实能减少淋湿，但在观测数据中，带伞的人衣服反而更湿，因为他们绝大多数都站在雨中。</p>
+<FormatAlt class="epub-only print-only">
+<PanelTitle>案例详解</PanelTitle>
+
+### 观察不等于干预
+
+在这个玩具结构模型中，下雨会让带伞和衣服湿的现象都变得更加常见。带伞本身确实能减少淋湿，但在观测数据中，带伞的人衣服反而更湿，因为他们绝大多数都站在雨中。
+
 <table class="alt-table">
 <thead><tr><th>数量</th><th>提问含义</th><th>默认读数</th></tr></thead>
 <tbody>
@@ -331,12 +385,13 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>后门调整对照量</td><td>利用总体的下雨概率加权平均特定下雨状态下的带伞效应。</td><td>−0.16，与该模型下的干预对照量一致。</td></tr>
 </tbody>
 </table>
-<p>默认参数：<MathInline latex={String.raw`P(S=1)=0.45`} />、<MathInline latex={String.raw`a=-2.0`} />、<MathInline latex={String.raw`b=+2.8`} />、<MathInline latex={String.raw`c=-2.2`} />、<MathInline latex={String.raw`d=-1.485`} />、<MathInline latex={String.raw`e=+4.1`} />。公式：<MathInline latex={String.raw`P(Y=1 \mid \operatorname{do}(X=x)) = \sum_s P(Y=1 \mid X=x,S=s)P(S=s)`} />。而观测对照量则使用了 <MathInline latex={String.raw`P(S=s \mid X=x)`} />，当雨水影响带伞行为时，这一项就会发生改变。</p>
-</div>
+默认参数：<MathInline latex={String.raw`P(S=1)=0.45`} />、<MathInline latex={String.raw`a=-2.0`} />、<MathInline latex={String.raw`b=+2.8`} />、<MathInline latex={String.raw`c=-2.2`} />、<MathInline latex={String.raw`d=-1.485`} />、<MathInline latex={String.raw`e=+4.1`} />。公式：<MathInline latex={String.raw`P(Y=1 \mid \operatorname{do}(X=x)) = \sum_s P(Y=1 \mid X=x,S=s)P(S=s)`} />。而观测对照量则使用了 <MathInline latex={String.raw`P(S=s \mid X=x)`} />，当雨水影响带伞行为时，这一项就会发生改变。
 
-<section>
-<p>右图中被切断的箭头就是 do-算子的直观可视化。干预不仅是观察 X，它还会删除指向 X 的箭头，并用你的手取而代之。此时「下雨 → 带伞」的链接被切断，因此在带伞对照中，观测路径「带伞 ← 下雨 → 湿衣」不再开启。在此有向图下，后门调整后的对照量便还原了真实的干预效应。</p>
-<p>珀尔为我们提供了一套在纸上进行此类操作的语法体系。本课使用的递归或无环<span class="term">结构因果模型</span>（Structural Causal Models，简称 SCM）<TipNote text={String.raw`结构因果模型描述了变量是如何由其他变量与背景噪声生成的。`} />由<span class="term">有向无环图</span>（Directed Acyclic Graphs，简称 DAG）<TipNote text={String.raw`有向无环图（DAG）是由箭头组成的网络，且不包含任何有向环。`} />来表示：即由没有向循环的方框和箭头组成。现实中也存在有环与动态结构模型。在 DAG 中，<span class="term">叉形结构</span>（Fork，X ← Z → Y）可能带来混杂；<span class="term">链形结构</span>（Chain，X → Z → Y）则扮演中介（Mediator）；而<span class="term">对撞结构</span>（Collider，X → Z ← Y）则是那个统计学陷阱。一条由两个箭头交汇于同一节点的路径在对撞因子处默认是关闭的。然而，对该对撞因子（或其后代节点）进行条件化控制，反而会打开这条路径，从而在该路径上诱发关联。这就是为什么调整每一个测得变量都可能引入严重偏差。</p>
+</FormatAlt>
+
+右图中被切断的箭头就是 do-算子的直观可视化。干预不仅是观察 X，它还会删除指向 X 的箭头，并用你的手取而代之。此时「下雨 → 带伞」的链接被切断，因此在带伞对照中，观测路径「带伞 ← 下雨 → 湿衣」不再开启。在此有向图下，后门调整后的对照量便还原了真实的干预效应。
+
+珀尔为我们提供了一套在纸上进行此类操作的语法体系。本课使用的递归或无环<Term>结构因果模型</Term>（Structural Causal Models，简称 SCM）<TipNote text={String.raw`结构因果模型描述了变量是如何由其他变量与背景噪声生成的。`} />由<Term>有向无环图</Term>（Directed Acyclic Graphs，简称 DAG）<TipNote text={String.raw`有向无环图（DAG）是由箭头组成的网络，且不包含任何有向环。`} />来表示：即由没有向循环的方框和箭头组成。现实中也存在有环与动态结构模型。在 DAG 中，<Term>叉形结构</Term>（Fork，X ← Z → Y）可能带来混杂；<Term>链形结构</Term>（Chain，X → Z → Y）则扮演中介（Mediator）；而<Term>对撞结构</Term>（Collider，X → Z ← Y）则是那个统计学陷阱。一条由两个箭头交汇于同一节点的路径在对撞因子处默认是关闭的。然而，对该对撞因子（或其后代节点）进行条件化控制，反而会打开这条路径，从而在该路径上诱发关联。这就是为什么调整每一个测得变量都可能引入严重偏差。
 
 <div class="dag-examples" role="group" aria-label="三个具体 DAG 示例：叉形结构、链形结构和对撞结构。">
 <figure class="dag-card">
@@ -392,21 +447,27 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </figure>
 </div>
 
-<div class="aside">
-<p class="h">前门技巧</p>
-<p>珀尔的<span class="term">前门准则</span>（Front-Door Criterion）<TipNote text={String.raw`当暴露与结果之间的路径存在未观测混杂时，前门准则在满足特定图形条件的前提下，可通过测量中介因子来识别因果效应。`} />是该框架中最巧妙的招式之一：有时即便暴露与结果之间的路径存在未测量的混杂因素，你仍然可以通过测量一个中介因子来识别总体因果效应。教科书上常见的「吸烟 → 焦油 → 癌症」案例是一个简化的示意图（Stylized Graph），而非生物系统真实的定论。标准前门准则需要满足三个图形条件：中介因子截获了从处理到结果的所有有向路径；从处理到中介因子之间不存在未阻断的后门路径；以及处理变量阻断了从中介因子到结果的所有后门路径。此外，你依然需要明确定义的干预措施、一致性、充足的数据支持以及常规的测量和选择偏误防范。</p>
-<p>当这些条件满足时，因果效应的计算分为三步：估计处理如何改变中介因子；估计中介因子在考虑处理变量的情况下如何改变结果；最后在观测的处理分布上对这些部分进行加权平均。</p>
-<div class="formula">
-<MathBlock latex={String.raw`P(y \mid \operatorname{do}(x)) = \sum_m P(m \mid x) \sum_{x'} P(y \mid m, x') P(x')`} />
-</div>
-<p>它是在假定图下从观测数据识别干预分布的手段——但前提是你必须提供一张足够强大、能授权该代数表达式的因果图。</p>
-</div>
-</section>
+<Aside>
+<BlockTitle>前门技巧</BlockTitle>
 
-<section class="frontier">
-<p class="sec-eyebrow">前沿 · 2026</p>
-<h2>三个活跃领域——以及前沿校准器</h2>
-<p>现在来谈谈那个催生了数千篇论文、甚至开创了一个行业的问题：你能仅从观测中推断出因果吗？坦诚回答是精确的「部分可以——但存在一堵已被证明的墙」。下方的每项声明都标明了其可信度。<span class="meta">证据覆盖至 2024 年；页面编辑审阅于 2026 年 6 月。</span></p>
+珀尔的<Term>前门准则</Term>（Front-Door Criterion）<TipNote text={String.raw`当暴露与结果之间的路径存在未观测混杂时，前门准则在满足特定图形条件的前提下，可通过测量中介因子来识别因果效应。`} />是该框架中最巧妙的招式之一：有时即便暴露与结果之间的路径存在未测量的混杂因素，你仍然可以通过测量一个中介因子来识别总体因果效应。教科书上常见的「吸烟 → 焦油 → 癌症」案例是一个简化的示意图（Stylized Graph），而非生物系统真实的定论。标准前门准则需要满足三个图形条件：中介因子截获了从处理到结果的所有有向路径；从处理到中介因子之间不存在未阻断的后门路径；以及处理变量阻断了从中介因子到结果的所有后门路径。此外，你依然需要明确定义的干预措施、一致性、充足的数据支持以及常规的测量和选择偏误防范。
+
+当这些条件满足时，因果效应的计算分为三步：估计处理如何改变中介因子；估计中介因子在考虑处理变量的情况下如何改变结果；最后在观测的处理分布上对这些部分进行加权平均。
+
+<Formula>
+<MathBlock latex={String.raw`P(y \mid \operatorname{do}(x)) = \sum_m P(m \mid x) \sum_{x'} P(y \mid m, x') P(x')`} />
+</Formula>
+
+它是在假定图下从观测数据识别干预分布的手段——但前提是你必须提供一张足够强大、能授权该代数表达式的因果图。
+
+</Aside>
+
+<ContentSection class="frontier">
+<SectionEyebrow>前沿 · 2026</SectionEyebrow>
+
+## 三个活跃领域——以及前沿校准器
+
+现在来谈谈那个催生了数千篇论文、甚至开创了一个行业的问题：你能仅从观测中推断出因果吗？坦诚回答是精确的「部分可以——但存在一堵已被证明的墙」。下方的每项声明都标明了其可信度。<Meta>证据覆盖至 2024 年；页面编辑审阅于 2026 年 6 月。</Meta>
 
 <div class="claim">
 <div class="ctop">
@@ -417,14 +478,18 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <h3>圈定领域的两个定理</h3>
 <p>这是今天最稳固的基石——它不是可能被推翻的经验发现，而是数学证明。首先，do-演算在一个限定的作用域内是完备的：在给定假定的非参数因果图与可用的观测分布时，它在识别特定的干预分布上是完备的。如果该问题下的识别失败，则没有任何其他基于相同观测信息的操作能够对其进行识别。而额外的实验、纵向数据、参数限制、有效代理变量或更强的函数形式假设则会改变可用的信息，并可能改变识别的结论。</p>
 
-<div class="aside">
-<p class="h">后门公式的推导过程</p>
-<p>对于一个简单的后门图，其中 Z 阻断了从 X 到 Y 的所有后门路径，且 Z 中的任何元素都不是由 X 引起的：</p>
-<div class="formula">
+<Aside>
+<BlockTitle>后门公式的推导过程</BlockTitle>
+
+对于一个简单的后门图，其中 Z 阻断了从 X 到 Y 的所有后门路径，且 Z 中的任何元素都不是由 X 引起的：
+
+<Formula>
 <MathBlock latex={String.raw`P(y \mid \operatorname{do}(x)) = \sum_z P(y \mid \operatorname{do}(x), z) P(z \mid \operatorname{do}(x)) = \sum_z P(y \mid x, z) P(z)`} />
-</div>
-<p>第一个等号是普通的对 Z 求和的全概率公式。第二个等号两次利用了因果图：一次是将对 X 的干预替换为在控制了充足调整集 Z 的条件后对 X 的观测，另一次则是说明对 X 的干预不会改变处理前变量 Z 的分布。因果图授权了哪些符号可以被擦除或交换。</p>
-</div>
+</Formula>
+
+第一个等号是普通的对 Z 求和的全概率公式。第二个等号两次利用了因果图：一次是将对 X 的干预替换为在控制了充足调整集 Z 的条件后对 X 的观测，另一次则是说明对 X 的干预不会改变处理前变量 Z 的分布。因果图授权了哪些符号可以被擦除或交换。
+
+</Aside>
 
 <p>其次是另一侧的墙：<span class="term">马尔可夫等价天花板</span>（Markov-Equivalence Ceiling）。在因果马尔可夫假设、忠实性假设以及对潜在变量与选择性偏误进行特定处理的框架下，条件独立性模式可以排除某些图，但不能排除所有图。例如，X→Y→Z、X←Y←Z 和 X←Y→Z 具有相同的骨架，且没有不同的未屏蔽对撞因子，因此它们暗示了相同的条件独立模式：一旦已知 Y，X 和 Z 就是独立的。它们构成了一个<span class="term">马尔可夫等价类</span>（Markov Equivalence Class）<TipNote text={String.raw`马尔可夫等价类是指一组暗示了相同条件独立性的因果图，因此仅凭此类观测数据无法在其中做出唯一的选择。`} />。对撞结构 X→Y←Z 与它们不同，因为对 Y 进行条件化控制会打开通过 Y 的路径。结论是冷酷的：在无假设的前提下，仅凭观测数据的独立性信息无法给出一个唯一的因果图——只能给出一类候选图。这两项结果在最强的意义上都是已确立的定理。</p>
 </div>
@@ -450,11 +515,12 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <p>最炙手可热也最模糊的前沿。<span class="term">因果表征学习</span>（Causal Representation Learning）<TipNote text={String.raw`因果表征学习试图从像素、文本或传感器流等原始数据中学习有用的因果变量。`} />（Schölkopf 等，2021 年《IEEE 会报》）提出了一个深刻的问题：经典的因果发现假设变量是现成给定的，但现实世界呈现的却是像素和词语。神经网络能否学习到高层因果变量——这是否能买来对<span class="term">分布偏移</span>（Distribution Shift）<TipNote text={String.raw`分布偏移是指模型在部署后看到的数据与其学习时的数据存在差异。`} />的稳健性，而这正是当今深度学习模型所极度欠缺的？这是一个严肃且活跃的研究计划，但其最大的承诺目前仍属于前景可期的线索，尚未在大规模实际应用中兑现。</p>
 <p>接着是最具争议的话题：大型语言模型能进行因果推理吗？Kıcıman、Ness、Sharma 和 Tan（TMLR 2024；初始 arXiv 预印本 2023 年）报告称，GPT-4 在自然语言的 Tübingen 双变量因果方向任务上达到了 97% 的准确率——使用的是文本变量描述，而不是数值观测数据——且在反事实评分上表现强劲。一个同时期批评认为，大模型只是在「谈论」因果，而非「具有」因果能力——它们只是在复述其训练语料中浸泡过的因果事实，而非执行珀尔式的因果推断。模型表现高度依赖于具体任务。模型能够检索已知的因果事实，并在语义丰富的基准测试中获得高分，但当去除语言和世界知识捷径，或者需要组合因果机制并将其迁移到新设定时，模型表现就会大幅下降。回想一下<a href="/zh/days/001-what-is-knowledge/">第 1 日的盖梯尔陷阱</a>的新变体：一个输出正确因果声明的 LLM，若其输出原因与实际的因果结构无关，那么它虽然答对了，但它「知道」吗？关于「LLM 是否在珀尔意义上具有因果推理能力」的结论：<StatusChip status={"bad"} label={"任务依赖；尚未确立为通用因果推理。"} printLabel={"任务依赖"} />它对于辅助因果分析是有用的，但尚未确立其作为通用因果推理器的地位。DoWhy 和 EconML 是现代生态中真正的工具：DoWhy 强调基于图的识别、假设和驳斥；EconML 则强调使用正交和机器学习方法的处理效应估计。关于「因果 AI 将很快取代普通相关性机器学习」的销售话术依然远远领先于证据。</p>
 </div>
-</section>
+</ContentSection>
 
-<section>
-<p class="sec-eyebrow">开放性问题</p>
-<h2>尚未定论的问题</h2>
+<SectionEyebrow>开放性问题</SectionEyebrow>
+
+## 尚未定论的问题
+
 <ul class="clean">
 <li>是否存在一种「正确」的因果理论？或者反事实、概率性、INUS、机制性和干预主义解释路径各抓住了不同的侧面，且都无法完全还原为其他论述？没有任何单一理论被普遍认为能解决所有主要类型的反例，包括早期和晚期预截、过度决定、遗漏和预防。</li>
 <li>我们在多大程度上可以信任忠实性假设？即假设现实系统永远不会产生因果路径之间精确抵消的现象。这种假设很方便，一些推论可以对照数据检验，但忠实性无法完全从有限的观测样本中确立——反馈、调节与内稳态会让它在某些生物系统中变得可疑。</li>
@@ -462,47 +528,49 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <li>大型模型是否构建了内部因果世界模型，还是仅仅建立了因果言论的统计模型？这一问题的答案直接关系到第 138–145 日，以及「预测是否等同于理解」的问题。</li>
 <li>箭头从何而来？这里的每种方法都需要「某种」因果输入——一张因果图、一个假设或一个实验。休谟的幽灵依然在发问：这些输入究竟是从世界中读取出来的，还是我们强加给世界的？</li>
 </ul>
-</section>
 
-<div class="recap">
-<p class="h">◆ 今日三句话总结</p>
+<Recap>
+<BlockTitle>◆ 今日三句话总结</BlockTitle>
+
 <dl>
 <div><dt>核心思想</dt><dd>因果效应是特定干预下结果之间的对照。观测数量与干预数量在数值上可能重合，但我们不能仅凭观测数据就假定它们相等；这需要通过随机化分配、因果图、潜在结果模型或其他可辩护的识别策略所体现的因果设计或因果假设。</dd></div>
 <div><dt>最佳类比</dt><dd>冰淇淋与溺水人数同步上升，而夏季在幕后同时牵动着这两根丝线；do-算子就像一把剪刀，剪断了指向处理变量的因果之弦，以便你看清它真正驱动了什么。</dd></div>
 <div><dt>实时争议</dt><dd>因果结构是否能仅从观测中推断——在标准假设下，通常只能识别到马尔可夫等价类，而在更强假设（LiNGAM、加性噪声模型）下可以部分恢复方向——以及当前关于大模型是在进行通用因果推理，还是大多在检索因果言论的争论。</dd></div>
 </dl>
-<p class="threads"><b>今日线索 ›</b> 信息（因果图是数据本身所缺乏的额外信息；do-算子区分了证据与干预）· 计算（可识别性作为一个算法问题；因果发现作为一种在假设下的搜索）· 涌现（因果结构是原始相关性之上的更高层级）——并回溯至 <a href="/zh/days/001-what-is-knowledge/">第 1 日</a>（凭运气正确）、<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>（休谟）、<a href="/zh/days/003-logic-and-valid-inference/">第 3 日</a>（溯因）以及 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>（<MathInline latex={String.raw`P(y\mid x)`} />），随后进入<a href="/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/">统计学与避免自欺的艺术</a>。</p>
-</div>
+<Threads>**今日线索 ›** 信息（因果图是数据本身所缺乏的额外信息；do-算子区分了证据与干预）· 计算（可识别性作为一个算法问题；因果发现作为一种在假设下的搜索）· 涌现（因果结构是原始相关性之上的更高层级）——并回溯至 [第 1 日](/zh/days/001-what-is-knowledge/)（凭运气正确）、[第 2 日](/zh/days/002-scientific-method-and-demarcation/)（休谟）、[第 3 日](/zh/days/003-logic-and-valid-inference/)（溯因）以及 [第 4 日](/zh/days/004-probability-as-extended-logic/)（<MathInline latex={String.raw`P(y\mid x)`} />），随后进入[统计学与避免自欺的艺术](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)。</Threads>
 
-<section class="sources">
-<p class="sec-eyebrow">证据</p>
-<h2>来源与深入阅读</h2>
-<ol>
-<li>Hume, D. (1739–40). <em>A Treatise of Human Nature</em>, Book I, Part III; and (1748) <em>An Enquiry Concerning Human Understanding</em>, §VII. <span class="meta">— 恒常结合；无可见的必然联系。</span></li>
-<li>Mackie, J. L. (1974/1980). <em>The Cement of the Universe: A Study of Causation.</em> Oxford University Press. <span class="meta">doi:10.1093/0198246420.001.0001。</span> <a href="https://doi.org/10.1093/0198246420.001.0001">doi.org/10.1093/0198246420.001.0001</a> <span class="meta">— INUS 条件；书名短语。</span></li>
-<li>Lewis, D. (1973). "Causation." <em>Journal of Philosophy</em> 70(17): 556–567. <span class="meta">doi:10.2307/2025310.</span> <a href="https://doi.org/10.2307/2025310">doi.org/10.2307/2025310</a> 另见 Lewis, <em>Counterfactuals</em> (Blackwell, 1973)；修订后的 "influence" 论述 (2000)。</li>
-<li>Reichenbach, H. (1956). <em>The Direction of Time.</em> University of California Press. <span class="meta">— 共同原因原理与屏蔽。</span></li>
-<li>Suppes, P. (1970). <em>A Probabilistic Theory of Causality.</em> North-Holland. <span class="meta">— 表面原因与虚假原因。</span></li>
-<li>Cartwright, N. (1979). "Causal Laws and Effective Strategies." <em>Noûs</em> 13(4): 419–437. <span class="meta">doi:10.2307/2215337.</span> <a href="https://doi.org/10.2307/2215337">doi.org/10.2307/2215337</a> <span class="meta">— 仅在因果同质背景下的概率提升。</span> <a href="https://academic.oup.com/book/27605/chapter/197659592">概览</a></li>
-<li>Woodward, J. (2003). <em>Making Things Happen: A Theory of Causal Explanation.</em> Oxford University Press. <span class="meta">doi:10.1093/0195155270.001.0001.</span> <a href="https://doi.org/10.1093/0195155270.001.0001">doi.org/10.1093/0195155270.001.0001</a> <span class="meta">— 干预主义/操控主义理论。</span></li>
-<li>Charig, C. R., Webb, D. R., Payne, S. R. &amp; Wickham, J. E. A. (1986). "Comparison of treatment of renal calculi by open surgery, percutaneous nephrolithotomy, and extracorporeal shockwave lithotripsy." <em>British Medical Journal</em> 292: 879–882. <span class="meta">doi:10.1136/bmj.292.6524.879.</span> <a href="https://doi.org/10.1136/bmj.292.6524.879">doi.org/10.1136/bmj.292.6524.879</a> <span class="meta">— 肾结石数据；观测与历史对比，而非治疗优势的随机化证据。</span></li>
-<li>Simpson, E. H. (1951). "The Interpretation of Interaction in Contingency Tables." <em>JRSS B</em> 13: 238–241. <span class="meta">doi:10.1111/j.2517-6161.1951.tb00088.x.</span> <a href="https://doi.org/10.1111/j.2517-6161.1951.tb00088.x">doi.org/10.1111/j.2517-6161.1951.tb00088.x</a> Blyth, C. R. (1972), <em>JASA</em> 67: 364–366, <span class="meta">doi:10.1080/01621459.1972.10482387</span>（提出 "Simpson's paradox" 一词）。<a href="https://doi.org/10.1080/01621459.1972.10482387">doi.org/10.1080/01621459.1972.10482387</a> Yule, G. U. (1903) 关于虚假相关，<span class="meta">doi:10.1093/biomet/2.2.121.</span> <a href="https://doi.org/10.1093/biomet/2.2.121">doi.org/10.1093/biomet/2.2.121</a></li>
-<li>Pearl, J. (2009). <em>Causality: Models, Reasoning, and Inference</em>, 2nd ed. Cambridge University Press. <span class="meta">doi:10.1017/CBO9780511803161.</span> <a href="https://doi.org/10.1017/CBO9780511803161">doi.org/10.1017/CBO9780511803161</a> 以及 Pearl, J. &amp; Mackenzie, D. (2018). <em>The Book of Why.</em> Basic Books. <span class="meta">— 因果之梯；do-演算；后门/前门。</span></li>
-<li>Holland, P. W. (1986). "Statistics and Causal Inference." <em>JASA</em> 81(396): 945–960. <span class="meta">doi:10.1080/01621459.1986.10478354; 潜在结果与因果推断的基本问题。</span> <a href="https://doi.org/10.1080/01621459.1986.10478354">doi.org/10.1080/01621459.1986.10478354</a> Rubin, D. B. (1974). "Estimating causal effects of treatments in randomized and nonrandomized studies." <em>Journal of Educational Psychology</em> 66(5): 688–701. <span class="meta">doi:10.1037/h0037350.</span> <a href="https://doi.org/10.1037/h0037350">doi.org/10.1037/h0037350</a></li>
-<li>Imbens, G. W. &amp; Rubin, D. B. (2015). <em>Causal Inference for Statistics, Social, and Biomedical Sciences.</em> Cambridge University Press. <span class="meta">doi:10.1017/CBO9781139025751.</span> <a href="https://doi.org/10.1017/CBO9781139025751">doi.org/10.1017/CBO9781139025751</a> Hernán, M. A. &amp; Robins, J. M. (2020). <em>Causal Inference: What If.</em> Chapman &amp; Hall/CRC. <a href="https://miguelhernan.org/whatifbook">书籍网站</a> <span class="meta">— 在线版持续更新，2026 年 6 月查阅；估计目标、一致性、可交换性、正值性、干扰、前门/后门。</span></li>
-<li>Shpitser, I. &amp; Pearl, J. (2006). "Identification of Joint Interventional Distributions in Recursive Semi-Markovian Causal Models." <em>AAAI.</em> <a href="https://cdn.aaai.org/AAAI/2006/AAAI06-191.pdf">AAAI PDF</a> &amp; Huang, Y. &amp; Valtorta, M. (2006). "Pearl's Calculus of Intervention Is Complete." <em>UAI.</em> <a href="https://arxiv.org/abs/1206.6831">arXiv</a> <span class="meta">— 在所陈述的识别问题内 do-演算的完备性。</span></li>
-<li>ACM (2012). 2011 A.M. Turing Award — Judea Pearl. <a href="https://amturing.acm.org/award_winners/pearl_2658896.cfm">amturing.acm.org/award_winners/pearl</a></li>
-<li>Spirtes, P., Glymour, C. &amp; Scheines, R. (2000). <em>Causation, Prediction, and Search</em>, 2nd ed. MIT Press. <span class="meta">doi:10.7551/mitpress/1754.001.0001.</span> <a href="https://doi.org/10.7551/mitpress/1754.001.0001">doi.org/10.7551/mitpress/1754.001.0001</a> <span class="meta">— PC 与 FCI 算法；马尔可夫等价。</span></li>
-<li>Shimizu, S., Hoyer, P. O., Hyvärinen, A. &amp; Kerminen, A. (2006). "A Linear Non-Gaussian Acyclic Model for Causal Discovery." <em>JMLR</em> 7: 2003–2030. <a href="https://www.jmlr.org/papers/v7/shimizu06a.html">JMLR</a> <span class="meta">— LiNGAM；线性、无环、无隐性混杂、相互独立的非高斯扰动项。</span></li>
-<li>Hoyer, P., Janzing, D., Mooij, J., Peters, J. &amp; Schölkopf, B. (2008/2009). "Nonlinear causal discovery with additive noise models." <em>Advances in Neural Information Processing Systems 21.</em> Mooij, J. et al. (2016). "Distinguishing Cause from Effect Using Observational Data." <em>JMLR</em> 17(32): 1–102. Wu, P. &amp; Fukumizu, K. (2020). "Causal Mosaic: Cause-Effect Inference via Nonlinear ICA and Ensemble Method." <em>Proceedings of Machine Learning Research</em> 108: 1157–1167. <a href="https://proceedings.mlr.press/v108/wu20b.html">PMLR</a> <span class="meta">— 加性噪声模型、Tübingen 成对基准与 Mosaic 报告的专家标记成对任务结果。</span></li>
-<li>Schölkopf, B., Locatello, F., Bauer, S., Ke, N. R., Kalchbrenner, N., Goyal, A. &amp; Bengio, Y. (2021). "Toward Causal Representation Learning." <em>Proceedings of the IEEE</em> 109(5): 612–634. <span class="meta">doi:10.1109/JPROC.2021.3058954.</span> <a href="https://doi.org/10.1109/JPROC.2021.3058954">doi.org/10.1109/JPROC.2021.3058954</a></li>
-<li>Kıcıman, E., Ness, R., Sharma, A. &amp; Tan, C. (2024). "Causal Reasoning and Large Language Models." <em>TMLR.</em> <span class="meta">初始 arXiv 预印本 2023 年；报告在使用文本元数据而非数值观测数据的自然语言成对因果方向任务上达到 97% 准确率。</span> <a href="https://openreview.net/forum?id=mqoxLkX210">OpenReview</a> Zečević, M., Willig, M., Dhami, D. S. &amp; Kersting, K. (2023). "Causal Parrots: Large Language Models May Talk Causality But Are Not Causal." <em>TMLR.</em> <span class="meta">arXiv:2308.13067.</span> Jin, Z. et al. (2024). "Can Large Language Models Infer Causation from Correlation?" <em>ICLR.</em></li>
-<li>The Royal Swedish Academy of Sciences (2021). The Sveriges Riksbank Prize in Economic Sciences — Card, Angrist &amp; Imbens. <a href="https://www.nobelprize.org/prizes/economic-sciences/2021/summary/">nobelprize.org/prizes/economic-sciences/2021</a></li>
-<li>Stanford Encyclopedia of Philosophy. "Causation." <a href="https://plato.stanford.edu/entries/causation-metaphysics/">plato.stanford.edu/entries/causation-metaphysics</a></li>
-<li>Stanford Encyclopedia of Philosophy. "Counterfactual Theories of Causation." <a href="https://plato.stanford.edu/entries/causation-counterfactual/">plato.stanford.edu/entries/causation-counterfactual</a></li>
-<li>Stanford Encyclopedia of Philosophy. "Causal Models." <a href="https://plato.stanford.edu/entries/causal-models/">plato.stanford.edu/entries/causal-models</a></li>
-<li>Stanford Encyclopedia of Philosophy. "Probabilistic Causation." <a href="https://plato.stanford.edu/entries/causation-probabilistic/">plato.stanford.edu/entries/causation-probabilistic</a></li>
-</ol>
-</section>
+</Recap>
 
-</div>
+<Sources>
+<SectionEyebrow>证据</SectionEyebrow>
+
+## 来源与深入阅读
+
+1. Hume, D. (1739–40). *A Treatise of Human Nature*, Book I, Part III; and (1748) *An Enquiry Concerning Human Understanding*, §VII. <Meta>— 恒常结合；无可见的必然联系。</Meta>
+1. Mackie, J. L. (1974/1980). *The Cement of the Universe: A Study of Causation.* Oxford University Press. <Meta>doi:10.1093/0198246420.001.0001。</Meta> [doi.org/10.1093/0198246420.001.0001](https://doi.org/10.1093/0198246420.001.0001) <Meta>— INUS 条件；书名短语。</Meta>
+1. Lewis, D. (1973). "Causation." *Journal of Philosophy* 70(17): 556–567. <Meta>doi:10.2307/2025310.</Meta> [doi.org/10.2307/2025310](https://doi.org/10.2307/2025310) 另见 Lewis, *Counterfactuals* (Blackwell, 1973)；修订后的 "influence" 论述 (2000)。
+1. Reichenbach, H. (1956). *The Direction of Time.* University of California Press. <Meta>— 共同原因原理与屏蔽。</Meta>
+1. Suppes, P. (1970). *A Probabilistic Theory of Causality.* North-Holland. <Meta>— 表面原因与虚假原因。</Meta>
+1. Cartwright, N. (1979). "Causal Laws and Effective Strategies." *Noûs* 13(4): 419–437. <Meta>doi:10.2307/2215337.</Meta> [doi.org/10.2307/2215337](https://doi.org/10.2307/2215337) <Meta>— 仅在因果同质背景下的概率提升。</Meta> [概览](https://academic.oup.com/book/27605/chapter/197659592)
+1. Woodward, J. (2003). *Making Things Happen: A Theory of Causal Explanation.* Oxford University Press. <Meta>doi:10.1093/0195155270.001.0001.</Meta> [doi.org/10.1093/0195155270.001.0001](https://doi.org/10.1093/0195155270.001.0001) <Meta>— 干预主义/操控主义理论。</Meta>
+1. Charig, C. R., Webb, D. R., Payne, S. R. &amp; Wickham, J. E. A. (1986). "Comparison of treatment of renal calculi by open surgery, percutaneous nephrolithotomy, and extracorporeal shockwave lithotripsy." *British Medical Journal* 292: 879–882. <Meta>doi:10.1136/bmj.292.6524.879.</Meta> [doi.org/10.1136/bmj.292.6524.879](https://doi.org/10.1136/bmj.292.6524.879) <Meta>— 肾结石数据；观测与历史对比，而非治疗优势的随机化证据。</Meta>
+1. Simpson, E. H. (1951). "The Interpretation of Interaction in Contingency Tables." *JRSS B* 13: 238–241. <Meta>doi:10.1111/j.2517-6161.1951.tb00088.x.</Meta> [doi.org/10.1111/j.2517-6161.1951.tb00088.x](https://doi.org/10.1111/j.2517-6161.1951.tb00088.x) Blyth, C. R. (1972), *JASA* 67: 364–366, <Meta>doi:10.1080/01621459.1972.10482387</Meta>（提出 "Simpson's paradox" 一词）。[doi.org/10.1080/01621459.1972.10482387](https://doi.org/10.1080/01621459.1972.10482387) Yule, G. U. (1903) 关于虚假相关，<Meta>doi:10.1093/biomet/2.2.121.</Meta> [doi.org/10.1093/biomet/2.2.121](https://doi.org/10.1093/biomet/2.2.121)
+1. Pearl, J. (2009). *Causality: Models, Reasoning, and Inference*, 2nd ed. Cambridge University Press. <Meta>doi:10.1017/CBO9780511803161.</Meta> [doi.org/10.1017/CBO9780511803161](https://doi.org/10.1017/CBO9780511803161) 以及 Pearl, J. &amp; Mackenzie, D. (2018). *The Book of Why.* Basic Books. <Meta>— 因果之梯；do-演算；后门/前门。</Meta>
+1. Holland, P. W. (1986). "Statistics and Causal Inference." *JASA* 81(396): 945–960. <Meta>doi:10.1080/01621459.1986.10478354; 潜在结果与因果推断的基本问题。</Meta> [doi.org/10.1080/01621459.1986.10478354](https://doi.org/10.1080/01621459.1986.10478354) Rubin, D. B. (1974). "Estimating causal effects of treatments in randomized and nonrandomized studies." *Journal of Educational Psychology* 66(5): 688–701. <Meta>doi:10.1037/h0037350.</Meta> [doi.org/10.1037/h0037350](https://doi.org/10.1037/h0037350)
+1. Imbens, G. W. &amp; Rubin, D. B. (2015). *Causal Inference for Statistics, Social, and Biomedical Sciences.* Cambridge University Press. <Meta>doi:10.1017/CBO9781139025751.</Meta> [doi.org/10.1017/CBO9781139025751](https://doi.org/10.1017/CBO9781139025751) Hernán, M. A. &amp; Robins, J. M. (2020). *Causal Inference: What If.* Chapman &amp; Hall/CRC. [书籍网站](https://miguelhernan.org/whatifbook) <Meta>— 在线版持续更新，2026 年 6 月查阅；估计目标、一致性、可交换性、正值性、干扰、前门/后门。</Meta>
+1. Shpitser, I. &amp; Pearl, J. (2006). "Identification of Joint Interventional Distributions in Recursive Semi-Markovian Causal Models." *AAAI.* [AAAI PDF](https://cdn.aaai.org/AAAI/2006/AAAI06-191.pdf) &amp; Huang, Y. &amp; Valtorta, M. (2006). "Pearl's Calculus of Intervention Is Complete." *UAI.* [arXiv](https://arxiv.org/abs/1206.6831) <Meta>— 在所陈述的识别问题内 do-演算的完备性。</Meta>
+1. ACM (2012). 2011 A.M. Turing Award — Judea Pearl. [amturing.acm.org/award_winners/pearl](https://amturing.acm.org/award_winners/pearl_2658896.cfm)
+1. Spirtes, P., Glymour, C. &amp; Scheines, R. (2000). *Causation, Prediction, and Search*, 2nd ed. MIT Press. <Meta>doi:10.7551/mitpress/1754.001.0001.</Meta> [doi.org/10.7551/mitpress/1754.001.0001](https://doi.org/10.7551/mitpress/1754.001.0001) <Meta>— PC 与 FCI 算法；马尔可夫等价。</Meta>
+1. Shimizu, S., Hoyer, P. O., Hyvärinen, A. &amp; Kerminen, A. (2006). "A Linear Non-Gaussian Acyclic Model for Causal Discovery." *JMLR* 7: 2003–2030. [JMLR](https://www.jmlr.org/papers/v7/shimizu06a.html) <Meta>— LiNGAM；线性、无环、无隐性混杂、相互独立的非高斯扰动项。</Meta>
+1. Hoyer, P., Janzing, D., Mooij, J., Peters, J. &amp; Schölkopf, B. (2008/2009). "Nonlinear causal discovery with additive noise models." *Advances in Neural Information Processing Systems 21.* Mooij, J. et al. (2016). "Distinguishing Cause from Effect Using Observational Data." *JMLR* 17(32): 1–102. Wu, P. &amp; Fukumizu, K. (2020). "Causal Mosaic: Cause-Effect Inference via Nonlinear ICA and Ensemble Method." *Proceedings of Machine Learning Research* 108: 1157–1167. [PMLR](https://proceedings.mlr.press/v108/wu20b.html) <Meta>— 加性噪声模型、Tübingen 成对基准与 Mosaic 报告的专家标记成对任务结果。</Meta>
+1. Schölkopf, B., Locatello, F., Bauer, S., Ke, N. R., Kalchbrenner, N., Goyal, A. &amp; Bengio, Y. (2021). "Toward Causal Representation Learning." *Proceedings of the IEEE* 109(5): 612–634. <Meta>doi:10.1109/JPROC.2021.3058954.</Meta> [doi.org/10.1109/JPROC.2021.3058954](https://doi.org/10.1109/JPROC.2021.3058954)
+1. Kıcıman, E., Ness, R., Sharma, A. &amp; Tan, C. (2024). "Causal Reasoning and Large Language Models." *TMLR.* <Meta>初始 arXiv 预印本 2023 年；报告在使用文本元数据而非数值观测数据的自然语言成对因果方向任务上达到 97% 准确率。</Meta> [OpenReview](https://openreview.net/forum?id=mqoxLkX210) Zečević, M., Willig, M., Dhami, D. S. &amp; Kersting, K. (2023). "Causal Parrots: Large Language Models May Talk Causality But Are Not Causal." *TMLR.* <Meta>arXiv:2308.13067.</Meta> Jin, Z. et al. (2024). "Can Large Language Models Infer Causation from Correlation?" *ICLR.*
+1. The Royal Swedish Academy of Sciences (2021). The Sveriges Riksbank Prize in Economic Sciences — Card, Angrist &amp; Imbens. [nobelprize.org/prizes/economic-sciences/2021](https://www.nobelprize.org/prizes/economic-sciences/2021/summary/)
+1. Stanford Encyclopedia of Philosophy. "Causation." [plato.stanford.edu/entries/causation-metaphysics](https://plato.stanford.edu/entries/causation-metaphysics/)
+1. Stanford Encyclopedia of Philosophy. "Counterfactual Theories of Causation." [plato.stanford.edu/entries/causation-counterfactual](https://plato.stanford.edu/entries/causation-counterfactual/)
+1. Stanford Encyclopedia of Philosophy. "Causal Models." [plato.stanford.edu/entries/causal-models](https://plato.stanford.edu/entries/causal-models/)
+1. Stanford Encyclopedia of Philosophy. "Probabilistic Causation." [plato.stanford.edu/entries/causation-probabilistic](https://plato.stanford.edu/entries/causation-probabilistic/)
+
+</Sources>
+
+</Wrap>

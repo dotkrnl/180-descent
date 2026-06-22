@@ -1,0 +1,9 @@
+---
+interface Props {
+  class?: string;
+  number?: string;
+}
+
+const className = ["sec-eyebrow", Astro.props.class].filter(Boolean).join(" ");
+---
+<p class={className}>{Astro.props.number && <span class="n">{Astro.props.number}</span>}<slot /></p>

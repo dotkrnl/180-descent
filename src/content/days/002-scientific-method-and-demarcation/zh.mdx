@@ -2,10 +2,35 @@ import blackSwan from "../../../assets/images/open-license/black-swan-cygnus-atr
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-<header class="hero wrap">
-<p class="eyebrow">模块一 · 知识与推理的根基 · <span class="daymark">第 02 日 / 180</span></p>
-<h1>科学方法与划界问题</h1>
-<p class="sub">四十五亿年来，太阳每日准时东升。那么明日依旧会如期而至——对吗？</p>
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+
+<Hero>
+<HeroEyebrow>模块一 · 知识与推理的根基 · <span class="daymark">第 02 日 / 180</span></HeroEyebrow>
+
+# 科学方法与划界问题
+
+<HeroSubhead>四十五亿年来，太阳每日准时东升。那么明日依旧会如期而至——对吗？</HeroSubhead>
 
 <figure class="hero-sun">
 <div class="sunwrap">
@@ -40,103 +65,134 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <span class="sun-tag">● 每一次过往的日出都是证据——却证明不了下一次日出</span>
 </figure>
 
-<p class="lede"><span class="drop">若</span>问一个孩子，明天太阳是否会升起，他多半会觉得你在无理取闹。当然会升——它一向如此。这份笃定，仿佛构成了知识最底层的基石。可若再深究一句「你凭什么相信」，你便一脚踏入了一座悬崖——那是 1739 年一位寡言的苏格兰哲学家悄然掘出的，至今无人能将其填平。你唯一的凭据，不过是太阳从前升起过。你的论证逻辑其实是：未来会与过去相似，因为在过去，未来曾与过去相似。请再读一遍——它预设了它恰恰想要证明的东西。</p>
+<Lead drop="若">问一个孩子，明天太阳是否会升起，他多半会觉得你在无理取闹。当然会升——它一向如此。这份笃定，仿佛构成了知识最底层的基石。可若再深究一句「你凭什么相信」，你便一脚踏入了一座悬崖——那是 1739 年一位寡言的苏格兰哲学家悄然掘出的，至今无人能将其填平。你唯一的凭据，不过是太阳从前升起过。你的论证逻辑其实是：未来会与过去相似，因为在过去，未来曾与过去相似。请再读一遍——它预设了它恰恰想要证明的东西。</Lead>
 
-<p>这座悬崖，名为归纳问题（Problem of Induction）；整部科学机器，正是从这处缺口启动——不是凯旋而归，而是从绝境出发。今日，我们将目睹思想家们耗费两个世纪试图攀援而出：他们放弃了证明，转而追逐「证伪」；他们意识到科学其实并不像教科书里写的那般整饬；最终，在我们身处的时代，科学家以所能想象的最严苛方式拷问这整桩疑问——让大量已发表的发现接受复现，然后冷眼旁观其中一部分拒绝重演。</p>
-</header><div class="wrap">
+这座悬崖，名为归纳问题（Problem of Induction）；整部科学机器，正是从这处缺口启动——不是凯旋而归，而是从绝境出发。今日，我们将目睹思想家们耗费两个世纪试图攀援而出：他们放弃了证明，转而追逐「证伪」；他们意识到科学其实并不像教科书里写的那般整饬；最终，在我们身处的时代，科学家以所能想象的最严苛方式拷问这整桩疑问——让大量已发表的发现接受复现，然后冷眼旁观其中一部分拒绝重演。
 
-<div class="whereblock">
-<p class="label">◆ 我们身处何处</p>
-<p>昨日（<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>）我们追问，单个信念何时堪称知识，并邂逅了盖梯尔那只停摆的钟——那是一桩被运气而非关联拯救的真信念。今日，我们将这一忧虑从一颗心智放大到整个文明尺度的事业：科学如何裁定，哪些主张才配进入竞技场？请把昨日的工具留在手边。<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>的信念刻度盘（信念有程度之分，并非全有即全无）即将成为面对休谟质疑的唯一清醒回应；而那道前沿校准器——它筛去热门发现，又在复现实验将其推翻时悄然生效——今日将成为整场戏的第三幕。</p>
-</div>
+</Hero>
 
-<section>
-<p class="sec-eyebrow">地上的裂口</p>
-<h2>休谟抽去了地基</h2>
-<p>1739 年，二十八岁的大卫·休谟出版《人性论》——一部问世时备受冷落的著作，他自嘲它「一出世便已夭折」。书中藏着一枚引线极长的炸弹。休谟注意到，我们关于尚未直接经历之事的全部信念——面包明日仍将如今日般滋养我们，太阳仍将升起——都倚靠一个隐秘的假设：即<span class="term">自然是齐一的</span>，未曾经历的事物会与过往经验一样运作。</p>
-<p>他指出，这一假设无从辩护。不是逻辑问题：太阳明天不升起，并不蕴涵矛盾。诚如休谟以不动声色的精准所言：</p>
+<Wrap>
+
+<WhereBlock>
+<Label>◆ 我们身处何处</Label>
+
+昨日（[第 1 日](/zh/days/001-what-is-knowledge/)）我们追问，单个信念何时堪称知识，并邂逅了盖梯尔那只停摆的钟——那是一桩被运气而非关联拯救的真信念。今日，我们将这一忧虑从一颗心智放大到整个文明尺度的事业：科学如何裁定，哪些主张才配进入竞技场？请把昨日的工具留在手边。[第 1 日](/zh/days/001-what-is-knowledge/)的信念刻度盘（信念有程度之分，并非全有即全无）即将成为面对休谟质疑的唯一清醒回应；而那道前沿校准器——它筛去热门发现，又在复现实验将其推翻时悄然生效——今日将成为整场戏的第三幕。
+
+</WhereBlock>
+
+<SectionEyebrow>地上的裂口</SectionEyebrow>
+
+## 休谟抽去了地基
+
+1739 年，二十八岁的大卫·休谟出版《人性论》——一部问世时备受冷落的著作，他自嘲它「一出世便已夭折」。书中藏着一枚引线极长的炸弹。休谟注意到，我们关于尚未直接经历之事的全部信念——面包明日仍将如今日般滋养我们，太阳仍将升起——都倚靠一个隐秘的假设：即<Term>自然是齐一的</Term>，未曾经历的事物会与过往经验一样运作。
+
+他指出，这一假设无从辩护。不是逻辑问题：太阳明天不升起，并不蕴涵矛盾。诚如休谟以不动声色的精准所言：
+
 <blockquote>太阳明日不会升起，这一命题并不比它明日会升起更不可理解，也不蕴涵更多矛盾。
 <span class="src">——休谟，《人类理解研究》，§IV（1748）</span></blockquote>
-<p>因此，齐一性并非逻辑真理。那么，能否以经验为之辩护——「它向来如此，所以推断它会继续如此是稳妥的」？且看陷阱合拢：这一论证动用了过去预测未来的原则，来证明过去预测未来。这是循环论证。人不可能拽着自己的头发离开地面。休谟的结论堪称真正激进，值得不加粉饰地陈述：我们对自己的未来之确信，毫无理性根据。我们期待日出，是出于习惯，而非逻辑证明。</p>
-<p>这便是科学方法自诞生起就试图包扎的伤口。若我们永远不能以堆积证实的案例来证明一条普遍定律——再多的白天鹅也无法证明「所有天鹅皆白」——那么科学声称发现自然定律时，究竟在做什么？</p>
+因此，齐一性并非逻辑真理。那么，能否以经验为之辩护——「它向来如此，所以推断它会继续如此是稳妥的」？且看陷阱合拢：这一论证动用了过去预测未来的原则，来证明过去预测未来。这是循环论证。人不可能拽着自己的头发离开地面。休谟的结论堪称真正激进，值得不加粉饰地陈述：我们对自己的未来之确信，毫无理性根据。我们期待日出，是出于习惯，而非逻辑证明。
 
-<div class="aside">
-<p class="h">关于黑天鹅的注记</p>
-<p>欧洲人曾如此确信所有天鹅皆白，以至于「黑天鹅」成了数个世纪以来的习语，意指不存在之物——好比「太阳从西边出来」。然而 1697 年，荷兰探险家抵达西澳大利亚，发现河湾中满是黑天鹅（Cygnus atratus）。百万次确认的目击筑起了一条坚不可摧的定律；珀斯的一只孤鸟却将其击得粉碎。请在心中持守这一不对等——它即将成为今日全篇的枢轴。</p>
+这便是科学方法自诞生起就试图包扎的伤口。若我们永远不能以堆积证实的案例来证明一条普遍定律——再多的白天鹅也无法证明「所有天鹅皆白」——那么科学声称发现自然定律时，究竟在做什么？
+
+<Aside>
+<BlockTitle>关于黑天鹅的注记</BlockTitle>
+
+欧洲人曾如此确信所有天鹅皆白，以至于「黑天鹅」成了数个世纪以来的习语，意指不存在之物——好比「太阳从西边出来」。然而 1697 年，荷兰探险家抵达西澳大利亚，发现河湾中满是黑天鹅（Cygnus atratus）。百万次确认的目击筑起了一条坚不可摧的定律；珀斯的一只孤鸟却将其击得粉碎。请在心中持守这一不对等——它即将成为今日全篇的枢轴。
+
 <figure class="lesson-figure">
 <img src={blackSwan.src} width="1200" height="600" loading="lazy" decoding="async" alt="一只黑天鹅带着几只灰色幼雏在水面上游动。" />
 <figcaption>一只黑天鹅让这种不对等变得一目了然：确认案例可以堆积数百年，而一个反例仍足以击碎定律。</figcaption>
 </figure>
-</div>
-</section>
+</Aside>
 
-<section>
-<p class="sec-eyebrow">逃遁之路</p>
-<h2>波普尔的柔道：别再试图证明</h2>
-<p>1920 年代的维也纳。年轻的卡尔·波普尔被各种急于攫取「科学」之名的思想运动包围：弗洛伊德的精神分析、阿德勒的个体心理学、马克思的历史理论。追随者们如痴如狂。他们环顾四周，满眼皆是证实——每一句口误都印证弗洛伊德，每一次政治旋涡都印证马克思。而波普尔猛然意识到，这恰恰是它们的病灶所在。</p>
-<p>解释一切的理论，其实一无所释。若没有任何可想象的观察能够反驳你的理论——若有人救起溺水儿童，与有人眼睁睁看着他溺毙，皆能同样套入弗洛伊德的框架——那么你的理论并不勇敢。它是空洞的。它没有排除任何可能，故世界无从惊扰它。</p>
-<p>请将之与爱因斯坦对照。1915 年，广义相对论作出了一项大胆的、高风险的预言：掠过太阳的星光会弯折一个特定角度——1.75 角秒，是牛顿预言的两倍。若 1919 年的日食测量结果符合牛顿的预测，爱因斯坦便将一败涂地。他把理论的脖子伸了出去。那，波普尔说，才是真实科学的印记。</p>
-<p>于是波普尔使出一记哲学柔道。休谟说得对——你永远无法证实一条普遍定律。很好。那么停止尝试。将黑天鹅的不对称性翻转为一门方法：</p>
+<SectionEyebrow>逃遁之路</SectionEyebrow>
+
+## 波普尔的柔道：别再试图证明
+
+1920 年代的维也纳。年轻的卡尔·波普尔被各种急于攫取「科学」之名的思想运动包围：弗洛伊德的精神分析、阿德勒的个体心理学、马克思的历史理论。追随者们如痴如狂。他们环顾四周，满眼皆是证实——每一句口误都印证弗洛伊德，每一次政治旋涡都印证马克思。而波普尔猛然意识到，这恰恰是它们的病灶所在。
+
+解释一切的理论，其实一无所释。若没有任何可想象的观察能够反驳你的理论——若有人救起溺水儿童，与有人眼睁睁看着他溺毙，皆能同样套入弗洛伊德的框架——那么你的理论并不勇敢。它是空洞的。它没有排除任何可能，故世界无从惊扰它。
+
+请将之与爱因斯坦对照。1915 年，广义相对论作出了一项大胆的、高风险的预言：掠过太阳的星光会弯折一个特定角度——1.75 角秒，是牛顿预言的两倍。若 1919 年的日食测量结果符合牛顿的预测，爱因斯坦便将一败涂地。他把理论的脖子伸了出去。那，波普尔说，才是真实科学的印记。
+
+于是波普尔使出一记哲学柔道。休谟说得对——你永远无法证实一条普遍定律。很好。那么停止尝试。将黑天鹅的不对称性翻转为一门方法：
+
 <blockquote>一种理论之科学地位的标准，在于其可证伪性、可反驳性，或可检验性。
 <span class="src">——波普尔，《猜想与反驳》（1963）</span></blockquote>
-<p>你无法以任何数量的白天鹅证明「所有天鹅皆白」——但一只单独的黑天鹅便永久否证了它。证实终归无望；<span class="term">证伪</span>却可一锤定音。依此观点，科学并非从证据拾级而上、迈向确定性。它提出大胆的猜想，然后竭尽全力试图反驳它们。那些在我们最猛烈的反驳尝试中幸存的理论，并非被证明——它们只是仍屹立不倒、得到佐证，在下一轮检验之前被临时信任。知识之增长，来自理论在反驳中幸存，而非证实案例的累积。</p>
-<p><span class="term">划界标准</span>——科学与伪科学之间的界线——由此干净利落。一项主张的科学性，取决于它是否把头伸出去：是否排除某些可能，作出可被推翻的预言，预先告诉你什么会证明它错误。「经济由阶级斗争支配」没有排除任何明确结果。「光线弯折 1.75 角秒」却排除了 1.74 与 1.76。后者是科学；前者更像一套披着白大褂的世界观。</p>
+你无法以任何数量的白天鹅证明「所有天鹅皆白」——但一只单独的黑天鹅便永久否证了它。证实终归无望；<Term>证伪</Term>却可一锤定音。依此观点，科学并非从证据拾级而上、迈向确定性。它提出大胆的猜想，然后竭尽全力试图反驳它们。那些在我们最猛烈的反驳尝试中幸存的理论，并非被证明——它们只是仍屹立不倒、得到佐证，在下一轮检验之前被临时信任。知识之增长，来自理论在反驳中幸存，而非证实案例的累积。
 
-<div class="aside">
-<p class="h">公允以待弗洛伊德</p>
-<p>这是个利落的故事，波普尔讲得极为出色——或许太出色了。后来的哲学家（尤其是 1984 年的阿道夫·格伦鲍姆）辩称，波普尔把精神分析刻画得过于简单：弗洛伊德有时确实指明过什么将反驳他（「只有当恐惧症被证明存在于性生活完全正常之处时，我的理论才能被反驳」）。而许多受人敬重的科学——历史学、进化论、宇宙学——同样无法进行对照实验。可证伪性是一束锐利的探照灯。今日余下时光，我们将看着它在边缘处摇曳明灭。</p>
-</div>
-</section>
+<Term>划界标准</Term>——科学与伪科学之间的界线——由此干净利落。一项主张的科学性，取决于它是否把头伸出去：是否排除某些可能，作出可被推翻的预言，预先告诉你什么会证明它错误。「经济由阶级斗争支配」没有排除任何明确结果。「光线弯折 1.75 角秒」却排除了 1.74 与 1.76。后者是科学；前者更像一套披着白大褂的世界观。
 
-<section>
-<p class="sec-eyebrow">复杂的现实</p>
-<h2>库恩：但科学并非那样运行</h2>
-<p>波普尔描述的是科学应当如何运作。1962 年，由物理学家转任的史学家托马斯·库恩审视了科学实际如何运作——发现了某种更芜杂、也更有人情味的东西。他的《科学革命的结构》成为二十世纪最广为引用的学术著作之一，并赋予你一个用过百遍却不知出处的词：<span class="term">范式</span>。</p>
-<p>这是库恩的异端之说。真正工作中的科学家，几乎在所有时间里，都不是在证伪他们的宏大理论。他们在做他所谓<span class="term">常规科学</span>之事：在一个被接受的框架——一个范式——内部解谜，而他们将这范式视为理所当然。一位化学家醒来时不会想着反驳元素周期表；她用它去琢磨一个反应。范式不是被告。它是法庭本身。</p>
-<p>而当实验结果异常时？科学家们大多不会像波普尔的故事要求的那样立刻抛弃理论。他们会把它视为<span class="term">反常</span>——一个留待日后解决的谜题，大概是自己哪里做错了。理论太过有用、太过多产，不至于因一个顽固的数据点就弃之。（注意，这与证伪主义正好相反——而且，说来尴尬，这也正是那些弗洛伊德主义者和马克思主义者所做的。）</p>
-<p>只有当反常堆积——变得太多、太核心而无法忽视——领域才滑入<span class="term">危机</span>。而危机的解决，并非通过整洁的反驳，而是一场科学革命：向新范式的全盘切换。托勒密的圆环让位于开普勒的椭圆；牛顿的绝对空间让位于爱因斯坦的时空。库恩认为这些转变如此彻底，以至于两个范式变得<span class="term">不可通约</span>——「无共同尺度」，因为对立阵营甚至对关键词汇的含义、哪些问题才重要都无法达成一致。「质量」于牛顿与爱因斯坦意指着微妙不同的东西。范式切换不太像赢得一场论证，更像是一次格式塔翻转——鸭子变兔子，你无法同时看见两者。</p>
+<Aside>
+<BlockTitle>公允以待弗洛伊德</BlockTitle>
 
-<div class="aside">
-<p class="h">一个值得破除的迷思</p>
-<p>库恩常被引为「科学不过是意见」或「所有范式同等有效」的证据。他憎恶这种解读，并耗费数年反击。他并非在说科学是非理性的——而是说，科学的理性比那套洁净的证伪主义童话所承认的更具共同体特征、更有历史纵深，也更趋保守。范式之所以被推翻，是因为对手真正解决了更多谜题。那不是相对主义，只是对人类实际科学实践的一种现实主义态度。</p>
-</div>
-</section>
+这是个利落的故事，波普尔讲得极为出色——或许太出色了。后来的哲学家（尤其是 1984 年的阿道夫·格伦鲍姆）辩称，波普尔把精神分析刻画得过于简单：弗洛伊德有时确实指明过什么将反驳他（「只有当恐惧症被证明存在于性生活完全正常之处时，我的理论才能被反驳」）。而许多受人敬重的科学——历史学、进化论、宇宙学——同样无法进行对照实验。可证伪性是一束锐利的探照灯。今日余下时光，我们将看着它在边缘处摇曳明灭。
 
-<section>
-<p class="sec-eyebrow">修补</p>
-<h2>拉卡托斯：理论从不孤身赴死——以及杜恒–奎因的幽灵</h2>
-<p>波普尔说证伪；库恩说科学家并不如此，也不应急于如此。是否存在一条道路，能兼纳二者——在保持证伪之脊梁的同时承认库恩的历史？伊姆雷·拉卡托斯，一位栖身伦敦经济学院的匈牙利流亡者，试图搭建的正是这样一座桥梁。但首先，我们必须会见那萦绕整间屋子的幽灵。</p>
-<p>它被称为<span class="term">杜恒–奎因论题</span>，一旦看见便无法视而不见。其主张简单却摧枯拉朽：没有任何假说是被单独检验的。当你检验「这颗星位于彼处」时，你同时依赖光学、大气模型、望远镜校准、光如何传播的理论。因此，当预言失败时，纯逻辑从不告诉你哪一环断裂。或许是假说错了——又或许只是望远镜校准有误。你总可以把责任推给辅助假设，来拯救自己钟爱的理论。波普尔那洁净的「一只黑天鹅便杀死理论」，原来从不曾那般洁净：你可以坚称那只黑天鹅不过是一只被涂漆的鹅。</p>
-<p>这并非书斋里的琐屑——它是真正发现的引擎。1840 年代，当天王星偏离其牛顿式轨道时，无人宣布牛顿被反驳。他们归咎于一项辅助假设：必定有一颗隐匿行星在牵引它。他们是对的——海王星便于 1846 年以此方式发现，一场辉煌的正名。受此鼓舞，天文学家们对水星的摇摆使出同一招，预言了另一颗隐匿行星，命名为祝融星。他们搜寻了数十年。它并不存在。水星的摇摆是在告诉世人，牛顿本人并不完备——而唯有 1915 年的爱因斯坦能道破此点。同样的逻辑招式，截然相反的结果。那么，如何分辨高明的拯救与绝望的遁词？</p>
-<p>拉卡托斯的答案重构了科学的单元。不要评判孤立的理论——要评判随时间展开的<span class="term">研究纲领</span>。每个纲领都有一个硬核（例如「牛顿定律成立」），外裹一层可调辅助假设的<span class="term">保护带</span>。麻烦来临时，你在保护带中吸纳冲击，而非伤及核心。这本身没有问题。关键在于接下来会发生什么：</p>
-<ul>
-<li>一个进步纲领的补丁预言了令人惊异的新事实，而这些新事实随后真的出现。「有一颗隐匿行星」预言了海王星会出现在天空中的某个特定位置——而它果然就在那里。这场拯救以新知识偿付了自身。</li>
-<li>一个退化纲领的补丁永远只是事后追补，为每一次失败硬凑借口，却从不预言新事物。祝融星被无尽地重新安置到恰好无法被看见之处，便是警示的信号。</li>
-</ul>
-<p>这便是重新绘制的划界线——而且与真实历史契合得多。科学不是单一理论面对单一裁决；它是一个纲领在岁月中赢得或失去立足之地，衡量的标准在于它是否持续告诉我们尚未知晓的事物。</p>
-</section>
+</Aside>
 
-<section>
-<p class="sec-eyebrow">重锤</p>
-<h2>费耶阿本德与「那」方法的死亡</h2>
-<p>随后，拉卡托斯的友人与论敌保罗·费耶阿本德把整个项目推到了极限。在《反对方法》（1975）中，他提出了一项调皮、恼人、却又出人意料地证据充分的论证：翻检科学突破的真实历史，你会发现每一条方法规则都曾在某个关键时刻被打破——而打破它恰恰是为了推动进步。伽利略以宣传、修辞伎俩和无视不利数据的方式推进了哥白尼事业。若他遵从了整饬的方法规则，那场革命或许便会停滞。</p>
-<p>他的结论成为科学哲学中最臭名昭著的一句口号：<span class="term">「一切皆可。」</span>但这里有一个几乎人人忽略的关键细节——费耶阿本德并非意指「随心所欲，所有想法平等」。他的意思是，这是一个苦涩的<span class="term">归谬论证</span><TipNote text={"归谬论证通过说明某个观点会导向荒谬或不可接受的后果来反驳它。"} />：唯一没有历史反例的方法规则，空泛到允许一切。用他的话来说，这是一位理性主义者终于诚实地审视历史后发出的「惊恐的呼喊」。他焚烧的是「存在某种大写 M 的方法论可以一劳永逸地定义科学」的观念——而非对混乱的背书。</p>
-<p>1983 年，哲学家拉里·劳丹发表了看似葬礼悼词的文字。在那篇著名论文《划界问题的消亡》中，他论证所有试图画出清晰界线的尝试——包括波普尔的——皆已失败，而「科学」与「伪科学」过于多样，无法共享单一的决定性标记。这些术语，他尖刻地写道，大体只是「承载我们情感评判的空洞辞藻」。两千五百年后，划界问题被宣告死亡。</p>
-</section>
+<SectionEyebrow>复杂的现实</SectionEyebrow>
 
-<section>
-<p class="sec-eyebrow">复活</p>
-<h2>为何界线依然重要</h2>
-<p>然而——这个问题太有用，不会真的入土为安。2013 年，哲学家马西莫·皮柳奇与马尔滕·布德里编纂了一部直言不讳的文集：《伪科学哲学：重新思考划界问题》，推动划界问题的复兴，回击了劳丹。他们的论证部分出于实践，且难以回避：在一个疫苗抗拒、气候否认、神迹疗法与智能设计「理论」并存的世界里，分辨科学与其仿品并非闲散的客厅游戏。它关乎生死。</p>
-<p>他们的哲学转向是，不再要求某种单一的万能标准，而是将科学视为一个<span class="term">家族相似概念</span>——借用维特根斯坦的术语。并非每种科学都共享某一特征，而每种伪科学都缺乏它。取而代之的是一组彼此重叠的特征：可证伪的预言，诚然，但也包括经验证绩、对修正的开放、与既有知识的融贯、对反常的诚实处理，以及典型遁词的缺席（无尽的事后补救、受迫害叙事、对证据免疫）。没有单根线维系整条绳索；是众多线股的交叠。真正的科学可能在某一标准上薄弱，而在其余标准上强劲。伪科学则因同时通不过整组特征而暴露自身。</p>
-<p>而这便铺垫了今日全篇的压轴一击。以上的一切——波普尔、库恩、拉卡托斯、那簇美德——皆是哲学，在研讨室中辩论。但在过去十五年间，科学做了一件非凡之事：它以大规模实证的方式，将划界问题转向了自身。它问自己，已发表的诸多发现能否经受住最基本的科学要求。</p>
-</section>
+## 库恩：但科学并非那样运行
+
+波普尔描述的是科学应当如何运作。1962 年，由物理学家转任的史学家托马斯·库恩审视了科学实际如何运作——发现了某种更芜杂、也更有人情味的东西。他的《科学革命的结构》成为二十世纪最广为引用的学术著作之一，并赋予你一个用过百遍却不知出处的词：<Term>范式</Term>。
+
+这是库恩的异端之说。真正工作中的科学家，几乎在所有时间里，都不是在证伪他们的宏大理论。他们在做他所谓<Term>常规科学</Term>之事：在一个被接受的框架——一个范式——内部解谜，而他们将这范式视为理所当然。一位化学家醒来时不会想着反驳元素周期表；她用它去琢磨一个反应。范式不是被告。它是法庭本身。
+
+而当实验结果异常时？科学家们大多不会像波普尔的故事要求的那样立刻抛弃理论。他们会把它视为<Term>反常</Term>——一个留待日后解决的谜题，大概是自己哪里做错了。理论太过有用、太过多产，不至于因一个顽固的数据点就弃之。（注意，这与证伪主义正好相反——而且，说来尴尬，这也正是那些弗洛伊德主义者和马克思主义者所做的。）
+
+只有当反常堆积——变得太多、太核心而无法忽视——领域才滑入<Term>危机</Term>。而危机的解决，并非通过整洁的反驳，而是一场科学革命：向新范式的全盘切换。托勒密的圆环让位于开普勒的椭圆；牛顿的绝对空间让位于爱因斯坦的时空。库恩认为这些转变如此彻底，以至于两个范式变得<Term>不可通约</Term>——「无共同尺度」，因为对立阵营甚至对关键词汇的含义、哪些问题才重要都无法达成一致。「质量」于牛顿与爱因斯坦意指着微妙不同的东西。范式切换不太像赢得一场论证，更像是一次格式塔翻转——鸭子变兔子，你无法同时看见两者。
+
+<Aside>
+<BlockTitle>一个值得破除的迷思</BlockTitle>
+
+库恩常被引为「科学不过是意见」或「所有范式同等有效」的证据。他憎恶这种解读，并耗费数年反击。他并非在说科学是非理性的——而是说，科学的理性比那套洁净的证伪主义童话所承认的更具共同体特征、更有历史纵深，也更趋保守。范式之所以被推翻，是因为对手真正解决了更多谜题。那不是相对主义，只是对人类实际科学实践的一种现实主义态度。
+
+</Aside>
+
+<SectionEyebrow>修补</SectionEyebrow>
+
+## 拉卡托斯：理论从不孤身赴死——以及杜恒–奎因的幽灵
+
+波普尔说证伪；库恩说科学家并不如此，也不应急于如此。是否存在一条道路，能兼纳二者——在保持证伪之脊梁的同时承认库恩的历史？伊姆雷·拉卡托斯，一位栖身伦敦经济学院的匈牙利流亡者，试图搭建的正是这样一座桥梁。但首先，我们必须会见那萦绕整间屋子的幽灵。
+
+它被称为<Term>杜恒–奎因论题</Term>，一旦看见便无法视而不见。其主张简单却摧枯拉朽：没有任何假说是被单独检验的。当你检验「这颗星位于彼处」时，你同时依赖光学、大气模型、望远镜校准、光如何传播的理论。因此，当预言失败时，纯逻辑从不告诉你哪一环断裂。或许是假说错了——又或许只是望远镜校准有误。你总可以把责任推给辅助假设，来拯救自己钟爱的理论。波普尔那洁净的「一只黑天鹅便杀死理论」，原来从不曾那般洁净：你可以坚称那只黑天鹅不过是一只被涂漆的鹅。
+
+这并非书斋里的琐屑——它是真正发现的引擎。1840 年代，当天王星偏离其牛顿式轨道时，无人宣布牛顿被反驳。他们归咎于一项辅助假设：必定有一颗隐匿行星在牵引它。他们是对的——海王星便于 1846 年以此方式发现，一场辉煌的正名。受此鼓舞，天文学家们对水星的摇摆使出同一招，预言了另一颗隐匿行星，命名为祝融星。他们搜寻了数十年。它并不存在。水星的摇摆是在告诉世人，牛顿本人并不完备——而唯有 1915 年的爱因斯坦能道破此点。同样的逻辑招式，截然相反的结果。那么，如何分辨高明的拯救与绝望的遁词？
+
+拉卡托斯的答案重构了科学的单元。不要评判孤立的理论——要评判随时间展开的<Term>研究纲领</Term>。每个纲领都有一个硬核（例如「牛顿定律成立」），外裹一层可调辅助假设的<Term>保护带</Term>。麻烦来临时，你在保护带中吸纳冲击，而非伤及核心。这本身没有问题。关键在于接下来会发生什么：
+
+- 一个进步纲领的补丁预言了令人惊异的新事实，而这些新事实随后真的出现。「有一颗隐匿行星」预言了海王星会出现在天空中的某个特定位置——而它果然就在那里。这场拯救以新知识偿付了自身。
+- 一个退化纲领的补丁永远只是事后追补，为每一次失败硬凑借口，却从不预言新事物。祝融星被无尽地重新安置到恰好无法被看见之处，便是警示的信号。
+
+这便是重新绘制的划界线——而且与真实历史契合得多。科学不是单一理论面对单一裁决；它是一个纲领在岁月中赢得或失去立足之地，衡量的标准在于它是否持续告诉我们尚未知晓的事物。
+
+<SectionEyebrow>重锤</SectionEyebrow>
+
+## 费耶阿本德与「那」方法的死亡
+
+随后，拉卡托斯的友人与论敌保罗·费耶阿本德把整个项目推到了极限。在《反对方法》（1975）中，他提出了一项调皮、恼人、却又出人意料地证据充分的论证：翻检科学突破的真实历史，你会发现每一条方法规则都曾在某个关键时刻被打破——而打破它恰恰是为了推动进步。伽利略以宣传、修辞伎俩和无视不利数据的方式推进了哥白尼事业。若他遵从了整饬的方法规则，那场革命或许便会停滞。
+
+他的结论成为科学哲学中最臭名昭著的一句口号：<Term>「一切皆可。」</Term>但这里有一个几乎人人忽略的关键细节——费耶阿本德并非意指「随心所欲，所有想法平等」。他的意思是，这是一个苦涩的<Term>归谬论证</Term><TipNote text={"归谬论证通过说明某个观点会导向荒谬或不可接受的后果来反驳它。"} />：唯一没有历史反例的方法规则，空泛到允许一切。用他的话来说，这是一位理性主义者终于诚实地审视历史后发出的「惊恐的呼喊」。他焚烧的是「存在某种大写 M 的方法论可以一劳永逸地定义科学」的观念——而非对混乱的背书。
+
+1983 年，哲学家拉里·劳丹发表了看似葬礼悼词的文字。在那篇著名论文《划界问题的消亡》中，他论证所有试图画出清晰界线的尝试——包括波普尔的——皆已失败，而「科学」与「伪科学」过于多样，无法共享单一的决定性标记。这些术语，他尖刻地写道，大体只是「承载我们情感评判的空洞辞藻」。两千五百年后，划界问题被宣告死亡。
+
+<SectionEyebrow>复活</SectionEyebrow>
+
+## 为何界线依然重要
+
+然而——这个问题太有用，不会真的入土为安。2013 年，哲学家马西莫·皮柳奇与马尔滕·布德里编纂了一部直言不讳的文集：《伪科学哲学：重新思考划界问题》，推动划界问题的复兴，回击了劳丹。他们的论证部分出于实践，且难以回避：在一个疫苗抗拒、气候否认、神迹疗法与智能设计「理论」并存的世界里，分辨科学与其仿品并非闲散的客厅游戏。它关乎生死。
+
+他们的哲学转向是，不再要求某种单一的万能标准，而是将科学视为一个<Term>家族相似概念</Term>——借用维特根斯坦的术语。并非每种科学都共享某一特征，而每种伪科学都缺乏它。取而代之的是一组彼此重叠的特征：可证伪的预言，诚然，但也包括经验证绩、对修正的开放、与既有知识的融贯、对反常的诚实处理，以及典型遁词的缺席（无尽的事后补救、受迫害叙事、对证据免疫）。没有单根线维系整条绳索；是众多线股的交叠。真正的科学可能在某一标准上薄弱，而在其余标准上强劲。伪科学则因同时通不过整组特征而暴露自身。
+
+而这便铺垫了今日全篇的压轴一击。以上的一切——波普尔、库恩、拉卡托斯、那簇美德——皆是哲学，在研讨室中辩论。但在过去十五年间，科学做了一件非凡之事：它以大规模实证的方式，将划界问题转向了自身。它问自己，已发表的诸多发现能否经受住最基本的科学要求。
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<div class="panel web-only">
-<p class="ptitle">互动 · 启动探照灯</p>
-<h3>划界实验室</h3>
-<p class="pnote">选择一项主张。我们先以波普尔检验它（是否可证伪？）——再交给库恩、拉卡托斯与簇群视角，让裁决变得复杂。注意四种视角相左之频繁。那分歧本身，便是科学哲学。</p>
+<Panel class="web-only">
+<PanelTitle>互动 · 启动探照灯</PanelTitle>
+
+### 划界实验室
+
+<PanelNote>选择一项主张。我们先以波普尔检验它（是否可证伪？）——再交给库恩、拉卡托斯与簇群视角，让裁决变得复杂。注意四种视角相左之频繁。那分歧本身，便是科学哲学。</PanelNote>
 
 <div class="lab-grid">
 <div class="claimlist" id="claimlist">
@@ -170,10 +226,13 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 {/* filled by JS */}
 </div>
 </div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">参考表格</p>
-<h3>划界标准表</h3>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>参考表格</PanelTitle>
+
+### 划界标准表
+
 <table class="alt-table">
 <thead><tr><th>主张</th><th>波普尔</th><th>库恩</th><th>拉卡托斯</th><th>簇群视角</th></tr></thead>
 <tbody>
@@ -184,12 +243,14 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>共同祖先</td><td>可证伪</td><td>生物学核心范式</td><td>进步</td><td>强科学画像</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<section class="frontier">
-<p class="sec-eyebrow">前沿 · 2026</p>
-<h2>复现危机：划界在现实检验中</h2>
-<p>若有一条几乎人人认同的标准——波普尔、库恩、你的高中老师——那便是可复现。真正的结果，当别人照着程序再做一遍时，应当再次出现。它不是侥幸、捏造或风尚。于是在 2010 年代，科学家们做了一件显而易见、令人不安、却从未被系统做过的事：他们取来成堆的已发表、经同行评议、备受赞誉的发现，逐一尝试复现。</p>
+<ContentSection class="frontier">
+<SectionEyebrow>前沿 · 2026</SectionEyebrow>
+
+## 复现危机：划界在现实检验中
+
+若有一条几乎人人认同的标准——波普尔、库恩、你的高中老师——那便是可复现。真正的结果，当别人照着程序再做一遍时，应当再次出现。它不是侥幸、捏造或风尚。于是在 2010 年代，科学家们做了一件显而易见、令人不安、却从未被系统做过的事：他们取来成堆的已发表、经同行评议、备受赞誉的发现，逐一尝试复现。
 
 <div class="claim">
 <div class="ctop">
@@ -310,57 +371,61 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <p>换个角度看，整场危机也可以是一个充满希望的故事，而非一桩丑闻。上述每一个数字都来自科学家以科学审视科学——使用预登记、高功效、公开共享的方法来揭露并丢弃那些站不住脚的主张。那是波普尔的反驳之刃，终于向内翻转。危机并非划界标准错误的证据，而是它们正在运作的证据，痛苦地、公开地运作着。</p>
 <p>而且它还触动了真正的改革。<span class="term">研究预登记</span>——在看见数据之前陈述你的假设与分析——堵住了那道夸大效应的陷阱（p 值操纵）；注册式报告，即期刊在结果出现之前仅依据方法接受研究，如今已被 300 余家期刊采纳。有人提议将「显著」阈值从 p &lt; 0.05 收紧至 p &lt; 0.005，而开放数据与多实验室联盟的文化已成常规。该领域正视休谟留下的缺口，看见运气与偏见多么轻易地伪造知识——正是<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>盖梯尔忧虑在工业规模上的重现——并开始重建其工具。我们将在第 149 日再次完整遇见这场改革运动。</p>
 </div>
-</section>
+</ContentSection>
 
-<section>
-<p class="sec-eyebrow">悬而未决的问题</p>
-<h2>何谓真正尚未落定</h2>
-<p>两千五百年过去，「何为科学？」这一问题的审慎回答仍有几条线没有系紧：</p>
-<ul>
-<li>是否存在任何单一的划界标准——还是劳丹赢了，留下的只有维特根斯坦式的、重叠的诸美德家族，而无总纲？</li>
-<li>杜恒–奎因问题能在多大程度上被驯服？若一次失败的检验从不在逻辑上归罪于某个假说，那么高功效、预登记的复现实验如何真正缩减腾挪空间——它们能否将之彻底关闭？</li>
-<li>那些根本无法进行实验的科学又该如何——宇宙学、进化生物学、弦理论？若一种理论在整整一代人的时间里无法作出可检验的预言（第 48 日的量子引力难题隐约浮现），它是科学、原科学，还是数学？</li>
-<li>复现的底线在哪里？社会科学中 62% 的复现率——面对复杂的人类行为，这算失败、合理水平，还是在「复现」定义本身达成一致之前无从判断？</li>
-<li>而那个将萦绕整门课程的问题：若即便经同行评议、备受赞誉的发现也被夸大了半数之多，那么你——在阅读任何一项自信的断言时，包括本页上的——该如何设定你的信念刻度？（带上刻度盘。<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>、<a href="/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/">第 6 日</a>。）</li>
-</ul>
-</section>
+<SectionEyebrow>悬而未决的问题</SectionEyebrow>
 
-<div class="recap">
-<p class="h">◆ 一日三句话</p>
+## 何谓真正尚未落定
+
+两千五百年过去，「何为科学？」这一问题的审慎回答仍有几条线没有系紧：
+
+- 是否存在任何单一的划界标准——还是劳丹赢了，留下的只有维特根斯坦式的、重叠的诸美德家族，而无总纲？
+- 杜恒–奎因问题能在多大程度上被驯服？若一次失败的检验从不在逻辑上归罪于某个假说，那么高功效、预登记的复现实验如何真正缩减腾挪空间——它们能否将之彻底关闭？
+- 那些根本无法进行实验的科学又该如何——宇宙学、进化生物学、弦理论？若一种理论在整整一代人的时间里无法作出可检验的预言（第 48 日的量子引力难题隐约浮现），它是科学、原科学，还是数学？
+- 复现的底线在哪里？社会科学中 62% 的复现率——面对复杂的人类行为，这算失败、合理水平，还是在「复现」定义本身达成一致之前无从判断？
+- 而那个将萦绕整门课程的问题：若即便经同行评议、备受赞誉的发现也被夸大了半数之多，那么你——在阅读任何一项自信的断言时，包括本页上的——该如何设定你的信念刻度？（带上刻度盘。[第 4 日](/zh/days/004-probability-as-extended-logic/)、[第 6 日](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)。）
+
+<Recap>
+<BlockTitle>◆ 一日三句话</BlockTitle>
+
 <dl>
 <div><dt>核心洞见</dt><dd>休谟指出，你永远无法靠堆积证实的案例来证明一条普遍定律，因此科学转而提出大胆的、可证伪的猜想，并竭力试图反驳它们——但真实的科学比那条洁净规则更复杂（库恩、拉卡托斯、费耶阿本德），而现代复现危机最终让那场辩论接受了硬数据的检验。</dd></div>
 <div><dt>最佳类比</dt><dd>黑天鹅：百万只白天鹅无法证明「所有天鹅皆白」，但澳大利亚的一只黑天鹅便永久否证了它——证实终究做不到，证伪却可一锤定音。</dd></div>
 <div><dt>活的争议</dt><dd>是否存在单一界线划分科学与伪科学（波普尔的可证伪性 vs 劳丹的「消亡」），以及复现数字究竟意味着什么——是破碎科学的丑闻，还是科学按设计运作的健康、公开的自我修正。</dd></div>
 </dl>
-<p class="threads">今日线索 › 信息（复现实验作为检验一项主张承载真实信号抑或噪音的试金石） · 演化（在波普尔那里，知识像选择过程一样增长——经反驳而幸存的猜想，预告第 74 日） · 计算与涌现（轻触——科学作为一个分布式的、自我修正的寻错系统，能完成任何单个心智无法完成之事）。</p>
-</div>
+<Threads>今日线索 › 信息（复现实验作为检验一项主张承载真实信号抑或噪音的试金石） · 演化（在波普尔那里，知识像选择过程一样增长——经反驳而幸存的猜想，预告第 74 日） · 计算与涌现（轻触——科学作为一个分布式的、自我修正的寻错系统，能完成任何单个心智无法完成之事）。</Threads>
 
-<section class="sources">
-<p class="sec-eyebrow">来源</p>
-<h2>来源与延伸阅读</h2>
-<ol>
-<li>Hume, D. (1739–40). A Treatise of Human Nature, Book I, Part iii. And (1748) An Enquiry Concerning Human Understanding, §IV–V. <span class="meta">——归纳问题；日出段落。见</span> <a href="https://plato.stanford.edu/entries/induction-problem/">Stanford Encyclopedia of Philosophy, "The Problem of Induction"</a> <span class="meta">（修订版 2018）。</span></li>
-<li>Popper, K. (1959). The Logic of Scientific Discovery (orig. Logik der Forschung, 1934). And (1963) Conjectures and Refutations: The Growth of Scientific Knowledge. Routledge. <span class="meta">——可证伪性；爱因斯坦 vs 弗洛伊德/阿德勒/马克思。见</span> <a href="https://plato.stanford.edu/entries/popper/">SEP, "Karl Popper"</a><span class="meta">。</span></li>
-<li>Kuhn, T. S. (1962; 2nd ed. 1970). The Structure of Scientific Revolutions. University of Chicago Press. <span class="meta">——常规科学、范式、反常、危机、革命、不可通约性。见</span> <a href="https://plato.stanford.edu/entries/thomas-kuhn/">SEP, "Thomas Kuhn"</a><span class="meta">。</span></li>
-<li>Lakatos, I. (1970). "Falsification and the Methodology of Scientific Research Programmes," in Lakatos &amp; Musgrave (eds.), Criticism and the Growth of Knowledge. Collected in Philosophical Papers, Vol. 1 (Cambridge UP, 1978). <span class="meta">——硬核、保护带、进步与退化纲领。</span></li>
-<li>Feyerabend, P. (1975). Against Method: Outline of an Anarchistic Theory of Knowledge. New Left Books. <span class="meta">——认识论无政府主义；「一切皆可」作为归谬。见</span> <a href="https://plato.stanford.edu/entries/feyerabend/">SEP, "Paul Feyerabend"</a><span class="meta">。</span></li>
-<li>Duhem, P. (1906). The Aim and Structure of Physical Theory. And Quine, W. V. O. (1951). "Two Dogmas of Empiricism," The Philosophical Review 60(1): 20–43. <span class="meta">doi:10.2307/2181906。</span> <a href="https://doi.org/10.2307/2181906">doi.org/10.2307/2181906</a> <span class="meta">——欠决定 / 整体确证论。见</span> <a href="https://plato.stanford.edu/entries/scientific-underdetermination/">SEP, "Underdetermination of Scientific Theory"</a><span class="meta">。</span></li>
-<li>Laudan, L. (1983). "The Demise of the Demarcation Problem," in Cohen &amp; Laudan (eds.), Physics, Philosophy and Psychoanalysis. Reidel, pp. 111–127. <span class="meta">doi:10.1007/978-94-009-7055-7_6。</span> <a href="https://doi.org/10.1007/978-94-009-7055-7_6">doi.org/10.1007/978-94-009-7055-7_6</a></li>
-<li>Pigliucci, M. &amp; Boudry, M. (eds.) (2013). Philosophy of Pseudoscience: Reconsidering the Demarcation Problem. University of Chicago Press. <a href="https://press.uchicago.edu/ucp/books/book/chicago/P/bo15996988.html">press.uchicago.edu</a> <span class="meta">——复兴；科学作为家族相似 / 簇群概念。</span></li>
-            <li>Open Science Collaboration (2015). "Estimating the reproducibility of psychological science." Science 349(6251): aac4716. <span class="meta">doi:10.1126/science.aac4716。</span> <a href="https://doi.org/10.1126/science.aac4716">doi.org</a> <a href="https://www.science.org/doi/10.1126/science.aac4716">science.org</a> <span class="meta">——97% / 36% / 47% / 39% / ~50%。</span></li>
-<li>Gilbert, D. T., King, G., Pettigrew, S. &amp; Wilson, T. D. (2016). "Comment on 'Estimating the reproducibility of psychological science.'" Science 351(6277): 1037. <span class="meta">doi:10.1126/science.aad7243。</span> <a href="https://doi.org/10.1126/science.aad7243">doi.org/10.1126/science.aad7243</a> <span class="meta">——批评；OSC 回应 doi:10.1126/science.aad9163。</span> <a href="https://doi.org/10.1126/science.aad9163">doi.org/10.1126/science.aad9163</a></li>
-<li>Errington, T. M. et al. (2021). "Investigating the replicability of preclinical cancer biology." eLife 10: e71601 (Reproducibility Project: Cancer Biology). <span class="meta">doi:10.7554/eLife.71601。</span> <a href="https://doi.org/10.7554/eLife.71601">doi.org/10.7554/eLife.71601</a> <span class="meta">——193 项中约 50 项实验被尝试；效应约缩小 85%；方法/数据大多无法获得。</span></li>
-            <li>Camerer, C. F. et al. (2016). "Evaluating replicability of laboratory experiments in economics." Science 351(6280): 1433–1436. <span class="meta">doi:10.1126/science.aaf0918。</span> <a href="https://doi.org/10.1126/science.aaf0918">doi.org</a> <span class="meta">——18 项中 11 项（61%）。</span></li>
-<li>Camerer, C. F. et al. (2018). "Evaluating the replicability of social science experiments in Nature and Science between 2010 and 2015." Nature Human Behaviour 2: 637–644. <span class="meta">doi:10.1038/s41562-018-0399-z。</span> <a href="https://doi.org/10.1038/s41562-018-0399-z">doi.org/10.1038/s41562-018-0399-z</a> <span class="meta">——21 项中 13 项（62%）。</span></li>
-<li>Klein, R. A. et al. (2018). "Many Labs 2: Investigating variation in replicability across samples and settings." Advances in Methods and Practices in Psychological Science 1(4): 443–490. <span class="meta">doi:10.1177/2515245918810225。</span> <a href="https://doi.org/10.1177/2515245918810225">doi.org/10.1177/2515245918810225</a> <span class="meta">——28 项中 15 项（54%）；场景未能解释失败。</span></li>
-            <li>Begley, C. G. &amp; Ellis, L. M. (2012). "Raise standards for preclinical cancer research." Nature 483: 531–533. <span class="meta">doi:10.1038/483531a。</span> <a href="https://doi.org/10.1038/483531a">doi.org</a> <span class="meta">——53 项中 6 项（11%）里程碑论文被确认（安进）。</span></li>
-            <li>Baker, M. (2016). "1,500 scientists lift the lid on reproducibility." Nature 533: 452–454. <span class="meta">doi:10.1038/533452a。</span> <a href="https://doi.org/10.1038/533452a">doi.org</a> <span class="meta">——&gt;70% 未能复现他人结果；&gt;50% 未能复现自己的结果。</span></li>
-<li>Hagger, M. S. et al. (2016). "A multilab preregistered replication of the ego-depletion effect." Perspectives on Psychological Science 11(4): 546–573. <span class="meta">doi:10.1177/1745691616652873。</span> <a href="https://doi.org/10.1177/1745691616652873">doi.org/10.1177/1745691616652873</a> <span class="meta">——23 间实验室；d = 0.04。</span></li>
-<li>Ranehill, E. et al. (2015). "Assessing the robustness of power posing." Psychological Science 26(5): 653–656. <span class="meta">doi:10.1177/0956797614553946。</span> <a href="https://doi.org/10.1177/0956797614553946">doi.org/10.1177/0956797614553946</a> And Carney, D. R. (2016), 公开声明否定权力姿势效应。见 <a href="https://en.wikipedia.org/wiki/Power_posing">概述</a><span class="meta">。</span></li>
-            <li>Le Texier, T. (2019). "Debunking the Stanford Prison Experiment." American Psychologist 74(7): 823–839. <span class="meta">doi:10.1037/amp0000401。</span> <a href="https://doi.org/10.1037/amp0000401">doi.org</a> <a href="https://pubmed.ncbi.nlm.nih.gov/31380664/">pubmed</a></li>
-<li>Ioannidis, J. P. A. (2005). "Why most published research findings are false." PLoS Medicine 2(8): e124. <span class="meta">doi:10.1371/journal.pmed.0020124。</span> <a href="https://doi.org/10.1371/journal.pmed.0020124">doi.org/10.1371/journal.pmed.0020124</a> <span class="meta">——奠基性（且基于模型，故细节上有争议）论文。</span></li>
-            <li>Benjamin, D. J. et al. (2018). "Redefine statistical significance." Nature Human Behaviour 2: 6–10. <span class="meta">doi:10.1038/s41562-017-0189-z。</span> <a href="https://doi.org/10.1038/s41562-017-0189-z">doi.org</a> <span class="meta">——p &lt; 0.005 提案（及 Amrhein &amp; Greenland 「移除而非重新定义」的反驳）。</span></li>
-<li>Chambers, C. D. (2013). "Registered Reports: A new publishing initiative at Cortex." Cortex 49(3): 609–610. <span class="meta">doi:10.1016/j.cortex.2012.12.016。</span> <a href="https://doi.org/10.1016/j.cortex.2012.12.016">doi.org/10.1016/j.cortex.2012.12.016</a> And Chambers &amp; Tzavella (2022), Nature Human Behaviour 6: 29–42, <span class="meta">doi:10.1038/s41562-021-01193-7。</span> <a href="https://doi.org/10.1038/s41562-021-01193-7">doi.org/10.1038/s41562-021-01193-7</a> <span class="meta">——注册式报告如今已有 300 余家期刊采纳。</span></li>
-</ol>
-</section>
-</div>
+</Recap>
+
+<Sources>
+<SectionEyebrow>来源</SectionEyebrow>
+
+<SourcesTitle>来源与延伸阅读</SourcesTitle>
+
+1. Hume, D. (1739–40). A Treatise of Human Nature, Book I, Part iii. And (1748) An Enquiry Concerning Human Understanding, §IV–V. <Meta>——归纳问题；日出段落。见</Meta> [Stanford Encyclopedia of Philosophy, "The Problem of Induction"](https://plato.stanford.edu/entries/induction-problem/) <Meta>（修订版 2018）。</Meta>
+1. Popper, K. (1959). The Logic of Scientific Discovery (orig. Logik der Forschung, 1934). And (1963) Conjectures and Refutations: The Growth of Scientific Knowledge. Routledge. <Meta>——可证伪性；爱因斯坦 vs 弗洛伊德/阿德勒/马克思。见</Meta> [SEP, "Karl Popper"](https://plato.stanford.edu/entries/popper/)<Meta>。</Meta>
+1. Kuhn, T. S. (1962; 2nd ed. 1970). The Structure of Scientific Revolutions. University of Chicago Press. <Meta>——常规科学、范式、反常、危机、革命、不可通约性。见</Meta> [SEP, "Thomas Kuhn"](https://plato.stanford.edu/entries/thomas-kuhn/)<Meta>。</Meta>
+1. Lakatos, I. (1970). "Falsification and the Methodology of Scientific Research Programmes," in Lakatos &amp; Musgrave (eds.), Criticism and the Growth of Knowledge. Collected in Philosophical Papers, Vol. 1 (Cambridge UP, 1978). <Meta>——硬核、保护带、进步与退化纲领。</Meta>
+1. Feyerabend, P. (1975). Against Method: Outline of an Anarchistic Theory of Knowledge. New Left Books. <Meta>——认识论无政府主义；「一切皆可」作为归谬。见</Meta> [SEP, "Paul Feyerabend"](https://plato.stanford.edu/entries/feyerabend/)<Meta>。</Meta>
+1. Duhem, P. (1906). The Aim and Structure of Physical Theory. And Quine, W. V. O. (1951). "Two Dogmas of Empiricism," The Philosophical Review 60(1): 20–43. <Meta>doi:10.2307/2181906。</Meta> [doi.org/10.2307/2181906](https://doi.org/10.2307/2181906) <Meta>——欠决定 / 整体确证论。见</Meta> [SEP, "Underdetermination of Scientific Theory"](https://plato.stanford.edu/entries/scientific-underdetermination/)<Meta>。</Meta>
+1. Laudan, L. (1983). "The Demise of the Demarcation Problem," in Cohen &amp; Laudan (eds.), Physics, Philosophy and Psychoanalysis. Reidel, pp. 111–127. <Meta>doi:10.1007/978-94-009-7055-7_6。</Meta> [doi.org/10.1007/978-94-009-7055-7_6](https://doi.org/10.1007/978-94-009-7055-7_6)
+1. Pigliucci, M. &amp; Boudry, M. (eds.) (2013). Philosophy of Pseudoscience: Reconsidering the Demarcation Problem. University of Chicago Press. [press.uchicago.edu](https://press.uchicago.edu/ucp/books/book/chicago/P/bo15996988.html) <Meta>——复兴；科学作为家族相似 / 簇群概念。</Meta>
+1. Open Science Collaboration (2015). "Estimating the reproducibility of psychological science." Science 349(6251): aac4716. <Meta>doi:10.1126/science.aac4716。</Meta> [doi.org](https://doi.org/10.1126/science.aac4716) [science.org](https://www.science.org/doi/10.1126/science.aac4716) <Meta>——97% / 36% / 47% / 39% / ~50%。</Meta>
+1. Gilbert, D. T., King, G., Pettigrew, S. &amp; Wilson, T. D. (2016). "Comment on 'Estimating the reproducibility of psychological science.'" Science 351(6277): 1037. <Meta>doi:10.1126/science.aad7243。</Meta> [doi.org/10.1126/science.aad7243](https://doi.org/10.1126/science.aad7243) <Meta>——批评；OSC 回应 doi:10.1126/science.aad9163。</Meta> [doi.org/10.1126/science.aad9163](https://doi.org/10.1126/science.aad9163)
+1. Errington, T. M. et al. (2021). "Investigating the replicability of preclinical cancer biology." eLife 10: e71601 (Reproducibility Project: Cancer Biology). <Meta>doi:10.7554/eLife.71601。</Meta> [doi.org/10.7554/eLife.71601](https://doi.org/10.7554/eLife.71601) <Meta>——193 项中约 50 项实验被尝试；效应约缩小 85%；方法/数据大多无法获得。</Meta>
+1. Camerer, C. F. et al. (2016). "Evaluating replicability of laboratory experiments in economics." Science 351(6280): 1433–1436. <Meta>doi:10.1126/science.aaf0918。</Meta> [doi.org](https://doi.org/10.1126/science.aaf0918) <Meta>——18 项中 11 项（61%）。</Meta>
+1. Camerer, C. F. et al. (2018). "Evaluating the replicability of social science experiments in Nature and Science between 2010 and 2015." Nature Human Behaviour 2: 637–644. <Meta>doi:10.1038/s41562-018-0399-z。</Meta> [doi.org/10.1038/s41562-018-0399-z](https://doi.org/10.1038/s41562-018-0399-z) <Meta>——21 项中 13 项（62%）。</Meta>
+1. Klein, R. A. et al. (2018). "Many Labs 2: Investigating variation in replicability across samples and settings." Advances in Methods and Practices in Psychological Science 1(4): 443–490. <Meta>doi:10.1177/2515245918810225。</Meta> [doi.org/10.1177/2515245918810225](https://doi.org/10.1177/2515245918810225) <Meta>——28 项中 15 项（54%）；场景未能解释失败。</Meta>
+1. Begley, C. G. &amp; Ellis, L. M. (2012). "Raise standards for preclinical cancer research." Nature 483: 531–533. <Meta>doi:10.1038/483531a。</Meta> [doi.org](https://doi.org/10.1038/483531a) <Meta>——53 项中 6 项（11%）里程碑论文被确认（安进）。</Meta>
+1. Baker, M. (2016). "1,500 scientists lift the lid on reproducibility." Nature 533: 452–454. <Meta>doi:10.1038/533452a。</Meta> [doi.org](https://doi.org/10.1038/533452a) <Meta>——&gt;70% 未能复现他人结果；&gt;50% 未能复现自己的结果。</Meta>
+1. Hagger, M. S. et al. (2016). "A multilab preregistered replication of the ego-depletion effect." Perspectives on Psychological Science 11(4): 546–573. <Meta>doi:10.1177/1745691616652873。</Meta> [doi.org/10.1177/1745691616652873](https://doi.org/10.1177/1745691616652873) <Meta>——23 间实验室；d = 0.04。</Meta>
+1. Ranehill, E. et al. (2015). "Assessing the robustness of power posing." Psychological Science 26(5): 653–656. <Meta>doi:10.1177/0956797614553946。</Meta> [doi.org/10.1177/0956797614553946](https://doi.org/10.1177/0956797614553946) And Carney, D. R. (2016), 公开声明否定权力姿势效应。见 [概述](https://en.wikipedia.org/wiki/Power_posing)<Meta>。</Meta>
+1. Le Texier, T. (2019). "Debunking the Stanford Prison Experiment." American Psychologist 74(7): 823–839. <Meta>doi:10.1037/amp0000401。</Meta> [doi.org](https://doi.org/10.1037/amp0000401) [pubmed](https://pubmed.ncbi.nlm.nih.gov/31380664/)
+1. Ioannidis, J. P. A. (2005). "Why most published research findings are false." PLoS Medicine 2(8): e124. <Meta>doi:10.1371/journal.pmed.0020124。</Meta> [doi.org/10.1371/journal.pmed.0020124](https://doi.org/10.1371/journal.pmed.0020124) <Meta>——奠基性（且基于模型，故细节上有争议）论文。</Meta>
+1. Benjamin, D. J. et al. (2018). "Redefine statistical significance." Nature Human Behaviour 2: 6–10. <Meta>doi:10.1038/s41562-017-0189-z。</Meta> [doi.org](https://doi.org/10.1038/s41562-017-0189-z) <Meta>——p &lt; 0.005 提案（及 Amrhein &amp; Greenland 「移除而非重新定义」的反驳）。</Meta>
+1. Chambers, C. D. (2013). "Registered Reports: A new publishing initiative at Cortex." Cortex 49(3): 609–610. <Meta>doi:10.1016/j.cortex.2012.12.016。</Meta> [doi.org/10.1016/j.cortex.2012.12.016](https://doi.org/10.1016/j.cortex.2012.12.016) And Chambers &amp; Tzavella (2022), Nature Human Behaviour 6: 29–42, <Meta>doi:10.1038/s41562-021-01193-7。</Meta> [doi.org/10.1038/s41562-021-01193-7](https://doi.org/10.1038/s41562-021-01193-7) <Meta>——注册式报告如今已有 300 余家期刊采纳。</Meta>
+
+</Sources>
+
+</Wrap>
+

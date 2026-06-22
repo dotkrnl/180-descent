@@ -1,10 +1,36 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-<header class="hero wrap">
-<p class="eyebrow">Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 01 / 180</span></p>
-<h1>What Is Knowledge?</h1>
-<p class="sub">You looked at the clock. You were right. Did you <em>know</em>?</p>
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import Divider from "@app/components/lesson/Divider.astro";
+import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+
+<Hero>
+<HeroEyebrow>Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 01 / 180</span></HeroEyebrow>
+
+# What Is Knowledge?
+
+<HeroSubhead>You looked at the clock. You were right. Did you *know*?</HeroSubhead>
 
 <figure class="hero-clock">
 <div class="clockwrap">
@@ -39,45 +65,60 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <span class="stopped-tag">● stopped 12 h ago — but right, for this one minute</span>
 </figure>
 
-<p class="lede"><span class="drop">I</span>t is 9:12 in the morning and you are late. You glance up at the great station clock as you rush past, read <strong>9:12</strong>, and think: <em>fine — three minutes to spare.</em> You are right. It really is 9:12. And yet the clock you trusted died at 9:12 exactly twelve hours ago, somewhere in the small hours, and has hung there frozen ever since. You consulted a broken instrument at the single instant in the day it happened to be correct.</p>
+<Lead drop="I">t is 9:12 in the morning and you are late. You glance up at the great station clock as you rush past, read **9:12**, and think: *fine — three minutes to spare.* You are right. It really is 9:12. And yet the clock you trusted died at 9:12 exactly twelve hours ago, somewhere in the small hours, and has hung there frozen ever since. You consulted a broken instrument at the single instant in the day it happened to be correct.</Lead>
 
-<p>Your belief was <strong>true</strong>. It rested on a perfectly sensible <strong>reason</strong> — clocks tell the time, and you have trusted a thousand of them without incident. You <strong>believed</strong> it sincerely. So: did you <em>know</em> it was 9:12? Asked carefully, almost everyone says no. Something is missing. Saying exactly what has consumed philosophers for sixty years — and, as we'll see, the better part of a thousand.</p>
-</header><div class="wrap">
+Your belief was **true**. It rested on a perfectly sensible **reason** — clocks tell the time, and you have trusted a thousand of them without incident. You **believed** it sincerely. So: did you *know* it was 9:12? Asked carefully, almost everyone says no. Something is missing. Saying exactly what has consumed philosophers for sixty years — and, as we'll see, the better part of a thousand.
 
-<div class="whereblock">
-<p class="label">◆ Where we are</p>
-<p>This is the first descent, so there is nothing behind us yet — the log is blank. Instead we plant seeds. The machinery introduced today (belief as something that comes in <em>degrees</em>; updating on evidence; minds as inference engines) is the <em class="term">epistemic</em><TipNote text={"Epistemic means related to knowledge, evidence, justification, and rational belief."} /> toolkit the entire course will lean on. Watch for it to resurface on <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a> (how science decides what counts at all), <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a> (probability as the logic of partial belief), <a href="/days/007-information-theory/"><strong>Day 7</strong></a> (information), <strong>Day 119</strong> (the predictive brain), and <strong>Day 149</strong> (when famous results evaporate). The five threads we'll trace across all 180 days — <em>information, energy, evolution, emergence, computation</em> — all have a quiet first appearance right here.</p>
-</div>
+</Hero>
 
-<section>
-<p class="sec-eyebrow">The model</p>
-<h2>The three-legged stool</h2>
-<p>For roughly twenty-three centuries, Western philosophy carried around a tidy answer to "what is knowledge?" To <em class="term">know</em> that something is the case, you needed three things at once:</p>
-<p><strong>(1) you believe it</strong> — you can't know what you don't even hold to be true. <strong>(2) it's true</strong> — you can't <em>know</em> a falsehood; people who said "I knew the Earth was flat" merely <em>believed</em> it, confidently and wrongly. <strong>(3) you're justified</strong> — you have good reason, because a lucky guess that lands isn't knowledge either. The gambler who "just had a feeling" the long-shot would win, and won, did not <em>know</em> it would.</p>
-<p>Knowledge, on this view, is <em class="term">justified true belief</em> — JTB, a three-legged stool. Kick away any leg and it topples. The picture is usually traced to Plato, who in the <em>Theaetetus</em> floats the idea that knowledge is "true judgment with an account." There's a delicious irony here, much enjoyed by historians: in that very dialogue Socrates then dismantles the definition, so Plato arguably never endorsed the thing named after him. As one scholar put it, it is almost as if a distinguished critic created a tradition in the very act of destroying it.</p>
-<p>Still, the rough consensus held. The stool seemed stable. And then a 35-year-old philosopher who, the story goes, hadn't published much and rather needed to, wrote three pages.</p>
-</section>
+<Wrap>
 
-<section>
-<p class="sec-eyebrow">The grenade</p>
-<h2>Gettier's three pages</h2>
-<p>In 1963, Edmund Gettier published a paper in the journal <em>Analysis</em> with the cheekily plain title <em>"Is Justified True Belief Knowledge?"</em>. It runs barely three pages. It has since been cited in <strong>thousands</strong> of scholarly works and spawned entire subfields. Few documents in modern philosophy have done more damage per word.</p>
-<p>Gettier's move was devastatingly simple. He built little stories in which all three legs of the stool are firmly in place — belief, truth, justification — and yet you'd never say the person <em>knows</em>. Here is his first case, lightly modernized:</p>
+<WhereBlock>
+<Label>◆ Where we are</Label>
+
+This is the first descent, so there is nothing behind us yet — the log is blank. Instead we plant seeds. The machinery introduced today (belief as something that comes in *degrees*; updating on evidence; minds as inference engines) is the <Term as="em">epistemic</Term><TipNote text={"Epistemic means related to knowledge, evidence, justification, and rational belief."} /> toolkit the entire course will lean on. Watch for it to resurface on **[Day 2](/days/002-scientific-method-and-demarcation/)** (how science decides what counts at all), **[Day 4](/days/004-probability-as-extended-logic/)** (probability as the logic of partial belief), **[Day 7](/days/007-information-theory/)** (information), **Day 119** (the predictive brain), and **Day 149** (when famous results evaporate). The five threads we'll trace across all 180 days — *information, energy, evolution, emergence, computation* — all have a quiet first appearance right here.
+
+</WhereBlock>
+
+<SectionEyebrow>The model</SectionEyebrow>
+
+## The three-legged stool
+
+For roughly twenty-three centuries, Western philosophy carried around a tidy answer to "what is knowledge?" To <Term as="em">know</Term> that something is the case, you needed three things at once:
+
+**(1) you believe it** — you can't know what you don't even hold to be true. **(2) it's true** — you can't *know* a falsehood; people who said "I knew the Earth was flat" merely *believed* it, confidently and wrongly. **(3) you're justified** — you have good reason, because a lucky guess that lands isn't knowledge either. The gambler who "just had a feeling" the long-shot would win, and won, did not *know* it would.
+
+Knowledge, on this view, is <Term as="em">justified true belief</Term> — JTB, a three-legged stool. Kick away any leg and it topples. The picture is usually traced to Plato, who in the *Theaetetus* floats the idea that knowledge is "true judgment with an account." There's a delicious irony here, much enjoyed by historians: in that very dialogue Socrates then dismantles the definition, so Plato arguably never endorsed the thing named after him. As one scholar put it, it is almost as if a distinguished critic created a tradition in the very act of destroying it.
+
+Still, the rough consensus held. The stool seemed stable. And then a 35-year-old philosopher who, the story goes, hadn't published much and rather needed to, wrote three pages.
+
+<SectionEyebrow>The grenade</SectionEyebrow>
+
+## Gettier's three pages
+
+In 1963, Edmund Gettier published a paper in the journal *Analysis* with the cheekily plain title *"Is Justified True Belief Knowledge?"*. It runs barely three pages. It has since been cited in **thousands** of scholarly works and spawned entire subfields. Few documents in modern philosophy have done more damage per word.
+
+Gettier's move was devastatingly simple. He built little stories in which all three legs of the stool are firmly in place — belief, truth, justification — and yet you'd never say the person *knows*. Here is his first case, lightly modernized:
+
 <blockquote>Smith and Jones both apply for a job. The boss tells Smith, "Jones will get it." Smith has also, idly, counted the coins in Jones's pocket: ten. So Smith forms a justified belief: <em>the person who gets the job has ten coins in their pocket.</em></blockquote>
-<p>Now the twist. The boss was wrong (or changed her mind): <strong>Smith</strong> gets the job, not Jones. And — entirely unknown to Smith — Smith happens to have <strong>ten coins</strong> in his own pocket too. Look at his belief, "the person who gets the job has ten coins": it's <strong>true</strong> (the winner, Smith, does have ten coins), it's <strong>justified</strong> (excellent evidence — the boss's word, a literal coin count), and it's sincerely <strong>believed</strong>. JTB, all three legs. Yet Smith plainly doesn't <em>know</em> it. He was tracking <em>Jones</em> and arrived at the right answer about the wrong man.</p>
-<p>That is the anatomy of a <em class="term">Gettier case</em>: your justification runs <em>through a falsehood</em> ("Jones will get the job"), and the belief is rescued into truth by an unrelated <em>coincidence</em> ("Smith also has ten coins"). The reason and the truth never actually touch. The stopped clock is the same skeleton in cleaner clothes: your reason (the clock) is broken, and the truth (it's 9:12) arrives by luck.</p>
+Now the twist. The boss was wrong (or changed her mind): **Smith** gets the job, not Jones. And — entirely unknown to Smith — Smith happens to have **ten coins** in his own pocket too. Look at his belief, "the person who gets the job has ten coins": it's **true** (the winner, Smith, does have ten coins), it's **justified** (excellent evidence — the boss's word, a literal coin count), and it's sincerely **believed**. JTB, all three legs. Yet Smith plainly doesn't *know* it. He was tracking *Jones* and arrived at the right answer about the wrong man.
 
-<div class="aside">
-<p class="h">A twist older than its name</p>
-<p>Gettier wasn't first. Bertrand Russell had the stopped-clock case in <em>Human Knowledge: Its Scope and Limits</em> (1948). Go back further and the problem is downright ancient: around <strong>770&nbsp;CE</strong> the Buddhist logician <strong>Dharmottara</strong> described a traveler who sees what looks like smoke over a hill, infers fire, and is right that there's fire — except the "smoke" was a swarm of insects. Same skeleton, twelve centuries early. In 14th-century India, <strong>Gaṅgeśa</strong> built a whole causal theory of knowing to handle such cases. The "Gettier problem" is one of philosophy's great instances of <em>convergent discovery</em> — the kind of thing minds keep tripping over independently, which is itself a hint that something real is there.</p>
-</div>
-</section>
+That is the anatomy of a <Term as="em">Gettier case</Term>: your justification runs *through a falsehood* ("Jones will get the job"), and the belief is rescued into truth by an unrelated *coincidence* ("Smith also has ten coins"). The reason and the truth never actually touch. The stopped clock is the same skeleton in cleaner clothes: your reason (the clock) is broken, and the truth (it's 9:12) arrives by luck.
+
+<Aside>
+<BlockTitle>A twist older than its name</BlockTitle>
+
+Gettier wasn't first. Bertrand Russell had the stopped-clock case in *Human Knowledge: Its Scope and Limits* (1948). Go back further and the problem is downright ancient: around **770&nbsp;CE** the Buddhist logician **Dharmottara** described a traveler who sees what looks like smoke over a hill, infers fire, and is right that there's fire — except the "smoke" was a swarm of insects. Same skeleton, twelve centuries early. In 14th-century India, **Gaṅgeśa** built a whole causal theory of knowing to handle such cases. The "Gettier problem" is one of philosophy's great instances of *convergent discovery* — the kind of thing minds keep tripping over independently, which is itself a hint that something real is there.
+
+</Aside>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<div class="panel web-only">
-<p class="ptitle">Interactive · build it and break it</p>
-<h3>The Gettier Machine</h3>
-<p class="pnote">Flip the three classic conditions on and off. The center of the diagram lights up when all three overlap — that's <em>justified true belief</em>. Then try the red switch, <strong>Luck</strong>, with all three on: watch JTB stay satisfied while knowledge slips away. Or load a famous scenario.</p>
+<Panel class="web-only">
+<PanelTitle>Interactive · build it and break it</PanelTitle>
+
+### The Gettier Machine
+
+<PanelNote>Flip the three classic conditions on and off. The center of the diagram lights up when all three overlap — that's *justified true belief*. Then try the red switch, **Luck**, with all three on: watch JTB stay satisfied while knowledge slips away. Or load a famous scenario.</PanelNote>
 
 <div class="gm-grid">
 <div>
@@ -133,11 +174,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 </div>
 </div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>Gettier Cases</h3>
-<p class="pnote">Key cases:</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### Gettier Cases
+
+<PanelNote>Key cases:</PanelNote>
+
 <table class="alt-table">
 <thead><tr><th>Case</th><th>Belief</th><th>Truth</th><th>Justification</th><th>Luck</th><th>Verdict</th></tr></thead>
 <tbody>
@@ -147,33 +192,42 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>Confident error</td><td>Yes</td><td>No</td><td>Yes</td><td>No</td><td>Not knowledge: the claim is false</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<section>
-<p class="sec-eyebrow">The patch wars</p>
-<h2>The hunt for the fourth leg</h2>
-<p>The obvious response to Gettier was: add a fourth condition that screens out the luck. For decades, epistemologists tried — and each tidy fix met a nastier counterexample. It became a minor blood sport.</p>
-<p><strong>No false lemmas.</strong> First idea: knowledge can't be reasoned <em>through</em> a falsehood. Smith's belief leaned on "Jones will get the job," which was false; ban that and you're safe. Clean — until Alvin Goldman's <strong>fake-barn country</strong> (1976). You're driving through a region where, as a prank, every "barn" is a flat movie-set façade — except one. You happen to glance at the single real barn and think "a barn." Your belief is true, justified, and rests on <em>no</em> false premise. Yet you don't know it's a barn: you could so easily have been fooled by a façade a hundred meters either way.</p>
-<p><strong>Track the truth.</strong> So maybe knowledge is about how your belief behaves across <em class="term">nearby possibilities</em><TipNote text={"Nearby possibilities are realistic alternate ways the situation could have gone, not wildly remote science-fiction scenarios."} />. Robert Nozick (1981) proposed <em class="term">sensitivity</em>: you know <em>p</em> only if, <em>were p false, you wouldn't believe it.</em> Elegant — but it produces strange verdicts in edge cases. Sosa-style <em class="term">safety</em> shifts the modal test: not "would you believe it if it were false?" but "could you easily have believed it falsely?" The two are close cousins, but not twins: sensitivity asks whether your belief would disappear if the claim were false; safety asks whether your way of forming it sits too close to error. The stopped clock fails safety hard (a minute either side and you're mistaken); a working clock passes. Fake-barn-you fails safety too.</p>
-<p>Then Linda Zagzebski (1994) sharpened the trouble into a kind of <strong>recipe</strong>. For a large class of JTB-plus-extra-condition analyses, she argued, Gettier problems are structurally reproducible. Start with a belief that's justified but could still be false (which fallible justification always allows). Arrange for the justification to misfire so the belief is false — then arrange, by luck, for it to be true after all. So long as the added condition does not itself close the gap where epistemic luck enters, luck can wedge back in. The patch wars may be structurally unwinnable on those terms.</p>
+<SectionEyebrow>The patch wars</SectionEyebrow>
 
-<h3>Two ways to stop fighting</h3>
-<p><strong>Declare knowledge a primitive.</strong> Timothy Williamson, in <em>Knowledge and Its Limits</em> (2000), made a radical move: stop trying to build knowledge out of simpler parts. Maybe it has no analysis. On his <em class="term">knowledge-first</em> view, knowing is a basic mental state — the most general <em class="term">factive</em><TipNote text={"A factive mental state can obtain only if its content is true: you can believe falsely, but you cannot know falsely."} /> one — and we should explain belief, evidence, and justification <em>in terms of knowledge</em>, not the other way around. You can't define <em>hydrogen</em> or <em>John F. Kennedy</em> into simpler concepts; perhaps knowledge is bedrock too. Sixty years of failed definitions start to look less like a puzzle and more like a clue.</p>
-<p><strong>Make it about competence.</strong> The other escape is <em class="term">virtue epistemology</em> (Sosa again). Knowledge is <em>apt</em> belief — a belief that is true <em>because of</em> the knower's skill, not by accident. Picture an archer. A bullseye is a good shot only if the arrow hit center <em>because</em> the archer aimed well — not because a gust blew a bad shot onto the target. The Gettiered believer is exactly that archer: the wind knocked the arrow off course, then a second gust knocked it back onto the bull. Accurate, yes. Skillful, no. <em>Apt</em>, no. That, says Sosa, is why luck-based hits aren't knowledge.</p>
-</section>
+## The hunt for the fourth leg
 
-<section>
-<p class="sec-eyebrow">The debate</p>
-<h2>What makes a belief justified at all?</h2>
-<p>Step back from "is it knowledge?" to the humbler leg: what makes a belief <em>justified</em> in the first place? Push on any justification and you fall into a regress. It's 9:12 because the clock says so. Trust the clock because clocks are reliable. Believe <em>that</em> because… and now you're sliding. The ancient skeptics mapped the trap precisely. Every chain of justification, they argued, ends in one of three uncomfortable places — the <em class="term">Agrippan trilemma</em>: it goes on <strong>forever</strong>, or it loops back in a <strong>circle</strong>, or it stops at some <strong>arbitrary</strong> point you simply declare.</p>
-<p>Three modern schools each pick which horn to grab — and a fourth changes the subject entirely.</p>
-</section>
+The obvious response to Gettier was: add a fourth condition that screens out the luck. For decades, epistemologists tried — and each tidy fix met a nastier counterexample. It became a minor blood sport.
+
+**No false lemmas.** First idea: knowledge can't be reasoned *through* a falsehood. Smith's belief leaned on "Jones will get the job," which was false; ban that and you're safe. Clean — until Alvin Goldman's **fake-barn country** (1976). You're driving through a region where, as a prank, every "barn" is a flat movie-set façade — except one. You happen to glance at the single real barn and think "a barn." Your belief is true, justified, and rests on *no* false premise. Yet you don't know it's a barn: you could so easily have been fooled by a façade a hundred meters either way.
+
+**Track the truth.** So maybe knowledge is about how your belief behaves across <Term as="em">nearby possibilities</Term><TipNote text={"Nearby possibilities are realistic alternate ways the situation could have gone, not wildly remote science-fiction scenarios."} />. Robert Nozick (1981) proposed <Term as="em">sensitivity</Term>: you know *p* only if, *were p false, you wouldn't believe it.* Elegant — but it produces strange verdicts in edge cases. Sosa-style <Term as="em">safety</Term> shifts the modal test: not "would you believe it if it were false?" but "could you easily have believed it falsely?" The two are close cousins, but not twins: sensitivity asks whether your belief would disappear if the claim were false; safety asks whether your way of forming it sits too close to error. The stopped clock fails safety hard (a minute either side and you're mistaken); a working clock passes. Fake-barn-you fails safety too.
+
+Then Linda Zagzebski (1994) sharpened the trouble into a kind of **recipe**. For a large class of JTB-plus-extra-condition analyses, she argued, Gettier problems are structurally reproducible. Start with a belief that's justified but could still be false (which fallible justification always allows). Arrange for the justification to misfire so the belief is false — then arrange, by luck, for it to be true after all. So long as the added condition does not itself close the gap where epistemic luck enters, luck can wedge back in. The patch wars may be structurally unwinnable on those terms.
+
+### Two ways to stop fighting
+
+**Declare knowledge a primitive.** Timothy Williamson, in *Knowledge and Its Limits* (2000), made a radical move: stop trying to build knowledge out of simpler parts. Maybe it has no analysis. On his <Term as="em">knowledge-first</Term> view, knowing is a basic mental state — the most general <Term as="em">factive</Term><TipNote text={"A factive mental state can obtain only if its content is true: you can believe falsely, but you cannot know falsely."} /> one — and we should explain belief, evidence, and justification *in terms of knowledge*, not the other way around. You can't define *hydrogen* or *John F. Kennedy* into simpler concepts; perhaps knowledge is bedrock too. Sixty years of failed definitions start to look less like a puzzle and more like a clue.
+
+**Make it about competence.** The other escape is <Term as="em">virtue epistemology</Term> (Sosa again). Knowledge is *apt* belief — a belief that is true *because of* the knower's skill, not by accident. Picture an archer. A bullseye is a good shot only if the arrow hit center *because* the archer aimed well — not because a gust blew a bad shot onto the target. The Gettiered believer is exactly that archer: the wind knocked the arrow off course, then a second gust knocked it back onto the bull. Accurate, yes. Skillful, no. *Apt*, no. That, says Sosa, is why luck-based hits aren't knowledge.
+
+<SectionEyebrow>The debate</SectionEyebrow>
+
+## What makes a belief justified at all?
+
+Step back from "is it knowledge?" to the humbler leg: what makes a belief *justified* in the first place? Push on any justification and you fall into a regress. It's 9:12 because the clock says so. Trust the clock because clocks are reliable. Believe *that* because… and now you're sliding. The ancient skeptics mapped the trap precisely. Every chain of justification, they argued, ends in one of three uncomfortable places — the <Term as="em">Agrippan trilemma</Term>: it goes on **forever**, or it loops back in a **circle**, or it stops at some **arbitrary** point you simply declare.
+
+Three modern schools each pick which horn to grab — and a fourth changes the subject entirely.
 
 {/* ===================== VISUAL 2 ===================== */}
-<div class="panel tri">
-<p class="ptitle">Diagram · the regress problem</p>
-<h3>Agrippa's Trilemma — three bad endings, four escapes</h3>
-<p class="pnote">Why is your belief justified? Every honest answer to "…and why <em>that</em>?" eventually hits one of three walls.</p>
+<Panel class="tri">
+<PanelTitle>Diagram · the regress problem</PanelTitle>
+
+### Agrippa's Trilemma — three bad endings, four escapes
+
+<PanelNote>Why is your belief justified? Every honest answer to "…and why *that*?" eventually hits one of three walls.</PanelNote>
+
 <div class="regress-map print-hide" role="img" aria-label="A chain of reasons ending in infinite regress, a circle, or an arbitrary halt.">
 <div class="regress-chain">
 <div class="rnode strong"><b>Belief</b><span>"it is 9:12"</span></div>
@@ -202,16 +256,16 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <div class="k"><b>Infinitism</b> — the brave minority: accepts that justification is an endless chain of reasons, never bottoming out.</div>
 <div class="k"><b>Reliabilism</b> — changes the question. A belief is justified if it was <em>produced by a reliable process</em> — good vision, sound memory — whether or not you can recite a defense. This is <em>externalism</em>: justification can be a fact about your wiring, not a story in your head.</div>
 </div>
-</div>
+</Panel>
 
-<section>
-<p>That internal/external split matters more than it looks. The <strong>internalist</strong> says justification must be something you can access by reflection — reasons available "from the inside." The <strong>externalist</strong> (reliabilism's home) says what matters is that your belief was, in fact, produced in a truth-conducive way, accessible or not. Hold that tension in mind: it is exactly where the old armchair questions collide with the new science of how brains actually form beliefs.</p>
-</section>
+That internal/external split matters more than it looks. The **internalist** says justification must be something you can access by reflection — reasons available "from the inside." The **externalist** (reliabilism's home) says what matters is that your belief was, in fact, produced in a truth-conducive way, accessible or not. Hold that tension in mind: it is exactly where the old armchair questions collide with the new science of how brains actually form beliefs.
 
-<section class="frontier">
-<p class="sec-eyebrow">The frontier · 2026</p>
-<h2>Three live edges — and the hype filter</h2>
-<p>Every day in this course ends at the research frontier, with each claim tagged for how much weight it can bear. Knowledge sits at a fascinating junction right now: philosophers, psychologists, and neuroscientists are all circling the same questions from different sides.</p>
+<ContentSection class="frontier">
+<SectionEyebrow>The frontier · 2026</SectionEyebrow>
+
+## Three live edges — and the hype filter
+
+Every day in this course ends at the research frontier, with each claim tagged for how much weight it can bear. Knowledge sits at a fascinating junction right now: philosophers, psychologists, and neuroscientists are all circling the same questions from different sides.
 
 <div class="claim">
 <div class="ctop">
@@ -237,13 +291,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <p class="epub-only print-only">The table below turns the same trap into three benchmark cases: coherent credence, overconfidence, and underconfidence.</p>
 <p>What's still <em>contested</em> is whether graded credence <em>replaces</em> ordinary yes/no belief or merely sits beside it. (The lottery paradox bites here: you're 99.9% sure your ticket loses — but do you flat-out <em>believe</em> it loses?) We pick this thread up properly on <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>.</p>
 </div>
-</section>
+</ContentSection>
 
 {/* ===================== INTERACTIVE 3 ===================== */}
-<div class="panel web-only">
-<p class="ptitle">Interactive · feel the trap</p>
-<h3>The Credence Dial &amp; the Dutch Book</h3>
-<p class="pnote">Set your confidence that the next card is <strong>red</strong> (S) and that it's <strong>not red</strong> (¬S). The two should sum to exactly 1. Push them out of line and watch a bookie turn your incoherence into a guaranteed profit — at your expense.</p>
+<Panel class="web-only">
+<PanelTitle>Interactive · feel the trap</PanelTitle>
+
+### The Credence Dial &amp; the Dutch Book
+
+<PanelNote>Set your confidence that the next card is **red** (S) and that it's **not red** (¬S). The two should sum to exactly 1. Push them out of line and watch a bookie turn your incoherence into a guaranteed profit — at your expense.</PanelNote>
 
 <div class="cred-controls">
 <div class="slider-row">
@@ -270,11 +326,15 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 </div>
 <button class="snap" id="snapBtn">↳ Snap ¬S to 1 − S (make it coherent)</button>
 </div>
-</div>
-<div class="format-alt epub-only print-only">
-<p class="ptitle">Reference table</p>
-<h3>Credence Coherence</h3>
-<p>If your credence in <em>S</em> and your credence in <em>not-S</em> sum to 1.00, the pair is coherent. If they sum above 1.00, you will overpay for bets where exactly one can win. If they sum below 1.00, a bookie can reverse the bets and still guarantee a profit.</p>
+</Panel>
+
+<FormatAlt class="epub-only print-only">
+<PanelTitle>Reference table</PanelTitle>
+
+### Credence Coherence
+
+If your credence in *S* and your credence in *not-S* sum to 1.00, the pair is coherent. If they sum above 1.00, you will overpay for bets where exactly one can win. If they sum below 1.00, a bookie can reverse the bets and still guarantee a profit.
+
 <table class="alt-table">
 <thead><tr><th>Credence in S</th><th>Credence in not-S</th><th>Sum</th><th>Result</th></tr></thead>
 <tbody>
@@ -283,9 +343,9 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <tr><td>0.30</td><td>0.40</td><td class="num">0.70</td><td>Guaranteed 0.30 loss if the bookie buys both bets from you</td></tr>
 </tbody>
 </table>
-</div>
+</FormatAlt>
 
-<section class="frontier">
+<ContentSection class="frontier">
 <div class="claim">
 <div class="ctop">
 <span class="cnum">Edge 03</span>
@@ -296,54 +356,58 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <p>Philosophy asks what justifies a belief; neuroscience now asks how a lump of tissue forms one. A fast-growing program answers: the brain is not a passive sponge soaking up the world — it is a relentless <em class="term">prediction machine</em>. In many <em class="term">predictive-processing</em><TipNote text={"Predictive processing is a family of theories where the brain continually predicts sensory input and updates when prediction errors arrive."} /> models (Andy Clark, <em>Behavioral and Brain Sciences</em>, 2013; Jakob Hohwy, 2013), the brain continually compares prediction with input; <em>prediction-error</em> signals help update the model. Perception becomes the brain's best running guess, reined in by error; in Anil Seth's memorable phrase, a "controlled hallucination." Belief-updating starts to look like <strong>Bayesian inference rendered in neurons</strong> — the so-called "Bayesian brain," tying Edge 02 to wetware.</p>
 <p>Karl Friston pushes the idea to its limit with the <em class="term">Free Energy Principle</em><TipNote text={"Friston’s Free Energy Principle proposes that living systems act to minimize prediction error or uncertainty, using a formal quantity called free energy."} /> (<em>Nature Reviews Neuroscience</em>, 2010): living systems persist precisely by minimizing a quantity — "free energy," an information-theoretic<TipNote text={"Information-theoretic means described using mathematical measures of information, uncertainty, and surprise."} /> cousin of <em>surprise</em> — that knits perception, action, and even biological self-organization into one framework. The honest labels matter here. Predictive coding genuinely explains real perceptual phenomena and is a serious, productive research program — <strong>promising</strong>. But the <em>grand</em> Free Energy Principle, as a single law for all of mind and life, remains <strong>contested</strong>: critics argue that broad versions can become difficult to test directly; defenders often treat it as a mathematical framework that becomes empirically risky only through more specific models. We'll return to it for perception (<strong>Day 119</strong>) and consciousness (<strong>Days 123–126</strong>) — and notice already how its "free energy" rhymes with the thermodynamics we'll meet on <strong>Days 33 and 83–85</strong>. <em>Information, energy, computation, emergence</em> — four of our five threads, braided into one neuron's quiet arithmetic.</p>
 </div>
-</section>
+</ContentSection>
 
-<section>
-<p class="sec-eyebrow">Open questions</p>
-<h2>What's genuinely unsettled</h2>
-<p>Sixty years on, the honest answer to "what is knowledge?" includes a healthy list of things nobody has nailed down:</p>
-<ul>
-<li><strong>Can knowledge be analyzed at all?</strong> Or was Williamson right that it's bedrock — a primitive we explain other things <em>with</em>, not <em>from</em>?</li>
-<li><strong>Internal or external?</strong> Does being justified require reasons you can access by reflection, or just wiring that tends to produce truths?</li>
-<li><strong>One currency or two?</strong> Is rational belief fundamentally graded (credence), all-or-nothing, or both somehow reconciled?</li>
-<li><strong>Is there really a universal human epistemology</strong> — and if so, did <em>evolution</em> install the instinct that luck-based "knowing" doesn't count? (A thread for <strong>Day 74</strong>.)</li>
-<li><strong>Is the brain <em>literally</em> Bayesian</strong>, or is "the brain does inference" just a useful way of describing it from outside?</li>
-<li><strong>And the question that will haunt the AI block:</strong> when a system like the one that drafted this page outputs a true, well-supported claim, does it <em>know</em> anything — or is it the ultimate Gettier case, right for reasons that have nothing to do with the truth? (<strong>Days 138–145</strong>.)</li>
-</ul>
-</section>
+<SectionEyebrow>Open questions</SectionEyebrow>
 
-<div class="recap">
-<p class="h">◆ The day in three sentences</p>
+## What's genuinely unsettled
+
+Sixty years on, the honest answer to "what is knowledge?" includes a healthy list of things nobody has nailed down:
+
+- **Can knowledge be analyzed at all?** Or was Williamson right that it's bedrock — a primitive we explain other things *with*, not *from*?
+- **Internal or external?** Does being justified require reasons you can access by reflection, or just wiring that tends to produce truths?
+- **One currency or two?** Is rational belief fundamentally graded (credence), all-or-nothing, or both somehow reconciled?
+- **Is there really a universal human epistemology** — and if so, did *evolution* install the instinct that luck-based "knowing" doesn't count? (A thread for **Day 74**.)
+- **Is the brain *literally* Bayesian**, or is "the brain does inference" just a useful way of describing it from outside?
+- **And the question that will haunt the AI block:** when a system like the one that drafted this page outputs a true, well-supported claim, does it *know* anything — or is it the ultimate Gettier case, right for reasons that have nothing to do with the truth? (**Days 138–145**.)
+
+<Recap>
+<BlockTitle>◆ The day in three sentences</BlockTitle>
+
 <dl>
 <div><dt>Big idea</dt><dd>For 2,300 years knowledge looked like justified true belief — until Gettier showed in three pages that you can hold all three and still not know, because your reasons and the truth can meet by luck rather than by connection.</dd></div>
 <div><dt>Best analogy</dt><dd>The stopped clock that's right twice a day — and the archer whose arrow is blown off target, then blown back onto the bullseye: accurate, but not <em>apt</em>.</dd></div>
 <div><dt>Live controversy</dt><dd>Whether the fix is a fourth condition (and which), whether knowledge is unanalyzable bedrock, and whether "belief" should give way to graded, Bayesian credence — with a real scientific frontier in the claim that the brain is a prediction machine.</dd></div>
 </dl>
-<p class="threads"><b>Threads today ›</b> information (credence &amp; the Bayesian brain) · energy (Friston's free energy) · computation (mind as inference engine) — with light first touches of emergence and evolution.</p>
-</div>
-<hr class="div" />
+<Threads>**Threads today ›** information (credence &amp; the Bayesian brain) · energy (Friston's free energy) · computation (mind as inference engine) — with light first touches of emergence and evolution.</Threads>
 
-<section class="sources">
-<p class="sec-eyebrow">Sources</p>
-<h2>Sources &amp; further reading</h2>
-<ol>
-<li>Gettier, E. L. (1963). "Is Justified True Belief Knowledge?" <em>Analysis</em> 23(6): 121–123. <span class="meta">doi:10.1093/analys/23.6.121.</span> <a href="https://doi.org/10.1093/analys/23.6.121">doi.org/10.1093/analys/23.6.121</a></li>
-<li>Ichikawa, J. J. &amp; Steup, M. "The Analysis of Knowledge." <em>Stanford Encyclopedia of Philosophy</em> (substantive rev. Jan. 21, 2026). <a href="https://plato.stanford.edu/entries/knowledge-analysis/">plato.stanford.edu/entries/knowledge-analysis</a> <span class="meta">— JTB, the Gettier cases, safety/sensitivity, and the knowledge-first turn.</span></li>
-<li>"Gettier problem." <em>Wikipedia</em> (accessed 2026). <a href="https://en.wikipedia.org/wiki/Gettier_problem">en.wikipedia.org/wiki/Gettier_problem</a> <span class="meta">— precedents in Russell (1948), Dharmottara (~770 CE), and Gaṅgeśa (14th c.).</span></li>
-<li>Russell, B. (1948). <em>Human Knowledge: Its Scope and Limits.</em> London: Allen &amp; Unwin. <span class="meta">— the stopped-clock case (pp. ~170–171).</span></li>
-<li>Goldman, A. (1976). "Discrimination and Perceptual Knowledge." <em>Journal of Philosophy</em> 73(20): 771–791. <span class="meta">doi:10.2307/2025679.</span> <a href="https://doi.org/10.2307/2025679">doi.org/10.2307/2025679</a> <span class="meta">— the fake-barn case; reliabilism.</span></li>
-<li>Nozick, R. (1981). <em>Philosophical Explanations.</em> Harvard University Press. <span class="meta">— truth-tracking / sensitivity.</span></li>
-<li>Sosa, E. (1999). "How to Defeat Opposition to Moore." <em>Noûs</em> 33(s13), supplement: <em>Philosophical Perspectives</em> 13, Epistemology: 141–153. <span class="meta">doi:10.1111/0029-4624.33.s13.7.</span> <a href="https://doi.org/10.1111/0029-4624.33.s13.7">doi.org/10.1111/0029-4624.33.s13.7</a> <span class="meta">— the safety condition.</span> See also Sosa (2007), <em>A Virtue Epistemology</em> (apt belief), <span class="meta">doi:10.1093/acprof:oso/9780199297023.001.0001.</span> <a href="https://doi.org/10.1093/acprof:oso/9780199297023.001.0001">doi.org/10.1093/acprof:oso/9780199297023.001.0001</a>.</li>
-<li>Zagzebski, L. (1994). "The Inescapability of Gettier Problems." <em>The Philosophical Quarterly</em> 44(174): 65–73. <span class="meta">doi:10.2307/2220147.</span> <a href="https://doi.org/10.2307/2220147">doi.org/10.2307/2220147</a> <span class="meta">— structural reproducibility for many JTB-plus-extra-condition analyses.</span></li>
-<li>Williamson, T. (2000). <em>Knowledge and Its Limits.</em> Oxford University Press. <span class="meta">doi:10.1093/019925656X.001.0001.</span> <a href="https://doi.org/10.1093/019925656X.001.0001">doi.org/10.1093/019925656X.001.0001</a> <a href="https://en.wikipedia.org/wiki/Knowledge_and_Its_Limits">overview</a> <span class="meta">— knowledge-first epistemology; knowledge as the most general factive mental state.</span></li>
-<li>Weinberg, J. M., Nichols, S. &amp; Stich, S. (2001). "Normativity and Epistemic Intuitions." <em>Philosophical Topics</em> 29(1–2): 429–460. <span class="meta">doi:10.5840/philtopics2001291/217.</span> <a href="https://doi.org/10.5840/philtopics2001291/217">doi.org/10.5840/philtopics2001291/217</a> <span class="meta">— the founding (later contested) cross-cultural x-phi study.</span></li>
-<li>Machery, E., Stich, S., Rose, D., Chatterjee, A., Karasawa, K., Struchiner, N., Sirker, S., Usui, N. &amp; Hashimoto, T. (2017). "Gettier Across Cultures." <em>Noûs</em> 51(3): 645–664. <span class="meta">doi:10.1111/nous.12110.</span> <a href="https://doi.org/10.1111/nous.12110">doi.org/10.1111/nous.12110</a></li>
-<li>Kim, M. &amp; Yuan, Y. (2015). "No cross-cultural differences in the Gettier car case intuition: A replication study of Weinberg et al. 2001." <em>Episteme</em> 12(3): 355–361. <span class="meta">doi:10.1017/epi.2015.17.</span> <a href="https://doi.org/10.1017/epi.2015.17">doi.org/10.1017/epi.2015.17</a></li>
-<li>Weisberg, J. "Bayesian Epistemology." <em>Stanford Encyclopedia of Philosophy.</em> <a href="https://plato.stanford.edu/entries/epistemology-bayesian/">plato.stanford.edu/entries/epistemology-bayesian</a> <span class="meta">— credences, conditionalization, and the Dutch book argument (Ramsey 1926; de Finetti 1937).</span></li>
-<li>Clark, A. (2013). "Whatever next? Predictive brains, situated agents, and the future of cognitive science." <em>Behavioral and Brain Sciences</em> 36(3): 181–204. <span class="meta">doi:10.1017/S0140525X12000477.</span> <a href="https://doi.org/10.1017/S0140525X12000477">doi.org/10.1017/S0140525X12000477</a> See also Clark, <em>Surfing Uncertainty</em> (OUP, 2016), <span class="meta">doi:10.1093/acprof:oso/9780190217013.001.0001.</span> <a href="https://doi.org/10.1093/acprof:oso/9780190217013.001.0001">doi.org/10.1093/acprof:oso/9780190217013.001.0001</a>.</li>
-<li>Friston, K. (2010). "The free-energy principle: a unified brain theory?" <em>Nature Reviews Neuroscience</em> 11(2): 127–138. <span class="meta">doi:10.1038/nrn2787.</span> <a href="https://doi.org/10.1038/nrn2787">doi.org/10.1038/nrn2787</a></li>
-<li>Hohwy, J. (2013). <em>The Predictive Mind.</em> Oxford University Press. <span class="meta">doi:10.1093/acprof:oso/9780199682737.001.0001.</span> <a href="https://doi.org/10.1093/acprof:oso/9780199682737.001.0001">doi.org/10.1093/acprof:oso/9780199682737.001.0001</a></li>
-</ol>
-</section>
+</Recap>
 
-</div>
+<Divider />
+
+<Sources>
+<SectionEyebrow>Sources</SectionEyebrow>
+
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. Gettier, E. L. (1963). "Is Justified True Belief Knowledge?" *Analysis* 23(6): 121–123. <Meta>doi:10.1093/analys/23.6.121.</Meta> [doi.org/10.1093/analys/23.6.121](https://doi.org/10.1093/analys/23.6.121)
+1. Ichikawa, J. J. &amp; Steup, M. "The Analysis of Knowledge." *Stanford Encyclopedia of Philosophy* (substantive rev. Jan. 21, 2026). [plato.stanford.edu/entries/knowledge-analysis](https://plato.stanford.edu/entries/knowledge-analysis/) <Meta>— JTB, the Gettier cases, safety/sensitivity, and the knowledge-first turn.</Meta>
+1. "Gettier problem." *Wikipedia* (accessed 2026). [en.wikipedia.org/wiki/Gettier_problem](https://en.wikipedia.org/wiki/Gettier_problem) <Meta>— precedents in Russell (1948), Dharmottara (~770 CE), and Gaṅgeśa (14th c.).</Meta>
+1. Russell, B. (1948). *Human Knowledge: Its Scope and Limits.* London: Allen &amp; Unwin. <Meta>— the stopped-clock case (pp. ~170–171).</Meta>
+1. Goldman, A. (1976). "Discrimination and Perceptual Knowledge." *Journal of Philosophy* 73(20): 771–791. <Meta>doi:10.2307/2025679.</Meta> [doi.org/10.2307/2025679](https://doi.org/10.2307/2025679) <Meta>— the fake-barn case; reliabilism.</Meta>
+1. Nozick, R. (1981). *Philosophical Explanations.* Harvard University Press. <Meta>— truth-tracking / sensitivity.</Meta>
+1. Sosa, E. (1999). "How to Defeat Opposition to Moore." *Noûs* 33(s13), supplement: *Philosophical Perspectives* 13, Epistemology: 141–153. <Meta>doi:10.1111/0029-4624.33.s13.7.</Meta> [doi.org/10.1111/0029-4624.33.s13.7](https://doi.org/10.1111/0029-4624.33.s13.7) <Meta>— the safety condition.</Meta> See also Sosa (2007), *A Virtue Epistemology* (apt belief), <Meta>doi:10.1093/acprof:oso/9780199297023.001.0001.</Meta> [doi.org/10.1093/acprof:oso/9780199297023.001.0001](https://doi.org/10.1093/acprof:oso/9780199297023.001.0001).
+1. Zagzebski, L. (1994). "The Inescapability of Gettier Problems." *The Philosophical Quarterly* 44(174): 65–73. <Meta>doi:10.2307/2220147.</Meta> [doi.org/10.2307/2220147](https://doi.org/10.2307/2220147) <Meta>— structural reproducibility for many JTB-plus-extra-condition analyses.</Meta>
+1. Williamson, T. (2000). *Knowledge and Its Limits.* Oxford University Press. <Meta>doi:10.1093/019925656X.001.0001.</Meta> [doi.org/10.1093/019925656X.001.0001](https://doi.org/10.1093/019925656X.001.0001) [overview](https://en.wikipedia.org/wiki/Knowledge_and_Its_Limits) <Meta>— knowledge-first epistemology; knowledge as the most general factive mental state.</Meta>
+1. Weinberg, J. M., Nichols, S. &amp; Stich, S. (2001). "Normativity and Epistemic Intuitions." *Philosophical Topics* 29(1–2): 429–460. <Meta>doi:10.5840/philtopics2001291/217.</Meta> [doi.org/10.5840/philtopics2001291/217](https://doi.org/10.5840/philtopics2001291/217) <Meta>— the founding (later contested) cross-cultural x-phi study.</Meta>
+1. Machery, E., Stich, S., Rose, D., Chatterjee, A., Karasawa, K., Struchiner, N., Sirker, S., Usui, N. &amp; Hashimoto, T. (2017). "Gettier Across Cultures." *Noûs* 51(3): 645–664. <Meta>doi:10.1111/nous.12110.</Meta> [doi.org/10.1111/nous.12110](https://doi.org/10.1111/nous.12110)
+1. Kim, M. &amp; Yuan, Y. (2015). "No cross-cultural differences in the Gettier car case intuition: A replication study of Weinberg et al. 2001." *Episteme* 12(3): 355–361. <Meta>doi:10.1017/epi.2015.17.</Meta> [doi.org/10.1017/epi.2015.17](https://doi.org/10.1017/epi.2015.17)
+1. Weisberg, J. "Bayesian Epistemology." *Stanford Encyclopedia of Philosophy.* [plato.stanford.edu/entries/epistemology-bayesian](https://plato.stanford.edu/entries/epistemology-bayesian/) <Meta>— credences, conditionalization, and the Dutch book argument (Ramsey 1926; de Finetti 1937).</Meta>
+1. Clark, A. (2013). "Whatever next? Predictive brains, situated agents, and the future of cognitive science." *Behavioral and Brain Sciences* 36(3): 181–204. <Meta>doi:10.1017/S0140525X12000477.</Meta> [doi.org/10.1017/S0140525X12000477](https://doi.org/10.1017/S0140525X12000477) See also Clark, *Surfing Uncertainty* (OUP, 2016), <Meta>doi:10.1093/acprof:oso/9780190217013.001.0001.</Meta> [doi.org/10.1093/acprof:oso/9780190217013.001.0001](https://doi.org/10.1093/acprof:oso/9780190217013.001.0001).
+1. Friston, K. (2010). "The free-energy principle: a unified brain theory?" *Nature Reviews Neuroscience* 11(2): 127–138. <Meta>doi:10.1038/nrn2787.</Meta> [doi.org/10.1038/nrn2787](https://doi.org/10.1038/nrn2787)
+1. Hohwy, J. (2013). *The Predictive Mind.* Oxford University Press. <Meta>doi:10.1093/acprof:oso/9780199682737.001.0001.</Meta> [doi.org/10.1093/acprof:oso/9780199682737.001.0001](https://doi.org/10.1093/acprof:oso/9780199682737.001.0001)
+
+</Sources>
+
+</Wrap>
+
