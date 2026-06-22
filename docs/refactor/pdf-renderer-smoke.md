@@ -1,6 +1,6 @@
 # PDF Renderer Smoke Report
 
-Generated: 2026-06-21T22:47:38.676Z
+Generated: 2026-06-22T01:23:40.548Z
 
 This is a Tier 1 smoke attempt for the free PDF renderer candidates. Generated PDFs stay under ignored `dist/refactor/pdf-smoke/` and are not committed.
 
@@ -15,12 +15,12 @@ Smoke content includes English prose, Chinese prose, math text, inline SVG, and 
 
 | Candidate | Passed | Duration | Output | Notes |
 | --- | --- | ---: | --- | --- |
-| LaTeX via Pandoc/XeLaTeX | yes | 1844ms | pandoc-xelatex.pdf | smoke PDF generated |
-| Tectonic | yes | 4673ms | smoke.pdf | smoke PDF generated |
-| Typst | yes | 288ms | typst.pdf | smoke PDF generated |
-| WeasyPrint | yes | 408ms | weasyprint.pdf | smoke PDF generated |
-| Vivliostyle CLI | yes | 2608ms | vivliostyle.pdf | smoke PDF generated |
-| Playwright/Chromium | yes | 123ms | playwright.pdf | smoke PDF generated |
+| LaTeX via Pandoc/XeLaTeX | yes | 2190ms | pandoc-xelatex.pdf | smoke PDF generated |
+| Tectonic | yes | 4758ms | smoke.pdf | smoke PDF generated |
+| Typst | yes | 258ms | typst.pdf | smoke PDF generated |
+| WeasyPrint | yes | 470ms | weasyprint.pdf | smoke PDF generated |
+| Vivliostyle CLI | yes | 3839ms | vivliostyle.pdf | smoke PDF generated |
+| Playwright/Chromium | yes | 126ms | playwright.pdf | smoke PDF generated |
 
 ## Raw Command Evidence
 
@@ -80,7 +80,7 @@ INFO Building pages
 INFO Building PDF
 INFO Processing PDF
 SUCCESS Finished building vivliostyle.pdf
-📘 Built successfully!
+📙 Built successfully!
 ```
 Stderr: empty
 

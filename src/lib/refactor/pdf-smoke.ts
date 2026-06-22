@@ -4,10 +4,27 @@ import { mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
 
-const root = process.cwd();
-const outputDir = path.join(root, "dist/refactor/pdf-smoke");
-const reportPath = path.join(root, "docs/refactor/pdf-renderer-smoke.md");
-const localBin = path.join(root, "node_modules/.bin");
+export interface PdfSmokeOptions {
+  root: string;
+}
+
+interface CommandResult {
+  command: string;
+  ok: boolean;
+  status: number | null;
+  durationMs: number;
+  error: string | null;
+  stdout: string;
+  stderr: string;
+}
+
+interface CandidateResult extends CommandResult {
+  id: string;
+  label: string;
+  input: string;
+  output: string;
+  passed: boolean;
+}
 
 const smoke = {
   title: "PDF Renderer Smoke",
@@ -18,10 +35,55 @@ const smoke = {
   svg: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"120\" height=\"60\" viewBox=\"0 0 120 60\"><rect width=\"120\" height=\"60\" fill=\"#f6f1e8\"/><circle cx=\"35\" cy=\"30\" r=\"18\" fill=\"#335c67\"/><path d=\"M65 44 L95 16\" stroke=\"#9e2a2b\" stroke-width=\"6\"/></svg>"
 };
 
-function run(command, args, options = {}) {
+export async function runPdfRendererSmoke(options: PdfSmokeOptions): Promise<{
+  reportPath: string;
+  outputDir: string;
+  results: CandidateResult[];
+}> {
+  const outputDir = path.join(options.root, "dist/refactor/pdf-smoke");
+  const reportPath = path.join(options.root, "docs/refactor/pdf-renderer-smoke.md");
+  const localBin = path.join(options.root, "node_modules/.bin");
+
+  await writeSmokeSources(outputDir);
+
+  const results = [
+    candidateResult(outputDir, "latex-pandoc", "LaTeX via Pandoc/XeLaTeX", "smoke.md", "pandoc-xelatex.pdf", runCommand(outputDir, "pandoc", [
+      "smoke.md",
+      "--pdf-engine=xelatex",
+      "-V",
+      "mainfont=Helvetica Neue",
+      "-V",
+      "CJKmainfont=Hiragino Sans GB",
+      "-o",
+      "pandoc-xelatex.pdf"
+    ])),
+    candidateResult(outputDir, "tectonic", "Tectonic", "smoke.tex", "smoke.pdf", runCommand(outputDir, "tectonic", ["smoke.tex", "--outdir", outputDir])),
+    candidateResult(outputDir, "typst", "Typst", "smoke.typ", "typst.pdf", runCommand(outputDir, "typst", ["compile", "smoke.typ", "typst.pdf"])),
+    candidateResult(outputDir, "weasyprint", "WeasyPrint", "smoke.html", "weasyprint.pdf", runCommand(outputDir, "weasyprint", ["smoke.html", "weasyprint.pdf"])),
+    candidateResult(outputDir, "vivliostyle", "Vivliostyle CLI", "smoke.html", "vivliostyle.pdf", runCommand(outputDir, commandPath(localBin, "vivliostyle"), ["build", "smoke.html", "-o", "vivliostyle.pdf"])),
+    candidateResult(outputDir, "playwright", "Playwright/Chromium", "smoke.html", "playwright.pdf", await runPlaywrightSmoke(outputDir))
+  ];
+
+  await mkdir(path.dirname(reportPath), { recursive: true });
+  await writeFile(reportPath, renderPdfSmokeReport(results));
+
+  return { reportPath, outputDir, results };
+}
+
+export function trimOutput(value = ""): string {
+  const text = value.trim();
+  if (text.length <= 1200) return text;
+  return `${text.slice(0, 1200)}...`;
+}
+
+export function summarizePdfSmokeFailure(result: Pick<CandidateResult, "error" | "stderr" | "stdout">): string {
+  return (result.error || result.stderr || result.stdout || "failed").replace(/\|/g, "/").split("\n")[0];
+}
+
+function runCommand(outputDir: string, command: string, args: string[]): CommandResult {
   const started = Date.now();
   const result = spawnSync(command, args, {
-    cwd: options.cwd ?? outputDir,
+    cwd: outputDir,
     encoding: "utf8",
     timeout: 45000,
     stdio: ["ignore", "pipe", "pipe"]
@@ -38,13 +100,7 @@ function run(command, args, options = {}) {
   };
 }
 
-function trimOutput(value = "") {
-  const text = value.trim();
-  if (text.length <= 1200) return text;
-  return `${text.slice(0, 1200)}...`;
-}
-
-async function writeSmokeSources() {
+async function writeSmokeSources(outputDir: string): Promise<void> {
   await rm(outputDir, { recursive: true, force: true });
   await mkdir(outputDir, { recursive: true });
 
@@ -119,7 +175,7 @@ async function writeSmokeSources() {
   ].join("\n"));
 }
 
-async function runPlaywrightSmoke() {
+async function runPlaywrightSmoke(outputDir: string): Promise<CommandResult> {
   const started = Date.now();
   const browser = await chromium.launch();
   try {
@@ -141,7 +197,7 @@ async function runPlaywrightSmoke() {
       ok: false,
       status: null,
       durationMs: Date.now() - started,
-      error: error.message,
+      error: error instanceof Error ? error.message : String(error),
       stdout: "",
       stderr: ""
     };
@@ -150,7 +206,7 @@ async function runPlaywrightSmoke() {
   }
 }
 
-function candidateResult(id, label, input, output, result) {
+function candidateResult(outputDir: string, id: string, label: string, input: string, output: string, result: CommandResult): CandidateResult {
   const combinedOutput = `${result.stdout}\n${result.stderr}`;
   const cjkMissing = /Missing character:[^\n]*(?:[\u4e00-\u9fff]|U\+[4-9][0-9A-F]{3}|0x[4-9][0-9a-f]{3})/i.test(combinedOutput)
     || /could not represent character [^\n]*(?:[\u4e00-\u9fff]|0x[4-9][0-9a-f]{3})/i.test(combinedOutput);
@@ -172,17 +228,17 @@ function candidateResult(id, label, input, output, result) {
   };
 }
 
-function hasPdfHeader(filePath) {
+function hasPdfHeader(filePath: string): boolean {
   if (!existsSync(filePath)) return false;
   return readFileSync(filePath).subarray(0, 5).toString("utf8") === "%PDF-";
 }
 
-function commandPath(command) {
+function commandPath(localBin: string, command: string): string {
   const local = path.join(localBin, command);
   return existsSync(local) ? local : command;
 }
 
-function renderReport(results) {
+function renderPdfSmokeReport(results: CandidateResult[]): string {
   const survivors = results.filter((result) => result.passed).map((result) => result.id);
   const eliminated = results.filter((result) => !result.passed).map((result) => result.id);
 
@@ -209,7 +265,7 @@ function renderReport(results) {
       result.passed ? "yes" : "no",
       `${result.durationMs}ms`,
       result.output,
-      result.passed ? "smoke PDF generated" : summarizeFailure(result)
+      result.passed ? "smoke PDF generated" : summarizePdfSmokeFailure(result)
     ].join(" | ")} |`),
     "",
     "## Raw Command Evidence",
@@ -227,72 +283,6 @@ function renderReport(results) {
   ].join("\n")}\n`;
 }
 
-function summarizeFailure(result) {
-  return (result.error || result.stderr || result.stdout || "failed").replace(/\|/g, "/").split("\n")[0];
-}
-
-function fence(value) {
+function fence(value: string): string {
   return `\n\`\`\`txt\n${value}\n\`\`\``;
 }
-
-await writeSmokeSources();
-
-const results = [
-  candidateResult(
-    "latex-pandoc",
-    "LaTeX via Pandoc/XeLaTeX",
-    "smoke.md",
-    "pandoc-xelatex.pdf",
-    run("pandoc", [
-      "smoke.md",
-      "--pdf-engine=xelatex",
-      "-V",
-      "mainfont=Helvetica Neue",
-      "-V",
-      "CJKmainfont=Hiragino Sans GB",
-      "-o",
-      "pandoc-xelatex.pdf"
-    ])
-  ),
-  candidateResult(
-    "tectonic",
-    "Tectonic",
-    "smoke.tex",
-    "smoke.pdf",
-    run("tectonic", ["smoke.tex", "--outdir", outputDir])
-  ),
-  candidateResult(
-    "typst",
-    "Typst",
-    "smoke.typ",
-    "typst.pdf",
-    run("typst", ["compile", "smoke.typ", "typst.pdf"])
-  ),
-  candidateResult(
-    "weasyprint",
-    "WeasyPrint",
-    "smoke.html",
-    "weasyprint.pdf",
-    run("weasyprint", ["smoke.html", "weasyprint.pdf"])
-  ),
-  candidateResult(
-    "vivliostyle",
-    "Vivliostyle CLI",
-    "smoke.html",
-    "vivliostyle.pdf",
-    run(commandPath("vivliostyle"), ["build", "smoke.html", "-o", "vivliostyle.pdf"])
-  ),
-  candidateResult(
-    "playwright",
-    "Playwright/Chromium",
-    "smoke.html",
-    "playwright.pdf",
-    await runPlaywrightSmoke()
-  )
-];
-
-await mkdir(path.dirname(reportPath), { recursive: true });
-await writeFile(reportPath, renderReport(results));
-
-console.log(`Wrote ${path.relative(root, reportPath)}`);
-console.log(`Temporary outputs: ${path.relative(root, outputDir)}`);
