@@ -97,7 +97,7 @@ export async function prepareCjkFonts(options: PrepareCjkFontsOptions): Promise<
       await copyFile(path.join(packageRoot, "files", fileName), path.join(outDir, fileName));
     }
 
-    cssParts.push(cssText.replaceAll("./files/", "/assets/fonts/cjk/"));
+    cssParts.push(cssText.replaceAll("./files/", "../fonts/cjk/"));
     results.push({ prefix: weight.prefix, subsets: subsets.length });
   }
 
@@ -123,12 +123,16 @@ export async function prepareKatexAssets(options: AssetPreparationOptions): Prom
   }
 
   const css = await readFile(path.join(katexRoot, "dist", "katex.min.css"), "utf8");
-  await writeFile(cssOut, css.replaceAll("fonts/", "../fonts/katex/"));
+  await writeFile(cssOut, stripUnbundledKatexTtfSources(css.replaceAll("fonts/", "../fonts/katex/")));
 
   return {
     cssOut,
     fonts: fonts.length
   };
+}
+
+function stripUnbundledKatexTtfSources(css: string): string {
+  return css.replace(/,url\(\.\.\/fonts\/katex\/[^)]*?\.ttf\)\s*format\("truetype"\)/g, "");
 }
 
 function resolvePackageRoot(packageName: string, resolver?: (packageName: string) => string): string {

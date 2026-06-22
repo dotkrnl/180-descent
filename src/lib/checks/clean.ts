@@ -29,7 +29,7 @@ const FORBIDDEN_TRACKED_PATHS = [
   ["src/assets/images/social", "Generated social-card PNGs must not be committed"]
 ] as const;
 
-const MIGRATION_ONLY_PATTERNS = [
+const RETIRED_SCRIPT_PATTERNS = [
   /renderer-spike/i,
   /migration-only/i,
   /compat(?:ibility)?-shim/i
@@ -59,11 +59,11 @@ export async function checkCleanRepo(options: CleanCheckOptions): Promise<CleanC
   const scriptFiles = await listFiles(path.join(options.root, "scripts"));
   for (const file of scriptFiles) {
     const relativePath = toPosix(path.relative(options.root, file));
-    for (const pattern of MIGRATION_ONLY_PATTERNS) {
+    for (const pattern of RETIRED_SCRIPT_PATTERNS) {
       if (pattern.test(relativePath)) {
         failures.push({
           path: relativePath,
-          reason: `Migration-only script path matches ${pattern}`
+          reason: `Retired script path matches ${pattern}`
         });
       }
     }

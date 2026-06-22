@@ -60,7 +60,7 @@ describe("target content registry", () => {
     expect(routes[1].summary).toBe("中文夹具摘要。");
   });
 
-  it("loads migrated project day content with paired appendices and components", async () => {
+  it("loads project day content with paired appendices and components", async () => {
     const registry = await loadContentRegistry({ daysDir: projectDaysDir });
     const daysByPath = new Map(registry.days.map((day) => [day.manifest.path, day]));
     const day001 = daysByPath.get("001-what-is-knowledge");

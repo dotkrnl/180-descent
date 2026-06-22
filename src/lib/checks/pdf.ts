@@ -228,8 +228,8 @@ class PdfChecker {
       /Accuracy domination, as credence geometry/
     ]) {
       if (pattern.test(extractedText)) this.errors.push(`Standard PDF contains deep-dive appendix content matching ${pattern}`);
-      if (!pattern.test(deepDiveText)) this.errors.push(`Deep-dive PDF is missing appendix fallback content matching ${pattern}`);
-      if (!pattern.test(dayOneText)) this.errors.push(`Day-specific PDF is missing appendix fallback content matching ${pattern}`);
+      if (!pattern.test(deepDiveText)) this.errors.push(`Deep-dive PDF is missing appendix content matching ${pattern}`);
+      if (!pattern.test(dayOneText)) this.errors.push(`Day-specific PDF is missing appendix content matching ${pattern}`);
     }
 
     for (const pattern of [
@@ -242,8 +242,8 @@ class PdfChecker {
       /准确性.配，表现为置信度.何/
     ]) {
       if (pattern.test(zhText)) this.errors.push(`Standard Chinese PDF contains deep-dive appendix content matching ${pattern}`);
-      if (!pattern.test(zhDeepDiveText)) this.errors.push(`Deep-dive Chinese PDF is missing appendix fallback content matching ${pattern}`);
-      if (!pattern.test(zhDayOneText)) this.errors.push(`Day-specific Chinese PDF is missing appendix fallback content matching ${pattern}`);
+      if (!pattern.test(zhDeepDiveText)) this.errors.push(`Deep-dive Chinese PDF is missing appendix content matching ${pattern}`);
+      if (!pattern.test(zhDayOneText)) this.errors.push(`Day-specific Chinese PDF is missing appendix content matching ${pattern}`);
     }
 
     for (const pattern of [

@@ -42,7 +42,7 @@ describe("font asset preparation", () => {
     const css = await readFile(path.join(root, "src/assets/css/cjk.css"), "utf8");
     expect(result.weights).toEqual([{ prefix: "fixture", subsets: 1 }]);
     expect(copied).toBe("subset");
-    expect(css).toContain("/assets/fonts/cjk/fixture-subset-1.woff2");
+    expect(css).toContain("../fonts/cjk/fixture-subset-1.woff2");
   });
 
   it("copies KaTeX fonts and rewrites css font paths", async () => {
@@ -51,8 +51,9 @@ describe("font asset preparation", () => {
     await mkdir(path.join(packageRoot, "dist/fonts"), { recursive: true });
     await mkdir(path.join(root, "src/assets/css"), { recursive: true });
     await writeFile(path.join(packageRoot, "dist/fonts", "KaTeX_Main-Regular.woff2"), "woff2");
+    await writeFile(path.join(packageRoot, "dist/fonts", "KaTeX_Main-Regular.woff"), "woff");
     await writeFile(path.join(packageRoot, "dist/fonts", "KaTeX_Main-Regular.ttf"), "ignored");
-    await writeFile(path.join(packageRoot, "dist/katex.min.css"), "@font-face{src:url(fonts/KaTeX_Main-Regular.woff2)}");
+    await writeFile(path.join(packageRoot, "dist/katex.min.css"), '@font-face{src:url(fonts/KaTeX_Main-Regular.woff2) format("woff2"),url(fonts/KaTeX_Main-Regular.woff) format("woff"),url(fonts/KaTeX_Main-Regular.ttf) format("truetype")}');
 
     const result = await prepareKatexAssets({
       root,
@@ -61,9 +62,11 @@ describe("font asset preparation", () => {
 
     const copied = await readFile(path.join(root, "src/assets/fonts/katex/KaTeX_Main-Regular.woff2"), "utf8");
     const css = await readFile(path.join(root, "src/assets/css/katex.css"), "utf8");
-    expect(result.fonts).toBe(1);
+    expect(result.fonts).toBe(2);
     expect(copied).toBe("woff2");
     expect(css).toContain("../fonts/katex/KaTeX_Main-Regular.woff2");
+    expect(css).toContain("../fonts/katex/KaTeX_Main-Regular.woff");
+    expect(css).not.toContain("../fonts/katex/KaTeX_Main-Regular.ttf");
   });
 });
 

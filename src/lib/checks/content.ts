@@ -95,7 +95,7 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
   }
 
   if (/content_template|eleventy|<\/?script\b/i.test(file.source)) {
-    failures.push({ message: `${file.relativePath} contains legacy route/template surface` });
+    failures.push({ message: `${file.relativePath} contains retired route/template surface` });
   }
 
   if (!file.source.includes('class="sources"') && !file.source.includes("className=\"sources\"")) {

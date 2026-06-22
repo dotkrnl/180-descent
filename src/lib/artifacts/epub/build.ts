@@ -77,6 +77,13 @@ interface EpubImage {
   id: string;
 }
 
+interface EpubFont {
+  href: string;
+  filePath: string;
+  mediaType: string;
+  id: string;
+}
+
 export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void> {
   const root = options.root;
   const book = YAML.parse(await readFile(path.join(root, "src/_data/book.yaml"), "utf8")) as BookData;
@@ -241,11 +248,10 @@ async function buildEpub(config: EpubConfig): Promise<void> {
 
   const oebps = requiredZipFolder(zip, "OEBPS");
   requiredZipFolder(oebps, "styles").file("book.css", await epubCss(config.root));
-  const fontsFolder = requiredZipFolder(oebps, "fonts");
-  for (const font of await readdir(path.join(config.root, "_site/assets/fonts"))) {
-    if (font.endsWith(".woff2")) {
-      fontsFolder.file(font, await readFile(path.join(config.root, "_site/assets/fonts", font)));
-    }
+  const epubFonts = await collectEpubFonts(config.root);
+  requiredZipFolder(oebps, "fonts");
+  for (const font of epubFonts) {
+    oebps.file(font.href, await readFile(font.filePath));
   }
 
   const spine: string[] = [];
@@ -285,10 +291,8 @@ async function buildEpub(config: EpubConfig): Promise<void> {
     manifestItems.push(`<item id="${image.id}" href="${escapeXml(image.href)}" media-type="${image.mediaType}"/>`);
   }
 
-  for (const font of await readdir(path.join(config.root, "_site/assets/fonts"))) {
-    if (font.endsWith(".woff2")) {
-      manifestItems.push(`<item id="${font.replace(/[^a-z0-9]/gi, "_")}" href="fonts/${font}" media-type="font/woff2"/>`);
-    }
+  for (const font of epubFonts) {
+    manifestItems.push(`<item id="${font.id}" href="${escapeXml(font.href)}" media-type="${font.mediaType}"/>`);
   }
 
   oebps.file("nav.xhtml", navDocument(days, config));
@@ -320,7 +324,10 @@ async function pageToXhtml(
     $("details.deep-dive").each((_, details) => {
       const el = $(details);
       const labels = appendixLabels(config.meta.language);
-      const heading = el.find("> summary .deep-dive-title").text().trim() || labels.fallbackTitle;
+      const heading = el.find("> summary .deep-dive-title").text().trim();
+      if (!heading) {
+        throw new Error(`Missing deep-dive title while building EPUB page ${selfHref}`);
+      }
       const subtitle = el.find("> summary .deep-dive-sub").text().trim();
       const subtitleMarkup = subtitle ? `<p class="deep-dive-sub">${escapeXml(subtitle)}</p>` : "";
       el.find("> summary").replaceWith(`<header class="deep-dive-header">
@@ -384,7 +391,7 @@ ${subtitleMarkup}
 
 async function epubCss(root: string): Promise<string> {
   const css = await readFile(path.join(root, "src/assets/css/book.css"), "utf8");
-  return css
+  return stripUnbundledKatexTtfSources(stripCjkFontFaces(css))
     .replaceAll("@media print", "@media amzn-mobi")
     .replaceAll(".epub-only,.print-only,.format-alt{display:none;}", ".print-only{display:none;}.epub-alt{display:block;}")
     .replaceAll(".site-topbar,.site-footer,.download-strip,.web-only,.epub-only,.print-hide{display:none!important;}", ".site-topbar,.site-footer,.download-strip,.web-only,.print-only{display:none!important;}")
@@ -421,6 +428,44 @@ body{font-size:1em;}
   .barfill.mid{background:#d8ac5a!important;}
 }
 `;
+}
+
+function stripCjkFontFaces(css: string): string {
+  return css.replace(/\/\* LXGW WenKai \[[^\]]+\] \*\/\s*@font-face\s*{[\s\S]*?}\s*/g, "");
+}
+
+function stripUnbundledKatexTtfSources(css: string): string {
+  return css.replace(/,url\(\.\.\/fonts\/katex\/[^)]*?\.ttf\)\s*format\("truetype"\)/g, "");
+}
+
+async function collectEpubFonts(root: string): Promise<EpubFont[]> {
+  const fontsRoot = path.join(root, "_site/assets/fonts");
+  const fonts: EpubFont[] = [];
+
+  for (const fileName of await readdir(fontsRoot)) {
+    if (fileName.endsWith(".woff2")) {
+      fonts.push(epubFont(`fonts/${fileName}`, path.join(fontsRoot, fileName)));
+    }
+  }
+
+  const katexRoot = path.join(fontsRoot, "katex");
+  for (const fileName of await readdir(katexRoot)) {
+    if (fileName.endsWith(".woff2") || fileName.endsWith(".woff")) {
+      fonts.push(epubFont(`fonts/katex/${fileName}`, path.join(katexRoot, fileName)));
+    }
+  }
+
+  return fonts;
+}
+
+function epubFont(href: string, filePath: string): EpubFont {
+  const extension = path.extname(href).slice(1);
+  return {
+    href,
+    filePath,
+    mediaType: `font/${extension}`,
+    id: href.replace(/[^a-z0-9]/gi, "_")
+  };
 }
 
 function convertTipNotesToFootnotes($: CheerioRoot, language = "", selfHref = "document.xhtml"): void {
@@ -627,21 +672,18 @@ function dayDocumentTitle(day: ArtifactBookDay, config: Pick<EpubConfig | DayEpu
 function appendixLabels(language = ""): {
   kicker: string;
   headingPrefix: string;
-  fallbackTitle: string;
   note: string;
 } {
   if (language.startsWith("zh")) {
     return {
       kicker: "可选附录",
       headingPrefix: "附录：",
-      fallbackTitle: "专题深入",
       note: "本节是可选的补充阅读；可以放心跳过，不会影响正文课程。"
     };
   }
   return {
     kicker: "Optional appendix",
     headingPrefix: "Appendix: ",
-    fallbackTitle: "Deep Dive",
     note: "This section is optional supplemental reading. You can skip it without losing the main lesson."
   };
 }

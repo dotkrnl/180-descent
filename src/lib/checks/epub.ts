@@ -194,7 +194,7 @@ function inspectEpubXml(edition: string, name: string, text: string, zip: JSZip,
     errors.push(`${edition} contains print-hidden content in ${name}`);
   }
   if (/Reference table/.test(text)) {
-    errors.push(`${edition} contains generic fallback label in ${name}`);
+    errors.push(`${edition} contains generic reference-table label in ${name}`);
   }
   for (const match of text.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/gi)) {
     const src = match[1];

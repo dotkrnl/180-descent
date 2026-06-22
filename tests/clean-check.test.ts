@@ -18,7 +18,7 @@ describe("final cleanup gate", () => {
     ]);
   });
 
-  it("flags migration-only script names in any mode", async () => {
+  it("flags retired experiment script names in any mode", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
     await mkdir(path.join(root, "scripts"), { recursive: true });
     await writeFile(path.join(root, "scripts/renderer-spike-demo.ts"), "");

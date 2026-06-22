@@ -177,7 +177,15 @@ const structuredData = {
     </main>
     <footer class="site-footer">
       <div class="wrap wide footer-grid">
-        <p><strong>{uiTitle}</strong><br />{uiSubtitle}<br />{isZh ? `作者：${book.zh.authors}` : `By ${book.authors}`}{isZh ? <><br />{`翻译：${book.zh.translators}`}</> : null}</p>
+        <p>
+          <strong>{uiTitle}</strong><br />
+          {uiSubtitle}<br />
+          {isZh ? `作者：${book.zh.authors}` : `By ${book.authors}`}
+          {isZh ? <><br />{`翻译：${book.zh.translators}`}</> : null}
+          <br />
+          {isZh ? "人工编辑" : "Human editor"}<br />
+          <a href={isZh ? "https://jasonlau.io/cn/" : "https://jasonlau.io"}>{isZh ? "刘家昌" : "Jason Lau"}</a>
+        </p>
         <p><a href={book.repo}>GitHub</a><br /><a href={downloadsUrl}>{isZh ? "EPUB 与 PDF 下载" : "EPUB and PDF downloads"}</a><br /><a href={creditsUrl}>{isZh ? "鸣谢" : "Credits"}</a></p>
       </div>
     </footer>
