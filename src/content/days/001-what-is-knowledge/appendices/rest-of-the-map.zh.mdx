@@ -1,6 +1,9 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import ModalRings from "@app/components/lesson/interactives/ModalRings.astro";
+import StakesDial from "@app/components/lesson/interactives/StakesDial.astro";
+import ClosureMachine from "@app/components/lesson/interactives/ClosureMachine.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -80,34 +83,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 </ContentSection>
 
-<Panel class="web-only cm-machine">
-<PanelTitle>交互 · 选择你的出路</PanelTitle>
-
-### 怀疑论者的三段论——四扇出口之门
-
-<PanelNote>下面的论证是有效的：如果你接受所有三行，你就是怀疑论者。因此你必须拒绝某一点。每一次拒绝都是真实的招式，有真实的捍卫者——以及真实的代价。选择其一，看看你与谁为伍。</PanelNote>
-
-<div class="cm-arg" id="appendix-d001-cmArg">
-<div class="cm-line cm-p1" id="appendix-d001-cmP1"><span class="pn">P1</span><span class="pt">你并不知道自己不是一只无手的缸中之脑（一个无法分辨的伪造）。</span></div>
-<div class="cm-line cm-p2" id="appendix-d001-cmP2"><span class="pn">P2</span><span class="pt">封闭性：如果你知道你有双手，你就知道自己不是那样的缸中之脑。</span></div>
-<div class="cm-line concl cm-c" id="appendix-d001-cmC"><span class="pn">∴</span><span class="pt">所以你不知道自己有双手。</span></div>
-</div>
-
-<div class="cm-exits">
-<p class="h">你拒绝哪一行？</p>
-<div class="cm-btns">
-<button class="cm-btn" data-exit="skeptic">接受全部三点</button>
-<button class="cm-btn" data-exit="moore">拒绝 P1</button>
-<button class="cm-btn" data-exit="dretske">拒绝 P2（否定封闭性）</button>
-<button class="cm-btn" data-exit="context">重新定义「知道」</button>
-</div>
-</div>
-
-<div class="cm-out cm-outlet" id="appendix-d001-cmOut">
-<span class="who">选择一扇门……</span>
-      每个选项都会使你所拒绝的那行变暗，并告诉你落到了何处。
-</div>
-</Panel>
+<ClosureMachine locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表格</PanelTitle>
@@ -146,34 +122,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 </ContentSection>
 
-<Panel class="web-only stakes-dial">
-<PanelTitle>交互 · 相同证据，变化判断</PanelTitle>
-
-### 银行案例——利害关系拨盘
-
-<PanelNote>你的证据是固定的：「我两个周六前在这家银行，而且它在营业。」世界或你的视力没有任何变化。滑动利害关系；可选地让你的配偶提出出错的可能性。观察「我知道」如何变成「我最好确认一下」——并阅读三个对立阵营如何解释这完全相同的转变。</PanelNote>
-
-<div class="sd-case stakes-case" id="appendix-d001-sdCase">…</div>
-
-<div class="slider-row">
-<label>正确与否牵涉多大利害 <span class="val stakes-value" id="appendix-d001-sdVal">低</span></label>
-<input type="range" id="appendix-d001-rStakes" min="0" max="100" value="15" aria-label="利害关系" class="stakes-range" />
-</div>
-
-<button class="errtoggle stakes-error" id="appendix-d001-sdErr" role="switch" aria-checked="false">
-<span class="knob"></span>
-<span class="lab">配偶提出出错的可能性 <span>「……但银行确实有时会改变营业时间。」</span></span>
-</button>
-
-<div class="sd-verdict">
-<div class="vstate know stakes-state" id="appendix-d001-sdState">—</div>
-<div class="sd-readings">
-<div class="r">语境主义<span id="appendix-d001-sdCtx" class="stakes-contextualism"></span></div>
-<div class="r">实际利害介入<span id="appendix-d001-sdEnc" class="stakes-encroachment"></span></div>
-<div class="r">不变主义<span id="appendix-d001-sdInv" class="stakes-invariantism"></span></div>
-</div>
-</div>
-</Panel>
+<StakesDial locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表格</PanelTitle>
@@ -206,31 +155,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 </ContentSection>
 
-<Panel class="web-only modal-rings">
-<PanelTitle>图表 · 一个信念的邻近区域</PanelTitle>
-
-### 安全与幸运——模态 X 光
-
-<PanelNote>中心点 = 实际世界，你的信念在此为真。环 = 邻近可能世界：和现实很接近、但差一点就会出错的情形。<span class="tone-ok">绿色</span> = 你在那里仍然正确；<span class="tone-contested">红色</span> = 你会相信它，却是错的。知识需要一个绿色的邻近区域。</PanelNote>
-
-<div class="mr-wrap">
-<div class="mr-btns">
-<button class="mr-btn" data-scn="know" aria-pressed="true">正常运行的钟（知识）</button>
-<button class="mr-btn" data-scn="gettier">停摆的钟（盖梯尔）</button>
-<button class="mr-btn" data-scn="barn">假谷仓之国</button>
-</div>
-<svg id="appendix-d001-mrSvg" viewBox="0 0 360 300" role="img" aria-label="一个中心世界被邻近的可能世界环绕，按信念是否保持为真着色。">
-<circle cx="180" cy="150" r="118" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 5"></circle>
-<text x="180" y="22" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">邻近可能世界</text>
-<g id="appendix-d001-mrSat" class="modal-satellites"></g>
-<circle id="appendix-d001-mrCore" cx="180" cy="150" r="31" fill="color-mix(in srgb,var(--ok) 22%,transparent)" stroke="var(--ok)" stroke-width="2.5" class="modal-core"></circle>
-<text x="180" y="147" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">实际</text>
-<text x="180" y="159" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">真</text>
-</svg>
-<div class="mr-verdict safe modal-verdict" id="appendix-d001-mrVerdict">— 安全 —</div>
-<p class="mr-expl modal-explainer" id="appendix-d001-mrExpl"></p>
-</div>
-</Panel>
+<ModalRings locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表格</PanelTitle>

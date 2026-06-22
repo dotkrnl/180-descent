@@ -1,0 +1,51 @@
+---
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  sLabel: "对 S 的置信度——「下一张牌是红色」",
+  nLabel: "对 ¬S 的置信度——「下一张牌不是红色」",
+  sAria: "对 S 的置信度",
+  nAria: "对 ¬S 的置信度",
+  sum: "总和 = 1.00 ✓",
+  ledgerTitle: "融贯",
+  ledgerBody: "你的置信度之和为 1。没有一套看起来公平的赌约能保证让你亏损。这是概率对一个理性心智提出的最低要求。",
+  snap: "↳ 将 ¬S 对齐至 1 − S（恢复融贯）"
+} : {
+  sLabel: 'Credence in S — "next card is red"',
+  nLabel: 'Credence in ¬S — "next card is not red"',
+  sAria: "Credence in S",
+  nAria: "Credence in not S",
+  sum: "sum = 1.00 ✓",
+  ledgerTitle: "Coherent",
+  ledgerBody: "Your confidences sum to 1. No book of fair-looking bets can guarantee you a loss. This is the bare minimum probability asks of a rational mind.",
+  snap: "↳ Snap ¬S to 1 − S (make it coherent)"
+};
+---
+<div class="cred-controls">
+  <div class="slider-row">
+    <label>{copy.sLabel} <span class="val" id="vS">0.50</span></label>
+    <input type="range" id="rS" min="0" max="100" value="50" aria-label={copy.sAria} />
+  </div>
+  <div class="slider-row">
+    <label>{copy.nLabel} <span class="val" id="vN">0.50</span></label>
+    <input type="range" id="rN" min="0" max="100" value="50" aria-label={copy.nAria} />
+  </div>
+
+  <div>
+    <div class="sumbar" id="sumbar" aria-hidden="true">
+      <div class="seg s" id="segS" style="width:50%"></div>
+      <div class="seg n" id="segN" style="width:50%"></div>
+      <div class="one-line"></div>
+    </div>
+    <div class="sum-readout"><span>0</span><span id="sumtxt">{copy.sum}</span><span>2</span></div>
+  </div>
+
+  <div class="ledger coherent" id="ledger">
+    <p class="lh" id="ledgerH">{copy.ledgerTitle}</p>
+    <p id="ledgerBody" style="margin:0;">{copy.ledgerBody}</p>
+  </div>
+  <button class="snap" id="snapBtn">{copy.snap}</button>
+</div>

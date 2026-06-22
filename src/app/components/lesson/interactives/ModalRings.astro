@@ -1,0 +1,71 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "图表 · 一个信念的邻近区域",
+  heading: "安全与幸运——模态 X 光",
+  noteStart: "中心点 = 实际世界，你的信念在此为真。环 = 邻近可能世界：和现实很接近、但差一点就会出错的情形。",
+  noteGreen: "绿色",
+  noteMid: " = 你在那里仍然正确；",
+  noteRed: "红色",
+  noteEnd: " = 你会相信它，却是错的。知识需要一个绿色的邻近区域。",
+  buttons: [
+    ["know", "正常运行的钟（知识）"],
+    ["gettier", "停摆的钟（盖梯尔）"],
+    ["barn", "假谷仓之国"]
+  ],
+  aria: "一个中心世界被邻近的可能世界环绕，按信念是否保持为真着色。",
+  nearby: "邻近可能世界",
+  actual: "实际",
+  truth: "真",
+  initialVerdict: "— 安全 —"
+} : {
+  panelTitle: "Diagram · the neighborhood of a belief",
+  heading: "Safe vs. Lucky — a modal X-ray",
+  noteStart: "Center dot = the actual world, where your belief is true. Ring = nearby possible worlds, the realistic near-misses.",
+  noteGreen: "Green",
+  noteMid: " = you'd still be right there; ",
+  noteRed: "red",
+  noteEnd: " = you'd believe it and be wrong. Knowledge needs a green neighborhood.",
+  buttons: [
+    ["know", "Working clock (knowledge)"],
+    ["gettier", "Stopped clock (Gettier)"],
+    ["barn", "Fake-barn country"]
+  ],
+  aria: "A central world surrounded by nearby possible worlds, colored by whether the belief stays true.",
+  nearby: "nearby possible worlds",
+  actual: "actual",
+  truth: "TRUE",
+  initialVerdict: "— safe —"
+};
+---
+<Panel class="web-only modal-rings">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+
+  <h3>{copy.heading}</h3>
+
+  <PanelNote>{copy.noteStart} <span class="tone-ok">{copy.noteGreen}</span>{copy.noteMid}<span class="tone-contested">{copy.noteRed}</span>{copy.noteEnd}</PanelNote>
+
+  <div class="mr-wrap">
+    <div class="mr-btns">
+      {copy.buttons.map(([scenario, label], index) => <button class="mr-btn" data-scn={scenario} aria-pressed={index === 0 ? "true" : undefined}>{label}</button>)}
+    </div>
+    <svg id="appendix-d001-mrSvg" viewBox="0 0 360 300" role="img" aria-label={copy.aria}>
+      <circle cx="180" cy="150" r="118" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 5"></circle>
+      <text x="180" y="22" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.nearby}</text>
+      <g id="appendix-d001-mrSat" class="modal-satellites"></g>
+      <circle id="appendix-d001-mrCore" cx="180" cy="150" r="31" fill="color-mix(in srgb,var(--ok) 22%,transparent)" stroke="var(--ok)" stroke-width="2.5" class="modal-core"></circle>
+      <text x="180" y="147" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">{copy.actual}</text>
+      <text x="180" y="159" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">{copy.truth}</text>
+    </svg>
+    <div class="mr-verdict safe modal-verdict" id="appendix-d001-mrVerdict">{copy.initialVerdict}</div>
+    <p class="mr-expl modal-explainer" id="appendix-d001-mrExpl"></p>
+  </div>
+</Panel>

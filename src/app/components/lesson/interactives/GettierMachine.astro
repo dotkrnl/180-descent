@@ -1,0 +1,99 @@
+---
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const labels = zh ? {
+  belief: "信念",
+  beliefSub: "你真心相信它",
+  truth: "为真",
+  truthSub: "事实正是如此",
+  justification: "证成",
+  justificationSub: "你有充分理由",
+  luck: "运气（盖梯尔转折）",
+  luckSub: "理由失准；事实碰巧成立",
+  presetsTitle: "载入情境",
+  presets: [
+    ["clock", "停摆的钟"],
+    ["coins", "史密斯与硬币"],
+    ["guess", "幸运的猜测"],
+    ["false", "自信的错误"],
+    ["know", "普通的知识"]
+  ],
+  aria: "三个交叠的圆，分别代表信念、为真与证成。",
+  circleBelief: "信念",
+  circleTruth: "为真",
+  circleJustification: "证成"
+} : {
+  belief: "Belief",
+  beliefSub: "You sincerely hold it",
+  truth: "Truth",
+  truthSub: "It is in fact the case",
+  justification: "Justification",
+  justificationSub: "You have good reason",
+  luck: "Luck (the Gettier twist)",
+  luckSub: "Reason misfires; truth arrives by coincidence",
+  presetsTitle: "Load a scenario",
+  presets: [
+    ["clock", "Stopped clock"],
+    ["coins", "Smith & the coins"],
+    ["guess", "A lucky guess"],
+    ["false", "A confident error"],
+    ["know", "Plain knowing"]
+  ],
+  aria: "Three overlapping circles for Belief, Truth and Justification.",
+  circleBelief: "BELIEF",
+  circleTruth: "TRUE",
+  circleJustification: "JUSTIFIED"
+};
+
+const switchRows = [
+  ["sw-b", "", labels.belief, labels.beliefSub, true],
+  ["sw-t", "", labels.truth, labels.truthSub, true],
+  ["sw-j", "", labels.justification, labels.justificationSub, true],
+  ["sw-l", "luck", labels.luck, labels.luckSub, false]
+] as const;
+---
+<div class="gm-grid">
+  <div>
+    <div class="switches">
+      {switchRows.map(([id, className, label, sublabel, checked]) => (
+        <button class={["swbtn", className].filter(Boolean).join(" ")} id={id} role="switch" aria-checked={checked ? "true" : "false"}>
+          <span class="knob"></span><span class="lab">{zh ? label : <b>{label}</b>}<span>{sublabel}</span></span>
+        </button>
+      ))}
+    </div>
+    <div class="presets">
+      <p class="h">{labels.presetsTitle}</p>
+      <div class="pbtns">
+        {labels.presets.map(([preset, label]) => <button class="pbtn" data-preset={preset}>{label}</button>)}
+      </div>
+    </div>
+  </div>
+
+  <div class="venn-box">
+    <svg viewBox="0 0 400 330" role="img" aria-label={labels.aria}>
+      <defs>
+        <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <rect width="8" height="8" fill="color-mix(in srgb,var(--contested) 18%,transparent)"></rect>
+          <line x1="0" y1="0" x2="0" y2="8" stroke="var(--contested)" stroke-width="2"></line>
+        </pattern>
+      </defs>
+      <circle id="c-b" cx="200" cy="118" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+      <circle id="c-t" cx="150" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+      <circle id="c-j" cx="250" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+      <text x="200" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">{labels.circleBelief}</text>
+      <text x="96" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">{labels.circleTruth}</text>
+      <text x="305" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">{labels.circleJustification}</text>
+      <circle id="center-mark" cx="200" cy="178" r="30" fill="none" stroke="none"></circle>
+      <text id="center-label" x="200" y="183" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" font-weight={zh ? undefined : "600"} fill="var(--ink)" opacity="0"></text>
+    </svg>
+
+    <div class="verdict">
+      <div class="vstate" id="vstate">—</div>
+      <p class="vexpl" id="vexpl"></p>
+      <p class="story" id="vstory"></p>
+    </div>
+  </div>
+</div>

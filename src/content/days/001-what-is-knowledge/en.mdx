@@ -2,6 +2,8 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import StoppedClockFigure from "@app/components/lesson/figures/StoppedClockFigure.astro";
+import CredenceDial from "@app/components/lesson/interactives/CredenceDial.astro";
+import GettierMachine from "@app/components/lesson/interactives/GettierMachine.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -96,60 +98,7 @@ Gettier wasn't first. Bertrand Russell had the stopped-clock case in *Human Know
 
 <PanelNote>Flip the three classic conditions on and off. The center of the diagram lights up when all three overlap — that's *justified true belief*. Then try the red switch, **Luck**, with all three on: watch JTB stay satisfied while knowledge slips away. Or load a famous scenario.</PanelNote>
 
-<div class="gm-grid">
-<div>
-<div class="switches">
-<button class="swbtn" id="sw-b" role="switch" aria-checked="true">
-<span class="knob"></span><span class="lab"><b>Belief</b><span>You sincerely hold it</span></span>
-</button>
-<button class="swbtn" id="sw-t" role="switch" aria-checked="true">
-<span class="knob"></span><span class="lab"><b>Truth</b><span>It is in fact the case</span></span>
-</button>
-<button class="swbtn" id="sw-j" role="switch" aria-checked="true">
-<span class="knob"></span><span class="lab"><b>Justification</b><span>You have good reason</span></span>
-</button>
-<button class="swbtn luck" id="sw-l" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><b>Luck (the Gettier twist)</b><span>Reason misfires; truth arrives by coincidence</span></span>
-</button>
-</div>
-<div class="presets">
-<p class="h">Load a scenario</p>
-<div class="pbtns">
-<button class="pbtn" data-preset="clock">Stopped clock</button>
-<button class="pbtn" data-preset="coins">Smith &amp; the coins</button>
-<button class="pbtn" data-preset="guess">A lucky guess</button>
-<button class="pbtn" data-preset="false">A confident error</button>
-<button class="pbtn" data-preset="know">Plain knowing</button>
-</div>
-</div>
-</div>
-
-<div class="venn-box">
-<svg viewBox="0 0 400 330" role="img" aria-label="Three overlapping circles for Belief, Truth and Justification.">
-<defs>
-<pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-<rect width="8" height="8" fill="color-mix(in srgb,var(--contested) 18%,transparent)"></rect>
-<line x1="0" y1="0" x2="0" y2="8" stroke="var(--contested)" stroke-width="2"></line>
-</pattern>
-</defs>
-<circle id="c-b" cx="200" cy="118" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<circle id="c-t" cx="150" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<circle id="c-j" cx="250" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<text x="200" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">BELIEF</text>
-<text x="96" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">TRUE</text>
-<text x="305" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">JUSTIFIED</text>
-{/* center badge */}
-<circle id="center-mark" cx="200" cy="178" r="30" fill="none" stroke="none"></circle>
-<text id="center-label" x="200" y="183" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" font-weight="600" fill="var(--ink)" opacity="0"></text>
-</svg>
-
-<div class="verdict">
-<div class="vstate" id="vstate">—</div>
-<p class="vexpl" id="vexpl"></p>
-<p class="story" id="vstory"></p>
-</div>
-</div>
-</div>
+<GettierMachine locale="en" />
 </Panel>
 
 <FormatAlt class="epub-only print-only">
@@ -281,31 +230,7 @@ Every day in this course ends at the research frontier, with each claim tagged f
 
 <PanelNote>Set your confidence that the next card is **red** (S) and that it's **not red** (¬S). The two should sum to exactly 1. Push them out of line and watch a bookie turn your incoherence into a guaranteed profit — at your expense.</PanelNote>
 
-<div class="cred-controls">
-<div class="slider-row">
-<label>Credence in S — "next card is red" <span class="val" id="vS">0.50</span></label>
-<input type="range" id="rS" min="0" max="100" value="50" aria-label="Credence in S" />
-</div>
-<div class="slider-row">
-<label>Credence in ¬S — "next card is not red" <span class="val" id="vN">0.50</span></label>
-<input type="range" id="rN" min="0" max="100" value="50" aria-label="Credence in not S" />
-</div>
-
-<div>
-<div class="sumbar" id="sumbar" aria-hidden="true">
-<div class="seg s" id="segS" style="width:50%"></div>
-<div class="seg n" id="segN" style="width:50%"></div>
-<div class="one-line"></div>
-</div>
-<div class="sum-readout"><span>0</span><span id="sumtxt">sum = 1.00 ✓</span><span>2</span></div>
-</div>
-
-<div class="ledger coherent" id="ledger">
-<p class="lh" id="ledgerH">Coherent</p>
-<p id="ledgerBody" style="margin:0;">Your confidences sum to 1. No book of fair-looking bets can guarantee you a loss. This is the bare minimum probability asks of a rational mind.</p>
-</div>
-<button class="snap" id="snapBtn">↳ Snap ¬S to 1 − S (make it coherent)</button>
-</div>
+<CredenceDial locale="en" />
 </Panel>
 
 <FormatAlt class="epub-only print-only">

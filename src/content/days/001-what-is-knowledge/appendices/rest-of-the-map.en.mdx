@@ -1,6 +1,9 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import ModalRings from "@app/components/lesson/interactives/ModalRings.astro";
+import StakesDial from "@app/components/lesson/interactives/StakesDial.astro";
+import ClosureMachine from "@app/components/lesson/interactives/ClosureMachine.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -80,34 +83,7 @@ Each line looks reasonable; together they seem to show that you know nothing abo
 
 </ContentSection>
 
-<Panel class="web-only cm-machine">
-<PanelTitle>Interactive · pick your escape</PanelTitle>
-
-### The Skeptic's Syllogism — four doors out
-
-<PanelNote>The argument below is valid: if you accept all three lines, you're a skeptic. So you must reject something. Each rejection is a real move with real defenders — and real costs. Pick one and see whose company you've joined.</PanelNote>
-
-<div class="cm-arg" id="appendix-d001-cmArg">
-<div class="cm-line cm-p1" id="appendix-d001-cmP1"><span class="pn">P1</span><span class="pt">You don't <strong>know</strong> you're not a handless brain in a vat (an indistinguishable fake).</span></div>
-<div class="cm-line cm-p2" id="appendix-d001-cmP2"><span class="pn">P2</span><span class="pt"><strong>Closure:</strong> if you know you have hands, you know you're not such a vat-brain.</span></div>
-<div class="cm-line concl cm-c" id="appendix-d001-cmC"><span class="pn">∴</span><span class="pt">So you <strong>don't know</strong> you have hands.</span></div>
-</div>
-
-<div class="cm-exits">
-<p class="h">Which line do you refuse?</p>
-<div class="cm-btns">
-<button class="cm-btn" data-exit="skeptic">Accept all three</button>
-<button class="cm-btn" data-exit="moore">Reject P1</button>
-<button class="cm-btn" data-exit="dretske">Reject P2 (deny closure)</button>
-<button class="cm-btn" data-exit="context">Redefine "know"</button>
-</div>
-</div>
-
-<div class="cm-out cm-outlet" id="appendix-d001-cmOut">
-<span class="who">Choose a door…</span>
-      Each option dims the line you're rejecting and tells you where you've landed.
-</div>
-</Panel>
+<ClosureMachine locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -146,34 +122,7 @@ It's Friday. You drive past your bank, which has a long Saturday line, and decid
 
 </ContentSection>
 
-<Panel class="web-only stakes-dial">
-<PanelTitle>Interactive · same evidence, shifting verdict</PanelTitle>
-
-### The Bank Cases — the Stakes Dial
-
-<PanelNote>Your evidence is fixed: *"I was at this bank two Saturdays ago, and it was open."* Nothing about the world or your eyesight changes. Slide the stakes; optionally let your spouse raise the possibility of error. Watch "I know" turn into "I'd better check" — and read how three rival camps explain the very same flip.</PanelNote>
-
-<div class="sd-case stakes-case" id="appendix-d001-sdCase">…</div>
-
-<div class="slider-row">
-<label>How much rides on being right <span class="val stakes-value" id="appendix-d001-sdVal">low</span></label>
-<input type="range" id="appendix-d001-rStakes" min="0" max="100" value="15" aria-label="Stakes" class="stakes-range" />
-</div>
-
-<button class="errtoggle stakes-error" id="appendix-d001-sdErr" role="switch" aria-checked="false">
-<span class="knob"></span>
-<span class="lab">Spouse raises the possibility of error <span>"…but banks <em>do</em> sometimes change their hours."</span></span>
-</button>
-
-<div class="sd-verdict">
-<div class="vstate know stakes-state" id="appendix-d001-sdState">—</div>
-<div class="sd-readings">
-<div class="r"><b>Contextualism</b><span id="appendix-d001-sdCtx" class="stakes-contextualism"></span></div>
-<div class="r"><b>Pragmatic encroachment</b><span id="appendix-d001-sdEnc" class="stakes-encroachment"></span></div>
-<div class="r"><b>Invariantism</b><span id="appendix-d001-sdInv" class="stakes-invariantism"></span></div>
-</div>
-</div>
-</Panel>
+<StakesDial locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -206,31 +155,7 @@ This is the deep content of the "safety" idea, and it's worth *seeing*. Picture 
 
 </ContentSection>
 
-<Panel class="web-only modal-rings">
-<PanelTitle>Diagram · the neighborhood of a belief</PanelTitle>
-
-### Safe vs. Lucky — a modal X-ray
-
-<PanelNote>Center dot = the actual world, where your belief is true. Ring = nearby possible worlds, the realistic near-misses. <span class="tone-ok">Green</span> = you'd still be right there; <span class="tone-contested">red</span> = you'd believe it and be wrong. Knowledge needs a green neighborhood.</PanelNote>
-
-<div class="mr-wrap">
-<div class="mr-btns">
-<button class="mr-btn" data-scn="know" aria-pressed="true">Working clock (knowledge)</button>
-<button class="mr-btn" data-scn="gettier">Stopped clock (Gettier)</button>
-<button class="mr-btn" data-scn="barn">Fake-barn country</button>
-</div>
-<svg id="appendix-d001-mrSvg" viewBox="0 0 360 300" role="img" aria-label="A central world surrounded by nearby possible worlds, colored by whether the belief stays true.">
-<circle cx="180" cy="150" r="118" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 5"></circle>
-<text x="180" y="22" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">nearby possible worlds</text>
-<g id="appendix-d001-mrSat" class="modal-satellites"></g>
-<circle id="appendix-d001-mrCore" cx="180" cy="150" r="31" fill="color-mix(in srgb,var(--ok) 22%,transparent)" stroke="var(--ok)" stroke-width="2.5" class="modal-core"></circle>
-<text x="180" y="147" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">actual</text>
-<text x="180" y="159" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">TRUE</text>
-</svg>
-<div class="mr-verdict safe modal-verdict" id="appendix-d001-mrVerdict">— safe —</div>
-<p class="mr-expl modal-explainer" id="appendix-d001-mrExpl"></p>
-</div>
-</Panel>
+<ModalRings locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>

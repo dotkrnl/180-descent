@@ -2,6 +2,8 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import StoppedClockFigure from "@app/components/lesson/figures/StoppedClockFigure.astro";
+import CredenceDial from "@app/components/lesson/interactives/CredenceDial.astro";
+import GettierMachine from "@app/components/lesson/interactives/GettierMachine.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -96,60 +98,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <PanelNote>切换三个经典条件。当三者重叠时，图表中央亮起——那便是证成的真信念。然后打开红色的「运气」开关，看着 JTB（Justified True Belief，证成的真信念）依旧满足，知识却悄然溜走。你也可以点击加载一个经典情景。</PanelNote>
 
-<div class="gm-grid">
-<div>
-<div class="switches">
-<button class="swbtn" id="sw-b" role="switch" aria-checked="true">
-<span class="knob"></span><span class="lab">信念<span>你真心相信它</span></span>
-</button>
-<button class="swbtn" id="sw-t" role="switch" aria-checked="true">
-<span class="knob"></span><span class="lab">为真<span>事实正是如此</span></span>
-</button>
-<button class="swbtn" id="sw-j" role="switch" aria-checked="true">
-<span class="knob"></span><span class="lab">证成<span>你有充分理由</span></span>
-</button>
-<button class="swbtn luck" id="sw-l" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab">运气（盖梯尔转折）<span>理由失准；事实碰巧成立</span></span>
-</button>
-</div>
-<div class="presets">
-<p class="h">载入情境</p>
-<div class="pbtns">
-<button class="pbtn" data-preset="clock">停摆的钟</button>
-<button class="pbtn" data-preset="coins">史密斯与硬币</button>
-<button class="pbtn" data-preset="guess">幸运的猜测</button>
-<button class="pbtn" data-preset="false">自信的错误</button>
-<button class="pbtn" data-preset="know">普通的知识</button>
-</div>
-</div>
-</div>
-
-<div class="venn-box">
-<svg viewBox="0 0 400 330" role="img" aria-label="三个交叠的圆，分别代表信念、为真与证成。">
-<defs>
-<pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-<rect width="8" height="8" fill="color-mix(in srgb,var(--contested) 18%,transparent)"></rect>
-<line x1="0" y1="0" x2="0" y2="8" stroke="var(--contested)" stroke-width="2"></line>
-</pattern>
-</defs>
-<circle id="c-b" cx="200" cy="118" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<circle id="c-t" cx="150" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<circle id="c-j" cx="250" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<text x="200" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">信念</text>
-<text x="96" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">为真</text>
-<text x="305" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">证成</text>
-{/* center badge */}
-<circle id="center-mark" cx="200" cy="178" r="30" fill="none" stroke="none"></circle>
-<text id="center-label" x="200" y="183" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink)" opacity="0"></text>
-</svg>
-
-<div class="verdict">
-<div class="vstate" id="vstate">—</div>
-<p class="vexpl" id="vexpl"></p>
-<p class="story" id="vstory"></p>
-</div>
-</div>
-</div>
+<GettierMachine locale="zh" />
 </Panel>
 
 <FormatAlt class="epub-only print-only">
@@ -281,31 +230,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <PanelNote>设定你对下一张牌为红色（S）以及非红色（¬S）的置信度。两者之和应当恰好为 1。将它们推离一致，看着庄家把你的不融贯转化为稳赚不赔的利润——代价由你承担。</PanelNote>
 
-<div class="cred-controls">
-<div class="slider-row">
-<label>对 S 的置信度——「下一张牌是红色」 <span class="val" id="vS">0.50</span></label>
-<input type="range" id="rS" min="0" max="100" value="50" aria-label="对 S 的置信度" />
-</div>
-<div class="slider-row">
-<label>对 ¬S 的置信度——「下一张牌不是红色」 <span class="val" id="vN">0.50</span></label>
-<input type="range" id="rN" min="0" max="100" value="50" aria-label="对 ¬S 的置信度" />
-</div>
-
-<div>
-<div class="sumbar" id="sumbar" aria-hidden="true">
-<div class="seg s" id="segS" style="width:50%"></div>
-<div class="seg n" id="segN" style="width:50%"></div>
-<div class="one-line"></div>
-</div>
-<div class="sum-readout"><span>0</span><span id="sumtxt">总和 = 1.00 ✓</span><span>2</span></div>
-</div>
-
-<div class="ledger coherent" id="ledger">
-<p class="lh" id="ledgerH">融贯</p>
-<p id="ledgerBody" style="margin:0;">你的置信度之和为 1。没有一套看起来公平的赌约能保证让你亏损。这是概率对一个理性心智提出的最低要求。</p>
-</div>
-<button class="snap" id="snapBtn">↳ 将 ¬S 对齐至 1 − S（恢复融贯）</button>
-</div>
+<CredenceDial locale="zh" />
 </Panel>
 
 <FormatAlt class="epub-only print-only">

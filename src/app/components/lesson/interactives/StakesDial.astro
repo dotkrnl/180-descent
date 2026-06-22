@@ -1,0 +1,64 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "交互 · 相同证据，变化判断",
+  heading: "银行案例——利害关系拨盘",
+  note: "你的证据是固定的：「我两个周六前在这家银行，而且它在营业。」世界或你的视力没有任何变化。滑动利害关系；可选地让你的配偶提出出错的可能性。观察「我知道」如何变成「我最好确认一下」——并阅读三个对立阵营如何解释这完全相同的转变。",
+  stakeLabel: "正确与否牵涉多大利害",
+  stakeInitial: "低",
+  stakeAria: "利害关系",
+  errorLabel: "配偶提出出错的可能性",
+  errorQuote: "「……但银行确实有时会改变营业时间。」",
+  contextualism: "语境主义",
+  encroachment: "实际利害介入",
+  invariantism: "不变主义"
+} : {
+  panelTitle: "Interactive · same evidence, shifting verdict",
+  heading: "The Bank Cases — the Stakes Dial",
+  note: 'Your evidence is fixed: "I was at this bank two Saturdays ago, and it was open." Nothing about the world or your eyesight changes. Slide the stakes; optionally let your spouse raise the possibility of error. Watch "I know" turn into "I\'d better check" — and read how three rival camps explain the very same flip.',
+  stakeLabel: "How much rides on being right",
+  stakeInitial: "low",
+  stakeAria: "Stakes",
+  errorLabel: "Spouse raises the possibility of error",
+  errorQuote: '"…but banks do sometimes change their hours."',
+  contextualism: "Contextualism",
+  encroachment: "Pragmatic encroachment",
+  invariantism: "Invariantism"
+};
+---
+<Panel class="web-only stakes-dial">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+
+  <h3>{copy.heading}</h3>
+
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="sd-case stakes-case" id="appendix-d001-sdCase">…</div>
+
+  <div class="slider-row">
+    <label>{copy.stakeLabel} <span class="val stakes-value" id="appendix-d001-sdVal">{copy.stakeInitial}</span></label>
+    <input type="range" id="appendix-d001-rStakes" min="0" max="100" value="15" aria-label={copy.stakeAria} class="stakes-range" />
+  </div>
+
+  <button class="errtoggle stakes-error" id="appendix-d001-sdErr" role="switch" aria-checked="false">
+    <span class="knob"></span>
+    <span class="lab">{copy.errorLabel} <span>{copy.errorQuote}</span></span>
+  </button>
+
+  <div class="sd-verdict">
+    <div class="vstate know stakes-state" id="appendix-d001-sdState">—</div>
+    <div class="sd-readings">
+      <div class="r">{zh ? copy.contextualism : <b>{copy.contextualism}</b>}<span id="appendix-d001-sdCtx" class="stakes-contextualism"></span></div>
+      <div class="r">{zh ? copy.encroachment : <b>{copy.encroachment}</b>}<span id="appendix-d001-sdEnc" class="stakes-encroachment"></span></div>
+      <div class="r">{zh ? copy.invariantism : <b>{copy.invariantism}</b>}<span id="appendix-d001-sdInv" class="stakes-invariantism"></span></div>
+    </div>
+  </div>
+</Panel>
