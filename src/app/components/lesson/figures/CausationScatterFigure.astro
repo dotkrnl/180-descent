@@ -1,0 +1,53 @@
+---
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  aria: "散点图显示冰淇淋销量与溺水人数同步上升，且有一个隐藏的「夏季」变量同时影响两者。",
+  x: "冰淇淋销量 →",
+  y: "溺水人数 →",
+  hidden: "隐藏原因",
+  summer: "☀ 夏季高温"
+} : {
+  aria: "A scatter plot showing ice cream sales and drownings rising together, with a hidden 'summer' arrow feeding both.",
+  x: "ice-cream sales →",
+  y: "drownings →",
+  hidden: "hidden cause",
+  summer: "☀ summer heat"
+};
+---
+<figure class="hero-fig">
+  <svg viewBox="0 0 460 300" role="img" aria-label={copy.aria}>
+    <line x1="56" y1="248" x2="438" y2="248" stroke="var(--line-strong)" stroke-width="1.5"></line>
+    <line x1="56" y1="40" x2="56" y2="248" stroke="var(--line-strong)" stroke-width="1.5"></line>
+    <text x="247" y="280" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)">{copy.x}</text>
+    <text x="20" y="150" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-faint)" transform="rotate(-90 20 150)">{copy.y}</text>
+    <line x1="74" y1="226" x2="416" y2="70" stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.7"></line>
+    <g>
+      <circle cx="92" cy="214" r="6" fill="color-mix(in srgb,var(--accent) 55%,transparent)"></circle>
+      <circle cx="116" cy="206" r="6" fill="color-mix(in srgb,var(--accent) 55%,transparent)"></circle>
+      <circle cx="140" cy="196" r="6" fill="color-mix(in srgb,var(--accent) 60%,transparent)"></circle>
+      <circle cx="168" cy="188" r="6" fill="color-mix(in srgb,var(--accent) 60%,transparent)"></circle>
+      <circle cx="196" cy="172" r="6" fill="color-mix(in srgb,var(--hint) 65%,transparent)"></circle>
+      <circle cx="222" cy="168" r="6" fill="color-mix(in srgb,var(--hint) 65%,transparent)"></circle>
+      <circle cx="252" cy="150" r="6" fill="color-mix(in srgb,var(--hint) 70%,transparent)"></circle>
+      <circle cx="282" cy="140" r="6" fill="color-mix(in srgb,var(--contested) 60%,transparent)"></circle>
+      <circle cx="312" cy="122" r="6" fill="color-mix(in srgb,var(--contested) 65%,transparent)"></circle>
+      <circle cx="344" cy="108" r="6" fill="color-mix(in srgb,var(--contested) 70%,transparent)"></circle>
+      <circle cx="372" cy="92" r="6" fill="color-mix(in srgb,var(--contested) 72%,transparent)"></circle>
+      <circle cx="402" cy="78" r="6" fill="color-mix(in srgb,var(--contested) 75%,transparent)"></circle>
+    </g>
+    <g>
+      <rect x="300" y="200" width="132" height="40" rx="8" fill="var(--raised)" stroke="var(--brass)" stroke-width="1.4"></rect>
+      <text x="366" y="218" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">{copy.hidden}</text>
+      <text x="366" y="232" text-anchor="middle" font-family="Fraunces,serif" font-size="13" font-weight="600" fill="var(--ink)">{copy.summer}</text>
+    </g>
+  </svg>
+  {zh ? (
+    <figcaption>这是一张示意性的玩具散点图：散点同步上行——这是典型的相关性。它们的颜色代表了图上没有显示的变量：<span class="hl">季节</span>。高温既催生了甜筒销量，又让更多人下水消暑。</figcaption>
+  ) : (
+    <figcaption>A schematic toy scatter plot: the dots march upward together — a textbook correlation. Their color is the variable the chart never shows: <span class="hl">the season</span>. Heat sells cones <em>and</em> sends people to the water.</figcaption>
+  )}
+</figure>
