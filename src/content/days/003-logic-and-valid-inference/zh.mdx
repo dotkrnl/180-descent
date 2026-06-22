@@ -2,8 +2,6 @@ import sherlockHolmes from "../../../assets/images/open-license/sherlock-holmes-
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -20,6 +18,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
@@ -96,6 +95,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <figcaption>佩吉特笔下的福尔摩斯成了「演绎」的公众形象；然而那些著名的诊断式跳跃，通常先是溯因：线索在前，最佳解释在后。</figcaption>
 </figure>
 
+<ContentSection>
 <SectionEyebrow>模型<TipNote text={"模型是一种简化结构，用来帮助我们理解和推理更复杂的对象。"} /></SectionEyebrow>
 
 ## 三类推理，三种保证强度
@@ -117,6 +117,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>人人都容易混淆的区分</SectionEyebrow>
 
 ## 有效并不等于为真
@@ -133,6 +136,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 这可不是钻牛角尖。它是<Term>归谬法</Term>（Reductio ad absurdum）——数学中最锋利的工具之一——背后的工作原理：如果从某个假设出发，经过有效推理推出矛盾或已知假命题，那么问题不在推理规则，而在假设本身。归谬法依赖的正是有效性的反向约束：如果一组前提通过有效推导导出已知为假的结论，那么这些前提中至少有一个不能为真。有效性不是替前提担保，而是让错误无处藏身。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>当形式破裂时</SectionEyebrow>
 
 ## 藏在每个「如果」里的两种谬误
@@ -148,6 +154,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 一个教学经典能让这一结构刻骨铭心：「若一只动物是狗，它就有四条腿。这只动物有四条腿。因此它是狗。」猫、马甚至桌子都会对此表示抗议。这种荒谬感正是要点所在——它与圣迭戈案例的逻辑缺陷完全一致，只是通过荒诞化让齿轮的滑脱变得清晰可见。（欧仁·尤内斯库在他的名剧《犀牛》中，曾以此谬误为核心构建了一整幕戏：一位逻辑学家庄严地向人证明，一只有四条腿的猫必定是狗。）
 
 这些被称为形式谬误（Formal fallacies）——即骨架本身的断裂。而它们的亲戚，非形式谬误，其缺陷不在于形状而在于实质内容：如 post hoc ergo propter hoc（公鸡报晓，太阳升起，故公鸡唤醒了黎明）、人身攻击，或是悄悄在论证中途偷换词义的歧义谬误。形式谬误只需核查骨架即可识破；非形式谬误则需要深入阅读文字的实际逻辑指向。
+
+</ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
 <Panel class="web-only">
@@ -202,6 +210,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </table>
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>脉络</SectionEyebrow>
 
 ## 逻辑如何变成数学
@@ -216,6 +225,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 戈特洛布·弗雷格完成了自亚里士多德以来最大的跳跃。他那薄薄一卷、令人生畏的《概念文字》（Begriffsschrift，1879）引入了<Term>量词</Term>——形式的「所有」（`∀x`<TipNote text={"∀x 表示「对所有 x」。"} />）与「存在」（`∃x`<TipNote text={"∃x 表示「存在一个 x」。"} />）——以及<Term>谓词逻辑</Term>。亚里士多德的词项逻辑会被「马皆动物，故马头皆动物头」这类论证难倒；弗雷格的机制不仅能处理它，而且远不止此——它把命题解析为以个体为变元的函数。它常被称为符号逻辑史上最伟大的一部著作。但悲剧性的尾声随之而来：弗雷格梦想把全部算术还原为纯粹逻辑，就在第二卷即将付梓之际，年轻的伯特兰·罗素寄来一封信，里面藏着一个悖论——所有不包含自身的集合构成的集合：它是否包含自身？无论回答「是」或「否」，都会自相矛盾。弗雷格宏大的基础工程由此崩裂。但他的逻辑在废墟中幸存，成为我们今天仍在讲授的现代符号逻辑。（那个悖论的幽灵，以及它所暗示的边界，将在第 28 日重新浮现；届时哥德尔将证明，没有任何形式系统能满足数学家曾怀有的全部希望。）
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>辩论</SectionEyebrow>
 
 ## 逻辑是发现还是发明？
@@ -246,6 +258,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </div>
 
 最后一个方框，正把问题引向今日的前沿。历史上大部分时间里，「思维规律」似乎不可触碰——质疑它们仿佛锯断自己正坐着的树枝。但二十世纪产生了严谨且可运作的替代逻辑，它们悄然放弃某条神圣定律，却依旧运转。一旦你看到这些替代逻辑确实能承担实际工作，那个宏大的形而上学问题便会软化成一个更实际、也更耐人寻味的问题：不是「哪种逻辑为真？」而是「对这项工作来说，哪种逻辑才是合适的工具？」下面就来看这些替代者。
+
+</ContentSection>
 
 <ContentSection class="frontier">
 <SectionEyebrow>前沿 · 2026</SectionEyebrow>
@@ -340,6 +354,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </div>
 </ContentSection>
 
+<ContentSection>
 <SectionEyebrow>开放问题</SectionEyebrow>
 
 ## 真正尚未解决的是什么
@@ -351,6 +366,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 - 溯因究竟是什么？「最佳解释推理」是真正第三种模式，还是换了外衣的归纳？甚至皮尔士本人是否将其理解为最佳解释推理（而非仅仅生成假设），学者之间亦有争议。
 - 程序化证明能否改变数学本身？若一个结果为真，却只有计算机核查过证明，有没有人真正理解它？一个已验证却不透明的证明，与一个能带来洞见的人类证明，价值是否相同？
 - 以及将萦绕 AI 单元的问题：当一台机器输出一个真实且得到充分支持的定理时，它是否知道任何东西——还是它只是第 1 日那个终极盖梯尔案例的翻版——因与理解毫无关系的理由而恰巧正确？（第 138–145 日。）
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ 用三句话概括今日</BlockTitle>

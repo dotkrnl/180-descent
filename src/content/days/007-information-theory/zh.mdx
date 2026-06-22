@@ -5,8 +5,6 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
@@ -28,6 +26,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
@@ -79,6 +78,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 </WhereBlock>
 
+<ContentSection>
 <SectionEyebrow>模型</SectionEyebrow>
 
 ## 一比特，就是把可能性减半
@@ -115,6 +115,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 香农公式里的 H，在代数形式上与物理学家自 19 世纪 70 年代起用来度量无序的物理量一模一样——那便是「熵」（entropy）。数十年后，迈伦·特里布斯（Myron Tribus）讲述过这样一个故事：香农当时不确定如何命名这个新度量，约翰·冯·诺伊曼（John von Neumann）告诉他应该叫它熵，理由有两个——首先，该公式在统计力学中早已拥有了这个名字；其次，「没人真正知道熵是什么，所以在任何辩论中你都会占尽上风」。这听起来有些过于传奇，未必完全属实（该故事直到 1971 年才首次见诸报端）。但这一巧合所揭示的联系却是真实、深刻且至今仍被争论不休的——它也将是本课程后半部分所有内容得以转动的枢轴。请记住这一点。
 
 </Aside>
+
+</ContentSection>
 
 <FormatOnly media="web">使用下方的动态拨盘来调整硬币的公平程度，观察熵如何随硬币偏置程度增加而下降。</FormatOnly>
 
@@ -207,6 +209,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </table>
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>历史意义</SectionEyebrow>
 
 ## 构筑现代世界的定理
@@ -218,6 +221,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <blockquote>信道容量是指定信道的渐近边界。在它之下，足够长的编码可以让错误率趋近于零；有限消息仍然要在速率、延迟和错误概率之间权衡。</blockquote>
 真正的关键在于：香农证明了这些优秀编码确实存在，但并未指明如何构建它们。他给工程师们留下了一张只标了 X、却没画出路线的藏宝图。追寻这个 X 成为了应用数学界最宏大的探索之一——从保护 CD、二维码以及火星数据回传的里德-所罗门码（Reed–Solomon codes），到 Turbo 码（1993 年），再到如今在 Wi-Fi、5G 数据信道和存储中静默运行的低密度奇偶校验码（LDPC）。每一步都在现实约束下更逼近香农之墙。每当你在不稳定的网络连接下流畅观看电影时，背后不只有信道编码，也有缓冲、重传、拥塞控制、源编码和应用层掩蔽在共同工作。给更常见的符号分配更短的编码——正如摩尔斯电码中为字母「E」分配的单个点，或是霍夫曼编码（1952 年）背后的逻辑——这背后运行着相同的原则：将比特预算花在惊奇度最高的地方。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>论辩</SectionEyebrow>
 
 ## 信息是物理的吗？
@@ -251,6 +257,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 为什么偏偏是擦除？因为擦除不可逆。如果我告诉你某个比特现在是「0」，你无法得知它在片刻之前是「0」还是「1」——那段历史已经永久消逝，两种可能的过去被强行压缩进了一个单一的现在。<Term>逻辑不可逆操作</Term><TipNote text={"逻辑不可逆操作是指将多个可能的输入映射为同一个输出，使得无法仅凭输出重建输入。"} />会湮灭物理区分，而在物理设备中，这种区分由物理状态来承载。对于偏置比特、相关存储器或存在可用边信息的情形，下限取决于实际被丢弃的熵以及存储器物理自由能的变化。标准的未知公平比特，下限才是 <MathInline latex={String.raw`k_B T \ln 2`} />。兰道尔的口号自此成为物理学的战斗口号：<Highlight>「信息是物理的。」</Highlight>
 
 1982 年，他在 IBM 的同事<Term>查尔斯·贝内特</Term>（Charles Bennett）借由这一洞见彻底破解了麦克斯韦妖的陷阱。妖的失误并不简单地在于「测量」分子——如果用适当准备好的存储器可逆实现，测量本身没有兰道尔最低耗散下限。妖的致命问题在于它拥有「记忆」，而记忆的空间是有限的。为了能作为循环装置无休止地进行分类，它必须最终恢复那块记忆。每一次逻辑不可逆的重置，都会把此前似乎从气体中移走的熵以热量形式排回环境。完整循环因此不再违背第二定律。这个捣蛋鬼的聪明，关键并不在于思考，<Highlight>而在于遗忘</Highlight>。
+
+</ContentSection>
 
 <FormatOnly media="web">下方的动态演示模拟了引发热量计上升的不可逆重置过程。</FormatOnly>
 
@@ -418,6 +426,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </div>
 </ContentSection>
 
+<ContentSection>
 <SectionEyebrow>未决问题</SectionEyebrow>
 
 ## 真正悬而未决的谜题
@@ -426,6 +435,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 - 「那个妖真的能被彻底驱逐吗？」少数物理学家（如 Earman 和 Norton）指出，标准的驱魔论证存在微妙的循环论证——利用第二定律推导擦除下限，再用这个下限来捍卫第二定律。2016 年一项备受争议的研究甚至声称实现了一个运行开销低于 <MathInline latex={String.raw`k_B T \ln 2`} /> 的逻辑不可逆门。在实验支持下的主流学界虽然持否定态度，但这背后的物理解释仍未完全定案。
 - 「现实中的计算究竟能降到多低？」可逆计算承诺能几乎完全避开擦除耗散。但至今还没有人建造出真正实用的可逆计算机。兰道尔下限究竟是一个可以触及的工程目标，还是永远只是一件科学珍玩？
 - 「在人工智能模块中等待我们的问题：」当一个模型「知道」某些事物时，这种知识最终是否只是为了降低损失函数而排列的比特？而这些比特背后的能耗约束，是否暗示了「思考」到底需要什么？（第 138 至 145 日。）
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ 今日精要三句话</BlockTitle>

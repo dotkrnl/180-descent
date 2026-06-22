@@ -5,8 +5,6 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -25,6 +23,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
@@ -98,6 +97,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 </WhereBlock>
 
+<ContentSection>
 <SectionEyebrow>引子</SectionEyebrow>
 
 ## 最容易被愚弄的人
@@ -116,6 +116,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <FormatOnly media="web">接下来的面板将让你亲自运行这台机器——这是一个实时的蒙特卡洛模拟，而非预设的动画。其中的每一项「研究」都是纯噪声，没有任何真实效应。看看这些自由度会怎样扭曲结果。</FormatOnly>
 
 <FormatOnly media="print-epub">下方参考表以静态形式展示同一台机器：每增加一种研究自由度，纯噪声就多了一条看起来像「发现」的路径。</FormatOnly>
+
+</ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
 <Panel class="web-only statistics-factory">
@@ -180,6 +182,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>核心模型</SectionEyebrow>
 
 ## p 值到底在说什么（以及关于它的六种误读）
@@ -348,6 +351,9 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 功效不足不只是让研究更容易漏掉真实效应。它还会扭曲那些成功越过显著性门槛的估计：当功效较低时，往往只有被随机误差放大的结果才能达到显著，这就是 <Term>赢家诅咒</Term>（winner’s curse）<TipNote text={String.raw`赢家诅咒是指在充满噪声的研究中，被选中的显著估计值往往会夸大真实的效应。`} />。再叠加对显著结果更友好的发表机制，文献中留下的往往是被夸大的效应，而且较难复现。2013 年的一项系统性审查（Button 等人的《功效失败》）估计，他们所考察的神经科学元分析的功效中位数约为 <Highlight>21%</Highlight>；Nord 等人在 2017 年的再分析则指出，不同子领域的功效差异很大。这个限定不改变核心教训：研究功效不足时，真实效应更容易被漏掉，而成功发表的效应估计往往偏大。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>更深层的陷阱</SectionEyebrow>
 
 ## 即使没有故意操纵，也可能被误导
@@ -367,11 +373,16 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>争论</SectionEyebrow>
 
 ## 是收紧阈值，还是彻底弃用？
 
 如果 p < .05 如此容易被滥用，该用什么来取代它？在这个问题上，统计学界形成了几种不同立场——这不是非专业人士与专家的对立，而是严肃统计学家之间的真实分歧。我们可以将这些观点排在一条直线上，从「打补丁」到「彻底推倒」。
+
+</ContentSection>
 
 {/* ===================== VISUAL 2 ===================== */}
 <Panel class="statistics-spectrum">
@@ -415,7 +426,10 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 </div>
 </Panel>
 
+<ContentSection>
 这些改革立场不同，却都在推动同一转变：不再寄希望于通过一个单一阈值给出「是 / 否」的判定，而是转向<Highlight>报告效应的大小、不确定程度，以及结论对分析选择的敏感程度</Highlight>。最后这个「敏感程度」（或称结论的脆弱性），正是当前改革的重点之一。
+
+</ContentSection>
 
 <ContentSection class="frontier">
 <SectionEyebrow>前沿 · 2024–2026</SectionEyebrow>
@@ -506,6 +520,7 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>开放问题</SectionEyebrow>
 
 ## 尚未定论的领域
@@ -515,6 +530,8 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 - 分析结论的差异，是否意味着真实效应也同样不同？ 2023 年的一项细致重分析指出，在一些「同一份数据，众多分析师」研究中，引人注目的分歧其实是关于「显著性」判定的，而底层的效应量其实相当一致且微小。对结论的分歧可能会超过对数字本身的分歧。不应据此断言所有分析都不可靠。
 - 未来更可能以 p 值还是 e 值为主？ 基于投注的工具优雅地解决了「可选停止」问题，但可能需要更多数据，并引入了新的建模负担（该怎么下注？）。两者共存似乎比一方取代另一方更有可能。
 - 以及 AI 单元中等待着的问题： 当一个在数百万篇论文上训练出来的模型报告一个「稳健」的结果时，它是在根据证据进行推理，还是在模仿那些让我们陷入现状的「分岔路径」习惯？（见第 138–145 日）。
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ 今日总结：三句话</BlockTitle>

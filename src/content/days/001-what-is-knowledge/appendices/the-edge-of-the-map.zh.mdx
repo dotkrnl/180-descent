@@ -1,9 +1,8 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -15,6 +14,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 
@@ -35,7 +35,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 <li>准确性优先——一种形式化的重构，通过事实准确性而非金钱重新推导出第 1 日的荷兰赌论证。</li>
 </ol>
 </div>
-
+<ContentSection>
 <SectionEyebrow number="§1"> 探究转向</SectionEyebrow>
 
 ## 认识论遗忘了探究
@@ -71,6 +71,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 为什么这在研讨会之外也很重要？因为它表明认识论一直在研究错误的单元。如果信念规范与探究规范真正发生冲突，那么仅建立在信念之上的理论就是不完整的——甚至可能是本末倒置的。激进的提议，即「探究转向」，认为所有认识论规范最终都是探究规范（悬置判断变成了指向问题的态度；相信一个答案是关闭一个问题的方式）。该领域尚未全盘接受这一点——而这正是诚实的部分。Arianna Falbo（"Should epistemology take the zetetic turn?"，Philosophical Studies，2023）等人认为探究规范实际上是实践性的，而非独特的认识论规范，并且纯粹的探究认识论无法解释为什么有些信念是不理性的，即使相信它们会有助于你的探究。因此：这个谜题现在在整个领域都被严肃对待；而「探究规范统摄一切」的强命题则是一场真正的、未解决的争论。无论如何，「什么是知识？」这个问题正悄然被重构为「什么是良好的探究？」——这一重构一直延伸到第 2 日，在那里，科学方法正是一套用于集体探究的规范。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§2"> 认知科学转向</SectionEyebrow>
 
 ## 如果知识在信念之前呢？
@@ -99,6 +102,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 如果这一观点成立，那么对第 1 日的回报是直接且巨大的。它将为 Timothy Williamson 的知识优先（knowledge-first）计划提供经验证据——这一哲学主张（我们曾将其视为纯粹的扶手椅理论）认为知识是基础的、不可分析的状态，应该根据它来解释信念，而不是相反。突然之间，这不再仅仅是逻辑学家的直觉；它成了认知架构的一项候选事实，并具有演化上的合理性（社会性动物迫切需要追踪谁拥有可靠信息——这呼应了附录 I 中 Edward Craig 的「良好信息提供者」谱系学）。但诚实要求加上星号，而且此处的星号震耳欲聋：一篇 BBS 供同行评论的文章附带了数十篇同行评议评论，许多人强烈反对。批评者认为知识与信念的界限比作者所允许的更为模糊，「追踪谁看到了什么」不一定是对知识的完整表征，而且文化和语言塑造了整个图景。因此：行为发现（儿童和猿类很早就追踪信息访问）是相当可靠的；而强解释（知识表征在形而上学和计算上是优先的，信念是从中组装而来的）仍然悬而未决，而且争论很活跃。我们关于心智结构的图景正在被重新安排，而研究者们还没有就新图景达成一致。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§3"> 机器转向，第一部分</SectionEyebrow>
 
 ## 语言模型知道什么吗——还是只是在扯淡？
@@ -110,6 +116,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 为什么这可能会重绘版图：它直接切断了关于机器「知道」、「理解」或「相信」的随意谈论。如果这个论点是正确的，那么 LLM 的为真输出就不是知识，甚至在完整意义上也不是真正的断言——它们是一类新的看起来像真话的文本，背后并没有人在乎它是否真实。这重塑了我们该如何信任、引用和监管这些系统。而且，不出所料，这是有争议的——反驳意见已经形成了一组反驳文献。一些人认为「扯淡」标签暗中预设了关于模型是否具有意图的立场（Sarah Fisher, 「Large language models and their big bullshit potential」, 2024; David Gunkel &amp; Simon Coghlan, 「Cut the crap」, 2025）；另一些人则认为，随着模型通过强化学习被训练得诚实并表达校准过的不确定性，「对真假漠不关心」过于粗糙了。已经比较稳固的，是那个不那么耀眼的核心判断：基础语言模型并没有内置的求真承诺，流畅性也不等于知识。而开放的问题是，「扯淡」、「工具」、「证言者」还是某种全新的认知类别才是这些系统所产生内容的正确归宿。它是附录 I 中那只缸中之脑的硅制版本——交付给了十亿用户——那些可能从未触及过世界的词语，现在正在回答我们的问题。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§4"> 机器转向，第二部分</SectionEyebrow>
 
 ## 你从未察觉的支撑梁：认知后盾
@@ -150,6 +159,9 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 
 所以，Rini 提出的机制——录音录像作为证言的沉默调节器——是一项真实且具有启发性的贡献；但关于「认知末日」或公共知识全面崩溃的预测，仍是一场正在进行的争论，而不是定论。把这一点带到第 2 日，你会看到科学如何用重复实验和记录制度回答「你如何信任一份你无法亲自核实的报告？」。再带到 AI 板块，它也会与 §3 正面交锋。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§5"> 对抗性转向</SectionEyebrow>
 
 ## 敌对认识论：当环境是为了愚弄你而构建时
@@ -162,6 +174,8 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 <FormatOnly media="web">下面的交互式内容可以让你亲身体验到这一点：最显而易见的干预措施——让人们接触另一方的观点——可以戳破气泡，却可能加固回声室，因为在回声室内部，遇到敌方的论点恰恰是回声室所预言的，从而证实了它。</FormatOnly>
 
 <FormatOnly media="print-epub">下方表格说明，最显而易见的干预——让人们接触另一方观点——为什么可能戳破气泡，却加固回声室。</FormatOnly>
+
+</ContentSection>
 
 <Panel class="web-only echo-chamber">
 <PanelTitle>互动 · 为什么「只展示事实」会适得其反</PanelTitle>
@@ -224,10 +238,14 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 </table>
 </FormatAlt>
 
+<ContentSection>
 第二招指出你大脑内部的一个弱点。在 "The Seductions of Clarity" (Royal Institute of Philosophy Supplement, 2021) 中，Nguyen 认为，清晰的感觉——即当一切似乎都各就各位时那种令人满意的契合感——起到了<Term>终止探究的启发式</Term><TipNote text={"启发式是一种快速的经验规则：快而有用，但也可能系统性误导你。"} />的作用。我们把「事情已经变得清晰」这种感觉当作探究已经足够、可以停止的信号。通常这没问题。但这意味着清晰感可以被武器化：一个能够制造夸大清晰感的操纵者——一种解释一切的整洁意识形态，或一个每个事实都能严丝合缝嵌入其中的阴谋论——可以让你在发现漏洞之前就提前终止探究。请注意这如何与 §1 相衔接：清晰之所以危险，恰恰是因为它终结了探究过程。正因如此，那些最圆滑、最让人觉得「现在一切都说得通了」的说法，反而最需要严加审视。第三招完善了这一工具：在 "Trust as an Unquestioning Attitude" (Oxford Studies in Epistemology, 2022) 中，Nguyen 将信任本身分析为一种不加质疑的立场——即将某事视为已解决的背景，在此基础上构建而不再重新检查。这是必不可少的（你不可能从头推导一切），也正因如此是可以被利用的：夺取了一个人毫无保留信任的东西，你就夺取了他永远不会想到去查核的盲点。
 
 这里的真实评价是双重的。其概念性贡献——气泡与回声室、作为探究终止符的清晰感、作为不加质疑的信任——已被迅速且广泛地采用，因为它们确实起到了澄清作用并具有行动指导意义。但有两点警示值得注意。首先，哲学家们已经开始对这一概念框架本身提出异议 (Carey &amp; Ventham, "There is no fresh air: a problem with the concept of echo chambers," Episteme, 2025)。其次——这也是本课程坚持的一个前沿校准器原则——社会科学关于现实世界中回声室普遍程度的实证图景确实复杂且不一；几项大型研究发现，大多数人的媒体信息摄入比「封闭的回声室」这一形象所暗示的更为多样化。因此，请将这一概念机制视为一件尖锐而持久的工具，而将该现象的实证规模视为一个尚待测量的经验问题。框架本身就是贡献；它所描述的火势究竟有多大，仍在测量之中。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§6"> 形式化重构</SectionEyebrow>
 
 ## 重新推导第 1 日的荷兰赌——基于事实准确性，而非金钱
@@ -240,6 +258,8 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 <FormatOnly media="web">这个交互式内容让你能从几何上直观地看到这种「支配」。</FormatOnly>
 
 <FormatOnly media="print-epub">下方表格把同一几何关系列成三种置信度情形：在线上、在线上方、在线下方。</FormatOnly>
+
+</ContentSection>
 
 <Panel class="web-only accuracy-domination">
 <PanelTitle>交互 · 从另一个方向学习与第 1 日相同的课程</PanelTitle>
@@ -316,7 +336,10 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 </table>
 </FormatAlt>
 
+<ContentSection>
 使其成为前沿而非注脚的原因是：它尝试将理性的基础重建在单一的认知价值上——即接近事实——并从准确性支配论证中不仅推导出<Term>概率主义</Term><TipNote text={"概率主义认为：理性的置信度应当遵守概率公理。"} />，还推导出更新规则（条件化）等更多内容。如果它完全成功，那么我们在第 1 日开始勾勒的整个贝叶斯体系将建立在准确性之上，而不是博彩行为或心理学之上。不过，「已确立」这个标签是有根据的。概率主义的核心支配定理是已经确立的数学。但其雄心——即所有的认知规范都仅源于准确性——则有争议：最纯粹的结果依赖于技术假设（<Term>加法性</Term><TipNote text={"加法性指互斥选项不能同时发生时，「其中之一发生」的概率等于各自概率之和。"} />、有限命题），批评者认为这些假设比单纯的「接近事实」所能保证的内容夹带了更多的私货（Chad Marxen, "Epistemic utility theory's difficult future," Synthese, 2021），而且不同的准确性衡量标准可能会得出不同的判断。因此：这是一个美丽且极具启发性的重新构架，拥有坚如磐石的核心和充满争议的外延——这恰好也是整个附录的形状。
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ 三句话总结前沿</BlockTitle>
@@ -330,6 +353,7 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 
 </Recap>
 
+<ContentSection>
 <SectionEyebrow>开放问题</SectionEyebrow>
 
 ## 地图边缘的空白处
@@ -341,6 +365,8 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 - 你心智的环境被工程化到了什么程度——以及我们现在能清晰描述的回声室，实际上到底有多大？
 - 只靠接近事实能奠定理性的基础吗？ 准确性优先原则能涵盖一切，还是仅限于其技术假设所能触及的范围？
 - 还有一个为未来准备的更安静的竞争者： 其中好几项都越过知识指向了理解，认为那才是我们真正看重的东西——每当一个模型能够预测却无法解释时，我们都会再次感受到这一转向。
+
+</ContentSection>
 
 <Divider />
 

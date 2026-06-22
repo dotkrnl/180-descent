@@ -1,10 +1,9 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -16,6 +15,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 
@@ -37,7 +37,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 <li><b>Almost everything you know, someone told you</b> — testimony, disagreement, and epistemic injustice.</li>
 </ol>
 </div>
-
+<ContentSection>
 <SectionEyebrow number="§1"> The machinery</SectionEyebrow>
 
 ## The two trapdoors under every Gettier case
@@ -57,6 +57,9 @@ The main lesson used the coins. Gettier's *second* case shows trapdoor two even 
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§2"> The biggest omission</SectionEyebrow>
 
 ## The skeptic at the door
@@ -73,6 +76,8 @@ Each line looks reasonable; together they seem to show that you know nothing abo
 <FormatOnly media="web">The interactive below lets you try every way out — and discover that each "way out" is a named philosophical position with a price tag.</FormatOnly>
 
 <FormatOnly media="print-epub">The table below maps each possible way out to the line it rejects, the named philosophical position, and its price tag.</FormatOnly>
+
+</ContentSection>
 
 <Panel class="web-only cm-machine">
 <PanelTitle>Interactive · pick your escape</PanelTitle>
@@ -119,6 +124,7 @@ Each line looks reasonable; together they seem to show that you know nothing abo
 </table>
 </FormatAlt>
 
+<ContentSection>
 The doors are worth naming in full. **G. E. Moore** (1939) simply ran the argument backwards: *I am far more sure that here is one hand* (holding it up) *than I am of any fancy premise the skeptic offers* — so if the premises imply I don't know it, so much the worse for the premises. Cheeky, and strangely hard to beat. **Fred Dretske** (1970) and Robert Nozick (1981) took the surgical route: *deny closure.* On Dretske's <Term as="em">relevant alternatives</Term> view, to know something you only need to rule out the *relevant* ways you could be wrong, not every bizarre one. At the zoo you know the animal is a zebra — you've ruled out "it's a horse," "it's a goat" — even though you haven't ruled out "it's a mule cleverly painted to look like a zebra," because in this context that's not a live possibility. Knowledge doesn't automatically transmit to every entailment. The cost is steep: closure is intuitive, and giving it up has consequences elsewhere. **Contextualism** (our next section) offers the diplomat's solution: maybe the skeptic and Moore are *both* right, because "know" means something stricter in the skeptic's seminar than in ordinary life.
 
 ### The 2020s upgrade: are we in a simulation?
@@ -127,6 +133,9 @@ The vat got a software update. Nick Bostrom's **simulation argument** (*Philosop
 
 Two honest labels before we move on. The simulation *hypothesis* — that we are in fact simulated — is, as it stands, **untestable metaphysics, not science**: there's no agreed observation that would confirm or refute it, which puts it on the wrong side of the demarcation line we'll draw tomorrow. <StatusChip status={"bad"} label={"simulation hypothesis · unfalsifiable"} printLabel={"unfalsifiable"} /> The *philosophical* payoff is real all the same: it sharpens what we even mean by "real" and "know." And there's a famous reply that turns the screw the other way. Putnam argued that "I am a brain in a vat" is <Term as="em">self-refuting</Term><TipNote text={"A self-refuting claim undermines itself: if the claim were true, its own conditions would make it false or meaningless."} />: your words only mean what they do because of your causal history, so a lifelong brain-in-a-vat's word "vat" couldn't refer to real vats (it never causally touched one) — meaning that if you *were* a vat-brain, your sentence "I am a brain in a vat" would come out *false*. Whether that works is still argued, which is precisely why this thread runs straight into the AI block: when a system trained only on text outputs "Paris is in France," does it *know* that — or is it the purest brain-in-a-vat of all, with words that never touched the world? Hold the question for **Days 138–145**.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§3"> The moving target</SectionEyebrow>
 
 ## "Knows" on a sliding scale
@@ -138,6 +147,8 @@ It's Friday. You drive past your bank, which has a long Saturday line, and decid
 <FormatOnly media="web">The dial below lets you slide between the two and watch it flip.</FormatOnly>
 
 <FormatOnly media="print-epub">The table below compares the low-stakes, high-stakes, and error-raised versions of the case.</FormatOnly>
+
+</ContentSection>
 
 <Panel class="web-only stakes-dial">
 <PanelTitle>Interactive · same evidence, shifting verdict</PanelTitle>
@@ -183,8 +194,12 @@ It's Friday. You drive past your bank, which has a long Saturday line, and decid
 </table>
 </FormatAlt>
 
+<ContentSection>
 Three camps, three diagnoses of the same data. **Contextualism** (DeRose; David Lewis, "Elusive Knowledge," 1996; Stewart Cohen, 1988) locates the shift in the *word*: "knows" is like "tall" or "here" — context-sensitive. Raising the stakes or mentioning error raises the standard a belief must meet for the sentence "S knows" to count as true. Both utterances are correct, in their own conversations. The skeptic is even right in the seminar — he's just jacked the standard sky-high. **Pragmatic encroachment** (Jason Stanley, *Knowledge and Practical Interests*, 2005; Fantl &amp; McGrath; John Hawthorne, *Knowledge and Lotteries*, 2004) puts the shift in the *knower*: what *you* know genuinely depends on what's practically at stake *for you*, because knowledge is supposed to be the thing you can act on. High stakes really can deprive you of knowledge you'd have had when it didn't matter — a startling idea, since it lets practical pressure "encroach" on a supposedly purely factual state. **Invariantism** (the traditional holdout) digs in: "knows" means one fixed thing, the standards don't move, and one of your two verdicts is simply mistaken — you either knew all along or never did, and the stakes just changed how *willing* you were to *say* so. <StatusChip status={"ok"} label={"that the verdicts shift · agreed"} printLabel={"agreed"} /> <StatusChip status={"bad"} label={"why they shift · unresolved"} printLabel={"unresolved"} /> The data is robust; its explanation is one of the most active fault lines in the field.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§4"> The pattern behind the patches</SectionEyebrow>
 
 ## The luck we were really chasing
@@ -196,6 +211,8 @@ This is the deep content of the "safety" idea, and it's worth *seeing*. Picture 
 <FormatOnly media="web">Toggle the three scenarios below and watch the neighborhood light up.</FormatOnly>
 
 <FormatOnly media="print-epub">The table below compares three nearby-worlds cases and the safety verdict each one earns.</FormatOnly>
+
+</ContentSection>
 
 <Panel class="web-only modal-rings">
 <PanelTitle>Diagram · the neighborhood of a belief</PanelTitle>
@@ -238,6 +255,7 @@ This is the deep content of the "safety" idea, and it's worth *seeing*. Picture 
 </table>
 </FormatAlt>
 
+<ContentSection>
 That single picture retroactively explains the whole mess. The stopped clock fails *hard* — a minute either side and you're wrong, so the neighborhood is a sea of red. Fake-barn country is subtler: the barn you're looking at is genuinely there (the core is green), but you're surrounded by façades, so a glance a hundred meters either way would have fooled you — red neighborhood, no knowledge, even with a true justified belief and no false premise. The patches all failed because each tried to capture "green neighborhood" with a slightly different yardstick, and luck kept finding the gaps.
 
 Two more patches the main lesson didn't name, now that we have the frame. **Defeasibility theory** (Lehrer &amp; Paxson, 1969) said knowledge is *un-defeated* justified true belief: there must be no true fact out there that, if you learned it, would dissolve your justification. It handles many cases elegantly — until the "misleading defeater" twist, where there's a true-but-misleading fact that *shouldn't* rob you of knowledge but technically does, forcing ever-finer distinctions. And reaching back further, the **causal theory** (Goldman, 1967, before he turned reliabilist) demanded that the fact *cause* your belief — no causal chain, no knowledge. Beautiful for perception; fatal for mathematics, since the number 7 and the Pythagorean theorem don't cause anything (Paul Benacerraf pressed exactly this "access problem" in 1973). You can't shake hands with an abstract object.
@@ -246,6 +264,9 @@ And the deepest crack in reliabilism, which the main lesson only gestured at: th
 
 Where does Pritchard land? At <Term as="em">anti-luck virtue epistemology</Term>: knowledge needs *both* conditions, because they catch different failures. You need **safety** (a green neighborhood — no veritic luck) *and* you need **aptness** (the belief is true *through your own ability* — the archer's skill from the main lesson). Neither alone suffices: the stopped clock can fail safety, fake-barn country can have local skill but bad luck. It's not a tidy three-word formula — and that, by now, may be the lesson. Knowledge might just *be* the kind of thing that takes two independent guarantees, one about you and one about your world.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§5"> The question under the question</SectionEyebrow>
 
 ## Why is knowing worth more than just being right?
@@ -270,6 +291,9 @@ The value problem turns into a precise weapon against one of the main lesson's t
 
 This is where **virtue epistemology** earns its keep, and where the archer finally pays off. Its answer: knowledge isn't valuable as a *better-stocked* true belief; it's valuable as an <Term as="em">achievement</Term> — a success that's *yours*, that came about *through your own competence*. And achievements carry a kind of worth that lucky successes never do, the way a bullseye you actually aimed is worth something a lucky gust-blown hit isn't, even though the arrow lands in the same spot. A true belief reached through your own cognitive skill is a *cognitive achievement*; a lucky true belief is not. That's the extra value — not in the result, but in the *getting there*. The road to Larissa you can actually find again is worth more than the one you stumbled onto, even on a day you both arrive.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§6"> The other knowings</SectionEyebrow>
 
 ## The kinds of knowing we ignored
@@ -305,6 +329,9 @@ Everything so far — the entire main lesson — was about <Term as="em">proposi
 
 **Knowing by acquaintance.** Bertrand Russell (1911) drew a second cut: between knowledge *by acquaintance* — your direct, unmediated grip on a patch of red you're seeing, a pain you're feeling, a face you're looking at — and knowledge *by description*, the facts you know *about* things you've never directly met ("the first person to stand on the Moon," whom you know only as the one satisfying that description). You can know a stupendous amount *about* Bismarck and never have known *him*; you know the color red in a way the world's greatest blind physicist, who knows every fact about wavelengths, does not. That gap — facts about an experience versus the experience itself — is a quiet seed for the hardest problem in the entire course, the one waiting on **Day 123**: why there's *something it is like* to see red at all.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§7"> The social turn</SectionEyebrow>
 
 ## Almost everything you know, someone told you
@@ -324,6 +351,9 @@ There's a radical way to end the whole 180-page hunt for a definition, and it th
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§8"> The formal edge</SectionEyebrow>
 
 ## Two more frontiers, beyond Bayes
@@ -333,6 +363,8 @@ The main lesson's formal frontier was Bayesian credence. Two further formal idea
 **The logic of knowing.** Jaakko Hintikka, in *Knowledge and Belief* (1962), treated "knows" as a formal operator you can reason with, like "necessarily" — launching <Term as="em">epistemic logic</Term>, now a workhorse in computer science (reasoning about what distributed agents and AI systems "know"). It immediately surfaces deep puzzles. The <Term as="em">KK principle</Term>: if you know *p*, do you thereby know *that you know* *p*? Tempting, but Williamson (from the main lesson) argues it's false — you can know something without being in a position to know that you know it, because knowledge has blurry margins. And *logical omniscience*: the clean logic implies that if you know some axioms, you know *every* logical consequence of them — which would make every mathematician instantly aware of every theorem. Obviously false for real, bounded minds, and a central headache for modeling actual reasoners (and machines).
 
 **The preface paradox.** A companion to the lottery paradox from the main lesson, and arguably nastier. You write a long, careful book. For *each* claim in it, you've checked your work and rationally believe it's true. Yet you also write, sincerely, in the preface: "no doubt errors remain, and they are mine alone" — because you know that across hundreds of claims, you've almost certainly slipped *somewhere*. So you rationally believe each individual claim, and *also* rationally believe that *at least one of them is false* (David Makinson, "The Paradox of the Preface," 1965). Those can't all be true together. The moral lands on the main lesson's open question with full force: ordinary all-or-nothing belief isn't *closed under conjunction* — believing each of many things doesn't license believing their grand conjunction — which is one more reason the field keeps drifting from yes/no belief toward graded credence. The dial, again, doing what the switch can't.
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ The appendix in three sentences</BlockTitle>
@@ -346,6 +378,7 @@ The main lesson's formal frontier was Bayesian credence. Two further formal idea
 
 </Recap>
 
+<ContentSection>
 <SectionEyebrow>Open questions</SectionEyebrow>
 
 ## What this appendix leaves unsettled
@@ -357,6 +390,8 @@ The main lesson's formal frontier was Bayesian credence. Two further formal idea
 - **Is knowing-how just knowing-that** in disguise, or its own irreducible kind of grip on the world?
 - **Is testimony basic or earned?** — and, downstream, when a peer disagrees, must you really meet them halfway?
 - **And the function-first wager:** if the concept of knowledge exists to flag good informants, does that *dissolve* the analysis project — or just relocate it?
+
+</ContentSection>
 
 <Divider />
 

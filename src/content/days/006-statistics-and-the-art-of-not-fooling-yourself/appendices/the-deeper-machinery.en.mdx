@@ -2,10 +2,9 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -17,6 +16,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 
 <Lead drop="T">he main lesson left a debt unpaid. We said, almost in passing, that a <MathInline latex={String.raw`p`} />-value is one of the most misunderstood numbers in science — and then we hurried on to the famous misreadings, as if the confusion were everyone's fault but the number's. It isn't. The deeper truth is that the tool itself is a chimera: stitched together from two rival philosophies whose founders despised each other, taught as if it were one coherent idea, and quietly incapable of meaning what almost everyone takes it to mean. This appendix is the autopsy. We'll find out why p-hacking isn't just *possible* but mathematically *guaranteed*; how wrong a "significant" result really is once you do the honest arithmetic; how a small army of statistical detectives now hunts for the fingerprints; and what the people who actually know this stuff reach for instead. We close on a single, lovely idea that turns a <MathInline latex={String.raw`p`} />-value into a number of coin flips — and hands us straight to tomorrow.</Lead>
@@ -25,7 +25,7 @@ import Term from "@app/components/lesson/Term.astro";
 <p class="label">◆ Continuing from the main lesson</p>
 <p>You've met the False-Positive Factory, the garden of forking paths, the reform spectrum, and the many-analysts duels. Hold onto three threads in particular: <strong>Day 4</strong>'s Bayes (a <MathInline latex={String.raw`p`} />-value is not P(hypothesis | data), and here we'll finally compute what it costs to forget that), <strong>Day 2</strong>'s Popper and Ioannidis (severity and "most findings false"), and <strong>Day 1</strong>'s calibration instinct. Everything below is the substructure those ideas were standing on.</p>
 </div>
-
+<ContentSection>
 <SectionEyebrow number="§1"> The original sin</SectionEyebrow>
 
 ## A tool built from two incompatible blueprints
@@ -35,6 +35,8 @@ Here is a fact that explains an astonishing amount of misery: the standard proce
 On one side stood **Ronald Fisher**. In *Statistical Methods for Research Workers* (1925), he offered the <MathInline latex={String.raw`p`} />-value as an informal, continuous gauge of *evidence against* a single null hypothesis — a measure of how strange your data would look if nothing were going on. He needed no alternative hypothesis, no rejection region, no long run. He suggested <MathInline latex={String.raw`p < .05`} /> only as a homely rule of thumb, the rough point past which a coincidence starts to feel implausible, and explicitly said you could pick a different line if you preferred. For Fisher, a small *p* was a prompt to *think*, not a verdict to *obey*. The null, he wrote, is never proved — only, occasionally, embarrassed.
 
 On the other side stood **Jerzy Neyman and Egon Pearson**. In a series of papers culminating in 1933, they rebuilt the whole enterprise as a *decision rule*, not a measure of evidence. You specify two hypotheses up front, fix in advance your tolerable rate of false alarms (<Term as="em">α</Term>, the Type I error rate) and misses (<Term as="em">β</Term>, the Type II rate; *power* = <MathInline latex={String.raw`1-\beta`} />), draw a line, and thereafter behave: reject or accept, accepting that over the long run you'll be wrong at the rates you chose. There is, pointedly, *no* measure of evidence for the case in front of you — only a procedure with known long-run properties. Neyman thought Fisher's inductive "evidence" talk was mush; Fisher thought Neyman had turned science into factory quality-control. The feud was lifelong and genuinely vicious.
+
+</ContentSection>
 
 <Panel>
 <PanelTitle>Diagram · two philosophies, forced into one box</PanelTitle>
@@ -74,8 +76,12 @@ On the other side stood **Jerzy Neyman and Egon Pearson**. In a series of papers
 </div>
 </Panel>
 
+<ContentSection>
 Once you see the seam, the whole replication crisis reads differently. We took a flexible Fisherian prompt-to-think, froze it into a Neyman–Pearson gate, stripped out the part of Neyman–Pearson that made the gate honest (pre-committed <MathInline latex={String.raw`\alpha`} />, adequate power, a real alternative), and then published only what got through. The wonder is not that so much fails to replicate. It's that anything survives.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§2"> Why the factory always wins</SectionEyebrow>
 
 ## The two facts that make p-hacking inevitable
@@ -87,6 +93,8 @@ The False-Positive Factory wasn't a trick of clever programming. It rests on two
 Run an exact test with continuous data where nothing is happening, under the assumptions of the null model, and the <MathInline latex={String.raw`p`} />-value you get is a **uniform random number between 0 and 1**. For discrete, composite, or conservative tests, valid <MathInline latex={String.raw`p`} />-values are often *super-uniform*: <MathInline latex={String.raw`P(p \le \alpha) \le \alpha`} />, not necessarily exactly equal. The practical warning survives that qualification. In the calibrated continuous case, exactly 5% of the interval [0, 1] lies below .05; in conservative cases the rate is no larger than that. But flip it around and the menace appears: even honest, effect-free experiments sometimes hand you a "significant" result by raw luck. Run the experiment twenty ways — twenty outcomes, twenty covariates, twenty subgroups — and you've effectively bought many tickets on a small-probability prize. The expected number of "discoveries" in a drawer full of nothing is driven by how many times you looked.
 
 <FormatOnly media="web">The live panel below lets you watch the continuous exact-test idealization. With the true effect set to zero, the histogram of <MathInline latex={String.raw`p`} />-values is flat, with a stubborn 5% poking below the line. Now turn up a *real* effect and watch the pile move toward smaller values: genuine signal makes very small significant <MathInline latex={String.raw`p`} />-values more common than barely significant ones. That surplus of very small <MathInline latex={String.raw`p`} />-values is a literature's pulse. Its absence is a death certificate.</FormatOnly>
+
+</ContentSection>
 
 <Panel class="web-only statistics-appendix-lab">
 <PanelTitle>Interactive · live simulation</PanelTitle>
@@ -127,12 +135,16 @@ Run an exact test with continuous data where nothing is happening, under the ass
 </table>
 </FormatAlt>
 
+<ContentSection>
 ### Fact two: keep looking, and you're *certain* to win
 
 The optional-stopping toggle in the main factory hid a result that ought to be more famous than it is. Suppose you test after every new subject and stop the instant <MathInline latex={String.raw`p`} /> dips below .05. If there's a real effect, fine. But if there *isn't* — if the null is exactly true — and you're allowed to keep sampling indefinitely, then the probability that you *eventually* cross .05 is not 5%; in the mathematical idealization, it approaches **100%**. This is "sampling to a foregone conclusion," proved by Anscombe in 1954 and hammered home by Armitage and colleagues in 1969: the wandering <MathInline latex={String.raw`p`} />-value, given enough patience, is liable to stumble below any fixed line at some point, purely by chance, even when nothing is there.
 
 This is why peeking is not a venial sin but a structural exploit — and why **Day 4**'s *e-values* and anytime-valid tests are such a clean fix: they're built so that the guarantee survives unlimited peeking. It's also why real clinical trials, which *must* monitor accumulating data for safety, use <Term as="em">alpha-spending</Term> and group-sequential designs — they pay a small statistical tax at each interim look so the total false-alarm budget still adds up to 5%. Optional stopping done lawlessly is cheating; done with a spending rule, it's one of the triumphs of 20th-century statistics.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§3"> Reading the fingerprints</SectionEyebrow>
 
 ## The forensic turn
@@ -166,7 +178,9 @@ And then there are the sting operations — demonstrations built to make the mul
 </div>
 </div>
 <p class="mono">Hype filter: p-curve and these forensic tools are <StatusChip status={"ok"} label={"established"} /> as diagnostics — but they detect <em>patterns</em>, not guilt; an innocent literature with publication bias can mimic some signatures, so they flag suspicion, not proof.</p>
+</ContentSection>
 
+<ContentSection>
 <SectionEyebrow number="§4"> The honest arithmetic</SectionEyebrow>
 
 ## How wrong is a "significant" result, really?
@@ -176,6 +190,8 @@ Now for the number that should be printed on the first page of every statistics 
 A <MathInline latex={String.raw`p`} />-value lives in the world of <MathInline latex={String.raw`\mathrm{P}(\text{data}\mid\text{null})`} />. What you actually care about is <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{significant result})`} /> — the chance your shiny finding is bogus. Bridging the two requires a *prior*: how plausible was your hypothesis before the data? And the moment you supply a realistic prior, the picture darkens. The engine is the same one Ioannidis used in his famous **Day 2** essay "Why Most Published Research Findings Are False": combine the prior odds, the study's power, and <MathInline latex={String.raw`\alpha`} />, and read off the <Term as="em">false positive risk</Term> — the share of your "significant" results that are false alarms.
 
 <FormatOnly media="web">Use the live calculator below. You'll find that even with a coin-flip prior and decent power, a meaningful chunk of your significant findings are wrong — and with the long-shot hypotheses that make for exciting headlines, most of them are.</FormatOnly>
+
+</ContentSection>
 
 <Panel class="web-only statistics-appendix-lab">
 <PanelTitle>Interactive · the false-positive risk engine</PanelTitle>
@@ -225,6 +241,7 @@ A <MathInline latex={String.raw`p`} />-value lives in the world of <MathInline l
 </table>
 </FormatAlt>
 
+<ContentSection>
 Two refinements make the news worse, not better — and they're the real essence here.
 
 **It's grimmer than the grid suggests (Colquhoun).** The calculator above uses the whole .05 *tail* as the false-positive rate. But David Colquhoun (2014, 2017) pointed out that a result sitting *right at* <MathInline latex={String.raw`p = .05`} /> is barely more likely under a real effect than under the null, so its honest false-positive risk is higher than the tail suggests. His verdict, for an even-odds prior: observe <MathInline latex={String.raw`p \approx .05`} /> and the minimum chance you're wrong is around **26%** — not 5%. Demand a genuine discovery rate, and <MathInline latex={String.raw`p < .05`} /> simply isn't a high enough bar. This is the quantitative heart of the Benjamin et al. push toward .005 you met in the main lesson.
@@ -238,6 +255,9 @@ Here's a genuinely unsettling one. With a very large sample, a result at exactly
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§5"> The better toolkit</SectionEyebrow>
 
 ## What the people who know this reach for
@@ -260,6 +280,9 @@ When you really must run many tests (every gene, every brain region), the old fi
 
 Finally, a small move with large clarifying power: Amrhein, Greenland and colleagues urge calling a confidence interval a <Term as="em">compatibility interval</Term> — the range of effect sizes reasonably *compatible* with your data and model. The word kills two errors at once. It stops you treating values inside as proven and values outside as impossible, and it nudges you to report the whole interval as a statement about *magnitude and uncertainty* rather than a yes/no membership test for zero.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§6"> The case for the defence</SectionEyebrow>
 
 ## Significance testing, done severely
@@ -269,6 +292,9 @@ It would be too tidy to end with "p-values bad, estimation good." Evenhandedness
 <blockquote>You have evidence for a claim only to the degree it has passed a test it would <em>probably have failed</em>, had the claim been false.</blockquote>
 That is <Term as="em">severity</Term>, and notice it is **Day 2**'s Popper rendered quantitative: a result corroborates a hypothesis only if the test genuinely *risked* refuting it. On this view, the rot isn't the <MathInline latex={String.raw`p`} />-value — it's the abandonment of severity. A <MathInline latex={String.raw`p`} />-value squeezed out of a forking-paths fishing trip is worthless not because it's a <MathInline latex={String.raw`p`} />-value but because the "test" was never severe: it could hardly have come out any other way. Mayo's warning to the reformers is pointed: drop all thresholds and error-control, and you don't get more nuanced science — you get less accountable science, with no public standard for when a claim has actually earned its keep. The honest synthesis the main lesson reached for lives here: not "abolish" or "obey," but *demand severity*, report magnitude and uncertainty, and make the test one the hypothesis could have flunked.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="§7"> The bridge to tomorrow</SectionEyebrow>
 
 ## A p-value, measured in coin flips
@@ -280,6 +306,8 @@ The translation is wonderfully concrete. Ask: how many fair coins would I have t
 <FormatOnly media="web">The slider below lets you feel any <MathInline latex={String.raw`p`} />-value's true evidential weight, in the honest units of Day 7.</FormatOnly>
 
 <FormatOnly media="print-epub">The reference table below translates common <MathInline latex={String.raw`p`} />-values into the honest units of Day 7.</FormatOnly>
+
+</ContentSection>
 
 <Panel class="web-only statistics-appendix-lab">
 <PanelTitle>Interactive · surprise in bits</PanelTitle>
@@ -319,6 +347,7 @@ The translation is wonderfully concrete. Ask: how many fair coins would I have t
 </table>
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>What to actually do</SectionEyebrow>
 
 ## The working scientist's defence kit
@@ -334,6 +363,8 @@ Distilled from everything above and in the main lesson — the moves that conver
 <li><b>When you must test many things, control the false discovery rate</b> — not the family-wise error into oblivion.</li>
 <li><b>If you want to claim "no effect," run an equivalence test.</b> Absence of evidence isn't evidence of absence until you've actually looked for absence.</li>
 </ul>
+</ContentSection>
+
 <Recap>
 <BlockTitle>◆ The appendix in three sentences</BlockTitle>
 

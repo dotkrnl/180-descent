@@ -81,6 +81,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 </WhereBlock>
 
+<ContentSection>
 <SectionEyebrow>最古老的问题</SectionEyebrow>
 
 ## 休谟踢翻了支撑
@@ -98,6 +99,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>四种修正</SectionEyebrow>
 
 ## 阐明「更多」的含义
@@ -112,7 +116,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </div>
 
 <p class="theory-note">同一个问题有多种审视透镜：反事实关注「若非如此会怎样？」；概率关注「在固定竞争项时是否增加了概率？」；INUS 关注「这一部分在充足组合中扮演了什么角色？」；干预主义关注「在合适干预下会改变什么？」。结构因果模型为许多反事实和干预主义问题提供了精确语言，但并不解决关于因果性的每一种哲学说明。接下来的统计框架提出的是一个更窄的操作性问题：一旦指定了干预和目标效应，哪些假设能让数据识别该效应？注意南希·卡特赖特（Nancy Cartwright, 1979）是如何完善概率说法的，因为她的修正正是今日的核心枢纽。原因确实提高了结果发生的概率，但必须是在「因果同质」的背景下，即保持其他相关原因固定不变。忽略这个前提，你就会直接掉进统计学中最精妙的陷阱。</p>
+</ContentSection>
 
+<ContentSection>
 <SectionEyebrow>陷阱</SectionEyebrow>
 
 ## 辛普森悖论：当数字发生彻底反转
@@ -124,6 +130,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 在肾结石数据（Charig 等，《英国医学杂志》（BMJ），1986 年）中，这是一项对开放手术 A 和经皮肾镜取石术（PCNL）B 的历史性、非随机化比较。接受疗法 B 的病例中包含比例大得多的小结石患者。因此，B 拥有更高的汇总成功率，而 A 在每个报告的结石大小分层内部都拥有更高的观测成功率。这些观测分层展示了病例构成的不均和比例反转；它们本身并不证明开放手术对同一批患者的因果效果更优。
 
 下方的反转机器将这一切凝炼成一张图。每个方块代表一名患者，且位置永远保持不变。颜色表示所接受的疗法；行表示病例是小结石还是大结石；填充表示治疗是否有效。汇总视图比较两个疗法列。分层视图保留同一张图，但首先在每一行内部进行比较。在这个例子中，结石大小是一个合理的基线严重程度变量，因此分层比较是有信息量的；但在其他因果图中，相同的分层操作可能会回答不同的因果问题，甚至引入新的偏差。
+
+</ContentSection>
 
 {/* ===================== INTERACTIVE 1 : SIMPSON ===================== */}
 <Panel class="web-only causation-simpson">
@@ -171,8 +179,12 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 </FormatAlt>
 
+<ContentSection>
 教训是深刻的：你无法单凭一张数据表读出因果关系。完全相同的数字，根据一个甚至可能不在电子表格中的变量，可以支持截然相反的结论。这引出了一个统领后续所有内容的问题——如果数据本身无法告诉你答案，那么什么可以？答案来自一位在 20 世纪 80 年代致力于让机器在不确定性下进行推理的计算机科学家：你需要添加一些数据本身并不包含的东西——一个关于「箭头指向何处」的模型。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>因果革命</SectionEyebrow>
 
 ## 珀尔的梯子，以及改变一切的动词
@@ -180,6 +192,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 朱迪亚·珀尔（Judea Pearl）获得了 2011 年的图灵奖，「因其通过开发概率与因果推理演算，对人工智能做出的基础性贡献」。他在《为什么》（The Book of Why, 2018）中普及的核心意象，便是极具影响力的<Term>因果之梯</Term>（Ladder of Causation）<TipNote text={String.raw`珀尔的因果之梯将关联、干预和反事实推理划分到三个要求逐渐提高的层级中。`} />。这是一个强有力的概念层级结构，但并非每个因果推断流派都以完全相同的形式来表述这一分类。
 
 亲自攀爬：
+
+</ContentSection>
 
 {/* ===================== INTERACTIVE 2 : LADDER ===================== */}
 <Panel class="web-only causation-ladder">
@@ -254,6 +268,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 </FormatAlt>
 
+<ContentSection>
 ### do-算子：观察不等于干预
 
 这是整个现代因果领域的概念枢纽，值得仔细体味。对于变量 X，你可以进行两种截然不同的操作。
@@ -263,6 +278,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 或者你可以进行干预——在珀尔的记号中写为 <MathInline latex={String.raw`P(Y \mid \operatorname{do}(X = x))`} />。这意味着：考虑一种在目标人群中把 X 设为 x 的制度，将 X 与其通常的原因切断，然后观察 Y。这就是「干预」（Doing）。在理想随机试验中，随机化处理分配被设计用来近似这种切断操作。
 
 二者在数值上可能重合，但相等需要特定的实验设计或因果假设；仅凭数据上的接近不能推出二者等价。<MathInline latex={String.raw`P(Y \mid X=x)`} /> 描述的是在观测到 X 等于 x 的情况下结果 Y 的分布；<MathInline latex={String.raw`P(Y \mid \operatorname{do}(X=x))`} /> 则描述了一个假想制度下将 X 设为 x 时 Y 的分布。下方的交互机器通过一个显式的结构模型来计算这两个量，使它们的区别清晰可见。
+
+</ContentSection>
 
 <Aside>
 <BlockTitle>潜在结果的视角</BlockTitle>
@@ -389,6 +406,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 </FormatAlt>
 
+<ContentSection>
 右图中被切断的箭头就是 do-算子的直观可视化。干预不仅是观察 X，它还会删除指向 X 的箭头，并用你的手取而代之。此时「下雨 → 带伞」的链接被切断，因此在带伞对照中，观测路径「带伞 ← 下雨 → 湿衣」不再开启。在此有向图下，后门调整后的对照量便还原了真实的干预效应。
 
 珀尔为我们提供了一套在纸上进行此类操作的语法体系。本课使用的递归或无环<Term>结构因果模型</Term>（Structural Causal Models，简称 SCM）<TipNote text={String.raw`结构因果模型描述了变量是如何由其他变量与背景噪声生成的。`} />由<Term>有向无环图</Term>（Directed Acyclic Graphs，简称 DAG）<TipNote text={String.raw`有向无环图（DAG）是由箭头组成的网络，且不包含任何有向环。`} />来表示：即由没有向循环的方框和箭头组成。现实中也存在有环与动态结构模型。在 DAG 中，<Term>叉形结构</Term>（Fork，X ← Z → Y）可能带来混杂；<Term>链形结构</Term>（Chain，X → Z → Y）则扮演中介（Mediator）；而<Term>对撞结构</Term>（Collider，X → Z ← Y）则是那个统计学陷阱。一条由两个箭头交汇于同一节点的路径在对撞因子处默认是关闭的。然而，对该对撞因子（或其后代节点）进行条件化控制，反而会打开这条路径，从而在该路径上诱发关联。这就是为什么调整每一个测得变量都可能引入严重偏差。
@@ -462,6 +480,8 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 </Aside>
 
+</ContentSection>
+
 <ContentSection class="frontier">
 <SectionEyebrow>前沿 · 2026</SectionEyebrow>
 
@@ -517,6 +537,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </div>
 </ContentSection>
 
+<ContentSection>
 <SectionEyebrow>开放性问题</SectionEyebrow>
 
 ## 尚未定论的问题
@@ -528,6 +549,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <li>大型模型是否构建了内部因果世界模型，还是仅仅建立了因果言论的统计模型？这一问题的答案直接关系到第 138–145 日，以及「预测是否等同于理解」的问题。</li>
 <li>箭头从何而来？这里的每种方法都需要「某种」因果输入——一张因果图、一个假设或一个实验。休谟的幽灵依然在发问：这些输入究竟是从世界中读取出来的，还是我们强加给世界的？</li>
 </ul>
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ 今日三句话总结</BlockTitle>

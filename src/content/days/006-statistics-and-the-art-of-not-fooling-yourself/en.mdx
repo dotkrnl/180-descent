@@ -5,8 +5,6 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -24,6 +22,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
@@ -95,6 +94,7 @@ On **[Day 2](/days/002-scientific-method-and-demarcation/)** we met the replicat
 
 </WhereBlock>
 
+<ContentSection>
 <SectionEyebrow>The hook</SectionEyebrow>
 
 ## The easiest person to fool
@@ -113,6 +113,8 @@ Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved i
 <FormatOnly media="web">The next panel lets you run that machine yourself — with a live simulation, not a canned animation. Every "study" inside it is pure static, generated with no real effect whatsoever. Watch what your freedom does to the truth.</FormatOnly>
 
 <FormatOnly media="print-epub">The reference table below shows the same machine in static form: each added research freedom gives pure noise another route to look like a discovery.</FormatOnly>
+
+</ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
 <Panel class="web-only statistics-factory">
@@ -177,6 +179,7 @@ Simmons, Nelson, and Simonsohn showed that combining four such freedoms can rais
 
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>The core model</SectionEyebrow>
 
 ## What a <MathInline latex={String.raw`p`} />-value actually says (and the six lies people tell about it)
@@ -341,6 +344,9 @@ So the natural sentence — "there's a 95% chance the true value is in *this* in
 
 Two ways to be wrong: a <Term as="em">Type I error</Term><TipNote text={String.raw`A Type I error is a false positive: rejecting a true null hypothesis.`} /> (false alarm — declaring an effect that isn't there) and a <Term as="em">Type II error</Term><TipNote text={String.raw`A Type II error is a false negative: missing a real effect.`} /> (a miss — failing to see one that is). <Term as="em">Statistical power</Term><TipNote text={String.raw`Statistical power is the probability that a study will detect an effect of a given size if that effect is real.`} /> is your chance of catching a real effect; more data buys more power. You'd assume an underpowered study just yields shrugs and "no result." Worse: it actively poisons the literature. When power is low, the only estimates lucky enough to clear the significance bar are the substantially inflated ones — the <Term as="em">winner's curse</Term><TipNote text={String.raw`The winner’s curse is the tendency for selected significant estimates from noisy studies to exaggerate the true effect.`} />. Pair that with publication practices that preferentially reward significant findings, and you manufacture a published record of effects that are both exaggerated and fragile. A sobering 2013 audit ("Power failure," Button et al.) put the median power across neuroscience at roughly **21%**; a 2017 reanalysis by Nord and colleagues usefully qualifies the headline, arguing that power is not uniformly low across every neuroscience subfield. The lesson survives the caveat: where studies are underpowered, real effects are missed and the effects that surface are often inflated.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>The deeper trap</SectionEyebrow>
 
 ## You don't have to cheat to be fooled
@@ -358,11 +364,16 @@ If the problem is that choices get made *after* seeing the data, the cleanest cu
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>The debate</SectionEyebrow>
 
 ## Burn the threshold, or just lower it?
 
 If <MathInline latex={String.raw`p < .05`} /> is so abusable, what should replace it? Here the field splits — not into crank versus expert, but into camps of serious statisticians who genuinely disagree. It helps to lay them on a single line, from "patch it" to "torch it."
+
+</ContentSection>
 
 {/* ===================== VISUAL 2 ===================== */}
 <Panel class="statistics-spectrum">
@@ -406,7 +417,10 @@ If <MathInline latex={String.raw`p < .05`} /> is so abusable, what should replac
 </div>
 </Panel>
 
+<ContentSection>
 What unites the whole spectrum, from cautious to incendiary, is a single migration: away from a yes/no verdict at a magic number, toward *reporting how big an effect is, how uncertain you are, and how fragile the answer is to the choices you made*. That last idea — fragility — is where the live 2020s frontier lives.
+
+</ContentSection>
 
 <ContentSection class="frontier">
 <SectionEyebrow>The frontier · 2024–2026</SectionEyebrow>
@@ -497,6 +511,7 @@ The honest report is the distribution across reasonable specifications; the dish
 
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>Open questions</SectionEyebrow>
 
 ## What's genuinely unsettled
@@ -506,6 +521,8 @@ The honest report is the distribution across reasonable specifications; the dish
 - **Is variation in *conclusions* the same as variation in *reality*?** A subtle 2023 reanalysis noted that in some many-analyst studies the headline-grabbing disagreement was about *significance*, while the underlying effect sizes were quietly consistent and small. Disagreement about a verdict can exceed disagreement about the number. Don't over-learn "everything is hopeless."
 - **Do <MathInline latex={String.raw`p`} />-values or e-values deserve the future?** The betting-based tools elegantly solve optional stopping but can demand more data and import a new modeling burden (which bet?). Coexistence looks likelier than conquest.
 - **And the question waiting in the AI block:** when a model trained on millions of papers reports a "robust" result, has it learned to reason about evidence — or to imitate the very forking-path habits that got us here? (**Days 138–145**.)
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ The day in three sentences</BlockTitle>

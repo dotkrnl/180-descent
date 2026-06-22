@@ -3,8 +3,6 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -22,6 +20,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
@@ -83,6 +82,7 @@ Four days in, the toolkit is starting to interlock. **[Day 1](/days/001-what-is-
 
 </WhereBlock>
 
+<ContentSection>
 <SectionEyebrow>The oldest problem</SectionEyebrow>
 
 ## Hume kicks out the leg
@@ -100,6 +100,9 @@ The phrase gets attached to Hume, but it is better treated as Mackie's title and
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>Four repairs</SectionEyebrow>
 
 ## Saying what "more" there is
@@ -114,7 +117,9 @@ If causation is *more* than constant conjunction, the obvious move is to say wha
 </div>
 
 <p class="theory-note">One question, several lenses: counterfactual = "what if it hadn't?"; probabilistic = "does it raise the odds, holding rivals fixed?"; INUS = "what role did this part play in a sufficient package?"; interventionist = "what changes under the right kind of intervention?". Structural causal models provide a precise language for many counterfactual and interventionist questions, though they do not settle every philosophical account of causation. The statistical frameworks that follow ask a narrower operational question: once an intervention and target effect have been specified, what assumptions let data identify that effect? Notice how <strong>Cartwright (1979)</strong> sharpened the probabilistic story, because her fix is the hinge of the whole day. Causes raise the probability of effects, yes — <em>but only inside a "causally homogeneous" background</em>, with the relevant other causes held fixed. Forget that proviso and you walk straight into the most beautiful trap in statistics.</p>
+</ContentSection>
 
+<ContentSection>
 <SectionEyebrow>The trap</SectionEyebrow>
 
 ## Simpson's paradox: when the numbers literally reverse
@@ -126,6 +131,8 @@ A Simpson reversal occurs because the groups being combined have different mixtu
 In the kidney-stone data (Charig et al., *BMJ*, 1986), this was a historical, nonrandomized comparison of open surgery **A** and percutaneous nephrolithotomy **B**. The B cases contained a much larger share of small stones. B therefore has the higher pooled success rate, while A has the higher observed success rate within each reported stone-size stratum. Those observational strata demonstrate unequal case mix and a reversal; by themselves, they do not establish that open surgery would have produced better outcomes for the same patients.
 
 The Reversal Machine below turns that into one picture. Each square is one patient and never moves. Color says which treatment they received; row says whether the case was small-stone or large-stone; fill says whether the treatment worked. The pooled view compares the two treatment columns. The stratified view keeps the same picture but compares inside each row first. In this example, stone size is a plausible baseline severity variable, so stratification is informative; in other graphs the same move could answer a different causal question or create bias.
+
+</ContentSection>
 
 {/* ===================== INTERACTIVE 1 : SIMPSON ===================== */}
 <Panel class="web-only causation-simpson">
@@ -173,8 +180,12 @@ The pooled comparison reverses because the treatment groups contain different mi
 
 </FormatAlt>
 
+<ContentSection>
 The lesson lands hard: **you cannot read causation off a table of numbers.** The very same digits can support different summaries depending on a variable that may not even be in the spreadsheet. Which raises the question that organizes everything after this — if the data alone won't tell you, what *will*? The answer, from a computer scientist who spent the 1980s building machines that reason under uncertainty, is that you need to add something the data doesn't contain: a **model of which arrows point where.**
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>The causal revolution</SectionEyebrow>
 
 ## Pearl's ladder, and the verb that changed everything
@@ -182,6 +193,8 @@ The lesson lands hard: **you cannot read causation off a table of numbers.** The
 Judea Pearl won the 2011 Turing Award "for fundamental contributions to artificial intelligence through the development of a calculus for probabilistic and causal reasoning." His central image, popularized in *The Book of Why* (2018), is the influential <Term as="em">Ladder of Causation</Term><TipNote text={String.raw`Pearl’s ladder separates association, intervention, and counterfactual reasoning into increasingly demanding levels.`} />: association, intervention, and counterfactuals. It is a powerful conceptual hierarchy, not an uncontested taxonomy every causal-inference tradition states in exactly the same form.
 
 Climb it yourself:
+
+</ContentSection>
 
 {/* ===================== INTERACTIVE 2 : LADDER ===================== */}
 <Panel class="web-only causation-ladder">
@@ -256,6 +269,7 @@ In the last line, <MathInline latex={String.raw`Y_x`} /> means "<MathInline late
 
 </FormatAlt>
 
+<ContentSection>
 ### The do-operator: seeing is not doing
 
 Here is the conceptual hinge of the entire modern field, and it is worth saying slowly. There are two very different things you can do with a variable X.
@@ -265,6 +279,8 @@ You can **condition**<TipNote text={String.raw`Conditioning means narrowing atte
 Or you can **intervene** — written, in Pearl's notation, <MathInline latex={String.raw`P(Y \mid \operatorname{do}(X = x))`} />. This means: consider a regime that sets X to x in the target population, snipping X away from whatever usually causes it, and then watch Y. This is *doing*. In an ideal randomized trial, assignment is designed to approximate that severing operation.
 
 The two may coincide, but equality requires a design or causal assumptions; it does not follow from their numerical similarity. <MathInline latex={String.raw`P(Y \mid X=x)`} /> describes outcomes among cases in which X was observed to equal x. <MathInline latex={String.raw`P(Y \mid \operatorname{do}(X=x))`} /> describes outcomes in a hypothetical regime that sets X to x. The machine below makes the difference auditable by calculating both quantities from an explicit structural model.
+
+</ContentSection>
 
 <Aside>
 <BlockTitle>The potential-outcomes lens</BlockTitle>
@@ -391,6 +407,7 @@ Default parameters: <MathInline latex={String.raw`P(S=1)=0.45`} />, <MathInline 
 
 </FormatAlt>
 
+<ContentSection>
 That severed arrow in the right-hand graph is the do-operator made visual. Intervening doesn't just *look* at X — it **deletes the arrows pointing into X** and replaces them with your hand. The rain→umbrella link is cut, so the observational path umbrella ← rain → wetness is no longer open in the umbrella contrast. Under this graph, the back-door-adjusted contrast recovers the intervention contrast.
 
 Pearl gave us a grammar for doing this on paper. The recursive or acyclic <Term as="em">structural causal models</Term><TipNote text={String.raw`A structural causal model represents how variables are generated from other variables and from background noise.`} /> used in this lesson are represented by <Term as="em">directed acyclic graphs</Term><TipNote text={String.raw`A directed acyclic graph, or DAG, is a network of arrows with no directed loops.`} />: boxes and arrows with no directed loops. Cyclic and dynamic structural models also exist. In a DAG, a <Term as="em">fork</Term> (X ← Z → Y) can be a confounder; a <Term as="em">chain</Term> (X → Z → Y) can be a mediator; and a <Term as="em">collider</Term> (X → Z ← Y) is the trap. A path that enters a node through two arrowheads is normally closed at that collider. Conditioning on the collider — or sometimes one of its descendants — can open that path and induce an association along that route. This is why adjusting for every measured variable can introduce serious bias.
@@ -463,6 +480,8 @@ It identifies an interventional distribution from observational data under the a
 
 </Aside>
 
+</ContentSection>
+
 <ContentSection class="frontier">
 <SectionEyebrow>The frontier · 2026</SectionEyebrow>
 
@@ -516,6 +535,7 @@ The first equality is ordinary total probability over Z. The second uses the gra
 </div>
 </ContentSection>
 
+<ContentSection>
 <SectionEyebrow>Open questions</SectionEyebrow>
 
 ## What's genuinely unsettled
@@ -527,6 +547,7 @@ The first equality is ordinary total probability over Z. The second uses the gra
 <li><strong>Do large models build internal causal world-models,</strong> or only ever statistics of causal talk? The answer reaches straight into <strong>Days 138–145</strong> and the question of whether prediction can ever amount to understanding.</li>
 <li><strong>Where do the arrows come from?</strong> Every method here needs <em>some</em> causal input — a graph, an assumption, an experiment. Hume's ghost still asks whether that input is ever read off the world, or always brought to it.</li>
 </ul>
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ The day in three sentences</BlockTitle>

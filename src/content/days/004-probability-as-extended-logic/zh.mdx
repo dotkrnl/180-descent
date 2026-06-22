@@ -4,8 +4,6 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -24,6 +22,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
@@ -85,6 +84,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 </WhereBlock>
 
+<ContentSection>
 <SectionEyebrow>集体翻车</SectionEyebrow>
 
 ## 全国最聪明的一批人，同时栽了跟头
@@ -109,6 +109,8 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </Aside>
 
 这场风波暴露了一件事。蒙提霍尔问题不是花招，不是文字游戏——它的答案可证明、可模拟，板上钉钉。它揭示的是：人类对不确定性的直觉存在系统性偏差，我们迫切需要一件形式化的工具来矫正它。这件工具就是今天的主题。但在此之前，先让我们重新看看我们的直觉——再重新塑造它。
+
+</ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
 <Panel class="web-only probability-monty">
@@ -209,6 +211,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>为何如此</SectionEyebrow>
 
 ## 主持人在帮你，也在泄密
@@ -226,6 +229,9 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>模型</SectionEyebrow>
 
 ## 贝叶斯定理：信念的更新法则
@@ -300,6 +306,8 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 <FormatOnly media="print-epub">下方表格按默认医学检测案例展开这个陷阱；它值得记住，因为它存在于每一次体检、每一个垃圾邮件过滤器、每一道机场安检。</FormatOnly>
 
+</ContentSection>
+
 {/* ===================== INTERACTIVE 2 ===================== */}
 <Panel class="web-only probability-bayes">
 <PanelTitle>交互 · 基础概率陷阱</PanelTitle>
@@ -363,6 +371,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>深层思想</SectionEyebrow>
 
 ## 为什么叫「扩展的逻辑」，而不只是一个公式
@@ -380,6 +389,9 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>争论</SectionEyebrow>
 
 ## 两大阵营，同一个方程
@@ -419,6 +431,8 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </Aside>
 
 从这盘棋里还能落下一条实践智慧：<Term>克伦威尔法则</Term>（丹尼斯·林德利以克伦威尔 1650 年的恳求命名：「我求你，在心底想一想，你也有可能是错的」）。永远不要把先验精确地设为 0 或 1，因为贝叶斯定理此后再也改变不了它——被绝对确信的东西，按定义就是不会再因世界而变动的。林德利写道：哪怕给「月亮是绿奶酪」留一丝怀疑余地也好，否则哪怕宇航员真从月球带回了奶酪样本，也休想撼动你分毫。我们再次讨论了校准这一贯穿整个模块的暗线。
+
+</ContentSection>
 
 <ContentSection class="frontier">
 <SectionEyebrow>前沿 · 2026</SectionEyebrow>
@@ -527,7 +541,10 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 </FormatAlt>
 
+<ContentSection>
 换到科学场景会是什么样？在一项<Term>持续更新的临床元分析</Term><TipNote text={"元分析会用统计方法合并多项研究的结果；持续更新的元分析会随着新研究出现而更新。"} />里，原假设可能是「BCG 疫苗对医护人员感染 COVID-19 没有临床相关效果」。新的随机试验会在不同时间报告结果，研究者希望一有新数据就更新综合分析，同时又不希望每看一次结果，假阳性风险就悄悄升高。ALL-IN 元分析框架正是为这类场景设计的：它允许后续试验的证据陆续加入，同时保留第一类错误率与区间覆盖率保证。在一个 BCG/COVID 应用中，对证据过程来说，「赢」本来意味着累积到足以支持临床相关获益的强证据；但这项任意时刻有效分析没有发现 BCG 能临床相关地降低感染，而住院结局因事件太少，仍不足以下定论。这和硬币玩具是同一结构，只是把正反面换成了医学终点和陆续到来的试验数据。
+
+</ContentSection>
 
 <ContentSection class="frontier">
 <div class="claim">
@@ -544,6 +561,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </div>
 </ContentSection>
 
+<ContentSection>
 <SectionEyebrow>开放问题</SectionEyebrow>
 
 ## 真正尚未解决的
@@ -553,6 +571,8 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 - <Highlight>基于下注的统计学真能接管吗？</Highlight>还是只会沦为序贯实验的专用工具，而 p 值继续统治其余领域——而且，「选你的赌注」真的比「选你的先验」更不主观吗？
 - <Highlight>大脑真的在运行贝叶斯吗？</Highlight>[第 1 日](/zh/days/001-what-is-knowledge/)的预测加工线索说，感知就是神经组织中的贝叶斯推断。今天为这个主张提供了规范性骨架——但「大脑近似贝叶斯」和「大脑就是贝叶斯」是两笔截然不同的赌注，我们将在第 119 日重返这个话题。
 - <Highlight>考克斯定理真的对任何理性主体都有效吗</Highlight>——包括人工主体——还是只对那些已经接受了它的一致性公理的主体有效？（这个问题对 AI 板块格外要紧，第 138–145 日。）
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ 今日三句话</BlockTitle>

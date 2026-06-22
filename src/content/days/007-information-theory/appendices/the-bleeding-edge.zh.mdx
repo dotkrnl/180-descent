@@ -5,6 +5,7 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
@@ -54,6 +55,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 </svg>
 </Panel>
 
+<ContentSection>
 <SectionEyebrow number="01"> · 焦点成果</SectionEyebrow>
 
 ## 在活细胞内部测量不可逆性
@@ -79,6 +81,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 另外两项相关成果同样值得关注。斯金纳和敦克尔（Skinner &amp; Dunkel，PNAS，2021 年）开发了一套严密的优化框架，用于从部分观测中确定熵产生的界限，并将其应用于研究细菌鞭毛马达与生长中的微管。另一篇 2024 年的 PNAS 论文则使用「深度学习概率流」——即基于得分的生成模型——来估算高维活性物质系统中的熵产生，为解析手段无能为力的高维系统提供了一条计算路径。<StatusChip status={"ok"} label={"两项均已确立"} printLabel={"已确立"} />
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="02"> · 新法则</SectionEyebrow>
 
 ## 通用权衡律：不确定性、速度与耗散
@@ -107,6 +112,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 </div>
 总的来说，这些成果正在构建一种类似于「热力学编码」的体系——一套针对指定非平衡过程的约束，就像香农信道容量限制指定通信模型一样。这种类比并非巧合：从事这一领域的学者们认为，香农时代的信息论与 21 世纪的随机热力学，本就是同一门学科的两个不同篇章。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="03"> · 滴答声背后的耗散</SectionEyebrow>
 
 ## 时钟运转依赖于熵
@@ -123,6 +131,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 后续的研究进一步深化了这一结论。迈尔、施瓦茨汉斯、埃尔克与胡伯（Meier, Schwarzhans, Erker &amp; Huber，PRL 131, 220201, 2023）表明，在他们的框架中，计时的热力学限制可以拆分为「准确度」（规律性）和「分辨率」（滴答频率），这两者都需要更多熵产生，但作用方式不同。而 2025 年发表在 PRL 上的一篇关于从量子时钟中提取经典滴答信号的论文则指出，主要耗散可能不在于时钟本身的齿轮运转，而在于「测量」本身——即把微观的量子振荡放大为经典信号的过程。这又是麦克斯韦妖的影子：能耗问题并不在于「知道」，而在于「让其被经典地知晓」。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="04"> · 变数最大的豪赌</SectionEyebrow>
 
 ## 热力学计算：变噪声为特性
@@ -149,6 +160,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="05"> · 麦克斯韦妖的升级版</SectionEyebrow>
 
 ## 信息引擎迈向多体、量子与自主运行
@@ -171,6 +185,9 @@ Chor 等人（2023）将西拉德引擎从单粒子系统扩展到多体胶体�
 
 阿马诺、埃斯波西托、克赖特、利、佩诺基奥与罗伯茨（Amano, Esposito, Kreidt, Leigh, Penocchio &amp; Roberts，Nature Chemistry，2022 年）对一个真实的化学驱动合成旋转分子马达进行了严格的信息热力学分析；这类合成分子机器正属于 2016 年诺贝尔化学奖所表彰的研究传统。论文证明，其运转可以分解为一个信息处理循环。原来，麦克斯韦妖一直都只是一个设计得特别精巧的分子。<StatusChip status={"ok"} label={"已确立"} />
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="06"> · 擦除走向量子化</SectionEyebrow>
 
 ## 协同擦除与降低局部热耗散的方案
@@ -179,6 +196,9 @@ Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自�
 
 另一个独立的理论项目则探索了<Term>辅助系统协助擦除</Term>（ancilla-assisted erasure，arXiv:2402.15812，2024 年），即通过引入一个辅助量子系统来转移存储器中的熵，从而在特定的运行状态下，向局部热浴中释放「少于」 <MathInline latex={String.raw`k_B T \ln 2`} /> 的热量。作者强调，这并没有违反第二定律——包括辅助系统在内的总熵依然增加——但局部发热量确实能降到教科书上的经典下限之下。这为超低耗散量子计算的研究指引了方向，而非所谓的免费午餐。<StatusChip status={"hint"} label={"初露曙光——特定机制下适用，预印本"} printLabel={"初露曙光"} />
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="07"> · 时空边缘的信息</SectionEyebrow>
 
 ## 孤岛公式与佩奇曲线
@@ -192,6 +212,9 @@ Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自�
 
 注意事项：目前「没有任何实验或天文观测的测试」。该计算完全依赖于特定的理论框架，尚不清楚它是否适用于现实中的四维、非 AdS 时空。这一结论在数学上与该领域的其他定理一样坚实，但目前仍缺乏实验或天文观测检验。<StatusChip status={"hint"} label={"尚无实验检验"} printLabel={"待审"} />
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="08"> · 宏观图景</SectionEyebrow>
 
 ## 计算的统一物理学？
@@ -206,6 +229,8 @@ Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自�
 这直接为我们接下来对生命物理学的深度探索做好了铺垫。当我们重新审视薛定谔提出的「生命是什么？」这一经典问题时，我们将拥有两个五年前尚不存在的利器：用于测量细胞内部熵产生率的方差求和规则，以及用于划定任何计算能耗界限的沃尔珀特框架。两者合力，开始缩窄「生命以负熵为生」（这只是一个口号）与「这条生化途径会产生多少热力学耗散」（这能给出一个具体的数字）之间的鸿沟。
 
 </Aside>
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ 三句话概括前沿地带</BlockTitle>

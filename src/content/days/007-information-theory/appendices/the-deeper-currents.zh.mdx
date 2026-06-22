@@ -2,11 +2,10 @@ import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -19,11 +18,13 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 
 <Lead drop="我">们在主线页面中完成了两件非同寻常的事：我们用比特度量了事实的分量，也看见了遗忘一个比特会释放多少热量——以 zJ 计。这是这门学科的脊梁。然而，仅有脊梁并不能构成完整的躯体。在香农对比特的定义与兰道尔擦除比特的物理含义之间，横跨了我们此前飞速掠过的一个世纪的思想：第二个与熵同样基础的物理量，用于度量一件事物能透露多少关于另一件事物的信息；你的手机能将照片压缩 95% 且在有静电干扰的信道中无瑕传输的深层原因；一只会走迷宫的机械小鼠；以及一连串最终直达宇宙计算极限的物理限制链条。本附录是一场从容的旅程。</Lead>
 
+<ContentSection>
 <SectionEyebrow number="01"> · 缺失的物理量</SectionEyebrow>
 
 ## 互信息，以及错误模型会多占多少码长
@@ -41,6 +42,8 @@ import Threads from "@app/components/lesson/Threads.astro";
 <FormatOnly media="web">对于两个变量，用两个不确定性圆圈的重叠来理解很直观。但这个图像有边界：三个或更多变量的信息图中会出现带符号的交互区域。互信息衡量统计依赖，而不是因果关系。因果图（第 5 日）编码的是结构假设和条件独立性；两个变量共享信息，可能是因为一个导致另一个，也可能是因为共同原因或选择偏差。在贝叶斯实验设计（第 2 日）中，关于假设的期望信息增益是一种有用目标，并可写作互信息。一次已经发生的观测则通过似然比、贝叶斯因子、对数评分或后验更新成为证据。</FormatOnly>
 
 <FormatOnly media="print-epub" class="format-alt">互信息衡量统计依赖。信道容量是在指定信道模型和约束下输入与输出之间可达到的最大互信息率。因果和实际证据还需要互信息之外的额外结构。</FormatOnly>
+
+</ContentSection>
 
 <Panel class="web-only appendix-mutual-information">
 <PanelTitle>交互式 · 两个不确定性的重叠</PanelTitle>
@@ -88,6 +91,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 </table>
 </FormatAlt>
 
+<ContentSection>
 ### 惊奇税：相对熵
 
 熵有一个关系密切的“亲戚”，也是科学中极有用的量。它回答的问题很尖锐：相信一个错误模型，会多消耗多少比特？假设现实从分布 p 中产生结果，而你把世界建模为 q。你每次都按 q 来预估惊奇度，但真实结果服从的是 p。由此增加的平均码长，就是<Term>相对熵 (relative entropy)</Term>，或称<Term>KL 散度 (Kullback–Leibler divergence)</Term>：
@@ -100,6 +104,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 这个不等式贯穿本课程的许多地方。它量化的是错误先验或错误模型带来的额外开销，因此会自然出现在贝叶斯更新（第 1 日、第 4 日）里。KL 是散度而不是距离：它不对称，也不满足三角不等式。交叉熵与它相关但并非同义：<MathInline latex={String.raw`H(p,q)=H(p)+D_{\mathrm{KL}}(p\|q)`} />，因此只有当真实分布 p 固定时，最小化交叉熵才等价于最小化 KL。语言模型训练可以理想化为最小化期望交叉熵的经验估计；这不是说模型真的拿到了 <MathInline latex={String.raw`D(\text{reality}\|\text{model})`} /> 这个对象。弗里斯顿的变分自由能也更微妙：它是生成模型下惊奇度的上界，并包含近似后验与模型后验之间的 KL 项。互信息本身可写为联合分布 P(X,Y) 与乘积分布 P(X)P(Y) 之间的 KL 散度。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="02"> · 压缩</SectionEyebrow>
 
 ## 压掉冗余
@@ -117,6 +124,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 上述所有都是无损压缩：解压后你能找回每一个比特。但人的眼睛和耳朵并不苛刻，而这种不苛刻本身就能换来巨大的压缩空间。<Term>率失真理论 (rate–distortion theory)</Term>（香农，1959 年）提出了一个更难的问题：如果允许丢失一点点信息，在给定的可接受失真水平下，你最少可以花费多少比特？这是有损压缩的主导数学原理——JPEG 丢弃了你的视网膜无法分辨的细微色彩细节，MP3 舍弃了已被较响亮声音掩盖的微弱音调。这门艺术的关键在于，只在人类能察觉的地方花费比特，而让其余的部分蒸发。在线流媒体、视频通话以及现代互联网的整个视觉质感——全都是率失真理论的产物。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="03"> · 终极压缩</SectionEyebrow>
 
 ## 柯尔莫哥洛夫复杂度：信息与计算的交汇
@@ -127,6 +137,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 而在此处，该学科露出了它锋利而美丽的一面。柯尔莫哥洛夫复杂度是可证明不可计算的 <StatusChip status={"ok"} label={"已证实"} printLabel={"待审"} />。不存在任何算法能在给定任意字符串后，返回其最短程序的长度——这一结论与第 27–28 日等待着我们的哥德尔和图灵极限，以及蔡廷的怪异常数 Ω 产生了共鸣。合适的一致形式系统可以确定 Ω 的某些有限事实，但不能确定任意多位数字。我们明天将在复杂性主题下再次遇到相关思想，但要带着一个重要警告：高描述复杂度本身并不等于有意义或有组织的复杂性。典型随机字符串同样会最大化它。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="04"> · 对抗黑暗的编码</SectionEyebrow>
 
 ## 信息如何在敌意重重的世界中幸存
@@ -136,6 +149,8 @@ import Threads from "@app/components/lesson/Threads.astro";
 1947 年，理查德·汉明 (Richard Hamming) 在周末可以使用一台继电器计算机，但它总是让他失望：每当它检测到输入中存在错误时，就会直接停机，静静等待周一才来上班的人类操作员。“如果机器能检测到错误，”汉明愤怒地质问，“为什么它不能定位并纠正它呢？”汉明码 (Hamming code)（发表于 1950 年）便诞生自这股怒火中，它是第一个真正的纠错码，并带来了一种从几何角度审视整个领域的全新方式。
 
 其核心思想是<Term>汉明距离 (Hamming distance)</Term>：分隔两个码字所需的比特翻转次数。如果你的有效消息只有 `000` 和 `111`，它们在空间中的距离为 3。单比特错误会把 `000` 变成诸如 `010` 的字符串——但 `010` 仍然比 `111` 更接近 `000`，因此接收端可以通过多数表决来静默纠正它。在比特字符串的这一几何空间中，让你的有效码字拉开足够远的距离，你就能在每个码字周围划分出一个可以纠正错误的保护性“球体”。冗余，在这里被施以了几何学的诡计。
+
+</ContentSection>
 
 <Panel class="web-only appendix-hamming-cube">
 <PanelTitle>交互式 · 编码的几何学</PanelTitle>
@@ -176,12 +191,16 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 </FormatAlt>
 
+<ContentSection>
 ### 从火星到你的口袋
 
 汉明的几何学扩展成为了一项你时时刻刻依赖却浑然不觉的工程奇迹。里德-所罗门码 (Reed–Solomon codes)（1960 年）将数据视为多项式上的点，并且能够修复整段的突发损毁——这正是划伤的 CD 仍然可以播放、撕裂的二维码仍然可以扫描，以及旅行者号探测器能够在使用比冰箱灯泡还要微弱的发射机的情况下，横跨数十亿公里将外行星的图像低声传回地球的原因。深空任务将编码进行层层嵌套（级联），以从几近纯粹的噪声中剥离出它们的信号。
 
 在数十年的时间里，香农所承诺的与工程师所能建造的之间一直存在着一道鸿沟。后来，这道鸿沟被突然跨过了。Turbo 码通过两个迭代译码器反复交换软信息，使性能逼近信道容量，差距仅为零点几分贝，从而震惊了该领域。低密度奇偶校验码 (LDPC)——由罗伯特·加拉格尔于 1960 年发明，因在当时对硬件计算要求过于苛刻而尘封了三十年，直到 20 世纪 90 年代末被重新发现——如今正为 Wi-Fi、5G 数据信道和存储设备保驾护航。而在 2009 年，埃尔达尔·阿里坎发明的极化码 (polar codes) 成为了第一个明确构造、并被证明可渐近达到二元输入无记忆信道对称容量且具有高效编解码的码族。<StatusChip status={"ok"} label={"已确立"} />。2016 年，全球 5G 标准将极化码用于控制相关信道，而 LDPC 承担了大量数据信道编码。在香农于地图上画下 X 的 68 年后，工程师终于找到了通往它的实际道路。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="05"> · 巨人的肩膀与科学顽童</SectionEyebrow>
 
 ## 页面背后的先驱
@@ -190,6 +209,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 香农本人也极值得写上一段。克劳德·香农曾在贝尔实验室的走廊里骑着独轮车，同时进行抛球杂耍。他建造了一只名叫忒修斯 (Theseus)（1950 年）的机械小鼠，这只小鼠能自己学会走出迷宫——这是最早呈现在他办公桌上的机器学习演示之一。他在马文·明斯基的建议下建造了「终极机器」：一个带有一个开关的盒子，当拨动开关时，盒子会打开，伸出一只机械手，把自己的开关拨回关闭状态，然后缩回。他与数学家爱德华·索普 (Ed Thorp) 合作建造了通常被称为首个可穿戴计算机的设备——一个香烟盒大小的装置，用于在轮盘赌中赢钱，并于 1961 年秘密带入拉斯维加斯。他让来访客人猜测句子里的下一个字母，并不只是助兴游戏，而是在现场感受英语的可预测性。这个把工程学中最抽象的信息概念变成精确定理的人，私下却几乎停不下来地热爱动手做东西。也正合适：他理论最后的点睛之笔——信息是物理的——就等在他出发的道路尽头。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="06"> · 当信息走向量子化</SectionEyebrow>
 
 ## 比特更奇特的同胞
@@ -200,6 +222,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 还有两个前瞻性的亮点。不可克隆定理 (no-cloning theorem)（Wootters 与 Zurek; Dieks, 1982 年） <StatusChip status={"ok"} label={"已确立"} /> 指出，一个未知的量子态无法被复制——并不存在量子复印机——它有助于解释为什么窃听会扰动量子密码协议，但安全性还需要完整的协议证明，而不只是不可克隆定理。香农熵的量子对应物——冯·诺伊曼熵 <MathInline latex={String.raw`S=-\operatorname{Tr}(\rho \log \rho)`} />——用于度量量子态中的不确定性，并且对于纯的二分系统等于纠缠熵；混合态纠缠则需要其他度量。到了量子世界，比特只是故事的第一章。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="07"> · 规避过路费</SectionEyebrow>
 
 ## 可逆计算：如何避免不必要的擦除
@@ -210,6 +235,9 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 因此，在原则上，可逆计算可以在信息被有意丢弃之前避开根本的擦除下限。物理实现可以通过更温和、更接近准静态的协议降低耗散，但速度—能量权衡取决于具体器件模型；逻辑可逆本身并不意味着计算机必须以趋近于零的速度运行。可逆算法也涉及时间—空间权衡，而不是简单地永远储存无限历史。目前尚未有人建造出通用的实用可逆计算机；它与其说是一种产品，不如说是一个精妙的设想。但这关乎到该领域突然再次引人瞩目的原因：随着传统芯片逼近物理极限，避免擦除开始具有工程意义，而不只是一个理论上的奇招。这条线索一直延伸到第 47 日：理想闭合系统中的量子门是幺正且可逆的，而初始化、测量、纠错、控制和重置都要单独分析其热力学影响。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="08"> · 最后一堵墙</SectionEyebrow>
 
 ## 计算的终极物理极限
@@ -226,6 +254,8 @@ import Threads from "@app/components/lesson/Threads.astro";
 </Aside>
 
 把这套物理上限推到宇宙尺度，你可以发问：自大爆炸以来，整个宇宙已经计算了多少？劳埃德 2002 年的估计约为：在 <MathInline latex={String.raw`10^{90}`} /> 个普通物质比特上进行了 <MathInline latex={String.raw`10^{120}`} /> 次基本操作；如果计入引力自由度，可容纳的信息量还会高得多。这固然是一个极其巨大的数字，但是有限的。现实本身所执行的计算量存在一个硬性的、可数的上限。这是否意味着宇宙字面上就是一个计算机，仍是一个充满争议的生动阐释 <StatusChip status={"bad"} label={"存在争议——仅为解释，而非结论"} printLabel={"争议/炒作"} />，它是主线页面所标记的“万物源于比特”这一过度解读的近亲。数值界限来自物理；形而上学则是自选的。
+
+</ContentSection>
 
 <Panel class="ladder">
 <PanelTitle>图表 · 速率与总量</PanelTitle>
@@ -278,6 +308,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 <p class="ladder-key">从你的笔记本电脑到终极笔记本电脑的速率跨越约为 10³⁹ 倍。宇宙标记是另一条累计估计，不是每秒操作次数基准。两条尺度指向同一个朴素结论：计算和万事万物一样，都受物理定律约束。</p>
 </Panel>
 
+<ContentSection>
 <SectionEyebrow number="09"> · 无处不在的线索</SectionEyebrow>
 
 ## 一旦拥有了单位，你就会在万物中看见它
@@ -291,6 +322,8 @@ import Threads from "@app/components/lesson/Threads.astro";
 - 在生命本身中，薛定谔关于有机体通过摄入「负熵」（Brillouin 后来称之为 negentropy）来维持生存的思想是信息热力学的雏形——这正是第 83–85 日所围绕的核心谜题，届时今天所学的 <MathInline latex={String.raw`k_B T \ln 2`} /> 将以细胞内部热力学耗散的形式再次出现。
 
 这正是该主题为何在课程中处于目前位置的真实原因，即在 180 天中仅排第七。信息正是因为一旦被度量，便拒绝被禁锢在自身的领域，才与能量、演化、涌现和计算一同，成为了这门课程的五条核心线索之一。它是整张知识地图的结缔组织。
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ 三句话总结本附录</BlockTitle>

@@ -1,10 +1,9 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
@@ -16,10 +15,12 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 
 <Lead>主线航程呈现了一个明晰的故事：推理的几种模式、有效性与健全性的区分、将逻辑转化为代数的漫长炼金术，以及机器开始冷酷地检查证明的前沿地带。但明晰的故事往往经过了精心剪裁。在它背后，隐藏着一幅更为诡谲而富饶的景观：有些逻辑传统古老到后来被重新发现时都显得令人尴尬；有些悖论曾两次撼动逻辑基础；还有一只拒绝被说服的乌龟；以及一系列人类永远无法读完、却因机器背书了每一步而不得不承认其为真的定理。这份附录就是那部「导演剪辑版」。我们假设你已经看过了正片，这里补充了那些被删减的镜头，并依照正片的顺序排列，方便你一读到底。</Lead>
 
+<ContentSection>
 <SectionEyebrow number="第一乐章"></SectionEyebrow>
 
 ## 三段论背后的秘密
@@ -94,6 +95,9 @@ import Term from "@app/components/lesson/Term.astro";
 
 随后，根岑证明了他的系统的一个深刻特性：<Term>切消去定理</Term> (cut-elimination theorem)<TipNote text={"切消去定理指出，证明过程中经过中间引理的某些绕路是可以被移除的，从而使证明呈现出更直接的正规形式。"} />（他的“Hauptsatz”，即核心定理）。通俗地说，它意味着任何通过巧妙的中间引理绕路的证明，原则上都可以重写为一个永不脱离前提和结论所涉及范围的直接证明。每一个捷径都可以被还原为漫长而平直的路径。这听起来很专业，但它是驱动「自动化」证明搜索的理论引擎——它保证了搜索空间有着可控的形状。而且，通过正文提到的柯里-霍华德对应，它连接到了程序如何通过简化进行计算。根岑的“账本”就是我们在第五乐章中将要谈到的证明助手的远祖。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="第二乐章"></SectionEyebrow>
 
 ## 谬误辨析实地指南
@@ -147,6 +151,9 @@ import Term from "@app/components/lesson/Term.astro";
 </table>
 </FormatAlt>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="第三乐章"></SectionEyebrow>
 
 ## 击碎逻辑的句子
@@ -178,6 +185,9 @@ import Term from "@app/components/lesson/Term.astro";
 
 还有一个基础性的震颤，而且是个迷人的震颤。正文在非经典逻辑中列举了模糊逻辑和多值逻辑，但跳过了第一个严谨的<Term>多值逻辑</Term> (many-valued logic)<TipNote text={"多值逻辑允许除了真和假之外的更多真值，例如“不确定”或真值的程度。"} />是如何诞生的故事。1920 年，波兰逻辑学家扬·卢卡谢维奇正在苦思冥想亚里士多德曾提出的一个问题：<Highlight>海战问题</Highlight>。「明天将有一场海战。」这句话在<Highlight>今天</Highlight>是真的还是假的？如果它已经是真的，那么未来似乎已被注定，自由意志荡然无存；如果已经是假的，那么海战就是不可能的。亚里士多德为此苦恼不已。卢卡谢维奇的大胆举动是拒绝承认这句话现在必须要么真要么假——他为开放的未来引入了<Highlight>第三个</Highlight>真值：「可能」或「不确定」。这个看似哲学的问题，后来长成了整个多值逻辑领域，它也是如今运行在你相机自动对焦系统中的模糊逻辑的数学鼻祖。一个关于命运的问题，被问了两千年，最终变成了一个工程分支。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="第四乐章"></SectionEyebrow>
 
 ## 不需要规则的规则
@@ -205,6 +215,9 @@ import Term from "@app/components/lesson/Term.astro";
 
 这是针对第五乐章的巨大平衡力，我们将在<Highlight>第 28 日</Highlight>用一整天来展开它。现在，请将这种张力像和弦一样留在脑海中：程序化证明强大得令人窒息，验证了人类无法手工检查的事物——<Highlight>同时</Highlight>，任何此类系统对其自身所能提供的确定性都有着坚固的、已被定理证明的极限。证明助手是一个在笼子里运作的宏伟工具，而哥德尔精准地测量了那些栅栏。请同时保留这两个部分。成就与极限是同一主题的两面——你可能已经注意到，这正是整个课程反复出现的形状。
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="第五乐章"></SectionEyebrow>
 
 ## 通往人类无法阅读之证明的长路
@@ -257,6 +270,8 @@ import Term from "@app/components/lesson/Term.astro";
 - <StatusChip status={"bad"} label={"炒作 / 存疑"} printLabel={"存疑"} />：任何宣称 AI 已经「解决了数学」或让数学家失业的说法。一个里程碑式反例并不等于通用数学智能；竞赛题也仍只是有着已知简短答案的一小部分。正如正文所提醒的：即便是在 2025 年的「金牌」水平，依然有几十名人类少年得分更高。
 
 纵贯这六十年——从阿佩尔和哈肯那张有争议的地图，到没人读得懂的罗宾斯证明，再到在 Lean 内核中搜索的 AlphaProof——都贯穿着同一个安静的想法，也是正文结尾的那个：亚里士多德想要一条不容置疑的推理链条。我们终于造出了一台能够强制执行那一标准的机器，它逐行执行，不知疲倦，也不讲情面。而我们仍在发现那台机器引发的新问题：一个人类无法阅读的证明，是否能被称为「理解」；以及那份在没有洞察力的情况下交付的确定性，是否真的是数学家们一直以来真正追求的东西。
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ 附录三线回顾</BlockTitle>

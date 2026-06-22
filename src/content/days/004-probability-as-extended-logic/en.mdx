@@ -4,8 +4,6 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -23,6 +21,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
@@ -84,6 +83,7 @@ On **[Day 1](/days/001-what-is-knowledge/)** we met <Term as="em">credence</Term
 
 </WhereBlock>
 
+<ContentSection>
 <SectionEyebrow>The meltdown</SectionEyebrow>
 
 ## The smartest people in the country, all wrong at once
@@ -108,6 +108,8 @@ Even **Paul Erdős**<TipNote text={"Erdős wrote about 1,500 papers, helped shap
 </Aside>
 
 Here's the thing the meltdown reveals. The Monty Hall problem isn't a trick or a word game — its answer is provably, simulation-confirmably true. What it exposes is that human intuition about uncertainty is *systematically* miscalibrated, and that we badly need a formal tool to override it. That tool is the subject of today's descent. But first, let's actually break our intuition on the rocks — and then rebuild it.
+
+</ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
 <Panel class="web-only probability-monty">
@@ -208,6 +210,7 @@ So staying keeps the original 1/3 chance; switching captures the 2/3 chance that
 
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>Why it works</SectionEyebrow>
 
 ## The host is doing you a favor (and leaking information)
@@ -225,6 +228,9 @@ The puzzle didn't start with Monty Hall. The statistician **Steve Selvin** posed
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>The model</SectionEyebrow>
 
 ## Bayes' theorem: the law of belief revision
@@ -299,6 +305,8 @@ Bayes' theorem doesn't only rescue game-show contestants. It catches a mistake t
 
 <FormatOnly media="print-epub">The table below walks through the default medical-test case, which is worth keeping in your bones because it governs every medical test, spam filter, and airport screening you'll ever encounter.</FormatOnly>
 
+</ContentSection>
+
 {/* ===================== INTERACTIVE 2 ===================== */}
 <Panel class="web-only probability-bayes">
 <PanelTitle>Interactive · the base-rate trap</PanelTitle>
@@ -362,6 +370,7 @@ The posterior is therefore about <MathInline latex={String.raw`0.99/50.94`} />, 
 
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>The deep idea</SectionEyebrow>
 
 ## Why "extended logic," not just a formula
@@ -379,6 +388,9 @@ Cox's original proof was a touch too quick. In 1999 the computer scientist **Jos
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>The debate</SectionEyebrow>
 
 ## Two tribes, one equation
@@ -418,6 +430,8 @@ The Italian Bruno de Finetti opened his treatise with those four words, in capit
 </Aside>
 
 And note the practical wisdom that falls out: <strong><Term as="em">Cromwell's rule</Term></strong> (named by Dennis Lindley after Oliver Cromwell's 1650 plea, "think it possible that you may be mistaken"). Never set a prior to exactly 0 or 1, because Bayes' theorem can never budge it afterward — a belief held with absolute certainty is, by construction, unteachable. Leave a sliver of doubt for the moon being green cheese, Lindley wrote, or no returning astronaut's cheese samples will ever move you. Calibration, again — the through-line of this whole block.
+
+</ContentSection>
 
 <ContentSection class="frontier">
 <SectionEyebrow>The frontier · 2026</SectionEyebrow>
@@ -542,6 +556,7 @@ The tradeoff is conservatism: an anytime-valid ledger can need stronger or more 
 </div>
 </ContentSection>
 
+<ContentSection>
 <SectionEyebrow>Open questions</SectionEyebrow>
 
 ## What's genuinely unsettled
@@ -551,6 +566,8 @@ The tradeoff is conservatism: an anytime-valid ledger can need stronger or more 
 - **Will betting-based statistics actually take over?** Or settle in as a specialist tool for sequential experiments while the p-value rules on — and is "choose your bet" any less subjective than "choose your prior"?
 - **Is the brain *literally* running Bayes?** [Day 1's](/days/001-what-is-knowledge/) predictive-processing thread says perception is Bayesian inference in neural tissue. Today gives that claim its normative backbone — but "the brain approximates Bayes" and "the brain *is* Bayesian" are very different bets, and we'll return to them on **Day 119**.
 - **Does Cox's theorem truly force probability on any rational agent** — including an artificial one — or only on agents that already accept his consistency axioms? (A question with teeth for the AI block, **Days 138–145**.)
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ The day in three sentences</BlockTitle>

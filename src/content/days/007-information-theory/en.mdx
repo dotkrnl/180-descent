@@ -5,8 +5,6 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
@@ -27,6 +25,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
@@ -78,6 +77,7 @@ We've spent six days building an epistemic toolkit; today we discover it has a *
 
 </WhereBlock>
 
+<ContentSection>
 <SectionEyebrow>The model</SectionEyebrow>
 
 ## A bit is a halving
@@ -114,6 +114,8 @@ Entropy is the irreducible core of a source model. For one-symbol binary prefix 
 Shannon's H has the exact algebraic shape — a sum of *p* log *p* — of a quantity physicists had used since the 1870s to measure disorder: *entropy*. The story, told decades later by Myron Tribus, is that Shannon was unsure what to call his new measure, and John von Neumann told him to call it entropy for two reasons — the formula already had that name in statistical mechanics, and "nobody knows what entropy really is, so in any debate you'll have the advantage." It's probably too good to be literally true (it surfaces in print only in 1971). But the coincidence it points at is real, deep, and still argued over — and it's the hinge the entire back half of this course will swing on. Hold that thought.
 
 </Aside>
+
+</ContentSection>
 
 <FormatOnly media="web">Use the live dial below to bend a coin from fair to nearly fixed and watch its information content collapse.</FormatOnly>
 
@@ -206,6 +208,7 @@ Shannon's H has the exact algebraic shape — a sum of *p* log *p* — of a quan
 </table>
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>Why it mattered</SectionEyebrow>
 
 ## The theorem that built the modern world
@@ -217,6 +220,9 @@ Every real channel corrupts its messages: static on a line, scratches on a disc,
 <blockquote>Capacity is an asymptotic boundary for a specified channel. Below it, vanishing error is possible with sufficiently long codes; finite messages still trade rate, latency, and error probability.</blockquote>
 Here's the kicker: Shannon proved the good codes *exist* without saying how to build them. He left engineers a treasure map with an X but no path. Chasing that X became one of the great quests of applied mathematics — Reed–Solomon codes (which armor your CDs, QR codes, and the data beamed back from Mars), then turbo codes (1993), then the low-density parity-check codes now humming inside Wi-Fi, 5G data channels, and storage. Each crept closer to Shannon's wall under real constraints. Every time a movie streams smoothly over a flaky connection, you are watching this theorem work together with buffering, retransmission, congestion control, source coding, and error concealment. The shorter codeword for the commoner symbol — Morse's single dot for "E," the logic behind Huffman coding (1952) — is the same principle running underneath: spend your bits where the surprise is.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>The debate</SectionEyebrow>
 
 ## Is information *physical*?
@@ -250,6 +256,8 @@ The resolution is one of the most beautiful pieces of reasoning in twentieth-cen
 Why erasure specifically? Because erasure is not reversible. If I tell you a bit is now "0," you cannot recover whether it was "0" or "1" a moment ago — that history is gone, two possible pasts crushed into one present. <Term as="em">Logically irreversible operations</Term><TipNote text={"A logically irreversible operation maps multiple possible inputs to one output, so the input cannot be reconstructed from the output alone."} /> *destroy* distinctions, and in a physical device, distinctions live in physical states. For biased bits, correlated memories, or usable side information, the lower bound is governed by the entropy actually discarded and by changes in the memory's physical free energy. For the standard unknown fair bit, the cost is <MathInline latex={String.raw`k_B T \ln 2`} />. Landauer's slogan became a rallying cry: **"Information is physical."**
 
 In 1982 his IBM colleague **Charles Bennett** closed the trap on Maxwell's demon with this insight. The demon's mistake was never simply *measuring* the molecules — measurement has no Landauer minimum in principle when implemented reversibly with a suitably prepared memory. The demon's mistake is that it has a *memory*, and that memory fills up. To keep sorting forever as a cyclic device, it must eventually restore that memory. Each logically irreversible reset pays back, as heat, the entropy the demon thought it was removing from the gas. The books balance. The cost of the demon's cleverness isn't thinking — *it's forgetting.*
+
+</ContentSection>
 
 <FormatOnly media="web">The live machine below steps through the irreversible reset that makes the heat meter climb.</FormatOnly>
 
@@ -416,6 +424,7 @@ For fifty years Landauer's principle was a piece of theory so clean it felt almo
 </div>
 </ContentSection>
 
+<ContentSection>
 <SectionEyebrow>Open questions</SectionEyebrow>
 
 ## What's genuinely unsettled
@@ -424,6 +433,8 @@ For fifty years Landauer's principle was a piece of theory so clean it felt almo
 - **Can the demon ever truly be beaten?** A minority of physicists (Earman &amp; Norton) argue the standard exorcism is subtly circular — using the second law to derive the erasure cost, then using that cost to defend the second law. A contested 2016 result even claimed a logically irreversible gate run below <MathInline latex={String.raw`k_B T \ln 2`} />. The mainstream, backed by the experiments, says no — but the foundations aren't fully closed.
 - **How low can real computation actually go?** Reversible computing promises to dodge erasure costs almost entirely. Nobody has built a useful machine that does. Is the Landauer floor a practical target or a permanent curiosity?
 - **And the question waiting in the AI block:** when a model "knows" something, is that knowledge ultimately just bits arranged to reduce a loss — and does the thermodynamic cost of those bits tell us anything about what it would take to *think*? (Days 138–145.)
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ The day in three sentences</BlockTitle>

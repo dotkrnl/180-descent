@@ -2,8 +2,6 @@ import sherlockHolmes from "../../../assets/images/open-license/sherlock-holmes-
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -20,6 +18,7 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
@@ -96,6 +95,7 @@ Two days in, we have circled reasoning from the outside. On **[Day 1](/days/001-
 <figcaption>Paget's Holmes became the public face of "deduction," even though the famous diagnostic leaps are usually abductive: clues first, best explanation second.</figcaption>
 </figure>
 
+<ContentSection>
 <SectionEyebrow>The model<TipNote text={"A model is a simplified structure that helps us reason about a more complicated subject."} /></SectionEyebrow>
 
 ## Three engines, three guarantees
@@ -117,6 +117,9 @@ Holmes is not alone. We say a doctor "diagnoses" — that's abduction, reasoning
 
 </Aside>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>The distinction everyone fumbles</SectionEyebrow>
 
 ## Valid is not the same as true
@@ -133,6 +136,9 @@ The *form* is flawless — "All M are P; s is M; therefore s is P," the very mou
 
 This is not hair-splitting. It is the working principle behind <Term as="em">reductio ad absurdum</Term>, one of the sharpest tools in mathematics: to prove a premise false, assume it, reason *validly* to a conclusion you know is false, and the falsehood flows backward to indict the premise. The whole technique depends on a valid argument deliberately producing a false conclusion. Validity is the carrier; truth is the cargo; learn to track them separately and a fog lifts from every argument you'll ever read.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>When the form breaks</SectionEyebrow>
 
 ## The two fallacies hiding in every "if"
@@ -148,6 +154,8 @@ The two valid moves are old friends. <Term as="em">Modus ponens</Term>: if P the
 There's a teaching classic that makes the structure unforgettable: *If an animal is a dog, it has four legs. This animal has four legs. Therefore it is a dog.* Cats, horses, and tables object. The absurdity is the point — it's the same broken form as the San Diego argument, just with the silliness turned up so you can see the gears slip. (Eugène Ionesco built an entire scene of his play *Rhinoceros* on exactly this fallacy, a Logician gravely proving that a cat with four legs must be a dog.)
 
 These are *formal* fallacies — broken shapes. Their cousins, the *informal* fallacies, are flaws not in form but in content: *post hoc ergo propter hoc* (the rooster crows, the sun rises, therefore the rooster summons the dawn), the ad hominem, the equivocation that quietly swaps a word's meaning mid-argument. Formal fallacies you catch by checking the skeleton; informal ones you catch by reading what the words actually do.
+
+</ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
 <Panel class="web-only">
@@ -202,6 +210,7 @@ These are *formal* fallacies — broken shapes. Their cousins, the *informal* fa
 </table>
 </FormatAlt>
 
+<ContentSection>
 <SectionEyebrow>The lineage</SectionEyebrow>
 
 ## How logic became mathematics
@@ -216,6 +225,9 @@ The machinery you've been using has a deep history, and it bends in a surprising
 
 **Gottlob Frege** delivered the largest leap since Aristotle. His slim, forbidding *Begriffsschrift* ("concept-script," 1879) introduced the <Term as="em">quantifier</Term> — the formal "for all" (`∀x`<TipNote text={"∀x means \"for all x\"."} />) and "there exists" (`∃x`<TipNote text={"∃x means \"there exists an x\"."} />) — and with it <Term as="em">predicate logic</Term>. Aristotle's term logic choked on arguments like "every horse is an animal, therefore every head of a horse is the head of an animal"; Frege's machinery handled it and vastly more, analyzing propositions as functions fed with arguments. It is often called the finest single book in the history of symbolic logic. There's a tragic coda: Frege dreamed of reducing all of arithmetic to pure logic, and just as the second volume went to press, a young Bertrand Russell sent him a letter containing a paradox — the set of all sets that don't contain themselves: does it contain itself or not? Either answer contradicts itself. Frege's grand foundation cracked. But his *logic* survived the wreck and became the modern symbolic logic we still teach. (The ghost of that paradox, and the limits it hinted at, will haunt us on **Day 28**, when Gödel proves no formal system can be everything mathematicians hoped.)
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow>The debate</SectionEyebrow>
 
 ## Is logic discovered or invented?
@@ -246,6 +258,8 @@ Here is a question that sounds like a parlor game and turns out to cut very deep
 </div>
 
 That last box is the hinge of today's frontier. For most of history "the laws of thought" seemed untouchable — to question them was to saw off the branch you sat on. But the twentieth century produced rigorous, working *alternative* logics, systems that quietly drop one of the sacred laws and keep functioning. Once you've seen those alternatives do real labor, the grand metaphysical question softens into something more practical and, frankly, more interesting: not "which logic is *True*?" but "which logic is the right *tool* for this job?" Let's go meet the alternatives.
+
+</ContentSection>
 
 <ContentSection class="frontier">
 <SectionEyebrow>The frontier · 2026</SectionEyebrow>
@@ -340,6 +354,7 @@ This curriculum's hype filter includes a rule worth stating: preprints, company 
 </div>
 </ContentSection>
 
+<ContentSection>
 <SectionEyebrow>Open questions</SectionEyebrow>
 
 ## What's genuinely unsettled
@@ -351,6 +366,8 @@ Twenty-three centuries in, the study of valid inference still leaves real questi
 - **What is abduction, exactly?** Is "inference to the best explanation" a real third mode, or dressed-up induction? Even whether Peirce *meant* it as inference-to-best-explanation (versus mere hypothesis-generation) is debated among his scholars.
 - **Can mechanized proof change what mathematics *is*?** If a result is true but only a computer has checked the proof, has anyone *understood* it? Does a verified-but-opaque proof carry the same value as an illuminating human one?
 - **And the question that will stalk the AI block:** when a machine outputs a true, well-supported theorem, does it *know* anything — or is it the ultimate Gettier case from **[Day 1](/days/001-what-is-knowledge/)**, right for reasons that have nothing to do with comprehension? (**Days 138–145**.)
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ The day in three sentences</BlockTitle>

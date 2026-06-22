@@ -1,10 +1,9 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 
-import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Lead from "@app/components/lesson/Lead.astro";
@@ -15,10 +14,12 @@ import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 
 <Lead drop="T">he main descent told a clean story: three engines of inference, validity versus soundness, the slow alchemy that turned logic into algebra, and a frontier where machines now check proofs without mercy. But a clean story is a curated one. Behind it sits a far stranger and richer landscape — a logic so old it predates its own discoverers' embarrassment, paradoxes that have toppled foundations twice, a tortoise who refuses to be argued with, and a string of theorems no human will ever fully read, accepted as true anyway because a machine vouched for every step. This appendix is the director's cut. It assumes you've watched the film; it adds the scenes that didn't fit, in the same order the film would have used them, so you can read straight through.</Lead>
 
+<ContentSection>
 <SectionEyebrow number="Movement I"></SectionEyebrow>
 
 ## What the syllogism was hiding
@@ -93,6 +94,9 @@ The main page spoke of "valid form" but never showed how a logician *constructs*
 
 Gentzen then proved something deep about his own system: the <Term as="em">cut-elimination theorem</Term><TipNote text={"Cut elimination says certain detours through intermediate lemmas can be removed, giving proofs a more direct normal form."} /> (his "Hauptsatz," or "main theorem"). Informally, it says any proof that detours through a clever intermediate lemma can be rewritten into a direct proof that never leaves the subject matter of its premises and conclusion. Every shortcut can, in principle, be unwound into a plodding straight line. This sounds technical, but it is the theoretical engine that makes *automated* proof search possible at all — it guarantees the search space has a manageable shape — and it connects, through Curry–Howard from the main page, to how programs compute by simplification. Gentzen's ledgers are the distant ancestor of the proof assistants we'll return to in Movement V.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="Movement II"></SectionEyebrow>
 
 ## A field guide to bad arguments
@@ -146,6 +150,9 @@ A special pair deserves its own spotlight, because they are where logic meets th
 </table>
 </FormatAlt>
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="Movement III"></SectionEyebrow>
 
 ## The sentences that broke logic
@@ -177,6 +184,9 @@ That hierarchy-of-types idea did not die in 1913. Stripped of its philosophical 
 
 One more foundational tremor, and a charming one. The main page listed fuzzy and many-valued logics among the non-classical zoo, but skipped the story of where the *first* rigorous <Term as="em">many-valued logic</Term><TipNote text={"Many-valued logic allows more truth values than just true and false, such as indeterminate or degrees of truth."} /> came from. In 1920, the Polish logician Jan Łukasiewicz was brooding on a problem Aristotle himself had raised: the *sea battle*. "There will be a sea battle tomorrow." Is that statement true or false *today*? If it's already true, the future seems fixed and free will evaporates; if already false, the battle is impossible. Aristotle squirmed. Łukasiewicz's bold move was to deny that the statement must be either true or false right now — he introduced a *third* value, "possible" or "indeterminate," for the open future. From that one philosophical itch grew the entire field of many-valued logic, the mathematical parent of the fuzzy logic running in your camera's autofocus. A question about fate, asked for two thousand years, turned into a branch of engineering.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="Movement IV"></SectionEyebrow>
 
 ## The rule that needs no rule
@@ -204,6 +214,9 @@ The main page's frontier — proof assistants verifying mathematics at zero tole
 
 This is the great counterweight to Movement V, and we will give it the full day it deserves on **Day 28**. For now, hold the tension in your mind like a chord: mechanized proof is breathtakingly powerful, verifying things no human could check by hand — *and* there is a hard, theorem-proven limit to how much certainty any such system can deliver about itself. The proof assistant is a magnificent tool operating inside a cage whose bars Gödel measured exactly. Keep both halves. The triumph and the limit are the same subject seen from two sides — which, you may have noticed, is the recurring shape of this entire course.
 
+</ContentSection>
+
+<ContentSection>
 <SectionEyebrow number="Movement V"></SectionEyebrow>
 
 ## The long road to a proof no human can read
@@ -256,6 +269,8 @@ The honest ledger, sharpened from the main page:
 - **What's hype** <StatusChip status={"bad"} label={"contested/hype"} printLabel={"contested"} />: any claim that AI has "solved mathematics" or made mathematicians obsolete. One landmark counterexample is not a general mathematical mind, and contest problems are still a narrow slice with known-to-exist short answers. Recall from the main page that even at the 2025 "gold" level, dozens of human teenagers still scored higher.
 
 The thread running through all sixty years — from Appel and Haken's contested map, through the Robbins proof nobody understands, to AlphaProof searching inside Lean's unforgiving kernel — is a single quiet idea, the one the main page closed on. Aristotle wanted a chain of reasoning that could not be doubted. We have finally built a machine that enforces exactly that standard, line by line, without fatigue or mercy. What we are still discovering is the strange new questions that machine raises: whether a proof we cannot read is a proof we have *understood*, and whether certainty, delivered without insight, is the thing mathematicians were really after all along.
+
+</ContentSection>
 
 <Recap>
 <BlockTitle>◆ The appendix in three threads</BlockTitle>
