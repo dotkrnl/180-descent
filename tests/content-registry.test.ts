@@ -65,10 +65,12 @@ describe("target content registry", () => {
     const daysByPath = new Map(registry.days.map((day) => [day.manifest.path, day]));
     const day001 = daysByPath.get("001-what-is-knowledge");
     const day002 = daysByPath.get("002-scientific-method-and-demarcation");
+    const day003 = daysByPath.get("003-logic-and-valid-inference");
 
     expect([...daysByPath.keys()]).toEqual([
       "001-what-is-knowledge",
-      "002-scientific-method-and-demarcation"
+      "002-scientific-method-and-demarcation",
+      "003-logic-and-valid-inference"
     ]);
 
     for (const day of registry.days) {
@@ -108,5 +110,18 @@ describe("target content registry", () => {
       "base-rate-engine"
     ]);
     expect(day002?.bodies[0].source).toContain("blackSwan.src");
+
+    expect(day003?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "the-deeper-machinery-of-logic:en",
+      "the-deeper-machinery-of-logic:zh",
+      "the-unsettled-frontier:en",
+      "the-unsettled-frontier:zh"
+    ]);
+    expect(day003?.manifest.components.map((component) => component.id)).toEqual([
+      "inference-inspector",
+      "fallacy-spotter",
+      "hype-filter-trainer"
+    ]);
+    expect(day003?.bodies[0].source).toContain("sherlockHolmes.src");
   });
 });

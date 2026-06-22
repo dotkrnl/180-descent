@@ -1,0 +1,360 @@
+import sherlockHolmes from "../../../assets/images/open-license/sherlock-holmes-watson-sidney-paget.jpg";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+
+<header class="hero wrap">
+<p class="eyebrow">Block I · Foundations of Knowledge &amp; Reasoning · <span class="daymark">Day 003 / 180</span></p>
+<h1>Logic &amp; Valid Inference<TipNote text={"Valid means the conclusion must be true if the premises are true, regardless of whether the premises actually are true."} /></h1>
+<p class="sub">Three ways to move from premises<TipNote text={"Premises are the starting statements an argument assumes or asks you to grant."} /> to conclusions — and only one of them is safe.</p>
+
+<figure class="hero-art">
+<svg viewBox="0 0 460 250" role="img" aria-label="Three arrows of inference: deduction pointing inward and certain, induction reaching beyond the dots, abduction leaping to an explanation.">
+<defs>
+<marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--accent)"></path></marker>
+<marker id="ahb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--brass)"></path></marker>
+<marker id="ahc" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--contested)"></path></marker>
+</defs>
+{/* DEDUCTION */}
+<g font-family="IBM Plex Mono,monospace" font-size="10.5">
+<text x="73" y="24" text-anchor="middle" fill="var(--accent)" letter-spacing="1.5">DEDUCTION</text>
+<rect x="20" y="40" width="106" height="74" rx="9" fill="none" stroke="var(--accent)" stroke-width="1.5"></rect>
+<text x="73" y="66" text-anchor="middle" fill="var(--ink-soft)">all M are P</text>
+<text x="73" y="82" text-anchor="middle" fill="var(--ink-soft)">s is M</text>
+<line x1="35" y1="90" x2="111" y2="90" stroke="var(--line-strong)" stroke-width="1"></line>
+<text x="73" y="106" text-anchor="middle" fill="var(--ink)">∴ s is P</text>
+<text x="73" y="135" text-anchor="middle" fill="var(--ok)" font-size="10.5">truth-preserving</text>
+<text x="73" y="149" text-anchor="middle" fill="var(--ink-faint)" font-size="10.5">entailed</text>
+</g>
+{/* INDUCTION */}
+<g font-family="IBM Plex Mono,monospace" font-size="10.5">
+<text x="230" y="24" text-anchor="middle" fill="var(--brass)" letter-spacing="1.5">INDUCTION</text>
+<circle cx="196" cy="58" r="5" fill="var(--ink-soft)"></circle>
+<circle cx="214" cy="74" r="5" fill="var(--ink-soft)"></circle>
+<circle cx="190" cy="80" r="5" fill="var(--ink-soft)"></circle>
+<circle cx="210" cy="94" r="5" fill="var(--ink-soft)"></circle>
+<path d="M222,86 C250,80 258,70 270,62" fill="none" stroke="var(--brass)" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#ahb)"></path>
+<text x="248" y="116" text-anchor="middle" fill="var(--ink-soft)" font-size="10.5">…so all of them?</text>
+<text x="230" y="135" text-anchor="middle" fill="var(--brass)" font-size="10.5">reaches beyond</text>
+<text x="230" y="149" text-anchor="middle" fill="var(--contested)" font-size="10.5">next case may break it</text>
+</g>
+{/* ABDUCTION */}
+<g font-family="IBM Plex Mono,monospace" font-size="10.5">
+<text x="388" y="24" text-anchor="middle" fill="var(--contested)" letter-spacing="1.5">ABDUCTION</text>
+<text x="388" y="60" text-anchor="middle" fill="var(--ink-soft)" font-size="10.5">surprising clue</text>
+<circle cx="388" cy="74" r="4" fill="var(--contested)"></circle>
+<path d="M388,82 Q360,100 388,116" fill="none" stroke="var(--contested)" stroke-width="1.6" marker-end="url(#ahc)"></path>
+<text x="388" y="132" text-anchor="middle" fill="var(--ink)" font-size="10.5">best story that</text>
+<text x="388" y="146" text-anchor="middle" fill="var(--ink)" font-size="10.5">would explain it</text>
+</g>
+<text x="230" y="182" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" letter-spacing="1">three engines of inference — guarantee shrinks left → right</text>
+</svg>
+<figcaption>Deduction keeps you safe but locked in the room. Induction and abduction get you out — at the price of certainty.</figcaption>
+</figure>
+
+<p class="lede"><span class="drop">A</span> stranger walks into a London consulting room. Within seconds Sherlock Holmes announces, to Watson's astonishment, that the man is a retired army doctor, recently invalided home from Afghanistan. The skin is tanned but the wrists are pale — a sunburn caught abroad, not at the seaside. He holds his arm stiffly, war-wounded. The face is haggard with hardship and fever. Holmes calls this <em>deduction</em>, and the word has clung to him for over a century. He is wrong about the word. What Holmes performs — and what made him immortal — is not deduction at all. It is a humbler, riskier, far more creative thing.</p>
+
+<p>That mislabeling is the perfect way in, because the whole of today turns on a distinction almost everyone blurs: there is more than one way to reason, and they do not come with the same guarantees. Some inferences are <strong>airtight</strong> — if you grant the premises, the conclusion cannot escape. Others are <strong>fertile but fallible</strong> — they reach past the evidence and can be overturned by tomorrow's surprise. Mistaking one for the other is the root of a startling fraction of human error. So let's draw the lines carefully.</p>
+</header><div class="wrap">
+
+<div class="whereblock">
+<p class="label">◆ Where we are</p>
+<p>Two days in, we have circled reasoning from the outside. On <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a> we asked what turns a true belief into <em>knowledge</em> — and hit the Agrippan trilemma, the worry that every justification either regresses forever, loops in a circle, or stops somewhere arbitrary. On <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a>, Hume's <em>problem of induction</em> showed that no pile of observations can ever <em>prove</em> a universal law, which is why Popper told us to falsify rather than verify. Today we open the engine itself. Those two earlier puzzles were really about the limits of two specific <em>inference modes</em>; now we name all three, watch logic become mathematics, and follow it to the strangest frontier in the course — machines that check proofs with zero tolerance for error. The thread that lights up brightest today is <em>computation</em>.</p>
+</div>
+
+<figure class="lesson-figure is-portrait">
+<img src={sherlockHolmes.src} width="760" height="843" loading="lazy" decoding="async" alt="Sidney Paget illustration of Sherlock Holmes and Dr. Watson, with Holmes holding a watch." />
+<figcaption>Paget's Holmes became the public face of "deduction," even though the famous diagnostic leaps are usually abductive: clues first, best explanation second.</figcaption>
+</figure>
+
+<section>
+<p class="sec-eyebrow">The model<TipNote text={"A model is a simplified structure that helps us reason about a more complicated subject."} /></p>
+<h2>Three engines, three guarantees</h2>
+<p>If you remember one thing from today, make it this trichotomy. Reasoning is not one activity but three, and they are sorted by how much they promise.</p>
+
+<p><strong><em class="term">Deduction</em></strong> is the truth-preserving engine. The conclusion is already folded inside the premises; valid deduction merely unfolds it. Grant that all men are mortal and that Socrates is a man, and you <em>cannot</em> avoid the conclusion that Socrates is mortal — to deny it is to contradict yourself. The price of this safety is that deduction is <em class="term">non-ampliative</em>: the conclusion adds nothing not already entailed by the premises, though it can reveal consequences we had not noticed. Mathematics is the deductive art carried to its limit, which is exactly why mathematicians can be so certain and why their certainty never, by itself, settles a question about <em>this</em> universe.</p>
+
+<p><strong><em class="term">Induction</em></strong> is the generalizing engine. You have seen the sun rise ten thousand times; you infer it will rise tomorrow. Every swan anyone had ever logged was white, so — until 1697 — "all swans are white" looked secure. Induction is <em class="term">ampliative</em>: it adds content, reaching beyond the cases in hand. And for precisely that reason it is <strong>not truth-preserving</strong>: a single <em class="term">counterexample</em><TipNote text={"A counterexample is one case that shows a general claim is false."} /> can break the pattern. This is Hume's bomb from <a href="/days/002-scientific-method-and-demarcation/"><strong>Day 2</strong></a>, still ticking: no finite run of observations can logically guarantee the next one. Induction is how empirical knowledge actually grows, and it comes with no warranty.</p>
+
+<p><strong><em class="term">Abduction</em></strong> is the explaining engine — and the one most people were never taught to name. You meet a <em>surprising fact</em>, and you cast around for a hypothesis that, if true, would make the surprise dissolve. The American polymath <em class="term">Charles Sanders Peirce</em> (1839–1914) singled it out as the only genuinely creative mode, the one that <em>generates</em> new ideas rather than just testing or unpacking them. "Every plank of [science's] advance," he wrote, "is first laid by retroduction alone." Deduction and induction work over hypotheses you already have; abduction is where the hypotheses come from in the first place.</p>
+
+<p>Now back to Holmes. The tan, the stiff arm, the haggard face — these are surprising facts, and Holmes leaps to the explanation that best accounts for all of them at once: a war-wounded military doctor home from a hot campaign. But notice the leap is not <em>guaranteed</em>. The man could be an actor who summers in Morocco and sprained his shoulder playing tennis. Holmes's conclusion is the <em>best</em> explanation, not the <em>only</em> one — which is the signature of abduction, not deduction. Conan Doyle gave his detective the wrong word, and a century of readers inherited the mistake. (This will matter again on <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>, when we ask how to make "best explanation" precise using probability.)</p>
+
+<div class="aside">
+<p class="h">The shape of a great misnomer</p>
+<p>Holmes is not alone. We say a doctor "diagnoses" — that's abduction, reasoning from symptoms to the disease most likely to produce them. A mechanic listening to an engine, a detective at a crime scene, a scientist staring at an anomalous reading: all abducting, all leaping to the explanation that would render the strange ordinary. Even this sentence relies on it — you're inferring a mind behind these words because that's the best explanation for their orderly arrangement, not because a theorem forces it. Abduction is the water we swim in; we just rarely call it by name.</p>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">The distinction everyone fumbles</p>
+<h2>Valid is not the same as true</h2>
+<p>Inside the deductive engine lives the single most misunderstood idea in all of logic, and getting it straight is worth more than a dozen memorized fallacies. It is the difference between <em class="term">validity</em> and <em class="term">soundness</em><TipNote text={"Soundness means an argument is valid and all of its premises are actually true."} />.</p>
+
+<p>An argument is <strong>valid</strong> when its <em>form</em> guarantees that true premises would force a true conclusion. Validity is a property of the <em>shape</em>, not the content. The Internet Encyclopedia of Philosophy puts it cleanly: an argument is valid "if and only if it takes a form that makes it impossible for the premises to be true and the conclusion nevertheless to be false." Soundness asks for more — an argument is <strong>sound</strong> only if it is valid <em>and</em> all its premises are actually true.</p>
+
+<p>Here is the part that trips people: <strong>a valid argument can have a wildly false conclusion.</strong> Watch.</p>
+
+<blockquote>All birds can fly. A penguin is a bird. Therefore, a penguin can fly.</blockquote>
+
+<p>The <em>form</em> is flawless — "All M are P; s is M; therefore s is P," the very mould Socrates was poured into. If the premises were true, the conclusion would have to follow. So the argument is perfectly <strong>valid</strong>. It is also, obviously, <strong>unsound</strong>, because the first premise is false: not all birds fly. Validity certifies the plumbing; soundness asks whether you also pumped in clean water. A valid argument with a false premise is a beautifully engineered pipe carrying sewage.</p>
+
+<p>This is not hair-splitting. It is the working principle behind <em class="term">reductio ad absurdum</em>, one of the sharpest tools in mathematics: to prove a premise false, assume it, reason <em>validly</em> to a conclusion you know is false, and the falsehood flows backward to indict the premise. The whole technique depends on a valid argument deliberately producing a false conclusion. Validity is the carrier; truth is the cargo; learn to track them separately and a fog lifts from every argument you'll ever read.</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">When the form breaks</p>
+<h2>The two fallacies hiding in every "if"</h2>
+<p>If valid forms are the safe paths, fallacies are the trapdoors that look just like them. The most treacherous live in conditional reasoning — statements of the form <code>P → Q</code><TipNote text={"P → Q means \"if P, then Q\"."} /> — because the broken versions sit one letter away from the sound ones.</p>
+
+<p>The two valid moves are old friends. <em class="term">Modus ponens</em>: if P then Q; P is true; therefore Q. <em class="term">Modus tollens</em>: if P then Q; Q is false; therefore <code>¬P</code><TipNote text={"¬P means \"not P\"."} />. Both are airtight. Now meet their evil twins.</p>
+
+<p><strong><em class="term">Affirming the consequent</em></strong> runs: <em>if P then Q; Q is true; therefore P.</em> It grabs the wrong end. "If someone lives in San Diego, they live in California. Joe lives in California. Therefore Joe lives in San Diego." But California is large; Joe could be in Sacramento. The conclusion <em>might</em> be true, which is exactly what makes the fallacy so seductive — it sometimes lands the right answer for no good reason, and a true conclusion reached by a broken argument is the Gettier trap from <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a> wearing a logician's coat.</p>
+
+<p><strong><em class="term">Denying the antecedent</em></strong> is its mirror: <em>if P then Q; P is false; therefore Q is false.</em> "If it's raining, the ground is wet. It isn't raining. Therefore the ground isn't wet." Sprinklers, dear reader. Burst pipes. A spilled bucket. Knocking out one cause does not knock out the effect, because effects can have more than one cause.</p>
+
+<p>There's a teaching classic that makes the structure unforgettable: <em>If an animal is a dog, it has four legs. This animal has four legs. Therefore it is a dog.</em> Cats, horses, and tables object. The absurdity is the point — it's the same broken form as the San Diego argument, just with the silliness turned up so you can see the gears slip. (Eugène Ionesco built an entire scene of his play <em>Rhinoceros</em> on exactly this fallacy, a Logician gravely proving that a cat with four legs must be a dog.)</p>
+
+<p>These are <em>formal</em> fallacies — broken shapes. Their cousins, the <em>informal</em> fallacies, are flaws not in form but in content: <em>post hoc ergo propter hoc</em> (the rooster crows, the sun rises, therefore the rooster summons the dawn), the ad hominem, the equivocation that quietly swaps a word's meaning mid-argument. Formal fallacies you catch by checking the skeleton; informal ones you catch by reading what the words actually do.</p>
+</section>
+
+{/* ===================== INTERACTIVE 1 ===================== */}
+<div class="panel web-only">
+<p class="ptitle">Interactive · test the form, not the words</p>
+<h3>The Inference Inspector</h3>
+<p class="pnote">Pick a conditional argument form. The machine doesn't care what the sentences <em>say</em> — only whether the <strong>shape</strong> guarantees the conclusion. Flip between the two valid moves and their two notorious impostors, then load a real-world example to feel why the broken ones fool us.</p>
+
+<div class="ii-grid">
+<div>
+<div class="ii-forms" id="iiForms">
+<button class="iibtn" data-form="ponens" aria-pressed="true">Modus Ponens</button>
+<button class="iibtn" data-form="tollens" aria-pressed="false">Modus Tollens</button>
+<button class="iibtn" data-form="affirm" aria-pressed="false">Affirm Consequent</button>
+<button class="iibtn" data-form="deny" aria-pressed="false">Deny Antecedent</button>
+</div>
+<div class="ii-examples">
+<p class="h">Dress it in real words</p>
+<div class="pbtns">
+<button class="exbtn" data-ex="rain">Rain &amp; wet ground</button>
+<button class="exbtn" data-ex="dog">Dog &amp; four legs</button>
+<button class="exbtn" data-ex="sd">San Diego &amp; California</button>
+</div>
+</div>
+</div>
+<div class="ii-readout">
+<div class="ii-arg" id="iiArg"></div>
+<div class="ii-verdict" id="iiVerdict">
+<div class="ii-vstate" id="iiVState">—</div>
+<p class="ii-vexpl" id="iiVExpl"></p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h3>Conditional Forms</h3>
+<p class="pnote">Conditional arguments can be sorted by form before their content is judged.</p>
+<table class="alt-table">
+<thead><tr><th>Form</th><th>Pattern</th><th>Verdict</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>Modus ponens</td><td>If P then Q; P; therefore Q</td><td>Valid</td><td>Affirming the sufficient condition forces the consequent.</td></tr>
+<tr><td>Modus tollens</td><td>If P then Q; not-Q; therefore not-P</td><td>Valid</td><td>If Q must follow from P, the absence of Q rules P out.</td></tr>
+<tr><td>Affirming the consequent</td><td>If P then Q; Q; therefore P</td><td>Invalid</td><td>Q may have other causes: Joe can live in California without living in San Diego.</td></tr>
+<tr><td>Denying the antecedent</td><td>If P then Q; not-P; therefore not-Q</td><td>Invalid</td><td>Removing one sufficient cause does not remove every route to Q: sprinklers can wet the ground.</td></tr>
+</tbody>
+</table>
+</div>
+
+<section>
+<p class="sec-eyebrow">The lineage</p>
+<h2>How logic became mathematics</h2>
+<p>The machinery you've been using has a deep history, and it bends in a surprising direction: over twenty-three centuries, the study of <em>good argument</em> slowly turned into a branch of <em>algebra</em>. The story has four landmarks.</p>
+
+<p><strong>Aristotle</strong> (4th century BCE) built the first formal system in his <em>Prior Analytics</em>. His genius was to use letters as placeholders — "all <em>A</em> are <em>B</em>" — and so to study argument <em>forms</em> apart from their content. This is <em class="term">term logic</em>: it relates terms like "man" and "mortal." Medieval logicians lovingly catalogued the valid syllogistic moods with mnemonic names — <em>Barbara</em>, <em>Celarent</em>, <em>Darii</em>. The names are codes, not people: their vowels mark proposition<TipNote text={"A proposition is a statement that can be true or false."} /> types, where <em>A</em> means "all S are P," <em>E</em> means "no S are P," <em>I</em> means "some S are P," and <em>O</em> means "some S are not P." So <em>Barbara</em> is AAA, <em>Celarent</em> is EAE, and <em>Darii</em> is AII; <em>Barbara</em>, for example, means all M are P; all S are M; therefore all S are P. For nearly two thousand years, this <em>was</em> logic.</p>
+
+<p><strong>The Stoics</strong>, above all <em class="term">Chrysippus</em> (c. 279–206 BCE), built a second, parallel logic that history nearly lost. Where Aristotle related <em>terms</em>, the Stoics related whole <em>propositions</em> with connectives we still use daily: if…then, and, or, not. Chrysippus laid out five "indemonstrables" — basic <em class="term">proof rules</em><TipNote text={"A proof rule licenses a step from certain statements to a conclusion, such as modus ponens."} />, the first of which ("if the first then the second; but the first; therefore the second") is precisely <em>modus ponens</em>. This is <em class="term">propositional logic</em>, the ancestor of the logic inside every computer chip. The Stoics arguably had a <em class="term">truth-functional</em><TipNote text={"Truth-functional means the truth of a compound statement depends only on the truth values of its parts and the connective joining them."} /> grasp of the connectives — understanding "or" by when the whole is true given its parts — two millennia before it was rediscovered. The 20th-century logician Jan Łukasiewicz startled scholars by arguing Stoic logic was not Aristotle's poor cousin but "an achievement of equal rank." Then it was buried for ages while Aristotle reigned — a reminder that intellectual history is not a tidy relay race.</p>
+
+<p><strong>George Boole</strong> snapped the two traditions onto a new track. In <em>An Investigation of the Laws of Thought</em> (1854), he did something audacious: he treated logical reasoning as <em>calculation</em>. Let 1 be the universe and 0 be nothing; let multiplication be "and," addition be "or." Suddenly the laws of valid inference looked like the laws of algebra. "We ought no longer to associate Logic and Metaphysics," Boole declared, "but Logic and Mathematics." His book sold modestly and puzzled contemporaries. Only decades later, when Claude Shannon noticed in 1937 that Boole's two-valued algebra described electrical switching circuits exactly, did <em>Boolean algebra</em> become the literal foundation of digital logic. Every AND-gate in the device you're reading this on is a sentence of Chrysippus, rendered in silicon.</p>
+
+<p><strong>Gottlob Frege</strong> delivered the largest leap since Aristotle. His slim, forbidding <em>Begriffsschrift</em> ("concept-script," 1879) introduced the <em class="term">quantifier</em> — the formal "for all" (<code>∀x</code><TipNote text={"∀x means \"for all x\"."} />) and "there exists" (<code>∃x</code><TipNote text={"∃x means \"there exists an x\"."} />) — and with it <em class="term">predicate logic</em>. Aristotle's term logic choked on arguments like "every horse is an animal, therefore every head of a horse is the head of an animal"; Frege's machinery handled it and vastly more, analyzing propositions as functions fed with arguments. It is often called the finest single book in the history of symbolic logic. There's a tragic coda: Frege dreamed of reducing all of arithmetic to pure logic, and just as the second volume went to press, a young Bertrand Russell sent him a letter containing a paradox — the set of all sets that don't contain themselves: does it contain itself or not? Either answer contradicts itself. Frege's grand foundation cracked. But his <em>logic</em> survived the wreck and became the modern symbolic logic we still teach. (The ghost of that paradox, and the limits it hinted at, will haunt us on <strong>Day 28</strong>, when Gödel proves no formal system can be everything mathematicians hoped.)</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">The debate</p>
+<h2>Is logic discovered or invented?</h2>
+<p>Here is a question that sounds like a parlor game and turns out to cut very deep. The bedrock laws — possible <em class="term">axioms</em><TipNote text={"An axiom is a starting rule or statement a formal system accepts without proof."} /> such as <em class="term">identity</em> (A is A), <em class="term">non-contradiction</em> (not both A and not-A), and <em class="term">excluded middle</em> (either A or not-A, no third option) — feel utterly inescapable. But where do they live? Are they features of <em>reality</em>, woven into the universe whether or not minds exist? Features of <em>thought</em>, the unavoidable grammar of any thinker? Or human <em>conventions</em>, real and binding but ultimately chosen, like the rules of chess?</p>
+
+<div class="schools">
+<div class="school">
+<h3>Logical realism</h3>
+<span class="tag">discovered</span>
+<p>The laws are objective, mind-independent structures of the world. We don't legislate non-contradiction any more than we legislate the prime numbers — we find it. Logic is read off reality.</p>
+</div>
+<div class="school">
+<h3>Psychologism</h3>
+<span class="tag">laws of thought</span>
+<p>The laws describe how minds must operate — a branch of psychology. Frege and Husserl attacked this fiercely: logical truths are exact and <em class="term">a priori</em><TipNote text={"A priori means knowable independently of particular experience, by reason or conceptual understanding alone."} />, while psychology is empirical and fuzzy.</p>
+</div>
+<div class="school">
+<h3>Conventionalism</h3>
+<span class="tag">invented</span>
+<p>The laws are stipulations we adopt because they're useful — binding once chosen, but not handed down by the cosmos. Curiously rare as a fully worked-out position, despite its close kinship to moral anti-realism.</p>
+</div>
+<div class="school">
+<h3>Revisability</h3>
+<span class="tag">empirical?</span>
+<p>Quine and Putnam floated the radical thought that even logic might be revised for <em>empirical</em> reasons — that quantum mechanics could push us toward a non-classical logic, much as relativity pushed us to non-Euclidean geometry.</p>
+</div>
+</div>
+
+<p>That last box is the hinge of today's frontier. For most of history "the laws of thought" seemed untouchable — to question them was to saw off the branch you sat on. But the twentieth century produced rigorous, working <em>alternative</em> logics, systems that quietly drop one of the sacred laws and keep functioning. Once you've seen those alternatives do real labor, the grand metaphysical question softens into something more practical and, frankly, more interesting: not "which logic is <em>True</em>?" but "which logic is the right <em>tool</em> for this job?" Let's go meet the alternatives.</p>
+</section>
+
+<section class="frontier">
+<p class="sec-eyebrow">The frontier · 2026</p>
+<h2>Three live edges — and the hype filter</h2>
+<p>Every day in this course ends at the research frontier, with each claim tagged for how much weight it can bear. Logic's frontier is unusually concrete: it runs on real computers, checks real proofs, and has lately collided with artificial intelligence in ways that demand a careful eye.</p>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 01</span>
+<StatusChip status={"ok"} label={"Non-classical logics · established"} printLabel={"established"} />
+</div>
+<h3>The logics that break the rules — on purpose</h3>
+<p>"Classical" logic is not the only consistent option; it's one settled point in a landscape of alternatives, each built by surrendering a law most people thought non-negotiable.</p>
+<p><strong><em class="term">Intuitionistic logic</em></strong> drops the law of <em>excluded middle</em>. Pioneered by L.E.J. Brouwer and formalized by Arend Heyting in the 1920s–30s, it insists a statement counts as true only if you can <em>construct</em> a proof of it. You may not assert "A or not-A" for free — you must prove one side. The motivating example is sharp: excluded middle would let you cheerfully assert, for any computer program, "it halts or it doesn't" — yet (as we'll see on <strong>Day 27</strong>) no general method decides halting, so there's no construction backing the claim. Intuitionism says: then don't assert it. This sounds like philosophical fastidiousness until you learn where it leads — straight into the heart of computer science, via a correspondence so beautiful it gets its own box below.</p>
+<p><strong><em class="term">Paraconsistent logic</em></strong> drops <em>explosion</em>. In classical logic a single contradiction is apocalyptic: from "P and not-P" you can derive <em>literally anything</em> (the principle <em>ex contradictione quodlibet</em>) — one inconsistency and the whole system goes up in flames. Paraconsistent logics refuse this, letting you reason sensibly even when some contradiction has crept in — useful for large databases, legal codes, or any messy body of information that's locally inconsistent but not therefore worthless. The stronger philosophical cousin, <em class="term">dialetheism</em> — Graham Priest's view that some contradictions are <em>actually true</em>, like the Liar sentence "this sentence is false" — is far more controversial. Keep them separate: you can adopt a paraconsistent logic (a technical choice about explosion) without being a dialetheist (a metaphysical claim about true contradictions). The first is a tool; the second is a worldview.</p>
+<p><strong><em class="term">Fuzzy logic</em></strong> drops the two-value restriction entirely. Lotfi Zadeh (1965) let truth slide along the whole interval from 0 to 1 to handle vagueness — "the water is warm" is 0.7 true — building on the many-valued logics of Łukasiewicz from the 1920s. It runs in control systems and appliances. And <strong><em class="term">modal logic</em></strong> — the logic of <em>necessity</em> and <em>possibility</em> (□ and ◇) — together with carefully chosen temporal logics underpins the <em class="term">formal verification</em> of hardware and software: specific fragments are expressive enough to say useful things while remaining <em class="term">decidable</em><TipNote text={"A decidable logic has an algorithm that can always determine, in finite time, whether a statement follows from the rules."} /> enough for <em class="term">model checking</em><TipNote text={"Model checking automatically explores the possible states of a system to verify that a formal property always holds."} />. These aren't museum pieces. They're the working logics of the modern technical world.</p>
+
+<div class="ch-box">
+<p style="font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .3rem;">The bridge · propositions as types</p>
+<p style="font-size:.92em;margin:0 0 .8rem;color:var(--ink-soft);">The deepest reason intuitionistic logic matters is the <strong><em class="term">Curry–Howard correspondence</em></strong>: in suitable formal systems, propositions correspond to types and proofs correspond to programs. Proving a theorem can be treated as constructing the program-like object that inhabits its type — and vice versa.</p>
+<svg viewBox="0 0 480 150" role="img" aria-label="Curry-Howard correspondence: logic side mapped to computation side.">
+<g font-family="IBM Plex Mono,monospace" font-size="12">
+<text x="120" y="22" text-anchor="middle" fill="var(--accent)" letter-spacing="1.5">LOGIC</text>
+<text x="360" y="22" text-anchor="middle" fill="var(--brass)" letter-spacing="1.5">COMPUTATION</text>
+<rect x="24" y="38" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="120" y="55" text-anchor="middle" fill="var(--ink-soft)">proposition</text>
+<rect x="264" y="38" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="360" y="55" text-anchor="middle" fill="var(--ink-soft)">type</text>
+<rect x="24" y="72" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="120" y="89" text-anchor="middle" fill="var(--ink-soft)">proof</text>
+<rect x="264" y="72" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="360" y="89" text-anchor="middle" fill="var(--ink-soft)">program</text>
+<rect x="24" y="106" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="120" y="123" text-anchor="middle" fill="var(--ink-soft)">"there exists an x..."</text>
+<rect x="264" y="106" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="360" y="123" text-anchor="middle" fill="var(--ink-soft)">code that builds the x</text>
+<line x1="218" y1="51" x2="262" y2="51" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
+<line x1="218" y1="85" x2="262" y2="85" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
+<line x1="218" y1="119" x2="262" y2="119" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
+<text x="240" y="48" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
+<text x="240" y="82" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
+<text x="240" y="116" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
+</g>
+</svg>
+<p style="font-size:.86em;margin:.7rem 0 0;color:var(--ink-faint);">This is why several proof assistants below are built on <em class="term">type-theoretic</em> foundations — and why <em>logic and computation</em>, one of our five threads, are not neighbors but the same country seen from two sides. (Picked up on <strong>Days 27–29</strong>.)</p>
+</div>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 02</span>
+<StatusChip status={"ok"} label={"Machine-checked proof · established"} printLabel={"established"} />
+</div>
+<h3>Proof at zero tolerance: the rise of the proof assistant</h3>
+<p>Aristotle's dream was a chain of reasoning so tight that no one could doubt it. Twenty-three centuries later, that dream has a software implementation. A <em class="term">proof assistant</em> is a program in which every logical step must pass a mechanical check; nothing is accepted on authority, intuition, or "clearly." The leading systems include <strong>Lean</strong> (now Lean 4), <strong>Rocq</strong> (the proof assistant formerly named Coq, renamed in 2025), <strong>Agda</strong>, and <strong>Isabelle/HOL</strong>. Lean, Rocq, and Agda live in the <em class="term">type-theoretic</em><TipNote text={"Type theory treats mathematical objects and proofs through typed expressions; in many systems, proving a statement is like constructing an object of the matching type."} /> family; Isabelle/HOL is based on classical higher-order logic. Same ambition, different foundations.</p>
+<p>Lean's community-built library, <em class="term">mathlib</em>, is one of the largest unified <em class="term">formalizations</em><TipNote text={"A formalization rewrites ordinary mathematical definitions and proofs in a strict formal language that a proof checker can verify."} /> of mathematics ever assembled: <strong>more than 278,000 theorems and 132,000 definitions</strong> when checked in June 2026, growing continuously, and covering 84 of the 100 problems on a famous "formalize these" challenge list. This is not a toy. Consider what it has already verified:</p>
+
+<ul class="mtl">
+<li class="done"><span class="yr">2022 · completed</span><b>The Liquid Tensor Experiment.</b> In December 2020, Fields Medalist Peter Scholze challenged the world to verify a theorem from his "condensed mathematics" that he himself wasn't fully sure of. A team led by Johan Commelin and Adam Topaz did it in Lean, finishing on 14 July 2022. A working mathematician used a machine to gain <em>confidence</em> in a proof too intricate for comfortable human refereeing — exactly the point.</li>
+<li class="done"><span class="yr">2023 · completed in 3 weeks</span><b>The Polynomial Freiman–Ruzsa conjecture.</b> Days after Tim Gowers, Ben Green, Freddie Manners, and Terence Tao posted a proof of this additive-combinatorics result, Tao launched a Lean project to formalize it — and announced the dependency graph "completely covered in a lovely shade of green" three weeks later. Formalization keeping pace with research, nearly in real time.</li>
+<li class="done"><span class="yr">2024–25 · completed</span><b>The Equational Theories Project.</b> Tao's collaborative experiment (launched September 2024) to settle the implication relation among 4,694 algebraic laws — <strong>22,033,636</strong> ordered pairs if you include each law's trivial implication of itself, or <strong>22,028,942</strong> nontrivial graph edges — combining human proofs, <em class="term">automated theorem provers</em><TipNote text={"A theorem prover is software that searches for proofs or checks whether a statement follows from formal rules."} />, AI, and Lean verification across 50+ contributors. It finished in just over 200 days: a new model of massively collaborative, machine-checked mathematics.</li>
+<li class="prog"><span class="yr">2024–2029 · in progress</span><b>Fermat's Last Theorem.</b> Kevin Buzzard's EPSRC-funded project (launched April 2024, Imperial College London) to formalize FLT — not the original Wiles proof but a modern route. Buzzard is "quietly confident" of reducing it to 1980s-known results, but frank that the whole thing is "at least a 5 year project." <em>Not yet done</em> — the honest status is a work in progress, the last of those 100 challenge problems still open.</li>
+</ul>
+
+<p>And the certainty reaches beyond pure mathematics into systems lives depend on. <strong>CompCert</strong> is a C <em class="term">compiler</em><TipNote text={"A compiler translates source code written by programmers into lower-level machine code that a computer can run."} /> <em>proved correct</em> in Rocq; a celebrated bug-hunting study spent roughly six CPU-years trying to make it emit wrong code and failed — "the only compiler we have tested for which Csmith cannot find wrong-code errors" — while finding the usual swarm of bugs in GCC and LLVM. <strong>seL4</strong> is the first operating-system <em class="term">microkernel</em><TipNote text={"A microkernel is the small core of an operating system that handles only essentials, leaving many services outside the kernel."} /> with a full machine-checked proof of <em class="term">functional correctness</em><TipNote text={"Functional correctness means the implementation is proven to do what its formal specification says, under stated assumptions."} /> (in Isabelle/HOL): under its stated assumptions, the C implementation refines the formal specification, so whole classes of crashes and unsafe behaviors are ruled out by theorem rather than hope. These are not ordinary promises; they are conditional theorems about software. <em>This</em> is what logic, mechanized, can do — and it is solidly <strong>established</strong>.</p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 03</span>
+<StatusChip status={"ok"} label={"Medal-level AI · established"} printLabel={"established"} />
+<StatusChip status={"bad"} label={"\"AI solved math\" · hype"} printLabel={"contested/hype"} />
+</div>
+<h3>When AI met the proof checker</h3>
+<p>The newest and noisiest edge is the collision of machine learning with formal proof — and it is exactly where the hype filter earns its keep, because headlines routinely overreach.</p>
+<p>The genuine milestone first. In July 2024, DeepMind's <strong>AlphaProof</strong>, paired with AlphaGeometry 2, solved <strong>4 of 6 problems</strong> at the International Mathematical Olympiad, scoring 28 points — the top end of the silver-medal category, one point below the gold threshold of 29. It even cracked the fearsome Problem 6, which only 5 of roughly 600 human contestants fully solved. The methodology was published online in <em>Nature</em> on 12 November 2025, with the version of record appearing in 2026. Here's the design fact that separates it from chatbot bluster: <strong>AlphaProof works inside Lean.</strong> It auto-formalized about a million natural-language problems into ~80 million formal Lean statements, then trained itself in an <em class="term">AlphaZero-style loop</em><TipNote text={"AlphaZero-style training means the system improves by generating search attempts, checking outcomes, and using those results as new training signal."} /> where <em>Lean checks every step</em>. As DeepMind put it, there are "no hallucinations to worry about" — because a hallucinated step simply fails to compile. The neural net supplies creative search; the proof assistant supplies ground truth. That marriage is real and important. <StatusChip status={"ok"} label={"established"} printLabel={"established"} /></p>
+<p>In July 2025 the bar rose again: both DeepMind (a Gemini "Deep Think" model) and OpenAI reported <strong>gold-medal scores</strong> — 5 of 6 problems, 35 points — and, strikingly, did it working <em>end-to-end in natural language</em> within the time limit, not in Lean. DeepMind's result was officially certified by the IMO; OpenAI's was graded internally. Genuinely impressive. But here is where you deploy the calibration instinct from <strong>Day 1</strong>:</p>
+<ul>
+<li><strong>"Gold medal" is a score, not a coronation.</strong> These are competition problems — a narrow, time-boxed slice of mathematics with known-to-exist short answers. They are not unsolved research problems, and per the official 2025 results, <em>26 human contestants still outscored both AI systems</em>.</li>
+<li><strong>Dropping Lean is a trade, not a free upgrade.</strong> The 2024 silver was <em>formally verified</em> — guaranteed correct by machine. The 2025 natural-language gold was <em>human-graded</em>, which means we're back to trusting prose that could harbor a subtle gap. More general, less certain. Don't let "gold beats silver" hide that the epistemic ground shifted.</li>
+<li><strong>It is expensive and narrow.</strong> Each hard 2024 problem took two to three days of computation, and problems were hand-translated into Lean for the competition. This is not a general mathematical mind.</li>
+</ul>
+<p>And the claim to retire most firmly: <strong>AI has not "solved mathematics" or made mathematicians obsolete.</strong> <StatusChip status={"bad"} label={"hype"} printLabel={"contested/hype"} /> Until recently, AI systems could solve contest problems and assist formal proof, but had not produced an accepted landmark mathematical result on their own. That changed in an important but limited way in May 2026, when an internal OpenAI model generated a counterexample to the longstanding Erdős unit-distance conjecture; OpenAI reported that external mathematicians checked the proof, and Alon, Bloom, Gowers, Litt, Sawin, Shankar, Tsimerman, Wang, and Matchett Wood published a human-digested version on arXiv. That is a real milestone. It does not mean AI has "solved mathematics": the result still needed human verification, refinement, exposition, and interpretation, and general autonomous mathematical discovery remains uneven. The real revolution is quieter and more durable than the headlines: a 2,300-year-old standard — <em>a proof is a chain no one can doubt</em> — is being handed to machines that can search, construct, and check with growing force. (A theme we'll chase properly across <strong>Days 138–145</strong>.)</p>
+<div class="aside" style="margin-top:1.4rem;">
+<p class="h">A note on evidence status</p>
+<p>This curriculum's hype filter includes a rule worth stating: preprints, company claims, and benchmark numbers that have not yet passed peer review must be labeled as such. Search results in this space are littered with confident-looking items that have not yet been peer reviewed. Every milestone above is traced to a real, dated source — a published <em>Nature</em> paper, an official competition result, a named researcher's own announcement, a company research post, or a companion arXiv paper by reputable mathematicians. When a claim about AI and mathematics can't be traced that way, the right response is not excitement but suspicion.</p>
+</div>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">Open questions</p>
+<h2>What's genuinely unsettled</h2>
+<p>Twenty-three centuries in, the study of valid inference still leaves real questions wide open:</p>
+<ul>
+<li><strong>Is there one true logic, or many?</strong> Once intuitionistic, paraconsistent, and fuzzy logics all do useful work, "the correct logic" starts to look less like a fact about the universe and more like a choice of tool — but pluralists and monists are still genuinely at odds.</li>
+<li><strong>Discovered or invented?</strong> Are the laws of logic read off reality, baked into any possible mind, or adopted by convention? And could empirical physics ever <em>force</em> a revision, as Putnam suspected?</li>
+<li><strong>What is abduction, exactly?</strong> Is "inference to the best explanation" a real third mode, or dressed-up induction? Even whether Peirce <em>meant</em> it as inference-to-best-explanation (versus mere hypothesis-generation) is debated among his scholars.</li>
+<li><strong>Can mechanized proof change what mathematics <em>is</em>?</strong> If a result is true but only a computer has checked the proof, has anyone <em>understood</em> it? Does a verified-but-opaque proof carry the same value as an illuminating human one?</li>
+<li><strong>And the question that will stalk the AI block:</strong> when a machine outputs a true, well-supported theorem, does it <em>know</em> anything — or is it the ultimate Gettier case from <a href="/days/001-what-is-knowledge/"><strong>Day 1</strong></a>, right for reasons that have nothing to do with comprehension? (<strong>Days 138–145</strong>.)</li>
+</ul>
+</section>
+
+<div class="recap">
+<p class="h">◆ The day in three sentences</p>
+<dl>
+<div><dt>Big idea</dt><dd>Reasoning comes in three engines with three different warranties — <em>deduction</em> preserves truth and exposes what follows without adding new content, <em>induction</em> generalizes but can be broken by the next case, and <em>abduction</em> leaps to the best explanation — and inside deduction, validity (good form) is a wholly separate thing from soundness (good form plus true premises).</dd></div>
+<div><dt>Best analogy</dt><dd>Sherlock Holmes's "deductions" are really abductions — the best explanation of the clues, not a guaranteed conclusion — and a valid-but-unsound argument is a beautifully built pipe carrying sewage.</dd></div>
+<div><dt>Live controversy</dt><dd>Whether logic is discovered or invented (and whether there's one true logic or a toolkit of them), now sharpened by a real frontier where proof assistants like Lean verify cutting-edge mathematics at zero tolerance, AI has reached medal-level, and one AI-generated counterexample has become a genuine research milestone — but emphatically has <em>not</em> "solved mathematics."</dd></div>
+</dl>
+<p class="threads"><b>Threads today ›</b> computation (Curry–Howard: proofs correspond to programs; Boolean algebra in silicon; proof assistants) · information (formalization makes a proof's content machine-checkable) · emergence (massively collaborative proof settling about 22 million implication relations) — with deduction and induction tying back to <a href="/days/001-what-is-knowledge/">Day 1</a> and <a href="/days/002-scientific-method-and-demarcation/">Day 2</a>.</p>
+</div>
+
+
+<section class="sources">
+<p class="sec-eyebrow">Sources</p>
+<h2>Sources &amp; further reading</h2>
+<ol>
+<li>"Validity and Soundness." <em>Internet Encyclopedia of Philosophy</em> (accessed 2026). <a href="https://iep.utm.edu/val-snd/">iep.utm.edu/val-snd</a> <span class="meta">— the form-based definition of validity and the validity-vs-soundness distinction.</span></li>
+<li>"Deductive and Inductive Arguments." <em>Internet Encyclopedia of Philosophy.</em> <a href="https://iep.utm.edu/ded-ind/">iep.utm.edu/ded-ind</a> <span class="meta">— truth-preserving vs ampliative inference.</span></li>
+<li>Douven, I. "Abduction." <em>Stanford Encyclopedia of Philosophy</em> (rev. 2021). <a href="https://plato.stanford.edu/entries/abduction/">plato.stanford.edu/entries/abduction</a> <span class="meta">— Peirce, inference to the best explanation, and the scholarly debate over what abduction is.</span></li>
+<li>"Aristotle's Logic." <em>Stanford Encyclopedia of Philosophy.</em> <a href="https://plato.stanford.edu/entries/aristotle-logic/">plato.stanford.edu/entries/aristotle-logic</a> <span class="meta">— the syllogistic, <em>Prior Analytics</em>, and term logic.</span></li>
+<li>Bobzien, S. "Ancient Logic." <em>Stanford Encyclopedia of Philosophy.</em> <a href="https://plato.stanford.edu/entries/logic-ancient/">plato.stanford.edu/entries/logic-ancient</a> <span class="meta">— Chrysippus, the Stoic indemonstrables, and propositional logic; Łukasiewicz's reassessment.</span></li>
+<li>Boole, G. (1854). <em>An Investigation of the Laws of Thought.</em> London: Walton &amp; Maberly. See "George Boole, The Laws of Thought," <em>PhilPapers.</em> <a href="https://philpapers.org/rec/BOOTLO-4">philpapers.org/rec/BOOTLO-4</a> <span class="meta">— logic as algebra; "Logic and Mathematics."</span></li>
+<li>"Origins of Boolean Algebra in the Logic of Classes." <em>Mathematical Association of America (Convergence).</em> <a href="https://old.maa.org/press/periodicals/convergence/origins-of-boolean-algebra-in-the-logic-of-classes-george-boole-john-venn-and-c-s-peirce">old.maa.org</a> <span class="meta">— Boole, Venn, Peirce, and the path to digital logic via Shannon (1937).</span></li>
+<li>"Frege's Logic." <em>Stanford Encyclopedia of Philosophy.</em> <a href="https://plato.stanford.edu/entries/frege-logic/">plato.stanford.edu/entries/frege-logic</a> <span class="meta">— the <em>Begriffsschrift</em> (1879), quantifiers, predicate logic, and Russell's paradox.</span></li>
+<li>"Intuitionistic Logic." <em>Stanford Encyclopedia of Philosophy.</em> <a href="https://plato.stanford.edu/entries/logic-intuitionistic/">plato.stanford.edu/entries/logic-intuitionistic</a> <span class="meta">— Brouwer, Heyting, the rejection of excluded middle, the BHK interpretation.</span></li>
+<li>Priest, G., Berto, F. &amp; Weber, Z. "Dialetheism" and "Paraconsistent Logic." <em>Stanford Encyclopedia of Philosophy.</em> <a href="https://plato.stanford.edu/entries/dialetheism/">plato.stanford.edu/entries/dialetheism</a> <span class="meta">— explosion, paraconsistency vs dialetheism, the Logic of Paradox.</span></li>
+<li>Zadeh, L. A. (1965). "Fuzzy sets." <em>Information and Control</em> 8(3): 338–353. <span class="meta">doi:10.1016/S0019-9958(65)90241-X.</span> <a href="https://doi.org/10.1016/S0019-9958(65)90241-X">doi.org/10.1016/S0019-9958(65)90241-X</a> <span class="meta">— original fuzzy-set source: degrees of membership in [0,1], the basis for fuzzy logic.</span></li>
+<li>Garson, J. "Modal Logic." <em>Stanford Encyclopedia of Philosophy.</em> <a href="https://plato.stanford.edu/entries/logic-modal/">plato.stanford.edu/entries/logic-modal</a> <span class="meta">— necessity/possibility and applications to computer science and verification.</span></li>
+<li>Wadler, P. (2015). "Propositions as Types." <em>Communications of the ACM</em> 58(12): 75–84. <span class="meta">doi:10.1145/2699407.</span> <a href="https://doi.org/10.1145/2699407">doi.org/10.1145/2699407</a> See also Sørensen, M. H. &amp; Urzyczyn, P. (2006). <em>Lectures on the Curry-Howard Isomorphism.</em> Elsevier. <span class="meta">— propositions-as-types / proofs-as-programs in type theory.</span></li>
+<li>de Moura, L., Kong, S., Avigad, J., van Doorn, F. &amp; von Raumer, J. (2015). "The Lean Theorem Prover (system description)." <em>CADE-25.</em> <a href="https://lean-lang.org/theorem_proving_in_lean4/Introduction/">lean-lang.org/theorem_proving_in_lean4</a> <span class="meta">— Lean's small kernel, dependent type theory, axioms, and fully specified formal proofs.</span></li>
+<li>"Mathlib statistics." <em>Lean community</em> (accessed 14 Jun 2026). <a href="https://leanprover-community.github.io/mathlib_stats.html">leanprover-community.github.io/mathlib_stats.html</a> <span class="meta">— current theorem and definition counts; fast-moving project page.</span></li>
+<li>"100 theorems in Lean." <em>Lean community</em> (accessed 14 Jun 2026). <a href="https://leanprover-community.github.io/100.html">leanprover-community.github.io/100.html</a> <span class="meta">— 84 of Wiedijk's 100 theorem benchmarks formalized in Lean; fast-moving project page.</span></li>
+<li>Commelin, J. &amp; Topaz, A. et al. "Liquid Tensor Experiment." <em>Lean community blog</em> (completion 14 July 2022); Scholze's original challenge (Dec 2020). <a href="https://leanprover-community.github.io/blog/posts/lte-final/">leanprover-community.github.io</a> <span class="meta">— machine-checking a Fields Medalist's uncertain proof.</span></li>
+<li>Tao, T. "Formalizing the proof of PFR in Lean4." <em>terrytao.wordpress.com</em> (Nov 2023). Gowers, Green, Manners &amp; Tao, "On a conjecture of Marton," <em>Annals of Mathematics</em> (2025). <span class="meta">doi:10.4007/annals.2025.201.2.5.</span> <a href="https://doi.org/10.4007/annals.2025.201.2.5">doi.org/10.4007/annals.2025.201.2.5</a> <a href="https://terrytao.wordpress.com/2023/11/18/formalizing-the-proof-of-pfr-in-lean4-using-blueprint-a-short-tour/">terrytao.wordpress.com</a></li>
+<li>Tao, T. et al. "The Equational Theories Project." Project announced Sept 2024; retrospective paper Dec 2025 (arXiv:2512.07087). <a href="https://teorth.github.io/equational_theories/">teorth.github.io/equational_theories</a> <span class="meta">— 22,033,636 ordered pairs including self-implications; 22,028,942 nontrivial graph edges; 50+ contributors, Lean-verified.</span></li>
+<li>Buzzard, K. "Fermat's Last Theorem project." <em>Lean community blog</em> (launch 30 April 2024); EPSRC grant EP/Y022904/1 (2024–2029), Imperial College London. <a href="https://leanprover-community.github.io/blog/posts/FLT-announcement/">leanprover-community.github.io</a> <span class="meta">— in progress; "at least a 5 year project."</span></li>
+<li>Leroy, X. et al. "CompCert" — a formally verified C compiler. Yang, Chen, Eide &amp; Regehr, "Finding and Understanding Bugs in C Compilers," <em>PLDI</em> (2011). <span class="meta">doi:10.1145/1993498.1993532.</span> <a href="https://doi.org/10.1145/1993498.1993532">doi.org/10.1145/1993498.1993532</a> <a href="https://compcert.org/">compcert.org</a> <span class="meta">— six CPU-years and no wrong-code bugs found.</span></li>
+<li>Klein, G. et al. (2009). "seL4: Formal Verification of an OS Kernel." <em>SOSP '09.</em> <span class="meta">doi:10.1145/1629575.1629596.</span> <a href="https://doi.org/10.1145/1629575.1629596">doi.org/10.1145/1629575.1629596</a> <a href="https://sel4.systems/">sel4.systems</a> <span class="meta">— first machine-checked proof of OS-kernel functional correctness (Isabelle/HOL).</span></li>
+<li>"AI achieves silver-medal standard solving International Mathematical Olympiad problems." <em>Google DeepMind blog</em> (25 July 2024). <a href="https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/">deepmind.google</a> <span class="meta">— AlphaProof + AlphaGeometry 2; 28 points; works in Lean.</span></li>
+            <li>Hubert, T., Mehta, R., Sartran, L. et al. (2026). "Olympiad-level formal mathematical reasoning with reinforcement learning." <em>Nature</em> 651: 607–613. <span class="meta">doi:10.1038/s41586-025-09833-y.</span> <a href="https://doi.org/10.1038/s41586-025-09833-y">doi.org</a> <a href="https://www.nature.com/articles/s41586-025-09833-y">nature.com/articles/s41586-025-09833-y</a> <span class="meta">— the AlphaProof method paper; published online 12 Nov 2025, version of record 13 Mar 2026; ~80 million Lean problems.</span></li>
+<li>"Advanced version of Gemini with Deep Think officially achieves gold-medal standard at the IMO." <em>Google DeepMind blog</em> (July 2025). <a href="https://deepmind.google/blog/advanced-version-of-gemini-with-deep-think-officially-achieves-gold-medal-standard-at-the-international-mathematical-olympiad/">deepmind.google</a> <span class="meta">— 35/42 officially certified; natural-language proofs within the contest time limit.</span></li>
+<li>"66th IMO 2025." <em>International Mathematical Olympiad</em>. <a href="https://www.imo-official.org/editions/2025/">imo-official.org/editions/2025</a> and <a href="https://www.imo-official.org/results/individual/year/2025/">individual results</a> <span class="meta">— 630 contestants; gold cutoff 35; human score distribution.</span></li>
+<li>"Our First Proof submissions." <em>OpenAI</em> (2026). <a href="https://openai.com/index/first-proof-submissions/">openai.com/index/first-proof-submissions</a> <span class="meta">— OpenAI's later summary of its July 2025 IMO gold-medal-level result, 35/42 points.</span></li>
+<li>"Logical Pluralism," "The Normative Status of Logic," and "Logical Constants." <em>Stanford Encyclopedia of Philosophy</em> (accessed 2026). <a href="https://plato.stanford.edu/entries/logical-pluralism/">plato.stanford.edu/entries/logical-pluralism</a> · <a href="https://plato.stanford.edu/entries/logic-normative/">plato.stanford.edu/entries/logic-normative</a> · <a href="https://plato.stanford.edu/entries/logical-constants/">plato.stanford.edu/entries/logical-constants</a> <span class="meta">— logical pluralism, revising logic, and what counts as logical.</span></li>
+</ol>
+</section>
+</div>

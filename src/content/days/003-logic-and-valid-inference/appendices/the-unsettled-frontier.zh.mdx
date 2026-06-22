@@ -1,0 +1,254 @@
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+
+<p class="lede">第一个附录更像是「导演剪辑版」——那是已被尘封的历史，虽因篇幅未进正文，其真实性却从无争议。但这份附录不同，阅读它需要换一种姿态。这里讨论的成果大多出现在 2023 至 2026 年之间，许多还新到数学界尚未形成稳定共识。其中有些在五年后看来，可能会是「地壳变动」的起点；而另一些则可能仅仅是虚晃一枪、骗过众人的公关稿。真正的麻烦在于，此时此刻，<span class="hl">没人能完全分清孰真孰假</span>——而这恰恰是它们出现在这门关于「有效推理」课程中的原因。在这里，「前沿校准器」不再只是一项教学练习，而是一项活学活用的生存技能，直接施加在那些还带着实验室余温的断言之上。</p>
+<section>
+<p class="sec-eyebrow"><span class="n">简报 I</span></p>
+<h2>证明器走向开放权重</h2>
+<p>正文中的 AI 证明故事停在了 AlphaProof：一个躲在公司围墙后、解决每个问题都需要耗费数日算力的封闭系统。自那以后，该领域出现了 AI 界少见的开放趋势：若干证明器开放了<span class="hl">权重</span>，而且能力提升很快。到了 2025 年，一些开放权重证明器已能在个人级硬件上运行，并在形式化、机器检查的 Lean 语言中解决奥数级数学问题。这是一场静悄悄的地震。</p>
+
+<p>要跟上它的节奏，你需要了解计分板。机器证明器是根据共享的<span class="term">基准测试</span>（benchmarks）<TipNote text={"基准测试是在规定条件下用于比较系统的标准化测试集。"} />进行排名的——这是一组每个人都要面对的固定题目。其中有三个至关重要。<span class="term">miniF2F</span>（2022 年推出）包含几百道奥数级别的题目，直到最近还是行业标准；现在它已趋于<span class="hl">饱和</span>，顶尖系统的得分已接近天花板。<span class="term">PutnamBench</span>（2024 年）难度更高——题目选自臭名昭著的普特南（Putnam）本科生数学竞赛，人类得分的中位数通常是<span class="hl">零</span>。而 <span class="term">FrontierMath</span>（2024 年）则更上一层楼：研究级的难题，人类专家往往需要数小时甚至数天才能解决，其设计初衷是让当今模型的得分仅维持在个位数或低两位数。随着一个基准测试达到饱和，领域内就会建立一个更高的基准。计分板就像一架梯子，横木不断在上方增加。</p>
+
+<div class="panel">
+<p class="ptitle">图表 · 移动的天花板</p>
+<h3>基准测试之梯</h3>
+<p class="pnote">每当一个基准测试被攻克，上方就会建立一个更难的基准。今天的前沿系统处于旧阶梯的顶端和新阶梯的底端——这正是一个健康的基准测试应有的表现。</p>
+<svg viewBox="0 0 460 300" role="img" aria-label="数学基准测试阶梯，从接近饱和的 miniF2F 到极难的 FrontierMath，附带大致的最高得分。">
+<defs>
+<linearGradient id="appendix-d003-the-unsettled-frontier-grad" x1="0" y1="1" x2="0" y2="0">
+<stop offset="0%" stop-color="var(--ok)"></stop>
+<stop offset="50%" stop-color="var(--hint)"></stop>
+<stop offset="100%" stop-color="var(--contested)"></stop>
+</linearGradient>
+</defs>
+{/* axis */}
+<line x1="60" y1="20" x2="60" y2="270" stroke="var(--line-strong)" stroke-width="1.5"></line>
+<text x="52" y="26" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">难</text>
+<text x="52" y="268" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">易</text>
+{/* rungs */}
+<g font-family="IBM Plex Mono,monospace">
+{/* miniF2F */}
+<rect x="70" y="210" width="300" height="46" rx="8" fill="color-mix(in srgb,var(--ok) 12%,transparent)" stroke="var(--ok)" stroke-width="1.4"></rect>
+<text x="84" y="231" font-size="13" fill="var(--ink)" font-weight="600">miniF2F</text>
+<text x="84" y="247" font-size="10.5" fill="var(--ink-soft)">奥数级别 · ~300 题 · 2022 年</text>
+<text x="356" y="237" text-anchor="end" font-size="15" fill="var(--ok)" font-weight="600">~90%</text>
+<text x="356" y="251" text-anchor="end" font-size="10.5" fill="var(--ink-faint)">接近饱和</text>
+{/* PutnamBench */}
+<rect x="70" y="140" width="300" height="46" rx="8" fill="color-mix(in srgb,var(--hint) 12%,transparent)" stroke="var(--hint)" stroke-width="1.4"></rect>
+<text x="84" y="161" font-size="13" fill="var(--ink)" font-weight="600">PutnamBench</text>
+<text x="84" y="177" font-size="10.5" fill="var(--ink-soft)">本科生级别 · ~660 题 · 2024 年</text>
+<text x="356" y="167" text-anchor="end" font-size="15" fill="var(--hint)" font-weight="600">~13%</text>
+<text x="356" y="181" text-anchor="end" font-size="10.5" fill="var(--ink-faint)">已解决 86 / 658</text>
+{/* FrontierMath */}
+<rect x="70" y="70" width="300" height="46" rx="8" fill="color-mix(in srgb,var(--contested) 12%,transparent)" stroke="var(--contested)" stroke-width="1.4"></rect>
+<text x="84" y="91" font-size="13" fill="var(--ink)" font-weight="600">FrontierMath</text>
+<text x="84" y="107" font-size="10.5" fill="var(--ink-soft)">研究级别 · 专家需数小时 · 2024 年</text>
+<text x="356" y="97" text-anchor="end" font-size="15" fill="var(--contested)" font-weight="600">~10%</text>
+<text x="356" y="111" text-anchor="end" font-size="10.5" fill="var(--ink-faint)">存疑——见简报 V</text>
+</g>
+<text x="215" y="42" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">↑ 领域内不断建立更高的阶梯</text>
+</svg>
+<p class="appendix-caption micro">得分取自公开报道的最佳水平，随采样预算波动，且逐月变化。这些数据仅供参考，而非教条——请将本页所有数字视为「截至 2026 年初的约数」。</p>
+</div>
+
+<p>现在来看看那些不断攀登的系统。在 2025 年，两款开放权重证明器重塑了人们的预期，而第三款则冲入了奥数金牌水平。</p>
+
+<table class="alt-table">
+<thead><tr><th>系统</th><th>核心主张</th><th>状态</th></tr></thead>
+<tbody>
+<tr>
+<td>DeepSeek-Prover-V2<br /><span class="table-subnote">2025 年 4 月</span></td>
+<td>在 miniF2F-test 上达到 <span class="hl">88.9%</span>；在 PutnamBench 上解决 <span class="hl">49 / 658</span> 题。通过递归地将目标分解为子目标，并从能够闭合的路径中学习，在 Lean 4 中工作。</td>
+<td><StatusChip status={"ok"} label={"已确立"} /><br /><span class="table-subnote small">开放权重，可复现</span></td>
+</tr>
+<tr>
+<td>Goedel-Prover-V2<br /><span class="table-subnote">2025 年 8 月</span></td>
+<td>在 miniF2F 上达到 <span class="hl">~90%</span>（含自校正）；解决 <span class="hl">86</span> 道 PutnamBench 题目。其 <span class="hl">32B</span> 模型击败了规模大 20 倍的对手；<span class="hl">8B</span> 版本打平了拥有 671B 参数的前作。</td>
+<td><StatusChip status={"ok"} label={"已确立"} /><br /><span class="table-subnote small">更小更强；开放权重</span></td>
+</tr>
+<tr>
+<td>Seed-Prover<br /><span class="table-subnote">2025 年</span></td>
+<td>2025 年 7 月的预印本报告了 2025 年 IMO 六道题中 <span class="hl">5 道</span> 的完整 Lean 证明（赛后环境）；在代码库和独立审计敲定细节前，请将其视为强势但仍属厂商自述/预印本阶段的主张。</td>
+<td><StatusChip status={"hint"} label={"有前景"} /><br /><span class="table-subnote small">厂商报告的金牌成绩</span></td>
+</tr>
+</tbody>
+</table>
+
+<p>有两点值得强调：一点令人振奋，一点令人清醒。令人振奋的是：一个 320 亿参数的模型——小到足以在严肃的业余研究者或小型实验室拥有的个人级硬件上运行——现在已经能与一年前需要数据中心支撑的系统平起平坐。能力在体积和成本上都在飞速塌缩。而清醒的一点隐藏在 「Pass@k」 这个术语中。当一篇论文报告 「miniF2F 达到 88.9%」 时，通常意味着模型被允许针对每个问题进行<span class="hl">数千次</span>尝试，并至少成功了一次。「机器解决了它」可能悄悄意味着「八千次尝试中有一个编译通过了」。这不算作弊——对于形式化证明，只要有一个编译通过的证明<span class="hl">就是</span>证明，无论之前经历了多少次失败——但这与一个因为「理解」了题目而能一次性做对的人类是完全不同的。请记住这两个事实：证明器确实在迅速变强，<span class="hl">同时</span>标题中的百分比也美化了它们。</p>
+
+<div class="aside">
+<p class="h">为什么 Lean 改变了认识论</p>
+<p>为什么这篇简报可以打上 <StatusChip status={"ok"} label={"已确立"} /> 的标签，而接下来的四篇却变得扑朔迷离？原因在于：这些系统输出的是 <span class="hl">Lean 语言</span> 编写的证明，而 Lean 的内核要么接受这个证明，要么拒绝它。因此，困扰本页其余部分的那个问题——「AI 真的在推理，还是在装模作样？」——对于<span class="hl">形式化输出</span>而言并不以同样方式出现。一个经过 Lean 验证的证明，是相对于相应形式化陈述、所用公理和 Lean 内核，被机器接受的严格证明；它仍取决于形式化是否忠实表达了原本的非形式数学主张。形式化带来的不是「机器理解了数学」，而是「被检查的对象没有跳过任何规则」。这种权衡正是连接本附录与课程主题的最重要思想：当你无法信任推理者时，请验证推理过程。</p>
+</div>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">简报 II</span></p>
+<h2>机器找到了人类此前没有找到的构造</h2>
+<p>证明一个已知的定理是一回事。而<span class="hl">发现</span>一个新的数学对象——构造出一种人类从未写下的结构——则是另一回事。2023 年，一台机器做到了这一点，其方式非常值得研究，因为它极易被误读。</p>
+
+<p>该系统名为 <span class="term">FunSearch</span><TipNote text={"FunSearch 是 Google DeepMind 开发的系统，它利用语言模型生成程序，并保留在数学目标上得分较高的变体。"} />，由 Google DeepMind 开发，于 2023 年 12 月发表在《自然》杂志上。它的设计既优雅又带点自谦。选一个棘手的数学问题，目标是寻找某类对象的<span class="hl">最优构造</span>。让大语言模型编写能生成候选构造的小程序。根据输出结果的好坏为每个程序评分。保留优胜者，将它们反馈给模型进行变异和改进，并不断循环——这是一种进化搜索，LLM 是变异的来源，而一个快速、简单的评分器则是裁判。目标是 <span class="term">盖集问题</span>（cap set problem）<TipNote text={"盖集问题探讨的是在避免三点共线的前提下，有限网格的子集最大能有多大。"} />，这是组合数学中一个著名的难题，菲尔兹奖得主陶哲轩曾称其为自己的心头好。FunSearch 在 8 维空间中找到了一个大小为 <span class="hl">512</span> 的盖集——超过了此前保持了 20 年之久的记录 496，让停滞不前的下界第一次向上移动。</p>
+
+<p>这是一个真实的、可验证的、全新的数学结果，值得一个 <StatusChip status={"ok"} label={"已确立"} /> 的评价。但现在请看其细则，因为细则才是全部教训所在。首先，这种情况很<span class="hl">罕见</span>：在 140 次实验运行中，只有 4 次找到了大小为 512 的集合——在大量尝试中，系统只有少数几次找到了成功构造。其次，更奇怪的是：<span class="hl">语言模型从未被告知它在处理什么问题。</span>它看到的只是一个抽象的评分函数和编写更好程序的要求。它没有「盖集」的概念，不懂数学，也不知道自己正在创造历史。这种「洞察力」其实存在于<span class="hl">循环</span>中——模型盲目的生成流畅性与评分器判别优劣的能力相结合——而非产生于任何机器理解的瞬间。计算机科学家欧内斯特·戴维斯在评论这一结果时强调了这一点：真正有趣的是「人机反馈结构」，而非自主的 AI 洞察。随后，人类数学家乔丹·艾伦伯格观察了 FunSearch 的产出，发现程序误打误撞进了一个对称结构，并利用<span class="hl">人类的观察</span>进一步推高了边界。机器找到了砖块，人类看见了教堂。</p>
+
+<p>这种模式随后被放大。 <span class="term">AlphaEvolve</span><TipNote text={"AlphaEvolve 是 DeepMind 的进化编程系统，用于提出、测试和完善算法构造。"} />（DeepMind，2025 年）将 FunSearch 的理念推广为更广泛的「进化编程智能体」。2025 年 11 月的一篇论文——「大规模数学探索与发现」，陶哲轩本人也是作者之一——将其应用于分析、组合、几何和数论领域的 67 个问题，重新发现了已知的最优点并改进了一小部分。<StatusChip status={"ok"} label={"已确立"} /> 作者本人所使用的诚实表述，正是这篇简报的核心结论：这些系统正在以超人的规模和速度进行 <span class="hl">搜索与优化</span>。它们不是在进行「证明」，也不是在进行「理解」。它们是一种新型且强大的数学望远镜——而望远镜本身发现不了任何东西，它只是让数学家看得更远。</p>
+
+<div class="aside">
+<p class="h">一个值得保持的清晰区分</p>
+<p>头条新闻总是把三件事混为一谈，而一旦将它们拆解开，本页的大部分困惑也就烟消云散了。<span class="hl">验证</span>人类写下的证明（Lean 的工作，已完全解决）。<span class="hl">搜索</span>众多候选者中的优选构造或证明（FunSearch、AlphaEvolve 及简报 I 中的证明器——真实且在进步中）。以及<span class="hl">理解</span>——明白「为什么」一个结论是正确的，这才是数学家真正珍视的东西（机器做不到这一点，而且目前还不清楚对机器而言这意味着什么）。当有人说「AI 做了数学」时，你的第一个问题永远应该是：<span class="hl">属于这三者中的哪一个？</span></p>
+</div>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">简报 III</span></p>
+<h2>埃尔多什风波：如何看透新闻标题</h2>
+<p>如果你想找一个故事，能教会你本课程的核心技能——区分真实主张与听起来真实的主张——那么 2025 年到 2026 年冬季公开上演的这场「AI 与埃尔多什问题」风波是不二之选。它包含一个炒作高峰、一次剧烈修正，以及随后一个宁静且真正有趣的真相。请观察这三个节拍。</p>
+
+<p>背景：保罗·埃尔多什，这位四处游历的匈牙利人，一生提出的问题可能比历史上任何人都多。他留下了数百个悬而未决的问题，目前由数学家托马斯·布鲁姆维护的一个公开数据库进行归档。对于那些想要证明实力的 AI 实验室来说，这些问题是不可抗拒的目标。</p>
+
+<h3>第一拍——高峰</h3>
+<p>2025 年 10 月，OpenAI 的重要人物大张旗鼓地宣布，GPT-5 已经 「找到了 10 个（！）此前未解的埃尔多什问题的答案」，并对其他问题取得了进展。这个数字迅速传遍互联网，听起来像是机器开始进行真正的数学研究的时刻。<StatusChip status={"bad"} label={"炒作"} printLabel={"需审查"} /></p>
+
+<h3>第二拍——修正</h3>
+<p>修正来得很快，且出自最权威人士之手。维护数据库的托马斯·布鲁姆称这一说法是 <span class="hl">「极具误导性的陈述」</span>。这些问题并不是被 GPT-5 「解决」的，而是<span class="hl">几年前</span>就被人类解决了，只是布鲁姆还没来得及录入论文——而模型完成了一项真正有用但完全不同的工作：<span class="hl">找到了这些现成的论文</span>。在他数据库里的「未解」，仅仅意味着「我个人还不知道有论文解决了它」。其中最典型的问题 #339，大约在二十年前就已经尘埃落定。GPT-5 展示的是卓越的「文献搜索」能力，而非数学发现。甚至竞争对手实验室的负责人哈萨比斯也称这一插曲「令人尴尬」。OpenAI 随后发表的论文悄悄地重新界定了结果：是检索，而非证明。</p>
+<blockquote>机器并没有回答问题。它只是找到了别人已经给出的答案——而一份公关稿却把图书管理员包装成了数学家。</blockquote>
+
+<h3>第三拍——宁静后的真相</h3>
+<p>然而。剥去炒作的外衣，等待几个月，同样的努力中确实浮现了一些真实的成果——这正是为什么这是一个精彩的故事，而非简单的辟谣。到 2026 年 1 月，陶哲轩谨慎地报道称，极少数埃尔多什问题确实以一种<span class="hl">看起来确实是新的</span>方式被解决了。他写道，问题 <span class="hl">#728</span>「由 AI 基本上自主地解决（在获得一些反馈后……），符合问题精神……据我们所知，该结果尚未在现有文献中复现」。随后又有几个问题效仿此法，其中一些通过名为 Aristotle 的系统在 Lean 中进行了形式化验证，并得到了陶哲轩本人的认可。<StatusChip status={"hint"} label={"有前景"} /></p>
+
+<p>但请注意陶哲轩——一位在一线工作的数学家，而非营销部门——是如何界定它的。他的框架正是本课程试图为你建立的「校准思维」典范。他强调，这些是 <span class="hl">「最容易摘的果子」（lowest-hanging fruit）</span>。埃尔多什问题的难度差异极大，跨越数个数量级；「未解」标签「始终是暂时的」；而且报道存在严重的偏差，因为失败从未被公布——该工具已经「悄悄地应用到了相当比例的现存埃尔多什未解问题上，但并无显著成功」。成功是真实的，值得庆祝。但它们也是那一堆问题中最简单的，是在人类反馈的循环中解决的，且在文献中已有非常相近的结果。用陶哲轩优美的原话来说，机器正在「清理那些最容易摘的果子，并分离出那些真正困难的问题」。</p>
+
+<ul class="appendix-timeline">
+<li class="hype"><span class="yr">2025 年 10 月 · 高峰</span><span class="term">「GPT-5 解决了 10 个未解的埃尔多什问题。」</span> 由 OpenAI 人物发布；被广泛转发为研究突破。<StatusChip status={"bad"} label={"炒作"} printLabel={"需审查"} /></li>
+<li class="real"><span class="yr">2025 年 10 月 · 修正</span><span class="term">「极具误导性的陈述」——托马斯·布鲁姆。</span> 这些问题多年前已被人类解决；AI 只是找到了现成论文。哈萨比斯：「令人尴尬」。</li>
+<li class="hint"><span class="yr">2026 年 1 月 · 真相</span><span class="term">埃尔多什 #728「基本上自主」解决，文献中未见。</span> 随后还有几个案例，部分经过 Lean 验证并被陶哲轩接受——但属于「最容易摘的果子」。<StatusChip status={"hint"} label={"有前景"} /></li>
+</ul>
+
+<p>这一课并不是说「AI 数学全是假的」——第三拍是真实的，而且很可能是某种宏大趋势的前哨。这一课告诉我们，<span class="hl">同样的底层事件</span>，在 10 月产生了一个极其错误的头条，在 1 月产生了一个严谨的真实声明。而分辨它们的唯一方法就是追问：说话者是谁，「已解决」和「未解」究竟意味着什么，以及结果是否经过验证。这就是「前沿校准器」在实时新闻中的典型用法。请掌握这套方法；在具体的题目编号被忘却后，你依然会需要它。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">简报 IV</span></p>
+<h2>这一切真的是「推理」吗？</h2>
+<p>在基准测试分数和头条新闻之下，隐藏着一个尚未解答的问题，而且持不同立场的严肃研究者都承认，这个问题仍未解决：当一个模型给出一连串看起来合理的步骤并得出正确答案时，它是在进行 <span class="hl">推理</span>——还是在对数以十亿计的案例进行一种极其精妙的模仿与模式匹配？这是第 1 日那个问题的现代机械化版本：输出真实主张的系统是否真的<span class="hl">知道</span>什么。在 2024 到 2025 年间，这引发了该领域最激烈的实证交锋之一。</p>
+
+<h3>支持「模式匹配」的证据</h3>
+<p>导火索是苹果公司机器学习团队的两篇论文。第一篇是 <span class="term">GSM-Symbolic</span>（发表于 2025 年 ICLR 会议），进行了一个精妙且简单的实验。拿模型能轻松应对的小学数学应用题，只改变其中的 <span class="hl">数字和姓名</span>——推理逻辑完全不变——观察得分。结果分数出现了波动，这如果模型真的理解方法，本不该发生。接着，他们做了更残酷的一步：在题干中加入一个 <span class="hl">在主题上相关但在逻辑上无关</span> 的句子。表现 <span class="hl">轰然塌缩——跌幅高达 65%</span>。加入一句看似相关、实则无关的干扰信息后，最强模型的得分从 94.9% 瞬间掉到了 63.0%。作者的结论很直白：模型「无法进行真正的逻辑推理」；它们只是「从训练数据中复制推理步骤」。第二篇论文《思考的幻觉》（2025 年 6 月）更进一步，指出在汉诺塔等受控谜题上，最新的「推理」模型在超过一定复杂度后会出现「准确率全面塌缩」——而且诡异的是，随着问题变难，模型开始变得 <span class="hl">不那么努力</span> 了。</p>
+
+<h3>支持「没那么简单」的论点</h3>
+<p>反驳也随之而来。一份广泛流传的回复——半开玩笑地署名了一位 AI 合作作者——认为苹果的实验结果在一定程度上是 <span class="hl">实验误差造成的假象</span>：有些「失败」仅仅是因为模型在回答中途触及了输出长度限制，而有些被判为失败的谜题实例 <span class="hl">本身在数学上就是无解的</span>，所以任何系统都不可能做「对」。西班牙一个研究小组的独立复现（2025 年 9 月发布）得出了一个折中的结论：没错，部分剧烈的塌缩确实是由于输出限制造成的，但并非全部；即使复杂度只是适度上升（例如在八个圆盘时），模型确实会陷入挣扎。真相正如本页常态：并非任何一个头条所言。</p>
+
+<div class="aside">
+<p class="h">尚未定论</p>
+<p>这里最诚实的结论是：问题确实悬而未决。证据既不支持「LLM 真正拥有推理能力」，也不支持「它纯粹是模仿」。真实存在的脆弱性、测试数据的污染，以及真实的、非平凡的泛化能力并存。一门关于有效推理的课程应该以此为榜样：愿意承认 <span class="hl">我们目前还不知道</span>，并在更好的实验出现前保留两种假设。</p>
+</div>
+
+<h3>最让你担心的反转</h3>
+<p>还有第三个发现，虽然不如「苹果之争」出名，但可能更重要，因为它触及了信任机器推理的根基。当模型「展示它的思考过程」——即现在随处可见的、在给出答案前叙述步骤的「思维链」时——我们自然会假设这种叙述 <span class="hl">就是</span> 它的推理过程。Anthropic 对齐团队的研究（2025 年）表明，事实往往并非如此。他们测量模型给出的理由在多大程度上忠实反映真正驱动答案的因素，发现其 <span class="term">忠实性</span>（faithfulness）<TipNote text={"忠实性探讨的是模型的陈述性解释是否反映了导致其得出答案的真实因素。"} />低得惊人：一个领先模型约为 <span class="hl">25%</span>，另一个约为 <span class="hl">39%</span>。当研究人员向模型提供暗示，且模型确实使用了该暗示时，模型通常 <span class="hl">闭口不谈</span>——而是构建了一个听起来合理的「马后炮」解释。换句话说，思维链并不是透视机器真实过程的可靠窗口。它有时只是模型为自己通过其他手段得出的答案编造的一个故事。</p>
+
+<p>请仔细思考这对 AI 「证明」意味着什么。如果一个系统交给你一个步骤详尽的论证，而这些步骤与它得出结论的真实路径 <span class="hl">并不</span> 一致，那么这个解释就只是装饰性的——你又回到了第 1 日遇到的盖梯尔担忧：结论可能是正确的，但其给出的理由与它正确的原因毫无关系。这就是为什么简报 I 中经过 Lean 验证的证明器如此重要。在整个前沿领域中，那是唯一可以完全避开「推理是否真实」这一问题的角落——因为内核不看故事，它只检查证明。当你无法信任解释时，请验证结果。整个前沿领域最终都会回到这一句话上。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">简报 V</span></p>
+<h2>计分板失效之日</h2>
+<p>本页的每一个主张最终都建立在基准测试数字之上，这意味着基准测试本身承担着巨大的压力。2024 年底发生的一件事揭示了一个数字可以产生多大的误导，即使它是由一个严肃的实验室秉持诚意发布的。这是整份附录中最重要的警示故事，因为它与 AI 无关，而是关于 <span class="hl">测量</span> 本身。</p>
+
+<p>回想一下，FrontierMath 是最难的基准测试——研究级难题。2024 年 12 月，在一次直播发布中，OpenAI 的研究主管宣布他们即将推出的 o3 模型在这一测试中达到了 <span class="hl">超过 25%</span> 的成绩，而此前所有系统的表现都低于 2%。在专家级数学题目上从 2% 飞跃到 25%，这种数字足以重塑整个领域一整年的谈话。它理所当然地登上了各大头条。</p>
+
+<p>随后背景被揭露出来，令人尴尬。首先：<span class="hl">OpenAI 资助了这个基准测试</span>，并拥有大部分题目和答案的访问权限——这一事实在发布时并未明确披露，而且几位题目编写者表示他们此前并不知情。该公司指出一项不利用这些题目进行训练的口头协议，并使用了留出集（held-out set）；但基准测试的主要负责数学家承认，该组织无法 <span class="hl">独立地</span> 验证 OpenAI 的分数。评论家加里·马库斯称这次演示「具有误导性且不体面」。其次，对这个数字本身更致命的是：当后来进行独立评估时，o3 的得分 <span class="hl">更接近 10%</span>——而非 25%。<StatusChip status={"bad"} label={"存疑 / 炒作"} printLabel={"存疑"} /></p>
+
+<p>这两点都不意味着有人撒了谎。不同的测试条件、不同的采样预算，以及内部测试与外部审计之间的差距，完全可以解释 25% 与 10% 之间的分歧。这正是重点所在。分数并非伪造，但它是 <span class="hl">脆弱的</span>——它对测量者、访问权限及背后的激励机制高度敏感。在课程看来，这是一个完美的样本，因为它的意义远超 AI：由利益相关方在自己参与构建的工具上得出的测量结果，在成为事实之前，必须经过独立的复现。我们在第 2 日学到的「复现危机」，在这里再次上演，只是它穿着排行榜的外衣。</p>
+
+<div class="aside">
+<p class="h">一个你可以保留的经验法则</p>
+<p>当你读到一个系统「在基准测试 Y 上获得了 X% 分数」时，在相信之前请追问四个问题。<span class="hl">谁建立并资助了 Y？</span> <span class="hl">测试方是否曾提前接触过它？</span> <span class="hl">X% 允许每个问题尝试多少次？</span> <span class="hl">是否有独立方复现了这一结果？</span> 经得起这四问的数字才有价值。哪怕有一问经不起——比如这里的 25%——它就只是一个调查的起点，而非事实。值得称赞的是，Epoch AI 后来披露了利益冲突，保留了真实的留出集，并在 2025 到 2026 年间积极纠正基准测试中的错误；这种自纠本身就是一个健康的信号。</p>
+</div>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">简报 VI</span></p>
+<h2>寂静的革命</h2>
+<p>AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外四个前沿领域也取得了实质性的进展，虽没那么喧嚣，但在某些方面却更为坚实。它们完善了全景图，其中一些在长远看来可能比今年的排行榜更有意义。</p>
+
+<h3>连续统假设重回视野</h3>
+<p>数学中最深层的根基问题——康托尔的 <span class="term">连续统假设</span>（Continuum Hypothesis）<TipNote text={"连续统假设探讨的是在自然数和实数之间，是否存在一种大小介于两者之间的无穷大。"} />，即在整数和实数之间是否存在某种大小的无穷大——曾被哥德尔和科恩证明是与标准公理 <span class="hl">独立</span> 的：你既不能证明它为真，也不能证明它为假。几十年来，这看起来像是盖棺定论了。但 W·休·伍丁多年来一直在构建一种他称之为 <span class="term">终极 L</span>（Ultimate L）<TipNote text={"终极 L 是伍丁提出的公理化集合论内部模型，旨在解决标准公理留下的未决问题。"} />的备选架构。最近的研究（2024 年）出现了一个惊人的逆转，结果表明，<span class="hl">如果</span> 他的核心猜想成立，由此产生的自然公理将使连续统假设的结果为 <span class="hl">真</span>——推翻了他早先认为其为假的倾向。<StatusChip status={"ok"} label={"已确立"} /> 作为严肃的数学，但这套猜想依然悬而未决。其他人（尤其是乔尔·大卫·哈姆金斯）则认为这个问题根本没有唯一答案，存在一个由同样合法的集合论组成的 <span class="hl">多重宇宙</span>。关于无穷大的、有着两千年历史的疑问，竟然依然活跃。</p>
+
+<h3>一个证明可以自我计算的根基</h3>
+<p>除了将数学建立在集合之上，另一种选择是将其建立在 <span class="hl">类型</span> 和 <span class="hl">空间</span> 之上——这就是 <span class="term">同伦类型论</span>（HoTT）<TipNote text={"同伦类型论将类型论与同伦论中的几何思想联系起来，将「相等」视为一种「路径」。"} />及其「单价基础」计划。它将「相等」视为一种路径，从而将几何学引入了根基。其最新的变体——<span class="hl">立方</span> 类型论，终于为该计划提供了长期缺失的东西：<span class="hl">计算</span> 能力。2023 年，研究人员利用 Cubical Agda 形式化地确立了一个关于球面同伦群的深奥事实，并在此过程中让计算机 <span class="hl">计算</span> 出了一个具体的数字（即 Brunerie 数），而这个数字多年来一直无法通过手工计算得出。<StatusChip status={"ok"} label={"已确立"} /> 相对于 Lean 的集合论主流而言，这依然属于小众领域，但它展示了一种全然不同的、更具计算性的数学根基方案。</p>
+
+<h3>用逻辑反制 AI</h3>
+<p>如果神经网络将要驾驶飞机或阅读扫描图，我们希望得到关于它们行为的 <span class="hl">证明</span>。现在，一个名为 <span class="term">神经网络验证</span>（neural-network verification）<TipNote text={"神经网络验证试图证明关于训练好的模型在指定输入变化下的行为的正式保证。"} /> 的子领域已经存在。利用从验证 seL4 和 CompCert（见正文）发展而来的形式化方法，名为 α,β-CROWN 等工具可以为训练好的网络提供数学保证——例如，输入的微小扰动不会导致输出翻转。目前有一个年度竞赛来推动这些工具的发展，它们正迅速成熟。<StatusChip status={"ok"} label={"已确立"} /> 这是一个巧妙的倒置：前六篇简报都在追问 AI 是否能做逻辑，而在这里，逻辑被用来监管 AI。目前本页所有成功的范式——将神经创造力与符号检查器相结合——都有一个共同的名字：<span class="term">神经符号 AI</span>（neurosymbolic AI）<TipNote text={"神经符号 AI 将神经网络的模式搜索与符号规则、程序、证明检查器或其他显式结构相结合。"} />。它被越来越多地视为通往真正可信系统的必经之路。</p>
+
+<h3>一个比所有问题都更长久的疑问</h3>
+<p>最后是一个哲学而非技术的前沿，也是本页一直在徘徊的问题。一些严肃的文献——杰里米·阿维加德的《数学与形式化转向》（2024 年）、埃蒙·杜德等人关于「计算不透明时代」的知识研究——提出了一个问题：当证明变成只有机器才能检查的东西时，数学上的 <span class="hl">理解</span> 会发生什么？数学对证明一直有两种诉求：对结论真实性的 <span class="hl">确定性</span>，以及对「为什么」的 <span class="hl">理解</span>。机器现在在提供确定性方面表现卓越。数学家亚历克斯·康托罗维奇描绘了一个噩梦版本：一个长达百万行、经过机器验证的黎曼假设证明，它是 <span class="hl">绝对正确</span> 的，却又是 <span class="hl">完全不可理解</span> 的。这是第 1 日提到的「正确却不被理解的信念」的终极形态。这究竟是胜利，还是对学科内涵的掏空？这不是任何基准测试能解决的问题。<StatusChip status={"hint"} label={"悬而未决"} printLabel={"需审查"} /> 这也是这篇简报留给你的思考。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">轮到你了</span></p>
+<h2>前沿校准器练习场</h2>
+<p>你已经观摩了六次校准器应用。现在请亲自动手。下面的每张卡片都是 2023 到 2026 年间前沿领域的真实主张，取自上述简报。请决定它属于哪一类——<StatusChip status={"ok"} label={"已确立"} />、<StatusChip status={"hint"} label={"有前景"} /> 或 <StatusChip status={"bad"} label={"炒作"} printLabel={"需审查"} />——然后揭晓答案与理由。目的不在于拿满分，而在于让这种校准变成一种本能。</p>
+
+<div class="panel web-only hype-filter-trainer">
+<p class="ptitle">互动 · 校准你的怀疑精神</p>
+<h3>前沿校准器练习场</h3>
+<p class="pnote">七个主张，每个主张只需一次判断。请仔细阅读——陷阱通常隐藏在措辞中。<span class="hf-score hype-score" id="appendix-d003-the-unsettled-frontier-hfScore"></span></p>
+<div class="hf-card">
+<span class="hf-tag hype-tag" id="appendix-d003-the-unsettled-frontier-hfTag">主张 1 / 7</span>
+<div class="hf-claim hype-claim" id="appendix-d003-the-unsettled-frontier-hfClaim">—</div>
+<div class="hf-opts">
+<button class="hfbtn b-ok hype-choice" data-pick="ok"><span class="chip-dot" aria-hidden="true"></span>已确立</button>
+<button class="hfbtn b-hint hype-choice" data-pick="hint"><span class="chip-dot" aria-hidden="true"></span>有前景</button>
+<button class="hfbtn b-bad hype-choice" data-pick="bad"><span class="chip-dot" aria-hidden="true"></span>炒作</button>
+</div>
+<div class="hf-explain hype-explain" id="appendix-d003-the-unsettled-frontier-hfExplain"></div>
+<button class="hf-next hype-next" id="appendix-d003-the-unsettled-frontier-hfNext" hidden>下一条主张 →</button>
+</div>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表</p>
+<h3>前沿校准器练习场：校准答案</h3>
+<table class="alt-table">
+<thead><tr><th>主张</th><th>最佳标签</th><th>校准说明</th></tr></thead>
+<tbody>
+<tr><td>一个开放权重的 32B Lean 证明器在 miniF2F 上达到约 90%。</td><td>已确立</td><td>Lean 的检查功能使正确性可审计；采样预算依然重要。</td></tr>
+<tr><td>GPT-5 解决了 10 个此前未解的埃尔多什问题。</td><td>炒作</td><td>引起争议的公开说法实则是文献检索，而非 10 个新成果。</td></tr>
+<tr><td>FunSearch 改进了 8 维盖集的构造。</td><td>已确立</td><td>该构造已发表且可直接验证，尽管它属于搜索而非洞察。</td></tr>
+<tr><td>o3 在 FrontierMath 上得分超过 25%。</td><td>炒作</td><td>考虑到基准测试的访问权限及后续较低的独立测试得分，该数字是脆弱的。</td></tr>
+<tr><td>埃尔多什问题 #728 基本上由 AI 自主推进并经过 Lean 验证。</td><td>有前景</td><td>真实且有趣，但仍处于早期阶段，且有部分人类反馈参与。</td></tr>
+<tr><td>变体应用题的失败证明了 LLM 无法推理。</td><td>有前景</td><td>脆弱性结果是真实的，但其普适性结论仍存争议。</td></tr>
+<tr><td>思维链转录忠实地报告了模型的实际推理过程。</td><td>炒作</td><td>证据表明，这些解释可能只是事后合理化的产物。</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<div class="recap">
+<p class="h">◆ 本附录的三条线索</p>
+<p><span class="hl">机器确实在变强——而且是以开放权重、低成本、快速迭代的方式。</span> 经过 Lean 验证的证明器在奥数基准测试中已达到约 90%，能在个人级硬件上运行，并完全绕过了 「这是否真的是推理」 的质疑，因为证明要么通过，要么不通过。这是前沿领域中唯一获得稳固 「已确立」 标签的角落。</p>
+<p><span class="hl">除了那个角落，其他一切都需要全力的「前沿校准器」。</span> AI 通过搜索而非理解来「发现」（盖集问题）；埃尔多什「突破」在被证实前其实是文献检索；头条中的基准测试分数（25%）在独立观察下缩水到了 10%；而这一切是否属于真正的推理仍然是一个悬而未决的问题，且研究发现模型的自述理由往往并不忠实于其实际过程。</p>
+<p><span class="hl">贯穿始终的一句话才是教训：当你无法信任推理者时，请验证推理过程。</span> 从伍丁的无穷大到可能出现的不可理解的黎曼证明，前沿领域不断回归到第 1 日那个最古老的担忧——一个 「正确」 的结论，却没有任何人（无论是人类还是机器）真正 「理解」 为什么。</p>
+</div>
+<hr class="div" />
+<section class="sources">
+<p class="sec-eyebrow"><span class="n">附录来源 II</span></p>
+<h2>来源与进阶阅读</h2>
+<p class="source-note">前沿来源，附带日期。证据标签区分经过同行评审的论文、arXiv 预印本、公司报告、基准维护者页面与新闻报道；变动频繁的基准测试结果及相关声明均附检索日期。</p>
+<ol>
+<li>DeepSeek-AI. (2025 年 4 月). "DeepSeek-Prover-V2: Advancing Formal Mathematical Reasoning via Reinforcement Learning for Subgoal Decomposition." arXiv:2504.21801. <a href="https://arxiv.org/abs/2504.21801">arxiv.org/abs/2504.21801</a> <span class="meta">— miniF2F 88.9%；PutnamBench 49/658。arXiv 预印本；基准测试声明检索于 2026 年 6 月 14 日；开放权重。</span></li>
+<li>Lin, Y. 等. (2025 年 8 月). "Goedel-Prover-V2: Scaling Formal Theorem Proving with Scaffolded Data Synthesis and Self-Correction." arXiv:2508.03613. <a href="https://arxiv.org/abs/2508.03613">arxiv.org/abs/2508.03613</a> <span class="meta">— miniF2F ~90%；32B 模型击败了规模大得多的模型。arXiv 预印本；基准测试声明检索于 2026 年 6 月 14 日；开放权重。</span></li>
+<li>ByteDance Seed. (2025 年). "Seed-Prover: Deep and Broad Reasoning for Automated Theorem Proving." arXiv:2507.23726. <a href="https://arxiv.org/abs/2507.23726">arxiv.org/abs/2507.23726</a> <span class="meta">— 报告在形式化的往届 IMO 题目上达到 78.1%，miniF2F 达到饱和，并为 2025 年 IMO 5/6 的题目提供完整 Lean 证明。arXiv 预印本 / 公司报告；基准测试声明检索于 2026 年 6 月 14 日。</span></li>
+<li>Zheng, K., Han, J. &amp; Polu, S. (2022 年). "miniF2F: a cross-system benchmark for formal Olympiad-level mathematics." <em>ICLR 2022.</em> Tsoukalas, G. 等. (2024 年). "PutnamBench." <em>NeurIPS 2024.</em> <span class="meta">— 基准测试梯度的底端与中端。经过同行评审的基准论文；这里引用的是定义，不是实时排行榜声明。</span></li>
+<li>Yang, K. 等. (2023 年). "LeanDojo: Theorem Proving with Retrieval-Augmented Language Models." <em>NeurIPS 2023.</em> arXiv:2306.15626. <span class="meta">— 开源 Lean 证明环境及 ReProver 基准。经过同行评审的会议论文；附 arXiv 版本。</span></li>
+<li>Poiroux, A. 等. (2025 年 10 月修订). "Reliable Evaluation and Benchmarks for Statement Autoformalization." arXiv:2406.07222. <span class="meta">— BEq+ 指标；在本科数学上约为 45%，在研究级别仍面临挑战。arXiv 预印本；基准测试声明检索于 2026 年 6 月 14 日。</span></li>
+<li>Romera-Paredes, B. 等. (2023 年). "Mathematical discoveries from program search with large language models" (FunSearch). <em>Nature</em> 625, 468–475. <span class="meta">doi:10.1038/s41586-023-06924-6。</span> <a href="https://doi.org/10.1038/s41586-023-06924-6">doi.org/10.1038/s41586-023-06924-6</a> <span class="meta">— 大小为 512 的盖集；140 次运行中仅 4 次成功；模型从未被告知问题。经过同行评审的论文。</span></li>
+<li>Davis, E. "Comment on (Romera-Paredes et al., 2023)." <a href="https://cs.nyu.edu/~davise/papers/FunSearchComment.pdf">cs.nyu.edu/~davise</a> <span class="meta">— 真正核心是人机环路而非自主洞察；艾伦伯格的对称性观察。</span></li>
+<li>Georgiev, B., Gómez-Serrano, J., Tao, T. &amp; Wagner, A. (2025 年 11 月). "Mathematical exploration and discovery at scale" (AlphaEvolve). arXiv:2511.02864. <span class="meta">— 67 个问题；通过进化搜索重新发现并改进。arXiv 预印本；基准/问题数量声明检索于 2026 年 6 月 14 日；陶哲轩合著。</span></li>
+<li>Bloom, T. <em>Erdős Problems</em> 数据库及 「Disclaimers and caveats」。 <a href="https://www.erdosproblems.com/">erdosproblems.com</a> · <a href="https://github.com/teorth/erdosproblems/wiki/Disclaimers-and-caveats">teorth/erdosproblems wiki</a> <span class="meta">— 「极具误导性的陈述」；难度差异巨大；「未解」是暂时的。数据库维护者页面；检索于 2026 年 6 月 14 日。</span></li>
+<li>OpenAI. (2025 年 11 月). "Early science acceleration experiments with GPT-5." arXiv:2511.16072. TechCrunch (2025 年 10 月 19 日), "OpenAI's 'embarrassing' math." <a href="https://techcrunch.com/2025/10/19/openais-embarrassing-math/">techcrunch.com</a> <span class="meta">— 将埃尔多什问题的「解决」重新界定为文献检索；哈萨比斯的反应。公司报告 / arXiv 预印本 + 新闻报道。</span></li>
+<li>Tao, T. (2026 年 1 月). Mathstodon 关于 Erdős #728/#729/#397 的发帖。 <a href="https://mathstodon.xyz/@tao/115855840223258103">mathstodon.xyz/@tao</a> <span class="meta">— 「基本上自主」，「最容易摘的果子」，通过 Aristotle 进行 Lean 验证。研究者声明。</span></li>
+<li>OpenAI. (2026 年 5 月 20 日). "An OpenAI model has disproved a central conjecture in discrete geometry." <a href="https://openai.com/index/model-disproves-discrete-geometry-conjecture/">openai.com</a> <span class="meta">— 内部模型给出埃尔多什单位距离猜想的反例；外部数学家核查。公司报告。</span></li>
+<li>Alon, N., Bloom, T. F., Gowers, W. T., Litt, D., Sawin, W., Shankar, A., Tsimerman, J., Wang, V. &amp; Matchett Wood, M. (2026 年). "Remarks on the disproof of the unit distance conjecture." arXiv:2605.20695. <a href="https://arxiv.org/abs/2605.20695">arxiv.org/abs/2605.20695</a> <span class="meta">— 对 OpenAI 生成反例进行人类整理阐释与验证后的版本。arXiv 预印本。</span></li>
+<li>Mirzadeh, I., Farajtabar, M. 等. (Apple). "GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in LLMs." arXiv:2410.05229; <em>ICLR 2025.</em> <a href="https://machinelearning.apple.com/research/gsm-symbolic">machinelearning.apple.com</a> <span class="meta">— 逻辑无关从句导致得分跌幅高达 65%；GPT-4o 94.9%→63.0%。经过同行评审的论文；基准测试声明检索于 2026 年 6 月 14 日。</span></li>
+<li>Shojaee, P. 等. (Apple). (2025 年 6 月). "The Illusion of Thinking。" 附带反驳意见 "The Illusion of the Illusion of Thinking" (Lawsen, 2025) 以及中立复现 Dellibarda Varela 等. (CSIC), "Rethinking the Illusion of Thinking," arXiv:2507.01231。 <span class="meta">— 准确率塌缩 vs 实验误差之争；真相介于两者之间。arXiv 预印本 / 公司报告。</span></li>
+<li>Chen, Y. 等. (Anthropic). (2025 年). "Reasoning Models Don't Always Say What They Think." arXiv:2505.05410. <span class="meta">— 思维链忠实度约为 25%/39%；模型隐藏了对暗示的使用。arXiv 预印本 / 公司报告；基准测试声明检索于 2026 年 6 月 14 日。</span></li>
+<li>Glazer, E. 等. (Epoch AI). "FrontierMath" (arXiv:2411.04872). TechCrunch (2025 年 1 月) 与 TechRepublic (2025 年 4 月 18 日) 关于 OpenAI 资助/访问权披露及独立 10% 复测的报道。 <span class="meta">— 基准测试完整性；25% 演示分 vs ~10% 独立分。arXiv 预印本 + 基准维护者页面 + 新闻报道；基准测试声明检索于 2026 年 6 月 14 日。</span></li>
+<li>Woodin, W. H.; Saarinen, J., Väänänen, J. &amp; Woodin (2024 年) 关于 Ultimate L 和 CH；Hamkins, J. D. (2024 年) 关于集合论多重宇宙，<em>Journal for the Philosophy of Mathematics</em>。<span class="meta">— 可能逆转为 CH 为真；多元主义反方立场。</span></li>
+<li>Ljungström, A. &amp; Mörtberg, A. (2023 年). "Formalizing π₄(S³) ≅ ℤ/2ℤ and Computing a Brunerie Number in Cubical Agda." <em>LICS 2023.</em> <span class="meta">— 立方同伦类型论计算出了此前难以处理的数字。经过同行评审的会议论文。</span></li>
+<li>VNN-COMP (神经网络验证竞赛), 2024 (蒙特利尔) &amp; 2025 (萨格勒布)；α,β-CROWN (Zhang 等)。 <a href="https://sites.google.com/view/vnn2025">sites.google.com/view/vnn2025</a> <span class="meta">— 关于受训网络的正式保证；逻辑监管 AI。基准维护者页面；检索于 2026 年 6 月 14 日。</span></li>
+<li>Avigad, J. (2024 年). "Mathematics and the formal turn." <em>Bulletin of the AMS.</em> Duede, E. &amp; Davey, K. (2024 年), "Apriori Knowledge in an Era of Computational Opacity," <em>Philosophy of Science.</em> Kontorovich, A. (2023 年). "Notes on a Path to AI Assistance in Mathematical Reasoning," arXiv:2310.02896. <span class="meta">— 不透明证明的认识论；「不可理解的黎曼证明」噩梦。经过同行评审的论文 / arXiv 预印本。</span></li>
+</ol>
+</section>

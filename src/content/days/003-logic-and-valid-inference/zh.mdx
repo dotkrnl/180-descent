@@ -1,0 +1,360 @@
+import sherlockHolmes from "../../../assets/images/open-license/sherlock-holmes-watson-sidney-paget.jpg";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+
+<header class="hero wrap">
+<p class="eyebrow">模块一 · 知识与推理的根基 · <span class="daymark">第 003 日 / 180</span></p>
+<h1>逻辑与有效推理</h1>
+<p class="sub">从前提通往结论有三条路，只有一条真正保险。</p>
+
+<figure class="hero-art">
+<svg viewBox="0 0 460 250" role="img" aria-label="三种推理之箭：演绎向内收敛、确定无疑；归纳越过圆点向外延伸；溯因一跃而起、奔向解释。">
+<defs>
+<marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--accent)"></path></marker>
+<marker id="ahb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--brass)"></path></marker>
+<marker id="ahc" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--contested)"></path></marker>
+</defs>
+{/* DEDUCTION */}
+<g font-family="IBM Plex Mono,monospace" font-size="10.5">
+<text x="73" y="24" text-anchor="middle" fill="var(--accent)" letter-spacing="1.5">演绎</text>
+<rect x="20" y="40" width="106" height="74" rx="9" fill="none" stroke="var(--accent)" stroke-width="1.5"></rect>
+<text x="73" y="66" text-anchor="middle" fill="var(--ink-soft)">所有 M 都是 P</text>
+<text x="73" y="82" text-anchor="middle" fill="var(--ink-soft)">s 是 M</text>
+<line x1="35" y1="90" x2="111" y2="90" stroke="var(--line-strong)" stroke-width="1"></line>
+<text x="73" y="106" text-anchor="middle" fill="var(--ink)">∴ s 是 P</text>
+<text x="73" y="135" text-anchor="middle" fill="var(--ok)" font-size="10.5">保真</text>
+<text x="73" y="149" text-anchor="middle" fill="var(--ink-faint)" font-size="10.5">已蕴涵</text>
+</g>
+{/* INDUCTION */}
+<g font-family="IBM Plex Mono,monospace" font-size="10.5">
+<text x="230" y="24" text-anchor="middle" fill="var(--brass)" letter-spacing="1.5">归纳</text>
+<circle cx="196" cy="58" r="5" fill="var(--ink-soft)"></circle>
+<circle cx="214" cy="74" r="5" fill="var(--ink-soft)"></circle>
+<circle cx="190" cy="80" r="5" fill="var(--ink-soft)"></circle>
+<circle cx="210" cy="94" r="5" fill="var(--ink-soft)"></circle>
+<path d="M222,86 C250,80 258,70 270,62" fill="none" stroke="var(--brass)" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#ahb)"></path>
+<text x="248" y="116" text-anchor="middle" fill="var(--ink-soft)" font-size="10.5">……故皆然？</text>
+<text x="230" y="135" text-anchor="middle" fill="var(--brass)" font-size="10.5">超越已知</text>
+<text x="230" y="149" text-anchor="middle" fill="var(--contested)" font-size="10.5">或毁于下一例</text>
+</g>
+{/* ABDUCTION */}
+<g font-family="IBM Plex Mono,monospace" font-size="10.5">
+<text x="388" y="24" text-anchor="middle" fill="var(--contested)" letter-spacing="1.5">溯因</text>
+<text x="388" y="60" text-anchor="middle" fill="var(--ink-soft)" font-size="10.5">意外线索</text>
+<circle cx="388" cy="74" r="4" fill="var(--contested)"></circle>
+<path d="M388,82 Q360,100 388,116" fill="none" stroke="var(--contested)" stroke-width="1.6" marker-end="url(#ahc)"></path>
+<text x="388" y="132" text-anchor="middle" fill="var(--ink)" font-size="10.5">最能解释</text>
+<text x="388" y="146" text-anchor="middle" fill="var(--ink)" font-size="10.5">它的故事</text>
+</g>
+<text x="230" y="182" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" letter-spacing="1">三种推理引擎——保证自左至右递减</text>
+</svg>
+<figcaption>演绎把你锁在安全的房间里；归纳与溯因送你出门——代价是确定性。</figcaption>
+</figure>
+
+<p class="lede">一名陌生人走进伦敦诊室。片刻之间，夏洛克·福尔摩斯便断言：此人是刚从阿富汗归来的退役军医。华生大为惊讶。福尔摩斯称这叫「演绎」，这个说法也流传了一个多世纪。但严格说，他用错了词。福尔摩斯真正擅长的，不是演绎，而是溯因：从线索出发，寻找最能解释它们的假说。</p>
+
+<p>这个误称是再好不过的入口，因为今日全篇围绕一个几乎人人混淆的区分：推理不止一种，而它们给出的保证并不相同。有些推理天衣无缝——只要承认前提，结论便无处可逃；另一些能产出新认识，却可能出错——它们越过证据，可能被明日的意外推翻。把前者当后者、或把后者当前者，是人类错误中惊人比例的根源。所以我们要把界线画清楚。</p>
+</header><div class="wrap">
+
+<div class="whereblock">
+<p class="label">◆ 我们身在何处</p>
+<p>前两日，我们都在推理的外围徘徊。在<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>，我们追问真信念何以成为知识——并撞上阿格里帕三难：任何理由要么无穷追问，要么陷入循环论证，要么在某处武断止步。到<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>，休谟的归纳问题表明，再多观察也无法证明一条普遍定律，因此波普尔告诉我们应去证伪而非证实。今日我们打开引擎本身。先前两个谜题其实都关乎两种特定推理模式的边界；如今我们为三者命名，看逻辑如何蜕变为数学，再跟随它抵达本课程最奇异的前沿——以零容错的精确度核查证明的机器。今天贯穿始终的主线，是计算。</p>
+</div>
+
+<figure class="lesson-figure is-portrait">
+<img src={sherlockHolmes.src} width="760" height="843" loading="lazy" decoding="async" alt="西德尼·佩吉特笔下的福尔摩斯与华生，福尔摩斯手中拿着一块怀表。" />
+<figcaption>佩吉特笔下的福尔摩斯成了「演绎」的公众形象；然而那些著名的诊断式跳跃，通常先是溯因：线索在前，最佳解释在后。</figcaption>
+</figure>
+
+<section>
+<p class="sec-eyebrow">模型<TipNote text={"模型是一种简化结构，用来帮助我们理解和推理更复杂的对象。"} /></p>
+<h2>三类推理，三种保证强度</h2>
+<p>如果今日只能记住一件事，就记住这个三分法。推理不是单一活动，而有几种可靠程度不同的模式；今天要区分其中最重要的三种。</p>
+
+<p><span class="term">演绎</span>的特点是保真：如果<span class="term">前提</span><TipNote text={"前提是论证开始时预先假定，或要求你承认的陈述。"} />为真，结论就不可能为假。结论早已蕴涵在前提之中；<span class="term">有效</span><TipNote text={"有效指只要前提为真，结论就必定为真；至于前提实际是否为真，是另一个问题。"} />的演绎只是把它展开。承认所有人都会死，且苏格拉底是人，你便无法回避「苏格拉底会死」——否认它便是自相矛盾。这种安全的代价，是演绎具有<span class="term">非扩展性</span>：它不会增加前提之外的新信息，但能揭示前提已经蕴涵、而我们尚未看见的后果。数学把演绎推到了极致，所以数学家能获得极高的确定性。但这种确定性本身不能告诉我们现实世界中的哪些前提为真；那需要观察和经验。</p>
+
+<p><span class="term">归纳</span>是概括引擎。你见过太阳升起一万次，便推断它明日仍将升起。直到 1697 年以前，所有人记录下的天鹅都是白色，于是「所有天鹅皆白」看似牢不可破。归纳是<span class="term">扩展性</span>的：它增添内容，将已有的案例推向未知。正因如此，它不保真：一个<span class="term">反例</span><TipNote text={"反例是一个足以说明某个普遍说法为假的个案。"} />就能打破模式。这是第 2 日休谟埋下的炸弹，至今仍在滴答作响：任何有限次的观察，都无法在逻辑上担保下一次。归纳是经验知识真正成长的方式，但它不提供逻辑保证。</p>
+
+<p><span class="term">溯因</span>（abduction，也叫最佳解释推理）是解释型推理——也是多数人从未学过名称的那一种。你遇到一个令人惊讶的事实，于是寻找一个假设：若它为真，惊讶便会消散。美国哲学家、逻辑学家<span class="term">查尔斯·桑德斯·皮尔士</span>（Charles Sanders Peirce，1839–1914）将它单独提出，视为唯一真正具有创造性的模式：它不是检验或展开旧观念，而是生成新观念。在他看来，科学的每一次实质性进步，最初都离不开溯因：先提出一个能解释现象的新假说。演绎与归纳处理你已有的假设；溯因则回答假设最初从何而来。</p>
+
+<p>回到福尔摩斯。黝黑肤色、僵直手臂、憔悴面容——这些都是令人惊讶的事实；福尔摩斯一跃而至最能同时解释它们的假设：一名从炎热战场归来的战伤军医。但请注意，这一跃并无担保。此人也可能是个演员，夏天在摩洛哥度假，打网球时扭伤了肩膀。福尔摩斯的结论是最佳解释，而非唯一解释——这正是溯因的标志——而非演绎。（这一点在<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>还会回来，届时我们将用概率把「最佳解释」变得精确。）</p>
+
+<div class="aside">
+<p class="h">一个伟大误称的形态</p>
+<p>福尔摩斯并不孤单。我们说医生「诊断」——那是溯因，从症状推理到最可能产生它们的疾病。听发动机的技工、勘查犯罪现场的侦探、盯着反常读数的科学家：他们都在溯因，都在跃向那个能把奇怪变得平常的解释。甚至你读到的这句话也依赖它——你推断这些文字背后有一颗心智，因为这是它们有序排列的最佳解释，而非某个定理强迫你如此推断。溯因像空气一样包围着我们的日常思考；只是我们很少叫出它的名字。</p>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">人人都容易混淆的区分</p>
+<h2>有效并不等于为真</h2>
+<p>在演绎引擎内部，住着整个逻辑中最易被误解的观念；厘清它，比背诵一打谬误更能切中要害。那就是<span class="term">有效性</span>（Validity）与<span class="term">健全性</span><TipNote text={"健全性指一个论证既有效，而且所有前提实际上都为真。"} />（Soundness）的区别。</p>
+
+<p>一个论证是有效的，当且仅当它的形式保证了前提为真时结论必为真。有效性是「形状」的性质，而非「内容」的性质——它只问论证的骨架，不问骨架里填装了什么。《互联网哲学百科全书》表述得干净利落：一个论证有效，「当且仅当它的形式使得前提为真而结论为假成为不可能」。而健全性要求更多——一个论证是健全的，仅当它既有效，且所有前提实际为真。</p>
+
+<p>真正容易让人误解的是这一点：一个有效论证完全可能导出一个荒谬的假结论。请看：</p>
+
+<blockquote>所有鸟都会飞。企鹅是鸟。因此，企鹅会飞。</blockquote>
+
+<p>其形式毫无瑕疵——「所有 M 都是 P；s 是 M；因此 s 是 P」，正是苏格拉底那一例所套用的模子。若前提为真，结论就不得不跟随。所以这个论证完全有效。但它也显然是不健全的，因为第一个前提为假：并非所有鸟都会飞。有效性只认证「管道」的结构；健全性则还要追问管中流淌的是否为「清水」。一个有效却不健全的论证，就像一条做工完美的管道，输送的却是污水。</p>
+
+<p>这可不是钻牛角尖。它是<span class="term">归谬法</span>（Reductio ad absurdum）——数学中最锋利的工具之一——背后的工作原理：如果从某个假设出发，经过有效推理推出矛盾或已知假命题，那么问题不在推理规则，而在假设本身。归谬法依赖的正是有效性的反向约束：如果一组前提通过有效推导导出已知为假的结论，那么这些前提中至少有一个不能为真。有效性不是替前提担保，而是让错误无处藏身。</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">当形式破裂时</p>
+<h2>藏在每个「如果」里的两种谬误</h2>
+<p>若有效形式是安全路径，谬误便是伪装成路径的陷阱。其中最危险的一批藏在「假言推理」——即 <code>P → Q</code><TipNote text={"P → Q 表示「如果 P，那么 Q」。"} /> 形式的命题中，因为其无效式与有效式往往只有一字之差。</p>
+
+<p>两个有效的推导模式是我们的老朋友。<span class="term">肯定前件式</span>（Modus ponens）：若 P 则 Q；P 为真；故 Q。<span class="term">否定后件式</span>（Modus tollens）：若 P 则 Q；Q 为假；故 <code>¬P</code><TipNote text={"¬P 表示「非 P」或「不是 P」。"} />。这两者在逻辑上是滴水不漏的。现在，请看它们那对声名狼藉的「冒牌货」孪生兄弟。</p>
+
+<p><span class="term">肯定后件</span>（Affirming the consequent）的推法是：若 P 则 Q；Q 为真；故 P。它抓反了箭头的方向。「若某人住在圣迭戈，他就住在加利福尼亚。Joe 住在加利福尼亚。因此 Joe 住在圣迭戈。」但加利福尼亚幅员辽阔，Joe 完全可能住在萨克拉门托。结论本身可能碰巧为真，这正是该谬误极具诱导性的原因。这很像第 1 日的盖梯尔式陷阱：结论碰巧为真，但抵达它的理由并不成立。</p>
+
+<p><span class="term">否定前件</span>（Denying the antecedent）则是其镜像：若 P 则 Q；P 为假；故 Q 为假。「如果下雨，地面就会湿。现在没下雨。所以地面不湿。」但请想想洒水器、爆裂的自来水管或是打翻的水桶。排除一个充分原因并不等于排除了结果本身；同一结果往往有多种可能的来路。</p>
+
+<p>一个教学经典能让这一结构刻骨铭心：「若一只动物是狗，它就有四条腿。这只动物有四条腿。因此它是狗。」猫、马甚至桌子都会对此表示抗议。这种荒谬感正是要点所在——它与圣迭戈案例的逻辑缺陷完全一致，只是通过荒诞化让齿轮的滑脱变得清晰可见。（欧仁·尤内斯库在他的名剧《犀牛》中，曾以此谬误为核心构建了一整幕戏：一位逻辑学家庄严地向人证明，一只有四条腿的猫必定是狗。）</p>
+
+<p>这些被称为形式谬误（Formal fallacies）——即骨架本身的断裂。而它们的亲戚，非形式谬误，其缺陷不在于形状而在于实质内容：如 post hoc ergo propter hoc（公鸡报晓，太阳升起，故公鸡唤醒了黎明）、人身攻击，或是悄悄在论证中途偷换词义的歧义谬误。形式谬误只需核查骨架即可识破；非形式谬误则需要深入阅读文字的实际逻辑指向。</p>
+</section>
+
+{/* ===================== INTERACTIVE 1 ===================== */}
+<div class="panel web-only">
+<p class="ptitle">交互演示 · 检查形式，而非文字</p>
+<h3>推理检视器</h3>
+<p class="pnote">选择一个条件论证形式。机器不关心句子说了什么——只关心形状是否保证结论。在两种有效招式与它们两个臭名昭著的替身之间切换，再载入一个现实例子，体会为什么残缺形式会骗过我们。</p>
+
+<div class="ii-grid">
+<div>
+<div class="ii-forms" id="iiForms">
+<button class="iibtn" data-form="ponens" aria-pressed="true">肯定前件式</button>
+<button class="iibtn" data-form="tollens" aria-pressed="false">否定后件式</button>
+<button class="iibtn" data-form="affirm" aria-pressed="false">肯定后件</button>
+<button class="iibtn" data-form="deny" aria-pressed="false">否定前件</button>
+</div>
+<div class="ii-examples">
+<p class="h">换上真实说法</p>
+<div class="pbtns">
+<button class="exbtn" data-ex="rain">下雨与湿地</button>
+<button class="exbtn" data-ex="dog">狗与四条腿</button>
+<button class="exbtn" data-ex="sd">圣迭戈与加利福尼亚</button>
+</div>
+</div>
+</div>
+<div class="ii-readout">
+<div class="ii-arg" id="iiArg"></div>
+<div class="ii-verdict" id="iiVerdict">
+<div class="ii-vstate" id="iiVState">—</div>
+<p class="ii-vexpl" id="iiVExpl"></p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表</p>
+<h3>条件论证形式表</h3>
+<p class="pnote">条件论证可在判断内容之前，先按形式分类。</p>
+<table class="alt-table">
+<thead><tr><th>形式</th><th>模式</th><th>判定</th><th>理由</th></tr></thead>
+<tbody>
+<tr><td>肯定前件式</td><td>若 P 则 Q；P；故 Q</td><td>有效</td><td>肯定充分条件，结论便逃不掉。</td></tr>
+<tr><td>否定后件式</td><td>若 P 则 Q；非-Q；故非-P</td><td>有效</td><td>若 Q 必随 P 而来，则 Q 不在场便可排除 P。</td></tr>
+<tr><td>肯定后件</td><td>若 P 则 Q；Q；故 P</td><td>无效</td><td>Q 可能有别的原因：Joe 可以住在加利福尼亚，却不住在圣迭戈。</td></tr>
+<tr><td>否定前件</td><td>若 P 则 Q；非-P；故非-Q</td><td>无效</td><td>排除一个充分原因，不等于排除 Q 的所有来路：洒水器仍可打湿地面。</td></tr>
+</tbody>
+</table>
+</div>
+
+<section>
+<p class="sec-eyebrow">脉络</p>
+<h2>逻辑如何变成数学</h2>
+<p>你正在使用的这套机制有着深远的历史，并最终转向一个出人意料的方向：在二十三个世纪里，对好论证的研究逐渐被代数化。这个故事有四座里程碑。</p>
+
+<p>亚里士多德（公元前 4 世纪）在《前分析篇》中建立了第一个形式系统。他的天才在于以字母充当占位符——「所有 A 是 B」——从而研究脱离内容的论证形式。这是<span class="term">词项逻辑</span>：它处理「人」「会死」这类词项之间的关系。中世纪逻辑学家用一套助记名系统编排有效的三段论式——Barbara、 Celarent、 Darii。这些名字不是人名，而是密码：元音标记命题<TipNote text={"命题是可以判断真假的陈述。"} />类型，A 表示「所有 S 都是 P」，E 表示「没有 S 是 P」，I 表示「有些 S 是 P」，O 表示「有些 S 不是 P」。因此 Barbara 是 AAA，Celarent 是 EAE，Darii 是 AII；例如 Barbara 意味着：所有 M 都是 P；所有 S 都是 M；所以所有 S 都是 P。近两千年间，这就是逻辑。</p>
+
+<p>斯多葛学派，尤其是<span class="term">克律西波斯</span>（约公元前 279–206 年），建立了第二条与之平行的逻辑，历史几乎让它失传。亚里士多德处理词项，斯多葛学派则用我们日常仍在使用的联结词处理整个命题：如果……那么、并且、或者、并非。克律西波斯列出五条「不可证明式」——基本<span class="term">证明规则</span><TipNote text={"证明规则定义了从特定陈述合法推导出结论的步骤，例如肯定前件式。"} />，第一条（「若第一，则第二；但第一；故第二」）正是肯定前件式。这便是<span class="term">命题逻辑</span>，也是每一块计算机芯片内部逻辑的远古源头。斯多葛学派很可能已经对联结词有了<span class="term">真值函项</span><TipNote text={"真值函项指复合语句的真假只取决于各组成部分的真假，以及连接它们的逻辑词。"} />的理解——通过组成部分的真假判断整体的真假——这比后人重新发现早了两千年。20 世纪逻辑学家扬·卢卡谢维奇曾令学者惊讶地主张，斯多葛逻辑并非亚里士多德的穷亲戚，而是「同等级的成就」。随后它被掩埋多年，亚里士多德独尊——这提醒我们，思想史并非一场整齐的接力赛。</p>
+
+<p>乔治·布尔把两个传统推上了新轨道。1854 年，他在《思维规律的研究》中做了一件大胆的事：把逻辑推理当作计算。令 1 表示全域，0 表示空类；乘法表示「且」，加法表示「或」。骤然之间，有效推理的规律看上去如同代数定律。「我们不应再把逻辑与形而上学相联系，」布尔宣称，「而应把逻辑与数学相联系。」他的书销量平平，同代人也大惑不解。直到几十年后，1937 年克劳德·香农注意到布尔的二值代数精确描述了电路开关，布尔代数才成为数字逻辑名副其实的基础。你此刻用来阅读这段文字的设备中，每一个 AND 门（与门）都是克律西波斯的一句话在硅中的实现。</p>
+
+<p>戈特洛布·弗雷格完成了自亚里士多德以来最大的跳跃。他那薄薄一卷、令人生畏的《概念文字》（Begriffsschrift，1879）引入了<span class="term">量词</span>——形式的「所有」（<code>∀x</code><TipNote text={"∀x 表示「对所有 x」。"} />）与「存在」（<code>∃x</code><TipNote text={"∃x 表示「存在一个 x」。"} />）——以及<span class="term">谓词逻辑</span>。亚里士多德的词项逻辑会被「马皆动物，故马头皆动物头」这类论证难倒；弗雷格的机制不仅能处理它，而且远不止此——它把命题解析为以个体为变元的函数。它常被称为符号逻辑史上最伟大的一部著作。但悲剧性的尾声随之而来：弗雷格梦想把全部算术还原为纯粹逻辑，就在第二卷即将付梓之际，年轻的伯特兰·罗素寄来一封信，里面藏着一个悖论——所有不包含自身的集合构成的集合：它是否包含自身？无论回答「是」或「否」，都会自相矛盾。弗雷格宏大的基础工程由此崩裂。但他的逻辑在废墟中幸存，成为我们今天仍在讲授的现代符号逻辑。（那个悖论的幽灵，以及它所暗示的边界，将在第 28 日重新浮现；届时哥德尔将证明，没有任何形式系统能满足数学家曾怀有的全部希望。）</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">辩论</p>
+<h2>逻辑是发现还是发明？</h2>
+<p>这里有一个听起来像沙龙游戏、实则直抵根本的问题。那些看似不可动摇的基本定律——也就是形式系统可能当作出发点接受的<span class="term">公理</span><TipNote text={"公理是形式系统不经证明而作为起点接受的规则或陈述。"} />，如<span class="term">同一律</span>（A 是 A）、<span class="term">矛盾律</span>（A 与非-A 不能同真）、<span class="term">排中律</span>（A 或非-A，没有第三种）——看似无可回避。但这些定律的根据究竟是什么？是实在的特征，即使心智不存在也编织在宇宙之中？是思维的特征，任何思考者都无法逃避的语法？还是人类的约定——真实且具约束力，但终究是被选择出来的，犹如象棋规则？</p>
+
+<div class="schools">
+<div class="school">
+<h3>逻辑实在论</h3>
+<span class="tag">被发现</span>
+<p>定律是客观的、独立于心智的世界结构。我们并不立法规定矛盾律，正如我们并不立法规定素数——我们只是发现它。逻辑是从实在中读出的。</p>
+</div>
+<div class="school">
+<h3>心理主义</h3>
+<span class="tag">思维规律</span>
+<p>定律描述心智必须如何运作——实为心理学的一个分支。弗雷格与胡塞尔猛烈抨击这一点：逻辑真理是精确且<span class="term">先验</span>的<TipNote text={"先验指不依赖某次具体经验，而能凭理性或概念理解来把握。"} />，而心理学是经验且模糊的。</p>
+</div>
+<div class="school">
+<h3>约定主义</h3>
+<span class="tag">被发明</span>
+<p>定律是我们因有用而采纳的约定——一旦选定便具约束力，但并非由宇宙降下。奇怪的是，尽管它与道德反实在论渊源甚深，这个立场却很少有充分发展的版本。</p>
+</div>
+<div class="school">
+<h3>可修正性</h3>
+<span class="tag">经验的？</span>
+<p>奎因与普特南提出了激进的想法：即便逻辑也可能因经验理由而被修正——量子力学可能把我们推向非经典逻辑，恰如相对论曾把我们推向非欧几何。</p>
+</div>
+</div>
+
+<p>最后一个方框，正把问题引向今日的前沿。历史上大部分时间里，「思维规律」似乎不可触碰——质疑它们仿佛锯断自己正坐着的树枝。但二十世纪产生了严谨且可运作的替代逻辑，它们悄然放弃某条神圣定律，却依旧运转。一旦你看到这些替代逻辑确实能承担实际工作，那个宏大的形而上学问题便会软化成一个更实际、也更耐人寻味的问题：不是「哪种逻辑为真？」而是「对这项工作来说，哪种逻辑才是合适的工具？」下面就来看这些替代者。</p>
+</section>
+
+<section class="frontier">
+<p class="sec-eyebrow">前沿 · 2026</p>
+<h2>三条活跃前沿，以及一道前沿校准器</h2>
+<p>本课程每日都以前沿研究收尾，每条主张都标明了它能承受多少重量。逻辑的前沿出奇地具体：它运行在真实计算机上，核查真实证明，并且最近与人工智能发生碰撞——这要求我们擦亮眼睛。</p>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">前沿 01</span>
+<StatusChip status={"ok"} label={"非经典逻辑· 已确立"} printLabel={"已确立"} />
+</div>
+<h3>故意打破规则的那些逻辑</h3>
+<p>「经典」逻辑并非唯一一致的选项；它只是更广阔的逻辑图景中一个已站稳脚跟的位置。许多替代逻辑会限制、修改或拒绝某些常被视为不可动摇的经典原则。</p>
+<p><span class="term">直觉主义逻辑</span>拒绝无条件使用排中律。它由 L. E. J. 布劳威尔开创，1920–30 年代由阿伦德·海廷形式化，坚持一条陈述只有在你能构造出其证明时才算为真。它并不是说「A 或非-A」永远错误，而是要求你在适当意义上给出构造、证明或判定方法。一个例子能尖锐地说明动机：排中律会让你轻松断言，对任何计算机程序，「它停机或不停机」——然而（我们将在第 27 日看到）不存在判定停机的通用方法，因此没有构造支撑这一断言。直觉主义说：没有构造性根据，就不能这样断言。这听起来像是哲学洁癖，直到你发现经由一种美得值得专设一框的对应关系，它竟通向计算机科学的心脏。</p>
+<p><span class="term">次协调 / 相容逻辑</span>放弃了爆炸原则。在经典逻辑中，单个矛盾是灾难性的：从「P 且非-P」你可以推出任何东西（原则 ex contradictione quodlibet，「由矛盾可得任意结论」）——在经典逻辑中，一处矛盾就足以让系统推出任意结论。次协调逻辑拒绝这一点，让你即便某些矛盾潜入，仍能合理推理——这对大型数据库、法典，以及任何局部不一致却仍有整体价值的信息集都很有用。更强硬的哲学表亲，<span class="term">真矛盾论</span>（dialetheism，也译「双真论」）——格雷厄姆·普里斯特认为有些矛盾实际为真，如说谎者语句「这句话是假的」——则争议大得多。务必区分二者：你可以采纳次协调逻辑（关于爆炸原则的技术选择）而不成为真矛盾论者（关于真实矛盾的本体论主张）。前者是工具；后者是世界观。</p>
+<p><span class="term">模糊逻辑</span>完全放弃了二值限制。1965 年，洛特菲·扎德让真值在 0 到 1 的连续区间滑动，以刻画模糊性——「水是温的」为 0.7 真——建立在 1920 年代扬·卢卡谢维奇的多值逻辑之上。它运行在控制系统与家电中。而<span class="term">模态逻辑</span>——关于必然与可能（□ 与 ◇）的逻辑——以及经过精心选择的时态逻辑，支撑着硬件与软件的<span class="term">形式验证</span>：某些具体片段既能表达有用性质，又足够克制，可以保留<span class="term">模型检查</span><TipNote text={"模型检查会自动遍历系统可能状态，验证某个形式性质是否始终成立。"} />所需的<span class="term">可判定性</span><TipNote text={"可判定性指存在一个算法，总能在有限时间内判断某个陈述是否由规则推出。"} />。这些不是博物馆中的藏品，而是现代技术世界实际运转的逻辑。</p>
+
+<div class="ch-box">
+<p style="font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .3rem;">桥梁 · 命题即类型</p>
+<p style="font-size:.92em;margin:0 0 .8rem;color:var(--ink-soft);">直觉主义逻辑之所以重要的根本原因，是<span class="term">柯里–霍华德对应</span>：在适当的形式系统中，命题对应类型，证明对应程序。证明一个定理，可以被看作构造一个居于相应类型之中的程序式对象——反过来也一样。</p>
+<svg viewBox="0 0 480 150" role="img" aria-label="柯里–霍华德对应：逻辑一侧映射到计算一侧。">
+<g font-family="IBM Plex Mono,monospace" font-size="12">
+<text x="120" y="22" text-anchor="middle" fill="var(--accent)" letter-spacing="1.5">逻辑</text>
+<text x="360" y="22" text-anchor="middle" fill="var(--brass)" letter-spacing="1.5">计算</text>
+<rect x="24" y="38" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="120" y="55" text-anchor="middle" fill="var(--ink-soft)">命题</text>
+<rect x="264" y="38" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="360" y="55" text-anchor="middle" fill="var(--ink-soft)">类型</text>
+<rect x="24" y="72" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="120" y="89" text-anchor="middle" fill="var(--ink-soft)">证明</text>
+<rect x="264" y="72" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="360" y="89" text-anchor="middle" fill="var(--ink-soft)">程序</text>
+<rect x="24" y="106" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="120" y="123" text-anchor="middle" fill="var(--ink-soft)">「存在一个 x……」</text>
+<rect x="264" y="106" width="192" height="26" rx="6" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+<text x="360" y="123" text-anchor="middle" fill="var(--ink-soft)">构造该 x 的代码</text>
+<line x1="218" y1="51" x2="262" y2="51" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
+<line x1="218" y1="85" x2="262" y2="85" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
+<line x1="218" y1="119" x2="262" y2="119" stroke="var(--accent)" stroke-width="1.4" opacity="0.7"></line>
+<text x="240" y="48" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
+<text x="240" y="82" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
+<text x="240" y="116" text-anchor="middle" fill="var(--ink-faint)" font-size="13">≡</text>
+</g>
+</svg>
+<p style="font-size:.86em;margin:.7rem 0 0;color:var(--ink-faint);">这就是为什么下面若干证明助手建立在<span class="term">类型论</span>基础之上——也是为何逻辑与计算，我们五条线索之二，并非彼此相邻的邻域，而是同一片疆域的两面视图。（将在第 27–29 日继续展开。）</p>
+</div>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">前沿 02</span>
+<StatusChip status={"ok"} label={"机器核查证明· 已确立"} printLabel={"已确立"} />
+</div>
+<h3>零容错的证明：证明助手的崛起</h3>
+<p>亚里士多德的梦想是一条紧密到无人能够怀疑的推理链。二十三个世纪后，这个梦想有了软件化身。<span class="term">证明助手</span>是一种程序，其中每一步逻辑都必须通过机器核查；没有任何一步能凭权威、直觉或一句「显然」而蒙混过关。主流系统包括 Lean（现为 Lean 4）、 Rocq（原名为 Coq，2025 年更名）、 Agda 与 Isabelle/HOL。Lean、 Rocq 与 Agda 属于<span class="term">类型论</span>家族<TipNote text={"类型论用带类型的表达式组织数学对象与证明；在许多系统中，证明一个命题就像构造一个属于相应类型的对象。"} />；Isabelle/HOL 则建立在经典高阶逻辑之上。目标相同，基础不同。</p>
+<p>Lean 的社区共建数学库<span class="term">mathlib</span>，是世界上最大的统一的数学<span class="term">形式化库</span><TipNote text={"形式化是把普通数学定义和证明改写成严格的形式语言，使证明检查器能够逐步核查。"} />之一：超过 278,000 条定理与 132,000 个定义——2026 年 6 月统计时如此，且仍在增长——覆盖了某著名「形式化这些」挑战清单上 100 个问题中的 84 个。这已经远非玩具项目。看看它已验证的成果：</p>
+
+<ul class="mtl">
+<li class="done"><span class="yr">2022 · 已完成</span>液体张量实验。2020 年 12 月，菲尔兹奖得主彼得·朔尔策向全世界发出挑战，要求验证其「凝聚数学」中一个他本人都不太确定的定理。约翰·科默兰与亚当·托帕兹带领的团队在 Lean 中完成了验证，于 2022 年 7 月 14 日完成。一位一线数学家借助机器，获得对一份复杂到人类审稿人难以安心核查的证明的信心——这正是关键所在。</li>
+<li class="done"><span class="yr">2023 · 三周内完成</span>多项式弗雷曼–鲁萨猜想。蒂姆·高尔斯、本·格林、弗雷迪·曼纳斯与陶哲轩发表这一加性组合学结果的证明数日后，陶哲轩启动了一个 Lean 项目来形式化它——三周后便宣布依赖图「被一片可爱的绿色完全覆盖」。形式化几乎与研究同步推进。</li>
+<li class="done"><span class="yr">2024–25 · 已完成</span>等式理论项目。陶哲轩的合作实验（2024 年 9 月启动）旨在判定 4,694 条代数定律之间的蕴涵关系——若把每条定律对自身的平凡蕴涵也算入，共有 22,033,636 个有序对；若只数非平凡图边，则为 22,028,942 条——结合人类证明、<span class="term">自动定理证明器</span><TipNote text={"定理证明器是搜索证明，或检查某个陈述是否能由形式规则推出的软件。"} />、AI 与 Lean 验证，50 余位贡献者，在 200 多天内完成了工作。这是一种大规模协作、机器核查数学的新范式。</li>
+<li class="prog"><span class="yr">2024–2029 · 进行中</span>费马大定理。凯文·巴扎德由 EPSRC 资助的项目（2024 年 4 月启动，伦敦帝国理工学院）旨在形式化 FLT——并非怀尔斯的原始证明，而是一条现代路线。巴扎德「谨慎乐观」地认为自己能把它归约到 1980 年代已知的结果，但坦率承认整个项目「至少需要 5 年」。尚未完成——最诚实也准确的说法是：它仍在进行中，也是那 100 个挑战问题中尚未闭合的最后一项。</li>
+</ul>
+
+<p>这种确定性已经进入安全关键型工程系统。Rocq 中被证明正确的 C <span class="term">编译器</span><TipNote text={"编译器把程序员写的源代码转换成计算机可以执行的较低层机器代码。"} /> CompCert；一项著名的编译器查错研究耗费约六个 CPU 年，试图诱使它生成错误代码，却一无所获——「我们测试过的唯一一个 Csmith 无法找到错误代码的编译器」——同时在 GCC 与 LLVM 中找出了大量 bug。seL4 是第一个在 Isabelle/HOL 中拥有完整机器检查<span class="term">功能正确性</span><TipNote text={"功能正确性指在给定假设下，程序实现已被证明符合其形式规格。"} />证明的操作系统<span class="term">微内核</span><TipNote text={"微内核是操作系统最小的核心，只处理必要功能，把许多服务留在内核之外运行。"} />：在其明确列出的假设下，C 实现细化了形式规格，因此整类崩溃与不安全行为不是靠希望避免，而是被定理排除。这些不是普通承诺，而是带有明确前提的软件定理。这就是逻辑的程序化证明所能做的事——而且它已确立。</p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">前沿 03</span>
+<StatusChip status={"ok"} label={"奖牌级 AI ·已确立"} printLabel={"已确立"} />
+<StatusChip status={"bad"} label={"「AI 解决了数学」· 炒作"} printLabel={"争议/炒作"} />
+</div>
+<h3>当 AI 遇见证明核查器</h3>
+<p>最新、也最被喧嚣包围的前沿，是机器学习与形式证明的碰撞——此处正是前沿校准器该上场的时候，因为媒体在标题上常常哗众取宠。</p>
+<p>先看真正的里程碑。2024 年 7 月，DeepMind 的 AlphaProof 与 AlphaGeometry 2 联手，在国际数学奥林匹克（IMO）6 道题中解出 4 道，获得 28 分——位居银牌档顶端，仅比 29 分的金牌线低 1 分。它甚至攻克了令人畏惧的第 6 题，这道题在约 600 名人类参赛者中只有 5 人完整解出。该方法于 2025 年 11 月 12 日在线发表于 Nature，正式版本于 2026 年刊出。真正把它同聊天机器人式空谈区分开的关键设计事实是：AlphaProof 在 Lean 内部工作。它把约一百万道自然语言问题自动形式化为约 8000 万条 Lean 陈述，然后以<span class="term">AlphaZero 风格循环</span><TipNote text={"AlphaZero 风格训练指系统不断生成搜索尝试、检查结果，并把这些结果反过来作为新的训练信号。"} />训练自己，其中每一步都由 Lean 核查。用 DeepMind 的话说，「无需担心幻觉」——因为一个幻觉步骤根本无法编译。神经网络提供创造性搜索，证明助手提供真值基准。这种结合真实且重要。<StatusChip status={"ok"} label={"已确立"} printLabel={"已确立"} /></p>
+<p>2025 年 7 月，结果变得更为惊人：DeepMind（Gemini 「Deep Think」模型）与 OpenAI 都报告了金牌分数——6 题中解出 5 题，35 分——而且引人注目的是，它们在时限内以端到端自然语言完成，而非在 Lean 内部完成。DeepMind 的结果由 IMO 官方认证；OpenAI 的结果是内部评分。确实令人印象深刻。但也正是在这里，第 1 日练出的校准直觉该派上用场：</p>
+<ul>
+<li>「金牌」是一个分数，不是加冕。这些是竞赛题——数学中狭窄、限时、已知存在简短答案的一角。它们不是未解的研究谜题，而且据官方 2025 年结果，仍有 26 名人类参赛者得分超过两个 AI 系统。</li>
+<li>离开 Lean 是一种取舍，不是无代价的升级。2024 年的银牌是形式验证的——由机器保证正确。2025 年的自然语言金牌是人工评分的，意味着我们重新依赖可能藏有细微漏洞的散文。更通用，却更不确定。别让「金牌胜过银牌」的叙事掩盖了认识论根基的转移。</li>
+<li>它昂贵且狭窄。每道困难的 2024 年题需要两到三天的计算，而且题目还需先被人工形式化为 Lean 陈述。这还称不上通用数学智能。</li>
+</ul>
+<p>最该澄清的一句话是：AI 尚未「解决数学」，也没有使数学家变得多余。 <StatusChip status={"bad"} label={"炒作"} printLabel={"争议/炒作"} /> 直到不久前，AI 系统已经能解竞赛题、辅助形式证明，却还没有独立产出一个被接受为里程碑的数学结果。2026 年 5 月，这一点以重要但有限的方式改变了：OpenAI 的一个内部模型生成了对埃尔多什单位距离猜想的反例；OpenAI 称该证明已由外部数学家核查，Alon、Bloom、Gowers、Litt、Sawin、Shankar、Tsimerman、Wang 与 Matchett Wood 随后在 arXiv 发布了经人类整理阐释的版本。这是真正的里程碑。但它并不意味着 AI 已经「解决了数学」：该结果仍需要人类验证、精炼与解释，而一般性的自主数学发现仍然参差不齐。真正的革命比标题更安静、也更持久：一条延续 2300 年的标准——证明是一条无人能怀疑的链——正在交由越来越擅长搜索、构造和核查的机器。（我们将在第 138–145 日深入追寻这一主题。）</p>
+<div class="aside" style="margin-top:1.4rem;">
+<p class="h">关于证据状态的说明</p>
+<p>本课程的前沿校准器有一条必须明说的规则：凡是尚未经过同行审查的预印本、公司声明或基准数字，都必须明确标注证据状态。这一领域的搜索结果中，充斥着语气笃定但尚未经过同行审查的条目。以上每个里程碑都可追溯到真实、有日期、可核实的来源——已发表的 Nature 论文、官方竞赛结果、具名研究者本人的公开宣布、公司研究发布，或由有信誉数学家署名的配套 arXiv 论文。当一条关于 AI 与数学的声明无法这样追溯时，正确反应不是兴奋，而是怀疑。</p>
+</div>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">开放问题</p>
+<h2>真正尚未解决的是什么</h2>
+<p>二十三个世纪之后，有效推理的研究依然留有真正未决的问题：</p>
+<ul>
+<li>是否只有一种真逻辑，还是有许多种？当直觉主义逻辑、次协调逻辑与模糊逻辑都能切实派上用场，「正确逻辑」便渐渐显得更像工具选择，而非宇宙事实——但多元论者与一元论者仍真正地各执一词。</li>
+<li>发现还是发明？逻辑定律是从实在中读出、嵌入任何可能心智，还是由约定采纳？经验物理学能否如普特南所想迫使我们修正？</li>
+<li>溯因究竟是什么？「最佳解释推理」是真正第三种模式，还是换了外衣的归纳？甚至皮尔士本人是否将其理解为最佳解释推理（而非仅仅生成假设），学者之间亦有争议。</li>
+<li>程序化证明能否改变数学本身？若一个结果为真，却只有计算机核查过证明，有没有人真正理解它？一个已验证却不透明的证明，与一个能带来洞见的人类证明，价值是否相同？</li>
+<li>以及将萦绕 AI 单元的问题：当一台机器输出一个真实且得到充分支持的定理时，它是否知道任何东西——还是它只是第 1 日那个终极盖梯尔案例的翻版——因与理解毫无关系的理由而恰巧正确？（第 138–145 日。）</li>
+</ul>
+</section>
+
+<div class="recap">
+<p class="h">◆ 用三句话概括今日</p>
+<dl>
+<div><dt>核心观点</dt><dd>推理有几种可靠程度不同的模式：演绎保真，并揭示前提中已蕴涵的结果，却不增添新信息；归纳概括，却可能被下一例打破；溯因跃向最佳解释。在演绎内部，有效性指形式保真；健全性指论证有效且所有前提实际为真。</dd></div>
+<div><dt>最佳类比</dt><dd>夏洛克·福尔摩斯的「演绎」其实是溯因——对线索的最佳解释，而非保证结论——而一个有效却不健全的论证，是一条接合严密却输送污水的管道。</dd></div>
+<div><dt>当下争议</dt><dd>逻辑是发现还是发明（以及是否只有一种真逻辑，还是一套工具），如今被一条真实的前沿所激化：Lean 等证明助手以零容错验证前沿数学，AI 已达奖牌水准，一个 AI 生成的反例也已成为真正的研究里程碑——但它仍未真正「解决数学」。</dd></div>
+</dl>
+<p class="threads">今日线索 › 计算（柯里–霍华德：证明对应程序；硅芯片中的布尔代数；证明助手） · 信息（形式化使证明内容可被机器核查） · 涌现（大规模协作证明判定约 2200 万个蕴涵关系）——也将演绎与归纳衔接到<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>与<a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>。</p>
+</div>
+
+
+<section class="sources">
+<p class="sec-eyebrow">来源</p>
+<h2>来源与延伸阅读</h2>
+<ol>
+<li>"Validity and Soundness." Internet Encyclopedia of Philosophy (accessed 2026). <a href="https://iep.utm.edu/val-snd/">iep.utm.edu/val-snd</a> <span class="meta">——基于形式的有效性与健全性区分。</span></li>
+<li>"Deductive and Inductive Arguments." Internet Encyclopedia of Philosophy. <a href="https://iep.utm.edu/ded-ind/">iep.utm.edu/ded-ind</a> <span class="meta">——保真推理与扩展性推理之分。</span></li>
+<li>Douven, I. "Abduction." Stanford Encyclopedia of Philosophy (rev. 2021). <a href="https://plato.stanford.edu/entries/abduction/">plato.stanford.edu/entries/abduction</a> <span class="meta">——皮尔士、最佳解释推理，以及关于溯因究竟是什么的学术争论。</span></li>
+<li>"Aristotle's Logic." Stanford Encyclopedia of Philosophy. <a href="https://plato.stanford.edu/entries/aristotle-logic/">plato.stanford.edu/entries/aristotle-logic</a> <span class="meta">——三段论、《前分析篇》与词项逻辑。</span></li>
+<li>Bobzien, S. "Ancient Logic." Stanford Encyclopedia of Philosophy. <a href="https://plato.stanford.edu/entries/logic-ancient/">plato.stanford.edu/entries/logic-ancient</a> <span class="meta">——克律西波斯、斯多葛不可证明式与命题逻辑；卢卡谢维奇的重新评估。</span></li>
+<li>Boole, G. (1854). An Investigation of the Laws of Thought. London: Walton &amp; Maberly. See "George Boole, The Laws of Thought," PhilPapers. <a href="https://philpapers.org/rec/BOOTLO-4">philpapers.org/rec/BOOTLO-4</a> <span class="meta">——逻辑作为代数；「逻辑与数学」。</span></li>
+<li>"Origins of Boolean Algebra in the Logic of Classes." Mathematical Association of America (Convergence). <a href="https://old.maa.org/press/periodicals/convergence/origins-of-boolean-algebra-in-the-logic-of-classes-george-boole-john-venn-and-c-s-peirce">old.maa.org</a> <span class="meta">——布尔、文恩、皮尔士，以及经香农（1937）通往数字逻辑之路。</span></li>
+<li>"Frege's Logic." Stanford Encyclopedia of Philosophy. <a href="https://plato.stanford.edu/entries/frege-logic/">plato.stanford.edu/entries/frege-logic</a> <span class="meta">——《概念文字》（1879）、量词、谓词逻辑与罗素悖论。</span></li>
+<li>"Intuitionistic Logic." Stanford Encyclopedia of Philosophy. <a href="https://plato.stanford.edu/entries/logic-intuitionistic/">plato.stanford.edu/entries/logic-intuitionistic</a> <span class="meta">——布劳威尔、海廷、对排中律的拒斥、 BHK 解释。</span></li>
+<li>Priest, G., Berto, F. &amp; Weber, Z. "Dialetheism" and "Paraconsistent Logic." Stanford Encyclopedia of Philosophy. <a href="https://plato.stanford.edu/entries/dialetheism/">plato.stanford.edu/entries/dialetheism</a> <span class="meta">——爆炸原则、次协调性与真矛盾论、 Logic of Paradox。</span></li>
+<li>Zadeh, L. A. (1965). "Fuzzy sets." <em>Information and Control</em> 8(3): 338–353. <span class="meta">doi:10.1016/S0019-9958(65)90241-X。</span> <a href="https://doi.org/10.1016/S0019-9958(65)90241-X">doi.org/10.1016/S0019-9958(65)90241-X</a> <span class="meta">——模糊集合的原始来源：以 [0,1] 表示隶属度，构成模糊逻辑的基础。</span></li>
+<li>Garson, J. "Modal Logic." Stanford Encyclopedia of Philosophy. <a href="https://plato.stanford.edu/entries/logic-modal/">plato.stanford.edu/entries/logic-modal</a> <span class="meta">——必然 / 可能与计算机科学及验证应用。</span></li>
+<li>Wadler, P. (2015). "Propositions as Types." <em>Communications of the ACM</em> 58(12): 75–84. <span class="meta">doi:10.1145/2699407。</span> <a href="https://doi.org/10.1145/2699407">doi.org/10.1145/2699407</a> 另见 Sørensen, M. H. &amp; Urzyczyn, P. (2006). <em>Lectures on the Curry-Howard Isomorphism.</em> Elsevier. <span class="meta">——类型论中的「命题即类型 / 证明即程序」。</span></li>
+<li>de Moura, L., Kong, S., Avigad, J., van Doorn, F. &amp; von Raumer, J. (2015). "The Lean Theorem Prover (system description)." <em>CADE-25.</em> <a href="https://lean-lang.org/theorem_proving_in_lean4/Introduction/">lean-lang.org/theorem_proving_in_lean4</a> <span class="meta">——Lean 的小型内核、依赖类型论、公理与完全指定的形式证明。</span></li>
+<li>"Mathlib statistics." Lean community (accessed 14 Jun 2026). <a href="https://leanprover-community.github.io/mathlib_stats.html">leanprover-community.github.io/mathlib_stats.html</a> <span class="meta">——当前定理与定义数量；快速变化的项目页面。</span></li>
+<li>"100 theorems in Lean." Lean community (accessed 14 Jun 2026). <a href="https://leanprover-community.github.io/100.html">leanprover-community.github.io/100.html</a> <span class="meta">——Wiedijk 的 100 个定理基准中已有 84 个在 Lean 中形式化；快速变化的项目页面。</span></li>
+<li>Commelin, J. &amp; Topaz, A. et al. "Liquid Tensor Experiment." Lean community blog (completion 14 July 2022); Scholze's original challenge (Dec 2020). <a href="https://leanprover-community.github.io/blog/posts/lte-final/">leanprover-community.github.io</a> <span class="meta">——机器核查一位菲尔兹奖得主自己都不太确定的证明。</span></li>
+<li>Tao, T. "Formalizing the proof of PFR in Lean4." terrytao.wordpress.com (Nov 2023). Gowers, Green, Manners &amp; Tao, "On a conjecture of Marton," Annals of Mathematics (2025). <span class="meta">doi:10.4007/annals.2025.201.2.5。</span> <a href="https://doi.org/10.4007/annals.2025.201.2.5">doi.org/10.4007/annals.2025.201.2.5</a> <a href="https://terrytao.wordpress.com/2023/11/18/formalizing-the-proof-of-pfr-in-lean4-using-blueprint-a-short-tour/">terrytao.wordpress.com</a></li>
+<li>Tao, T. et al. "The Equational Theories Project." Project announced Sept 2024; retrospective paper Dec 2025 (arXiv:2512.07087). <a href="https://teorth.github.io/equational_theories/">teorth.github.io/equational_theories</a> <span class="meta">——22,033,636 个含自蕴涵的有序对；22,028,942 条非平凡图边；50 余位贡献者，Lean 验证。</span></li>
+<li>Buzzard, K. "Fermat's Last Theorem project." Lean community blog (launch 30 April 2024); EPSRC grant EP/Y022904/1 (2024–2029), Imperial College London. <a href="https://leanprover-community.github.io/blog/posts/FLT-announcement/">leanprover-community.github.io</a> <span class="meta">——进行中；「至少需要 5 年」。</span></li>
+<li>Leroy, X. et al. "CompCert" — a formally verified C compiler. Yang, Chen, Eide &amp; Regehr, "Finding and Understanding Bugs in C Compilers," PLDI (2011). <span class="meta">doi:10.1145/1993498.1993532。</span> <a href="https://doi.org/10.1145/1993498.1993532">doi.org/10.1145/1993498.1993532</a> <a href="https://compcert.org/">compcert.org</a> <span class="meta">——约六个 CPU 年未找到错误代码。</span></li>
+<li>Klein, G. et al. (2009). "seL4: Formal Verification of an OS Kernel." SOSP '09. <span class="meta">doi:10.1145/1629575.1629596。</span> <a href="https://doi.org/10.1145/1629575.1629596">doi.org/10.1145/1629575.1629596</a> <a href="https://sel4.systems/">sel4.systems</a> <span class="meta">——首个操作系统微内核功能正确性的机器检查证明（Isabelle/HOL）。</span></li>
+<li>"AI achieves silver-medal standard solving International Mathematical Olympiad problems." Google DeepMind blog (25 July 2024). <a href="https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/">deepmind.google</a> <span class="meta">——AlphaProof + AlphaGeometry 2；28 分；在 Lean 中工作。</span></li>
+            <li>Hubert, T., Mehta, R., Sartran, L. et al. (2026). "Olympiad-level formal mathematical reasoning with reinforcement learning." Nature 651: 607–613. <span class="meta">doi:10.1038/s41586-025-09833-y。</span> <a href="https://doi.org/10.1038/s41586-025-09833-y">doi.org</a> <a href="https://www.nature.com/articles/s41586-025-09833-y">nature.com/articles/s41586-025-09833-y</a> <span class="meta">——AlphaProof 方法论文；2025 年 11 月 12 日在线发表，2026 年 3 月 13 日正式出版；约 8000 万道 Lean 问题。</span></li>
+<li>"Advanced version of Gemini with Deep Think officially achieves gold-medal standard at the IMO." Google DeepMind blog (July 2025). <a href="https://deepmind.google/blog/advanced-version-of-gemini-with-deep-think-officially-achieves-gold-medal-standard-at-the-international-mathematical-olympiad/">deepmind.google</a> <span class="meta">——35/42，官方认证；时限内的自然语言证明。</span></li>
+<li>"66th IMO 2025." International Mathematical Olympiad. <a href="https://www.imo-official.org/editions/2025/">imo-official.org/editions/2025</a> 和 <a href="https://www.imo-official.org/results/individual/year/2025/">individual results</a> <span class="meta">——630 名参赛者；金牌线 35；人类分数分布。</span></li>
+<li>"Our First Proof submissions." OpenAI (2026). <a href="https://openai.com/index/first-proof-submissions/">openai.com/index/first-proof-submissions</a> <span class="meta">——OpenAI 对其 2025 年 7 月 IMO 金牌级结果的后续总结，35/42 分。</span></li>
+<li>"Logical Pluralism," "The Normative Status of Logic," and "Logical Constants." Stanford Encyclopedia of Philosophy (accessed 2026). <a href="https://plato.stanford.edu/entries/logical-pluralism/">plato.stanford.edu/entries/logical-pluralism</a> · <a href="https://plato.stanford.edu/entries/logic-normative/">plato.stanford.edu/entries/logic-normative</a> · <a href="https://plato.stanford.edu/entries/logical-constants/">plato.stanford.edu/entries/logical-constants</a> <span class="meta">——逻辑多元论、修正逻辑，以及什么算作逻辑。</span></li>
+</ol>
+</section>
+</div>
