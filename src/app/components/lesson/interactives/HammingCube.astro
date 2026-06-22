@@ -1,0 +1,30 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const prefix = "appendix-d007-the-deeper-currents-";
+---
+<Panel class="web-only appendix-hamming-cube">
+  <PanelTitle>{zh ? "交互式 · 编码的几何" : "Interactive · the geometry of a code"}</PanelTitle>
+  <h3>{zh ? "汉明立方体" : "The Hamming Cube"}</h3>
+  <PanelNote>{zh ? "每个 3 比特词都是立方体的一个角；一条边代表一次比特翻转。我们的编码只使用两个有效词：000 与 111，也就是相距最远的两个角（蓝绿色）。点击任意角点，将其视为经噪声信道收到的词；解码器会按多数投票将它贴到最近的有效词上。一次错误总能被纠正；立方体会告诉你为什么。" : "Every 3-bit word is a corner of a cube; an edge is one bit-flip. Our code uses just two valid words — 000 and 111, the far corners (teal). Click any corner to receive it through a noisy channel: the decoder snaps it to the nearest valid word by majority vote. One error is always corrected; the cube shows you why."}</PanelNote>
+
+  <div class="ham-stage">
+    <svg viewBox="0 0 390 285" role="img" aria-label={zh ? "一个立方体，其八个角是 3 比特字符串，其中 000 与 111 为编码词。" : "A cube whose eight corners are the 3-bit strings, with 000 and 111 as codewords."}>
+      <g id={`${prefix}hamEdges`} stroke="var(--line-strong)" stroke-width="1.5"></g>
+      <g id={`${prefix}hamVerts`}></g>
+    </svg>
+  </div>
+  <div class="ham-legend">
+    <span><i class="legend-codeword"></i> {zh ? "编码词" : "codeword"}</span>
+    <span><i class="legend-decodes-zero"></i> {zh ? "解码 → 000" : "decodes → 000"}</span>
+    <span><i class="legend-decodes-one"></i> {zh ? "解码 → 111" : "decodes → 111"}</span>
+  </div>
+  <p class="ham-read" id={`${prefix}hamRead`}>{zh ? <><b>点击一个角点。</b> 两个编码词位于立方体的相对两端，汉明距离为 3。这个间隔就是编码的保护层：任何一次比特翻转都会让你离起点只差一步，仍然稳稳落在某个编码词的领地内。</> : <><b>Click a corner.</b> The two codewords sit at opposite ends of the cube, Hamming distance 3 apart. That gap is the code's armor: any single bit-flip lands you one step from where you started, still firmly inside one codeword's territory.</>}</p>
+</Panel>

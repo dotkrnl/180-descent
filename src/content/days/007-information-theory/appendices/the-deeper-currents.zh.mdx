@@ -1,6 +1,8 @@
 import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import HammingCube from "@app/components/lesson/interactives/HammingCube.astro";
+import MutualInformationOverlap from "@app/components/lesson/interactives/MutualInformationOverlap.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -45,35 +47,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 </ContentSection>
 
-<Panel class="web-only appendix-mutual-information">
-<PanelTitle>交互式 · 两个不确定性的重叠</PanelTitle>
-
-### 互信息的图示
-
-<PanelNote>两枚公平硬币 X 和 Y，各携带 1 比特信息。将它们从「独立」（已知其中一枚无法透露另一枚的任何信息）滑动到「相同」（已知其中一枚便得知了另一枚的全部信息）。蓝绿色的重叠部分代表 <MathInline latex={String.raw`I(X;Y)`} />；两侧的外弯月代表存留的惊奇度——即条件熵。观察信道是如何「开启」的。</PanelNote>
-
-<div class="mi-grid">
-<div class="mi-venn">
-<svg viewBox="0 0 360 230" role="img" aria-label="两个重叠的圆圈，其重叠部分代表互信息。">
-<circle id="appendix-d007-the-deeper-currents-cX" cx="135" cy="115" r="86" fill="color-mix(in srgb,var(--accent) 14%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<circle id="appendix-d007-the-deeper-currents-cY" cx="225" cy="115" r="86" fill="color-mix(in srgb,var(--brass) 14%,transparent)" stroke="var(--brass)" stroke-width="2"></circle>
-<text id="appendix-d007-the-deeper-currents-lblX" x="95" y="60" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--accent)">H(X)</text>
-<text id="appendix-d007-the-deeper-currents-lblY" x="265" y="60" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)" text-anchor="end">H(Y)</text>
-<text id="appendix-d007-the-deeper-currents-lblI" x="180" y="120" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="var(--ink)">I</text>
-</svg>
-</div>
-<div>
-<div class="mi-nums">
-<div class="row"><span><MathInline latex={String.raw`H(X)`} /> · <MathInline latex={String.raw`H(Y)`} /></span><b>1.00 · 1.00</b></div>
-<div class="row"><span><MathInline latex={String.raw`H(Y\mid X)`} /> — 存留的惊奇度</span><b id="appendix-d007-the-deeper-currents-hcond">1.00</b></div>
-<div class="row big"><span><MathInline latex={String.raw`I(X;Y)`} /> — 共享部分</span><b id="appendix-d007-the-deeper-currents-miVal">0.00</b></div>
-</div>
-<p class="mi-caption" id="appendix-d007-the-deeper-currents-miCap">独立。两枚硬币相互独立；得知 X 后，Y 的不确定性完全保留。信道未传输任何信息。</p>
-</div>
-</div>
-<div class="slabel appendix-slider-label"><span>取值相同的概率 P(X = Y)</span><span class="val" id="appendix-d007-the-deeper-currents-aLbl">0.50</span></div>
-<input type="range" id="appendix-d007-the-deeper-currents-aSlider" min="50" max="100" value="50" aria-label="Agreement between X and Y" />
-</Panel>
+<MutualInformationOverlap locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表格</PanelTitle>
@@ -152,26 +126,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 </ContentSection>
 
-<Panel class="web-only appendix-hamming-cube">
-<PanelTitle>交互式 · 编码的几何学</PanelTitle>
-
-### 汉明立方体
-
-<PanelNote>每个 3 比特串都是立方体的一个角；一条棱代表一次比特翻转。我们的编码仅使用两个有效码字——`000` 和 `111`，分别位于最遥远的对角（蓝绿色）。点击任意角，通过有噪信道「接收」它：解码器会通过多数表决将其拉回到最近的有效码字上。单比特错误总能被纠正；立方体向你展示了其中的原因。</PanelNote>
-
-<div class="ham-stage">
-<svg viewBox="0 0 390 285" role="img" aria-label="一个立方体，其八个顶点代表3比特字符串，其中 000 和 111 为码字。">
-<g id="appendix-d007-the-deeper-currents-hamEdges" stroke="var(--line-strong)" stroke-width="1.5"></g>
-<g id="appendix-d007-the-deeper-currents-hamVerts"></g>
-</svg>
-</div>
-<div class="ham-legend">
-<span><i class="legend-codeword"></i> 码字</span>
-<span><i class="legend-decodes-zero"></i> 解码为 → 000</span>
-<span><i class="legend-decodes-one"></i> 解码为 → 111</span>
-</div>
-<p class="ham-read" id="appendix-d007-the-deeper-currents-hamRead">点击任意角。两个码字分别位于立方体的对角两端，汉明距离为 3。这个间距是该编码的铠甲：任何单比特翻转都只会让你距离起点仅一步之遥，依然稳稳落在其中一个码字的势力范围内。</p>
-</Panel>
+<HammingCube locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表格</PanelTitle>
@@ -365,4 +320,3 @@ import Threads from "@app/components/lesson/Threads.astro";
 1. Soni, J. &amp; Goodman, R. (2017). *A Mind at Play.* Simon &amp; Schuster. <Meta>—— 香农生平：忒修斯小鼠、终极机器、与爱德华·索普合作的轮盘赌计算机、骑独轮车抛球杂耍。</Meta>
 
 </Sources>
-

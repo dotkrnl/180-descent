@@ -6,6 +6,8 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import LandauerMachine from "@app/components/lesson/interactives/LandauerMachine.astro";
+import EntropyDial from "@app/components/lesson/interactives/EntropyDial.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -124,73 +126,7 @@ Shannon's H has the exact algebraic shape — a sum of *p* log *p* — of a quan
 <FormatOnly media="print-epub">The reference table below shows the same entropy pattern without a live dial: maximum uncertainty carries the most information, while near-certainty carries almost none.</FormatOnly>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<Panel class="web-only information-entropy">
-<PanelTitle>Interactive · weigh a coin</PanelTitle>
-
-#### The Entropy Dial
-
-<PanelNote>Bend a coin from fair to fixed and watch its information content collapse. The curve is *H* for a two-outcome source; the bars are the surprise of each face. Maximum information lives at maximum doubt — the fair coin, peak 1 bit. Certainty carries nothing.</PanelNote>
-
-<div class="ent-grid">
-<div class="ent-curve">
-<svg viewBox="0 0 360 250" role="img" aria-label="Entropy curve peaking at probability one half.">
-{/* axes */}
-<line x1="40" y1="210" x2="340" y2="210" stroke="var(--line-strong)" stroke-width="1.2"></line>
-<line x1="40" y1="210" x2="40" y2="24" stroke="var(--line-strong)" stroke-width="1.2"></line>
-{/* y ticks */}
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">
-<text x="34" y="34">1.0</text>
-<text x="34" y="125">0.5</text>
-<text x="34" y="214">0</text>
-</g>
-<line x1="40" y1="30" x2="340" y2="30" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 4"></line>
-{/* x labels */}
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
-<text x="40" y="226">0</text>
-<text x="190" y="226">0.5</text>
-<text x="340" y="226">1</text>
-<text x="190" y="244" fill="var(--ink-soft)">P(heads)</text>
-</g>
-<text x="14" y="120" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" transform="rotate(-90 14 120)" text-anchor="middle">H (bits)</text>
-<polyline id="entCurve" fill="none" stroke="var(--accent)" stroke-width="2.4" points=""></polyline>
-<line id="entGuide" x1="190" y1="30" x2="190" y2="210" stroke="var(--brass)" stroke-width="1" stroke-dasharray="2 3" opacity=".8"></line>
-<circle id="entDot" cx="190" cy="30" r="5.5" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
-</svg>
-</div>
-
-<div class="ent-readouts">
-<div>
-<div class="bigH"><span id="hVal">1.00</span><small>bits / flip</small></div>
-</div>
-<div class="surprise-rows">
-<div class="srow">
-<span>heads · p=<span id="pH">0.50</span> · surprise <span id="sH">1.00</span> b</span>
-<div class="bar" id="barH" style="width:33%"></div>
-</div>
-<div class="srow">
-<span>tails · p=<span id="pT">0.50</span> · surprise <span id="sT">1.00</span> b</span>
-<div class="bar t" id="barT" style="width:33%"></div>
-</div>
-</div>
-<p class="ent-calc" id="entCalc"><MathInline latex={String.raw`H = 0.50\times1.00 + 0.50\times1.00 = 1.00`} /> bits/flip.</p>
-<p class="ent-verdict" id="entVerdict" aria-live="polite">A fair coin: every flip is a genuine question with no shortcut. To send 1,000 flips you need 1,000 bits — there's nothing to compress.</p>
-</div>
-</div>
-
-<div class="slider-row" style="margin-top:1.1rem;">
-<label for="pSlider">P(heads) <span class="val" id="pLabel">0.50</span></label>
-<input type="range" id="pSlider" min="1" max="99" value="50" />
-</div>
-<div class="presets">
-<p class="h">Load a source</p>
-<div class="pbtns">
-<button class="pbtn" data-p="50">Fair coin</button>
-<button class="pbtn" data-p="88">Loaded (88/12)</button>
-<button class="pbtn" data-p="99">Near-certain</button>
-<button class="pbtn" data-p="5">"u follows q?"</button>
-</div>
-</div>
-</Panel>
+<EntropyDial locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -260,46 +196,7 @@ In 1982 his IBM colleague **Charles Bennett** closed the trap on Maxwell's demon
 <FormatOnly media="print-epub">The worked example below follows the same erasure cycle as a static sequence: protect a bit, remove its distinction, force it to 0, and pay the heat cost.</FormatOnly>
 
 {/* ===================== INTERACTIVE 2 ===================== */}
-<Panel class="web-only landauer-machine">
-<PanelTitle>Interactive · pay the toll</PanelTitle>
-
-#### The Landauer Erasure Machine
-
-<PanelNote>A single unknown, equiprobable bit, stored as a ball in a double-welled landscape: left = 0, right = 1. To *reset* it to 0 no matter where it started, you lower the wall, bias the landscape toward 0, and trap it left again — squeezing two possible pasts into one. In the ideal quasistatic limit, the work put into this irreversible reset is dissipated as heat; releasing the bias does not give the missing distinction back.</PanelNote>
-
-<div class="lm-stage">
-<svg viewBox="0 0 440 210" role="img" aria-label="A double-well potential with a ball representing one bit of memory.">
-{/* baseline */}
-<line x1="20" y1="180" x2="420" y2="180" stroke="var(--line)" stroke-width="1"></line>
-<text x="130" y="200" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">0</text>
-<text x="310" y="200" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">1</text>
-{/* potential well path (morphs) */}
-<path id="wellPath" d="M20,40 C90,40 70,150 130,150 C175,150 165,70 220,70 C275,70 265,150 310,150 C370,150 350,40 420,40" fill="none" stroke="var(--accent)" stroke-width="2.6"></path>
-{/* the ball */}
-<circle id="bitBall" cx="310" cy="137" r="13" fill="var(--brass)" stroke="var(--raised)" stroke-width="2.5"></circle>
-<text id="ballLbl" x="310" y="141" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">1</text>
-{/* heat puffs */}
-<g id="heatPuffs" opacity="0"></g>
-</svg>
-</div>
-
-<div class="lm-controls">
-<button class="lm-btn" id="lmStep">Next step</button>
-<button class="lm-btn ghost" id="lmReset">Reset bit to 1</button>
-</div>
-
-<div class="lm-readout" aria-label="Landauer machine readout">
-<div class="lm-card">
-<p class="lh">Logical state</p>
-<p class="lv" id="lmState">bit = 1</p>
-</div>
-<div class="lm-card heat">
-<p class="lh">Heat dissipated</p>
-<p class="lv"><span id="lmHeat" aria-live="polite">0.0</span> zJ</p>
-</div>
-</div>
-<p class="lm-caption" id="lmCaption" aria-live="polite"><b>Stage 0 — a bit at rest.</b> The ball sits in the right well: this memory holds a 1. Two wells, two possible values, the wall between them keeping the bit stable. Press <b>Next step</b> to begin erasing it to 0.</p>
-</Panel>
+<LandauerMachine locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Worked example</PanelTitle>

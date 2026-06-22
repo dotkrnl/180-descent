@@ -1,0 +1,60 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const presets = zh
+  ? [["50", "公平硬币"], ["88", "有偏硬币 (88/12)"], ["99", "接近确定"], ["5", "「q 后是否跟 u？」"]]
+  : [["50", "Fair coin"], ["88", "Loaded (88/12)"], ["99", "Near-certain"], ["5", '"u follows q?"']];
+---
+<Panel class="web-only information-entropy">
+  <PanelTitle>{zh ? "交互 · 称量硬币" : "Interactive · weigh a coin"}</PanelTitle>
+  <h4>{zh ? "熵之拨盘" : "The Entropy Dial"}</h4>
+  <PanelNote>{zh ? "通过调节拨盘将硬币从公平转为有偏，并观察熵如何下降。曲线代表双结果信源的熵 H；柱状图代表每个面的惊奇度。不确定性最大时，熵也最大——公平硬币达到 1 比特的峰值。确定性则不承载任何信息。" : "Bend a coin from fair to fixed and watch its information content collapse. The curve is H for a two-outcome source; the bars are the surprise of each face. Maximum information lives at maximum doubt — the fair coin, peak 1 bit. Certainty carries nothing."}</PanelNote>
+
+  <div class="ent-grid">
+    <div class="ent-curve">
+      <svg viewBox="0 0 360 250" role="img" aria-label={zh ? "熵曲线，在概率为二分之一处达到峰值。" : "Entropy curve peaking at probability one half."}>
+        <line x1="40" y1="210" x2="340" y2="210" stroke="var(--line-strong)" stroke-width="1.2"></line>
+        <line x1="40" y1="210" x2="40" y2="24" stroke="var(--line-strong)" stroke-width="1.2"></line>
+        <g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">
+          <text x="34" y="34">1.0</text><text x="34" y="125">0.5</text><text x="34" y="214">0</text>
+        </g>
+        <line x1="40" y1="30" x2="340" y2="30" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 4"></line>
+        <g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
+          <text x="40" y="226">0</text><text x="190" y="226">0.5</text><text x="340" y="226">1</text>
+          <text x="190" y="244" fill="var(--ink-soft)">{zh ? "P(正面)" : "P(heads)"}</text>
+        </g>
+        <text x="14" y="120" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" transform="rotate(-90 14 120)" text-anchor="middle">{zh ? "H（比特）" : "H (bits)"}</text>
+        <polyline id="entCurve" fill="none" stroke="var(--accent)" stroke-width="2.4" points=""></polyline>
+        <line id="entGuide" x1="190" y1="30" x2="190" y2="210" stroke="var(--brass)" stroke-width="1" stroke-dasharray="2 3" opacity=".8"></line>
+        <circle id="entDot" cx="190" cy="30" r="5.5" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
+      </svg>
+    </div>
+
+    <div class="ent-readouts">
+      <div><div class="bigH"><span id="hVal">1.00</span><small>{zh ? "比特 / 投掷" : "bits / flip"}</small></div></div>
+      <div class="surprise-rows">
+        <div class="srow"><span>{zh ? "正面" : "heads"} · p=<span id="pH">0.50</span> · {zh ? "惊奇度" : "surprise"} <span id="sH">1.00</span> {zh ? "比特" : "b"}</span><div class="bar" id="barH" style="width:33%"></div></div>
+        <div class="srow"><span>{zh ? "反面" : "tails"} · p=<span id="pT">0.50</span> · {zh ? "惊奇度" : "surprise"} <span id="sT">1.00</span> {zh ? "比特" : "b"}</span><div class="bar t" id="barT" style="width:33%"></div></div>
+      </div>
+      <p class="ent-calc" id="entCalc"><MathInline latex={String.raw`H = 0.50\times1.00 + 0.50\times1.00 = 1.00`} /> {zh ? "比特/投掷。" : "bits/flip."}</p>
+      <p class="ent-verdict" id="entVerdict" aria-live="polite">{zh ? "一枚公平的硬币：每次投掷都是一个真正的提问，没有任何捷径。要发送 1,000 次投掷结果，你需要 1,000 比特——没有任何压缩空间。" : "A fair coin: every flip is a genuine question with no shortcut. To send 1,000 flips you need 1,000 bits — there's nothing to compress."}</p>
+    </div>
+  </div>
+
+  <div class="slider-row" style="margin-top:1.1rem;">
+    <label for="pSlider">{zh ? "P(正面)" : "P(heads)"} <span class="val" id="pLabel">0.50</span></label>
+    <input type="range" id="pSlider" min="1" max="99" value="50" />
+  </div>
+  <div class="presets">
+    <p class="h">{zh ? "加载信源" : "Load a source"}</p>
+    <div class="pbtns">{presets.map(([p, label]) => <button class="pbtn" data-p={p}>{label}</button>)}</div>
+  </div>
+</Panel>

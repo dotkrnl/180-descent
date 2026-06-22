@@ -1,0 +1,40 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const prefix = "appendix-d007-the-deeper-currents-";
+---
+<Panel class="web-only appendix-mutual-information">
+  <PanelTitle>{zh ? "交互式 · 两个不确定性的重叠" : "Interactive · the overlap of two uncertainties"}</PanelTitle>
+  <h3>{zh ? "互信息的图示" : "Mutual Information, drawn"}</h3>
+  <PanelNote>{zh ? <>两枚公平硬币 X 和 Y，各携带 1 比特信息。将它们从「独立」（已知其中一枚无法透露另一枚的任何信息）滑动到「相同」（已知其中一枚便得知了另一枚的全部信息）。蓝绿色的重叠部分代表 <MathInline latex={String.raw`I(X;Y)`} />；两侧的外弯月代表存留的惊奇度——即条件熵。观察信道是如何「开启」的。</> : <>Two fair coins, X and Y, each carrying 1 bit. Slide them from <em>independent</em> (knowing one tells you nothing about the other) to <em>identical</em> (knowing one tells you everything). The teal overlap is <MathInline latex={String.raw`I(X;Y)`} />; the outer crescents are the surprise that survives — the conditional entropies. Watch the channel "open."</>}</PanelNote>
+
+  <div class="mi-grid">
+    <div class="mi-venn">
+      <svg viewBox="0 0 360 230" role="img" aria-label={zh ? "两个重叠的圆圈，其重叠部分代表互信息。" : "Two overlapping circles whose overlap represents mutual information."}>
+        <circle id={`${prefix}cX`} cx="135" cy="115" r="86" fill="color-mix(in srgb,var(--accent) 14%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+        <circle id={`${prefix}cY`} cx="225" cy="115" r="86" fill="color-mix(in srgb,var(--brass) 14%,transparent)" stroke="var(--brass)" stroke-width="2"></circle>
+        <text id={`${prefix}lblX`} x="95" y="60" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--accent)">H(X)</text>
+        <text id={`${prefix}lblY`} x="265" y="60" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)" text-anchor="end">H(Y)</text>
+        <text id={`${prefix}lblI`} x="180" y="120" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="var(--ink)">I</text>
+      </svg>
+    </div>
+    <div>
+      <div class="mi-nums">
+        <div class="row"><span><MathInline latex={String.raw`H(X)`} /> · <MathInline latex={String.raw`H(Y)`} /></span><b>1.00 · 1.00</b></div>
+        <div class="row"><span><MathInline latex={String.raw`H(Y\mid X)`} /> — {zh ? "存留的惊奇度" : "surprise left"}</span><b id={`${prefix}hcond`}>1.00</b></div>
+        <div class="row big"><span><MathInline latex={String.raw`I(X;Y)`} /> — {zh ? "共享部分" : "shared"}</span><b id={`${prefix}miVal`}>0.00</b></div>
+      </div>
+      <p class="mi-caption" id={`${prefix}miCap`}>{zh ? "独立。两枚硬币相互独立；得知 X 后，Y 的不确定性完全保留。信道未传输任何信息。" : "Independent. The coins ignore each other; learning X leaves all of Y's uncertainty intact. The channel carries nothing."}</p>
+    </div>
+  </div>
+  <div class="slabel appendix-slider-label"><span>{zh ? "取值相同的概率 P(X = Y)" : "agreement P(X = Y)"}</span><span class="val" id={`${prefix}aLbl`}>0.50</span></div>
+  <input type="range" id={`${prefix}aSlider`} min="50" max="100" value="50" aria-label={zh ? "X 与 Y 的取值相同概率" : "Agreement between X and Y"} />
+</Panel>

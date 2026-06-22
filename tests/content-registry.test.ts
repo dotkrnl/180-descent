@@ -170,9 +170,9 @@ describe("target content registry", () => {
       "information-theory"
     ]);
     expect(day007?.bodies[0].source).toContain("maxwellsDemon.src");
-    expect(day007?.bodies[0].source).toContain("information-entropy");
+    expect(day007?.bodies[0].source).toContain("EntropyDial");
     expect(day007?.bodies[0].source).toContain("<MathBlock");
-    expect(day007?.appendixBodies[0].source).toContain("appendix-mutual-information");
-    expect(day007?.appendixBodies[0].source).toContain("appendix-hamming-cube");
+    expect(day007?.appendixBodies[0].source).toContain("MutualInformationOverlap");
+    expect(day007?.appendixBodies[0].source).toContain("HammingCube");
   });
 });

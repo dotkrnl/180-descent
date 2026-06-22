@@ -1,0 +1,39 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<Panel class="web-only landauer-machine">
+  <PanelTitle>{zh ? "交互 · 付出代价" : "Interactive · pay the toll"}</PanelTitle>
+  <h4>{zh ? "兰道尔擦除机" : "The Landauer Erasure Machine"}</h4>
+  <PanelNote>{zh ? "一个未知且等概率的比特，被存为双势阱中的小球：左 = 0，右 = 1。若要无论它从哪里开始都将它重置为 0，就要降低势垒、将势能地貌偏向 0，并再次把它困在左侧——把两个可能的过去压缩成一个现在。在理想准静态极限中，这个不可逆重置所输入的功会以热的形式耗散；撤去偏置并不会把缺失的区分带回来。" : "A single unknown, equiprobable bit, stored as a ball in a double-welled landscape: left = 0, right = 1. To reset it to 0 no matter where it started, you lower the wall, bias the landscape toward 0, and trap it left again — squeezing two possible pasts into one. In the ideal quasistatic limit, the work put into this irreversible reset is dissipated as heat; releasing the bias does not give the missing distinction back."}</PanelNote>
+
+  <div class="lm-stage">
+    <svg viewBox="0 0 440 210" role="img" aria-label={zh ? "双势阱势能地貌，小球代表一个存储比特。" : "A double-well potential with a ball representing one bit of memory."}>
+      <line x1="20" y1="180" x2="420" y2="180" stroke="var(--line)" stroke-width="1"></line>
+      <text x="130" y="200" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">0</text>
+      <text x="310" y="200" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">1</text>
+      <path id="wellPath" d="M20,40 C90,40 70,150 130,150 C175,150 165,70 220,70 C275,70 265,150 310,150 C370,150 350,40 420,40" fill="none" stroke="var(--accent)" stroke-width="2.6"></path>
+      <circle id="bitBall" cx="310" cy="137" r="13" fill="var(--brass)" stroke="var(--raised)" stroke-width="2.5"></circle>
+      <text id="ballLbl" x="310" y="141" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">1</text>
+      <g id="heatPuffs" opacity="0"></g>
+    </svg>
+  </div>
+
+  <div class="lm-controls">
+    <button class="lm-btn" id="lmStep">{zh ? "下一步" : "Next step"}</button>
+    <button class="lm-btn ghost" id="lmReset">{zh ? "重置比特为 1" : "Reset bit to 1"}</button>
+  </div>
+
+  <div class="lm-readout" aria-label={zh ? "兰道尔机器读数" : "Landauer machine readout"}>
+    <div class="lm-card"><p class="lh">{zh ? "逻辑状态" : "Logical state"}</p><p class="lv" id="lmState">{zh ? "比特 = 1" : "bit = 1"}</p></div>
+    <div class="lm-card heat"><p class="lh">{zh ? "耗散热量" : "Heat dissipated"}</p><p class="lv"><span id="lmHeat" aria-live="polite">0.0</span> zJ</p></div>
+  </div>
+  <p class="lm-caption" id="lmCaption" aria-live="polite">{zh ? "「阶段 0 — 静止的比特」小球停在右侧的势阱中：此存储状态为 1。两个势阱，代表两个可能的值，它们之间的壁障保持着比特的稳定性。点击「下一步」开始将其擦除归零。" : <><b>Stage 0 — a bit at rest.</b> The ball sits in the right well: this memory holds a 1. Two wells, two possible values, the wall between them keeping the bit stable. Press <b>Next step</b> to begin erasing it to 0.</>}</p>
+</Panel>

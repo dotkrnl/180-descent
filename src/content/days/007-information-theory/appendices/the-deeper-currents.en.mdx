@@ -1,6 +1,8 @@
 import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import HammingCube from "@app/components/lesson/interactives/HammingCube.astro";
+import MutualInformationOverlap from "@app/components/lesson/interactives/MutualInformationOverlap.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -45,35 +47,7 @@ Start with two simpler pieces. <Term as="em">Joint entropy</Term> <MathInline la
 
 </ContentSection>
 
-<Panel class="web-only appendix-mutual-information">
-<PanelTitle>Interactive · the overlap of two uncertainties</PanelTitle>
-
-### Mutual Information, drawn
-
-<PanelNote>Two fair coins, X and Y, each carrying 1 bit. Slide them from *independent* (knowing one tells you nothing about the other) to *identical* (knowing one tells you everything). The teal overlap is <MathInline latex={String.raw`I(X;Y)`} />; the outer crescents are the surprise that survives — the conditional entropies. Watch the channel "open."</PanelNote>
-
-<div class="mi-grid">
-<div class="mi-venn">
-<svg viewBox="0 0 360 230" role="img" aria-label="Two overlapping circles whose overlap represents mutual information.">
-<circle id="appendix-d007-the-deeper-currents-cX" cx="135" cy="115" r="86" fill="color-mix(in srgb,var(--accent) 14%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<circle id="appendix-d007-the-deeper-currents-cY" cx="225" cy="115" r="86" fill="color-mix(in srgb,var(--brass) 14%,transparent)" stroke="var(--brass)" stroke-width="2"></circle>
-<text id="appendix-d007-the-deeper-currents-lblX" x="95" y="60" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--accent)">H(X)</text>
-<text id="appendix-d007-the-deeper-currents-lblY" x="265" y="60" font-family="IBM Plex Mono,monospace" font-size="12" fill="var(--brass)" text-anchor="end">H(Y)</text>
-<text id="appendix-d007-the-deeper-currents-lblI" x="180" y="120" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="var(--ink)">I</text>
-</svg>
-</div>
-<div>
-<div class="mi-nums">
-<div class="row"><span><MathInline latex={String.raw`H(X)`} /> · <MathInline latex={String.raw`H(Y)`} /></span><b>1.00 · 1.00</b></div>
-<div class="row"><span><MathInline latex={String.raw`H(Y\mid X)`} /> — surprise left</span><b id="appendix-d007-the-deeper-currents-hcond">1.00</b></div>
-<div class="row big"><span><MathInline latex={String.raw`I(X;Y)`} /> — shared</span><b id="appendix-d007-the-deeper-currents-miVal">0.00</b></div>
-</div>
-<p class="mi-caption" id="appendix-d007-the-deeper-currents-miCap">Independent. The coins ignore each other; learning X leaves all of Y's uncertainty intact. The channel carries nothing.</p>
-</div>
-</div>
-<div class="slabel appendix-slider-label"><span>agreement P(X = Y)</span><span class="val" id="appendix-d007-the-deeper-currents-aLbl">0.50</span></div>
-<input type="range" id="appendix-d007-the-deeper-currents-aSlider" min="50" max="100" value="50" aria-label="Agreement between X and Y" />
-</Panel>
+<MutualInformationOverlap locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -152,26 +126,7 @@ The idea is <Term as="em">Hamming distance</Term>: the number of bit-flips separ
 
 </ContentSection>
 
-<Panel class="web-only appendix-hamming-cube">
-<PanelTitle>Interactive · the geometry of a code</PanelTitle>
-
-### The Hamming Cube
-
-<PanelNote>Every 3-bit word is a corner of a cube; an edge is one bit-flip. Our code uses just two valid words — `000` and `111`, the far corners (teal). Click any corner to "receive" it through a noisy channel: the decoder snaps it to the nearest valid word by majority vote. One error is always corrected; the cube shows you why.</PanelNote>
-
-<div class="ham-stage">
-<svg viewBox="0 0 390 285" role="img" aria-label="A cube whose eight corners are the 3-bit strings, with 000 and 111 as codewords.">
-<g id="appendix-d007-the-deeper-currents-hamEdges" stroke="var(--line-strong)" stroke-width="1.5"></g>
-<g id="appendix-d007-the-deeper-currents-hamVerts"></g>
-</svg>
-</div>
-<div class="ham-legend">
-<span><i class="legend-codeword"></i> codeword</span>
-<span><i class="legend-decodes-zero"></i> decodes → 000</span>
-<span><i class="legend-decodes-one"></i> decodes → 111</span>
-</div>
-<p class="ham-read" id="appendix-d007-the-deeper-currents-hamRead"><b>Click a corner.</b> The two codewords sit at opposite ends of the cube, Hamming distance 3 apart. That gap is the code's armor: any single bit-flip lands you one step from where you started, still firmly inside one codeword's territory.</p>
-</Panel>
+<HammingCube locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -366,4 +321,3 @@ That is the real reason this day sits where it does in the course, only seventh 
 1. Soni, J. &amp; Goodman, R. (2017). *A Mind at Play.* Simon &amp; Schuster. <Meta>— Shannon's life: Theseus, the Ultimate Machine, the roulette computer with Ed Thorp, the juggling unicyclist.</Meta>
 
 </Sources>
-
