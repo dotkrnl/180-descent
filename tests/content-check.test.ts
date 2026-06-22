@@ -37,6 +37,25 @@ describe("content check", () => {
       }
     ]);
   });
+
+  it("reports raw interactive markup in MDX content", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<button class="demo" data-action="next">Next</button>'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx contains raw interactive markup (raw control or canvas); extract it to a lesson component"
+      }
+    ]);
+  });
 });
 
 async function createFixtureRoot(): Promise<string> {

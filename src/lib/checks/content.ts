@@ -29,6 +29,13 @@ const LEGACY_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<div class="mh-machine"\b/, "use <MontyHallMachine>"],
   [/<div class="atlas"\b/, "use <IncomingWaveAtlas> or <WaveAtlas>"]
 ];
+const RAW_INTERACTIVE_PATTERNS: Array<[RegExp, string]> = [
+  [/<(?:button|input|select|textarea|canvas)\b/i, "raw control or canvas"],
+  [/\s(?:on[a-z]+)=/i, "inline event handler"],
+  [/\srole=["'](?:button|switch|slider|tab|tabpanel|checkbox|radio)["']/i, "interactive ARIA role"],
+  [/\saria-(?:pressed|checked|expanded|controls)=/i, "interactive ARIA state"],
+  [/\sdata-(?:action|case|exit|filter|mode|p|pick|preset|scn|state|step|target|value)=/i, "interactive data hook"]
+];
 
 interface RegistryContentFile {
   label: string;
@@ -134,6 +141,7 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
   }
 
   checkLegacyMdxWrappers(file, failures);
+  checkRawInteractiveMarkup(file, failures);
 }
 
 function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
@@ -171,6 +179,22 @@ function checkLegacyMdxWrappers(file: RegistryContentFile, failures: ContentChec
       failures.push({ message: `${file.relativePath} contains legacy MDX wrapper markup; ${replacement}` });
     }
   }
+}
+
+function checkRawInteractiveMarkup(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  const source = stripCodeBlocks(file.source);
+  for (const [pattern, label] of RAW_INTERACTIVE_PATTERNS) {
+    if (pattern.test(source)) {
+      failures.push({
+        message: `${file.relativePath} contains raw interactive markup (${label}); extract it to a lesson component`
+      });
+      return;
+    }
+  }
+}
+
+function stripCodeBlocks(source: string): string {
+  return source.replace(/```[\s\S]*?```/g, "");
 }
 
 async function checkCssFonts(root: string, failures: ContentCheckFailure[]): Promise<void> {
