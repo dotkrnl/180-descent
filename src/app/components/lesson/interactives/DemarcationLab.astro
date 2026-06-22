@@ -1,0 +1,56 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 启动探照灯",
+  heading: "划界实验室",
+  note: "选择一项主张。我们先以波普尔检验它（是否可证伪？）——再交给库恩、拉卡托斯与簇群视角，让裁决变得复杂。注意四种视角相左之频繁。那分歧本身，便是科学哲学。",
+  claims: [
+    ["relativity", "A", "「星光掠过太阳时弯折 1.75 角秒。」", "爱因斯坦，广义相对论"],
+    ["astrology", "B", "「水星逆行扰乱通讯。」", "占星术"],
+    ["marx", "C", "「历史由阶级斗争驱动。」", "正统马克思主义"],
+    ["strings", "D", "「现实由十一维空间中振动的弦构成。」", "弦理论"],
+    ["evolution", "E", "「一切生命共享共同祖先。」", "进化生物学"],
+    ["freud", "F", "「被压抑的冲突导致神经症。」", "精神分析"]
+  ]
+} : {
+  panelTitle: "Interactive · run the searchlight",
+  heading: "The Demarcation Lab",
+  note: "Pick a claim. We'll run it past Popper (is it falsifiable?) — and then past Kuhn, Lakatos, and the cluster view, all of which complicate his verdict. Notice how often the four lenses disagree. That disagreement is the philosophy of science.",
+  claims: [
+    ["relativity", "A", '"Starlight bends by 1.75″ near the sun."', "Einstein, general relativity"],
+    ["astrology", "B", '"Mercury in retrograde disrupts communication."', "Astrology"],
+    ["marx", "C", '"History is driven by class struggle."', "Orthodox Marxism"],
+    ["strings", "D", '"Reality is made of vibrating strings in 11 dimensions."', "String theory"],
+    ["evolution", "E", '"All life shares common descent."', "Evolutionary biology"],
+    ["freud", "F", '"Repressed conflicts cause neuroses."', "Psychoanalysis"]
+  ]
+};
+---
+<Panel class="web-only">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+
+  <h3>{copy.heading}</h3>
+
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="lab-grid">
+    <div class="claimlist" id="claimlist">
+      {copy.claims.map(([key, index, claim, source], i) => (
+        <button class="clbtn" data-c={key} aria-pressed={i === 0 ? "true" : undefined}>
+          <span class="ci">{index}</span>
+          <span class="cl">{zh ? claim : <b>{claim}</b>}<span>{source}</span></span>
+        </button>
+      ))}
+    </div>
+
+    <div class="verdict-card" id="verdictCard"></div>
+  </div>
+</Panel>

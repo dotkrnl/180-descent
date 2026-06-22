@@ -1,0 +1,70 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 证据打不破的平局",
+  heading: "绿色 vs. 绿蓝",
+  note: "这是关于祖母绿的两种理论、两个平行世界。拖动「今天」——也就是你已检查祖母绿的时间界限。实心宝石是你见过的（证据），空心宝石是每种理论的预测。虚线是截止日期 t。注意：只要「今天」位于 t 左侧，两个世界在你检查过的每一颗宝石上都一模一样。",
+  aria: "两排祖母绿，一排预测全部绿色，一排预测在时间 t 之后变为蓝色。",
+  h1: "H₁ ·全部绿色",
+  h2: "H₂ ·全部绿蓝",
+  cutoff: "t（截止：2050）",
+  today: "今天",
+  slider: "检查祖母绿截至：",
+  sliderAria: "观察视野（今天）",
+  readoutTitle: "平局成立",
+  readoutBody: "你检查过的每一颗祖母绿都是绿色——而这个事实对「全绿」和对「全绿蓝」是完全同等的证据。两种理论对你见过的每一颗宝石都意见一致。古德曼的要点是：无论过去证据多么丰富，都不能替你决定该把哪一个理论带入未来。"
+} : {
+  panelTitle: "Interactive · the tie that evidence can't break",
+  heading: "Green vs. Grue",
+  note: "Two theories about emeralds, two parallel worlds. Drag \"today\" — the line up to which you've examined emeralds. Solid gems are ones you've seen (your evidence); hollow gems are each theory's prediction. The dashed line is the cutoff date t. Notice: as long as \"today\" sits left of t, the two worlds are identical on every gem you've examined.",
+  aria: "Two rows of emeralds, one predicting all green, one predicting green then blue after time t.",
+  h1: "H₁ · all GREEN",
+  h2: "H₂ · all GRUE",
+  cutoff: "t (cutoff: 2050)",
+  today: "today",
+  slider: "Examine emeralds up to:",
+  sliderAria: "Observation horizon (today)",
+  readoutTitle: "The tie holds",
+  readoutBody: "Every emerald you've examined is green — and that fact is exactly as good evidence for \"all green\" as for \"all grue.\" The two theories agree on every gem you've ever seen. Goodman's point: no amount of past evidence, however vast, tells you which one to carry into the future."
+};
+---
+<Panel class="web-only grue-machine">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+
+  <h3>{copy.heading}</h3>
+
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="grue-stage">
+    <svg id="appendix-d002-foundations-without-bedrock-grueSvg" viewBox="0 0 640 250" role="img" aria-label={copy.aria}>
+      <text x="14" y="60" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-soft)">{copy.h1}</text>
+      <text x="14" y="150" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-soft)">{copy.h2}</text>
+      <line id="appendix-d002-foundations-without-bedrock-tLine" x1="0" y1="20" x2="0" y2="210" stroke="var(--brass)" stroke-width="1.5" stroke-dasharray="3 5"></line>
+      <text id="appendix-d002-foundations-without-bedrock-tLabel" x="0" y="232" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">{copy.cutoff}</text>
+      <line id="appendix-d002-foundations-without-bedrock-nowLine" x1="0" y1="20" x2="0" y2="210" stroke="var(--accent)" stroke-width="2"></line>
+      <text id="appendix-d002-foundations-without-bedrock-nowLabel" x="0" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--accent)">{copy.today}</text>
+      <g id="appendix-d002-foundations-without-bedrock-greenRow"></g>
+      <g id="appendix-d002-foundations-without-bedrock-grueRow"></g>
+      <rect id="appendix-d002-foundations-without-bedrock-divZone" x="0" y="20" width="0" height="190" fill="color-mix(in srgb,var(--contested) 8%,transparent)" opacity="0"></rect>
+    </svg>
+  </div>
+
+  <div class="grue-controls">
+    <div class="slider-row">
+      <label>{copy.slider} <span class="val" id="appendix-d002-foundations-without-bedrock-nowVal">2032</span></label>
+      <input type="range" id="appendix-d002-foundations-without-bedrock-nowRange" min="0" max="100" value="34" aria-label={copy.sliderAria} />
+    </div>
+    <div class="grue-readout tie" id="appendix-d002-foundations-without-bedrock-grueReadout">
+      <p class="lh" id="appendix-d002-foundations-without-bedrock-grueRH">{copy.readoutTitle}</p>
+      <p id="appendix-d002-foundations-without-bedrock-grueRBody" class="u-m-0">{copy.readoutBody}</p>
+    </div>
+  </div>
+</Panel>

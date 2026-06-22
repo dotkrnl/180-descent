@@ -3,6 +3,7 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import DemarcationLab from "@app/components/lesson/interactives/DemarcationLab.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -205,46 +206,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<Panel class="web-only">
-<PanelTitle>互动 · 启动探照灯</PanelTitle>
-
-### 划界实验室
-
-<PanelNote>选择一项主张。我们先以波普尔检验它（是否可证伪？）——再交给库恩、拉卡托斯与簇群视角，让裁决变得复杂。注意四种视角相左之频繁。那分歧本身，便是科学哲学。</PanelNote>
-
-<div class="lab-grid">
-<div class="claimlist" id="claimlist">
-<button class="clbtn" data-c="relativity" aria-pressed="true">
-<span class="ci">A</span>
-<span class="cl">「星光掠过太阳时弯折 1.75 角秒。」<span>爱因斯坦，广义相对论</span></span>
-</button>
-<button class="clbtn" data-c="astrology">
-<span class="ci">B</span>
-<span class="cl">「水星逆行扰乱通讯。」<span>占星术</span></span>
-</button>
-<button class="clbtn" data-c="marx">
-<span class="ci">C</span>
-<span class="cl">「历史由阶级斗争驱动。」<span>正统马克思主义</span></span>
-</button>
-<button class="clbtn" data-c="strings">
-<span class="ci">D</span>
-<span class="cl">「现实由十一维空间中振动的弦构成。」<span>弦理论</span></span>
-</button>
-<button class="clbtn" data-c="evolution">
-<span class="ci">E</span>
-<span class="cl">「一切生命共享共同祖先。」<span>进化生物学</span></span>
-</button>
-<button class="clbtn" data-c="freud">
-<span class="ci">F</span>
-<span class="cl">「被压抑的冲突导致神经症。」<span>精神分析</span></span>
-</button>
-</div>
-
-<div class="verdict-card" id="verdictCard">
-{/* filled by JS */}
-</div>
-</div>
-</Panel>
+<DemarcationLab locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表格</PanelTitle>

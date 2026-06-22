@@ -1,6 +1,8 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import GrueMachine from "@app/components/lesson/interactives/GrueMachine.astro";
+import DiscoveryPurityEngine from "@app/components/lesson/interactives/DiscoveryPurityEngine.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -83,43 +85,7 @@ The evidence cannot choose between them, because *every observation confirms bot
 
 </ContentSection>
 
-<Panel class="web-only grue-machine">
-<PanelTitle>Interactive · the tie that evidence can't break</PanelTitle>
-
-### Green vs. Grue
-
-<PanelNote>Two theories about emeralds, two parallel worlds. Drag **"today"** — the line up to which you've examined emeralds. Solid gems are ones you've *seen* (your evidence); hollow gems are each theory's *prediction*. The dashed line is the cutoff date *t*. Notice: as long as "today" sits left of *t*, the two worlds are identical on every gem you've examined.</PanelNote>
-
-<div class="grue-stage">
-<svg id="appendix-d002-foundations-without-bedrock-grueSvg" viewBox="0 0 640 250" role="img" aria-label="Two rows of emeralds, one predicting all green, one predicting green then blue after time t.">
-{/* row labels */}
-<text x="14" y="60" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-soft)">H₁ · all GREEN</text>
-<text x="14" y="150" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-soft)">H₂ · all GRUE</text>
-{/* t line */}
-<line id="appendix-d002-foundations-without-bedrock-tLine" x1="0" y1="20" x2="0" y2="210" stroke="var(--brass)" stroke-width="1.5" stroke-dasharray="3 5"></line>
-<text id="appendix-d002-foundations-without-bedrock-tLabel" x="0" y="232" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">t (cutoff: 2050)</text>
-{/* now line */}
-<line id="appendix-d002-foundations-without-bedrock-nowLine" x1="0" y1="20" x2="0" y2="210" stroke="var(--accent)" stroke-width="2"></line>
-<text id="appendix-d002-foundations-without-bedrock-nowLabel" x="0" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--accent)">today</text>
-{/* emerald rows */}
-<g id="appendix-d002-foundations-without-bedrock-greenRow"></g>
-<g id="appendix-d002-foundations-without-bedrock-grueRow"></g>
-{/* divergence shading */}
-<rect id="appendix-d002-foundations-without-bedrock-divZone" x="0" y="20" width="0" height="190" fill="color-mix(in srgb,var(--contested) 8%,transparent)" opacity="0"></rect>
-</svg>
-</div>
-
-<div class="grue-controls">
-<div class="slider-row">
-<label>Examine emeralds up to: <span class="val" id="appendix-d002-foundations-without-bedrock-nowVal">2032</span></label>
-<input type="range" id="appendix-d002-foundations-without-bedrock-nowRange" min="0" max="100" value="34" aria-label="Observation horizon (today)" />
-</div>
-<div class="grue-readout tie" id="appendix-d002-foundations-without-bedrock-grueReadout">
-<p class="lh" id="appendix-d002-foundations-without-bedrock-grueRH">The tie holds</p>
-<p id="appendix-d002-foundations-without-bedrock-grueRBody" class="u-m-0">Every emerald you've examined is green — and that fact is <em>exactly</em> as good evidence for "all green" as for "all grue." The two theories agree on every gem you've ever seen. Goodman's point: no amount of past evidence, however vast, tells you which one to carry into the future.</p>
-</div>
-</div>
-</Panel>
+<GrueMachine locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -313,55 +279,7 @@ That last number is the killer, and it's the one researchers forget. Here's the 
 
 </ContentSection>
 
-<Panel class="web-only base-rate-engine">
-<PanelTitle>Interactive · run Ioannidis's machine</PanelTitle>
-
-### The Discovery-Purity Engine
-
-<PanelNote>A field tests **1,000 hypotheses** at the 5% significance threshold. Set how many are *really* true, how much statistical **power** the studies have, and how much **bias** (p-hacking) creeps in. Watch what fraction of the published "discoveries" are actually real — the PPV.</PanelNote>
-
-<div class="ppv-controls">
-<div class="slider-row">
-<label>True hypotheses (out of 1,000) <span class="val" id="appendix-d002-foundations-without-bedrock-brVal">100</span></label>
-<input type="range" id="appendix-d002-foundations-without-bedrock-brRange" min="20" max="500" value="100" step="10" aria-label="Number of true hypotheses out of 1000" />
-</div>
-<div class="slider-row">
-<label>Statistical power <span class="val" id="appendix-d002-foundations-without-bedrock-powVal">80%</span></label>
-<input type="range" id="appendix-d002-foundations-without-bedrock-powRange" min="10" max="99" value="80" aria-label="Statistical power" />
-</div>
-<div class="slider-row">
-<label>Bias / p-hacking <span class="val" id="appendix-d002-foundations-without-bedrock-biasVal">none</span></label>
-<input type="range" id="appendix-d002-foundations-without-bedrock-biasRange" min="0" max="40" value="0" aria-label="Bias from questionable research practices" />
-</div>
-</div>
-
-<div class="matrix" aria-hidden="false">
-<div class="corner"></div>
-<div class="colh">Test says<br />SIGNIFICANT<br />("published")</div>
-<div class="colh">Test says<br />not significant<br />(filed away)</div>
-
-<div class="rowh">Really TRUE</div>
-<div class="mcell tp"><span class="mc-n" id="appendix-d002-foundations-without-bedrock-cTP">80</span><span class="mc-l">true positive ✓</span></div>
-<div class="mcell fn"><span class="mc-n" id="appendix-d002-foundations-without-bedrock-cFN">20</span><span class="mc-l">missed (false neg.)</span></div>
-
-<div class="rowh">Really FALSE</div>
-<div class="mcell fp"><span class="mc-n" id="appendix-d002-foundations-without-bedrock-cFP">45</span><span class="mc-l">false positive ✗</span></div>
-<div class="mcell tn"><span class="mc-n" id="appendix-d002-foundations-without-bedrock-cTN">855</span><span class="mc-l">correct null</span></div>
-</div>
-
-<div class="purity-wrap">
-<p class="purity-lab">Of everything published as a "discovery" (the significant column):</p>
-<div class="purity-bar">
-<div class="seg-tp initial-share" id="appendix-d002-foundations-without-bedrock-segTP"></div>
-<div class="seg-fp initial-share" id="appendix-d002-foundations-without-bedrock-segFP"></div>
-</div>
-</div>
-
-<div class="ppv-headline">
-<div class="big" id="appendix-d002-foundations-without-bedrock-ppvBig">64%</div>
-<p class="cap" id="appendix-d002-foundations-without-bedrock-ppvCap">real. About <strong>64</strong> of every 100 published "discoveries" here are true — and <strong>36</strong> are noise dressed as signal.</p>
-</div>
-</Panel>
+<DiscoveryPurityEngine locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>

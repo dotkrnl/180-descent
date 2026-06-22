@@ -3,6 +3,7 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import DemarcationLab from "@app/components/lesson/interactives/DemarcationLab.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -205,46 +206,7 @@ Which sets up the punchline of the entire day. All of this — Popper, Kuhn, Lak
 </ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<Panel class="web-only">
-<PanelTitle>Interactive · run the searchlight</PanelTitle>
-
-### The Demarcation Lab
-
-<PanelNote>Pick a claim. We'll run it past **Popper** (is it falsifiable?) — and then past **Kuhn**, **Lakatos**, and the **cluster view**, all of which complicate his verdict. Notice how often the four lenses disagree. That disagreement *is* the philosophy of science.</PanelNote>
-
-<div class="lab-grid">
-<div class="claimlist" id="claimlist">
-<button class="clbtn" data-c="relativity" aria-pressed="true">
-<span class="ci">A</span>
-<span class="cl"><b>"Starlight bends by 1.75″ near the sun."</b><span>Einstein, general relativity</span></span>
-</button>
-<button class="clbtn" data-c="astrology">
-<span class="ci">B</span>
-<span class="cl"><b>"Mercury in retrograde disrupts communication."</b><span>Astrology</span></span>
-</button>
-<button class="clbtn" data-c="marx">
-<span class="ci">C</span>
-<span class="cl"><b>"History is driven by class struggle."</b><span>Orthodox Marxism</span></span>
-</button>
-<button class="clbtn" data-c="strings">
-<span class="ci">D</span>
-<span class="cl"><b>"Reality is made of vibrating strings in 11 dimensions."</b><span>String theory</span></span>
-</button>
-<button class="clbtn" data-c="evolution">
-<span class="ci">E</span>
-<span class="cl"><b>"All life shares common descent."</b><span>Evolutionary biology</span></span>
-</button>
-<button class="clbtn" data-c="freud">
-<span class="ci">F</span>
-<span class="cl"><b>"Repressed conflicts cause neuroses."</b><span>Psychoanalysis</span></span>
-</button>
-</div>
-
-<div class="verdict-card" id="verdictCard">
-{/* filled by JS */}
-</div>
-</div>
-</Panel>
+<DemarcationLab locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>

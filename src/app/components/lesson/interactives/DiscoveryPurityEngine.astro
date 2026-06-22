@@ -1,0 +1,103 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 操作伊奥安尼迪斯的机器",
+  heading: "发现纯度引擎",
+  note: "一个领域在 5% 显著性阈值下检验 1,000 个假说。设置其中有多少确实为真、研究的统计功效有多大、以及渗入了多少偏倚（p 值操纵）。观察作为「发现」发表的成果中实际为真的比例——PPV。",
+  trueLabel: "真实假说（共 1,000 个）",
+  trueAria: "1000 个假说中真实假说的数量",
+  powerLabel: "统计功效",
+  powerAria: "统计功效",
+  biasLabel: "偏倚 / p 值操纵",
+  biasInitial: "无",
+  biasAria: "来自可疑研究实践的偏倚",
+  sig: "检验结果<br />显著<br />(「发表」)",
+  notSig: "检验结果<br />不显著<br />(归档)",
+  trueRow: "实际为真",
+  falseRow: "实际为假",
+  tp: "真阳性 ✓",
+  fn: "遗漏（假阴性）",
+  fp: "假阳性 ✗",
+  tn: "正确接受零假设",
+  purity: "在所有作为「发现」发表的结果中（显著列）：",
+  cap: "为真。此处每 100 个已发表的「发现」中，约 64 个是真的，36 个是伪装成信号的噪音。"
+} : {
+  panelTitle: "Interactive · run Ioannidis's machine",
+  heading: "The Discovery-Purity Engine",
+  note: "A field tests 1,000 hypotheses at the 5% significance threshold. Set how many are really true, how much statistical power the studies have, and how much bias (p-hacking) creeps in. Watch what fraction of the published \"discoveries\" are actually real — the PPV.",
+  trueLabel: "True hypotheses (out of 1,000)",
+  trueAria: "Number of true hypotheses out of 1000",
+  powerLabel: "Statistical power",
+  powerAria: "Statistical power",
+  biasLabel: "Bias / p-hacking",
+  biasInitial: "none",
+  biasAria: "Bias from questionable research practices",
+  sig: "Test says<br />SIGNIFICANT<br />(\"published\")",
+  notSig: "Test says<br />not significant<br />(filed away)",
+  trueRow: "Really TRUE",
+  falseRow: "Really FALSE",
+  tp: "true positive ✓",
+  fn: "missed (false neg.)",
+  fp: "false positive ✗",
+  tn: "correct null",
+  purity: 'Of everything published as a "discovery" (the significant column):',
+  cap: 'real. About 64 of every 100 published "discoveries" here are true — and 36 are noise dressed as signal.'
+};
+---
+<Panel class="web-only base-rate-engine">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+
+  <h3>{copy.heading}</h3>
+
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="ppv-controls">
+    <div class="slider-row">
+      <label>{copy.trueLabel} <span class="val" id="appendix-d002-foundations-without-bedrock-brVal">100</span></label>
+      <input type="range" id="appendix-d002-foundations-without-bedrock-brRange" min="20" max="500" value="100" step="10" aria-label={copy.trueAria} />
+    </div>
+    <div class="slider-row">
+      <label>{copy.powerLabel} <span class="val" id="appendix-d002-foundations-without-bedrock-powVal">80%</span></label>
+      <input type="range" id="appendix-d002-foundations-without-bedrock-powRange" min="10" max="99" value="80" aria-label={copy.powerAria} />
+    </div>
+    <div class="slider-row">
+      <label>{copy.biasLabel} <span class="val" id="appendix-d002-foundations-without-bedrock-biasVal">{copy.biasInitial}</span></label>
+      <input type="range" id="appendix-d002-foundations-without-bedrock-biasRange" min="0" max="40" value="0" aria-label={copy.biasAria} />
+    </div>
+  </div>
+
+  <div class="matrix" aria-hidden="false">
+    <div class="corner"></div>
+    <div class="colh" set:html={copy.sig}></div>
+    <div class="colh" set:html={copy.notSig}></div>
+
+    <div class="rowh">{copy.trueRow}</div>
+    <div class="mcell tp"><span class="mc-n" id="appendix-d002-foundations-without-bedrock-cTP">80</span><span class="mc-l">{copy.tp}</span></div>
+    <div class="mcell fn"><span class="mc-n" id="appendix-d002-foundations-without-bedrock-cFN">20</span><span class="mc-l">{copy.fn}</span></div>
+
+    <div class="rowh">{copy.falseRow}</div>
+    <div class="mcell fp"><span class="mc-n" id="appendix-d002-foundations-without-bedrock-cFP">45</span><span class="mc-l">{copy.fp}</span></div>
+    <div class="mcell tn"><span class="mc-n" id="appendix-d002-foundations-without-bedrock-cTN">855</span><span class="mc-l">{copy.tn}</span></div>
+  </div>
+
+  <div class="purity-wrap">
+    <p class="purity-lab">{copy.purity}</p>
+    <div class="purity-bar">
+      <div class="seg-tp initial-share" id="appendix-d002-foundations-without-bedrock-segTP"></div>
+      <div class="seg-fp initial-share" id="appendix-d002-foundations-without-bedrock-segFP"></div>
+    </div>
+  </div>
+
+  <div class="ppv-headline">
+    <div class="big" id="appendix-d002-foundations-without-bedrock-ppvBig">64%</div>
+    <p class="cap" id="appendix-d002-foundations-without-bedrock-ppvCap">{copy.cap}</p>
+  </div>
+</Panel>
