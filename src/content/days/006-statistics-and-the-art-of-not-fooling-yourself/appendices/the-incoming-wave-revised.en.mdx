@@ -9,6 +9,7 @@ import Claim from "@app/components/lesson/Claim.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import IncomingWaveAtlas from "@app/components/lesson/interactives/IncomingWaveAtlas.astro";
+import StatisticsIncomingWaveLab from "@app/components/lesson/interactives/StatisticsIncomingWaveLab.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
@@ -60,26 +61,7 @@ Optional stopping was one of the False-Positive Factory switches. Anytime-valid 
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-peekPanel">
-<PanelTitle>Interactive · optional stopping</PanelTitle>
-
-### The peek meter
-
-<PanelNote>A toy approximation: treat each look as a fresh chance to cross <MathInline latex={String.raw`p < \alpha`} />. Real sequential dependence is subtler, but the direction is the point. Fixed-sample p-values are brittle under repeated looks; anytime-valid procedures are designed for the stopping rule.</PanelNote>
-
-<div class="grid2">
-<div class="ctrl">
-<div class="slider-row"><label>Nominal <MathInline latex={String.raw`\alpha`} /> <span class="val" id="appendix-d006-the-incoming-wave-revised-peekAlphaVal">0.05</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-peekAlpha" min="1" max="10" value="5" /></div>
-<div class="slider-row"><label>Number of looks <span class="val" id="appendix-d006-the-incoming-wave-revised-peekLooksVal">12</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-peekLooks" min="1" max="100" value="12" /></div>
-</div>
-<div class="visbox">
-<div class="metric"><span class="lab">fixed-sample p</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-peekFixedBar"></span></div><b id="appendix-d006-the-incoming-wave-revised-peekFixedPct">46%</b></div>
-<div class="metric"><span class="lab">anytime-valid</span><div class="meter green"><span id="appendix-d006-the-incoming-wave-revised-peekAnyBar"></span></div><b id="appendix-d006-the-incoming-wave-revised-peekAnyPct">5%</b></div>
-<p class="note">The red bar is the chance that at least one look produces a false “discovery” under the simple independent-looks approximation. The green bar stays at the designed false-alarm level.</p>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-incoming-wave-revised-peekRead"></div>
-</Panel>
+<StatisticsIncomingWaveLab kind="peek" locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -110,28 +92,7 @@ The hype filter: marginal coverage is real; conditional coverage is hard. Under 
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-confPanel">
-<PanelTitle>Interactive · conformal bargain</PanelTitle>
-
-### Coverage is bought with set size
-
-<PanelNote>This is a conceptual dial, not a theorem. Lower α asks for higher coverage; weaker model skill and more shift make the prediction set larger or less trustworthy. The real guarantee depends on exchangeability or a justified shift correction.</PanelNote>
-
-<div class="grid2">
-<div class="ctrl">
-<div class="slider-row"><label><MathInline latex={String.raw`\alpha`} />, tolerated miss-rate <span class="val" id="appendix-d006-the-incoming-wave-revised-confAlphaVal">0.10</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confAlpha" min="1" max="30" value="10" /></div>
-<div class="slider-row"><label>Model skill <span class="val" id="appendix-d006-the-incoming-wave-revised-confSkillVal">0.70</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confSkill" min="10" max="95" value="70" /></div>
-<div class="slider-row"><label>Deployment shift <span class="val" id="appendix-d006-the-incoming-wave-revised-confShiftVal">0.00</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confShift" min="0" max="80" value="0" /></div>
-</div>
-<div class="visbox">
-<div class="metric"><span class="lab">target coverage</span><div class="meter green"><span id="appendix-d006-the-incoming-wave-revised-confTargetBar"></span></div><b id="appendix-d006-the-incoming-wave-revised-confTargetPct">90%</b></div>
-<div class="metric"><span class="lab">stress coverage</span><div class="meter"><span id="appendix-d006-the-incoming-wave-revised-confStressBar"></span></div><b id="appendix-d006-the-incoming-wave-revised-confStressPct">90%</b></div>
-<div class="metric"><span class="lab">set size</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-confSizeBar"></span></div><b id="appendix-d006-the-incoming-wave-revised-confSizePct">42%</b></div>
-<p class="note">A uselessly wide set can be valid. Validity is a safety net, not a hammock.</p>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-incoming-wave-revised-confRead"></div>
-</Panel>
+<StatisticsIncomingWaveLab kind="conformal" locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -162,29 +123,7 @@ The limitation is practical, not philosophical. You still need a gold-standard l
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-ppiPanel">
-<PanelTitle>Interactive · the PPI bargain</PanelTitle>
-
-### Cheap predictions buy precision only after gold-standard correction
-
-<PanelNote>Move the sliders to compare three intervals: classical labeled-only, naive ML-as-truth, and PPI. The naive interval can be narrow and wrong. PPI aims to be narrower than labeled-only while retaining validity through the rectifier.</PanelNote>
-
-<div class="grid2">
-<div class="ctrl">
-<div class="slider-row"><label>Gold labels <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiNVal">200</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiN" min="40" max="2000" value="200" /></div>
-<div class="slider-row"><label>Unlabeled predictions <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiUVal">20,000</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiU" min="1000" max="100000" step="1000" value="20000" /></div>
-<div class="slider-row"><label>Model correlation with truth <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiRVal">0.70</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiR" min="0" max="95" value="70" /></div>
-<div class="slider-row"><label>Naive model bias <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiBiasVal">0.20</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiBias" min="0" max="60" value="20" /></div>
-</div>
-<div class="visbox">
-<div class="ci-row"><span class="ci-label">labeled-only</span><div class="ci-bar"><div class="ci-band classical" id="appendix-d006-the-incoming-wave-revised-ciClass"></div><div class="ci-truth" id="appendix-d006-the-incoming-wave-revised-truthClass"></div></div></div>
-<div class="ci-row"><span class="ci-label">naive ML</span><div class="ci-bar"><div class="ci-band naive" id="appendix-d006-the-incoming-wave-revised-ciNaive"></div><div class="ci-truth" id="appendix-d006-the-incoming-wave-revised-truthNaive"></div></div></div>
-<div class="ci-row"><span class="ci-label">PPI</span><div class="ci-bar"><div class="ci-band ppi" id="appendix-d006-the-incoming-wave-revised-ciPpi"></div><div class="ci-truth" id="appendix-d006-the-incoming-wave-revised-truthPpi"></div></div></div>
-<div class="legend"><span><i class="legend-accent"></i> labels only</span><span><i class="legend-contested"></i> naive prediction</span><span><i class="legend-ppi"></i> PPI</span><span><i class="legend-contested"></i> truth</span></div>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-incoming-wave-revised-ppiRead"></div>
-</Panel>
+<StatisticsIncomingWaveLab kind="ppi" locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -240,29 +179,7 @@ The hype filter: this is not easy, and it is not a substitute for preregistratio
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-pathsPanel">
-<PanelTitle>Interactive · AI analyst multiverse</PanelTitle>
-
-### The garden grows faster when analysis is cheap
-
-<PanelNote>Assume pure noise and a nominal <MathInline latex={String.raw`\alpha=.05`} />. Each prompt, model, outcome, and cleaning rule multiplies the number of possible analyses. The independence approximation is crude; the moral is not.</PanelNote>
-
-<div class="grid2">
-<div class="ctrl">
-<div class="slider-row"><label>Prompts tried <span class="val" id="appendix-d006-the-incoming-wave-revised-pathPromptVal">4</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathPrompt" min="1" max="30" value="4" /></div>
-<div class="slider-row"><label>Models / agents tried <span class="val" id="appendix-d006-the-incoming-wave-revised-pathModelVal">3</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathModel" min="1" max="12" value="3" /></div>
-<div class="slider-row"><label>Outcomes considered <span class="val" id="appendix-d006-the-incoming-wave-revised-pathOutcomeVal">5</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathOutcome" min="1" max="30" value="5" /></div>
-<div class="slider-row"><label>Cleaning / covariate rules <span class="val" id="appendix-d006-the-incoming-wave-revised-pathCleanVal">4</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathClean" min="1" max="20" value="4" /></div>
-</div>
-<div class="visbox">
-<div class="bigstat"><span id="appendix-d006-the-incoming-wave-revised-pathK">240</span> <small>analysis paths</small></div>
-<div class="metric"><span class="lab">false-positive risk</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-pathRiskBar"></span></div><b id="appendix-d006-the-incoming-wave-revised-pathRiskPct">≈100%</b></div>
-<div class="metric"><span class="lab">preregistered</span><div class="meter green"><span class="meter-five"></span></div><b>5%</b></div>
-<p class="note">An AI analyst that reports the full multiverse can be an honesty machine. An AI analyst that silently selects the prettiest path is a p-hacking accelerator.</p>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-incoming-wave-revised-pathsRead"></div>
-</Panel>
+<StatisticsIncomingWaveLab kind="paths" locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -383,28 +300,7 @@ AI can give an illusion of understanding: more outputs, more polish, more confid
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-benchPanel">
-<PanelTitle>Interactive · benchmark games</PanelTitle>
-
-### When the leaderboard is not deployment
-
-<PanelNote>A toy model of benchmark inflation. Contamination and repeated submissions can raise a public score without improving hidden deployment performance.</PanelNote>
-
-<div class="grid2">
-<div class="ctrl">
-<div class="slider-row"><label>True deployment skill <span class="val" id="appendix-d006-the-incoming-wave-revised-benchSkillVal">72%</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-benchSkill" min="40" max="95" value="72" /></div>
-<div class="slider-row"><label>Benchmark contamination <span class="val" id="appendix-d006-the-incoming-wave-revised-benchContamVal">20%</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-benchContam" min="0" max="80" value="20" /></div>
-<div class="slider-row"><label>Leaderboard submissions <span class="val" id="appendix-d006-the-incoming-wave-revised-benchSubVal">12</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-benchSub" min="1" max="200" value="12" /></div>
-</div>
-<div class="visbox">
-<div class="metric"><span class="lab">hidden holdout</span><div class="meter green"><span id="appendix-d006-the-incoming-wave-revised-benchHiddenBar"></span></div><b id="appendix-d006-the-incoming-wave-revised-benchHiddenPct">72%</b></div>
-<div class="metric"><span class="lab">public board</span><div class="meter"><span id="appendix-d006-the-incoming-wave-revised-benchPublicBar"></span></div><b id="appendix-d006-the-incoming-wave-revised-benchPublicPct">80%</b></div>
-<div class="metric"><span class="lab">generalization gap</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-benchGapBar"></span></div><b id="appendix-d006-the-incoming-wave-revised-benchGapPct">8%</b></div>
-<p class="note">Healthy evaluation rotates or hides tests, audits contamination, limits leaderboard overfitting, and reports uncertainty around rank differences.</p>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-incoming-wave-revised-benchRead"></div>
-</Panel>
+<StatisticsIncomingWaveLab kind="benchmark" locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>

@@ -9,6 +9,7 @@ import Claim from "@app/components/lesson/Claim.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import IncomingWaveAtlas from "@app/components/lesson/interactives/IncomingWaveAtlas.astro";
+import StatisticsIncomingWaveLab from "@app/components/lesson/interactives/StatisticsIncomingWaveLab.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
@@ -61,26 +62,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-peekPanel">
-<PanelTitle>交互式 · 可选停止</PanelTitle>
-
-### 重复查看风险
-
-<PanelNote>一个简易模型：将每次查看视为一次跨过 <Term><MathInline latex={String.raw`p < \alpha`} /></Term> 的新机会。真实的序贯依赖性更微妙，但趋势才是重点。固定样本 p 值在重复查看下非常脆弱；而任意时点有效程序则是专为停止规则设计的。</PanelNote>
-
-<div class="grid2">
-<div class="ctrl">
-<div class="slider-row"><label>名义 <span class="term"><MathInline latex={String.raw`\alpha`} /></span> <span class="val" id="appendix-d006-the-incoming-wave-revised-peekAlphaVal">0.05</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-peekAlpha" min="1" max="10" value="5" /></div>
-<div class="slider-row"><label>查看次数 <span class="val" id="appendix-d006-the-incoming-wave-revised-peekLooksVal">12</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-peekLooks" min="1" max="100" value="12" /></div>
-</div>
-<div class="visbox">
-<div class="metric"><span class="lab">固定样本 p 值</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-peekFixedBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-peekFixedPct">46%</span></div>
-<div class="metric"><span class="lab">任意时点有效</span><div class="meter green"><span id="appendix-d006-the-incoming-wave-revised-peekAnyBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-peekAnyPct">5%</span></div>
-<p class="note">红色条是在简单的独立查看近似下，至少有一次查看产生虚假「发现」的概率。绿色条则保持在预设的假警报水平。</p>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-incoming-wave-revised-peekRead"></div>
-</Panel>
+<StatisticsIncomingWaveLab kind="peek" locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -115,28 +97,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-confPanel">
-<PanelTitle>交互式 · 共形方法的权衡</PanelTitle>
-
-### 更高覆盖率的代价是更大的预测集
-
-<PanelNote>这只是一个概念性的拨盘，而非定理。更低的 <Term><MathInline latex={String.raw`\alpha`} /></Term> 要求更高的覆盖率；模型预测性能越弱、部署分布偏移越大，预测集通常越大或越不可信。真实的保证取决于可交换性或经论证的偏移修正。</PanelNote>
-
-<div class="grid2">
-<div class="ctrl">
-<div class="slider-row"><label><span class="term"><MathInline latex={String.raw`\alpha`} /></span>（允许的未覆盖率） <span class="val" id="appendix-d006-the-incoming-wave-revised-confAlphaVal">0.10</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confAlpha" min="1" max="30" value="10" /></div>
-<div class="slider-row"><label>模型预测性能 <span class="val" id="appendix-d006-the-incoming-wave-revised-confSkillVal">0.70</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confSkill" min="10" max="95" value="70" /></div>
-<div class="slider-row"><label>部署分布偏移 <span class="val" id="appendix-d006-the-incoming-wave-revised-confShiftVal">0.00</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-confShift" min="0" max="80" value="0" /></div>
-</div>
-<div class="visbox">
-<div class="metric"><span class="lab">目标覆盖率</span><div class="meter green"><span id="appendix-d006-the-incoming-wave-revised-confTargetBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-confTargetPct">90%</span></div>
-<div class="metric"><span class="lab">压力测试覆盖率</span><div class="meter"><span id="appendix-d006-the-incoming-wave-revised-confStressBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-confStressPct">90%</span></div>
-<div class="metric"><span class="lab">集合大小</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-confSizeBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-confSizePct">42%</span></div>
-<p class="note">一个大到毫无用处的集合也可以满足覆盖率要求。统计有效性只能兜底，不能让人高枕无忧。</p>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-incoming-wave-revised-confRead"></div>
-</Panel>
+<StatisticsIncomingWaveLab kind="conformal" locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -171,29 +132,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-ppiPanel">
-<PanelTitle>交互式 · PPI 权衡</PanelTitle>
-
-### 低成本预测仅在金标准校正后才能换取精确度
-
-<PanelNote>移动滑块以比较三种区间：经典的仅标注、朴素地将 ML 视为真值、以及 PPI。未经校正的区间可能很窄但却是错的。PPI 旨在比仅标注区间更窄，同时通过偏差校正项保持统计有效性。</PanelNote>
-
-<div class="grid2">
-<div class="ctrl">
-<div class="slider-row"><label>金标准标注 <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiNVal">200</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiN" min="40" max="2000" value="200" /></div>
-<div class="slider-row"><label>未标注预测 <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiUVal">20,000</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiU" min="1000" max="100000" step="1000" value="20000" /></div>
-<div class="slider-row"><label>模型预测与真实标签的相关性 <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiRVal">0.70</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiR" min="0" max="95" value="70" /></div>
-<div class="slider-row"><label>未经校正的模型偏差 <span class="val" id="appendix-d006-the-incoming-wave-revised-ppiBiasVal">0.20</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-ppiBias" min="0" max="60" value="20" /></div>
-</div>
-<div class="visbox">
-<div class="ci-row"><span class="ci-label">仅标注</span><div class="ci-bar"><div class="ci-band classical" id="appendix-d006-the-incoming-wave-revised-ciClass"></div><div class="ci-truth" id="appendix-d006-the-incoming-wave-revised-truthClass"></div></div></div>
-<div class="ci-row"><span class="ci-label">朴素 ML</span><div class="ci-bar"><div class="ci-band naive" id="appendix-d006-the-incoming-wave-revised-ciNaive"></div><div class="ci-truth" id="appendix-d006-the-incoming-wave-revised-truthNaive"></div></div></div>
-<div class="ci-row"><span class="ci-label">PPI</span><div class="ci-bar"><div class="ci-band ppi" id="appendix-d006-the-incoming-wave-revised-ciPpi"></div><div class="ci-truth" id="appendix-d006-the-incoming-wave-revised-truthPpi"></div></div></div>
-<div class="legend"><span><i class="legend-accent"></i> 仅标注</span><span><i class="legend-contested"></i> 朴素预测</span><span><i class="legend-ppi"></i> PPI</span><span><i class="legend-contested"></i> 真值</span></div>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-incoming-wave-revised-ppiRead"></div>
-</Panel>
+<StatisticsIncomingWaveLab kind="ppi" locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -249,29 +188,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-pathsPanel">
-<PanelTitle>交互式 · AI 分析师多重宇宙</PanelTitle>
-
-### 当分析成本低廉时，花园长得更快
-
-<PanelNote>假定纯粹是噪声且名义 <Term><MathInline latex={String.raw`\alpha=.05`} /></Term>。每组提示词设定、模型、结果和清洗规则都会使可能的分析路径成倍增加。独立性近似虽显粗糙，但其中的警示意义不言自明。</PanelNote>
-
-<div class="grid2">
-<div class="ctrl">
-<div class="slider-row"><label>尝试的提示词设定 <span class="val" id="appendix-d006-the-incoming-wave-revised-pathPromptVal">4</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathPrompt" min="1" max="30" value="4" /></div>
-<div class="slider-row"><label>尝试的模型 / 智能体 <span class="val" id="appendix-d006-the-incoming-wave-revised-pathModelVal">3</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathModel" min="1" max="12" value="3" /></div>
-<div class="slider-row"><label>考虑的结果变量 <span class="val" id="appendix-d006-the-incoming-wave-revised-pathOutcomeVal">5</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathOutcome" min="1" max="30" value="5" /></div>
-<div class="slider-row"><label>清洗 / 协变量规则 <span class="val" id="appendix-d006-the-incoming-wave-revised-pathCleanVal">4</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-pathClean" min="1" max="20" value="4" /></div>
-</div>
-<div class="visbox">
-<div class="bigstat"><span id="appendix-d006-the-incoming-wave-revised-pathK">240</span> <small>条分析路径</small></div>
-<div class="metric"><span class="lab">假阳性风险</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-pathRiskBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-pathRiskPct">≈100%</span></div>
-<div class="metric"><span class="lab">研究预登记</span><div class="meter green"><span class="meter-five"></span></div><span>5%</span></div>
-<p class="note">一个报告完整多重宇宙的 AI 分析师可以提高透明度。一个悄悄选择最有利路径的 AI 分析师，则是 <span class="term">p 值操纵</span> 的加速器。</p>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-incoming-wave-revised-pathsRead"></div>
-</Panel>
+<StatisticsIncomingWaveLab kind="paths" locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -392,28 +309,7 @@ AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更�
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab" id="appendix-d006-the-incoming-wave-revised-benchPanel">
-<PanelTitle>交互式 · 公开基准分数</PanelTitle>
-
-### 排行榜分数不等于部署表现
-
-<PanelNote>下面用一个简化模型说明公开基准分数如何被高估。污染和重复提交可以提高公开分数，而不会改善未公开测试集上的部署表现。</PanelNote>
-
-<div class="grid2">
-<div class="ctrl">
-<div class="slider-row"><label>真实部署表现 <span class="val" id="appendix-d006-the-incoming-wave-revised-benchSkillVal">72%</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-benchSkill" min="40" max="95" value="72" /></div>
-<div class="slider-row"><label>基准测试污染 <span class="val" id="appendix-d006-the-incoming-wave-revised-benchContamVal">20%</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-benchContam" min="0" max="80" value="20" /></div>
-<div class="slider-row"><label>排行榜提交次数 <span class="val" id="appendix-d006-the-incoming-wave-revised-benchSubVal">12</span></label><input type="range" id="appendix-d006-the-incoming-wave-revised-benchSub" min="1" max="200" value="12" /></div>
-</div>
-<div class="visbox">
-<div class="metric"><span class="lab">隐藏测试集</span><div class="meter green"><span id="appendix-d006-the-incoming-wave-revised-benchHiddenBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-benchHiddenPct">72%</span></div>
-<div class="metric"><span class="lab">公开排行榜</span><div class="meter"><span id="appendix-d006-the-incoming-wave-revised-benchPublicBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-benchPublicPct">80%</span></div>
-<div class="metric"><span class="lab">泛化差距</span><div class="meter red"><span id="appendix-d006-the-incoming-wave-revised-benchGapBar"></span></div><span id="appendix-d006-the-incoming-wave-revised-benchGapPct">8%</span></div>
-<p class="note">稳健的评估体系会轮换或隐藏测试集、审计污染情况、限制排行榜过拟合，并报告排名差异的不确定性。</p>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-incoming-wave-revised-benchRead"></div>
-</Panel>
+<StatisticsIncomingWaveLab kind="benchmark" locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>

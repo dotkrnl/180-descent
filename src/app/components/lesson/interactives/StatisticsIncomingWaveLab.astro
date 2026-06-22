@@ -1,0 +1,226 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Term from "@app/components/lesson/Term.astro";
+
+type Kind = "peek" | "conformal" | "ppi" | "paths" | "benchmark";
+
+interface Props {
+  kind: Kind;
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const kind = Astro.props.kind;
+const prefix = "appendix-d006-the-incoming-wave-revised-";
+
+const panels = {
+  peek: {
+    id: "peekPanel",
+    title: zh ? "交互式 · 可选停止" : "Interactive · optional stopping",
+    heading: zh ? "重复查看风险" : "The peek meter",
+    controls: zh
+      ? [
+          { id: "peekAlpha", label: "名义", math: String.raw`\alpha`, mathAfter: true, valueId: "peekAlphaVal", value: "0.05", inputValue: "5", min: "1", max: "10" },
+          { id: "peekLooks", label: "查看次数", valueId: "peekLooksVal", value: "12", min: "1", max: "100" }
+        ]
+      : [
+          { id: "peekAlpha", label: "Nominal", math: String.raw`\alpha`, mathAfter: true, valueId: "peekAlphaVal", value: "0.05", inputValue: "5", min: "1", max: "10" },
+          { id: "peekLooks", label: "Number of looks", valueId: "peekLooksVal", value: "12", min: "1", max: "100" }
+        ],
+    metrics: zh
+      ? [
+          { label: "固定样本 p 值", meter: "red", bar: "peekFixedBar", valueId: "peekFixedPct", value: "46%" },
+          { label: "任意时点有效", meter: "green", bar: "peekAnyBar", valueId: "peekAnyPct", value: "5%" }
+        ]
+      : [
+          { label: "fixed-sample p", meter: "red", bar: "peekFixedBar", valueId: "peekFixedPct", value: "46%" },
+          { label: "anytime-valid", meter: "green", bar: "peekAnyBar", valueId: "peekAnyPct", value: "5%" }
+        ],
+    metricNote: zh
+      ? "红色条是在简单的独立查看近似下，至少有一次查看产生虚假「发现」的概率。绿色条则保持在预设的假警报水平。"
+      : "The red bar is the chance that at least one look produces a false “discovery” under the simple independent-looks approximation. The green bar stays at the designed false-alarm level.",
+    readout: "peekRead"
+  },
+  conformal: {
+    id: "confPanel",
+    title: zh ? "交互式 · 共形方法的权衡" : "Interactive · conformal bargain",
+    heading: zh ? "更高覆盖率的代价是更大的预测集" : "Coverage is bought with set size",
+    controls: zh
+      ? [
+          { id: "confAlpha", label: "（允许的未覆盖率）", math: String.raw`\alpha`, valueId: "confAlphaVal", value: "0.10", inputValue: "10", min: "1", max: "30" },
+          { id: "confSkill", label: "模型预测性能", valueId: "confSkillVal", value: "0.70", min: "10", max: "95" },
+          { id: "confShift", label: "部署分布偏移", valueId: "confShiftVal", value: "0.00", min: "0", max: "80" }
+        ]
+      : [
+          { id: "confAlpha", label: ", tolerated miss-rate", math: String.raw`\alpha`, valueId: "confAlphaVal", value: "0.10", inputValue: "10", min: "1", max: "30" },
+          { id: "confSkill", label: "Model skill", valueId: "confSkillVal", value: "0.70", min: "10", max: "95" },
+          { id: "confShift", label: "Deployment shift", valueId: "confShiftVal", value: "0.00", min: "0", max: "80" }
+        ],
+    metrics: zh
+      ? [
+          { label: "目标覆盖率", meter: "green", bar: "confTargetBar", valueId: "confTargetPct", value: "90%" },
+          { label: "压力测试覆盖率", meter: "", bar: "confStressBar", valueId: "confStressPct", value: "90%" },
+          { label: "集合大小", meter: "red", bar: "confSizeBar", valueId: "confSizePct", value: "42%" }
+        ]
+      : [
+          { label: "target coverage", meter: "green", bar: "confTargetBar", valueId: "confTargetPct", value: "90%" },
+          { label: "stress coverage", meter: "", bar: "confStressBar", valueId: "confStressPct", value: "90%" },
+          { label: "set size", meter: "red", bar: "confSizeBar", valueId: "confSizePct", value: "42%" }
+        ],
+    metricNote: zh
+      ? "一个大到毫无用处的集合也可以满足覆盖率要求。统计有效性只能兜底，不能让人高枕无忧。"
+      : "A uselessly wide set can be valid. Validity is a safety net, not a hammock.",
+    readout: "confRead"
+  },
+  ppi: {
+    id: "ppiPanel",
+    title: zh ? "交互式 · PPI 权衡" : "Interactive · the PPI bargain",
+    heading: zh ? "低成本预测仅在金标准校正后才能换取精确度" : "Cheap predictions buy precision only after gold-standard correction",
+    controls: zh
+      ? [
+          { id: "ppiN", label: "金标准标注", valueId: "ppiNVal", value: "200", min: "40", max: "2000" },
+          { id: "ppiU", label: "未标注预测", valueId: "ppiUVal", value: "20,000", min: "1000", max: "100000", step: "1000" },
+          { id: "ppiR", label: "模型预测与真实标签的相关性", valueId: "ppiRVal", value: "0.70", min: "0", max: "95" },
+          { id: "ppiBias", label: "未经校正的模型偏差", valueId: "ppiBiasVal", value: "0.20", min: "0", max: "60" }
+        ]
+      : [
+          { id: "ppiN", label: "Gold labels", valueId: "ppiNVal", value: "200", min: "40", max: "2000" },
+          { id: "ppiU", label: "Unlabeled predictions", valueId: "ppiUVal", value: "20,000", min: "1000", max: "100000", step: "1000" },
+          { id: "ppiR", label: "Model correlation with truth", valueId: "ppiRVal", value: "0.70", min: "0", max: "95" },
+          { id: "ppiBias", label: "Naive model bias", valueId: "ppiBiasVal", value: "0.20", min: "0", max: "60" }
+        ],
+    readout: "ppiRead"
+  },
+  paths: {
+    id: "pathsPanel",
+    title: zh ? "交互式 · AI 分析师多重宇宙" : "Interactive · AI analyst multiverse",
+    heading: zh ? "当分析成本低廉时，花园长得更快" : "The garden grows faster when analysis is cheap",
+    controls: zh
+      ? [
+          { id: "pathPrompt", label: "尝试的提示词设定", valueId: "pathPromptVal", value: "4", min: "1", max: "30" },
+          { id: "pathModel", label: "尝试的模型 / 智能体", valueId: "pathModelVal", value: "3", min: "1", max: "12" },
+          { id: "pathOutcome", label: "考虑的结果变量", valueId: "pathOutcomeVal", value: "5", min: "1", max: "30" },
+          { id: "pathClean", label: "清洗 / 协变量规则", valueId: "pathCleanVal", value: "4", min: "1", max: "20" }
+        ]
+      : [
+          { id: "pathPrompt", label: "Prompts tried", valueId: "pathPromptVal", value: "4", min: "1", max: "30" },
+          { id: "pathModel", label: "Models / agents tried", valueId: "pathModelVal", value: "3", min: "1", max: "12" },
+          { id: "pathOutcome", label: "Outcomes considered", valueId: "pathOutcomeVal", value: "5", min: "1", max: "30" },
+          { id: "pathClean", label: "Cleaning / covariate rules", valueId: "pathCleanVal", value: "4", min: "1", max: "20" }
+        ],
+    readout: "pathsRead"
+  },
+  benchmark: {
+    id: "benchPanel",
+    title: zh ? "交互式 · 公开基准分数" : "Interactive · benchmark games",
+    heading: zh ? "排行榜分数不等于部署表现" : "When the leaderboard is not deployment",
+    controls: zh
+      ? [
+          { id: "benchSkill", label: "真实部署表现", valueId: "benchSkillVal", value: "72%", min: "40", max: "95" },
+          { id: "benchContam", label: "基准测试污染", valueId: "benchContamVal", value: "20%", min: "0", max: "80" },
+          { id: "benchSub", label: "排行榜提交次数", valueId: "benchSubVal", value: "12", min: "1", max: "200" }
+        ]
+      : [
+          { id: "benchSkill", label: "True deployment skill", valueId: "benchSkillVal", value: "72%", min: "40", max: "95" },
+          { id: "benchContam", label: "Benchmark contamination", valueId: "benchContamVal", value: "20%", min: "0", max: "80" },
+          { id: "benchSub", label: "Leaderboard submissions", valueId: "benchSubVal", value: "12", min: "1", max: "200" }
+        ],
+    metrics: zh
+      ? [
+          { label: "隐藏测试集", meter: "green", bar: "benchHiddenBar", valueId: "benchHiddenPct", value: "72%" },
+          { label: "公开排行榜", meter: "", bar: "benchPublicBar", valueId: "benchPublicPct", value: "80%" },
+          { label: "泛化差距", meter: "red", bar: "benchGapBar", valueId: "benchGapPct", value: "8%" }
+        ]
+      : [
+          { label: "hidden holdout", meter: "green", bar: "benchHiddenBar", valueId: "benchHiddenPct", value: "72%" },
+          { label: "public board", meter: "", bar: "benchPublicBar", valueId: "benchPublicPct", value: "80%" },
+          { label: "generalization gap", meter: "red", bar: "benchGapBar", valueId: "benchGapPct", value: "8%" }
+        ],
+    metricNote: zh
+      ? "健康的评估需要轮换或隐藏测试集、审计污染、限制排行榜过拟合，并报告排名差异的不确定性。"
+      : "Healthy evaluation rotates or hides tests, audits contamination, limits leaderboard overfitting, and reports uncertainty around rank differences.",
+    readout: "benchRead"
+  }
+} as const;
+
+const panel = panels[kind];
+---
+<Panel class="web-only statistics-appendix-lab" id={`${prefix}${panel.id}`}>
+  <PanelTitle>{panel.title}</PanelTitle>
+  <h3>{panel.heading}</h3>
+  <PanelNote>
+    {kind === "peek" && (
+      zh
+        ? <>一个简易模型：将每次查看视为一次跨过 <Term><MathInline latex={String.raw`p < \alpha`} /></Term> 的新机会。真实的序贯依赖性更微妙，但趋势才是重点。固定样本 p 值在重复查看下非常脆弱；而任意时点有效程序则是专为停止规则设计的。</>
+        : <>A toy approximation: treat each look as a fresh chance to cross <MathInline latex={String.raw`p < \alpha`} />. Real sequential dependence is subtler, but the direction is the point. Fixed-sample p-values are brittle under repeated looks; anytime-valid procedures are designed for the stopping rule.</>
+    )}
+    {kind === "conformal" && (
+      zh
+        ? <>这只是一个概念性的拨盘，而非定理。更低的 <Term><MathInline latex={String.raw`\alpha`} /></Term> 要求更高的覆盖率；模型预测性能越弱、部署分布偏移越大，预测集通常越大或越不可信。真实的保证取决于可交换性或经论证的偏移修正。</>
+        : <>This is a conceptual dial, not a theorem. Lower α asks for higher coverage; weaker model skill and more shift make the prediction set larger or less trustworthy. The real guarantee depends on exchangeability or a justified shift correction.</>
+    )}
+    {kind === "ppi" && (
+      zh
+        ? <>移动滑块以比较三种区间：经典的仅标注、朴素地将 ML 视为真值、以及 PPI。未经校正的区间可能很窄但却是错的。PPI 旨在比仅标注区间更窄，同时通过偏差校正项保持统计有效性。</>
+        : <>Move the sliders to compare three intervals: classical labeled-only, naive ML-as-truth, and PPI. The naive interval can be narrow and wrong. PPI aims to be narrower than labeled-only while retaining validity through the rectifier.</>
+    )}
+    {kind === "paths" && (
+      zh
+        ? <>假定纯粹是噪声且名义 <Term><MathInline latex={String.raw`\alpha=.05`} /></Term>。每组提示词设定、模型、结果和清洗规则都会使可能的分析路径成倍增加。独立性近似虽显粗糙，但其中的警示意义不言自明。</>
+        : <>Assume pure noise and a nominal <MathInline latex={String.raw`\alpha=.05`} />. Each prompt, model, outcome, and cleaning rule multiplies the number of possible analyses. The independence approximation is crude; the moral is not.</>
+    )}
+    {kind === "benchmark" && (
+      zh
+        ? <>下面用一个简化模型说明公开基准分数如何被高估。污染和重复提交可以提高公开分数，而不会改善未公开测试集上的部署表现。</>
+        : <>A toy model of benchmark inflation. Contamination and repeated submissions can raise a public score without improving hidden deployment performance.</>
+    )}
+  </PanelNote>
+
+  <div class="grid2">
+    <div class="ctrl">
+          {panel.controls.map((control) => (
+        <div class="slider-row">
+          <label>
+            {control.math && !control.mathAfter && <MathInline latex={control.math} />}{control.math && !control.mathAfter && (control.label.startsWith(",") || control.label.startsWith("（") ? "" : " ")}
+            {control.label}{control.mathAfter && " "}{control.math && control.mathAfter && <MathInline latex={control.math} />}
+            <span class="val" id={`${prefix}${control.valueId}`}>{control.value}</span>
+          </label>
+          <input type="range" id={`${prefix}${control.id}`} min={control.min} max={control.max} step={control.step} value={(control.inputValue ?? control.value).replace(/[,％%]/g, "")} />
+        </div>
+      ))}
+    </div>
+    <div class="visbox">
+      {kind === "ppi" ? (
+        <>
+          <div class="ci-row"><span class="ci-label">{zh ? "仅标注" : "labeled-only"}</span><div class="ci-bar"><div class="ci-band classical" id={`${prefix}ciClass`}></div><div class="ci-truth" id={`${prefix}truthClass`}></div></div></div>
+          <div class="ci-row"><span class="ci-label">{zh ? "朴素 ML" : "naive ML"}</span><div class="ci-bar"><div class="ci-band naive" id={`${prefix}ciNaive`}></div><div class="ci-truth" id={`${prefix}truthNaive`}></div></div></div>
+          <div class="ci-row"><span class="ci-label">PPI</span><div class="ci-bar"><div class="ci-band ppi" id={`${prefix}ciPpi`}></div><div class="ci-truth" id={`${prefix}truthPpi`}></div></div></div>
+          <div class="legend">
+            <span><i class="legend-accent"></i> {zh ? "仅标注" : "labels only"}</span>
+            <span><i class="legend-contested"></i> {zh ? "朴素预测" : "naive prediction"}</span>
+            <span><i class="legend-ppi"></i> PPI</span>
+            <span><i class="legend-contested"></i> {zh ? "真值" : "truth"}</span>
+          </div>
+        </>
+      ) : kind === "paths" ? (
+        <>
+          <div class="bigstat"><span id={`${prefix}pathK`}>240</span> <small>{zh ? "条分析路径" : "analysis paths"}</small></div>
+          <div class="metric"><span class="lab">{zh ? "假阳性风险" : "false-positive risk"}</span><div class="meter red"><span id={`${prefix}pathRiskBar`}></span></div><span id={`${prefix}pathRiskPct`}>≈100%</span></div>
+          <div class="metric"><span class="lab">{zh ? "研究预登记" : "preregistered"}</span><div class="meter green"><span class="meter-five"></span></div><span>5%</span></div>
+          <p class="note">{zh ? <>一个报告完整多重宇宙的 AI 分析师可以提高透明度。一个悄悄选择最有利路径的 AI 分析师，则是 <span class="term">p 值操纵</span> 的加速器。</> : "An AI analyst that reports the full multiverse can be an honesty machine. An AI analyst that silently selects the prettiest path is a p-hacking accelerator."}</p>
+        </>
+      ) : (
+        <>
+          {panel.metrics.map((metric) => (
+            <div class="metric"><span class="lab">{metric.label}</span><div class={`meter ${metric.meter}`.trim()}><span id={`${prefix}${metric.bar}`}></span></div><span id={`${prefix}${metric.valueId}`}>{metric.value}</span></div>
+          ))}
+          <p class="note">{panel.metricNote}</p>
+        </>
+      )}
+    </div>
+  </div>
+  <div class="readout" id={`${prefix}${panel.readout}`}></div>
+</Panel>
