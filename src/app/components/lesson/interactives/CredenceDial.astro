@@ -1,10 +1,16 @@
 ---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
 interface Props {
   locale?: "en" | "zh";
 }
 
 const zh = Astro.props.locale === "zh";
 const copy = zh ? {
+  panelTitle: "交互演示 · 感受陷阱",
+  heading: "置信度刻度盘与荷兰赌",
   sLabel: "对 S 的置信度——「下一张牌是红色」",
   nLabel: "对 ¬S 的置信度——「下一张牌不是红色」",
   sAria: "对 S 的置信度",
@@ -14,6 +20,8 @@ const copy = zh ? {
   ledgerBody: "你的置信度之和为 1。没有一套看起来公平的赌约能保证让你亏损。这是概率对一个理性心智提出的最低要求。",
   snap: "↳ 将 ¬S 对齐至 1 − S（恢复融贯）"
 } : {
+  panelTitle: "Interactive · feel the trap",
+  heading: "The Credence Dial & the Dutch Book",
   sLabel: 'Credence in S — "next card is red"',
   nLabel: 'Credence in ¬S — "next card is not red"',
   sAria: "Credence in S",
@@ -24,28 +32,38 @@ const copy = zh ? {
   snap: "↳ Snap ¬S to 1 − S (make it coherent)"
 };
 ---
-<div class="cred-controls">
-  <div class="slider-row">
-    <label>{copy.sLabel} <span class="val" id="vS">0.50</span></label>
-    <input type="range" id="rS" min="0" max="100" value="50" aria-label={copy.sAria} />
-  </div>
-  <div class="slider-row">
-    <label>{copy.nLabel} <span class="val" id="vN">0.50</span></label>
-    <input type="range" id="rN" min="0" max="100" value="50" aria-label={copy.nAria} />
-  </div>
+<Panel class="web-only">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+  <h3>{copy.heading}</h3>
+  {zh ? (
+    <PanelNote>设定你对下一张牌为红色（S）以及非红色（¬S）的置信度。两者之和应当恰好为 1。将它们推离一致，看着庄家把你的不融贯转化为稳赚不赔的利润——代价由你承担。</PanelNote>
+  ) : (
+    <PanelNote>Set your confidence that the next card is <strong>red</strong> (S) and that it's <strong>not red</strong> (¬S). The two should sum to exactly 1. Push them out of line and watch a bookie turn your incoherence into a guaranteed profit — at your expense.</PanelNote>
+  )}
 
-  <div>
-    <div class="sumbar" id="sumbar" aria-hidden="true">
-      <div class="seg s" id="segS" style="width:50%"></div>
-      <div class="seg n" id="segN" style="width:50%"></div>
-      <div class="one-line"></div>
+  <div class="cred-controls">
+    <div class="slider-row">
+      <label>{copy.sLabel} <span class="val" id="vS">0.50</span></label>
+      <input type="range" id="rS" min="0" max="100" value="50" aria-label={copy.sAria} />
     </div>
-    <div class="sum-readout"><span>0</span><span id="sumtxt">{copy.sum}</span><span>2</span></div>
-  </div>
+    <div class="slider-row">
+      <label>{copy.nLabel} <span class="val" id="vN">0.50</span></label>
+      <input type="range" id="rN" min="0" max="100" value="50" aria-label={copy.nAria} />
+    </div>
 
-  <div class="ledger coherent" id="ledger">
-    <p class="lh" id="ledgerH">{copy.ledgerTitle}</p>
-    <p id="ledgerBody" style="margin:0;">{copy.ledgerBody}</p>
+    <div>
+      <div class="sumbar" id="sumbar" aria-hidden="true">
+        <div class="seg s" id="segS" style="width:50%"></div>
+        <div class="seg n" id="segN" style="width:50%"></div>
+        <div class="one-line"></div>
+      </div>
+      <div class="sum-readout"><span>0</span><span id="sumtxt">{copy.sum}</span><span>2</span></div>
+    </div>
+
+    <div class="ledger coherent" id="ledger">
+      <p class="lh" id="ledgerH">{copy.ledgerTitle}</p>
+      <p id="ledgerBody" style="margin:0;">{copy.ledgerBody}</p>
+    </div>
+    <button class="snap" id="snapBtn">{copy.snap}</button>
   </div>
-  <button class="snap" id="snapBtn">{copy.snap}</button>
-</div>
+</Panel>

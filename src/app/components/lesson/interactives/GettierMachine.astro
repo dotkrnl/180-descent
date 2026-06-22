@@ -1,10 +1,16 @@
 ---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
 interface Props {
   locale?: "en" | "zh";
 }
 
 const zh = Astro.props.locale === "zh";
 const labels = zh ? {
+  panelTitle: "交互演示 · 搭建与拆毁",
+  heading: "盖梯尔机器",
   belief: "信念",
   beliefSub: "你真心相信它",
   truth: "为真",
@@ -26,6 +32,8 @@ const labels = zh ? {
   circleTruth: "为真",
   circleJustification: "证成"
 } : {
+  panelTitle: "Interactive · build it and break it",
+  heading: "The Gettier Machine",
   belief: "Belief",
   beliefSub: "You sincerely hold it",
   truth: "Truth",
@@ -55,45 +63,55 @@ const switchRows = [
   ["sw-l", "luck", labels.luck, labels.luckSub, false]
 ] as const;
 ---
-<div class="gm-grid">
-  <div>
-    <div class="switches">
-      {switchRows.map(([id, className, label, sublabel, checked]) => (
-        <button class={["swbtn", className].filter(Boolean).join(" ")} id={id} role="switch" aria-checked={checked ? "true" : "false"}>
-          <span class="knob"></span><span class="lab">{zh ? label : <b>{label}</b>}<span>{sublabel}</span></span>
-        </button>
-      ))}
+<Panel class="web-only">
+  <PanelTitle>{labels.panelTitle}</PanelTitle>
+  <h3>{labels.heading}</h3>
+  {zh ? (
+    <PanelNote>切换三个经典条件。当三者重叠时，图表中央亮起——那便是证成的真信念。然后打开红色的「运气」开关，看着 JTB（Justified True Belief，证成的真信念）依旧满足，知识却悄然溜走。你也可以点击加载一个经典情景。</PanelNote>
+  ) : (
+    <PanelNote>Flip the three classic conditions on and off. The center of the diagram lights up when all three overlap — that's <em>justified true belief</em>. Then try the red switch, <strong>Luck</strong>, with all three on: watch JTB stay satisfied while knowledge slips away. Or load a famous scenario.</PanelNote>
+  )}
+
+  <div class="gm-grid">
+    <div>
+      <div class="switches">
+        {switchRows.map(([id, className, label, sublabel, checked]) => (
+          <button class={["swbtn", className].filter(Boolean).join(" ")} id={id} role="switch" aria-checked={checked ? "true" : "false"}>
+            <span class="knob"></span><span class="lab">{zh ? label : <b>{label}</b>}<span>{sublabel}</span></span>
+          </button>
+        ))}
+      </div>
+      <div class="presets">
+        <p class="h">{labels.presetsTitle}</p>
+        <div class="pbtns">
+          {labels.presets.map(([preset, label]) => <button class="pbtn" data-preset={preset}>{label}</button>)}
+        </div>
+      </div>
     </div>
-    <div class="presets">
-      <p class="h">{labels.presetsTitle}</p>
-      <div class="pbtns">
-        {labels.presets.map(([preset, label]) => <button class="pbtn" data-preset={preset}>{label}</button>)}
+
+    <div class="venn-box">
+      <svg viewBox="0 0 400 330" role="img" aria-label={labels.aria}>
+        <defs>
+          <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <rect width="8" height="8" fill="color-mix(in srgb,var(--contested) 18%,transparent)"></rect>
+            <line x1="0" y1="0" x2="0" y2="8" stroke="var(--contested)" stroke-width="2"></line>
+          </pattern>
+        </defs>
+        <circle id="c-b" cx="200" cy="118" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+        <circle id="c-t" cx="150" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+        <circle id="c-j" cx="250" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+        <text x="200" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">{labels.circleBelief}</text>
+        <text x="96" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">{labels.circleTruth}</text>
+        <text x="305" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">{labels.circleJustification}</text>
+        <circle id="center-mark" cx="200" cy="178" r="30" fill="none" stroke="none"></circle>
+        <text id="center-label" x="200" y="183" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" font-weight={zh ? undefined : "600"} fill="var(--ink)" opacity="0"></text>
+      </svg>
+
+      <div class="verdict">
+        <div class="vstate" id="vstate">—</div>
+        <p class="vexpl" id="vexpl"></p>
+        <p class="story" id="vstory"></p>
       </div>
     </div>
   </div>
-
-  <div class="venn-box">
-    <svg viewBox="0 0 400 330" role="img" aria-label={labels.aria}>
-      <defs>
-        <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-          <rect width="8" height="8" fill="color-mix(in srgb,var(--contested) 18%,transparent)"></rect>
-          <line x1="0" y1="0" x2="0" y2="8" stroke="var(--contested)" stroke-width="2"></line>
-        </pattern>
-      </defs>
-      <circle id="c-b" cx="200" cy="118" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-      <circle id="c-t" cx="150" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-      <circle id="c-j" cx="250" cy="208" r="92" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-      <text x="200" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">{labels.circleBelief}</text>
-      <text x="96" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">{labels.circleTruth}</text>
-      <text x="305" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="var(--ink-soft)">{labels.circleJustification}</text>
-      <circle id="center-mark" cx="200" cy="178" r="30" fill="none" stroke="none"></circle>
-      <text id="center-label" x="200" y="183" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" font-weight={zh ? undefined : "600"} fill="var(--ink)" opacity="0"></text>
-    </svg>
-
-    <div class="verdict">
-      <div class="vstate" id="vstate">—</div>
-      <p class="vexpl" id="vexpl"></p>
-      <p class="story" id="vstory"></p>
-    </div>
-  </div>
-</div>
+</Panel>
