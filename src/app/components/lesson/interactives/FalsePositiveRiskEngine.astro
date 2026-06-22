@@ -1,0 +1,49 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Highlight from "@app/components/lesson/Highlight.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Term from "@app/components/lesson/Term.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const prefix = "appendix-d006-the-deeper-machinery-";
+---
+<Panel class="web-only statistics-appendix-lab">
+  <PanelTitle>{zh ? "交互式 · 误报风险引擎" : "Interactive · the false-positive risk engine"}</PanelTitle>
+  <h3>{zh ? "在 100 项「发现」中，有多少是假的？" : 'Of 100 "discoveries," how many are false?'}</h3>
+  <PanelNote>
+    {zh ? (
+      <>想象许多假设都在常用的 <Term><MathInline latex={String.raw`p < .05`} /></Term> 下进行检验。设定你的假设<Highlight>真正</Highlight>为真的频率（先验）以及你的研究功效。网格显示了 100 个你会称为「显著」的结果，颜色区分了它们是货真价实的（青色）还是误报（红色）。</>
+    ) : (
+      <>Imagine many hypotheses tested at the usual <MathInline latex={String.raw`p < .05`} />. Set how often your hypotheses are <em>really</em> true (the prior) and your study's power. The grid shows 100 results you'd call "significant," coloured by whether they're genuine (teal) or false alarms (red).</>
+    )}
+  </PanelNote>
+
+  <div class="ctrl">
+    <div class="slider-row">
+      <label>{zh ? "先验：被检假设中真正为真的比例" : "Prior: share of tested hypotheses that are truly real"} <span class="val" id={`${prefix}priorVal`}>50%</span></label>
+      <input type="range" id={`${prefix}priorR`} min="2" max="90" value="50" aria-label={zh ? "先验概率" : "Prior probability"} />
+    </div>
+    <div class="slider-row">
+      <label>{zh ? "检验功效（捕捉到真实效应的几率）" : "Statistical power (chance of catching a real effect)"} <span class="val" id={`${prefix}powerVal`}>50%</span></label>
+      <input type="range" id={`${prefix}powerR`} min="10" max="99" value="50" aria-label={zh ? "检验功效" : "Power"} />
+    </div>
+    <div>
+      <div class="stat-inline-readout">
+        <span class="ppv-big" id={`${prefix}fprBig`}>—</span>
+        <span class="stat-muted">{zh ? <>的「显著」发现是<span class="hl">错误</span>的</> : <>of your "significant" findings are <strong>false</strong></>}</span>
+      </div>
+      <div class="ppv-grid" id={`${prefix}ppvGrid`} aria-hidden="true"></div>
+      <div class="ppv-legend">
+        <span><i class="legend-accent"></i> {zh ? "真实发现" : "true discovery"}</span>
+        <span><i class="legend-contested"></i> {zh ? "误报" : "false alarm"}</span>
+      </div>
+    </div>
+    <div class="readout" id={`${prefix}fprRead`}></div>
+  </div>
+</Panel>

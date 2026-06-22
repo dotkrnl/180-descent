@@ -1,0 +1,40 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Term from "@app/components/lesson/Term.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const prefix = "appendix-d006-the-deeper-machinery-";
+---
+<Panel class="web-only statistics-appendix-lab">
+  <PanelTitle>{zh ? "交互式 · 以比特计量的惊异度" : "Interactive · surprise in bits"}</PanelTitle>
+  <h3>{zh ? "S-值" : "The S-value"}</h3>
+  <PanelNote>
+    {zh ? (
+      <>拖动以设定 <Term>p 值</Term>。<Term>S-值</Term> (<MathInline latex={String.raw`S=-\log_2 p`} />) 会告诉你它代表多少次「硬币全正面」的惊异度，也就是以比特表示数据在受检模型下有多出人意料。</>
+    ) : (
+      <>Drag to set a <MathInline latex={String.raw`p`} />-value. The S-value, <MathInline latex={String.raw`S=-\log_2 p`} />, tells you how many coins-all-heads worth of surprise it represents — the real evidence against the tested model, in bits.</>
+    )}
+  </PanelNote>
+
+  <div class="ctrl">
+    <div class="slider-row">
+      <label>{zh ? <span class="term">p 值</span> : <><MathInline latex={String.raw`p`} />-value</>} <span class="val mono" id={`${prefix}pShow`}>0.050</span></label>
+      <input type="range" id={`${prefix}pRange`} min="0" max="100" value="33" aria-label={zh ? "p 值（对数尺度）" : "p-value (log scale)"} />
+    </div>
+    <div class="stat-inline-readout">
+      <span class="sval-big" id={`${prefix}sBig`}>4.3</span>
+      <span class="stat-muted">
+        {zh ? <>比特的惊异度 &nbsp;≈&nbsp; <span id={`${prefix}coinTxt`} class="mono">4–5</span> 枚硬币全部正面</> : <>bits of surprise &nbsp;≈&nbsp; <b id={`${prefix}coinTxt`} class="mono">4–5</b> coins, all heads</>}
+      </span>
+    </div>
+    <div class="coins" id={`${prefix}coinRow`}></div>
+    <div class="readout" id={`${prefix}sRead`}></div>
+  </div>
+</Panel>

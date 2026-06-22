@@ -1,0 +1,40 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Highlight from "@app/components/lesson/Highlight.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Term from "@app/components/lesson/Term.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const prefix = "appendix-d006-the-deeper-machinery-";
+---
+<Panel class="web-only statistics-appendix-lab">
+  <PanelTitle>{zh ? "交互式 · 实时模拟" : "Interactive · live simulation"}</PanelTitle>
+  <h3>{zh ? "p 值的形状" : "The shape of a p-value"}</h3>
+  <PanelNote>
+    {zh ? (
+      <>每次运行都会模拟 <Highlight>4,000 次实验</Highlight>（两组，每组 n = 30）并对其 <Term>p 值</Term> 进行分桶。将「真实效应」从 0（无真实效应）向上滑动。在这个连续模拟中，零假设下的分布是平坦的；随着信号出现，小 <Term>p 值</Term> 会更常见，低于 .05 的比例也会从约 5%（即 <Term><MathInline latex={String.raw`\alpha`} /></Term>）攀升至你研究的实际「检验功效」。</>
+    ) : (
+      <>Each run simulates <strong>4,000 experiments</strong> (two groups, n = 30 each) and bins their <MathInline latex={String.raw`p`} />-values. Slide the <em>true effect</em> from 0 (nothing is real) upward. In this continuous simulation, the null distribution is flat; as signal appears, small <MathInline latex={String.raw`p`} />-values become more common and the share below <MathInline latex={String.raw`.05`} /> climbs from about 5% (that's <MathInline latex={String.raw`\alpha`} />) to your study's actual <em>power</em>.</>
+    )}
+  </PanelNote>
+
+  <div class="ctrl">
+    <div class="slider-row">
+      <label>{zh ? <>真实效应量 (Cohen’s <span class="term"><MathInline latex={String.raw`d`} /></span>)</> : <>True effect size (Cohen's <em>d</em>)</>} <span class="val" id={`${prefix}dVal`}>0.00</span></label>
+      <input type="range" id={`${prefix}dRange`} min="0" max="100" value="0" aria-label={zh ? "真实效应量" : "True effect size"} />
+    </div>
+    <svg class="canvas" id={`${prefix}histCanvas`} viewBox="0 0 640 220" role="img" aria-label={zh ? "模拟 p 值的直方图" : "Histogram of simulated p-values."}></svg>
+    <div>
+      <button class="btn primary" id={`${prefix}histRun`}>↻ {zh ? "重新运行" : "Re-run"}</button>
+      <button class="btn" id={`${prefix}histNull`}>{zh ? "设定效应 = 0" : "Set effect = 0"}</button>
+      <button class="btn" id={`${prefix}histReal`}>{zh ? "设定真实效应" : "Set a real effect"}</button>
+    </div>
+    <div class="readout" id={`${prefix}histRead`}></div>
+  </div>
+</Panel>

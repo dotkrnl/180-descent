@@ -2,6 +2,9 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import FalsePositiveRiskEngine from "@app/components/lesson/interactives/FalsePositiveRiskEngine.astro";
+import PValueShapeSimulator from "@app/components/lesson/interactives/PValueShapeSimulator.astro";
+import SValueBits from "@app/components/lesson/interactives/SValueBits.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -97,27 +100,7 @@ Run an exact test with continuous data where nothing is happening, under the ass
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab">
-<PanelTitle>Interactive · live simulation</PanelTitle>
-
-### The shape of a p-value
-
-<PanelNote>Each run simulates **4,000 experiments** (two groups, n = 30 each) and bins their <MathInline latex={String.raw`p`} />-values. Slide the *true effect* from 0 (nothing is real) upward. In this continuous simulation, the null distribution is flat; as signal appears, small <MathInline latex={String.raw`p`} />-values become more common and the share below <MathInline latex={String.raw`.05`} /> climbs from about 5% (that's <MathInline latex={String.raw`\alpha`} />) to your study's actual *power*.</PanelNote>
-
-<div class="ctrl">
-<div class="slider-row">
-<label>True effect size (Cohen's <em>d</em>) <span class="val" id="appendix-d006-the-deeper-machinery-dVal">0.00</span></label>
-<input type="range" id="appendix-d006-the-deeper-machinery-dRange" min="0" max="100" value="0" aria-label="True effect size" />
-</div>
-<svg class="canvas" id="appendix-d006-the-deeper-machinery-histCanvas" viewBox="0 0 640 220" role="img" aria-label="Histogram of simulated p-values."></svg>
-<div>
-<button class="btn primary" id="appendix-d006-the-deeper-machinery-histRun">↻ Re-run</button>
-<button class="btn" id="appendix-d006-the-deeper-machinery-histNull">Set effect = 0</button>
-<button class="btn" id="appendix-d006-the-deeper-machinery-histReal">Set a real effect</button>
-</div>
-<div class="readout" id="appendix-d006-the-deeper-machinery-histRead"></div>
-</div>
-</Panel>
+<PValueShapeSimulator locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -190,36 +173,7 @@ A <MathInline latex={String.raw`p`} />-value lives in the world of <MathInline l
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab">
-<PanelTitle>Interactive · the false-positive risk engine</PanelTitle>
-
-### Of 100 "discoveries," how many are false?
-
-<PanelNote>Imagine many hypotheses tested at the usual <MathInline latex={String.raw`p < .05`} />. Set how often your hypotheses are *really* true (the prior) and your study's power. The grid shows 100 results you'd call "significant," coloured by whether they're genuine (teal) or false alarms (red).</PanelNote>
-
-<div class="ctrl">
-<div class="slider-row">
-<label>Prior: share of tested hypotheses that are truly real <span class="val" id="appendix-d006-the-deeper-machinery-priorVal">50%</span></label>
-<input type="range" id="appendix-d006-the-deeper-machinery-priorR" min="2" max="90" value="50" aria-label="Prior probability" />
-</div>
-<div class="slider-row">
-<label>Statistical power (chance of catching a real effect) <span class="val" id="appendix-d006-the-deeper-machinery-powerVal">50%</span></label>
-<input type="range" id="appendix-d006-the-deeper-machinery-powerR" min="10" max="99" value="50" aria-label="Power" />
-</div>
-<div>
-<div class="stat-inline-readout">
-<span class="ppv-big" id="appendix-d006-the-deeper-machinery-fprBig">—</span>
-<span class="stat-muted">of your "significant" findings are <strong>false</strong></span>
-</div>
-<div class="ppv-grid" id="appendix-d006-the-deeper-machinery-ppvGrid" aria-hidden="true"></div>
-<div class="ppv-legend">
-<span><i class="legend-accent"></i> true discovery</span>
-<span><i class="legend-contested"></i> false alarm</span>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-deeper-machinery-fprRead"></div>
-</div>
-</Panel>
+<FalsePositiveRiskEngine locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -302,26 +256,7 @@ The translation is wonderfully concrete. Ask: how many fair coins would I have t
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab">
-<PanelTitle>Interactive · surprise in bits</PanelTitle>
-
-### The S-value
-
-<PanelNote>Drag to set a <MathInline latex={String.raw`p`} />-value. The S-value, <MathInline latex={String.raw`S=-\log_2 p`} />, tells you how many coins-all-heads worth of surprise it represents — the real evidence against the tested model, in bits.</PanelNote>
-
-<div class="ctrl">
-<div class="slider-row">
-<label><MathInline latex={String.raw`p`} />-value <span class="val mono" id="appendix-d006-the-deeper-machinery-pShow">0.050</span></label>
-<input type="range" id="appendix-d006-the-deeper-machinery-pRange" min="0" max="100" value="33" aria-label="p-value (log scale)" />
-</div>
-<div class="stat-inline-readout">
-<span class="sval-big" id="appendix-d006-the-deeper-machinery-sBig">4.3</span>
-<span class="stat-muted">bits of surprise &nbsp;≈&nbsp; <b id="appendix-d006-the-deeper-machinery-coinTxt" class="mono">4–5</b> coins, all heads</span>
-</div>
-<div class="coins" id="appendix-d006-the-deeper-machinery-coinRow"></div>
-<div class="readout" id="appendix-d006-the-deeper-machinery-sRead"></div>
-</div>
-</Panel>
+<SValueBits locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -393,4 +328,3 @@ Distilled from everything above and in the main lesson — the moves that conver
 1. Greenland, S. (2019). "Valid P-Values Behave Exactly as They Should: Some Misleading Criticisms of P-Values and Their Resolution With S-Values." *The American Statistician* 73(sup1): 106–114. <Meta>doi:10.1080/00031305.2018.1529625 — the S-value / surprisal, in bits.</Meta>
 
 </Sources>
-

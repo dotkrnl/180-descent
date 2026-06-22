@@ -2,6 +2,9 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import FalsePositiveRiskEngine from "@app/components/lesson/interactives/FalsePositiveRiskEngine.astro";
+import PValueShapeSimulator from "@app/components/lesson/interactives/PValueShapeSimulator.astro";
+import SValueBits from "@app/components/lesson/interactives/SValueBits.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -98,27 +101,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab">
-<PanelTitle>交互式 · 实时模拟</PanelTitle>
-
-### p 值的形状
-
-<PanelNote>每次运行都会模拟 <Highlight>4,000 次实验</Highlight>（两组，每组 n = 30）并对其 <Term>p 值</Term> 进行分桶。将「真实效应」从 0（无真实效应）向上滑动。在这个连续模拟中，零假设下的分布是平坦的；随着信号出现，小 <Term>p 值</Term> 会更常见，低于 .05 的比例也会从约 5%（即 <Term><MathInline latex={String.raw`\alpha`} /></Term>）攀升至你研究的实际「检验功效」。</PanelNote>
-
-<div class="ctrl">
-<div class="slider-row">
-<label>真实效应量 (Cohen’s <span class="term"><MathInline latex={String.raw`d`} /></span>) <span class="val" id="appendix-d006-the-deeper-machinery-dVal">0.00</span></label>
-<input type="range" id="appendix-d006-the-deeper-machinery-dRange" min="0" max="100" value="0" aria-label="真实效应量" />
-</div>
-<svg class="canvas" id="appendix-d006-the-deeper-machinery-histCanvas" viewBox="0 0 640 220" role="img" aria-label="模拟 p 值的直方图"></svg>
-<div>
-<button class="btn primary" id="appendix-d006-the-deeper-machinery-histRun">↻ 重新运行</button>
-<button class="btn" id="appendix-d006-the-deeper-machinery-histNull">设定效应 = 0</button>
-<button class="btn" id="appendix-d006-the-deeper-machinery-histReal">设定真实效应</button>
-</div>
-<div class="readout" id="appendix-d006-the-deeper-machinery-histRead"></div>
-</div>
-</Panel>
+<PValueShapeSimulator locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -191,36 +174,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab">
-<PanelTitle>交互式 · 误报风险引擎</PanelTitle>
-
-### 在 100 项「发现」中，有多少是假的？
-
-<PanelNote>想象许多假设都在常用的 <Term><MathInline latex={String.raw`p < .05`} /></Term> 下进行检验。设定你的假设<Highlight>真正</Highlight>为真的频率（先验）以及你的研究功效。网格显示了 100 个你会称为「显著」的结果，颜色区分了它们是货真价实的（青色）还是误报（红色）。</PanelNote>
-
-<div class="ctrl">
-<div class="slider-row">
-<label>先验：被检假设中真正为真的比例 <span class="val" id="appendix-d006-the-deeper-machinery-priorVal">50%</span></label>
-<input type="range" id="appendix-d006-the-deeper-machinery-priorR" min="2" max="90" value="50" aria-label="先验概率" />
-</div>
-<div class="slider-row">
-<label>检验功效（捕捉到真实效应的几率） <span class="val" id="appendix-d006-the-deeper-machinery-powerVal">50%</span></label>
-<input type="range" id="appendix-d006-the-deeper-machinery-powerR" min="10" max="99" value="50" aria-label="检验功效" />
-</div>
-<div>
-<div class="stat-inline-readout">
-<span class="ppv-big" id="appendix-d006-the-deeper-machinery-fprBig">—</span>
-<span class="stat-muted">的「显著」发现是<span class="hl">错误</span>的</span>
-</div>
-<div class="ppv-grid" id="appendix-d006-the-deeper-machinery-ppvGrid" aria-hidden="true"></div>
-<div class="ppv-legend">
-<span><i class="legend-accent"></i> 真实发现</span>
-<span><i class="legend-contested"></i> 误报</span>
-</div>
-</div>
-<div class="readout" id="appendix-d006-the-deeper-machinery-fprRead"></div>
-</div>
-</Panel>
+<FalsePositiveRiskEngine locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -307,26 +261,7 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效�
 
 </ContentSection>
 
-<Panel class="web-only statistics-appendix-lab">
-<PanelTitle>交互式 · 以比特计量的惊异度</PanelTitle>
-
-### S-值
-
-<PanelNote>拖动以设定 <Term>p 值</Term>。<Term>S-值</Term> (<MathInline latex={String.raw`S=-\log_2 p`} />) 会告诉你它代表多少次「硬币全正面」的惊异度，也就是以比特表示数据在受检模型下有多出人意料。</PanelNote>
-
-<div class="ctrl">
-<div class="slider-row">
-<label><span class="term">p 值</span> <span class="val mono" id="appendix-d006-the-deeper-machinery-pShow">0.050</span></label>
-<input type="range" id="appendix-d006-the-deeper-machinery-pRange" min="0" max="100" value="33" aria-label="p 值（对数尺度）" />
-</div>
-<div class="stat-inline-readout">
-<span class="sval-big" id="appendix-d006-the-deeper-machinery-sBig">4.3</span>
-<span class="stat-muted">比特的惊异度 &nbsp;≈&nbsp; <span id="appendix-d006-the-deeper-machinery-coinTxt" class="mono">4–5</span> 枚硬币全部正面</span>
-</div>
-<div class="coins" id="appendix-d006-the-deeper-machinery-coinRow"></div>
-<div class="readout" id="appendix-d006-the-deeper-machinery-sRead"></div>
-</div>
-</Panel>
+<SValueBits locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -398,4 +333,3 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效�
 1. Greenland, S. (2019). "Valid P-Values Behave Exactly as They Should: Some Misleading Criticisms of P-Values and Their Resolution With S-Values." *The American Statistician* 73(sup1): 106–114. <Meta>doi:10.1080/00031305.2018.1529625 — S-值 / 惊异度，以比特为单位。</Meta>
 
 </Sources>
-

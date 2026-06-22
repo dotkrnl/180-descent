@@ -158,7 +158,7 @@ describe("target content registry", () => {
     ]);
     expect(day006?.bodies[0].source).toContain("feynman1959.src");
     expect(day006?.bodies[0].source).toContain("pValueTailArea.src");
-    expect(day006?.appendixBodies[0].source).toContain("statistics-appendix-lab");
+    expect(day006?.appendixBodies[0].source).toContain("PValueShapeSimulator");
 
     expect(day007?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
       "the-bleeding-edge:en",
