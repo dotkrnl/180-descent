@@ -67,12 +67,14 @@ describe("target content registry", () => {
     const day002 = daysByPath.get("002-scientific-method-and-demarcation");
     const day003 = daysByPath.get("003-logic-and-valid-inference");
     const day004 = daysByPath.get("004-probability-as-extended-logic");
+    const day005 = daysByPath.get("005-causation");
 
     expect([...daysByPath.keys()]).toEqual([
       "001-what-is-knowledge",
       "002-scientific-method-and-demarcation",
       "003-logic-and-valid-inference",
-      "004-probability-as-extended-logic"
+      "004-probability-as-extended-logic",
+      "005-causation"
     ]);
 
     for (const day of registry.days) {
@@ -131,5 +133,12 @@ describe("target content registry", () => {
       "probability-machines"
     ]);
     expect(day004?.bodies[0].source).toContain("montyHall.src");
+
+    expect(day005?.appendixBodies).toEqual([]);
+    expect(day005?.manifest.components.map((component) => component.id)).toEqual([
+      "causation-lab"
+    ]);
+    expect(day005?.bodies[0].source).toContain("causation-do-see");
+    expect(day005?.bodies[0].source).toContain("<MathBlock");
   });
 });
