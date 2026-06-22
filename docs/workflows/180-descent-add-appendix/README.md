@@ -262,10 +262,9 @@ Appendix interactions must have separate copy for web and static outputs.
    - run the GLM refinement pass
    - manually review preservation of HTML structure, comments, classes, ids, data attributes, fallbacks, citations, URLs, DOI metadata, scripts, and terminology
 10. If images or other bundled assets are introduced, use `180-descent-assets`.
-11. Run the target-day checklist and project checks:
+11. Run the project checks:
 
 ```sh
-node docs/workflows/180-descent-add-day/scripts/add-day-checklist.mjs ### --require-zh
 npm run build
 npm run check:appendix-style
 npm run check:seo

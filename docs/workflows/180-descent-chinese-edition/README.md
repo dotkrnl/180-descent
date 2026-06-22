@@ -181,7 +181,6 @@ opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.1 "è¯·ä
 14. Run:
 
 ```sh
-node docs/workflows/180-descent-add-day/scripts/add-day-checklist.mjs ### --require-zh
 npm run build
 npm run check:seo
 npm run check

@@ -320,16 +320,13 @@ for each output mode. Do not let web instructions leak into print or EPUB.
 8. Run the Accessibility Gate for any markup, images, SVGs, controls, live
    outputs, or fallback content added or changed by the day.
 9. Run the Image Candidate Gate. If the user accepts any third-party image or bundled asset, switch to `180-descent-assets` before adding it.
-10. Run the target-day checklist and project checks:
+10. Run the project checks:
 
 ```sh
-node docs/workflows/180-descent-add-day/scripts/add-day-checklist.mjs ###
 npm run build
 npm run check:seo
 npm run check
 ```
-
-When Chinese mirroring is required, run the checklist with `--require-zh`.
 
 ## Required Outputs
 

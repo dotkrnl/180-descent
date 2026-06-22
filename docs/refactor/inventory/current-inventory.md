@@ -1,6 +1,6 @@
 # Refactor Inventory Baseline
 
-Generated: 2026-06-22T01:23:45.370Z
+Generated: 2026-06-22T01:25:11.903Z
 Status: migration-freeze-active
 
 This report captures source facts for the clean-break refactor. It is a coverage baseline, not a compatibility promise.
