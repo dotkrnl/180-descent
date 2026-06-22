@@ -31,7 +31,7 @@ Do not add decorative images just because they are available. Use images when th
 - Note modifications such as "Locally resized and compressed from the Wikimedia Commons original."
 - Social-card PNGs under `src/assets/images/social/` are generated first-party
   build assets from route-shell front matter by
-  `scripts/generate-social-cards.mjs`; do not hand-edit or credit them as
+  `npm run build:social-cards`; do not hand-edit or credit them as
   third-party assets.
 - If a user explicitly wants a custom third-party image as `seo_image`, treat it
   like any other bundled image: store it locally, credit it in

@@ -197,7 +197,7 @@ ready, confirm its route shell supports the shared SEO system:
    layout derives canonical URLs, reciprocal `hreflang`, previous/next links,
    and day-specific social-card paths from this metadata.
 5. Do not manually edit generated files in `src/assets/images/social/`. Run the
-   build or `node scripts/generate-social-cards.mjs`; it creates/refreshes
+   build or `npm run build:social-cards`; it creates/refreshes
    default and per-day PNG cards from route-shell front matter.
 6. After building, run `npm run check:seo` or the full `npm run check`
    and fix any missing canonical, hreflang, sitemap, JSON-LD, or social-image
@@ -363,7 +363,7 @@ When Chinese mirroring is required, run the checklist with `--require-zh`.
   keyboard focus, contrast, and Chinese accessible-label parity are covered,
   with `check:a11y` passing
 - Generated or refreshed social-card PNGs through
-  `scripts/generate-social-cards.mjs`, with `check:seo` passing for canonical,
+  `npm run build:social-cards`, with `check:seo` passing for canonical,
   hreflang, sitemap, JSON-LD, and social-image coverage
 - Passing target-day checklist, site build, EPUB/PDF build, link/content checks,
   accessibility checks, EPUB structural checks, and PDF checks

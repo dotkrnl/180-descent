@@ -158,7 +158,7 @@ appendix:
    `summary` misleading, update the English summary and mirror the change into
    Chinese when that edition exists.
 3. Do not manually edit generated social cards. Run `npm run build` or
-   `node scripts/generate-social-cards.mjs` after route-shell summary/title
+   `npm run build:social-cards` after route-shell summary/title
    changes.
 4. Run `npm run check:seo` or the full project check before treating the
    appendix as complete.

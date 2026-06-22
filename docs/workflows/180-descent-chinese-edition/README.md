@@ -77,7 +77,7 @@ JSON-LD, and social-card system as English routes.
    requests a documented special case.
 4. Ensure English and Chinese route shells share the same `day_path`; this is
    what connects reciprocal `hreflang` links and generated day social cards.
-5. Run `node scripts/generate-social-cards.mjs` directly or via
+5. Run `npm run build:social-cards` directly or via
    `npm run build`, then run `npm run check:seo` or the full project
    check before considering Chinese mirroring complete.
 
