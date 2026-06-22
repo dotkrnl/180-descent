@@ -37,8 +37,8 @@ describe("math check", () => {
 
   it("allows prose-font KaTeX CSS overrides", async () => {
     const root = await createFixtureRoot();
-    await mkdir(path.join(root, "src/assets/css/src"), { recursive: true });
-    await writeFile(path.join(root, "src/assets/css/src/base.css"), ".katex .mathnormal{font-family:inherit;}");
+    await mkdir(path.join(root, "src/assets/scss/base"), { recursive: true });
+    await writeFile(path.join(root, "src/assets/scss/base/_base.scss"), ".katex .mathnormal{font-family:inherit;}");
 
     const result = await checkMath({ root });
 

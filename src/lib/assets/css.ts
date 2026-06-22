@@ -1,7 +1,8 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import postcss from "postcss";
 import postcssImport from "postcss-import";
+import { compile } from "sass";
 
 export interface BuildCssOptions {
   root: string;
@@ -14,9 +15,12 @@ export interface BuildCssResult {
 }
 
 export async function buildCss(options: BuildCssOptions): Promise<BuildCssResult> {
-  const entryFile = path.resolve(options.root, options.entryFile ?? "src/assets/css/src/book.css");
+  const entryFile = path.resolve(options.root, options.entryFile ?? "src/assets/scss/book.scss");
   const outFile = path.resolve(options.root, options.outFile ?? "src/assets/css/book.css");
-  const css = await readFile(entryFile, "utf8");
+  const css = compile(entryFile, {
+    loadPaths: [path.dirname(entryFile)],
+    style: "expanded"
+  }).css;
   const result = await postcss([postcssImport()]).process(css, {
     from: entryFile,
     to: outFile
