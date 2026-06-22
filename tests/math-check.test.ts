@@ -34,6 +34,21 @@ describe("math check", () => {
       }
     ]);
   });
+
+  it("rejects CSS that overrides KaTeX math fonts", async () => {
+    const root = await createFixtureRoot();
+    await mkdir(path.join(root, "src/assets/css/src"), { recursive: true });
+    await writeFile(path.join(root, "src/assets/css/src/base.css"), ".katex .mathnormal{font-family:inherit;}");
+
+    const result = await checkMath({ root });
+
+    expect(result.failures).toEqual([
+      {
+        file: "src/assets/css/src/base.css",
+        label: "KaTeX CSS must not inherit prose fonts"
+      }
+    ]);
+  });
 });
 
 async function createFixtureRoot(): Promise<string> {

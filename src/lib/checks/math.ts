@@ -33,6 +33,7 @@ const BUILT_PATTERNS = [
 export async function checkMath(options: MathCheckOptions): Promise<MathCheckResult> {
   const sourceDir = path.join(options.root, options.sourceDir ?? "src/content/days");
   const siteDir = path.join(options.root, options.siteDir ?? "_site");
+  const cssDir = path.join(options.root, "src/assets/css/src");
   const failures: MathCheckFailure[] = [];
   const sourceFiles = await pathExists(sourceDir)
     ? await walkFiles(sourceDir, { exts: ".mdx", ignored: [] })
@@ -48,6 +49,19 @@ export async function checkMath(options: MathCheckOptions): Promise<MathCheckRes
     for (const file of builtFiles) {
       const content = await readFile(file, "utf8");
       failures.push(...scanPatterns(options.root, file, content, BUILT_PATTERNS));
+    }
+  }
+
+  if (await pathExists(cssDir)) {
+    const cssFiles = await walkFiles(cssDir, { exts: ".css", ignored: [] });
+    for (const file of cssFiles) {
+      const content = await readFile(file, "utf8");
+      if (/\.katex[\s\S]{0,160}font-family\s*:\s*inherit/.test(content)) {
+        failures.push({
+          file: toRelative(options.root, file),
+          label: "KaTeX CSS must not inherit prose fonts"
+        });
+      }
     }
   }
 
