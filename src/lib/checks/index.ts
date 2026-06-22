@@ -1,5 +1,6 @@
 export * from "./appendix-style";
 export * from "./clean";
+export * from "./content";
 export * from "./links";
 export * from "./math";
 export * from "./svg-text";
