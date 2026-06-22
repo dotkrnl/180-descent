@@ -5,7 +5,9 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import HeroDoorsFigure from "@app/components/lesson/figures/HeroDoorsFigure.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
-import MontyHallMachine from "@app/components/lesson/interactives/MontyHallMachine.astro";
+import EValueLedger from "@app/components/lesson/interactives/EValueLedger.astro";
+import BayesTrap from "@app/components/lesson/interactives/BayesTrap.astro";
+import ProbabilityMontyPanel from "@app/components/lesson/interactives/ProbabilityMontyPanel.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
@@ -98,15 +100,7 @@ Here's the thing the meltdown reveals. The Monty Hall problem isn't a trick or a
 </ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<Panel class="web-only probability-monty">
-<PanelTitle>Interactive · play it yourself</PanelTitle>
-
-### The Monty Hall Machine
-
-<PanelNote>Pick a door. The host opens a different one — always a goat, never your pick, never the car. Then click your original door to stay, or click the other closed door to switch. Play a few by hand, then hit **auto-run 1,000×** and watch the two strategies separate. The tallies don't lie.</PanelNote>
-
-<MontyHallMachine locale="en" />
-</Panel>
+<ProbabilityMontyPanel locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -224,48 +218,7 @@ Bayes' theorem doesn't only rescue game-show contestants. It catches a mistake t
 </ContentSection>
 
 {/* ===================== INTERACTIVE 2 ===================== */}
-<Panel class="web-only probability-bayes">
-<PanelTitle>Interactive · the base-rate trap</PanelTitle>
-
-### A 99%-sensitive test for a rare disease
-
-<PanelNote>A disease affects a small slice of the population. The test is excellent. You test positive. **What's the chance you're actually sick?** Drag the sliders and watch the grid of 1,000 people sort itself into the four outcomes. The answer is almost always far lower than people guess.</PanelNote>
-
-<div class="bayes-grid">
-<div>
-<div class="slider-row">
-<label>Disease prevalence (base rate) <span class="val" id="vPrev">0.1%</span></label>
-<input type="range" id="rPrev" min="1" max="500" value="1" aria-label="Prevalence per 1000" />
-</div>
-<div class="slider-row">
-<label>Test sensitivity — catches true cases <span class="val" id="vSens">99%</span></label>
-<input type="range" id="rSens" min="50" max="100" value="99" aria-label="Sensitivity percent" />
-</div>
-<div class="slider-row">
-<label>False-positive rate — flags healthy people <span class="val" id="vFpr">5%</span></label>
-<input type="range" id="rFpr" min="0" max="30" value="5" aria-label="False positive rate percent" />
-</div>
-
-<div class="post-readout">
-<p class="lh"><MathInline latex={String.raw`\mathrm{P}(\text{sick}\mid\text{positive test})`} /></p>
-<div class="num" id="postNum">1.9%</div>
-<p id="postExpl"></p>
-</div>
-</div>
-
-<div>
-<div class="icon-array">
-<svg id="iconGrid" viewBox="0 0 200 200" role="img" aria-label="A grid of 1000 people colored by test outcome."></svg>
-</div>
-<div class="ia-legend">
-<span><i style="background:var(--ok)"></i>true positive (sick, +)</span>
-<span><i style="background:var(--contested)"></i>false positive (healthy, +)</span>
-<span><i style="background:var(--line-strong)"></i>negative test</span>
-</div>
-</div>
-</div>
-<p style="font-size:.86em;color:var(--ink-soft);margin:1.1rem 0 0;">In a 1978 study (Casscells, Schoenberger &amp; Graboys, <em>New England Journal of Medicine</em>), 60 Harvard medical staff and students were handed essentially this problem. The most common answer was <strong>95%</strong>. The correct answer was about <strong>2%</strong>. Only 11 of 60 got it right. The culprit is mixing up <MathInline latex={String.raw`\mathrm{P}(\text{positive}\mid\text{sick})`} /> with <MathInline latex={String.raw`\mathrm{P}(\text{sick}\mid\text{positive})`} /> — and forgetting that when a disease is rare, the few real cases drown in a sea of false alarms.</p>
-</Panel>
+<BayesTrap locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -379,59 +332,7 @@ For a century, the frequentist p-value has been science's gatekeeper: get below 
 </ContentSection>
 
 {/* ===================== INTERACTIVE 3 ===================== */}
-<Panel class="web-only probability-evalue">
-<PanelTitle>Interactive · the gambler's ledger</PanelTitle>
-
-### Betting against a "fair" coin
-
-<PanelNote>The claim being tested is the null: the coin is fair, <MathInline latex={String.raw`\mathrm{P}(\text{heads}) = 0.5`} />. The slider sets the simulator's actual data-generating <MathInline latex={String.raw`\mathrm{P}(\text{heads})`} />, hidden from the test in a real experiment. At <MathInline latex={String.raw`0.50`} /> the null is true; at <MathInline latex={String.raw`0.65`} /> or <MathInline latex={String.raw`0.35`} /> the null is false. This widget is asking only whether the data give strong evidence against fairness, not what the exact bias is. The e-value strategy bets against fairness flip by flip, using the two likelihood-ratio tickets described above. If wealth reaches **<MathInline latex={String.raw`20`} />**, the bet has "won" enough to reject fairness at level <MathInline latex={String.raw`0.05`} />; if wealth stays near <MathInline latex={String.raw`1`} /> or falls, the bet has not found evidence against fairness.</PanelNote>
-
-<div class="ev-controls">
-<label>
-        Actual <MathInline latex={String.raw`\mathrm{P}(\text{heads})`} />:
-<input type="range" id="rBias" min="20" max="80" value="50" />
-<span class="val" id="vBias">0.50</span>
-</label>
-</div>
-<div class="ev-controls">
-<button class="btn" id="btnFlip">Flip 25×</button>
-<button class="btn ghost" id="btnEvReset">Reset</button>
-<span class="note">null: coin is fair (<MathInline latex={String.raw`p = 0.5`} />)</span>
-</div>
-
-<div class="ev-chart">
-<svg id="evChart" viewBox="0 0 480 220" role="img" aria-label="Wealth of the betting strategy over successive coin flips, on a log scale.">
-<line x1="44" y1="20" x2="44" y2="188" stroke="var(--line-strong)" stroke-width="1"></line>
-<line x1="44" y1="188" x2="468" y2="188" stroke="var(--line-strong)" stroke-width="1"></line>
-<line id="line20" x1="44" y1="60" x2="468" y2="60" stroke="var(--ok)" stroke-width="1" stroke-dasharray="4 4" opacity="0.7"></line>
-<line id="line1" x1="44" y1="124" x2="468" y2="124" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="2 4" opacity="0.6"></line>
-<text x="40" y="63" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ok)">20</text>
-<text x="40" y="127" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">1</text>
-<text x="40" y="191" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">.05</text>
-<text x="240" y="208" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">flips →</text>
-<polyline id="evLine" points="" fill="none" stroke="var(--accent)" stroke-width="2"></polyline>
-</svg>
-</div>
-
-<div class="ev-readout">
-<div class="evcard ev-wealth">
-<p class="th">Current wealth (e-value)</p>
-<div class="big" id="evWealth">1.00</div>
-<div class="sub">&#36;1 split across two tickets</div>
-</div>
-<div class="evcard ev-flips">
-<p class="th">Flips so far</p>
-<div class="big" id="evFlips">0</div>
-<div class="sub" id="evHeads">0 heads</div>
-</div>
-<div class="evcard ev-verdict" id="evVerdict">
-<p class="th">Verdict</p>
-<div class="big" id="evVerdictTxt">collecting…</div>
-<div class="sub" id="evVerdictSub">need wealth ≥ 20</div>
-</div>
-</div>
-<p style="font-size:.82em;color:var(--ink-soft);margin:1rem 0 0;">Set actual <MathInline latex={String.raw`\mathrm{P}(\text{heads})`} /> to exactly <MathInline latex={String.raw`0.50`} /> and the null is true: most wealth paths hover or sag, and only rare lucky streaks reach <MathInline latex={String.raw`20`} />. Nudge it to <MathInline latex={String.raw`0.65`} /> or <MathInline latex={String.raw`0.35`} /> and the data now come from a biased coin, so one of the two tickets tends to compound. The upward march is a win for the betting strategy and evidence against fairness; a flat or falling line is a loss for that bet, meaning "keep collecting" or "do not reject," not "the coin is proven fair."</p>
-</Panel>
+<EValueLedger locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>

@@ -1,0 +1,89 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "交互 · 基础概率陷阱",
+  heading: "一种罕见病的 99% 灵敏度检测",
+  note: "某种病只影响人口中的极少数。检测非常优秀。你测出阳性。「你真的患病的概率有多大？」拖动滑块，看着 1000 人的方格自动归入四类。答案几乎总是远低于人们的直觉。",
+  prev: "疾病患病率（基础概率）",
+  prevAria: "每千人患病率",
+  sens: "检测灵敏度——真患者能否被检出",
+  sensAria: "灵敏度百分比",
+  fpr: "假阳性率——健康人被误报",
+  fprAria: "假阳性率百分比",
+  formula: String.raw`\mathrm{P}(\text{患病}\mid\text{阳性})`,
+  gridAria: "按检测结果上色的 1000 人网格。",
+  legend: ["真阳性（患病，+）", "假阳性（健康，+）", "检测阴性"],
+  caption: "1978 年，Casscells、Schoenberger 与 Graboys 在《新英格兰医学杂志》发表的研究把本质相同的问题交给了 60 位哈佛医学院的师生。最常见的答案是 95%。正确答案约 2%。60 人中只有 11 人答对。罪魁祸首是混淆了",
+  positiveGivenSick: String.raw`\mathrm{P}(\text{阳性}\mid\text{患病})`,
+  sickGivenPositive: String.raw`\mathrm{P}(\text{患病}\mid\text{阳性})`,
+  captionTail: "——再加上一个事实：当疾病本身很罕见时，寥寥几个真阳性会被假阳性的汪洋淹没。"
+} : {
+  panelTitle: "Interactive · the base-rate trap",
+  heading: "A 99%-sensitive test for a rare disease",
+  note: "A disease affects a small slice of the population. The test is excellent. You test positive. What's the chance you're actually sick? Drag the sliders and watch the grid of 1,000 people sort itself into the four outcomes. The answer is almost always far lower than people guess.",
+  prev: "Disease prevalence (base rate)",
+  prevAria: "Prevalence per 1000",
+  sens: "Test sensitivity — catches true cases",
+  sensAria: "Sensitivity percent",
+  fpr: "False-positive rate — flags healthy people",
+  fprAria: "False positive rate percent",
+  formula: String.raw`\mathrm{P}(\text{sick}\mid\text{positive test})`,
+  gridAria: "A grid of 1000 people colored by test outcome.",
+  legend: ["true positive (sick, +)", "false positive (healthy, +)", "negative test"],
+  caption: "In a 1978 study (Casscells, Schoenberger & Graboys, New England Journal of Medicine), 60 Harvard medical staff and students were handed essentially this problem. The most common answer was 95%. The correct answer was about 2%. Only 11 of 60 got it right. The culprit is mixing up",
+  positiveGivenSick: String.raw`\mathrm{P}(\text{positive}\mid\text{sick})`,
+  sickGivenPositive: String.raw`\mathrm{P}(\text{sick}\mid\text{positive})`,
+  captionTail: "— and forgetting that when a disease is rare, the few real cases drown in a sea of false alarms."
+};
+---
+<Panel class="web-only probability-bayes">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+
+  <h3>{copy.heading}</h3>
+
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="bayes-grid">
+    <div>
+      <div class="slider-row">
+        <label>{copy.prev} <span class="val" id="vPrev">0.1%</span></label>
+        <input type="range" id="rPrev" min="1" max="500" value="1" aria-label={copy.prevAria} />
+      </div>
+      <div class="slider-row">
+        <label>{copy.sens} <span class="val" id="vSens">99%</span></label>
+        <input type="range" id="rSens" min="50" max="100" value="99" aria-label={copy.sensAria} />
+      </div>
+      <div class="slider-row">
+        <label>{copy.fpr} <span class="val" id="vFpr">5%</span></label>
+        <input type="range" id="rFpr" min="0" max="30" value="5" aria-label={copy.fprAria} />
+      </div>
+
+      <div class="post-readout">
+        <p class="lh"><MathInline latex={copy.formula} /></p>
+        <div class="num" id="postNum">1.9%</div>
+        <p id="postExpl"></p>
+      </div>
+    </div>
+
+    <div>
+      <div class="icon-array">
+        <svg id="iconGrid" viewBox="0 0 200 200" role="img" aria-label={copy.gridAria}></svg>
+      </div>
+      <div class="ia-legend">
+        <span><span class="legend-swatch" style="background:var(--ok)" aria-hidden="true"></span>{copy.legend[0]}</span>
+        <span><span class="legend-swatch" style="background:var(--contested)" aria-hidden="true"></span>{copy.legend[1]}</span>
+        <span><span class="legend-swatch" style="background:var(--line-strong)" aria-hidden="true"></span>{copy.legend[2]}</span>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:.86em;color:var(--ink-soft);margin:1.1rem 0 0;">{copy.caption} <MathInline latex={copy.positiveGivenSick} /> {zh ? "与" : "with"} <MathInline latex={copy.sickGivenPositive} /> {copy.captionTail}</p>
+</Panel>

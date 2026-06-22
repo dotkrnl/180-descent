@@ -1,0 +1,31 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import MontyHallMachine from "@app/components/lesson/interactives/MontyHallMachine.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "交互 · 亲自玩一次",
+  heading: "蒙提霍尔机器",
+  note: "选择一扇门。主持人会打开另一扇门——永远是山羊，永远不是你选的门，也永远不是跑车。然后点击原来的门表示坚持，或点击另一扇关着的门表示换门。先手动玩几次，再点击自动运行 1,000 次，观察两种策略如何拉开距离。计数不会说谎。"
+} : {
+  panelTitle: "Interactive · play it yourself",
+  heading: "The Monty Hall Machine",
+  note: "Pick a door. The host opens a different one — always a goat, never your pick, never the car. Then click your original door to stay, or click the other closed door to switch. Play a few by hand, then hit auto-run 1,000× and watch the two strategies separate. The tallies don't lie."
+};
+---
+<Panel class="web-only probability-monty">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+
+  <h3>{copy.heading}</h3>
+
+  <PanelNote>{copy.note}</PanelNote>
+
+  <MontyHallMachine locale={Astro.props.locale} />
+</Panel>
