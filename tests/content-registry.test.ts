@@ -66,11 +66,13 @@ describe("target content registry", () => {
     const day001 = daysByPath.get("001-what-is-knowledge");
     const day002 = daysByPath.get("002-scientific-method-and-demarcation");
     const day003 = daysByPath.get("003-logic-and-valid-inference");
+    const day004 = daysByPath.get("004-probability-as-extended-logic");
 
     expect([...daysByPath.keys()]).toEqual([
       "001-what-is-knowledge",
       "002-scientific-method-and-demarcation",
-      "003-logic-and-valid-inference"
+      "003-logic-and-valid-inference",
+      "004-probability-as-extended-logic"
     ]);
 
     for (const day of registry.days) {
@@ -123,5 +125,11 @@ describe("target content registry", () => {
       "hype-filter-trainer"
     ]);
     expect(day003?.bodies[0].source).toContain("sherlockHolmes.src");
+
+    expect(day004?.appendixBodies).toEqual([]);
+    expect(day004?.manifest.components.map((component) => component.id)).toEqual([
+      "probability-machines"
+    ]);
+    expect(day004?.bodies[0].source).toContain("montyHall.src");
   });
 });
