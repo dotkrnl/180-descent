@@ -1,0 +1,306 @@
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+
+<p class="lede"><span class="drop">第</span>一个附录梳理的是相对成熟的版图——怀疑论、语境中的「知道」、知识的价值、社会网络——这些问题在几十年前甚至几百年前就已进入讨论。而这一篇则来到边缘地带：研究者们仍在争论边界究竟画在哪里。下文所有内容都是自 2020 年以来的同行评议工作，它们可能真正重绘我们所谓的「知识」——正因为它是如此之新，所以需要经过前沿校准器。这里没有哪一项已经可以写成定论。每一个前沿都已催生了各自的反对文献，每一项主张都带有标签：<StatusChip status={"ok"} label={"已确立"} /> <StatusChip status={"hint"} label={"有前景"} printLabel={"线索"} /> <StatusChip status={"bad"} label={"有争议"} printLabel={"争议/炒作"} /> 读这一节，要像读一份前线报告：兴奋、零碎，而且随时可能被新证据修订。</p>
+<div class="continues">
+<p class="label">↩ 序列中的第三篇</p>
+<p>第 1 日——什么是知识？搭建了凳子，并目睹了盖梯尔踢掉了一条腿。附录 I——「地图的其余部分」走过的是相对稳定的区域：怀疑论、语境主义、反运气认识论、价值问题、证言以及认知不正义。本篇则是同一片大陆上仍在扩张的前沿。如果说附录 I 中转向社会的篇章（证言、分歧、谁被相信）描述了「从他人处获知」的结构，那么这里的几个前沿则描述了当操纵者、机器和信息流开始蓄意攻击这一结构时，会发生什么。</p>
+</div>
+<div class="roadmap">
+<p class="h">◈ 海岸线正在移动的六处</p>
+<ol>
+<li>探究转向——认识论从信念状态转向探究行为，并发现旧规则与新规则存在冲突。</li>
+<li>先于信念的知识——认知科学翻转了布局：也许表征知识比表征信念更为基础。</li>
+<li>机器知道些什么吗——还是只是在扯淡？——大型语言模型的哲学，以及一个刻意粗鲁的诊断。</li>
+<li>认知后盾的崩塌——深度伪造悄然移除了支撑证言的一项长期支柱。</li>
+<li>敌对认识论——回声室、人造的清晰感，以及信任如何可能被武器化。</li>
+<li>准确性优先——一种形式化的重构，通过事实准确性而非金钱重新推导出第 1 日的荷兰赌论证。</li>
+</ol>
+</div>
+<section>
+<p class="sec-eyebrow"><span class="n">§1</span> 探究转向</p>
+<h2>认识论遗忘了探究</h2>
+<div class="chiprow"><StatusChip status={"hint"} label={"谜题真实存在 · 已被严肃对待"} printLabel={"线索"} /><StatusChip status={"bad"} label={"「一切规范皆属探究」 · 有争议"} printLabel={"争议/炒作"} /></div>
+<p>这是一个奇怪的疏忽，一旦你看到了，就再也无法忽视。一个世纪以来，认识论几乎完全是关于状态的理论——关于信念、证成、知识的状态：这些都是头脑完成思考后的快照。它极少谈及产生这些状态的活动——即探究——这一芜杂的过程：提出问题、决定收集哪些证据、知道何时停止。Jane Friedman 为这缺失的半壁命名，并让整个领域重新紧张起来。她将探究规范称为<span class="term">探究（zetetic）</span>规范（源自希腊语 zētein，意为寻求），她在其里程碑式的论文 "The Epistemic and the Zetetic"（The Philosophical Review，2020）中提出了一个真正具有颠覆性的论点：探究的规范与信念的规范不仅仅是分离的——它们在积极地冲突。</p>
+<p>其核心引擎是一个显而易见、听起来像陈词滥调的原则——<span class="term">探究工具性原则（Zetetic Instrumental Principle）</span>：如果你想弄清楚一个问题的答案，你就应该采取必要的手段去弄清楚。现在看看它如何与基石性的认识论规范发生碰撞——即证据主义者的命令：你可以相信你的证据已经支持的任何内容。假设你正试图清点街对面建筑的窗户。良好的探究会说：专注，去数窗户，不要分心。但在流逝的每一瞬间，你的感官都向你提供了足够的证据，使你形成并被允许相信一千个无关紧要的事实——那辆车的颜色、街角的人数、云朵的形状。信念规范许可所有这些内容。探究规范则告诉你要忽略所有这些，去数窗户。顺从其中一个，你就会违背另一个。图表将这种挤压具体化了。</p>
+
+<figure class="appendix-figure appendix-figure-wide">
+<svg viewBox="0 0 520 200" role="img" aria-label="一位探究者在证据收集规范与聚焦问题规范之间被拉扯。">
+<circle cx="260" cy="100" r="34" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+<text x="260" y="96" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">你，</text>
+<text x="260" y="108" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">正在数窗户</text>
+<line x1="226" y1="100" x2="120" y2="100" stroke="var(--hint)" stroke-width="1.6" marker-end="url(#appendix-d001-the-edge-of-the-map-az)"></line>
+<line x1="294" y1="100" x2="400" y2="100" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#appendix-d001-the-edge-of-the-map-ab)"></line>
+<defs>
+<marker id="appendix-d001-the-edge-of-the-map-az" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--hint)"></path></marker>
+<marker id="appendix-d001-the-edge-of-the-map-ab" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--accent)"></path></marker>
+</defs>
+<rect x="8" y="62" width="118" height="76" rx="8" fill="var(--paper)" stroke="var(--hint)" stroke-width="1.4"></rect>
+<text x="67" y="84" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">信念规范</text>
+<text x="67" y="104" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">相信证据所</text>
+<text x="67" y="118" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">支持的任何内容</text>
+<rect x="394" y="62" width="118" height="76" rx="8" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.4"></rect>
+<text x="453" y="84" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">探究规范</text>
+<text x="453" y="104" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">忽略干扰，</text>
+<text x="453" y="118" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">回答问题</text>
+<text x="260" y="170" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">顺从其中一个 → 违背另一个</text>
+</svg>
+<p class="figcap">Friedman 的张力：良好的探究与被许可的信念朝相反方向拉扯。</p>
+</figure>
+
+<p>为什么这在研讨会之外也很重要？因为它表明认识论一直在研究错误的单元。如果信念规范与探究规范真正发生冲突，那么仅建立在信念之上的理论就是不完整的——甚至可能是本末倒置的。激进的提议，即「探究转向」，认为所有认识论规范最终都是探究规范（悬置判断变成了指向问题的态度；相信一个答案是关闭一个问题的方式）。该领域尚未全盘接受这一点——而这正是诚实的部分。Arianna Falbo（"Should epistemology take the zetetic turn?"，Philosophical Studies，2023）等人认为探究规范实际上是实践性的，而非独特的认识论规范，并且纯粹的探究认识论无法解释为什么有些信念是不理性的，即使相信它们会有助于你的探究。因此：这个谜题现在在整个领域都被严肃对待；而「探究规范统摄一切」的强命题则是一场真正的、未解决的争论。无论如何，「什么是知识？」这个问题正悄然被重构为「什么是良好的探究？」——这一重构一直延伸到第 2 日，在那里，科学方法正是一套用于集体探究的规范。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§2</span> 认知科学转向</p>
+<h2>如果知识在信念之前呢？</h2>
+<div class="chiprow"><StatusChip status={"hint"} label={"经验模式 · 相当稳健"} printLabel={"线索"} /><StatusChip status={"bad"} label={"「知识更为基础」 · 有争议"} printLabel={"争议/炒作"} /></div>
+<p>第 1 日将知识视为从信念中构建出来的东西：获取一个信念，加上它为真，加上证成，筛掉运气。我们遇到的几乎每一种理论都假设信念是原材料，而知识是成品。由 Jonathan Phillips 和 Joshua Knobe 领导的一个大型跨学科团队在 BBS 上发表了一篇供同行评论的文章——「Knowledge before belief」（2021）——认为，就人类（以及动物）心智的实际运作方式而言，这可能完全是颠倒的。</p>
+
+<p>心理学中的标准叙事是，我们的「心智理论」（theory of mind）——我们模拟他人心智的能力——是以信念为中心的，并且在孩子大约四岁最终通过错误信念任务（false-belief task，即理解某人可以持有孩子知道是错的信念）时趋于成熟。Phillips 及其同事汇集了多方面的证据，说明表征知识才是更基础的本领。线索如下：从发展角度看，婴儿和幼儿在能够处理错误信念之前很久，就能追踪谁看到过或有权访问信息——即谁知道。从比较上看，非人类大型类人猿表现出追踪他人感知和知识的强有力迹象，而关于信念追踪的令人信服的证据仍然难以捉摸。而在成年人中，对知识的归因至少与对信念的归因一样快——有时甚至更快，如果「X knows p」是通过先构建「X believes p」然后检查额外条件来计算的，这就很难解释。他们描绘的图景是一个<span class="term">事实性心智理论</span>（factive theory of mind，即优先追踪「谁知道什么」的心智理论）：心智模拟他人的第一个也是最基础的工具是「他们知道什么？」，而更棘手的、容错的「他们仅仅相信什么（也许是错误的）？」则出现得更晚且成本更高。</p>
+
+<figure class="appendix-figure appendix-figure-wide">
+<svg viewBox="0 0 520 150" role="img" aria-label="发育和演化的排序：知识追踪比错误信念追踪出现得更早。">
+<line x1="40" y1="92" x2="490" y2="92" stroke="var(--line-strong)" stroke-width="2"></line>
+<text x="40" y="120" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">更早 / 更简单</text>
+<text x="490" y="120" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">更晚 / 成本更高</text>
+<circle cx="150" cy="92" r="7" fill="var(--ok)"></circle>
+<text x="150" y="62" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">追踪知识</text>
+<text x="150" y="78" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">「她看到了吗？」</text>
+<text x="150" y="138" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">婴儿· 猿类</text>
+<circle cx="380" cy="92" r="7" fill="var(--hint)"></circle>
+<text x="380" y="62" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">追踪错误信念</text>
+<text x="380" y="78" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">「她是否错误地认为……」</text>
+<text x="380" y="138" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">~4 岁+</text>
+</svg>
+<p class="figcap">拟议的排序——与教科书中「信念优先」的故事相反。</p>
+</figure>
+
+<p>如果这一观点成立，那么对第 1 日的回报是直接且巨大的。它将为 Timothy Williamson 的知识优先（knowledge-first）计划提供经验证据——这一哲学主张（我们曾将其视为纯粹的扶手椅理论）认为知识是基础的、不可分析的状态，应该根据它来解释信念，而不是相反。突然之间，这不再仅仅是逻辑学家的直觉；它成了认知架构的一项候选事实，并具有演化上的合理性（社会性动物迫切需要追踪谁拥有可靠信息——这呼应了附录 I 中 Edward Craig 的「良好信息提供者」谱系学）。但诚实要求加上星号，而且此处的星号震耳欲聋：一篇 BBS 供同行评论的文章附带了数十篇同行评议评论，许多人强烈反对。批评者认为知识与信念的界限比作者所允许的更为模糊，「追踪谁看到了什么」不一定是对知识的完整表征，而且文化和语言塑造了整个图景。因此：行为发现（儿童和猿类很早就追踪信息访问）是相当可靠的；而强解释（知识表征在形而上学和计算上是优先的，信念是从中组装而来的）仍然悬而未决，而且争论很活跃。我们关于心智结构的图景正在被重新安排，而研究者们还没有就新图景达成一致。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§3</span> 机器转向，第一部分</p>
+<h2>语言模型知道什么吗——还是只是在扯淡？</h2>
+<div class="chiprow"><StatusChip status={"ok"} label={"模型对真假漠不关心 · 已确立"} printLabel={"已确立"} /><StatusChip status={"bad"} label={"「扯淡」作为恰当范畴 · 有争议"} printLabel={"争议/炒作"} /></div>
+<p>第 1 日结束于一个尖锐而挥之不去的问题：当像起草这些页面的系统输出一个为真且有充分支持的句子时，它是否知道什么——或者它只是终极的盖梯尔案例，因为与事实无关的原因而正确？2020 年代将那个结尾的华彩变成该领域最激烈的辩论之一，而讨论最多的条目有一个标题，编辑部没有把它改得更委婉，就这样通过了同行评议：「ChatGPT is bullshit」（Hicks, Humphries &amp; Slater, Ethics and Information Technology, 2024）。</p>
+<p>他们的用词是精确的，而不只是无礼。他们借用了 Harry Frankfurt 对<span class="term">扯淡</span>（bullshit）的技术性定义（出自他 1986 年的文章 On Bullshit）：这里的「扯淡」不是普通骂人话，而是一种对真假漠不关心的言说。骗子至少还会追踪真相——他必须这样做，才能引导你远离真相。扯淡者则根本不在乎；他说任何符合其目的的话，至于是否为真并不重要。现在考虑大语言模型从根本上讲是什么：一个被训练用来预测统计上最可能的下一个<span class="term">标记</span><TipNote text={"标记是语言模型预测的文本单位，可以是完整词、词片段、标点或空格。"} />、生成流畅且听起来合理的文本的系统。它的训练目标不是忠实于事实；它并没有一个必须对齐的事实表征。因此，当它陈述一个真实的事实，和当它「幻觉」出一个虚假的引用时，它是在做同一件事——生成看起来合理的文本——并在两种情况下都同样成功地完成了其实际任务。在这种观点下，「幻觉」是一个带有误导性的美称，暗示了某种故障；更准确的描述是，该系统在设计上就对真假漠不关心，这正是 Frankfurt 意义上的扯淡。他们将软性扯淡（无意欺骗，只是对真假漠不关心）与硬性扯淡（此外还假装成真诚的真话陈述者）区分开来，并认为 LLM 至少是一个软性扯淡者。</p>
+<p>为什么这可能会重绘版图：它直接切断了关于机器「知道」、「理解」或「相信」的随意谈论。如果这个论点是正确的，那么 LLM 的为真输出就不是知识，甚至在完整意义上也不是真正的断言——它们是一类新的看起来像真话的文本，背后并没有人在乎它是否真实。这重塑了我们该如何信任、引用和监管这些系统。而且，不出所料，这是有争议的——反驳意见已经形成了一组反驳文献。一些人认为「扯淡」标签暗中预设了关于模型是否具有意图的立场（Sarah Fisher, 「Large language models and their big bullshit potential」, 2024; David Gunkel &amp; Simon Coghlan, 「Cut the crap」, 2025）；另一些人则认为，随着模型通过强化学习被训练得诚实并表达校准过的不确定性，「对真假漠不关心」过于粗糙了。已经比较稳固的，是那个不那么耀眼的核心判断：基础语言模型并没有内置的求真承诺，流畅性也不等于知识。而开放的问题是，「扯淡」、「工具」、「证言者」还是某种全新的认知类别才是这些系统所产生内容的正确归宿。它是附录 I 中那只缸中之脑的硅制版本——交付给了十亿用户——那些可能从未触及过世界的词语，现在正在回答我们的问题。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§4</span> 机器转向，第二部分</p>
+<h2>你从未察觉的支撑梁：认知后盾</h2>
+<div class="chiprow"><StatusChip status={"hint"} label={"机制 · 合理且影响深远"} printLabel={"线索"} /><StatusChip status={"bad"} label={"「认知末日」 · 有争议"} printLabel={"争议/炒作"} /></div>
+<p>附录 I 阐明了你所知的大部分内容都源自证言——即他人的话。Regina Rini 的 "Deepfakes and the Epistemic Backstop" (Philosophers' Imprint, 2020) 识别出了一种隐藏的结构性支撑，它一直悄无声息地维系着整个体系的诚实——并展示了一项新技术是如何将其锯断的。</p>
+<p>这个洞见很微妙：证言为什么通常还算可靠？Rini 认为，原因之一是我们一直生活在「可能被记录」的环境里。一个人的说法可能被照片、录音或视频推翻，因此他有持续的动机说真话。</p>
+<p>这些记录不一定真的被拿出来检查。它们的作用更像一名没有上场的裁判：只要它可能存在，言说者就会受到约束。这就是 Rini 所说的<span class="term">认知后盾</span>。在大约一个世纪的时间里——自从摄影和录音变得难以造假以来——我们一直在这个后盾之上建立公共诚实规范，却从未给它命名过。</p>
+<p>深度伪造——由 §3 中提到的同一波机器学习浪潮生成的逼真虚假视频和音频——从两个方面瓦解了这一后盾。它们一方面让信息渠道充满逼真的伪造品；另一方面，也给被抓现行的作恶者提供了新借口：那段关于我的录像可能是深度伪造。「<span class="term">说谎者红利</span>」<TipNote text={"说谎者红利指真实证据也能被说成伪造时，说谎者因此获得的好处。"} />。一旦任何录音录像都可以被轻而易举地否定，后盾就不再能约束证言。作为我们最大的单一知识来源，证言也就失去了一个我们此前没有察觉的支撑。</p>
+<p>Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat of Deepfakes," Philosophy &amp; Technology, 2021)：深度伪造削弱了视频所承载的关于实际发生情况的信息量，使其作为信号退化。</p>
+
+<figure class="appendix-figure appendix-figure-wide">
+<svg viewBox="0 0 520 180" role="img" aria-label="证言依靠在可能存在的录音录像后盾之上，而深度伪造移除了这一后盾。">
+<rect x="180" y="20" width="160" height="44" rx="9" fill="color-mix(in srgb,var(--accent) 12%,transparent)" stroke="var(--accent)" stroke-width="2"></rect>
+<text x="260" y="40" text-anchor="middle" font-family="Fraunces,serif" font-size="13" fill="var(--ink)">证言</text>
+<text x="260" y="55" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">「相信我的说法」</text>
+<line x1="260" y1="64" x2="260" y2="96" stroke="var(--ink-faint)" stroke-width="1.5" stroke-dasharray="3 4"></line>
+<text x="300" y="84" text-anchor="start" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">由……保持诚实</text>
+<rect x="150" y="100" width="220" height="40" rx="9" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.6"></rect>
+<text x="260" y="124" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">后盾：可能存在录音录像</text>
+<g stroke="var(--contested)" stroke-width="2.4">
+<line x1="392" y1="104" x2="430" y2="136"></line>
+<line x1="430" y1="104" x2="392" y2="136"></line>
+</g>
+<text x="412" y="154" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--contested)">深度伪造</text>
+<text x="260" y="166" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">移除横梁，上方的地板就会下陷</text>
+</svg>
+<p class="figcap">敲掉一个没人关注的支撑物，它所承载的结构依然会倒塌。</p>
+</figure>
+
+<p>这一点影响深远，因为它将深度伪造重新定义为一个认知问题，而不仅仅是欺诈或隐私问题。威胁不只在于某个具体谎言，还在于信任录音录像这一背景条件被整体侵蚀。</p>
+<p>但是，正如本附录所指出的，影响究竟有多大仍有争议，反驳意见也值得认真对待。Joshua Habgood-Coote（"Deepfakes and the epistemic apocalypse," Synthese, 2023) 指出，末日论式的框架被夸大了：我们从未将录音录像视为绝对可靠，也已经习惯通过多种来源交叉核对证言；社会以前也曾化解过媒体操纵带来的恐慌。Atencia-Linares and Artiga ("Deepfakes, shallow epistemic graves," Synthese, 2022) 则捍卫了摄影和视频残存的认知稳健性。</p>
+<p>所以，Rini 提出的机制——录音录像作为证言的沉默调节器——是一项真实且具有启发性的贡献；但关于「认知末日」或公共知识全面崩溃的预测，仍是一场正在进行的争论，而不是定论。把这一点带到第 2 日，你会看到科学如何用重复实验和记录制度回答「你如何信任一份你无法亲自核实的报告？」。再带到 AI 板块，它也会与 §3 正面交锋。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§5</span> 对抗性转向</p>
+<h2>敌对认识论：当环境是为了愚弄你而构建时</h2>
+<div class="chiprow"><StatusChip status={"ok"} label={"认知气泡 ≠ 回声室的区分 · 已被广泛采用"} printLabel={"已确立"} /><StatusChip status={"bad"} label={"「回声室」的范围和现实性 · 有争议"} printLabel={"争议/炒作"} /></div>
+<p>传统认识论描绘了一颗孤独、中立的心智面对一个中立的世界。C. Thi Nguyen 的计划——他称之为 <span class="term">敌对认识论</span>——始于一个更黑暗、也更现代的前提：你的认知环境并不是中立的。它越来越多地被刻意设计，通常由对你的信念怀有利益的各方操纵，以利用你的大脑赖以运转的那些可预测捷径。他在 2020 年后的三个举措重塑了整个领域讨论在线生活的方式。</p>
+<p>第一个区别听起来很学术，结果却是解决一切的关键：<span class="term">认知气泡</span>与<span class="term">回声室</span>之间的区别 ("Echo Chambers and Epistemic Bubbles," Episteme, 2020)。它们不是一回事，将两者混为一谈正是许多善意的修复方案失败的原因。在气泡中，外部声音仅仅是缺失的——你只是没有接触到它们（想象一个只显示你认同的来源的过滤器）。在回声室中，外部声音是存在的，但被主动贬低了——你已被预先训练去怀疑它们 (「主流媒体撒谎」，「专家已经腐败」)。后果是鲜明且反直觉的。</p>
+<p class="web-only">下面的交互式内容可以让你亲身体验到这一点：最显而易见的干预措施——让人们接触另一方的观点——可以戳破气泡，却可能加固回声室，因为在回声室内部，遇到敌方的论点恰恰是回声室所预言的，从而证实了它。</p>
+<p class="epub-only print-only">下方表格说明，最显而易见的干预——让人们接触另一方观点——为什么可能戳破气泡，却加固回声室。</p>
+</section>
+<div class="panel web-only echo-chamber">
+<p class="ptitle">互动 · 为什么「只展示事实」会适得其反</p>
+<h3>气泡与回声室</h3>
+<p class="pnote">选择一个结构，然后点击接触外部声音——这是最常见的提议方案。观察它在两种情况下产生的截然不同的结果。（中心 = 你；蓝色 = 信任的内部来源；边缘的三个节点 = 外部声音。）</p>
+<div class="echo-wrap">
+<div class="tbtns">
+<button class="tbtn" data-mode="bubble" aria-pressed="true">认知气泡</button>
+<button class="tbtn" data-mode="chamber">回声室</button>
+</div>
+<svg id="appendix-d001-the-edge-of-the-map-echoSvg" viewBox="0 0 420 290" role="img" aria-label="一个由你、内部来源和外部声音组成的网络。">
+<g id="appendix-d001-the-edge-of-the-map-echoInLinks" stroke="var(--accent)" stroke-width="1.6">
+<line x1="210" y1="150" x2="150" y2="100"></line>
+<line x1="210" y1="150" x2="270" y2="100"></line>
+<line x1="210" y1="150" x2="150" y2="200"></line>
+<line x1="210" y1="150" x2="270" y2="200"></line>
+</g>
+<g id="appendix-d001-the-edge-of-the-map-echoOutLinks" stroke-width="1.8" stroke-dasharray="4 4" opacity="0" class="echo-out-links">
+<line id="appendix-d001-the-edge-of-the-map-ol1" x1="210" y1="150" x2="55" y2="58"></line>
+<line id="appendix-d001-the-edge-of-the-map-ol2" x1="210" y1="150" x2="55" y2="240"></line>
+<line id="appendix-d001-the-edge-of-the-map-ol3" x1="210" y1="150" x2="378" y2="150"></line>
+</g>
+{/* inside nodes */}
+<g>
+<circle cx="150" cy="100" r="13" fill="color-mix(in srgb,var(--accent) 22%,var(--paper))" stroke="var(--accent)" stroke-width="1.8"></circle>
+<circle cx="270" cy="100" r="13" fill="color-mix(in srgb,var(--accent) 22%,var(--paper))" stroke="var(--accent)" stroke-width="1.8"></circle>
+<circle cx="150" cy="200" r="13" fill="color-mix(in srgb,var(--accent) 22%,var(--paper))" stroke="var(--accent)" stroke-width="1.8"></circle>
+<circle cx="270" cy="200" r="13" fill="color-mix(in srgb,var(--accent) 22%,var(--paper))" stroke="var(--accent)" stroke-width="1.8"></circle>
+</g>
+{/* center */}
+<circle cx="210" cy="150" r="20" fill="color-mix(in srgb,var(--brass) 20%,var(--paper))" stroke="var(--brass)" stroke-width="2.4"></circle>
+<text x="210" y="154" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">你</text>
+{/* outside nodes */}
+<g id="appendix-d001-the-edge-of-the-map-echoOut">
+<g id="appendix-d001-the-edge-of-the-map-o1" class="echo-out-node"><circle cx="55" cy="58" r="13" stroke-width="1.8"></circle><text x="55" y="62" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11"></text></g>
+<g id="appendix-d001-the-edge-of-the-map-o2" class="echo-out-node"><circle cx="55" cy="240" r="13" stroke-width="1.8"></circle><text x="55" y="244" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11"></text></g>
+<g id="appendix-d001-the-edge-of-the-map-o3" class="echo-out-node"><circle cx="378" cy="150" r="13" stroke-width="1.8"></circle><text x="378" y="154" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11"></text></g>
+</g>
+<text x="55" y="20" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">外部声音</text>
+</svg>
+<div class="echo-action"><button id="appendix-d001-the-edge-of-the-map-echoExpose" class="echo-expose">▶ 接触外部声音</button></div>
+<div class="echo-msg neutral echo-message" id="appendix-d001-the-edge-of-the-map-echoMsg"><span class="ttl">认知气泡</span>外部声音根本不在这里——不是被反驳，而是缺失。气泡是脆弱的：它仅靠缺乏接触而存在。</div>
+</div>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表格</p>
+<h3>气泡与回声室：接触后的结果</h3>
+<table class="alt-table">
+<thead><tr><th>结构</th><th>外部声音</th><th>接触后的结果</th><th>启示</th></tr></thead>
+<tbody>
+<tr><td>认知气泡</td><td>缺席，未被反驳。</td><td>新来源可以建立连接并戳破气泡。</td><td>当问题在于信息缺失时，接触可能奏效。</td></tr>
+<tr><td>回声室</td><td>存在，但预先被质疑。</td><td>接触可能强化不信任，因为回声室预言了充满敌意的局外人。</td><td>当不信任被内置于结构中时，显而易见的修复手段可能会适得其反。</td></tr>
+</tbody>
+</table>
+</div>
+<section>
+<p>第二招指出你大脑内部的一个弱点。在 "The Seductions of Clarity" (Royal Institute of Philosophy Supplement, 2021) 中，Nguyen 认为，清晰的感觉——即当一切似乎都各就各位时那种令人满意的契合感——起到了<span class="term">终止探究的启发式</span><TipNote text={"启发式是一种快速的经验规则：快而有用，但也可能系统性误导你。"} />的作用。我们把「事情已经变得清晰」这种感觉当作探究已经足够、可以停止的信号。通常这没问题。但这意味着清晰感可以被武器化：一个能够制造夸大清晰感的操纵者——一种解释一切的整洁意识形态，或一个每个事实都能严丝合缝嵌入其中的阴谋论——可以让你在发现漏洞之前就提前终止探究。请注意这如何与 §1 相衔接：清晰之所以危险，恰恰是因为它终结了探究过程。正因如此，那些最圆滑、最让人觉得「现在一切都说得通了」的说法，反而最需要严加审视。第三招完善了这一工具：在 "Trust as an Unquestioning Attitude" (Oxford Studies in Epistemology, 2022) 中，Nguyen 将信任本身分析为一种不加质疑的立场——即将某事视为已解决的背景，在此基础上构建而不再重新检查。这是必不可少的（你不可能从头推导一切），也正因如此是可以被利用的：夺取了一个人毫无保留信任的东西，你就夺取了他永远不会想到去查核的盲点。</p>
+<p>这里的真实评价是双重的。其概念性贡献——气泡与回声室、作为探究终止符的清晰感、作为不加质疑的信任——已被迅速且广泛地采用，因为它们确实起到了澄清作用并具有行动指导意义。但有两点警示值得注意。首先，哲学家们已经开始对这一概念框架本身提出异议 (Carey &amp; Ventham, "There is no fresh air: a problem with the concept of echo chambers," Episteme, 2025)。其次——这也是本课程坚持的一个前沿校准器原则——社会科学关于现实世界中回声室普遍程度的实证图景确实复杂且不一；几项大型研究发现，大多数人的媒体信息摄入比「封闭的回声室」这一形象所暗示的更为多样化。因此，请将这一概念机制视为一件尖锐而持久的工具，而将该现象的实证规模视为一个尚待测量的经验问题。框架本身就是贡献；它所描述的火势究竟有多大，仍在测量之中。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§6</span> 形式化重构</p>
+<h2>重新推导第 1 日的荷兰赌——基于事实准确性，而非金钱</h2>
+<div class="chiprow"><StatusChip status={"ok"} label={"核心准确性支配结果 · 已确立"} printLabel={"已确立"} /><StatusChip status={"bad"} label={"「重构全部理性」 · 有争议"} printLabel={"争议/炒作"} /></div>
+<p>在第 1 日，我们用一场赌局为概率定律辩护。荷兰赌定理表明，如果你的置信度违反了概率规则，一个聪明的庄家可以卖给你一组你认为公平的赌注，但这些赌注合在一起保证你会赔钱。这很强大，但作为认识论论证却略显不尽人意。谁在乎钱呢？一个信念之所以不理性，难道不应该是因为某种与事实有关的原因，而不是因为你的钱包吗？一个在 2010 年代逐渐成熟并现在正处于全盛时期的研究项目——<span class="term">准确性优先认识论</span>（也称为认知效用理论<TipNote text={"认知效用理论像决策论评价行动那样评价信念，只是评分标准通常是与知识相关的价值，例如准确性。"} />）——恰恰回答了这个问题，它是现代学科中最优雅的结果之一。</p>
+<p>这个想法（由 James Joyce 在 1998 年的 "A Nonpragmatic Vindication of Probabilism" 中播下种子，由 Richard Pettigrew 的 Accuracy and the Laws of Credence（2016）建成体系，随后在 2020–2023 年出现了一波对其进行完善和质疑的论文）是用一个单一的认知标尺来衡量一组置信度的优劣：准确性，即它与事实的接近程度。对真命题完全有信心，是完美的准确；对假命题完全有信心，则是最大程度的不准确。现在看定理：对于任何不融贯的置信度——即违反概率定律的置信度——保证存在一个在所有可能世界中都比它更准确的融贯置信度。在专业术语中，不融贯的置信度是<span class="term">被准确性支配的</span>（accuracy-dominated）：无论情况如何，它在接近事实方面都被彻底击败了。所以你根本不需要庄家。不融贯的置信度之所以不理性，完全是因为一个认知上的理由——它白白放弃了唾手可得的准确性；无论世界如何变化，都有一组更好的置信度能更接近事实。</p>
+<p class="web-only">这个交互式内容让你能从几何上直观地看到这种「支配」。</p>
+<p class="epub-only print-only">下方表格把同一几何关系列成三种置信度情形：在线上、在线上方、在线下方。</p>
+</section>
+<div class="panel web-only accuracy-domination">
+<p class="ptitle">交互 · 从另一个方向学习与第 1 日相同的课程</p>
+<h3>准确性支配</h3>
+<p class="pnote">设定你对下一张牌为红色 (S) 以及不是红色 (¬S) 的置信度——这两个拨盘与第 1 日的荷兰赌相同。图表将你的置信度显示为一个点。两个角落是世界仅有的两种可能状态。融贯的置信度位于连接它们的直线上。偏离这条线，就会有一个融贯的点比你更接近两个角落——无论实际情况如何，它都比你的置信度更接近事实。</p>
+<div class="acc-grid">
+<div>
+<div class="slider-row">
+<label>对 S 的置信度——「下一张牌为红色」 <span class="val accuracy-s-value" id="appendix-d001-the-edge-of-the-map-aS">0.50</span></label>
+<input type="range" id="appendix-d001-the-edge-of-the-map-raS" min="0" max="100" value="50" aria-label="对 S 的置信度" class="accuracy-s-range" />
+</div>
+<div class="slider-row">
+<label>对 ¬S 的置信度——「下一张牌不是红色」 <span class="val accuracy-n-value" id="appendix-d001-the-edge-of-the-map-aN">0.50</span></label>
+<input type="range" id="appendix-d001-the-edge-of-the-map-raN" min="0" max="100" value="50" aria-label="对 ¬S 的置信度" class="accuracy-n-range" />
+</div>
+<div class="acc-ledger coherent accuracy-ledger" id="appendix-d001-the-edge-of-the-map-aLedger">
+<p class="lh accuracy-ledger-title" id="appendix-d001-the-edge-of-the-map-aLh">融贯——未被支配</p>
+<p id="appendix-d001-the-edge-of-the-map-aBody" class="accuracy-ledger-body u-m-0">你的置信度之和等于 1，所以该点位于线上。在每一个世界中，没有其他置信度比它更接近事实。这是对准确性的基本要求——与第 1 日荷兰赌判断相同，且无需进行任何投注即可达成。</p>
+</div>
+<button class="snap accuracy-snap" id="appendix-d001-the-edge-of-the-map-aSnap">↳ 吸附到融贯线上</button>
+</div>
+<div class="acc-plot">
+<svg id="appendix-d001-the-edge-of-the-map-accSvg" viewBox="0 0 300 300" role="img" aria-label="一个单位正方形，绘制了对 S 的置信度与对 ¬S 的置信度，包含两个真值角和融贯线。">
+{/* square */}
+<rect x="46" y="46" width="200" height="200" fill="none" stroke="var(--line-strong)" stroke-width="1.4"></rect>
+{/* axes labels */}
+<text x="146" y="276" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">对 S 的置信度 →</text>
+<text x="20" y="146" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-90 20 146)">对 ¬S 的置信度 →</text>
+{/* coherence line: (c=1,d=0)=(246,246) to (c=0,d=1)=(46,46) */}
+<line x1="246" y1="246" x2="46" y2="46" stroke="var(--accent)" stroke-width="2"></line>
+<text x="170" y="120" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--accent)" transform="rotate(-45 170 120)">融贯：总和 = 1</text>
+{/* truth corners */}
+<circle cx="246" cy="246" r="6" fill="var(--ok)"></circle>
+<text x="246" y="262" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ok)">世界：S 为真</text>
+<circle cx="46" cy="46" r="6" fill="var(--hint)"></circle>
+<text x="52" y="40" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--hint)">世界：S 为假</text>
+{/* distance lines from P (red) */}
+<g id="appendix-d001-the-edge-of-the-map-accPlines" stroke="var(--contested)" stroke-width="1.3" stroke-dasharray="3 3" opacity=".75">
+<line id="appendix-d001-the-edge-of-the-map-lp1" x1="146" y1="146" x2="246" y2="246" class="accuracy-point-line-s"></line>
+<line id="appendix-d001-the-edge-of-the-map-lp2" x1="146" y1="146" x2="46" y2="46" class="accuracy-point-line-not"></line>
+</g>
+{/* distance lines from P* (green) */}
+<g id="appendix-d001-the-edge-of-the-map-accSlines" stroke="var(--ok)" stroke-width="1.3" opacity="0" class="accuracy-star-lines">
+<line id="appendix-d001-the-edge-of-the-map-ls1" x1="146" y1="146" x2="246" y2="246" class="accuracy-star-line-s"></line>
+<line id="appendix-d001-the-edge-of-the-map-ls2" x1="146" y1="146" x2="46" y2="46" class="accuracy-star-line-not"></line>
+</g>
+{/* connector P -> P* */}
+<line id="appendix-d001-the-edge-of-the-map-accConn" x1="146" y1="146" x2="146" y2="146" stroke="var(--ink-faint)" stroke-width="1.2" stroke-dasharray="2 3" class="accuracy-connector"></line>
+{/* P* (coherent dominator) */}
+<circle id="appendix-d001-the-edge-of-the-map-accStar" cx="146" cy="146" r="5.5" fill="var(--ok)" opacity="0" class="accuracy-star"></circle>
+{/* P (your credence) */}
+<circle id="appendix-d001-the-edge-of-the-map-accP" cx="146" cy="146" r="6.5" fill="var(--ink)" class="accuracy-point"></circle>
+</svg>
+<p class="figcap accuracy-caption" id="appendix-d001-the-edge-of-the-map-accCap">在线上：没有什么能在真值上胜过你。</p>
+</div>
+</div>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表格</p>
+<h3>准确性支配，表现为置信度几何</h3>
+<table class="alt-table">
+<thead><tr><th>置信度</th><th>总和</th><th>几何位置</th><th>判断</th></tr></thead>
+<tbody>
+<tr><td>P(S)=0.50, P(not-S)=0.50</td><td>1.00</td><td>位于融贯线上。</td><td>未被支配：在每个世界中，没有其他置信度更接近事实。</td></tr>
+<tr><td>P(S)=0.80, P(not-S)=0.80</td><td>1.60</td><td>位于融贯线上方。</td><td>被一个更接近两个真值角的融贯投影所支配。</td></tr>
+<tr><td>P(S)=0.20, P(not-S)=0.20</td><td>0.40</td><td>位于融贯线下方。</td><td>被一个更接近两个真值角的融贯投影所支配。</td></tr>
+</tbody>
+</table>
+</div>
+<section>
+<p>使其成为前沿而非注脚的原因是：它尝试将理性的基础重建在单一的认知价值上——即接近事实——并从准确性支配论证中不仅推导出<span class="term">概率主义</span><TipNote text={"概率主义认为：理性的置信度应当遵守概率公理。"} />，还推导出更新规则（条件化）等更多内容。如果它完全成功，那么我们在第 1 日开始勾勒的整个贝叶斯体系将建立在准确性之上，而不是博彩行为或心理学之上。不过，「已确立」这个标签是有根据的。概率主义的核心支配定理是已经确立的数学。但其雄心——即所有的认知规范都仅源于准确性——则有争议：最纯粹的结果依赖于技术假设（<span class="term">加法性</span><TipNote text={"加法性指互斥选项不能同时发生时，「其中之一发生」的概率等于各自概率之和。"} />、有限命题），批评者认为这些假设比单纯的「接近事实」所能保证的内容夹带了更多的私货（Chad Marxen, "Epistemic utility theory's difficult future," Synthese, 2021），而且不同的准确性衡量标准可能会得出不同的判断。因此：这是一个美丽且极具启发性的重新构架，拥有坚如磐石的核心和充满争议的外延——这恰好也是整个附录的形状。</p>
+</section>
+<div class="recap">
+<p class="h">◆ 三句话总结前沿</p>
+<dl>
+<div><dt>核心观点</dt><dd>自 2020 年以来，「什么是知识？」这一问题受到了来自五个维度的同时推进——将认识论重新构想为对探究而非对信念的研究（求知性）；重整心智的排序，使知识位于信念之前；并直面那些挑战甚至攻击「认知者」概念本身的机器、深度伪造和工程化信息环境——与此同时，一项形式化计划正在准确性之上静默地重建理性的根基。</dd></div>
+<div><dt>最佳新类比</dt><dd>认知后盾：证言一直以来都由一根无人察觉的支柱维持着真实性——即记录存在的可能性——而深度伪造锯断了它；将其与回声室结合起来，在那里，最显而易见的解决办法（向他们展示另一面）恰恰会让陷阱变得更牢固。</dd></div>
+<div><dt>现实争议</dt><dd>此处的每一项都尚未定论——探究规范是否吞噬了信念规范、知识表征是否真的比信念更基础、用「扯淡」来形容大语言模型是否准确、深度伪造带来的是崩溃还是仅仅增加摩擦、以及仅靠准确性是否能奠定所有认知理性的基础——这正是为什么每一项都带有前沿校准器标签。</dd></div>
+</dl>
+<p class="threads">此处线索 › 信息（证言隐藏的后盾；作为对真假漠不关心的文本引擎的大语言模型；作为认知价值的准确性） · 计算（事实性心智理论；作为信念决策论的认知效用理论） · 演化（为什么社会性物种会演化出优先追踪知识的能力）。几条主线至此已经浮出水面。</p>
+</div>
+<section>
+<p class="sec-eyebrow">开放问题</p>
+<h2>地图边缘的空白处</h2>
+<ul>
+<li>探究是真正的单位吗？ 寻求的规范是否真的与相信的规范相冲突——如果是，哪一个更根本？</li>
+<li>知识优先还是信念优先？ 「事实性心智理论」是否是基础的知识追踪工具，信念只是后来且成本更高的附加组件——还是知识与信念之间的界限本身就被划得太清晰了？</li>
+<li>机器到底产生了什么？ 是知识、主张、证言、仪器读数，还是某种全新的、无人关心其真伪的、看起来像真话的文本？</li>
+<li>摩擦还是崩溃？ 深度伪造仅仅增加了验证记录的成本，还是瓦解了公共知识的一个承重条件？</li>
+<li>你心智的环境被工程化到了什么程度——以及我们现在能清晰描述的回声室，实际上到底有多大？</li>
+<li>只靠接近事实能奠定理性的基础吗？ 准确性优先原则能涵盖一切，还是仅限于其技术假设所能触及的范围？</li>
+<li>还有一个为未来准备的更安静的竞争者： 其中好几项都越过知识指向了理解，认为那才是我们真正看重的东西——每当一个模型能够预测却无法解释时，我们都会再次感受到这一转向。</li>
+</ul>
+</section>
+
+<hr class="div" />
+<section class="sources">
+<p class="sec-eyebrow">来源 · 均为 2020 年后发表，基础性文献除外</p>
+<h2>来源与延伸阅读</h2>
+<ol>
+<li>Friedman, J. (2020). "The Epistemic and the Zetetic." The Philosophical Review 129(4): 501–536. <span class="meta">doi:10.1215/00318108-8540918。</span> <a href="https://doi.org/10.1215/00318108-8540918">doi.org/10.1215/00318108-8540918</a> <a href="https://read.dukeupress.edu/the-philosophical-review/article-abstract/129/4/501/166989/The-Epistemic-and-the-Zetetic">链接</a> 参见 Falbo, A. (2023), "Should epistemology take the zetetic turn?" Philosophical Studies 180(10–11): 2977–3002, <span class="meta">doi:10.1007/s11098-023-02016-3；</span> <a href="https://doi.org/10.1007/s11098-023-02016-3">doi.org/10.1007/s11098-023-02016-3</a> Flores, C. &amp; Woodard, E. (2023), "Epistemic norms on evidence-gathering," Philosophical Studies 180(9): 2547–2571, <span class="meta">doi:10.1007/s11098-023-01978-8。</span> <a href="https://doi.org/10.1007/s11098-023-01978-8">doi.org/10.1007/s11098-023-01978-8</a></li>
+<li>Phillips, J., Buckwalter, W., Cushman, F., Friedman, O., Martin, A., Turri, J., Santos, L. &amp; Knobe, J. (2021). "Knowledge before belief." Behavioral and Brain Sciences 44: e140. <span class="meta">doi:10.1017/S0140525X20000618。</span> <a href="https://doi.org/10.1017/S0140525X20000618">doi.org/10.1017/S0140525X20000618</a> <span class="meta">（目标文章 + 约 30 篇同行评议，包含若干不同意见）。</span> <a href="https://www.cambridge.org/core/journals/behavioral-and-brain-sciences/article/abs/knowledge-before-belief/B434EF04A3EA77018384EABEB4973994">链接</a></li>
+<li>Hicks, M. T., Humphries, J. &amp; Slater, J. (2024). "ChatGPT is bullshit." Ethics and Information Technology 26: 38. <span class="meta">doi:10.1007/s10676-024-09775-5。</span> <a href="https://doi.org/10.1007/s10676-024-09775-5">doi.org/10.1007/s10676-024-09775-5</a> <a href="https://link.springer.com/article/10.1007/s10676-024-09775-5">链接</a> 基础锚点：Frankfurt, H. (2005), On Bullshit (Princeton UP). 回复：Fisher, S. A. (2024), "Large language models and their big bullshit potential," Ethics and Information Technology 26, <span class="meta">doi:10.1007/s10676-024-09802-5；</span> <a href="https://doi.org/10.1007/s10676-024-09802-5">doi.org/10.1007/s10676-024-09802-5</a> Gunkel, D. &amp; Coghlan, S. (2025), "Cut the crap: a critical response to 'ChatGPT is bullshit'," Ethics and Information Technology 27, <span class="meta">doi:10.1007/s10676-025-09828-3。</span> <a href="https://doi.org/10.1007/s10676-025-09828-3">doi.org/10.1007/s10676-025-09828-3</a></li>
+<li>Rini, R. (2020). "Deepfakes and the Epistemic Backstop." Philosophers' Imprint 20(24): 1–16. <a href="https://philpapers.org/archive/RINDAT.pdf">链接</a> 以及 Fallis, D. (2021). "The Epistemic Threat of Deepfakes." Philosophy &amp; Technology 34(4): 623–643. <span class="meta">doi:10.1007/s13347-020-00419-2。</span> <a href="https://doi.org/10.1007/s13347-020-00419-2">doi.org/10.1007/s13347-020-00419-2</a></li>
+<li>Habgood-Coote, J. (2023). "Deepfakes and the epistemic apocalypse." Synthese 201(3). <span class="meta">doi:10.1007/s11229-023-04097-3。</span> <a href="https://doi.org/10.1007/s11229-023-04097-3">doi.org/10.1007/s11229-023-04097-3</a> 以及 Atencia-Linares, P. &amp; Artiga, M. (2022). "Deepfakes, shallow epistemic graves: On the epistemic robustness of photography and videos in the era of deepfakes." Synthese 200(6), <span class="meta">doi:10.1007/s11229-022-04003-3。</span> <a href="https://doi.org/10.1007/s11229-022-04003-3">doi.org/10.1007/s11229-022-04003-3</a> <span class="meta">——对「崩溃」框架的主要怀疑性回应。</span></li>
+<li>Nguyen, C. T. (2020). "Echo Chambers and Epistemic Bubbles." Episteme 17(2): 141–161. <span class="meta">doi:10.1017/epi.2018.32。</span> <a href="https://doi.org/10.1017/epi.2018.32">doi.org/10.1017/epi.2018.32</a> <a href="https://philpapers.org/rec/NGUECA">链接</a></li>
+<li>Nguyen, C. T. (2021). "The Seductions of Clarity." Royal Institute of Philosophy Supplement 89: 227–255. <span class="meta">doi:10.1017/S1358246121000035。</span> <a href="https://doi.org/10.1017/S1358246121000035">doi.org/10.1017/S1358246121000035</a> 以及 Nguyen, C. T. (2022). "Trust as an Unquestioning Attitude." Oxford Studies in Epistemology 7: 214–244, <span class="meta">doi:10.1093/oso/9780192868978.003.0007。</span> <a href="https://doi.org/10.1093/oso/9780192868978.003.0007">doi.org/10.1093/oso/9780192868978.003.0007</a> 参见 Nguyen (2023), "Hostile Epistemology," Social Philosophy Today 39: 9–32, <span class="meta">doi:10.5840/socphiltoday2023391；</span> <a href="https://doi.org/10.5840/socphiltoday2023391">doi.org/10.5840/socphiltoday2023391</a> 以及评述 Carey, B. &amp; Ventham, E. (2025), "There is no fresh air: A problem with the concept of echo chambers," Episteme First View. <span class="meta">doi:10.1017/epi.2024.43。</span> <a href="https://doi.org/10.1017/epi.2024.43">doi.org/10.1017/epi.2024.43</a></li>
+<li>Pettigrew, R. (2016). Accuracy and the Laws of Credence. Oxford University Press. <span class="meta">doi:10.1093/acprof:oso/9780198732716.001.0001。</span> <a href="https://doi.org/10.1093/acprof:oso/9780198732716.001.0001">doi.org/10.1093/acprof:oso/9780198732716.001.0001</a> 基础锚点：Joyce, J. M. (1998), "A Nonpragmatic Vindication of Probabilism," Philosophy of Science 65(4): 575–603, <span class="meta">doi:10.1086/392661。</span> <a href="https://doi.org/10.1086/392661">doi.org/10.1086/392661</a> 最近的发展与评述：Pettigrew, R. (2022), "Accuracy-First Epistemology Without Additivity," Philosophy of Science 89(1): 128–151, <span class="meta">doi:10.1017/psa.2021.17；</span> <a href="https://doi.org/10.1017/psa.2021.17">doi.org/10.1017/psa.2021.17</a> Marxen, C. (2021), "Epistemic utility theory's difficult future," Synthese 199(3–4): 7401–7421, <span class="meta">doi:10.1007/s11229-021-03120-9。</span> <a href="https://doi.org/10.1007/s11229-021-03120-9">doi.org/10.1007/s11229-021-03120-9</a> 综述：<a href="https://plato.stanford.edu/entries/epistemic-utility/">SEP, "Epistemic Utility Arguments for Epistemic Norms."</a></li>
+</ol>
+<p class="appendix-note">前沿校准器备注：引用经典锚点文献（Frankfurt 2005, Joyce 1998）仅作为 2020 年后工作的根源，而这些工作才是本附录的实际主题。上述任何主张都不应被视为已定论；这正是这些标签存在的意义。</p>
+</section>
