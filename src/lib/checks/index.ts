@@ -5,6 +5,7 @@ export * from "./content";
 export * from "./epub";
 export * from "./links";
 export * from "./math";
+export * from "./pdf";
 export * from "./seo";
 export * from "./svg-text";
 export * from "./workflows";
