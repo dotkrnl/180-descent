@@ -21,7 +21,7 @@
     "build:social-cards": "tsx scripts/cli/generate-social-cards.ts",
     "build:site": "tsx scripts/cli/prepare-fonts.ts && tsx scripts/cli/prepare-cjk-fonts.ts && tsx scripts/cli/prepare-katex.ts && tsx scripts/cli/prepare-css.ts && npm run build:social-cards && eleventy",
     "build:epub": "tsx scripts/cli/build-epub.ts",
-    "build:pdf": "node scripts/build-pdf.mjs",
+    "build:pdf": "tsx scripts/cli/build-pdf.ts",
     "build": "tsx scripts/cli/preflight.ts && npm run build:site && npm run build:epub && npm run build:pdf",
     "check:links": "tsx scripts/cli/check-links.ts",
     "check:content": "tsx scripts/cli/check-content.ts",
