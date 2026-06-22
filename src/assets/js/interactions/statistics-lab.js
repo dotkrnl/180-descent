@@ -3,11 +3,14 @@
 
   var isZh = (document.documentElement.getAttribute("lang") || "").toLowerCase().indexOf("zh") === 0;
 
-  var C = window.DescentCore || {};
-  var mean = C.mean, variance = C.variance, erf = C.erf, normalCdf = C.normalCdf;
-  var gammaln = C.gammaln, betacf = C.betacf, betai = C.betai;
-  var studentTCdf = C.studentTCdf, tCritical = C.tCritical, tTestP = C.tTestP;
-  var randn = C.randn;
+  var C = window.DescentCore;
+  var mean = C.mean.bind(C);
+  var variance = C.variance.bind(C);
+  var normalCdf = C.normalCdf.bind(C);
+  var studentTCdf = C.studentTCdf.bind(C);
+  var tCritical = C.tCritical.bind(C);
+  var tTestP = C.tTestP.bind(C);
+  var randn = C.randn.bind(C);
 
   function tCritical95(df){
     return tCritical(df, 0.95);

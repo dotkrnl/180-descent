@@ -68,13 +68,15 @@ describe("target content registry", () => {
     const day003 = daysByPath.get("003-logic-and-valid-inference");
     const day004 = daysByPath.get("004-probability-as-extended-logic");
     const day005 = daysByPath.get("005-causation");
+    const day006 = daysByPath.get("006-statistics-and-the-art-of-not-fooling-yourself");
 
     expect([...daysByPath.keys()]).toEqual([
       "001-what-is-knowledge",
       "002-scientific-method-and-demarcation",
       "003-logic-and-valid-inference",
       "004-probability-as-extended-logic",
-      "005-causation"
+      "005-causation",
+      "006-statistics-and-the-art-of-not-fooling-yourself"
     ]);
 
     for (const day of registry.days) {
@@ -140,5 +142,20 @@ describe("target content registry", () => {
     ]);
     expect(day005?.bodies[0].source).toContain("causation-do-see");
     expect(day005?.bodies[0].source).toContain("<MathBlock");
+
+    expect(day006?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "the-deeper-machinery:en",
+      "the-deeper-machinery:zh",
+      "the-incoming-wave-revised:en",
+      "the-incoming-wave-revised:zh"
+    ]);
+    expect(day006?.manifest.components.map((component) => component.id)).toEqual([
+      "statistics-core",
+      "statistics-lab",
+      "statistics-appendices"
+    ]);
+    expect(day006?.bodies[0].source).toContain("feynman1959.src");
+    expect(day006?.bodies[0].source).toContain("pValueTailArea.src");
+    expect(day006?.appendixBodies[0].source).toContain("statistics-appendix-lab");
   });
 });

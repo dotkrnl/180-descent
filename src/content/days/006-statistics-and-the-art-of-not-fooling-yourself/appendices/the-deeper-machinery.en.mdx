@@ -1,0 +1,304 @@
+import MathInline from "@app/components/lesson/MathInline.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+
+<p class="lede"><span class="drop">T</span>he main lesson left a debt unpaid. We said, almost in passing, that a <MathInline latex={String.raw`p`} />-value is one of the most misunderstood numbers in science — and then we hurried on to the famous misreadings, as if the confusion were everyone's fault but the number's. It isn't. The deeper truth is that the tool itself is a chimera: stitched together from two rival philosophies whose founders despised each other, taught as if it were one coherent idea, and quietly incapable of meaning what almost everyone takes it to mean. This appendix is the autopsy. We'll find out why p-hacking isn't just <em>possible</em> but mathematically <em>guaranteed</em>; how wrong a "significant" result really is once you do the honest arithmetic; how a small army of statistical detectives now hunts for the fingerprints; and what the people who actually know this stuff reach for instead. We close on a single, lovely idea that turns a <MathInline latex={String.raw`p`} />-value into a number of coin flips — and hands us straight to tomorrow.</p>
+<div class="continues">
+<p class="label">◆ Continuing from the main lesson</p>
+<p>You've met the False-Positive Factory, the garden of forking paths, the reform spectrum, and the many-analysts duels. Hold onto three threads in particular: <strong>Day 4</strong>'s Bayes (a <MathInline latex={String.raw`p`} />-value is not P(hypothesis | data), and here we'll finally compute what it costs to forget that), <strong>Day 2</strong>'s Popper and Ioannidis (severity and "most findings false"), and <strong>Day 1</strong>'s calibration instinct. Everything below is the substructure those ideas were standing on.</p>
+</div>
+<section>
+<p class="sec-eyebrow"><span class="n">§1</span> The original sin</p>
+<h2>A tool built from two incompatible blueprints</h2>
+<p>Here is a fact that explains an astonishing amount of misery: the standard procedure every science student is taught as "hypothesis testing" is a hybrid. It welds Fisherian evidence to Neyman-Pearson long-run decision rules, and that hybrid often causes confusion.</p>
+
+<p>On one side stood <strong>Ronald Fisher</strong>. In <em>Statistical Methods for Research Workers</em> (1925), he offered the <MathInline latex={String.raw`p`} />-value as an informal, continuous gauge of <em>evidence against</em> a single null hypothesis — a measure of how strange your data would look if nothing were going on. He needed no alternative hypothesis, no rejection region, no long run. He suggested <MathInline latex={String.raw`p < .05`} /> only as a homely rule of thumb, the rough point past which a coincidence starts to feel implausible, and explicitly said you could pick a different line if you preferred. For Fisher, a small <em>p</em> was a prompt to <em>think</em>, not a verdict to <em>obey</em>. The null, he wrote, is never proved — only, occasionally, embarrassed.</p>
+
+<p>On the other side stood <strong>Jerzy Neyman and Egon Pearson</strong>. In a series of papers culminating in 1933, they rebuilt the whole enterprise as a <em>decision rule</em>, not a measure of evidence. You specify two hypotheses up front, fix in advance your tolerable rate of false alarms (<em class="term">α</em>, the Type I error rate) and misses (<em class="term">β</em>, the Type II rate; <em>power</em> = <MathInline latex={String.raw`1-\beta`} />), draw a line, and thereafter behave: reject or accept, accepting that over the long run you'll be wrong at the rates you chose. There is, pointedly, <em>no</em> measure of evidence for the case in front of you — only a procedure with known long-run properties. Neyman thought Fisher's inductive "evidence" talk was mush; Fisher thought Neyman had turned science into factory quality-control. The feud was lifelong and genuinely vicious.</p>
+</section>
+<div class="panel">
+<p class="ptitle">Diagram · two philosophies, forced into one box</p>
+<h3>Fisher vs Neyman–Pearson</h3>
+<p class="pnote">They answer different questions. The modern "<MathInline latex={String.raw`p < .05`} /> test" pretends to answer both at once — which is exactly why it answers neither cleanly.</p>
+<div class="compare">
+<div class="ccard f">
+<p class="who">Fisher's significance test</p>
+<p class="yr">1925 · evidential / inductive</p>
+<ul>
+<li><b>One hypothesis</b> (the null) — no alternative required.</li>
+<li><em>p</em> is a <b>continuous measure of evidence</b> against it.</li>
+<li>.05 is a <b>flexible convention</b>, not a law.</li>
+<li>A prompt to <b>investigate</b>, judged in context.</li>
+<li>No "accept the null," no fixed long-run error rate.</li>
+</ul>
+</div>
+<div class="ccard np">
+<p class="who">Neyman–Pearson test</p>
+<p class="yr">1928–1933 · behavioural / decision</p>
+<ul>
+<li><b>Two hypotheses</b> fixed in advance (<MathInline latex={String.raw`H_0`} /> and <MathInline latex={String.raw`H_1`} />).</li>
+<li><MathInline latex={String.raw`\alpha`} />, <MathInline latex={String.raw`\beta`} />, and <b>power</b> set <em>before</em> seeing data.</li>
+<li>.05 is a <b>committed threshold</b>, chosen for its costs.</li>
+<li>A rule to <b>act on</b> — reject or accept, and move on.</li>
+<li>No evidence claim about the single case; only long-run rates.</li>
+</ul>
+</div>
+</div>
+<div class="vs">— welded together —</div>
+<div class="hybrid">
+<p class="h">The null ritual (what's actually taught)</p>
+      Compute <MathInline latex={String.raw`p`} />. Compare it to <MathInline latex={String.raw`.05`} />. Treat crossing it as <em>both</em> a Fisherian "the evidence is strong" <em>and</em> a Neyman–Pearson "the decision is made" — while reporting the exact <MathInline latex={String.raw`p`} /> as if it graded the evidence, yet thresholding it as if it were a fixed-<MathInline latex={String.raw`\alpha`} /> decision. The psychologist Gerd Gigerenzer calls this incoherent mash-up the "null ritual," performed by rote and understood by few. The confusion you met in the main lesson isn't a failure of student attention. It's baked into a tool that was never designed.
+</div>
+</div>
+<section>
+<p>Once you see the seam, the whole replication crisis reads differently. We took a flexible Fisherian prompt-to-think, froze it into a Neyman–Pearson gate, stripped out the part of Neyman–Pearson that made the gate honest (pre-committed <MathInline latex={String.raw`\alpha`} />, adequate power, a real alternative), and then published only what got through. The wonder is not that so much fails to replicate. It's that anything survives.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§2</span> Why the factory always wins</p>
+<h2>The two facts that make p-hacking inevitable</h2>
+<p>The False-Positive Factory wasn't a trick of clever programming. It rests on two mathematical facts so simple they're almost insulting — and once you hold both, you understand why noise can <em>always</em> be tortured into a confession.</p>
+
+<h3>Fact one: under the null, small p-values still arrive by chance</h3>
+<p>Run an exact test with continuous data where nothing is happening, under the assumptions of the null model, and the <MathInline latex={String.raw`p`} />-value you get is a <strong>uniform random number between 0 and 1</strong>. For discrete, composite, or conservative tests, valid <MathInline latex={String.raw`p`} />-values are often <em>super-uniform</em>: <MathInline latex={String.raw`P(p \le \alpha) \le \alpha`} />, not necessarily exactly equal. The practical warning survives that qualification. In the calibrated continuous case, exactly 5% of the interval [0, 1] lies below .05; in conservative cases the rate is no larger than that. But flip it around and the menace appears: even honest, effect-free experiments sometimes hand you a "significant" result by raw luck. Run the experiment twenty ways — twenty outcomes, twenty covariates, twenty subgroups — and you've effectively bought many tickets on a small-probability prize. The expected number of "discoveries" in a drawer full of nothing is driven by how many times you looked.</p>
+
+<p class="web-only">The live panel below lets you watch the continuous exact-test idealization. With the true effect set to zero, the histogram of <MathInline latex={String.raw`p`} />-values is flat, with a stubborn 5% poking below the line. Now turn up a <em>real</em> effect and watch the pile move toward smaller values: genuine signal makes very small significant <MathInline latex={String.raw`p`} />-values more common than barely significant ones. That surplus of very small <MathInline latex={String.raw`p`} />-values is a literature's pulse. Its absence is a death certificate.</p>
+</section>
+<div class="panel web-only statistics-appendix-lab">
+<p class="ptitle">Interactive · live simulation</p>
+<h3>The shape of a p-value</h3>
+<p class="pnote">Each run simulates <strong>4,000 experiments</strong> (two groups, n = 30 each) and bins their <MathInline latex={String.raw`p`} />-values. Slide the <em>true effect</em> from 0 (nothing is real) upward. In this continuous simulation, the null distribution is flat; as signal appears, small <MathInline latex={String.raw`p`} />-values become more common and the share below <MathInline latex={String.raw`.05`} /> climbs from about 5% (that's <MathInline latex={String.raw`\alpha`} />) to your study's actual <em>power</em>.</p>
+<div class="ctrl">
+<div class="slider-row">
+<label>True effect size (Cohen's <em>d</em>) <span class="val" id="appendix-d006-the-deeper-machinery-dVal">0.00</span></label>
+<input type="range" id="appendix-d006-the-deeper-machinery-dRange" min="0" max="100" value="0" aria-label="True effect size" />
+</div>
+<svg class="canvas" id="appendix-d006-the-deeper-machinery-histCanvas" viewBox="0 0 640 220" role="img" aria-label="Histogram of simulated p-values."></svg>
+<div>
+<button class="btn primary" id="appendix-d006-the-deeper-machinery-histRun">↻ Re-run</button>
+<button class="btn" id="appendix-d006-the-deeper-machinery-histNull">Set effect = 0</button>
+<button class="btn" id="appendix-d006-the-deeper-machinery-histReal">Set a real effect</button>
+</div>
+<div class="readout" id="appendix-d006-the-deeper-machinery-histRead"></div>
+</div>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h3>p-value shape reference</h3>
+<p class="pnote">The table summarizes the same lesson as the simulation: under the continuous exact-test idealization, null p-values are uniform; under a real effect, small p-values become more common.</p>
+<table class="alt-table">
+<thead><tr><th>Setting</th><th>Expected shape</th><th>Interpretation</th></tr></thead>
+<tbody>
+<tr><td>True effect = 0</td><td>Flat across 0 to 1</td><td>About 5% fall below .05 by construction.</td></tr>
+<tr><td>Small real effect</td><td>Left-leaning but noisy</td><td>Power rises slowly; many real effects are missed.</td></tr>
+<tr><td>Large real effect</td><td>Many very small p-values</td><td>High power and a healthy p-curve signature.</td></tr>
+</tbody>
+</table>
+</div>
+<section>
+<h3>Fact two: keep looking, and you're <em>certain</em> to win</h3>
+<p>The optional-stopping toggle in the main factory hid a result that ought to be more famous than it is. Suppose you test after every new subject and stop the instant <MathInline latex={String.raw`p`} /> dips below .05. If there's a real effect, fine. But if there <em>isn't</em> — if the null is exactly true — and you're allowed to keep sampling indefinitely, then the probability that you <em>eventually</em> cross .05 is not 5%; in the mathematical idealization, it approaches <strong>100%</strong>. This is "sampling to a foregone conclusion," proved by Anscombe in 1954 and hammered home by Armitage and colleagues in 1969: the wandering <MathInline latex={String.raw`p`} />-value, given enough patience, is liable to stumble below any fixed line at some point, purely by chance, even when nothing is there.</p>
+<p>This is why peeking is not a venial sin but a structural exploit — and why <strong>Day 4</strong>'s <em>e-values</em> and anytime-valid tests are such a clean fix: they're built so that the guarantee survives unlimited peeking. It's also why real clinical trials, which <em>must</em> monitor accumulating data for safety, use <em class="term">alpha-spending</em> and group-sequential designs — they pay a small statistical tax at each interim look so the total false-alarm budget still adds up to 5%. Optional stopping done lawlessly is cheating; done with a spending rule, it's one of the triumphs of 20th-century statistics.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§3</span> Reading the fingerprints</p>
+<h2>The forensic turn</h2>
+<p>If a real effect leaves many very small significant <MathInline latex={String.raw`p`} />-values, while p-hacking leaves a pile-up just below .05, then you can <em>audit a whole literature</em> from its published numbers alone — without rerunning a single experiment. That realization launched a small, slightly gleeful field of statistical forensics.</p>
+
+<p>The flagship tool is <em class="term">p-curve</em> (Simonsohn, Nelson &amp; Simmons, 2014 — yes, the same trio from the main lesson). Collect the significant <MathInline latex={String.raw`p`} />-values from a set of studies on one effect and look at their shape. A healthy p-curve has more very small significant <MathInline latex={String.raw`p`} />-values than barely significant ones: many .01s, fewer .04s, because real signal mostly yields <em>convincingly</em> small <MathInline latex={String.raw`p`} />-values. A literature with no underlying effect, propped up entirely by p-hacking, shows the suspicious pattern instead — an unnatural surplus of .04s and .049s, the telltale residue of researchers nudging results just over the line and stopping the moment they cleared it. A pile-up just below .05 is suspicious.</p>
+
+<p>And then there are the sting operations — demonstrations built to make the multiple-comparisons problem impossible to wave away:</p>
+
+<div class="appendix-card-grid">
+<div class="appendix-card">
+<p class="ct"><span class="emoji">🐟</span> The dead salmon</p>
+<p class="cy">Bennett et al., 2009 · Ig Nobel 2012</p>
+<p>Neuroscientists slid a <em>dead</em> Atlantic salmon into an fMRI scanner and "showed" it photographs of human social situations. With no correction for the ~130,000 voxels tested, a cluster of the deceased fish's brain lit up with "significant" activity. The point: test enough things and noise will counterfeit a discovery — in a corpse.</p>
+</div>
+<div class="appendix-card">
+<p class="ct"><span class="emoji">🪄</span> Voodoo correlations</p>
+<p class="cy">Vul et al., 2009</p>
+<p>Many celebrated brain-and-emotion studies reported correlations so high they exceeded the reliability of their own measures — impossible. The culprit was circular analysis: pick the voxels that correlate most, then report that correlation as if it were independent. The selection <em>is</em> the result. A forking path wearing a lab coat.</p>
+</div>
+<div class="appendix-card">
+<p class="ct"><span class="emoji">🔢</span> GRIM &amp; the sleuths</p>
+<p class="cy">Brown &amp; Heathers, 2017</p>
+<p>The GRIM test checks whether a reported average is even <em>arithmetically possible</em> for the stated sample size and integer answers. Astonishingly often, it isn't. A loose collective of "data detectives" now uses such tools to surface impossible numbers in published papers.</p>
+</div>
+<div class="appendix-card">
+<p class="ct"><span class="emoji">🤖</span> statcheck</p>
+<p class="cy">Nuijten et al., 2016</p>
+<p>An algorithm that re-computes the <MathInline latex={String.raw`p`} />-values in psychology papers from the reported test statistics. Scanning a quarter-million results, it found that roughly <strong>half</strong> of papers contained at least one inconsistent <MathInline latex={String.raw`p`} />-value, and about <strong>one in eight</strong> an error large enough to potentially flip a conclusion.</p>
+</div>
+</div>
+<p class="mono">Hype filter: p-curve and these forensic tools are <StatusChip status={"ok"} label={"established"} /> as diagnostics — but they detect <em>patterns</em>, not guilt; an innocent literature with publication bias can mimic some signatures, so they flag suspicion, not proof.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§4</span> The honest arithmetic</p>
+<h2>How wrong is a "significant" result, really?</h2>
+<p>Now for the number that should be printed on the first page of every statistics textbook and almost never is. You ran a clean study, no hacking, and got <MathInline latex={String.raw`p = .05`} />. Intuition whispers: "about a 5% chance this is a fluke." Intuition is catastrophically wrong, and we can prove it with nothing more than <strong>Day 4</strong>'s Bayes.</p>
+
+<p>A <MathInline latex={String.raw`p`} />-value lives in the world of <MathInline latex={String.raw`\mathrm{P}(\text{data}\mid\text{null})`} />. What you actually care about is <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{significant result})`} /> — the chance your shiny finding is bogus. Bridging the two requires a <em>prior</em>: how plausible was your hypothesis before the data? And the moment you supply a realistic prior, the picture darkens. The engine is the same one Ioannidis used in his famous <strong>Day 2</strong> essay "Why Most Published Research Findings Are False": combine the prior odds, the study's power, and <MathInline latex={String.raw`\alpha`} />, and read off the <em class="term">false positive risk</em> — the share of your "significant" results that are false alarms.</p>
+<p class="web-only">Use the live calculator below. You'll find that even with a coin-flip prior and decent power, a meaningful chunk of your significant findings are wrong — and with the long-shot hypotheses that make for exciting headlines, most of them are.</p>
+</section>
+<div class="panel web-only statistics-appendix-lab">
+<p class="ptitle">Interactive · the false-positive risk engine</p>
+<h3>Of 100 "discoveries," how many are false?</h3>
+<p class="pnote">Imagine many hypotheses tested at the usual <MathInline latex={String.raw`p < .05`} />. Set how often your hypotheses are <em>really</em> true (the prior) and your study's power. The grid shows 100 results you'd call "significant," coloured by whether they're genuine (teal) or false alarms (red).</p>
+<div class="ctrl">
+<div class="slider-row">
+<label>Prior: share of tested hypotheses that are truly real <span class="val" id="appendix-d006-the-deeper-machinery-priorVal">50%</span></label>
+<input type="range" id="appendix-d006-the-deeper-machinery-priorR" min="2" max="90" value="50" aria-label="Prior probability" />
+</div>
+<div class="slider-row">
+<label>Statistical power (chance of catching a real effect) <span class="val" id="appendix-d006-the-deeper-machinery-powerVal">50%</span></label>
+<input type="range" id="appendix-d006-the-deeper-machinery-powerR" min="10" max="99" value="50" aria-label="Power" />
+</div>
+<div>
+<div class="stat-inline-readout">
+<span class="ppv-big" id="appendix-d006-the-deeper-machinery-fprBig">—</span>
+<span class="stat-muted">of your "significant" findings are <strong>false</strong></span>
+</div>
+<div class="ppv-grid" id="appendix-d006-the-deeper-machinery-ppvGrid" aria-hidden="true"></div>
+<div class="ppv-legend">
+<span><i class="legend-accent"></i> true discovery</span>
+<span><i class="legend-contested"></i> false alarm</span>
+</div>
+</div>
+<div class="readout" id="appendix-d006-the-deeper-machinery-fprRead"></div>
+</div>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h3>False-positive risk reference</h3>
+<p class="pnote">The worked example separates alpha from false-positive risk among published discoveries.</p>
+<table class="alt-table">
+<thead><tr><th>Prior real effects</th><th>Power</th><th>Alpha</th><th>False among significant</th></tr></thead>
+<tbody>
+<tr><td>50%</td><td>50%</td><td>.05</td><td>About 9% false alarms.</td></tr>
+<tr><td>10%</td><td>50%</td><td>.05</td><td>About 47% false alarms.</td></tr>
+<tr><td>2%</td><td>50%</td><td>.05</td><td>About 83% false alarms.</td></tr>
+</tbody>
+</table>
+</div>
+<section>
+<p>Two refinements make the news worse, not better — and they're the real essence here.</p>
+<p><strong>It's grimmer than the grid suggests (Colquhoun).</strong> The calculator above uses the whole .05 <em>tail</em> as the false-positive rate. But David Colquhoun (2014, 2017) pointed out that a result sitting <em>right at</em> <MathInline latex={String.raw`p = .05`} /> is barely more likely under a real effect than under the null, so its honest false-positive risk is higher than the tail suggests. His verdict, for an even-odds prior: observe <MathInline latex={String.raw`p \approx .05`} /> and the minimum chance you're wrong is around <strong>26%</strong> — not 5%. Demand a genuine discovery rate, and <MathInline latex={String.raw`p < .05`} /> simply isn't a high enough bar. This is the quantitative heart of the Benjamin et al. push toward .005 you met in the main lesson.</p>
+<p><strong>The null is almost never exactly true anyway (Meehl's crud factor).</strong> Paul Meehl observed that in large social-science datasets, <em>everything</em> correlates a little with <em>everything</em> — birth order with politics, height with humor — because the world is a dense web of faint real connections he called the <em class="term">crud factor</em>. So a point null of "exactly zero" is a straw man; with a big enough sample you can reject it for any pair of variables you like. "Statistically significant" then certifies only that your sample was large, not that you found anything that matters. It's the deepest reason significance and importance are different animals.</p>
+
+<div class="aside">
+<p class="h">When Bayes and frequentism openly fight: the Jeffreys–Lindley paradox</p>
+<p>Here's a genuinely unsettling one. With a very large sample, a result at exactly <MathInline latex={String.raw`p = .05`} /> can be evidence <em>for</em> the null on a Bayesian analysis — the two frameworks don't just differ, they point in <em>opposite directions</em> (Lindley, 1957). The frequentist rejects; the Bayesian shrugs and leans toward <MathInline latex={String.raw`H_0`} />. The resolution isn't that one side is dumb; it's that they're answering different questions, and at large <em>n</em> the gap between "surprising under the null" and "more probable under the alternative" yawns wide. The modern Bayesian answer is the <em class="term">Bayes factor</em> — a direct ratio of how well each hypothesis predicted the data, popularized in accessible software like JASP. It can do something a <MathInline latex={String.raw`p`} />-value constitutionally cannot: gather evidence <em>for</em> the null, not just fail to reject it.</p>
+</div>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§5</span> The better toolkit</p>
+<h2>What the people who know this reach for</h2>
+<p>Demolition is easy; the appendix owes you the rebuild. The estimation-era toolkit isn't exotic — it's a handful of moves that quietly fix the specific failures above.</p>
+
+<h3>Better errors: Type S and Type M</h3>
+<p>Andrew Gelman and John Carlin (2014) argue that in the low-power world we actually inhabit, the classic Type I / Type II framing asks the wrong question. Two sharper failures matter more. A <em class="term">Type S</em> ("sign") error is getting the <em>direction</em> wrong — concluding a treatment helps when it harms. A <em class="term">Type M</em> ("magnitude") error is the exaggeration ratio — how many times too large your "significant" estimate is. Their punchline ties straight to the main lesson's winner's curse: when power is low, the few estimates that reach significance aren't just uncertain, they're systematically <strong>inflated</strong>, often two- or threefold. The published effect isn't a slightly noisy truth; it's a funhouse-mirror enlargement of it.</p>
+
+<h3>Proving a negative: equivalence testing</h3>
+<p>The main lesson warned that "<MathInline latex={String.raw`p > .05`} />" does not mean "no effect." But sometimes you genuinely want to conclude <em>there's nothing meaningful here</em> — and you can, with <em class="term">equivalence testing</em> (the TOST procedure; Lakens, 2017). You define the smallest effect you'd care about, then test whether the true effect is confidently <em>smaller</em> than that. It flips absence-of-evidence into evidence-of-absence, legitimately. A non-significant result plus a passed equivalence test is a real conclusion; a non-significant result alone is just a shrug.</p>
+
+<h3>Honest multiplicity: controlling the false discovery rate</h3>
+<p>When you really must run many tests (every gene, every brain region), the old fix was Bonferroni — divide <MathInline latex={String.raw`\alpha`} /> by the number of tests — which is correct but so brutal it leaves you no power. Benjamini and Hochberg's <em class="term">false discovery rate</em> (1995), one of the most-cited papers in all of science, changed the target: instead of guaranteeing <em>zero</em> false positives among <em>all</em> tests, control the expected <em>proportion</em> of false positives among the ones you <em>flag</em>. It's the pragmatic bargain that made genomics and neuroimaging statistically livable — accept a known, small fraction of duds in exchange for actually finding things.</p>
+
+<h3>Renaming the interval to mean what it is</h3>
+<p>Finally, a small move with large clarifying power: Amrhein, Greenland and colleagues urge calling a confidence interval a <em class="term">compatibility interval</em> — the range of effect sizes reasonably <em>compatible</em> with your data and model. The word kills two errors at once. It stops you treating values inside as proven and values outside as impossible, and it nudges you to report the whole interval as a statement about <em>magnitude and uncertainty</em> rather than a yes/no membership test for zero.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§6</span> The case for the defence</p>
+<h2>Significance testing, done severely</h2>
+<p>It would be too tidy to end with "p-values bad, estimation good." Evenhandedness — and accuracy — demand a serious counterweight, and the philosopher <strong>Deborah Mayo</strong> supplies it. In <em>Statistical Inference as Severe Testing</em> (2018), she defends error-statistical reasoning against both the abolitionists and the Bayesians, with a single demanding principle.</p>
+<blockquote>You have evidence for a claim only to the degree it has passed a test it would <em>probably have failed</em>, had the claim been false.</blockquote>
+<p>That is <em class="term">severity</em>, and notice it is <strong>Day 2</strong>'s Popper rendered quantitative: a result corroborates a hypothesis only if the test genuinely <em>risked</em> refuting it. On this view, the rot isn't the <MathInline latex={String.raw`p`} />-value — it's the abandonment of severity. A <MathInline latex={String.raw`p`} />-value squeezed out of a forking-paths fishing trip is worthless not because it's a <MathInline latex={String.raw`p`} />-value but because the "test" was never severe: it could hardly have come out any other way. Mayo's warning to the reformers is pointed: drop all thresholds and error-control, and you don't get more nuanced science — you get less accountable science, with no public standard for when a claim has actually earned its keep. The honest synthesis the main lesson reached for lives here: not "abolish" or "obey," but <em>demand severity</em>, report magnitude and uncertainty, and make the test one the hypothesis could have flunked.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="n">§7</span> The bridge to tomorrow</p>
+<h2>A p-value, measured in coin flips</h2>
+<p>One last idea, and it's a beauty — because it quietly turns the page to Day 7. Sander Greenland (2019) suggests we stop staring at the bare <MathInline latex={String.raw`p`} />-value and instead take its <em>surprisal</em>, borrowed straight from information theory: the <em class="term">S-value</em>, defined as <MathInline latex={String.raw`S=-\log_2 p`} />. This converts a probability into <strong>bits of information against your model</strong> — and bits, as we'll see tomorrow, are the universal currency of surprise.</p>
+<p>The translation is wonderfully concrete. Ask: how many fair coins would I have to flip and get <em>all heads</em> to be this surprised? That count <em>is</em> the S-value. A result at <MathInline latex={String.raw`p = .05`} /> carries about <strong>4.3 bits</strong> — roughly the surprise of calling four or five coin tosses in a row. Stated that way, the spell breaks. Four heads in a row is mildly interesting; it is not a discovery, and you would never bet your reputation on it.</p>
+<p class="web-only">The slider below lets you feel any <MathInline latex={String.raw`p`} />-value's true evidential weight, in the honest units of Day 7.</p>
+<p class="epub-only print-only">The reference table below translates common <MathInline latex={String.raw`p`} />-values into the honest units of Day 7.</p>
+</section>
+<div class="panel web-only statistics-appendix-lab">
+<p class="ptitle">Interactive · surprise in bits</p>
+<h3>The S-value</h3>
+<p class="pnote">Drag to set a <MathInline latex={String.raw`p`} />-value. The S-value, <MathInline latex={String.raw`S=-\log_2 p`} />, tells you how many coins-all-heads worth of surprise it represents — the real evidence against the tested model, in bits.</p>
+<div class="ctrl">
+<div class="slider-row">
+<label><MathInline latex={String.raw`p`} />-value <span class="val mono" id="appendix-d006-the-deeper-machinery-pShow">0.050</span></label>
+<input type="range" id="appendix-d006-the-deeper-machinery-pRange" min="0" max="100" value="33" aria-label="p-value (log scale)" />
+</div>
+<div class="stat-inline-readout">
+<span class="sval-big" id="appendix-d006-the-deeper-machinery-sBig">4.3</span>
+<span class="stat-muted">bits of surprise &nbsp;≈&nbsp; <b id="appendix-d006-the-deeper-machinery-coinTxt" class="mono">4–5</b> coins, all heads</span>
+</div>
+<div class="coins" id="appendix-d006-the-deeper-machinery-coinRow"></div>
+<div class="readout" id="appendix-d006-the-deeper-machinery-sRead"></div>
+</div>
+</div>
+<div class="format-alt epub-only print-only">
+<p class="ptitle">Reference table</p>
+<h3>S-value reference</h3>
+<p class="pnote">The S-value converts a p-value into bits of surprise: S = -log2(p).</p>
+<table class="alt-table">
+<thead><tr><th>p-value</th><th>S-value</th><th>Coin-flip analogy</th></tr></thead>
+<tbody>
+<tr><td>.05</td><td>4.3 bits</td><td>About 4 to 5 heads in a row.</td></tr>
+<tr><td>.01</td><td>6.6 bits</td><td>About 7 heads in a row.</td></tr>
+<tr><td>.005</td><td>7.6 bits</td><td>About 8 heads in a row.</td></tr>
+</tbody>
+</table>
+</div>
+<section>
+<p class="sec-eyebrow">What to actually do</p>
+<h2>The working scientist's defence kit</h2>
+<p>Distilled from everything above and in the main lesson — the moves that convert luck into knowledge:</p>
+<ul class="check">
+<li><b>Preregister the confirmatory test.</b> Freeze the confirmatory path before you see the data; label everything else exploratory and honest.</li>
+<li><b>Report the effect size with a compatibility interval</b>, always. The magnitude and its uncertainty <em>are</em> the result; the <MathInline latex={String.raw`p`} />-value is a footnote.</li>
+<li><b>Power the study for the smallest effect you'd care about</b> — and remember that a "significant" result from an underpowered study is probably inflated (Type M).</li>
+<li><b>Translate your <em>p</em> into bits.</b> If it's only a few coin flips' worth of surprise, say so, and don't oversell.</li>
+<li><b>Check robustness across reasonable analyses</b> (a specification curve), and ask whether the result survived a <em>severe</em> test or merely a convenient one.</li>
+<li><b>When you must test many things, control the false discovery rate</b> — not the family-wise error into oblivion.</li>
+<li><b>If you want to claim "no effect," run an equivalence test.</b> Absence of evidence isn't evidence of absence until you've actually looked for absence.</li>
+</ul>
+</section>
+<div class="recap">
+<p class="h">◆ The appendix in three sentences</p>
+<dl>
+<div><dt>Deepest idea</dt><dd>The "<MathInline latex={String.raw`p < .05`} /> test" is an incoherent weld of Fisher's evidence-measure and Neyman–Pearson's decision-rule, and the misreadings everyone makes are symptoms of that original sin — while two simple facts (the <MathInline latex={String.raw`p`} />-value is uniform under the null; peeking eventually crosses any line with certainty) make p-hacking not merely possible but guaranteed.</dd></div>
+<div><dt>Best new analogy</dt><dd>A <MathInline latex={String.raw`p`} />-value translated into coin flips: <MathInline latex={String.raw`p = .05`} /> is the surprise of ~4–5 heads in a row — mildly interesting, never a discovery — which is why the honest false-positive risk of a fresh "significant" result is around 26%, not 5%.</dd></div>
+<div><dt>The constructive turn</dt><dd>The fix is a toolkit, not a ban: severity (Mayo), effect sizes with compatibility intervals, Type S/M thinking, equivalence tests, false-discovery-rate control, and Bayes factors — plus the forensic methods (p-curve, the dead salmon, statcheck) that audit a literature from its own numbers.</dd></div>
+</dl>
+</div>
+
+<hr class="div" />
+<section class="sources">
+<p class="sec-eyebrow">Sources · appendix</p>
+<h2>Sources &amp; further reading</h2>
+<ol>
+<li>Fisher, R. A. (1925). <em>Statistical Methods for Research Workers.</em> Oliver &amp; Boyd. <span class="meta">— the p-value as a continuous evidential measure; .05 as a flexible convention.</span></li>
+<li>Neyman, J. &amp; Pearson, E. S. (1933). "On the Problem of the Most Efficient Tests of Statistical Hypotheses." <em>Philosophical Transactions of the Royal Society A</em> 231: 289–337. <span class="meta">— testing as a decision rule with α, β, and power.</span></li>
+<li>Gigerenzer, G. (2004). "Mindless statistics." <em>The Journal of Socio-Economics</em> 33(5): 587–606. <span class="meta">— the "null ritual" as an incoherent Fisher/Neyman–Pearson hybrid.</span></li>
+<li>Goodman, S. N. (1999). "Toward Evidence-Based Medical Statistics. 1: The P Value Fallacy." <em>Annals of Internal Medicine</em> 130(12): 995–1004. <span class="meta">doi:10.7326/0003-4819-130-12-199906150-00008.</span></li>
+<li>Anscombe, F. J. (1954). "Fixed-Sample-Size Analysis of Sequential Observations." <em>Biometrics</em> 10(1): 89–100. <span class="meta">— sampling to a foregone conclusion.</span></li>
+<li>Armitage, P., McPherson, C. K. &amp; Rowe, B. C. (1969). "Repeated Significance Tests on Accumulating Data." <em>Journal of the Royal Statistical Society A</em> 132(2): 235–244. <span class="meta">— optional stopping crosses any threshold under H₀ with probability → 1.</span></li>
+<li>Simonsohn, U., Nelson, L. D. &amp; Simmons, J. P. (2014). "P-curve: A Key to the File-Drawer." <em>Journal of Experimental Psychology: General</em> 143(2): 534–547. <span class="meta">doi:10.1037/a0033242.</span></li>
+<li>Bennett, C. M., Baird, A. A., Miller, M. B. &amp; Wolford, G. L. (2010). "Neural Correlates of Interspecies Perspective Taking in the Post-Mortem Atlantic Salmon." <em>Journal of Serendipitous and Unexpected Results</em> 1: 1–5. <span class="meta">(HBM 2009 poster; Ig Nobel 2012) — multiple comparisons in fMRI.</span></li>
+<li>Vul, E., Harris, C., Winkielman, P. &amp; Pashler, H. (2009). "Puzzlingly High Correlations in fMRI Studies of Emotion, Personality, and Social Cognition." <em>Perspectives on Psychological Science</em> 4(3): 274–290. <span class="meta">— "voodoo correlations"; non-independence error.</span></li>
+<li>Brown, N. J. L. &amp; Heathers, J. A. J. (2017). "The GRIM Test: A Simple Technique Detects Numerous Anomalies in the Reporting of Results in Psychology." <em>Social Psychological and Personality Science</em> 8(4): 363–369. <span class="meta">doi:10.1177/1948550616673876.</span></li>
+<li>Nuijten, M. B., Hartgerink, C. H. J., van Assen, M. A. L. M., Epskamp, S. &amp; Wicherts, J. M. (2016). "The prevalence of statistical reporting errors in psychology (1985–2013)." <em>Behavior Research Methods</em> 48: 1205–1226. <span class="meta">doi:10.3758/s13428-015-0664-2 — the statcheck audit.</span></li>
+<li>Ioannidis, J. P. A. (2005). "Why Most Published Research Findings Are False." <em>PLoS Medicine</em> 2(8): e124. <span class="meta">— the positive-predictive-value engine (revisited from Day 2).</span></li>
+<li>Colquhoun, D. (2014). "An investigation of the false discovery rate and the misinterpretation of p-values." <em>Royal Society Open Science</em> 1: 140216. <span class="meta">doi:10.1098/rsos.140216.</span> &nbsp;Colquhoun, D. (2017). "The reproducibility of research and the misinterpretation of p-values." <em>Royal Society Open Science</em> 4: 171085. <span class="meta">— observed <MathInline latex={String.raw`p \approx .05 \Rightarrow`} /> false-positive risk <MathInline latex={String.raw`\ge \sim 26\%`} />.</span></li>
+<li>Lindley, D. V. (1957). "A Statistical Paradox." <em>Biometrika</em> 44(1–2): 187–192. <span class="meta">— the Jeffreys–Lindley divergence of p-values and Bayes factors at large n.</span></li>
+<li>Meehl, P. E. (1990). "Why Summaries of Research on Psychological Theories Are Often Uninterpretable." <em>Psychological Reports</em> 66(1): 195–244. <span class="meta">— the "crud factor"; the point null is almost never exactly true.</span></li>
+<li>Gelman, A. &amp; Carlin, J. (2014). "Beyond Power Calculations: Assessing Type S (Sign) and Type M (Magnitude) Errors." <em>Perspectives on Psychological Science</em> 9(6): 641–651. <span class="meta">doi:10.1177/1745691614551642.</span></li>
+<li>Lakens, D. (2017). "Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses." <em>Social Psychological and Personality Science</em> 8(4): 355–362. <span class="meta">doi:10.1177/1948550617697177 — the TOST procedure.</span></li>
+<li>Benjamini, Y. &amp; Hochberg, Y. (1995). "Controlling the False Discovery Rate." <em>Journal of the Royal Statistical Society B</em> 57(1): 289–300. <span class="meta">— FDR vs family-wise error.</span></li>
+<li>Mayo, D. G. (2018). <em>Statistical Inference as Severe Testing: How to Get Beyond the Statistics Wars.</em> Cambridge University Press. <span class="meta">— severity; the error-statistical defence.</span></li>
+<li>Greenland, S. (2019). "Valid P-Values Behave Exactly as They Should: Some Misleading Criticisms of P-Values and Their Resolution With S-Values." <em>The American Statistician</em> 73(sup1): 106–114. <span class="meta">doi:10.1080/00031305.2018.1529625 — the S-value / surprisal, in bits.</span></li>
+</ol>
+</section>

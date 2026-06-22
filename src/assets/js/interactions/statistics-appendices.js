@@ -33,9 +33,11 @@
     fn();
   }
 
-  var C = window.DescentCore || {};
-  var gammaln = C.gammaln, betacf = C.betacf, betai = C.betai;
-  var mean = C.mean, variance = C.variance, randn = C.randn;
+  var C = window.DescentCore;
+  var betai = C.betai.bind(C);
+  var mean = C.mean.bind(C);
+  var variance = C.variance.bind(C);
+  var randn = C.randn.bind(C);
 
   function tP(a, b) {
     var na = a.length;

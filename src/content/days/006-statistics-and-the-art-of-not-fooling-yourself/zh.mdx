@@ -1,0 +1,486 @@
+import feynman1959 from "../../../assets/images/open-license/richard-feynman-1959.jpg";
+import pValueTailAreaZh from "../../../assets/images/open-license/p-value-tail-area-v2-zh.svg";
+import pValueTailAreaZhDark from "../../../assets/images/open-license/p-value-tail-area-v2-zh-dark.svg";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+
+<header class="hero wrap">
+<p class="eyebrow">第一单元 · 知识与推理的根基 · <span class="daymark">第 06 / 180 日</span></p>
+<h1>统计学与避免自欺的艺术</h1>
+<p class="sub">只要研究者手中有足够多看似合理的分析选择，许多数据集里都可能找到一条通往 <span class="hl"><MathInline latex={String.raw`p < .05`} /></span> 的路。统计学要做的，正是防止我们在不知不觉中挑中那条路。</p>
+
+<figure class="hero-fig forking-paths">
+<svg viewBox="0 0 640 320" role="img" aria-label="一张有序图：同一份数据经过多个看似合理的分析选择，生成许多设定，其中一个显著结果被选择性报告。">
+<defs>
+<marker id="garden-arrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--line-strong)"></path></marker>
+</defs>
+<rect x="8" y="10" width="624" height="284" rx="8" fill="var(--raised)" stroke="var(--line)"></rect>
+<g font-family="IBM Plex Mono,monospace">
+<text x="32" y="42" font-size="12" letter-spacing="1.6" fill="var(--accent)">分岔路径花园</text>
+<text x="32" y="66" font-size="11" fill="var(--ink-faint)">同一份数据，多套合理的分析设定，一个诱人的标题</text>
+<rect x="32" y="102" width="128" height="100" rx="8" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
+<text x="96" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">同一数据</text>
+<text x="96" y="148" text-anchor="middle" font-size="11" fill="var(--ink-faint)">只有噪声</text>
+<line x1="62" y1="177" x2="130" y2="177" stroke="var(--line-strong)" stroke-width="1.4"></line>
+<circle cx="70" cy="169" r="3" fill="var(--accent)"></circle>
+<circle cx="88" cy="182" r="3" fill="var(--ink-faint)"></circle>
+<circle cx="106" cy="172" r="3" fill="var(--accent)"></circle>
+<circle cx="124" cy="184" r="3" fill="var(--ink-faint)"></circle>
+<line x1="168" y1="152" x2="210" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
+<rect x="218" y="82" width="218" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
+<text x="327" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">合理选择</text>
+<g font-size="10.5">
+<text x="240" y="134" fill="var(--ink-soft)">离群值</text><text x="338" y="134" fill="var(--ink-faint)">保留 / 剔除</text>
+<text x="240" y="158" fill="var(--ink-soft)">协变量</text><text x="338" y="158" fill="var(--ink-faint)">无 / W</text>
+<text x="240" y="182" fill="var(--ink-soft)">尺度</text><text x="338" y="182" fill="var(--ink-faint)">原始 / 秩</text>
+<text x="240" y="206" fill="var(--ink-soft)">样本</text><text x="338" y="206" fill="var(--ink-faint)">全部 / 子组</text>
+</g>
+<line x1="240" y1="143" x2="416" y2="143" stroke="var(--line)" stroke-width="1"></line>
+<line x1="240" y1="167" x2="416" y2="167" stroke="var(--line)" stroke-width="1"></line>
+<line x1="240" y1="191" x2="416" y2="191" stroke="var(--line)" stroke-width="1"></line>
+<line x1="444" y1="152" x2="456" y2="152" stroke="var(--line-strong)" stroke-width="2" marker-end="url(#garden-arrow)"></line>
+<rect x="464" y="82" width="144" height="150" rx="8" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="1.5"></rect>
+<text x="536" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">报告结果</text>
+<rect x="484" y="122" width="104" height="26" rx="6" fill="color-mix(in srgb,var(--contested) 12%,var(--paper))" stroke="var(--contested)" stroke-width="1.8"></rect>
+<text x="536" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="var(--contested)">p = .03</text>
+<text x="536" y="165" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .61</text>
+<text x="536" y="187" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .44</text>
+<text x="536" y="209" text-anchor="middle" font-size="11" fill="var(--ink-faint)">p = .78</text>
+<rect x="450" y="246" width="172" height="28" rx="6" fill="color-mix(in srgb,var(--contested) 10%,var(--raised))" stroke="var(--contested)"></rect>
+<text x="536" y="265" text-anchor="middle" font-size="11" font-weight="700" fill="var(--contested)">最终报告的分支</text>
+</g>
+</svg>
+<figcaption>分岔路径花园。数据只有噪声；分支一多，就很容易冒出一条看似「发现」的路径。真正的危险，是看过数据后再决定走哪条路。</figcaption>
+</figure>
+
+<p class="lede dropcap">2011 年，三位心理学家故意设计了一项荒诞实验。他们让 20 名本科生分别听披头士的《当我六十四岁》（When I'm Sixty-Four）或一首对照曲目，然后回答包括出生日期在内的一系列问题。常规统计分析竟显示，听前一首歌的人「年轻」了约一岁半，<span class="hl"><MathInline latex={String.raw`p = .04`} /></span>。不是感觉更年轻，而是按出生日期算真的更年轻。</p>
+
+<p>当然，歌曲不可能改写出生年份，这正是实验的用意。约瑟夫·西蒙斯（Joseph Simmons）、莱夫·纳尔逊（Leif Nelson）和尤里·西蒙逊（Uri Simonsohn）没有揭露某个罕见骗局，而是在展示日常研究流程中的结构性漏洞：研究者没有捏造数据，只是在何时停止收集数据、选择哪个结果变量、是否加入协变量以及比较哪些组别等环节拥有若干看似合理的自由。每个选择单独看都说得过去，叠加起来却足以把随机噪声包装成一项「发现」。</p>
+</header><div class="wrap">
+
+<div class="whereblock">
+<p class="label">◆ 课程衔接</p>
+<p>在 <a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a>，我们通过一组触目惊心的数字了解了复现危机：原始心理学研究中，97% 报告了统计显著效应；在复现实验中，只有 36% 得到了同方向的统计显著结果。我们当时提到过 <span class="term">p 值操纵</span>（p-hacking）<TipNote text={String.raw`p 值操纵意味着尝试足够多的分析方式、剔除标准、结果指标或停止规则，直到随机噪声看起来具有统计显著性。`} />，但还没有解释它究竟如何发生。今天就来打开这个黑箱。</p>
+<p>这也是 <a href="/zh/days/001-what-is-knowledge/">第 1 日</a>「盖梯尔问题」的科学版：一个结论可能碰巧为真，却不是通过可靠方法得到。<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 提醒我们，p 值并不是零假设为真的概率；<a href="/zh/days/005-causation/">第 5 日</a> 则说明，选择控制哪些变量，本身就是分析路径的一部分。今日线索：信息（信号与噪声）和计算（作为易错推理机的实验室），以及对涌现的初步预览——科学作为一个超越任何单个分析者的错误修正系统。</p>
+</div>
+
+<section>
+<p class="sec-eyebrow">引子</p>
+<h2>最容易被愚弄的人</h2>
+<blockquote>「首要原则是你不能欺骗自己——而你恰恰是最容易被自己愚弄的人。」——理查德·费曼，加州理工学院毕业典礼，1974 年</blockquote>
+<figure class="lesson-figure is-portrait">
+<img src={feynman1959.src} width="899" height="900" alt="1959 年，理查德·费曼站在黑板前。" />
+<figcaption>1959 年，理查德·费曼站在黑板前。上方引文出自他 1974 年在加州理工学院关于「货物崇拜科学」的毕业典礼演讲。<span class="meta">图片：<em>The Big T</em> 1959，经 Wikimedia Commons，美国公有领域。</span></figcaption>
+</figure>
+<p>费曼谈论的是公式无法替代的、求真所需的诚实。现代统计学最残酷的转折在于：公式本身仍然可能是正确的，但在灵活搜索之后，错误率便无法再维持在名义水平。它们会给你想看到的结论披上数学权威的外衣。</p>
+<p>这个陷阱有个学名：<span class="term">研究者自由度</span>（researcher degrees of freedom）<TipNote text={String.raw`研究者自由度是指研究者在数据收集、清理、建模和报告过程中，可以做出的各种看起来合情合理的分析选择。`} />。每项实际研究背后都隐藏着几十个微小但看似合理的决定。剔除哪些异常值？是否控制年龄？性别？两者都控制？是现在停止收集数据，还是再招募 20 名参与者？你测量了三个指标，该报告哪一个？每个选择单独看都无可厚非。但如果是在看过数据后才做决定，它们加在一起就成了一台伪造「发现」的机器。</p>
+<p>西蒙斯、纳尔逊和西蒙逊在用披头士做实验之前，先用模拟展示了这一点。通过模拟，他们展示了把四种常见的研究者自由度组合起来——偷看数据并在需要时增加样本；在两个相关的结果指标中二选一；按性别等变量拆分子组；剔除三个实验条件中的一个——就能将假阳性的概率从宣称的 <span class="hl">5%</span> 抬升至高达 <span class="hl">61%</span>。把这些分析自由度叠加起来，可将纯噪声中的假阳性率推高到约 61%。</p>
+<p class="web-only">接下来的面板将让你亲自运行这台机器——这是一个实时的蒙特卡洛模拟，而非预设的动画。其中的每一项「研究」都是纯噪声，没有任何真实效应。看看这些自由度会怎样扭曲结果。</p>
+<p class="epub-only print-only">下方参考表以静态形式展示同一台机器：每增加一种研究自由度，纯噪声就多了一条看起来像「发现」的路径。</p>
+</section>
+
+{/* ===================== INTERACTIVE 1 ===================== */}
+<div class="panel web-only statistics-factory">
+<p class="ptitle">互动 · 实时蒙特卡洛模拟</p>
+<h3>假阳性工厂</h3>
+<p class="pnote">每次运行都会模拟 <span class="hl">约 1500 次</span>没有真实效应的实验。若零假设成立、模型假设满足，而且只进行一项预先指定的检验，约 5% 的实验仍会偶然得到 <span class="hl"><MathInline latex={String.raw`p < .05`} /></span>。现在开启几项研究者自由度，再观察工厂能从所有允许的分析中挑出多么有利的结果。</p>
+
+<div class="fp-grid">
+<div>
+<div class="switches">
+<button class="swbtn" id="fp-dv" role="switch" aria-checked="false">
+<span class="knob"></span><span class="lab"><span>两个结果指标</span><span>测量两个相关指标，只报告「成功」的那个</span></span>
+</button>
+<button class="swbtn" id="fp-stop" role="switch" aria-checked="false">
+<span class="knob"></span><span class="lab"><span>可选停止</span><span>样本量 n=20 时不显著？再加 10 个试试</span></span>
+</button>
+<button class="swbtn" id="fp-cov" role="switch" aria-checked="false">
+<span class="knob"></span><span class="lab"><span>灵活的子组分析</span><span>先看整体结果，再按「性别」拆分试试</span></span>
+</button>
+<button class="swbtn" id="fp-drop" role="switch" aria-checked="false">
+<span class="knob"></span><span class="lab"><span>剔除实验条件</span><span>运行三个小组，只报告表现最好的那一对</span></span>
+</button>
+</div>
+<div class="fp-actions">
+<button class="btn primary" id="fp-run">重新运行模拟</button>
+<button class="btn" id="fp-all">开启全部分析自由度</button>
+<button class="btn" id="fp-reset">重置</button>
+</div>
+</div>
+
+<div class="fp-meter">
+<div class="fp-bigwrap">
+<div class="fp-big low" id="fp-pct">5%</div>
+<div class="fp-biglab">假阳性率 · 纯噪声中产生的「发现」</div>
+</div>
+<div class="fp-bar"><div class="fill" id="fp-fill"></div><div class="honest"></div></div>
+<div class="fp-scale"><span>0%</span><span>↑ 诚实的 5%</span><span>~65%</span></div>
+<div class="fp-read" id="fp-read">未启用灵活分析。如果零假设成立且模型假设满足，一次预先指定的检验会给出统计系统承诺的错误率。</div>
+</div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表</p>
+<h3>假阳性工厂</h3>
+<p class="pnote">每增加一项看似普通的分析自由度，偶然结果被选中并报告的机会都会增加。</p>
+<table class="alt-table">
+<thead><tr><th>分析自由度</th><th>具体变动</th><th>为何会抬高假阳性率</th></tr></thead>
+<tbody>
+<tr><td>两个结果指标</td><td>测量两个相关结果，只报告显著的那个。</td><td>噪声获得了两次跨过 p &lt; .05 的机会。</td></tr>
+<tr><td>可选停止</td><td>在 n=20 时观察，需要时再增加参与者。</td><td>停止规则本身成了数据中的另一条路径。</td></tr>
+<tr><td>灵活的子组分析</td><td>尝试整体结果及子组拆分。</td><td>如果在看到数据后才选择，合理的子组检查就变成了多次比较。</td></tr>
+<tr><td>剔除实验条件</td><td>运行三个小组，报告最好的一对。</td><td>报告的对比结果是被特意挑选出来的。</td></tr>
+</tbody>
+</table>
+<p>西蒙斯、纳尔逊和西蒙逊展示，即使数据中没有真实效应，结合这四种自由度也能将名义上 5% 的假阳性率提高到约 61%。</p>
+</div>
+
+<section>
+<p class="sec-eyebrow">核心模型</p>
+<h2>p 值到底在说什么（以及关于它的六种误读）</h2>
+<p>要避免被统计结果误导，先要弄清 p 值究竟回答了什么问题。许多读者，包括受过训练的科学家和相当数量的统计学讲师，都会在这里出错。下面这一定义值得仔细读一遍：</p>
+
+<div class="def">
+<p class="h">定义 · p 值</p>
+      <span class="term">p 值</span>（p-value）<TipNote text={String.raw`p 值是特定零模型下数据的尾部概率，而非零假设为真的概率。`} />是在指定<span class="term">零模型</span><TipNote text={String.raw`零模型是 p 值计算所假定的世界，通常包括无效应模型以及所有抽样和建模假设。`} />及其假设成立时，观察到当前<span class="term">检验统计量</span>或更极端值的概率。这里的「零模型成立」包括<span class="term">零假设</span><TipNote text={String.raw`零假设是正在被测试的基准断言，通常指没有效应或没有差异。`} />以及相应的抽样和建模假设。
+</div>
+
+<p>换成一个小例子：假设零模型认为两组均值相同。如果在这个模型下，观察到当前这么大、甚至更大的差异的概率为 3%，那么 p = .03。这并不表示零假设为真的概率是 3%。</p>
+
+<figure class="lesson-figure pvalue-figure">
+<img src={pValueTailAreaZh.src} data-light-src={pValueTailAreaZh.src} data-dark-src={pValueTailAreaZhDark.src} width="800" height="460" loading="lazy" decoding="async" alt="课程风格的零模型钟形曲线图，阴影尾部标为 p 值，并强调 P(数据 | 零假设) 不是 P(零假设 | 数据)。" />
+  <figcaption>阴影尾部就是 p 值：在零模型下，出现如此极端或更极端结果的频率。<span class="meta">改编自 Repapetilto 与 Chen-Pan Liao，经 Wikimedia Commons，CC BY-SA 3.0。</span></figcaption>
+</figure>
+
+<p>这句话值得再读一遍。它是关于「给定假设下的数据」的陈述——写作 <span class="hl"><MathInline latex={String.raw`\mathrm{P}(\text{数据}\mid\text{零假设})`} /></span>。它绝对不是关于「给定数据下的假设」的陈述，即 <span class="hl"><MathInline latex={String.raw`\mathrm{P}(\text{零假设}\mid\text{数据})`} /></span>。混淆这两者正是 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 在患病测试问题中警告过的「逆概率」错误：<MathInline latex={String.raw`\mathrm{P}(\text{阳性}\mid\text{患病})`} /> 并不等于 <MathInline latex={String.raw`\mathrm{P}(\text{患病}\mid\text{阳性})`} />，而在没有先验概率的情况下，无论你盯着结果看多久，都无法将前者转化为后者。下面六种误读尤其常见——摘自格陵兰（Greenland）及其同事列出的 25 种常见误读：</p>
+
+<div class="aside">
+<p class="h">人们最常混淆的三种概率</p>
+<p><span class="term">α 水平</span><TipNote text={String.raw`α 水平是在查看数据之前承诺的假警报率：在零模型为真且检验程序已指定时，长期第一类错误率是多少。`} />描述检验程序的长期第一类错误率。<MathInline latex={String.raw`\alpha=.05`} /> 意味着：在零假设确实成立、程序及其假设均正确的重复检验中，约 5% 会被误判为显著。<span class="term">错误发现率</span><TipNote text={String.raw`错误发现率是在所有被宣布为发现的结果中，实际上为假的比例。`} />问的是另一个问题：反复采用同一检验程序时，在所有被判为发现的结果中，假发现所占比例的期望是多少？它取决于基础率、功效和选择机制，并不等同于 <MathInline latex={String.raw`\alpha`} />。<span class="term">后验概率</span><TipNote text={String.raw`后验概率是在结合数据与先验信息之后，某个假设为真的概率。`} />又是第三件事，例如 <MathInline latex={String.raw`\mathrm{P}(\text{零假设}\mid\text{数据})`} />，它需要先验分布和完整的概率模型。5% 的 <MathInline latex={String.raw`\alpha`} /> 既不是 5% 的错误发现率，也不是零假设为真的概率为 5%。</p>
+</div>
+
+<ul class="mislist">
+<li><span>「p = .03 意味着零假设为真的概率只有 3%。」</span><span class="fix">错误。那是 <MathInline latex={String.raw`\mathrm{P}(\text{零假设}\mid\text{数据})`} />——这是一个需要先验分布和完整概率模型的贝叶斯量。p 值本来就是在零假设成立的前提下计算的。</span></li>
+<li><span>「p = .05 意味着结果纯属偶然的概率是 5%。」</span><span class="fix">错误。p 值的计算已经以零模型为前提；它并不回答「结果纯属偶然的概率是多少」。</span></li>
+<li><span>「p > .05 意味着没有效应。」</span><span class="fix">错误。没有证据，不等于有证据表明没有——功效不足的研究经常无法检测出真实的效应。</span></li>
+<li><span>「<MathInline latex={String.raw`1-p`} /> 是备择假设为真的概率。」</span><span class="fix">错误。p 值及其补数都不是关于任何假设的概率。</span></li>
+<li><span>「p 值告诉你结果能否复现。」</span><span class="fix">错误。单个研究中的小 p 值，并不能说明下一次研究能否复现。</span></li>
+<li><span>「显著的结果意味着效应很大或很重要。」</span><span class="fix">错误。只要样本量足够大，微不足道的差异也能变得「显著」。显著性 ≠ 大小 ≠ 重要性。</span></li>
+</ul>
+
+<p>最后一种误读尤其隐蔽，因此值得单独展开一节。</p>
+
+<h3>显著性不等于大小：认识效应量</h3>
+<p>p 值由效应量、噪声、样本量和模型假设共同决定。只要样本量足够大，即使是微小到毫无意义的差异也能跨过显著性门槛。因此，规范的统计报告应同时给出 <span class="term">效应量</span>（effect size）<TipNote text={String.raw`效应量报告的是差异或关联的大小，而不只是它是否跨过了显著性门槛。`} />：例如 <span class="term">Cohen’s d</span><TipNote text={String.raw`Cohen’s d 是标准化均值差，用标准差为单位表示两个平均值之间的差异。`} />（标准化均值差）或相关系数 <span class="hl"><MathInline latex={String.raw`r`} /></span>。雅各布·科恩（Jacob Cohen）提供了粗略的分级——d ≈ 0.2 为小，0.5 为中，0.8 为大——同时也坦然承认这些只是经验规则，并非自然分界。重点不在于标签，而在于：只报告 p 值而不报告效应量，几乎无法判断结果是否具有实际意义。</p>
+
+<div class="panel web-only statistics-effect-lab">
+<p class="ptitle">互动 · 显著性与大小</p>
+<h3>效应量演示器</h3>
+<p class="pnote">设定真实均值差、每组样本量和噪声水平。这里的「组」指两组比较中的一组，例如处理组与对照组；每组 n = 50 意味着两边各 50 个观察值，总共 100 个。图中使用固定的 x 轴和 y 轴：均值差从 -3 到 +3，y 轴是重复估计的分箱频数。更细的柱形显示估计分布，曲线表示对应的抽样分布，横条则是在同一 x 尺度上的 95% 置信区间。</p>
+<div class="se-grid">
+<div class="se-controls">
+<label for="se-effect"><span>真实均值差</span><output id="se-effect-out" for="se-effect">0.30</output></label>
+<input type="range" id="se-effect" min="0" max="1.2" step="0.05" value="0.3" />
+<label for="se-n"><span>每组样本量</span><output id="se-n-out" for="se-n">50</output></label>
+<input type="range" id="se-n" min="10" max="800" step="10" value="50" />
+<label for="se-noise"><span>噪声 / 标准差</span><output id="se-noise-out" for="se-noise">1.00</output></label>
+<input type="range" id="se-noise" min="0.4" max="2.5" step="0.05" value="1" />
+</div>
+<div>
+<svg class="se-plot" id="se-plot" viewBox="0 0 420 310" role="img" aria-label="均值差的固定尺度抽样频数图和置信区间图。">
+<rect x="28" y="24" width="364" height="226" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>
+<g id="se-y-ticks"></g>
+<g id="se-bars"></g>
+<path id="se-sampling-curve" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"></path>
+<line x1="58" y1="220" x2="370" y2="220" stroke="var(--line-strong)" stroke-width="1.4"></line>
+<g id="se-ticks"></g>
+<line id="se-zero" x1="214" y1="38" x2="214" y2="220" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 5"></line>
+<line id="se-ci-line" x1="160" y1="272" x2="260" y2="272" stroke="var(--brass)" stroke-width="8" stroke-linecap="round"></line>
+<circle id="se-est-dot" cx="210" cy="272" r="7" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
+<text id="se-width-label" x="214" y="298" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">95% CI 宽度</text>
+<text x="16" y="136" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-90 16 136)">分箱频数</text>
+</svg>
+<div class="se-read" id="se-read" aria-live="polite"></div>
+</div>
+</div>
+<div class="se-metrics" aria-label="计算出的统计量">
+<div><span>p 值</span><strong id="se-p">.14</strong></div>
+<div><span>95% CI</span><strong id="se-ci">[-0.10, 0.70]</strong></div>
+<div><span>Cohen’s d</span><strong id="se-d">0.30</strong></div>
+<div><span>效应大小</span><strong id="se-importance">小</strong></div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表</p>
+<h3>显著性与大小</h3>
+<p class="pnote">同一个真实效应，会随着样本量和噪声变化而呈现出非常不同的统计表现。</p>
+<table class="alt-table">
+<thead><tr><th>情境</th><th>p 值</th><th>均值差的 95% CI</th><th>Cohen’s d</th><th>实际解读</th></tr></thead>
+<tbody>
+<tr><td>均值差 0.30，每组 n = 20，噪声 = 1.00</td><td>.35</td><td>[-0.34, 0.94]</td><td>0.30</td><td>小效应，估计太不精确。</td></tr>
+<tr><td>均值差 0.30，每组 n = 500，噪声 = 1.00</td><td>&lt; .001</td><td>[0.18, 0.42]</td><td>0.30</td><td>统计证据较明确，估计也更精确，但效应仍然很小。</td></tr>
+<tr><td>均值差 0.80，每组 n = 50，噪声 = 1.00</td><td>&lt; .001</td><td>[0.40, 1.20]</td><td>0.80</td><td>按科恩惯例属于大效应。</td></tr>
+<tr><td>均值差 0.30，每组 n = 50，噪声 = 2.00</td><td>.46</td><td>[-0.49, 1.09]</td><td>0.15</td><td>相对于噪声而言非常小。</td></tr>
+</tbody>
+</table>
+<p>要点不是「p 值越小越好」。p 值会变小，可能因为效应更大，也可能因为样本巨大、噪声更低，或三者同时改变。请同时报告效应量和区间。</p>
+</div>
+
+<h3>置信区间也常被误读</h3>
+<p><span class="term">置信区间</span>（confidence intervals）<TipNote text={String.raw`置信区间是由某种具有特定长期覆盖率（如 95%）的方法产生的范围。`} />常被视为比 p 值更直观的替代方案，但它同样容易被误读。</p>
+<div class="def">
+<p class="h">定义 · 95% 置信区间</p>
+      95% 置信区间中的「95%」描述的是构造区间的方法：如果不断重复同一抽样过程，并用同一种方法计算区间，那么这些区间中约有 95% 会覆盖真实参数。它并不是说，在已经得到某个具体区间之后，真值有 95% 的概率落在其中。
+</div>
+<p>因此，人们自然会说「真实值在<span class="hl">这个</span>区间内的概率是 95%」，但在频率学派框架下，这句话是错误的。研究完成后，这个区间要么包含真值，要么不包含；95% 属于方法的长期表现。</p>
+<p><a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 提到的贝叶斯「可信区间」可以作概率解释，但前提是指定先验分布和完整的概率模型。工具不同，承诺也不同。置信区间也不意味着 95% 的数据落在其中，更不意味着区间外的参数值绝无可能。更合适的理解是：它给出了一组在当前模型下与数据较为相容的参数值。区间越宽，估计越不精确；但区间内的值并非得到同等支持。</p>
+
+<div class="panel web-only statistics-ci-coverage">
+<p class="ptitle">互动 · 长期覆盖率</p>
+<h3>100 次置信区间覆盖实验</h3>
+<p class="pnote">从一个已知真实均值为 0 的世界中生成 100 次重复样本。x 轴固定为 -4 到 +4，这样区间宽度的变化不会被自动缩放掩盖。置信水平滑块改变长期覆盖目标：置信水平越高，覆盖次数通常越多，但区间也越宽。样本量和噪声主要改变精度。高亮区间代表一项具体研究：它要么覆盖，要么不覆盖。</p>
+<div class="ci-grid">
+<div class="ci-controls">
+<label for="ci-n"><span>每项研究样本量</span><output id="ci-n-out" for="ci-n">30</output></label>
+<input type="range" id="ci-n" min="8" max="100" step="2" value="30" />
+<label for="ci-noise"><span>噪声 / 标准差</span><output id="ci-noise-out" for="ci-noise">1.00</output></label>
+<input type="range" id="ci-noise" min="0.4" max="2.5" step="0.05" value="1" />
+<label for="ci-level"><span>置信水平</span><output id="ci-level-out" for="ci-level">95%</output></label>
+<input type="range" id="ci-level" min="80" max="99" step="1" value="95" />
+<button class="btn primary" id="ci-run">生成 100 个区间</button>
+</div>
+<div>
+<svg class="ci-plot" id="ci-plot" viewBox="0 0 680 316" role="img" aria-label="固定 x 轴上的 100 个模拟置信区间，并按是否覆盖真实均值着色。"></svg>
+<div class="ci-read" id="ci-read" aria-live="polite"></div>
+</div>
+</div>
+<div class="ci-metrics" aria-label="覆盖率模拟结果">
+<div><span>覆盖真值</span><strong id="ci-covered">95 / 100</strong></div>
+<div><span>漏掉真值</span><strong id="ci-missed">5 / 100</strong></div>
+<div><span>高亮区间</span><strong id="ci-observed">覆盖</strong></div>
+<div><span>典型宽度</span><strong id="ci-width">0.74</strong></div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">算例</p>
+<h3>置信区间覆盖率</h3>
+<p class="pnote">该表概括了长期教训：95% 置信区间程序在 100 次重复使用中大约 95 次覆盖真值，但任何单个区间只会覆盖或漏掉。</p>
+<table class="alt-table">
+<thead><tr><th>对象</th><th>重复使用时会发生什么</th><th>正确读法</th></tr></thead>
+<tbody>
+<tr><td>100 个重复生成的 95% 区间，真实均值 = 0</td><td>大约 95 个覆盖 0；大约 5 个漏掉 0。</td><td>这个程序具有约 95% 的长期覆盖率。</td></tr>
+<tr><td>一个观察到的区间，例如 [-0.31, 0.41]</td><td>它覆盖真实均值 0。</td><td>观察之后，这个区间要么包含 0，要么不包含；95% 属于方法。</td></tr>
+<tr><td>一个观察到的区间，例如 [0.04, 0.76]</td><td>它漏掉真实均值 0。</td><td>即使是 95% 的方法，在重复使用中也会产生未覆盖真值的区间。</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>为什么小样本研究会夸大检测到的效应</h3>
+<p>经典假设检验区分两类错误：<span class="term">第一类错误</span>（Type I error）<TipNote text={String.raw`第一类错误是假阳性：错误地拒绝了一个真实的零假设。`} />（假警报——宣称存在实际并不存在的效应）和 <span class="term">第二类错误</span>（Type II error）<TipNote text={String.raw`第二类错误是假阴性：漏掉了真实的效应。`} />（漏报——未能发现确实存在的效应）。<span class="term">检验功效</span>（statistical power）<TipNote text={String.raw`检验功效是指如果某种效应真实存在，研究能检测出该效应的概率。`} />是你捕捉到真实效应的机会；在其他条件相同时，增加样本量通常会提高检验功效。</p>
+<p>功效不足不只是让研究更容易漏掉真实效应。它还会扭曲那些成功越过显著性门槛的估计：当功效较低时，往往只有被随机误差放大的结果才能达到显著，这就是 <span class="term">赢家诅咒</span>（winner’s curse）<TipNote text={String.raw`赢家诅咒是指在充满噪声的研究中，被选中的显著估计值往往会夸大真实的效应。`} />。再叠加对显著结果更友好的发表机制，文献中留下的往往是被夸大的效应，而且较难复现。2013 年的一项系统性审查（Button 等人的《功效失败》）估计，他们所考察的神经科学元分析的功效中位数约为 <span class="hl">21%</span>；Nord 等人在 2017 年的再分析则指出，不同子领域的功效差异很大。这个限定不改变核心教训：研究功效不足时，真实效应更容易被漏掉，而成功发表的效应估计往往偏大。</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">更深层的陷阱</p>
+<h2>即使没有故意操纵，也可能被误导</h2>
+<p>更值得警惕的是，即使研究者没有故意操纵分析，也可能得到偏高的假阳性率。你可能读完了上述内容，誓不操纵 p 值，只运行<span class="hl">一个</span>预先计划好的分析并忠实报告——但你的假阳性率依然可能超标。这就是安德鲁·格尔曼（Andrew Gelman）和埃里克·洛肯（Eric Loken）所说的 <span class="term">分岔路径花园</span>（garden of forking paths）<TipNote text={String.raw`分岔路径花园是指研究者在看到同一份数据的不同模式后，本可以合理选择的所有分析路径的集合。`} />。这个说法借用了博尔赫斯《小径分岔的花园》的意象：数据一旦呈现出不同模样，研究者就可能走上另一条分析路径。</p>
+<p>他们的洞察细微而又令人不安。关键不在于研究者是否真的运行了许多分析，而在于最终采用的那套分析是否受已看到的数据影响。如果数据稍有不同——这里多点噪声，那里有个聚类——你可能就会选择另一套同样说得通的方案：控制年龄而不是收入，只分析女性子样本而不是全样本，使用中位数而不是均值。</p>
+<p>那些分析路径虽然没有真正运行，却仍然构成了多重性，因为数据的形态会影响研究者选择哪条路。因此，即使假设事先已经确定、研究者也没有故意进行数据钓鱼或 p 值操纵，假阳性率仍可能上升。</p>
+<p>注意这与 <a href="/zh/days/005-causation/">第 5 日</a> 的呼应。在那里，隐藏在背后的决定是「选择哪些变量进行条件化」——而对 <span class="term">对撞变量</span>（collider）<TipNote text={String.raw`对撞变量是受两个其他变量影响的变量；对其进行条件化可能会在它的原因之间制造出误导性的关联。`} />进行条件化会无中生有地「制造」出相关性。分岔路径把同一问题推广到了整个分析流程：每一个看似合理的选择都是一个岔口，数据呈现出的模式会不知不觉影响研究者走向哪一条路。无意中受数据影响的研究者，也可能得到与刻意操纵分析者相同的错误结果，唯一的区别在于，前者并不知道自己是怎么做到的。</p>
+
+<div class="aside">
+<p class="h">不同改革方案各自针对不同问题</p>
+<p>如果问题在于决策是在看到数据<span class="hl">之后</span>才做出的，那么最直接的对策就是在看到数据<span class="hl">之前</span>就做决策：<span class="term">研究预登记</span>（preregistration）<TipNote text={String.raw`研究预登记意味着在查看结果之前，公开记录假设、数据处理和分析计划。`} />（提前公开记录分析计划）和 <span class="term">注册式报告</span>（Registered Reports）<TipNote text={String.raw`注册式报告是在结果揭晓前，仅凭研究问题和方法通过同行评审并被期刊原则上接收的文章。`} />（期刊在结果揭晓前评审研究问题与方法，并对稿件作出原则性接收）。我们在 <a href="/zh/days/002-scientific-method-and-demarcation/">第 2 日</a> 见过它们；现在我们明白了它们为何有效。它们事先确定验证性分析方案；偏离计划的分析仍可报告，但应标为探索性，而不是伪装成预先计划的验证性分析。</p>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">争论</p>
+<h2>是收紧阈值，还是彻底弃用？</h2>
+<p>如果 p < .05 如此容易被滥用，该用什么来取代它？在这个问题上，统计学界形成了几种不同立场——这不是非专业人士与专家的对立，而是严肃统计学家之间的真实分歧。我们可以将这些观点排在一条直线上，从「打补丁」到「彻底推倒」。</p>
+</section>
+
+{/* ===================== VISUAL 2 ===================== */}
+<div class="panel statistics-spectrum">
+<p class="ptitle">图示 · 改革光谱</p>
+<h3>与 p 值共存的四种方式</h3>
+<p class="pnote">这条线上的所有人都同意现状已支离破碎。他们的分歧在于疗法需要多彻底。</p>
+<svg viewBox="0 0 640 168" role="img" aria-label="一个光谱：从保留 p < 0.05，到将其重新定义为 0.005，到为你的 α 提供依据，再到完全弃用统计显著性。">
+<line x1="40" y1="60" x2="600" y2="60" stroke="var(--line-strong)" stroke-width="2"></line>
+<g font-family="IBM Plex Mono,monospace">
+{/* stop 1 */}
+<circle cx="70" cy="60" r="7" fill="var(--paper)" stroke="var(--ink-faint)" stroke-width="2"></circle>
+<text x="70" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">保留 .05</text>
+<text x="70" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">现状派</text>
+{/* stop 2 */}
+<circle cx="230" cy="60" r="7" fill="color-mix(in srgb,var(--hint) 30%,transparent)" stroke="var(--hint)" stroke-width="2"></circle>
+<text x="230" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">重定义: .005</text>
+<text x="230" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">Benjamin 等 (2018)</text>
+<text x="230" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">(72 位作者)</text>
+{/* stop 3 */}
+<circle cx="400" cy="60" r="7" fill="color-mix(in srgb,var(--accent) 30%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
+<text x="400" y="40" text-anchor="middle" font-size="11" fill="var(--ink)">说明 α 依据</text>
+<text x="400" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">Lakens 等 (2018)</text>
+<text x="400" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">(88 位作者)</text>
+{/* stop 4 */}
+<circle cx="568" cy="60" r="7" fill="color-mix(in srgb,var(--contested) 30%,transparent)" stroke="var(--contested)" stroke-width="2"></circle>
+<text x="568" y="40" text-anchor="middle" font-size="11" fill="var(--contested)">弃用显著性</text>
+<text x="568" y="92" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">Amrhein 等 (2019)</text>
+<text x="568" y="104" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">(800+ 签名者)</text>
+</g>
+<text x="40" y="146" text-anchor="start" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">修补规则……</text>
+<text x="600" y="146" text-anchor="end" font-family="Fraunces,serif" font-style="italic" font-size="12.5" fill="var(--ink-soft)">……取消那条分界线</text>
+</svg>
+<div class="spec-key">
+<div class="k"><span>重定义</span> —— 本杰明（Benjamin）等 (2018) 保留了阈值的想法，但将显著性阈值收紧至 p < .005：低于 .005 才称为「发现」，而 .005–.05 仅称为「提示性证据」。简单直接，但批评者认为这只是治标不治本。</div>
+<div class="k"><span>说明 α 的设定依据</span> —— 拉肯斯（Lakens）等 (2018) 反对把任何单一数字当作通用阈值。他们认为应该根据具体情况，权衡「假警报」与「漏报」的真实成本，审慎选择阈值，并<span class="hl">展示你的推理过程</span>。</div>
+<div class="k"><span>弃用显著性</span> —— 阿姆瑞恩（Amrhein）、格陵兰和麦克沙恩（McShane）(2019) 在《自然》杂志上联合 800 多名签名者，呼吁废除「显著 / 不显著」这种二元对立的习惯——即不再把 p = .04 和 p = .06 看作两个不同的世界。他们并非主张禁用 p 值，而是反对用一条硬阈值把结果一分为二。</div>
+<div class="k"><span>统计学界的专业学会</span> —— 美国统计协会（ASA）曾两度发声：先是在 2016 年发表了包含六项原则的审慎声明，随后在 2019 年发表了一篇更为激进的社论，敦促大家停止把结果称为「统计显著」。（2019 年那篇是编辑观点，并非 ASA 的正式政策——这一区别本身也引发了一场争论。）</div>
+</div>
+</div>
+
+<section>
+<p>这些改革立场不同，却都在推动同一转变：不再寄希望于通过一个单一阈值给出「是 / 否」的判定，而是转向<span class="hl">报告效应的大小、不确定程度，以及结论对分析选择的敏感程度</span>。最后这个「敏感程度」（或称结论的脆弱性），正是当前改革的重点之一。</p>
+</section>
+
+<section class="frontier">
+<p class="sec-eyebrow">前沿 · 2024–2026</p>
+<h2>让脆弱性可见——以及前沿校准器</h2>
+<p>如果单一分析可能误导，一种直接的做法是：运行一组有据可依的分析方案，并展示结果如何变化。目前主要有多元宇宙分析和模型设定曲线两类方法；另一类研究则让多个独立研究团队分析同一份数据，观察结论会分歧到什么程度。一如既往，每项主张都有其对应的标签。</p>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">前沿 01</span>
+<StatusChip status={"ok"} label={"作为透明度工具 · 已确立"} printLabel={"已确立"} />
+<StatusChip status={"hint"} label={"作为正式检验 · 存议"} printLabel={"争议/炒作"} />
+</div>
+<h3>多元宇宙分析与设定曲线分析</h3>
+<p>不要只报告一套分析。研究者可以先界定一组在理论和方法上有依据的分析设定，逐一运行，再展示结论如何随这些选择变化。<span class="term">多元宇宙分析</span>（multiverse analysis）<TipNote text={String.raw`多元宇宙分析运行多种有据可依的分析选择，并报告结果的分布，而非单一的推导路径。`} />（Steegen 等, 2016）呈现这组分析所得结果的整体分布。<span class="term">设定曲线分析</span>（specification-curve analysis）<TipNote text={String.raw`设定曲线分析将许多有据可依的模型设定按估计效应排序，以揭示结果的稳健性或脆弱性。`} />（Simonsohn 等, 2020）则按照效应估计排序，让读者看到结论在哪些设定下保持稳定、在哪些设定下发生变化。先试一下这条曲线，然后再继续看它的限定条件。</p>
+<p>这里还必须守住一条纪律：有些「合理设定」会改变<span class="term">估计目标</span><TipNote text={String.raw`估计目标是研究试图估计的精确量，例如原始关联、因果效应，或某个特定人群中的效应。`} />。控制 W 只有在 W 是有因果理由的控制变量时，才是在估计同一个问题；秩变换、剔除异常值或仅分析某个子组，可能把目标从均值差异改成有序关联、对异常值不敏感的效应估计，或某个特定人群中的效应。设定曲线能暴露这个分岔，但不能替研究者决定原本想问的究竟是哪一个问题。</p>
+<p>不过，<span class="hl">前沿校准器</span>在这里也很重要。这些是绝佳的「透明度」工具，但作为「推断」工具则较为薄弱。设定曲线分析的作者们自己也承认了一个陷阱：决定哪些设定是「合理」的本身就是一个主观判断，算法无法代劳，而且「消除主观性的目标是无法实现的」。研究者仍需说明哪些设定被纳入、哪些被排除，以及理由是什么。目前也还没有一种公认的方法能从曲线中计算出单一的有效结论——这就是为什么 2024 年出现了新的工具（如 PIMA，见下文）试图填补这一空白。<StatusChip status={"ok"} label={"作为稳健性展示工具已确立"} printLabel={"已确立"} /> &nbsp;<StatusChip status={"bad"} label={"如果被视为自动产生客观结论的工具则是过度承诺"} printLabel={"争议/炒作"} /></p>
+</div>
+
+{/* ===================== INTERACTIVE 3 ===================== */}
+<div class="panel web-only statistics-spec-curve">
+<p class="ptitle">互动 · 运行你自己的多元宇宙</p>
+<h3>设定曲线（Specification Curve）</h3>
+<p class="pnote">这是一个固定的合成数据集，X 和 Y 之间有一个较弱且受混杂影响的关联：基线模型一开始不会跨过通常的 <span class="term"><MathInline latex={String.raw`p < .05`} /></span> 线，但某些看似合理的选择可以把它推过去。这里的 <strong>r</strong> 是皮尔逊相关系数，范围从 -1 到 +1；正的 <strong>r</strong> 表示 X 越大时 Y 往往也越大，接近 0 则表示关联较弱。画出这条曲线，是因为只报告一个模型可能很任意：问题是结论能否经受合理分析选择的扰动，还是只依赖某一条路径。面板默认开启所有选择，并高亮「择优报告」；关闭某项选择，就会减少纳入的分析方案。青色点表示 <span class="term"><MathInline latex={String.raw`p < .05`} /></span>，灰色点则不显著。下方的勾选矩阵显示每个设定用了哪些选择，包括它是否控制了第 5 日讨论的混杂变量 <strong>W</strong>。</p>
+
+<div class="mv-controls" id="mv-controls">
+<button class="mvchip" id="mv-trim" aria-pressed="true"><i></i>剔除异常值</button>
+<button class="mvchip" id="mv-cov" aria-pressed="true"><i></i>控制变量 W</button>
+<button class="mvchip" id="mv-rank" aria-pressed="true"><i></i>秩变换</button>
+<button class="mvchip" id="mv-sub" aria-pressed="true"><i></i>仅分析某个子组</button>
+<button class="mvchip" id="mv-cherry" aria-pressed="true" style="margin-left:auto;border-style:dashed;"><i></i>择优报告</button>
+</div>
+
+<div class="mv-scroll">
+<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 440 240" role="img" aria-label="设定曲线：所有已启用的分析设定下的效应估计值排序图。"></svg>
+</div>
+
+<div class="mv-read" id="mv-read"></div>
+<div class="mv-cherry honest" id="mv-cherrybox">
+<p class="lh" id="mv-clh">完整报告下的解读</p>
+<p id="mv-cbody" style="margin:0;"></p>
+</div>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">前沿 02</span>
+<StatusChip status={"ok"} label={"经验现象 · 已确立"} printLabel={"已确立"} />
+</div>
+<h3>同一份数据，众多分析师：最直观的证据</h3>
+<p>这项实验应该会改变你阅读每一条头条新闻的方式。拿出一份数据集，设定一个清晰的问题，然后将相同的副本分发给几十个专家团队。他们会得出同一个判定吗？很多时候，不会。</p>
+<p>在 Silberzahn 等 (2018) 的研究中，<span class="hl">29 个团队</span>（61 位分析师）被问了一个简单的问题：足球裁判是否更容易向肤色较深的球员出示红牌？他们估计的优势比（OR）从 0.89 到 2.93 不等；20 个团队发现了显著的正向效应，9 个团队则没有。耐人寻味的是，分析师的先验信念甚至他们的统计专业知识都无法解释这种差异。在 Botvinik-Nezer 等 (2020) 的研究中，<span class="hl">70 个团队</span>（180 位研究者）针对同一份脑成像数据集分析了九个预设假设——结果没有两个团队使用了完全相同的流程；即使各团队得到的底层统计图高度相关，他们的「是/否」结论也发生了严重分歧。Breznau 等 (2022) 将相同的数据和假设（移民是否会削弱对社会政策的支持？）交给 <span class="hl">73 个团队</span>，观察到估计效应从明显为负一直散布到明显为正。甚至金融领域也有自己的版本：Menkveld 等人的《非标准误差》(2024) 让 <span class="hl">164 个团队</span>在相同的市场数据上测试相同的假设，发现团队间的变异性与普通的统计误差旗鼓相当——令人欣慰的是，当增加额外的同行评审环节时，这种变异性有所收缩。</p>
+<p>这可以看作 <a href="/zh/days/001-what-is-knowledge/">第 1 日</a> 盖梯尔问题在数据分析中的一个缩影：每个团队都能用一套专业分析为自己的结论提供理由，但这些结论是否真正反映现实关系，却可能因分析路径而异。一项分析只是众多可能路径中的一条，不应被当作唯一答案。</p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">前沿 03</span>
+<StatusChip status={"hint"} label={"新方法 · 有前景的线索"} printLabel={"前景可期"} />
+<StatusChip status={"ok"} label={"改革基础设施 · 确立趋势"} printLabel={"已确立"} />
+</div>
+<h3>填补推断鸿沟——以及第 4 日的低调替代方案</h3>
+<p>上述所有内容中尚未解决的问题是如何在多元宇宙中进行诚实的「推断」：你如何从一千个纠缠在一起的分析中得出一个有效的结论？2024 年的一项研究提出了 <span class="term">PIMA</span>（多元宇宙分析中的选择后推断；Girardi 等, 2024），它提供了一种符号翻转得分检验，旨在为多元宇宙提供真正的联合误差保证，跨越了 2020 年设定曲线的线性模型限制。虽然这是一个经过同行评审且值得关注的工具，但它还很新，尚未成为标准做法——这属于<span class="hl">有前景的线索</span>，而非定论。</p>
+<p>与此同时，那些朴素但可靠的改革措施正在不断普及：「注册式报告」格式目前已有<span class="hl">数百家期刊</span>提供，研究预登记也正在逐渐从倡议走向常规做法。还记得 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 提到的 <span class="term">e 值</span>（e-values）<TipNote text={String.raw`e 值通过针对零假设的投注策略的回报来衡量证据强度。`} />和「通过投注进行测试」吗？这种 p 值的替代方案在正确构造、且模型和技术条件成立时，允许研究者根据已观察数据决定是否继续采样，同时保持规定的错误率或证据保证。目前这仍处于研究前沿而非主流实践——<span class="hl">前景可期</span>，值得持续关注。</p>
+</div>
+</section>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">参考表</p>
+<h3>设定曲线摘要</h3>
+<p class="pnote">同一份合成数据集可以通过多套合理的分析设定进行分析。</p>
+<table class="alt-table">
+<thead><tr><th>选择</th><th>对分析的影响</th><th>解读风险</th></tr></thead>
+<tbody>
+<tr><td>剔除异常值</td><td>在估计关联之前排除极端值。</td><td>可能使结果更稳定，也可能选择性地移除不利的数据点。</td></tr>
+<tr><td>控制变量 W</td><td>调整同时驱动 X 和 Y 的背景混杂变量。</td><td>通常会缩减虚假关联，但这种控制必须有因果论证支持。</td></tr>
+<tr><td>秩变换</td><td>在计算关联之前用排名代替原始值。</td><td>可以降低对分布形状的敏感性，但也会改变估计的目标。</td></tr>
+<tr><td>仅分析某个子组</td><td>仅分析数据的子集。</td><td>可以测试真实的边界条件，也可以制造出一个讨巧的子集。</td></tr>
+</tbody>
+</table>
+<p>诚实的报告是展示所有合理设定下的分布情况；而不诚实的报告则是只展示曲线上最有利的那一点。</p>
+</div>
+
+<section>
+<p class="sec-eyebrow">开放问题</p>
+<h2>尚未定论的领域</h2>
+<ul>
+<li>「统计显著性」是否应该彻底消失？ 改革者在规范阈值使用与彻底弃用阈值之间存在分歧。但决策总要在某个地方做出——一种药物要么获批要么不获批——主张弃用阈值者仍需说明，实际决策应如何作出。</li>
+<li>多元宇宙是否真能产生一个可信的总体结论？ 还是说，对「合理设定」的选择本身就是一种无法消除的主观行为，只是把主观选择上移了一层？PIMA 等工具是早期的尝试，目前尚无定论。</li>
+<li>分析结论的差异，是否意味着真实效应也同样不同？ 2023 年的一项细致重分析指出，在一些「同一份数据，众多分析师」研究中，引人注目的分歧其实是关于「显著性」判定的，而底层的效应量其实相当一致且微小。对结论的分歧可能会超过对数字本身的分歧。不应据此断言所有分析都不可靠。</li>
+<li>未来更可能以 p 值还是 e 值为主？ 基于投注的工具优雅地解决了「可选停止」问题，但可能需要更多数据，并引入了新的建模负担（该怎么下注？）。两者共存似乎比一方取代另一方更有可能。</li>
+<li>以及 AI 单元中等待着的问题： 当一个在数百万篇论文上训练出来的模型报告一个「稳健」的结果时，它是在根据证据进行推理，还是在模仿那些让我们陷入现状的「分岔路径」习惯？（见第 138–145 日）。</li>
+</ul>
+</section>
+
+<div class="recap">
+<p class="h">◆ 今日总结：三句话</p>
+<dl>
+<div><dt>核心理念</dt><dd>统计工具本身无法防止自欺；当分析选择高度灵活时，它们甚至可能放大偏差。分岔路径花园说明，许多看似合理的选择足以让噪声伪装成发现。因此，更可靠的做法是提高透明度、研究预登记验证性分析、报告效应量及其不确定性，并检验结论能否经受多种合理分析方案，而不是把判断押在一个固定阈值上。</dd></div>
+<div><dt>最佳类比</dt><dd>假阳性工厂：把几种研究者自由度叠加起来，就能将纯噪声中的假阳性率推高到约 61%；以及分岔路径花园，即使你只运行了一个分析，数据稍有不同时本会采用的其他分析路径也会推高你的错误率。</dd></div>
+<div><dt>前沿争议</dt><dd>是将显著性阈值收紧至 p < .005、按具体情况说明 α 的设定依据，还是彻底弃用「统计显著性」——多元宇宙和「同一份数据，众多分析师」研究揭示，同一数据集的结论会在多大程度上取决于分析者。</dd></div>
+</dl>
+<p class="threads"><span class="threads-label">今日线索 ›</span> 信息（将信号从噪声中分离；p 值作为一种常被误读的证据度量）· 计算（作为易错推理机的实验室；多元宇宙作为穷举法的应用）· 涌现（科学作为一个超越任何单个分析者的纠错系统——研究预登记、多团队分析、元分析）。</p>
+</div>
+
+<hr class="div" />
+
+<section class="sources">
+<p class="sec-eyebrow">参考文献</p>
+<h2>来源与延伸阅读</h2>
+<ol>
+<li>Feynman, R. P. (1974). "Cargo Cult Science." <em>Engineering and Science</em> 37(7): 10–13. <span class="meta">加州理工学院 1974 年毕业典礼演讲；开篇引文来源。</span> <a href="https://calteches.library.caltech.edu/51/2/CargoCult.htm">calteches.library.caltech.edu</a></li>
+<li>Open Science Collaboration. (2015). "Estimating the reproducibility of psychological science." <em>Science</em> 349(6251): aac4716. <span class="meta">doi:10.1126/science.aac4716；97% 原研究显著 / 36% 复现显著统计的来源。</span> <a href="https://doi.org/10.1126/science.aac4716">doi.org/10.1126/science.aac4716</a></li>
+<li>Simmons, J. P., Nelson, L. D. &amp; Simonsohn, U. (2011). "False-Positive Psychology: Undisclosed Flexibility in Data Collection and Analysis Allows Presenting Anything as Significant." <em>Psychological Science</em> 22(11): 1359–1366. <span class="meta">doi:10.1177/0956797611417632。</span> <a href="https://doi.org/10.1177/0956797611417632">doi.org/10.1177/0956797611417632</a> <span class="meta">— 《当我六十四岁》演示；5%→61% 的模拟。</span></li>
+<li>Gelman, A. &amp; Loken, E. (2014). "The Statistical Crisis in Science." <em>American Scientist</em> 102(6): 460–465. <span class="meta">— 「分岔路径花园」；更早为 2013 年哥伦比亚大学工作论文。</span> <a href="https://www.americanscientist.org/article/the-statistical-crisis-in-science">americanscientist.org</a></li>
+<li>Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. &amp; Altman, D. G. (2016). "Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations." <em>European Journal of Epidemiology</em> 31(4): 337–350. <span class="meta">doi:10.1007/s10654-016-0149-3。</span> <a href="https://doi.org/10.1007/s10654-016-0149-3">doi.org/10.1007/s10654-016-0149-3</a> <span class="meta">— 25 种常见误读的权威清单。</span></li>
+<li>Haller, H. &amp; Krauss, S. (2002). "Misinterpretations of Significance: A Problem Students Share with Their Teachers?" <em>Methods of Psychological Research Online</em> 7(1): 1–20. <span class="meta">— p 值误解即使在统计学教师中也持续存在的调查证据。</span> <a href="https://epub.uni-regensburg.de/34338/">epub.uni-regensburg.de/34338</a></li>
+<li>Badenes-Ribera, L., Frias-Navarro, D., Iotti, B., Bonilla-Campos, A. &amp; Longobardi, C. (2016). "Misconceptions of the p-value among Chilean and Italian Academic Psychologists." <em>Frontiers in Psychology</em> 7: 1247. <span class="meta">doi:10.3389/fpsyg.2016.01247。</span> <a href="https://doi.org/10.3389/fpsyg.2016.01247">doi.org/10.3389/fpsyg.2016.01247</a></li>
+<li>Wasserstein, R. L. &amp; Lazar, N. A. (2016). "The ASA Statement on p-Values: Context, Process, and Purpose." <em>The American Statistician</em> 70(2): 129–133. <span class="meta">doi:10.1080/00031305.2016.1154108。</span> <a href="https://doi.org/10.1080/00031305.2016.1154108">doi.org/10.1080/00031305.2016.1154108</a> <span class="meta">— 六项基本原则。</span></li>
+<li>Wasserstein, R. L., Schirm, A. L. &amp; Lazar, N. A. (2019). "Moving to a World Beyond 'p &lt; 0.05'." <em>The American Statistician</em> 73(sup1): 1–19. <span class="meta">doi:10.1080/00031305.2019.1583913。</span> <a href="https://doi.org/10.1080/00031305.2019.1583913">doi.org/10.1080/00031305.2019.1583913</a> <span class="meta">— 43 篇文章特刊的社论；「停止把结果称为统计显著」（编辑观点，非 ASA 正式政策）。</span></li>
+<li>Benjamin, D. J., Berger, J. O., Johannesson, M., et al. (2018). "Redefine statistical significance." <em>Nature Human Behaviour</em> 2(1): 6–10. <span class="meta">doi:10.1038/s41562-017-0189-z。</span> <a href="https://doi.org/10.1038/s41562-017-0189-z">doi.org/10.1038/s41562-017-0189-z</a></li>
+<li>Lakens, D., Adolfi, F. G., Albers, C. J., et al. (2018). "Justify your alpha." <em>Nature Human Behaviour</em> 2(3): 168–171. <span class="meta">doi:10.1038/s41562-018-0311-x。</span> <a href="https://doi.org/10.1038/s41562-018-0311-x">doi.org/10.1038/s41562-018-0311-x</a></li>
+<li>Amrhein, V., Greenland, S. &amp; McShane, B. (2019). "Scientists rise up against statistical significance." <em>Nature</em> 567(7748): 305–307. <span class="meta">doi:10.1038/d41586-019-00857-9；800 余名共同签名者。</span> <a href="https://doi.org/10.1038/d41586-019-00857-9">doi.org/10.1038/d41586-019-00857-9</a></li>
+<li>Button, K. S., Ioannidis, J. P. A., Mokrysz, C., et al. (2013). "Power failure: why small sample size undermines the reliability of neuroscience." <em>Nature Reviews Neuroscience</em> 14(5): 365–376. <span class="meta">doi:10.1038/nrn3475；功效中位数约 21%。</span> <a href="https://doi.org/10.1038/nrn3475">doi.org/10.1038/nrn3475</a></li>
+<li>Nord, C. L., Valton, V., Wood, J. &amp; Roiser, J. P. (2017). "Power-up: A Reanalysis of 'Power Failure' in Neuroscience Using Mixture Modeling." <em>The Journal of Neuroscience</em> 37(34): 8051–8061. <span class="meta">doi:10.1523/JNEUROSCI.3592-16.2017；关于神经科学低功效是否均匀分布的限定。</span> <a href="https://doi.org/10.1523/JNEUROSCI.3592-16.2017">doi.org/10.1523/JNEUROSCI.3592-16.2017</a></li>
+<li>Center for Open Science. "Registered Reports." <span class="meta">COS 官方说明和参与期刊列表；「300 多家期刊」说法的来源。</span> <a href="https://www.cos.io/initiatives/registered-reports">cos.io/initiatives/registered-reports</a></li>
+<li>Steegen, S., Tuerlinckx, F., Gelman, A. &amp; Vanpaemel, W. (2016). "Increasing Transparency Through a Multiverse Analysis." <em>Perspectives on Psychological Science</em> 11(5): 702–712. <span class="meta">doi:10.1177/1745691616658637。</span> <a href="https://doi.org/10.1177/1745691616658637">doi.org/10.1177/1745691616658637</a></li>
+<li>Simonsohn, U., Simmons, J. P. &amp; Nelson, L. D. (2020). "Specification curve analysis." <em>Nature Human Behaviour</em> 4(11): 1208–1214. <span class="meta">doi:10.1038/s41562-020-0912-z。</span> <a href="https://doi.org/10.1038/s41562-020-0912-z">doi.org/10.1038/s41562-020-0912-z</a></li>
+<li>Silberzahn, R., Uhlmann, E. L., Martin, D. P., et al. (2018). "Many Analysts, One Data Set." <em>Advances in Methods and Practices in Psychological Science</em> 1(3): 337–356. <span class="meta">doi:10.1177/2515245917747646；29 个团队，OR 0.89–2.93。</span> <a href="https://doi.org/10.1177/2515245917747646">doi.org/10.1177/2515245917747646</a></li>
+<li>Botvinik-Nezer, R., Holzmeister, F., Camerer, C. F., et al. (2020). "Variability in the analysis of a single neuroimaging dataset by many teams." <em>Nature</em> 582(7810): 84–88. <span class="meta">doi:10.1038/s41586-020-2314-9；70 个团队。</span> <a href="https://doi.org/10.1038/s41586-020-2314-9">doi.org/10.1038/s41586-020-2314-9</a></li>
+<li>Breznau, N., Rinke, E. M., Wuttke, A., et al. (2022). "Observing many researchers using the same data and hypothesis reveals a hidden universe of uncertainty." <em>PNAS</em> 119(44): e2203150119. <span class="meta">doi:10.1073/pnas.2203150119；73 个团队。</span> <a href="https://doi.org/10.1073/pnas.2203150119">doi.org/10.1073/pnas.2203150119</a></li>
+<li>Mathur, M. B., Covington, C. &amp; VanderWeele, T. J. (2023). "Variation across analysts in statistical significance, yet consistently small effect sizes." <em>PNAS</em> 120(3): e2218957120. <span class="meta">doi:10.1073/pnas.2218957120；提醒读者用效应量和区间、而不只是显著性标签来理解「多人同数」分歧。</span> <a href="https://doi.org/10.1073/pnas.2218957120">doi.org/10.1073/pnas.2218957120</a></li>
+<li>Menkveld, A. J., Dreber, A., Holzmeister, F., et al. (2024). "Nonstandard Errors." <em>The Journal of Finance</em> 79(3): 2339–2390. <span class="meta">doi:10.1111/jofi.13337；164 个团队。</span> <a href="https://doi.org/10.1111/jofi.13337">doi.org/10.1111/jofi.13337</a></li>
+<li>Girardi, P., Vesely, A., Lakens, D., et al. (2024). "Post-selection Inference in Multiverse Analysis (PIMA): An Inferential Framework Based on the Sign Flipping Score Test." <em>Psychometrika</em> 89(2): 542–568. <span class="meta">doi:10.1007/s11336-024-09973-6。</span> <a href="https://doi.org/10.1007/s11336-024-09973-6">doi.org/10.1007/s11336-024-09973-6</a></li>
+<li>Ramdas, A., Grünwald, P., Vovk, V. &amp; Shafer, G. (2023). "Game-theoretic statistics and safe anytime-valid inference." <em>Statistical Science</em> 38(4): 576–601. <span class="meta">doi:10.1214/23-STS894；e-process、testing by betting 与可选停止下仍有效的推断。</span> <a href="https://doi.org/10.1214/23-STS894">doi.org/10.1214/23-STS894</a></li>
+<li>Cohen, J. (1988). <em>Statistical Power Analysis for the Behavioral Sciences</em> (2nd ed.). Lawrence Erlbaum. <span class="meta">— 效应量分级惯例，作者本人也承认是刻意随意的。</span></li>
+</ol>
+</section>
+</div>
