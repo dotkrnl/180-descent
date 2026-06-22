@@ -1,0 +1,405 @@
+import maxwellsDemon from "../../../assets/images/open-license/maxwells-demon-wikimedia.svg";
+import maxwellsDemonDark from "../../../assets/images/open-license/maxwells-demon-wikimedia-dark.svg";
+import MathBlock from "@app/components/lesson/MathBlock.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+
+<header class="hero wrap">
+<p class="eyebrow">模块一 · 知识与推理的根基 · <span class="daymark">第 007 日 / 180</span></p>
+<h1>信息论</h1>
+<p class="sub">一条信息值多少个「是/否」问题？擦除它又会带来多少热力学耗散？</p>
+
+<figure class="hero-fig">
+<svg viewBox="0 0 520 230" role="img" aria-label="一个是/否问题的分支树，将 16 种可能性逐次减半，最终锁定为一个。">
+<defs>
+<marker id="hb" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path></marker>
+</defs>
+{/* columns of dots collapsing 16 -> 8 -> 4 -> 2 -> 1 */}
+<g id="qtree"></g>
+<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
+<text x="40" y="222">16</text>
+<text x="160" y="222">8</text>
+<text x="280" y="222">4</text>
+<text x="400" y="222">2</text>
+<text x="486" y="222">1</text>
+</g>
+<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--accent)" text-anchor="middle" letter-spacing="0.05em">
+<text x="100" y="20">Q1</text>
+<text x="220" y="20">Q2</text>
+<text x="340" y="20">Q3</text>
+<text x="443" y="20">Q4</text>
+</g>
+</svg>
+<figcaption>四个好问题即可锁定 16 种可能中的一种。<MathInline latex={String.raw`\log_2 16 = 4`} /> 比特。</figcaption>
+</figure>
+
+<p class="lede"><span class="drop">请</span>在 1 到 16 之间选一个整数，先别说出来，放在心里。假设每个数被选中的可能性都一样。我只需问四个尽量对半划分的是/否问题，就能确定它：「它是 9 或更大吗？」——这会把范围切成两半。「在剩下这一半里，它又落在上半段吗？」——再切一半。再问两次，我每次都能锁定你的数字。注意刚才发生了什么：一个原本模糊、私人的事实，竟然有了精确的大小。四个问题足够；在最坏情况下也必须问四个，因为 <MathInline latex={String.raw`2^4 = 16`} />。也就是 4 个<span class="term">比特</span>。</p>
+
+<p>香农在 1948 年把奈奎斯特和哈特利的工作统一进概率框架；兰道尔随后指出，一旦信息由物质承载，<span class="term">擦除</span><TipNote text={"擦除：把物理存储器重置为标准状态，让它先前的历史无法追溯。"} />信息就会产生不可避免的热力学耗散。今天，我们将逐一理解这段故事的两个部分。</p>
+</header><div class="wrap">
+
+<div class="whereblock">
+<p class="label">◆ 当前进度</p>
+<p>我们花了六天时间搭起一套认知工具箱；今天我们发现，它其实有自己的「流通货币」。在<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>里，我们遇见了「惊奇度」——蒙提·霍尔问题中主持人打开一扇山羊门，那不是噪声，而是信息——以及能兑现为真金白银的 e 值。今天，这一直觉将获得它的度量单位。在<a href="/zh/days/003-logic-and-valid-inference/">第 3 日</a>，布尔逻辑变成了物理开关（源于香农 1938 年的另一篇著名论文）；今天，让「信息」也变得物理化的，也正是他。而在<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>中我们认识的渐进信念，也连接到弗里斯顿框架：其中有机体被建模为最小化变分自由能——也就是在某个生成模型下，对惊奇度的一个可处理上界。自第一天起就在暗中延续的「信息」线索，终于落到了一个确凿的数字上。请做好准备：它将在第 33 日作为时间之矢再次出现，并在第 83 至 85 日中成为生命本身似乎在抗拒的东西。</p>
+</div>
+
+<section>
+<p class="sec-eyebrow">模型</p>
+<h2>一比特，就是把可能性减半</h2>
+<p>在香农之前，「信息」常常意味着报纸、电报、内容、意义和闲聊。香农的激进之处，在于把语义排除在数学定义之外。对于试图在充满噪声的导线上输送消息的工程师来说，关键不在于消息「说了什么」，而在于它「能说多少」：也就是它消除了多少不确定性。剥离了意义之后，剩下的就是可以计数的东西。</p>
+<p>信息的度量单位是<span class="term">比特</span><TipNote text={"比特是单个完全均衡的「是/否」区分所承载的信息量。"} />（bit）——它是「二进制数字」（binary digit）的缩写，由香农的同事约翰·图基（John Tukey）在 1947 年贝尔实验室的一份备忘录中首次提出，并在香农的论文中被指名致谢。1 比特是单次公平的是/否回答所蕴含的信息量：也就是把一种完全均衡的不确定性一次性消解掉。两个等可能发生的可能性，对应 1 比特。16 种等可能性，对应 4 比特，因为 <MathInline latex={String.raw`2^4 = 16`} />。比特就是「减半」。</p>
+<p>但现实中的选择并不总是均等的。该理论的精妙之处在于它如何处理不均匀的概率。香农将概率为 <MathInline latex={String.raw`p`} /> 的某一特定结果所蕴含的自信息量（surprisal，本文简称<span class="term">惊奇度</span><TipNote text={"在信息论中，惊奇度是特定结果所承载的信息量，以负对数概率表示。"} />）定义为：</p>
+
+<div class="formula">
+<MathBlock latex={String.raw`\text{surprise}(p) = -\log_2 p \quad \text{比特}`} />
+<p class="cap">必然发生的事件（<MathInline latex={String.raw`p = 1`} />）带来的惊奇度为零。百万分之一概率的罕见事件则包含约 20 比特的信息。</p>
+</div>
+
+<p>一旦动手检验，这层定义便豁然开朗。如果你明知一枚硬币两面都是正面：猜中「正面」对你没有任何帮助——<MathInline latex={String.raw`p = 1`} />，惊奇度 = <MathInline latex={String.raw`-\log_2 1 = 0`} /> 比特。对于一枚公平的硬币：<MathInline latex={String.raw`p = \tfrac12`} />，惊奇度 = <MathInline latex={String.raw`-\log_2 \tfrac12 = 1`} /> 比特，这正是教科书式的减半。如果下雨本来就已经确定，那么观察到下雨本身几乎没有惊奇度；如果下雨本来很罕见，那么观察到下雨就很惊奇。天气预报则是另一个对象：它在改变你的概率模型时才是有信息量的，不论最终天气本身是否罕见。对数公式的精妙之处在于它符合直觉，使惊奇度可以「相加」：了解两个独立的事实，其惊奇度会直接求和，正如它们的可能性空间彼此相乘。</p>
+
+<h3>熵：平均惊奇度</h3>
+<p>现在，让我们从单一结果放大到整个信源——一种语言、一枚骰子或一串连续不断的符号。它的「平均」惊奇度是多少？这个平均值就是信息论的核心量：<span class="term">香农熵</span><TipNote text={"香农熵是信源的期望惊奇度：即每个符号的平均信息量。"} />。</p>
+
+<div class="formula">
+<MathBlock latex={String.raw`H = -\sum_i p_i \log_2 p_i \quad \text{比特/符号}`} />
+<p class="cap">每个结果的惊奇度乘以它发生的概率，再进行加权求和。即每个符号的期望是/否提问次数。</p>
+</div>
+
+<p>熵是信源模型不可削减的核心。对于单符号二进制前缀码，最优平均码长通常满足 <MathInline latex={String.raw`H \le L < H + 1`} />；而对长区块进行编码时，无损压缩可以渐近逼近 H 比特/符号。一枚公平硬币的熵为 1；一枚公平的八面骰子熵为 3；而「q 后是否跟 u？」这个二元事件的熵低得多，因为其中一个答案被强烈预期。它既衡量信源的不确定性，也衡量观测消除的不确定性。</p>
+
+<div class="aside">
+<p class="h">「熵」这个名字从何而来</p>
+<p>香农公式里的 H，在代数形式上与物理学家自 19 世纪 70 年代起用来度量无序的物理量一模一样——那便是「熵」（entropy）。数十年后，迈伦·特里布斯（Myron Tribus）讲述过这样一个故事：香农当时不确定如何命名这个新度量，约翰·冯·诺伊曼（John von Neumann）告诉他应该叫它熵，理由有两个——首先，该公式在统计力学中早已拥有了这个名字；其次，「没人真正知道熵是什么，所以在任何辩论中你都会占尽上风」。这听起来有些过于传奇，未必完全属实（该故事直到 1971 年才首次见诸报端）。但这一巧合所揭示的联系却是真实、深刻且至今仍被争论不休的——它也将是本课程后半部分所有内容得以转动的枢轴。请记住这一点。</p>
+</div>
+</section>
+
+<p class="web-only">使用下方的动态拨盘来调整硬币的公平程度，观察熵如何随硬币偏置程度增加而下降。</p>
+<p class="epub-only print-only">下方的对照表展示了相同的熵变化模式（无动态拨盘）：最大不确定性承载最多信息，而接近确定的事件几乎不承载任何信息。</p>
+
+{/* ===================== INTERACTIVE 1 ===================== */}
+<div class="panel web-only information-entropy">
+<p class="ptitle">交互 · 称量硬币</p>
+<h4>熵之拨盘</h4>
+<p class="pnote">通过调节拨盘将硬币从公平转为有偏，并观察熵如何下降。曲线代表双结果信源的熵 H；柱状图代表每个面的惊奇度。不确定性最大时，熵也最大——公平硬币达到 1 比特的峰值。确定性则不承载任何信息。</p>
+
+<div class="ent-grid">
+<div class="ent-curve">
+<svg viewBox="0 0 360 250" role="img" aria-label="熵曲线，在概率为二分之一处达到峰值。">
+{/* axes */}
+<line x1="40" y1="210" x2="340" y2="210" stroke="var(--line-strong)" stroke-width="1.2"></line>
+<line x1="40" y1="210" x2="40" y2="24" stroke="var(--line-strong)" stroke-width="1.2"></line>
+{/* y ticks */}
+<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">
+<text x="34" y="34">1.0</text>
+<text x="34" y="125">0.5</text>
+<text x="34" y="214">0</text>
+</g>
+<line x1="40" y1="30" x2="340" y2="30" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 4"></line>
+{/* x labels */}
+<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
+<text x="40" y="226">0</text>
+<text x="190" y="226">0.5</text>
+<text x="340" y="226">1</text>
+<text x="190" y="244" fill="var(--ink-soft)">P(正面)</text>
+</g>
+<text x="14" y="120" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" transform="rotate(-90 14 120)" text-anchor="middle">H（比特）</text>
+<polyline id="entCurve" fill="none" stroke="var(--accent)" stroke-width="2.4" points=""></polyline>
+<line id="entGuide" x1="190" y1="30" x2="190" y2="210" stroke="var(--brass)" stroke-width="1" stroke-dasharray="2 3" opacity=".8"></line>
+<circle id="entDot" cx="190" cy="30" r="5.5" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
+</svg>
+</div>
+
+<div class="ent-readouts">
+<div>
+<div class="bigH"><span id="hVal">1.00</span><small>比特 / 投掷</small></div>
+</div>
+<div class="surprise-rows">
+<div class="srow">
+<span>正面 · p=<span id="pH">0.50</span> · 惊奇度 <span id="sH">1.00</span> 比特</span>
+<div class="bar" id="barH" style="width:33%"></div>
+</div>
+<div class="srow">
+<span>反面 · p=<span id="pT">0.50</span> · 惊奇度 <span id="sT">1.00</span> 比特</span>
+<div class="bar t" id="barT" style="width:33%"></div>
+</div>
+</div>
+<p class="ent-calc" id="entCalc"><MathInline latex={String.raw`H = 0.50\times1.00 + 0.50\times1.00 = 1.00`} /> 比特/投掷。</p>
+<p class="ent-verdict" id="entVerdict" aria-live="polite">一枚公平的硬币：每次投掷都是一个真正的提问，没有任何捷径。要发送 1,000 次投掷结果，你需要 1,000 比特——没有任何压缩空间。</p>
+</div>
+</div>
+
+<div class="slider-row" style="margin-top:1.1rem;">
+<label for="pSlider">P(正面) <span class="val" id="pLabel">0.50</span></label>
+<input type="range" id="pSlider" min="1" max="99" value="50" />
+</div>
+<div class="presets">
+<p class="h">加载信源</p>
+<div class="pbtns">
+<button class="pbtn" data-p="50">公平硬币</button>
+<button class="pbtn" data-p="88">有偏硬币 (88/12)</button>
+<button class="pbtn" data-p="99">接近确定</button>
+<button class="pbtn" data-p="5">「q 后是否跟 u？」</button>
+</div>
+</div>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">对照表</p>
+<h4>熵之拨盘</h4>
+<p class="pnote">双结果源在两个结果等可能性发生时达到其最大熵。</p>
+<table class="alt-table">
+<thead><tr><th>信源</th><th>P(正面)</th><th>熵</th><th>解读</th></tr></thead>
+<tbody>
+<tr><td>公平硬币</td><td>0.50</td><td class="num">1.00 比特/投掷</td><td>每次投掷都完整回答了一个是/否问题。</td></tr>
+<tr><td>有偏硬币</td><td>0.88</td><td class="num">0.53 比特/投掷</td><td>常见结果可以用短码表示；罕见结果则需要更长的码字。</td></tr>
+<tr><td>接近确定源</td><td>0.99</td><td class="num">0.08 比特/投掷</td><td>结果几乎预先已知，因此带来的新信息极少。</td></tr>
+<tr><td>「q 后是否跟 u？」</td><td>0.95</td><td class="num">0.29 比特/事件</td><td>这是二元事件的熵，不是完整的下一个字符分布。</td></tr>
+</tbody>
+</table>
+</div>
+
+<section>
+<p class="sec-eyebrow">历史意义</p>
+<h2>构筑现代世界的定理</h2>
+<p>仅仅给信息下一个定义，充其量只是一项不错的理论整理。让香农 1948 年那篇起初低调命名为《通信的数学理论》（A Mathematical Theory of Communication，后被誉为「信息时代大宪章」）的论文成为奠基石的，是一个关于「噪声」的惊人结论。</p>
+<p>任何现实中的信道都会损坏其传输的消息：线路上的杂音、光盘上的划痕，或是深空中翻转比特的宇宙射线。香农的有噪信道定理只有在你先指定信道模型和约束时才成立——带宽、功率、字母表、噪声规律以及允许的输入分布。在这些假设下，信道具有一个<span class="term">信道容量</span><TipNote text={"信道容量是在指定信道和约束下，错误概率可被任意逼近零的最高渐近信息传输速率。"} /> C。只要传输速率低于 C，足够长的编码就可以让译码错误概率任意接近于零；高于 C，则在同一信道模型下无法做到错误率消失。降低速率本身就是故事的一部分；巧妙编码的作用，是让可靠速率保持为正，而不是滑向零。</p>
+<blockquote>信道容量是指定信道的渐近边界。在它之下，足够长的编码可以让错误率趋近于零；有限消息仍然要在速率、延迟和错误概率之间权衡。</blockquote>
+<p>真正的关键在于：香农证明了这些优秀编码确实存在，但并未指明如何构建它们。他给工程师们留下了一张只标了 X、却没画出路线的藏宝图。追寻这个 X 成为了应用数学界最宏大的探索之一——从保护 CD、二维码以及火星数据回传的里德-所罗门码（Reed–Solomon codes），到 Turbo 码（1993 年），再到如今在 Wi-Fi、5G 数据信道和存储中静默运行的低密度奇偶校验码（LDPC）。每一步都在现实约束下更逼近香农之墙。每当你在不稳定的网络连接下流畅观看电影时，背后不只有信道编码，也有缓冲、重传、拥塞控制、源编码和应用层掩蔽在共同工作。给更常见的符号分配更短的编码——正如摩尔斯电码中为字母「E」分配的单个点，或是霍夫曼编码（1952 年）背后的逻辑——这背后运行着相同的原则：将比特预算花在惊奇度最高的地方。</p>
+</section>
+
+<section>
+<p class="sec-eyebrow">论辩</p>
+<h2>信息是物理的吗？</h2>
+<p>到目前为止，信息听起来像纯粹的数学——抽象、无量纲，是概率和对数的产物。比特本身没有固定的质量、大小或温度。但被存储和处理的比特总要有物理表示，而一个已经存在了一个多世纪的悖论逼迫人们直面这个问题：<span class="hl">在物质中遗忘信息，可以给房间增温。</span></p>
+
+<h3>守门的妖</h3>
+<p>1867 年，詹姆斯·克拉克·麦克斯韦（James Clerk Maxwell）构想出了一个捣蛋鬼。想象一个被隔断墙分成两半、装有气体的箱子，墙上有一道微型闸门，由一个微小的智能实体——后来被命名为<span class="term">麦克斯韦妖</span>（Maxwell's demon）——把守着。妖观察着每一个分子。当一个运动快的分子从右侧逼近时，妖打开闸门让它穿行到左侧；当一个运动慢的分子从左侧逼近时，妖让它穿过到右侧。它在分子上不做任何物理功——仅仅是在恰当的时刻开启和关闭一个无摩擦的闸门。慢慢地、耐心地，它把高速分子与低速分子分开，从而在两侧形成温差。</p>
+<figure class="lesson-figure">
+<img src={maxwellsDemon.src} data-light-src={maxwellsDemon.src} data-dark-src={maxwellsDemonDark.src} width="608" height="224" loading="lazy" decoding="async" alt="麦克斯韦妖在两个气体腔室之间打开闸门，将较慢的蓝色粒子与较快的红色粒子分开的示意图。" />
+<figcaption>作为筛选思想实验的麦克斯韦妖：守门者把较慢与较快的分子分开，看起来似乎只凭信息就在制造温差。<span class="meta">图片：Htkym，经 Wikimedia Commons，CC BY 2.5；配色为本项目本地改编。</span></figcaption>
+</figure>
+<p>这在物理上应该是不可能的。从热平衡状态中无偿制造出秩序，恰恰违背了<span class="term">热力学第二定律</span><TipNote text={"热力学第二定律大致是说：在孤立系统中，宏观熵以压倒性概率趋于增加，尽管小系统可能出现涨落。"} />的禁令——正是这条统计定律解释了热咖啡会变凉、打破的鸡蛋无法复原。然而，这个妖似乎仅凭关于分子速度和位置的「信息」，就绕过了热力学最基本的熵增限制。一百年来，这一难题一直困扰着物理学界。1929 年，利奥·西拉德（Leó Szilárd）将这一场景简化为箱子中的单个分子，并证明妖可以从「分子在左侧还是右侧」这 1 比特的知识中，得到恰好为 <MathInline latex={String.raw`k_B T \ln 2`} /> 的净功。物理学的指向开始令人感到不安：信息似乎可以用来输出有用功。</p>
+
+<h3>反转：关键不在于获取，而在于遗忘</h3>
+<p>这个谜题的解决是 20 世纪物理学中最漂亮的推理之一，它由建造计算机的那群人完成。1961 年，IBM 的<span class="term">罗尔夫·兰道尔</span>（Rolf Landauer）提出了一个前人从未想过的问题：计算「必然」是耗散能量的吗？摆弄比特的操作是否总是要消耗能量？他给出了令人吃惊的答案：<span class="hl">并非如此</span>——原则上，逻辑可逆的步骤可以以任意接近零的耗散完成，只要操作进行得足够缓慢和轻柔。不可避免的下限附着在逻辑不可逆操作上，而最典型的例子就是「擦除」。</p>
+
+<div class="formula">
+<MathBlock latex={String.raw`\begin{aligned}
+\text{擦除 1 比特} \\
+\Longrightarrow \\
+\text{至少耗散 } k_B T \ln 2
+\end{aligned}`} />
+<p class="cap">对于一个初始未知且等概率的比特，在无可用边信息的等温循环中重置时：室温下约为 2.8 zJ（1 zJ = <MathInline latex={String.raw`10^{-21}`} /> 焦耳，约 0.018 eV）。<span class="term">兰道尔原理</span><TipNote text={"兰道尔原理指出，逻辑不可逆擦除具有由被丢弃信息量决定的最低耗散下限。"} />，1961 年。</p>
+</div>
+
+<p>为什么偏偏是擦除？因为擦除不可逆。如果我告诉你某个比特现在是「0」，你无法得知它在片刻之前是「0」还是「1」——那段历史已经永久消逝，两种可能的过去被强行压缩进了一个单一的现在。<span class="term">逻辑不可逆操作</span><TipNote text={"逻辑不可逆操作是指将多个可能的输入映射为同一个输出，使得无法仅凭输出重建输入。"} />会湮灭物理区分，而在物理设备中，这种区分由物理状态来承载。对于偏置比特、相关存储器或存在可用边信息的情形，下限取决于实际被丢弃的熵以及存储器物理自由能的变化。标准的未知公平比特，下限才是 <MathInline latex={String.raw`k_B T \ln 2`} />。兰道尔的口号自此成为物理学的战斗口号：<span class="hl">「信息是物理的。」</span></p>
+<p>1982 年，他在 IBM 的同事<span class="term">查尔斯·贝内特</span>（Charles Bennett）借由这一洞见彻底破解了麦克斯韦妖的陷阱。妖的失误并不简单地在于「测量」分子——如果用适当准备好的存储器可逆实现，测量本身没有兰道尔最低耗散下限。妖的致命问题在于它拥有「记忆」，而记忆的空间是有限的。为了能作为循环装置无休止地进行分类，它必须最终恢复那块记忆。每一次逻辑不可逆的重置，都会把此前似乎从气体中移走的熵以热量形式排回环境。完整循环因此不再违背第二定律。这个捣蛋鬼的聪明，关键并不在于思考，<span class="hl">而在于遗忘</span>。</p>
+</section>
+
+<p class="web-only">下方的动态演示模拟了引发热量计上升的不可逆重置过程。</p>
+<p class="epub-only print-only">下方的算例按静态顺序展示了相同的擦除循环：保护比特、消除其物理区分、强行归零，并释放相应热量。</p>
+
+{/* ===================== INTERACTIVE 2 ===================== */}
+<div class="panel web-only landauer-machine">
+<p class="ptitle">交互 · 擦除下限</p>
+<h4>兰道尔擦除机</h4>
+<p class="pnote">单个初始未知且等概率的比特存储在双势阱势能景观中的小球上：左侧 = 0，右侧 = 1。要将其重置为 0，无论它初始在何处，你都要降下中间的壁障、把势能景观偏置向 0，并将其重新捕获在左侧——从而将两种可能的过去压缩为一种。在理想的准静态极限下，这个不可逆重置所输入的功会以热量形式耗散；撤去偏置并不会把丢失的区分还回来。</p>
+
+<div class="lm-stage">
+<svg viewBox="0 0 440 210" role="img" aria-label="双势阱，小球代表 1 比特的存储。">
+{/* baseline */}
+<line x1="20" y1="180" x2="420" y2="180" stroke="var(--line)" stroke-width="1"></line>
+<text x="130" y="200" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">0</text>
+<text x="310" y="200" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">1</text>
+{/* potential well path (morphs) */}
+<path id="wellPath" d="M20,40 C90,40 70,150 130,150 C175,150 165,70 220,70 C275,70 265,150 310,150 C370,150 350,40 420,40" fill="none" stroke="var(--accent)" stroke-width="2.6"></path>
+{/* the ball */}
+<circle id="bitBall" cx="310" cy="137" r="13" fill="var(--brass)" stroke="var(--raised)" stroke-width="2.5"></circle>
+<text id="ballLbl" x="310" y="141" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">1</text>
+{/* heat puffs */}
+<g id="heatPuffs" opacity="0"></g>
+</svg>
+</div>
+
+<div class="lm-controls">
+<button class="lm-btn" id="lmStep">下一步</button>
+<button class="lm-btn ghost" id="lmReset">重置比特为 1</button>
+</div>
+
+<div class="lm-readout" aria-label="兰道尔机读数">
+<div class="lm-card">
+<p class="lh">逻辑状态</p>
+<p class="lv" id="lmState">比特 = 1</p>
+</div>
+<div class="lm-card heat">
+<p class="lh">耗散的热量</p>
+<p class="lv"><span id="lmHeat" aria-live="polite">0.0</span> zJ</p>
+</div>
+</div>
+<p class="lm-caption" id="lmCaption" aria-live="polite">「阶段 0 — 静止的比特」小球停在右侧的势阱中：此存储状态为 1。两个势阱，代表两个可能的值，它们之间的壁障保持着比特的稳定性。点击「下一步」开始将其擦除归零。</p>
+</div>
+
+<div class="format-alt epub-only print-only">
+<p class="ptitle">算例</p>
+<h4>兰道尔擦除机</h4>
+<table class="alt-table">
+<thead><tr><th>步骤</th><th>逻辑状态</th><th>物理动作</th><th>热力学读数</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>比特可为 0 或 1</td><td>屏障分隔了两个稳定的势阱。</td><td>逻辑本身没有强制产生任何热量开销。</td></tr>
+<tr><td>1</td><td>旧值不再受保护</td><td>降下势阱之间的壁障。</td><td>原则上这可以通过可逆操作完成。</td></tr>
+<tr><td>2</td><td>强行归零</td><td>偏置地貌，使所有可能的初始状态都落到左侧。</td><td>由于重置把两个可能输入映射为一个输出，输入的功会以热量形式耗散。</td></tr>
+<tr><td>3</td><td>比特读数为 0</td><td>再次升起壁障。</td><td>两种可能的过去压缩为了一个现在。</td></tr>
+<tr><td>4</td><td>一个未知公平比特已擦除</td><td>重置完成。</td><td>在理想标准模型中，至少需要 <MathInline latex={String.raw`k_B T \ln 2`} /> 的功，并将相应熵转移到环境。</td></tr>
+</tbody>
+</table>
+</div>
+
+<section class="frontier">
+<p class="sec-eyebrow">前沿 · 2026 年</p>
+<h2>从思想实验到实验台上的 zJ</h2>
+<p>五十年来，兰道尔原理一直是一套过于纯粹的理论，甚至带有一点哲学意味。它涉及的数字小得荒谬——几个 zJ，极易消散在任何实际设备的电子热噪声海洋中。在过去，想要测量它看起来毫无希望。然而自 2012 年开始，一系列令人惊叹的实验终于将这一原理拉出了纯理论辩论的泥潭，在各种截然不同的物理系统上得到了精确验证。这正是<span class="term">前沿校准器</span>发挥威力的地方——而且不同寻常的是，那些听起来最大胆的主张竟然经住了检验。</p>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 01</span>
+<StatusChip status={"ok"} label={"兰道尔原理 · 已确立"} printLabel={"已确立"} />
+</div>
+<h3>五种方式测出的物理极限</h3>
+<p>第一个直接验证来自<span class="term">Bérut 等人</span>（《自然》，2012 年 3 月 8 日）：将单个微米级玻璃微珠捕获在双势阱光阱中（构成一个物理上的 1 比特存储器），对其进行反复擦除。随着擦除操作进行得越来越缓慢，其释放的平均热量最终收敛于 <MathInline latex={String.raw`k_B T \ln 2`} /> 的下限。两年后，<span class="term">Jun、Gavrilov 与 Bechhoefer（贝希霍费尔）</span>（《物理评论快报》，2014 年 11 月 4 日）在反馈阱中进一步提高了测量精度，证实了将可达状态数减半时至少会释放 <MathInline latex={String.raw`k_B T \ln 2`} /> 的热量。正如波动定理（第 85 日的预告内容）所预测的那样，虽然单个循环可能会涨落到该极限「之下」，但其「平均值」依然坚不可摧。</p>
+<p>让这一发现成为<StatusChip status={"ok"} label={"已确立"} />结论的，是在经过精确定义的协议下获得了多样化验证。利用单个电子在箱子中运行的西拉德引擎（Koski et al.，《美国国家科学院院刊》，2014 年）。纳米级磁体阵列（最接近真实数字存储器比特的载体）把测得数值锚定在「300 K 时约为 2.8 zJ」附近，实测值为 (4.2 ± 0.9) zJ（Hong, Lambson, Dhuey &amp; Bokor，《科学进展》，2016 年 3 月 11 日）。以及单个被捕获的钙离子将该原理成功扩展到了完全的量子领域（Yan et al.，《物理评论快报》，2018 年 5 月 21 日）。玻璃珠、电子、磁体、原子——平台千差万别，却指向同一个一致的下限。这才让它更像一条真正的自然定律，而不只是某个平台的偶然现象。</p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 02</span>
+<StatusChip status={"ok"} label={"信息引擎 · 已确立"} printLabel={"已确立"} />
+<StatusChip status={"hint"} label={"「最快引擎」之最 · 话术包装"} printLabel={"待审"} />
+</div>
+<h3>反向运行妖：将信息作为燃料</h3>
+<p>如果擦除比特「消耗」能量，那么测得的信息是否能帮助系统输出有用功？西拉德在纸面上给出了肯定的回答，而现在的实验室则用完整的测量—反馈循环将其变为了现实。<span class="term">外谷（Toyabe）等人</span>（《自然·物理学》，2010 年）建造了第一台真正的信息引擎：一个攀爬台阶的布朗粒子，利用对其位置的测量和反馈棘轮克服重力向上攀爬——从而将控制器中的信息转化为机械功，并在此过程中验证了反馈推广形式的杰辛斯基等式。<span class="term">科斯基（Koski）的单电子西拉德引擎</span>（2014–2015 年）使用单个电子实现了这一点，甚至构建了一台「信息动力制冷机」。最近，<span class="term">贝希霍费尔实验室</span>（Saha et al.，《美国国家科学院院刊》，2021 年 5 月 18 日）优化了一种胶体信息棘轮，据报告其输出功率可与生命体内部的分子机器相媲美——这是一个非常引人瞩目的成果。虽然媒体通稿冠之以「世界上最快的信息引擎」，但这更像是市场话术，而非论文中的学术断言；其背后的物理本身仍然扎实。</p>
+</div>
+
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 03</span>
+<StatusChip status={"ok"} label={"已确立"} printLabel={"已确立"} />
+<StatusChip status={"hint"} label={"尚非壁垒"} printLabel={"待审"} />
+</div>
+<h3>信息的新物理学——以及它对你的 GPU 意味着什么</h3>
+<p>如今，所有这些成果都融入了一个被称为<span class="term">随机热力学</span>的成熟框架中，该框架将经典的热力学定律扩展到了起伏剧烈、由涨落主导的微观系统。其核心工具包括<span class="term">杰辛斯基等式</span>（1997 年）和<span class="term">克鲁克斯涨落定理</span>（1999 年）这样的精确涨落关系。互信息项出现在它们的反馈控制推广中，也就是佐川—上田一脉的信息引擎公式。帕龙多、霍洛维茨与佐川发表的权威综述直截了当地命名为《信息热力学》（《自然·物理学》，2015 年）：信息必须和功、热量、测量、反馈、控制器记忆、重置放在同一个物理描述里。2024 年，大卫·沃尔珀特及其合作者扩展了有限时间随机计算理论，补充了较早的「失配成本」故事，而不是从零发明这一概念。</p>
+<p>这自然引出了隐藏在每个数据中心背后的终极疑问。我们的机器距离这个物理下限还有多远？答案是：<span class="hl">非常遥远</span>。单个晶体管开关在翻转时耗散的能量在 <MathInline latex={String.raw`10^{-18}`} /> 焦耳数量级——在器件层面上，这比兰道尔下限高出数百到数千倍；而一旦把内存读写、冷却散热和电源转换考虑在内，则更高。我们距离那堵物理极限之墙还差得远。这才是坦诚的事实框架：2024 年所有数据中心消耗了全球约 1.5% 的电力，AI 是其中快速增长的工作负载，并预计会推动到 2030 年的很大一部分增量（国际能源署《能源与 AI》，2025 年 4 月）。这暂时只是一个<span class="hl">工程与经济</span>问题，而非基础物理学问题。因此，「AI 即将撞上兰道尔极限」的头条新闻只是<StatusChip status={"hint"} label={"炒作"} printLabel={"待审"} />——但这个物理下限确实存在，也正是可逆计算、热力学计算与神经形态计算仍然值得关注的原因之一。</p>
+</div>
+</section>
+
+{/* ===================== VISUAL 3 ===================== */}
+<div class="panel landauer-ladder">
+<p class="ptitle">示意图 · 数量级对比</p>
+<h4>示意性能量尺度 —— 不能直接等同比较</h4>
+<p class="pnote">不同操作和系统边界下的对数能量尺度。各层分别表示 300 K 下理想公平比特重置、准静态单比特擦除实验、近似晶体管开关能量，以及完整逻辑或系统级计算。它们是方位标记，不是一条干净的历史效率曲线。</p>
+<svg viewBox="0 0 640 300" role="img" aria-label="从兰道尔下限到器件与系统级计算的示意性对数能量尺度。">
+{/* vertical log axis */}
+<line x1="150" y1="30" x2="150" y2="262" stroke="var(--line-strong)" stroke-width="1.2"></line>
+{/* gridlines + decade labels (zJ) */}
+<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">
+{/* map: y = 262 - (log10(zJ) - log10(2.8))*scale ; we lay out by hand */}
+<line x1="150" y1="248" x2="620" y2="248" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="252">~3 zJ</text>
+<line x1="150" y1="196" x2="620" y2="196" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="200">30 zJ</text>
+<line x1="150" y1="144" x2="620" y2="144" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="148">300 zJ</text>
+<line x1="150" y1="92" x2="620" y2="92" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="96">3 aJ</text>
+<line x1="150" y1="40" x2="620" y2="40" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></line><text x="144" y="44">3 fJ</text>
+</g>
+{/* the floor band */}
+<rect x="150" y="244" width="470" height="9" fill="color-mix(in srgb,var(--ok) 30%,transparent)"></rect>
+<text x="615" y="240" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ok)" text-anchor="end">理想重置 · 300 K · k_B T ln 2</text>
+
+{/* markers */}
+{/* lab experiments near floor */}
+<g>
+<circle cx="250" cy="248" r="7" fill="var(--accent)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="250" y="276" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">单比特重置</text>
+<text x="250" y="288" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">（Bérut, Hong…）</text>
+</g>
+{/* single transistor ~ few aJ */}
+<g>
+<circle cx="400" cy="88" r="7" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="420" y="112" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="start">器件开关</text>
+<text x="420" y="124" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="start">~10³ 倍底限</text>
+</g>
+{/* full logic op / system ~ fJ-pJ */}
+<g>
+<circle cx="540" cy="40" r="7" fill="var(--heat)" stroke="var(--raised)" stroke-width="2"></circle>
+<text x="540" y="28" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">逻辑/系统操作</text>
+<text x="540" y="16" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">~10⁶ 倍以上底限</text>
+</g>
+{/* connecting arc to dramatize the gap */}
+<path d="M250,244 C322,170 348,122 400,92" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
+<path d="M400,84 C470,60 500,48 540,42" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
+<text x="333" y="135" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-32 333 135)">← 边界不同 →</text>
+</svg>
+<p class="ladder-key">实验室装置并不是比你的笔记本更好的通用计算机：它们隔离的是一个擦除协议，并以足够温和的方式运行来逼近热力学界限。实际芯片还要为速度、可靠性、内存移动、控制、冷却和供电付费。只有始终看清每一层的系统边界，这种比较才有用。</p>
+</div>
+
+<section class="frontier">
+<div class="claim">
+<div class="ctop">
+<span class="cnum">Edge 04</span>
+<StatusChip status={"bad"} label={"争议/炒作"} printLabel={"争议/炒作"} />
+</div>
+<h3>概念的过度延伸</h3>
+<p>「信息是物理的」这一主张如今已确立。但人们很容易忍不住抹去限制词，转而宣称信息是「根本性的」——即现实在本质上是由比特构成的。物理学家约翰·阿奇博尔德·惠勒（John Archibald Wheeler）在 1989 年为此提出了著名的口号：<span class="term">「万物源于比特」</span>（it from bit），即推测每一个粒子和场的核心存在都派生自「是/否」的回答，派生自信息。这是一个极具启发性又充满魅力的思想——但它属于形而上学的范畴，而非经受过检验的科学结论。</p>
+<p>批评者指出了显而易见的循环论证：比特必须被编码在「某种东西」上，因此信息不可能成为堆栈最底部的乌龟。请把它妥善存放在「引人深思的假说」抽屉里，并贴上清晰的标签。</p>
+<p>再往前走就到了真正的边缘地带。梅尔文·沃普森（Melvin Vopson）提出了「质量-能量-信息等价性」，声称信息具有静止质量；他的「信息动力学第二定律」声称信息熵必须随时间「减少」；而他 2025 年一篇试图从信息中推导引力的论文，则被物理学家萨宾·霍森菲尔德（Sabine Hossenfelder）直接判定为「毫无道理」。当一个前沿足够火热时，它必然会滋生出边缘学术——而学会利用我们贯穿全书的<span class="term">前沿校准器</span>将这两者区分开来，正是本课程真正想要培养的核心技能。</p>
+</div>
+</section>
+
+<section>
+<p class="sec-eyebrow">未决问题</p>
+<h2>真正悬而未决的谜题</h2>
+<ul>
+<li>「香农熵与热力学熵是同一个东西，还只是外表相似？」两者的公式完全相同；这究竟是一种深刻的物理同一性（如杰恩斯的最大熵学说），还是一种精妙的类比，目前仍争论不休。这个问题将在第 33 日和第 83 至 85 日重新开启，到那时它将直接关系到「生命是什么？」。</li>
+<li>「那个妖真的能被彻底驱逐吗？」少数物理学家（如 Earman 和 Norton）指出，标准的驱魔论证存在微妙的循环论证——利用第二定律推导擦除下限，再用这个下限来捍卫第二定律。2016 年一项备受争议的研究甚至声称实现了一个运行开销低于 <MathInline latex={String.raw`k_B T \ln 2`} /> 的逻辑不可逆门。在实验支持下的主流学界虽然持否定态度，但这背后的物理解释仍未完全定案。</li>
+<li>「现实中的计算究竟能降到多低？」可逆计算承诺能几乎完全避开擦除耗散。但至今还没有人建造出真正实用的可逆计算机。兰道尔下限究竟是一个可以触及的工程目标，还是永远只是一件科学珍玩？</li>
+<li>「在人工智能模块中等待我们的问题：」当一个模型「知道」某些事物时，这种知识最终是否只是为了降低损失函数而排列的比特？而这些比特背后的能耗约束，是否暗示了「思考」到底需要什么？（第 138 至 145 日。）</li>
+</ul>
+</section>
+
+<div class="recap">
+<p class="h">◆ 今日精要三句话</p>
+<dl>
+<div><dt>核心思想</dt><dd>信息是可测量的：比特是对数单位，惊奇度是 <MathInline latex={String.raw`i(x)=-\log_2 p(x)`} />，熵 <MathInline latex={String.raw`H=-\sum p\log_2 p`} /> 是以比特计的期望惊奇度。当信息由物理系统表示时，在标准等温模型中重置一个初始未知的公平比特至少需要 <MathInline latex={String.raw`k_B T \ln 2`} /> 的功（兰道尔原理），这正是循环运行的麦克斯韦妖无法逃开热力学限制的机制。</dd></div>
+<div><dt>最佳比喻</dt><dd>一个事实的大小等价于它所值的是/否提问次数；记忆就像双势阱中的小球，将物理存储器重置为标准状态——即把两种可能的过去压缩为一种现在——正是向房间释放热量的物理根源。</dd></div>
+<div><dt>核心争议</dt><dd>香农熵与热力学熵究竟是同一个实体还是两个实体；麦克斯韦妖是否被真正战胜；以及「信息是根本性的」（惠勒的「万物源于比特」）这一宏大断言在多大程度上属于过度炒作。</dd></div>
+</dl>
+<p class="threads">今日线索 › 信息（终于迎来了它坚实的单位——比特、惊奇度、熵） · 能量（兰道尔的 <MathInline latex={String.raw`k_B T \ln 2`} /> 把比特与热量焊在一起） · 计算（擦除信息的物理下限——妖不过是一只内存有限的存储装置）——以及涌现的初显（一条在玻璃、电子、磁体、原子间普适的物理规律），并为第 83 至 85 日关于进化与生命的探讨埋下伏笔。</p>
+</div>
+
+<hr class="div" />
+
+<section class="sources">
+<p class="sec-eyebrow">参考文献</p>
+<h2>来源与延伸阅读</h2>
+<ol>
+<li>Shannon, C. E. (1948). "A Mathematical Theory of Communication." <em>Bell System Technical Journal</em> 27: 379–423 (July) &amp; 623–656 (October). <span class="meta">— 奠基性论文：引入比特、熵、信道容量以及有噪信道编码定理。</span> <a href="https://doi.org/10.1002/j.1538-7305.1948.tb01338.x">doi.org/10.1002/j.1538-7305.1948.tb01338.x</a></li>
+<li>Shannon, C. E. (1938). "A Symbolic Analysis of Relay and Switching Circuits." <em>Trans. AIEE</em> 57(12): 713–723 (MIT master's thesis, 1937). <span class="meta">— 物理开关中的布尔逻辑；连接第 3 日的桥梁。</span></li>
+<li>Soni, J. &amp; Goodman, R. (2017). <em>A Mind at Play: How Claude Shannon Invented the Information Age.</em> Simon &amp; Schuster. <span class="meta">— 传记；「信息时代大宪章」这一说法的来源，以及图基创造「比特」一词的背景。</span></li>
+<li>Landauer, R. (1961). "Irreversibility and Heat Generation in the Computing Process." <em>IBM Journal of Research and Development</em> 5(3): 183–191. <span class="meta">— 提出了 <MathInline latex={String.raw`k_B T \ln 2`} /> 的擦除下限。doi:10.1147/rd.53.0183。</span> <a href="https://doi.org/10.1147/rd.53.0183">doi.org/10.1147/rd.53.0183</a></li>
+<li>Bennett, C. H. (1982). "The Thermodynamics of Computation — a Review." <em>International Journal of Theoretical Physics</em> 21(12): 905–940. <span class="meta">doi:10.1007/BF02084158；证明了是擦除而非测量过程驱逐了麦克斯韦妖。</span> <a href="https://doi.org/10.1007/BF02084158">doi.org/10.1007/BF02084158</a></li>
+<li>Szilárd, L. (1929). "Über die Entropieverminderung in einem thermodynamischen System bei Eingriffen intelligenter Wesen." <em>Zeitschrift für Physik</em> 53: 840–856. <span class="meta">doi:10.1007/BF01341281；单分子引擎；确立了 1 比特 ↔ <MathInline latex={String.raw`k_B T \ln 2`} /> 功的转换关系。</span> <a href="https://doi.org/10.1007/BF01341281">doi.org/10.1007/BF01341281</a></li>
+<li>Bérut, A., Arakelyan, A., Petrosyan, A., Ciliberto, S., Dillenschneider, R. &amp; Lutz, E. (2012). "Experimental verification of Landauer's principle linking information and thermodynamics." <em>Nature</em> 483: 187–189 (8 March 2012). <span class="meta">doi:10.1038/nature10872。</span> <a href="https://doi.org/10.1038/nature10872">doi.org/10.1038/nature10872</a></li>
+<li>Jun, Y., Gavrilov, M. &amp; Bechhoefer, J. (2014). "High-Precision Test of Landauer's Principle in a Feedback Trap." <em>Physical Review Letters</em> 113: 190601 (4 Nov 2014). <span class="meta">doi:10.1103/PhysRevLett.113.190601。</span> <a href="https://doi.org/10.1103/PhysRevLett.113.190601">doi.org/10.1103/PhysRevLett.113.190601</a></li>
+<li>Hong, J., Lambson, B., Dhuey, S. &amp; Bokor, J. (2016). "Experimental test of Landauer's principle in single-bit operations on nanomagnetic memory bits." <em>Science Advances</em> 2(3): e1501492 (11 March 2016). <span class="meta">doi:10.1126/sciadv.1501492；实测值为 (4.2 ± 0.9) zJ，逼近「300 K 时约为 2.8 zJ」的底限。</span> <a href="https://doi.org/10.1126/sciadv.1501492">doi.org/10.1126/sciadv.1501492</a></li>
+<li>Yan, L. L. et al. (2018). "Single-Atom Demonstration of the Quantum Landauer Principle." <em>Physical Review Letters</em> 120: 210601 (21 May 2018). <span class="meta">— 使用单个被捕获的 ⁴⁰Ca⁺ 离子实现量子兰道尔原理的验证。</span> <a href="https://doi.org/10.1103/PhysRevLett.120.210601">link.aps.org/doi/10.1103/PhysRevLett.120.210601</a></li>
+<li>Toyabe, S., Sagawa, T., Ueda, M., Muneyuki, E. &amp; Sano, M. (2010). "Experimental demonstration of information-to-energy conversion and validation of the generalized Jarzynski equality." <em>Nature Physics</em> 6: 988–992. <span class="meta">doi:10.1038/nphys1821。</span> <a href="https://doi.org/10.1038/nphys1821">doi.org/10.1038/nphys1821</a></li>
+<li>Koski, J. V., Maisi, V. F., Pekola, J. P. &amp; Averin, D. V. (2014). "Experimental realization of a Szilard engine with a single electron." <em>PNAS</em> 111(38): 13786–13789. <span class="meta">doi:10.1073/pnas.1406966111。</span> <a href="https://doi.org/10.1073/pnas.1406966111">doi.org/10.1073/pnas.1406966111</a> 另见 Koski et al., <em>PRL</em> 113: 030601 (2014) 以及 <em>PRL</em> 115: 260602 (2015).</li>
+<li>Saha, T. K., Lucero, J. N. E., Ehrich, J., Sivak, D. A. &amp; Bechhoefer, J. (2021). "Maximizing power and velocity of an information engine." <em>PNAS</em> 118(20): e2023356118 (18 May 2021). <span class="meta">doi:10.1073/pnas.2023356118；优化后的胶体信息棘轮（「最快」属于媒体的宣传表述）。</span> <a href="https://doi.org/10.1073/pnas.2023356118">doi.org/10.1073/pnas.2023356118</a></li>
+<li>Jarzynski, C. (1997). "Nonequilibrium Equality for Free Energy Differences." <em>Physical Review Letters</em> 78: 2690. <span class="meta">doi:10.1103/PhysRevLett.78.2690。</span> <a href="https://doi.org/10.1103/PhysRevLett.78.2690">doi.org/10.1103/PhysRevLett.78.2690</a> · Crooks, G. E. (1999). "Entropy production fluctuation theorem and the nonequilibrium work relation for free energy differences." <em>Physical Review E</em> 60: 2721. <span class="meta">doi:10.1103/PhysRevE.60.2721。</span> <a href="https://doi.org/10.1103/PhysRevE.60.2721">doi.org/10.1103/PhysRevE.60.2721</a></li>
+<li>Parrondo, J. M. R., Horowitz, J. M. &amp; Sagawa, T. (2015). "Thermodynamics of information." <em>Nature Physics</em> 11: 131–139. <span class="meta">doi:10.1038/nphys3230。</span> <a href="https://doi.org/10.1038/nphys3230">doi.org/10.1038/nphys3230</a></li>
+<li>Manzano, G., Kardeş, G., Roldán, É. &amp; Wolpert, D. H. (2024). "Thermodynamics of Computations with Absolute Irreversibility, Unidirectional Transitions, and Stochastic Computation Times." <em>Physical Review X</em> 14: 021026 (13 May 2024). <span class="meta">doi:10.1103/PhysRevX.14.021026；量化了超出兰道尔下限的「失配成本」。</span> <a href="https://doi.org/10.1103/PhysRevX.14.021026">doi.org/10.1103/PhysRevX.14.021026</a></li>
+<li>International Energy Agency (2025). <em>Energy and AI.</em> (April 2025). <span class="meta">— 2024 年数据中心耗电约占全球需求 1.5%（~415 TWh），预计到 2030 年将达到约 945 TWh。</span> <a href="https://www.iea.org/reports/energy-and-ai">iea.org/reports/energy-and-ai</a></li>
+<li>Wheeler, J. A. (1990). "Information, Physics, Quantum: The Search for Links." In <em>Complexity, Entropy, and the Physics of Information.</em> <span class="meta">— 「万物源于比特」（有争议的形而上学主张）。</span></li>
+<li>Vopson, M. M. (2023). "The second law of infodynamics and its implications for the simulated universe hypothesis." <em>AIP Advances</em> 13: 105308. <span class="meta">doi:10.1063/5.0173278；有争议/炒作色彩。</span> <a href="https://doi.org/10.1063/5.0173278">doi.org/10.1063/5.0173278</a> 另见 Vopson (2025), "Is gravity evidence of a computational universe?", <em>AIP Advances</em> 15: 045035, <span class="meta">doi:10.1063/5.0264945，以及 Sabine Hossenfelder 在 2025 年发表的公开批评。</span> <a href="https://doi.org/10.1063/5.0264945">doi.org/10.1063/5.0264945</a></li>
+</ol>
+</section>
+
+</div>

@@ -69,6 +69,7 @@ describe("target content registry", () => {
     const day004 = daysByPath.get("004-probability-as-extended-logic");
     const day005 = daysByPath.get("005-causation");
     const day006 = daysByPath.get("006-statistics-and-the-art-of-not-fooling-yourself");
+    const day007 = daysByPath.get("007-information-theory");
 
     expect([...daysByPath.keys()]).toEqual([
       "001-what-is-knowledge",
@@ -76,7 +77,8 @@ describe("target content registry", () => {
       "003-logic-and-valid-inference",
       "004-probability-as-extended-logic",
       "005-causation",
-      "006-statistics-and-the-art-of-not-fooling-yourself"
+      "006-statistics-and-the-art-of-not-fooling-yourself",
+      "007-information-theory"
     ]);
 
     for (const day of registry.days) {
@@ -157,5 +159,20 @@ describe("target content registry", () => {
     expect(day006?.bodies[0].source).toContain("feynman1959.src");
     expect(day006?.bodies[0].source).toContain("pValueTailArea.src");
     expect(day006?.appendixBodies[0].source).toContain("statistics-appendix-lab");
+
+    expect(day007?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "the-bleeding-edge:en",
+      "the-bleeding-edge:zh",
+      "the-deeper-currents:en",
+      "the-deeper-currents:zh"
+    ]);
+    expect(day007?.manifest.components.map((component) => component.id)).toEqual([
+      "information-theory"
+    ]);
+    expect(day007?.bodies[0].source).toContain("maxwellsDemon.src");
+    expect(day007?.bodies[0].source).toContain("information-entropy");
+    expect(day007?.bodies[0].source).toContain("<MathBlock");
+    expect(day007?.appendixBodies[0].source).toContain("appendix-mutual-information");
+    expect(day007?.appendixBodies[0].source).toContain("appendix-hamming-cube");
   });
 });

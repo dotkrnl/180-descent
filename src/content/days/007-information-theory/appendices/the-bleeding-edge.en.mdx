@@ -1,0 +1,185 @@
+import MathBlock from "@app/components/lesson/MathBlock.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+
+<p class="lede"><span class="drop">T</span>he main page and the first appendix gave you the foundations: Shannon's bit, Landauer's toll, the full architecture. All of it rests on work decades old and thoroughly settled. This appendix is different: recent frontier work from roughly 2019–2026, much of it in the last two years, and some of it still warm from the press. These are the results the people <em>building</em> the field consider most consequential: experiments, frameworks, and engineering gambles most likely to reshape what we think we know. Some will hold. Some won't. The hype filter earns its keep today more than ever.</p>
+<div class="panel landscape">
+<p class="ptitle">Diagram · the frontier landscape</p>
+<h3>Seven frontier threads, one set of questions</h3>
+<p class="pnote">The recent frontier of information physics branches into seven active programmes. Color indicates evidence status: teal for established, amber for promising; a dashed border marks work that remains theory-only, with no experimental test yet.</p>
+<svg viewBox="0 0 640 330" role="img" aria-label="Seven frontier areas of information physics.">
+<defs><marker id="appendix-d007-the-bleeding-edge-fa" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path></marker></defs>
+<g font-family="IBM Plex Mono,monospace" font-size="10.5">
+<rect x="10" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--hint)" stroke-width="2"></rect><text x="95" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Thermodynamic</text><text x="95" y="58" text-anchor="middle" fill="var(--ink-soft)">Computing</text>
+<rect x="235" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="320" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Trade-off Laws</text><text x="320" y="58" text-anchor="middle" fill="var(--ink-soft)">TURs · Speed Limits</text>
+<rect x="460" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="545" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Cost of</text><text x="545" y="58" text-anchor="middle" fill="var(--ink-soft)">Timekeeping</text>
+<rect x="10" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="95" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Information</text><text x="95" y="166" text-anchor="middle" fill="var(--ink-soft)">Engines · Demons</text>
+<rect x="235" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--hint)" stroke-width="2"></rect><text x="320" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Quantum Info</text><text x="320" y="166" text-anchor="middle" fill="var(--ink-soft)">Thermodynamics</text>
+<rect x="460" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="545" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Living Systems</text><text x="545" y="166" text-anchor="middle" fill="var(--ink-soft)">Entropy in Cells</text>
+<rect x="235" y="250" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2" stroke-dasharray="4 3"></rect><text x="320" y="270" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">Black Hole</text><text x="320" y="286" text-anchor="middle" fill="var(--ink-soft)">Information Paradox</text>
+</g>
+<g stroke="var(--ink-faint)" stroke-width="1.2" fill="none" marker-end="url(#appendix-d007-the-bleeding-edge-fa)">
+<line x1="180" y1="46" x2="232" y2="46"></line><line x1="405" y1="46" x2="457" y2="46"></line>
+<line x1="95" y1="72" x2="95" y2="127"></line><line x1="320" y1="72" x2="320" y2="127"></line><line x1="545" y1="72" x2="545" y2="127"></line>
+<line x1="180" y1="156" x2="232" y2="156"></line><line x1="405" y1="156" x2="457" y2="156"></line>
+<line x1="320" y1="182" x2="320" y2="247"></line>
+<path d="M95,182 C95,230 232,265 232,270"></path><path d="M545,182 C545,230 408,265 408,270"></path>
+</g>
+<g font-family="IBM Plex Mono,monospace" font-size="10.5" transform="translate(470,250)">
+<circle cx="8" cy="6" r="5" fill="var(--ok)"></circle><text x="18" y="10" fill="var(--ink-faint)">established result</text>
+<circle cx="8" cy="24" r="5" fill="var(--hint)"></circle><text x="18" y="28" fill="var(--ink-faint)">promising hint</text>
+<rect x="2" y="38" width="12" height="10" rx="2" fill="none" stroke="var(--ink-faint)" stroke-dasharray="3 2"></rect><text x="18" y="46" fill="var(--ink-faint)">theory only (no expt)</text>
+</g>
+</svg>
+</div>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">01</span> · the headline result</p>
+<h2>Measuring irreversibility inside a living cell</h2>
+<p>If we had to name one recent result that could be remembered in twenty years, it is this: in 2024, a team led by <strong>Felix Ritort</strong> at the University of Barcelona published a way to infer the rate at which a living cell produces entropy — the quantitative arrow of time inside a single red blood cell — from microscopy plus force calibration and model assumptions.</p>
+<p>The insight is a new mathematical identity called the <em class="term">Variance Sum Rule</em>. It connects fluctuation statistics of a probe with the restoring forces acting on it, allowing entropy production rate <MathInline latex={String.raw`\sigma`} /> to be estimated under the model's conditions. No calorimeter, no complex perturbation protocol — but not just a bare microscope either.</p>
+<div class="formula">
+<MathBlock latex={String.raw`\sigma \propto \text{var}(\text{displacement}) + \text{var}(\text{force})`} />
+<p class="cap">Schematic only — not a generally usable identity. Di Terlizzi et al., Science, 2024.</p>
+</div>
+<p>They pointed this tool at human red blood cells and mapped the entropy production rate across the membrane. What they found was striking: <MathInline latex={String.raw`\sigma`} /> is <strong>spatially heterogeneous</strong>, varying from spot to spot across the cell, with a finite correlation length of about 0.6 micrometres. The average agreed with independent calorimetry measurements. The authors describe this as the first heat map of entropy production in a living system — a major step from qualitative "far from equilibrium" language toward spatially resolved thermodynamic accounting. <StatusChip status={"ok"} label={"established under model assumptions"} printLabel={"established"} /></p>
+<div class="aside">
+<p class="h">Why it matters for this course</p>
+<p>On <strong>Days 83–85</strong> we'll ask: how does life, which looks so orderly, square with the second law? The standard answer — organisms are open systems exporting entropy — is qualitatively right but quantitatively vague. The Variance Sum Rule hands that vague answer a ruler. If you can map entropy production inside cells with the resolution of a light microscope, you can start asking: which metabolic pathways generate the most irreversibility? Where is the thermodynamic cost concentrated? The technique turns stochastic thermodynamics from a framework into a <em>microscopy modality</em>.</p>
+</div>
+<p>Two companion results deserve note. <strong>Skinner &amp; Dunkel</strong> (<em>PNAS</em>, 2021) developed a rigorous optimization framework for bounding entropy production from partial observations and applied it to bacterial flagellar motors and growing microtubules. And a 2024 <em>PNAS</em> paper used <strong>deep-learning probability flows</strong> — score-based generative models — to estimate entropy production in high-dimensional active-matter systems, offering a computational path where the analytic rule runs out of dimensions. <StatusChip status={"ok"} label={"both established"} printLabel={"established"} /></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">02</span> · the new rules</p>
+<h2>Universal trade-offs: uncertainty, speed, and cost</h2>
+<p>The deepest conceptual advance in stochastic thermodynamics since 2020 is a family of results that say: <em>precision often costs entropy, under stated dynamical assumptions.</em> If a molecular motor turns with low noise, if a clock ticks with reliable rhythm, if a sensor measures a concentration accurately — something may have to pay, and the currency is dissipation. These <em class="term">thermodynamic uncertainty relations</em> (TURs) are powerful constraints for broad classes of nonequilibrium systems, but they are not assumption-free laws of nature.</p>
+<div class="appendix-timeline">
+<div class="tl-item ok">
+<p class="tl-year">2022–23</p>
+<p class="tl-title">The standard TUR is broad, not universal</p>
+<p class="tl-body">The standard steady-state TUR applies to Markov jump processes and overdamped Langevin systems. <strong>Pietzonka</strong> showed a classical pendulum clock can <em>violate</em> that simple entropy-production-only form (<em>PRL</em> 128, 130606, 2022), while <strong>Dieball &amp; Godec</strong> clarified its Langevin route and saturation conditions (<em>PRL</em> 130, 087101, 2023). Underdamped and non-Markovian systems may require modified bounds involving additional dynamical quantities.</p>
+<p class="tl-cite">Pietzonka, PRL 2022 · Dieball &amp; Godec, PRL 2023</p>
+</div>
+<div class="tl-item ok">
+<p class="tl-year">2023</p>
+<p class="tl-title">Speed limits, dissipation, and optimal transport unified</p>
+<p class="tl-body"><strong>Van Vu &amp; Saito</strong> showed TURs, minimum-dissipation protocols, and <em>thermodynamic speed limits</em> are all aspects of a single structure built on Wasserstein-distance optimal transport (<em>PRX</em> 13, 011013, 2023). Separately, <strong>Lee, Lee, Kwon &amp; Park</strong> derived a tight finite-time Landauer bound: the minimum dissipation to erase a bit in a fixed time, trading speed for heat (<em>PRL</em> 129, 120603, 2022).</p>
+<p class="tl-cite">Van Vu &amp; Saito, PRX 2023 · Lee et al., PRL 2022</p>
+</div>
+<div class="tl-item ok">
+<p class="tl-year">2025</p>
+<p class="tl-title">The thermodynamic cost of communication</p>
+<p class="tl-body"><strong>Yadav &amp; Wolpert</strong> proved that transmitting information <em>between</em> computational subsystems has an unavoidable dissipative cost — an overlooked component of a computer's heat bill that grows with communication bandwidth. In their framing: "talk isn't cheap." (<em>Phys. Rev. Research</em>, 2025.)</p>
+<p class="tl-cite">Yadav &amp; Wolpert, Phys. Rev. Research 2025</p>
+</div>
+</div>
+<p>Taken together, these results are building something like a <em>thermodynamic code</em> — a body of constraints on specified nonequilibrium processes, just as Shannon's channel capacity constrains a specified communication model. The analogy is deliberate: the people doing this work view Shannon-era information theory and 21st-century stochastic thermodynamics as two chapters of the same subject.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">03</span> · the cost of a tick</p>
+<h2>Clocks run on entropy</h2>
+<p>Here is a fact that, once you hear it, feels obvious: in important clock models and experiments, higher accuracy comes with higher dissipation.</p>
+<p>The team — <strong>Pearson, Guryanova, Erker, Laird, Briggs, Huber &amp; Ares</strong>, spanning Oxford, Vienna, and Lancaster — built the simplest possible clock: a nanometre-thick mechanical membrane vibrating in a cryogenic cavity, its oscillations read out by a radio-frequency circuit. By varying the drive power, they tuned the clock from sloppy to sharp and measured both accuracy and entropy production. They found a <em>linear</em> relationship: double the accuracy, double the dissipation. Their clock operated within an order of magnitude of the theoretical minimum. <StatusChip status={"ok"} label={"established"} /></p>
+<div class="formula">
+<MathBlock latex={String.raw`\text{accuracy} \propto \text{entropy production}`} />
+<p class="cap">More precise timekeeping demands more dissipation. Pearson et al., Physical Review X, 2021.</p>
+</div>
+<p>Follow-up work has deepened this. <strong>Meier, Schwarzhans, Erker &amp; Huber</strong> (<em>PRL</em> 131, 220201, 2023) showed the cost splits into <em>accuracy</em> (regularity) and <em>resolution</em> (tick rate), both requiring entropy in their framework but in different ways. And a 2025 <em>PRL</em> paper on the entropic costs of extracting classical ticks from a quantum clock argued that the dominant cost can be not the clockwork but the <em>measurement</em> — the act of amplifying a quantum oscillation into a classical signal. The demon's cousin again: the cost is not in the knowing, but in the <em>making-classically-known</em>.</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">04</span> · the highest-variance bet</p>
+<h2>Thermodynamic computing: noise as a feature</h2>
+<p>For seventy years, engineering's response to thermal noise has been: suppress it. Every transistor is designed to overpower the random jitter of its atoms with a clean voltage swing many times larger. That swing is where most of the energy goes and most of the heat comes from. The thermodynamic-computing programme asks: <em>what if you stopped fighting the noise and started computing with it?</em></p>
+<p>The idea is surprisingly direct. A system of coupled physical oscillators — RLC circuits, resistor networks — will, if left alone, thermally fluctuate. Those fluctuations sample from the Boltzmann distribution of the system's energy landscape. Design the landscape carefully, and those samples solve problems: linear systems, Bayesian inference, energy-based generative models. The computation is not imposed <em>against</em> the physics; it <em>is</em> the physics.</p>
+<div class="claim">
+<div class="ctop"><span class="cnum">Hardware 01</span><StatusChip status={"hint"} label={"peer-reviewed proof of concept"} printLabel={"review"} /></div>
+<h3>Normal Computing's Stochastic Processing Unit</h3>
+<p><strong>Melanson, Abu Khater, Aifer, Donatella, Gordon</strong> and colleagues published <em>"Thermodynamic Computing System for AI Applications"</em> in <em>Nature Communications</em> (16, 3757, April 2025). It describes a prototype <em class="term">stochastic processing unit</em> (SPU): eight fully coupled analog RLC oscillator nodes on a printed circuit board, performing Gaussian sampling and matrix inversion by letting the coupled system thermalize. A companion theory paper (<em>npj Unconventional Computing</em>, 2024) maps linear-algebra primitives onto thermodynamic equilibrium sampling, claiming asymptotic speedups scaling linearly in matrix dimension.</p>
+<p>The caveat: this is an <strong>eight-node prototype</strong>. An end-to-end wall-clock or energy advantage over a modern GPU on a real workload <strong>has not been demonstrated</strong>. The theory is elegant and peer-reviewed; the hardware exists; the performance claims await validation at scale. <StatusChip status={"hint"} label={"promising hint"} printLabel={"promising"} /></p>
+</div>
+<div class="claim">
+<div class="ctop"><span class="cnum">Hardware 02</span><StatusChip status={"bad"} label={"company-reported · unvalidated"} printLabel={"review"} /></div>
+<h3>Extropic's thermodynamic sampling units</h3>
+<p><strong>Extropic</strong>, founded by Guillaume Verdon, builds chips that natively sample from energy-based models at physical speeds. Its October 2025 public material presented XTR-0 hardware and company-reported simulations or small benchmarks suggesting roughly 10,000× energy savings against GPU/VAE baselines; it did <em>not</em> independently demonstrate GPU-parity hardware on production workloads. A larger follow-on chip has been reported as planned. These figures are company-reported, based on internal benchmarks, and <strong>not independently peer-reviewed</strong>. If confirmed, they would be transformative. Until then, the project lives in the same epistemic category as any startup claim — interesting, unvalidated, carrying the full standard deviation of venture capital. Apply Day 2's lesson: extraordinary claims await extraordinary replication.</p>
+</div>
+<div class="aside">
+<p class="h">What would change the labels</p>
+<p>Upgrading thermodynamic computing from <StatusChip status={"hint"} label={"promising"} /> to <StatusChip status={"ok"} label={"established"} /> requires one clear thing: an <strong>independent, peer-reviewed benchmark</strong> demonstrating an end-to-end advantage — wall-clock <em>or</em> energy — over a modern GPU on a real ML workload, not just an isolated primitive. A preprint (arXiv:2503.09980, 2025) argues that analog quasi-static inference could in principle be performed reversibly (no Landauer floor), while training retains a fundamental lower bound. The physics is sound; the engineering is early.</p>
+</div>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">05</span> · demons, upgraded</p>
+<h2>Information engines go many-body, quantum, and autonomous</h2>
+<p>The single-particle engines of 2010–2021 were stunning proofs of concept. The recent push is in three directions: <em>scale them up</em>, <em>make them quantum</em>, and <em>embody more of the sensing and feedback inside the device</em>.</p>
+<h3>Many-body engines</h3>
+<p><strong>Chor, Sohachi, Rosen, Rahav &amp; Roichman</strong> (<em>Phys. Rev. Research</em> 5, 043193, December 2023) extended the Szilárd engine from a single particle to a <em>many-body colloidal suspension</em>, extracting work from collective number fluctuations. A follow-up (arXiv:2512.01942, December 2025, preprint) describes a "piston-like information engine" that harvests work from an <em>equilibrium</em> bath purely by conditional measurement — Maxwell's demon writ in a crowd. <StatusChip status={"ok"} label={"PRResearch paper established"} printLabel={"established"} /> <StatusChip status={"hint"} label={"piston preprint pending"} printLabel={"review"} /></p>
+<h3>A quantum engine charging a quantum battery</h3>
+<p><strong>Zhang et al.</strong> (Kim group, Tsinghua; <em>Phys. Rev. Lett.</em> 135, 140403, 2025) built a cyclic quantum information engine from a single ytterbium-171 ion, using rapid mid-circuit measurement to suppress measurement disturbance. The energy extracted per cycle was used to charge a "quantum battery." They report an information-to-ergotropy conversion efficiency of 67% of the theoretical maximum and information-to-work efficiency of 70%. <StatusChip status={"ok"} label={"established"} /></p>
+<h3>Autonomous demons</h3>
+<p>Autonomous Maxwell demons have been demonstrated experimentally since at least the 2015 single-electron work of Koski and colleagues. In such systems, measurement and feedback are implemented internally rather than by an externally timed controller. That does <em>not</em> mean the device uses no nonequilibrium resources or produces no entropy: the energetic and entropic resources still have to be included in the full accounting. Newer quantum-dot rectifiers (<em>PRR</em> 2019), stochastic-resetting demons (<em>PRR</em> 2023), and transistor-based demons (<em>PRB</em> 2025) extend that design pattern for nanoscale energy harvesting. <StatusChip status={"hint"} label={"promising — individual realizations established"} printLabel={"established"} /></p>
+<h3>A real molecular motor as a demon</h3>
+<p><strong>Amano, Esposito, Kreidt, Leigh, Penocchio &amp; Roberts</strong> (<em>Nature Chemistry</em> 14, 530, 2022) performed a rigorous information-thermodynamic analysis of a <em>real chemically-driven synthetic rotary molecular motor</em> from the synthetic molecular-machines tradition recognized by the 2016 Nobel Prize in Chemistry, showing its operation decomposes into an information-processing cycle. The demon, it turns out, was always just a particularly well-designed molecule. <StatusChip status={"ok"} label={"established"} /></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">06</span> · erasure goes quantum</p>
+<h2>Cooperative erasure and beyond-Landauer protocols</h2>
+<p><strong>Buffoni &amp; Campisi</strong> (<em>Quantum</em> 7, 961, 2023) erased 256 qubits <em>simultaneously</em> on a D-Wave Advantage quantum annealer by exploiting spontaneous symmetry breaking amplified by quantum tunnelling. The collective flip achieved a per-bit erasure cost approaching <MathInline latex={String.raw`k_B T \ln 2`} /> with ~99.9% success rate, while the per-bit <em>action</em> (energy × time) reached <MathInline latex={String.raw`10^{-22}`} /> erg·s — extraordinarily fast and efficient. The key: cooperative effects let the system cross the energy barrier collectively rather than bit by bit. <StatusChip status={"ok"} label={"established"} /></p>
+<p>A separate theoretical programme explores <em class="term">ancilla-assisted erasure</em> (arXiv:2402.15812, 2024), in which an auxiliary quantum system shuttles entropy away from the memory, releasing <em>less than</em> <MathInline latex={String.raw`k_B T \ln 2`} /> of heat to the local bath in specific operating regimes. The authors stress the second law is not violated — the total entropy, including the ancilla, still increases — but the <em>local</em> heat can be reduced below the textbook floor. This is a pointer toward ultra-low-dissipation quantum computing, not a free lunch. <StatusChip status={"hint"} label={"promising — regime-specific, preprint"} printLabel={"promising"} /></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">07</span> · information at the edge of spacetime</p>
+<h2>The island formula and the Page curve</h2>
+<p>The longest-running open problem in quantum gravity is the <em class="term">black-hole information paradox</em>: does the information a black hole swallows survive its evaporation? Hawking's 1975 calculation said destroyed; quantum mechanics says nothing is permanently lost. For forty-five years, nobody had a satisfying resolution.</p>
+<p>In 2019–2020, a series of papers changed the conversation. <strong>Penington</strong> (<em>JHEP</em>, 2020), <strong>Almheiri, Engelhardt, Marolf &amp; Maxfield</strong> (<em>JHEP</em>, 2019), and <strong>Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini</strong> (<em>JHEP</em>, 2020) found that if you compute the entropy of Hawking radiation using a gravitational path-integral method — <em class="term">replica wormholes</em> — the answer includes contributions from disconnected regions of spacetime called <em class="term">"islands"</em> inside the black hole's interior. When these kick in, the radiation's entropy turns over and begins to <em>decrease</em>, tracing the <em class="term">Page curve</em> — exactly the shape a unitary (information-preserving) theory predicts in those controlled models.</p>
+<blockquote>Island calculations are a leading theoretical resolution in controlled semiclassical-gravity models. They strongly support unitary evaporation there; they are not yet a complete microscopic account of realistic black holes.</blockquote>
+<p>The authoritative review is <strong>Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini</strong>, <em>"The entropy of Hawking radiation,"</em> <em>Reviews of Modern Physics</em> 93, 035002 (2021). <StatusChip status={"ok"} label={"established as a theoretical result in model settings"} printLabel={"established"} /></p>
+<p>The caveat: there is <strong>no experimental or observational test</strong>. The calculation lives inside a specific theoretical framework, and it is not clear it applies to the real, four-dimensional, non-AdS universe. The result is as mathematically secure as anything in the field — but the field itself floats above experiment. <StatusChip status={"hint"} label={"no experimental test"} printLabel={"review"} /></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">08</span> · the big picture</p>
+<h2>A unified physics of computation?</h2>
+<p>The most ambitious attempt to pull this together is a 2024 <em>PNAS</em> perspective by <strong>Wolpert, Korbel, Lynn, Tasnim, Grochow, Kardeş</strong> and seventeen co-authors: <em>"Is stochastic thermodynamics the key to understanding the energy costs of computation?"</em> Their argument: the thermodynamics of computation is not just about Landauer's limit — that's merely the floor. Above it lies a rich structure of mismatch costs, communication costs, and nonequilibrium constraints that form a comprehensive physics of computation as rigorous as Shannon's theory of communication.</p>
+<p>One comparison from their review stops you in your tracks: biological systems — the molecular machinery of a cell — can appear roughly <strong>10⁵ times more energy-efficient</strong> per operation than some human-built computers, depending on what is counted as an operation and a boundary. Treat that as an illustrative, definition-dependent gap, not a universal constant. The main page's Landauer-ladder diagram showed chips sitting far above the thermodynamic floor; the deeper point is that biology often computes closer to physical noise and dissipation limits than conventional digital engineering, and understanding <em>how</em> is a foundational open problem. <StatusChip status={"ok"} label={"established framework, illustrative ratio"} printLabel={"established"} /></p>
+<div class="aside">
+<p class="h">The bridge to Days 83–85</p>
+<p>This is the direct setup for the physics-of-life deep dive. When we return to Schrödinger's "what is life?" question, we'll have two new tools that didn't exist five years ago: the Variance Sum Rule for measuring entropy production inside cells, and Wolpert's framework for bounding the energy cost of any computation. Together, they begin to close the gap between "life feeds on negentropy" (a slogan) and "here is the thermodynamic ledger of a specific biochemical pathway" (a number).</p>
+</div>
+</section>
+<div class="recap">
+<p class="h">◆ The frontier in three sentences</p>
+<dl>
+<div><dt>What's changed</dt><dd>Since roughly 2019, information thermodynamics and quantum-gravity-adjacent information theory have moved from confirming old principles to building new ones: scoped trade-off laws (TURs, speed limits, cost of timekeeping and communication), new entropy-production measurements in living cells, quantum-cooperative erasure near the Landauer floor, and island-formula progress on the black-hole information paradox in controlled models.</dd></div>
+<div><dt>What's betting big</dt><dd>Thermodynamic computing — turning thermal noise from enemy into computational substrate — is the field's highest-variance wager: elegant physics, early hardware, headline efficiency claims that remain unvalidated by independent benchmarks.</dd></div>
+<div><dt>The honest label</dt><dd>This frontier mixes peer-reviewed experiments, peer-reviewed theory, perspectives, preprints, and company-reported claims. The difference between a breakthrough and a footnote is independent replication, scale, and time — which is exactly what makes a frontier a frontier.</dd></div>
+</dl>
+<p class="threads"><b>Threads forward ›</b> thermodynamic speed limits → <strong>Day 33</strong> (thermodynamics) · entropy production in cells → <strong>Days 83–85</strong> (physics of life) · thermodynamic computing + Wolpert's 10⁵ gap → <strong>Days 178–179</strong> (energy &amp; AI economy) · island formula → <strong>Day 40</strong> (black holes) · TURs → <strong>Day 13</strong> (measurement) · quantum erasure → <strong>Day 47</strong> (quantum computing).</p>
+</div>
+<hr class="div" />
+<section class="sources">
+<p class="sec-eyebrow">Sources · frontier appendix</p>
+<h2>Sources — recent frontier work</h2>
+<ol>
+<li>Di Terlizzi, I. et al. (2024). "Variance Sum Rule for Entropy Production." <em>Science</em> 383: 971. <span class="meta">doi:10.1126/science.adh1823.</span></li>
+<li>Skinner, D. J. &amp; Dunkel, J. (2021). "Improved bounds on entropy production in living systems." <em>PNAS</em> 118: e2024300118.</li>
+<li>Pearson, A. N. et al. (2021). "Measuring the Thermodynamic Cost of Timekeeping." <em>Phys. Rev. X</em> 11: 021029.</li>
+<li>Meier, F. et al. (2023). "Fundamental accuracy–resolution trade-off for timekeeping devices." <em>PRL</em> 131: 220201.</li>
+<li>Wadhia, V. et al. (2025). "Entropic Costs of Extracting Classical Ticks from a Quantum Clock." <em>PRL</em> 135: 200407. <span class="meta">doi:10.1103/5rtj-djfk.</span></li>
+<li>Van Vu, T. &amp; Saito, K. (2023). "Thermodynamic Unification of Optimal Transport…" <em>Phys. Rev. X</em> 13: 011013.</li>
+<li>Lee, J. S. et al. (2022). "Speed Limit for a Highly Irreversible Process and Tight Finite-Time Landauer's Bound." <em>PRL</em> 129: 120603.</li>
+<li>Pietzonka, P. (2022). "Classical Pendulum Clocks Break the Thermodynamic Uncertainty Relation." <em>PRL</em> 128: 130606.</li>
+<li>Dieball, C. &amp; Godec, A. (2023). "Direct Route to TURs and Their Saturation." <em>PRL</em> 130: 087101.</li>
+<li>Yadav, A. C. &amp; Wolpert, D. H. (2025). "Minimal thermodynamic cost of communication." <em>Phys. Rev. Research</em> 7: 043324. <span class="meta">doi:10.1103/qvc2-32xr.</span></li>
+<li>Melanson, D. et al. (2025). "Thermodynamic Computing System for AI Applications." <em>Nature Communications</em> 16: 3757. <span class="meta">doi:10.1038/s41467-025-59011-x.</span></li>
+<li>Aifer, M. et al. (2024). "Thermodynamic Linear Algebra." <em>npj Unconventional Computing</em> 1: 13.</li>
+<li>Extropic (2025). XTR-0 announcement and thermodynamic-computing posts (extropic.ai, Oct 2025). <span class="meta">Company-reported simulations/benchmarks; NOT independently validated.</span></li>
+<li>Chor, R. et al. (2023). "Many-body Szilard engine…" <em>Phys. Rev. Research</em> 5: 043193.</li>
+<li>Goerlich, R. et al. (2025). "Piston-Like Information Engine I: Universal Features in Equilibrium." <em>arXiv</em>:2512.01942. <span class="meta">Preprint.</span></li>
+<li>Zhang, Z. et al. (2025). "Single-Ion Information Engine for Charging Quantum Battery." <em>PRL</em> 135: 140403. <span class="meta">doi:10.1103/g45c-ssfx.</span></li>
+<li>Koski, J. V. et al. (2015). "On-Chip Maxwell's Demon as an Information-Powered Refrigerator." <em>Physical Review Letters</em> 115: 260602. <span class="meta">Autonomous single-electron demon.</span></li>
+<li>Amano, S. et al. (2022). "…information thermodynamics analysis of a synthetic molecular motor." <em>Nature Chemistry</em> 14: 530. <span class="meta">doi:10.1038/s41557-022-00899-z.</span></li>
+<li>Buffoni, L. &amp; Campisi, M. (2023). "Cooperative quantum information erasure." <em>Quantum</em> 7: 961. <span class="meta">doi:10.22331/q-2023-03-23-961.</span></li>
+<li>Almheiri, A. et al. (2021). "The entropy of Hawking radiation." <em>Rev. Mod. Phys.</em> 93: 035002.</li>
+<li>Penington, G. (2020). "Entanglement Wedge Reconstruction…" <em>JHEP</em> 09: 002. · Almheiri, A. et al. (2020). "Replica Wormholes…" <em>JHEP</em> 05: 013.</li>
+<li>Wolpert, D. H. et al. (2024). "Is stochastic thermodynamics the key…?" <em>PNAS</em> 121: e2321112121.</li>
+<li>Manzano, G. et al. (2024). "Thermodynamics of Computations…" <em>Phys. Rev. X</em> 14: 021026.</li>
+</ol>
+</section>

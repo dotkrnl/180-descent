@@ -1,0 +1,185 @@
+import MathBlock from "@app/components/lesson/MathBlock.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+
+<p class="lede"><span class="drop">主</span>页和第一篇附录已经为你奠定了坚实的基础：香农的信息比特、兰道尔的物理能耗，以及整个理论大厦。所有这一切，都建立在数十年前便已尘埃落定的研究之上。而本篇附录则截然不同：它关注约 2019–2026 年的近期前沿工作，其中许多来自最近两年，有的甚至还带着墨香。这些是亲手拓荒该领域的学者们认为最关键的成果：最有可能颠覆和重塑我们既有知识的实验、理论框架以及工程豪赌。有些能立得住，有些则会被证伪。在今天，我们的「前沿校准器」比以往任何时候都更需要开足马力。</p>
+<div class="panel landscape">
+<p class="ptitle">示意图 · 前沿图景</p>
+<h3>七条前沿线索，同一套问题</h3>
+<p class="pnote">信息物理的近期前沿延伸出七条活跃线索。颜色只表示证据状态：青色代表已确立，琥珀色代表初露曙光；虚线边框表示目前主要停留在理论模型中，尚无实验检验。</p>
+<svg viewBox="0 0 640 330" role="img" aria-label="信息物理学的七个前沿领域。">
+<defs><marker id="appendix-d007-the-bleeding-edge-fa" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path></marker></defs>
+<g font-family="IBM Plex Mono,monospace" font-size="10.5">
+<rect x="10" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--hint)" stroke-width="2"></rect><text x="95" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">热力学</text><text x="95" y="58" text-anchor="middle" fill="var(--ink-soft)">计算</text>
+<rect x="235" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="320" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">权衡法则</text><text x="320" y="58" text-anchor="middle" fill="var(--ink-soft)">TUR · 速度极限</text>
+<rect x="460" y="20" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="545" y="42" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">计时</text><text x="545" y="58" text-anchor="middle" fill="var(--ink-soft)">能耗要求</text>
+<rect x="10" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="95" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">信息引擎</text><text x="95" y="166" text-anchor="middle" fill="var(--ink-soft)">麦克斯韦妖</text>
+<rect x="235" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--hint)" stroke-width="2"></rect><text x="320" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">量子信息</text><text x="320" y="166" text-anchor="middle" fill="var(--ink-soft)">热力学</text>
+<rect x="460" y="130" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-width="2"></rect><text x="545" y="150" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">生命系统</text><text x="545" y="166" text-anchor="middle" fill="var(--ink-soft)">细胞中的熵</text>
+<rect x="235" y="250" width="170" height="52" rx="9" fill="var(--raised)" stroke="var(--ok)" stroke-dasharray="4 3"></rect><text x="320" y="270" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">黑洞</text><text x="320" y="286" text-anchor="middle" fill="var(--ink-soft)">信息悖论</text>
+</g>
+<g stroke="var(--ink-faint)" stroke-width="1.2" fill="none" marker-end="url(#appendix-d007-the-bleeding-edge-fa)">
+<line x1="180" y1="46" x2="232" y2="46"></line><line x1="405" y1="46" x2="457" y2="46"></line>
+<line x1="95" y1="72" x2="95" y2="127"></line><line x1="320" y1="72" x2="320" y2="127"></line><line x1="545" y1="72" x2="545" y2="127"></line>
+<line x1="180" y1="156" x2="232" y2="156"></line><line x1="405" y1="156" x2="457" y2="156"></line>
+<line x1="320" y1="182" x2="320" y2="247"></line>
+<path d="M95,182 C95,230 232,265 232,270"></path><path d="M545,182 C545,230 408,265 408,270"></path>
+</g>
+<g font-family="IBM Plex Mono,monospace" font-size="10.5" transform="translate(470,250)">
+<circle cx="8" cy="6" r="5" fill="var(--ok)"></circle><text x="18" y="10" fill="var(--ink-faint)">已确立的成果</text>
+<circle cx="8" cy="24" r="5" fill="var(--hint)"></circle><text x="18" y="28" fill="var(--ink-faint)">初露曙光的线索</text>
+<rect x="2" y="38" width="12" height="10" rx="2" fill="none" stroke="var(--ink-faint)" stroke-dasharray="3 2"></rect><text x="18" y="46" fill="var(--ink-faint)">仅限理论（无实验）</text>
+</g>
+</svg>
+</div>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">01</span> · 焦点成果</p>
+<h2>在活细胞内部测量不可逆性</h2>
+<p>如果要在近期成果中，选出一项在二十年后仍被人们铭记的突破，那很可能是它：2024 年，由巴塞罗那大学费利克斯·里托尔特（Felix Ritort）领衔的团队发表了一项研究，他们利用显微成像、力的校准和模型假设，推断出了活细胞产生熵的速率——这也是单个红细胞内时间之箭的定量表现。</p>
+<p>其核心原理是一个名为<span class="term">方差求和规则</span>（Variance Sum Rule）的全新数学恒等式。它将探针涨落统计与作用在它身上的恢复力联系起来，使研究者能在模型条件下估计熵产生率 <MathInline latex={String.raw`\sigma`} />。无需热量计，也无需复杂的扰动协议——但也不是只靠一台裸显微镜。</p>
+<div class="formula">
+<MathBlock latex={String.raw`\sigma \propto \text{var}(\text{displacement}) + \text{var}(\text{force})`} />
+<p class="cap">仅为示意——不是可直接通用的公式。Di Terlizzi et al., Science, 2024。</p>
+</div>
+<p>他们将这一工具对准人类红细胞，绘制出了横跨细胞膜的熵产生率分布图。其发现令人震惊：<MathInline latex={String.raw`\sigma`} /> 呈现出明显的「空间非均匀性」，在细胞的不同位置均有不同，其关联长度约为 0.6 微米。其平均值与独立的热量计测量结果高度吻合。作者将其描述为活系统熵产生的第一张热图——这是从定性的“远离平衡”语言迈向空间分辨热力学测量的重要一步。<StatusChip status={"ok"} label={"在模型假设下已确立"} printLabel={"已确立"} /></p>
+<div class="aside">
+<p class="h">本课程为何关注这一突破</p>
+<p>在第 83–85 日，我们会提问：生命看起来如此井然有序，究竟是如何与热力学第二定律达成妥协的？标准的回答——「有机体是输出熵的开放系统」——在定性上虽然没错，但在定量上却过于模糊。方差求和规则为这个模糊的答案提供了一把精密的量尺。如果能在光学显微镜的分辨率下映射出细胞内部的熵产生，我们就可以开始追问：究竟是哪些代谢途径制造了最多的不可逆性？耗散又集中在何处？这项技术将随机热力学从一个单纯的理论框架，升华为了一种全新的「显微成像手段」。</p>
+</div>
+<p>另外两项相关成果同样值得关注。斯金纳和敦克尔（Skinner &amp; Dunkel，PNAS，2021 年）开发了一套严密的优化框架，用于从部分观测中确定熵产生的界限，并将其应用于研究细菌鞭毛马达与生长中的微管。另一篇 2024 年的 PNAS 论文则使用「深度学习概率流」——即基于得分的生成模型——来估算高维活性物质系统中的熵产生，为解析手段无能为力的高维系统提供了一条计算路径。<StatusChip status={"ok"} label={"两项均已确立"} printLabel={"已确立"} /></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">02</span> · 新法则</p>
+<h2>通用权衡律：不确定性、速度与耗散</h2>
+<p>自 2020 年以来，随机热力学最深刻的概念进展，是一系列揭示了「在特定动力学假设下，高精度常伴随更多熵产生」的理论成果。如果分子马达运行时噪声极低、如果时钟走时节律稳定可靠、如果传感器测量浓度精准无误——背后往往有相应的耗散。这些<span class="term">热力学不确定关系</span>（TUR）是适用于广泛非平衡系统类别的强约束，但并不是无条件的自然铁律。</p>
+<div class="appendix-timeline">
+<div class="tl-item ok">
+<p class="tl-year">2022–23</p>
+<p class="tl-title">标准 TUR 很宽，但并非普适</p>
+<p class="tl-body">标准稳态 TUR 适用于马尔可夫跳跃过程和过阻尼朗之万系统。皮埃宗卡（Pietzonka）证明经典摆钟可以「违反」这种只含熵产生的简单形式（PRL 128, 130606, 2022），而迪巴尔与戈德克（Dieball &amp; Godec）澄清了它的朗之万推导路径和饱和条件（PRL 130, 087101, 2023）。欠阻尼和非马尔可夫系统可能需要包含额外动力学量的修正界限。</p>
+<p class="tl-cite">Pietzonka, PRL 2022 · Dieball &amp; Godec, PRL 2023</p>
+</div>
+<div class="tl-item ok">
+<p class="tl-year">2023</p>
+<p class="tl-title">速度极限、耗散与最优输运的统一</p>
+<p class="tl-body">Van Vu 与 Saito 证明，TUR、最小耗散协议以及「热力学速度极限」实际上是建立在 Wasserstein 距离最优输运理论之上的单一结构的各个侧面（PRX 13, 011013, 2023）。另外，Lee、Lee、Kwon 与 Park 推导出了一个紧的有限时间兰道尔下界：即在固定时间内擦除一个比特所需的最小耗散，在速度与热能之间进行了权衡（PRL 129, 120603, 2022）。</p>
+<p class="tl-cite">Van Vu &amp; Saito, PRX 2023 · Lee et al., PRL 2022</p>
+</div>
+<div class="tl-item ok">
+<p class="tl-year">2025</p>
+<p class="tl-title">通信也会产生耗散</p>
+<p class="tl-body">亚达夫与沃尔珀特（Yadav &amp; Wolpert）证明，在计算子系统之间传输信息会带来不可避免的耗散——这是计算机发热来源中长期被忽视的一个组成部分，且随通信带宽的增加而增长。用他们的话来说就是：「沟通并非毫无代价。」（Phys. Rev. Research，2025 年。）</p>
+<p class="tl-cite">Yadav &amp; Wolpert, Phys. Rev. Research 2025</p>
+</div>
+</div>
+<p>总的来说，这些成果正在构建一种类似于「热力学编码」的体系——一套针对指定非平衡过程的约束，就像香农信道容量限制指定通信模型一样。这种类比并非巧合：从事这一领域的学者们认为，香农时代的信息论与 21 世纪的随机热力学，本就是同一门学科的两个不同篇章。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">03</span> · 滴答声背后的耗散</p>
+<h2>时钟运转依赖于熵</h2>
+<p>这听起来像是一个显而易见的常识：在许多重要时钟模型和实验中，走时越精准，耗散越高。</p>
+<p>由来自牛津、维也纳与兰开斯特等地的联合研究团队——皮尔森、古里亚诺娃、埃尔克、莱尔德、布里格斯、胡伯与阿雷斯（Pearson, Guryanova, Erker, Laird, Briggs, Huber &amp; Ares）——建造了尽可能简单的时钟：一个在低温腔体中振动的纳米级机械薄膜，其振荡通过射频电路读取。通过调节驱动功率，他们将时钟的状态从模糊调整到精确，并同时测量了其准确度与熵产生。他们发现了一个明确的线性关系：准确度翻倍，耗散也随之翻倍。其时钟运行效率与理论极限相比，差距已在同一个数量级之内。<StatusChip status={"ok"} label={"已确立"} /></p>
+<div class="formula">
+<MathBlock latex={String.raw`\text{准确度} \propto \text{熵产生}`} />
+<p class="cap">更精准的计时需要更多的耗散。Pearson et al., Physical Review X, 2021。</p>
+</div>
+<p>后续的研究进一步深化了这一结论。迈尔、施瓦茨汉斯、埃尔克与胡伯（Meier, Schwarzhans, Erker &amp; Huber，PRL 131, 220201, 2023）表明，在他们的框架中，计时的热力学限制可以拆分为「准确度」（规律性）和「分辨率」（滴答频率），这两者都需要更多熵产生，但作用方式不同。而 2025 年发表在 PRL 上的一篇关于从量子时钟中提取经典滴答信号的论文则指出，主要耗散可能不在于时钟本身的齿轮运转，而在于「测量」本身——即把微观的量子振荡放大为经典信号的过程。这又是麦克斯韦妖的影子：能耗问题并不在于「知道」，而在于「让其被经典地知晓」。</p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">04</span> · 变数最大的豪赌</p>
+<h2>热力学计算：变噪声为特性</h2>
+<p>七十年来，工程界应对热噪声的唯一办法就是：压制它。每一个晶体管的设计初衷，都是为了用大出许多倍的清晰电压摆幅来盖过原子的随机抖动。而这部分的摆幅，正是绝大多数能量消耗和热量产生的源头。热力学计算计划则反其道而行之：如果我们不再与噪声为敌，而是直接利用它来进行计算呢？</p>
+<p>这个想法出人意料地直接。一个由耦合物理振荡器（如 RLC 电路、电阻网络）组成的系统，若任其自然，就会产生热涨落。这些涨落会自发地对系统能量景观的玻尔兹曼分布进行采样。只要精心设计这个能量景观，这些采样就可以用来求解特定的问题：如线性系统求解、贝叶斯推理、基于能量的生成模型等。在这里，计算不再是违背物理规律的逆行，计算本身就是物理过程。</p>
+<div class="claim">
+<div class="ctop"><span class="cnum">硬件 01</span><StatusChip status={"hint"} label={"同行评审概念验证"} printLabel={"待审"} /></div>
+<h3>Normal Computing 的随机处理单元</h3>
+<p>梅兰森、阿布·哈特尔、艾弗、多纳泰拉、戈登（Melanson, Abu Khater, Aifer, Donatella, Gordon）及其同事在《自然·通讯》（Nature Communications，16: 3757，2025 年 4 月）上发表了《用于人工智能应用的热力学计算系统》。它描述了一个随机处理单元（SPU）的原型：一块印制电路板上集成了八个完全耦合的模拟 RLC 振荡器节点，通过让该耦合系统达到热平衡，来进行高斯采样和矩阵求逆。一篇配套的理论论文（npj Unconventional Computing，2024 年）将线性代数原语映射到了热力学平衡采样上，并声称渐进加速比与矩阵维度呈线性比例关系。</p>
+<p>注意事项：这只是一个「八节点原型」。在实际工作负载中，相比于现代 GPU，它在端到端耗时或能耗上的优势「尚未得到证实」。理论虽然优雅且通过了同行评审，硬件也切实存在，但其性能宣称仍有待大规模验证。<StatusChip status={"hint"} label={"初露曙光"} /></p>
+</div>
+<div class="claim">
+<div class="ctop"><span class="cnum">硬件 02</span><StatusChip status={"bad"} label={"公司单方报告 · 未经证实"} printLabel={"待审"} /></div>
+<h3>Extropic 的热力学采样单元</h3>
+<p>由纪尧姆·维尔东（Guillaume Verdon）创立的 Extropic 公司正在制造能够以物理速度对基于能量的模型进行原生采样的芯片。其 2025 年 10 月的公开材料展示了 XTR-0 硬件，并给出公司单方报告的模拟或小型基准结果，声称相对于 GPU/VAE 基线可节省约 10,000 倍能耗；但它并未独立证明硬件在生产级工作负载上实现了 GPU 同等性能。据报道，一款更大规模的后续芯片正在规划中。这些数据纯属公司单方报告，基于其内部基准测试，并且「没有经过独立的同行评审」。若被证实，这确实将是颠覆性的突破。但在那之前，该项目依然处于与所有创业公司宣传口号相同的认识论范畴中——有趣、未经证实，且承载着风投行业的巨大变数。请应用第 2 日的教训：超乎寻常的断言，需要超乎寻常的复现。</p>
+</div>
+<div class="aside">
+<p class="h">何时才能改变评级标签</p>
+<p>要将热力学计算的标签从 <StatusChip status={"hint"} label={"初露曙光"} /> 升级为 <StatusChip status={"ok"} label={"已确立"} />，必须有「独立的、经同行评审的基准测试」，证明其在实际机器学习工作负载上——而非仅在孤立的计算原语中——相对于现代 GPU 具有端到端的优势（无论是实际运行时间还是能耗）。一份预印本论文（arXiv:2503.09980，2025 年）指出，模拟拟静态推理在原理上可以可逆地进行（不存在兰道尔能耗下限），而模型训练则依然存在基础的能耗下限。其物理学逻辑是自洽的，但工程实现仍处于极早期阶段。</p>
+</div>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">05</span> · 麦克斯韦妖的升级版</p>
+<h2>信息引擎迈向多体、量子与自主运行</h2>
+<p>2010 至 2021 年间的单粒子引擎是令人惊叹的概念验证。近期研发工作主要指向三个方向：规模化、量子化，以及把更多感知与反馈机制内嵌到器件之中。</p>
+<h3>多体引擎</h3>
+<p>Chor 等人（2023）将西拉德引擎从单粒子系统扩展到多体胶体悬浮液，利用集体数量涨落来提取有用功。后续的一项工作（arXiv:2512.01942，2025 年 12 月预印本）描述了一种「活塞式信息引擎」，它纯粹通过条件测量从平衡态热浴中收集功——这相当于在群体层面上实现麦克斯韦妖。<StatusChip status={"ok"} label={"PRResearch 论文已确立"} printLabel={"已确立"} /> <StatusChip status={"hint"} label={"活塞引擎预印本待审"} printLabel={"待审"} /></p>
+<h3>量子引擎为量子电池充电</h3>
+<p>清华大学金奇奂团队的 Zhang 等人（2025）利用单个镱-171 离子构建了一个循环运行的量子信息引擎，通过快速的量子电路中的中途测量（mid-circuit measurement）来抑制测量干扰。每个循环得到的能量被用来为一个「量子电池」充电。他们报告的信息到最大可用功（ergotropy）的转化效率达到了理论上限的 67%，而信息到功的整体效率达到了 70%。<StatusChip status={"ok"} label={"已确立"} /></p>
+<h3>自主麦克斯韦妖</h3>
+<p>至少从 Koski 及其同事 2015 年的单电子实验开始，自主麦克斯韦妖就已经被实验展示。在这类系统中，测量和反馈由器件内部实现，而不是由外部定时控制器执行。但这并不意味着器件不使用非平衡资源，也不意味着它不产生熵；完整分析仍必须包含其能量与熵资源。较新的量子点整流器（PRR，2019 年）、随机重置麦克斯韦妖（PRR，2023 年）以及基于晶体管的麦克斯韦妖（PRB，2025 年）则把这种设计模式继续推向纳米尺度能量收集。<StatusChip status={"hint"} label={"初露曙光——单体实现已确立"} printLabel={"已确立"} /></p>
+<h3>将真实的分子马达作为麦克斯韦妖</h3>
+<p>阿马诺、埃斯波西托、克赖特、利、佩诺基奥与罗伯茨（Amano, Esposito, Kreidt, Leigh, Penocchio &amp; Roberts，Nature Chemistry，2022 年）对一个真实的化学驱动合成旋转分子马达进行了严格的信息热力学分析；这类合成分子机器正属于 2016 年诺贝尔化学奖所表彰的研究传统。论文证明，其运转可以分解为一个信息处理循环。原来，麦克斯韦妖一直都只是一个设计得特别精巧的分子。<StatusChip status={"ok"} label={"已确立"} /></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">06</span> · 擦除走向量子化</p>
+<h2>协同擦除与降低局部热耗散的方案</h2>
+<p>Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自发对称性破缺，在 D-Wave Advantage 量子退火器上同时擦除了 256 个量子比特。这一集体翻转实现了接近 <MathInline latex={String.raw`k_B T \ln 2`} /> 的单比特擦除耗散，成功率达 ~99.9%，而单比特作用量（能量 × 时间）低至 <MathInline latex={String.raw`10^{-22}`} /> erg·s——其速度和能效都极其惊人。其关键在于：协同效应使系统能够集体越过势垒，而不是逐个比特地跨越。<StatusChip status={"ok"} label={"已确立"} /></p>
+<p>另一个独立的理论项目则探索了<span class="term">辅助系统协助擦除</span>（ancilla-assisted erasure，arXiv:2402.15812，2024 年），即通过引入一个辅助量子系统来转移存储器中的熵，从而在特定的运行状态下，向局部热浴中释放「少于」 <MathInline latex={String.raw`k_B T \ln 2`} /> 的热量。作者强调，这并没有违反第二定律——包括辅助系统在内的总熵依然增加——但局部发热量确实能降到教科书上的经典下限之下。这为超低耗散量子计算的研究指引了方向，而非所谓的免费午餐。<StatusChip status={"hint"} label={"初露曙光——特定机制下适用，预印本"} printLabel={"初露曙光"} /></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">07</span> · 时空边缘的信息</p>
+<h2>孤岛公式与佩奇曲线</h2>
+<p>量子引力领域悬而未决最久的一个难题便是<span class="term">黑洞信息悖论</span>：被黑洞吞噬的信息，在黑洞蒸发后还能留存下来吗？霍金 1975 年的计算认为信息被彻底毁灭了；而量子理论的幺正演化要求信息不被永久销毁。整整四十五年来，无人能给出一个令人满意的解释。</p>
+<p>在 2019–2020 年，一系列研究彻底改变了这一对话。佩宁顿（Penington，JHEP，2020 年），阿尔姆海里、恩格尔哈特、马罗夫与麦克斯菲尔德（Almheiri, Engelhardt, Marolf &amp; Maxfield，JHEP，2019 年），以及阿尔姆海里、哈特曼、马尔达西那、沙古里安与塔吉迪尼（Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini，JHEP，2020 年）发现，如果使用引力路径积分方法中的<span class="term">副本虫洞</span>来计算霍金辐射的熵，计算结果会把黑洞内部被称为<span class="term">孤岛</span>的非连通时空区域的贡献包含在内。当这些「孤岛」开始发挥作用时，辐射的熵就会迎来拐点并开始减少，从而绘制出一条<span class="term">佩奇曲线</span>——这恰恰是在这些受控模型中幺正理论所预测的形状。</p>
+<blockquote>孤岛计算是在受控半经典引力模型中的领先理论方案。它们强力支持这些模型中的幺正蒸发；但还不是现实黑洞信息恢复的完整微观解释。</blockquote>
+<p>对此最权威的综述是 Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini 所著的《霍金辐射的熵》（"The entropy of Hawking radiation"，Reviews of Modern Physics 93, 035002, 2021 年）。<StatusChip status={"ok"} label={"作为模型设定中的理论成果已确立"} printLabel={"已确立"} /></p>
+<p>注意事项：目前「没有任何实验或天文观测的测试」。该计算完全依赖于特定的理论框架，尚不清楚它是否适用于现实中的四维、非 AdS 时空。这一结论在数学上与该领域的其他定理一样坚实，但目前仍缺乏实验或天文观测检验。<StatusChip status={"hint"} label={"尚无实验检验"} printLabel={"待审"} /></p>
+</section>
+<section>
+<p class="sec-eyebrow"><span class="sec-num">08</span> · 宏观图景</p>
+<h2>计算的统一物理学？</h2>
+<p>对此最宏伟的整合尝试，见于沃尔珀特、科贝尔、林、塔斯尼姆、格罗肖、卡尔代什（Wolpert, Korbel, Lynn, Tasnim, Grochow, Kardeş）以及其他 17 位共同作者于 2024 年发表的 PNAS 展望论文：《随机热力学是理解计算能耗的关键吗？》（"Is stochastic thermodynamics the key to understanding the energy costs of computation?"）。他们的论点是：计算热力学不仅仅关于兰道尔极限——那仅仅是一个最低底线。在其之上，还包含着由失配开销、通信耗散和非平衡约束所组成的丰富体系，它们共同构成了如同香农通信理论一样严密的「计算物理学完整框架」。</p>
+<p>这篇展望文章给出的一项比较足以令人震撼：按照某些「每次操作」的定义，生物分子机器的能效可能比部分人造计算系统高约 <span class="hl">10⁵ 倍</span>。请把它当作依赖定义的示意性差距，而不是普适常数。主页的兰道尔阶梯图显示，芯片的运行功耗远高于热力学极限底线；更深层的要点是，生物系统经常更靠近物理噪声和耗散边界，而探究其背后的实现机制，正是当前一个根本性的未解问题。<StatusChip status={"ok"} label={"框架已确立，比例为示意"} printLabel={"已确立"} /></p>
+<div class="aside">
+<p class="h">通往第 83–85 日的桥梁</p>
+<p>这直接为我们接下来对生命物理学的深度探索做好了铺垫。当我们重新审视薛定谔提出的「生命是什么？」这一经典问题时，我们将拥有两个五年前尚不存在的利器：用于测量细胞内部熵产生率的方差求和规则，以及用于划定任何计算能耗界限的沃尔珀特框架。两者合力，开始缩窄「生命以负熵为生」（这只是一个口号）与「这条生化途径会产生多少热力学耗散」（这能给出一个具体的数字）之间的鸿沟。</p>
+</div>
+</section>
+<div class="recap">
+<p class="h">◆ 三句话概括前沿地带</p>
+<dl>
+<div><dt>哪些被改变了</dt><dd>大约自 2019 年以来，信息热力学以及与量子引力相邻的信息理论已从验证既有原理转向建立新法则：包括有适用范围的权衡律（TUR、速度极限、计时与通信耗散）、活细胞内部新的熵产生测量、接近兰道尔极限的量子协同擦除，以及孤岛公式在受控模型中对黑洞信息悖论的推进。</dd></div>
+<div><dt>哪些是宏大赌注</dt><dd>热力学计算——即将热噪声从敌人转变为计算基底——是该领域最受瞩目的豪赌：物理学逻辑优雅，硬件尚处早期，那些引人注目的能效声明依然有待独立基准测试的验证。</dd></div>
+<div><dt>坦诚的评级标签</dt><dd>这个前沿混合了同行评审实验、同行评审理论、综述/展望、预印本和公司单方报告。是成为颠覆性的突破还是沦为历史的脚注，取决于独立复现、规模化和时间——而这，也正是前沿之所以被称为前沿的原因。</dd></div>
+</dl>
+<p class="threads">后续探索 › 热力学速度极限 → 第 33 日（热力学） · 细胞内的熵产生 → 第 83–85 日（生命物理学） · 热力学计算与沃尔珀特的 10⁵ 倍能效差 → 第 178–179 日（能源与 AI 经济） · 孤岛公式 → 第 40 日（黑洞） · TUR → 第 13 日（测量） · 量子擦除 → 第 47 日（量子计算）。</p>
+</div>
+<hr class="div" />
+<section class="sources">
+<p class="sec-eyebrow">文献来源 · 前沿附录</p>
+<h2>文献来源——近期前沿工作</h2>
+<ol>
+<li>Di Terlizzi, I. et al. (2024). "Variance Sum Rule for Entropy Production." <em>Science</em> 383: 971. <span class="meta">doi:10.1126/science.adh1823.</span></li>
+<li>Skinner, D. J. &amp; Dunkel, J. (2021). "Improved bounds on entropy production in living systems." <em>PNAS</em> 118: e2024300118.</li>
+<li>Pearson, A. N. et al. (2021). "Measuring the Thermodynamic Cost of Timekeeping." <em>Phys. Rev. X</em> 11: 021029.</li>
+<li>Meier, F. et al. (2023). "Fundamental accuracy–resolution trade-off for timekeeping devices." <em>PRL</em> 131: 220201.</li>
+<li>Wadhia, V. et al. (2025). "Entropic Costs of Extracting Classical Ticks from a Quantum Clock." <em>PRL</em> 135: 200407. <span class="meta">doi:10.1103/5rtj-djfk。</span></li>
+<li>Van Vu, T. &amp; Saito, K. (2023). "Thermodynamic Unification of Optimal Transport…" <em>Phys. Rev. X</em> 13: 011013.</li>
+<li>Lee, J. S. et al. (2022). "Speed Limit for a Highly Irreversible Process and Tight Finite-Time Landauer's Bound." <em>PRL</em> 129: 120603.</li>
+<li>Pietzonka, P. (2022). "Classical Pendulum Clocks Break the Thermodynamic Uncertainty Relation." <em>PRL</em> 128: 130606.</li>
+<li>Dieball, C. &amp; Godec, A. (2023). "Direct Route to TURs and Their Saturation." <em>PRL</em> 130: 087101.</li>
+<li>Yadav, A. C. &amp; Wolpert, D. H. (2025). "Minimal thermodynamic cost of communication." <em>Phys. Rev. Research</em> 7: 043324. <span class="meta">doi:10.1103/qvc2-32xr。</span></li>
+<li>Melanson, D. et al. (2025). "Thermodynamic Computing System for AI Applications." <em>Nature Communications</em> 16: 3757. <span class="meta">doi:10.1038/s41467-025-59011-x。</span></li>
+<li>Aifer, M. et al. (2024). "Thermodynamic Linear Algebra." <em>npj Unconventional Computing</em> 1: 13.</li>
+<li>Extropic (2025). XTR-0 announcement and thermodynamic-computing posts (extropic.ai, Oct 2025). <span class="meta">公司单方模拟/基准报告；未经独立验证。</span></li>
+<li>Chor, R. et al. (2023). "Many-body Szilard engine…" <em>Phys. Rev. Research</em> 5: 043193.</li>
+<li>Goerlich, R. et al. (2025). "Piston-Like Information Engine I: Universal Features in Equilibrium." <em>arXiv</em>:2512.01942. <span class="meta">预印本。</span></li>
+<li>Zhang, Z. et al. (2025). "Single-Ion Information Engine for Charging Quantum Battery." <em>PRL</em> 135: 140403. <span class="meta">doi:10.1103/g45c-ssfx。</span></li>
+<li>Koski, J. V. et al. (2015). "On-Chip Maxwell's Demon as an Information-Powered Refrigerator." <em>Physical Review Letters</em> 115: 260602. <span class="meta">自主单电子麦克斯韦妖。</span></li>
+<li>Amano, S. et al. (2022). "…information thermodynamics analysis of a synthetic molecular motor." <em>Nature Chemistry</em> 14: 530. <span class="meta">doi:10.1038/s41557-022-00899-z。</span></li>
+<li>Buffoni, L. &amp; Campisi, M. (2023). "Cooperative quantum information erasure." <em>Quantum</em> 7: 961. <span class="meta">doi:10.22331/q-2023-03-23-961。</span></li>
+<li>Almheiri, A. et al. (2021). "The entropy of Hawking radiation." <em>Rev. Mod. Phys.</em> 93: 035002.</li>
+<li>Penington, G. (2020). "Entanglement Wedge Reconstruction…" <em>JHEP</em> 09: 002. · Almheiri, A. et al. (2020). "Replica Wormholes…" <em>JHEP</em> 05: 013.</li>
+<li>Wolpert, D. H. et al. (2024). "Is stochastic thermodynamics the key…?" <em>PNAS</em> 121: e2321112121.</li>
+<li>Manzano, G. et al. (2024). "Thermodynamics of Computations…" <em>Phys. Rev. X</em> 14: 021026.</li>
+</ol>
+</section>
