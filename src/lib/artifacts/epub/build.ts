@@ -1,155 +1,233 @@
-import { mkdir, readFile, readdir, writeFile, copyFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { copyFile, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
 import JSZip from "jszip";
 import YAML from "yaml";
-import { escapeXml } from "./lib/escape.mjs";
-import { loadDays } from "./lib/days.mjs";
+import { loadLegacyDays, type LegacyDay } from "@lib/content";
+import { escapeXml } from "@lib/text";
 
-const book = YAML.parse(await readFile("src/_data/book.yaml", "utf8"));
+type CheerioRoot = ReturnType<typeof cheerio.load>;
 
-await mkdir("_site/downloads", { recursive: true });
-await mkdir("dist/downloads", { recursive: true });
+export interface BuildAllEpubsOptions {
+  root: string;
+}
 
-await buildEpub({
-  meta: {
-    title: book.title,
-    subtitle: book.subtitle,
-    authors: book.authors,
-    language: book.language,
-    publisher: book.publisher,
-    epub_identifier: book.epub_identifier
-  },
-  dayDir: "src/days",
-  siteDayDir: "_site/days",
-  dayUrlPrefix: "/days/",
-  introHtml: "_site/introduction/index.html",
-  introUrl: "/introduction/",
-  introTitle: "Introduction",
-  introLabel: "Introduction",
-  dayLabel: "Day",
-  output: "180-descent.epub"
-});
+interface BookData {
+  title: string;
+  subtitle: string;
+  deep_dive_subtitle: string;
+  authors: string;
+  language: string;
+  publisher: string;
+  epub_identifier: string;
+  zh: {
+    title: string;
+    subtitle: string;
+    deep_dive_subtitle: string;
+    authors: string;
+    translators?: string;
+    language: string;
+    epub_identifier: string;
+  };
+}
 
-await buildEpub({
-  meta: {
-    title: `${book.title}: Deep Dive Edition`,
-    subtitle: book.deep_dive_subtitle,
-    authors: book.authors,
-    language: book.language,
-    publisher: book.publisher,
-    epub_identifier: `${book.epub_identifier}-deep-dive`
-  },
-  dayDir: "src/days",
-  siteDayDir: "_site/days",
-  dayUrlPrefix: "/days/",
-  introHtml: "_site/introduction/index.html",
-  introUrl: "/introduction/",
-  introTitle: "Introduction",
-  introLabel: "Introduction",
-  dayLabel: "Day",
-  output: "180-descent-deep-dive.epub",
-  includeDeepDive: true
-});
+interface EpubMeta {
+  title: string;
+  subtitle?: string;
+  authors: string;
+  translators?: string;
+  language: string;
+  publisher: string;
+  epub_identifier: string;
+}
 
-await buildEpub({
-  meta: {
-    title: book.zh.title,
-    subtitle: book.zh.subtitle,
-    authors: book.zh.authors,
-    translators: book.zh.translators,
-    language: book.zh.language,
-    publisher: book.publisher,
-    epub_identifier: book.zh.epub_identifier
-  },
-  dayDir: "src/zh/days",
-  siteDayDir: "_site/zh/days",
-  dayUrlPrefix: "/zh/days/",
-  introHtml: "_site/zh/introduction/index.html",
-  introUrl: "/zh/introduction/",
-  introTitle: "导言",
-  introLabel: "导言",
-  dayLabel: "第",
-  output: "180-descent-zh.epub"
-});
+interface EpubConfig {
+  root: string;
+  meta: EpubMeta;
+  dayDir: string;
+  siteDayDir: string;
+  dayUrlPrefix: string;
+  introHtml: string | null;
+  introUrl?: string;
+  introTitle?: string;
+  introLabel?: string;
+  dayLabel: string;
+  output: string;
+  days?: LegacyDay[];
+  includeDeepDive?: boolean;
+  singleDay?: boolean;
+}
 
-await buildEpub({
-  meta: {
-    title: `${book.zh.title}：专题深入版`,
-    subtitle: book.zh.deep_dive_subtitle,
-    authors: book.zh.authors,
-    translators: book.zh.translators,
-    language: book.zh.language,
-    publisher: book.publisher,
-    epub_identifier: `${book.zh.epub_identifier}-deep-dive`
-  },
-  dayDir: "src/zh/days",
-  siteDayDir: "_site/zh/days",
-  dayUrlPrefix: "/zh/days/",
-  introHtml: "_site/zh/introduction/index.html",
-  introUrl: "/zh/introduction/",
-  introTitle: "导言",
-  introLabel: "导言",
-  dayLabel: "第",
-  output: "180-descent-zh-deep-dive.epub",
-  includeDeepDive: true
-});
+interface DayEpubConfig {
+  root: string;
+  meta: EpubMeta;
+  dayDir: string;
+  siteDayDir: string;
+  dayUrlPrefix: string;
+  dayLabel: string;
+  outputPrefix: string;
+}
 
-await buildDayEpubs({
-  meta: {
-    title: book.title,
-    subtitle: book.subtitle,
-    authors: book.authors,
-    language: book.language,
-    publisher: book.publisher,
-    epub_identifier: `${book.epub_identifier}-day`
-  },
-  dayDir: "src/days",
-  siteDayDir: "_site/days",
-  dayUrlPrefix: "/days/",
-  dayLabel: "Day",
-  outputPrefix: "180-descent-day"
-});
+interface EpubImage {
+  href: string;
+  filePath: string;
+  mediaType: string;
+  id: string;
+}
 
-await buildDayEpubs({
-  meta: {
-    title: book.zh.title,
-    subtitle: book.zh.subtitle,
-    authors: book.zh.authors,
-    translators: book.zh.translators,
-    language: book.zh.language,
-    publisher: book.publisher,
-    epub_identifier: `${book.zh.epub_identifier}-day`
-  },
-  dayDir: "src/zh/days",
-  siteDayDir: "_site/zh/days",
-  dayUrlPrefix: "/zh/days/",
-  dayLabel: "第",
-  outputPrefix: "180-descent-zh-day"
-});
+export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void> {
+  const root = options.root;
+  const book = YAML.parse(await readFile(path.join(root, "src/_data/book.yaml"), "utf8")) as BookData;
 
-async function buildDayEpubs(config) {
-  const days = await loadDays(config.dayDir, { xhtml: true });
+  await mkdir(path.join(root, "_site/downloads"), { recursive: true });
+  await mkdir(path.join(root, "dist/downloads"), { recursive: true });
+
+  await buildEpub({
+    root,
+    meta: {
+      title: book.title,
+      subtitle: book.subtitle,
+      authors: book.authors,
+      language: book.language,
+      publisher: book.publisher,
+      epub_identifier: book.epub_identifier
+    },
+    dayDir: path.join(root, "src/days"),
+    siteDayDir: path.join(root, "_site/days"),
+    dayUrlPrefix: "/days/",
+    introHtml: path.join(root, "_site/introduction/index.html"),
+    introUrl: "/introduction/",
+    introTitle: "Introduction",
+    introLabel: "Introduction",
+    dayLabel: "Day",
+    output: "180-descent.epub"
+  });
+
+  await buildEpub({
+    root,
+    meta: {
+      title: `${book.title}: Deep Dive Edition`,
+      subtitle: book.deep_dive_subtitle,
+      authors: book.authors,
+      language: book.language,
+      publisher: book.publisher,
+      epub_identifier: `${book.epub_identifier}-deep-dive`
+    },
+    dayDir: path.join(root, "src/days"),
+    siteDayDir: path.join(root, "_site/days"),
+    dayUrlPrefix: "/days/",
+    introHtml: path.join(root, "_site/introduction/index.html"),
+    introUrl: "/introduction/",
+    introTitle: "Introduction",
+    introLabel: "Introduction",
+    dayLabel: "Day",
+    output: "180-descent-deep-dive.epub",
+    includeDeepDive: true
+  });
+
+  await buildEpub({
+    root,
+    meta: {
+      title: book.zh.title,
+      subtitle: book.zh.subtitle,
+      authors: book.zh.authors,
+      translators: book.zh.translators,
+      language: book.zh.language,
+      publisher: book.publisher,
+      epub_identifier: book.zh.epub_identifier
+    },
+    dayDir: path.join(root, "src/zh/days"),
+    siteDayDir: path.join(root, "_site/zh/days"),
+    dayUrlPrefix: "/zh/days/",
+    introHtml: path.join(root, "_site/zh/introduction/index.html"),
+    introUrl: "/zh/introduction/",
+    introTitle: "导言",
+    introLabel: "导言",
+    dayLabel: "第",
+    output: "180-descent-zh.epub"
+  });
+
+  await buildEpub({
+    root,
+    meta: {
+      title: `${book.zh.title}：专题深入版`,
+      subtitle: book.zh.deep_dive_subtitle,
+      authors: book.zh.authors,
+      translators: book.zh.translators,
+      language: book.zh.language,
+      publisher: book.publisher,
+      epub_identifier: `${book.zh.epub_identifier}-deep-dive`
+    },
+    dayDir: path.join(root, "src/zh/days"),
+    siteDayDir: path.join(root, "_site/zh/days"),
+    dayUrlPrefix: "/zh/days/",
+    introHtml: path.join(root, "_site/zh/introduction/index.html"),
+    introUrl: "/zh/introduction/",
+    introTitle: "导言",
+    introLabel: "导言",
+    dayLabel: "第",
+    output: "180-descent-zh-deep-dive.epub",
+    includeDeepDive: true
+  });
+
+  await buildDayEpubs({
+    root,
+    meta: {
+      title: book.title,
+      subtitle: book.subtitle,
+      authors: book.authors,
+      language: book.language,
+      publisher: book.publisher,
+      epub_identifier: `${book.epub_identifier}-day`
+    },
+    dayDir: path.join(root, "src/days"),
+    siteDayDir: path.join(root, "_site/days"),
+    dayUrlPrefix: "/days/",
+    dayLabel: "Day",
+    outputPrefix: "180-descent-day"
+  });
+
+  await buildDayEpubs({
+    root,
+    meta: {
+      title: book.zh.title,
+      subtitle: book.zh.subtitle,
+      authors: book.zh.authors,
+      translators: book.zh.translators,
+      language: book.zh.language,
+      publisher: book.publisher,
+      epub_identifier: `${book.zh.epub_identifier}-day`
+    },
+    dayDir: path.join(root, "src/zh/days"),
+    siteDayDir: path.join(root, "_site/zh/days"),
+    dayUrlPrefix: "/zh/days/",
+    dayLabel: "第",
+    outputPrefix: "180-descent-zh-day"
+  });
+}
+
+async function buildDayEpubs(config: DayEpubConfig): Promise<void> {
+  const days = await loadLegacyDays(config.dayDir, { xhtml: true });
   for (const day of days) {
     await buildEpub({
       ...config,
       meta: {
         ...config.meta,
         title: dayDocumentTitle(day, config),
-        epub_identifier: `${config.meta.epub_identifier}-${String(day.data.day).padStart(3, "0")}`
+        epub_identifier: `${config.meta.epub_identifier}-${String(dayNumber(day)).padStart(3, "0")}`
       },
       days: [day],
       introHtml: null,
-      output: `${config.outputPrefix}-${day.data.day_path}.epub`,
+      output: `${config.outputPrefix}-${dayPath(day)}.epub`,
       singleDay: true,
       includeDeepDive: true
     });
   }
 }
 
-async function buildEpub(config) {
-  const days = config.days || await loadDays(config.dayDir, { xhtml: true });
+async function buildEpub(config: EpubConfig): Promise<void> {
+  const days = config.days ?? await loadLegacyDays(config.dayDir, { xhtml: true });
 
   const zip = new JSZip();
   zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
@@ -160,17 +238,17 @@ async function buildEpub(config) {
   </rootfiles>
 </container>`);
 
-  const oebps = zip.folder("OEBPS");
-  oebps.folder("styles").file("book.css", await epubCss());
-  const fontsFolder = oebps.folder("fonts");
-  for (const font of await readdir("_site/assets/fonts")) {
+  const oebps = requiredZipFolder(zip, "OEBPS");
+  requiredZipFolder(oebps, "styles").file("book.css", await epubCss(config.root));
+  const fontsFolder = requiredZipFolder(oebps, "fonts");
+  for (const font of await readdir(path.join(config.root, "_site/assets/fonts"))) {
     if (font.endsWith(".woff2")) {
-      fontsFolder.file(font, await readFile(path.join("_site/assets/fonts", font)));
+      fontsFolder.file(font, await readFile(path.join(config.root, "_site/assets/fonts", font)));
     }
   }
 
-  const spine = [];
-  const imageAssets = new Map();
+  const spine: string[] = [];
+  const imageAssets = new Map<string, EpubImage>();
   const manifestItems = [
     `<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`,
     `<item id="css" href="styles/book.css" media-type="text/css"/>`
@@ -186,19 +264,19 @@ async function buildEpub(config) {
   spine.push(`<itemref idref="nav"/>`);
 
   if (config.introHtml) {
-    const intro = await pageToXhtml(config.introHtml, config.introTitle, "introduction.xhtml", config, days, imageAssets);
+    const intro = await pageToXhtml(config.introHtml, config.introTitle ?? "", "introduction.xhtml", config, days, imageAssets);
     oebps.file("introduction.xhtml", intro);
     manifestItems.push(xhtmlManifestItem("intro", "introduction.xhtml", intro));
     spine.push(`<itemref idref="intro"/>`);
   }
 
   for (const day of days) {
-    const htmlPath = path.join(config.siteDayDir, day.data.day_path, "index.html");
+    const htmlPath = path.join(config.siteDayDir, dayPath(day), "index.html");
     const title = dayDocumentTitle(day, config);
-    const xhtml = await pageToXhtml(htmlPath, title, day.xhtml, config, days, imageAssets);
-    oebps.file(day.xhtml, xhtml);
-    manifestItems.push(xhtmlManifestItem(`day${String(day.data.day).padStart(3, "0")}`, day.xhtml, xhtml));
-    spine.push(`<itemref idref="day${String(day.data.day).padStart(3, "0")}"/>`);
+    const xhtml = await pageToXhtml(htmlPath, title, dayXhtml(day), config, days, imageAssets);
+    oebps.file(dayXhtml(day), xhtml);
+    manifestItems.push(xhtmlManifestItem(`day${String(dayNumber(day)).padStart(3, "0")}`, dayXhtml(day), xhtml));
+    spine.push(`<itemref idref="day${String(dayNumber(day)).padStart(3, "0")}"/>`);
   }
 
   for (const image of imageAssets.values()) {
@@ -206,7 +284,7 @@ async function buildEpub(config) {
     manifestItems.push(`<item id="${image.id}" href="${escapeXml(image.href)}" media-type="${image.mediaType}"/>`);
   }
 
-  for (const font of await readdir("_site/assets/fonts")) {
+  for (const font of await readdir(path.join(config.root, "_site/assets/fonts"))) {
     if (font.endsWith(".woff2")) {
       manifestItems.push(`<item id="${font.replace(/[^a-z0-9]/gi, "_")}" href="fonts/${font}" media-type="font/woff2"/>`);
     }
@@ -216,13 +294,22 @@ async function buildEpub(config) {
   oebps.file("content.opf", contentOpf(config.meta, manifestItems, spine));
 
   const buffer = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" });
-  await writeFile(`dist/downloads/${config.output}`, buffer);
-  await copyFile(`dist/downloads/${config.output}`, `_site/downloads/${config.output}`);
+  const distPath = path.join(config.root, "dist/downloads", config.output);
+  const sitePath = path.join(config.root, "_site/downloads", config.output);
+  await writeFile(distPath, buffer);
+  await copyFile(distPath, sitePath);
 }
 
-async function pageToXhtml(htmlPath, title, selfHref, config, days, imageAssets) {
+async function pageToXhtml(
+  htmlPath: string,
+  title: string,
+  selfHref: string,
+  config: EpubConfig,
+  days: LegacyDay[],
+  imageAssets: Map<string, EpubImage>
+): Promise<string> {
   const html = await readFile(htmlPath, "utf8");
-  const $ = cheerio.load(html, { decodeEntities: true });
+  const $ = cheerio.load(html);
   if (config.singleDay) {
     $(".lesson-nav").remove();
   }
@@ -249,16 +336,16 @@ ${subtitleMarkup}
   $(".epub-only .ptitle").remove();
   $(".epub-only").removeClass("epub-only print-only format-alt").addClass("epub-alt");
   $("svg").attr("xmlns", "http://www.w3.org/2000/svg");
-  $("a[href]").each((_, a) => {
-    const el = $(a);
+  $("a[href]").each((_, anchor) => {
+    const el = $(anchor);
     const href = el.attr("href");
     if (!href) return;
     if (href.startsWith(config.dayUrlPrefix)) {
       const slug = href.slice(config.dayUrlPrefix.length).split("/")[0];
-      const day = days.find((d) => d.data.day_path === slug);
+      const day = days.find((candidate) => dayPath(candidate) === slug);
       if (day) {
-        const anchor = href.includes("#") ? `#${href.split("#")[1]}` : "";
-        el.attr("href", `${day.xhtml}${anchor}`);
+        const hash = href.includes("#") ? `#${href.split("#")[1]}` : "";
+        el.attr("href", `${dayXhtml(day)}${hash}`);
       } else {
         el.attr("href", "nav.xhtml");
       }
@@ -270,7 +357,7 @@ ${subtitleMarkup}
   });
   $("img[src]").each((_, img) => {
     const el = $(img);
-    const epubImage = registerEpubImage(el.attr("src"), imageAssets);
+    const epubImage = registerEpubImage(el.attr("src"), imageAssets, config.root);
     if (!epubImage) return;
 
     el.attr("src", epubImage.href);
@@ -294,8 +381,8 @@ ${subtitleMarkup}
 </html>`;
 }
 
-async function epubCss() {
-  const css = await readFile("src/assets/css/book.css", "utf8");
+async function epubCss(root: string): Promise<string> {
+  const css = await readFile(path.join(root, "src/assets/css/book.css"), "utf8");
   return css
     .replaceAll("@media print", "@media amzn-mobi")
     .replaceAll(".epub-only,.print-only,.format-alt{display:none;}", ".print-only{display:none;}.epub-alt{display:block;}")
@@ -335,7 +422,7 @@ body{font-size:1em;}
 `;
 }
 
-function convertTipNotesToFootnotes($, language = "", selfHref = "document.xhtml") {
+function convertTipNotesToFootnotes($: CheerioRoot, language = "", selfHref = "document.xhtml"): void {
   const isZh = language.startsWith("zh");
   const labels = isZh
     ? {
@@ -350,7 +437,7 @@ function convertTipNotesToFootnotes($, language = "", selfHref = "document.xhtml
       };
   const scopeCandidates = $(".page,.lesson,.print-intro,.lesson-print").toArray();
   const scopes = scopeCandidates.length ? scopeCandidates : [$("body").get(0)].filter(Boolean);
-  const used = new Set();
+  const used = new Set<unknown>();
 
   scopes.forEach((scopeElement, scopeIndex) => {
     const scope = $(scopeElement);
@@ -361,7 +448,7 @@ function convertTipNotesToFootnotes($, language = "", selfHref = "document.xhtml
     if (!notes.length) return;
 
     const baseId = epubNoteBaseId(scope, selfHref, scopeIndex);
-    const items = [];
+    const items: string[] = [];
     notes.forEach((noteElement, noteIndex) => {
       used.add(noteElement);
       const note = $(noteElement);
@@ -390,24 +477,24 @@ function convertTipNotesToFootnotes($, language = "", selfHref = "document.xhtml
   });
 }
 
-function epubNoteBaseId(scope, selfHref, scopeIndex) {
+function epubNoteBaseId(scope: ReturnType<CheerioRoot>, selfHref: string, scopeIndex: number): string {
   const id = scope.attr("id") || scope.attr("data-day-path") || scope.attr("data-reading-day") || `${selfHref}-${scopeIndex + 1}`;
   const base = String(id).replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-|-$/g, "");
   return `tip-${base || `section-${scopeIndex + 1}`}`;
 }
 
-function navDocument(items, config) {
+function navDocument(items: LegacyDay[], config: EpubConfig): string {
   const titleLink = config.introHtml && !config.singleDay
     ? `<li><a href="title.xhtml">${escapeXml(config.meta.language.startsWith("zh") ? "书名页" : "Title Page")}</a></li>`
     : "";
   const introLink = config.introHtml
-    ? `<li><a href="introduction.xhtml">${escapeXml(config.introLabel)}</a></li>`
+    ? `<li><a href="introduction.xhtml">${escapeXml(config.introLabel ?? "")}</a></li>`
     : "";
   const links = items.map((day) => {
     const label = config.meta.language.startsWith("zh")
-      ? `第 ${day.data.day} 日：${escapeXml(day.data.title)}`
-      : `Day ${day.data.day}: ${escapeXml(day.data.title)}`;
-    return `<li><a href="${day.xhtml}">${label}</a></li>`;
+      ? `第 ${dayNumber(day)} 日：${escapeXml(dayTitle(day))}`
+      : `Day ${dayNumber(day)}: ${escapeXml(dayTitle(day))}`;
+    return `<li><a href="${dayXhtml(day)}">${label}</a></li>`;
   }).join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
@@ -426,9 +513,9 @@ function navDocument(items, config) {
 </html>`;
 }
 
-function contentOpf(meta, manifestItems, spine) {
+function contentOpf(meta: EpubMeta, manifestItems: string[], spine: string[]): string {
   const modified = "2026-06-19T00:00:00Z";
-  const identifier = `urn:uuid:${uuidFromString(meta.epub_identifier)}`;
+  const identifier = `urn:uuid:${epubUuidFromString(meta.epub_identifier)}`;
   return `<?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="3.0">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -450,14 +537,14 @@ function contentOpf(meta, manifestItems, spine) {
 </package>`;
 }
 
-function xhtmlManifestItem(id, href, xhtml, properties = []) {
+function xhtmlManifestItem(id: string, href: string, xhtml: string, properties: string[] = []): string {
   const allProperties = [...properties];
   if (/<svg\b/i.test(xhtml)) allProperties.push("svg");
   const propertyAttr = allProperties.length ? ` properties="${allProperties.join(" ")}"` : "";
   return `<item id="${id}" href="${escapeXml(href)}" media-type="application/xhtml+xml"${propertyAttr}/>`;
 }
 
-function uuidFromString(value) {
+export function epubUuidFromString(value: string): string {
   const bytes = createHash("sha1").update(String(value)).digest();
   bytes[6] = (bytes[6] & 0x0f) | 0x50;
   bytes[8] = (bytes[8] & 0x3f) | 0x80;
@@ -465,12 +552,12 @@ function uuidFromString(value) {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20, 32)}`;
 }
 
-function registerEpubImage(src = "", imageAssets) {
+function registerEpubImage(src = "", imageAssets: Map<string, EpubImage>, root: string): EpubImage | null {
   const pathOnly = src.split(/[?#]/)[0];
   if (!pathOnly.startsWith("/assets/images/")) return null;
 
   const extension = path.extname(pathOnly).toLowerCase();
-  const mediaTypes = {
+  const mediaTypes: Record<string, string> = {
     ".jpg": "image/jpeg",
     ".jpeg": "image/jpeg",
     ".png": "image/png",
@@ -484,16 +571,16 @@ function registerEpubImage(src = "", imageAssets) {
   if (!imageAssets.has(href)) {
     imageAssets.set(href, {
       href,
-      filePath: path.join("_site", pathOnly.slice(1)),
+      filePath: path.join(root, "_site", pathOnly.slice(1)),
       mediaType,
       id: `img_${href.replace(/[^a-z0-9]/gi, "_")}`
     });
   }
 
-  return imageAssets.get(href);
+  return imageAssets.get(href) ?? null;
 }
 
-function titlePageDocument(config) {
+export function titlePageDocument(config: Pick<EpubConfig, "meta">): string {
   const isZh = config.meta.language.startsWith("zh");
   const authorLine = isZh ? `作者：${config.meta.authors}` : `By ${config.meta.authors}`;
   const translatorLine = config.meta.translators
@@ -519,14 +606,19 @@ function titlePageDocument(config) {
 </html>`;
 }
 
-function dayDocumentTitle(day, config) {
+function dayDocumentTitle(day: LegacyDay, config: Pick<EpubConfig | DayEpubConfig, "meta" | "dayLabel">): string {
   if (config.meta.language.startsWith("zh")) {
-    return `${config.dayLabel} ${day.data.day} 日：${day.data.title}`;
+    return `${config.dayLabel} ${dayNumber(day)} 日：${dayTitle(day)}`;
   }
-  return `${config.dayLabel} ${day.data.day}: ${day.data.title}`;
+  return `${config.dayLabel} ${dayNumber(day)}: ${dayTitle(day)}`;
 }
 
-function appendixLabels(language = "") {
+function appendixLabels(language = ""): {
+  kicker: string;
+  headingPrefix: string;
+  fallbackTitle: string;
+  note: string;
+} {
   if (language.startsWith("zh")) {
     return {
       kicker: "可选附录",
@@ -541,4 +633,26 @@ function appendixLabels(language = "") {
     fallbackTitle: "Deep Dive",
     note: "This section is optional supplemental reading. You can skip it without losing the main lesson."
   };
+}
+
+function requiredZipFolder(zip: JSZip, name: string): JSZip {
+  const folder = zip.folder(name);
+  if (!folder) throw new Error(`Unable to create EPUB folder: ${name}`);
+  return folder;
+}
+
+function dayNumber(day: LegacyDay): number {
+  return Number(day.data.day);
+}
+
+function dayPath(day: LegacyDay): string {
+  return String(day.data.day_path);
+}
+
+function dayTitle(day: LegacyDay): string {
+  return String(day.data.title);
+}
+
+function dayXhtml(day: LegacyDay): string {
+  return day.xhtml ?? `day-${String(dayNumber(day)).padStart(3, "0")}.xhtml`;
 }

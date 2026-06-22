@@ -68,7 +68,7 @@ Do not add decorative images just because they are available. Use images when th
 ## Artifact Handling
 
 - Use `/assets/images/...` for local site images.
-- `scripts/build-epub.mjs` must rewrite these paths into `OEBPS/images/...` and add image manifest entries to `content.opf`.
+- `npm run build:epub` must rewrite these paths into `OEBPS/images/...` and add image manifest entries to `content.opf`.
 - PDF generation must force lazy images to load and decode before `page.pdf()`. If captions appear but pictures do not, check `scripts/build-pdf.mjs` before changing lesson markup.
 - Keep `npm run check:epub` guarding against absolute or missing EPUB image paths.
 - Keep `npm run check:pdf` fast: prefer cached whole-PDF/per-page text extraction and low-resolution pixel samples over repeated page-by-page Ghostscript calls. Add Ghostscript timeouts so validation fails quickly.
