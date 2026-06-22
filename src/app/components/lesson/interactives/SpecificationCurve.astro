@@ -1,0 +1,61 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Highlight from "@app/components/lesson/Highlight.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Term from "@app/components/lesson/Term.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 运行你自己的多元宇宙",
+  heading: "设定曲线（Specification Curve）",
+  noteA: "这是一个固定的合成数据集，X 和 Y 之间有一个较弱且受混杂影响的关联：基线模型一开始不会跨过通常的 ",
+  noteB: " 线，但某些看似合理的选择可以把它推过去。这里的 ",
+  noteC: " 是皮尔逊相关系数，范围从 -1 到 +1；正的 ",
+  noteD: " 表示 X 越大时 Y 往往也越大，接近 0 则表示关联较弱。画出这条曲线，是因为只报告一个模型可能很任意：问题是结论能否经受合理分析选择的扰动，还是只依赖某一条路径。面板默认开启所有选择，并高亮「择优报告」；关闭某项选择，就会减少纳入的分析方案。青色点表示 ",
+  noteE: "，灰色点则不显著。下方的勾选矩阵显示每个设定用了哪些选择，包括它是否控制了第 5 日讨论的混杂变量 ",
+  noteF: "。",
+  chips: [["mv-trim", "剔除异常值"], ["mv-cov", "控制变量 W"], ["mv-rank", "秩变换"], ["mv-sub", "仅分析某个子组"], ["mv-cherry", "择优报告"]],
+  aria: "设定曲线：所有已启用的分析设定下的效应估计值排序图。",
+  reading: "完整报告下的解读"
+} : {
+  panelTitle: "Interactive · run your own multiverse",
+  heading: "The Specification Curve",
+  note: "A fixed synthetic dataset gives X and Y a weak, confounded association: the baseline model starts below the usual p < .05 line, but some defensible choices can push it across. Here r is the Pearson correlation coefficient, from -1 to +1; positive r means larger X tends to come with larger Y, and values near 0 are weak. We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. The panel opens with every choice included and cherry-pick highlighted; turning off a chip narrows the multiverse. Teal dots are p < .05, grey dots are not. The check rows show which choices each specification uses, including whether it controls for the lurking Day 5 confounder W.",
+  chips: [["mv-trim", "trim outliers"], ["mv-cov", "control for W"], ["mv-rank", "rank-transform"], ["mv-sub", "drop subgroup"], ["mv-cherry", "cherry-pick"]],
+  aria: "A specification curve: a sorted plot of effect estimates across all enabled analytic specifications.",
+  reading: "The honest reading"
+};
+---
+<Panel class="web-only statistics-spec-curve">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+  <h3>{copy.heading}</h3>
+  <PanelNote>
+    {zh ? (
+      <>{copy.noteA}<Term><MathInline latex={String.raw`p < .05`} /></Term>{copy.noteB}<strong>r</strong>{copy.noteC}<strong>r</strong>{copy.noteD}<Term><MathInline latex={String.raw`p < .05`} /></Term>{copy.noteE}<strong>W</strong>{copy.noteF}</>
+    ) : (
+      <>A fixed synthetic dataset gives X and Y a weak, confounded association: the baseline model starts below the usual <MathInline latex={String.raw`p < .05`} /> line, but some defensible choices can push it across. Here <strong>r</strong> is the Pearson correlation coefficient, from -1 to +1; positive <strong>r</strong> means larger X tends to come with larger Y, and values near 0 are weak. We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. The panel opens with every choice included and cherry-pick highlighted; turning off a chip narrows the multiverse. Teal dots are <MathInline latex={String.raw`p < .05`} />, grey dots are not. The check rows show which choices each specification uses, including whether it controls for the lurking Day 5 confounder <strong>W</strong>.</>
+    )}
+  </PanelNote>
+
+  <div class="mv-controls" id="mv-controls">
+    {copy.chips.map(([id, label]) => (
+      <button class="mvchip" id={id} aria-pressed="true" style={id === "mv-cherry" ? "margin-left:auto;border-style:dashed;" : undefined}><i></i>{label}</button>
+    ))}
+  </div>
+
+  <div class="mv-scroll">
+    <svg class="mv-canvas" id="mv-canvas" viewBox="0 0 440 240" role="img" aria-label={copy.aria}></svg>
+  </div>
+
+  <div class="mv-read" id="mv-read"></div>
+  <div class="mv-cherry honest" id="mv-cherrybox">
+    <p class="lh" id="mv-clh">{copy.reading}</p>
+    <p id="mv-cbody" style="margin:0;"></p>
+  </div>
+</Panel>

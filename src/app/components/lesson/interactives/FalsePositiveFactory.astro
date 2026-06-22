@@ -1,0 +1,92 @@
+---
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Highlight from "@app/components/lesson/Highlight.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 实时蒙特卡洛模拟",
+  heading: "假阳性工厂",
+  noteStart: "每次运行都会模拟 ",
+  noteCount: "约 1500 次",
+  noteMid: "没有真实效应的实验。若零假设成立、模型假设满足，而且只进行一项预先指定的检验，约 5% 的实验仍会偶然得到 ",
+  noteEnd: "。现在开启几项研究者自由度，再观察工厂能从所有允许的分析中挑出多么有利的结果。",
+  switches: [
+    ["fp-dv", "两个结果指标", "测量两个相关指标，只报告「成功」的那个"],
+    ["fp-stop", "可选停止", "样本量 n=20 时不显著？再加 10 个试试"],
+    ["fp-cov", "灵活的子组分析", "先看整体结果，再按「性别」拆分试试"],
+    ["fp-drop", "剔除实验条件", "运行三个小组，只报告表现最好的那一对"]
+  ],
+  run: "重新运行模拟",
+  all: "开启全部分析自由度",
+  reset: "重置",
+  rate: "假阳性率 · 纯噪声中产生的「发现」",
+  scale: ["0%", "↑ 诚实的 5%", "~65%"],
+  read: "未启用灵活分析。如果零假设成立且模型假设满足，一次预先指定的检验会给出统计系统承诺的错误率。"
+} : {
+  panelTitle: "Interactive · live Monte-Carlo simulation",
+  heading: "The False-Positive Factory",
+  noteStart: "Each run simulates ",
+  noteCount: "~1,500 experiments",
+  noteMid: " in which there is ",
+  noteEm: "no real effect at all",
+  noteTail: " — two groups drawn from the same distribution. If the null is true, the model assumptions hold, and you run one pre-specified test, about 5% will still cross ",
+  noteEnd: " by chance. Now hand yourself some researcher degrees of freedom and re-run. The factory simply reports the prettiest result it can find among the analyses you've allowed.",
+  switches: [
+    ["fp-dv", "Two outcome measures", 'Measure two related things, report whichever "works"'],
+    ["fp-stop", "Optional stopping", "Not significant at n=20? Add 10 more and re-test"],
+    ["fp-cov", "Flexible subgroup analysis", 'Try it overall, then split by "gender" too'],
+    ["fp-drop", "Drop a condition", "Run three groups, report the best pair"]
+  ],
+  run: "Re-run simulation",
+  all: "Flip all four",
+  reset: "Reset",
+  rate: 'false-positive rate · "findings" from pure noise',
+  scale: ["0%", "↑ honest 5%", "~65%"],
+  read: "No tricks enabled. If the null is true and the assumptions hold, one pre-specified test gives the error rate the system promises."
+};
+---
+<Panel class="web-only statistics-factory">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+  <h3>{copy.heading}</h3>
+  <PanelNote>
+    {zh ? (
+      <>{copy.noteStart}<Highlight>{copy.noteCount}</Highlight>{copy.noteMid}<Highlight><MathInline latex={String.raw`p < .05`} /></Highlight>{copy.noteEnd}</>
+    ) : (
+      <>{copy.noteStart}<strong>{copy.noteCount}</strong>{copy.noteMid}<em>{copy.noteEm}</em>{copy.noteTail}<MathInline latex={String.raw`p < .05`} />{copy.noteEnd}</>
+    )}
+  </PanelNote>
+
+  <div class="fp-grid">
+    <div>
+      <div class="switches">
+        {copy.switches.map(([id, label, sub]) => (
+          <button class="swbtn" id={id} role="switch" aria-checked="false">
+            <span class="knob"></span><span class="lab">{zh ? <span>{label}</span> : <b>{label}</b>}<span>{sub}</span></span>
+          </button>
+        ))}
+      </div>
+      <div class="fp-actions">
+        <button class="btn primary" id="fp-run">{copy.run}</button>
+        <button class="btn" id="fp-all">{copy.all}</button>
+        <button class="btn" id="fp-reset">{copy.reset}</button>
+      </div>
+    </div>
+
+    <div class="fp-meter">
+      <div class="fp-bigwrap">
+        <div class="fp-big low" id="fp-pct">5%</div>
+        <div class="fp-biglab">{copy.rate}</div>
+      </div>
+      <div class="fp-bar"><div class="fill" id="fp-fill"></div><div class="honest"></div></div>
+      <div class="fp-scale"><span>{copy.scale[0]}</span><span>{copy.scale[1]}</span><span>{copy.scale[2]}</span></div>
+      <div class="fp-read" id="fp-read">{copy.read}</div>
+    </div>
+  </div>
+</Panel>

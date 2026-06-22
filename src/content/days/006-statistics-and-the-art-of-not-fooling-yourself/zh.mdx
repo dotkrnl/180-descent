@@ -6,6 +6,10 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import SpecificationCurve from "@app/components/lesson/interactives/SpecificationCurve.astro";
+import ConfidenceIntervalCoverage from "@app/components/lesson/interactives/ConfidenceIntervalCoverage.astro";
+import EffectSizeDial from "@app/components/lesson/interactives/EffectSizeDial.astro";
+import FalsePositiveFactory from "@app/components/lesson/interactives/FalsePositiveFactory.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -121,47 +125,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<Panel class="web-only statistics-factory">
-<PanelTitle>互动 · 实时蒙特卡洛模拟</PanelTitle>
-
-### 假阳性工厂
-
-<PanelNote>每次运行都会模拟 <Highlight>约 1500 次</Highlight>没有真实效应的实验。若零假设成立、模型假设满足，而且只进行一项预先指定的检验，约 5% 的实验仍会偶然得到 <Highlight><MathInline latex={String.raw`p < .05`} /></Highlight>。现在开启几项研究者自由度，再观察工厂能从所有允许的分析中挑出多么有利的结果。</PanelNote>
-
-<div class="fp-grid">
-<div>
-<div class="switches">
-<button class="swbtn" id="fp-dv" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><span>两个结果指标</span><span>测量两个相关指标，只报告「成功」的那个</span></span>
-</button>
-<button class="swbtn" id="fp-stop" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><span>可选停止</span><span>样本量 n=20 时不显著？再加 10 个试试</span></span>
-</button>
-<button class="swbtn" id="fp-cov" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><span>灵活的子组分析</span><span>先看整体结果，再按「性别」拆分试试</span></span>
-</button>
-<button class="swbtn" id="fp-drop" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><span>剔除实验条件</span><span>运行三个小组，只报告表现最好的那一对</span></span>
-</button>
-</div>
-<div class="fp-actions">
-<button class="btn primary" id="fp-run">重新运行模拟</button>
-<button class="btn" id="fp-all">开启全部分析自由度</button>
-<button class="btn" id="fp-reset">重置</button>
-</div>
-</div>
-
-<div class="fp-meter">
-<div class="fp-bigwrap">
-<div class="fp-big low" id="fp-pct">5%</div>
-<div class="fp-biglab">假阳性率 · 纯噪声中产生的「发现」</div>
-</div>
-<div class="fp-bar"><div class="fill" id="fp-fill"></div><div class="honest"></div></div>
-<div class="fp-scale"><span>0%</span><span>↑ 诚实的 5%</span><span>~65%</span></div>
-<div class="fp-read" id="fp-read">未启用灵活分析。如果零假设成立且模型假设满足，一次预先指定的检验会给出统计系统承诺的错误率。</div>
-</div>
-</div>
-</Panel>
+<FalsePositiveFactory locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -225,46 +189,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 p 值由效应量、噪声、样本量和模型假设共同决定。只要样本量足够大，即使是微小到毫无意义的差异也能跨过显著性门槛。因此，规范的统计报告应同时给出 <Term>效应量</Term>（effect size）<TipNote text={String.raw`效应量报告的是差异或关联的大小，而不只是它是否跨过了显著性门槛。`} />：例如 <Term>Cohen’s d</Term><TipNote text={String.raw`Cohen’s d 是标准化均值差，用标准差为单位表示两个平均值之间的差异。`} />（标准化均值差）或相关系数 <Highlight><MathInline latex={String.raw`r`} /></Highlight>。雅各布·科恩（Jacob Cohen）提供了粗略的分级——d ≈ 0.2 为小，0.5 为中，0.8 为大——同时也坦然承认这些只是经验规则，并非自然分界。重点不在于标签，而在于：只报告 p 值而不报告效应量，几乎无法判断结果是否具有实际意义。
 
-<Panel class="web-only statistics-effect-lab">
-<PanelTitle>互动 · 显著性与大小</PanelTitle>
-
-### 效应量演示器
-
-<PanelNote>设定真实均值差、每组样本量和噪声水平。这里的「组」指两组比较中的一组，例如处理组与对照组；每组 n = 50 意味着两边各 50 个观察值，总共 100 个。图中使用固定的 x 轴和 y 轴：均值差从 -3 到 +3，y 轴是重复估计的分箱频数。更细的柱形显示估计分布，曲线表示对应的抽样分布，横条则是在同一 x 尺度上的 95% 置信区间。</PanelNote>
-
-<div class="se-grid">
-<div class="se-controls">
-<label for="se-effect"><span>真实均值差</span><output id="se-effect-out" for="se-effect">0.30</output></label>
-<input type="range" id="se-effect" min="0" max="1.2" step="0.05" value="0.3" />
-<label for="se-n"><span>每组样本量</span><output id="se-n-out" for="se-n">50</output></label>
-<input type="range" id="se-n" min="10" max="800" step="10" value="50" />
-<label for="se-noise"><span>噪声 / 标准差</span><output id="se-noise-out" for="se-noise">1.00</output></label>
-<input type="range" id="se-noise" min="0.4" max="2.5" step="0.05" value="1" />
-</div>
-<div>
-<svg class="se-plot" id="se-plot" viewBox="0 0 420 310" role="img" aria-label="均值差的固定尺度抽样频数图和置信区间图。">
-<rect x="28" y="24" width="364" height="226" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>
-<g id="se-y-ticks"></g>
-<g id="se-bars"></g>
-<path id="se-sampling-curve" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"></path>
-<line x1="58" y1="220" x2="370" y2="220" stroke="var(--line-strong)" stroke-width="1.4"></line>
-<g id="se-ticks"></g>
-<line id="se-zero" x1="214" y1="38" x2="214" y2="220" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 5"></line>
-<line id="se-ci-line" x1="160" y1="272" x2="260" y2="272" stroke="var(--brass)" stroke-width="8" stroke-linecap="round"></line>
-<circle id="se-est-dot" cx="210" cy="272" r="7" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
-<text id="se-width-label" x="214" y="298" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">95% CI 宽度</text>
-<text x="16" y="136" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-90 16 136)">分箱频数</text>
-</svg>
-<div class="se-read" id="se-read" aria-live="polite"></div>
-</div>
-</div>
-<div class="se-metrics" aria-label="计算出的统计量">
-<div><span>p 值</span><strong id="se-p">.14</strong></div>
-<div><span>95% CI</span><strong id="se-ci">[-0.10, 0.70]</strong></div>
-<div><span>Cohen’s d</span><strong id="se-d">0.30</strong></div>
-<div><span>效应大小</span><strong id="se-importance">小</strong></div>
-</div>
-</Panel>
+<EffectSizeDial locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>参考表</PanelTitle>
@@ -298,35 +223,7 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 [第 4 日](/zh/days/004-probability-as-extended-logic/) 提到的贝叶斯「可信区间」可以作概率解释，但前提是指定先验分布和完整的概率模型。工具不同，承诺也不同。置信区间也不意味着 95% 的数据落在其中，更不意味着区间外的参数值绝无可能。更合适的理解是：它给出了一组在当前模型下与数据较为相容的参数值。区间越宽，估计越不精确；但区间内的值并非得到同等支持。
 
-<Panel class="web-only statistics-ci-coverage">
-<PanelTitle>互动 · 长期覆盖率</PanelTitle>
-
-### 100 次置信区间覆盖实验
-
-<PanelNote>从一个已知真实均值为 0 的世界中生成 100 次重复样本。x 轴固定为 -4 到 +4，这样区间宽度的变化不会被自动缩放掩盖。置信水平滑块改变长期覆盖目标：置信水平越高，覆盖次数通常越多，但区间也越宽。样本量和噪声主要改变精度。高亮区间代表一项具体研究：它要么覆盖，要么不覆盖。</PanelNote>
-
-<div class="ci-grid">
-<div class="ci-controls">
-<label for="ci-n"><span>每项研究样本量</span><output id="ci-n-out" for="ci-n">30</output></label>
-<input type="range" id="ci-n" min="8" max="100" step="2" value="30" />
-<label for="ci-noise"><span>噪声 / 标准差</span><output id="ci-noise-out" for="ci-noise">1.00</output></label>
-<input type="range" id="ci-noise" min="0.4" max="2.5" step="0.05" value="1" />
-<label for="ci-level"><span>置信水平</span><output id="ci-level-out" for="ci-level">95%</output></label>
-<input type="range" id="ci-level" min="80" max="99" step="1" value="95" />
-<button class="btn primary" id="ci-run">生成 100 个区间</button>
-</div>
-<div>
-<svg class="ci-plot" id="ci-plot" viewBox="0 0 680 316" role="img" aria-label="固定 x 轴上的 100 个模拟置信区间，并按是否覆盖真实均值着色。"></svg>
-<div class="ci-read" id="ci-read" aria-live="polite"></div>
-</div>
-</div>
-<div class="ci-metrics" aria-label="覆盖率模拟结果">
-<div><span>覆盖真值</span><strong id="ci-covered">95 / 100</strong></div>
-<div><span>漏掉真值</span><strong id="ci-missed">5 / 100</strong></div>
-<div><span>高亮区间</span><strong id="ci-observed">覆盖</strong></div>
-<div><span>典型宽度</span><strong id="ci-width">0.74</strong></div>
-</div>
-</Panel>
+<ConfidenceIntervalCoverage locale="zh" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>算例</PanelTitle>
@@ -447,31 +344,7 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 </div>
 
 {/* ===================== INTERACTIVE 3 ===================== */}
-<Panel class="web-only statistics-spec-curve">
-<PanelTitle>互动 · 运行你自己的多元宇宙</PanelTitle>
-
-### 设定曲线（Specification Curve）
-
-<PanelNote>这是一个固定的合成数据集，X 和 Y 之间有一个较弱且受混杂影响的关联：基线模型一开始不会跨过通常的 <Term><MathInline latex={String.raw`p < .05`} /></Term> 线，但某些看似合理的选择可以把它推过去。这里的 **r** 是皮尔逊相关系数，范围从 -1 到 +1；正的 **r** 表示 X 越大时 Y 往往也越大，接近 0 则表示关联较弱。画出这条曲线，是因为只报告一个模型可能很任意：问题是结论能否经受合理分析选择的扰动，还是只依赖某一条路径。面板默认开启所有选择，并高亮「择优报告」；关闭某项选择，就会减少纳入的分析方案。青色点表示 <Term><MathInline latex={String.raw`p < .05`} /></Term>，灰色点则不显著。下方的勾选矩阵显示每个设定用了哪些选择，包括它是否控制了第 5 日讨论的混杂变量 **W**。</PanelNote>
-
-<div class="mv-controls" id="mv-controls">
-<button class="mvchip" id="mv-trim" aria-pressed="true"><i></i>剔除异常值</button>
-<button class="mvchip" id="mv-cov" aria-pressed="true"><i></i>控制变量 W</button>
-<button class="mvchip" id="mv-rank" aria-pressed="true"><i></i>秩变换</button>
-<button class="mvchip" id="mv-sub" aria-pressed="true"><i></i>仅分析某个子组</button>
-<button class="mvchip" id="mv-cherry" aria-pressed="true" style="margin-left:auto;border-style:dashed;"><i></i>择优报告</button>
-</div>
-
-<div class="mv-scroll">
-<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 440 240" role="img" aria-label="设定曲线：所有已启用的分析设定下的效应估计值排序图。"></svg>
-</div>
-
-<div class="mv-read" id="mv-read"></div>
-<div class="mv-cherry honest" id="mv-cherrybox">
-<p class="lh" id="mv-clh">完整报告下的解读</p>
-<p id="mv-cbody" style="margin:0;"></p>
-</div>
-</Panel>
+<SpecificationCurve locale="zh" />
 
 <div class="claim">
 <div class="ctop">

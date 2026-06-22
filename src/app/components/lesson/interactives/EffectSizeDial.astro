@@ -1,0 +1,73 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 显著性与大小",
+  heading: "效应量演示器",
+  note: "设定真实均值差、每组样本量和噪声水平。这里的「组」指两组比较中的一组，例如处理组与对照组；每组 n = 50 意味着两边各 50 个观察值，总共 100 个。图中使用固定的 x 轴和 y 轴：均值差从 -3 到 +3，y 轴是重复估计的分箱频数。更细的柱形显示估计分布，曲线表示对应的抽样分布，横条则是在同一 x 尺度上的 95% 置信区间。",
+  controls: [["se-effect", "真实均值差", "0.30"], ["se-n", "每组样本量", "50"], ["se-noise", "噪声 / 标准差", "1.00"]],
+  aria: "均值差的固定尺度抽样频数图和置信区间图。",
+  ciWidth: "95% CI 宽度",
+  yLabel: "分箱频数",
+  metricsAria: "计算出的统计量",
+  metrics: [["p 值", "se-p", ".14"], ["95% CI", "se-ci", "[-0.10, 0.70]"], ["Cohen’s d", "se-d", "0.30"], ["效应大小", "se-importance", "小"]]
+} : {
+  panelTitle: "Interactive · significance versus size",
+  heading: "The Effect-Size Dial",
+  note: "Set a true mean difference, a per-group sample size, and a noise level. A group means one side of the two-group comparison, such as treatment versus control; n = 50 per group means 50 observations in each side, 100 total. The plot uses fixed x and y scales: mean difference from -3 to +3, and bucket frequency from repeated estimates. Finer bars show the estimate distribution; the curve is the matching sampling distribution; the horizontal bar is the 95% confidence interval on the same x scale.",
+  controls: [["se-effect", "True mean difference", "0.30"], ["se-n", "Sample size per group", "50"], ["se-noise", "Noise / standard deviation", "1.00"]],
+  aria: "A fixed-scale sampling-frequency plot and confidence interval for the mean difference.",
+  ciWidth: "95% CI width",
+  yLabel: "bucket frequency",
+  metricsAria: "Computed statistics",
+  metrics: [["p-value", "se-p", ".14"], ["95% CI", "se-ci", "[-0.10, 0.70]"], ["Cohen's d", "se-d", "0.30"], ["Practical size", "se-importance", "small"]]
+};
+
+const inputAttrs = {
+  "se-effect": { min: "0", max: "1.2", step: "0.05", value: "0.3" },
+  "se-n": { min: "10", max: "800", step: "10", value: "50" },
+  "se-noise": { min: "0.4", max: "2.5", step: "0.05", value: "1" }
+};
+---
+<Panel class="web-only statistics-effect-lab">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+  <h3>{copy.heading}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="se-grid">
+    <div class="se-controls">
+      {copy.controls.map(([id, label, value]) => (
+        <>
+          <label for={id}><span>{label}</span><output id={`${id}-out`} for={id}>{value}</output></label>
+          <input type="range" id={id} min={inputAttrs[id].min} max={inputAttrs[id].max} step={inputAttrs[id].step} value={inputAttrs[id].value} />
+        </>
+      ))}
+    </div>
+    <div>
+      <svg class="se-plot" id="se-plot" viewBox="0 0 420 310" role="img" aria-label={copy.aria}>
+        <rect x="28" y="24" width="364" height="226" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>
+        <g id="se-y-ticks"></g>
+        <g id="se-bars"></g>
+        <path id="se-sampling-curve" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"></path>
+        <line x1="58" y1="220" x2="370" y2="220" stroke="var(--line-strong)" stroke-width="1.4"></line>
+        <g id="se-ticks"></g>
+        <line id="se-zero" x1="214" y1="38" x2="214" y2="220" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 5"></line>
+        <line id="se-ci-line" x1="160" y1="272" x2="260" y2="272" stroke="var(--brass)" stroke-width="8" stroke-linecap="round"></line>
+        <circle id="se-est-dot" cx="210" cy="272" r="7" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
+        <text id="se-width-label" x="214" y="298" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.ciWidth}</text>
+        <text x="16" y="136" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-90 16 136)">{copy.yLabel}</text>
+      </svg>
+      <div class="se-read" id="se-read" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="se-metrics" aria-label={copy.metricsAria}>
+    {copy.metrics.map(([label, id, value]) => <div><span>{label}</span><strong id={id}>{value}</strong></div>)}
+  </div>
+</Panel>

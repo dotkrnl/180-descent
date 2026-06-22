@@ -6,6 +6,10 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import SpecificationCurve from "@app/components/lesson/interactives/SpecificationCurve.astro";
+import ConfidenceIntervalCoverage from "@app/components/lesson/interactives/ConfidenceIntervalCoverage.astro";
+import EffectSizeDial from "@app/components/lesson/interactives/EffectSizeDial.astro";
+import FalsePositiveFactory from "@app/components/lesson/interactives/FalsePositiveFactory.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -118,47 +122,7 @@ Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved i
 </ContentSection>
 
 {/* ===================== INTERACTIVE 1 ===================== */}
-<Panel class="web-only statistics-factory">
-<PanelTitle>Interactive · live Monte-Carlo simulation</PanelTitle>
-
-### The False-Positive Factory
-
-<PanelNote>Each run simulates **~1,500 experiments** in which there is *no real effect at all* — two groups drawn from the same distribution. If the null is true, the model assumptions hold, and you run one pre-specified test, about 5% will still cross <MathInline latex={String.raw`p < .05`} /> by chance. Now hand yourself some researcher degrees of freedom and re-run. The factory simply reports the prettiest result it can find among the analyses you've allowed.</PanelNote>
-
-<div class="fp-grid">
-<div>
-<div class="switches">
-<button class="swbtn" id="fp-dv" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><b>Two outcome measures</b><span>Measure two related things, report whichever "works"</span></span>
-</button>
-<button class="swbtn" id="fp-stop" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><b>Optional stopping</b><span>Not significant at n=20? Add 10 more and re-test</span></span>
-</button>
-<button class="swbtn" id="fp-cov" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><b>Flexible subgroup analysis</b><span>Try it overall, then split by "gender" too</span></span>
-</button>
-<button class="swbtn" id="fp-drop" role="switch" aria-checked="false">
-<span class="knob"></span><span class="lab"><b>Drop a condition</b><span>Run three groups, report the best pair</span></span>
-</button>
-</div>
-<div class="fp-actions">
-<button class="btn primary" id="fp-run">Re-run simulation</button>
-<button class="btn" id="fp-all">Flip all four</button>
-<button class="btn" id="fp-reset">Reset</button>
-</div>
-</div>
-
-<div class="fp-meter">
-<div class="fp-bigwrap">
-<div class="fp-big low" id="fp-pct">5%</div>
-<div class="fp-biglab">false-positive rate · "findings" from pure noise</div>
-</div>
-<div class="fp-bar"><div class="fill" id="fp-fill"></div><div class="honest"></div></div>
-<div class="fp-scale"><span>0%</span><span>↑ honest 5%</span><span>~65%</span></div>
-<div class="fp-read" id="fp-read">No tricks enabled. If the null is true and the assumptions hold, one pre-specified test gives the error rate the system promises.</div>
-</div>
-</div>
-</Panel>
+<FalsePositiveFactory locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -222,46 +186,7 @@ That last one is the quiet killer, so it gets its own model.
 
 A <MathInline latex={String.raw`p`} />-value entangles effect size, noise, sample size, and model assumptions. Pour in enough participants and even a microscopic, meaningless difference crosses the line. So grown-up statistics insists on reporting the <Term as="em">effect size</Term><TipNote text={String.raw`An effect size reports how large a difference or association is, instead of only whether it crossed a significance threshold.`} /> separately: *Cohen's d*<TipNote text={String.raw`Cohen’s d expresses a difference between two means in units of standard deviation.`} /> (a difference in means measured in standard deviations) or a correlation *r*. Jacob Cohen offered rough labels — *d* ≈ 0.2 small, 0.5 medium, 0.8 large — while cheerfully admitting they were arbitrary: "Although arbitrary, the proposed conventions will be found to be reasonable by reasonable people." The point is not the labels. The point is that a number with no effect size attached has told you almost nothing worth knowing.
 
-<Panel class="web-only statistics-effect-lab">
-<PanelTitle>Interactive · significance versus size</PanelTitle>
-
-### The Effect-Size Dial
-
-<PanelNote>Set a true mean difference, a per-group sample size, and a noise level. A group means one side of the two-group comparison, such as treatment versus control; n = 50 per group means 50 observations in each side, 100 total. The plot uses fixed x and y scales: mean difference from -3 to +3, and bucket frequency from repeated estimates. Finer bars show the estimate distribution; the curve is the matching sampling distribution; the horizontal bar is the 95% confidence interval on the same x scale.</PanelNote>
-
-<div class="se-grid">
-<div class="se-controls">
-<label for="se-effect"><span>True mean difference</span><output id="se-effect-out" for="se-effect">0.30</output></label>
-<input type="range" id="se-effect" min="0" max="1.2" step="0.05" value="0.3" />
-<label for="se-n"><span>Sample size per group</span><output id="se-n-out" for="se-n">50</output></label>
-<input type="range" id="se-n" min="10" max="800" step="10" value="50" />
-<label for="se-noise"><span>Noise / standard deviation</span><output id="se-noise-out" for="se-noise">1.00</output></label>
-<input type="range" id="se-noise" min="0.4" max="2.5" step="0.05" value="1" />
-</div>
-<div>
-<svg class="se-plot" id="se-plot" viewBox="0 0 420 310" role="img" aria-label="A fixed-scale sampling-frequency plot and confidence interval for the mean difference.">
-<rect x="28" y="24" width="364" height="226" rx="8" fill="var(--paper)" stroke="var(--line)"></rect>
-<g id="se-y-ticks"></g>
-<g id="se-bars"></g>
-<path id="se-sampling-curve" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"></path>
-<line x1="58" y1="220" x2="370" y2="220" stroke="var(--line-strong)" stroke-width="1.4"></line>
-<g id="se-ticks"></g>
-<line id="se-zero" x1="214" y1="38" x2="214" y2="220" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 5"></line>
-<line id="se-ci-line" x1="160" y1="272" x2="260" y2="272" stroke="var(--brass)" stroke-width="8" stroke-linecap="round"></line>
-<circle id="se-est-dot" cx="210" cy="272" r="7" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
-<text id="se-width-label" x="214" y="298" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">95% CI width</text>
-<text x="16" y="136" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-90 16 136)">bucket frequency</text>
-</svg>
-<div class="se-read" id="se-read" aria-live="polite"></div>
-</div>
-</div>
-<div class="se-metrics" aria-label="Computed statistics">
-<div><span>p-value</span><strong id="se-p">.14</strong></div>
-<div><span>95% CI</span><strong id="se-ci">[-0.10, 0.70]</strong></div>
-<div><span>Cohen's d</span><strong id="se-d">0.30</strong></div>
-<div><span>Practical size</span><strong id="se-importance">small</strong></div>
-</div>
-</Panel>
+<EffectSizeDial locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Reference table</PanelTitle>
@@ -293,35 +218,7 @@ The lesson is not "smaller p-values are better." A p-value can shrink because an
 </div>
 So the natural sentence — "there's a 95% chance the true value is in *this* interval" — is, in the frequentist world, simply false. Your interval either contains the truth or it doesn't; the dice were thrown when you ran the study. (A **Day 4** Bayesian *credible* interval *does* license that sentence — but only after you've committed to a prior. Different tool, different promise.) Nor does a CI mean 95% of your data live inside it, nor that values just outside are impossible. What it gives you, refreshingly, is a *range of effect sizes compatible with your data* — and that reframing, from "yes/no" to "how much, how precisely," is the heart of what reformers call the *new statistics*.
 
-<Panel class="web-only statistics-ci-coverage">
-<PanelTitle>Interactive · long-run coverage</PanelTitle>
-
-### The 100-interval test
-
-<PanelNote>Generate 100 repeated samples from a world where the true mean is known to be 0. The x-axis is fixed from -4 to +4 so width changes stay visually honest. The confidence-level dial changes the long-run target: higher confidence covers more often but makes wider intervals. Sample size and noise mostly change precision. The highlighted interval is one observed study: it either covers or it does not.</PanelNote>
-
-<div class="ci-grid">
-<div class="ci-controls">
-<label for="ci-n"><span>Sample size per study</span><output id="ci-n-out" for="ci-n">30</output></label>
-<input type="range" id="ci-n" min="8" max="100" step="2" value="30" />
-<label for="ci-noise"><span>Noise / standard deviation</span><output id="ci-noise-out" for="ci-noise">1.00</output></label>
-<input type="range" id="ci-noise" min="0.4" max="2.5" step="0.05" value="1" />
-<label for="ci-level"><span>Confidence level</span><output id="ci-level-out" for="ci-level">95%</output></label>
-<input type="range" id="ci-level" min="80" max="99" step="1" value="95" />
-<button class="btn primary" id="ci-run">Generate 100 intervals</button>
-</div>
-<div>
-<svg class="ci-plot" id="ci-plot" viewBox="0 0 680 316" role="img" aria-label="One hundred simulated confidence intervals on a fixed x-axis, colored by whether they cover the true mean."></svg>
-<div class="ci-read" id="ci-read" aria-live="polite"></div>
-</div>
-</div>
-<div class="ci-metrics" aria-label="Coverage simulation results">
-<div><span>covered truth</span><strong id="ci-covered">95 / 100</strong></div>
-<div><span>missed truth</span><strong id="ci-missed">5 / 100</strong></div>
-<div><span>highlighted interval</span><strong id="ci-observed">covers</strong></div>
-<div><span>typical width</span><strong id="ci-width">0.74</strong></div>
-</div>
-</Panel>
+<ConfidenceIntervalCoverage locale="en" />
 
 <FormatAlt class="epub-only print-only">
 <PanelTitle>Worked example</PanelTitle>
@@ -438,31 +335,7 @@ If a single analysis can mislead, the modern move is brutally simple: *run them 
 </div>
 
 {/* ===================== INTERACTIVE 3 ===================== */}
-<Panel class="web-only statistics-spec-curve">
-<PanelTitle>Interactive · run your own multiverse</PanelTitle>
-
-### The Specification Curve
-
-<PanelNote>A fixed synthetic dataset gives X and Y a weak, confounded association: the baseline model starts below the usual <MathInline latex={String.raw`p < .05`} /> line, but some defensible choices can push it across. Here **r** is the Pearson correlation coefficient, from -1 to +1; positive **r** means larger X tends to come with larger Y, and values near 0 are weak. We draw the curve because one reported model can be arbitrary: the question is whether the conclusion survives reasonable analytic choices or depends on one path. The panel opens with every choice included and cherry-pick highlighted; turning off a chip narrows the multiverse. Teal dots are <MathInline latex={String.raw`p < .05`} />, grey dots are not. The check rows show which choices each specification uses, including whether it controls for the lurking Day 5 confounder **W**.</PanelNote>
-
-<div class="mv-controls" id="mv-controls">
-<button class="mvchip" id="mv-trim" aria-pressed="true"><i></i>trim outliers</button>
-<button class="mvchip" id="mv-cov" aria-pressed="true"><i></i>control for W</button>
-<button class="mvchip" id="mv-rank" aria-pressed="true"><i></i>rank-transform</button>
-<button class="mvchip" id="mv-sub" aria-pressed="true"><i></i>drop subgroup</button>
-<button class="mvchip" id="mv-cherry" aria-pressed="true" style="margin-left:auto;border-style:dashed;"><i></i>cherry-pick</button>
-</div>
-
-<div class="mv-scroll">
-<svg class="mv-canvas" id="mv-canvas" viewBox="0 0 440 240" role="img" aria-label="A specification curve: a sorted plot of effect estimates across all enabled analytic specifications."></svg>
-</div>
-
-<div class="mv-read" id="mv-read"></div>
-<div class="mv-cherry honest" id="mv-cherrybox">
-<p class="lh" id="mv-clh">The honest reading</p>
-<p id="mv-cbody" style="margin:0;"></p>
-</div>
-</Panel>
+<SpecificationCurve locale="en" />
 
 <div class="claim">
 <div class="ctop">

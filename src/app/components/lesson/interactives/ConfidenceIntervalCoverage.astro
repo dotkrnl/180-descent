@@ -1,0 +1,60 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh ? {
+  panelTitle: "互动 · 长期覆盖率",
+  heading: "100 次置信区间覆盖实验",
+  note: "从一个已知真实均值为 0 的世界中生成 100 次重复样本。x 轴固定为 -4 到 +4，这样区间宽度的变化不会被自动缩放掩盖。置信水平滑块改变长期覆盖目标：置信水平越高，覆盖次数通常越多，但区间也越宽。样本量和噪声主要改变精度。高亮区间代表一项具体研究：它要么覆盖，要么不覆盖。",
+  controls: [["ci-n", "每项研究样本量", "30"], ["ci-noise", "噪声 / 标准差", "1.00"], ["ci-level", "置信水平", "95%"]],
+  run: "生成 100 个区间",
+  aria: "固定 x 轴上的 100 个模拟置信区间，并按是否覆盖真实均值着色。",
+  metricsAria: "覆盖率模拟结果",
+  metrics: [["覆盖真值", "ci-covered", "95 / 100"], ["漏掉真值", "ci-missed", "5 / 100"], ["高亮区间", "ci-observed", "覆盖"], ["典型宽度", "ci-width", "0.74"]]
+} : {
+  panelTitle: "Interactive · long-run coverage",
+  heading: "The 100-interval test",
+  note: "Generate 100 repeated samples from a world where the true mean is known to be 0. The x-axis is fixed from -4 to +4 so width changes stay visually honest. The confidence-level dial changes the long-run target: higher confidence covers more often but makes wider intervals. Sample size and noise mostly change precision. The highlighted interval is one observed study: it either covers or it does not.",
+  controls: [["ci-n", "Sample size per study", "30"], ["ci-noise", "Noise / standard deviation", "1.00"], ["ci-level", "Confidence level", "95%"]],
+  run: "Generate 100 intervals",
+  aria: "One hundred simulated confidence intervals on a fixed x-axis, colored by whether they cover the true mean.",
+  metricsAria: "Coverage simulation results",
+  metrics: [["covered truth", "ci-covered", "95 / 100"], ["missed truth", "ci-missed", "5 / 100"], ["highlighted interval", "ci-observed", "covers"], ["typical width", "ci-width", "0.74"]]
+};
+
+const inputAttrs = {
+  "ci-n": { min: "8", max: "100", step: "2", value: "30" },
+  "ci-noise": { min: "0.4", max: "2.5", step: "0.05", value: "1" },
+  "ci-level": { min: "80", max: "99", step: "1", value: "95" }
+};
+---
+<Panel class="web-only statistics-ci-coverage">
+  <PanelTitle>{copy.panelTitle}</PanelTitle>
+  <h3>{copy.heading}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="ci-grid">
+    <div class="ci-controls">
+      {copy.controls.map(([id, label, value]) => (
+        <>
+          <label for={id}><span>{label}</span><output id={`${id}-out`} for={id}>{value}</output></label>
+          <input type="range" id={id} min={inputAttrs[id].min} max={inputAttrs[id].max} step={inputAttrs[id].step} value={inputAttrs[id].value} />
+        </>
+      ))}
+      <button class="btn primary" id="ci-run">{copy.run}</button>
+    </div>
+    <div>
+      <svg class="ci-plot" id="ci-plot" viewBox="0 0 680 316" role="img" aria-label={copy.aria}></svg>
+      <div class="ci-read" id="ci-read" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="ci-metrics" aria-label={copy.metricsAria}>
+    {copy.metrics.map(([label, id, value]) => <div><span>{label}</span><strong id={id}>{value}</strong></div>)}
+  </div>
+</Panel>
