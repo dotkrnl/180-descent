@@ -2,6 +2,7 @@ export * from "./a11y";
 export * from "./appendix-style";
 export * from "./clean";
 export * from "./content";
+export * from "./epub";
 export * from "./links";
 export * from "./math";
 export * from "./seo";
