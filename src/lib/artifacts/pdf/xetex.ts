@@ -392,7 +392,7 @@ function renderNode(node: MdxNode, state: MdxRenderState, context: RenderContext
     case "inlineCode":
       return `\\texttt{${latexEscape(node.value ?? "")}}`;
     case "code":
-      return `\\begin{verbatim}\n${node.value ?? ""}\n\\end{verbatim}`;
+      return renderCodeBlock(node.value ?? "");
     case "blockquote":
       return `\\begin{quotebox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{quotebox}`;
     case "list":
@@ -444,6 +444,72 @@ function renderList(node: MdxNode, state: MdxRenderState): string {
   return `\\begin{${env}}\n${items}\n\\end{${env}}`;
 }
 
+function renderCodeBlock(value: string): string {
+  const lines = value.replace(/\s+$/g, "").split(/\r?\n/);
+  const rendered = lines.map((line) => {
+    const leading = line.match(/^ */)?.[0].length ?? 0;
+    const body = latexEscape(line.slice(leading))
+      .replaceAll("->", "\\textrightarrow{}")
+      .replaceAll("<-", "\\textleftarrow{}");
+    const indent = leading ? `\\hspace*{${(leading * 0.38).toFixed(2)}em}` : "";
+    return `${indent}${body || "\\strut"}\\\\`;
+  }).join("\n");
+  return `\\begin{codebox}\n${rendered}\n\\end{codebox}`;
+}
+
+function renderComparePanel(node: MdxNode, state: MdxRenderState): string {
+  const cards = (node.children ?? [])
+    .filter((child) => child.name === "div" && /\bccard\b/.test(mdxAttributes(child).get("class") ?? ""))
+    .map((card) => renderCompareCard(card, state));
+  if (!cards.length) return renderChildren(node.children ?? [], state, { block: true });
+  const columns = cards.slice(0, 2).map((card) => [
+    "\\begin{minipage}[t]{0.47\\linewidth}",
+    card,
+    "\\end{minipage}"
+  ].join("\n"));
+  return [
+    "\\begin{comparebox}",
+    columns.join("\\hfill\n"),
+    "\\end{comparebox}"
+  ].join("\n");
+}
+
+function renderCompareCard(node: MdxNode, state: MdxRenderState): string {
+  let title = "";
+  let meta = "";
+  let items: string[] = [];
+  const leadingParagraphs: string[] = [];
+  for (const child of node.children ?? []) {
+    const childName = child.name ?? "";
+    const className = mdxAttributes(child).get("class") ?? "";
+    if (childName === "p" && /\bwho\b/.test(className)) {
+      title = renderInlineChildren(child, state, { heading: true }).trim();
+      continue;
+    }
+    if (childName === "p" && /\byr\b/.test(className)) {
+      meta = renderInlineChildren(child, state, { heading: true }).trim();
+      continue;
+    }
+    if (childName === "p") {
+      const text = renderInlineChildren(child, state, { heading: true }).trim();
+      if (text) leadingParagraphs.push(text);
+      continue;
+    }
+    if (childName === "ul") {
+      items = collectListItems(child)
+        .map((item) => renderChildren(item.children ?? [], state, { block: true, listItem: true }).trim())
+        .filter(Boolean);
+    }
+  }
+  if (!title && leadingParagraphs[0]) title = leadingParagraphs[0];
+  if (!meta && leadingParagraphs[1]) meta = leadingParagraphs[1];
+  return [
+    title ? `{\\displayfont\\large\\bfseries\\color{descentInk}${title}\\par}` : "",
+    meta ? `{\\ttfamily\\footnotesize\\color{descentMuted}${meta}\\par}` : "",
+    items.length ? `\\begin{itemize}[leftmargin=1em,itemsep=0.16em,topsep=0.34em]\n${items.map((item) => `\\item ${item}`).join("\n")}\n\\end{itemize}` : ""
+  ].filter(Boolean).join("\n");
+}
+
 function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderContext): string {
   const name = node.name ?? "";
   const attrs = mdxAttributes(node);
@@ -457,6 +523,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "SimpleTable") return renderSimpleTable(attrs, state);
   const renderedSvg = renderRenderedSvgComponent(name, attrs, state);
   if (renderedSvg) return renderedSvg;
+  if (name === "svg") return renderInlineSvg(node, state);
   if (name === "ImageFigure") {
     const src = resolveImageExpression(attrs.get("src"), state);
     const caption = renderChildren(node.children ?? [], state, { block: false }).trim();
@@ -503,6 +570,14 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
 
   if (name === "Lead") return renderLead(node, attrs, state);
   if (name === "div" && /\bctop\b/.test(attrs.get("class") ?? "")) return renderClaimTop(node, state);
+  if (name === "div" && /\bcompare\b/.test(attrs.get("class") ?? "")) return renderComparePanel(node, state);
+  if (name === "div" && /\bvs\b/.test(attrs.get("class") ?? "")) {
+    const text = cleanEyebrowText(renderInlineChildren(node, state, { ...context, heading: true }));
+    return text ? `\\begin{center}{\\ttfamily\\footnotesize\\color{descentMuted}\\MakeUppercase{${text}}}\\end{center}` : "";
+  }
+  if (name === "div" && /\bhybrid\b/.test(attrs.get("class") ?? "")) {
+    return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
+  }
   if (["Aside", "Panel", "Recap", "WhereBlock", "Formula", "Claim"].includes(name)) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
@@ -660,6 +735,41 @@ function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, nam
   ].filter(Boolean).join("\n");
 }
 
+function renderInlineSvg(node: MdxNode, state: MdxRenderState): string {
+  const svg = serializeSvgNode(node);
+  return renderSvgAsset(svg, "", state, "InlineSvg", {
+    width: "0.9\\linewidth",
+    height: "0.34\\textheight"
+  });
+}
+
+function serializeSvgNode(node: MdxNode): string {
+  if (node.type === "text") return xmlEscape(node.value ?? "");
+  const name = node.name ?? "";
+  if (!name) return (node.children ?? []).map(serializeSvgNode).join("");
+
+  const attrs = (node.attributes ?? [])
+    .filter((attr) => attr.type === "mdxJsxAttribute" && attr.name)
+    .map((attr) => {
+      const value = typeof attr.value === "string"
+        ? attr.value
+        : attr.value && typeof attr.value === "object"
+          ? attr.value.value ?? ""
+          : "";
+      return ` ${attr.name}="${xmlEscape(value)}"`;
+    })
+    .join("");
+  return `<${name}${attrs}>${(node.children ?? []).map(serializeSvgNode).join("")}</${name}>`;
+}
+
+function xmlEscape(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("\"", "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
 function prepareSvgForRsvg(svg: string): string {
   let prepared = svg
     .replace(/color-mix\(in srgb,\s*(var\(--[^)]+\)|#[0-9a-fA-F]{3,8}|[a-zA-Z]+)\s+\d+%,\s*transparent\)/g, "$1")
@@ -810,7 +920,7 @@ function renderChildren(children: MdxNode[], state: MdxRenderState, context: Ren
     rendered.push(`\\sectioneyebrow{${state.pendingSectionEyebrow}}`);
     state.pendingSectionEyebrow = null;
   }
-  return rendered.join(context.tableCell ? " " : "\n\n");
+  return rendered.join(context.tableCell || context.listItem ? " " : "\n\n");
 }
 
 function renderInlineChildren(node: MdxNode, state: MdxRenderState, context: RenderContext): string {
@@ -999,7 +1109,7 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5em}
 \tolerance=1800
-\emergencystretch=1.2em
+\emergencystretch=3em
 ${config.locale === "zh" ? "" : "\\RaggedRight"}
 \exhyphenpenalty=10000
 \setlist{itemsep=0.18em,topsep=0.32em,leftmargin=1.25em}
@@ -1034,9 +1144,11 @@ ${config.locale === "zh" ? "" : "\\RaggedRight"}
 \newcommand{\statuschiphint}[1]{\statuschipbase{descentHint}{descentHintBg}{descentHintLine}{#1}}
 \newcommand{\statuschipbad}[1]{\statuschipbase{descentBad}{descentBadBg}{descentBadLine}{#1}}
 \newcommand{\claimtop}[2]{\Needspace{5\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\if\relax\detokenize{#2}\relax\else\enspace #2\fi\par\nopagebreak\smallskip}
-\newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=2.2em\lettrine[lines=2,loversize=0.08,lhang=0.02,nindent=0pt,findent=0.08em]{#1}{#2}\par\endgroup\medskip}
-\newcommand{\leadparanodrop}[1]{\Needspace{6\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=2.2em#1\par\endgroup\medskip}
+\newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=3em\lettrine[lines=2,loversize=0.08,lhang=0.02,nindent=0pt,findent=0.08em]{#1}{#2}\par\endgroup\medskip}
+\newcommand{\leadparanodrop}[1]{\Needspace{6\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=3em#1\par\endgroup\medskip}
 \newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
+\newenvironment{codebox}{\Needspace{5\baselineskip}\par\vspace{0.08in}\begin{tcolorbox}[enhanced,breakable,colback=descentCream,colframe=descentLine,boxrule=0.35pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]\ttfamily\footnotesize\color{descentInk}\RaggedRight\setlength{\parskip}{0pt}\setlength{\baselineskip}{1.22\baselineskip}}{\end{tcolorbox}\vspace{0.08in}}
+\newenvironment{comparebox}{\Needspace{12\baselineskip}\par\vspace{0.08in}\begin{tcolorbox}[enhanced,breakable,colback=descentCream,colframe=descentLine,boxrule=0.35pt,arc=1mm,left=8pt,right=8pt,top=8pt,bottom=8pt]\footnotesize\color{descentInk}\setlength{\parskip}{0pt}}{\end{tcolorbox}\vspace{0.06in}}
 \newcommand{\tablehead}[1]{{\ttfamily\fontsize{6.4}{7.4}\selectfont\color{descentMuted}\MakeUppercase{#1}}}
 \newenvironment{sourcesbox}{\Needspace{8\baselineskip}\par\vspace{0.16in}\begingroup\footnotesize\color{descentMuted}\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\emergencystretch=2em\setlength{\parskip}{0.32em}\noindent{\color{descentLine}\rule{\linewidth}{0.35pt}}\par\vspace{0.05in}}{\par\endgroup}
 \newenvironment{quotebox}{\Needspace{4\baselineskip}\par\vspace{0.12in}\begin{tcolorbox}[enhanced,breakable,blanker,borderline west={1.2pt}{0pt}{descentLine},left=10pt,right=0pt,top=2pt,bottom=2pt]\displayfont\itshape\large\color{descentInk}}{\end{tcolorbox}\vspace{0.08in}}
