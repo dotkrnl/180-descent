@@ -99,6 +99,15 @@ const TOOLS = {
       return commandVersion("xelatex", ["--version"]);
     }
   },
+  fonttools: {
+    label: "fonttools",
+    category: "durable-required",
+    usedBy: "build-pdf WOFF2 to OpenType font preparation",
+    installHint: "macOS: brew install fonttools | Debian/Ubuntu: apt-get install fonttools",
+    check() {
+      return commandVersion("fonttools", ["ttLib.woff2", "decompress", "--help"]);
+    }
+  },
   rsvg: {
     label: "rsvg-convert",
     category: "durable-required",
@@ -165,7 +174,7 @@ const TOOLS = {
 const TOOLS_BY_NAME: Record<string, ToolDefinition | undefined> = TOOLS;
 
 export const TOOL_GROUPS = {
-  durable: ["node", "npm", "pdftotext", "latexmk", "xelatex", "rsvg", "xmllint", "playwright", "java", "epubcheck"],
+  durable: ["node", "npm", "pdftotext", "latexmk", "xelatex", "fonttools", "rsvg", "xmllint", "playwright", "java", "epubcheck"],
   epubcheck: ["java", "epubcheck"]
 } as const;
 

@@ -1,8 +1,11 @@
-import { copyFile, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { copyFile, mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
+import { promisify } from "node:util";
 
 const require = createRequire(import.meta.url);
+const execFileAsync = promisify(execFile);
 
 export interface AssetPreparationOptions {
   root: string;
@@ -45,15 +48,24 @@ export interface PrepareKatexAssetsResult {
   fonts: number;
 }
 
+export interface PreparePdfFontsResult {
+  converted: number;
+  outDir: string;
+}
+
 export const latinFontAssets: readonly LatinFontAsset[] = [
   { packageName: "@fontsource/fraunces", fileName: "fraunces-latin-400-normal.woff2" },
   { packageName: "@fontsource/fraunces", fileName: "fraunces-latin-400-italic.woff2" },
   { packageName: "@fontsource/fraunces", fileName: "fraunces-latin-500-normal.woff2" },
   { packageName: "@fontsource/fraunces", fileName: "fraunces-latin-500-italic.woff2" },
   { packageName: "@fontsource/fraunces", fileName: "fraunces-latin-600-normal.woff2" },
+  { packageName: "@fontsource/fraunces", fileName: "fraunces-latin-700-normal.woff2" },
+  { packageName: "@fontsource/fraunces", fileName: "fraunces-latin-700-italic.woff2" },
   { packageName: "@fontsource/newsreader", fileName: "newsreader-latin-400-normal.woff2" },
   { packageName: "@fontsource/newsreader", fileName: "newsreader-latin-400-italic.woff2" },
   { packageName: "@fontsource/newsreader", fileName: "newsreader-latin-500-normal.woff2" },
+  { packageName: "@fontsource/newsreader", fileName: "newsreader-latin-700-normal.woff2" },
+  { packageName: "@fontsource/newsreader", fileName: "newsreader-latin-700-italic.woff2" },
   { packageName: "@fontsource/ibm-plex-mono", fileName: "ibm-plex-mono-latin-400-normal.woff2" },
   { packageName: "@fontsource/ibm-plex-mono", fileName: "ibm-plex-mono-latin-500-normal.woff2" },
   { packageName: "@fontsource/ibm-plex-mono", fileName: "ibm-plex-mono-latin-600-normal.woff2" }
@@ -77,6 +89,25 @@ export async function prepareLatinFonts(options: PrepareLatinFontsOptions): Prom
     copied: (options.assets ?? latinFontAssets).length,
     outDir
   };
+}
+
+export async function preparePdfFonts(options: AssetPreparationOptions): Promise<PreparePdfFontsResult> {
+  const sourceDir = path.resolve(options.root, "src/assets/fonts");
+  const outDir = path.resolve(sourceDir, "pdf");
+  await mkdir(outDir, { recursive: true });
+
+  let converted = 0;
+  for (const asset of latinFontAssets) {
+    const source = path.join(sourceDir, asset.fileName);
+    const output = path.join(outDir, asset.fileName.replace(/\.woff2$/, ".otf"));
+    if (await isFresh(output, source)) continue;
+    await execFileAsync("fonttools", ["ttLib.woff2", "decompress", source, "-o", output], {
+      maxBuffer: 1024 * 1024 * 4
+    });
+    converted++;
+  }
+
+  return { converted, outDir };
 }
 
 export async function prepareCjkFonts(options: PrepareCjkFontsOptions): Promise<PrepareCjkFontsResult> {
@@ -135,6 +166,15 @@ export async function prepareKatexAssets(options: AssetPreparationOptions): Prom
 
 function stripUnbundledKatexTtfSources(css: string): string {
   return css.replace(/,url\((?:\.\.\/){1,2}fonts\/katex\/[^)]*?\.ttf\)\s*format\("truetype"\)/g, "");
+}
+
+async function isFresh(output: string, source: string): Promise<boolean> {
+  try {
+    const [outputStat, sourceStat] = await Promise.all([stat(output), stat(source)]);
+    return outputStat.mtimeMs >= sourceStat.mtimeMs;
+  } catch {
+    return false;
+  }
 }
 
 function resolvePackageRoot(packageName: string, resolver?: (packageName: string) => string): string {

@@ -8,6 +8,7 @@ import remarkGfm from "remark-gfm";
 import remarkMdx from "remark-mdx";
 import remarkParse from "remark-parse";
 import YAML from "yaml";
+import { prepareLatinFonts, preparePdfFonts } from "@lib/assets";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import type { Locale } from "@lib/schemas";
 
@@ -37,6 +38,7 @@ interface PdfEdition {
   title: string;
   subtitle: string;
   authors: string;
+  translators?: string;
   language: string;
   output: string;
   includeDeepDive?: boolean;
@@ -100,6 +102,8 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
   const root = options.root;
   const book = YAML.parse(await readFile(path.join(root, "src/_data/book.yaml"), "utf8")) as BookData;
 
+  await prepareLatinFonts({ root });
+  await preparePdfFonts({ root });
   await mkdir(path.join(root, "_site/downloads"), { recursive: true });
   await mkdir(path.join(root, "dist/downloads"), { recursive: true });
 
@@ -130,6 +134,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     title: book.zh.title,
     subtitle: book.zh.subtitle,
     authors: book.zh.authors,
+    translators: book.zh.translators,
     language: book.zh.language,
     output: "180-descent-zh.pdf"
   });
@@ -140,6 +145,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     title: `${book.zh.title}：专题深入版`,
     subtitle: book.zh.subtitle,
     authors: book.zh.authors,
+    translators: book.zh.translators,
     language: book.zh.language,
     output: "180-descent-zh-deep-dive.pdf",
     includeDeepDive: true
@@ -159,6 +165,7 @@ async function buildDayPdfs(root: string, locale: Locale, book: BookData): Promi
       title: zh ? `${book.zh.title}：第 ${day.day} 日` : `${book.title}: Day ${day.day}`,
       subtitle: day.title,
       authors: zh ? book.zh.authors : book.authors,
+      translators: zh ? book.zh.translators : undefined,
       language: zh ? book.zh.language : book.language,
       output: zh ? `180-descent-zh-day-${day.path}.pdf` : `180-descent-day-${day.path}.pdf`,
       days: [day],
@@ -212,10 +219,12 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
   }
 
   let currentBlock = "";
+  let blockNumber = 0;
   for (const day of days) {
     if (!config.singleDay && dayBlock(day) !== currentBlock) {
       currentBlock = dayBlock(day);
-      chunks.push(`\\part*{${latexEscape(currentBlock)}}\n\\addcontentsline{toc}{part}{${latexEscape(currentBlock)}}`);
+      blockNumber++;
+      chunks.push(blockDividerLatex(currentBlock, blockNumber, config.locale));
     }
     chunks.push(dayLatex(day, config));
     chunks.push(await mdxToLatex(day.bodySource, {
@@ -230,7 +239,7 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
       for (const appendix of day.appendices) {
         const label = config.locale === "zh" ? "可选附录" : "Optional appendix";
         const title = appendix.title ?? appendix.id;
-        chunks.push(`\\clearpage\n\\section*{${latexEscape(label)}: ${latexEscape(title)}}\n\\addcontentsline{toc}{section}{${latexEscape(label)}: ${latexEscape(title)}}`);
+        chunks.push(`\\clearpage\n\\section*{${latexEscape(label)}: ${latexEscape(title)}}`);
         chunks.push(await mdxToLatex(appendix.bodySource, {
           root: config.root,
           locale: config.locale,
@@ -256,6 +265,7 @@ async function introductionLatex(config: PdfEdition & { root: string }, workDir:
   const title = config.locale === "zh" ? "导言" : "Introduction";
   return [
     `\\chapter*{${latexEscape(title)}}`,
+    `\\markboth{${latexEscape(title)}}{${latexEscape(title)}}`,
     `\\addcontentsline{toc}{chapter}{${latexEscape(title)}}`,
     await mdxToLatex(source, {
       root: config.root,
@@ -271,9 +281,33 @@ function dayLatex(day: ArtifactBookDay, config: PdfEdition): string {
   const prefix = config.locale === "zh" ? `第 ${day.day} 日` : `Day ${day.day}`;
   return [
     "\\clearpage",
-    `\\chapter{${latexEscape(prefix)}: ${latexEscape(day.title)}}`,
-    day.summary ? `\\begin{leadbox}\n${latexEscape(day.summary)}\n\\end{leadbox}` : ""
+    `\\chaptermark{${latexEscape(prefix)}: ${latexEscape(day.title)}}`,
+    `\\addcontentsline{toc}{chapter}{${latexEscape(prefix)}: ${latexEscape(day.title)}}`
   ].filter(Boolean).join("\n\n");
+}
+
+function blockDividerLatex(title: string, blockNumber: number, locale: Locale): string {
+  const label = locale === "zh" ? `模块 ${romanNumeral(blockNumber)}` : `Block ${romanNumeral(blockNumber)}`;
+  const tocLabel = `${label} · ${title}`;
+  return String.raw`\clearpage
+\addcontentsline{toc}{part}{${latexEscape(tocLabel)}}
+\thispagestyle{empty}
+\pagecolor{descentTeal}
+\color{white}
+\begingroup
+\newgeometry{margin=0in}
+\vspace*{3.72in}
+\hspace*{0.68in}
+\begin{minipage}{4.55in}
+{\ttfamily\fontsize{8.8}{11}\selectfont\addfontfeatures{LetterSpace=18}\MakeUppercase{${latexEscape(label)}}\par}
+\vspace{0.18in}
+{\displayfont\bfseries\fontsize{29}{31}\selectfont ${latexEscape(title)}\par}
+\end{minipage}
+\restoregeometry
+\endgroup
+\clearpage
+\nopagecolor
+\color{descentInk}`;
 }
 
 async function mdxToLatex(source: string, options: MdxLatexOptions): Promise<string> {
@@ -347,7 +381,7 @@ function renderParagraph(node: MdxNode, state: MdxRenderState, context: RenderCo
 
 function renderHeading(node: MdxNode, state: MdxRenderState): string {
   const text = renderInlineChildren(node, state, { heading: true });
-  if (node.depth === 1) return `\\chapter*{${text}}\n\\addcontentsline{toc}{chapter}{${text}}`;
+  if (node.depth === 1) return `\\pdfdaytitle{${text}}`;
   if (node.depth === 2) return `\\section{${text}}`;
   if (node.depth === 3) return `\\subsection{${text}}`;
   return `\\paragraph{${text}}`;
@@ -395,8 +429,14 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "li") {
     return renderChildren(node.children ?? [], state, { block: true, listItem: true }).trim();
   }
+  if (name === "span") {
+    return renderInlineChildren(node, state, context);
+  }
 
-  if (name === "Lead") return `\\begin{leadbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{leadbox}`;
+  if (name === "Lead") {
+    const drop = latexEscape(attrs.get("drop") ?? "");
+    return `\\begin{leadbox}\n${drop}${renderChildren(node.children ?? [], state, { block: true }).trim()}\n\\end{leadbox}`;
+  }
   if (["Aside", "Panel", "Recap", "WhereBlock", "Formula", "Claim"].includes(name)) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
@@ -407,7 +447,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     return `\\subsection*{${renderInlineChildren(node, state, { ...context, heading: true })}}`;
   }
   if (["SectionEyebrow", "HeroEyebrow", "Label", "Meta"].includes(name)) {
-    const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
+    const text = cleanEyebrowText(renderInlineChildren(node, state, { ...context, heading: true }).trim());
     return text ? `\\eyebrow{${text}}` : "";
   }
   if (["HeroSubhead", "PanelNote", "Caption", "FigureCaption"].includes(name)) {
@@ -492,14 +532,24 @@ function collectTableRows(node: MdxNode, state: MdxRenderState, table: LatexTabl
 
 function latexTable(table: LatexTable): string {
   const columnCount = Math.max(1, ...table.rows.map((row) => row.length));
-  const width = Math.min(0.9, 0.92 / columnCount).toFixed(2);
+  const usableWidth = columnCount >= 5 ? 0.82 : columnCount === 4 ? 0.86 : 0.9;
+  const width = Math.min(0.9, usableWidth / columnCount).toFixed(3);
+  const size = columnCount >= 5 ? "\\scriptsize" : "\\footnotesize";
   const columns = Array.from({ length: columnCount }, () => `>{\\raggedright\\arraybackslash}p{${width}\\linewidth}`).join("");
-  const lines = [`\\begin{small}`, `\\begin{longtable}{@{}${columns}@{}}`, "\\toprule"];
+  const lines = [
+    "\\begingroup",
+    size,
+    "\\setlength{\\tabcolsep}{2.5pt}",
+    "\\renewcommand{\\arraystretch}{1.12}",
+    "\\sloppy",
+    `\\begin{longtable}{@{}${columns}@{}}`,
+    "\\toprule"
+  ];
   for (const [index, row] of table.rows.entries()) {
     lines.push(row.map((cell) => cell || "\\strut").join(" & ") + " \\\\");
     if (table.headerRows.has(index)) lines.push("\\midrule");
   }
-  lines.push("\\bottomrule", "\\end{longtable}", "\\end{small}");
+  lines.push("\\bottomrule", "\\end{longtable}", "\\endgroup");
   return lines.join("\n");
 }
 
@@ -555,7 +605,12 @@ function renderChildren(children: MdxNode[], state: MdxRenderState, context: Ren
 }
 
 function renderInlineChildren(node: MdxNode, state: MdxRenderState, context: RenderContext): string {
-  return renderChildren(node.children ?? [], state, { ...context, block: false }).replace(/\n+/g, " ").replace(/\s{2,}/g, " ");
+  return normalizeInlineLatex(
+    (node.children ?? [])
+      .map((child) => renderNode(child, state, { ...context, block: false }))
+      .join("")
+      .replace(/\n+/g, " ")
+  );
 }
 
 function blockMath(value: string): string {
@@ -563,7 +618,7 @@ function blockMath(value: string): string {
 }
 
 function inlineMath(value: string): string {
-  return value ? `\\(${value}\\)` : "";
+  return value ? `\\mbox{\\(${value}\\)}` : "";
 }
 
 function mdxAttributes(node: MdxNode): Map<string, string | null> {
@@ -642,20 +697,42 @@ function resolveImportPath(importPath: string, root: string, sourceDir: string):
   return path.join(root, importPath);
 }
 
-function latexPreamble(config: PdfEdition): string {
-  const cjkMain = config.locale === "zh" ? "Songti SC" : "Songti SC";
-  return String.raw`\documentclass[10.5pt,openany]{book}
-\usepackage[paperwidth=6in,paperheight=9in,top=0.74in,bottom=0.78in,inner=0.72in,outer=0.64in,headheight=14pt,headsep=11pt,footskip=26pt]{geometry}
+function latexPreamble(config: PdfEdition & { root: string }): string {
+  const fontPath = latexPath(path.join(config.root, "src/assets/fonts/pdf") + path.sep);
+  const cjkMain = config.locale === "zh" ? "LXGW WenKai" : "Songti SC";
+  return String.raw`\documentclass[10.5pt,openany,oneside]{book}
+\let\cleardoublepage\clearpage
+\usepackage[paperwidth=6in,paperheight=9in,top=0.72in,bottom=0.78in,inner=0.55in,outer=0.55in,headheight=14pt,headsep=11pt,footskip=26pt]{geometry}
 \usepackage{fontspec}
 \usepackage{xeCJK}
-\setmainfont{Georgia}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont[
+  Path=${fontPath},
+  UprightFont=newsreader-latin-400-normal.otf,
+  ItalicFont=newsreader-latin-400-italic.otf,
+  BoldFont=newsreader-latin-700-normal.otf,
+  BoldItalicFont=newsreader-latin-700-italic.otf
+]{Newsreader}
+\newfontfamily\displayfont[
+  Path=${fontPath},
+  UprightFont=fraunces-latin-600-normal.otf,
+  ItalicFont=fraunces-latin-400-italic.otf,
+  BoldFont=fraunces-latin-700-normal.otf,
+  BoldItalicFont=fraunces-latin-700-italic.otf
+]{Fraunces}
+\setmonofont[
+  Path=${fontPath},
+  UprightFont=ibm-plex-mono-latin-400-normal.otf,
+  BoldFont=ibm-plex-mono-latin-600-normal.otf,
+  Scale=0.82
+]{IBM Plex Mono}
 \setsansfont{Hiragino Sans GB}
-\setmonofont{Menlo}[Scale=0.82]
-\setCJKmainfont{${cjkMain}}
+\IfFontExistsTF{${cjkMain}}{\setCJKmainfont{${cjkMain}}}{\setCJKmainfont{Songti SC}}
 \setCJKsansfont{Hiragino Sans GB}
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{tikz}
 \usepackage{caption}
 \usepackage{array}
 \usepackage{longtable}
@@ -663,29 +740,45 @@ function latexPreamble(config: PdfEdition): string {
 \usepackage{enumitem}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
+\usepackage{tocloft}
 \usepackage[most]{tcolorbox}
 \usepackage{amsmath,amssymb}
 \definecolor{descentTeal}{HTML}{13525A}
 \definecolor{descentInk}{HTML}{1D2424}
 \definecolor{descentMuted}{HTML}{667579}
 \definecolor{descentPaper}{HTML}{FBF8F0}
+\definecolor{descentCream}{HTML}{F7F3EA}
 \definecolor{descentLine}{HTML}{D7CCC0}
 \color{descentInk}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.58em}
-\setlist{itemsep=0.22em,topsep=0.35em,leftmargin=1.35em}
+\setlength{\parskip}{0.5em}
+\exhyphenpenalty=10000
+\setlist{itemsep=0.18em,topsep=0.32em,leftmargin=1.25em}
+\setcounter{tocdepth}{0}
+\setcounter{secnumdepth}{0}
+\renewcommand{\contentsname}{${config.locale === "zh" ? "目录" : "Contents"}}
+\renewcommand{\cfttoctitlefont}{\displayfont\Huge\bfseries\color{descentTeal}}
+\renewcommand{\cftpartfont}{\ttfamily\footnotesize\color{descentMuted}}
+\renewcommand{\cftpartpagefont}{\ttfamily\footnotesize\color{descentMuted}}
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftchappagefont}{\ttfamily\footnotesize\color{descentMuted}}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforepartskip}{0.62em}
+\setlength{\cftbeforechapskip}{0.2em}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[LE,RO]{\sffamily\footnotesize\color{descentMuted}\thepage}
-\fancyhead[LO]{\sffamily\footnotesize\color{descentMuted}${latexEscape(config.title)}}
-\fancyhead[RE]{\sffamily\footnotesize\color{descentMuted}\leftmark}
+\fancyhead[LE,RO]{\ttfamily\scriptsize\color{descentMuted}\thepage}
+\fancyhead[LO]{\ttfamily\scriptsize\color{descentMuted}${latexEscape(config.title)}}
+\fancyhead[RE]{\ttfamily\scriptsize\color{descentMuted}\leftmark}
 \renewcommand{\headrulewidth}{0pt}
-\titleformat{\chapter}[display]{\sffamily\bfseries\color{descentTeal}}{\Large\MakeUppercase{\chaptertitlename}\ \thechapter}{0.6em}{\Huge}
-\titleformat{\section}{\sffamily\Large\bfseries\color{descentTeal}}{\thesection}{0.55em}{}
-\titleformat{\subsection}{\sffamily\large\bfseries\color{descentInk}}{\thesubsection}{0.5em}{}
-\newcommand{\eyebrow}[1]{\par\smallskip{\sffamily\footnotesize\bfseries\color{descentMuted}\MakeUppercase{#1}}\par\smallskip}
+\titleformat{\chapter}[display]{\displayfont\bfseries\color{descentTeal}}{}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{0.22in}
+\titleformat{\section}{\displayfont\Large\bfseries\color{descentTeal}}{\thesection}{0.55em}{}
+\titleformat{\subsection}{\displayfont\large\bfseries\color{descentInk}}{\thesubsection}{0.5em}{}
+\newcommand{\pdfdaytitle}[1]{{\displayfont\bfseries\fontsize{23}{25}\selectfont #1\par}\vspace{0.04in}}
+\newcommand{\eyebrow}[1]{\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\smallskip}
 \newcommand{\statuschip}[1]{\textsf{\footnotesize\color{descentTeal}[#1]}}
-\newenvironment{leadbox}{\begin{tcolorbox}[enhanced,breakable,colback=descentPaper,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
+\newenvironment{leadbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=white,boxrule=0pt,arc=0mm,left=0pt,right=0pt,top=2pt,bottom=2pt]\large\color{descentTeal}}{\end{tcolorbox}}
 \newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
 \newenvironment{sourcesbox}{\begin{tcolorbox}[enhanced,breakable,colback=descentPaper,colframe=descentLine,boxrule=0.3pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]\footnotesize}{\end{tcolorbox}}
 \newenvironment{quotebox}{\begin{quote}\itshape}{\end{quote}}
@@ -695,24 +788,43 @@ function latexPreamble(config: PdfEdition): string {
 \XeTeXlinebreakskip = 0pt plus 1pt`;
 }
 
-function titlePageLatex(config: PdfEdition): string {
-  return String.raw`\begin{titlepage}
+function titlePageLatex(config: PdfEdition & { root: string }): string {
+  const logo = latexPath(path.join(config.root, "src/assets/images/brand/180-descent-icon.png"));
+  const isZh = config.locale === "zh";
+  const eyebrow = config.subtitle;
+  const byline = isZh ? `作者：${config.authors}` : `By ${config.authors}`;
+  const translator = isZh && config.translators ? `翻译：${config.translators}` : "";
+  const editor = isZh ? "人工编辑：刘家昌" : "Human editor: Jason Lau";
+  return String.raw`\clearpage
+\thispagestyle{empty}
 \pagecolor{descentTeal}
 \color{white}
-\vspace*{0.52in}
-{\sffamily\bfseries\fontsize{28}{32}\selectfont ${latexEscape(config.title)}\par}
-\vspace{0.22in}
-{\sffamily\fontsize{12}{16}\selectfont ${latexEscape(config.subtitle)}\par}
-\vfill
-{\sffamily\fontsize{9}{13}\selectfont ${latexEscape(config.authors)}\par}
-{\sffamily\fontsize{8}{12}\selectfont ${latexEscape(config.language)}\par}
-\end{titlepage}
+\begingroup
+\newgeometry{margin=0in}
+\vspace*{2.52in}
+\hspace*{0.68in}
+\begin{minipage}{4.55in}
+\begin{tikzpicture}
+\node[circle,fill=descentCream,inner sep=0pt,minimum size=1.18in] {\includegraphics[width=0.84in]{${logo}}};
+\end{tikzpicture}\par
+\vspace{0.32in}
+{\ttfamily\fontsize{7.8}{10}\selectfont\addfontfeatures{LetterSpace=18}\MakeUppercase{${latexEscape(eyebrow)}}\par}
+\vspace{0.18in}
+{\displayfont\bfseries\fontsize{29}{31}\selectfont ${latexEscape(config.title)}\par}
+\vspace{0.20in}
+{\displayfont\itshape\fontsize{13.8}{17}\selectfont ${latexEscape(byline)}\par}
+${translator ? `{\\displayfont\\itshape\\fontsize{13.8}{17}\\selectfont ${latexEscape(translator)}\\par}` : ""}
+{\displayfont\itshape\fontsize{13.8}{17}\selectfont ${latexEscape(editor)}\par}
+\end{minipage}
+\restoregeometry
+\endgroup
+\clearpage
 \nopagecolor
 \color{descentInk}`;
 }
 
 function latexEscape(value: string): string {
-  return value
+  const escaped = normalizeText(value)
     .replaceAll("\\", "\\textbackslash{}")
     .replaceAll("&", "\\&")
     .replaceAll("%", "\\%")
@@ -723,6 +835,103 @@ function latexEscape(value: string): string {
     .replaceAll("}", "\\}")
     .replaceAll("~", "\\textasciitilde{}")
     .replaceAll("^", "\\textasciicircum{}");
+  return escaped
+    .replace(/”\s*(?=[A-Za-z\\])/g, "”\\ ")
+    .replaceAll("≠", "\\ensuremath{\\neq}")
+    .replaceAll("≈", "\\ensuremath{\\approx}")
+    .replaceAll("≤", "\\ensuremath{\\leq}")
+    .replaceAll("≥", "\\ensuremath{\\geq}");
+}
+
+function normalizeText(value: string): string {
+  return smartQuotes(decodeHtmlEntities(value))
+    .replace(/([.?!])“(?=$|\s)/g, "$1”")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .replace(/\s+([)\]}])/g, "$1")
+    .replace(/([([{])\s+/g, "$1")
+    .replace(/\s+([”’])/g, "$1")
+    .replace(/([“‘])\s+/g, "$1")
+    .replace(/([”’])([A-Za-z])/g, "$1 $2")
+    .replace(/\s+—\s*/g, " --- ")
+    .replace(/\s+–\s*/g, " -- ");
+}
+
+function decodeHtmlEntities(value: string): string {
+  return value
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, "\"")
+    .replace(/&apos;/g, "'")
+    .replace(/&#(\d+);/g, (_, code: string) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code: string) => String.fromCodePoint(parseInt(code, 16)));
+}
+
+function smartQuotes(value: string): string {
+  let result = "";
+  let openDouble = true;
+  let openSingle = true;
+  for (let index = 0; index < value.length; index++) {
+    const char = value[index];
+    if (char === "\"") {
+      result += openDouble ? "“" : "”";
+      openDouble = !openDouble;
+    } else if (char === "'" && /[A-Za-z]/.test(value[index - 1] ?? "") && /[A-Za-z]/.test(value[index + 1] ?? "")) {
+      result += "’";
+    } else if (char === "'") {
+      result += openSingle ? "‘" : "’";
+      openSingle = !openSingle;
+    } else {
+      result += char;
+    }
+  }
+  return result;
+}
+
+function normalizeInlineLatex(value: string): string {
+  return value
+    .replace(/\\mbox\{\\\(p\\\)\}\s*-value/g, "\\mbox{\\(p\\)-value}")
+    .replace(/\\mbox\{\\emph\{p\}\}\s*-value/g, "\\mbox{\\emph{p}-value}")
+    .replace(/\\emph\{p\}\s*-value/g, "\\mbox{\\emph{p}-value}")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .replace(/\s+([)\]}])/g, "$1")
+    .replace(/([([{])\s+/g, "$1")
+    .replace(/\s+([”’])/g, "$1")
+    .replace(/([“‘])\s+/g, "$1")
+    .replace(/”\s*(?=[A-Za-z\\])/g, "”\\ ")
+    .trim();
+}
+
+function cleanEyebrowText(value: string): string {
+  return value.replace(/^[◆◇▪●■□\s]+/, "");
+}
+
+function romanNumeral(value: number): string {
+  const numerals: Array<[number, string]> = [
+    [1000, "M"],
+    [900, "CM"],
+    [500, "D"],
+    [400, "CD"],
+    [100, "C"],
+    [90, "XC"],
+    [50, "L"],
+    [40, "XL"],
+    [10, "X"],
+    [9, "IX"],
+    [5, "V"],
+    [4, "IV"],
+    [1, "I"]
+  ];
+  let remaining = value;
+  let result = "";
+  for (const [number, roman] of numerals) {
+    while (remaining >= number) {
+      result += roman;
+      remaining -= number;
+    }
+  }
+  return result;
 }
 
 function latexPath(value: string): string {
