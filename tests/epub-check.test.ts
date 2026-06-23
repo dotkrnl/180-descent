@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { decodeXmlEntities, isInsideSvg } from "@lib/checks";
+import { decodeXmlEntities, isInsideSvg } from "@lib/checks/epub";
 
 describe("epub check helpers", () => {
   it("decodes XML entities before appendix content matching", () => {

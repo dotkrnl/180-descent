@@ -1,4 +1,4 @@
-import { checkAccessibility } from "@lib/checks";
+import { checkAccessibility } from "@lib/checks/a11y";
 
 const result = await checkAccessibility({ root: process.cwd() });
 

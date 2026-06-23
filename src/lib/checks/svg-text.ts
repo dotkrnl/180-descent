@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { walkFilesSync } from "@lib/fs";
+import { walkFilesSync } from "@lib/fs/walk";
 
 export const MIN_SVG_FONT_SIZE = 10.5;
 

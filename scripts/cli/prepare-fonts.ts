@@ -1,4 +1,4 @@
-import { prepareLatinFonts } from "@lib/assets";
+import { prepareLatinFonts } from "@lib/assets/fonts";
 
 try {
   const { copied } = await prepareLatinFonts({ root: process.cwd() });

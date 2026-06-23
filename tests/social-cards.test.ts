@@ -3,7 +3,7 @@ import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { clampSocialText, loadSocialCards, renderSocialCardSvg, wrapSocialText } from "@lib/assets";
+import { clampSocialText, loadSocialCards, renderSocialCardSvg, wrapSocialText } from "@lib/assets/social-cards";
 
 describe("social cards", () => {
   it("loads root and paired day cards from source metadata", async () => {

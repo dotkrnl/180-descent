@@ -5,7 +5,7 @@ import {
   parsePreflightArgs,
   PreflightError,
   resolveToolNames
-} from "@lib/tools";
+} from "@lib/tools/preflight";
 
 const { toolNames, optional, list } = parsePreflightArgs(process.argv.slice(2));
 

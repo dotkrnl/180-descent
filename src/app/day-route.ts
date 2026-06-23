@@ -1,7 +1,7 @@
 import path from "node:path";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
-import { listRegistryDayLocaleEntries, loadContentRegistry, type RegistryDayLocaleEntry } from "@lib/content";
-import type { Locale } from "@lib/schemas";
+import { listRegistryDayLocaleEntries, loadContentRegistry, type RegistryDayLocaleEntry } from "@lib/content/registry";
+import type { Locale } from "@lib/schemas/day";
 
 type MdxModule = {
   default: AstroComponentFactory;

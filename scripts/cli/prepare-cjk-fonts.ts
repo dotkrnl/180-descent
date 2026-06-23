@@ -1,4 +1,4 @@
-import { prepareCjkFonts } from "@lib/assets";
+import { prepareCjkFonts } from "@lib/assets/fonts";
 
 try {
   const result = await prepareCjkFonts({ root: process.cwd() });

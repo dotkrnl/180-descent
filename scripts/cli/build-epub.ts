@@ -1,4 +1,4 @@
-import { buildAllEpubs } from "@lib/artifacts";
+import { buildAllEpubs } from "@lib/artifacts/epub/build";
 
 try {
   await buildAllEpubs({ root: process.cwd() });

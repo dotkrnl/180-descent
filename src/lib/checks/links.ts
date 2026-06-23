@@ -2,8 +2,8 @@ import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
 import YAML from "yaml";
-import { loadContentRegistry } from "@lib/content";
-import { walkFiles } from "@lib/fs";
+import { loadContentRegistry } from "@lib/content/registry";
+import { walkFiles } from "@lib/fs/walk";
 
 export interface LinkCheckOptions {
   root: string;

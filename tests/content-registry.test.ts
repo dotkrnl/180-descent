@@ -1,7 +1,7 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { listRegistryDayLocaleEntries, loadContentRegistry } from "@lib/content";
-import { dayManifestSchema } from "@lib/schemas";
+import { listRegistryDayLocaleEntries, loadContentRegistry } from "@lib/content/registry";
+import { dayManifestSchema } from "@lib/schemas/day";
 
 const fixtureDaysDir = path.join(process.cwd(), "tests/fixtures/content/days");
 const projectDaysDir = path.join(process.cwd(), "src/content/days");

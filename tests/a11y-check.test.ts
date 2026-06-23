@@ -3,7 +3,7 @@ import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkStaticAccessibility } from "@lib/checks";
+import { checkStaticAccessibility } from "@lib/checks/a11y";
 
 describe("static accessibility check", () => {
   it("reports missing image alt text and accessible-name label mismatches", async () => {

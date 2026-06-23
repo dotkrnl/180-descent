@@ -1,6 +1,6 @@
 import { renderToString } from "katex";
 import { escapeHtml } from "@lib/text/escape";
-import type { Locale } from "@lib/schemas";
+import type { Locale } from "@lib/schemas/day";
 
 export interface StatusChipOptions {
   status: string;

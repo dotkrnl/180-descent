@@ -1,4 +1,4 @@
-import { prepareKatexAssets } from "@lib/assets";
+import { prepareKatexAssets } from "@lib/assets/fonts";
 
 try {
   const { fonts } = await prepareKatexAssets({ root: process.cwd() });

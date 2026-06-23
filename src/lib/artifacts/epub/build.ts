@@ -5,9 +5,9 @@ import * as cheerio from "cheerio";
 import JSZip from "jszip";
 import YAML from "yaml";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
-import { compileCss } from "@lib/assets";
-import type { Locale } from "@lib/schemas";
-import { escapeXml } from "@lib/text";
+import { compileCss } from "@lib/assets/css";
+import type { Locale } from "@lib/schemas/day";
+import { escapeXml } from "@lib/text/escape";
 
 type CheerioRoot = ReturnType<typeof cheerio.load>;
 

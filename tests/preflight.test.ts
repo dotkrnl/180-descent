@@ -6,7 +6,7 @@ import {
   parsePreflightArgs,
   PreflightError,
   resolveToolNames
-} from "@lib/tools";
+} from "@lib/tools/preflight";
 
 describe("typed preflight", () => {
   it("resolves named groups without duplicates", () => {

@@ -3,7 +3,7 @@ import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkSeo } from "@lib/checks";
+import { checkSeo } from "@lib/checks/seo";
 
 describe("seo check", () => {
   it("accepts a minimal indexable page with required metadata", async () => {

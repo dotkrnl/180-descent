@@ -1,4 +1,4 @@
-import { checkMath } from "@lib/checks";
+import { checkMath } from "@lib/checks/math";
 
 const result = await checkMath({ root: process.cwd() });
 

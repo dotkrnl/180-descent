@@ -3,7 +3,7 @@ import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkSvgTextSize } from "@lib/checks";
+import { checkSvgTextSize } from "@lib/checks/svg-text";
 
 describe("svg text size check", () => {
   it("reports SVG font sizes below the minimum", async () => {

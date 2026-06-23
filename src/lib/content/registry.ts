@@ -1,7 +1,7 @@
 import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { parse as parseYaml } from "yaml";
-import { dayManifestSchema, type DayManifest, type Locale } from "@lib/schemas";
+import { dayManifestSchema, type DayManifest, type Locale } from "@lib/schemas/day";
 
 export interface ContentRegistryOptions {
   daysDir: string;

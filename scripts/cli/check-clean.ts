@@ -1,4 +1,4 @@
-import { checkCleanRepo } from "@lib/checks";
+import { checkCleanRepo } from "@lib/checks/clean";
 
 const failures = await checkCleanRepo({ root: process.cwd() });
 

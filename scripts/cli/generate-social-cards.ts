@@ -1,5 +1,5 @@
 import { fileURLToPath } from "node:url";
-import { generateSocialCards } from "@lib/assets";
+import { generateSocialCards } from "@lib/assets/social-cards";
 
 try {
   const result = await generateSocialCards({

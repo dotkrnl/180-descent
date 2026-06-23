@@ -1,4 +1,4 @@
-import { checkSeo } from "@lib/checks";
+import { checkSeo } from "@lib/checks/seo";
 
 const result = await checkSeo({ root: process.cwd() });
 

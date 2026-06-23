@@ -2,7 +2,7 @@ import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkCleanRepo } from "@lib/checks";
+import { checkCleanRepo } from "@lib/checks/clean";
 
 describe("final cleanup gate", () => {
   it("flags unsupported static-site paths", async () => {

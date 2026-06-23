@@ -1,6 +1,6 @@
 import path from "node:path";
 import { loadContentRegistry } from "@lib/content/registry";
-import type { Locale } from "@lib/schemas";
+import type { Locale } from "@lib/schemas/day";
 
 export interface ArtifactBook {
   locale: Locale;

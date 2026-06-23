@@ -1,4 +1,4 @@
-import { checkPdf } from "@lib/checks";
+import { checkPdf } from "@lib/checks/pdf";
 
 const result = await checkPdf({ root: process.cwd() });
 

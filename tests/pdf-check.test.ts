@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { parsePpm } from "@lib/pdf";
-import { escapeRegExp } from "@lib/text";
-import { hasPdfHeader, textMatchesAny } from "@lib/checks";
+import { parsePpm } from "@lib/pdf/ppm";
+import { escapeRegExp } from "@lib/text/escape";
+import { hasPdfHeader, textMatchesAny } from "@lib/checks/pdf";
 
 describe("pdf check helpers", () => {
   it("classifies PDF headers and text pattern matches", () => {

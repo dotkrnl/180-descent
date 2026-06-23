@@ -2,7 +2,7 @@ import { mkdtemp, mkdir, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkWorkflowSkillLinks } from "@lib/checks";
+import { checkWorkflowSkillLinks } from "@lib/checks/workflows";
 
 describe("workflow skill links", () => {
   it("accepts canonical workflow symlinks", async () => {

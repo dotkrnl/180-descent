@@ -1,4 +1,4 @@
-import { checkLinks } from "@lib/checks";
+import { checkLinks } from "@lib/checks/links";
 
 const failures = await checkLinks({ root: process.cwd() });
 

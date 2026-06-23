@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import yaml from "yaml";
-import { loadContentRegistry } from "@lib/content";
+import { loadContentRegistry } from "@lib/content/registry";
 import { escapeXml } from "@lib/text/escape";
 
 export interface GenerateSocialCardsOptions {

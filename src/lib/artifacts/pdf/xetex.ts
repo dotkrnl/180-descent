@@ -9,9 +9,9 @@ import remarkGfm from "remark-gfm";
 import remarkMdx from "remark-mdx";
 import remarkParse from "remark-parse";
 import YAML from "yaml";
-import { prepareLatinFonts, preparePdfFonts } from "@lib/assets";
+import { prepareLatinFonts, preparePdfFonts } from "@lib/assets/fonts";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
-import type { Locale } from "@lib/schemas";
+import type { Locale } from "@lib/schemas/day";
 
 const execFileAsync = promisify(execFile);
 

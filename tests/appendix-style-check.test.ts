@@ -3,7 +3,7 @@ import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkAppendixStyle } from "@lib/checks";
+import { checkAppendixStyle } from "@lib/checks/appendix-style";
 
 describe("appendix style check", () => {
   it("reports forbidden appendix-local classes", async () => {

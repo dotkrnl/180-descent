@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { load } from "cheerio";
-import { pathExists, walkFiles } from "@lib/fs";
-import { urlForHtml } from "@lib/static-site";
+import { pathExists, walkFiles } from "@lib/fs/walk";
+import { urlForHtml } from "@lib/static-site/url";
 
 export interface SeoCheckOptions {
   root: string;

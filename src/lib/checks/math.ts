@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { pathExists, walkFiles } from "@lib/fs";
+import { pathExists, walkFiles } from "@lib/fs/walk";
 
 export interface MathCheckOptions {
   root: string;

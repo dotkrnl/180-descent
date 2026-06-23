@@ -3,7 +3,7 @@ import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { prepareCjkFonts, prepareKatexAssets, prepareLatinFonts } from "@lib/assets";
+import { prepareCjkFonts, prepareKatexAssets, prepareLatinFonts } from "@lib/assets/fonts";
 
 describe("font asset preparation", () => {
   it("copies configured latin font files into the site asset directory", async () => {

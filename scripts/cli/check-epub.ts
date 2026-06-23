@@ -1,4 +1,4 @@
-import { checkEpub } from "@lib/checks";
+import { checkEpub } from "@lib/checks/epub";
 
 const result = await checkEpub({ root: process.cwd() });
 

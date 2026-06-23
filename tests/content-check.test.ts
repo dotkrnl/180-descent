@@ -3,7 +3,7 @@ import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkContent } from "@lib/checks";
+import { checkContent } from "@lib/checks/content";
 
 describe("content check", () => {
   it("accepts minimal paired registry content", async () => {

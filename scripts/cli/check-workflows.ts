@@ -1,4 +1,4 @@
-import { checkWorkflowSkillLinks } from "@lib/checks";
+import { checkWorkflowSkillLinks } from "@lib/checks/workflows";
 
 const failures = await checkWorkflowSkillLinks(process.cwd());
 

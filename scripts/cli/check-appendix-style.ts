@@ -1,4 +1,4 @@
-import { checkAppendixStyle } from "@lib/checks";
+import { checkAppendixStyle } from "@lib/checks/appendix-style";
 
 const result = await checkAppendixStyle({ root: process.cwd() });
 

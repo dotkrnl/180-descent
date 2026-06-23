@@ -1,4 +1,4 @@
-import { buildAllPdfs } from "@lib/artifacts";
+import { buildAllPdfs } from "@lib/artifacts/pdf/xetex";
 
 try {
   await buildAllPdfs({ root: process.cwd() });

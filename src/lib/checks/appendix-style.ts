@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { compileCss } from "@lib/assets";
-import { loadContentRegistry } from "@lib/content";
-import { pathExists, walkFiles } from "@lib/fs";
+import { compileCss } from "@lib/assets/css";
+import { loadContentRegistry } from "@lib/content/registry";
+import { pathExists, walkFiles } from "@lib/fs/walk";
 
 export interface AppendixStyleCheckOptions {
   root: string;

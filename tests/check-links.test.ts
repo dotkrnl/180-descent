@@ -3,7 +3,7 @@ import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkLinks } from "@lib/checks";
+import { checkLinks } from "@lib/checks/links";
 
 describe("link checks", () => {
   it("reports broken internal links and missing anchors", async () => {

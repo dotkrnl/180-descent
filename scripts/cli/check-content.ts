@@ -1,4 +1,4 @@
-import { checkContent } from "@lib/checks";
+import { checkContent } from "@lib/checks/content";
 
 const failures = await checkContent({ root: process.cwd() });
 

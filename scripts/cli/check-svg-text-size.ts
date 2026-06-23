@@ -1,4 +1,4 @@
-import { checkSvgTextSize, MIN_SVG_FONT_SIZE } from "@lib/checks";
+import { checkSvgTextSize, MIN_SVG_FONT_SIZE } from "@lib/checks/svg-text";
 
 const failures = checkSvgTextSize({ root: process.cwd() });
 

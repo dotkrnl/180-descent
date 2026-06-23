@@ -1,10 +1,10 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
-import { compileCss } from "@lib/assets";
-import { loadContentRegistry } from "@lib/content";
-import { walkFiles } from "@lib/fs";
-import type { Locale } from "@lib/schemas";
+import { compileCss } from "@lib/assets/css";
+import { loadContentRegistry } from "@lib/content/registry";
+import { walkFiles } from "@lib/fs/walk";
+import type { Locale } from "@lib/schemas/day";
 
 export interface ContentCheckOptions {
   root: string;

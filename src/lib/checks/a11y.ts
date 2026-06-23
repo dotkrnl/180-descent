@@ -6,8 +6,8 @@ import { load, type CheerioAPI } from "cheerio";
 import type { Element } from "domhandler";
 import { chromium } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
-import { walkFiles } from "@lib/fs";
-import { contentType, urlForHtml } from "@lib/static-site";
+import { walkFiles } from "@lib/fs/walk";
+import { contentType, urlForHtml } from "@lib/static-site/url";
 
 export interface AccessibilityCheckOptions {
   root: string;

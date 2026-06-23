@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { epubUuidFromString, titlePageDocument } from "@lib/artifacts";
+import { epubUuidFromString, titlePageDocument } from "@lib/artifacts/epub/build";
 
 describe("epub builder helpers", () => {
   it("derives stable version-5 UUIDs from identifiers", () => {

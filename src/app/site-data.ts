@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { parse as parseYaml } from "yaml";
-import { loadContentRegistry } from "@lib/content";
-import type { Locale } from "@lib/schemas";
+import { loadContentRegistry } from "@lib/content/registry";
+import type { Locale } from "@lib/schemas/day";
 
 export interface BookData {
   title: string;
