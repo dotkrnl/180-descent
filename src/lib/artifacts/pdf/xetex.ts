@@ -204,7 +204,6 @@ async function buildPdf(config: PdfEdition & { root: string }): Promise<void> {
   const workDir = await mkdtemp(path.join(tempRoot, "xetex-"));
   const texPath = path.join(workDir, "book.tex");
   const outputPath = path.join(workDir, "book.pdf");
-  let failed = false;
 
   try {
     const tex = await buildLatexDocument(config, workDir);
@@ -216,13 +215,12 @@ async function buildPdf(config: PdfEdition & { root: string }): Promise<void> {
     await copyFile(outputPath, distPath);
     await copyFile(outputPath, sitePath);
   } catch (error) {
-    failed = true;
     const log = await readFile(path.join(workDir, "book.log"), "utf8").catch(() => "");
     const keepNote = process.env.PDF_KEEP_TEMP === "1" ? `\n\nTemporary PDF build directory kept at ${workDir}` : "";
     const message = log ? `${toError(error).message}\n\n${lastLatexLogLines(log)}${keepNote}` : `${toError(error).message}${keepNote}`;
     throw new Error(`XeTeX PDF build failed for ${config.output}: ${message}`);
   } finally {
-    if (!failed || process.env.PDF_KEEP_TEMP !== "1") {
+    if (process.env.PDF_KEEP_TEMP !== "1") {
       await rm(workDir, { recursive: true, force: true });
     }
   }
@@ -290,13 +288,15 @@ async function introductionLatex(config: PdfEdition & { root: string }, workDir:
     `\\chapter*{${latexEscape(title)}}`,
     `\\markboth{${latexEscape(title)}}{${latexEscape(title)}}`,
     `\\addcontentsline{toc}{chapter}{${latexEscape(title)}}`,
+    "\\begin{pdfintro}",
     await mdxToLatex(source, {
       root: config.root,
       locale: config.locale,
       sourceFile,
       includeDeepDive: Boolean(config.includeDeepDive),
       workDir
-    })
+    }),
+    "\\end{pdfintro}"
   ].join("\n\n");
 }
 
@@ -910,7 +910,7 @@ async function loadRenderedHtml(root: string, locale: Locale, sourceFile: string
 function latexPreamble(config: PdfEdition & { root: string }): string {
   const fontPath = latexPath(path.join(config.root, "src/assets/fonts/pdf") + path.sep);
   const cjkMain = config.locale === "zh" ? "LXGW WenKai" : "Songti SC";
-  return String.raw`\documentclass[10.5pt,openany,oneside]{book}
+  return String.raw`\documentclass[10pt,openany,oneside]{book}
 \let\cleardoublepage\clearpage
 \usepackage[paperwidth=6in,paperheight=9in,top=0.72in,bottom=0.78in,inner=0.55in,outer=0.55in,headheight=14pt,headsep=11pt,footskip=26pt]{geometry}
 \usepackage{fontspec}
@@ -939,7 +939,7 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \setsansfont{Hiragino Sans GB}
 \IfFontExistsTF{${cjkMain}}{\setCJKmainfont{${cjkMain}}}{\setCJKmainfont{Songti SC}}
 \setCJKsansfont{Hiragino Sans GB}
-\usepackage{microtype}
+\IfFontExistsTF{${cjkMain}}{\setCJKmonofont{${cjkMain}}}{\setCJKmonofont{Songti SC}}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -964,6 +964,12 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \definecolor{descentOk}{HTML}{2A704A}
 \definecolor{descentHint}{HTML}{845A1B}
 \definecolor{descentBad}{HTML}{A23C34}
+\definecolor{descentOkBg}{HTML}{EEF6F1}
+\definecolor{descentHintBg}{HTML}{F8F1E7}
+\definecolor{descentBadBg}{HTML}{F8ECEA}
+\definecolor{descentOkLine}{HTML}{B8D0C1}
+\definecolor{descentHintLine}{HTML}{DAC3A3}
+\definecolor{descentBadLine}{HTML}{DAB3AE}
 \color{descentInk}
 \raggedbottom
 \setlength{\parindent}{0pt}
@@ -983,9 +989,8 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \setlength{\cftbeforechapskip}{0.2em}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[LE,RO]{\ttfamily\scriptsize\color{descentMuted}\thepage}
-\fancyhead[LO]{\ttfamily\scriptsize\color{descentMuted}${latexEscape(config.title)}}
-\fancyhead[RE]{\ttfamily\scriptsize\color{descentMuted}\leftmark}
+\fancyhead[R]{\ttfamily\scriptsize\color{descentMuted}\thepage}
+\fancyhead[L]{\ttfamily\scriptsize\color{descentMuted}${latexEscape(config.title)}}
 \renewcommand{\headrulewidth}{0pt}
 \titleformat{\chapter}[display]{\displayfont\bfseries\color{descentTeal}}{}{0pt}{\Huge}
 \titlespacing*{\chapter}{0pt}{0pt}{0.22in}
@@ -993,19 +998,23 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \titleformat{\subsection}{\displayfont\large\bfseries\color{descentInk}}{\thesubsection}{0.5em}{}
 \newcommand{\pdfdaytitle}[1]{{\displayfont\bfseries\fontsize{23}{25}\selectfont #1\par}\vspace{0.04in}}
 \newcommand{\eyebrow}[1]{\Needspace{4\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\smallskip}
-\newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\medskip\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\endgroup\nobreak\vspace{0.02in}}
-\newcommand{\sectionwithlabel}[2]{\Needspace{10\baselineskip}\par\medskip\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.015in}{\displayfont\Large\bfseries\color{descentTeal}#2\par}\endgroup\nobreak\vspace{0.08in}}
-\newcommand{\subsectionwithlabel}[2]{\Needspace{8\baselineskip}\par\smallskip\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.012in}{\displayfont\large\bfseries\color{descentInk}#2\par}\endgroup\nobreak\vspace{0.06in}}
-\newcommand{\statuschipok}[1]{\textsf{\scriptsize\color{descentOk}[#1]}}
-\newcommand{\statuschiphint}[1]{\textsf{\scriptsize\color{descentHint}[#1]}}
-\newcommand{\statuschipbad}[1]{\textsf{\scriptsize\color{descentBad}[#1]}}
+\newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\vspace{3.5ex plus 1ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\endgroup\nobreak\vspace{0.02in}}
+\newcommand{\sectionwithlabel}[2]{\Needspace{10\baselineskip}\par\vspace{3.5ex plus 1ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.015in}{\displayfont\Large\bfseries\color{descentTeal}#2\par}\endgroup\nobreak\vspace{0.08in}}
+\newcommand{\subsectionwithlabel}[2]{\Needspace{8\baselineskip}\par\vspace{2.2ex plus .7ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.012in}{\displayfont\large\bfseries\color{descentInk}#2\par}\endgroup\nobreak\vspace{0.06in}}
+\newtcbox{\statuspillok}{on line,box align=base,colback=descentOkBg,colframe=descentOkLine,boxrule=0.35pt,arc=2mm,left=1mm,right=1.2mm,top=0.2mm,bottom=0.2mm,boxsep=0pt}
+\newtcbox{\statuspillhint}{on line,box align=base,colback=descentHintBg,colframe=descentHintLine,boxrule=0.35pt,arc=2mm,left=1mm,right=1.2mm,top=0.2mm,bottom=0.2mm,boxsep=0pt}
+\newtcbox{\statuspillbad}{on line,box align=base,colback=descentBadBg,colframe=descentBadLine,boxrule=0.35pt,arc=2mm,left=1mm,right=1.2mm,top=0.2mm,bottom=0.2mm,boxsep=0pt}
+\newcommand{\statuschipok}[1]{\statuspillok{{\scriptsize\color{descentOk}\raisebox{0.12ex}{\textbullet}}\hspace{0.32em}{\ttfamily\fontsize{6.2}{7.2}\selectfont\color{descentOk}\MakeUppercase{#1}}}}
+\newcommand{\statuschiphint}[1]{\statuspillhint{{\scriptsize\color{descentHint}\raisebox{0.12ex}{\textbullet}}\hspace{0.32em}{\ttfamily\fontsize{6.2}{7.2}\selectfont\color{descentHint}\MakeUppercase{#1}}}}
+\newcommand{\statuschipbad}[1]{\statuspillbad{{\scriptsize\color{descentBad}\raisebox{0.12ex}{\textbullet}}\hspace{0.32em}{\ttfamily\fontsize{6.2}{7.2}\selectfont\color{descentBad}\MakeUppercase{#1}}}}
 \newcommand{\claimtop}[2]{\Needspace{5\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\if\relax\detokenize{#2}\relax\else\enspace #2\fi\par\nopagebreak\smallskip}
 \newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\lettrine[lines=2,loversize=0.08,lhang=0.02,nindent=0pt,findent=0.08em]{#1}{#2}\par\endgroup\medskip}
 \newcommand{\leadparanodrop}[1]{\Needspace{6\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}#1\par\endgroup\medskip}
 \newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
-\newenvironment{sourcesbox}{\begin{tcolorbox}[enhanced,breakable,colback=descentPaper,colframe=descentLine,boxrule=0.3pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]\footnotesize}{\end{tcolorbox}}
+\newenvironment{sourcesbox}{\Needspace{8\baselineskip}\par\vspace{0.16in}\begingroup\footnotesize\color{descentMuted}\setlength{\parskip}{0.32em}\noindent{\color{descentLine}\rule{\linewidth}{0.35pt}}\par\vspace{0.05in}}{\par\endgroup}
 \newenvironment{quotebox}{\begin{quote}\itshape}{\end{quote}}
 \newenvironment{notepara}{\par\small\color{descentMuted}}{\par}
+\newenvironment{pdfintro}{\begingroup\sloppy\emergencystretch=1.8em\exhyphenpenalty=50\relax}{\par\endgroup}
 \captionsetup{font=small,labelformat=empty,textfont={color=descentMuted}}
 \XeTeXlinebreaklocale "zh"
 \XeTeXlinebreakskip = 0pt plus 1pt`;
@@ -1094,9 +1103,20 @@ function normalizePdfGlyphs(value: string): string {
     .replace(/[∃]/g, "exists ")
     .replace(/[¬]/g, "not ")
     .replace(/[α]/g, "alpha")
+    .replace(/[βΒ]/g, "beta")
+    .replace(/[π]/g, "pi")
+    .replace(/[Σ]/g, "Sigma")
+    .replace(/[Ω]/g, "Omega")
+    .replace(/[ℤ]/g, "Z")
     .replace(/[□]/g, "box")
     .replace(/[◇]/g, "diamond")
+    .replace(/[◈]/g, "diamond")
     .replace(/[≈]/g, " approximately ")
+    .replace(/[≅]/g, " approximately equal ")
+    .replace(/[↑]/g, " up ")
+    .replace(/[↩]/g, " return ")
+    .replace(/[\u200b\u200c\u200d\ufeff]/g, "")
+    .replace(/[🐟🪄🔢🤖]/gu, "")
     .replace(/[†‡]/g, "");
 }
 
