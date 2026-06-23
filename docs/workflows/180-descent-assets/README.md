@@ -90,7 +90,7 @@ npm run check:a11y
 npm run check
 ```
 
-For every affected PDF page, render the page to PNG with Ghostscript or Poppler and visually confirm the picture appears. Do not trust caption text alone.
+For every affected PDF page, render the page to PNG with Poppler and visually confirm the picture appears. Do not trust caption text alone.
 
 For EPUB, inspect the zip:
 

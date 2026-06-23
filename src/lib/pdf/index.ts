@@ -1,1 +1,1 @@
-export * from "./ghostscript";
+export * from "./ppm";
