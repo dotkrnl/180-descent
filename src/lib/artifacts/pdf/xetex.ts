@@ -580,7 +580,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "div" && /\bhybrid\b/.test(attrs.get("class") ?? "")) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
-  if (["Aside", "Panel", "Recap", "WhereBlock", "Formula", "Claim"].includes(name)) {
+  if (["Aside", "Panel", "Recap", "WhereBlock", "Formula", "ClaimHeader"].includes(name)) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
   if (name === "Sources") {

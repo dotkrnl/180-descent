@@ -5,7 +5,7 @@ import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
-import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import IncomingWaveAtlas from "@app/components/lesson/interactives/IncomingWaveAtlas.astro";
@@ -44,7 +44,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 ## Anytime-valid inference: the end of illegal peeking
 
-<Claim label="Wave 01"><StatusChip status={"ok"} label={"Theory established"} printLabel={"established"} /><StatusChip status={"hint"} label={"Adoption still uneven"} printLabel={"promising"} /></Claim>
+<ClaimHeader label="Wave 01"><StatusChip status={"ok"} label={"Theory established"} printLabel={"established"} /><StatusChip status={"hint"} label={"Adoption still uneven"} printLabel={"promising"} /></ClaimHeader>
 The old fixed-sample test is fragile because it assumes you decided the sample size before seeing the data. But modern science does not behave like that. A/B tests stream in hourly. Platform teams refresh dashboards. Clinical trials have interim looks. Labs add subjects when the first batch is “almost significant.” The ordinary p-value is not built for this world.
 
 <Term as="em">Anytime-valid inference</Term> changes the contract. Instead of a p-value that is valid only at a pre-fixed stopping time, it uses e-values, e-processes, always-valid p-values, and confidence sequences: evidence measures and intervals designed to remain valid at **arbitrary stopping times**. You can look early, look often, stop when the evidence is decisive, or continue when it is ambiguous, without silently inflating the false-positive rate.
@@ -79,7 +79,7 @@ Optional stopping was one of the False-Positive Factory switches. Anytime-valid 
 
 ## Conformal prediction becomes conformal risk control
 
-<Claim label="Wave 02"><StatusChip status={"ok"} label={"Core method established"} printLabel={"established"} /><StatusChip status={"hint"} label={"Risk-control frontier"} printLabel={"promising"} /></Claim>
+<ClaimHeader label="Wave 02"><StatusChip status={"ok"} label={"Core method established"} printLabel={"established"} /><StatusChip status={"hint"} label={"Risk-control frontier"} printLabel={"promising"} /></ClaimHeader>
 Conformal prediction is the simplest profound idea in the current statistics/ML interface. Train any predictive model. Hold out calibration data. Measure how wrong the model is on those held-out cases. Use the empirical quantile of those errors to form a prediction set for the next case. Under exchangeability, the set covers the true answer at the advertised rate in finite samples, regardless of whether the model is linear, neural, brilliant, or embarrassing.
 
 A common simplification treats conformal prediction as “intervals for any model.” That is correct but incomplete. The post-2020 frontier is broader: <Term as="em">conformal risk control</Term> asks not merely “does the true label fall in the set?” but “can we control a chosen risk function?” In vision and language tasks, the useful error metric may be false negative rate, graph distance, abstention error, retrieval miss-rate, or token-level F1. Conformal risk control extends the conformal idea to monotone losses and gives finite-sample control of the expected risk.
@@ -108,7 +108,7 @@ The hype filter: marginal coverage is real; conditional coverage is hard. Under 
 
 ## Prediction-powered inference: the rectifier is the point
 
-<Claim label="Wave 03"><StatusChip status={"ok"} label={"Science 2023"} printLabel={"review"} /><StatusChip status={"ok"} label={"PNAS 2024 extensions"} printLabel={"established"} /><StatusChip status={"hint"} label={"Adoption growing"} printLabel={"promising"} /></Claim>
+<ClaimHeader label="Wave 03"><StatusChip status={"ok"} label={"Science 2023"} printLabel={"review"} /><StatusChip status={"ok"} label={"PNAS 2024 extensions"} printLabel={"established"} /><StatusChip status={"hint"} label={"Adoption growing"} printLabel={"promising"} /></ClaimHeader>
 AI can label a million galaxies, satellite tiles, pathology patches, protein records, or clinical notes. But a statistical estimate from those predictions is not automatically valid, because model errors are not random clerical typos. They are structured. They follow the model’s blind spots.
 
 <Term as="em">Prediction-powered inference</Term> (PPI) solves the problem by refusing to trust the model alone. You combine a small labeled sample, where humans or instruments provide gold-standard truth, with a much larger unlabeled sample on which the model predicts. The labeled sample estimates a **rectifier**: the correction for the model’s bias on the estimand you actually care about. The unlabeled sample supplies cheap precision; the labeled sample supplies validity.
@@ -137,7 +137,7 @@ The limitation is practical, not philosophical. You still need a gold-standard l
 
 ## Double / debiased machine learning for causal effects
 
-<Claim label="Wave 04"><StatusChip status={"ok"} label={"Theory established"} printLabel={"established"} /><StatusChip status={"ok"} label={"Tooling mature"} printLabel={"established"} /></Claim>
+<ClaimHeader label="Wave 04"><StatusChip status={"ok"} label={"Theory established"} printLabel={"established"} /><StatusChip status={"ok"} label={"Tooling mature"} printLabel={"established"} /></ClaimHeader>
 Day 5’s warning was blunt: association is not intervention. To estimate a causal effect from observational data, you must adjust for confounders, and you must do it without imposing a fantasy linear model on a nonlinear world.
 
 Double/debiased machine learning (DML) uses ML where ML is strongest: learning high-dimensional nuisance functions such as outcome regressions and propensity scores. Then it uses orthogonal scores and cross-fitting where statistics is strongest: protecting a low-dimensional target estimate from first-order errors in those nuisance fits. You let the random forest, gradient booster, or neural net approximate the messy parts, then construct the causal estimator so that small nuisance mistakes wash out.
@@ -159,7 +159,7 @@ DML helps estimate <MathInline latex={String.raw`P(Y\mid\operatorname{do}(X))`} 
 
 ## Inference after discovery: post-selection, causal discovery, and data fission
 
-<Claim label="Wave 05"><StatusChip status={"hint"} label={"Fast-moving frontier"} printLabel={"review"} /><StatusChip status={"ok"} label={"Core problem settled"} printLabel={"review"} /></Claim>
+<ClaimHeader label="Wave 05"><StatusChip status={"hint"} label={"Fast-moving frontier"} printLabel={"review"} /><StatusChip status={"ok"} label={"Core problem settled"} printLabel={"review"} /></ClaimHeader>
 The garden of forking paths is not going away. Modern analysis often begins with discovery: cluster the cells, find the subgroup, select the variables, learn the causal graph, choose the image region, tune the transformation, ask the AI analyst to “find what matters.” The fatal mistake is to use the same data to discover a target and then pretend the target was specified in advance.
 
 <Term as="em">Post-selection inference</Term> is the statistical attempt to pay that bill honestly. The classical approaches condition on the selection event, split the data into discovery and confirmation sets, or build simultaneous intervals wide enough to survive selection. The post-2020 frontier adds three especially relevant ideas.
@@ -191,7 +191,7 @@ The hype filter: this is not easy, and it is not a substitute for preregistratio
 
 ## Differential privacy turns uncertainty into a public design problem
 
-<Claim label="Wave 06"><StatusChip status={"hint"} label={"High-stakes frontier"} printLabel={"review"} /><StatusChip status={"blue"} label={"Policy-relevant"} printLabel={"review"} /></Claim>
+<ClaimHeader label="Wave 06"><StatusChip status={"hint"} label={"High-stakes frontier"} printLabel={"review"} /><StatusChip status={"blue"} label={"Policy-relevant"} printLabel={"review"} /></ClaimHeader>
 Open science wants data sharing. Human subjects, firms, hospitals, and governments want confidentiality. Differential privacy is the strongest modern language for this tradeoff: random noise is added so that one person’s presence or absence has bounded influence on the released output.
 
 For Day 6, the statistical sting is this: **privacy noise is not a file-format detail.** If you analyze differentially private statistics or synthetic data as if they were ordinary observations, your intervals can be too narrow, your p-values too confident, and your null findings too frequent. The privacy mechanism is part of the data-generating process, so valid inference has to include it.
@@ -207,7 +207,7 @@ The hype filter: differential privacy protects individuals by making some analys
 
 ## Bayesian workflow and simulation-based calibration
 
-<Claim label="Wave 07"><StatusChip status={"ok"} label={"Practice shift"} printLabel={"established"} /><StatusChip status={"hint"} label={"Computation-sensitive"} printLabel={"review"} /></Claim>
+<ClaimHeader label="Wave 07"><StatusChip status={"ok"} label={"Practice shift"} printLabel={"established"} /><StatusChip status={"hint"} label={"Computation-sensitive"} printLabel={"review"} /></ClaimHeader>
 Bayesian statistics is often sold as a clean alternative to p-values: put a prior on the unknowns, compute a posterior, report probabilities about parameters. That is attractive, but it can become another ritual if the prior is unexamined, the model is misspecified, and the sampler is silently broken.
 
 The post-2020 Bayesian workflow movement says: the unit of trust is not the posterior; it is the **workflow that produced and criticized the posterior**. Prior predictive checks ask whether the model could generate plausible data before seeing the data. Posterior predictive checks ask what the fitted model still cannot reproduce. Cross-validation asks whether predictions survive held-out cases. Simulation-based calibration checks whether the inference algorithm can recover known parameters when the data are simulated from the model.
@@ -223,7 +223,7 @@ The hype filter: model checking is not model proof. Posterior predictive checks 
 
 ## Statistical forensics and replicability triage at scale
 
-<Claim label="Wave 08"><StatusChip status={"ok"} label={"Forensics validated"} printLabel={"established"} /><StatusChip status={"hint"} label={"Scale still early"} printLabel={"review"} /></Claim>
+<ClaimHeader label="Wave 08"><StatusChip status={"ok"} label={"Forensics validated"} printLabel={"established"} /><StatusChip status={"hint"} label={"Scale still early"} printLabel={"review"} /></ClaimHeader>
 Appendix I’s forensic toolkit was artisanal: GRIM checks, statcheck, p-curve, digit anomalies, spreadsheet oddities. The post-2020 change is that the stakes and scale have grown.
 
 The Francesca Gino / Data Colada case showed both the power and the danger. Data Colada published detailed anomaly analyses in 2023. Harvard’s investigation concluded research misconduct; Gino denied wrongdoing and sued. In September 2024, a federal judge dismissed all claims against the Data Colada defendants; in May 2025 Harvard revoked Gino’s tenure and terminated her employment, while some legal disputes involving Harvard continued. The scientific lesson is not “bloggers should run universities.” It is that transparent forensic arguments can become part of the formal error-correction system.
@@ -257,7 +257,7 @@ The hype filter: forensic tools can be misused as accusation engines. A weird da
 
 ## Silicon samples and LLM social simulations
 
-<Claim label="Wave 09"><StatusChip status={"hint"} label={"Useful for piloting"} printLabel={"review"} /><StatusChip status={"bad"} label={"Contested as evidence"} printLabel={"contested"} /></Claim>
+<ClaimHeader label="Wave 09"><StatusChip status={"hint"} label={"Useful for piloting"} printLabel={"review"} /><StatusChip status={"bad"} label={"Contested as evidence"} printLabel={"contested"} /></ClaimHeader>
 Silicon sampling asks an irresistible question: if a language model has absorbed enough social text, can it act as a simulated survey respondent or experimental participant? The first wave of results was exciting. Conditioned on demographic backstories, models sometimes reproduced aggregate opinion patterns. Agent-based simulations produced believable local interactions. Large-scale replications of psychology and management scenarios found that LLMs often matched the *direction* of main effects.
 
 The second wave is the caution. LLMs can distort correlations even when margins look right. They often compress distributions toward modal answers. They may amplify effect sizes. They can perform worse on socially sensitive topics. Their “population” is a residue of training data, alignment tuning, prompt wording, and model version. That is not a sample frame. It is a machine-shaped mirror.
@@ -273,7 +273,7 @@ Reporting standards should become severe: model name and version, date, system p
 
 ## AI analysts, automated science, and benchmark contamination
 
-<Claim label="Wave 10"><StatusChip status={"bad"} label={"Deeply unsettled"} printLabel={"contested"} /><StatusChip status={"hint"} label={"Tooling advancing fast"} printLabel={"review"} /></Claim>
+<ClaimHeader label="Wave 10"><StatusChip status={"bad"} label={"Deeply unsettled"} printLabel={"contested"} /><StatusChip status={"hint"} label={"Tooling advancing fast"} printLabel={"review"} /></ClaimHeader>
 The most dangerous frontier is not AI as a model inside an analysis. It is AI as the entity that chooses the analysis.
 
 Data-analysis agents can clean data, write code, choose models, run tests, generate plots, and narrate findings. New benchmarks such as StatLLM evaluate statistical code; data-agent benchmarks evaluate longer workflows. Studies of LLM data analysis show variation across models, prompts, temperatures, and repeated executions; even the same task and dataset can lead to meaningfully different estimates. At the far edge, autonomous research systems now generate ideas, write code, run experiments, plot results, draft papers, and perform self-review.
