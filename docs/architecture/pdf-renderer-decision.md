@@ -6,7 +6,7 @@ Date: 2026-06-23
 
 Use XeTeX as the only durable PDF renderer.
 
-The PDF pipeline now reads the same Astro/MDX registry as the site and EPUB builders, converts semantic MDX nodes and reusable lesson components into LaTeX, and emits PDFs with `latexmk -xelatex`. Browser print pages are no longer part of PDF generation, and no Playwright fallback or legacy PDF renderer remains.
+The PDF pipeline reads the same Astro/MDX registry as the site and EPUB builders, converts semantic MDX nodes and reusable lesson components into LaTeX, and emits PDFs with `latexmk -xelatex`. Browser print pages are not part of PDF generation.
 
 ## Source Contract
 
@@ -48,4 +48,4 @@ The PDF output should match the website's visual vocabulary: serif body text, re
 - deep-dive and day-specific editions include appendix content and labels;
 - live interactive control text does not leak into deep-dive PDFs.
 
-Browser-specific assertions such as full-bleed page background sampling and Playwright running-header stamping are intentionally retired.
+Browser-specific assertions such as full-bleed page background sampling and Playwright running-header stamping are outside the PDF contract.

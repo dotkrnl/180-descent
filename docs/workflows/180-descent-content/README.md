@@ -61,8 +61,8 @@ Appendices are declared in `day.yaml` under `appendices`.
 - Put static lesson visuals with inline SVG or complex markup in `src/app/components/lesson/figures/`.
 - Put controls, sliders, buttons, generated SVG roots, and DOM hooks in `src/app/components/lesson/interactives/`.
 - Keep JavaScript behavior separate in `src/assets/js/interactions/`; avoid inline scripts in content.
-- Add or adjust styles in SCSS modules imported by `book.scss`. Do not add component-local `.css`, legacy `book.css`, fallback CSS, or migration-only styles.
-- Do not add compatibility shims, legacy importers, or fallback paths. `npm run check:clean` blocks retired static-site paths and blind HTML importers.
+- Add or adjust styles in SCSS modules imported by `book.scss`. Do not add component-local `.css`, duplicate `book.css`, browser-print PDF styles, or one-off generated CSS.
+- Do not add parallel adapter layers, blind importers, or alternate source trees. `npm run check:clean` blocks unsupported static-site paths and blind HTML importers.
 - PDF output is generated from semantic MDX through XeTeX, not from browser print pages. When a live web component is not suitable for print, provide a semantic `FormatAlt` or `FormatOnly` print alternative instead of relying on DOM controls.
 
 ## PDF Notes

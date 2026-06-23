@@ -18,7 +18,7 @@ export interface ContentCheckFailure {
 const PRINT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
 const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".scss", ".yaml", ".yml"]);
 const PARENT_MARKDOWN_PATTERN = /\.\.\/[^\s"'`)]+\.md\b/;
-const LEGACY_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
+const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<header class="hero wrap">/, "use <Hero>"],
   [/<\/header>/, "use </Hero>"],
   [/<section(?:\s|>)/, "use Markdown structure, <ContentSection>, or <Sources>"],
@@ -114,7 +114,7 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
   }
 
   if (/content_template|eleventy|<\/?script\b/i.test(file.source)) {
-    failures.push({ message: `${file.relativePath} contains retired route/template surface` });
+    failures.push({ message: `${file.relativePath} contains unsupported route/template surface` });
   }
 
   if (!file.source.includes("<Sources") && !file.source.includes('class="sources"') && !file.source.includes("className=\"sources\"")) {
@@ -140,7 +140,7 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
     checkStaticAlternates(file, failures);
   }
 
-  checkLegacyMdxWrappers(file, failures);
+  checkUnsupportedMdxWrappers(file, failures);
   checkRawInteractiveMarkup(file, failures);
 }
 
@@ -173,10 +173,10 @@ function checkStaticAlternates(file: RegistryContentFile, failures: ContentCheck
   }
 }
 
-function checkLegacyMdxWrappers(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  for (const [pattern, replacement] of LEGACY_MDX_WRAPPER_PATTERNS) {
+function checkUnsupportedMdxWrappers(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  for (const [pattern, replacement] of UNSUPPORTED_MDX_WRAPPER_PATTERNS) {
     if (pattern.test(file.source)) {
-      failures.push({ message: `${file.relativePath} contains legacy MDX wrapper markup; ${replacement}` });
+      failures.push({ message: `${file.relativePath} contains unsupported MDX wrapper markup; ${replacement}` });
     }
   }
 }

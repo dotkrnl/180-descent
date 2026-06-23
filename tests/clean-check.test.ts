@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { checkCleanRepo } from "@lib/checks";
 
 describe("final cleanup gate", () => {
-  it("flags retired static-site paths", async () => {
+  it("flags unsupported static-site paths", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
     await writeFile(path.join(root, "eleventy.config.cjs"), "module.exports = {};");
     await mkdir(path.join(root, "scripts"), { recursive: true });
@@ -13,12 +13,12 @@ describe("final cleanup gate", () => {
     await expect(checkCleanRepo({ root })).resolves.toEqual([
       {
         path: "eleventy.config.cjs",
-        reason: "Retired static-site config must not exist"
+        reason: "Static-site config outside Astro must not exist"
       }
     ]);
   });
 
-  it("flags retired experiment script names in any mode", async () => {
+  it("flags unsupported experiment script names in any mode", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
     await mkdir(path.join(root, "scripts"), { recursive: true });
     await writeFile(path.join(root, "scripts/renderer-spike-demo.ts"), "");
@@ -28,7 +28,7 @@ describe("final cleanup gate", () => {
     expect(failures[0].path).toBe("scripts/renderer-spike-demo.ts");
   });
 
-  it("blocks retired blind importers in any mode", async () => {
+  it("blocks blind importers in any mode", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
     await mkdir(path.join(root, "scripts"), { recursive: true });
     await writeFile(path.join(root, "scripts/import-day-from-html.mjs"), "");
@@ -37,7 +37,7 @@ describe("final cleanup gate", () => {
     expect(failures).toEqual([
       {
         path: "scripts/import-day-from-html.mjs",
-        reason: "Blind day importer has been retired; use manual paired-MDX conversion"
+        reason: "Blind day importers are not allowed; convert paired MDX manually"
       }
     ]);
   });

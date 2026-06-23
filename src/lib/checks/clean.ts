@@ -12,27 +12,27 @@ export interface CleanCheckFailure {
 }
 
 const FORBIDDEN_PATHS = [
-  ["eleventy.config.cjs", "Retired static-site config must not exist"],
-  ["src/days", "Retired English day shell directory must not exist"],
-  ["src/zh/days", "Retired Chinese day shell directory must not exist"],
-  ["src/_includes/days", "Retired day body directory must not exist"]
+  ["eleventy.config.cjs", "Static-site config outside Astro must not exist"],
+  ["src/days", "Day content must live under src/content/days"],
+  ["src/zh/days", "Chinese day content must live under src/content/days"],
+  ["src/_includes/days", "Day body includes must not exist outside MDX content"]
 ] as const;
 
 const ALWAYS_FORBIDDEN_PATHS = [
-  ["scripts/import-day-from-html.mjs", "Blind day importer has been retired; use manual paired-MDX conversion"],
-  ["scripts/import-appendix-from-html.mjs", "Blind appendix importer has been retired; use manual paired-MDX conversion"]
+  ["scripts/import-day-from-html.mjs", "Blind day importers are not allowed; convert paired MDX manually"],
+  ["scripts/import-appendix-from-html.mjs", "Blind appendix importers are not allowed; convert paired MDX manually"]
 ] as const;
 
 const FORBIDDEN_TRACKED_PATHS = [
   ["_site", "Generated site output must not be committed"],
-  ["dist", "Generated temporary output must not be committed"],
+  ["dist", "Generated artifact output must not be committed"],
   ["src/assets/images/social", "Generated social-card PNGs must not be committed"]
 ] as const;
 
-const RETIRED_SCRIPT_PATTERNS = [
+const FORBIDDEN_SCRIPT_PATTERNS = [
   /renderer-spike/i,
-  /migration-only/i,
-  /compat(?:ibility)?-shim/i
+  /bulk-import/i,
+  /parallel-adapter/i
 ];
 
 export async function checkCleanRepo(options: CleanCheckOptions): Promise<CleanCheckFailure[]> {
@@ -59,11 +59,11 @@ export async function checkCleanRepo(options: CleanCheckOptions): Promise<CleanC
   const scriptFiles = await listFiles(path.join(options.root, "scripts"));
   for (const file of scriptFiles) {
     const relativePath = toPosix(path.relative(options.root, file));
-    for (const pattern of RETIRED_SCRIPT_PATTERNS) {
+    for (const pattern of FORBIDDEN_SCRIPT_PATTERNS) {
       if (pattern.test(relativePath)) {
         failures.push({
           path: relativePath,
-          reason: `Retired script path matches ${pattern}`
+          reason: `Unsupported script path matches ${pattern}`
         });
       }
     }
