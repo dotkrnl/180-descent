@@ -68,6 +68,7 @@ interface MdxRenderState {
   renderedHtml: CheerioRoot | null;
   componentCounts: Map<string, number>;
   generatedAssetIndex: number;
+  pendingSectionEyebrow: string | null;
 }
 
 type CheerioRoot = ReturnType<typeof cheerio.load>;
@@ -359,7 +360,8 @@ async function mdxToLatex(source: string, options: MdxLatexOptions): Promise<str
     constants: extractStringConstants(source),
     renderedHtml: await loadRenderedHtml(options.root, options.locale, options.sourceFile),
     componentCounts: new Map(),
-    generatedAssetIndex: 0
+    generatedAssetIndex: 0,
+    pendingSectionEyebrow: null
   };
   return renderChildren(tree.children ?? [], state, { block: true }).replace(/\n{3,}/g, "\n\n").trim();
 }
@@ -424,6 +426,10 @@ function renderParagraph(node: MdxNode, state: MdxRenderState, context: RenderCo
 
 function renderHeading(node: MdxNode, state: MdxRenderState): string {
   const text = renderInlineChildren(node, state, { heading: true });
+  const eyebrow = state.pendingSectionEyebrow;
+  state.pendingSectionEyebrow = null;
+  if (eyebrow && node.depth === 2) return `\\sectionwithlabel{${eyebrow}}{${text}}`;
+  if (eyebrow && node.depth === 3) return `\\subsectionwithlabel{${eyebrow}}{${text}}`;
   if (node.depth === 1) return `\\pdfdaytitle{${text}}`;
   if (node.depth === 2) return `\\section{${text}}`;
   if (node.depth === 3) return `\\subsection{${text}}`;
@@ -479,6 +485,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   }
 
   if (name === "Lead") return renderLead(node, attrs, state);
+  if (name === "div" && /\bctop\b/.test(attrs.get("class") ?? "")) return renderClaimTop(node, state);
   if (["Aside", "Panel", "Recap", "WhereBlock", "Formula", "Claim"].includes(name)) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
@@ -490,7 +497,8 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   }
   if (name === "SectionEyebrow") {
     const text = cleanEyebrowText(renderEyebrowText(node, attrs, state, context));
-    return text ? `\\sectioneyebrow{${text}}` : "";
+    state.pendingSectionEyebrow = text || null;
+    return "";
   }
   if (["HeroEyebrow", "Label", "Meta"].includes(name)) {
     const text = cleanEyebrowText(renderEyebrowText(node, attrs, state, context));
@@ -536,7 +544,8 @@ function renderTipNote(attrs: Map<string, string | null>, state: MdxRenderState,
 
 function renderStatusChip(attrs: Map<string, string | null>, state: MdxRenderState): string {
   const label = resolveExpression(attrs.get("printLabel"), state) || resolveExpression(attrs.get("label"), state);
-  return label ? `\\statuschip{${latexEscape(label)}}` : "";
+  const status = resolveExpression(attrs.get("status"), state);
+  return label ? statusChipLatex(label, status) : "";
 }
 
 function renderLead(node: MdxNode, attrs: Map<string, string | null>, state: MdxRenderState): string {
@@ -544,6 +553,35 @@ function renderLead(node: MdxNode, attrs: Map<string, string | null>, state: Mdx
   const body = renderChildren(node.children ?? [], state, { block: true }).trim();
   if (!body) return "";
   return drop ? `\\leadpara{${drop}}{${body}}` : `\\leadparanodrop{${body}}`;
+}
+
+function renderClaimTop(node: MdxNode, state: MdxRenderState): string {
+  const labelParts: string[] = [];
+  const chips: string[] = [];
+
+  for (const child of node.children ?? []) {
+    const childName = child.name ?? "";
+    const attrs = mdxAttributes(child);
+    if (childName === "StatusChip") {
+      const label = resolveExpression(attrs.get("printLabel"), state) || resolveExpression(attrs.get("label"), state);
+      const status = resolveExpression(attrs.get("status"), state);
+      if (label) chips.push(statusChipLatex(label, status));
+      continue;
+    }
+    const text = renderInlineChildren(child, state, { heading: true }).trim();
+    if (text) labelParts.push(text);
+  }
+
+  const label = cleanEyebrowText(labelParts.join(" "));
+  const chipText = chips.join("\\enspace ");
+  if (label && chipText) return `\\claimtop{${label}}{${chipText}}`;
+  if (label) return `\\claimtop{${label}}{}`;
+  return chipText;
+}
+
+function statusChipLatex(label: string, status: string): string {
+  const command = status === "bad" ? "statuschipbad" : status === "hint" ? "statuschiphint" : "statuschipok";
+  return `\\${command}{${latexEscape(label)}}`;
 }
 
 function renderSimpleTable(attrs: Map<string, string | null>, state: MdxRenderState): string {
@@ -732,7 +770,20 @@ function prepareImagePath(src: string, state: MdxRenderState): string | null {
 }
 
 function renderChildren(children: MdxNode[], state: MdxRenderState, context: RenderContext): string {
-  return children.map((child) => renderNode(child, state, context)).filter(Boolean).join(context.tableCell ? " " : "\n\n");
+  const rendered: string[] = [];
+  for (const child of children) {
+    if (state.pendingSectionEyebrow && child.type !== "heading") {
+      rendered.push(`\\sectioneyebrow{${state.pendingSectionEyebrow}}`);
+      state.pendingSectionEyebrow = null;
+    }
+    const value = renderNode(child, state, context);
+    if (value) rendered.push(value);
+  }
+  if (state.pendingSectionEyebrow && context.block) {
+    rendered.push(`\\sectioneyebrow{${state.pendingSectionEyebrow}}`);
+    state.pendingSectionEyebrow = null;
+  }
+  return rendered.join(context.tableCell ? " " : "\n\n");
 }
 
 function renderInlineChildren(node: MdxNode, state: MdxRenderState, context: RenderContext): string {
@@ -904,6 +955,9 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \definecolor{descentPaper}{HTML}{FBF8F0}
 \definecolor{descentCream}{HTML}{F7F3EA}
 \definecolor{descentLine}{HTML}{D7CCC0}
+\definecolor{descentOk}{HTML}{2A704A}
+\definecolor{descentHint}{HTML}{845A1B}
+\definecolor{descentBad}{HTML}{A23C34}
 \color{descentInk}
 \raggedbottom
 \setlength{\parindent}{0pt}
@@ -934,7 +988,12 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \newcommand{\pdfdaytitle}[1]{{\displayfont\bfseries\fontsize{23}{25}\selectfont #1\par}\vspace{0.04in}}
 \newcommand{\eyebrow}[1]{\Needspace{4\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\smallskip}
 \newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\medskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\smallskip}
-\newcommand{\statuschip}[1]{\textsf{\footnotesize\color{descentTeal}[#1]}}
+\newcommand{\sectionwithlabel}[2]{\Needspace{10\baselineskip}\par\medskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\vspace{-0.02in}\section{#2}}
+\newcommand{\subsectionwithlabel}[2]{\Needspace{8\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\vspace{-0.02in}\subsection{#2}}
+\newcommand{\statuschipok}[1]{\textsf{\scriptsize\color{descentOk}[#1]}}
+\newcommand{\statuschiphint}[1]{\textsf{\scriptsize\color{descentHint}[#1]}}
+\newcommand{\statuschipbad}[1]{\textsf{\scriptsize\color{descentBad}[#1]}}
+\newcommand{\claimtop}[2]{\Needspace{5\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\if\relax\detokenize{#2}\relax\else\enspace #2\fi\par\nopagebreak\smallskip}
 \newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\lettrine[lines=2,loversize=0.08,lhang=0.02,nindent=0pt,findent=0.08em]{#1}{#2}\par\endgroup\medskip}
 \newcommand{\leadparanodrop}[1]{\Needspace{6\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}#1\par\endgroup\medskip}
 \newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
