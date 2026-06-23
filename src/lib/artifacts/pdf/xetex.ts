@@ -478,10 +478,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     return renderInlineChildren(node, state, context);
   }
 
-  if (name === "Lead") {
-    const drop = latexEscape(attrs.get("drop") ?? "");
-    return `\\begin{leadbox}\n${drop}${renderChildren(node.children ?? [], state, { block: true }).trim()}\n\\end{leadbox}`;
-  }
+  if (name === "Lead") return renderLead(node, attrs, state);
   if (["Aside", "Panel", "Recap", "WhereBlock", "Formula", "Claim"].includes(name)) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
@@ -542,6 +539,13 @@ function renderStatusChip(attrs: Map<string, string | null>, state: MdxRenderSta
   return label ? `\\statuschip{${latexEscape(label)}}` : "";
 }
 
+function renderLead(node: MdxNode, attrs: Map<string, string | null>, state: MdxRenderState): string {
+  const drop = latexEscape(attrs.get("drop") ?? "");
+  const body = renderChildren(node.children ?? [], state, { block: true }).trim();
+  if (!body) return "";
+  return drop ? `\\leadpara{${drop}}{${body}}` : `\\leadparanodrop{${body}}`;
+}
+
 function renderSimpleTable(attrs: Map<string, string | null>, state: MdxRenderState): string {
   const headers = parseStringArray(resolveExpression(attrs.get("headers"), state)).map(latexEscape);
   const rows = parseStringMatrix(resolveExpression(attrs.get("rows"), state)).map((row) => row.map(latexEscape));
@@ -550,7 +554,7 @@ function renderSimpleTable(attrs: Map<string, string | null>, state: MdxRenderSt
 }
 
 const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
-  ["StoppedClockFigure", { selector: ".hero-clock", width: "0.48\\linewidth", height: "0.28\\textheight" }],
+  ["StoppedClockFigure", { selector: ".hero-clock", width: "0.42\\linewidth", height: "0.24\\textheight" }],
   ["SunriseInductionFigure", { selector: ".hero-sun", width: "0.82\\linewidth", height: "0.28\\textheight" }],
   ["InferenceModesFigure", { selector: ".hero-art", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["InformationQuestionTree", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }],
@@ -891,6 +895,7 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \usepackage{titlesec}
 \usepackage{tocloft}
 \usepackage{needspace}
+\usepackage{lettrine}
 \usepackage[most]{tcolorbox}
 \usepackage{amsmath,amssymb}
 \definecolor{descentTeal}{HTML}{13525A}
@@ -930,7 +935,8 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \newcommand{\eyebrow}[1]{\Needspace{4\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\smallskip}
 \newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\medskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\smallskip}
 \newcommand{\statuschip}[1]{\textsf{\footnotesize\color{descentTeal}[#1]}}
-\newenvironment{leadbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=white,boxrule=0pt,arc=0mm,left=0pt,right=0pt,top=2pt,bottom=2pt]\large\color{descentTeal}}{\end{tcolorbox}}
+\newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\lettrine[lines=2,loversize=0.08,lhang=0.02,nindent=0pt,findent=0.08em]{#1}{#2}\par\endgroup\medskip}
+\newcommand{\leadparanodrop}[1]{\Needspace{6\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}#1\par\endgroup\medskip}
 \newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
 \newenvironment{sourcesbox}{\begin{tcolorbox}[enhanced,breakable,colback=descentPaper,colframe=descentLine,boxrule=0.3pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]\footnotesize}{\end{tcolorbox}}
 \newenvironment{quotebox}{\begin{quote}\itshape}{\end{quote}}
