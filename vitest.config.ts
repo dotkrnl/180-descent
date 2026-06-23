@@ -9,9 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@app": new URL("./src/app", import.meta.url).pathname,
-      "@content": new URL("./src/content", import.meta.url).pathname,
-      "@lib": new URL("./src/lib", import.meta.url).pathname,
-      "@interactions": new URL("./src/interactions", import.meta.url).pathname
+      "@lib": new URL("./src/lib", import.meta.url).pathname
     }
   }
 });
