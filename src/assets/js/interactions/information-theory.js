@@ -10,6 +10,7 @@
   function initQuestionTree(){
     var group = document.getElementById("qtree");
     if (!group) return;
+    if (group.children.length) return;
     var ns = "http://www.w3.org/2000/svg";
     var cols = [
       { x: 40, n: 16 },

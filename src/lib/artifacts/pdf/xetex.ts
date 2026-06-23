@@ -231,8 +231,8 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
   const blockTitles = config.singleDay ? new Map<string, string>() : await localizedBlockTitles(config.root, config.locale);
   const chunks: string[] = [];
 
-  chunks.push(titlePageLatex(config));
   if (!config.singleDay) {
+    chunks.push(titlePageLatex(config));
     chunks.push("\\frontmatter\n\\tableofcontents\n\\mainmatter");
     chunks.push(await introductionLatex(config, workDir));
   } else {
@@ -593,9 +593,13 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     state.pendingSectionEyebrow = text || null;
     return "";
   }
-  if (["HeroEyebrow", "Label", "Meta"].includes(name)) {
+  if (["HeroEyebrow", "Label"].includes(name)) {
     const text = cleanEyebrowText(renderEyebrowText(node, attrs, state, context));
     return text ? `\\eyebrow{${text}}` : "";
+  }
+  if (name === "Meta") {
+    const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
+    return text ? `{\\ttfamily\\footnotesize\\color{descentTeal}${text}}` : "";
   }
   if (["HeroSubhead", "PanelNote", "Caption", "FigureCaption"].includes(name)) {
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
@@ -1321,7 +1325,8 @@ function cleanDecorativePrefix(value: string): string {
 }
 
 function cleanFigureCaption(value: string): string {
-  return cleanDecorativePrefix(value);
+  return cleanDecorativePrefix(value)
+    .replace(/log216\s*=\s*4/g, "\\(\\log_2 16 = 4\\)");
 }
 
 function isDecorativeOnly(value: string): boolean {
