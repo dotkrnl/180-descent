@@ -433,7 +433,7 @@ function renderHeading(node: MdxNode, state: MdxRenderState): string {
   if (node.depth === 1) return `\\pdfdaytitle{${text}}`;
   if (node.depth === 2) return `\\section{${text}}`;
   if (node.depth === 3) return `\\subsection{${text}}`;
-  return `\\paragraph{${text}}`;
+  return `\\blockheading{${text}}`;
 }
 
 function renderList(node: MdxNode, state: MdxRenderState): string {
@@ -450,7 +450,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
 
   if (!shouldRenderElement(name, attrs, state)) return "";
 
-  if (name === "MathInline") return inlineMath(resolveExpression(attrs.get("latex"), state));
+  if (name === "MathInline") return inlineMath(resolveExpression(attrs.get("latex"), state), !context.tableCell);
   if (name === "MathBlock") return blockMath(resolveExpression(attrs.get("latex"), state));
   if (name === "TipNote") return renderTipNote(attrs, state, context);
   if (name === "StatusChip") return renderStatusChip(attrs, state);
@@ -480,9 +480,21 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "li") {
     return renderChildren(node.children ?? [], state, { block: true, listItem: true }).trim();
   }
-  if (name === "p" && /\b(label|h)\b/.test(attrs.get("class") ?? "")) {
+  if (name === "p") {
+    if (/\b(label|h)\b/.test(attrs.get("class") ?? "")) {
+      const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }).trim());
+      return text ? `\\eyebrow{${text}}` : "";
+    }
+    const text = renderInlineChildren(node, state, context).trim();
+    return context.tableCell || context.listItem ? text : `${text}\n`;
+  }
+  if (/^h[1-6]$/.test(name)) {
+    const depth = Number(name.slice(1));
     const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }).trim());
-    return text ? `\\eyebrow{${text}}` : "";
+    if (!text) return "";
+    if (depth === 1) return `\\pdfdaytitle{${text}}`;
+    if (depth === 2) return `\\section{${text}}`;
+    return `\\blockheading{${text}}`;
   }
   if (name === "span") {
     const text = renderInlineChildren(node, state, context);
@@ -638,11 +650,13 @@ function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, nam
   execFileSyncish("rsvg-convert", ["-f", "pdf", "-o", pdfPath, svgPath]);
 
   return [
-    "\\Needspace{0.36\\textheight}",
+    "\\Needspace{0.4\\textheight}",
+    "\\vspace{0.12in}",
     "\\begin{center}",
-    `\\includegraphics[width=${spec.width ?? "0.82\\linewidth"},height=${spec.height ?? "0.3\\textheight"},keepaspectratio]{${latexPath(pdfPath)}}`,
-    caption ? `\\\\{\\small\\color{descentMuted}${cleanFigureCaption(caption)}}` : "",
-    "\\end{center}"
+    `\\includegraphics[width=${spec.width ?? "0.78\\linewidth"},height=${spec.height ?? "0.28\\textheight"},keepaspectratio]{${latexPath(pdfPath)}}`,
+    caption ? `\\\\[0.06in]{\\small\\color{descentMuted}${cleanFigureCaption(caption)}}` : "",
+    "\\end{center}",
+    "\\vspace{0.1in}"
   ].filter(Boolean).join("\n");
 }
 
@@ -706,24 +720,29 @@ function collectTableRows(node: MdxNode, state: MdxRenderState, table: LatexTabl
 
 function latexTable(table: LatexTable): string {
   const columnCount = Math.max(1, ...table.rows.map((row) => row.length));
-  const usableWidth = columnCount >= 5 ? 0.82 : columnCount === 4 ? 0.86 : 0.9;
-  const width = Math.min(0.9, usableWidth / columnCount).toFixed(3);
+  const usableWidth = columnCount >= 5 ? 0.9 : columnCount === 4 ? 0.92 : 0.94;
+  const width = Math.min(0.94, usableWidth / columnCount).toFixed(3);
   const size = columnCount >= 5 ? "\\scriptsize" : "\\footnotesize";
   const columns = Array.from({ length: columnCount }, () => `>{\\raggedright\\arraybackslash}p{${width}\\linewidth}`).join("");
   const lines = [
     "\\begingroup",
     size,
-    "\\setlength{\\tabcolsep}{2.5pt}",
-    "\\renewcommand{\\arraystretch}{1.12}",
+    "\\setlength{\\tabcolsep}{3pt}",
+    "\\renewcommand{\\arraystretch}{1.22}",
+    "\\arrayrulecolor{descentLine}",
     "\\sloppy",
     `\\begin{longtable}{@{}${columns}@{}}`,
-    "\\toprule"
   ];
   for (const [index, row] of table.rows.entries()) {
-    lines.push(row.map((cell) => cell || "\\strut").join(" & ") + " \\\\");
-    if (table.headerRows.has(index)) lines.push("\\midrule");
+    const isHeader = table.headerRows.has(index);
+    const cells = row.map((cell) => {
+      const content = cell || "\\strut";
+      return isHeader ? `\\tablehead{${content}}` : content;
+    });
+    lines.push(cells.join(" & ") + " \\\\");
+    lines.push("\\hline");
   }
-  lines.push("\\bottomrule", "\\end{longtable}", "\\endgroup");
+  lines.push("\\end{longtable}", "\\endgroup");
   return lines.join("\n");
 }
 
@@ -757,11 +776,13 @@ function renderImage(src: string, caption: string, state: MdxRenderState): strin
   const safePath = latexPath(filePath);
   const safeCaption = caption || "";
   return [
-    "\\Needspace{0.38\\textheight}",
+    "\\Needspace{0.42\\textheight}",
+    "\\vspace{0.14in}",
     "\\begin{center}",
-    `\\includegraphics[width=0.92\\linewidth,height=0.34\\textheight,keepaspectratio]{${safePath}}`,
-    safeCaption ? `\\\\{\\small\\color{descentMuted}${safeCaption}}` : "",
-    "\\end{center}"
+    `\\includegraphics[width=0.86\\linewidth,height=0.3\\textheight,keepaspectratio]{${safePath}}`,
+    safeCaption ? `\\\\[0.06in]{\\small\\color{descentMuted}${safeCaption}}` : "",
+    "\\end{center}",
+    "\\vspace{0.12in}"
   ].filter(Boolean).join("\n");
 }
 
@@ -812,8 +833,9 @@ function blockMath(value: string): string {
   return value ? `\\[\n${value}\n\\]` : "";
 }
 
-function inlineMath(value: string): string {
-  return value ? `\\mbox{\\(${value}\\)}` : "";
+function inlineMath(value: string, noWrap = true): string {
+  if (!value) return "";
+  return `\\(${value}\\)`;
 }
 
 function mdxAttributes(node: MdxNode): Map<string, string | null> {
@@ -941,12 +963,14 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \setCJKsansfont{Hiragino Sans GB}
 \IfFontExistsTF{${cjkMain}}{\setCJKmonofont{${cjkMain}}}{\setCJKmonofont{Songti SC}}
 \usepackage{xcolor}
+\usepackage{colortbl}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{caption}
 \usepackage{array}
 \usepackage{longtable}
 \usepackage{booktabs}
+\usepackage{ragged2e}
 \usepackage{enumitem}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
@@ -974,6 +998,9 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \raggedbottom
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5em}
+\tolerance=1800
+\emergencystretch=1.2em
+${config.locale === "zh" ? "" : "\\RaggedRight"}
 \exhyphenpenalty=10000
 \setlist{itemsep=0.18em,topsep=0.32em,leftmargin=1.25em}
 \setcounter{tocdepth}{0}
@@ -1001,18 +1028,18 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\vspace{3.5ex plus 1ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\endgroup\nobreak\vspace{0.02in}}
 \newcommand{\sectionwithlabel}[2]{\Needspace{10\baselineskip}\par\vspace{3.5ex plus 1ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.015in}{\displayfont\Large\bfseries\color{descentTeal}#2\par}\endgroup\nobreak\vspace{0.08in}}
 \newcommand{\subsectionwithlabel}[2]{\Needspace{8\baselineskip}\par\vspace{2.2ex plus .7ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.012in}{\displayfont\large\bfseries\color{descentInk}#2\par}\endgroup\nobreak\vspace{0.06in}}
-\newtcbox{\statuspillok}{on line,box align=base,colback=descentOkBg,colframe=descentOkLine,boxrule=0.35pt,arc=2mm,left=1mm,right=1.2mm,top=0.2mm,bottom=0.2mm,boxsep=0pt}
-\newtcbox{\statuspillhint}{on line,box align=base,colback=descentHintBg,colframe=descentHintLine,boxrule=0.35pt,arc=2mm,left=1mm,right=1.2mm,top=0.2mm,bottom=0.2mm,boxsep=0pt}
-\newtcbox{\statuspillbad}{on line,box align=base,colback=descentBadBg,colframe=descentBadLine,boxrule=0.35pt,arc=2mm,left=1mm,right=1.2mm,top=0.2mm,bottom=0.2mm,boxsep=0pt}
-\newcommand{\statuschipok}[1]{\statuspillok{{\scriptsize\color{descentOk}\raisebox{0.12ex}{\textbullet}}\hspace{0.32em}{\ttfamily\fontsize{6.2}{7.2}\selectfont\color{descentOk}\MakeUppercase{#1}}}}
-\newcommand{\statuschiphint}[1]{\statuspillhint{{\scriptsize\color{descentHint}\raisebox{0.12ex}{\textbullet}}\hspace{0.32em}{\ttfamily\fontsize{6.2}{7.2}\selectfont\color{descentHint}\MakeUppercase{#1}}}}
-\newcommand{\statuschipbad}[1]{\statuspillbad{{\scriptsize\color{descentBad}\raisebox{0.12ex}{\textbullet}}\hspace{0.32em}{\ttfamily\fontsize{6.2}{7.2}\selectfont\color{descentBad}\MakeUppercase{#1}}}}
+\newcommand{\blockheading}[1]{\Needspace{4\baselineskip}\par\smallskip{\displayfont\large\bfseries\color{descentInk}#1\par}\nobreak\vspace{0.02in}\noindent\ignorespaces}
+\newcommand{\statuschipbase}[4]{\mbox{\tikz[baseline=(chip.base)]{\node[inner xsep=4.2pt,inner ysep=1.7pt,rounded corners=5pt,draw=#3,line width=0.32pt,fill=#2](chip){\tikz[baseline=-0.55ex]\fill[#1] (0,0) circle (1.6pt);\hspace{0.34em}{\ttfamily\fontsize{6.2}{7.2}\selectfont\color{#1}\MakeUppercase{#4}}};}}}
+\newcommand{\statuschipok}[1]{\statuschipbase{descentOk}{descentOkBg}{descentOkLine}{#1}}
+\newcommand{\statuschiphint}[1]{\statuschipbase{descentHint}{descentHintBg}{descentHintLine}{#1}}
+\newcommand{\statuschipbad}[1]{\statuschipbase{descentBad}{descentBadBg}{descentBadLine}{#1}}
 \newcommand{\claimtop}[2]{\Needspace{5\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\if\relax\detokenize{#2}\relax\else\enspace #2\fi\par\nopagebreak\smallskip}
-\newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\lettrine[lines=2,loversize=0.08,lhang=0.02,nindent=0pt,findent=0.08em]{#1}{#2}\par\endgroup\medskip}
-\newcommand{\leadparanodrop}[1]{\Needspace{6\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}#1\par\endgroup\medskip}
+\newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=2.2em\lettrine[lines=2,loversize=0.08,lhang=0.02,nindent=0pt,findent=0.08em]{#1}{#2}\par\endgroup\medskip}
+\newcommand{\leadparanodrop}[1]{\Needspace{6\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=2.2em#1\par\endgroup\medskip}
 \newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
-\newenvironment{sourcesbox}{\Needspace{8\baselineskip}\par\vspace{0.16in}\begingroup\footnotesize\color{descentMuted}\setlength{\parskip}{0.32em}\noindent{\color{descentLine}\rule{\linewidth}{0.35pt}}\par\vspace{0.05in}}{\par\endgroup}
-\newenvironment{quotebox}{\begin{quote}\itshape}{\end{quote}}
+\newcommand{\tablehead}[1]{{\ttfamily\fontsize{6.4}{7.4}\selectfont\color{descentMuted}\MakeUppercase{#1}}}
+\newenvironment{sourcesbox}{\Needspace{8\baselineskip}\par\vspace{0.16in}\begingroup\footnotesize\color{descentMuted}\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\emergencystretch=2em\setlength{\parskip}{0.32em}\noindent{\color{descentLine}\rule{\linewidth}{0.35pt}}\par\vspace{0.05in}}{\par\endgroup}
+\newenvironment{quotebox}{\Needspace{4\baselineskip}\par\vspace{0.12in}\begin{tcolorbox}[enhanced,breakable,blanker,borderline west={1.2pt}{0pt}{descentLine},left=10pt,right=0pt,top=2pt,bottom=2pt]\displayfont\itshape\large\color{descentInk}}{\end{tcolorbox}\vspace{0.08in}}
 \newenvironment{notepara}{\par\small\color{descentMuted}}{\par}
 \newenvironment{pdfintro}{\begingroup\sloppy\emergencystretch=1.8em\exhyphenpenalty=50\relax}{\par\endgroup}
 \captionsetup{font=small,labelformat=empty,textfont={color=descentMuted}}
@@ -1156,9 +1183,9 @@ function smartQuotes(value: string): string {
 
 function normalizeInlineLatex(value: string): string {
   return value
-    .replace(/\\mbox\{\\\(p\\\)\}\s*-value/g, "\\mbox{\\(p\\)-value}")
-    .replace(/\\mbox\{\\emph\{p\}\}\s*-value/g, "\\mbox{\\emph{p}-value}")
-    .replace(/\\emph\{p\}\s*-value/g, "\\mbox{\\emph{p}-value}")
+    .replace(/\\mbox\{\\\(p\\\)\}\s*-value/g, "\\(p\\)-value")
+    .replace(/\\mbox\{\\emph\{p\}\}\s*-value/g, "\\emph{p}-value")
+    .replace(/\\emph\{p\}\s*-value/g, "\\emph{p}-value")
     .replace(/\s{2,}/g, " ")
     .replace(/\s+([,.;:!?])/g, "$1")
     .replace(/\s+([)\]}])/g, "$1")
