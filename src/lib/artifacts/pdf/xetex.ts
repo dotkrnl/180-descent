@@ -1,8 +1,10 @@
 import { execFile, execFileSync } from "node:child_process";
+import { writeFileSync } from "node:fs";
 import { copyFile, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
+import * as cheerio from "cheerio";
 import { unified } from "unified";
 import remarkGfm from "remark-gfm";
 import remarkMdx from "remark-mdx";
@@ -63,7 +65,12 @@ interface MdxRenderState {
   workDir: string;
   imports: Map<string, string>;
   constants: Map<string, string>;
+  renderedHtml: CheerioRoot | null;
+  componentCounts: Map<string, number>;
+  generatedAssetIndex: number;
 }
+
+type CheerioRoot = ReturnType<typeof cheerio.load>;
 
 interface RenderContext {
   block?: boolean;
@@ -96,6 +103,20 @@ type MdxAttribute = {
 interface LatexTable {
   rows: string[][];
   headerRows: Set<number>;
+}
+
+interface SvgComponentSpec {
+  selector: string;
+  width?: string;
+  height?: string;
+}
+
+type LocalizedValue = string | Record<Locale, string | undefined>;
+
+interface SyllabusData {
+  blocks?: Array<{
+    title?: LocalizedValue;
+  }>;
 }
 
 export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> {
@@ -208,6 +229,7 @@ async function buildPdf(config: PdfEdition & { root: string }): Promise<void> {
 
 async function buildLatexDocument(config: PdfEdition & { root: string }, workDir: string): Promise<string> {
   const days = config.days ?? await loadArtifactBookDays(config.root, config.locale);
+  const blockTitles = config.singleDay ? new Map<string, string>() : await localizedBlockTitles(config.root, config.locale);
   const chunks: string[] = [];
 
   chunks.push(titlePageLatex(config));
@@ -224,7 +246,7 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
     if (!config.singleDay && dayBlock(day) !== currentBlock) {
       currentBlock = dayBlock(day);
       blockNumber++;
-      chunks.push(blockDividerLatex(currentBlock, blockNumber, config.locale));
+      chunks.push(blockDividerLatex(blockTitles.get(currentBlock) ?? currentBlock, blockNumber, config.locale));
     }
     chunks.push(dayLatex(day, config));
     chunks.push(await mdxToLatex(day.bodySource, {
@@ -310,13 +332,34 @@ function blockDividerLatex(title: string, blockNumber: number, locale: Locale): 
 \color{descentInk}`;
 }
 
+async function localizedBlockTitles(root: string, locale: Locale): Promise<Map<string, string>> {
+  const syllabus = YAML.parse(await readFile(path.join(root, "src/_data/syllabus-data.yaml"), "utf8")) as SyllabusData;
+  const titles = new Map<string, string>();
+  for (const block of syllabus.blocks ?? []) {
+    const title = block.title;
+    const en = localizedString(title, "en");
+    const localized = localizedString(title, locale);
+    if (en && localized) titles.set(en, localized);
+  }
+  return titles;
+}
+
+function localizedString(value: LocalizedValue | undefined, locale: Locale): string {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  return value[locale] ?? "";
+}
+
 async function mdxToLatex(source: string, options: MdxLatexOptions): Promise<string> {
   const tree = unified().use(remarkParse).use(remarkMdx).use(remarkGfm).parse(source) as MdxNode;
   const state: MdxRenderState = {
     ...options,
     sourceDir: path.dirname(options.sourceFile),
     imports: extractAssetImports(source, options.root, path.dirname(options.sourceFile)),
-    constants: extractStringConstants(source)
+    constants: extractStringConstants(source),
+    renderedHtml: await loadRenderedHtml(options.root, options.locale, options.sourceFile),
+    componentCounts: new Map(),
+    generatedAssetIndex: 0
   };
   return renderChildren(tree.children ?? [], state, { block: true }).replace(/\n{3,}/g, "\n\n").trim();
 }
@@ -406,6 +449,8 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "TipNote") return renderTipNote(attrs, state, context);
   if (name === "StatusChip") return renderStatusChip(attrs, state);
   if (name === "SimpleTable") return renderSimpleTable(attrs, state);
+  const renderedSvg = renderRenderedSvgComponent(name, attrs, state);
+  if (renderedSvg) return renderedSvg;
   if (name === "ImageFigure") {
     const src = resolveImageExpression(attrs.get("src"), state);
     const caption = renderChildren(node.children ?? [], state, { block: false }).trim();
@@ -499,6 +544,82 @@ function renderSimpleTable(attrs: Map<string, string | null>, state: MdxRenderSt
   if (!headers.length || !rows.length) return "";
   return latexTable({ rows: [headers, ...rows], headerRows: new Set([0]) });
 }
+
+const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
+  ["StoppedClockFigure", { selector: ".hero-clock", width: "0.48\\linewidth", height: "0.28\\textheight" }],
+  ["SunriseInductionFigure", { selector: ".hero-sun", width: "0.82\\linewidth", height: "0.28\\textheight" }],
+  ["InferenceModesFigure", { selector: ".hero-art", width: "0.82\\linewidth", height: "0.3\\textheight" }],
+  ["InformationQuestionTree", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }],
+  ["ForkingPathsFigure", { selector: ".forking-paths", width: "0.82\\linewidth", height: "0.3\\textheight" }],
+  ["CausationScatterFigure", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }]
+]);
+
+function renderRenderedSvgComponent(name: string, attrs: Map<string, string | null>, state: MdxRenderState): string {
+  const spec = SVG_COMPONENTS.get(name);
+  if (!spec || !state.renderedHtml) return "";
+
+  const index = state.componentCounts.get(spec.selector) ?? 0;
+  state.componentCounts.set(spec.selector, index + 1);
+
+  const rootElement = state.renderedHtml(spec.selector).eq(index);
+  if (!rootElement.length) return "";
+
+  const svgElements = rootElement.find("svg");
+  if (svgElements.length !== 1) return "";
+
+  const svg = state.renderedHtml.xml(svgElements.first());
+  const caption = latexEscape(
+    resolveExpression(attrs.get("tag"), state)
+    || rootElement.find("figcaption,.figcap,.stopped-tag,.sun-tag,.doors-tag").first().text().trim()
+  );
+  return renderSvgAsset(svg, caption, state, name, spec);
+}
+
+function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, name: string, spec: SvgComponentSpec): string {
+  if (!svg.trim()) return "";
+  const sourceSlug = sanitizeAssetName(path.relative(path.join(state.root, "src/content/days"), state.sourceFile));
+  const assetSlug = sanitizeAssetName(`${sourceSlug}-${name}-${++state.generatedAssetIndex}`);
+  const svgPath = path.join(state.workDir, `${assetSlug}.svg`);
+  const pdfPath = path.join(state.workDir, `${assetSlug}.pdf`);
+
+  writeFileSync(svgPath, prepareSvgForRsvg(svg), "utf8");
+  execFileSyncish("rsvg-convert", ["-f", "pdf", "-o", pdfPath, svgPath]);
+
+  return [
+    "\\begin{center}",
+    `\\includegraphics[width=${spec.width ?? "0.82\\linewidth"},height=${spec.height ?? "0.3\\textheight"},keepaspectratio]{${latexPath(pdfPath)}}`,
+    caption ? `\\\\{\\small\\color{descentMuted}${caption}}` : "",
+    "\\end{center}"
+  ].filter(Boolean).join("\n");
+}
+
+function prepareSvgForRsvg(svg: string): string {
+  let prepared = svg
+    .replace(/color-mix\(in srgb,\s*(var\(--[^)]+\)|#[0-9a-fA-F]{3,8}|[a-zA-Z]+)\s+\d+%,\s*transparent\)/g, "$1")
+    .replace(/var\(--([^)]+)\)/g, (_, name: string) => SVG_COLOR_VARS.get(name.trim()) ?? "#1d2424");
+  if (!/\sxmlns=/.test(prepared)) {
+    prepared = prepared.replace("<svg", "<svg xmlns=\"http://www.w3.org/2000/svg\"");
+  }
+  return prepared;
+}
+
+const SVG_COLOR_VARS = new Map<string, string>([
+  ["paper", "#f5f3ec"],
+  ["raised", "#fbfaf5"],
+  ["ink", "#172530"],
+  ["ink-soft", "#41545d"],
+  ["ink-faint", "#5d6c72"],
+  ["line", "#ddd7c8"],
+  ["line-strong", "#cabfa8"],
+  ["accent", "#1d6f78"],
+  ["accent-deep", "#13525a"],
+  ["brass", "#93651f"],
+  ["ok", "#2a704a"],
+  ["hint", "#845a1b"],
+  ["contested", "#a23c34"],
+  ["heat", "#a8442d"],
+  ["paper-deep", "#ebe4d4"]
+]);
 
 function renderMarkdownTable(node: MdxNode, state: MdxRenderState): string {
   const rows = (node.children ?? []).map((row) => {
@@ -695,6 +816,21 @@ function resolveImportPath(importPath: string, root: string, sourceDir: string):
   if (importPath.startsWith(".")) return path.resolve(sourceDir, importPath);
   if (importPath.startsWith("@assets/")) return path.join(root, "src/assets", importPath.slice("@assets/".length));
   return path.join(root, importPath);
+}
+
+async function loadRenderedHtml(root: string, locale: Locale, sourceFile: string): Promise<CheerioRoot | null> {
+  const contentRoot = path.join(root, "src/content/days");
+  const relativeSource = path.relative(contentRoot, sourceFile);
+  if (relativeSource.startsWith("..")) return null;
+
+  const [dayPath] = relativeSource.split(path.sep);
+  if (!dayPath) return null;
+
+  const htmlPath = locale === "zh"
+    ? path.join(root, "_site/zh/days", dayPath, "index.html")
+    : path.join(root, "_site/days", dayPath, "index.html");
+  const html = await readFile(htmlPath, "utf8").catch(() => "");
+  return html ? cheerio.load(html) : null;
 }
 
 function latexPreamble(config: PdfEdition & { root: string }): string {
@@ -936,6 +1072,14 @@ function romanNumeral(value: number): string {
 
 function latexPath(value: string): string {
   return value.replaceAll("\\", "/").replaceAll(" ", "\\space ");
+}
+
+function sanitizeAssetName(value: string): string {
+  return value
+    .replace(/\.[a-z0-9]+$/i, "")
+    .replace(/[^A-Za-z0-9_-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 96) || "asset";
 }
 
 function dayBlock(day: ArtifactBookDay): string {

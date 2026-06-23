@@ -3,6 +3,21 @@ interface Props {
   ariaLabel: string;
   tag: string;
 }
+
+const tickLines = Array.from({ length: 60 }, (_, index) => {
+  const angle = index * 6 * Math.PI / 180;
+  const major = index % 5 === 0;
+  const r1 = major ? 92 : 96;
+  const r2 = 100;
+  return {
+    x1: (120 + r1 * Math.sin(angle)).toFixed(1),
+    y1: (120 - r1 * Math.cos(angle)).toFixed(1),
+    x2: (120 + r2 * Math.sin(angle)).toFixed(1),
+    y2: (120 - r2 * Math.cos(angle)).toFixed(1),
+    strokeWidth: major ? "2" : "1",
+    opacity: major ? "0.85" : "0.4"
+  };
+});
 ---
 <figure class="hero-clock">
   <div class="clockwrap">
@@ -15,7 +30,11 @@ interface Props {
       </defs>
       <circle cx="120" cy="120" r="108" fill="url(#face)" stroke="var(--line-strong)" stroke-width="2"></circle>
       <circle cx="120" cy="120" r="100" fill="none" stroke="var(--line)" stroke-width="1"></circle>
-      <g id="ticks" stroke="var(--ink-faint)"></g>
+      <g id="ticks" stroke="var(--ink-faint)">
+        {tickLines.map((tick) => (
+          <line x1={tick.x1} y1={tick.y1} x2={tick.x2} y2={tick.y2} stroke-width={tick.strokeWidth} opacity={tick.opacity}></line>
+        ))}
+      </g>
       <g fill="var(--ink-soft)" font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="middle">
         <text x="120" y="34">12</text>
         <text x="208" y="125">3</text>

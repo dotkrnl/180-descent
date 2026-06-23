@@ -2,6 +2,7 @@
   "use strict";
 
   document.querySelectorAll("#ticks").forEach(function(ticks){
+    if (ticks.children.length) return;
     var ns = "http://www.w3.org/2000/svg";
     for(var i = 0; i < 60; i++){
       var a = i * 6 * Math.PI / 180;
