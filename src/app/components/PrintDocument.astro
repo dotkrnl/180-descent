@@ -6,6 +6,7 @@ import IntroEn from "@app/content/introduction.en.mdx";
 import IntroZh from "@app/content/introduction.zh.mdx";
 import {
   getBookData,
+  getSyllabus,
   padDay,
   roman
 } from "@app/site-data";
@@ -44,7 +45,15 @@ const book = await getBookData();
 const Intro = isZh ? IntroZh : IntroEn;
 const edition = isZh ? book.zh : book;
 const coverSubtitle = includeDeepDive && edition.deep_dive_subtitle ? edition.deep_dive_subtitle : edition.subtitle;
-const registry = await loadContentRegistry({ daysDir: path.join(process.cwd(), "src/content/days") });
+const [registry, sourceSyllabus, localizedSyllabus] = await Promise.all([
+  loadContentRegistry({ daysDir: path.join(process.cwd(), "src/content/days") }),
+  getSyllabus("en"),
+  getSyllabus(locale)
+]);
+const blockTitleBySource = new Map(sourceSyllabus.blocks.map((block, index) => [
+  block.title,
+  localizedSyllabus.blocks[index]?.title ?? block.title
+]));
 const printDays: PrintDay[] = [];
 let currentBlock = "";
 let blockNumber = 0;
@@ -75,7 +84,7 @@ for (const day of registry.days.filter((entry) => entry.manifest.published)) {
     day: day.manifest.day,
     path: day.manifest.path,
     title: localeEntry.title,
-    block: day.manifest.block,
+    block: blockTitleBySource.get(day.manifest.block) ?? day.manifest.block,
     blockNumber,
     startsBlock,
     Body: await loadMdx(day.manifest.path, body.path),
