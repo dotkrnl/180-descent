@@ -3,8 +3,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     globals: true,
-    include: ["tests/**/*.test.ts", "src/**/*.test.ts"],
-    passWithNoTests: true
+    include: ["tests/**/*.test.ts", "src/**/*.test.ts"]
   },
   resolve: {
     alias: {
