@@ -1,7 +1,10 @@
+import { mkdir, mkdtemp } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { checkPdf, hasPdfHeader, textMatchesAny } from "@lib/checks/pdf";
 import { parsePpm } from "@lib/pdf/ppm";
 import { escapeRegExp } from "@lib/text/escape";
-import { hasPdfHeader, textMatchesAny } from "@lib/checks/pdf";
 
 describe("pdf check helpers", () => {
   it("classifies PDF headers and text pattern matches", () => {
@@ -24,4 +27,18 @@ describe("pdf check helpers", () => {
   it("escapes regular expression text", () => {
     expect(escapeRegExp("A+B?")).toBe("A\\+B\\?");
   });
+
+  it("reports missing required artifacts without throwing", async () => {
+    const root = await createEmptyContentRoot("180-pdf-missing-");
+
+    const result = await checkPdf({ root });
+
+    expect(result.errors).toContain("_site/downloads/180-descent.pdf is missing");
+  });
 });
+
+async function createEmptyContentRoot(prefix: string): Promise<string> {
+  const root = await mkdtemp(path.join(os.tmpdir(), prefix));
+  await mkdir(path.join(root, "src/content/days"), { recursive: true });
+  return root;
+}

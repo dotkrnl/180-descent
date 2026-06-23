@@ -123,6 +123,11 @@ function addPerDayEditions(root: string, editions: EpubEdition[], days: Artifact
 
 async function checkEpubEdition(root: string, edition: EpubEdition, errors: string[]): Promise<void> {
   const absoluteFile = path.join(root, edition.file);
+  if (!existsSync(absoluteFile)) {
+    errors.push(`${edition.file} is missing`);
+    return;
+  }
+
   const data = await readFile(absoluteFile);
   const zip = await JSZip.loadAsync(data);
 

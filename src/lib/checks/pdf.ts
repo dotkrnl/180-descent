@@ -44,6 +44,7 @@ export function textMatchesAny(text: string, patterns: RegExp[]): boolean {
 
 class PdfChecker {
   private readonly pdfCache = new Map<string, PdfInfo>();
+  private readonly missingFiles = new Set<string>();
   private readonly errors: string[] = [];
   private readonly debug: boolean;
 
@@ -94,6 +95,11 @@ class PdfChecker {
 
   private async checkPdfHeaderTextAndLinks(file: string): Promise<void> {
     this.debugStep(`load ${file}`);
+    if (!existsSync(this.absolute(file))) {
+      this.reportMissing(file);
+      return;
+    }
+
     const info = await this.pdfInfo(file);
     const raw = info.data.toString("latin1");
     const annotationCount = countPdfAnnotations(info);
@@ -233,11 +239,22 @@ class PdfChecker {
   }
 
   private async extractPdfText(pdfPath: string): Promise<string> {
+    if (!existsSync(this.absolute(pdfPath))) {
+      this.reportMissing(pdfPath);
+      return "";
+    }
+
     return (await this.pdfInfo(pdfPath)).text;
   }
 
   private absolute(relativePath: string): string {
     return path.join(this.options.root, relativePath);
+  }
+
+  private reportMissing(relativePath: string): void {
+    if (this.missingFiles.has(relativePath)) return;
+    this.missingFiles.add(relativePath);
+    this.errors.push(`${relativePath} is missing`);
   }
 
   private debugStep(label: string): void {
