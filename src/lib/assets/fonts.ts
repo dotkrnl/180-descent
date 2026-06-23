@@ -178,5 +178,20 @@ async function isFresh(output: string, source: string): Promise<boolean> {
 }
 
 function resolvePackageRoot(packageName: string, resolver?: (packageName: string) => string): string {
-  return resolver?.(packageName) ?? path.dirname(require.resolve(`${packageName}/package.json`));
+  if (resolver) return resolver(packageName);
+
+  switch (packageName) {
+    case "@fontsource/fraunces":
+      return path.dirname(require.resolve("@fontsource/fraunces/package.json"));
+    case "@fontsource/ibm-plex-mono":
+      return path.dirname(require.resolve("@fontsource/ibm-plex-mono/package.json"));
+    case "@fontsource/newsreader":
+      return path.dirname(require.resolve("@fontsource/newsreader/package.json"));
+    case "katex":
+      return path.dirname(require.resolve("katex/package.json"));
+    case "lxgw-wenkai-webfont":
+      return path.dirname(require.resolve("lxgw-wenkai-webfont/package.json"));
+    default:
+      throw new Error(`Unsupported asset package: ${packageName}`);
+  }
 }
