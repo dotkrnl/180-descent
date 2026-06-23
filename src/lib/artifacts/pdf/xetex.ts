@@ -596,6 +596,19 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `{\\ttfamily\\footnotesize\\color{descentMuted}${text}}\\quad ` : "";
   }
+  if (name === "LogicSchools") {
+    return renderChildren(node.children ?? [], state, { block: true });
+  }
+  if (name === "LogicSchool") {
+    const title = latexEscape(attrs.get("title") ?? "");
+    const tag = latexEscape(attrs.get("tag") ?? "");
+    const body = renderChildren(node.children ?? [], state, { block: true }).trim();
+    return [
+      title ? `\\blockheading{${title}}` : "",
+      tag ? `{\\ttfamily\\footnotesize\\color{descentMuted}${tag}\\par}` : "",
+      body
+    ].filter(Boolean).join("\n");
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
