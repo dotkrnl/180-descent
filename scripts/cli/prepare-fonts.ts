@@ -1,9 +1,7 @@
 import { prepareLatinFonts } from "@lib/assets/fonts";
+import { runCli } from "./support";
 
-try {
+await runCli(async () => {
   const { copied } = await prepareLatinFonts({ root: process.cwd() });
   console.log(`Latin fonts prepared: ${copied} fonts`);
-} catch (error) {
-  console.error(error);
-  process.exit(1);
-}
+});

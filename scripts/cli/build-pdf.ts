@@ -1,8 +1,4 @@
 import { buildAllPdfs } from "@lib/artifacts/pdf/xetex";
+import { runCli } from "./support";
 
-try {
-  await buildAllPdfs({ root: process.cwd() });
-} catch (error) {
-  console.error(error);
-  process.exit(1);
-}
+await runCli(() => buildAllPdfs({ root: process.cwd() }));

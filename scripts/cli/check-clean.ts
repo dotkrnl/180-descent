@@ -1,13 +1,11 @@
 import { checkCleanRepo } from "@lib/checks/clean";
+import { exitOnErrors } from "./support";
 
 const failures = await checkCleanRepo({ root: process.cwd() });
 
-if (failures.length) {
-  console.error("Cleanliness check failed:");
-  for (const failure of failures) {
-    console.error(`- ${failure.path}: ${failure.reason}`);
-  }
-  process.exit(1);
-}
+exitOnErrors(failures, (failure) => `${failure.path}: ${failure.reason}`, {
+  heading: "Cleanliness check failed:",
+  prefix: "- "
+});
 
 console.log("Cleanliness check passed.");

@@ -1,11 +1,6 @@
 import { checkContent } from "@lib/checks/content";
+import { exitOnErrors } from "./support";
 
 const failures = await checkContent({ root: process.cwd() });
 
-for (const failure of failures) {
-  console.error(failure.message);
-}
-
-if (failures.length) {
-  process.exit(1);
-}
+exitOnErrors(failures, (failure) => failure.message);

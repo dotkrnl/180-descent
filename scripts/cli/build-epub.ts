@@ -1,8 +1,4 @@
 import { buildAllEpubs } from "@lib/artifacts/epub/build";
+import { runCli } from "./support";
 
-try {
-  await buildAllEpubs({ root: process.cwd() });
-} catch (error) {
-  console.error(error);
-  process.exit(1);
-}
+await runCli(() => buildAllEpubs({ root: process.cwd() }));
