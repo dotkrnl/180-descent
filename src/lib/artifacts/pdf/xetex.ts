@@ -491,8 +491,12 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (["BlockTitle", "PanelTitle", "SourcesTitle"].includes(name)) {
     return `\\subsection*{${renderInlineChildren(node, state, { ...context, heading: true })}}`;
   }
-  if (["SectionEyebrow", "HeroEyebrow", "Label", "Meta"].includes(name)) {
-    const text = cleanEyebrowText(renderInlineChildren(node, state, { ...context, heading: true }).trim());
+  if (name === "SectionEyebrow") {
+    const text = cleanEyebrowText(renderEyebrowText(node, attrs, state, context));
+    return text ? `\\sectioneyebrow{${text}}` : "";
+  }
+  if (["HeroEyebrow", "Label", "Meta"].includes(name)) {
+    const text = cleanEyebrowText(renderEyebrowText(node, attrs, state, context));
     return text ? `\\eyebrow{${text}}` : "";
   }
   if (["HeroSubhead", "PanelNote", "Caption", "FigureCaption"].includes(name)) {
@@ -586,9 +590,10 @@ function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, nam
   execFileSyncish("rsvg-convert", ["-f", "pdf", "-o", pdfPath, svgPath]);
 
   return [
+    "\\Needspace{0.36\\textheight}",
     "\\begin{center}",
     `\\includegraphics[width=${spec.width ?? "0.82\\linewidth"},height=${spec.height ?? "0.3\\textheight"},keepaspectratio]{${latexPath(pdfPath)}}`,
-    caption ? `\\\\{\\small\\color{descentMuted}${caption}}` : "",
+    caption ? `\\\\{\\small\\color{descentMuted}${cleanFigureCaption(caption)}}` : "",
     "\\end{center}"
   ].filter(Boolean).join("\n");
 }
@@ -704,6 +709,7 @@ function renderImage(src: string, caption: string, state: MdxRenderState): strin
   const safePath = latexPath(filePath);
   const safeCaption = caption || "";
   return [
+    "\\Needspace{0.38\\textheight}",
     "\\begin{center}",
     `\\includegraphics[width=0.92\\linewidth,height=0.34\\textheight,keepaspectratio]{${safePath}}`,
     safeCaption ? `\\\\{\\small\\color{descentMuted}${safeCaption}}` : "",
@@ -732,6 +738,13 @@ function renderInlineChildren(node: MdxNode, state: MdxRenderState, context: Ren
       .join("")
       .replace(/\n+/g, " ")
   );
+}
+
+function renderEyebrowText(node: MdxNode, attrs: Map<string, string | null>, state: MdxRenderState, context: RenderContext): string {
+  return [
+    attrs.get("number") ?? "",
+    renderInlineChildren(node, state, { ...context, heading: true }).trim()
+  ].filter(Boolean).join(" ");
 }
 
 function blockMath(value: string): string {
@@ -877,6 +890,7 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{tocloft}
+\usepackage{needspace}
 \usepackage[most]{tcolorbox}
 \usepackage{amsmath,amssymb}
 \definecolor{descentTeal}{HTML}{13525A}
@@ -886,6 +900,7 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \definecolor{descentCream}{HTML}{F7F3EA}
 \definecolor{descentLine}{HTML}{D7CCC0}
 \color{descentInk}
+\raggedbottom
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5em}
 \exhyphenpenalty=10000
@@ -912,7 +927,8 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \titleformat{\section}{\displayfont\Large\bfseries\color{descentTeal}}{\thesection}{0.55em}{}
 \titleformat{\subsection}{\displayfont\large\bfseries\color{descentInk}}{\thesubsection}{0.5em}{}
 \newcommand{\pdfdaytitle}[1]{{\displayfont\bfseries\fontsize{23}{25}\selectfont #1\par}\vspace{0.04in}}
-\newcommand{\eyebrow}[1]{\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\smallskip}
+\newcommand{\eyebrow}[1]{\Needspace{4\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\smallskip}
+\newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\medskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\smallskip}
 \newcommand{\statuschip}[1]{\textsf{\footnotesize\color{descentTeal}[#1]}}
 \newenvironment{leadbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=white,boxrule=0pt,arc=0mm,left=0pt,right=0pt,top=2pt,bottom=2pt]\large\color{descentTeal}}{\end{tcolorbox}}
 \newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
@@ -1040,7 +1056,16 @@ function normalizeInlineLatex(value: string): string {
 }
 
 function cleanEyebrowText(value: string): string {
-  return value.replace(/^[◆◇▪●■□\s]+/, "");
+  return value
+    .replace(/^[◆◇▪●■□•·\s]+/, "")
+    .replace(/\s+·\s*$/, "")
+    .trim();
+}
+
+function cleanFigureCaption(value: string): string {
+  return value
+    .replace(/^[◆◇▪●■□•·\s]+/, "")
+    .trim();
 }
 
 function romanNumeral(value: number): string {
