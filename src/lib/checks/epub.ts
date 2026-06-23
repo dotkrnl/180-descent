@@ -89,19 +89,18 @@ async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
 
   const enDays = await loadArtifactBookDays(root, "en");
   const zhDays = await loadArtifactBookDays(root, "zh");
-  addPerDayEditions(root, editions, enDays, false);
-  addPerDayEditions(root, editions, zhDays, true);
+  addPerDayEditions(editions, enDays, false);
+  addPerDayEditions(editions, zhDays, true);
   return editions;
 }
 
-function addPerDayEditions(root: string, editions: EpubEdition[], days: ArtifactBookDay[], zh: boolean): void {
+function addPerDayEditions(editions: EpubEdition[], days: ArtifactBookDay[], zh: boolean): void {
   for (const day of days) {
     const dayPath = day.path;
     const dayNumber = day.day;
     const file = zh
       ? `_site/downloads/180-descent-zh-day-${dayPath}.epub`
       : `_site/downloads/180-descent-day-${dayPath}.epub`;
-    if (!existsSync(path.join(root, file))) continue;
 
     const isDayOne = dayNumber === 1;
     const dayRequired = [

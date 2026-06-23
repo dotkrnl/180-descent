@@ -1,8 +1,6 @@
-import { mkdir, mkdtemp } from "node:fs/promises";
-import os from "node:os";
-import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkEpub, decodeXmlEntities, isInsideSvg } from "@lib/checks/epub";
+import { createEmptyContentRoot, writePublishedDay } from "./helpers/content-root";
 
 describe("epub check helpers", () => {
   it("decodes XML entities before appendix content matching", () => {
@@ -22,10 +20,14 @@ describe("epub check helpers", () => {
 
     expect(result.errors).toContain("_site/downloads/180-descent.epub is missing");
   });
-});
 
-async function createEmptyContentRoot(prefix: string): Promise<string> {
-  const root = await mkdtemp(path.join(os.tmpdir(), prefix));
-  await mkdir(path.join(root, "src/content/days"), { recursive: true });
-  return root;
-}
+  it("reports missing per-day artifacts", async () => {
+    const root = await createEmptyContentRoot("180-epub-day-missing-");
+    await writePublishedDay(root);
+
+    const result = await checkEpub({ root });
+
+    expect(result.errors).toContain("_site/downloads/180-descent-day-001-fixture.epub is missing");
+    expect(result.errors).toContain("_site/downloads/180-descent-zh-day-001-fixture.epub is missing");
+  });
+});

@@ -83,12 +83,10 @@ class PdfChecker {
     const enDays = await loadArtifactBookDays(this.options.root, "en");
     const zhDays = await loadArtifactBookDays(this.options.root, "zh");
     for (const day of enDays) {
-      const file = `_site/downloads/180-descent-day-${day.path}.pdf`;
-      if (existsSync(this.absolute(file))) pdfFiles.push(file);
+      pdfFiles.push(`_site/downloads/180-descent-day-${day.path}.pdf`);
     }
     for (const day of zhDays) {
-      const file = `_site/downloads/180-descent-zh-day-${day.path}.pdf`;
-      if (existsSync(this.absolute(file))) pdfFiles.push(file);
+      pdfFiles.push(`_site/downloads/180-descent-zh-day-${day.path}.pdf`);
     }
     return pdfFiles;
   }
