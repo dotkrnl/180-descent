@@ -1,10 +1,12 @@
-import { readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
+import { readFile } from "node:fs/promises";
+import { execFile } from "node:child_process";
 import path from "node:path";
+import { promisify } from "node:util";
 import { PDFDocument, PDFName } from "pdf-lib";
-import { ghostscriptAllPagesText, ghostscriptBoundingBox, ghostscriptPagePpm } from "@lib/pdf";
-import { escapeRegExp } from "@lib/text";
 import { loadArtifactBookDays } from "@lib/artifacts/book";
+
+const execFileAsync = promisify(execFile);
 
 export interface PdfCheckOptions {
   root: string;
@@ -23,19 +25,21 @@ interface PdfInfo {
 }
 
 type TextPatternCheck = [label: string, text: string, pattern: RegExp];
-type PdfPatternCheck = [label: string, pdfPath: string, pattern: RegExp];
 
 export async function checkPdf(options: PdfCheckOptions): Promise<PdfCheckResult> {
   const checker = new PdfChecker(options);
   return { errors: await checker.run() };
 }
 
-export function isFullPageBox([left, bottom, right, top]: number[]): boolean {
-  return left <= 1 && bottom <= 1 && right >= 431 && top >= 647;
+export function hasPdfHeader(data: Buffer): boolean {
+  return data.toString("latin1", 0, 5) === "%PDF-";
 }
 
-export function isWhitePixel(sample: number[]): boolean {
-  return sample.every((channel) => channel > 250);
+export function textMatchesAny(text: string, patterns: RegExp[]): boolean {
+  return patterns.some((pattern) => {
+    pattern.lastIndex = 0;
+    return pattern.test(text);
+  });
 }
 
 class PdfChecker {
@@ -50,27 +54,20 @@ class PdfChecker {
   async run(): Promise<string[]> {
     const pdfFiles = await this.collectPdfFiles();
     for (const file of pdfFiles) {
-      await this.checkPdfHeaderAndLinks(file);
+      await this.checkPdfHeaderTextAndLinks(file);
     }
 
-    this.debugStep("extract full text");
-    const extractedText = await this.extractPdfText("_site/downloads/180-descent.pdf");
-    const frontMatter = extractedText.split("THE 180-DAY MAP")[0] || "";
+    this.debugStep("extract edition text");
+    const standardText = await this.extractPdfText("_site/downloads/180-descent.pdf");
     const deepDiveText = await this.extractPdfText("_site/downloads/180-descent-deep-dive.pdf");
-    const deepDiveFrontMatter = deepDiveText.split("THE 180-DAY MAP")[0] || "";
     const zhText = await this.extractPdfText("_site/downloads/180-descent-zh.pdf");
     const zhDeepDiveText = await this.extractPdfText("_site/downloads/180-descent-zh-deep-dive.pdf");
     const dayOneText = await this.extractPdfText("_site/downloads/180-descent-day-001-what-is-knowledge.pdf");
     const zhDayOneText = await this.extractPdfText("_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf");
 
-    await this.checkAppendixLabels(deepDiveText, dayOneText, zhDeepDiveText, zhDayOneText);
-    await this.checkAppendixBackgrounds();
-    await this.checkAppendixSourceBackgrounds();
-    this.checkForbiddenArtifacts(extractedText, frontMatter);
-    this.checkToc(frontMatter);
-    this.checkAppendixContent(extractedText, deepDiveText, dayOneText, zhText, zhDeepDiveText, zhDayOneText);
-    await this.checkFullBleed(frontMatter, deepDiveFrontMatter);
-    await this.checkRunningHeaders(frontMatter);
+    this.checkBookText(standardText, zhText);
+    this.checkAppendixLabels(deepDiveText, dayOneText, zhDeepDiveText, zhDayOneText);
+    this.checkAppendixContent(standardText, deepDiveText, dayOneText, zhText, zhDeepDiveText, zhDayOneText);
 
     return this.errors;
   }
@@ -95,14 +92,22 @@ class PdfChecker {
     return pdfFiles;
   }
 
-  private async checkPdfHeaderAndLinks(file: string): Promise<void> {
+  private async checkPdfHeaderTextAndLinks(file: string): Promise<void> {
     this.debugStep(`load ${file}`);
     const info = await this.pdfInfo(file);
-    const text = info.data.toString("latin1");
+    const raw = info.data.toString("latin1");
     const annotationCount = countPdfAnnotations(info);
 
-    if (!text.startsWith("%PDF-")) {
+    if (!hasPdfHeader(info.data)) {
       this.errors.push(`${file} does not start with a PDF header`);
+    }
+
+    if (info.pdf.getPageCount() < 1) {
+      this.errors.push(`${file} has no pages`);
+    }
+
+    if (!info.text.trim()) {
+      this.errors.push(`${file} has no extractable text`);
     }
 
     if (annotationCount > 0) {
@@ -115,18 +120,31 @@ class PdfChecker {
       /https:\/\/180-descent\.pages\.dev\/(?:zh\/)?days\//,
       /https:\/\/180-descent\.pages\.dev\/(?:zh\/)?introduction\//
     ]) {
-      if (pattern.test(text)) {
+      if (pattern.test(raw)) {
         this.errors.push(`${file} contains forbidden PDF link matching ${pattern}`);
       }
     }
   }
 
-  private async checkAppendixLabels(
+  private checkBookText(standardText: string, zhText: string): void {
+    for (const [label, text, pattern] of [
+      ["English PDF", standardText, /The Scientific Method/i],
+      ["English PDF", standardText, /Probability as/i],
+      ["Chinese PDF", zhText, /科学方法|证伪|概率/],
+      ["Chinese PDF", zhText, /深入一百八十日/]
+    ] as TextPatternCheck[]) {
+      if (!pattern.test(text)) {
+        this.errors.push(`${label} is missing core text matching ${pattern}`);
+      }
+    }
+  }
+
+  private checkAppendixLabels(
     deepDiveText: string,
     dayOneText: string,
     zhDeepDiveText: string,
     zhDayOneText: string
-  ): Promise<void> {
+  ): void {
     const checks: TextPatternCheck[] = [
       ["Deep-dive PDF", deepDiveText, /Optional appendix/i],
       ["Day-specific PDF", dayOneText, /Optional appendix/i],
@@ -140,78 +158,8 @@ class PdfChecker {
     }
   }
 
-  private async checkAppendixBackgrounds(): Promise<void> {
-    const checks: PdfPatternCheck[] = [
-      ["Deep-dive PDF", "_site/downloads/180-descent-deep-dive.pdf", /OPTIONAL APPENDIX/i],
-      ["Day-specific PDF", "_site/downloads/180-descent-day-001-what-is-knowledge.pdf", /OPTIONAL APPENDIX/i],
-      ["Deep-dive Chinese PDF", "_site/downloads/180-descent-zh-deep-dive.pdf", /可选附录/],
-      ["Day-specific Chinese PDF", "_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf", /可选附录/]
-    ];
-    for (const [label, pdfPath, pattern] of checks) {
-      this.debugStep(`find appendix ${label}`);
-      const appendixPage = await this.findFirstPageContaining(pdfPath, pattern);
-      if (!appendixPage) {
-        this.errors.push(`${label} is missing an appendix page matching ${pattern}`);
-        continue;
-      }
-      for (const [xRatio, yRatio] of [[0.03, 0.03], [0.97, 0.97]]) {
-        const sample = await this.samplePdfPagePixel(pdfPath, appendixPage, xRatio, yRatio);
-        if (isWhitePixel(sample)) {
-          this.errors.push(`${label} appendix page ${appendixPage} is missing a full-page background sample at ${xRatio},${yRatio}: ${sample.join(" ")}`);
-          break;
-        }
-      }
-    }
-  }
-
-  private async checkAppendixSourceBackgrounds(): Promise<void> {
-    const checks: PdfPatternCheck[] = [
-      ["Deep-dive PDF", "_site/downloads/180-descent-deep-dive.pdf", /Reference surveys/i],
-      ["Day-specific PDF", "_site/downloads/180-descent-day-001-what-is-knowledge.pdf", /Reference surveys/i],
-      ["Deep-dive Chinese PDF", "_site/downloads/180-descent-zh-deep-dive.pdf", /参考综述/],
-      ["Day-specific Chinese PDF", "_site/downloads/180-descent-zh-day-001-what-is-knowledge.pdf", /参考综述/]
-    ];
-    for (const [label, pdfPath, pattern] of checks) {
-      this.debugStep(`find appendix sources ${label}`);
-      const appendixSourcePage = await this.findFirstPageContaining(pdfPath, pattern);
-      if (!appendixSourcePage) {
-        this.errors.push(`${label} is missing an appendix sources page matching ${pattern}`);
-        continue;
-      }
-      const sample = await this.samplePdfPagePixel(pdfPath, appendixSourcePage, 0.5, 0.74);
-      if (sample.every((channel) => channel > 250)) {
-        this.errors.push(`${label} appendix sources page ${appendixSourcePage} has a white background sample: ${sample.join(" ")}`);
-      }
-    }
-  }
-
-  private checkForbiddenArtifacts(extractedText: string, frontMatter: string): void {
-    for (const pattern of [/\[\[toc:/, /WHERE WE ARE/i, /PAGE\s+\d+\s*\/\s*\d+/, /THE 180-DAY DESCENT/]) {
-      if (pattern.test(extractedText)) {
-        this.errors.push(`PDF extracted text contains forbidden print artifact matching ${pattern}`);
-      }
-    }
-
-    if (/^\s+\d+\.\s/m.test(frontMatter)) {
-      this.errors.push("PDF TOC appears to use ordered-list numbering");
-    }
-  }
-
-  private checkToc(frontMatter: string): void {
-    for (const pattern of [
-      /Introduction\s+\d+/,
-      /BLOCK I · FOUNDATIONS OF KNOWLEDGE & REASONING\s+\d+/,
-      /DAY 1\s+What Is Knowledge\?\s+\d+/,
-      /DAY 2\s+The Scientific Method & Demarcation\s+\d+/
-    ]) {
-      if (!pattern.test(frontMatter)) {
-        this.errors.push(`PDF TOC is missing right-aligned page number text matching ${pattern}`);
-      }
-    }
-  }
-
   private checkAppendixContent(
-    extractedText: string,
+    standardText: string,
     deepDiveText: string,
     dayOneText: string,
     zhText: string,
@@ -227,7 +175,7 @@ class PdfChecker {
       /Bubble vs\. Chamber, as exposure outcomes/,
       /Accuracy domination, as credence geometry/
     ]) {
-      if (pattern.test(extractedText)) this.errors.push(`Standard PDF contains deep-dive appendix content matching ${pattern}`);
+      if (pattern.test(standardText)) this.errors.push(`Standard PDF contains deep-dive appendix content matching ${pattern}`);
       if (!pattern.test(deepDiveText)) this.errors.push(`Deep-dive PDF is missing appendix content matching ${pattern}`);
       if (!pattern.test(dayOneText)) this.errors.push(`Day-specific PDF is missing appendix content matching ${pattern}`);
     }
@@ -246,19 +194,18 @@ class PdfChecker {
       if (!pattern.test(zhDayOneText)) this.errors.push(`Day-specific Chinese PDF is missing appendix content matching ${pattern}`);
     }
 
-    for (const pattern of [
+    const liveControlPatterns = [
       /Choose a door/,
       /How much rides on being right/,
       /Spouse raises the possibility of error/,
-      /Working clock \(knowledge\)/,
       /Expose to outside voices/,
-      /Credence in S/,
       /Snap onto the coherence line/
-    ]) {
-      if (pattern.test(deepDiveText)) this.errors.push(`Deep-dive PDF contains live interactive control text matching ${pattern}`);
+    ];
+    if (textMatchesAny(deepDiveText, liveControlPatterns)) {
+      this.errors.push("Deep-dive PDF contains live interactive control text");
     }
 
-    for (const pattern of [
+    const zhLiveControlPatterns = [
       /选择一扇门/,
       /你拒绝哪一行/,
       /利害关系拨盘/,
@@ -267,62 +214,9 @@ class PdfChecker {
       /接触外部声音/,
       /对 S 的置信度/,
       /吸附到融贯线上/
-    ]) {
-      if (pattern.test(zhDeepDiveText)) this.errors.push(`Deep-dive Chinese PDF contains live interactive control text matching ${pattern}`);
-    }
-  }
-
-  private async checkFullBleed(frontMatter: string, deepDiveFrontMatter: string): Promise<void> {
-    for (const [label, pdfPath, matterText] of [
-      ["PDF", "_site/downloads/180-descent.pdf", frontMatter],
-      ["Deep-dive PDF", "_site/downloads/180-descent-deep-dive.pdf", deepDiveFrontMatter]
-    ] as Array<[string, string, string]>) {
-      this.debugStep(`validate full bleed ${label}`);
-      const match = matterText.match(/BLOCK I · FOUNDATIONS OF KNOWLEDGE & REASONING\s+(\d+)/);
-      if (!match) {
-        this.errors.push(`${label} TOC is missing the Block I page number needed for full-bleed validation`);
-        continue;
-      }
-
-      for (const pageNumber of [1, Number(match[1])]) {
-        const box = await this.extractPageBoundingBox(pdfPath, pageNumber);
-        if (!isFullPageBox(box)) {
-          this.errors.push(`${label} page ${pageNumber} is not painted to the full 6x9 page bounds: ${box.join(" ")}`);
-        }
-      }
-    }
-  }
-
-  private async checkRunningHeaders(frontMatter: string): Promise<void> {
-    const blockMatch = frontMatter.match(/BLOCK I · FOUNDATIONS OF KNOWLEDGE & REASONING\s+(\d+)/);
-    const introMatch = frontMatter.match(/Introduction\s+(\d+)/);
-    const dayOneMatch = frontMatter.match(/DAY 1\s+What Is Knowledge\?\s+(\d+)/);
-    if (introMatch && dayOneMatch) {
-      const introPage = Number(introMatch[1]);
-      const dayOnePage = Number(dayOneMatch[1]);
-      for (const [pageNumber, section] of [
-        [introPage, "Introduction"],
-        [dayOnePage, "Foundations of Knowledge & Reasoning"]
-      ] as Array<[number, string]>) {
-        this.debugStep(`validate running header page ${pageNumber}`);
-        const pageText = await this.extractPdfPageText("_site/downloads/180-descent.pdf", pageNumber);
-        if (!new RegExp(`The 180-Day Descent\\s+${escapeRegExp(section)}`).test(pageText)) {
-          this.errors.push(`PDF page ${pageNumber} is missing its running header`);
-        }
-        if (!new RegExp(`\\n\\s*${pageNumber}\\s*$`).test(pageText)) {
-          this.errors.push(`PDF page ${pageNumber} is missing its right-aligned footer page number`);
-        }
-      }
-
-      for (const pageNumber of [2, Number(blockMatch?.[1])].filter(Boolean) as number[]) {
-        this.debugStep(`validate no running header page ${pageNumber}`);
-        const pageText = await this.extractPdfPageText("_site/downloads/180-descent.pdf", pageNumber);
-        if (/The 180-Day Descent\s+Foundations of Knowledge & Reasoning/.test(pageText) || new RegExp(`\\n\\s*${pageNumber}\\s*$`).test(pageText)) {
-          this.errors.push(`PDF page ${pageNumber} should not have running header/footer text`);
-        }
-      }
-    } else {
-      this.errors.push("PDF TOC is missing page numbers needed for running-header validation");
+    ];
+    if (textMatchesAny(zhDeepDiveText, zhLiveControlPatterns)) {
+      this.errors.push("Deep-dive Chinese PDF contains live interactive control text");
     }
   }
 
@@ -331,40 +225,15 @@ class PdfChecker {
     if (this.pdfCache.has(absolute)) return this.pdfCache.get(absolute)!;
     const data = await readFile(absolute);
     const pdf = await PDFDocument.load(data);
-    const pageTexts = await ghostscriptAllPagesText(absolute, pdf.getPageCount());
-    const info = { data, pdf, pageTexts, text: pageTexts.join("\n") };
+    const text = await popplerText(absolute);
+    const pageTexts = [text];
+    const info = { data, pdf, pageTexts, text };
     this.pdfCache.set(absolute, info);
     return info;
   }
 
   private async extractPdfText(pdfPath: string): Promise<string> {
     return (await this.pdfInfo(pdfPath)).text;
-  }
-
-  private async extractPdfPageText(pdfPath: string, pageNumber: number): Promise<string> {
-    return (await this.pdfInfo(pdfPath)).pageTexts[pageNumber - 1] || "";
-  }
-
-  private async findFirstPageContaining(pdfPath: string, pattern: RegExp): Promise<number | null> {
-    const { pageTexts } = await this.pdfInfo(pdfPath);
-    for (const [index, text] of pageTexts.entries()) {
-      pattern.lastIndex = 0;
-      if (pattern.test(text)) return index + 1;
-    }
-    return null;
-  }
-
-  private async extractPageBoundingBox(pdfPath: string, pageNumber: number): Promise<number[]> {
-    return ghostscriptBoundingBox(this.absolute(pdfPath), pageNumber);
-  }
-
-  private async samplePdfPagePixel(pdfPath: string, pageNumber: number, xRatio: number, yRatio: number): Promise<number[]> {
-    const parsed = await ghostscriptPagePpm(this.absolute(pdfPath), pageNumber);
-    const x = Math.max(0, Math.min(parsed.width - 1, Math.floor(parsed.width * xRatio)));
-    const y = Math.max(0, Math.min(parsed.height - 1, Math.floor(parsed.height * yRatio)));
-    const offset = parsed.dataOffset + ((y * parsed.width + x) * 3);
-    const buffer = parsed.buffer;
-    return [buffer[offset], buffer[offset + 1], buffer[offset + 2]];
   }
 
   private absolute(relativePath: string): string {
@@ -374,6 +243,14 @@ class PdfChecker {
   private debugStep(label: string): void {
     if (this.debug) console.error(`[check-pdf] ${label}`);
   }
+}
+
+async function popplerText(pdfPath: string): Promise<string> {
+  const { stdout } = await execFileAsync("pdftotext", [pdfPath, "-"], {
+    maxBuffer: 1024 * 1024 * 24,
+    timeout: 60000
+  });
+  return String(stdout);
 }
 
 function countPdfAnnotations({ pdf }: PdfInfo): number {

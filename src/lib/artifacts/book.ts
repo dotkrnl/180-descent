@@ -13,6 +13,7 @@ export interface ArtifactBookDay {
   locale: Locale;
   title: string;
   summary: string;
+  block: string;
   bodyPath: string;
   bodySource: string;
   xhtml: string;
@@ -65,6 +66,7 @@ export async function loadArtifactBook(
         locale,
         title: localeEntry.title,
         summary: localeEntry.summary,
+        block: day.manifest.block,
         bodyPath: body.path,
         bodySource: body.source,
         xhtml: `day-${String(day.manifest.day).padStart(3, "0")}.xhtml`,

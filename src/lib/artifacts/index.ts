@@ -1,3 +1,3 @@
 export * from "./book";
 export * from "./epub/build";
-export * from "./pdf/playwright";
+export * from "./pdf/xetex";

@@ -63,6 +63,7 @@ Appendices are declared in `day.yaml` under `appendices`.
 - Keep JavaScript behavior separate in `src/assets/js/interactions/`; avoid inline scripts in content.
 - Add or adjust styles in SCSS modules imported by `book.scss`. Do not add component-local `.css`, legacy `book.css`, fallback CSS, or migration-only styles.
 - Do not add compatibility shims, legacy importers, or fallback paths. `npm run check:clean` blocks retired static-site paths and blind HTML importers.
+- PDF output is generated from semantic MDX through XeTeX, not from browser print pages. When a live web component is not suitable for print, provide a semantic `FormatAlt` or `FormatOnly` print alternative instead of relying on DOM controls.
 
 ## Chinese Edition
 

@@ -1,36 +1,51 @@
 # PDF Renderer Decision
 
-Date: 2026-06-21
+Date: 2026-06-23
 
 ## Decision
 
-Keep Playwright/Chromium as the durable PDF renderer for the current book pipeline.
+Use XeTeX as the only durable PDF renderer.
 
-This is a free/open-source renderer choice. The project still uses a dedicated Astro print surface plus the artifact book model as PDF input; Playwright is the final pagination and PDF emission engine.
+The PDF pipeline now reads the same Astro/MDX registry as the site and EPUB builders, converts semantic MDX nodes and reusable lesson components into LaTeX, and emits PDFs with `latexmk -xelatex`. Browser print pages are no longer part of PDF generation, and no Playwright fallback or legacy PDF renderer remains.
 
-## Smoke Matrix
+## Source Contract
 
-Temporary smoke artifacts were generated outside the repository under `/tmp/180-descent-pdf-smoke-*` and were not committed. Each smoke used English prose, Chinese prose, a math expression, SVG/image content, a link, and a static interaction table. First-page PNGs were rendered with Poppler.
-
-| Candidate | Version | Result | Notes |
-| --- | --- | --- | --- |
-| Pandoc + XeLaTeX | Pandoc 3.10, XeLaTeX from TeX Live | Pass | CJK and SVG worked after installing `librsvg` and using `Songti SC`. Math produced through the Pandoc path was visibly degraded for the smoke expression, so this would need a custom template/conversion path. |
-| Tectonic | 0.16.9 | Pass | Math quality was good, but layout overflowed the interaction table without a maintained TeX template and explicit asset conversion rules. |
-| Typst | 0.15.0 | Pass | Clean output and low operational weight. Adopting it would require a maintained MDX/component-to-Typst renderer parallel to the existing HTML artifact surface. |
-| WeasyPrint | 69.0 | Pass | CJK, HTML/CSS, and SVG worked. Math quality was weak without separate KaTeX/MathML engineering, and CSS behavior differs from Chromium. |
-| Vivliostyle CLI | via `npx @vivliostyle/cli` | Pass with CJK concern | HTML/CSS and SVG rendered, but the smoke output dropped most Chinese text, making it unsafe as the bilingual default without additional CJK work. |
-| Playwright/Chromium | Playwright 1.60.0 | Pass | Preserved the same browser CSS, CJK behavior, SVG rendering, and artifact table behavior used by the current print pages. |
+- `src/content/days/**/day.yaml` remains the canonical manifest for day number, path, block, localized metadata, appendices, assets, and artifact variants.
+- `en.mdx`, `zh.mdx`, and appendix MDX files are the canonical prose sources.
+- MDX should express content semantically through Markdown and lesson components.
+- Print-only alternatives belong in semantic MDX components such as `FormatAlt` and `FormatOnly`; live web controls should not leak into PDF output.
+- The XeTeX renderer maps text, headings, lists, blockquotes, tables, `MathInline`, `MathBlock`, `TipNote`, `StatusChip`, `SimpleTable`, and `ImageFigure` directly to LaTeX.
 
 ## Rationale
 
-The dedicated typesetting engines remain credible future candidates, especially Typst and a custom TeX path. They are not selected now because they would add a second maintained renderer for MDX/component contracts before the artifact model has enough complexity to justify it.
+XeTeX is selected because it gives the project a proper book renderer instead of a browser screenshot pipeline:
 
-Playwright wins for this refactor because it:
+- stable TeX pagination and typography for long-form book PDFs;
+- first-class math rendering from the MDX math source rather than browser-rendered KaTeX boxes;
+- direct Chinese font support through `xeCJK`;
+- a semantic artifact path from MDX to LaTeX, making PDF behavior easier to reason about and test;
+- a free/open-source toolchain available through TeX Live and Homebrew.
 
-- keeps one print HTML/CSS surface for web-adjacent artifact layout;
-- preserves current CJK behavior and project typography;
-- supports the existing SVG, table, static interaction, and print CSS patterns;
-- already passes the PDF checks for full-book, deep-dive, per-day, English, and Chinese outputs;
-- avoids committing unselected renderer adapters, sample outputs, or spike scripts.
+The PDF output should match the website's visual vocabulary: serif body text, restrained teal accents, boxed notes, table hierarchy, captions, and bilingual typography. It does not attempt to clone browser layout. TeX may choose better page breaks, float placement, line breaking, and table pagination.
 
-This decision should be revisited only if Playwright blocks book-quality typography, cross-reference behavior, CJK pagination, or maintainable print CSS. A future renderer change must replace this path cleanly rather than adding a parallel durable renderer.
+## Required Tools
+
+- `latexmk`
+- `xelatex`
+- `rsvg-convert` for SVG image conversion
+- Poppler `pdftotext` for PDF text extraction during checks
+
+`npm run preflight` checks these tools.
+
+## Checks
+
+`npm run check:pdf` validates the generated PDFs as XeTeX book artifacts:
+
+- every expected book and day PDF exists and has a valid PDF header;
+- PDFs have pages and extractable text;
+- PDFs contain no annotations or local/staging day links;
+- standard editions omit appendix content;
+- deep-dive and day-specific editions include appendix content and labels;
+- live interactive control text does not leak into deep-dive PDFs.
+
+Browser-specific assertions such as full-bleed page background sampling and Playwright running-header stamping are intentionally retired.

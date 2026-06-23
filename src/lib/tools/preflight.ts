@@ -72,13 +72,40 @@ const TOOLS = {
       return execFileSync("npm", ["--version"], { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }).trim();
     }
   },
-  gs: {
-    label: "Ghostscript (gs)",
+  pdftotext: {
+    label: "Poppler pdftotext",
     category: "durable-required",
-    usedBy: "build-pdf, check-pdf",
-    installHint: "macOS: brew install ghostscript | Debian/Ubuntu: apt-get install ghostscript",
+    usedBy: "check-pdf text extraction",
+    installHint: "macOS: brew install poppler | Debian/Ubuntu: apt-get install poppler-utils",
     check() {
-      return execFileSync("gs", ["--version"], { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }).trim();
+      return commandVersion("pdftotext", ["-v"]);
+    }
+  },
+  latexmk: {
+    label: "latexmk",
+    category: "durable-required",
+    usedBy: "build-pdf XeTeX orchestration",
+    installHint: "macOS: brew install texlive | Debian/Ubuntu: apt-get install texlive-xetex latexmk",
+    check() {
+      return commandVersion("latexmk", ["-version"]);
+    }
+  },
+  xelatex: {
+    label: "XeLaTeX",
+    category: "durable-required",
+    usedBy: "build-pdf",
+    installHint: "macOS: brew install texlive | Debian/Ubuntu: apt-get install texlive-xetex",
+    check() {
+      return commandVersion("xelatex", ["--version"]);
+    }
+  },
+  rsvg: {
+    label: "rsvg-convert",
+    category: "durable-required",
+    usedBy: "build-pdf SVG image conversion",
+    installHint: "macOS: brew install librsvg | Debian/Ubuntu: apt-get install librsvg2-bin",
+    check() {
+      return commandVersion("rsvg-convert", ["--version"]);
     }
   },
   xmllint: {
@@ -93,7 +120,7 @@ const TOOLS = {
   playwright: {
     label: "Playwright Chromium browser",
     category: "durable-required",
-    usedBy: "build-pdf, check-a11y, web screenshot QA",
+    usedBy: "check-a11y, web screenshot QA",
     installHint: "npx playwright install chromium",
     check() {
       const cacheDir = playwrightCacheDir();
@@ -138,7 +165,7 @@ const TOOLS = {
 const TOOLS_BY_NAME: Record<string, ToolDefinition | undefined> = TOOLS;
 
 export const TOOL_GROUPS = {
-  durable: ["node", "npm", "gs", "xmllint", "playwright", "java", "epubcheck"],
+  durable: ["node", "npm", "pdftotext", "latexmk", "xelatex", "rsvg", "xmllint", "playwright", "java", "epubcheck"],
   epubcheck: ["java", "epubcheck"]
 } as const;
 

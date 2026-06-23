@@ -74,9 +74,10 @@ Do not add decorative images just because they are available. Use images when th
 
 - Use `/assets/images/...` for local site images.
 - `npm run build:epub` must rewrite these paths into `OEBPS/images/...` and add image manifest entries to `content.opf`.
-- PDF generation must force lazy images to load and decode before `page.pdf()`. If captions appear but pictures do not, check `npm run build:pdf` before changing lesson markup.
+- PDF generation reads semantic MDX and builds with XeTeX. `ImageFigure` sources backed by committed JPEG/PNG/PDF assets are included directly; SVGs are converted with `rsvg-convert`.
+- If a PDF caption appears but the picture does not, check the MDX image import, the resolved asset path, and the XeTeX build log before changing lesson markup.
 - Keep `npm run check:epub` guarding against absolute or missing EPUB image paths.
-- Keep `npm run check:pdf` fast: prefer cached whole-PDF/per-page text extraction and low-resolution pixel samples over repeated page-by-page Ghostscript calls. Add Ghostscript timeouts so validation fails quickly.
+- Keep `npm run check:pdf` focused on artifact correctness: valid non-interactive PDFs, Poppler-extractable text, appendix inclusion rules, no local links, and no live interactive control leakage.
 
 ## Verification
 
@@ -89,7 +90,7 @@ npm run check:a11y
 npm run check
 ```
 
-For every affected PDF page, render the page to PNG with Ghostscript and visually confirm the picture appears. Do not trust caption text alone.
+For every affected PDF page, render the page to PNG with Ghostscript or Poppler and visually confirm the picture appears. Do not trust caption text alone.
 
 For EPUB, inspect the zip:
 

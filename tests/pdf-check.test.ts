@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { parsePpm } from "@lib/pdf";
 import { escapeRegExp } from "@lib/text";
-import { isFullPageBox, isWhitePixel } from "@lib/checks";
+import { hasPdfHeader, textMatchesAny } from "@lib/checks";
 
 describe("pdf check helpers", () => {
-  it("classifies full-page bounding boxes and white pixels", () => {
-    expect(isFullPageBox([0, 0, 432, 648])).toBe(true);
-    expect(isFullPageBox([2, 0, 432, 648])).toBe(false);
-    expect(isWhitePixel([251, 252, 253])).toBe(true);
-    expect(isWhitePixel([249, 252, 253])).toBe(false);
+  it("classifies PDF headers and text pattern matches", () => {
+    expect(hasPdfHeader(Buffer.from("%PDF-1.7\n"))).toBe(true);
+    expect(hasPdfHeader(Buffer.from("not a pdf"))).toBe(false);
+    expect(textMatchesAny("The 180-Day Descent", [/180-Day/, /missing/])).toBe(true);
+    expect(textMatchesAny("The 180-Day Descent", [/missing/])).toBe(false);
   });
 
   it("parses binary PPM headers", () => {
