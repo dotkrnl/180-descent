@@ -1,7 +1,7 @@
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, readdirSync } from "node:fs";
-import os from "node:os";
+import { existsSync } from "node:fs";
 import path from "node:path";
+import { chromium } from "playwright";
 
 type ToolCategory = "durable-required";
 
@@ -132,16 +132,11 @@ const TOOLS = {
     usedBy: "check-a11y, web screenshot QA",
     installHint: "npx playwright install chromium",
     check() {
-      const cacheDir = playwrightCacheDir();
-      if (!existsSync(cacheDir)) {
-        throw new Error(`Playwright browser cache not found at ${cacheDir}`);
+      const executable = chromium.executablePath();
+      if (!existsSync(executable)) {
+        throw new Error(`Playwright Chromium executable not found at ${executable}`);
       }
-      const entries = readdirSync(cacheDir);
-      const chromium = entries.find((entry) => entry.startsWith("chromium-"));
-      if (!chromium) {
-        throw new Error(`No chromium-* directory in ${cacheDir}`);
-      }
-      return chromium;
+      return playwrightBrowserName(executable);
     }
   },
   java: {
@@ -307,15 +302,11 @@ function checkCommandVersions(commands: CommandSpec[]): string {
   throw new Error(errors.join("; "));
 }
 
-function playwrightCacheDir(): string {
-  if (process.env.PLAYWRIGHT_BROWSERS_PATH) return process.env.PLAYWRIGHT_BROWSERS_PATH;
-  if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library", "Caches", "ms-playwright");
-  }
-  if (process.platform === "win32") {
-    return path.join(process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local"), "ms-playwright");
-  }
-  return path.join(os.homedir(), ".cache", "ms-playwright");
+function playwrightBrowserName(executable: string): string {
+  return executable
+    .split(path.sep)
+    .find((part) => /^chromium(?:_headless_shell)?-\d+$/.test(part))
+    ?? executable;
 }
 
 function toError(error: unknown): Error {
