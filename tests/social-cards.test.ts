@@ -44,7 +44,7 @@ describe("social cards", () => {
       day: 7,
       title: "A <B>",
       summary: "one ".repeat(80),
-      outPath: "unused.png"
+      outPath: "card.png"
     }, "brand");
 
     expect(svg).toContain("<svg");
