@@ -2,26 +2,6 @@
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import BookShell from "@app/layouts/BookShell.astro";
 import type { RegistryDayLocaleEntry } from "@lib/content";
-import accuracyDominationScript from "../../assets/js/interactions/accuracy-domination.js?url";
-import baseRateEngineScript from "../../assets/js/interactions/base-rate-engine.js?url";
-import causationLabScript from "../../assets/js/interactions/causation-lab.js?url";
-import clockTicksScript from "../../assets/js/interactions/clock-ticks.js?url";
-import closureMachineScript from "../../assets/js/interactions/closure-machine.js?url";
-import credenceDialScript from "../../assets/js/interactions/credence-dial.js?url";
-import demarcationLabScript from "../../assets/js/interactions/demarcation-lab.js?url";
-import echoChamberScript from "../../assets/js/interactions/echo-chamber.js?url";
-import fallacySpotterScript from "../../assets/js/interactions/fallacy-spotter.js?url";
-import gettierMachineScript from "../../assets/js/interactions/gettier-machine.js?url";
-import grueMachineScript from "../../assets/js/interactions/grue-machine.js?url";
-import hypeFilterTrainerScript from "../../assets/js/interactions/hype-filter-trainer.js?url";
-import inferenceInspectorScript from "../../assets/js/interactions/inference-inspector.js?url";
-import informationTheoryScript from "../../assets/js/interactions/information-theory.js?url";
-import modalRingsScript from "../../assets/js/interactions/modal-rings.js?url";
-import probabilityMachinesScript from "../../assets/js/interactions/probability-machines.js?url";
-import stakesDialScript from "../../assets/js/interactions/stakes-dial.js?url";
-import statisticsAppendicesScript from "../../assets/js/interactions/statistics-appendices.js?url";
-import statisticsCoreScript from "../../assets/js/interactions/core.js?url";
-import statisticsLabScript from "../../assets/js/interactions/statistics-lab.js?url";
 
 interface AppendixRenderEntry {
   id: string;
@@ -43,28 +23,17 @@ interface Props {
   appendices: AppendixRenderEntry[];
 }
 
-const interactionScriptModules: Record<string, string> = {
-  "accuracy-domination": accuracyDominationScript,
-  "base-rate-engine": baseRateEngineScript,
-  "causation-lab": causationLabScript,
-  "clock-ticks": clockTicksScript,
-  "closure-machine": closureMachineScript,
-  "credence-dial": credenceDialScript,
-  "demarcation-lab": demarcationLabScript,
-  "echo-chamber": echoChamberScript,
-  "fallacy-spotter": fallacySpotterScript,
-  "gettier-machine": gettierMachineScript,
-  "grue-machine": grueMachineScript,
-  "hype-filter-trainer": hypeFilterTrainerScript,
-  "inference-inspector": inferenceInspectorScript,
-  "information-theory": informationTheoryScript,
-  "modal-rings": modalRingsScript,
-  "probability-machines": probabilityMachinesScript,
-  "stakes-dial": stakesDialScript,
-  "statistics-appendices": statisticsAppendicesScript,
-  "statistics-core": statisticsCoreScript,
-  "statistics-lab": statisticsLabScript
-};
+const interactionScriptModules = Object.fromEntries(
+  Object.entries(import.meta.glob<string>("../../assets/js/interactions/*.js", {
+    eager: true,
+    import: "default",
+    query: "?url"
+  })).map(([modulePath, script]) => {
+    const entry = modulePath.split("/").pop()?.replace(/\.js$/, "");
+    if (!entry) throw new Error(`Invalid interaction script path: ${modulePath}`);
+    return [entry, script];
+  })
+) as Record<string, string>;
 
 const { entry, previous, next, Body, appendices } = Astro.props;
 const isZh = entry.locale === "zh";
