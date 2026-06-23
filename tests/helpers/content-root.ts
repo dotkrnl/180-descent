@@ -8,7 +8,18 @@ export async function createEmptyContentRoot(prefix: string): Promise<string> {
   return root;
 }
 
-export async function writePublishedDay(root: string): Promise<void> {
+interface PublishedDayOptions {
+  enTitle?: string;
+  enSummary?: string;
+  zhTitle?: string;
+  zhSummary?: string;
+}
+
+export async function writePublishedDay(root: string, options: PublishedDayOptions = {}): Promise<void> {
+  const enTitle = options.enTitle ?? "Fixture";
+  const enSummary = options.enSummary ?? "English summary.";
+  const zhTitle = options.zhTitle ?? "夹具";
+  const zhSummary = options.zhSummary ?? "中文简介。";
   const dayDir = path.join(root, "src/content/days/001-fixture");
   await mkdir(dayDir, { recursive: true });
   await writeFile(path.join(dayDir, "day.yaml"), [
@@ -19,13 +30,13 @@ export async function writePublishedDay(root: string): Promise<void> {
     "published: true",
     "locales:",
     "  en:",
-    "    title: Fixture",
-    "    summary: English summary.",
+    `    title: ${enTitle}`,
+    `    summary: ${enSummary}`,
     "    body: en.mdx",
     "    status: reviewed",
     "  zh:",
-    "    title: 夹具",
-    "    summary: 中文简介。",
+    `    title: ${zhTitle}`,
+    `    summary: ${zhSummary}`,
     "    body: zh.mdx",
     "    status: reviewed"
   ].join("\n"));

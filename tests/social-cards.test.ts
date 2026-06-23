@@ -1,14 +1,19 @@
-import { mkdir, writeFile } from "node:fs/promises";
 import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { clampSocialText, loadSocialCards, renderSocialCardSvg, wrapSocialText } from "@lib/assets/social-cards";
+import { writePublishedDay } from "./helpers/content-root";
 
 describe("social cards", () => {
   it("loads root and paired day cards from source metadata", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-social-cards-"));
-    await writeRegistryDay(root);
+    await writePublishedDay(root, {
+      enTitle: "English Fixture",
+      enSummary: "English summary.",
+      zhTitle: "Chinese Fixture",
+      zhSummary: "Chinese summary."
+    });
 
     const cards = await loadSocialCards({
       root,
@@ -64,28 +69,3 @@ describe("social cards", () => {
     ]);
   });
 });
-
-async function writeRegistryDay(root: string): Promise<void> {
-  const dayDir = path.join(root, "src/content/days/001-fixture");
-  await mkdir(dayDir, { recursive: true });
-  await writeFile(path.join(dayDir, "day.yaml"), [
-    "day: 1",
-    "slug: fixture",
-    "path: 001-fixture",
-    "block: Fixture",
-    "published: true",
-    "locales:",
-    "  en:",
-    "    title: English Fixture",
-    "    summary: English summary.",
-    "    body: en.mdx",
-    "    status: reviewed",
-    "  zh:",
-    "    title: Chinese Fixture",
-    "    summary: Chinese summary.",
-    "    body: zh.mdx",
-    "    status: reviewed"
-  ].join("\n"));
-  await writeFile(path.join(dayDir, "en.mdx"), "");
-  await writeFile(path.join(dayDir, "zh.mdx"), "");
-}
