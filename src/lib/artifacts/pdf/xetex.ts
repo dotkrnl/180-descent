@@ -563,6 +563,17 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
 
   if (name === "Lead") return renderLead(node, attrs, state);
   if (name === "ClaimHeader") return renderClaimHeader(node, attrs, state);
+  if (["AppendixCardGrid", "AppendixCard"].includes(name)) {
+    return renderChildren(node.children ?? [], state, { block: true });
+  }
+  if (name === "AppendixCardTitle") {
+    const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }).trim());
+    return text ? `\\blockheading{${text}}` : "";
+  }
+  if (name === "AppendixCardMeta") {
+    const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
+    return text ? `{\\ttfamily\\footnotesize\\color{descentMuted}${text}\\par}` : "";
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
