@@ -4,7 +4,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkCleanRepo } from "@lib/checks/clean";
 
-describe("final cleanup gate", () => {
+describe("clean repo check", () => {
   it("flags unsupported static-site paths", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
     await writeFile(path.join(root, "eleventy.config.cjs"), "module.exports = {};");

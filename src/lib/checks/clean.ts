@@ -15,10 +15,7 @@ const FORBIDDEN_PATHS = [
   ["eleventy.config.cjs", "Static-site config outside Astro must not exist"],
   ["src/days", "Day content must live under src/content/days"],
   ["src/zh/days", "Chinese day content must live under src/content/days"],
-  ["src/_includes/days", "Day body includes must not exist outside MDX content"]
-] as const;
-
-const ALWAYS_FORBIDDEN_PATHS = [
+  ["src/_includes/days", "Day body includes must not exist outside MDX content"],
   ["scripts/import-day-from-html.mjs", "Blind day importers are not allowed; convert paired MDX manually"],
   ["scripts/import-appendix-from-html.mjs", "Blind appendix importers are not allowed; convert paired MDX manually"]
 ] as const;
@@ -39,12 +36,6 @@ export async function checkCleanRepo(options: CleanCheckOptions): Promise<CleanC
   const failures: CleanCheckFailure[] = [];
 
   for (const [relativePath, reason] of FORBIDDEN_PATHS) {
-    if (await pathExists(path.join(options.root, relativePath))) {
-      failures.push({ path: relativePath, reason });
-    }
-  }
-
-  for (const [relativePath, reason] of ALWAYS_FORBIDDEN_PATHS) {
     if (await pathExists(path.join(options.root, relativePath))) {
       failures.push({ path: relativePath, reason });
     }
