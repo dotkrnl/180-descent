@@ -993,9 +993,9 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \titleformat{\subsection}{\displayfont\large\bfseries\color{descentInk}}{\thesubsection}{0.5em}{}
 \newcommand{\pdfdaytitle}[1]{{\displayfont\bfseries\fontsize{23}{25}\selectfont #1\par}\vspace{0.04in}}
 \newcommand{\eyebrow}[1]{\Needspace{4\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\smallskip}
-\newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\medskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\smallskip}
-\newcommand{\sectionwithlabel}[2]{\Needspace{10\baselineskip}\par\medskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\vspace{0.03in}{\displayfont\Large\bfseries\color{descentTeal}#2\par}\nobreak\vspace{0.08in}}
-\newcommand{\subsectionwithlabel}[2]{\Needspace{8\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\vspace{0.02in}{\displayfont\large\bfseries\color{descentInk}#2\par}\nobreak\vspace{0.06in}}
+\newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\medskip\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\endgroup\nobreak\vspace{0.02in}}
+\newcommand{\sectionwithlabel}[2]{\Needspace{10\baselineskip}\par\medskip\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.015in}{\displayfont\Large\bfseries\color{descentTeal}#2\par}\endgroup\nobreak\vspace{0.08in}}
+\newcommand{\subsectionwithlabel}[2]{\Needspace{8\baselineskip}\par\smallskip\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.012in}{\displayfont\large\bfseries\color{descentInk}#2\par}\endgroup\nobreak\vspace{0.06in}}
 \newcommand{\statuschipok}[1]{\textsf{\scriptsize\color{descentOk}[#1]}}
 \newcommand{\statuschiphint}[1]{\textsf{\scriptsize\color{descentHint}[#1]}}
 \newcommand{\statuschipbad}[1]{\textsf{\scriptsize\color{descentBad}[#1]}}
