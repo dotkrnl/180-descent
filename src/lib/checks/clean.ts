@@ -1,6 +1,6 @@
-import { access, readdir } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
+import { pathExists, walkFiles } from "@lib/fs/walk";
 
 export interface CleanCheckOptions {
   root: string;
@@ -47,7 +47,10 @@ export async function checkCleanRepo(options: CleanCheckOptions): Promise<CleanC
     }
   }
 
-  const scriptFiles = await listFiles(path.join(options.root, "scripts"));
+  const scriptsDir = path.join(options.root, "scripts");
+  const scriptFiles = await pathExists(scriptsDir)
+    ? await walkFiles(scriptsDir, { ignored: [] })
+    : [];
   for (const file of scriptFiles) {
     const relativePath = toPosix(path.relative(options.root, file));
     for (const pattern of FORBIDDEN_SCRIPT_PATTERNS) {
@@ -61,31 +64,6 @@ export async function checkCleanRepo(options: CleanCheckOptions): Promise<CleanC
   }
 
   return failures;
-}
-
-async function pathExists(filePath: string): Promise<boolean> {
-  try {
-    await access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-async function listFiles(dir: string): Promise<string[]> {
-  if (!(await pathExists(dir))) return [];
-
-  const entries = await readdir(dir, { withFileTypes: true });
-  const files: string[] = [];
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      files.push(...await listFiles(fullPath));
-    } else if (entry.isFile()) {
-      files.push(fullPath);
-    }
-  }
-  return files;
 }
 
 function toPosix(value: string): string {
