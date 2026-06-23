@@ -106,10 +106,13 @@ interface LatexTable {
   headerRows: Set<number>;
 }
 
-interface SvgComponentSpec {
-  selector: string;
+interface SvgAssetSpec {
   width?: string;
   height?: string;
+}
+
+interface SvgComponentSpec extends SvgAssetSpec {
+  selector: string;
 }
 
 type LocalizedValue = string | Record<Locale, string | undefined>;
@@ -718,7 +721,7 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
   return renderSvgAsset(svg, caption, state, name, spec);
 }
 
-function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, name: string, spec: SvgComponentSpec): string {
+function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, name: string, spec: SvgAssetSpec): string {
   if (!svg.trim()) return "";
   const sourceSlug = sanitizeAssetName(path.relative(path.join(state.root, "src/content/days"), state.sourceFile));
   const assetSlug = sanitizeAssetName(`${sourceSlug}-${name}-${++state.generatedAssetIndex}`);
