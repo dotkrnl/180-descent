@@ -1,11 +1,11 @@
 ---
 name: 180-descent-content
-description: Add or edit The 180-Day Descent day content, appendices, and Chinese paired editions through the Astro/MDX registry model.
+description: Add or edit The 180-Day Descent day content, appendices, reusable lesson components, and Chinese paired editions through the Astro/MDX registry model.
 ---
 
 # 180 Descent Content Workflow
 
-Use this workflow for new days, day edits, deep-dive appendices, and Chinese paired content.
+Use this workflow for new days, day edits, reusable lesson components, deep-dive appendices, and Chinese paired content.
 
 ## Source Model
 
@@ -14,21 +14,27 @@ Each published day lives under `src/content/days/###-slug/`.
 - `day.yaml` is the typed manifest: day number, URL path, block, publish state, locale metadata, appendices, components, assets, and artifact variants.
 - `en.mdx` and `zh.mdx` are the main bodies.
 - `appendices/*.en.mdx` and `appendices/*.zh.mdx` are optional deep-dive bodies declared by manifest id.
-- Shared lesson components live in `src/app/components/lesson/`.
-- Live interaction modules live in `src/assets/js/interactions/` and are registered through `day.yaml` `components[].webEntry`.
+- Shared prose/layout components live in `src/app/components/lesson/`.
+- Reusable static figures live in `src/app/components/lesson/figures/`.
+- Reusable web interactives live in `src/app/components/lesson/interactives/`.
+- Interaction behavior lives in `src/assets/js/interactions/` and is registered through `day.yaml` `components[].webEntry`.
 - Asset files live under `src/assets/images/...` and are declared in `day.yaml` `assets`.
+- Styling is SCSS-only. Astro layouts import `src/assets/scss/book.scss`; edit SCSS modules under `src/assets/scss/`, not hand-written `.css` files.
 
-Do not bulk-copy source HTML into project content. Convert material manually, case by case, into the manifest and MDX structure. Preserve meaning, citations, ids/classes used by interactions, accessibility labels, and static artifact variants deliberately.
+Do not bulk-copy source HTML into project content. Convert material manually, case by case, into MDX plus reusable Astro components. Preserve meaning, citations, accessibility labels, and static artifact variants deliberately.
+
+MDX may use imported components and ordinary Markdown/MDX prose, but it must not own raw interactive controls, canvas, behavior ARIA roles, inline event handlers, or action/state data hooks. Put those contracts inside `lesson/interactives` components and let `npm run check:content` enforce the boundary.
 
 ## Day Changes
 
 1. Pick the canonical `###-slug` path from the syllabus and create or edit `src/content/days/###-slug/day.yaml`.
 2. Keep English and Chinese locale entries paired when the day is published. If a locale is intentionally absent, its manifest status must explain that state through the existing schema values.
 3. Put page title, summary, block, threads, appendices, components, and assets in `day.yaml`; do not duplicate routing metadata elsewhere.
-4. Write lesson bodies as MDX. Import lesson components explicitly at the top of each MDX file, for example `TipNote`, `MathInline`, `MathBlock`, or `StatusChip`.
-5. Use stable ids and classes for diagrams and controls. When adding a live component, add a matching manifest component with `webEntry` plus `artifactVariants.epub` and `artifactVariants.pdf`.
-6. Keep artifact variants purposeful. EPUB/PDF may drift from the live web component when the static form is clearer, but HTML should stay visually consistent with the intended web design.
-7. Run `npm run build:social-cards` when titles or summaries change.
+4. Write lesson bodies as real MDX. Import lesson components explicitly at the top of each MDX file, for example `Hero`, `TipNote`, `MathInline`, `MathBlock`, `StatusChip`, `SimpleTable`, `ImageFigure`, a figure component, or an interactive component.
+5. Extract repeated or behavior-bearing markup into Astro components. Keep raw HTML in MDX only when it is genuinely semantic prose markup that has no existing component and no interaction behavior.
+6. Use stable ids and classes inside the reusable component that owns the DOM contract. When adding a live component, add a matching manifest component with `webEntry` plus `artifactVariants.epub` and `artifactVariants.pdf`.
+7. Keep artifact variants purposeful. EPUB/PDF may drift from the live web component when the static form is clearer, but HTML should stay visually consistent with the intended web design.
+8. Run `npm run build:social-cards` when titles or summaries change.
 
 ## Appendices
 
@@ -40,11 +46,22 @@ Appendices are declared in `day.yaml` under `appendices`.
 - Include static PDF/EPUB equivalents for any web-only controls.
 - Verify the appendix appears only in deep-dive/full-day artifact editions.
 
+## Components And Styles
+
+- Prefer existing components before adding new ones.
+- Add a component only when it removes real duplication, owns a behavior contract, or makes MDX materially more readable.
+- Put static lesson visuals with inline SVG or complex markup in `src/app/components/lesson/figures/`.
+- Put controls, sliders, buttons, generated SVG roots, and DOM hooks in `src/app/components/lesson/interactives/`.
+- Keep JavaScript behavior separate in `src/assets/js/interactions/`; avoid inline scripts in content.
+- Add or adjust styles in SCSS modules imported by `book.scss`. Do not add component-local `.css`, legacy `book.css`, fallback CSS, or migration-only styles.
+- Do not add compatibility shims, legacy importers, or fallback paths. `npm run check:clean` blocks retired static-site paths and blind HTML importers.
+
 ## Chinese Edition
 
 Chinese content should be idiomatic Simplified Chinese, not literal line-by-line English.
 
-- Preserve manifest structure, day numbers, path, citations, URLs, DOI metadata, ids, classes, data attributes, SVG structure, tables, image alt meaning, and interaction hooks.
+- Preserve manifest structure, day numbers, path, citations, URLs, DOI metadata, component imports, image alt meaning, and interaction behavior.
+- Localize block titles and print labels through existing data/components; do not hard-code English labels into Chinese print surfaces.
 - Keep terminology consistent across existing Chinese days.
 - Prefer natural Chinese rhythm and punctuation. Use Chinese quotes for quoted propositions and titles where appropriate.
 - Avoid dense emphasis in Chinese prose. Use terminology styling and sparse color emphasis only when it clarifies structure.
@@ -69,6 +86,7 @@ npm run check:content
 npm run check:math
 npm run check:appendix-style
 npm run check:links
+npm run check:clean
 ```
 
 For asset or artifact changes, also inspect EPUB/PDF outputs:

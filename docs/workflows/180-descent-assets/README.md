@@ -11,7 +11,7 @@ Use this skill for lesson images and bundled third-party assets.
 
 Prefer, in order:
 
-1. Original diagrams built in SVG/HTML/CSS.
+1. Original diagrams built as reusable Astro figure or interactive components using SVG/HTML and SCSS.
 2. Open-license, public-domain, or Creative Commons figures with local copies and attribution when they clarify the lesson.
 3. Official-source images where reuse is clearly allowed.
 4. Generated bitmap images when copyright-safe external images are unsuitable.
@@ -26,7 +26,7 @@ Do not add decorative images just because they are available. Use images when th
 - Download the source for conversion, but do not commit multi-megabyte originals.
 - Place committed assets under `src/assets/images/...`.
 - Resize and compress JPEG/WebP assets to real display needs. Aim for roughly 100-200 KB per image when quality permits; use larger files only when the image carries important inspectable detail.
-- Keep `width` and `height` attributes in lesson markup aligned with compressed asset dimensions.
+- Keep `width` and `height` attributes in component markup aligned with compressed asset dimensions.
 - Update `src/_data/credits.yaml` for every added asset: creator, title/description, source URL, license name/version, local asset path, and whether it was modified.
 - Note modifications such as "Locally resized and compressed from the Wikimedia Commons original."
 - Social-card PNGs under `src/assets/images/social/` are generated first-party
@@ -52,6 +52,9 @@ Do not add decorative images just because they are available. Use images when th
   needed because it is not an `<img>` in the document.
 - For SVG figures, use `role="img"` plus `aria-label`/`aria-labelledby` for
   informative diagrams, or `aria-hidden="true"` for decorative SVGs.
+- Do not bury large inline SVGs or image-heavy structures in MDX. Put reusable
+  visuals in `src/app/components/lesson/figures/` or
+  `src/app/components/lesson/interactives/` and import them from MDX.
 
 ## Dark Theme Requirements
 
@@ -59,11 +62,13 @@ Do not add decorative images just because they are available. Use images when th
   SVG, figure frame, caption surface, card, or visual component.
 - Avoid hard-coded light backgrounds, white SVG documents, and dark-only strokes
   or text that become eye-straining or unreadable in dark mode.
-- Prefer theme-token-driven SVG/HTML/CSS diagrams. For external or image-backed
+- Prefer theme-token-driven SVG/HTML/SCSS diagrams. For external or image-backed
   SVGs with fixed colors, add explicit dark variants or a proven dark-mode
   treatment and wire them to the site's theme toggle.
 - Verify the affected page in dark mode, not only with system preference or
   light-mode screenshots.
+- Add shared visual styling under `src/assets/scss/`; Astro imports SCSS
+  directly through `book.scss`. Do not add hand-maintained `.css` files.
 
 ## Artifact Handling
 

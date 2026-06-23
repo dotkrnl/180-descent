@@ -1,11 +1,11 @@
 ---
 name: 180-descent-publish
-description: Verify, review, commit, push, and deploy The 180-Day Descent changes. Use when Codex needs the human refinement gate, full build/check validation, Conventional Commit creation, git push, or Cloudflare Pages deployment through npm run deploy.
+description: Verify, review, commit, push, deploy, and visually compare The 180-Day Descent changes. Use when Codex needs the human refinement gate, full build/check validation, Conventional Commit creation, git push, Cloudflare Pages production deployment, staging deployment, or production-vs-staging visual comparison.
 ---
 
 # Publish 180 Descent
 
-Use this skill when the user asks to commit, push, deploy, publish, or run the human review gate.
+Use this skill when the user asks to commit, push, deploy, publish, deploy staging, visually compare, or run the human review gate.
 
 ## Human Refinement Gate
 
@@ -62,12 +62,22 @@ intentional.
 git push origin HEAD
 ```
 
-6. Deploy only when the user asks for deployment:
+6. Deploy only when the user asks for deployment.
+
+For production:
 
 ```sh
 npm run deploy
 ```
 
-7. Report commit hash, branch, push result, deploy URL or deployment status, and any residual risks.
+For staging:
+
+```sh
+npm run deploy:staging
+```
+
+7. When asked to visually compare, compare `https://staging.180-descent.pages.dev` against `https://180d.io` after the staging deploy finishes. Cover every generated route in both English and Chinese at desktop and mobile widths. At minimum, check HTTP status, `lang`, title, H1, text/content drift, scroll height, horizontal overflow, and screenshots at top/middle/bottom scroll positions for long pages.
+8. Treat structural mismatches, language/title/H1 mismatches, horizontal overflow, broken math, missing Chinese font behavior, and untranslated Chinese print labels as regressions. Distinguish expected content drift from visual degradation when staging intentionally includes newer content than production.
+9. Report commit hash, branch, push result, deploy URL or deployment status, visual comparison scope, and any residual risks.
 
 Do not edit generated files in `_site/` or `dist/`; they are build outputs.
