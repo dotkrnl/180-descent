@@ -480,8 +480,13 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "li") {
     return renderChildren(node.children ?? [], state, { block: true, listItem: true }).trim();
   }
+  if (name === "p" && /\b(label|h)\b/.test(attrs.get("class") ?? "")) {
+    const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }).trim());
+    return text ? `\\eyebrow{${text}}` : "";
+  }
   if (name === "span") {
-    return renderInlineChildren(node, state, context);
+    const text = renderInlineChildren(node, state, context);
+    return isDecorativeOnly(text) ? "" : text;
   }
 
   if (name === "Lead") return renderLead(node, attrs, state);
@@ -493,7 +498,8 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     return `\\begin{sourcesbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{sourcesbox}`;
   }
   if (["BlockTitle", "PanelTitle", "SourcesTitle"].includes(name)) {
-    return `\\subsection*{${renderInlineChildren(node, state, { ...context, heading: true })}}`;
+    const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }));
+    return text ? `\\subsection*{${text}}` : "";
   }
   if (name === "SectionEyebrow") {
     const text = cleanEyebrowText(renderEyebrowText(node, attrs, state, context));
@@ -988,8 +994,8 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \newcommand{\pdfdaytitle}[1]{{\displayfont\bfseries\fontsize{23}{25}\selectfont #1\par}\vspace{0.04in}}
 \newcommand{\eyebrow}[1]{\Needspace{4\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\smallskip}
 \newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\medskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\smallskip}
-\newcommand{\sectionwithlabel}[2]{\Needspace{10\baselineskip}\par\medskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\vspace{-0.02in}\section{#2}}
-\newcommand{\subsectionwithlabel}[2]{\Needspace{8\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\vspace{-0.02in}\subsection{#2}}
+\newcommand{\sectionwithlabel}[2]{\Needspace{10\baselineskip}\par\medskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\vspace{0.03in}{\displayfont\Large\bfseries\color{descentTeal}#2\par}\nobreak\vspace{0.08in}}
+\newcommand{\subsectionwithlabel}[2]{\Needspace{8\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\nopagebreak\vspace{0.02in}{\displayfont\large\bfseries\color{descentInk}#2\par}\nobreak\vspace{0.06in}}
 \newcommand{\statuschipok}[1]{\textsf{\scriptsize\color{descentOk}[#1]}}
 \newcommand{\statuschiphint}[1]{\textsf{\scriptsize\color{descentHint}[#1]}}
 \newcommand{\statuschipbad}[1]{\textsf{\scriptsize\color{descentBad}[#1]}}
@@ -1061,7 +1067,7 @@ function latexEscape(value: string): string {
 }
 
 function normalizeText(value: string): string {
-  return smartQuotes(decodeHtmlEntities(value))
+  return smartQuotes(normalizePdfGlyphs(decodeHtmlEntities(value)))
     .replace(/([.?!])“(?=$|\s)/g, "$1”")
     .replace(/\s+([,.;:!?])/g, "$1")
     .replace(/\s+([)\]}])/g, "$1")
@@ -1071,6 +1077,27 @@ function normalizeText(value: string): string {
     .replace(/([”’])([A-Za-z])/g, "$1 $2")
     .replace(/\s+—\s*/g, " --- ")
     .replace(/\s+–\s*/g, " -- ");
+}
+
+function normalizePdfGlyphs(value: string): string {
+  const hasCjk = /[\u3400-\u9fff]/.test(value);
+  return (hasCjk ? value : value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, ""))
+    .replace(/[\u00c0-\u024f\u1e00-\u1eff\u2070-\u209f]/g, (char) => char.normalize("NFKD").replace(/[\u0300-\u036f]/g, ""))
+    .replace(/[Łł]/g, (char) => char === "Ł" ? "L" : "l")
+    .replace(/[ı]/g, "i")
+    .replace(/[→⇒]/g, " -> ")
+    .replace(/[←⇐]/g, " <- ")
+    .replace(/[↔⇔]/g, " <-> ")
+    .replace(/[∀]/g, "forall ")
+    .replace(/[∃]/g, "exists ")
+    .replace(/[¬]/g, "not ")
+    .replace(/[α]/g, "alpha")
+    .replace(/[□]/g, "box")
+    .replace(/[◇]/g, "diamond")
+    .replace(/[≈]/g, " approximately ")
+    .replace(/[†‡]/g, "");
 }
 
 function decodeHtmlEntities(value: string): string {
@@ -1094,7 +1121,9 @@ function smartQuotes(value: string): string {
       result += openDouble ? "“" : "”";
       openDouble = !openDouble;
     } else if (char === "'" && /[A-Za-z]/.test(value[index - 1] ?? "") && /[A-Za-z]/.test(value[index + 1] ?? "")) {
-      result += "’";
+      result += "'";
+    } else if (char === "'" && /[A-Za-z0-9]/.test(value[index - 1] ?? "")) {
+      result += "'";
     } else if (char === "'") {
       result += openSingle ? "‘" : "’";
       openSingle = !openSingle;
@@ -1121,16 +1150,23 @@ function normalizeInlineLatex(value: string): string {
 }
 
 function cleanEyebrowText(value: string): string {
-  return value
-    .replace(/^[◆◇▪●■□•·\s]+/, "")
+  return cleanDecorativePrefix(value)
     .replace(/\s+·\s*$/, "")
     .trim();
 }
 
-function cleanFigureCaption(value: string): string {
+function cleanDecorativePrefix(value: string): string {
   return value
-    .replace(/^[◆◇▪●■□•·\s]+/, "")
+    .replace(/^[◆◇▪●■□•·▮�￿\s]+/, "")
     .trim();
+}
+
+function cleanFigureCaption(value: string): string {
+  return cleanDecorativePrefix(value);
+}
+
+function isDecorativeOnly(value: string): boolean {
+  return /^[◆◇▪●■□•·▮∞↻�￿\s]+$/.test(value);
 }
 
 function romanNumeral(value: number): string {
