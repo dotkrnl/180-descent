@@ -571,6 +571,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   }
 
   if (name === "Lead") return renderLead(node, attrs, state);
+  if (name === "ClaimHeader") return renderClaimHeader(node, attrs, state);
   if (name === "div" && /\bctop\b/.test(attrs.get("class") ?? "")) return renderClaimTop(node, state);
   if (name === "div" && /\bcompare\b/.test(attrs.get("class") ?? "")) return renderComparePanel(node, state);
   if (name === "div" && /\bvs\b/.test(attrs.get("class") ?? "")) {
@@ -580,7 +581,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "div" && /\bhybrid\b/.test(attrs.get("class") ?? "")) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
-  if (["Aside", "Panel", "Recap", "WhereBlock", "Formula", "ClaimHeader"].includes(name)) {
+  if (["Aside", "Panel", "Recap", "WhereBlock", "Formula"].includes(name)) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
   if (name === "Sources") {
@@ -676,6 +677,19 @@ function renderClaimTop(node: MdxNode, state: MdxRenderState): string {
   if (label && chipText) return `\\claimtop{${label}}{${chipText}}`;
   if (label) return `\\claimtop{${label}}{}`;
   return chipText;
+}
+
+function renderClaimHeader(node: MdxNode, attrs: Map<string, string | null>, state: MdxRenderState): string {
+  const label = cleanEyebrowText(resolveExpression(attrs.get("label"), state));
+  const chips = (node.children ?? [])
+    .filter((child) => (child.name ?? "") === "StatusChip")
+    .map((child) => renderStatusChip(mdxAttributes(child), state))
+    .filter(Boolean)
+    .join("\\enspace ");
+
+  if (label && chips) return `\\claimtop{${label}}{${chips}}`;
+  if (label) return `\\claimtop{${label}}{}`;
+  return chips;
 }
 
 function statusChipLatex(label: string, status: string): string {
