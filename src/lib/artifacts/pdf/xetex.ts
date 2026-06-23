@@ -446,9 +446,9 @@ function renderList(node: MdxNode, state: MdxRenderState): string {
   return `\\begin{${env}}\n${items}\n\\end{${env}}`;
 }
 
-function renderAppendixTimelineList(node: MdxNode, state: MdxRenderState): string {
+function renderComponentItemize(node: MdxNode, state: MdxRenderState, itemName: string): string {
   const items = (node.children ?? [])
-    .filter((child) => child.name === "AppendixTimelineListItem")
+    .filter((child) => child.name === itemName)
     .map((child) => `\\item ${renderChildren(child.children ?? [], state, { block: true, listItem: true }).trim()}`)
     .join("\n");
   return items ? `\\begin{itemize}\n${items}\n\\end{itemize}` : "";
@@ -583,9 +583,16 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     return text ? `{\\ttfamily\\footnotesize\\color{descentMuted}${text}\\par}` : "";
   }
   if (name === "AppendixTimelineList") {
-    return renderAppendixTimelineList(node, state);
+    return renderComponentItemize(node, state, "AppendixTimelineListItem");
   }
   if (name === "AppendixTimelineListYear") {
+    const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
+    return text ? `{\\ttfamily\\footnotesize\\color{descentMuted}${text}}\\quad ` : "";
+  }
+  if (name === "MilestoneList") {
+    return renderComponentItemize(node, state, "MilestoneItem");
+  }
+  if (name === "MilestoneDate") {
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `{\\ttfamily\\footnotesize\\color{descentMuted}${text}}\\quad ` : "";
   }

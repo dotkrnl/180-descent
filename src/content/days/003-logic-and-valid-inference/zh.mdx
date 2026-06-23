@@ -1,4 +1,7 @@
 import sherlockHolmes from "../../../assets/images/open-license/sherlock-holmes-watson-sidney-paget.jpg";
+import MilestoneDate from "@app/components/lesson/MilestoneDate.astro";
+import MilestoneItem from "@app/components/lesson/MilestoneItem.astro";
+import MilestoneList from "@app/components/lesson/MilestoneList.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
@@ -214,12 +217,12 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <p>亚里士多德的梦想是一条紧密到无人能够怀疑的推理链。二十三个世纪后，这个梦想有了软件化身。<span class="term">证明助手</span>是一种程序，其中每一步逻辑都必须通过机器核查；没有任何一步能凭权威、直觉或一句「显然」而蒙混过关。主流系统包括 Lean（现为 Lean 4）、 Rocq（原名为 Coq，2025 年更名）、 Agda 与 Isabelle/HOL。Lean、 Rocq 与 Agda 属于<span class="term">类型论</span>家族<TipNote text={"类型论用带类型的表达式组织数学对象与证明；在许多系统中，证明一个命题就像构造一个属于相应类型的对象。"} />；Isabelle/HOL 则建立在经典高阶逻辑之上。目标相同，基础不同。</p>
 <p>Lean 的社区共建数学库<span class="term">mathlib</span>，是世界上最大的统一的数学<span class="term">形式化库</span><TipNote text={"形式化是把普通数学定义和证明改写成严格的形式语言，使证明检查器能够逐步核查。"} />之一：超过 278,000 条定理与 132,000 个定义——2026 年 6 月统计时如此，且仍在增长——覆盖了某著名「形式化这些」挑战清单上 100 个问题中的 84 个。这已经远非玩具项目。看看它已验证的成果：</p>
 
-<ul class="mtl">
-<li class="done"><span class="yr">2022 · 已完成</span>液体张量实验。2020 年 12 月，菲尔兹奖得主彼得·朔尔策向全世界发出挑战，要求验证其「凝聚数学」中一个他本人都不太确定的定理。约翰·科默兰与亚当·托帕兹带领的团队在 Lean 中完成了验证，于 2022 年 7 月 14 日完成。一位一线数学家借助机器，获得对一份复杂到人类审稿人难以安心核查的证明的信心——这正是关键所在。</li>
-<li class="done"><span class="yr">2023 · 三周内完成</span>多项式弗雷曼–鲁萨猜想。蒂姆·高尔斯、本·格林、弗雷迪·曼纳斯与陶哲轩发表这一加性组合学结果的证明数日后，陶哲轩启动了一个 Lean 项目来形式化它——三周后便宣布依赖图「被一片可爱的绿色完全覆盖」。形式化几乎与研究同步推进。</li>
-<li class="done"><span class="yr">2024–25 · 已完成</span>等式理论项目。陶哲轩的合作实验（2024 年 9 月启动）旨在判定 4,694 条代数定律之间的蕴涵关系——若把每条定律对自身的平凡蕴涵也算入，共有 22,033,636 个有序对；若只数非平凡图边，则为 22,028,942 条——结合人类证明、<span class="term">自动定理证明器</span><TipNote text={"定理证明器是搜索证明，或检查某个陈述是否能由形式规则推出的软件。"} />、AI 与 Lean 验证，50 余位贡献者，在 200 多天内完成了工作。这是一种大规模协作、机器核查数学的新范式。</li>
-<li class="prog"><span class="yr">2024–2029 · 进行中</span>费马大定理。凯文·巴扎德由 EPSRC 资助的项目（2024 年 4 月启动，伦敦帝国理工学院）旨在形式化 FLT——并非怀尔斯的原始证明，而是一条现代路线。巴扎德「谨慎乐观」地认为自己能把它归约到 1980 年代已知的结果，但坦率承认整个项目「至少需要 5 年」。尚未完成——最诚实也准确的说法是：它仍在进行中，也是那 100 个挑战问题中尚未闭合的最后一项。</li>
-</ul>
+<MilestoneList>
+<MilestoneItem status="done"><MilestoneDate>2022 · 已完成</MilestoneDate>液体张量实验。2020 年 12 月，菲尔兹奖得主彼得·朔尔策向全世界发出挑战，要求验证其「凝聚数学」中一个他本人都不太确定的定理。约翰·科默兰与亚当·托帕兹带领的团队在 Lean 中完成了验证，于 2022 年 7 月 14 日完成。一位一线数学家借助机器，获得对一份复杂到人类审稿人难以安心核查的证明的信心——这正是关键所在。</MilestoneItem>
+<MilestoneItem status="done"><MilestoneDate>2023 · 三周内完成</MilestoneDate>多项式弗雷曼–鲁萨猜想。蒂姆·高尔斯、本·格林、弗雷迪·曼纳斯与陶哲轩发表这一加性组合学结果的证明数日后，陶哲轩启动了一个 Lean 项目来形式化它——三周后便宣布依赖图「被一片可爱的绿色完全覆盖」。形式化几乎与研究同步推进。</MilestoneItem>
+<MilestoneItem status="done"><MilestoneDate>2024–25 · 已完成</MilestoneDate>等式理论项目。陶哲轩的合作实验（2024 年 9 月启动）旨在判定 4,694 条代数定律之间的蕴涵关系——若把每条定律对自身的平凡蕴涵也算入，共有 22,033,636 个有序对；若只数非平凡图边，则为 22,028,942 条——结合人类证明、<span class="term">自动定理证明器</span><TipNote text={"定理证明器是搜索证明，或检查某个陈述是否能由形式规则推出的软件。"} />、AI 与 Lean 验证，50 余位贡献者，在 200 多天内完成了工作。这是一种大规模协作、机器核查数学的新范式。</MilestoneItem>
+<MilestoneItem status="prog"><MilestoneDate>2024–2029 · 进行中</MilestoneDate>费马大定理。凯文·巴扎德由 EPSRC 资助的项目（2024 年 4 月启动，伦敦帝国理工学院）旨在形式化 FLT——并非怀尔斯的原始证明，而是一条现代路线。巴扎德「谨慎乐观」地认为自己能把它归约到 1980 年代已知的结果，但坦率承认整个项目「至少需要 5 年」。尚未完成——最诚实也准确的说法是：它仍在进行中，也是那 100 个挑战问题中尚未闭合的最后一项。</MilestoneItem>
+</MilestoneList>
 
 <p>这种确定性已经进入安全关键型工程系统。Rocq 中被证明正确的 C <span class="term">编译器</span><TipNote text={"编译器把程序员写的源代码转换成计算机可以执行的较低层机器代码。"} /> CompCert；一项著名的编译器查错研究耗费约六个 CPU 年，试图诱使它生成错误代码，却一无所获——「我们测试过的唯一一个 Csmith 无法找到错误代码的编译器」——同时在 GCC 与 LLVM 中找出了大量 bug。seL4 是第一个在 Isabelle/HOL 中拥有完整机器检查<span class="term">功能正确性</span><TipNote text={"功能正确性指在给定假设下，程序实现已被证明符合其形式规格。"} />证明的操作系统<span class="term">微内核</span><TipNote text={"微内核是操作系统最小的核心，只处理必要功能，把许多服务留在内核之外运行。"} />：在其明确列出的假设下，C 实现细化了形式规格，因此整类崩溃与不安全行为不是靠希望避免，而是被定理排除。这些不是普通承诺，而是带有明确前提的软件定理。这就是逻辑的程序化证明所能做的事——而且它已确立。</p>
 </Claim>
