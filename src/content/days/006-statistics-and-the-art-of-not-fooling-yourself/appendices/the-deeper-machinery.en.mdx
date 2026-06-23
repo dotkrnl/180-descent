@@ -6,6 +6,13 @@ import FalsePositiveRiskEngine from "@app/components/lesson/interactives/FalsePo
 import PValueShapeSimulator from "@app/components/lesson/interactives/PValueShapeSimulator.astro";
 import SValueBits from "@app/components/lesson/interactives/SValueBits.astro";
 
+import BridgeLabel from "@app/components/lesson/BridgeLabel.astro";
+import CompareCard from "@app/components/lesson/CompareCard.astro";
+import CompareCardMeta from "@app/components/lesson/CompareCardMeta.astro";
+import CompareCardTitle from "@app/components/lesson/CompareCardTitle.astro";
+import ComparePanel from "@app/components/lesson/ComparePanel.astro";
+import HybridBox from "@app/components/lesson/HybridBox.astro";
+import HybridTitle from "@app/components/lesson/HybridTitle.astro";
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -49,10 +56,10 @@ On the other side stood **Jerzy Neyman and Egon Pearson**. In a series of papers
 
 <PanelNote>They answer different questions. The modern "<MathInline latex={String.raw`p < .05`} /> test" pretends to answer both at once — which is exactly why it answers neither cleanly.</PanelNote>
 
-<div class="compare">
-<div class="ccard f">
-<p class="who">Fisher's significance test</p>
-<p class="yr">1925 · evidential / inductive</p>
+<ComparePanel>
+<CompareCard kind="f">
+<CompareCardTitle>Fisher's significance test</CompareCardTitle>
+<CompareCardMeta>1925 · evidential / inductive</CompareCardMeta>
 <ul>
 <li><b>One hypothesis</b> (the null) — no alternative required.</li>
 <li><em>p</em> is a <b>continuous measure of evidence</b> against it.</li>
@@ -60,10 +67,10 @@ On the other side stood **Jerzy Neyman and Egon Pearson**. In a series of papers
 <li>A prompt to <b>investigate</b>, judged in context.</li>
 <li>No "accept the null," no fixed long-run error rate.</li>
 </ul>
-</div>
-<div class="ccard np">
-<p class="who">Neyman–Pearson test</p>
-<p class="yr">1928–1933 · behavioural / decision</p>
+</CompareCard>
+<CompareCard kind="np">
+<CompareCardTitle>Neyman–Pearson test</CompareCardTitle>
+<CompareCardMeta>1928–1933 · behavioural / decision</CompareCardMeta>
 <ul>
 <li><b>Two hypotheses</b> fixed in advance (<MathInline latex={String.raw`H_0`} /> and <MathInline latex={String.raw`H_1`} />).</li>
 <li><MathInline latex={String.raw`\alpha`} />, <MathInline latex={String.raw`\beta`} />, and <b>power</b> set <em>before</em> seeing data.</li>
@@ -71,13 +78,13 @@ On the other side stood **Jerzy Neyman and Egon Pearson**. In a series of papers
 <li>A rule to <b>act on</b> — reject or accept, and move on.</li>
 <li>No evidence claim about the single case; only long-run rates.</li>
 </ul>
-</div>
-</div>
-<div class="vs">— welded together —</div>
-<div class="hybrid">
-<p class="h">The null ritual (what's actually taught)</p>
+</CompareCard>
+</ComparePanel>
+<BridgeLabel>— welded together —</BridgeLabel>
+<HybridBox>
+<HybridTitle>The null ritual (what's actually taught)</HybridTitle>
       Compute <MathInline latex={String.raw`p`} />. Compare it to <MathInline latex={String.raw`.05`} />. Treat crossing it as <em>both</em> a Fisherian "the evidence is strong" <em>and</em> a Neyman–Pearson "the decision is made" — while reporting the exact <MathInline latex={String.raw`p`} /> as if it graded the evidence, yet thresholding it as if it were a fixed-<MathInline latex={String.raw`\alpha`} /> decision. The psychologist Gerd Gigerenzer calls this incoherent mash-up the "null ritual," performed by rote and understood by few. The confusion you met in the main lesson isn't a failure of student attention. It's baked into a tool that was never designed.
-</div>
+</HybridBox>
 </Panel>
 
 <ContentSection>

@@ -6,6 +6,13 @@ import FalsePositiveRiskEngine from "@app/components/lesson/interactives/FalsePo
 import PValueShapeSimulator from "@app/components/lesson/interactives/PValueShapeSimulator.astro";
 import SValueBits from "@app/components/lesson/interactives/SValueBits.astro";
 
+import BridgeLabel from "@app/components/lesson/BridgeLabel.astro";
+import CompareCard from "@app/components/lesson/CompareCard.astro";
+import CompareCardMeta from "@app/components/lesson/CompareCardMeta.astro";
+import CompareCardTitle from "@app/components/lesson/CompareCardTitle.astro";
+import ComparePanel from "@app/components/lesson/ComparePanel.astro";
+import HybridBox from "@app/components/lesson/HybridBox.astro";
+import HybridTitle from "@app/components/lesson/HybridTitle.astro";
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -50,10 +57,10 @@ import Term from "@app/components/lesson/Term.astro";
 
 <PanelNote>他们回答的是不同的问题。现代的「<Term><MathInline latex={String.raw`p < .05`} /></Term> 检验」假装同时回答了这两者 —— 这也正是它无法清晰回答任何一个问题的原因。</PanelNote>
 
-<div class="compare">
-<div class="ccard f">
-<p class="who">费舍尔的显著性检验</p>
-<p class="yr">1925 · 证据性 / 归纳式</p>
+<ComparePanel>
+<CompareCard kind="f">
+<CompareCardTitle>费舍尔的显著性检验</CompareCardTitle>
+<CompareCardMeta>1925 · 证据性 / 归纳式</CompareCardMeta>
 <ul>
 <li><span class="term">单一假设</span>（零假设）—— 不需要备择假设。</li>
 <li><span class="term"><MathInline latex={String.raw`p`} /></span> 衡量数据与零假设不相容的程度。</li>
@@ -61,10 +68,10 @@ import Term from "@app/components/lesson/Term.astro";
 <li>提示研究者结合具体情境作进一步调查。</li>
 <li>没有「接受零假设」一说，也没有固定的长期错误率。</li>
 </ul>
-</div>
-<div class="ccard np">
-<p class="who">内曼-皮尔逊检验</p>
-<p class="yr">1928–1933 · 行为式 / 决策式</p>
+</CompareCard>
+<CompareCard kind="np">
+<CompareCardTitle>内曼-皮尔逊检验</CompareCardTitle>
+<CompareCardMeta>1928–1933 · 行为式 / 决策式</CompareCardMeta>
 <ul>
 <li>预先固定的<span class="term">两个假设</span>（<MathInline latex={String.raw`H_0`} /> 和 <MathInline latex={String.raw`H_1`} />）。</li>
 <li>在看到数据前就设定好 <span class="term"><MathInline latex={String.raw`\alpha`} /></span>、<span class="term"><MathInline latex={String.raw`\beta`} /></span> 和 <span class="term">检验功效</span>。</li>
@@ -72,13 +79,13 @@ import Term from "@app/components/lesson/Term.astro";
 <li>一套用于<span class="term">指导行动</span>的规则 —— 拒绝或接受，然后继续。</li>
 <li>不对单一案例提供证据主张；只关注长期错误率。</li>
 </ul>
-</div>
-</div>
-<div class="vs">—— 焊接在一起 ——</div>
-<div class="hybrid">
-<p class="h">零假设仪式（实际教导的内容）</p>
+</CompareCard>
+</ComparePanel>
+<BridgeLabel>—— 焊接在一起 ——</BridgeLabel>
+<HybridBox>
+<HybridTitle>零假设仪式（实际教导的内容）</HybridTitle>
       计算 <span class="term"><MathInline latex={String.raw`p`} /></span>。将其与神圣的 <span class="term">.05</span> 进行比较。将低于这一阈值的行为同时视为费舍尔式的「证据充分」和内曼-皮尔逊式的「已做决策」——在报告精确的 <span class="term"><MathInline latex={String.raw`p`} /></span> 值时，既把它当成证据等级，又像固定 <span class="term"><MathInline latex={String.raw`\alpha`} /></span> 决策那样给它设限。心理学家格尔德·吉仁泽 (Gerd Gigerenzer) 将这种不连贯的混杂体称为「零假设仪式」，它被机械地执行，却很少有人真正理解。你在正文中遇到的混乱并不是因为学生注意力不集中，而是因为它本身就被植入了一个从未被设计好的工具中。
-</div>
+</HybridBox>
 </Panel>
 
 <ContentSection>

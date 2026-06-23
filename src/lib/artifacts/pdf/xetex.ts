@@ -461,9 +461,9 @@ function renderCodeBlock(value: string): string {
 
 function renderComparePanel(node: MdxNode, state: MdxRenderState): string {
   const cards = (node.children ?? [])
-    .filter((child) => child.name === "div" && /\bccard\b/.test(mdxAttributes(child).get("class") ?? ""))
+    .filter((child) => child.name === "CompareCard")
     .map((card) => renderCompareCard(card, state));
-  if (!cards.length) return renderChildren(node.children ?? [], state, { block: true });
+  if (!cards.length) return "";
   const columns = cards.slice(0, 2).map((card) => [
     "\\begin{minipage}[t]{0.47\\linewidth}",
     card,
@@ -480,21 +480,14 @@ function renderCompareCard(node: MdxNode, state: MdxRenderState): string {
   let title = "";
   let meta = "";
   let items: string[] = [];
-  const leadingParagraphs: string[] = [];
   for (const child of node.children ?? []) {
     const childName = child.name ?? "";
-    const className = mdxAttributes(child).get("class") ?? "";
-    if (childName === "p" && /\bwho\b/.test(className)) {
+    if (childName === "CompareCardTitle") {
       title = renderInlineChildren(child, state, { heading: true }).trim();
       continue;
     }
-    if (childName === "p" && /\byr\b/.test(className)) {
+    if (childName === "CompareCardMeta") {
       meta = renderInlineChildren(child, state, { heading: true }).trim();
-      continue;
-    }
-    if (childName === "p") {
-      const text = renderInlineChildren(child, state, { heading: true }).trim();
-      if (text) leadingParagraphs.push(text);
       continue;
     }
     if (childName === "ul") {
@@ -503,8 +496,6 @@ function renderCompareCard(node: MdxNode, state: MdxRenderState): string {
         .filter(Boolean);
     }
   }
-  if (!title && leadingParagraphs[0]) title = leadingParagraphs[0];
-  if (!meta && leadingParagraphs[1]) meta = leadingParagraphs[1];
   return [
     title ? `{\\displayfont\\large\\bfseries\\color{descentInk}${title}\\par}` : "",
     meta ? `{\\ttfamily\\footnotesize\\color{descentMuted}${meta}\\par}` : "",
@@ -572,12 +563,12 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
 
   if (name === "Lead") return renderLead(node, attrs, state);
   if (name === "ClaimHeader") return renderClaimHeader(node, attrs, state);
-  if (name === "div" && /\bcompare\b/.test(attrs.get("class") ?? "")) return renderComparePanel(node, state);
-  if (name === "div" && /\bvs\b/.test(attrs.get("class") ?? "")) {
+  if (name === "ComparePanel") return renderComparePanel(node, state);
+  if (name === "BridgeLabel") {
     const text = cleanEyebrowText(renderInlineChildren(node, state, { ...context, heading: true }));
     return text ? `\\begin{center}{\\ttfamily\\footnotesize\\color{descentMuted}\\MakeUppercase{${text}}}\\end{center}` : "";
   }
-  if (name === "div" && /\bhybrid\b/.test(attrs.get("class") ?? "")) {
+  if (name === "HybridBox") {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
   if (["Aside", "Panel", "Recap", "WhereBlock", "Formula"].includes(name)) {
@@ -595,7 +586,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     state.pendingSectionEyebrow = text || null;
     return "";
   }
-  if (["HeroEyebrow", "Label"].includes(name)) {
+  if (["HeroEyebrow", "Label", "HybridTitle"].includes(name)) {
     const text = cleanEyebrowText(renderEyebrowText(node, attrs, state, context));
     return text ? `\\eyebrow{${text}}` : "";
   }
