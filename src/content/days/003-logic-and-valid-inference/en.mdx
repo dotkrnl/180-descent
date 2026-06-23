@@ -1,4 +1,5 @@
 import sherlockHolmes from "../../../assets/images/open-license/sherlock-holmes-watson-sidney-paget.jpg";
+import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
@@ -192,7 +193,7 @@ That last box is the hinge of today's frontier. For most of history "the laws of
 
 Every day in this course ends at the research frontier, with each claim tagged for how much weight it can bear. Logic's frontier is unusually concrete: it runs on real computers, checks real proofs, and has lately collided with artificial intelligence in ways that demand a careful eye.
 
-<div class="claim">
+<Claim>
 <ClaimHeader label="Edge 01">
 <StatusChip status={"ok"} label={"Non-classical logics · established"} printLabel={"established"} />
 </ClaimHeader>
@@ -203,9 +204,9 @@ Every day in this course ends at the research frontier, with each claim tagged f
 <p><strong><em class="term">Fuzzy logic</em></strong> drops the two-value restriction entirely. Lotfi Zadeh (1965) let truth slide along the whole interval from 0 to 1 to handle vagueness — "the water is warm" is 0.7 true — building on the many-valued logics of Łukasiewicz from the 1920s. It runs in control systems and appliances. And <strong><em class="term">modal logic</em></strong> — the logic of <em>necessity</em> and <em>possibility</em> (□ and ◇) — together with carefully chosen temporal logics underpins the <em class="term">formal verification</em> of hardware and software: specific fragments are expressive enough to say useful things while remaining <em class="term">decidable</em><TipNote text={"A decidable logic has an algorithm that can always determine, in finite time, whether a statement follows from the rules."} /> enough for <em class="term">model checking</em><TipNote text={"Model checking automatically explores the possible states of a system to verify that a formal property always holds."} />. These aren't museum pieces. They're the working logics of the modern technical world.</p>
 
 <CurryHowardBridge locale="en" />
-</div>
+</Claim>
 
-<div class="claim">
+<Claim>
 <ClaimHeader label="Edge 02">
 <StatusChip status={"ok"} label={"Machine-checked proof · established"} printLabel={"established"} />
 </ClaimHeader>
@@ -221,9 +222,9 @@ Every day in this course ends at the research frontier, with each claim tagged f
 </ul>
 
 <p>And the certainty reaches beyond pure mathematics into systems lives depend on. <strong>CompCert</strong> is a C <em class="term">compiler</em><TipNote text={"A compiler translates source code written by programmers into lower-level machine code that a computer can run."} /> <em>proved correct</em> in Rocq; a celebrated bug-hunting study spent roughly six CPU-years trying to make it emit wrong code and failed — "the only compiler we have tested for which Csmith cannot find wrong-code errors" — while finding the usual swarm of bugs in GCC and LLVM. <strong>seL4</strong> is the first operating-system <em class="term">microkernel</em><TipNote text={"A microkernel is the small core of an operating system that handles only essentials, leaving many services outside the kernel."} /> with a full machine-checked proof of <em class="term">functional correctness</em><TipNote text={"Functional correctness means the implementation is proven to do what its formal specification says, under stated assumptions."} /> (in Isabelle/HOL): under its stated assumptions, the C implementation refines the formal specification, so whole classes of crashes and unsafe behaviors are ruled out by theorem rather than hope. These are not ordinary promises; they are conditional theorems about software. <em>This</em> is what logic, mechanized, can do — and it is solidly <strong>established</strong>.</p>
-</div>
+</Claim>
 
-<div class="claim">
+<Claim>
 <ClaimHeader label="Edge 03">
 <StatusChip status={"ok"} label={"Medal-level AI · established"} printLabel={"established"} />
 <StatusChip status={"bad"} label={"\"AI solved math\" · hype"} printLabel={"contested/hype"} />
@@ -244,7 +245,7 @@ Every day in this course ends at the research frontier, with each claim tagged f
 This curriculum's hype filter includes a rule worth stating: preprints, company claims, and benchmark numbers that have not yet passed peer review must be labeled as such. Search results in this space are littered with confident-looking items that have not yet been peer reviewed. Every milestone above is traced to a real, dated source — a published *Nature* paper, an official competition result, a named researcher's own announcement, a company research post, or a companion arXiv paper by reputable mathematicians. When a claim about AI and mathematics can't be traced that way, the right response is not excitement but suspicion.
 
 </Aside>
-</div>
+</Claim>
 </ContentSection>
 
 <ContentSection>

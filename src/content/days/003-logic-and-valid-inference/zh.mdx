@@ -1,4 +1,5 @@
 import sherlockHolmes from "../../../assets/images/open-license/sherlock-holmes-watson-sidney-paget.jpg";
+import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
@@ -192,7 +193,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 本课程每日都以前沿研究收尾，每条主张都标明了它能承受多少重量。逻辑的前沿出奇地具体：它运行在真实计算机上，核查真实证明，并且最近与人工智能发生碰撞——这要求我们擦亮眼睛。
 
-<div class="claim">
+<Claim>
 <ClaimHeader label="前沿 01">
 <StatusChip status={"ok"} label={"非经典逻辑· 已确立"} printLabel={"已确立"} />
 </ClaimHeader>
@@ -203,9 +204,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <p><span class="term">模糊逻辑</span>完全放弃了二值限制。1965 年，洛特菲·扎德让真值在 0 到 1 的连续区间滑动，以刻画模糊性——「水是温的」为 0.7 真——建立在 1920 年代扬·卢卡谢维奇的多值逻辑之上。它运行在控制系统与家电中。而<span class="term">模态逻辑</span>——关于必然与可能（□ 与 ◇）的逻辑——以及经过精心选择的时态逻辑，支撑着硬件与软件的<span class="term">形式验证</span>：某些具体片段既能表达有用性质，又足够克制，可以保留<span class="term">模型检查</span><TipNote text={"模型检查会自动遍历系统可能状态，验证某个形式性质是否始终成立。"} />所需的<span class="term">可判定性</span><TipNote text={"可判定性指存在一个算法，总能在有限时间内判断某个陈述是否由规则推出。"} />。这些不是博物馆中的藏品，而是现代技术世界实际运转的逻辑。</p>
 
 <CurryHowardBridge locale="zh" />
-</div>
+</Claim>
 
-<div class="claim">
+<Claim>
 <ClaimHeader label="前沿 02">
 <StatusChip status={"ok"} label={"机器核查证明· 已确立"} printLabel={"已确立"} />
 </ClaimHeader>
@@ -221,9 +222,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </ul>
 
 <p>这种确定性已经进入安全关键型工程系统。Rocq 中被证明正确的 C <span class="term">编译器</span><TipNote text={"编译器把程序员写的源代码转换成计算机可以执行的较低层机器代码。"} /> CompCert；一项著名的编译器查错研究耗费约六个 CPU 年，试图诱使它生成错误代码，却一无所获——「我们测试过的唯一一个 Csmith 无法找到错误代码的编译器」——同时在 GCC 与 LLVM 中找出了大量 bug。seL4 是第一个在 Isabelle/HOL 中拥有完整机器检查<span class="term">功能正确性</span><TipNote text={"功能正确性指在给定假设下，程序实现已被证明符合其形式规格。"} />证明的操作系统<span class="term">微内核</span><TipNote text={"微内核是操作系统最小的核心，只处理必要功能，把许多服务留在内核之外运行。"} />：在其明确列出的假设下，C 实现细化了形式规格，因此整类崩溃与不安全行为不是靠希望避免，而是被定理排除。这些不是普通承诺，而是带有明确前提的软件定理。这就是逻辑的程序化证明所能做的事——而且它已确立。</p>
-</div>
+</Claim>
 
-<div class="claim">
+<Claim>
 <ClaimHeader label="前沿 03">
 <StatusChip status={"ok"} label={"奖牌级 AI ·已确立"} printLabel={"已确立"} />
 <StatusChip status={"bad"} label={"「AI 解决了数学」· 炒作"} printLabel={"争议/炒作"} />
@@ -244,7 +245,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 本课程的前沿校准器有一条必须明说的规则：凡是尚未经过同行审查的预印本、公司声明或基准数字，都必须明确标注证据状态。这一领域的搜索结果中，充斥着语气笃定但尚未经过同行审查的条目。以上每个里程碑都可追溯到真实、有日期、可核实的来源——已发表的 Nature 论文、官方竞赛结果、具名研究者本人的公开宣布、公司研究发布，或由有信誉数学家署名的配套 arXiv 论文。当一条关于 AI 与数学的声明无法这样追溯时，正确反应不是兴奋，而是怀疑。
 
 </Aside>
-</div>
+</Claim>
 </ContentSection>
 
 <ContentSection>

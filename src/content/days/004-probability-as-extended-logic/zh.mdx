@@ -1,6 +1,7 @@
 import montyHall from "../../../assets/images/open-license/lets-make-a-deal-1974-monty-hall.jpg";
 import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
+import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
@@ -303,7 +304,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 一个世纪以来，频率派的 p 值一直是科学的守门人：跌破 <MathInline latex={String.raw`0.05`} />，结果便可称为「显著」。在[第 2 日](/zh/days/002-scientific-method-and-demarcation/)我们看到「显著」再也不是不可动摇的结论了——复现危机中，成山的「显著」发现一经复测便烟消云散。一个主要元凶是结构性的：p 值太脆弱。<Highlight>实验做到一半查看一次数据，发现 <MathInline latex={String.raw`p<0.05`} /> 就立刻收手——你的假阳性率就这样被悄悄抬高。</Highlight>这个过失太过常见，甚至有了专门名称：「选择性停止」（optional stopping）。如今统计学界正在流传一套新框架，从地基开始重建假设检验，正是为了解决这个问题。它的核心对象不是概率，而是一场「赌局」。
 
-<div class="claim">
+<Claim>
 <ClaimHeader label="前沿 01">
 <StatusChip status={"ok"} label={"数学理论 · 已确立"} printLabel={"已确立"} />
 </ClaimHeader>
@@ -311,9 +312,9 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <p><span class="term">e 值</span>是你对<span class="term">原假设</span><TipNote text={"原假设是统计检验试图拒绝的默认说法，通常是「没有效应」或「没有差异」。"} />下注后获得的回报。你押上 1 美元赌原假设为假，这份赌约被设计成「在原假设为真时公平」——也就是说，如果原假设确实成立，你便会亏得占不到任何长期便宜（用符号说：e 值在原假设下的期望值至多为 <MathInline latex={String.raw`1`} />）。所以，如果最终你的赌注翻了二十倍，那原假设一定哪里出了问题：要么它为假，要么你中了天文数字级别的头彩。一个很大的 e 值，字面意思就是<span class="hl">你从原假设身上赢到的真金白银</span>，而你累积的财富就是你的证据。它的倒数 <MathInline latex={String.raw`1/e`} /> 行为上像个保守的 p 值，但下注的场景才是精髓。</p>
 <p>在硬币例子里，原假设很具体：「硬币公平，<MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.5`} />」。e 值是两张<span class="term">似然比</span><TipNote text={"似然比比较同一批数据在两个假设之下分别有多可能出现。"} />赌票合起来的财富。一张赌票押「正面偏多」的硬币，即 <MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.60`} />：每出现一次正面，这张票乘以 <MathInline latex={String.raw`0.60/0.50 = 1.2`} />；每出现一次反面，则乘以 <MathInline latex={String.raw`0.40/0.50 = 0.8`} />。另一张镜像赌票押「反面偏多」，即 <MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.40`} />，倍率正好反过来。把起始的 1 美元平均分到两张票上，无论硬币朝哪边持续偏，都可能让财富增长。如果硬币真的公平，每张票每轮的期望倍率都是 <MathInline latex={String.raw`1`} />；这场赌局在原假设下就是公平的。在这个玩具赌局里，「赢」就是财富大到足以拒绝「硬币公平」；「输」就是财富停滞或缩水，说明你还没有赢到反对公平的证据。</p>
 <p>这不是松散的比喻，而是一套严格的纲领——「博弈论统计学」，由格伦·谢弗与弗拉基米尔·沃夫克用二十年时间建立，现由阿迪亚·拉姆达斯、彼得·格伦瓦尔德、王若度等人继续推进。谢弗的宣言《以赌注检验》于 2020 年在英国皇家统计学会宣读，2021 年发表于该会《期刊》A 辑。他抱怨 p 值的一个理由正是它太难向人解释；而「我赌这个假设不成立，赢了 20 块」——这话任何人都能听懂。</p>
-</div>
+</Claim>
 
-<div class="claim">
+<Claim>
 <ClaimHeader label="前沿 02">
 <StatusChip status={"ok"} label={"选择性停止 · 已确立"} printLabel={"已确立"} />
 <StatusChip status={"hint"} label={"「取代 p 值」· 仍有争议"} printLabel={"争议"} />
@@ -323,7 +324,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <p class="web-only">下面亲手试试：同一串数据，分别交给脆弱、怕中途查看的 p 值，和诚实的 e 值来评判。</p>
 <p class="epub-only print-only">下方表格概括同一个对比：脆弱、怕中途查看的 p 值，与诚实的 e 值。</p>
 <p>这个玩具任务故意很窄：它要拒绝的只是「这枚硬币是公平的」这个命题；它不是在估计硬币的精确偏差，也不是在绝对证明硬币不公平。</p>
-</div>
+</Claim>
 </ContentSection>
 
 {/* ===================== INTERACTIVE 3 ===================== */}
@@ -353,7 +354,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </ContentSection>
 
 <ContentSection class="frontier">
-<div class="claim">
+<Claim>
 <ClaimHeader label="前沿 03">
 <StatusChip status={"ok"} label={"产业采纳 · 已确立（有限范围）"} printLabel={"已确立"} />
 <StatusChip status={"bad"} label={"全面取代科学界 p 值 · 炒作"} printLabel={"炒作"} />
@@ -363,7 +364,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <p>真实世界中的<span class="term">采纳</span>则是更窄、也更诚实的故事。最清晰的落地在科技公司 <span class="term">A/B 测试</span><TipNote text={"A/B 测试会把用户随机分到产品版本 A 或 B，比较哪个版本表现更好。"} />——因为持续查看数据本身就是它们的日常：Optimizely 围绕「始终有效推断」重建了整个平台（Johari、Koomen、Pekelis 与 Walsh），Netflix 与 Adobe 则公开使用任意时刻有效的<span class="term">置信序列</span><TipNote text={"置信序列是一组随着数据累积而更新、且在每个时点都保持有效的置信区间。"} />，让产品团队能持续监控实验而不在统计上作弊。这是真正的生产环境应用——但距离全球的生物统计、心理学和物理学共同体还很远，那里 p 值依旧根深蒂固。</p>
 <p>新工具也不是毫无代价。在固定样本量比较中，e 值可能需要比 p 值更极端的数据才能跨过同样的拒绝门槛；谢弗的回应是，这是让证据这把尺子变诚实的代价，而非简单缺陷。你的赌局效率取决于下注策略的好坏——说白了，这跟贝叶斯派选择先验时面对的建模判断如出一辙，只是换了套行头。塞缪尔·帕维尔与莱昂哈德·赫尔德等批评者警告：把检验标榜为「安全」或「始终有效」可能有误导之嫌，因为这些保证同样依赖假设（模型设定正确、无发表偏倚），而那些假设可能跟别的假设一样失效。诚实的裁决是：它是 p 值的一个<StatusChip status={"hint"} label={"前景可期"} />、严格、真正有用的补充——但绝不是科学范围内的全面替代品，至少现在不是。</p>
 <p style="font-size:.92em;color:var(--ink-soft);">什么能真正推动局面？如果 FDA 或 EMA 这类药物监管机构批准 e 值用于确证性临床试验，或者某家顶级综合科学期刊把它写进投稿指南，「取代」的口号才有可能从炒作变成现实。让我们拭目以待。</p>
-</div>
+</Claim>
 </ContentSection>
 
 <ContentSection>

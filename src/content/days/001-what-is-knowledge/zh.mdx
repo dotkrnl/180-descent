@@ -7,6 +7,7 @@ import GettierMachine from "@app/components/lesson/interactives/GettierMachine.a
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
@@ -187,7 +188,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 本课程的每一天都在研究前沿收束，每一项主张都标注着它究竟能承载多少分量。知识正处在一个迷人的交汇点上：哲学家、心理学家与神经科学家正从不同方向环绕着同一组问题。
 
-<div class="claim">
+<Claim>
 <ClaimHeader label="前沿 01">
 <StatusChip status={"bad"} label={"原初主张· 已被取代"} printLabel={"争议/炒作"} />
 <StatusChip status={"ok"} label={"复现研究· 已确立"} printLabel={"已确立"} />
@@ -195,9 +196,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <h3>「知识」直觉是普世的——抑或仅仅是西方的？</h3>
 <p>当整个学科的运行逻辑是「若仔细追问，几乎所有人都会说不」时，一个自然的忧虑是：哪些人？2001 年，<span class="term">实验哲学</span><TipNote text={"实验哲学用问卷和实验来检验人们实际如何判断哲学案例。"} />的开山之作——温伯格、尼科尔斯与斯蒂奇——报告称盖梯尔直觉因文化而异，据说东亚参与者更愿意将「知识」的头衔授予那位幸运的认知者。若属实，这会带来一个大麻烦：哲学赖以运作的依赖直觉的方法论，看起来竟是褊狭的。</p>
 <p>后来的复现研究没有支持这一主张。在「Gettier Across Cultures」（Noûs, 2017）中，马谢里、斯蒂奇、罗斯及其同事以近乎逐字转录的案例在巴西、印度、日本与美国进行了测试——却发现了相反的结果：在每一组人群中，人们都坚决拒绝将盖梯尔化的信念称为知识。另一项独立复现（Kim & Yuan）甚至以更大的东亚样本也未能复现最初的文化差异。来自这些盖梯尔式研究的当前证据支持一种跨文化的共同核心，不过，更广泛的认识论判断仍可能因语境而异。我们将在第 149 日认识到一个更深层的教训：最耸动的发现，往往会被更谨慎的复现研究推翻或收回。</p>
-</div>
+</Claim>
 
-<div class="claim">
+<Claim>
 <ClaimHeader label="前沿 02">
 <StatusChip status={"ok"} label={"规范性框架· 已确立"} printLabel={"已确立"} />
 <StatusChip status={"hint"} label={"「取代信念」· 尚有争议"} printLabel={"争议/炒作"} />
@@ -208,7 +209,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <p class="web-only">下方的刻度盘让你亲身体会如何掉入这一陷阱。</p>
 <p class="epub-only print-only">下方表格把同一个陷阱整理成三个基准案例：融贯、过度自信、信心不足。</p>
 <p>仍属争议的是，分级的置信度究竟是取代了日常的是/否信念，还是仅仅与之并置。（彩票悖论向你提问：你有 99.9% 的把握自己的彩票会输——但你真的相信它会输吗？）我们将在<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>正式拾起这条线索。</p>
-</div>
+</Claim>
 </ContentSection>
 
 {/* ===================== INTERACTIVE 3 ===================== */}
@@ -226,7 +227,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </FormatAlt>
 
 <ContentSection class="frontier">
-<div class="claim">
+<Claim>
 <ClaimHeader label="前沿 03">
 <StatusChip status={"hint"} label={"预测编码· 前景可期"} printLabel={"线索"} />
 <StatusChip status={"bad"} label={"宏大「自由能」理论· 争议重重"} printLabel={"争议/炒作"} />
@@ -235,7 +236,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <p>哲学问的是：一个信念凭什么算有证成？神经科学问的是另一个问题：一团有机组织怎样形成信念？</p>
 <p>预测加工理论给出了一种答案：大脑不是被动接收世界的海绵，而是不断预测输入的<span class="term">预测机器</span>。在许多<span class="term">预测加工</span><TipNote text={"预测加工是一类理论：大脑持续预测感觉输入，并在预测误差出现时更新模型。"} />模型中（安迪·克拉克，Behavioral and Brain Sciences, 2013；雅各布·霍维，2013），大脑不断把预测同输入拿来对照；<span class="term">预测误差</span>信号帮助它更新模型。感知因此像是大脑实时给出的最佳猜测，被误差不断校准；用阿尼尔·塞思那句著名的话说，是一场「受控的幻觉」。信念更新开始看起来像是神经元中实现的贝叶斯推理——即所谓的「贝叶斯大脑」，将前沿 02 与生物硬件统一起来。</p>
 <p>卡尔·弗里斯顿以<span class="term">自由能原理</span><TipNote text={"弗里斯顿的自由能原理认为，生命系统会行动以最小化预测误差或不确定性，并用一个名为自由能的形式量来表达。"} />（Nature Reviews Neuroscience, 2010）将这一观念推向极致：生命系统之所以能持续存在，恰恰在于最小化一个量——「自由能」，也就是一个与「惊讶」密切相关的信息论<TipNote text={"信息论用数学方式描述信息、不确定性与意外。"} />量——它将感知、行动乃至生物自组织编织进同一框架。我们先来给这一研究贴上校准的标签。预测编码确实解释了真实的感知现象，是一个严肃而多产的研究纲领——前景可期。但宏大的自由能原理，作为统摄心智与生命的单一法则，依然争议重重：批评者认为，其宽泛版本会变得难以直接检验；拥护者则常把它视为一种数学框架，只有落到更具体的模型上，才真正拿出可由经验检验的赌注。我们将在感知（第 119 日）与意识（第 123–126 日）中继续讨论这一问题，它的「自由能」与我们将在第 33 日和第 83–85 日遇见的热力学如何遥相呼应。信息、能量、计算、涌现——我们五条线索中的四条，被编织进神经元安静的运算之中。</p>
-</div>
+</Claim>
 </ContentSection>
 
 <ContentSection>

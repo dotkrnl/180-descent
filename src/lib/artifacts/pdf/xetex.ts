@@ -1380,6 +1380,7 @@ function isBlockMdxElement(node: MdxNode): boolean {
     "Formula",
     "Sources",
     "ContentSection",
+    "Claim",
     "Hero",
     "Wrap",
     "FormatAlt",
@@ -1394,6 +1395,7 @@ function isFlowElement(node: MdxNode): boolean {
 function isContainerComponent(name: string): boolean {
   return [
     "ContentSection",
+    "Claim",
     "Hero",
     "Wrap",
     "Threads",
