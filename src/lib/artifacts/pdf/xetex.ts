@@ -563,6 +563,21 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
 
   if (name === "Lead") return renderLead(node, attrs, state);
   if (name === "ClaimHeader") return renderClaimHeader(node, attrs, state);
+  if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
+    return renderChildren(node.children ?? [], state, { block: true });
+  }
+  if (name === "AppendixTimelineYear" || name === "AppendixTimelineCitation") {
+    const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
+    return text ? `{\\ttfamily\\footnotesize\\color{descentMuted}${text}\\par}` : "";
+  }
+  if (name === "AppendixTimelineTitle") {
+    const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }).trim());
+    return text ? `\\blockheading{${text}}` : "";
+  }
+  if (name === "AppendixTimelineBody") {
+    const text = renderInlineChildren(node, state, context).trim();
+    return text ? `${text}\n` : "";
+  }
   if (name === "ComparePanel") return renderComparePanel(node, state);
   if (name === "BridgeLabel") {
     const text = cleanEyebrowText(renderInlineChildren(node, state, { ...context, heading: true }));

@@ -1,5 +1,11 @@
 import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
+import AppendixTimeline from "@app/components/lesson/AppendixTimeline.astro";
+import AppendixTimelineBody from "@app/components/lesson/AppendixTimelineBody.astro";
+import AppendixTimelineCitation from "@app/components/lesson/AppendixTimelineCitation.astro";
+import AppendixTimelineItem from "@app/components/lesson/AppendixTimelineItem.astro";
+import AppendixTimelineTitle from "@app/components/lesson/AppendixTimelineTitle.astro";
+import AppendixTimelineYear from "@app/components/lesson/AppendixTimelineYear.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
@@ -91,26 +97,26 @@ Two companion results deserve note. **Skinner &amp; Dunkel** (*PNAS*, 2021) deve
 
 The deepest conceptual advance in stochastic thermodynamics since 2020 is a family of results that say: *precision often costs entropy, under stated dynamical assumptions.* If a molecular motor turns with low noise, if a clock ticks with reliable rhythm, if a sensor measures a concentration accurately — something may have to pay, and the currency is dissipation. These <Term as="em">thermodynamic uncertainty relations</Term> (TURs) are powerful constraints for broad classes of nonequilibrium systems, but they are not assumption-free laws of nature.
 
-<div class="appendix-timeline">
-<div class="tl-item ok">
-<p class="tl-year">2022–23</p>
-<p class="tl-title">The standard TUR is broad, not universal</p>
-<p class="tl-body">The standard steady-state TUR applies to Markov jump processes and overdamped Langevin systems. <strong>Pietzonka</strong> showed a classical pendulum clock can <em>violate</em> that simple entropy-production-only form (<em>PRL</em> 128, 130606, 2022), while <strong>Dieball &amp; Godec</strong> clarified its Langevin route and saturation conditions (<em>PRL</em> 130, 087101, 2023). Underdamped and non-Markovian systems may require modified bounds involving additional dynamical quantities.</p>
-<p class="tl-cite">Pietzonka, PRL 2022 · Dieball &amp; Godec, PRL 2023</p>
-</div>
-<div class="tl-item ok">
-<p class="tl-year">2023</p>
-<p class="tl-title">Speed limits, dissipation, and optimal transport unified</p>
-<p class="tl-body"><strong>Van Vu &amp; Saito</strong> showed TURs, minimum-dissipation protocols, and <em>thermodynamic speed limits</em> are all aspects of a single structure built on Wasserstein-distance optimal transport (<em>PRX</em> 13, 011013, 2023). Separately, <strong>Lee, Lee, Kwon &amp; Park</strong> derived a tight finite-time Landauer bound: the minimum dissipation to erase a bit in a fixed time, trading speed for heat (<em>PRL</em> 129, 120603, 2022).</p>
-<p class="tl-cite">Van Vu &amp; Saito, PRX 2023 · Lee et al., PRL 2022</p>
-</div>
-<div class="tl-item ok">
-<p class="tl-year">2025</p>
-<p class="tl-title">The thermodynamic cost of communication</p>
-<p class="tl-body"><strong>Yadav &amp; Wolpert</strong> proved that transmitting information <em>between</em> computational subsystems has an unavoidable dissipative cost — an overlooked component of a computer's heat bill that grows with communication bandwidth. In their framing: "talk isn't cheap." (<em>Phys. Rev. Research</em>, 2025.)</p>
-<p class="tl-cite">Yadav &amp; Wolpert, Phys. Rev. Research 2025</p>
-</div>
-</div>
+<AppendixTimeline>
+<AppendixTimelineItem status="ok">
+<AppendixTimelineYear>2022–23</AppendixTimelineYear>
+<AppendixTimelineTitle>The standard TUR is broad, not universal</AppendixTimelineTitle>
+<AppendixTimelineBody>The standard steady-state TUR applies to Markov jump processes and overdamped Langevin systems. <strong>Pietzonka</strong> showed a classical pendulum clock can <em>violate</em> that simple entropy-production-only form (<em>PRL</em> 128, 130606, 2022), while <strong>Dieball &amp; Godec</strong> clarified its Langevin route and saturation conditions (<em>PRL</em> 130, 087101, 2023). Underdamped and non-Markovian systems may require modified bounds involving additional dynamical quantities.</AppendixTimelineBody>
+<AppendixTimelineCitation>Pietzonka, PRL 2022 · Dieball &amp; Godec, PRL 2023</AppendixTimelineCitation>
+</AppendixTimelineItem>
+<AppendixTimelineItem status="ok">
+<AppendixTimelineYear>2023</AppendixTimelineYear>
+<AppendixTimelineTitle>Speed limits, dissipation, and optimal transport unified</AppendixTimelineTitle>
+<AppendixTimelineBody><strong>Van Vu &amp; Saito</strong> showed TURs, minimum-dissipation protocols, and <em>thermodynamic speed limits</em> are all aspects of a single structure built on Wasserstein-distance optimal transport (<em>PRX</em> 13, 011013, 2023). Separately, <strong>Lee, Lee, Kwon &amp; Park</strong> derived a tight finite-time Landauer bound: the minimum dissipation to erase a bit in a fixed time, trading speed for heat (<em>PRL</em> 129, 120603, 2022).</AppendixTimelineBody>
+<AppendixTimelineCitation>Van Vu &amp; Saito, PRX 2023 · Lee et al., PRL 2022</AppendixTimelineCitation>
+</AppendixTimelineItem>
+<AppendixTimelineItem status="ok">
+<AppendixTimelineYear>2025</AppendixTimelineYear>
+<AppendixTimelineTitle>The thermodynamic cost of communication</AppendixTimelineTitle>
+<AppendixTimelineBody><strong>Yadav &amp; Wolpert</strong> proved that transmitting information <em>between</em> computational subsystems has an unavoidable dissipative cost — an overlooked component of a computer's heat bill that grows with communication bandwidth. In their framing: "talk isn't cheap." (<em>Phys. Rev. Research</em>, 2025.)</AppendixTimelineBody>
+<AppendixTimelineCitation>Yadav &amp; Wolpert, Phys. Rev. Research 2025</AppendixTimelineCitation>
+</AppendixTimelineItem>
+</AppendixTimeline>
 Taken together, these results are building something like a *thermodynamic code* — a body of constraints on specified nonequilibrium processes, just as Shannon's channel capacity constrains a specified communication model. The analogy is deliberate: the people doing this work view Shannon-era information theory and 21st-century stochastic thermodynamics as two chapters of the same subject.
 
 </ContentSection>
