@@ -603,7 +603,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `{\\ttfamily\\footnotesize\\color{descentTeal}${text}}` : "";
   }
-  if (["HeroSubhead", "PanelNote", "Caption", "FigureCaption"].includes(name)) {
+  if (["HeroSubhead", "PanelNote", "Caption"].includes(name)) {
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `\\begin{notepara}${text}\\end{notepara}` : "";
   }
