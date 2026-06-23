@@ -1,7 +1,6 @@
 import { execFile, execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { copyFile, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 import * as cheerio from "cheerio";
@@ -519,7 +518,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
 
   if (!shouldRenderElement(name, attrs, state)) return "";
 
-  if (name === "MathInline") return inlineMath(resolveExpression(attrs.get("latex"), state), !context.tableCell);
+  if (name === "MathInline") return inlineMath(resolveExpression(attrs.get("latex"), state));
   if (name === "MathBlock") return blockMath(resolveExpression(attrs.get("latex"), state));
   if (name === "TipNote") return renderTipNote(attrs, state, context);
   if (name === "StatusChip") return renderStatusChip(attrs, state);
@@ -950,7 +949,7 @@ function blockMath(value: string): string {
   return value ? `\\[\n${value}\n\\]` : "";
 }
 
-function inlineMath(value: string, noWrap = true): string {
+function inlineMath(value: string): string {
   if (!value) return "";
   return `\\(${value}\\)`;
 }

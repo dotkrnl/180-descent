@@ -64,11 +64,11 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
     }
   }
 
-  failures.push(...await checkFutureLinks(options.root, daysDir, futureLinksPath));
+  failures.push(...await checkFutureLinks(daysDir, futureLinksPath));
   return failures;
 }
 
-async function checkFutureLinks(root: string, daysDir: string, futureLinksPath: string): Promise<LinkCheckFailure[]> {
+async function checkFutureLinks(daysDir: string, futureLinksPath: string): Promise<LinkCheckFailure[]> {
   const registry = await loadContentRegistry({ daysDir });
   const days = registry.days.filter((day) => day.manifest.published).map((day) => day.manifest.day);
   const maxDay = days.length ? Math.max(...days) : 0;
