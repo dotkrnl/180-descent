@@ -65,6 +65,16 @@ Appendices are declared in `day.yaml` under `appendices`.
 - Do not add compatibility shims, legacy importers, or fallback paths. `npm run check:clean` blocks retired static-site paths and blind HTML importers.
 - PDF output is generated from semantic MDX through XeTeX, not from browser print pages. When a live web component is not suitable for print, provide a semantic `FormatAlt` or `FormatOnly` print alternative instead of relying on DOM controls.
 
+## PDF Notes
+
+- Treat `src/lib/artifacts/pdf/xetex.ts` as the PDF renderer contract. It consumes semantic MDX, selected Astro-rendered figure components, inline SVG, Markdown tables, fenced code blocks, math components, and common lesson components.
+- Keep diagrams source-of-truth in MDX/Astro/SVG. Reusable complex figures should live in `lesson/figures/`; one-off semantic SVG diagrams may remain inline in MDX because the PDF renderer converts `svg` nodes through `rsvg-convert`. Do not reimplement the same diagram separately in TeX.
+- Use real fenced code blocks for code or pseudocode. The PDF renderer gives them a styled `codebox`; do not fake code with ad hoc HTML grids or paragraphs.
+- Use `MathInline` and `MathBlock` for math so HTML gets KaTeX and PDF gets XeTeX math from the same source.
+- For web interactives, keep behavior in the interactive component and provide a clear static PDF/EPUB representation with `FormatAlt`, `FormatOnly`, or manifest artifact variants. Static artifact output may drift from the live web component when it improves readability.
+- For PDF-affecting edits, run `npm run build:pdf` and `npm run check:pdf`. When changing PDF renderer, figure, table, code, or source-block behavior, also preserve logs with `PDF_KEEP_TEMP=1 npm run build:pdf` and scan for `Overfull`, `Missing character`, and font warnings.
+- Visual review scope: for global renderer/style changes, sample at least 20 pages from each full PDF (`180-descent`, `180-descent-deep-dive`, `180-descent-zh`, `180-descent-zh-deep-dive`). For individual day PDFs, first and last page are sufficient unless the changed day contains a new figure, table, code block, or interactive print alternative; then inspect the affected interior page too.
+
 ## Chinese Edition
 
 Chinese content should be idiomatic Simplified Chinese, not literal line-by-line English.
