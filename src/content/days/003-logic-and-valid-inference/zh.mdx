@@ -1,4 +1,5 @@
 import sherlockHolmes from "../../../assets/images/open-license/sherlock-holmes-watson-sidney-paget.jpg";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -192,10 +193,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 本课程每日都以前沿研究收尾，每条主张都标明了它能承受多少重量。逻辑的前沿出奇地具体：它运行在真实计算机上，核查真实证明，并且最近与人工智能发生碰撞——这要求我们擦亮眼睛。
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">前沿 01</span>
+<ClaimHeader label="前沿 01">
 <StatusChip status={"ok"} label={"非经典逻辑· 已确立"} printLabel={"已确立"} />
-</div>
+</ClaimHeader>
 <h3>故意打破规则的那些逻辑</h3>
 <p>「经典」逻辑并非唯一一致的选项；它只是更广阔的逻辑图景中一个已站稳脚跟的位置。许多替代逻辑会限制、修改或拒绝某些常被视为不可动摇的经典原则。</p>
 <p><span class="term">直觉主义逻辑</span>拒绝无条件使用排中律。它由 L. E. J. 布劳威尔开创，1920–30 年代由阿伦德·海廷形式化，坚持一条陈述只有在你能构造出其证明时才算为真。它并不是说「A 或非-A」永远错误，而是要求你在适当意义上给出构造、证明或判定方法。一个例子能尖锐地说明动机：排中律会让你轻松断言，对任何计算机程序，「它停机或不停机」——然而（我们将在第 27 日看到）不存在判定停机的通用方法，因此没有构造支撑这一断言。直觉主义说：没有构造性根据，就不能这样断言。这听起来像是哲学洁癖，直到你发现经由一种美得值得专设一框的对应关系，它竟通向计算机科学的心脏。</p>
@@ -206,10 +206,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </div>
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">前沿 02</span>
+<ClaimHeader label="前沿 02">
 <StatusChip status={"ok"} label={"机器核查证明· 已确立"} printLabel={"已确立"} />
-</div>
+</ClaimHeader>
 <h3>零容错的证明：证明助手的崛起</h3>
 <p>亚里士多德的梦想是一条紧密到无人能够怀疑的推理链。二十三个世纪后，这个梦想有了软件化身。<span class="term">证明助手</span>是一种程序，其中每一步逻辑都必须通过机器核查；没有任何一步能凭权威、直觉或一句「显然」而蒙混过关。主流系统包括 Lean（现为 Lean 4）、 Rocq（原名为 Coq，2025 年更名）、 Agda 与 Isabelle/HOL。Lean、 Rocq 与 Agda 属于<span class="term">类型论</span>家族<TipNote text={"类型论用带类型的表达式组织数学对象与证明；在许多系统中，证明一个命题就像构造一个属于相应类型的对象。"} />；Isabelle/HOL 则建立在经典高阶逻辑之上。目标相同，基础不同。</p>
 <p>Lean 的社区共建数学库<span class="term">mathlib</span>，是世界上最大的统一的数学<span class="term">形式化库</span><TipNote text={"形式化是把普通数学定义和证明改写成严格的形式语言，使证明检查器能够逐步核查。"} />之一：超过 278,000 条定理与 132,000 个定义——2026 年 6 月统计时如此，且仍在增长——覆盖了某著名「形式化这些」挑战清单上 100 个问题中的 84 个。这已经远非玩具项目。看看它已验证的成果：</p>
@@ -225,11 +224,10 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </div>
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">前沿 03</span>
+<ClaimHeader label="前沿 03">
 <StatusChip status={"ok"} label={"奖牌级 AI ·已确立"} printLabel={"已确立"} />
 <StatusChip status={"bad"} label={"「AI 解决了数学」· 炒作"} printLabel={"争议/炒作"} />
-</div>
+</ClaimHeader>
 <h3>当 AI 遇见证明核查器</h3>
 <p>最新、也最被喧嚣包围的前沿，是机器学习与形式证明的碰撞——此处正是前沿校准器该上场的时候，因为媒体在标题上常常哗众取宠。</p>
 <p>先看真正的里程碑。2024 年 7 月，DeepMind 的 AlphaProof 与 AlphaGeometry 2 联手，在国际数学奥林匹克（IMO）6 道题中解出 4 道，获得 28 分——位居银牌档顶端，仅比 29 分的金牌线低 1 分。它甚至攻克了令人畏惧的第 6 题，这道题在约 600 名人类参赛者中只有 5 人完整解出。该方法于 2025 年 11 月 12 日在线发表于 Nature，正式版本于 2026 年刊出。真正把它同聊天机器人式空谈区分开的关键设计事实是：AlphaProof 在 Lean 内部工作。它把约一百万道自然语言问题自动形式化为约 8000 万条 Lean 陈述，然后以<span class="term">AlphaZero 风格循环</span><TipNote text={"AlphaZero 风格训练指系统不断生成搜索尝试、检查结果，并把这些结果反过来作为新的训练信号。"} />训练自己，其中每一步都由 Lean 核查。用 DeepMind 的话说，「无需担心幻觉」——因为一个幻觉步骤根本无法编译。神经网络提供创造性搜索，证明助手提供真值基准。这种结合真实且重要。<StatusChip status={"ok"} label={"已确立"} printLabel={"已确立"} /></p>

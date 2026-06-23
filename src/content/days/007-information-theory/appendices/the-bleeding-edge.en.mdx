@@ -1,5 +1,6 @@
 import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
@@ -142,13 +143,17 @@ For seventy years, engineering's response to thermal noise has been: suppress it
 The idea is surprisingly direct. A system of coupled physical oscillators — RLC circuits, resistor networks — will, if left alone, thermally fluctuate. Those fluctuations sample from the Boltzmann distribution of the system's energy landscape. Design the landscape carefully, and those samples solve problems: linear systems, Bayesian inference, energy-based generative models. The computation is not imposed *against* the physics; it *is* the physics.
 
 <div class="claim">
-<div class="ctop"><span class="cnum">Hardware 01</span><StatusChip status={"hint"} label={"peer-reviewed proof of concept"} printLabel={"review"} /></div>
+<ClaimHeader label="Hardware 01">
+<StatusChip status={"hint"} label={"peer-reviewed proof of concept"} printLabel={"review"} />
+</ClaimHeader>
 <h3>Normal Computing's Stochastic Processing Unit</h3>
 <p><strong>Melanson, Abu Khater, Aifer, Donatella, Gordon</strong> and colleagues published <em>"Thermodynamic Computing System for AI Applications"</em> in <em>Nature Communications</em> (16, 3757, April 2025). It describes a prototype <em class="term">stochastic processing unit</em> (SPU): eight fully coupled analog RLC oscillator nodes on a printed circuit board, performing Gaussian sampling and matrix inversion by letting the coupled system thermalize. A companion theory paper (<em>npj Unconventional Computing</em>, 2024) maps linear-algebra primitives onto thermodynamic equilibrium sampling, claiming asymptotic speedups scaling linearly in matrix dimension.</p>
 <p>The caveat: this is an <strong>eight-node prototype</strong>. An end-to-end wall-clock or energy advantage over a modern GPU on a real workload <strong>has not been demonstrated</strong>. The theory is elegant and peer-reviewed; the hardware exists; the performance claims await validation at scale. <StatusChip status={"hint"} label={"promising hint"} printLabel={"promising"} /></p>
 </div>
 <div class="claim">
-<div class="ctop"><span class="cnum">Hardware 02</span><StatusChip status={"bad"} label={"company-reported · unvalidated"} printLabel={"review"} /></div>
+<ClaimHeader label="Hardware 02">
+<StatusChip status={"bad"} label={"company-reported · unvalidated"} printLabel={"review"} />
+</ClaimHeader>
 <h3>Extropic's thermodynamic sampling units</h3>
 <p><strong>Extropic</strong>, founded by Guillaume Verdon, builds chips that natively sample from energy-based models at physical speeds. Its October 2025 public material presented XTR-0 hardware and company-reported simulations or small benchmarks suggesting roughly 10,000× energy savings against GPU/VAE baselines; it did <em>not</em> independently demonstrate GPU-parity hardware on production workloads. A larger follow-on chip has been reported as planned. These figures are company-reported, based on internal benchmarks, and <strong>not independently peer-reviewed</strong>. If confirmed, they would be transformative. Until then, the project lives in the same epistemic category as any startup claim — interesting, unvalidated, carrying the full standard deviation of venture capital. Apply Day 2's lesson: extraordinary claims await extraordinary replication.</p>
 </div>

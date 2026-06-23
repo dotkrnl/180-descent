@@ -572,7 +572,6 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
 
   if (name === "Lead") return renderLead(node, attrs, state);
   if (name === "ClaimHeader") return renderClaimHeader(node, attrs, state);
-  if (name === "div" && /\bctop\b/.test(attrs.get("class") ?? "")) return renderClaimTop(node, state);
   if (name === "div" && /\bcompare\b/.test(attrs.get("class") ?? "")) return renderComparePanel(node, state);
   if (name === "div" && /\bvs\b/.test(attrs.get("class") ?? "")) {
     const text = cleanEyebrowText(renderInlineChildren(node, state, { ...context, heading: true }));
@@ -653,30 +652,6 @@ function renderLead(node: MdxNode, attrs: Map<string, string | null>, state: Mdx
   const body = renderChildren(node.children ?? [], state, { block: true }).trim();
   if (!body) return "";
   return drop ? `\\leadpara{${drop}}{${body}}` : `\\leadparanodrop{${body}}`;
-}
-
-function renderClaimTop(node: MdxNode, state: MdxRenderState): string {
-  const labelParts: string[] = [];
-  const chips: string[] = [];
-
-  for (const child of node.children ?? []) {
-    const childName = child.name ?? "";
-    const attrs = mdxAttributes(child);
-    if (childName === "StatusChip") {
-      const label = resolveExpression(attrs.get("printLabel"), state) || resolveExpression(attrs.get("label"), state);
-      const status = resolveExpression(attrs.get("status"), state);
-      if (label) chips.push(statusChipLatex(label, status));
-      continue;
-    }
-    const text = renderInlineChildren(child, state, { heading: true }).trim();
-    if (text) labelParts.push(text);
-  }
-
-  const label = cleanEyebrowText(labelParts.join(" "));
-  const chipText = chips.join("\\enspace ");
-  if (label && chipText) return `\\claimtop{${label}}{${chipText}}`;
-  if (label) return `\\claimtop{${label}}{}`;
-  return chipText;
 }
 
 function renderClaimHeader(node: MdxNode, attrs: Map<string, string | null>, state: MdxRenderState): string {

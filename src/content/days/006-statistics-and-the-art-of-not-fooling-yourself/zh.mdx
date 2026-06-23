@@ -2,6 +2,7 @@ import feynman1959 from "../../../assets/images/open-license/richard-feynman-195
 import pValueTailAreaZh from "../../../assets/images/open-license/p-value-tail-area-v2-zh.svg";
 import pValueTailAreaZhDark from "../../../assets/images/open-license/p-value-tail-area-v2-zh-dark.svg";
 import MathInline from "@app/components/lesson/MathInline.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -248,11 +249,10 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 如果单一分析可能误导，一种直接的做法是：运行一组有据可依的分析方案，并展示结果如何变化。目前主要有多元宇宙分析和模型设定曲线两类方法；另一类研究则让多个独立研究团队分析同一份数据，观察结论会分歧到什么程度。一如既往，每项主张都有其对应的标签。
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">前沿 01</span>
+<ClaimHeader label="前沿 01">
 <StatusChip status={"ok"} label={"作为透明度工具 · 已确立"} printLabel={"已确立"} />
 <StatusChip status={"hint"} label={"作为正式检验 · 存议"} printLabel={"争议/炒作"} />
-</div>
+</ClaimHeader>
 <h3>多元宇宙分析与设定曲线分析</h3>
 <p>不要只报告一套分析。研究者可以先界定一组在理论和方法上有依据的分析设定，逐一运行，再展示结论如何随这些选择变化。<span class="term">多元宇宙分析</span>（multiverse analysis）<TipNote text={String.raw`多元宇宙分析运行多种有据可依的分析选择，并报告结果的分布，而非单一的推导路径。`} />（Steegen 等, 2016）呈现这组分析所得结果的整体分布。<span class="term">设定曲线分析</span>（specification-curve analysis）<TipNote text={String.raw`设定曲线分析将许多有据可依的模型设定按估计效应排序，以揭示结果的稳健性或脆弱性。`} />（Simonsohn 等, 2020）则按照效应估计排序，让读者看到结论在哪些设定下保持稳定、在哪些设定下发生变化。先试一下这条曲线，然后再继续看它的限定条件。</p>
 <p>这里还必须守住一条纪律：有些「合理设定」会改变<span class="term">估计目标</span><TipNote text={String.raw`估计目标是研究试图估计的精确量，例如原始关联、因果效应，或某个特定人群中的效应。`} />。控制 W 只有在 W 是有因果理由的控制变量时，才是在估计同一个问题；秩变换、剔除异常值或仅分析某个子组，可能把目标从均值差异改成有序关联、对异常值不敏感的效应估计，或某个特定人群中的效应。设定曲线能暴露这个分岔，但不能替研究者决定原本想问的究竟是哪一个问题。</p>
@@ -263,10 +263,9 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 <SpecificationCurve locale="zh" />
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">前沿 02</span>
+<ClaimHeader label="前沿 02">
 <StatusChip status={"ok"} label={"经验现象 · 已确立"} printLabel={"已确立"} />
-</div>
+</ClaimHeader>
 <h3>同一份数据，众多分析师：最直观的证据</h3>
 <p>这项实验应该会改变你阅读每一条头条新闻的方式。拿出一份数据集，设定一个清晰的问题，然后将相同的副本分发给几十个专家团队。他们会得出同一个判定吗？很多时候，不会。</p>
 <p>在 Silberzahn 等 (2018) 的研究中，<span class="hl">29 个团队</span>（61 位分析师）被问了一个简单的问题：足球裁判是否更容易向肤色较深的球员出示红牌？他们估计的优势比（OR）从 0.89 到 2.93 不等；20 个团队发现了显著的正向效应，9 个团队则没有。耐人寻味的是，分析师的先验信念甚至他们的统计专业知识都无法解释这种差异。在 Botvinik-Nezer 等 (2020) 的研究中，<span class="hl">70 个团队</span>（180 位研究者）针对同一份脑成像数据集分析了九个预设假设——结果没有两个团队使用了完全相同的流程；即使各团队得到的底层统计图高度相关，他们的「是/否」结论也发生了严重分歧。Breznau 等 (2022) 将相同的数据和假设（移民是否会削弱对社会政策的支持？）交给 <span class="hl">73 个团队</span>，观察到估计效应从明显为负一直散布到明显为正。甚至金融领域也有自己的版本：Menkveld 等人的《非标准误差》(2024) 让 <span class="hl">164 个团队</span>在相同的市场数据上测试相同的假设，发现团队间的变异性与普通的统计误差旗鼓相当——令人欣慰的是，当增加额外的同行评审环节时，这种变异性有所收缩。</p>
@@ -274,11 +273,10 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 </div>
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">前沿 03</span>
+<ClaimHeader label="前沿 03">
 <StatusChip status={"hint"} label={"新方法 · 有前景的线索"} printLabel={"前景可期"} />
 <StatusChip status={"ok"} label={"改革基础设施 · 确立趋势"} printLabel={"已确立"} />
-</div>
+</ClaimHeader>
 <h3>填补推断鸿沟——以及第 4 日的低调替代方案</h3>
 <p>上述所有内容中尚未解决的问题是如何在多元宇宙中进行诚实的「推断」：你如何从一千个纠缠在一起的分析中得出一个有效的结论？2024 年的一项研究提出了 <span class="term">PIMA</span>（多元宇宙分析中的选择后推断；Girardi 等, 2024），它提供了一种符号翻转得分检验，旨在为多元宇宙提供真正的联合误差保证，跨越了 2020 年设定曲线的线性模型限制。虽然这是一个经过同行评审且值得关注的工具，但它还很新，尚未成为标准做法——这属于<span class="hl">有前景的线索</span>，而非定论。</p>
 <p>与此同时，那些朴素但可靠的改革措施正在不断普及：「注册式报告」格式目前已有<span class="hl">数百家期刊</span>提供，研究预登记也正在逐渐从倡议走向常规做法。还记得 <a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a> 提到的 <span class="term">e 值</span>（e-values）<TipNote text={String.raw`e 值通过针对零假设的投注策略的回报来衡量证据强度。`} />和「通过投注进行测试」吗？这种 p 值的替代方案在正确构造、且模型和技术条件成立时，允许研究者根据已观察数据决定是否继续采样，同时保持规定的错误率或证据保证。目前这仍处于研究前沿而非主流实践——<span class="hl">前景可期</span>，值得持续关注。</p>

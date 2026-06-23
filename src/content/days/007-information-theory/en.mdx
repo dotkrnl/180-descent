@@ -2,6 +2,7 @@ import maxwellsDemon from "../../../assets/images/open-license/maxwells-demon-wi
 import maxwellsDemonDark from "../../../assets/images/open-license/maxwells-demon-wikimedia-dark.svg";
 import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -201,31 +202,28 @@ In 1982 his IBM colleague **Charles Bennett** closed the trap on Maxwell's demon
 For fifty years Landauer's principle was a piece of theory so clean it felt almost philosophical. The numbers were absurd — a few *zeptojoules*, billionths of a billionth of a joule, lost in the thermal roar of any real device. Measuring it seemed hopeless. Then, beginning in 2012, a string of breathtaking experiments dragged the principle out of the realm of argument and onto the lab bench, across system after system. Here is where the hype filter earns its keep — and here, unusually, the boldest-sounding claims are the ones that *survived*.
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">Edge 01</span>
+<ClaimHeader label="Edge 01">
 <StatusChip status={"ok"} label={"Landauer's principle · established"} printLabel={"established"} />
-</div>
+</ClaimHeader>
 <h3>The bound, measured five ways</h3>
 <p>The first direct confirmation came from <strong>Bérut and colleagues</strong> (<em>Nature</em>, 8 March 2012): a single micron-sized glass bead held in a double-well optical trap — a physical one-bit memory — was erased over and over, and the average heat released settled onto the <MathInline latex={String.raw`k_B T \ln 2`} /> floor as the erasure was done more gently. Two years later <strong>Jun, Gavrilov &amp; Bechhoefer</strong> (<em>Physical Review Letters</em>, 4 Nov 2014) pushed precision higher in a feedback trap, confirming that halving the number of accessible states costs at least <MathInline latex={String.raw`k_B T \ln 2`} /> — with individual cycles dipping <em>below</em> the bound, exactly as the fluctuation theorems (a Day-85 preview) predict, while the <em>average</em> holds firm.</p>
 <p>What makes it <StatusChip status={"ok"} label={"established"} /> is the diversity of confirmations under carefully specified protocols. A single <strong>electron</strong> in a box run as a Szilárd engine (Koski et al., <em>PNAS</em>, 2014). An array of nanoscale <strong>magnets</strong> — the closest thing yet to a real digital memory bit — pinned the cost near "2.8 zJ at 300 K," measuring (4.2 ± 0.9) zJ (Hong, Lambson, Dhuey &amp; Bokor, <em>Science Advances</em>, 11 March 2016). And a single trapped <strong>calcium ion</strong> extended the principle into the fully quantum regime (Yan et al., <em>Physical Review Letters</em>, 21 May 2018). Glass, electrons, magnets, atoms — wildly different platforms, one consistent lower bound. That's what a real law looks like.</p>
 </div>
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">Edge 02</span>
+<ClaimHeader label="Edge 02">
 <StatusChip status={"ok"} label={"Information engines · established"} printLabel={"established"} />
 <StatusChip status={"hint"} label={"\"Fastest engine\" superlative · framing"} printLabel={"review"} />
-</div>
+</ClaimHeader>
 <h3>Running the demon in reverse: information as fuel</h3>
 <p>If erasing a bit <em>costs</em> energy, can measured information help extract work? Szilárd said yes on paper; the lab now says yes under full measurement-feedback accounting. <strong>Toyabe and colleagues</strong> (<em>Nature Physics</em>, 2010) built the first real information engine: a Brownian particle climbing a staircase, lifted against gravity using well-timed measurements of its position and a feedback ratchet — converting information in the controller into mechanical work, and validating a feedback-generalized Jarzynski equality in the process. <strong>Koski's single-electron Szilárd engine</strong> (2014–2015) did it with one electron and even built an "information-powered refrigerator." More recently, the <strong>Bechhoefer lab</strong> (Saha et al., <em>PNAS</em>, 18 May 2021) optimized a colloidal information ratchet whose output power, they report, rivals the molecular machinery inside living cells — a genuinely striking result, though the "world's fastest information engine" billing comes from the press release, not the peer-reviewed claim, so treat that phrase as marketing, the underlying physics as solid.</p>
 </div>
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">Edge 03</span>
+<ClaimHeader label="Edge 03">
 <StatusChip status={"ok"} label={"established"} printLabel={"established"} />
 <StatusChip status={"hint"} label={"not a wall"} printLabel={"review"} />
-</div>
+</ClaimHeader>
 <h3>The new physics of information — and what it says about your GPU</h3>
 <p>All of this now lives inside a mature framework called <em class="term">stochastic thermodynamics</em>, which extends the old laws of heat to tiny, jittering systems where fluctuations dominate. Its engine room includes exact fluctuation relations such as the <strong>Jarzynski equality</strong> (1997) and the <strong>Crooks fluctuation theorem</strong> (1999). Mutual-information terms enter their feedback-controlled generalizations, the Sagawa-Ueda lineage used in information-engine experiments. The authoritative synthesis is Parrondo, Horowitz &amp; Sagawa's review, bluntly titled <em>"Thermodynamics of information"</em> (<em>Nature Physics</em>, 2015): information belongs in the ledger alongside work, heat, measurement, feedback, controller memory, and reset. In 2024, David H. Wolpert and collaborators at the Santa Fe Institute extended finite-time stochastic-computation theory, adding to the older mismatch-cost story rather than inventing it from scratch.</p>
 <p>Which raises the question lurking behind every data center. How far above the floor are our machines? <strong>Very</strong>. A single transistor switch dissipates on the order of <MathInline latex={String.raw`10^{-18}`} /> joules — hundreds to thousands of times the Landauer bound at the device level, and far more once you count memory traffic, cooling, and power conversion. We are nowhere near the wall. That's the honest framing: all data centers drew about 1.5% of global electricity in 2024, and AI is a rapidly growing workload expected to drive a substantial share of the increase through 2030 (IEA, <em>Energy and AI</em>, April 2025). For now this is an <strong>engineering and economic</strong> problem, not a fundamental-physics one. The "AI is about to hit the Landauer limit" headline is <StatusChip status={"hint"} label={"hype"} printLabel={"review"} /> — but the floor is real, and it is one reason reversible, thermodynamic, and neuromorphic computing remain interesting.</p>
@@ -236,10 +234,9 @@ For fifty years Landauer's principle was a piece of theory so clean it felt almo
 
 <ContentSection class="frontier">
 <div class="claim">
-<div class="ctop">
-<span class="cnum">Edge 04</span>
+<ClaimHeader label="Edge 04">
 <StatusChip status={"bad"} label={"contested hype"} printLabel={"contested"} />
-</div>
+</ClaimHeader>
 <h3>Where the idea overreaches</h3>
 <p>"Information is physical" is established. The temptation is to sand off the qualifier and declare that information is <em>fundamental</em> — that reality is, at bottom, made of bits. The physicist John Archibald Wheeler gave this its slogan in 1989: <em class="term">"it from bit,"</em> the conjecture that every particle and field derives its very existence from yes/no answers, from information. It is a gorgeous, generative idea — and it is metaphysics, not a tested result. Critics note the obvious circularity: a bit has to be encoded in <em>something</em>, so information can't be the bottom turtle. Keep it in the "stimulating speculation" drawer, clearly labeled.</p>
 <p>Further out lies genuine fringe. Melvin Vopson's "mass–energy–information equivalence" claims information has rest mass; his "second law of infodynamics" claims information entropy must <em>decrease</em> over time; his 2025 paper deriving gravity from information drew a flat verdict from physicist Sabine Hossenfelder that it "makes no sense." When a frontier is hot, it grows a fringe — and learning to tell the two apart, using exactly the hype filter we've run all course, is the skill this whole project is really about.</p>

@@ -1,4 +1,5 @@
 import sherlockHolmes from "../../../assets/images/open-license/sherlock-holmes-watson-sidney-paget.jpg";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -192,10 +193,9 @@ That last box is the hinge of today's frontier. For most of history "the laws of
 Every day in this course ends at the research frontier, with each claim tagged for how much weight it can bear. Logic's frontier is unusually concrete: it runs on real computers, checks real proofs, and has lately collided with artificial intelligence in ways that demand a careful eye.
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">Edge 01</span>
+<ClaimHeader label="Edge 01">
 <StatusChip status={"ok"} label={"Non-classical logics · established"} printLabel={"established"} />
-</div>
+</ClaimHeader>
 <h3>The logics that break the rules — on purpose</h3>
 <p>"Classical" logic is not the only consistent option; it's one settled point in a landscape of alternatives, each built by surrendering a law most people thought non-negotiable.</p>
 <p><strong><em class="term">Intuitionistic logic</em></strong> drops the law of <em>excluded middle</em>. Pioneered by L.E.J. Brouwer and formalized by Arend Heyting in the 1920s–30s, it insists a statement counts as true only if you can <em>construct</em> a proof of it. You may not assert "A or not-A" for free — you must prove one side. The motivating example is sharp: excluded middle would let you cheerfully assert, for any computer program, "it halts or it doesn't" — yet (as we'll see on <strong>Day 27</strong>) no general method decides halting, so there's no construction backing the claim. Intuitionism says: then don't assert it. This sounds like philosophical fastidiousness until you learn where it leads — straight into the heart of computer science, via a correspondence so beautiful it gets its own box below.</p>
@@ -206,10 +206,9 @@ Every day in this course ends at the research frontier, with each claim tagged f
 </div>
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">Edge 02</span>
+<ClaimHeader label="Edge 02">
 <StatusChip status={"ok"} label={"Machine-checked proof · established"} printLabel={"established"} />
-</div>
+</ClaimHeader>
 <h3>Proof at zero tolerance: the rise of the proof assistant</h3>
 <p>Aristotle's dream was a chain of reasoning so tight that no one could doubt it. Twenty-three centuries later, that dream has a software implementation. A <em class="term">proof assistant</em> is a program in which every logical step must pass a mechanical check; nothing is accepted on authority, intuition, or "clearly." The leading systems include <strong>Lean</strong> (now Lean 4), <strong>Rocq</strong> (the proof assistant formerly named Coq, renamed in 2025), <strong>Agda</strong>, and <strong>Isabelle/HOL</strong>. Lean, Rocq, and Agda live in the <em class="term">type-theoretic</em><TipNote text={"Type theory treats mathematical objects and proofs through typed expressions; in many systems, proving a statement is like constructing an object of the matching type."} /> family; Isabelle/HOL is based on classical higher-order logic. Same ambition, different foundations.</p>
 <p>Lean's community-built library, <em class="term">mathlib</em>, is one of the largest unified <em class="term">formalizations</em><TipNote text={"A formalization rewrites ordinary mathematical definitions and proofs in a strict formal language that a proof checker can verify."} /> of mathematics ever assembled: <strong>more than 278,000 theorems and 132,000 definitions</strong> when checked in June 2026, growing continuously, and covering 84 of the 100 problems on a famous "formalize these" challenge list. This is not a toy. Consider what it has already verified:</p>
@@ -225,11 +224,10 @@ Every day in this course ends at the research frontier, with each claim tagged f
 </div>
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">Edge 03</span>
+<ClaimHeader label="Edge 03">
 <StatusChip status={"ok"} label={"Medal-level AI · established"} printLabel={"established"} />
 <StatusChip status={"bad"} label={"\"AI solved math\" · hype"} printLabel={"contested/hype"} />
-</div>
+</ClaimHeader>
 <h3>When AI met the proof checker</h3>
 <p>The newest and noisiest edge is the collision of machine learning with formal proof — and it is exactly where the hype filter earns its keep, because headlines routinely overreach.</p>
 <p>The genuine milestone first. In July 2024, DeepMind's <strong>AlphaProof</strong>, paired with AlphaGeometry 2, solved <strong>4 of 6 problems</strong> at the International Mathematical Olympiad, scoring 28 points — the top end of the silver-medal category, one point below the gold threshold of 29. It even cracked the fearsome Problem 6, which only 5 of roughly 600 human contestants fully solved. The methodology was published online in <em>Nature</em> on 12 November 2025, with the version of record appearing in 2026. Here's the design fact that separates it from chatbot bluster: <strong>AlphaProof works inside Lean.</strong> It auto-formalized about a million natural-language problems into ~80 million formal Lean statements, then trained itself in an <em class="term">AlphaZero-style loop</em><TipNote text={"AlphaZero-style training means the system improves by generating search attempts, checking outcomes, and using those results as new training signal."} /> where <em>Lean checks every step</em>. As DeepMind put it, there are "no hallucinations to worry about" — because a hallucinated step simply fails to compile. The neural net supplies creative search; the proof assistant supplies ground truth. That marriage is real and important. <StatusChip status={"ok"} label={"established"} printLabel={"established"} /></p>

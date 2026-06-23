@@ -2,6 +2,7 @@ import feynman1959 from "../../../assets/images/open-license/richard-feynman-195
 import pValueTailArea from "../../../assets/images/open-license/p-value-tail-area-v2.svg";
 import pValueTailAreaDark from "../../../assets/images/open-license/p-value-tail-area-v2-dark.svg";
 import MathInline from "@app/components/lesson/MathInline.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -239,11 +240,10 @@ What unites the whole spectrum, from cautious to incendiary, is a single migrati
 If a single analysis can mislead, the modern move is brutally simple: *run them all*, and show the spread. Two named methods do this, and a third line of work tests the whole idea by turning loose armies of real scientists on the same data. As always, each claim gets a label.
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">Edge 01</span>
+<ClaimHeader label="Edge 01">
 <StatusChip status={"ok"} label={"As a transparency tool · established"} printLabel={"established"} />
 <StatusChip status={"hint"} label={"As a formal test · contested"} printLabel={"contested"} />
-</div>
+</ClaimHeader>
 <h3>Multiverse &amp; specification-curve analysis</h3>
 <p>Instead of defending one analysis, you enumerate <em>every</em> reasonable combination of choices — keep outliers or trim them, log-transform or not, control for this covariate or that — and compute the result under each. <em class="term">Multiverse analysis</em><TipNote text={String.raw`Multiverse analysis runs many defensible analysis choices and reports the distribution of results rather than one preferred path.`} /> (Steegen, Tuerlinckx, Gelman &amp; Vanpaemel, <em>Perspectives on Psychological Science</em>, 2016) displays the whole cloud of outcomes. <em class="term">Specification-curve analysis</em><TipNote text={String.raw`Specification-curve analysis sorts many defensible model specifications by their estimated effect to reveal robustness or fragility.`} /> (Simonsohn, Simmons &amp; Nelson, <em>Nature Human Behaviour</em>, 2020) sorts hundreds of specifications into a single curve and asks: across all the defensible ways to slice this, does the effect hold up, or does it evaporate the moment you wiggle a choice? It's honest, vivid, and increasingly expected by reviewers. Try the curve now, before the caveats continue.</p>
 <p>One discipline matters more than the picture suggests: some "reasonable specifications" change the <em class="term">estimand</em><TipNote text={String.raw`An estimand is the exact quantity a study is trying to estimate, such as a raw association, a causal effect, or an effect for a specific population.`} />. Controlling for W is not just another estimate of the same question unless W is a causally justified control; rank-transforming, trimming outliers, or dropping a subgroup can shift the target from a mean difference to an ordinal association, a robust effect, or a population-specific effect. Specification curves expose that fork, but they do not decide which question you meant to ask.</p>
@@ -254,10 +254,9 @@ If a single analysis can mislead, the modern move is brutally simple: *run them 
 <SpecificationCurve locale="en" />
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">Edge 02</span>
+<ClaimHeader label="Edge 02">
 <StatusChip status={"ok"} label={"Empirical phenomenon · established"} printLabel={"established"} />
-</div>
+</ClaimHeader>
 <h3>Many analysts, one dataset — the clearest demonstration in the room</h3>
 <p>Here is the experiment that should change how you read every headline. Take one dataset, one clear question, and hand identical copies to dozens of expert teams. Do they converge on the same verdict? Often, no.</p>
 <p>In Silberzahn et al. (<em>Advances in Methods and Practices in Psychological Science</em>, 2018), <strong>29 teams</strong> (61 analysts) were asked a single question — do soccer referees give more red cards to dark-skin-toned players? Their estimated odds ratios ranged from <strong>0.89 to 2.93</strong>; twenty teams found a significant positive effect, nine did not. Tellingly, the analysts' prior beliefs and even their statistical expertise did <em>not</em> explain who found what. In Botvinik-Nezer et al. (<em>Nature</em>, 2020), <strong>70 teams</strong> (180 researchers) analyzed the same brain-imaging dataset against nine pre-set hypotheses — and no two teams used the same pipeline; their yes/no conclusions diverged sharply even when their underlying statistical maps were highly correlated. Breznau et al. (<em>PNAS</em>, 2022) put the same data and hypothesis (does immigration erode support for social policy?) to <strong>73 teams</strong> and watched estimates scatter from clearly negative to clearly positive. Even finance has its version: Menkveld et al.'s "Nonstandard Errors" (<em>Journal of Finance</em>, 2024) had <strong>164 teams</strong> test the same hypotheses on the same market data, and found the cross-team variability rivaled ordinary statistical error — shrinking, encouragingly, when extra peer-review stages were added.</p>
@@ -265,11 +264,10 @@ If a single analysis can mislead, the modern move is brutally simple: *run them 
 </div>
 
 <div class="claim">
-<div class="ctop">
-<span class="cnum">Edge 03</span>
+<ClaimHeader label="Edge 03">
 <StatusChip status={"hint"} label={"New methods · promising hint"} printLabel={"promising"} />
 <StatusChip status={"ok"} label={"Reform infrastructure · established trend"} printLabel={"established"} />
-</div>
+</ClaimHeader>
 <h3>Plugging the inference gap — and Day 4's quiet alternative</h3>
 <p>The open problem in all of the above is honest <em>inference</em> across a multiverse: how do you draw one valid conclusion from a thousand entangled analyses? A 2024 entry, <em class="term">PIMA</em> (Post-selection Inference in Multiverse Analysis; Girardi et al., <em>Psychometrika</em>, 2024), offers a sign-flipping test that aims to give the multiverse a proper joint error guarantee, reaching beyond the linear-model limits of the 2020 specification curve. It's peer-reviewed and genuinely interesting, but new and not yet standard practice — a <strong>promising hint</strong>, not a settled tool.</p>
 <p>Meanwhile the boring, durable fixes keep spreading: the Registered Reports format — where journals accept your <em>plan</em> before your results exist — is now offered at <strong>several hundred journals</strong>, and preregistration is becoming a default rather than a virtue. And recall <a href="/days/004-probability-as-extended-logic/"><strong>Day 4</strong></a>'s <em class="term">e-values</em><TipNote text={String.raw`E-values measure evidence as the payoff of a betting strategy against a null hypothesis.`} /> and "testing by betting" (Grünwald, Ramdas, Shafer): an alternative to the <MathInline latex={String.raw`p`} />-value that stays valid even if you peek at your data and stop whenever you like — aimed squarely at the optional-stopping degree of freedom you toggled in the factory above. Still a research frontier rather than mainstream practice — <strong>promising</strong>, watch this space.</p>

@@ -1,5 +1,6 @@
 import MathBlock from "@app/components/lesson/MathBlock.astro";
 import MathInline from "@app/components/lesson/MathInline.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
@@ -143,13 +144,17 @@ import Threads from "@app/components/lesson/Threads.astro";
 这个想法出人意料地直接。一个由耦合物理振荡器（如 RLC 电路、电阻网络）组成的系统，若任其自然，就会产生热涨落。这些涨落会自发地对系统能量景观的玻尔兹曼分布进行采样。只要精心设计这个能量景观，这些采样就可以用来求解特定的问题：如线性系统求解、贝叶斯推理、基于能量的生成模型等。在这里，计算不再是违背物理规律的逆行，计算本身就是物理过程。
 
 <div class="claim">
-<div class="ctop"><span class="cnum">硬件 01</span><StatusChip status={"hint"} label={"同行评审概念验证"} printLabel={"待审"} /></div>
+<ClaimHeader label="硬件 01">
+<StatusChip status={"hint"} label={"同行评审概念验证"} printLabel={"待审"} />
+</ClaimHeader>
 <h3>Normal Computing 的随机处理单元</h3>
 <p>梅兰森、阿布·哈特尔、艾弗、多纳泰拉、戈登（Melanson, Abu Khater, Aifer, Donatella, Gordon）及其同事在《自然·通讯》（Nature Communications，16: 3757，2025 年 4 月）上发表了《用于人工智能应用的热力学计算系统》。它描述了一个随机处理单元（SPU）的原型：一块印制电路板上集成了八个完全耦合的模拟 RLC 振荡器节点，通过让该耦合系统达到热平衡，来进行高斯采样和矩阵求逆。一篇配套的理论论文（npj Unconventional Computing，2024 年）将线性代数原语映射到了热力学平衡采样上，并声称渐进加速比与矩阵维度呈线性比例关系。</p>
 <p>注意事项：这只是一个「八节点原型」。在实际工作负载中，相比于现代 GPU，它在端到端耗时或能耗上的优势「尚未得到证实」。理论虽然优雅且通过了同行评审，硬件也切实存在，但其性能宣称仍有待大规模验证。<StatusChip status={"hint"} label={"初露曙光"} /></p>
 </div>
 <div class="claim">
-<div class="ctop"><span class="cnum">硬件 02</span><StatusChip status={"bad"} label={"公司单方报告 · 未经证实"} printLabel={"待审"} /></div>
+<ClaimHeader label="硬件 02">
+<StatusChip status={"bad"} label={"公司单方报告 · 未经证实"} printLabel={"待审"} />
+</ClaimHeader>
 <h3>Extropic 的热力学采样单元</h3>
 <p>由纪尧姆·维尔东（Guillaume Verdon）创立的 Extropic 公司正在制造能够以物理速度对基于能量的模型进行原生采样的芯片。其 2025 年 10 月的公开材料展示了 XTR-0 硬件，并给出公司单方报告的模拟或小型基准结果，声称相对于 GPU/VAE 基线可节省约 10,000 倍能耗；但它并未独立证明硬件在生产级工作负载上实现了 GPU 同等性能。据报道，一款更大规模的后续芯片正在规划中。这些数据纯属公司单方报告，基于其内部基准测试，并且「没有经过独立的同行评审」。若被证实，这确实将是颠覆性的突破。但在那之前，该项目依然处于与所有创业公司宣传口号相同的认识论范畴中——有趣、未经证实，且承载着风投行业的巨大变数。请应用第 2 日的教训：超乎寻常的断言，需要超乎寻常的复现。</p>
 </div>
