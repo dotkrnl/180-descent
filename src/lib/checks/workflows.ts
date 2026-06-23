@@ -7,10 +7,8 @@ export interface WorkflowLinkFailure {
 }
 
 const WORKFLOW_SKILL_LINKS = [
-  "180-descent-add-appendix",
-  "180-descent-add-day",
   "180-descent-assets",
-  "180-descent-chinese-edition",
+  "180-descent-content",
   "180-descent-publish"
 ] as const;
 

@@ -1,1 +1,0 @@
-../../../docs/workflows/180-descent-chinese-edition/README.md

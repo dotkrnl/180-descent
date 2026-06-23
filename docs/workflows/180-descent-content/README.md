@@ -36,6 +36,13 @@ MDX may use imported components and ordinary Markdown/MDX prose, but it must not
 7. Keep artifact variants purposeful. EPUB/PDF may drift from the live web component when the static form is clearer, but HTML should stay visually consistent with the intended web design.
 8. Run `npm run build:social-cards` when titles or summaries change.
 
+For a new published day, the minimum source set is:
+
+- `src/content/days/###-slug/day.yaml`
+- `src/content/days/###-slug/en.mdx`
+- `src/content/days/###-slug/zh.mdx`
+- Optional paired appendices under `src/content/days/###-slug/appendices/*.en.mdx` and `*.zh.mdx`
+
 ## Appendices
 
 Appendices are declared in `day.yaml` under `appendices`.
@@ -45,6 +52,7 @@ Appendices are declared in `day.yaml` under `appendices`.
 - Keep optional appendix content inside the appendix MDX file, not hidden in the main day body.
 - Include static PDF/EPUB equivalents for any web-only controls.
 - Verify the appendix appears only in deep-dive/full-day artifact editions.
+- Standard EPUB/PDF outputs omit appendices; deep-dive EPUB/PDF outputs include them.
 
 ## Components And Styles
 
@@ -62,6 +70,9 @@ Chinese content should be idiomatic Simplified Chinese, not literal line-by-line
 
 - Preserve manifest structure, day numbers, path, citations, URLs, DOI metadata, component imports, image alt meaning, and interaction behavior.
 - Localize block titles and print labels through existing data/components; do not hard-code English labels into Chinese print surfaces.
+- Translate image `alt`, SVG `aria-label`, captions, panel titles, status-chip print labels, figure labels, and static table headings.
+- Import the same reusable figure or interactive component used by English, with localized props or localized component data when needed.
+- Add Chinese-specific styling only through existing SCSS modules, especially `src/assets/scss/content/_zh.scss`, unless a shared style is more appropriate.
 - Keep terminology consistent across existing Chinese days.
 - Prefer natural Chinese rhythm and punctuation. Use Chinese quotes for quoted propositions and titles where appropriate.
 - Avoid dense emphasis in Chinese prose. Use terminology styling and sparse color emphasis only when it clarifies structure.

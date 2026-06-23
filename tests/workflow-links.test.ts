@@ -18,18 +18,16 @@ describe("workflow skill links", () => {
 
     const failures = await checkWorkflowSkillLinks(root);
     expect(failures[0]).toEqual({
-      path: ".codex/skills/180-descent-add-appendix/SKILL.md",
-      reason: "Expected symlink to ../../../docs/workflows/180-descent-add-appendix/README.md"
+      path: ".codex/skills/180-descent-assets/SKILL.md",
+      reason: "Expected symlink to ../../../docs/workflows/180-descent-assets/README.md"
     });
   });
 });
 
 async function createWorkflowTree(root: string, linked: boolean): Promise<void> {
   for (const workflow of [
-    "180-descent-add-appendix",
-    "180-descent-add-day",
     "180-descent-assets",
-    "180-descent-chinese-edition",
+    "180-descent-content",
     "180-descent-publish"
   ]) {
     const skillDir = path.join(root, ".codex/skills", workflow);

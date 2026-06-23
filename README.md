@@ -37,20 +37,23 @@ npm run deploy:staging
 
 The Cloudflare Pages project name is `180-descent`.
 
-## Adding A Day
+## Content Workflow
 
-Use the agent-agnostic workflow at `docs/workflows/180-descent-add-day/`. It documents the registry-MDX day workflow, required files, paired Chinese content, appendices, artifact variants, and validation commands. Codex skill shims live at `.codex/skills/`.
+Use the single agent-agnostic workflow at `docs/workflows/180-descent-content/` for adding days, adding appendices, editing paired Chinese content, extracting reusable components, and maintaining artifact variants. Codex skill shims live at `.codex/skills/`.
 
 Day source is split by responsibility:
 
 - `src/content/days/###-slug/day.yaml` is the typed day manifest.
 - `src/content/days/###-slug/en.mdx` and `src/content/days/###-slug/zh.mdx` hold the paired lesson bodies.
 - `src/content/days/###-slug/appendices/*.mdx` holds optional deep-dive content declared in the manifest.
-- Reusable interaction code lives in `src/assets/js/interactions/` and is registered by manifest `components[].webEntry`.
+- Reusable figures live in `src/app/components/lesson/figures/`.
+- Reusable interactive DOM lives in `src/app/components/lesson/interactives/`.
+- Interaction behavior lives in `src/assets/js/interactions/` and is registered by manifest `components[].webEntry`.
+- Styling is SCSS-only under `src/assets/scss/`.
 
 ## Adding A Deep Dive Appendix
 
-Use the same repo-local workflow. Add the appendix body under the day directory, declare it in `day.yaml`, and provide static EPUB/PDF variants for any live web components. Standard EPUB/PDF outputs omit appendices; deep-dive EPUB/PDF outputs include them.
+Use the same content workflow. Add the appendix body under the day directory, declare it in `day.yaml`, and provide static EPUB/PDF variants for any live web components. Standard EPUB/PDF outputs omit appendices; deep-dive EPUB/PDF outputs include them.
 
 ## Licenses
 
