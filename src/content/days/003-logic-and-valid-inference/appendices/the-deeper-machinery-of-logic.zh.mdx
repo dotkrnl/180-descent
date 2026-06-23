@@ -5,6 +5,7 @@ import FallacySpotter from "@app/components/lesson/interactives/FallacySpotter.a
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
@@ -77,7 +78,7 @@ import Term from "@app/components/lesson/Term.astro";
 <text x="230" y="150" text-anchor="middle" fill="var(--contested)" font-size="11">矛盾关系</text>
 </g>
 </svg>
-<p class="appendix-caption">虚线对角线承担了图中最关键的逻辑关系：如果「所有 S 都是 P」为真，那么「有的 S 不是 P」必须为假，反之亦然——绝无例外。</p>
+<Caption class="appendix-caption">虚线对角线承担了图中最关键的逻辑关系：如果「所有 S 都是 P」为真，那么「有的 S 不是 P」必须为假，反之亦然——绝无例外。</Caption>
 </Panel>
 
 现在来看看那条裂痕。注意垂直的边缘，这被称为<Term>差等关系</Term> (subalternation)<TipNote text={"差等关系是一个古老的规则，允许全称命题蕴涵相应的特称命题，例如由“所有 S 都是 P”推导出“有的 S 是 P”。"} />：经典的对当方阵认为，如果「所有 S 都是 P」为真，那么「有的 S 是 P」也必然为真。从全称下降到特称。这听起来理所当然——如果所有的乌鸦都是黑的，那么显然「有的乌鸦是黑的」。但它暗中带入了一个亚里士多德从未明示的假设：即世界上<Highlight>至少存在一个</Highlight> S。看看它是如何失效的：「所有非法入内者都将被起诉」这句话，即便在没有非法入内者出现的太平盛世，地主说出来也依然是真的。但差等关系会强行推导出「有的非法入内者将被起诉」——而这断言了非法入内者的<Highlight>存在</Highlight>。更糟的是：「所有独角兽都是白色的」听起来人畜无害，但经典的对当方阵却能从中推导出「有的独角兽是白色的」，通过纯粹的逻辑召唤出了一只独角兽。这就是所谓的<Term>存在蕴涵问题</Term> (problem of existential import)<TipNote text={"存在蕴涵是一种假设，认为一个命题暗示了其主语在现实中至少有一个实例。"} />，这正是弗雷格的量词（我们在正文中见过）被发明出来要弥合的精确缝隙。
@@ -295,4 +296,3 @@ import Term from "@app/components/lesson/Term.astro";
 1. Yang, K. et al. (2023). "LeanDojo: Theorem Proving with Retrieval-Augmented Language Models." *NeurIPS 2023.* Hubert, T. et al. (2025), "Olympiad-level formal mathematical reasoning with reinforcement learning," *Nature*, <Meta>doi:10.1038/s41586-025-09833-y。</Meta> [doi.org](https://doi.org/10.1038/s41586-025-09833-y) <Meta>— 自动形式化、Lean 作为一个 AI 训练环境、AlphaProof 的内核检查设计（深化正文）。</Meta>
 
 </Sources>
-
