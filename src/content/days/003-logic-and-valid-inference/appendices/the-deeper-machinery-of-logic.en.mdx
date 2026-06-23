@@ -1,3 +1,6 @@
+import AppendixCard from "@app/components/lesson/AppendixCard.astro";
+import AppendixCardGrid from "@app/components/lesson/AppendixCardGrid.astro";
+import AppendixCardTitle from "@app/components/lesson/AppendixCardTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -106,18 +109,48 @@ Gentzen then proved something deep about his own system: the <Term as="em">cut-e
 
 The main page gave you the two great *formal* fallacies — affirming the consequent and denying the antecedent — the ones with broken skeletons. But most of the bad reasoning you'll actually meet in the wild is *informal*: the form is fine, the content cheats. These have been catalogued since antiquity (Aristotle wrote a whole treatise, the *Sophistical Refutations*, on argumentative dirty tricks), and knowing their names is a genuine cognitive upgrade — you cannot easily un-see a fallacy once you can label it. Here is a working field guide to the most common specimens.
 
-<div class="appendix-card-grid">
-<div class="appendix-card"><b>Ad hominem</b> <span class="latin">"to the person"</span><p>Attack the arguer instead of the argument. "You'd say that — you're a banker." Whether bankers are biased is irrelevant to whether the claim is true.</p></div>
-<div class="appendix-card"><b>Straw man</b><p>Replace your opponent's actual position with a flimsy caricature, then knock that down. The easiest argument to win is one your opponent never made.</p></div>
-<div class="appendix-card"><b>Equivocation</b><p>Slide a word between two meanings mid-argument. "Nothing is better than eternal happiness; a ham sandwich is better than nothing; therefore a ham sandwich is better than eternal happiness." "Nothing" switched jobs.</p></div>
-<div class="appendix-card"><b>False dilemma</b><p>Offer two options as if they were the only two. "Either we ban it or we descend into chaos." Reality usually has more than two doors.</p></div>
-<div class="appendix-card"><b>Begging the question</b> <span class="latin">petitio principii</span><p>Smuggle the conclusion into the premises. "It's reliable because it says so, and it wouldn't say so if it weren't reliable." The argument assumes what it's meant to prove — a tiny version of Day 1's circular justification.</p></div>
-<div class="appendix-card"><b>Post hoc</b> <span class="latin">post hoc ergo propter hoc</span><p>"After this, therefore because of this." The rooster crows, the sun rises; the rooster takes the credit. Mistaking sequence for cause — the trap Day 5 is built to disarm.</p></div>
-<div class="appendix-card"><b>Slippery slope</b><p>Claim one small step must inevitably tumble all the way down, without showing why each step forces the next. Sometimes true, usually asserted rather than argued.</p></div>
-<div class="appendix-card"><b>Appeal to authority</b> <span class="latin">ad verecundiam</span><p>Not all such appeals are fallacious — trusting genuine experts is rational. It curdles into fallacy when the "authority" is irrelevant, fabricated, or outside their field.</p></div>
-<div class="appendix-card"><b>Hasty generalization</b><p>Leap to a sweeping rule from a handful of cases. Induction (Day 2) done recklessly — the fallacy is in the <em>haste</em>, not the generalizing.</p></div>
-<div class="appendix-card"><b>No true Scotsman</b><p>Defend a generalization by redefining it to dodge counterexamples. "No Scotsman puts sugar on porridge." "But my uncle Angus—" "No <em>true</em> Scotsman." The claim is made unfalsifiable by fiat.</p></div>
-</div>
+<AppendixCardGrid>
+<AppendixCard>
+<AppendixCardTitle><b>Ad hominem</b> <span class="latin">"to the person"</span></AppendixCardTitle>
+<p>Attack the arguer instead of the argument. "You'd say that — you're a banker." Whether bankers are biased is irrelevant to whether the claim is true.</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><b>Straw man</b></AppendixCardTitle>
+<p>Replace your opponent's actual position with a flimsy caricature, then knock that down. The easiest argument to win is one your opponent never made.</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><b>Equivocation</b></AppendixCardTitle>
+<p>Slide a word between two meanings mid-argument. "Nothing is better than eternal happiness; a ham sandwich is better than nothing; therefore a ham sandwich is better than eternal happiness." "Nothing" switched jobs.</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><b>False dilemma</b></AppendixCardTitle>
+<p>Offer two options as if they were the only two. "Either we ban it or we descend into chaos." Reality usually has more than two doors.</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><b>Begging the question</b> <span class="latin">petitio principii</span></AppendixCardTitle>
+<p>Smuggle the conclusion into the premises. "It's reliable because it says so, and it wouldn't say so if it weren't reliable." The argument assumes what it's meant to prove — a tiny version of Day 1's circular justification.</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><b>Post hoc</b> <span class="latin">post hoc ergo propter hoc</span></AppendixCardTitle>
+<p>"After this, therefore because of this." The rooster crows, the sun rises; the rooster takes the credit. Mistaking sequence for cause — the trap Day 5 is built to disarm.</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><b>Slippery slope</b></AppendixCardTitle>
+<p>Claim one small step must inevitably tumble all the way down, without showing why each step forces the next. Sometimes true, usually asserted rather than argued.</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><b>Appeal to authority</b> <span class="latin">ad verecundiam</span></AppendixCardTitle>
+<p>Not all such appeals are fallacious — trusting genuine experts is rational. It curdles into fallacy when the "authority" is irrelevant, fabricated, or outside their field.</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><b>Hasty generalization</b></AppendixCardTitle>
+<p>Leap to a sweeping rule from a handful of cases. Induction (Day 2) done recklessly — the fallacy is in the <em>haste</em>, not the generalizing.</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><b>No true Scotsman</b></AppendixCardTitle>
+<p>Defend a generalization by redefining it to dodge counterexamples. "No Scotsman puts sugar on porridge." "But my uncle Angus—" "No <em>true</em> Scotsman." The claim is made unfalsifiable by fiat.</p>
+</AppendixCard>
+</AppendixCardGrid>
 
 A special pair deserves its own spotlight, because they are where logic meets the probability we'll meet tomorrow on **Day 4**. The <Term as="em">gambler's fallacy</Term><TipNote text={"The gambler’s fallacy is the mistake of thinking independent random events must “balance out” soon after a streak."} /> is the conviction that a run of reds at the roulette wheel makes black "due" — as if the wheel had a memory and a conscience. It doesn't; each spin is independent, and the ball owes you nothing. Its mirror image, the <Term as="em">base-rate fallacy</Term><TipNote text={"The base-rate fallacy is ignoring how common or rare the underlying condition is when interpreting evidence."} />, is ignoring how rare something is when interpreting evidence: a test that's "99% accurate" for a disease that afflicts one person in ten thousand will still flag mostly healthy people, because the rare truth is swamped by the common error. Both are failures of probabilistic intuition so systematic that they need formal machinery to override — which is precisely the argument tomorrow opens with.
 

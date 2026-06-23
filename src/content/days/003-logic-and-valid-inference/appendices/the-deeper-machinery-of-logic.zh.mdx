@@ -1,3 +1,6 @@
+import AppendixCard from "@app/components/lesson/AppendixCard.astro";
+import AppendixCardGrid from "@app/components/lesson/AppendixCardGrid.astro";
+import AppendixCardTitle from "@app/components/lesson/AppendixCardTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -107,18 +110,48 @@ import Term from "@app/components/lesson/Term.astro";
 
 正文给了你两种伟大的「形式谬误」——肯定后件和否定前件，它们有着破碎的骨架。但你在现实中遇到的大多数糟糕推理都是「非形式谬误」：形式没问题，内容在耍诈。自古以来，人们就开始对这些谬误进行分类（亚里士多德专门写过一篇论文《诡辩驳议》，详述了论辩中的各种肮脏手段）。掌握它们的名字是一种真正的认知升级——一旦你能给一个谬误贴上标签，你就再也无法对它视而不见。这里有一份针对最常见谬误的实地指南。
 
-<div class="appendix-card-grid">
-<div class="appendix-card"><span class="term">诉诸人身</span> <span class="latin">"ad hominem"</span><p>攻击论辩者而非论点本身。「你当然会这么说——你是个银行家。」银行家是否有偏见，与该主张本身是否为真无关。</p></div>
-<div class="appendix-card"><span class="term">稻草人谬误</span><p>用一个站不住脚的夸张版本取代对手的真实立场，然后将其击倒。最容易赢的争论，是对手从未提出过的那个。</p></div>
-<div class="appendix-card"><span class="term">偷换概念</span><p>在论证中途悄悄转换词义。「无物比永恒的幸福更好；火腿三明治比无物更好；因此火腿三明治比永恒的幸福更好。」这里的“无物”在两句话中扮演了不同的角色。</p></div>
-<div class="appendix-card"><span class="term">虚假两难</span><p>提供两个选项，仿佛只有这两个选择。「要么禁掉它，要么我们就陷入混乱。」现实通常有两扇以上的门。</p></div>
-<div class="appendix-card"><span class="term">循环论证 / 乞题</span> <span class="latin">"petitio principii"</span><p>将结论偷运进前提之中。「它是可靠的，因为它就是这么说的；如果它不可靠，它就不会这么说。」论证假设了它本应证明的东西——这是第 1 日提到的循环辩护的一个微缩版本。</p></div>
-<div class="appendix-card"><span class="term">事后归因</span> <span class="latin">"post hoc ergo propter hoc"</span><p>「在此之后，因此由此导致。」公鸡打鸣，太阳升起；公鸡于是揽功。将先后顺序误认为因果关系——这是第 5 日要拆解的陷阱。</p></div>
-<div class="appendix-card"><span class="term">滑坡谬误</span><p>宣称迈出一小步必然会导致全盘崩塌，却未能展示每一步是如何迫使下一步发生的。有时确有其事，但通常只是断言而非论证。</p></div>
-<div class="appendix-card"><span class="term">诉诸权威</span> <span class="latin">"ad verecundiam"</span><p>并非所有诉诸权威都是谬误——信任真正的专家是理性的。当该“权威”无关、虚构或处于其专业领域之外时，它就变质成了谬误。</p></div>
-<div class="appendix-card"><span class="term">以偏概全</span><p>从少数几个案例轻率地跃迁到普遍规律。这是草率的归纳（第 2 日）——谬误在于「草率」，而非归纳本身。</p></div>
-<div class="appendix-card"><span class="term">诉诸纯洁 / 无真苏格兰人</span><p>通过重新定义泛化概念来躲避反例。「苏格兰人从不在粥里放糖。」「但我安格斯叔叔……」「没有『真正的』苏格兰人会这么做。」通过行政命令使断言变得不可伪造。</p></div>
-</div>
+<AppendixCardGrid>
+<AppendixCard>
+<AppendixCardTitle><span class="term">诉诸人身</span> <span class="latin">"ad hominem"</span></AppendixCardTitle>
+<p>攻击论辩者而非论点本身。「你当然会这么说——你是个银行家。」银行家是否有偏见，与该主张本身是否为真无关。</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><span class="term">稻草人谬误</span></AppendixCardTitle>
+<p>用一个站不住脚的夸张版本取代对手的真实立场，然后将其击倒。最容易赢的争论，是对手从未提出过的那个。</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><span class="term">偷换概念</span></AppendixCardTitle>
+<p>在论证中途悄悄转换词义。「无物比永恒的幸福更好；火腿三明治比无物更好；因此火腿三明治比永恒的幸福更好。」这里的“无物”在两句话中扮演了不同的角色。</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><span class="term">虚假两难</span></AppendixCardTitle>
+<p>提供两个选项，仿佛只有这两个选择。「要么禁掉它，要么我们就陷入混乱。」现实通常有两扇以上的门。</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><span class="term">循环论证 / 乞题</span> <span class="latin">"petitio principii"</span></AppendixCardTitle>
+<p>将结论偷运进前提之中。「它是可靠的，因为它就是这么说的；如果它不可靠，它就不会这么说。」论证假设了它本应证明的东西——这是第 1 日提到的循环辩护的一个微缩版本。</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><span class="term">事后归因</span> <span class="latin">"post hoc ergo propter hoc"</span></AppendixCardTitle>
+<p>「在此之后，因此由此导致。」公鸡打鸣，太阳升起；公鸡于是揽功。将先后顺序误认为因果关系——这是第 5 日要拆解的陷阱。</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><span class="term">滑坡谬误</span></AppendixCardTitle>
+<p>宣称迈出一小步必然会导致全盘崩塌，却未能展示每一步是如何迫使下一步发生的。有时确有其事，但通常只是断言而非论证。</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><span class="term">诉诸权威</span> <span class="latin">"ad verecundiam"</span></AppendixCardTitle>
+<p>并非所有诉诸权威都是谬误——信任真正的专家是理性的。当该“权威”无关、虚构或处于其专业领域之外时，它就变质成了谬误。</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><span class="term">以偏概全</span></AppendixCardTitle>
+<p>从少数几个案例轻率地跃迁到普遍规律。这是草率的归纳（第 2 日）——谬误在于「草率」，而非归纳本身。</p>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><span class="term">诉诸纯洁 / 无真苏格兰人</span></AppendixCardTitle>
+<p>通过重新定义泛化概念来躲避反例。「苏格兰人从不在粥里放糖。」「但我安格斯叔叔……」「没有『真正的』苏格兰人会这么做。」通过行政命令使断言变得不可伪造。</p>
+</AppendixCard>
+</AppendixCardGrid>
 
 有一对特殊的谬误值得单独关注，因为它们是逻辑与我们明天要在<Highlight>第 4 日</Highlight>遇到的概率论交汇的地方。<Term>赌徒谬误</Term> (gambler's fallacy)<TipNote text={"赌徒谬误是一种错误认知，认为在经历了一连串极端情况后，独立的随机事件必然会很快“平衡”回来。"} />是指坚信轮盘赌中连续出现红色会让黑色“快要出了”——仿佛轮盘有着记忆和良知。它没有；每一次转动都是独立的，球不欠你任何东西。与之对应的镜像是<Term>基础概率谬误</Term> (base-rate fallacy)<TipNote text={"基础概率谬误是在解释证据时，忽略了潜在情况本身的普遍或罕见程度。"} />，即在解读证据时忽略了某事的稀有程度：一种对于发病率万分之一的疾病有着“99% 准确度”的检测，依然会筛查出大量的健康人，因为稀有的真相被普遍的误差淹没了。这两者都是极其系统的概率直觉失败，以至于需要形式化的机器来强制修正——而这正是明天内容的开篇论点。
 
