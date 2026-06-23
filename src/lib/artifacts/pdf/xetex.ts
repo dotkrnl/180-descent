@@ -446,6 +446,14 @@ function renderList(node: MdxNode, state: MdxRenderState): string {
   return `\\begin{${env}}\n${items}\n\\end{${env}}`;
 }
 
+function renderAppendixTimelineList(node: MdxNode, state: MdxRenderState): string {
+  const items = (node.children ?? [])
+    .filter((child) => child.name === "AppendixTimelineListItem")
+    .map((child) => `\\item ${renderChildren(child.children ?? [], state, { block: true, listItem: true }).trim()}`)
+    .join("\n");
+  return items ? `\\begin{itemize}\n${items}\n\\end{itemize}` : "";
+}
+
 function renderCodeBlock(value: string): string {
   const lines = value.replace(/\s+$/g, "").split(/\r?\n/);
   const rendered = lines.map((line) => {
@@ -573,6 +581,13 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "AppendixCardMeta") {
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `{\\ttfamily\\footnotesize\\color{descentMuted}${text}\\par}` : "";
+  }
+  if (name === "AppendixTimelineList") {
+    return renderAppendixTimelineList(node, state);
+  }
+  if (name === "AppendixTimelineListYear") {
+    const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
+    return text ? `{\\ttfamily\\footnotesize\\color{descentMuted}${text}}\\quad ` : "";
   }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });

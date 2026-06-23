@@ -1,3 +1,6 @@
+import AppendixTimelineList from "@app/components/lesson/AppendixTimelineList.astro";
+import AppendixTimelineListItem from "@app/components/lesson/AppendixTimelineListItem.astro";
+import AppendixTimelineListYear from "@app/components/lesson/AppendixTimelineListYear.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -158,11 +161,11 @@ And yet. Strip away the hype, wait a few months, and something genuine emerges f
 
 But notice how Tao — a working mathematician, not a marketing department — frames it, because his framing is the model of calibrated thinking this course is trying to install in you. These, he stresses, are the **"lowest-hanging fruit."** Erdős problems "vary widely in difficulty, by several orders of magnitude"; an "open" label "is always provisional"; and the reporting is badly biased, because the failures never get announced — the tool had already been "quietly applied to a significant fraction of the currently open Erdős problems, without notable success." The successes are real and worth celebrating. They are also the easiest problems in the pile, solved with human feedback in the loop, with closely related results already sitting in the literature. The machine is, in Tao's lovely phrase, "clearing out the lowest-hanging fruit and isolating the problems which are genuinely difficult."
 
-<ul class="appendix-timeline">
-<li class="hype"><span class="yr">Oct 2025 · the spike</span><b>"GPT-5 solved 10 unsolved Erdős problems."</b> Announced by OpenAI figures; widely shared as a research breakthrough. <StatusChip status={"bad"} label={"hype"} printLabel={"review"} /></li>
-<li class="real"><span class="yr">Oct 2025 · the correction</span><b>"A dramatic misrepresentation" — Thomas Bloom.</b> The problems were solved years ago by humans; the AI found the existing papers. Hassabis: "embarrassing."</li>
-<li class="hint"><span class="yr">Jan 2026 · the real thing</span><b>Erdős #728 solved "more or less autonomously," not in existing literature.</b> A few more follow, some Lean-verified and accepted by Tao — but the "lowest-hanging fruit." <StatusChip status={"hint"} label={"promising"} /></li>
-</ul>
+<AppendixTimelineList>
+<AppendixTimelineListItem status="hype"><AppendixTimelineListYear>Oct 2025 · the spike</AppendixTimelineListYear><b>"GPT-5 solved 10 unsolved Erdős problems."</b> Announced by OpenAI figures; widely shared as a research breakthrough. <StatusChip status={"bad"} label={"hype"} printLabel={"review"} /></AppendixTimelineListItem>
+<AppendixTimelineListItem status="real"><AppendixTimelineListYear>Oct 2025 · the correction</AppendixTimelineListYear><b>"A dramatic misrepresentation" — Thomas Bloom.</b> The problems were solved years ago by humans; the AI found the existing papers. Hassabis: "embarrassing."</AppendixTimelineListItem>
+<AppendixTimelineListItem status="hint"><AppendixTimelineListYear>Jan 2026 · the real thing</AppendixTimelineListYear><b>Erdős #728 solved "more or less autonomously," not in existing literature.</b> A few more follow, some Lean-verified and accepted by Tao — but the "lowest-hanging fruit." <StatusChip status={"hint"} label={"promising"} /></AppendixTimelineListItem>
+</AppendixTimelineList>
 
 The lesson is not "AI math is fake" — beat three is real, and may well be the leading edge of something large. The lesson is that the *same underlying events* produced a wildly false headline in October and a carefully true statement in January, and the only way to tell them apart was to ask who was speaking, what "solved" and "open" actually meant, and whether the result had been checked. That is the hype filter, working exactly as designed, on a live story. Hold onto the method; you'll need it long after the specific problem numbers are forgotten.
 

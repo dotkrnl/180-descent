@@ -1,3 +1,6 @@
+import AppendixTimelineList from "@app/components/lesson/AppendixTimelineList.astro";
+import AppendixTimelineListItem from "@app/components/lesson/AppendixTimelineListItem.astro";
+import AppendixTimelineListYear from "@app/components/lesson/AppendixTimelineListYear.astro";
 import AppendixCard from "@app/components/lesson/AppendixCard.astro";
 import AppendixCardGrid from "@app/components/lesson/AppendixCardGrid.astro";
 import AppendixCardTitle from "@app/components/lesson/AppendixCardTitle.astro";
@@ -263,14 +266,14 @@ import Term from "@app/components/lesson/Term.astro";
 
 黑尔斯的回应是向怀疑宣战。他启动了 <Highlight>Flyspeck 项目</Highlight>（这个名字是“开普勒形式化证明”的俏皮缩写），旨在将整个证明在证明助手中形式化，让没有任何计算是不可信的。一个国际团队耗时十余年，终于在 <Highlight>2014 年</Highlight>完工，他们结合使用了 <Highlight>HOL Light</Highlight> 和 <Highlight>Isabelle</Highlight> 系统，并于 2015 年发布了官方报告。这个悬而未决 400 年、在 1998 年只有“99% 肯定”的橙子堆放问题，终于成为了一个完全由机器验证的定理。<StatusChip status={"ok"} label={"已确立"} />
 
-<ul class="appendix-timeline">
-<li><span class="yr">1929 · 基础保证</span><span class="term">哥德尔完备性定理。</span> 在标准一阶逻辑中，语义有效性与形式可证性能够精确对应；这为一阶逻辑的程序化证明提供基础。现代证明助手还依赖各自的内核、基础理论、公理与形式化质量。</li>
-<li class="open"><span class="yr">1976 · 争议</span><span class="term">四色定理 (Appel &amp; Haken)。</span> 约 2,000 个案例由计算机检查；这是第一个人类无法手工验证的重大证明。“四色足矣”。</li>
-<li><span class="yr">1996 · 孤独的机器</span><span class="term">罗宾斯猜想 (McCune 的 EQP)。</span> 一个自动化证明器在 8 天内解决了一个有着 60 年历史的悬案——证明过程“无人能懂”。</li>
-<li><span class="yr">2005 · 救赎</span><span class="term">四色定理形式化 (Gonthier, Coq)。</span> 1976 年那场对程序的盲信，变成了内核验证过的定理。</li>
-<li><span class="yr">2014 · 400 年的终点</span><span class="term">开普勒猜想形式化 (Flyspeck, HOL Light + Isabelle)。</span> 黑尔斯那份“99% 肯定”的证明，变成了完全由机器验证的证明。</li>
-<li class="open"><span class="yr">2024–26 · AI 转向</span><span class="term">AlphaProof 及其后。</span> 证明内核内部的神经搜索——正文已提及，下文将深入探讨。</li>
-</ul>
+<AppendixTimelineList>
+<AppendixTimelineListItem><AppendixTimelineListYear>1929 · 基础保证</AppendixTimelineListYear><span class="term">哥德尔完备性定理。</span> 在标准一阶逻辑中，语义有效性与形式可证性能够精确对应；这为一阶逻辑的程序化证明提供基础。现代证明助手还依赖各自的内核、基础理论、公理与形式化质量。</AppendixTimelineListItem>
+<AppendixTimelineListItem status="open"><AppendixTimelineListYear>1976 · 争议</AppendixTimelineListYear><span class="term">四色定理 (Appel &amp; Haken)。</span> 约 2,000 个案例由计算机检查；这是第一个人类无法手工验证的重大证明。“四色足矣”。</AppendixTimelineListItem>
+<AppendixTimelineListItem><AppendixTimelineListYear>1996 · 孤独的机器</AppendixTimelineListYear><span class="term">罗宾斯猜想 (McCune 的 EQP)。</span> 一个自动化证明器在 8 天内解决了一个有着 60 年历史的悬案——证明过程“无人能懂”。</AppendixTimelineListItem>
+<AppendixTimelineListItem><AppendixTimelineListYear>2005 · 救赎</AppendixTimelineListYear><span class="term">四色定理形式化 (Gonthier, Coq)。</span> 1976 年那场对程序的盲信，变成了内核验证过的定理。</AppendixTimelineListItem>
+<AppendixTimelineListItem><AppendixTimelineListYear>2014 · 400 年的终点</AppendixTimelineListYear><span class="term">开普勒猜想形式化 (Flyspeck, HOL Light + Isabelle)。</span> 黑尔斯那份“99% 肯定”的证明，变成了完全由机器验证的证明。</AppendixTimelineListItem>
+<AppendixTimelineListItem status="open"><AppendixTimelineListYear>2024–26 · AI 转向</AppendixTimelineListYear><span class="term">AlphaProof 及其后。</span> 证明内核内部的神经搜索——正文已提及，下文将深入探讨。</AppendixTimelineListItem>
+</AppendixTimelineList>
 
 ### 机器到底是如何搜索证明的
 

@@ -1,3 +1,6 @@
+import AppendixTimelineList from "@app/components/lesson/AppendixTimelineList.astro";
+import AppendixTimelineListItem from "@app/components/lesson/AppendixTimelineListItem.astro";
+import AppendixTimelineListYear from "@app/components/lesson/AppendixTimelineListYear.astro";
 import AppendixCard from "@app/components/lesson/AppendixCard.astro";
 import AppendixCardGrid from "@app/components/lesson/AppendixCardGrid.astro";
 import AppendixCardTitle from "@app/components/lesson/AppendixCardTitle.astro";
@@ -262,14 +265,14 @@ The pattern recurred, bigger, in the story of <Term as="em">Kepler's conjecture<
 
 Hales's response was to declare war on the doubt. He launched the **Flyspeck project** — the name a playful contraction of "Formal Proof of Kepler" — to formalize the entire thing inside proof assistants, leaving no calculation untrusted. It took a international team over a decade. In **2014** they finished, using a combination of the **HOL Light** and **Isabelle** systems, and published the official account in 2015. The orange-stacking problem, open for 400 years and only "99% certain" in 1998, became a fully machine-verified theorem. <StatusChip status={"ok"} label={"established"} />
 
-<ul class="appendix-timeline">
-<li><span class="yr">1929 · the licence</span><b>Gödel's completeness theorem.</b> Provability and truth march in step for first-order logic — the guarantee under which every proof checker operates.</li>
-<li class="open"><span class="yr">1976 · the controversy</span><b>Four Colour Theorem (Appel &amp; Haken).</b> ~2,000 cases checked by computer; the first major proof no human could verify by hand. "Four colors suffice."</li>
-<li><span class="yr">1996 · the lone machine</span><b>Robbins conjecture (McCune's EQP).</b> An automated prover settles a 60-year-old open problem in 8 days — with a proof "nobody understands."</li>
-<li><span class="yr">2005 · the redemption</span><b>Four Colour Theorem, formalized (Gonthier, in Coq).</b> The 1976 act of faith becomes a kernel-checked theorem.</li>
-<li><span class="yr">2014 · the 400-year finish</span><b>Kepler conjecture, formalized (Flyspeck, HOL Light + Isabelle).</b> Hales's "99% certain" proof becomes fully machine-verified.</li>
-<li class="open"><span class="yr">2024–26 · the AI turn</span><b>AlphaProof and after.</b> Neural search inside a proof kernel — covered on the main page, deepened below.</li>
-</ul>
+<AppendixTimelineList>
+<AppendixTimelineListItem><AppendixTimelineListYear>1929 · the licence</AppendixTimelineListYear><b>Gödel's completeness theorem.</b> Provability and truth march in step for first-order logic — the guarantee under which every proof checker operates.</AppendixTimelineListItem>
+<AppendixTimelineListItem status="open"><AppendixTimelineListYear>1976 · the controversy</AppendixTimelineListYear><b>Four Colour Theorem (Appel &amp; Haken).</b> ~2,000 cases checked by computer; the first major proof no human could verify by hand. "Four colors suffice."</AppendixTimelineListItem>
+<AppendixTimelineListItem><AppendixTimelineListYear>1996 · the lone machine</AppendixTimelineListYear><b>Robbins conjecture (McCune's EQP).</b> An automated prover settles a 60-year-old open problem in 8 days — with a proof "nobody understands."</AppendixTimelineListItem>
+<AppendixTimelineListItem><AppendixTimelineListYear>2005 · the redemption</AppendixTimelineListYear><b>Four Colour Theorem, formalized (Gonthier, in Coq).</b> The 1976 act of faith becomes a kernel-checked theorem.</AppendixTimelineListItem>
+<AppendixTimelineListItem><AppendixTimelineListYear>2014 · the 400-year finish</AppendixTimelineListYear><b>Kepler conjecture, formalized (Flyspeck, HOL Light + Isabelle).</b> Hales's "99% certain" proof becomes fully machine-verified.</AppendixTimelineListItem>
+<AppendixTimelineListItem status="open"><AppendixTimelineListYear>2024–26 · the AI turn</AppendixTimelineListYear><b>AlphaProof and after.</b> Neural search inside a proof kernel — covered on the main page, deepened below.</AppendixTimelineListItem>
+</AppendixTimelineList>
 
 ### How a machine actually searches for a proof
 
