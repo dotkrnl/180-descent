@@ -8,7 +8,7 @@ export interface MathCheckOptions {
   siteDir?: string;
 }
 
-export interface MathCheckFailure {
+interface MathCheckFailure {
   file: string;
   label: string;
 }

@@ -7,17 +7,17 @@ export interface ContentRegistryOptions {
   daysDir: string;
 }
 
-export interface RegistryBody {
+interface RegistryBody {
   locale: Locale;
   path: string;
   source: string;
 }
 
-export interface RegistryAppendixBody extends RegistryBody {
+interface RegistryAppendixBody extends RegistryBody {
   appendixId: string;
 }
 
-export interface RegistryDay {
+interface RegistryDay {
   directory: string;
   manifestPath: string;
   manifest: DayManifest;

@@ -29,7 +29,7 @@ export interface BookData {
   };
 }
 
-export interface DownloadData {
+interface DownloadData {
   epub: string;
   pdf: string;
   deep_epub: string;
@@ -41,13 +41,13 @@ export interface CreditsData {
   images: CreditImage[];
 }
 
-export interface CreditFont {
+interface CreditFont {
   name: string;
   source: string;
   license: string;
 }
 
-export interface CreditImage {
+interface CreditImage {
   title: string;
   creator: string;
   source: string;
@@ -74,7 +74,7 @@ export interface Syllabus {
   blocks: SyllabusBlock[];
 }
 
-export interface SyllabusBlock {
+interface SyllabusBlock {
   id: string;
   start_day: number;
   end_day: number;

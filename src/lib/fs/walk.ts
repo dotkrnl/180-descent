@@ -57,15 +57,6 @@ export async function pathExists(filePath: string): Promise<boolean> {
   }
 }
 
-export function pathExistsSync(filePath: string): boolean {
-  try {
-    fsSync.statSync(filePath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 function normalizeExts(exts: WalkOptions["exts"]): Set<string> | null {
   if (!exts) return null;
   if (typeof exts === "string") return new Set([exts]);

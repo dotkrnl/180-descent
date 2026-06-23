@@ -22,19 +22,19 @@ export interface ArtifactBookDay {
   components: ArtifactBookComponent[];
 }
 
-export interface ArtifactBookAppendix {
+interface ArtifactBookAppendix {
   id: string;
   title?: string;
   bodyPath: string;
   bodySource: string;
 }
 
-export interface ArtifactBookAsset {
+interface ArtifactBookAsset {
   id: string;
   path: string;
 }
 
-export interface ArtifactBookComponent {
+interface ArtifactBookComponent {
   id: string;
   webEntry: string;
   artifactVariants: {

@@ -12,7 +12,7 @@ export interface AssetPreparationOptions {
   resolvePackageRoot?: (packageName: string) => string;
 }
 
-export interface LatinFontAsset {
+interface LatinFontAsset {
   packageName: string;
   fileName: string;
 }
@@ -26,7 +26,7 @@ export interface PrepareLatinFontsResult {
   outDir: string;
 }
 
-export interface CjkFontWeight {
+interface CjkFontWeight {
   cssFile: string;
   prefix: string;
 }
@@ -53,7 +53,7 @@ export interface PreparePdfFontsResult {
   outDir: string;
 }
 
-export const latinFontAssets: readonly LatinFontAsset[] = [
+const latinFontAssets: readonly LatinFontAsset[] = [
   { packageName: "@fontsource/fraunces", fileName: "fraunces-latin-400-normal.woff2" },
   { packageName: "@fontsource/fraunces", fileName: "fraunces-latin-400-italic.woff2" },
   { packageName: "@fontsource/fraunces", fileName: "fraunces-latin-500-normal.woff2" },
@@ -71,7 +71,7 @@ export const latinFontAssets: readonly LatinFontAsset[] = [
   { packageName: "@fontsource/ibm-plex-mono", fileName: "ibm-plex-mono-latin-600-normal.woff2" }
 ];
 
-export const cjkFontWeights: readonly CjkFontWeight[] = [
+const cjkFontWeights: readonly CjkFontWeight[] = [
   { cssFile: "lxgwwenkai-regular.css", prefix: "lxgwwenkai-regular" },
   { cssFile: "lxgwwenkai-bold.css", prefix: "lxgwwenkai-bold" }
 ];

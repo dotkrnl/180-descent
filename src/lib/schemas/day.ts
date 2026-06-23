@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-export const localeSchema = z.enum(["en", "zh"]);
+const localeSchema = z.enum(["en", "zh"]);
 
-export const reviewStatusSchema = z.enum([
+const reviewStatusSchema = z.enum([
   "draft",
   "needs-review",
   "reviewed",
@@ -10,25 +10,25 @@ export const reviewStatusSchema = z.enum([
   "pending"
 ]);
 
-export const localeContentSchema = z.object({
+const localeContentSchema = z.object({
   body: z.string().min(1),
   status: reviewStatusSchema,
   title: z.string().min(1),
   summary: z.string().min(1)
 });
 
-export const localizedTextSchema = z.object({
+const localizedTextSchema = z.object({
   en: z.string().min(1).optional(),
   zh: z.string().min(1).optional()
 }).strict();
 
-export const appendixLocaleSchema = z.object({
+const appendixLocaleSchema = z.object({
   body: z.string().min(1),
   status: reviewStatusSchema,
   title: z.string().min(1).optional()
 });
 
-export const appendixSchema = z.object({
+const appendixSchema = z.object({
   id: z.string().min(1),
   title: localizedTextSchema.optional(),
   locales: z.object({
@@ -40,7 +40,7 @@ export const appendixSchema = z.object({
   )
 });
 
-export const localizedFilesSchema = z.object({
+const localizedFilesSchema = z.object({
   shared: z.string().min(1).optional(),
   en: z.string().min(1).optional(),
   zh: z.string().min(1).optional()
@@ -49,12 +49,12 @@ export const localizedFilesSchema = z.object({
   "Asset must declare at least one shared or localized file"
 );
 
-export const assetSchema = z.object({
+const assetSchema = z.object({
   id: z.string().min(1),
   files: localizedFilesSchema
 }).strict();
 
-export const componentSchema = z.object({
+const componentSchema = z.object({
   id: z.string().min(1),
   webEntry: z.string().min(1),
   artifactVariants: z.object({
@@ -86,5 +86,4 @@ export const dayManifestSchema = z.object({
 }).strict();
 
 export type Locale = z.infer<typeof localeSchema>;
-export type ReviewStatus = z.infer<typeof reviewStatusSchema>;
 export type DayManifest = z.infer<typeof dayManifestSchema>;

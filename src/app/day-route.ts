@@ -7,7 +7,7 @@ type MdxModule = {
   default: AstroComponentFactory;
 };
 
-export interface DayAppendixRenderEntry {
+interface DayAppendixRenderEntry {
   id: string;
   title: string;
   Body: AstroComponentFactory;

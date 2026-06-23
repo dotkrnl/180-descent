@@ -3,7 +3,7 @@ import { existsSync, readdirSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-export type ToolCategory = "durable-required";
+type ToolCategory = "durable-required";
 
 interface ToolDefinition {
   label: string;
@@ -173,7 +173,7 @@ const TOOLS = {
 
 const TOOLS_BY_NAME: Record<string, ToolDefinition | undefined> = TOOLS;
 
-export const TOOL_GROUPS = {
+const TOOL_GROUPS = {
   durable: ["node", "npm", "pdftotext", "latexmk", "xelatex", "fonttools", "rsvg", "xmllint", "playwright", "java", "epubcheck"],
   epubcheck: ["java", "epubcheck"]
 } as const;
