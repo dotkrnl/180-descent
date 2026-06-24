@@ -26,5 +26,7 @@ describe("static site URL helpers", () => {
     expect(sitePathForHref(siteDir, siteUrl, "/favicon.ico")).toBe(path.join(siteDir, "favicon.ico"));
     expect(sitePathForHref(siteDir, siteUrl, "https://180d.io/social.png")).toBe(path.join(siteDir, "social.png"));
     expect(sitePathForHref(siteDir, siteUrl, "https://example.com/social.png")).toBe("");
+    expect(sitePathForHref(siteDir, siteUrl, "HTTPS://example.com/social.png")).toBe("");
+    expect(sitePathForHref(siteDir, siteUrl, "//example.com/social.png")).toBe("");
   });
 });

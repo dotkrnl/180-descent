@@ -39,8 +39,9 @@ export function sitePathForUrlPath(siteDir: string, urlPath: string): string {
 }
 
 export function sitePathForHref(siteDir: string, siteUrl: string, href: string): string {
-  if (href.startsWith("http") && !href.startsWith(siteUrl)) return "";
-  const parsed = href.startsWith("http") ? new URL(href) : new URL(href, siteUrl);
+  const base = new URL(siteUrl);
+  const parsed = new URL(href, base);
+  if (parsed.origin !== base.origin) return "";
   return sitePathForUrlPath(siteDir, parsed.pathname);
 }
 
