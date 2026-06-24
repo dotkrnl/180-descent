@@ -45,7 +45,7 @@ const copy = zh ? {
 
   <div class="mv-controls" id="mv-controls">
     {copy.chips.map(([id, label]) => (
-      <button class="mvchip" id={id} aria-pressed="true" style={id === "mv-cherry" ? "margin-left:auto;border-style:dashed;" : undefined}><i></i>{label}</button>
+      <button class:list={["mvchip", id === "mv-cherry" && "mvchip-cherry"]} id={id} aria-pressed="true"><i></i>{label}</button>
     ))}
   </div>
 
@@ -56,6 +56,6 @@ const copy = zh ? {
   <div class="mv-read" id="mv-read"></div>
   <div class="mv-cherry honest" id="mv-cherrybox">
     <p class="lh" id="mv-clh">{copy.reading}</p>
-    <p id="mv-cbody" style="margin:0;"></p>
+    <p class="u-m-0" id="mv-cbody"></p>
   </div>
 </Panel>
