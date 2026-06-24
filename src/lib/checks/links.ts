@@ -7,6 +7,7 @@ import { loadContentRegistry } from "@lib/content/registry";
 import { futureLinksDataFile } from "@lib/data/paths";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
+import { siteDir } from "@lib/static-site/routes";
 
 interface LinkCheckOptions {
   root: string;
@@ -23,11 +24,11 @@ interface FutureLinkEntry {
 }
 
 export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFailure[]> {
-  const siteDir = path.join(options.root, "_site");
+  const builtSiteDir = siteDir(options.root);
   const daysDir = contentDaysDir(options.root);
   const futureLinksPath = futureLinksDataFile(options.root);
   const failures: LinkCheckFailure[] = [];
-  const htmlFiles = await walkFiles(siteDir, { exts: ".html", ignored: [] });
+  const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignored: [] });
   const idCache = new Map<string, Set<string>>();
 
   for (const file of htmlFiles) {
@@ -47,8 +48,8 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
       const target = targetRef.samePage
         ? file
         : pathname.endsWith("/")
-          ? path.join(siteDir, pathname, "index.html")
-          : path.join(siteDir, pathname);
+          ? path.join(builtSiteDir, pathname, "index.html")
+          : path.join(builtSiteDir, pathname);
 
       try {
         await access(target);

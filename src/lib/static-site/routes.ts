@@ -23,12 +23,16 @@ export function dayUrlPrefix(locale: Locale): string {
   return locale === "zh" ? "/zh/days/" : "/days/";
 }
 
+export function siteDir(root: string): string {
+  return path.join(root, "_site");
+}
+
 export function siteDayDir(root: string, locale: Locale): string {
-  return locale === "zh" ? path.join(root, "_site/zh/days") : path.join(root, "_site/days");
+  return locale === "zh" ? path.join(siteDir(root), "zh/days") : path.join(siteDir(root), "days");
 }
 
 export function sitePageFile(root: string, locale: Locale, slug: StaticPageSlug): string {
   return locale === "zh"
-    ? path.join(root, "_site/zh", slug, "index.html")
-    : path.join(root, "_site", slug, "index.html");
+    ? path.join(siteDir(root), "zh", slug, "index.html")
+    : path.join(siteDir(root), slug, "index.html");
 }

@@ -7,6 +7,7 @@ import type { Element } from "domhandler";
 import { chromium } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
 import { walkFiles } from "@lib/fs/walk";
+import { siteDir } from "@lib/static-site/routes";
 import { contentType, urlForHtml } from "@lib/static-site/url";
 
 interface AccessibilityCheckOptions {
@@ -29,12 +30,12 @@ interface StaticServer {
 }
 
 async function checkStaticAccessibility(options: AccessibilityCheckOptions): Promise<StaticAccessibilityResult> {
-  const siteDir = path.resolve(options.root, "_site");
+  const builtSiteDir = siteDir(options.root);
   const errors: string[] = [];
-  const htmlFiles = await walkFiles(siteDir, { exts: ".html", ignored: [] });
+  const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignored: [] });
 
   for (const filePath of htmlFiles) {
-    const url = urlForHtml(siteDir, filePath);
+    const url = urlForHtml(builtSiteDir, filePath);
     const html = await readFile(filePath, "utf8");
     const $ = load(html);
 
@@ -98,17 +99,17 @@ async function checkStaticAccessibility(options: AccessibilityCheckOptions): Pro
     }
   }
 
-  const axePages = htmlFiles.map((filePath) => urlForHtml(siteDir, filePath));
+  const axePages = htmlFiles.map((filePath) => urlForHtml(builtSiteDir, filePath));
 
   return { errors, axePages };
 }
 
 export async function checkAccessibility(options: AccessibilityCheckOptions): Promise<AccessibilityCheckResult> {
-  const siteDir = path.resolve(options.root, "_site");
-  await stat(siteDir);
+  const builtSiteDir = siteDir(options.root);
+  await stat(builtSiteDir);
 
   const { errors: staticFailures, axePages } = await checkStaticAccessibility(options);
-  const { server, origin } = await startServer(siteDir);
+  const { server, origin } = await startServer(builtSiteDir);
   const browser = await chromium.launch();
   const failures = [...staticFailures];
 

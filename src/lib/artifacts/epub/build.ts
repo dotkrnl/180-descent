@@ -10,7 +10,7 @@ import { stripUnbundledKatexTtfSources } from "@lib/assets/fonts";
 import { fontsDir, katexFontsDir } from "@lib/assets/paths";
 import { readBookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
-import { dayUrlPrefix, siteDayDir, sitePageFile, staticPageUrl } from "@lib/static-site/routes";
+import { dayUrlPrefix, siteDayDir, siteDir, sitePageFile, staticPageUrl } from "@lib/static-site/routes";
 import { escapeXml } from "@lib/text/escape";
 
 type CheerioRoot = ReturnType<typeof cheerio.load>;
@@ -596,7 +596,7 @@ function registerEpubImage(src = "", imageAssets: Map<string, EpubImage>, root: 
   if (!imageAssets.has(href)) {
     imageAssets.set(href, {
       href,
-      filePath: path.join(root, "_site", pathOnly.slice(1)),
+      filePath: path.join(siteDir(root), pathOnly.slice(1)),
       mediaType,
       id: `img_${href.replace(/[^a-z0-9]/gi, "_")}`
     });

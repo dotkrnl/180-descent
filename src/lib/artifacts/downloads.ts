@@ -1,10 +1,11 @@
 import path from "node:path";
 import type { Locale } from "@lib/schemas/day";
+import { siteDir } from "@lib/static-site/routes";
 
 type ArtifactFormat = "epub" | "pdf";
 
 export function downloadsDir(root: string): string {
-  return path.join(root, "_site/downloads");
+  return path.join(siteDir(root), "downloads");
 }
 
 export function bookArtifactName(format: ArtifactFormat, locale: Locale, deepDive: boolean): string {

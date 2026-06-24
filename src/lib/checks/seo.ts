@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { load } from "cheerio";
 import { pathExists, walkFiles } from "@lib/fs/walk";
+import { siteDir } from "@lib/static-site/routes";
 import { urlForHtml } from "@lib/static-site/url";
 
 interface SeoCheckOptions {
@@ -14,20 +15,20 @@ interface SeoCheckResult {
 }
 
 export async function checkSeo(options: SeoCheckOptions): Promise<SeoCheckResult> {
-  const siteDir = path.resolve(options.root, "_site");
+  const builtSiteDir = siteDir(options.root);
   const siteUrl = "https://180d.io";
   const errors: string[] = [];
 
-  if (!await pathExists(siteDir)) {
+  if (!await pathExists(builtSiteDir)) {
     throw new Error("_site does not exist; run npm run build:site first");
   }
 
-  const htmlFiles = (await walkFiles(siteDir, { ignored: [] })).filter((file) => file.endsWith(".html"));
+  const htmlFiles = (await walkFiles(builtSiteDir, { ignored: [] })).filter((file) => file.endsWith(".html"));
   for (const file of htmlFiles) {
-    await checkHtml(siteDir, siteUrl, file, errors);
+    await checkHtml(builtSiteDir, siteUrl, file, errors);
   }
-  await checkSitemap(siteDir, errors);
-  await checkRobots(siteDir, siteUrl, errors);
+  await checkSitemap(builtSiteDir, errors);
+  await checkRobots(builtSiteDir, siteUrl, errors);
 
   return {
     checkedHtmlFiles: htmlFiles.length,

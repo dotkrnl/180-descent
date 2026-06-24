@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { contentDaysDir } from "@lib/content/paths";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
+import { siteDir } from "@lib/static-site/routes";
 
 interface MathCheckOptions {
   root: string;
@@ -32,7 +32,7 @@ const BUILT_PATTERNS = [
 
 export async function checkMath(options: MathCheckOptions): Promise<MathCheckResult> {
   const sourceDir = contentDaysDir(options.root);
-  const siteDir = path.join(options.root, "_site");
+  const builtSiteDir = siteDir(options.root);
   const failures: MathCheckFailure[] = [];
   const sourceFiles = await walkFiles(sourceDir, { exts: ".mdx", ignored: [] });
 
@@ -41,7 +41,7 @@ export async function checkMath(options: MathCheckOptions): Promise<MathCheckRes
     failures.push(...scanPatterns(options.root, file, content, RAW_SOURCE_PATTERNS));
   }
 
-  const builtFiles = await walkFiles(siteDir, { exts: ".html", ignored: [] });
+  const builtFiles = await walkFiles(builtSiteDir, { exts: ".html", ignored: [] });
   for (const file of builtFiles) {
     const content = await readFile(file, "utf8");
     failures.push(...scanPatterns(options.root, file, content, BUILT_PATTERNS));
