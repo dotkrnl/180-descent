@@ -24,6 +24,9 @@ import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
+import EpistemicBackstopFigure from "@app/components/lesson/figures/EpistemicBackstopFigure.astro";
+import KnowledgeBeforeBeliefTimeline from "@app/components/lesson/figures/KnowledgeBeforeBeliefTimeline.astro";
+import ZeteticNormTensionFigure from "@app/components/lesson/figures/ZeteticNormTensionFigure.astro";
 
 <Lead drop="第">一个附录梳理的是相对成熟的版图——怀疑论、语境中的「知道」、知识的价值、社会网络——这些问题在几十年前甚至几百年前就已进入讨论。而这一篇则来到边缘地带：研究者们仍在争论边界究竟画在哪里。下文所有内容都是自 2020 年以来的同行评议工作，它们可能真正重绘我们所谓的「知识」——正因为它是如此之新，所以需要经过前沿校准器。这里没有哪一项已经可以写成定论。每一个前沿都已催生了各自的反对文献，每一项主张都带有标签：<StatusChip status={"ok"} label={"已确立"} /> <StatusChip status={"hint"} label={"有前景"} printLabel={"线索"} /> <StatusChip status={"bad"} label={"有争议"} printLabel={"争议/炒作"} /> 读这一节，要像读一份前线报告：兴奋、零碎，而且随时可能被新证据修订。</Lead>
 
@@ -49,26 +52,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 其核心引擎是一个显而易见、听起来像陈词滥调的原则——<Term>探究工具性原则（Zetetic Instrumental Principle）</Term>：如果你想弄清楚一个问题的答案，你就应该采取必要的手段去弄清楚。现在看看它如何与基石性的认识论规范发生碰撞——即证据主义者的命令：你可以相信你的证据已经支持的任何内容。假设你正试图清点街对面建筑的窗户。良好的探究会说：专注，去数窗户，不要分心。但在流逝的每一瞬间，你的感官都向你提供了足够的证据，使你形成并被允许相信一千个无关紧要的事实——那辆车的颜色、街角的人数、云朵的形状。信念规范许可所有这些内容。探究规范则告诉你要忽略所有这些，去数窗户。顺从其中一个，你就会违背另一个。图表将这种挤压具体化了。
 
 <AppendixFigure variant="wide">
-<svg viewBox="0 0 520 200" role="img" aria-label="一位探究者在证据收集规范与聚焦问题规范之间被拉扯。">
-<circle cx="260" cy="100" r="34" fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="var(--accent)" stroke-width="2"></circle>
-<text x="260" y="96" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">你，</text>
-<text x="260" y="108" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">正在数窗户</text>
-<line x1="226" y1="100" x2="120" y2="100" stroke="var(--hint)" stroke-width="1.6" marker-end="url(#appendix-d001-the-edge-of-the-map-az)"></line>
-<line x1="294" y1="100" x2="400" y2="100" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#appendix-d001-the-edge-of-the-map-ab)"></line>
-<defs>
-<marker id="appendix-d001-the-edge-of-the-map-az" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--hint)"></path></marker>
-<marker id="appendix-d001-the-edge-of-the-map-ab" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--accent)"></path></marker>
-</defs>
-<rect x="8" y="62" width="118" height="76" rx="8" fill="var(--paper)" stroke="var(--hint)" stroke-width="1.4"></rect>
-<text x="67" y="84" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">信念规范</text>
-<text x="67" y="104" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">相信证据所</text>
-<text x="67" y="118" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">支持的任何内容</text>
-<rect x="394" y="62" width="118" height="76" rx="8" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.4"></rect>
-<text x="453" y="84" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">探究规范</text>
-<text x="453" y="104" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">忽略干扰，</text>
-<text x="453" y="118" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">回答问题</text>
-<text x="260" y="170" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">顺从其中一个 → 违背另一个</text>
-</svg>
+<ZeteticNormTensionFigure locale="zh" />
 <Caption class="figcap">Friedman 的张力：良好的探究与被许可的信念朝相反方向拉扯。</Caption>
 </AppendixFigure>
 
@@ -87,19 +71,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 心理学中的标准叙事是，我们的「心智理论」（theory of mind）——我们模拟他人心智的能力——是以信念为中心的，并且在孩子大约四岁最终通过错误信念任务（false-belief task，即理解某人可以持有孩子知道是错的信念）时趋于成熟。Phillips 及其同事汇集了多方面的证据，说明表征知识才是更基础的本领。线索如下：从发展角度看，婴儿和幼儿在能够处理错误信念之前很久，就能追踪谁看到过或有权访问信息——即谁知道。从比较上看，非人类大型类人猿表现出追踪他人感知和知识的强有力迹象，而关于信念追踪的令人信服的证据仍然难以捉摸。而在成年人中，对知识的归因至少与对信念的归因一样快——有时甚至更快，如果「X knows p」是通过先构建「X believes p」然后检查额外条件来计算的，这就很难解释。他们描绘的图景是一个<Term>事实性心智理论</Term>（factive theory of mind，即优先追踪「谁知道什么」的心智理论）：心智模拟他人的第一个也是最基础的工具是「他们知道什么？」，而更棘手的、容错的「他们仅仅相信什么（也许是错误的）？」则出现得更晚且成本更高。
 
 <AppendixFigure variant="wide">
-<svg viewBox="0 0 520 150" role="img" aria-label="发育和演化的排序：知识追踪比错误信念追踪出现得更早。">
-<line x1="40" y1="92" x2="490" y2="92" stroke="var(--line-strong)" stroke-width="2"></line>
-<text x="40" y="120" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">更早 / 更简单</text>
-<text x="490" y="120" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">更晚 / 成本更高</text>
-<circle cx="150" cy="92" r="7" fill="var(--ok)"></circle>
-<text x="150" y="62" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">追踪知识</text>
-<text x="150" y="78" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">「她看到了吗？」</text>
-<text x="150" y="138" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">婴儿· 猿类</text>
-<circle cx="380" cy="92" r="7" fill="var(--hint)"></circle>
-<text x="380" y="62" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">追踪错误信念</text>
-<text x="380" y="78" text-anchor="middle" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">「她是否错误地认为……」</text>
-<text x="380" y="138" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">~4 岁+</text>
-</svg>
+<KnowledgeBeforeBeliefTimeline locale="zh" />
 <Caption class="figcap">拟议的排序——与教科书中「信念优先」的故事相反。</Caption>
 </AppendixFigure>
 
@@ -138,21 +110,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat of Deepfakes," Philosophy &amp; Technology, 2021)：深度伪造削弱了视频所承载的关于实际发生情况的信息量，使其作为信号退化。
 
 <AppendixFigure variant="wide">
-<svg viewBox="0 0 520 180" role="img" aria-label="证言依靠在可能存在的录音录像后盾之上，而深度伪造移除了这一后盾。">
-<rect x="180" y="20" width="160" height="44" rx="9" fill="color-mix(in srgb,var(--accent) 12%,transparent)" stroke="var(--accent)" stroke-width="2"></rect>
-<text x="260" y="40" text-anchor="middle" font-family="Fraunces,serif" font-size="13" fill="var(--ink)">证言</text>
-<text x="260" y="55" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">「相信我的说法」</text>
-<line x1="260" y1="64" x2="260" y2="96" stroke="var(--ink-faint)" stroke-width="1.5" stroke-dasharray="3 4"></line>
-<text x="300" y="84" text-anchor="start" font-family="Newsreader,serif" font-size="10.5" fill="var(--ink-soft)">由……保持诚实</text>
-<rect x="150" y="100" width="220" height="40" rx="9" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.6"></rect>
-<text x="260" y="124" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">后盾：可能存在录音录像</text>
-<g stroke="var(--contested)" stroke-width="2.4">
-<line x1="392" y1="104" x2="430" y2="136"></line>
-<line x1="430" y1="104" x2="392" y2="136"></line>
-</g>
-<text x="412" y="154" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--contested)">深度伪造</text>
-<text x="260" y="166" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">移除横梁，上方的地板就会下陷</text>
-</svg>
+<EpistemicBackstopFigure locale="zh" />
 <Caption class="figcap">敲掉一个没人关注的支撑物，它所承载的结构依然会倒塌。</Caption>
 </AppendixFigure>
 

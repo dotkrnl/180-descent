@@ -887,6 +887,9 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["InferenceModesFigure", { selector: ".hero-art", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["InformationQuestionTree", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["InformationPhysicsFrontierMap", { selector: ".information-physics-frontier-map", width: "0.86\\linewidth", height: "0.3\\textheight" }],
+  ["ZeteticNormTensionFigure", { selector: ".zetetic-norm-tension-figure", width: "0.82\\linewidth", height: "0.24\\textheight" }],
+  ["KnowledgeBeforeBeliefTimeline", { selector: ".knowledge-before-belief-timeline", width: "0.82\\linewidth", height: "0.2\\textheight" }],
+  ["EpistemicBackstopFigure", { selector: ".epistemic-backstop-figure", width: "0.82\\linewidth", height: "0.22\\textheight" }],
   ["ForkingPathsFigure", { selector: ".forking-paths", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["CausationScatterFigure", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }]
 ]);

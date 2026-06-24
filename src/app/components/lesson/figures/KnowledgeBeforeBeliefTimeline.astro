@@ -1,0 +1,49 @@
+---
+import type { Locale } from "@lib/schemas/day";
+
+interface Props {
+  locale: Locale;
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      aria: "发育和演化的排序：知识追踪比错误信念追踪出现得更早。",
+      leftScale: "更早 / 更简单",
+      rightScale: "更晚 / 成本更高",
+      knowledgeTitle: "追踪知识",
+      knowledgeQuestion: "「她看到了吗？」",
+      knowledgeStage: "婴儿· 猿类",
+      beliefTitle: "追踪错误信念",
+      beliefQuestion: "「她是否错误地认为……」",
+      beliefStage: "~4 岁+",
+      italic: false
+    }
+  : {
+      aria: "A developmental and evolutionary ordering: knowledge-tracking appears earlier than false-belief tracking.",
+      leftScale: "earlier / simpler",
+      rightScale: "later / costlier",
+      knowledgeTitle: "tracks KNOWLEDGE",
+      knowledgeQuestion: "\"has she seen it?\"",
+      knowledgeStage: "infants · apes",
+      beliefTitle: "tracks FALSE BELIEF",
+      beliefQuestion: "\"does she wrongly think…?\"",
+      beliefStage: "~age 4+",
+      italic: true
+    };
+---
+<div class="knowledge-before-belief-timeline">
+  <svg viewBox="0 0 520 150" role="img" aria-label={copy.aria}>
+    <line x1="40" y1="92" x2="490" y2="92" stroke="var(--line-strong)" stroke-width="2"></line>
+    <text x="40" y="120" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.leftScale}</text>
+    <text x="490" y="120" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.rightScale}</text>
+    <circle cx="150" cy="92" r="7" fill="var(--ok)"></circle>
+    <text x="150" y="62" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">{copy.knowledgeTitle}</text>
+    <text x="150" y="78" text-anchor="middle" font-family="Newsreader,serif" font-style={copy.italic ? "italic" : undefined} font-size="10.5" fill="var(--ink-soft)">{copy.knowledgeQuestion}</text>
+    <text x="150" y="138" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.knowledgeStage}</text>
+    <circle cx="380" cy="92" r="7" fill="var(--hint)"></circle>
+    <text x="380" y="62" text-anchor="middle" font-family="Fraunces,serif" font-size="12" fill="var(--ink)">{copy.beliefTitle}</text>
+    <text x="380" y="78" text-anchor="middle" font-family="Newsreader,serif" font-style={copy.italic ? "italic" : undefined} font-size="10.5" fill="var(--ink-soft)">{copy.beliefQuestion}</text>
+    <text x="380" y="138" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.beliefStage}</text>
+  </svg>
+</div>
