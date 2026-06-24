@@ -53,14 +53,12 @@ async function createFixtureRoot(): Promise<string> {
     "    title: Fixture",
     "    summary: Fixture summary.",
     "    body: en.mdx",
-    "    status: reviewed",
     "appendices:",
     "  - id: appendix-a",
     "    locales:",
     "      en:",
     "        title: Appendix A",
-    "        body: appendices/appendix-a.en.mdx",
-    "        status: reviewed"
+    "        body: appendices/appendix-a.en.mdx"
   ].join("\n"));
   await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), "");
   return root;

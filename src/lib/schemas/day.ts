@@ -2,17 +2,8 @@ import { z } from "zod";
 
 const localeSchema = z.enum(["en", "zh"]);
 
-const reviewStatusSchema = z.enum([
-  "draft",
-  "needs-review",
-  "reviewed",
-  "unavailable",
-  "pending"
-]);
-
 const localeContentSchema = z.object({
   body: z.string().min(1),
-  status: reviewStatusSchema,
   title: z.string().min(1),
   summary: z.string().min(1)
 });
@@ -24,7 +15,6 @@ const localizedTextSchema = z.object({
 
 const appendixLocaleSchema = z.object({
   body: z.string().min(1),
-  status: reviewStatusSchema,
   title: z.string().min(1).optional()
 });
 

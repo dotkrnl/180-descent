@@ -48,12 +48,10 @@ export async function writePublishedDay(root: string, options: PublishedDayOptio
     `    title: ${enTitle}`,
     `    summary: ${enSummary}`,
     "    body: en.mdx",
-    "    status: reviewed",
     "  zh:",
     `    title: ${zhTitle}`,
     `    summary: ${zhSummary}`,
-    "    body: zh.mdx",
-    "    status: reviewed"
+    "    body: zh.mdx"
   ];
 
   if (options.appendices?.length) {
@@ -65,11 +63,9 @@ export async function writePublishedDay(root: string, options: PublishedDayOptio
         "      en:",
         `        title: ${appendix.enTitle}`,
         `        body: ${appendix.enBodyPath}`,
-        "        status: reviewed",
         "      zh:",
         `        title: ${appendix.zhTitle}`,
-        `        body: ${appendix.zhBodyPath}`,
-        "        status: reviewed"
+        `        body: ${appendix.zhBodyPath}`
       );
     }
   }

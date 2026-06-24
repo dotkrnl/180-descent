@@ -17,8 +17,7 @@ describe("target content registry", () => {
         en: {
           title: "Minimal",
           summary: "Minimal summary.",
-          body: "en.mdx",
-          status: "reviewed"
+          body: "en.mdx"
         }
       }
     });
