@@ -30,6 +30,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<div class="def">/, "use <DefinitionBox>"],
   [/<figure class="appendix-figure\b/, "use <AppendixFigure>"],
   [/<p class="appendix-note">/, "use <AppendixNote>"],
+  [/<ul class="(?:clean|check)">/, "use <LessonList>"],
   [/<div class="(?:aside|formula|recap|whereblock|wrap|format-alt epub-only print-only|panel)\b/, "use shared lesson components"],
   [/<div class="(?:regress-map|tri-print)\b/, "use <AgrippaTrilemmaMap>"],
   [/<figure class="(?:hero-clock|hero-doors)\b/, "use shared figure components"],

@@ -692,6 +692,9 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `\\begin{notepara}${text}\\end{notepara}` : "";
   }
+  if (name === "LessonList") {
+    return renderHtmlList({ ...node, name: "ul" }, state, false);
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
@@ -1565,7 +1568,8 @@ function isBlockMdxElement(node: MdxNode): boolean {
     "Roadmap",
     "DefinitionBox",
     "AppendixFigure",
-    "AppendixNote"
+    "AppendixNote",
+    "LessonList"
   ].includes(node.name ?? "");
 }
 
