@@ -7,6 +7,7 @@ export interface BookData {
   subtitle: string;
   deepDiveSubtitle: string;
   authors: string;
+  humanEditor: HumanEditorData;
   description: string;
   siteUrl: string;
   repo: string;
@@ -23,6 +24,7 @@ export interface BookData {
     deepDiveSubtitle: string;
     authors: string;
     translators: string;
+    humanEditor: HumanEditorData;
     description: string;
     epubIdentifier: string;
     downloads: DownloadData;
@@ -36,11 +38,17 @@ interface DownloadData {
   deepPdf: string;
 }
 
+interface HumanEditorData {
+  name: string;
+  url: string;
+}
+
 interface RawBookData {
   title: string;
   subtitle: string;
   deep_dive_subtitle: string;
   authors: string;
+  human_editor: RawHumanEditorData;
   description: string;
   site_url: string;
   repo: string;
@@ -57,6 +65,7 @@ interface RawBookData {
     deep_dive_subtitle: string;
     authors: string;
     translators: string;
+    human_editor: RawHumanEditorData;
     description: string;
     epub_identifier: string;
     downloads: RawDownloadData;
@@ -74,6 +83,11 @@ interface RawDownloadData {
   deep_pdf: string;
 }
 
+interface RawHumanEditorData {
+  name: string;
+  url: string;
+}
+
 export async function readBookData(root: string): Promise<BookData> {
   const raw = YAML.parse(await readFile(bookDataFile(root), "utf8")) as RawBookData;
   return {
@@ -81,6 +95,7 @@ export async function readBookData(root: string): Promise<BookData> {
     subtitle: raw.subtitle,
     deepDiveSubtitle: raw.deep_dive_subtitle,
     authors: raw.authors,
+    humanEditor: normalizeHumanEditor(raw.human_editor),
     description: raw.description,
     siteUrl: raw.site_url,
     repo: raw.repo,
@@ -97,6 +112,7 @@ export async function readBookData(root: string): Promise<BookData> {
       deepDiveSubtitle: raw.zh.deep_dive_subtitle,
       authors: raw.zh.authors,
       translators: raw.zh.translators,
+      humanEditor: normalizeHumanEditor(raw.zh.human_editor),
       description: raw.zh.description,
       epubIdentifier: raw.zh.epub_identifier,
       downloads: normalizeDownloads(raw.zh.downloads)
@@ -115,5 +131,12 @@ function normalizeDownloads(raw: RawDownloadData): DownloadData {
     pdf: raw.pdf,
     deepEpub: raw.deep_epub,
     deepPdf: raw.deep_pdf
+  };
+}
+
+function normalizeHumanEditor(raw: RawHumanEditorData): HumanEditorData {
+  return {
+    name: raw.name,
+    url: raw.url
   };
 }

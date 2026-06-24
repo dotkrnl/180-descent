@@ -31,6 +31,10 @@ interface PdfEdition {
   subtitle: string;
   authors: string;
   translators?: string;
+  humanEditor: {
+    name: string;
+    url: string;
+  };
   language: string;
   output: string;
   includeDeepDive?: boolean;
@@ -127,6 +131,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     title: book.title,
     subtitle: book.subtitle,
     authors: book.authors,
+    humanEditor: book.humanEditor,
     language: book.language,
     output: bookArtifactName("pdf", "en", false)
   });
@@ -137,6 +142,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     title: `${book.title}: Deep Dive`,
     subtitle: book.subtitle,
     authors: book.authors,
+    humanEditor: book.humanEditor,
     language: book.language,
     output: bookArtifactName("pdf", "en", true),
     includeDeepDive: true
@@ -149,6 +155,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     subtitle: book.zh.subtitle,
     authors: book.zh.authors,
     translators: book.zh.translators,
+    humanEditor: book.zh.humanEditor,
     language: book.zh.language,
     output: bookArtifactName("pdf", "zh", false)
   });
@@ -160,6 +167,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     subtitle: book.zh.subtitle,
     authors: book.zh.authors,
     translators: book.zh.translators,
+    humanEditor: book.zh.humanEditor,
     language: book.zh.language,
     output: bookArtifactName("pdf", "zh", true),
     includeDeepDive: true
@@ -181,6 +189,7 @@ async function buildDayPdfs(root: string, locale: Locale, book: BookData): Promi
       subtitle: day.title,
       authors: zh ? book.zh.authors : book.authors,
       translators: zh ? book.zh.translators : undefined,
+      humanEditor: zh ? book.zh.humanEditor : book.humanEditor,
       language: zh ? book.zh.language : book.language,
       output: dayArtifactName("pdf", locale, day.path),
       days: [day],
@@ -1408,7 +1417,7 @@ function titlePageLatex(config: PdfEdition & { root: string }): string {
   const eyebrow = config.subtitle;
   const byline = isZh ? `作者：${config.authors}` : `By ${config.authors}`;
   const translator = isZh && config.translators ? `翻译：${config.translators}` : "";
-  const editor = isZh ? "人工编辑：刘家昌" : "Human editor: Jason Lau";
+  const editor = isZh ? `人工编辑：${config.humanEditor.name}` : `Human editor: ${config.humanEditor.name}`;
   return String.raw`\clearpage
 \thispagestyle{empty}
 \pagecolor{descentTeal}

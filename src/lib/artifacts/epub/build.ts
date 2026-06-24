@@ -26,6 +26,10 @@ interface EpubMeta {
   subtitle?: string;
   authors: string;
   translators?: string;
+  humanEditor: {
+    name: string;
+    url: string;
+  };
   language: string;
   publisher: string;
   epubIdentifier: string;
@@ -84,6 +88,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       title: book.title,
       subtitle: book.subtitle,
       authors: book.authors,
+      humanEditor: book.humanEditor,
       language: book.language,
       publisher: book.publisher,
       epubIdentifier: book.epubIdentifier
@@ -105,6 +110,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       title: `${book.title}: Deep Dive Edition`,
       subtitle: book.deepDiveSubtitle,
       authors: book.authors,
+      humanEditor: book.humanEditor,
       language: book.language,
       publisher: book.publisher,
       epubIdentifier: `${book.epubIdentifier}-deep-dive`
@@ -128,6 +134,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       subtitle: book.zh.subtitle,
       authors: book.zh.authors,
       translators: book.zh.translators,
+      humanEditor: book.zh.humanEditor,
       language: book.zh.language,
       publisher: book.publisher,
       epubIdentifier: book.zh.epubIdentifier
@@ -150,6 +157,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       subtitle: book.zh.deepDiveSubtitle,
       authors: book.zh.authors,
       translators: book.zh.translators,
+      humanEditor: book.zh.humanEditor,
       language: book.zh.language,
       publisher: book.publisher,
       epubIdentifier: `${book.zh.epubIdentifier}-deep-dive`
@@ -172,6 +180,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       title: book.title,
       subtitle: book.subtitle,
       authors: book.authors,
+      humanEditor: book.humanEditor,
       language: book.language,
       publisher: book.publisher,
       epubIdentifier: `${book.epubIdentifier}-day`
@@ -189,6 +198,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       subtitle: book.zh.subtitle,
       authors: book.zh.authors,
       translators: book.zh.translators,
+      humanEditor: book.zh.humanEditor,
       language: book.zh.language,
       publisher: book.publisher,
       epubIdentifier: `${book.zh.epubIdentifier}-day`
@@ -622,7 +632,9 @@ function titlePageDocument(config: Pick<EpubConfig, "meta">): string {
   const translatorLine = config.meta.translators
     ? `<span class="credit-line">${escapeXml(isZh ? `翻译：${config.meta.translators}` : `Translated by ${config.meta.translators}`)}</span>`
     : "";
-  const editorLine = `<span class="credit-line">${escapeXml(isZh ? "人工编辑：刘家昌" : "Human editor: Jason Lau")}</span>`;
+  const editorLabel = isZh ? "人工编辑" : "Human editor";
+  const editorSeparator = isZh ? "：" : ": ";
+  const editorLine = `<span class="credit-line">${escapeXml(`${editorLabel}${editorSeparator}${config.meta.humanEditor.name}`)}</span>`;
   const subtitle = config.meta.subtitle ? `<p class="eyebrow">${escapeXml(config.meta.subtitle)}</p>` : "";
 
   return `<?xml version="1.0" encoding="UTF-8"?>
