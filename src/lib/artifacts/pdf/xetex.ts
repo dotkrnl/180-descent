@@ -617,6 +617,19 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
       body
     ].filter(Boolean).join("\n");
   }
+  if (name === "EscapeGrid") {
+    return renderChildren(node.children ?? [], state, { block: true });
+  }
+  if (name === "EscapeCard") {
+    const who = latexEscape(attrs.get("who") ?? "");
+    const move = latexEscape(attrs.get("move") ?? "");
+    const body = renderChildren(node.children ?? [], state, { block: true }).trim();
+    return [
+      who ? `\\blockheading{${who}}` : "",
+      move ? `{\\ttfamily\\footnotesize\\color{descentMuted}${move}\\par}` : "",
+      body
+    ].filter(Boolean).join("\n");
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }

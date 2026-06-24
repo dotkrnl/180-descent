@@ -11,6 +11,8 @@ import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import Divider from "@app/components/lesson/Divider.astro";
+import EscapeCard from "@app/components/lesson/EscapeCard.astro";
+import EscapeGrid from "@app/components/lesson/EscapeGrid.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
@@ -45,28 +47,20 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 两个半世纪以来，哲学家们试图从休谟的深坑中爬出。无人完全成功——但这些尝试每一桩都精彩绝伦，因为每一种都是某种性情气质凝结而成的论证。
 
-<div class="escape-grid">
-<div class="ecard">
-<div class="who">斯特劳森</div>
-<div class="move">消解问题</div>
-<p>问「归纳是否合理」本身就问错了。把信念按证据调整，这就是推理得好的题中之义。要求一个外在的盖章认可，好比追问法律本身合不合法。问题一经如此提出，便自行消解。</p>
-</div>
-<div class="ecard">
-<div class="who">赖欣巴赫</div>
-<div class="move">务实地下注</div>
-<p>我们证明不了归纳一定有效，但可以证明它是当下能下的最好赌注。如果有哪种方法能捕捉自然的规律性，归纳最终一定能捕捉到。它至多不比别的方法差，所以尽管用。这是一种手段层面的辩护，而非真理层面的辩护。</p>
-</div>
-<div class="ecard">
-<div class="who">波普尔</div>
-<div class="move">否认前提</div>
-<p>他的激进主张：根本不存在归纳这回事。科学从不从实例中概括，而是大胆猜想、竭力反驳。方法中既无归纳步骤，休谟的问题便无处下嘴。（批评者追问：那科学岂不永远无法告诉我们某个理论对预测是可靠的？而这显然是我们需要的。）</p>
-</div>
-<div class="ecard">
-<div class="who">贝叶斯</div>
-<div class="move">量化更新</div>
-<p>把学习看成用贝叶斯定理修正置信度——也就是第 1 日的信念刻度盘。这漂亮地形式化了从证据中学习的过程，却并未化解休谟：先验概率与更新规则本身仍需根基。（将在<a href="/zh/days/004-probability-as-extended-logic/">第 4 日</a>正式展开。）</p>
-</div>
-</div>
+<EscapeGrid>
+<EscapeCard who="斯特劳森" move="消解问题">
+问「归纳是否合理」本身就问错了。把信念按证据调整，这就是推理得好的题中之义。要求一个外在的盖章认可，好比追问法律本身合不合法。问题一经如此提出，便自行消解。
+</EscapeCard>
+<EscapeCard who="赖欣巴赫" move="务实地下注">
+我们证明不了归纳一定有效，但可以证明它是当下能下的最好赌注。如果有哪种方法能捕捉自然的规律性，归纳最终一定能捕捉到。它至多不比别的方法差，所以尽管用。这是一种手段层面的辩护，而非真理层面的辩护。
+</EscapeCard>
+<EscapeCard who="波普尔" move="否认前提">
+他的激进主张：根本不存在归纳这回事。科学从不从实例中概括，而是大胆猜想、竭力反驳。方法中既无归纳步骤，休谟的问题便无处下嘴。（批评者追问：那科学岂不永远无法告诉我们某个理论对预测是可靠的？而这显然是我们需要的。）
+</EscapeCard>
+<EscapeCard who="贝叶斯" move="量化更新">
+把学习看成用贝叶斯定理修正置信度——也就是第 1 日的信念刻度盘。这漂亮地形式化了从证据中学习的过程，却并未化解休谟：先验概率与更新规则本身仍需根基。（将在[第 4 日](/zh/days/004-probability-as-extended-logic/)正式展开。）
+</EscapeCard>
+</EscapeGrid>
 
 就在你以为最坏的情形已过之际，哈佛逻辑学家纳尔逊·古德曼在 1955 年引爆了第二颗炸弹——一颗即使你承认归纳运转完美也会被击中的炸弹。它被称为<Term>新归纳之谜</Term>，而它的全部武器只是一个生造的词。
 
