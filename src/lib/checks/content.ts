@@ -112,7 +112,6 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
         requiresTitle: false
       }, failures);
     }
-
   }
 
   await checkCssFonts(options.root, failures);
@@ -130,7 +129,7 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
     failures.push({ message: `${file.relativePath} contains inline script; use shared interaction assets instead` });
   }
 
-  if (!file.source.includes("<Sources") && !file.source.includes('class="sources"') && !file.source.includes("className=\"sources\"")) {
+  if (!file.source.includes("<Sources")) {
     failures.push({ message: `${file.label} has no sources section` });
   }
 
