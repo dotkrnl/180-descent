@@ -57,7 +57,7 @@
       var p100 = Math.round(rate * 100);
       pct.textContent = p100 + "%";
       pct.classList.toggle("low", p100 <= 8);
-      fill.style.width = Math.min(100, rate / 0.65 * 100) + "%";
+      fill.value = Math.min(100, rate / 0.65 * 100);
       if (nTests === 1) {
         read.innerHTML = isZh
           ? '未启用灵活分析。如果零假设成立且模型假设满足，每项研究只做 <span class="fp-tests">1 次预先指定的检验</span>，就会给出统计系统承诺的错误率。'
