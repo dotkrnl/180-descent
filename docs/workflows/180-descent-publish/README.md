@@ -45,7 +45,8 @@ npm run check
 
 The SEO check must pass before publishing. It verifies built canonical tags,
 meta descriptions, reciprocal `hreflang`, JSON-LD, sitemap/robots discovery,
-and local existence of Open Graph social images.
+local Open Graph social images, favicon, apple-touch-icon, web app manifest,
+and manifest icons.
 
 The accessibility check must pass before publishing. It scans every generated
 HTML file for image `alt` attributes, named `role="img"` SVGs, named
