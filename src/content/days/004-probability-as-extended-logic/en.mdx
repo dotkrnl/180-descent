@@ -13,10 +13,12 @@ import ProbabilityMontyPanel from "@app/components/lesson/interactives/Probabili
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
+import BayesHeaderNote from "@app/components/lesson/BayesHeaderNote.astro";
 import BayesMeter from "@app/components/lesson/BayesMeter.astro";
 import BayesNote from "@app/components/lesson/BayesNote.astro";
 import BayesSieve from "@app/components/lesson/BayesSieve.astro";
 import BayesSymbol from "@app/components/lesson/BayesSymbol.astro";
+import BayesValue from "@app/components/lesson/BayesValue.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -30,6 +32,7 @@ import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
 import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Highlight from "@app/components/lesson/Highlight.astro";
 import Label from "@app/components/lesson/Label.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import LessonNote from "@app/components/lesson/LessonNote.astro";
@@ -174,42 +177,42 @@ What we did to those doors by hand has a name and a formula. The formula looks c
 <DataTable slot="table" class="bs-table">
 <DataTableHead>
 <DataTableRow>
-<DataTableHeader><BayesSymbol><MathInline latex={String.raw`H`} /></BayesSymbol><small>this row's car-location claim</small></DataTableHeader>
-<DataTableHeader><span><MathInline latex={String.raw`P(H)`} /></span><small>prior chance this row is true</small></DataTableHeader>
-<DataTableHeader><span><MathInline latex={String.raw`P(E \mid H)`} /></span><small>chance host opens Door 3 if this row is true</small></DataTableHeader>
-<DataTableHeader><span><MathInline latex={String.raw`P(H)P(E \mid H)`} /></span><small>row's surviving weight</small></DataTableHeader>
-<DataTableHeader><span><MathInline latex={String.raw`P(E)`} /></span><small>overall chance host opens Door 3</small></DataTableHeader>
-<DataTableHeader><span><MathInline latex={String.raw`P(H \mid E)`} /></span><small>chance this row is true after Door 3 opens</small></DataTableHeader>
+<DataTableHeader><BayesSymbol><MathInline latex={String.raw`H`} /></BayesSymbol><BayesHeaderNote>this row's car-location claim</BayesHeaderNote></DataTableHeader>
+<DataTableHeader><MathInline latex={String.raw`P(H)`} /><BayesHeaderNote>prior chance this row is true</BayesHeaderNote></DataTableHeader>
+<DataTableHeader><MathInline latex={String.raw`P(E \mid H)`} /><BayesHeaderNote>chance host opens Door 3 if this row is true</BayesHeaderNote></DataTableHeader>
+<DataTableHeader><MathInline latex={String.raw`P(H)P(E \mid H)`} /><BayesHeaderNote>row's surviving weight</BayesHeaderNote></DataTableHeader>
+<DataTableHeader><MathInline latex={String.raw`P(E)`} /><BayesHeaderNote>overall chance host opens Door 3</BayesHeaderNote></DataTableHeader>
+<DataTableHeader><MathInline latex={String.raw`P(H \mid E)`} /><BayesHeaderNote>chance this row is true after Door 3 opens</BayesHeaderNote></DataTableHeader>
 </DataTableRow>
 </DataTableHead>
 <DataTableBody>
 <DataTableRow>
 <DataTableHeader class="bs-row-head"><BayesSymbol><MathInline latex={String.raw`H:`} /></BayesSymbol> Car behind your Door 1</DataTableHeader>
-<DataTableCell class="bs-val bs-prior" dataLabel="P(H): prior chance this row is true"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
-<DataTableCell class="bs-val bs-like" dataLabel="P(E | H): chance host opens Door 3 if this row is true"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
-<DataTableCell class="bs-val" dataLabel="P(H) × P(E | H): row's surviving weight"><b><MathInline latex={String.raw`1/6`} /></b><BayesNote>possible, but only half as expected</BayesNote></DataTableCell>
-<DataTableCell class="bs-val bs-evidence" dataLabel="P(E): overall chance host opens Door 3"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
-<DataTableCell class="bs-val bs-post" dataLabel="P(H | E): chance this row is true after Door 3 opens"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
+<DataTableCell class="bs-val bs-prior" dataLabel="P(H): prior chance this row is true"><BayesValue><MathInline latex={String.raw`1/3`} /></BayesValue><BayesMeter value={33.33} /></DataTableCell>
+<DataTableCell class="bs-val bs-like" dataLabel="P(E | H): chance host opens Door 3 if this row is true"><BayesValue><MathInline latex={String.raw`1/2`} /></BayesValue><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val" dataLabel="P(H) × P(E | H): row's surviving weight"><BayesValue><MathInline latex={String.raw`1/6`} /></BayesValue><BayesNote>possible, but only half as expected</BayesNote></DataTableCell>
+<DataTableCell class="bs-val bs-evidence" dataLabel="P(E): overall chance host opens Door 3"><BayesValue><MathInline latex={String.raw`1/2`} /></BayesValue><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val bs-post" dataLabel="P(H | E): chance this row is true after Door 3 opens"><BayesValue><MathInline latex={String.raw`1/3`} /></BayesValue><BayesMeter value={33.33} /></DataTableCell>
 </DataTableRow>
 <DataTableRow>
 <DataTableHeader class="bs-row-head"><BayesSymbol><MathInline latex={String.raw`H:`} /></BayesSymbol> Car behind Door 2</DataTableHeader>
-<DataTableCell class="bs-val bs-prior" dataLabel="P(H): prior chance this row is true"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
-<DataTableCell class="bs-val bs-like" dataLabel="P(E | H): chance host opens Door 3 if this row is true"><b><MathInline latex={String.raw`1`} /></b><BayesMeter value={100} /></DataTableCell>
-<DataTableCell class="bs-val" dataLabel="P(H) × P(E | H): row's surviving weight"><b><MathInline latex={String.raw`1/3`} /></b><BayesNote>best survivor: the reveal was forced</BayesNote></DataTableCell>
-<DataTableCell class="bs-val bs-evidence" dataLabel="P(E): overall chance host opens Door 3"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
-<DataTableCell class="bs-val bs-post" dataLabel="P(H | E): chance this row is true after Door 3 opens"><b><MathInline latex={String.raw`2/3`} /></b><BayesMeter value={66.67} /></DataTableCell>
+<DataTableCell class="bs-val bs-prior" dataLabel="P(H): prior chance this row is true"><BayesValue><MathInline latex={String.raw`1/3`} /></BayesValue><BayesMeter value={33.33} /></DataTableCell>
+<DataTableCell class="bs-val bs-like" dataLabel="P(E | H): chance host opens Door 3 if this row is true"><BayesValue><MathInline latex={String.raw`1`} /></BayesValue><BayesMeter value={100} /></DataTableCell>
+<DataTableCell class="bs-val" dataLabel="P(H) × P(E | H): row's surviving weight"><BayesValue><MathInline latex={String.raw`1/3`} /></BayesValue><BayesNote>best survivor: the reveal was forced</BayesNote></DataTableCell>
+<DataTableCell class="bs-val bs-evidence" dataLabel="P(E): overall chance host opens Door 3"><BayesValue><MathInline latex={String.raw`1/2`} /></BayesValue><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val bs-post" dataLabel="P(H | E): chance this row is true after Door 3 opens"><BayesValue><MathInline latex={String.raw`2/3`} /></BayesValue><BayesMeter value={66.67} /></DataTableCell>
 </DataTableRow>
 <DataTableRow>
 <DataTableHeader class="bs-row-head"><BayesSymbol><MathInline latex={String.raw`H:`} /></BayesSymbol> Car behind Door 3</DataTableHeader>
-<DataTableCell class="bs-val bs-prior" dataLabel="P(H): prior chance this row is true"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
-<DataTableCell class="bs-val bs-like zero" dataLabel="P(E | H): chance host opens Door 3 if this row is true"><b><MathInline latex={String.raw`0`} /></b><BayesMeter value={0} /></DataTableCell>
-<DataTableCell class="bs-val zero" dataLabel="P(H) × P(E | H): row's surviving weight"><b><MathInline latex={String.raw`0`} /></b><BayesNote>ruled out: the host cannot open the car</BayesNote></DataTableCell>
-<DataTableCell class="bs-val bs-evidence" dataLabel="P(E): overall chance host opens Door 3"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
-<DataTableCell class="bs-val bs-post zero" dataLabel="P(H | E): chance this row is true after Door 3 opens"><b><MathInline latex={String.raw`0`} /></b><BayesMeter value={0} /></DataTableCell>
+<DataTableCell class="bs-val bs-prior" dataLabel="P(H): prior chance this row is true"><BayesValue><MathInline latex={String.raw`1/3`} /></BayesValue><BayesMeter value={33.33} /></DataTableCell>
+<DataTableCell class="bs-val bs-like zero" dataLabel="P(E | H): chance host opens Door 3 if this row is true"><BayesValue><MathInline latex={String.raw`0`} /></BayesValue><BayesMeter value={0} /></DataTableCell>
+<DataTableCell class="bs-val zero" dataLabel="P(H) × P(E | H): row's surviving weight"><BayesValue><MathInline latex={String.raw`0`} /></BayesValue><BayesNote>ruled out: the host cannot open the car</BayesNote></DataTableCell>
+<DataTableCell class="bs-val bs-evidence" dataLabel="P(E): overall chance host opens Door 3"><BayesValue><MathInline latex={String.raw`1/2`} /></BayesValue><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val bs-post zero" dataLabel="P(H | E): chance this row is true after Door 3 opens"><BayesValue><MathInline latex={String.raw`0`} /></BayesValue><BayesMeter value={0} /></DataTableCell>
 </DataTableRow>
 </DataTableBody>
 </DataTable>
-<Fragment slot="total"><span><MathInline latex={String.raw`P(E)`} /></span> is the total weight that survived the evidence: <strong><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></strong>. Divide each surviving weight by that half, and the unopened Door 2 gets <strong><MathInline latex={String.raw`2/3`} /></strong> of the remaining probability.</Fragment>
+<Fragment slot="total"><BayesSymbol><MathInline latex={String.raw`P(E)`} /></BayesSymbol> is the total weight that survived the evidence: <Highlight><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></Highlight>. Divide each surviving weight by that half, and the unopened Door 2 gets <Highlight><MathInline latex={String.raw`2/3`} /></Highlight> of the remaining probability.</Fragment>
 </BayesSieve>
 
 <MathLine>
