@@ -16,6 +16,8 @@ import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
+import MiniList from "@app/components/lesson/MiniList.astro";
+import MiniListItem from "@app/components/lesson/MiniListItem.astro";
 import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
@@ -184,11 +186,17 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 <Term>选择后推断</Term> (post-selection inference) 是统计学在诚实计入选择代价方面的尝试。经典方法包括以选择事件为条件、将数据拆分为探索集和验证集、或构建考虑选择过程后仍保持覆盖率的同时置信区间。2020 年后的前沿增加了三个特别相关的想法：
 
-<div class="mini-list">
-<div class="mini"><div class="num">A</div><p><span class="hl">算法稳定性。</span> 如果选择规则是随机且稳定的，那么它对任何单一观测值的敏感性就可以被量化。这种稳定性可以转化为选择后修正，借鉴了差分隐私和自适应数据分析的思想。</p></div>
-<div class="mini"><div class="num">B</div><p><span class="hl">数据裂变 (data fission) 与数据稀化 (data thinning)。</span> 与其拆分行，不如把单个观测所包含的统计信息拆分为选择部分和推断部分。一块用于探索；另一块用于检验。对于某些分布，最近的数据稀化方法可以产生相互独立的数据部分，而无需丢弃整个观测值。</p></div>
-<div class="mini"><div class="num">C</div><p><span class="hl">因果发现后的有效推断。</span> 运行图发现算法然后在同一份数据上估计效应会破坏覆盖率。新工作对发现过程进行了随机化和修正，使后续因果区间恢复有效覆盖。</p></div>
-</div>
+<MiniList>
+<MiniListItem marker="A">
+<Highlight>算法稳定性。</Highlight> 如果选择规则是随机且稳定的，那么它对任何单一观测值的敏感性就可以被量化。这种稳定性可以转化为选择后修正，借鉴了差分隐私和自适应数据分析的思想。
+</MiniListItem>
+<MiniListItem marker="B">
+<Highlight>数据裂变 (data fission) 与数据稀化 (data thinning)。</Highlight> 与其拆分行，不如把单个观测所包含的统计信息拆分为选择部分和推断部分。一块用于探索；另一块用于检验。对于某些分布，最近的数据稀化方法可以产生相互独立的数据部分，而无需丢弃整个观测值。
+</MiniListItem>
+<MiniListItem marker="C">
+<Highlight>因果发现后的有效推断。</Highlight> 运行图发现算法然后在同一份数据上估计效应会破坏覆盖率。新工作对发现过程进行了随机化和修正，使后续因果区间恢复有效覆盖。
+</MiniListItem>
+</MiniList>
 前沿校准器：这并不容易，在研究预登记可行的情况下，它也不是研究预登记的替代品。但它是探索性科学值得继续发展的方向，因为科学不可能禁止探索；关键是后续推断必须计入选择过程。
 
 </ContentSection>
@@ -418,4 +426,3 @@ AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更�
 1. Choi, H. K. et al. (2025). “How Contaminated Is Your Benchmark? Measuring Dataset Leakage in Large Language Models with Kernel Divergence.” *ICML*. [PMLR](https://proceedings.mlr.press/v267/choi25b.html).
 
 </Sources>
-

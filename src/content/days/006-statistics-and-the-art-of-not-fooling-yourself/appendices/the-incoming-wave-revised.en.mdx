@@ -15,6 +15,8 @@ import StatisticsIncomingWaveLab from "@app/components/lesson/interactives/Stati
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
+import MiniList from "@app/components/lesson/MiniList.astro";
+import MiniListItem from "@app/components/lesson/MiniListItem.astro";
 import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
@@ -175,11 +177,17 @@ The garden of forking paths is not going away. Modern analysis often begins with
 
 <Term as="em">Post-selection inference</Term> is the statistical attempt to pay that bill honestly. The classical approaches condition on the selection event, split the data into discovery and confirmation sets, or build simultaneous intervals wide enough to survive selection. The post-2020 frontier adds three especially relevant ideas.
 
-<div class="mini-list">
-<div class="mini"><div class="num">A</div><p><strong>Algorithmic stability.</strong> If the selection rule is randomized and stable, its sensitivity to any one observation can be quantified. That stability can be turned into post-selection corrections, borrowing ideas from differential privacy and adaptive data analysis.</p></div>
-<div class="mini"><div class="num">B</div><p><strong>Data fission and data thinning.</strong> Instead of splitting rows, split the statistical information inside the data into pieces. One piece explores; the other tests. For some distributions, recent thinning methods produce independent pieces without throwing away whole observations.</p></div>
-<div class="mini"><div class="num">C</div><p><strong>Valid inference after causal discovery.</strong> Running a graph-discovery algorithm and then estimating effects on the same data can break coverage. New work randomizes and corrects discovery so the subsequent causal intervals are not fantasy intervals.</p></div>
-</div>
+<MiniList>
+<MiniListItem marker="A">
+**Algorithmic stability.** If the selection rule is randomized and stable, its sensitivity to any one observation can be quantified. That stability can be turned into post-selection corrections, borrowing ideas from differential privacy and adaptive data analysis.
+</MiniListItem>
+<MiniListItem marker="B">
+**Data fission and data thinning.** Instead of splitting rows, split the statistical information inside the data into pieces. One piece explores; the other tests. For some distributions, recent thinning methods produce independent pieces without throwing away whole observations.
+</MiniListItem>
+<MiniListItem marker="C">
+**Valid inference after causal discovery.** Running a graph-discovery algorithm and then estimating effects on the same data can break coverage. New work randomizes and corrects discovery so the subsequent causal intervals are not fantasy intervals.
+</MiniListItem>
+</MiniList>
 The hype filter: this is not easy, and it is not a substitute for preregistration when preregistration is possible. But it is the right frontier for exploratory science because “never explore” is not a serious rule. The serious rule is: if the data suggested the question, the inference must know that.
 
 </ContentSection>
@@ -409,4 +417,3 @@ The original statistics crisis was not caused by evil people. It was caused by f
 1. Choi, H. K. et al. (2025). “How Contaminated Is Your Benchmark? Measuring Dataset Leakage in Large Language Models with Kernel Divergence.” *ICML*. [PMLR](https://proceedings.mlr.press/v267/choi25b.html).
 
 </Sources>
-

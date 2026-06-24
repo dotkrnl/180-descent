@@ -644,6 +644,20 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "TheoryCardLead") {
     return `\\textbf{${renderInlineChildren(node, state, context)}}`;
   }
+  if (name === "MiniList") {
+    const items = (node.children ?? [])
+      .filter((child) => child.name === "MiniListItem")
+      .map((child) => {
+        const marker = latexEscape(mdxAttributes(child).get("marker") ?? "");
+        const body = renderChildren(child.children ?? [], state, { block: true, listItem: true }).trim();
+        return `\\item${marker ? `[\\texttt{${marker}}]` : ""} ${body}`;
+      })
+      .join("\n");
+    return items ? `\\begin{itemize}\n${items}\n\\end{itemize}` : "";
+  }
+  if (name === "MiniListItem") {
+    return renderChildren(node.children ?? [], state, { block: true });
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
