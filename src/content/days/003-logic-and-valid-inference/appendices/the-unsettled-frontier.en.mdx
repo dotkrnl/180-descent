@@ -10,6 +10,12 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Lead from "@app/components/lesson/Lead.astro";
@@ -82,26 +88,26 @@ To follow it you need to understand the scoreboard. Machine provers are ranked o
 
 Now the systems doing the climbing. Two open-weights provers reset expectations in 2025, and a third pushed into olympiad-gold territory.
 
-<table class="alt-table">
-<thead><tr><th>System</th><th>What it claims</th><th>Status</th></tr></thead>
-<tbody>
-<tr>
-<td>DeepSeek-Prover-V2<br /><span class="table-subnote">Apr 2025</span></td>
-<td><strong>88.9%</strong> on miniF2F-test; <strong>49 / 658</strong> PutnamBench. Works in Lean 4 by recursively breaking a goal into subgoals, then learning from which ones it can close.</td>
-<td><StatusChip status={"ok"} label={"established"} /><br /><span class="table-subnote small">open weights, reproducible</span></td>
-</tr>
-<tr>
-<td>Goedel-Prover-V2<br /><span class="table-subnote">Aug 2025</span></td>
-<td><strong>~90%</strong> miniF2F (with self-correction); <strong>86</strong> PutnamBench problems. Its <em>32B</em> model beats rivals 20× larger; an <em>8B</em> version matches a 671B predecessor.</td>
-<td><StatusChip status={"ok"} label={"established"} /><br /><span class="table-subnote small">smaller &amp; better; open</span></td>
-</tr>
-<tr>
-<td>Seed-Prover<br /><span class="table-subnote">2025</span></td>
-<td>The July 2025 preprint reports full Lean proofs for <strong>5 of 6</strong> IMO 2025 problems, after the contest setting; treat it as a strong but still vendor/preprint claim until artifacts and independent audits settle the details.</td>
-<td><StatusChip status={"hint"} label={"promising"} /><br /><span class="table-subnote small">gold claim vendor-reported</span></td>
-</tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead><DataTableRow><DataTableHeader>System</DataTableHeader><DataTableHeader>What it claims</DataTableHeader><DataTableHeader>Status</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableBody>
+<DataTableRow>
+<DataTableCell>DeepSeek-Prover-V2<br /><span class="table-subnote">Apr 2025</span></DataTableCell>
+<DataTableCell><strong>88.9%</strong> on miniF2F-test; <strong>49 / 658</strong> PutnamBench. Works in Lean 4 by recursively breaking a goal into subgoals, then learning from which ones it can close.</DataTableCell>
+<DataTableCell><StatusChip status={"ok"} label={"established"} /><br /><span class="table-subnote small">open weights, reproducible</span></DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell>Goedel-Prover-V2<br /><span class="table-subnote">Aug 2025</span></DataTableCell>
+<DataTableCell><strong>~90%</strong> miniF2F (with self-correction); <strong>86</strong> PutnamBench problems. Its <em>32B</em> model beats rivals 20× larger; an <em>8B</em> version matches a 671B predecessor.</DataTableCell>
+<DataTableCell><StatusChip status={"ok"} label={"established"} /><br /><span class="table-subnote small">smaller &amp; better; open</span></DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell>Seed-Prover<br /><span class="table-subnote">2025</span></DataTableCell>
+<DataTableCell>The July 2025 preprint reports full Lean proofs for <strong>5 of 6</strong> IMO 2025 problems, after the contest setting; treat it as a strong but still vendor/preprint claim until artifacts and independent audits settle the details.</DataTableCell>
+<DataTableCell><StatusChip status={"hint"} label={"promising"} /><br /><span class="table-subnote small">gold claim vendor-reported</span></DataTableCell>
+</DataTableRow>
+</DataTableBody>
+</DataTable>
 
 Two things deserve emphasis, one exciting and one sobering. The exciting one: a 32-billion-parameter model — small enough to run on hardware a serious hobbyist could own — now matches systems that, a year earlier, needed a data centre. Capability is collapsing in size and cost, fast. The sobering one hides inside the phrase *Pass@k*. When a paper reports "88.9% on miniF2F," it often means the model was allowed *thousands* of attempts per problem, and succeeded at least once. "The machine solved it" can quietly mean "one of eight thousand tries compiled." That's not cheating — for formal proof, a single compiling proof *is* a proof, no matter how many failures preceded it — but it is a very different thing from a human who gets it on the first attempt because they understood it. Hold both facts: the provers are genuinely, rapidly better, *and* the headline percentages flatter them.
 

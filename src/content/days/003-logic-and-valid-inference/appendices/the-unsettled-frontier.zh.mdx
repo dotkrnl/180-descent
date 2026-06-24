@@ -10,6 +10,12 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
@@ -82,26 +88,26 @@ import Term from "@app/components/lesson/Term.astro";
 
 现在来看看那些不断攀登的系统。在 2025 年，两款开放权重证明器重塑了人们的预期，而第三款则冲入了奥数金牌水平。
 
-<table class="alt-table">
-<thead><tr><th>系统</th><th>核心主张</th><th>状态</th></tr></thead>
-<tbody>
-<tr>
-<td>DeepSeek-Prover-V2<br /><span class="table-subnote">2025 年 4 月</span></td>
-<td>在 miniF2F-test 上达到 <Highlight>88.9%</Highlight>；在 PutnamBench 上解决 <Highlight>49 / 658</Highlight> 题。通过递归地将目标分解为子目标，并从能够闭合的路径中学习，在 Lean 4 中工作。</td>
-<td><StatusChip status={"ok"} label={"已确立"} /><br /><span class="table-subnote small">开放权重，可复现</span></td>
-</tr>
-<tr>
-<td>Goedel-Prover-V2<br /><span class="table-subnote">2025 年 8 月</span></td>
-<td>在 miniF2F 上达到 <Highlight>~90%</Highlight>（含自校正）；解决 <Highlight>86</Highlight> 道 PutnamBench 题目。其 <Highlight>32B</Highlight> 模型击败了规模大 20 倍的对手；<Highlight>8B</Highlight> 版本打平了拥有 671B 参数的前作。</td>
-<td><StatusChip status={"ok"} label={"已确立"} /><br /><span class="table-subnote small">更小更强；开放权重</span></td>
-</tr>
-<tr>
-<td>Seed-Prover<br /><span class="table-subnote">2025 年</span></td>
-<td>2025 年 7 月的预印本报告了 2025 年 IMO 六道题中 <Highlight>5 道</Highlight> 的完整 Lean 证明（赛后环境）；在代码库和独立审计敲定细节前，请将其视为强势但仍属厂商自述/预印本阶段的主张。</td>
-<td><StatusChip status={"hint"} label={"有前景"} /><br /><span class="table-subnote small">厂商报告的金牌成绩</span></td>
-</tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead><DataTableRow><DataTableHeader>系统</DataTableHeader><DataTableHeader>核心主张</DataTableHeader><DataTableHeader>状态</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableBody>
+<DataTableRow>
+<DataTableCell>DeepSeek-Prover-V2<br /><span class="table-subnote">2025 年 4 月</span></DataTableCell>
+<DataTableCell>在 miniF2F-test 上达到 <Highlight>88.9%</Highlight>；在 PutnamBench 上解决 <Highlight>49 / 658</Highlight> 题。通过递归地将目标分解为子目标，并从能够闭合的路径中学习，在 Lean 4 中工作。</DataTableCell>
+<DataTableCell><StatusChip status={"ok"} label={"已确立"} /><br /><span class="table-subnote small">开放权重，可复现</span></DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell>Goedel-Prover-V2<br /><span class="table-subnote">2025 年 8 月</span></DataTableCell>
+<DataTableCell>在 miniF2F 上达到 <Highlight>~90%</Highlight>（含自校正）；解决 <Highlight>86</Highlight> 道 PutnamBench 题目。其 <Highlight>32B</Highlight> 模型击败了规模大 20 倍的对手；<Highlight>8B</Highlight> 版本打平了拥有 671B 参数的前作。</DataTableCell>
+<DataTableCell><StatusChip status={"ok"} label={"已确立"} /><br /><span class="table-subnote small">更小更强；开放权重</span></DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell>Seed-Prover<br /><span class="table-subnote">2025 年</span></DataTableCell>
+<DataTableCell>2025 年 7 月的预印本报告了 2025 年 IMO 六道题中 <Highlight>5 道</Highlight> 的完整 Lean 证明（赛后环境）；在代码库和独立审计敲定细节前，请将其视为强势但仍属厂商自述/预印本阶段的主张。</DataTableCell>
+<DataTableCell><StatusChip status={"hint"} label={"有前景"} /><br /><span class="table-subnote small">厂商报告的金牌成绩</span></DataTableCell>
+</DataTableRow>
+</DataTableBody>
+</DataTable>
 
 有两点值得强调：一点令人振奋，一点令人清醒。令人振奋的是：一个 320 亿参数的模型——小到足以在严肃的业余研究者或小型实验室拥有的个人级硬件上运行——现在已经能与一年前需要数据中心支撑的系统平起平坐。能力在体积和成本上都在飞速塌缩。而清醒的一点隐藏在 「Pass@k」 这个术语中。当一篇论文报告 「miniF2F 达到 88.9%」 时，通常意味着模型被允许针对每个问题进行<Highlight>数千次</Highlight>尝试，并至少成功了一次。「机器解决了它」可能悄悄意味着「八千次尝试中有一个编译通过了」。这不算作弊——对于形式化证明，只要有一个编译通过的证明<Highlight>就是</Highlight>证明，无论之前经历了多少次失败——但这与一个因为「理解」了题目而能一次性做对的人类是完全不同的。请记住这两个事实：证明器确实在迅速变强，<Highlight>同时</Highlight>标题中的百分比也美化了它们。
 
