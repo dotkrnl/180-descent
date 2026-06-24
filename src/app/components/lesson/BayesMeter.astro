@@ -3,6 +3,15 @@ interface Props {
   value: number;
 }
 
-const width = `${Math.max(0, Math.min(100, Astro.props.value))}%`;
+const meterClassByValue = new Map<number, string>([
+  [0, "bs-meter-fill-0"],
+  [33.33, "bs-meter-fill-33"],
+  [50, "bs-meter-fill-50"],
+  [66.67, "bs-meter-fill-67"],
+  [100, "bs-meter-fill-100"]
+]);
+
+const fillClass = meterClassByValue.get(Astro.props.value);
+if (!fillClass) throw new Error(`Unsupported BayesMeter value: ${Astro.props.value}`);
 ---
-<span class="bs-meter"><i style={`width:${width}`}></i></span>
+<span class="bs-meter"><i class={fillClass}></i></span>
