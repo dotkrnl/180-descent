@@ -5,7 +5,7 @@ import YAML from "yaml";
 export interface BookData {
   title: string;
   subtitle: string;
-  deepDiveSubtitle?: string;
+  deepDiveSubtitle: string;
   authors: string;
   description: string;
   siteUrl: string;
@@ -20,7 +20,7 @@ export interface BookData {
     language: string;
     title: string;
     subtitle: string;
-    deepDiveSubtitle?: string;
+    deepDiveSubtitle: string;
     authors: string;
     translators: string;
     description: string;
@@ -39,7 +39,7 @@ interface DownloadData {
 interface RawBookData {
   title: string;
   subtitle: string;
-  deep_dive_subtitle?: string;
+  deep_dive_subtitle: string;
   authors: string;
   description: string;
   site_url: string;
@@ -54,7 +54,7 @@ interface RawBookData {
     language: string;
     title: string;
     subtitle: string;
-    deep_dive_subtitle?: string;
+    deep_dive_subtitle: string;
     authors: string;
     translators: string;
     description: string;
