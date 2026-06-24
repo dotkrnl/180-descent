@@ -955,17 +955,24 @@ function collectTableRows(node: MdxNode, state: MdxRenderState, table: LatexTabl
   const name = node.name ?? "";
   const header = inHeader || name === "thead" || name === "DataTableHead";
   if (name === "tr" || name === "DataTableRow") {
-    const cells = (node.children ?? [])
-      .filter((child) => isTableCellComponent(child.name ?? ""))
+    const rowCells = (node.children ?? []).map(unwrapTableCell).filter((cell): cell is MdxNode => Boolean(cell));
+    const cells = rowCells
       .map((cell) => renderChildren(cell.children ?? [], state, { tableCell: true }).trim().replace(/\s+/g, " "));
     if (cells.length) {
       const index = table.rows.length;
       table.rows.push(cells);
-      if (header || (node.children ?? []).some((child) => isTableHeaderComponent(child.name ?? ""))) table.headerRows.add(index);
+      if (header || rowCells.every((cell) => isTableHeaderComponent(cell.name ?? ""))) table.headerRows.add(index);
     }
     return;
   }
   for (const child of node.children ?? []) collectTableRows(child, state, table, header);
+}
+
+function unwrapTableCell(node: MdxNode): MdxNode | null {
+  if (isTableCellComponent(node.name ?? "")) return node;
+  const children = node.children ?? [];
+  if (node.type === "paragraph" && children.length === 1 && isTableCellComponent(children[0].name ?? "")) return children[0];
+  return null;
 }
 
 function isTableComponent(name: string): boolean {

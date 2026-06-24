@@ -13,6 +13,7 @@ import ProbabilityMontyPanel from "@app/components/lesson/interactives/Probabili
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
+import BayesMeter from "@app/components/lesson/BayesMeter.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import DataTable from "@app/components/lesson/DataTable.astro";
@@ -166,44 +167,44 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <MathBlock latex={bayesFormula} />
 </div>
 <div class="bs-table-wrap" role="region" aria-label="贝叶斯概率表" tabindex="0">
-<table class="bs-table">
-<thead>
-<tr>
-<th><span class="bs-symbol"><MathInline latex={String.raw`H`} /></span><small>本行的藏车位置假设</small></th>
-<th><span><MathInline latex={String.raw`P(H)`} /></span><small>本行假设为真的先验概率</small></th>
-<th><span><MathInline latex={String.raw`P(E \mid H)`} /></span><small>若本行假设为真，主持人打开 3 号门的概率</small></th>
-<th><span><MathInline latex={String.raw`P(H)P(E \mid H)`} /></span><small>本行留下的权重</small></th>
-<th><span><MathInline latex={String.raw`P(E)`} /></span><small>主持人打开 3 号门的总体概率</small></th>
-<th><span><MathInline latex={String.raw`P(H \mid E)`} /></span><small>开 3 号门后，本行假设为真的概率</small></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span>车在你选的 1 号门后</th>
-<td class="bs-val bs-prior" data-label="P(H)：本行假设为真的先验概率"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H)：若本行假设为真，主持人打开 3 号门的概率"><b><MathInline latex={String.raw`1/2`} /></b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H)：本行留下的权重"><b><MathInline latex={String.raw`1/6`} /></b><span class="bs-note">仍可能，但证据只支持一半</span></td>
-<td class="bs-val bs-evidence" data-label="P(E)：主持人打开 3 号门的总体概率"><b><MathInline latex={String.raw`1/2`} /></b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E)：开 3 号门后，本行假设为真的概率"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-</tr>
-<tr>
-<th><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span>车在 2 号门后</th>
-<td class="bs-val bs-prior" data-label="P(H)：本行假设为真的先验概率"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H)：若本行假设为真，主持人打开 3 号门的概率"><b><MathInline latex={String.raw`1`} /></b><span class="bs-meter"><i style="width:100%"></i></span></td>
-<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H)：本行留下的权重"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-note">最强幸存者：这个揭示是被迫的</span></td>
-<td class="bs-val bs-evidence" data-label="P(E)：主持人打开 3 号门的总体概率"><b><MathInline latex={String.raw`1/2`} /></b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E)：开 3 号门后，本行假设为真的概率"><b><MathInline latex={String.raw`2/3`} /></b><span class="bs-meter"><i style="width:66.67%"></i></span></td>
-</tr>
-<tr>
-<th><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span>车在 3 号门后</th>
-<td class="bs-val bs-prior" data-label="P(H)：本行假设为真的先验概率"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like zero" data-label="P(E&nbsp;|&nbsp;H)：若本行假设为真，主持人打开 3 号门的概率"><b><MathInline latex={String.raw`0`} /></b><span class="bs-meter"><i style="width:0%"></i></span></td>
-<td class="bs-val zero" data-label="P(H) × P(E&nbsp;|&nbsp;H)：本行留下的权重"><b><MathInline latex={String.raw`0`} /></b><span class="bs-note">被排除：主持人不能打开藏车的门</span></td>
-<td class="bs-val bs-evidence" data-label="P(E)：主持人打开 3 号门的总体概率"><b><MathInline latex={String.raw`1/2`} /></b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post zero" data-label="P(H&nbsp;|&nbsp;E)：开 3 号门后，本行假设为真的概率"><b><MathInline latex={String.raw`0`} /></b><span class="bs-meter"><i style="width:0%"></i></span></td>
-</tr>
-</tbody>
-</table>
+<DataTable class="bs-table">
+<DataTableHead>
+<DataTableRow>
+<DataTableHeader><span class="bs-symbol"><MathInline latex={String.raw`H`} /></span><small>本行的藏车位置假设</small></DataTableHeader>
+<DataTableHeader><span><MathInline latex={String.raw`P(H)`} /></span><small>本行假设为真的先验概率</small></DataTableHeader>
+<DataTableHeader><span><MathInline latex={String.raw`P(E \mid H)`} /></span><small>若本行假设为真，主持人打开 3 号门的概率</small></DataTableHeader>
+<DataTableHeader><span><MathInline latex={String.raw`P(H)P(E \mid H)`} /></span><small>本行留下的权重</small></DataTableHeader>
+<DataTableHeader><span><MathInline latex={String.raw`P(E)`} /></span><small>主持人打开 3 号门的总体概率</small></DataTableHeader>
+<DataTableHeader><span><MathInline latex={String.raw`P(H \mid E)`} /></span><small>开 3 号门后，本行假设为真的概率</small></DataTableHeader>
+</DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow>
+<DataTableHeader class="bs-row-head"><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span>车在你选的 1 号门后</DataTableHeader>
+<DataTableCell class="bs-val bs-prior" dataLabel="P(H)：本行假设为真的先验概率"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
+<DataTableCell class="bs-val bs-like" dataLabel="P(E | H)：若本行假设为真，主持人打开 3 号门的概率"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val" dataLabel="P(H) × P(E | H)：本行留下的权重"><b><MathInline latex={String.raw`1/6`} /></b><span class="bs-note">仍可能，但证据只支持一半</span></DataTableCell>
+<DataTableCell class="bs-val bs-evidence" dataLabel="P(E)：主持人打开 3 号门的总体概率"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val bs-post" dataLabel="P(H | E)：开 3 号门后，本行假设为真的概率"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableHeader class="bs-row-head"><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span>车在 2 号门后</DataTableHeader>
+<DataTableCell class="bs-val bs-prior" dataLabel="P(H)：本行假设为真的先验概率"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
+<DataTableCell class="bs-val bs-like" dataLabel="P(E | H)：若本行假设为真，主持人打开 3 号门的概率"><b><MathInline latex={String.raw`1`} /></b><BayesMeter value={100} /></DataTableCell>
+<DataTableCell class="bs-val" dataLabel="P(H) × P(E | H)：本行留下的权重"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-note">最强幸存者：这个揭示是被迫的</span></DataTableCell>
+<DataTableCell class="bs-val bs-evidence" dataLabel="P(E)：主持人打开 3 号门的总体概率"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val bs-post" dataLabel="P(H | E)：开 3 号门后，本行假设为真的概率"><b><MathInline latex={String.raw`2/3`} /></b><BayesMeter value={66.67} /></DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableHeader class="bs-row-head"><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span>车在 3 号门后</DataTableHeader>
+<DataTableCell class="bs-val bs-prior" dataLabel="P(H)：本行假设为真的先验概率"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
+<DataTableCell class="bs-val bs-like zero" dataLabel="P(E | H)：若本行假设为真，主持人打开 3 号门的概率"><b><MathInline latex={String.raw`0`} /></b><BayesMeter value={0} /></DataTableCell>
+<DataTableCell class="bs-val zero" dataLabel="P(H) × P(E | H)：本行留下的权重"><b><MathInline latex={String.raw`0`} /></b><span class="bs-note">被排除：主持人不能打开藏车的门</span></DataTableCell>
+<DataTableCell class="bs-val bs-evidence" dataLabel="P(E)：主持人打开 3 号门的总体概率"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val bs-post zero" dataLabel="P(H | E)：开 3 号门后，本行假设为真的概率"><b><MathInline latex={String.raw`0`} /></b><BayesMeter value={0} /></DataTableCell>
+</DataTableRow>
+</DataTableBody>
+</DataTable>
 </div>
 <p class="bs-total"><span><MathInline latex={String.raw`P(E)`} /></span> 是证据筛过之后留下的总权重：<Highlight><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></Highlight>。把每个幸存权重都除以这个 <MathInline latex={String.raw`1/2`} />，未打开的 2 号门就拿走了剩余概率中的 <Highlight><MathInline latex={String.raw`2/3`} /></Highlight>。</p>
 </figure>

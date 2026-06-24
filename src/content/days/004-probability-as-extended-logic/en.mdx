@@ -13,6 +13,7 @@ import ProbabilityMontyPanel from "@app/components/lesson/interactives/Probabili
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
+import BayesMeter from "@app/components/lesson/BayesMeter.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import DataTable from "@app/components/lesson/DataTable.astro";
@@ -165,44 +166,44 @@ What we did to those doors by hand has a name and a formula. The formula looks c
 <MathBlock latex={bayesFormula} />
 </div>
 <div class="bs-table-wrap" role="region" aria-label="Bayesian probability table" tabindex="0">
-<table class="bs-table">
-<thead>
-<tr>
-<th><span class="bs-symbol"><MathInline latex={String.raw`H`} /></span><small>this row's car-location claim</small></th>
-<th><span><MathInline latex={String.raw`P(H)`} /></span><small>prior chance this row is true</small></th>
-<th><span><MathInline latex={String.raw`P(E \mid H)`} /></span><small>chance host opens Door 3 if this row is true</small></th>
-<th><span><MathInline latex={String.raw`P(H)P(E \mid H)`} /></span><small>row's surviving weight</small></th>
-<th><span><MathInline latex={String.raw`P(E)`} /></span><small>overall chance host opens Door 3</small></th>
-<th><span><MathInline latex={String.raw`P(H \mid E)`} /></span><small>chance this row is true after Door 3 opens</small></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span> Car behind your Door 1</th>
-<td class="bs-val bs-prior" data-label="P(H): prior chance this row is true"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H): chance host opens Door 3 if this row is true"><b><MathInline latex={String.raw`1/2`} /></b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H): row's surviving weight"><b><MathInline latex={String.raw`1/6`} /></b><span class="bs-note">possible, but only half as expected</span></td>
-<td class="bs-val bs-evidence" data-label="P(E): overall chance host opens Door 3"><b><MathInline latex={String.raw`1/2`} /></b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E): chance this row is true after Door 3 opens"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-</tr>
-<tr>
-<th><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span> Car behind Door 2</th>
-<td class="bs-val bs-prior" data-label="P(H): prior chance this row is true"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like" data-label="P(E&nbsp;|&nbsp;H): chance host opens Door 3 if this row is true"><b><MathInline latex={String.raw`1`} /></b><span class="bs-meter"><i style="width:100%"></i></span></td>
-<td class="bs-val" data-label="P(H) × P(E&nbsp;|&nbsp;H): row's surviving weight"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-note">best survivor: the reveal was forced</span></td>
-<td class="bs-val bs-evidence" data-label="P(E): overall chance host opens Door 3"><b><MathInline latex={String.raw`1/2`} /></b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post" data-label="P(H&nbsp;|&nbsp;E): chance this row is true after Door 3 opens"><b><MathInline latex={String.raw`2/3`} /></b><span class="bs-meter"><i style="width:66.67%"></i></span></td>
-</tr>
-<tr>
-<th><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span> Car behind Door 3</th>
-<td class="bs-val bs-prior" data-label="P(H): prior chance this row is true"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-meter"><i style="width:33.33%"></i></span></td>
-<td class="bs-val bs-like zero" data-label="P(E&nbsp;|&nbsp;H): chance host opens Door 3 if this row is true"><b><MathInline latex={String.raw`0`} /></b><span class="bs-meter"><i style="width:0%"></i></span></td>
-<td class="bs-val zero" data-label="P(H) × P(E&nbsp;|&nbsp;H): row's surviving weight"><b><MathInline latex={String.raw`0`} /></b><span class="bs-note">ruled out: the host cannot open the car</span></td>
-<td class="bs-val bs-evidence" data-label="P(E): overall chance host opens Door 3"><b><MathInline latex={String.raw`1/2`} /></b><span class="bs-meter"><i style="width:50%"></i></span></td>
-<td class="bs-val bs-post zero" data-label="P(H&nbsp;|&nbsp;E): chance this row is true after Door 3 opens"><b><MathInline latex={String.raw`0`} /></b><span class="bs-meter"><i style="width:0%"></i></span></td>
-</tr>
-</tbody>
-</table>
+<DataTable class="bs-table">
+<DataTableHead>
+<DataTableRow>
+<DataTableHeader><span class="bs-symbol"><MathInline latex={String.raw`H`} /></span><small>this row's car-location claim</small></DataTableHeader>
+<DataTableHeader><span><MathInline latex={String.raw`P(H)`} /></span><small>prior chance this row is true</small></DataTableHeader>
+<DataTableHeader><span><MathInline latex={String.raw`P(E \mid H)`} /></span><small>chance host opens Door 3 if this row is true</small></DataTableHeader>
+<DataTableHeader><span><MathInline latex={String.raw`P(H)P(E \mid H)`} /></span><small>row's surviving weight</small></DataTableHeader>
+<DataTableHeader><span><MathInline latex={String.raw`P(E)`} /></span><small>overall chance host opens Door 3</small></DataTableHeader>
+<DataTableHeader><span><MathInline latex={String.raw`P(H \mid E)`} /></span><small>chance this row is true after Door 3 opens</small></DataTableHeader>
+</DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow>
+<DataTableHeader class="bs-row-head"><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span> Car behind your Door 1</DataTableHeader>
+<DataTableCell class="bs-val bs-prior" dataLabel="P(H): prior chance this row is true"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
+<DataTableCell class="bs-val bs-like" dataLabel="P(E | H): chance host opens Door 3 if this row is true"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val" dataLabel="P(H) × P(E | H): row's surviving weight"><b><MathInline latex={String.raw`1/6`} /></b><span class="bs-note">possible, but only half as expected</span></DataTableCell>
+<DataTableCell class="bs-val bs-evidence" dataLabel="P(E): overall chance host opens Door 3"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val bs-post" dataLabel="P(H | E): chance this row is true after Door 3 opens"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableHeader class="bs-row-head"><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span> Car behind Door 2</DataTableHeader>
+<DataTableCell class="bs-val bs-prior" dataLabel="P(H): prior chance this row is true"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
+<DataTableCell class="bs-val bs-like" dataLabel="P(E | H): chance host opens Door 3 if this row is true"><b><MathInline latex={String.raw`1`} /></b><BayesMeter value={100} /></DataTableCell>
+<DataTableCell class="bs-val" dataLabel="P(H) × P(E | H): row's surviving weight"><b><MathInline latex={String.raw`1/3`} /></b><span class="bs-note">best survivor: the reveal was forced</span></DataTableCell>
+<DataTableCell class="bs-val bs-evidence" dataLabel="P(E): overall chance host opens Door 3"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val bs-post" dataLabel="P(H | E): chance this row is true after Door 3 opens"><b><MathInline latex={String.raw`2/3`} /></b><BayesMeter value={66.67} /></DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableHeader class="bs-row-head"><span class="bs-symbol"><MathInline latex={String.raw`H:`} /></span> Car behind Door 3</DataTableHeader>
+<DataTableCell class="bs-val bs-prior" dataLabel="P(H): prior chance this row is true"><b><MathInline latex={String.raw`1/3`} /></b><BayesMeter value={33.33} /></DataTableCell>
+<DataTableCell class="bs-val bs-like zero" dataLabel="P(E | H): chance host opens Door 3 if this row is true"><b><MathInline latex={String.raw`0`} /></b><BayesMeter value={0} /></DataTableCell>
+<DataTableCell class="bs-val zero" dataLabel="P(H) × P(E | H): row's surviving weight"><b><MathInline latex={String.raw`0`} /></b><span class="bs-note">ruled out: the host cannot open the car</span></DataTableCell>
+<DataTableCell class="bs-val bs-evidence" dataLabel="P(E): overall chance host opens Door 3"><b><MathInline latex={String.raw`1/2`} /></b><BayesMeter value={50} /></DataTableCell>
+<DataTableCell class="bs-val bs-post zero" dataLabel="P(H | E): chance this row is true after Door 3 opens"><b><MathInline latex={String.raw`0`} /></b><BayesMeter value={0} /></DataTableCell>
+</DataTableRow>
+</DataTableBody>
+</DataTable>
 </div>
 <p class="bs-total"><span><MathInline latex={String.raw`P(E)`} /></span> is the total weight that survived the evidence: <strong><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></strong>. Divide each surviving weight by that half, and the unopened Door 2 gets <strong><MathInline latex={String.raw`2/3`} /></strong> of the remaining probability.</p>
 </figure>
