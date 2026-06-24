@@ -67,7 +67,8 @@ async function checkHtml(siteDir: string, siteUrl: string, filePath: string, err
     if (!imagePath || !await pathExists(imagePath)) errors.push(`${url}: og:image does not exist locally (${ogImage})`);
   }
   for (const [label, href] of [["favicon", favicon], ["apple-touch-icon", appleTouchIcon], ["manifest", manifest]] as const) {
-    if (href && !await pathExists(localPathForHref(siteDir, siteUrl, href))) {
+    const localPath = href ? localPathForHref(siteDir, siteUrl, href) : "";
+    if (href && (!localPath || !await pathExists(localPath))) {
       errors.push(`${url}: ${label} does not exist locally (${href})`);
     }
   }
@@ -128,7 +129,8 @@ async function checkManifestIcons(siteDir: string, siteUrl: string, href: string
       errors.push(`${href}: icon src must be a string`);
       continue;
     }
-    if (!await pathExists(localPathForHref(siteDir, siteUrl, icon.src))) {
+    const localPath = localPathForHref(siteDir, siteUrl, icon.src);
+    if (!localPath || !await pathExists(localPath)) {
       errors.push(`${href}: icon does not exist locally (${icon.src})`);
     }
   }
@@ -141,9 +143,8 @@ function localPathForUrl(siteDir: string, siteUrl: string, url: string): string 
 }
 
 function localPathForHref(siteDir: string, siteUrl: string, href: string): string {
-  const parsed = href.startsWith("http")
-    ? new URL(href)
-    : new URL(href, siteUrl);
+  if (href.startsWith("http") && !href.startsWith(siteUrl)) return "";
+  const parsed = href.startsWith("http") ? new URL(href) : new URL(href, siteUrl);
   return path.join(siteDir, parsed.pathname.replace(/^\/+/, ""));
 }
 

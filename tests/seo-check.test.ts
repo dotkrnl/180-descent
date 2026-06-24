@@ -41,6 +41,23 @@ describe("seo check", () => {
       "/: hreflang x-default should be https://180d.io/, got https://180d.io/zh/"
     ]);
   });
+
+  it("rejects external asset URLs that only match a local pathname", async () => {
+    const root = await createSiteRoot();
+    await writeFile(path.join(root, "_site/index.html"), indexHtml({
+      favicon: "https://example.com/favicon.ico"
+    }));
+    await writeFile(path.join(root, "_site/site.webmanifest"), JSON.stringify({
+      icons: [{ src: "https://example.com/icon-192.png" }]
+    }));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "/: favicon does not exist locally (https://example.com/favicon.ico)",
+      "/site.webmanifest: icon does not exist locally (https://example.com/icon-192.png)"
+    ]);
+  });
 });
 
 async function createSiteRoot(): Promise<string> {
@@ -60,6 +77,7 @@ async function createSiteRoot(): Promise<string> {
 
 function indexHtml(options: {
   canonicalPath?: string;
+  favicon?: string;
   alternates?: {
     en: string;
     zh: string;
@@ -87,7 +105,7 @@ function indexHtml(options: {
     '<meta property="og:image" content="https://180d.io/social.png">',
     '<meta name="twitter:card" content="summary_large_image">',
     '<script type="application/ld+json">{}</script>',
-    '<link rel="icon" href="/favicon.ico">',
+    `<link rel="icon" href="${options.favicon ?? "/favicon.ico"}">`,
     '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
     '<link rel="manifest" href="/site.webmanifest">',
     "</head>",
