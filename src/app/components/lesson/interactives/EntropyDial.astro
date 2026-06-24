@@ -41,15 +41,15 @@ const presets = zh
     <div class="ent-readouts">
       <div><div class="bigH"><span id="hVal">1.00</span><small>{zh ? "比特 / 投掷" : "bits / flip"}</small></div></div>
       <div class="surprise-rows">
-        <div class="srow"><span>{zh ? "正面" : "heads"} · p=<span id="pH">0.50</span> · {zh ? "惊奇度" : "surprise"} <span id="sH">1.00</span> {zh ? "比特" : "b"}</span><div class="bar" id="barH" style="width:33%"></div></div>
-        <div class="srow"><span>{zh ? "反面" : "tails"} · p=<span id="pT">0.50</span> · {zh ? "惊奇度" : "surprise"} <span id="sT">1.00</span> {zh ? "比特" : "b"}</span><div class="bar t" id="barT" style="width:33%"></div></div>
+        <div class="srow"><span>{zh ? "正面" : "heads"} · p=<span id="pH">0.50</span> · {zh ? "惊奇度" : "surprise"} <span id="sH">1.00</span> {zh ? "比特" : "b"}</span><div class="bar initial-third" id="barH"></div></div>
+        <div class="srow"><span>{zh ? "反面" : "tails"} · p=<span id="pT">0.50</span> · {zh ? "惊奇度" : "surprise"} <span id="sT">1.00</span> {zh ? "比特" : "b"}</span><div class="bar t initial-third" id="barT"></div></div>
       </div>
       <p class="ent-calc" id="entCalc"><MathInline latex={String.raw`H = 0.50\times1.00 + 0.50\times1.00 = 1.00`} /> {zh ? "比特/投掷。" : "bits/flip."}</p>
       <p class="ent-verdict" id="entVerdict" aria-live="polite">{zh ? "一枚公平的硬币：每次投掷都是一个真正的提问，没有任何捷径。要发送 1,000 次投掷结果，你需要 1,000 比特——没有任何压缩空间。" : "A fair coin: every flip is a genuine question with no shortcut. To send 1,000 flips you need 1,000 bits — there's nothing to compress."}</p>
     </div>
   </div>
 
-  <div class="slider-row" style="margin-top:1.1rem;">
+  <div class="slider-row entropy-slider-row">
     <label for="pSlider">{zh ? "P(正面)" : "P(heads)"} <span class="val" id="pLabel">0.50</span></label>
     <input type="range" id="pSlider" min="1" max="99" value="50" />
   </div>
