@@ -3,6 +3,7 @@ import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import BookShell from "@app/layouts/BookShell.astro";
 import { getBookData } from "@app/site-data";
 import { dayArtifactDownloadUrl } from "@lib/artifacts/downloads";
+import { daySocialImagePath } from "@lib/assets/social-images";
 import type { RegistryDayLocaleEntry } from "@lib/content/registry";
 import { alternateLocale, dayUrl, staticPageUrl } from "@lib/static-site/routes";
 
@@ -46,7 +47,7 @@ const canonicalPath = dayUrl(entry.locale, dayPath);
 const alternatePath = dayUrl(alternateLocale(entry.locale), dayPath);
 const dayEpubUrl = dayArtifactDownloadUrl("epub", entry.locale, dayPath);
 const dayPdfUrl = dayArtifactDownloadUrl("pdf", entry.locale, dayPath);
-const socialImagePath = isZh ? `/assets/images/social/zh-day-${dayPath}.png` : `/assets/images/social/day-${dayPath}.png`;
+const socialImagePath = daySocialImagePath(entry.locale, dayPath);
 const paddedDay = String(entry.day.manifest.day).padStart(3, "0");
 const dayLabel = isZh ? `第${paddedDay}日` : `Day ${paddedDay}`;
 const remainingDays = book.totalDays - entry.day.manifest.day;

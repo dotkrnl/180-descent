@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { brandIconFile, socialImagesDir } from "@lib/assets/paths";
+import { bookSocialImageFile, daySocialImageFile } from "@lib/assets/social-images";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
@@ -115,7 +116,7 @@ async function loadSocialCards(options: {
       kicker: options.book.title,
       day: null,
       sourcePath: bookDataFile(options.root),
-      outPath: path.join(options.outDir, "180-descent.png")
+      outPath: path.join(options.outDir, bookSocialImageFile("en"))
     },
     {
       locale: "zh",
@@ -124,17 +125,17 @@ async function loadSocialCards(options: {
       kicker: options.book.zh.title,
       day: null,
       sourcePath: bookDataFile(options.root),
-      outPath: path.join(options.outDir, "180-descent-zh.png")
+      outPath: path.join(options.outDir, bookSocialImageFile("zh"))
     },
     ...enDays.map((day) => ({
       ...day,
       kicker: options.book.title,
-      outPath: path.join(options.outDir, `day-${day.dayPath}.png`)
+      outPath: path.join(options.outDir, daySocialImageFile(day.locale, day.dayPath))
     })),
     ...zhDays.map((day) => ({
       ...day,
       kicker: options.book.zh.title,
-      outPath: path.join(options.outDir, `zh-day-${day.dayPath}.png`)
+      outPath: path.join(options.outDir, daySocialImageFile(day.locale, day.dayPath))
     }))
   ];
 }

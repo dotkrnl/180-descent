@@ -7,6 +7,7 @@ import brandDark from "../../assets/images/brand/180-descent-icon-dark-96.png";
 import faviconLight from "../../assets/images/brand/favicon-32.png";
 import faviconDark from "../../assets/images/brand/favicon-32-dark.png";
 import appleTouchIcon from "../../assets/images/brand/apple-touch-icon.png";
+import { bookSocialImagePath } from "@lib/assets/social-images";
 import { homeUrl, staticPageUrl } from "@lib/static-site/routes";
 
 interface Props {
@@ -43,7 +44,7 @@ const canonicalUrl = new URL(canonicalPath, book.siteUrl).href;
 const alternateUrl = alternatePath ? new URL(alternatePath, book.siteUrl).href : undefined;
 const enUrl = alternateUrl ? (isZh ? alternateUrl : canonicalUrl) : undefined;
 const zhUrl = alternateUrl ? (isZh ? canonicalUrl : alternateUrl) : undefined;
-const requestedSocialImagePath = socialImagePath ?? (isZh ? "/assets/images/social/180-descent-zh.png" : "/assets/images/social/180-descent.png");
+const requestedSocialImagePath = socialImagePath ?? bookSocialImagePath(locale);
 const socialAssetPath = socialImageAssets[requestedSocialImagePath];
 if (!socialAssetPath) {
   throw new Error(`Missing social image asset: ${requestedSocialImagePath}`);
