@@ -15,6 +15,8 @@ import { escapeXml } from "@lib/text/escape";
 
 type CheerioRoot = ReturnType<typeof cheerio.load>;
 
+const EPUB_MODIFIED_TIMESTAMP = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
+
 interface BuildAllEpubsOptions {
   root: string;
 }
@@ -539,7 +541,6 @@ function navDocument(items: ArtifactBookDay[], config: EpubConfig): string {
 }
 
 function contentOpf(meta: EpubMeta, manifestItems: string[], spine: string[]): string {
-  const modified = "2026-06-19T00:00:00Z";
   const identifier = `urn:uuid:${epubUuidFromString(meta.epubIdentifier)}`;
   return `<?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="3.0">
@@ -551,7 +552,7 @@ function contentOpf(meta: EpubMeta, manifestItems: string[], spine: string[]): s
     <meta refines="#translator" property="role" scheme="marc:relators">trl</meta>` : ""}
     <dc:language>${escapeXml(meta.language)}</dc:language>
     <dc:publisher>${escapeXml(meta.publisher)}</dc:publisher>
-    <meta property="dcterms:modified">${modified}</meta>
+    <meta property="dcterms:modified">${EPUB_MODIFIED_TIMESTAMP}</meta>
   </metadata>
   <manifest>
     ${manifestItems.join("\n    ")}
