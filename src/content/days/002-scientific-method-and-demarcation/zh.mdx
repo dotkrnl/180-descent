@@ -12,6 +12,12 @@ import DemarcationLab from "@app/components/lesson/interactives/DemarcationLab.a
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -223,43 +229,43 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <h3>这并非一个领域的难堪</h3>
 <p>那种条件反射式的辩护——「软科学嘛，还能指望什么」——随着同样的复现实验在其他领域展开并返回同样令人沮丧的结果，便不攻自破。这场危机是全局性的。以下是经核实的锚定数字；每次请注意度量标准，因为如我们刚见，度量标准就是故事本身。</p>
 
-<table class="reptable">
-<thead>
-<tr><th>项目与发表处</th><th>复现对象</th><th class="num">已复现*</th><th>效应量缩减</th></tr>
-</thead>
-<tbody>
-<tr>
-<td class="metric">心理学<br /><span style="color:var(--ink-faint);font-size:.85em;">OSC, Science 2015</span></td>
-<td class="metric">100 项研究，3 本顶尖期刊</td>
-<td class="num">36%</td>
-<td class="metric">约为原始效应的 50%</td>
-</tr>
-<tr>
-<td class="metric">癌症生物学<br /><span style="color:var(--ink-faint);font-size:.85em;">Errington et al., eLife 2021</span></td>
-<td class="metric">计划复现 193 项实验——仅约 50 项得以尝试</td>
-<td class="num">~46%†</td>
-<td class="metric">约缩小 85%</td>
-</tr>
-<tr>
-<td class="metric">实验经济学<br /><span style="color:var(--ink-faint);font-size:.85em;">Camerer et al., Science 2016</span></td>
-<td class="metric">18 项实验室实验（AER, QJE）</td>
-<td class="num">61%</td>
-<td class="metric">约为原始效应的 66%</td>
-</tr>
-<tr>
-<td class="metric">社会科学<br /><span style="color:var(--ink-faint);font-size:.85em;">Camerer et al., Nat. Hum. Behav. 2018</span></td>
-<td class="metric">Nature 与 Science 中的 21 项实验</td>
-<td class="num">62%</td>
-<td class="metric">约为原始效应的 50%</td>
-</tr>
-<tr>
-<td class="metric">临床前肿瘤学<br /><span style="color:var(--ink-faint);font-size:.85em;">Begley &amp; Ellis, Nature 2012</span></td>
-<td class="metric">53 篇「里程碑」论文（安进）</td>
-<td class="num">11%</td>
-<td class="metric">——（53 篇中仅 6 篇被确认）</td>
-</tr>
-</tbody>
-</table>
+<DataTable class="reptable">
+<DataTableHead>
+<DataTableRow><DataTableHeader>项目与发表处</DataTableHeader><DataTableHeader>复现对象</DataTableHeader><DataTableHeader class="num">已复现*</DataTableHeader><DataTableHeader>效应量缩减</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow>
+<DataTableCell class="metric">心理学<br /><span class="table-subnote">OSC, Science 2015</span></DataTableCell>
+<DataTableCell class="metric">100 项研究，3 本顶尖期刊</DataTableCell>
+<DataTableCell class="num">36%</DataTableCell>
+<DataTableCell class="metric">约为原始效应的 50%</DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell class="metric">癌症生物学<br /><span class="table-subnote">Errington et al., eLife 2021</span></DataTableCell>
+<DataTableCell class="metric">计划复现 193 项实验——仅约 50 项得以尝试</DataTableCell>
+<DataTableCell class="num">~46%†</DataTableCell>
+<DataTableCell class="metric">约缩小 85%</DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell class="metric">实验经济学<br /><span class="table-subnote">Camerer et al., Science 2016</span></DataTableCell>
+<DataTableCell class="metric">18 项实验室实验（AER, QJE）</DataTableCell>
+<DataTableCell class="num">61%</DataTableCell>
+<DataTableCell class="metric">约为原始效应的 66%</DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell class="metric">社会科学<br /><span class="table-subnote">Camerer et al., Nat. Hum. Behav. 2018</span></DataTableCell>
+<DataTableCell class="metric">Nature 与 Science 中的 21 项实验</DataTableCell>
+<DataTableCell class="num">62%</DataTableCell>
+<DataTableCell class="metric">约为原始效应的 50%</DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell class="metric">临床前肿瘤学<br /><span class="table-subnote">Begley &amp; Ellis, Nature 2012</span></DataTableCell>
+<DataTableCell class="metric">53 篇「里程碑」论文（安进）</DataTableCell>
+<DataTableCell class="num">11%</DataTableCell>
+<DataTableCell class="metric">——（53 篇中仅 6 篇被确认）</DataTableCell>
+</DataTableRow>
+</DataTableBody>
+</DataTable>
 <p style="font-size:.78em;color:var(--ink-faint);margin-top:.7rem;">*「已复现」= 同方向显著效应，最严格的一般度量。†癌症生物学数字为已完成实验中的比例；引人注目的是，193 项原始实验中无一能仅凭发表的方法复现，且仅有 2% 可获得原始数据。<span style="color:var(--accent-deep);">[已确立]</span></p>
 
 <p>最深的信号甚至不是失败率——而是癌症生物学团队发现他们无法弄清原始科学家究竟做了什么。方法部分过于单薄，无从遵循；原作者往往不愿分享方案或数据。一项你连尝试复现都做不到的发现，并非未通过波普尔的检验——它拒绝接受检验。而一项调查将这种不安落到了实处：当 Nature 于 2016 年调查 1,576 位科学家时，超过 70% 表示他们曾尝试复现他人的实验却遭失败，超过一半未能复现自己的实验。<span style="color:var(--accent-deep);">[已确立]</span>——尽管请注意这是意见数据，是科学家们相信什么，而非实际测量的比率。</p>

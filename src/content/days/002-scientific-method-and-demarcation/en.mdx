@@ -12,6 +12,12 @@ import DemarcationLab from "@app/components/lesson/interactives/DemarcationLab.a
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -223,43 +229,43 @@ If there's one criterion almost everyone agrees on — Popper, Kuhn, your high-s
 <h3>It isn't one field's embarrassment</h3>
 <p>The reflex defense — "soft sciences, what do you expect" — collapsed as the same exercise ran elsewhere and came back in the same unhappy range. The crisis is broad. Here are the verified anchor numbers; note the metric every time, because, as we just saw, the metric <em>is</em> the story.</p>
 
-<table class="reptable">
-<thead>
-<tr><th>Project &amp; venue</th><th>What was repeated</th><th class="num">Replicated*</th><th>Effect-size shrinkage</th></tr>
-</thead>
-<tbody>
-<tr>
-<td class="metric"><b>Psychology</b><br /><span style="color:var(--ink-faint);font-size:.85em;">OSC, <em>Science</em> 2015</span></td>
-<td class="metric">100 studies, 3 top journals</td>
-<td class="num">36%</td>
-<td class="metric">to ~50% of original</td>
-</tr>
-<tr>
-<td class="metric"><b>Cancer biology</b><br /><span style="color:var(--ink-faint);font-size:.85em;">Errington et al., <em>eLife</em> 2021</span></td>
-<td class="metric">Planned 193 experiments — only ~50 could even be <em>attempted</em></td>
-<td class="num">~46%†</td>
-<td class="metric">~85% smaller</td>
-</tr>
-<tr>
-<td class="metric"><b>Experimental economics</b><br /><span style="color:var(--ink-faint);font-size:.85em;">Camerer et al., <em>Science</em> 2016</span></td>
-<td class="metric">18 lab experiments (AER, QJE)</td>
-<td class="num">61%</td>
-<td class="metric">to ~66% of original</td>
-</tr>
-<tr>
-<td class="metric"><b>Social science</b><br /><span style="color:var(--ink-faint);font-size:.85em;">Camerer et al., <em>Nat. Hum. Behav.</em> 2018</span></td>
-<td class="metric">21 experiments in <em>Nature</em> &amp; <em>Science</em></td>
-<td class="num">62%</td>
-<td class="metric">to ~50% of original</td>
-</tr>
-<tr>
-<td class="metric"><b>Preclinical oncology</b><br /><span style="color:var(--ink-faint);font-size:.85em;">Begley &amp; Ellis, <em>Nature</em> 2012</span></td>
-<td class="metric">53 "landmark" papers (Amgen)</td>
-<td class="num">11%</td>
-<td class="metric">— (6 of 53 confirmed)</td>
-</tr>
-</tbody>
-</table>
+<DataTable class="reptable">
+<DataTableHead>
+<DataTableRow><DataTableHeader>Project &amp; venue</DataTableHeader><DataTableHeader>What was repeated</DataTableHeader><DataTableHeader class="num">Replicated*</DataTableHeader><DataTableHeader>Effect-size shrinkage</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow>
+<DataTableCell class="metric"><b>Psychology</b><br /><span class="table-subnote">OSC, <em>Science</em> 2015</span></DataTableCell>
+<DataTableCell class="metric">100 studies, 3 top journals</DataTableCell>
+<DataTableCell class="num">36%</DataTableCell>
+<DataTableCell class="metric">to ~50% of original</DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell class="metric"><b>Cancer biology</b><br /><span class="table-subnote">Errington et al., <em>eLife</em> 2021</span></DataTableCell>
+<DataTableCell class="metric">Planned 193 experiments — only ~50 could even be <em>attempted</em></DataTableCell>
+<DataTableCell class="num">~46%†</DataTableCell>
+<DataTableCell class="metric">~85% smaller</DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell class="metric"><b>Experimental economics</b><br /><span class="table-subnote">Camerer et al., <em>Science</em> 2016</span></DataTableCell>
+<DataTableCell class="metric">18 lab experiments (AER, QJE)</DataTableCell>
+<DataTableCell class="num">61%</DataTableCell>
+<DataTableCell class="metric">to ~66% of original</DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell class="metric"><b>Social science</b><br /><span class="table-subnote">Camerer et al., <em>Nat. Hum. Behav.</em> 2018</span></DataTableCell>
+<DataTableCell class="metric">21 experiments in <em>Nature</em> &amp; <em>Science</em></DataTableCell>
+<DataTableCell class="num">62%</DataTableCell>
+<DataTableCell class="metric">to ~50% of original</DataTableCell>
+</DataTableRow>
+<DataTableRow>
+<DataTableCell class="metric"><b>Preclinical oncology</b><br /><span class="table-subnote">Begley &amp; Ellis, <em>Nature</em> 2012</span></DataTableCell>
+<DataTableCell class="metric">53 "landmark" papers (Amgen)</DataTableCell>
+<DataTableCell class="num">11%</DataTableCell>
+<DataTableCell class="metric">— (6 of 53 confirmed)</DataTableCell>
+</DataTableRow>
+</DataTableBody>
+</DataTable>
 <p style="font-size:.78em;color:var(--ink-faint);margin-top:.7rem;">*"Replicated" = significant effect in the same direction, the strictest common metric. †Cancer-biology figure is among experiments that could be completed; strikingly, <strong>not one</strong> of the 193 original experiments could be repeated from its published methods alone, and raw data was available for only 2%. <span style="color:var(--accent-deep);">[ESTABLISHED]</span></p>
 
 <p>The deepest signal isn't even the failure rate — it's that <em>cancer-biology team's</em> discovery that they couldn't <strong>find out what the original scientists had actually done.</strong> Methods sections were too thin to follow; original authors often wouldn't share protocols or data. A finding you can't even <em>attempt</em> to reproduce hasn't failed Popper's test — it has refused to take it. And a backdrop survey makes the unease concrete: when <em>Nature</em> polled <strong>1,576 scientists</strong> in 2016, more than <strong>70%</strong> said they'd tried and failed to reproduce <em>someone else's</em> experiment, and more than <strong>half</strong> had failed to reproduce <em>their own</em>. <span style="color:var(--accent-deep);font-weight:500;">[ESTABLISHED]</span> — though note this is opinion data, what scientists <em>believe</em>, not a measured rate.</p>
