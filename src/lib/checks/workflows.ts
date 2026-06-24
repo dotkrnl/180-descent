@@ -1,5 +1,6 @@
 import { lstat, readlink } from "node:fs/promises";
 import path from "node:path";
+import { isMissingPathError } from "@lib/fs/errors";
 
 interface WorkflowCheckFailure {
   path: string;
@@ -59,8 +60,4 @@ export async function checkProjectWorkflow(root: string): Promise<WorkflowCheckF
   }
 
   return failures;
-}
-
-function isMissingPathError(error: unknown): boolean {
-  return typeof error === "object" && error !== null && "code" in error && error.code === "ENOENT";
 }

@@ -24,7 +24,7 @@ export async function checkSeo(options: SeoCheckOptions): Promise<SeoCheckResult
     throw new Error("_site does not exist; run npm run build:site first");
   }
 
-  const htmlFiles = (await walkFiles(builtSiteDir, { ignored: [] })).filter((file) => file.endsWith(".html"));
+  const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignored: [] });
   for (const file of htmlFiles) {
     await checkHtml(builtSiteDir, siteUrl, file, errors);
   }
