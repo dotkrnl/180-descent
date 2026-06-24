@@ -1,0 +1,13 @@
+---
+interface Props {
+  variant: "frontier-watch" | "mono" | "table" | "theory";
+}
+
+const classNames = {
+  "frontier-watch": "frontier-watch-note",
+  mono: "mono",
+  table: "table-note",
+  theory: "theory-note"
+};
+---
+<p class={classNames[Astro.props.variant]}><slot /></p>

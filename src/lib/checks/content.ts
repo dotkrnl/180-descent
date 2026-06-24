@@ -33,6 +33,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<ul class="(?:clean|check)">/, "use <LessonList>"],
   [/<ul class="mislist">/, "use <MisconceptionList>"],
   [/<span class="fix">/, "use <MisconceptionFix>"],
+  [/<p class="(?:frontier-watch-note|mono|table-note|theory-note)">/, "use <LessonNote>"],
   [/<div class="dek-grid">/, "use <DekGrid>"],
   [/<div class="(?:aside|formula|recap|whereblock|wrap|format-alt epub-only print-only|panel)\b/, "use shared lesson components"],
   [/<div class="(?:regress-map|tri-print)\b/, "use <AgrippaTrilemmaMap>"],

@@ -705,6 +705,10 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const text = renderInlineChildren(node, state, context);
     return text ? ` ${text}` : "";
   }
+  if (name === "LessonNote") {
+    const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
+    return text ? `\\begin{notepara}${text}\\end{notepara}` : "";
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
@@ -1581,7 +1585,8 @@ function isBlockMdxElement(node: MdxNode): boolean {
     "AppendixNote",
     "LessonList",
     "DekGrid",
-    "MisconceptionList"
+    "MisconceptionList",
+    "LessonNote"
   ].includes(node.name ?? "");
 }
 
