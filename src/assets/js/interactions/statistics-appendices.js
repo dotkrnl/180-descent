@@ -2,7 +2,7 @@
   "use strict";
 
   var A1 = "appendix-d006-the-deeper-machinery-";
-  var A2 = "appendix-d006-the-incoming-wave-revised-";
+  var A2 = "appendix-d006-the-incoming-wave-";
   var zh = document.documentElement.lang.indexOf("zh") === 0 || location.pathname.indexOf("/zh/") === 0;
 
   function by(prefix, id) {

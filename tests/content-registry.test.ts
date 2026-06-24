@@ -145,8 +145,8 @@ describe("target content registry", () => {
     expect(day006?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
       "the-deeper-machinery:en",
       "the-deeper-machinery:zh",
-      "the-incoming-wave-revised:en",
-      "the-incoming-wave-revised:zh"
+      "the-incoming-wave:en",
+      "the-incoming-wave:zh"
     ]);
     expect(day006?.manifest.components.map((component) => component.id)).toEqual([
       "statistics-core",
