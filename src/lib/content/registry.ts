@@ -105,13 +105,21 @@ async function loadRegistryDay(directory: string): Promise<RegistryDay> {
 }
 
 async function readReferencedFile(root: string, relativePath: string): Promise<string> {
-  const filePath = path.join(root, relativePath);
-  return readFile(filePath, "utf8");
+  return readFile(referencedFilePath(root, relativePath), "utf8");
 }
 
 async function assertReferencedFile(root: string, relativePath: string): Promise<void> {
-  const filePath = path.join(root, relativePath);
-  await access(filePath);
+  await access(referencedFilePath(root, relativePath));
+}
+
+function referencedFilePath(root: string, relativePath: string): string {
+  const normalizedRoot = path.resolve(root);
+  const filePath = path.resolve(normalizedRoot, relativePath);
+  const rootPrefix = `${normalizedRoot}${path.sep}`;
+  if (filePath !== normalizedRoot && !filePath.startsWith(rootPrefix)) {
+    throw new Error(`Manifest reference escapes day directory: ${relativePath}`);
+  }
+  return filePath;
 }
 
 export function listRegistryDayLocaleEntries(registry: ContentRegistry): RegistryDayLocaleEntry[] {

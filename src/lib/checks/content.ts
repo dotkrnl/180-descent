@@ -91,10 +91,8 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
       }
     }
 
-    const declaredBodyPaths = new Set<string>();
     for (const body of day.bodies) {
       const localeData = day.manifest.locales[body.locale];
-      declaredBodyPaths.add(body.path);
       checkContentFile({
         label: `${body.locale.toUpperCase()} ${day.manifest.path}`,
         relativePath: toPosixRelative(options.root, path.join(day.directory, body.path)),
@@ -106,7 +104,6 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
     }
 
     for (const appendixBody of day.appendixBodies) {
-      declaredBodyPaths.add(appendixBody.path);
       checkContentFile({
         label: `${appendixBody.locale.toUpperCase()} ${day.manifest.path} appendix ${appendixBody.appendixId}`,
         relativePath: toPosixRelative(options.root, path.join(day.directory, appendixBody.path)),
@@ -119,14 +116,6 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
     for (const component of day.manifest.components) {
       if (!component.artifactVariants.epub || !component.artifactVariants.pdf) {
         failures.push({ message: `${day.manifest.path} component ${component.id} must declare EPUB and PDF artifact variants` });
-      }
-    }
-
-    for (const asset of day.manifest.assets) {
-      for (const assetPath of Object.values(asset.files)) {
-        if (assetPath && !declaredBodyPaths.has(assetPath) && assetPath.startsWith("..")) {
-          failures.push({ message: `${day.manifest.path} asset ${asset.id} escapes the day directory: ${assetPath}` });
-        }
       }
     }
   }

@@ -1,4 +1,6 @@
 import path from "node:path";
+import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
+import os from "node:os";
 import { describe, expect, it } from "vitest";
 import { listRegistryDayLocaleEntries, loadContentRegistry } from "@lib/content/registry";
 import { dayManifestSchema } from "@lib/schemas/day";
@@ -55,6 +57,25 @@ describe("target content registry", () => {
     ]);
     expect(routes[0].title).toBe("Fixture Day");
     expect(routes[1].summary).toBe("中文夹具摘要。");
+  });
+
+  it("rejects manifest file references that escape a day directory", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-escape-"));
+    const daysDir = path.join(root, "days");
+    const dayDir = path.join(daysDir, "001-fixture");
+    await mkdir(dayDir, { recursive: true });
+    await writeFile(path.join(root, "outside.mdx"), "# Outside");
+    await writeFile(path.join(dayDir, "day.yaml"), [
+      "day: 1",
+      "block: Fixture",
+      "locales:",
+      "  en:",
+      "    title: Fixture",
+      "    summary: Fixture summary.",
+      "    body: ../outside.mdx"
+    ].join("\n"));
+
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Manifest reference escapes day directory: ../outside.mdx");
   });
 
   it("loads project day content with paired appendices and components", async () => {
