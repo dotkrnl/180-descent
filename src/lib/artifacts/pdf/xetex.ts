@@ -168,10 +168,11 @@ async function buildDayPdfs(root: string, locale: Locale, book: BookData): Promi
   const days = await loadArtifactBookDays(root, locale);
   for (const day of days) {
     const zh = locale === "zh";
+    const dayLabel = pdfDayLabel(day.day, locale);
     await buildPdf({
       root,
       locale,
-      title: zh ? `${book.zh.title}：第 ${day.day} 日` : `${book.title}: Day ${day.day}`,
+      title: zh ? `${book.zh.title}：${dayLabel}` : `${book.title}: ${dayLabel}`,
       subtitle: day.title,
       authors: zh ? book.zh.authors : book.authors,
       translators: zh ? book.zh.translators : undefined,
@@ -285,12 +286,17 @@ async function introductionLatex(config: PdfEdition & { root: string }, workDir:
 }
 
 function dayLatex(day: ArtifactBookDay, config: PdfEdition): string {
-  const prefix = config.locale === "zh" ? `第 ${day.day} 日` : `Day ${day.day}`;
+  const prefix = pdfDayLabel(day.day, config.locale);
   return [
     "\\clearpage",
     `\\chaptermark{${latexEscape(prefix)}: ${latexEscape(day.title)}}`,
     `\\addcontentsline{toc}{chapter}{${latexEscape(prefix)}: ${latexEscape(day.title)}}`
   ].filter(Boolean).join("\n\n");
+}
+
+function pdfDayLabel(day: number, locale: Locale): string {
+  const padded = String(day).padStart(3, "0");
+  return locale === "zh" ? `第 ${padded} 日` : `Day ${padded}`;
 }
 
 function blockDividerLatex(title: string, blockNumber: number, locale: Locale): string {
