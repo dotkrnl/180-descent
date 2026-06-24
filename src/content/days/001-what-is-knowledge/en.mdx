@@ -1,6 +1,7 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import AgrippaTrilemmaMap from "@app/components/lesson/figures/AgrippaTrilemmaMap.astro";
 import StoppedClockFigure from "@app/components/lesson/figures/StoppedClockFigure.astro";
 import CredenceDial from "@app/components/lesson/interactives/CredenceDial.astro";
 import GettierMachine from "@app/components/lesson/interactives/GettierMachine.astro";
@@ -154,28 +155,13 @@ Three modern schools each pick which horn to grab — and a fourth changes the s
 
 <PanelNote>Why is your belief justified? Every honest answer to "…and why *that*?" eventually hits one of three walls.</PanelNote>
 
-<div class="regress-map print-hide" role="img" aria-label="A chain of reasons ending in infinite regress, a circle, or an arbitrary halt.">
-<div class="regress-chain">
-<div class="rnode strong"><b>Belief</b><span>"it is 9:12"</span></div>
-<div class="rstep" aria-hidden="true">-></div>
-<div class="rnode"><b>Reason</b><span>"the clock says so"</span></div>
-<div class="rstep" aria-hidden="true">-></div>
-<div class="rnode"><b>Further reason</b><span>"the clock is reliable"</span></div>
-</div>
-<div class="regress-outcomes">
-<article class="routcome"><span>∞</span><b>Infinite regress</b><p>Every reason asks for another reason.</p></article>
-<article class="routcome"><span>↻</span><b>Circle</b><p>The chain returns to a claim it already used.</p></article>
-<article class="routcome"><span>▮</span><b>Arbitrary halt</b><p>The chain simply stops at a basic commitment.</p></article>
-</div>
-</div>
-<div class="tri-print epub-only print-only">
-<p><strong>Reason chain:</strong> belief: "it's 9:12" -> because "the clock" -> because "...and why that?"</p>
-<ol>
-<li><strong>Infinite regress:</strong> every reason needs another reason forever.</li>
-<li><strong>Circle:</strong> the chain loops back to something it already used.</li>
-<li><strong>Arbitrary halt:</strong> the chain simply stops at a basic commitment.</li>
-</ol>
-</div>
+<AgrippaTrilemmaMap locale="en">
+**Reason chain:** belief: "it's 9:12" -> because "the clock" -> because "...and why that?"
+
+1. **Infinite regress:** every reason needs another reason forever.
+2. **Circle:** the chain loops back to something it already used.
+3. **Arbitrary halt:** the chain simply stops at a basic commitment.
+</AgrippaTrilemmaMap>
 <TrilemmaKey>
 <TrilemmaKeyItem>
 **Foundationalism** — bites the third bullet: some beliefs are *basic* and need no further support (raw experience, simple logic). The chain stops, but not arbitrarily.

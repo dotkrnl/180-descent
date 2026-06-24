@@ -1,0 +1,26 @@
+---
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<div class="regress-map print-hide" role="img" aria-label={zh ? "一条理由链最终走向无穷回溯、循环或武断止步。" : "A chain of reasons ending in infinite regress, a circle, or an arbitrary halt."}>
+  <div class="regress-chain">
+    <div class="rnode strong">{zh ? "信念" : <><b>Belief</b></>}<span>{zh ? "「现在是 9:12」" : '"it is 9:12"'}</span></div>
+    <div class="rstep" aria-hidden="true">-&gt;</div>
+    <div class="rnode">{zh ? "理由" : <><b>Reason</b></>}<span>{zh ? "「那座钟这么显示」" : '"the clock says so"'}</span></div>
+    <div class="rstep" aria-hidden="true">-&gt;</div>
+    <div class="rnode">{zh ? "更深的理由" : <><b>Further reason</b></>}<span>{zh ? "「那座钟可靠」" : '"the clock is reliable"'}</span></div>
+  </div>
+  <div class="regress-outcomes">
+    <article class="routcome"><span>∞</span>{zh ? "无穷回溯" : <><b>Infinite regress</b></>}<p>{zh ? "每一个理由都继续要求另一个理由。" : "Every reason asks for another reason."}</p></article>
+    <article class="routcome"><span>↻</span>{zh ? "循环" : <><b>Circle</b></>}<p>{zh ? "理由链绕回已经用过的主张。" : "The chain returns to a claim it already used."}</p></article>
+    <article class="routcome"><span>▮</span>{zh ? "武断止步" : <><b>Arbitrary halt</b></>}<p>{zh ? "理由链停在某个不再追问的基本承诺上。" : "The chain simply stops at a basic commitment."}</p></article>
+  </div>
+</div>
+<FormatOnly as="div" media="print-epub" class="tri-print">
+  <slot />
+</FormatOnly>
