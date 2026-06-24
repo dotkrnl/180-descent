@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { checkPdf } from "@lib/checks/pdf";
+import { bookArtifactName, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
 import { createEmptyContentRoot, writeContentDay } from "./helpers/content-root";
 
 describe("pdf check helpers", () => {
@@ -8,7 +9,7 @@ describe("pdf check helpers", () => {
 
     const result = await checkPdf({ root });
 
-    expect(result.errors).toContain("_site/downloads/180-descent.pdf is missing");
+    expect(result.errors).toContain(`${downloadArtifactPath(bookArtifactName("pdf", "en", false))} is missing`);
   });
 
   it("reports missing per-day artifacts", async () => {
@@ -17,7 +18,7 @@ describe("pdf check helpers", () => {
 
     const result = await checkPdf({ root });
 
-    expect(result.errors).toContain("_site/downloads/180-descent-day-001-fixture.pdf is missing");
-    expect(result.errors).toContain("_site/downloads/180-descent-zh-day-001-fixture.pdf is missing");
+    expect(result.errors).toContain(`${downloadArtifactPath(dayArtifactName("pdf", "en", "001-fixture"))} is missing`);
+    expect(result.errors).toContain(`${downloadArtifactPath(dayArtifactName("pdf", "zh", "001-fixture"))} is missing`);
   });
 });

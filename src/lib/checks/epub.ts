@@ -5,6 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import JSZip from "jszip";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
+import { bookArtifactName, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
 
 interface EpubCheckOptions {
   root: string;
@@ -82,28 +83,28 @@ function isInsideSvg(text: string, index: number): boolean {
 async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
   const editions: EpubEdition[] = [
     {
-      file: "_site/downloads/180-descent.epub",
+      file: downloadArtifactPath(bookArtifactName("epub", "en", false)),
       deepDive: false,
       appendixPatterns: ENGLISH_APPENDIX_PATTERNS,
       optionalAppendixLabel: null,
       required: BOOK_REQUIRED
     },
     {
-      file: "_site/downloads/180-descent-deep-dive.epub",
+      file: downloadArtifactPath(bookArtifactName("epub", "en", true)),
       deepDive: true,
       appendixPatterns: ENGLISH_APPENDIX_PATTERNS,
       optionalAppendixLabel: /Optional appendix/,
       required: BOOK_REQUIRED
     },
     {
-      file: "_site/downloads/180-descent-zh.epub",
+      file: downloadArtifactPath(bookArtifactName("epub", "zh", false)),
       deepDive: false,
       appendixPatterns: CHINESE_APPENDIX_PATTERNS,
       optionalAppendixLabel: null,
       required: BOOK_REQUIRED
     },
     {
-      file: "_site/downloads/180-descent-zh-deep-dive.epub",
+      file: downloadArtifactPath(bookArtifactName("epub", "zh", true)),
       deepDive: true,
       appendixPatterns: CHINESE_APPENDIX_PATTERNS,
       optionalAppendixLabel: /可选附录/,
@@ -122,9 +123,7 @@ function addPerDayEditions(editions: EpubEdition[], days: ArtifactBookDay[], zh:
   for (const day of days) {
     const dayPath = day.path;
     const dayNumber = day.day;
-    const file = zh
-      ? `_site/downloads/180-descent-zh-day-${dayPath}.epub`
-      : `_site/downloads/180-descent-day-${dayPath}.epub`;
+    const file = downloadArtifactPath(dayArtifactName("epub", zh ? "zh" : "en", dayPath));
 
     const isDayOne = dayNumber === 1;
     const dayRequired = [

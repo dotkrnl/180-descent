@@ -11,6 +11,7 @@ import remarkParse from "remark-parse";
 import YAML from "yaml";
 import { prepareLatinFonts, preparePdfFonts } from "@lib/assets/fonts";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
+import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/downloads";
 import { readBookData, type BookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
 
@@ -114,7 +115,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
 
   await prepareLatinFonts({ root });
   await preparePdfFonts({ root });
-  await mkdir(path.join(root, "_site/downloads"), { recursive: true });
+  await mkdir(downloadsDir(root), { recursive: true });
 
   await buildPdf({
     root,
@@ -123,7 +124,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     subtitle: book.subtitle,
     authors: book.authors,
     language: book.language,
-    output: "180-descent.pdf"
+    output: bookArtifactName("pdf", "en", false)
   });
 
   await buildPdf({
@@ -133,7 +134,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     subtitle: book.subtitle,
     authors: book.authors,
     language: book.language,
-    output: "180-descent-deep-dive.pdf",
+    output: bookArtifactName("pdf", "en", true),
     includeDeepDive: true
   });
 
@@ -145,7 +146,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     authors: book.zh.authors,
     translators: book.zh.translators,
     language: book.zh.language,
-    output: "180-descent-zh.pdf"
+    output: bookArtifactName("pdf", "zh", false)
   });
 
   await buildPdf({
@@ -156,7 +157,7 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     authors: book.zh.authors,
     translators: book.zh.translators,
     language: book.zh.language,
-    output: "180-descent-zh-deep-dive.pdf",
+    output: bookArtifactName("pdf", "zh", true),
     includeDeepDive: true
   });
 
@@ -177,7 +178,7 @@ async function buildDayPdfs(root: string, locale: Locale, book: BookData): Promi
       authors: zh ? book.zh.authors : book.authors,
       translators: zh ? book.zh.translators : undefined,
       language: zh ? book.zh.language : book.language,
-      output: zh ? `180-descent-zh-day-${day.path}.pdf` : `180-descent-day-${day.path}.pdf`,
+      output: dayArtifactName("pdf", locale, day.path),
       days: [day],
       includeDeepDive: true,
       singleDay: true
@@ -198,7 +199,7 @@ async function buildPdf(config: PdfEdition & { root: string }): Promise<void> {
     await writeFile(texPath, tex);
     await runXeLaTeX(texPath, workDir);
 
-    await copyFile(outputPath, path.join(root, "_site/downloads", config.output));
+    await copyFile(outputPath, path.join(downloadsDir(root), config.output));
   } catch (error) {
     const log = await readFile(path.join(workDir, "book.log"), "utf8").catch(() => "");
     const keepNote = process.env.PDF_KEEP_TEMP === "1" ? `\n\nTemporary PDF build directory kept at ${workDir}` : "";

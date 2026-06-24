@@ -4,6 +4,7 @@ import path from "node:path";
 import * as cheerio from "cheerio";
 import JSZip from "jszip";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
+import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/downloads";
 import { compileCss } from "@lib/assets/css";
 import { stripUnbundledKatexTtfSources } from "@lib/assets/fonts";
 import { readBookData } from "@lib/data/book";
@@ -50,7 +51,6 @@ interface DayEpubConfig {
   siteDayDir: string;
   dayUrlPrefix: string;
   dayLabel: string;
-  outputPrefix: string;
 }
 
 interface EpubImage {
@@ -71,7 +71,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
   const root = options.root;
   const book = await readBookData(root);
 
-  await mkdir(path.join(root, "_site/downloads"), { recursive: true });
+  await mkdir(downloadsDir(root), { recursive: true });
 
   await buildEpub({
     root,
@@ -91,7 +91,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
     introTitle: "Introduction",
     introLabel: "Introduction",
     dayLabel: "Day",
-    output: "180-descent.epub"
+    output: bookArtifactName("epub", "en", false)
   });
 
   await buildEpub({
@@ -112,7 +112,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
     introTitle: "Introduction",
     introLabel: "Introduction",
     dayLabel: "Day",
-    output: "180-descent-deep-dive.epub",
+    output: bookArtifactName("epub", "en", true),
     includeDeepDive: true
   });
 
@@ -135,7 +135,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
     introTitle: "导言",
     introLabel: "导言",
     dayLabel: "第",
-    output: "180-descent-zh.epub"
+    output: bookArtifactName("epub", "zh", false)
   });
 
   await buildEpub({
@@ -157,7 +157,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
     introTitle: "导言",
     introLabel: "导言",
     dayLabel: "第",
-    output: "180-descent-zh-deep-dive.epub",
+    output: bookArtifactName("epub", "zh", true),
     includeDeepDive: true
   });
 
@@ -174,8 +174,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
     },
     siteDayDir: path.join(root, "_site/days"),
     dayUrlPrefix: "/days/",
-    dayLabel: "Day",
-    outputPrefix: "180-descent-day"
+    dayLabel: "Day"
   });
 
   await buildDayEpubs({
@@ -192,8 +191,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
     },
     siteDayDir: path.join(root, "_site/zh/days"),
     dayUrlPrefix: "/zh/days/",
-    dayLabel: "第",
-    outputPrefix: "180-descent-zh-day"
+    dayLabel: "第"
   });
 }
 
@@ -209,7 +207,7 @@ async function buildDayEpubs(config: DayEpubConfig): Promise<void> {
       },
       days: [day],
       introHtml: null,
-      output: `${config.outputPrefix}-${dayPath(day)}.epub`,
+      output: dayArtifactName("epub", config.locale, dayPath(day)),
       singleDay: true,
       includeDeepDive: true
     });
@@ -281,7 +279,7 @@ async function buildEpub(config: EpubConfig): Promise<void> {
   oebps.file("content.opf", contentOpf(config.meta, manifestItems, spine));
 
   const buffer = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" });
-  await writeFile(path.join(config.root, "_site/downloads", config.output), buffer);
+  await writeFile(path.join(downloadsDir(config.root), config.output), buffer);
 }
 
 async function pageToXhtml(
