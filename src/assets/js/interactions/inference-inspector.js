@@ -113,9 +113,7 @@
       curEx = curEx === key ? null : key;
       document.querySelectorAll(".exbtn").forEach(function(x){
         var active = x === button && curEx;
-        x.style.borderStyle = active ? "solid" : "dashed";
-        x.style.color = active ? "var(--ink)" : "";
-        x.style.borderColor = active ? "var(--accent)" : "";
+        x.classList.toggle("is-active", Boolean(active));
       });
       render();
     });
