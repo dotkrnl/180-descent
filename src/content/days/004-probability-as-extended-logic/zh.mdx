@@ -199,7 +199,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </tbody>
 </table>
 </div>
-<p class="bs-total"><span><MathInline latex={String.raw`P(E)`} /></span> 是证据筛过之后留下的总权重：<span class="hl"><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></span>。把每个幸存权重都除以这个 <MathInline latex={String.raw`1/2`} />，未打开的 2 号门就拿走了剩余概率中的 <span class="hl"><MathInline latex={String.raw`2/3`} /></span>。</p>
+<p class="bs-total"><span><MathInline latex={String.raw`P(E)`} /></span> 是证据筛过之后留下的总权重：<Highlight><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></Highlight>。把每个幸存权重都除以这个 <MathInline latex={String.raw`1/2`} />，未打开的 2 号门就拿走了剩余概率中的 <Highlight><MathInline latex={String.raw`2/3`} /></Highlight>。</p>
 </figure>
 
 <div class="mathline">
@@ -271,7 +271,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <ul>
 <li>概率是事件在无限次重复中出现的频率。「硬币公平」意味着抛掷无穷多次，正面比例趋近一半。</li>
 <li>参数是固定但未知的常数；数据才是随机的。你关心的是：你的方法有多大可能误导你。</li>
-<li>工具：<span class="hl">p 值、置信区间、第一/第二类错误</span>（费希尔；奈曼与皮尔逊，1920–30 年代）。</li>
+<li>工具：<Highlight>p 值、置信区间、第一/第二类错误</Highlight>（费希尔；奈曼与皮尔逊，1920–30 年代）。</li>
 <li>说不出「火星上曾有生命的概率是 70%」——火星要么有过生命，要么没有，不存在可重复的样本可供计数。</li>
 </ul>
 </div>
@@ -281,7 +281,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <ul>
 <li>概率是一种置信度——你在已知条件下理性地有多确信（直接来自<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>的那只旋钮）。</li>
 <li>参数自身也获得概率分布；你随数据不断用贝叶斯定理更新它们。</li>
-<li>工具：<span class="hl">先验、后验、贝叶斯因子</span>。谱系：拉普拉斯 → 杰弗里斯 → 拉姆齐 → 德·菲内蒂 → 萨维奇。</li>
+<li>工具：<Highlight>先验、后验、贝叶斯因子</Highlight>。谱系：拉普拉斯 → 杰弗里斯 → 拉姆齐 → 德·菲内蒂 → 萨维奇。</li>
 <li>可以理直气壮地说「火星上曾有生命的概率是 70%」——一次性事件无法重复，但置信度恰好为此而生。</li>
 </ul>
 </div>
@@ -312,8 +312,8 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <StatusChip status={"ok"} label={"数学理论 · 已确立"} printLabel={"已确立"} />
 </ClaimHeader>
 <h3>e 值：用下注来检验假设</h3>
-<p><span class="term">e 值</span>是你对<span class="term">原假设</span><TipNote text={"原假设是统计检验试图拒绝的默认说法，通常是「没有效应」或「没有差异」。"} />下注后获得的回报。你押上 1 美元赌原假设为假，这份赌约被设计成「在原假设为真时公平」——也就是说，如果原假设确实成立，你便会亏得占不到任何长期便宜（用符号说：e 值在原假设下的期望值至多为 <MathInline latex={String.raw`1`} />）。所以，如果最终你的赌注翻了二十倍，那原假设一定哪里出了问题：要么它为假，要么你中了天文数字级别的头彩。一个很大的 e 值，字面意思就是<span class="hl">你从原假设身上赢到的真金白银</span>，而你累积的财富就是你的证据。它的倒数 <MathInline latex={String.raw`1/e`} /> 行为上像个保守的 p 值，但下注的场景才是精髓。</p>
-<p>在硬币例子里，原假设很具体：「硬币公平，<MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.5`} />」。e 值是两张<span class="term">似然比</span><TipNote text={"似然比比较同一批数据在两个假设之下分别有多可能出现。"} />赌票合起来的财富。一张赌票押「正面偏多」的硬币，即 <MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.60`} />：每出现一次正面，这张票乘以 <MathInline latex={String.raw`0.60/0.50 = 1.2`} />；每出现一次反面，则乘以 <MathInline latex={String.raw`0.40/0.50 = 0.8`} />。另一张镜像赌票押「反面偏多」，即 <MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.40`} />，倍率正好反过来。把起始的 1 美元平均分到两张票上，无论硬币朝哪边持续偏，都可能让财富增长。如果硬币真的公平，每张票每轮的期望倍率都是 <MathInline latex={String.raw`1`} />；这场赌局在原假设下就是公平的。在这个玩具赌局里，「赢」就是财富大到足以拒绝「硬币公平」；「输」就是财富停滞或缩水，说明你还没有赢到反对公平的证据。</p>
+<p><Term>e 值</Term>是你对<Term>原假设</Term><TipNote text={"原假设是统计检验试图拒绝的默认说法，通常是「没有效应」或「没有差异」。"} />下注后获得的回报。你押上 1 美元赌原假设为假，这份赌约被设计成「在原假设为真时公平」——也就是说，如果原假设确实成立，你便会亏得占不到任何长期便宜（用符号说：e 值在原假设下的期望值至多为 <MathInline latex={String.raw`1`} />）。所以，如果最终你的赌注翻了二十倍，那原假设一定哪里出了问题：要么它为假，要么你中了天文数字级别的头彩。一个很大的 e 值，字面意思就是<Highlight>你从原假设身上赢到的真金白银</Highlight>，而你累积的财富就是你的证据。它的倒数 <MathInline latex={String.raw`1/e`} /> 行为上像个保守的 p 值，但下注的场景才是精髓。</p>
+<p>在硬币例子里，原假设很具体：「硬币公平，<MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.5`} />」。e 值是两张<Term>似然比</Term><TipNote text={"似然比比较同一批数据在两个假设之下分别有多可能出现。"} />赌票合起来的财富。一张赌票押「正面偏多」的硬币，即 <MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.60`} />：每出现一次正面，这张票乘以 <MathInline latex={String.raw`0.60/0.50 = 1.2`} />；每出现一次反面，则乘以 <MathInline latex={String.raw`0.40/0.50 = 0.8`} />。另一张镜像赌票押「反面偏多」，即 <MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.40`} />，倍率正好反过来。把起始的 1 美元平均分到两张票上，无论硬币朝哪边持续偏，都可能让财富增长。如果硬币真的公平，每张票每轮的期望倍率都是 <MathInline latex={String.raw`1`} />；这场赌局在原假设下就是公平的。在这个玩具赌局里，「赢」就是财富大到足以拒绝「硬币公平」；「输」就是财富停滞或缩水，说明你还没有赢到反对公平的证据。</p>
 <p>这不是松散的比喻，而是一套严格的纲领——「博弈论统计学」，由格伦·谢弗与弗拉基米尔·沃夫克用二十年时间建立，现由阿迪亚·拉姆达斯、彼得·格伦瓦尔德、王若度等人继续推进。谢弗的宣言《以赌注检验》于 2020 年在英国皇家统计学会宣读，2021 年发表于该会《期刊》A 辑。他抱怨 p 值的一个理由正是它太难向人解释；而「我赌这个假设不成立，赢了 20 块」——这话任何人都能听懂。</p>
 </Claim>
 
@@ -323,7 +323,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <StatusChip status={"hint"} label={"「取代 p 值」· 仍有争议"} printLabel={"争议"} />
 </ClaimHeader>
 <h3>为什么下注好过 p 值：实时的局部结论</h3>
-<p>赌局会复利累积。如果你对原假设下了一场公平的赌，再下一场，再下一场，手头财富就构成了数学家所说的<span class="term">鞅</span><TipNote text={"鞅是公平赌局的数学模型：在已知过去的条件下，下一步的期望值等于当前值。"} />（martingale），而一条经典定理（维勒不等式<TipNote text={"维勒不等式限制了公平赌局的财富过程仅凭运气膨胀到很大数值的概率。"} />）保证：若原假设为真，它几乎不可能膨胀出天文数字。这赋予了 e 值一项 p 值望尘莫及的近乎魔法的性质：<span class="term">任意时刻有效性</span>。你可以盯着实验进展，随时喊停，觉得有希望就继续加数据——<span class="hl">中途查看多少次都可以</span>——你的错误保证依然成立。格伦瓦尔德、德·海德与库伦称之为「安全检验」（发表于 RSS《期刊》B 辑，2024）；更完整的框架——包括每时每刻都有效的置信区间——叫做「安全任意时刻有效推断」（拉姆达斯、格伦瓦尔德、沃夫克与谢弗，《统计科学》，2023）。e 值合并起来也极为方便：独立的 e 值直接<span class="hl">相乘</span>，相依的 e 值取<span class="hl">平均</span>，结果仍是有效 e 值——这让跨研究汇总变得干净利落，而 p 值则会一头扎进多重比较的雷区。</p>
+<p>赌局会复利累积。如果你对原假设下了一场公平的赌，再下一场，再下一场，手头财富就构成了数学家所说的<Term>鞅</Term><TipNote text={"鞅是公平赌局的数学模型：在已知过去的条件下，下一步的期望值等于当前值。"} />（martingale），而一条经典定理（维勒不等式<TipNote text={"维勒不等式限制了公平赌局的财富过程仅凭运气膨胀到很大数值的概率。"} />）保证：若原假设为真，它几乎不可能膨胀出天文数字。这赋予了 e 值一项 p 值望尘莫及的近乎魔法的性质：<Term>任意时刻有效性</Term>。你可以盯着实验进展，随时喊停，觉得有希望就继续加数据——<Highlight>中途查看多少次都可以</Highlight>——你的错误保证依然成立。格伦瓦尔德、德·海德与库伦称之为「安全检验」（发表于 RSS《期刊》B 辑，2024）；更完整的框架——包括每时每刻都有效的置信区间——叫做「安全任意时刻有效推断」（拉姆达斯、格伦瓦尔德、沃夫克与谢弗，《统计科学》，2023）。e 值合并起来也极为方便：独立的 e 值直接<Highlight>相乘</Highlight>，相依的 e 值取<Highlight>平均</Highlight>，结果仍是有效 e 值——这让跨研究汇总变得干净利落，而 p 值则会一头扎进多重比较的雷区。</p>
 <p class="web-only">下面亲手试试：同一串数据，分别交给脆弱、怕中途查看的 p 值，和诚实的 e 值来评判。</p>
 <p class="epub-only print-only">下方表格概括同一个对比：脆弱、怕中途查看的 p 值，与诚实的 e 值。</p>
 <p>这个玩具任务故意很窄：它要拒绝的只是「这枚硬币是公平的」这个命题；它不是在估计硬币的精确偏差，也不是在绝对证明硬币不公平。</p>
@@ -363,8 +363,8 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 <StatusChip status={"bad"} label={"全面取代科学界 p 值 · 炒作"} printLabel={"炒作"} />
 </ClaimHeader>
 <h3>这场兵变究竟蔓延了多远？</h3>
-<p>到了区分实诚与吹嘘的时候了。e 值的<span class="term">数学</span>已经确立且优美——经过本领域最顶尖期刊的同行评议（《统计学年鉴》、RSS 两辑《期刊》、《统计科学》），并在 2024 年预印本之后由拉姆达斯与王若度汇集成一本 390 页的《Foundations and Trends》专著。这一部分<StatusChip status={"ok"} label={"已确立"} />，无可争议。</p>
-<p>真实世界中的<span class="term">采纳</span>则是更窄、也更诚实的故事。最清晰的落地在科技公司 <span class="term">A/B 测试</span><TipNote text={"A/B 测试会把用户随机分到产品版本 A 或 B，比较哪个版本表现更好。"} />——因为持续查看数据本身就是它们的日常：Optimizely 围绕「始终有效推断」重建了整个平台（Johari、Koomen、Pekelis 与 Walsh），Netflix 与 Adobe 则公开使用任意时刻有效的<span class="term">置信序列</span><TipNote text={"置信序列是一组随着数据累积而更新、且在每个时点都保持有效的置信区间。"} />，让产品团队能持续监控实验而不在统计上作弊。这是真正的生产环境应用——但距离全球的生物统计、心理学和物理学共同体还很远，那里 p 值依旧根深蒂固。</p>
+<p>到了区分实诚与吹嘘的时候了。e 值的<Term>数学</Term>已经确立且优美——经过本领域最顶尖期刊的同行评议（《统计学年鉴》、RSS 两辑《期刊》、《统计科学》），并在 2024 年预印本之后由拉姆达斯与王若度汇集成一本 390 页的《Foundations and Trends》专著。这一部分<StatusChip status={"ok"} label={"已确立"} />，无可争议。</p>
+<p>真实世界中的<Term>采纳</Term>则是更窄、也更诚实的故事。最清晰的落地在科技公司 <Term>A/B 测试</Term><TipNote text={"A/B 测试会把用户随机分到产品版本 A 或 B，比较哪个版本表现更好。"} />——因为持续查看数据本身就是它们的日常：Optimizely 围绕「始终有效推断」重建了整个平台（Johari、Koomen、Pekelis 与 Walsh），Netflix 与 Adobe 则公开使用任意时刻有效的<Term>置信序列</Term><TipNote text={"置信序列是一组随着数据累积而更新、且在每个时点都保持有效的置信区间。"} />，让产品团队能持续监控实验而不在统计上作弊。这是真正的生产环境应用——但距离全球的生物统计、心理学和物理学共同体还很远，那里 p 值依旧根深蒂固。</p>
 <p>新工具也不是毫无代价。在固定样本量比较中，e 值可能需要比 p 值更极端的数据才能跨过同样的拒绝门槛；谢弗的回应是，这是让证据这把尺子变诚实的代价，而非简单缺陷。你的赌局效率取决于下注策略的好坏——说白了，这跟贝叶斯派选择先验时面对的建模判断如出一辙，只是换了套行头。塞缪尔·帕维尔与莱昂哈德·赫尔德等批评者警告：把检验标榜为「安全」或「始终有效」可能有误导之嫌，因为这些保证同样依赖假设（模型设定正确、无发表偏倚），而那些假设可能跟别的假设一样失效。诚实的裁决是：它是 p 值的一个<StatusChip status={"hint"} label={"前景可期"} />、严格、真正有用的补充——但绝不是科学范围内的全面替代品，至少现在不是。</p>
 <p style="font-size:.92em;color:var(--ink-soft);">什么能真正推动局面？如果 FDA 或 EMA 这类药物监管机构批准 e 值用于确证性临床试验，或者某家顶级综合科学期刊把它写进投稿指南，「取代」的口号才有可能从炒作变成现实。让我们拭目以待。</p>
 </Claim>

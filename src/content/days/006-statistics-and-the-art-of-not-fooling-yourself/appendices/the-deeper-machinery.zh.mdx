@@ -41,7 +41,7 @@ import Term from "@app/components/lesson/Term.astro";
 <Lead drop="正">文还留下一个问题没有回答。我们曾随口提到，<Term>p 值</Term>是科学界最被误读的数字之一，然后便匆匆转向那些著名的误读，仿佛这些混乱全是读者的错，而与数字本身无关。事实并非如此。今天常见的显著性检验，其实是两套不同统计传统的混合体：费舍尔式的证据衡量，与内曼-皮尔逊式的长期错误控制，被当作一套连贯思想来传授。它并不支持人们通常赋予它的那些解释。本附录将拆解这套统计机制：为什么反复搜索会使偶然显著变得越来越容易；一旦进行诚实的计算，一个「显著」的结果实际上有多离谱；一小群统计侦探是如何追踪这些蛛丝马迹的；以及研究者还可以使用哪些替代和补充工具。最后，我们将回到一个简洁的转换——它将 <Term>p 值</Term> 转化为投掷硬币的次数，并带我们直达明天的课题。</Lead>
 
 <ContinueNote label="◆ 接续正文内容">
-你已经见识过假阳性工厂、分岔路径花园、改革光谱以及多团队分析研究。请特别关注这三条线索：<span class="hl">第 4 日</span>的贝叶斯（<span class="term">p 值</span> 并不是 <MathInline latex={String.raw`\mathrm{P}(\text{假设}\mid\text{数据})`} />，在这里我们将最终算出忘掉这一点的代价）、<span class="hl">第 2 日</span>的波普尔与约安尼迪斯（检验严苛度与「大多数发现都是错误的」），以及<span class="hl">第 1 日</span>的校准直觉。下文将展开这些思想背后的统计结构。
+你已经见识过假阳性工厂、分岔路径花园、改革光谱以及多团队分析研究。请特别关注这三条线索：<Highlight>第 4 日</Highlight>的贝叶斯（<Term>p 值</Term> 并不是 <MathInline latex={String.raw`\mathrm{P}(\text{假设}\mid\text{数据})`} />，在这里我们将最终算出忘掉这一点的代价）、<Highlight>第 2 日</Highlight>的波普尔与约安尼迪斯（检验严苛度与「大多数发现都是错误的」），以及<Highlight>第 1 日</Highlight>的校准直觉。下文将展开这些思想背后的统计结构。
 </ContinueNote>
 <ContentSection>
 <SectionEyebrow number="§1"> 原罪</SectionEyebrow>
@@ -68,9 +68,9 @@ import Term from "@app/components/lesson/Term.astro";
 <CompareCardTitle>费舍尔的显著性检验</CompareCardTitle>
 <CompareCardMeta>1925 · 证据性 / 归纳式</CompareCardMeta>
 <ul>
-<li><span class="term">单一假设</span>（零假设）—— 不需要备择假设。</li>
-<li><span class="term"><MathInline latex={String.raw`p`} /></span> 衡量数据与零假设不相容的程度。</li>
-<li><span class="term">.05</span> 是一个<span class="term">灵活的惯例</span>，而非法律。</li>
+<li><Term>单一假设</Term>（零假设）—— 不需要备择假设。</li>
+<li><Term><MathInline latex={String.raw`p`} /></Term> 衡量数据与零假设不相容的程度。</li>
+<li><Term>.05</Term> 是一个<Term>灵活的惯例</Term>，而非法律。</li>
 <li>提示研究者结合具体情境作进一步调查。</li>
 <li>没有「接受零假设」一说，也没有固定的长期错误率。</li>
 </ul>
@@ -79,10 +79,10 @@ import Term from "@app/components/lesson/Term.astro";
 <CompareCardTitle>内曼-皮尔逊检验</CompareCardTitle>
 <CompareCardMeta>1928–1933 · 行为式 / 决策式</CompareCardMeta>
 <ul>
-<li>预先固定的<span class="term">两个假设</span>（<MathInline latex={String.raw`H_0`} /> 和 <MathInline latex={String.raw`H_1`} />）。</li>
-<li>在看到数据前就设定好 <span class="term"><MathInline latex={String.raw`\alpha`} /></span>、<span class="term"><MathInline latex={String.raw`\beta`} /></span> 和 <span class="term">检验功效</span>。</li>
-<li><span class="term">.05</span> 是一个<span class="term">既定的门槛</span>，根据成本选择。</li>
-<li>一套用于<span class="term">指导行动</span>的规则 —— 拒绝或接受，然后继续。</li>
+<li>预先固定的<Term>两个假设</Term>（<MathInline latex={String.raw`H_0`} /> 和 <MathInline latex={String.raw`H_1`} />）。</li>
+<li>在看到数据前就设定好 <Term><MathInline latex={String.raw`\alpha`} /></Term>、<Term><MathInline latex={String.raw`\beta`} /></Term> 和 <Term>检验功效</Term>。</li>
+<li><Term>.05</Term> 是一个<Term>既定的门槛</Term>，根据成本选择。</li>
+<li>一套用于<Term>指导行动</Term>的规则 —— 拒绝或接受，然后继续。</li>
 <li>不对单一案例提供证据主张；只关注长期错误率。</li>
 </ul>
 </CompareCard>
@@ -90,7 +90,7 @@ import Term from "@app/components/lesson/Term.astro";
 <BridgeLabel>—— 焊接在一起 ——</BridgeLabel>
 <HybridBox>
 <HybridTitle>零假设仪式（实际教导的内容）</HybridTitle>
-      计算 <span class="term"><MathInline latex={String.raw`p`} /></span>。将其与神圣的 <span class="term">.05</span> 进行比较。将低于这一阈值的行为同时视为费舍尔式的「证据充分」和内曼-皮尔逊式的「已做决策」——在报告精确的 <span class="term"><MathInline latex={String.raw`p`} /></span> 值时，既把它当成证据等级，又像固定 <span class="term"><MathInline latex={String.raw`\alpha`} /></span> 决策那样给它设限。心理学家格尔德·吉仁泽 (Gerd Gigerenzer) 将这种不连贯的混杂体称为「零假设仪式」，它被机械地执行，却很少有人真正理解。你在正文中遇到的混乱并不是因为学生注意力不集中，而是因为它本身就被植入了一个从未被设计好的工具中。
+      计算 <Term><MathInline latex={String.raw`p`} /></Term>。将其与神圣的 <Term>.05</Term> 进行比较。将低于这一阈值的行为同时视为费舍尔式的「证据充分」和内曼-皮尔逊式的「已做决策」——在报告精确的 <Term><MathInline latex={String.raw`p`} /></Term> 值时，既把它当成证据等级，又像固定 <Term><MathInline latex={String.raw`\alpha`} /></Term> 决策那样给它设限。心理学家格尔德·吉仁泽 (Gerd Gigerenzer) 将这种不连贯的混杂体称为「零假设仪式」，它被机械地执行，却很少有人真正理解。你在正文中遇到的混乱并不是因为学生注意力不集中，而是因为它本身就被植入了一个从未被设计好的工具中。
 </HybridBox>
 </Panel>
 
@@ -166,7 +166,7 @@ import Term from "@app/components/lesson/Term.astro";
 <AppendixCard>
 <AppendixCardTitle><span class="emoji">🤖</span> statcheck</AppendixCardTitle>
 <AppendixCardMeta>Nuijten et al., 2016</AppendixCardMeta>
-<p>一种检查所报告的检验统计量、自由度和 <span class="term">p 值</span> 在算术上是否一致的算法。在扫描了 25 万个结果后，它发现约<span class="hl">一半</span>的论文包含至少一个不一致的 <span class="term">p 值</span>，且约<span class="hl">八分之一</span>的错误可能改变结果是否跨过显著性阈值的判断。</p>
+<p>一种检查所报告的检验统计量、自由度和 <Term>p 值</Term> 在算术上是否一致的算法。在扫描了 25 万个结果后，它发现约<Highlight>一半</Highlight>的论文包含至少一个不一致的 <Term>p 值</Term>，且约<Highlight>八分之一</Highlight>的错误可能改变结果是否跨过显著性阈值的判断。</p>
 </AppendixCard>
 </AppendixCardGrid>
 <p class="mono">前沿校准器：P-curve 和这些取证工具被<StatusChip status={"ok"} label={"确立"} printLabel={"已确立"} />为诊断手段 —— 但它们检测的是「模式」而非罪行；即使不存在研究不端，发表偏差也可能产生类似模式，因此它们发出的是可疑信号，而非铁证。</p>
@@ -291,13 +291,13 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效�
 从上文及正文中提炼出的精髓 —— 将运气转化为知识的举措：
 
 <ul class="check">
-<li><span class="hl">研究预登记验证性检验。</span> 在看到数据前明确主要结果变量、模型、样本量和停止规则。偏离方案或新增的分析应标为探索性分析。</li>
-<li><span class="hl">始终报告效应量及相容性区间。</span> 效应量及其不确定性「才是」结果；<span class="term">p 值</span> 只是个脚注。</li>
-<li><span class="hl">围绕最小实质重要效应规划样本量。</span> 先设定目标功效，再计算检测这一效应所需的样本量；样本量不足的研究得出的「显著」结果很可能是虚高的（M 类错误）。</li>
-<li><span class="hl">将你的 p 值转化为比特。</span> 如果它只有几次硬币投掷的惊异度，请如实说明，不要过度推销。</li>
-<li><span class="hl">检查跨合理分析的稳健性</span>（模型设定曲线），并询问结果是通过了严苛检验，还是仅仅通过了一个「有利」的检验。</li>
-<li><span class="hl">当必须测试许多事物时，控制错误发现率</span>，同时说明族错误率和功效之间的取舍。</li>
-<li><span class="hl">如果你想排除具有实质意义的效应，请进行等效性检验。</span> 在你真正寻找过「不存在具有实质意义的效应」的证据之前，缺乏证据并不能证明不存在。</li>
+<li><Highlight>研究预登记验证性检验。</Highlight> 在看到数据前明确主要结果变量、模型、样本量和停止规则。偏离方案或新增的分析应标为探索性分析。</li>
+<li><Highlight>始终报告效应量及相容性区间。</Highlight> 效应量及其不确定性「才是」结果；<Term>p 值</Term> 只是个脚注。</li>
+<li><Highlight>围绕最小实质重要效应规划样本量。</Highlight> 先设定目标功效，再计算检测这一效应所需的样本量；样本量不足的研究得出的「显著」结果很可能是虚高的（M 类错误）。</li>
+<li><Highlight>将你的 p 值转化为比特。</Highlight> 如果它只有几次硬币投掷的惊异度，请如实说明，不要过度推销。</li>
+<li><Highlight>检查跨合理分析的稳健性</Highlight>（模型设定曲线），并询问结果是通过了严苛检验，还是仅仅通过了一个「有利」的检验。</li>
+<li><Highlight>当必须测试许多事物时，控制错误发现率</Highlight>，同时说明族错误率和功效之间的取舍。</li>
+<li><Highlight>如果你想排除具有实质意义的效应，请进行等效性检验。</Highlight> 在你真正寻找过「不存在具有实质意义的效应」的证据之前，缺乏证据并不能证明不存在。</li>
 </ul>
 </ContentSection>
 
@@ -305,8 +305,8 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效�
 <BlockTitle>◆ 附录要点总结</BlockTitle>
 
 <RecapList>
-<RecapItem term="最深层的思想">「<span class="term"><MathInline latex={String.raw`p < .05`} /></span> 检验」是费舍尔的证据衡量标准与内曼-皮尔逊的决策规则的不连贯糅合，许多误读都是这一混合结构的症状。而两个简单的数学事实（连续精确零假设下 <span class="term">p 值</span> 是均匀的；未经校正地反复查看会使越过固定阈值越来越容易）解释了为什么 p 值操纵如此危险。</RecapItem>
-<RecapItem term="最精彩的类比">将 <span class="term">p 值</span> 转化为投掷硬币：<span class="term"><MathInline latex={String.raw`p = .05`} /></span> 的惊异度仅相当于连续四五次正面，有点意思，但远谈不上发现。在 Colquhoun 的特定先验概率、功效和模型设定下，刚好达到 <span class="term"><MathInline latex={String.raw`p \approx .05`} /></span> 的结果可对应约 26% 的假阳性风险；这不是 p 值本身的固定含义。</RecapItem>
+<RecapItem term="最深层的思想">「<Term><MathInline latex={String.raw`p < .05`} /></Term> 检验」是费舍尔的证据衡量标准与内曼-皮尔逊的决策规则的不连贯糅合，许多误读都是这一混合结构的症状。而两个简单的数学事实（连续精确零假设下 <Term>p 值</Term> 是均匀的；未经校正地反复查看会使越过固定阈值越来越容易）解释了为什么 p 值操纵如此危险。</RecapItem>
+<RecapItem term="最精彩的类比">将 <Term>p 值</Term> 转化为投掷硬币：<Term><MathInline latex={String.raw`p = .05`} /></Term> 的惊异度仅相当于连续四五次正面，有点意思，但远谈不上发现。在 Colquhoun 的特定先验概率、功效和模型设定下，刚好达到 <Term><MathInline latex={String.raw`p \approx .05`} /></Term> 的结果可对应约 26% 的假阳性风险；这不是 p 值本身的固定含义。</RecapItem>
 <RecapItem term="建设性的转向">解决之道是工具箱而非禁令：检验严苛性 (Mayo)、带有相容性区间的效应量、S 类 / M 类思维、等效性检验、错误发现率控制以及贝叶斯因子——此外还有能够从数字中审计学科领域的统计取证方法（P-curve、死鱼实验、statcheck）。</RecapItem>
 </RecapList>
 </Recap>
