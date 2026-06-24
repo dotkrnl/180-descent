@@ -85,14 +85,14 @@ import Term from "@app/components/lesson/Term.astro";
 
 <PanelNote>除非检验是为序贯监测而设计，否则重复查看会提高至少产生一次假警报的几率。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>在 <MathInline latex={String.raw`\alpha=.05`} /> 下的查看次数</th><th>朴素假警报风险</th><th>任意时点有效目标</th></tr></thead>
-<tbody>
-<tr><td>1</td><td>5%</td><td>5%</td></tr>
-<tr><td>12</td><td>约 46%</td><td>5%</td></tr>
-<tr><td>100</td><td>约 99%</td><td>5%</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead><DataTableRow><DataTableHeader>在 <MathInline latex={String.raw`\alpha=.05`} /> 下的查看次数</DataTableHeader><DataTableHeader>朴素假警报风险</DataTableHeader><DataTableHeader>任意时点有效目标</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>1</DataTableCell><DataTableCell>5%</DataTableCell><DataTableCell>5%</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>12</DataTableCell><DataTableCell>约 46%</DataTableCell><DataTableCell>5%</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>100</DataTableCell><DataTableCell>约 99%</DataTableCell><DataTableCell>5%</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 </FormatAlt>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-conformal">
@@ -120,14 +120,14 @@ import Term from "@app/components/lesson/Term.astro";
 
 <PanelNote>共形保证在覆盖率与集合大小之间进行权衡，且取决于校准数据是否与部署环境相似。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>选择</th><th>何处改善</th><th>何处可能失效</th></tr></thead>
-<tbody>
-<tr><td>较低的 <MathInline latex={String.raw`\alpha`} /></td><td>更高的目标覆盖率</td><td>更大的预测集。</td></tr>
-<tr><td>更好的模型预测性能</td><td>更小且有用的集合</td><td>仍需校准。</td></tr>
-<tr><td>部署分布偏移</td><td>无自动改善</td><td>可交换性可能被破坏。</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead><DataTableRow><DataTableHeader>选择</DataTableHeader><DataTableHeader>何处改善</DataTableHeader><DataTableHeader>何处可能失效</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>较低的 <MathInline latex={String.raw`\alpha`} /></DataTableCell><DataTableCell>更高的目标覆盖率</DataTableCell><DataTableCell>更大的预测集。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>更好的模型预测性能</DataTableCell><DataTableCell>更小且有用的集合</DataTableCell><DataTableCell>仍需校准。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>部署分布偏移</DataTableCell><DataTableCell>无自动改善</DataTableCell><DataTableCell>可交换性可能被破坏。</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 </FormatAlt>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-ppi">

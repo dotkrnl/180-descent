@@ -21,6 +21,12 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -192,14 +198,14 @@ import Term from "@app/components/lesson/Term.astro";
 
 <PanelNote>该示例将 <MathInline latex={String.raw`\alpha`} /> 与已发表发现中的误报风险区分开来。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>先验真实效应</th><th>功效</th><th><MathInline latex={String.raw`\alpha`} /></th><th>显著结果中的错误比例</th></tr></thead>
-<tbody>
-<tr><td>50%</td><td>50%</td><td>.05</td><td>约 9% 的误报。</td></tr>
-<tr><td>10%</td><td>50%</td><td>.05</td><td>约 47% 的误报。</td></tr>
-<tr><td>2%</td><td>50%</td><td>.05</td><td>约 83% 的误报。</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead><DataTableRow><DataTableHeader>先验真实效应</DataTableHeader><DataTableHeader>功效</DataTableHeader><DataTableHeader><MathInline latex={String.raw`\alpha`} /></DataTableHeader><DataTableHeader>显著结果中的错误比例</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>50%</DataTableCell><DataTableCell>50%</DataTableCell><DataTableCell>.05</DataTableCell><DataTableCell>约 9% 的误报。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>10%</DataTableCell><DataTableCell>50%</DataTableCell><DataTableCell>.05</DataTableCell><DataTableCell>约 47% 的误报。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>2%</DataTableCell><DataTableCell>50%</DataTableCell><DataTableCell>.05</DataTableCell><DataTableCell>约 83% 的误报。</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 </FormatAlt>
 
 <ContentSection>
