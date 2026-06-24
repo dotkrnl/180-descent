@@ -100,6 +100,24 @@ describe("content check", () => {
       }
     ]);
   });
+
+  it("accepts semantic static alternate variants", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDayWithAppendix(root, {
+      enAppendix: [
+        '<StatusChip status={"ok"} label={"ok"} />',
+        '<Sources></Sources>',
+        '<Panel class="web-only">Interactive only</Panel>',
+        '<FormatOnly media="print-epub" variant="alternate">Static alternate</FormatOnly>'
+      ].join("\n"),
+      zhAppendix: [
+        '<StatusChip status={"ok"} label={"已确立"} />',
+        '<Sources></Sources>'
+      ].join("\n")
+    });
+
+    await expect(checkContent({ root })).resolves.toEqual([]);
+  });
 });
 
 async function createFixtureRoot(): Promise<string> {

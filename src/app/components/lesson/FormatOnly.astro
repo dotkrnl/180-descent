@@ -3,6 +3,7 @@ interface Props {
   as?: "div" | "p";
   class?: string;
   media: "web" | "print" | "epub" | "print-epub" | "deep-dive-epub" | "deep-dive-print";
+  variant?: "alternate";
 }
 
 const Tag = Astro.props.as ?? "p";
@@ -14,6 +15,7 @@ const mediaClasses: Record<Props["media"], string> = {
   "deep-dive-epub": "epub-only deep-dive-edition-only",
   "deep-dive-print": "print-only deep-dive-edition-only"
 };
-const className = [mediaClasses[Astro.props.media], Astro.props.class].filter(Boolean).join(" ");
+const variantClass = Astro.props.variant === "alternate" ? "format-alt" : undefined;
+const className = [mediaClasses[Astro.props.media], variantClass, Astro.props.class].filter(Boolean).join(" ");
 ---
 <Tag class={className}><slot /></Tag>

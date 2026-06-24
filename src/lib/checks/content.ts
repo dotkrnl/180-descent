@@ -177,7 +177,7 @@ function checkStaticAlternates(file: RegistryContentFile, failures: ContentCheck
     countMatches(file.source, /<Panel\b[^>]*class="[^"]*\bweb-only\b[^"]*"/g);
   const staticAlternates =
     countMatches(file.source, /class="[^"]*\bformat-alt\b[^"]*\b(?:print-only|epub-only)\b[^"]*"/g) +
-    countMatches(file.source, /<FormatOnly\b(?=[^>]*\bmedia="print-epub")(?=[^>]*\bclass="[^"]*\bformat-alt\b)/g);
+    countMatches(file.source, /<FormatOnly\b(?=[^>]*\bmedia="print-epub")(?=[^>]*\bvariant="alternate")/g);
   if (staticAlternates < webPanels) {
     failures.push({
       message: `${file.label} has ${webPanels} web-only panels but only ${staticAlternates} static print/EPUB alternates`
