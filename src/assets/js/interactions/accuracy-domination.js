@@ -80,8 +80,8 @@
       var dS2 = Math.hypot(cs, ds - 1);
 
       if(off < 0.005){
-        accStar.style.opacity = "0";
-        accSlines.style.opacity = "0";
+        accStar.classList.remove("is-visible");
+        accSlines.classList.remove("is-visible");
         accConn.setAttribute("x2", px);
         accConn.setAttribute("y2", py);
         aLedger.className = "acc-ledger coherent accuracy-ledger";
@@ -93,12 +93,12 @@
 
       accStar.setAttribute("cx", sx);
       accStar.setAttribute("cy", sy);
-      accStar.style.opacity = "1";
+      accStar.classList.add("is-visible");
       ls1.setAttribute("x1", sx);
       ls1.setAttribute("y1", sy);
       ls2.setAttribute("x1", sx);
       ls2.setAttribute("y1", sy);
-      accSlines.style.opacity = "0.9";
+      accSlines.classList.add("is-visible");
       accConn.setAttribute("x2", sx);
       accConn.setAttribute("y2", sy);
       aLedger.className = "acc-ledger dom accuracy-ledger";
