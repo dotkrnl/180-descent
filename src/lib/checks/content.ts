@@ -26,7 +26,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<div class="(?:aside|formula|recap|whereblock|wrap|format-alt epub-only print-only|panel)\b/, "use shared lesson components"],
   [/<figure class="(?:hero-clock|hero-doors)\b/, "use shared figure components"],
   [/<figure class="lesson-figure[^"]*">\s*<img\b/, "use <ImageFigure>"],
-  [/<div class="mh-machine"\b/, "use <MontyHallMachine>"],
+  [/<div class="mh-machine"\b/, "use <ProbabilityMontyPanel>"],
   [/<div class="atlas"\b/, "use <IncomingWaveAtlas> or <WaveAtlas>"]
 ];
 const RAW_INTERACTIVE_PATTERNS: Array<[RegExp, string]> = [
