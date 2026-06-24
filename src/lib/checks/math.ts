@@ -19,7 +19,7 @@ interface MathCheckResult {
   failures: MathCheckFailure[];
 }
 
-const LEGACY_PATTERNS = [
+const RAW_SOURCE_PATTERNS = [
   { pattern: /class="formula"[^>]*>[\s\S]*?<p\s+class="eq"/, label: "raw .formula .eq (use <MathBlock> instead)" },
   { pattern: /<p\s+class="formula"><code>/, label: "raw <p class=formula><code> (use <MathBlock> instead)" },
   { pattern: /\\\[.*\\\]/, label: "raw \\[ \\] delimiters (use <MathBlock> instead)" },
@@ -41,7 +41,7 @@ export async function checkMath(options: MathCheckOptions): Promise<MathCheckRes
 
   for (const file of sourceFiles) {
     const content = await readFile(file, "utf8");
-    failures.push(...scanPatterns(options.root, file, content, LEGACY_PATTERNS));
+    failures.push(...scanPatterns(options.root, file, content, RAW_SOURCE_PATTERNS));
   }
 
   if (await pathExists(siteDir)) {
