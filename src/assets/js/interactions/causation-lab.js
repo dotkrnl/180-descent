@@ -47,6 +47,10 @@
       return (s / n * 100).toFixed(1) + "%";
     }
 
+    function pctClass(s, n){
+      return "simp-rate-fill-" + Math.round(s / n * 1000);
+    }
+
     function calcLine(g, win){
       var cls = g.treatment === "A" ? "A" : "B";
       var percent = pctText(g.s, g.n);
@@ -55,7 +59,7 @@
         '<span>' + (isZh ? "疗法 " : "Treatment ") + g.treatment + '</span>' +
         '<code>' + g.s + (isZh ? " 有效 / " : " effective / ") + fail + (isZh ? " 无效" : " not effective") + '</code>' +
         '<b class="simp-pct">' + percent + '</b>' +
-        '<div class="simp-rate" aria-hidden="true"><i style="width:' + percent + '"></i></div>' +
+        '<div class="simp-rate" aria-hidden="true"><i class="' + pctClass(g.s, g.n) + '"></i></div>' +
         '</div>';
     }
 
