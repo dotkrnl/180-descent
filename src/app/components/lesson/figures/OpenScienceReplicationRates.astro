@@ -1,5 +1,6 @@
 ---
 import TipNote from "@app/components/lesson/TipNote.astro";
+import StatusText from "@app/components/lesson/StatusText.astro";
 
 interface Props {
   locale?: "en" | "zh";
@@ -16,7 +17,7 @@ const zh = Astro.props.locale === "zh";
         <div class="pct">97%</div>
       </div>
       <div class="oscrow">
-        <div class="lab">36% 的复现实验再次达到显著性 <span style="color:var(--contested)">← 那个著名而惊人的数字</span></div>
+        <div class="lab">36% 的复现实验再次达到显著性 <span class="osc-warning">← 那个著名而惊人的数字</span></div>
         <div class="bartrack"><div class="barfill rep" data-w="36"></div></div>
         <div class="pct">36%</div>
       </div>
@@ -44,7 +45,7 @@ const zh = Astro.props.locale === "zh";
         <div class="pct">97%</div>
       </div>
       <div class="oscrow">
-        <div class="lab"><b>36%</b> of the <em>replications</em> reached significance again <span style="color:var(--contested)">← the famous, scary number</span></div>
+        <div class="lab"><b>36%</b> of the <em>replications</em> reached significance again <span class="osc-warning">← the famous, scary number</span></div>
         <div class="bartrack"><div class="barfill rep" data-w="36"></div></div>
         <div class="pct">36%</div>
       </div>
@@ -68,7 +69,7 @@ const zh = Astro.props.locale === "zh";
 </div>
 
 {zh ? (
-  <p style="font-size:.92em;color:var(--ink-soft);margin-top:1rem;">每当你听见「只有三分之一的心理学是真实的」，便是有人抓起了 36% 而丢弃了其余。更诚实的概括要微妙得多，也更有意思：复现实验中的效应平均更弱——大约为首次报告的一半强度，且往往因复现实验<span class="term">功效不足</span><TipNote text={"功效不足的研究数据太少或噪声太大，无法可靠地检出相关大小的效应。"} />而未能检出。<span style="color:var(--accent-deep);">[核心数字已确立]</span>；这些数字究竟能在多大程度上说明哪些原始效应真实存在，<span style="color:var(--hint);">[解释仍有争议]</span>。</p>
+  <p class="osc-note">每当你听见「只有三分之一的心理学是真实的」，便是有人抓起了 36% 而丢弃了其余。更诚实的概括要微妙得多，也更有意思：复现实验中的效应平均更弱——大约为首次报告的一半强度，且往往因复现实验<span class="term">功效不足</span><TipNote text={"功效不足的研究数据太少或噪声太大，无法可靠地检出相关大小的效应。"} />而未能检出。<StatusText status={"ok"} label={"核心数字已确立"} />；这些数字究竟能在多大程度上说明哪些原始效应真实存在，<StatusText status={"hint"} label={"解释仍有争议"} />。</p>
 ) : (
-  <p style="font-size:.92em;color:var(--ink-soft);margin-top:1rem;">Whenever you see "only a third of psychology is real," someone has grabbed the <em>36%</em> and dropped the rest. The honest summary is subtler and more interesting: replication effects were <strong>weaker on average</strong> — roughly half as strong as first reported, and often too weak for an <em class="term">underpowered</em><TipNote text={"An underpowered study has too little data, or too much noise, to reliably detect an effect of the relevant size."} /> repeat to catch. <span style="color:var(--accent-deep);font-weight:500;">[ESTABLISHED]</span> for the numbers themselves; <span style="color:var(--hint);font-weight:500;">[CONTESTED]</span> for how far they license claims about which original effects were real.</p>
+  <p class="osc-note">Whenever you see "only a third of psychology is real," someone has grabbed the <em>36%</em> and dropped the rest. The honest summary is subtler and more interesting: replication effects were <strong>weaker on average</strong> — roughly half as strong as first reported, and often too weak for an <em class="term">underpowered</em><TipNote text={"An underpowered study has too little data, or too much noise, to reliably detect an effect of the relevant size."} /> repeat to catch. <StatusText status={"ok"} label={"ESTABLISHED"} /> for the numbers themselves; <StatusText status={"hint"} label={"CONTESTED"} /> for how far they license claims about which original effects were real.</p>
 )}
