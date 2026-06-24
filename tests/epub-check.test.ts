@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { checkEpub } from "@lib/checks/epub";
-import { createEmptyContentRoot, writePublishedDay } from "./helpers/content-root";
+import { createEmptyContentRoot, writeContentDay } from "./helpers/content-root";
 
 describe("epub check helpers", () => {
   it("reports missing required artifacts without throwing", async () => {
@@ -13,7 +13,7 @@ describe("epub check helpers", () => {
 
   it("reports missing per-day artifacts", async () => {
     const root = await createEmptyContentRoot("180-epub-day-missing-");
-    await writePublishedDay(root);
+    await writeContentDay(root);
 
     const result = await checkEpub({ root });
 

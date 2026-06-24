@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { checkPdf } from "@lib/checks/pdf";
-import { createEmptyContentRoot, writePublishedDay } from "./helpers/content-root";
+import { createEmptyContentRoot, writeContentDay } from "./helpers/content-root";
 
 describe("pdf check helpers", () => {
   it("reports missing required artifacts without throwing", async () => {
@@ -13,7 +13,7 @@ describe("pdf check helpers", () => {
 
   it("reports missing per-day artifacts", async () => {
     const root = await createEmptyContentRoot("180-pdf-day-missing-");
-    await writePublishedDay(root);
+    await writeContentDay(root);
 
     const result = await checkPdf({ root });
 

@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkLinks } from "@lib/checks/links";
-import { writePublishedDay } from "./helpers/content-root";
+import { writeContentDay } from "./helpers/content-root";
 
 describe("link checks", () => {
   it("reports broken internal links and missing anchors", async () => {
@@ -65,7 +65,7 @@ async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-check-links-"));
   await mkdir(path.join(root, "_site"), { recursive: true });
   await mkdir(path.join(root, "src/_data"), { recursive: true });
-  await writePublishedDay(root);
+  await writeContentDay(root);
   await writeFile(path.join(root, "src/_data/future-links.yaml"), "[]\n");
   return root;
 }

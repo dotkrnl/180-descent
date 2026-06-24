@@ -2,7 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkContent } from "@lib/checks/content";
-import { createEmptyContentRoot, writePublishedDay } from "./helpers/content-root";
+import { createEmptyContentRoot, writeContentDay } from "./helpers/content-root";
 
 describe("content check", () => {
   it("accepts minimal paired registry content", async () => {
@@ -134,7 +134,7 @@ async function writeRegistryDay(
     zh: string;
   }
 ): Promise<void> {
-  await writePublishedDay(root, {
+  await writeContentDay(root, {
     enTitle: "Fixture Day",
     enSummary: "Fixture summary.",
     enBody: options.en,
@@ -151,7 +151,7 @@ async function writeRegistryDayWithAppendix(
     zhAppendix: string;
   }
 ): Promise<void> {
-  await writePublishedDay(root, {
+  await writeContentDay(root, {
     enTitle: "Fixture Day",
     enSummary: "Fixture summary.",
     enBody: body("Fixture Day"),

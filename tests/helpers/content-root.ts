@@ -8,17 +8,17 @@ export async function createEmptyContentRoot(prefix: string): Promise<string> {
   return root;
 }
 
-interface PublishedDayOptions {
+interface ContentDayOptions {
   enTitle?: string;
   enSummary?: string;
   enBody?: string;
   zhTitle?: string;
   zhSummary?: string;
   zhBody?: string;
-  appendices?: PublishedDayAppendixOptions[];
+  appendices?: ContentDayAppendixOptions[];
 }
 
-interface PublishedDayAppendixOptions {
+interface ContentDayAppendixOptions {
   id: string;
   enTitle: string;
   enBodyPath: string;
@@ -28,7 +28,7 @@ interface PublishedDayAppendixOptions {
   zhBody: string;
 }
 
-export async function writePublishedDay(root: string, options: PublishedDayOptions = {}): Promise<void> {
+export async function writeContentDay(root: string, options: ContentDayOptions = {}): Promise<void> {
   const enTitle = options.enTitle ?? "Fixture";
   const enSummary = options.enSummary ?? "English summary.";
   const enBody = options.enBody ?? "";

@@ -24,7 +24,7 @@ interface CreditImage {
   notes: string;
 }
 
-export interface PublishedDay {
+export interface ContentDay {
   day: number;
   path: string;
   title: string;
@@ -95,7 +95,7 @@ export async function getSyllabus(locale: Locale): Promise<Syllabus> {
   return normalizeSyllabus(projectLocale(raw, locale) as RawSyllabus);
 }
 
-export async function getPublishedDays(locale: Locale): Promise<PublishedDay[]> {
+export async function getContentDays(locale: Locale): Promise<ContentDay[]> {
   const registry = await loadContentRegistry({ daysDir: path.join(process.cwd(), "src/content/days") });
   return registry.days
     .map((day) => {
@@ -116,7 +116,7 @@ export function padDay(value: number): string {
   return String(value).padStart(3, "0");
 }
 
-export function latestDays(days: PublishedDay[], count: number): PublishedDay[] {
+export function latestDays(days: ContentDay[], count: number): ContentDay[] {
   return [...days].sort((a, b) => b.day - a.day).slice(0, count);
 }
 
@@ -124,15 +124,15 @@ export function totalSyllabusDays(syllabus: Syllabus): number {
   return syllabus.blocks.reduce((total, block) => total + block.days.length, 0);
 }
 
-export function publishedByDay(days: PublishedDay[]): Map<number, PublishedDay> {
+export function contentDaysByNumber(days: ContentDay[]): Map<number, ContentDay> {
   return new Map(days.map((day) => [day.day, day]));
 }
 
-export function nextSyllabusDay(syllabus: Syllabus, days: PublishedDay[]): SyllabusDay | undefined {
-  const published = new Set(days.map((day) => day.day));
+export function nextSyllabusDay(syllabus: Syllabus, days: ContentDay[]): SyllabusDay | undefined {
+  const contentDayNumbers = new Set(days.map((day) => day.day));
   for (const block of syllabus.blocks) {
     for (const day of block.days) {
-      if (!published.has(day.day)) {
+      if (!contentDayNumbers.has(day.day)) {
         return { ...day, block: block.title, blockId: block.id };
       }
     }
@@ -140,12 +140,12 @@ export function nextSyllabusDay(syllabus: Syllabus, days: PublishedDay[]): Sylla
   return undefined;
 }
 
-export function upcomingSyllabusDays(syllabus: Syllabus, days: PublishedDay[], count: number): SyllabusDay[] {
-  const published = new Set(days.map((day) => day.day));
+export function upcomingSyllabusDays(syllabus: Syllabus, days: ContentDay[], count: number): SyllabusDay[] {
+  const contentDayNumbers = new Set(days.map((day) => day.day));
   const upcoming: SyllabusDay[] = [];
   for (const block of syllabus.blocks) {
     for (const day of block.days) {
-      if (!published.has(day.day)) {
+      if (!contentDayNumbers.has(day.day)) {
         upcoming.push({ ...day, block: block.title, blockId: block.id });
         if (upcoming.length >= count) return upcoming;
       }

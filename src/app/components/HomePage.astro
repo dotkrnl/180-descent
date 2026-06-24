@@ -1,7 +1,7 @@
 ---
 import BookShell from "@app/layouts/BookShell.astro";
 import DayCard from "@app/components/DayCard.astro";
-import { getBookData, getPublishedDays, latestDays, padDay } from "@app/site-data";
+import { getBookData, getContentDays, latestDays, padDay } from "@app/site-data";
 import type { Locale } from "@lib/schemas/day";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const book = await getBookData();
-const days = await getPublishedDays(locale);
+const days = await getContentDays(locale);
 const isZh = locale === "zh";
 const homePath = isZh ? "/zh/" : "/";
 const alternatePath = isZh ? "/" : "/zh/";

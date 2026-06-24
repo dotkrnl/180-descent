@@ -1,6 +1,6 @@
 import {
   getBookData,
-  getPublishedDays
+  getContentDays
 } from "@app/site-data";
 import { escapeXml } from "@lib/text/escape";
 
@@ -12,8 +12,8 @@ interface SitemapEntry {
 export async function GET() {
   const book = await getBookData();
   const [enDays, zhDays] = await Promise.all([
-    getPublishedDays("en"),
-    getPublishedDays("zh")
+    getContentDays("en"),
+    getContentDays("zh")
   ]);
   const dayPaths = new Set([...enDays, ...zhDays].map((day) => day.path));
   const entries: SitemapEntry[] = [

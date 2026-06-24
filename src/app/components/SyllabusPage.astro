@@ -1,12 +1,12 @@
 ---
 import PageShell from "@app/layouts/PageShell.astro";
 import {
+  contentDaysByNumber,
   getBookData,
-  getPublishedDays,
+  getContentDays,
   getSyllabus,
   nextSyllabusDay,
   padDay,
-  publishedByDay,
   totalSyllabusDays,
   upcomingSyllabusDays
 } from "@app/site-data";
@@ -21,13 +21,13 @@ const isZh = locale === "zh";
 const [book, syllabus, days] = await Promise.all([
   getBookData(),
   getSyllabus(locale),
-  getPublishedDays(locale)
+  getContentDays(locale)
 ]);
 const totalDays = totalSyllabusDays(syllabus);
-const published = publishedByDay(days);
+const contentDays = contentDaysByNumber(days);
 const nextDay = nextSyllabusDay(syllabus, days);
 const upcoming = upcomingSyllabusDays(syllabus, days, 6);
-const latestPublishedDay = days.at(-1)?.day ?? 0;
+const latestContentDay = days.at(-1)?.day ?? 0;
 ---
 <PageShell
   locale={locale}
@@ -68,12 +68,12 @@ const latestPublishedDay = days.at(-1)?.day ?? 0;
       <p>{block.summary}</p>
       <div class="syllabus-days">
         {block.days.map((day) => {
-          const publishedDay = published.get(day.day);
+          const contentDay = contentDays.get(day.day);
           return (
-            <article class:list={["day-card syllabus-card", { "is-published": Boolean(publishedDay) }]}>
-              <p class="card-kicker">{isZh ? `第 ${padDay(day.day)} 日 / ${book.totalDays}${publishedDay ? "" : " · 计划中"}` : `Day ${padDay(day.day)} / ${book.totalDays}${publishedDay ? "" : " · Planned"}`}</p>
-              <h3>{publishedDay ? <a href={publishedDay.url}>{publishedDay.title}</a> : day.title}</h3>
-              {publishedDay && <p>{publishedDay.summary}</p>}
+            <article class:list={["day-card syllabus-card", { "is-published": Boolean(contentDay) }]}>
+              <p class="card-kicker">{isZh ? `第 ${padDay(day.day)} 日 / ${book.totalDays}${contentDay ? "" : " · 计划中"}` : `Day ${padDay(day.day)} / ${book.totalDays}${contentDay ? "" : " · Planned"}`}</p>
+              <h3>{contentDay ? <a href={contentDay.url}>{contentDay.title}</a> : day.title}</h3>
+              {contentDay && <p>{contentDay.summary}</p>}
             </article>
           );
         })}
@@ -86,7 +86,7 @@ const latestPublishedDay = days.at(-1)?.day ?? 0;
     <h2 id="what-comes-next">{isZh ? "接下来是什么" : "What Comes Next"}</h2>
     {nextDay ? (
       <>
-        <p>{isZh ? `本书已发布至第 ${padDay(latestPublishedDay)} 日。下一日是第 ${padDay(nextDay.day)} 日：${nextDay.title}，位于模块 ${nextDay.blockId}。` : `The book has published through Day ${padDay(latestPublishedDay)}. The next lesson is Day ${padDay(nextDay.day)}: ${nextDay.title}, in Block ${nextDay.blockId}.`}{nextDay.entry && nextDay.model && nextDay.debate ? (isZh ? `课程表切入点：${nextDay.entry} 核心模型：${nextDay.model} 主要争论：${nextDay.debate}` : ` Syllabus entry point: ${nextDay.entry} Core model: ${nextDay.model} Live debate: ${nextDay.debate}`) : nextDay.note ? ` ${nextDay.note}` : ""}</p>
+        <p>{isZh ? `本书已发布至第 ${padDay(latestContentDay)} 日。下一日是第 ${padDay(nextDay.day)} 日：${nextDay.title}，位于模块 ${nextDay.blockId}。` : `The book has published through Day ${padDay(latestContentDay)}. The next lesson is Day ${padDay(nextDay.day)}: ${nextDay.title}, in Block ${nextDay.blockId}.`}{nextDay.entry && nextDay.model && nextDay.debate ? (isZh ? `课程表切入点：${nextDay.entry} 核心模型：${nextDay.model} 主要争论：${nextDay.debate}` : ` Syllabus entry point: ${nextDay.entry} Core model: ${nextDay.model} Live debate: ${nextDay.debate}`) : nextDay.note ? ` ${nextDay.note}` : ""}</p>
         <ol class="upcoming-list">
           {upcoming.map((day) => (
             <li><span class="upcoming-day">{isZh ? `第 ${padDay(day.day)} 日 · ` : `Day ${padDay(day.day)} · `}</span><span>{day.title}</span></li>
