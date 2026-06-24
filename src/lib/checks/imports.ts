@@ -6,7 +6,6 @@ import { walkFiles } from "@lib/fs/walk";
 
 interface ImportCheckOptions {
   root: string;
-  sourceRoots?: readonly string[];
 }
 
 interface UnusedDefaultImport {
@@ -19,7 +18,7 @@ const DEFAULT_SOURCE_ROOTS = ["src/app", "src/content"] as const;
 export async function checkUnusedDefaultImports(options: ImportCheckOptions): Promise<UnusedDefaultImport[]> {
   const failures: UnusedDefaultImport[] = [];
 
-  for (const sourceRoot of options.sourceRoots ?? DEFAULT_SOURCE_ROOTS) {
+  for (const sourceRoot of DEFAULT_SOURCE_ROOTS) {
     const absoluteRoot = path.join(options.root, sourceRoot);
     for (const filePath of await walkFiles(absoluteRoot, { exts: new Set([".astro", ".mdx"]) })) {
       const source = await readFile(filePath, "utf8");
