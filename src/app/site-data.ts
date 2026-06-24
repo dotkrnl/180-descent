@@ -98,10 +98,8 @@ export async function getSyllabus(locale: Locale): Promise<Syllabus> {
 export async function getPublishedDays(locale: Locale): Promise<PublishedDay[]> {
   const registry = await loadContentRegistry({ daysDir: path.join(process.cwd(), "src/content/days") });
   return registry.days
-    .filter((day) => day.manifest.published && Boolean(day.manifest.locales[locale]))
     .map((day) => {
       const localeData = day.manifest.locales[locale];
-      if (!localeData) throw new Error(`Missing ${locale} locale for ${day.manifest.path}`);
       return {
         day: day.manifest.day,
         path: day.manifest.path,

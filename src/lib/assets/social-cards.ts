@@ -177,10 +177,8 @@ function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string 
 async function readRegistryDays(root: string, locale: "en" | "zh"): Promise<DayData[]> {
   const registry = await loadContentRegistry({ daysDir: path.join(root, "src/content/days") });
   return registry.days
-    .filter((day) => day.manifest.published && Boolean(day.manifest.locales[locale]))
     .map((day) => {
       const localeEntry = day.manifest.locales[locale];
-      if (!localeEntry) throw new Error(`Missing ${locale} locale for ${day.manifest.path}`);
       return {
         locale,
         title: localeEntry.title,

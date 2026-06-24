@@ -38,13 +38,14 @@ async function loadArtifactBook(
 ): Promise<ArtifactBook> {
   const registry = await loadContentRegistry({ daysDir: options.daysDir ?? path.join(root, "src/content/days") });
   const days = registry.days
-    .filter((day) => day.manifest.published)
-    .flatMap((day): ArtifactBookDay[] => {
+    .map((day): ArtifactBookDay => {
       const localeEntry = day.manifest.locales[locale];
       const body = day.bodies.find((candidate) => candidate.locale === locale);
-      if (!body) return [];
+      if (!body) {
+        throw new Error(`Registry ${day.manifest.path} missing ${locale} body`);
+      }
 
-      return [{
+      return {
         day: day.manifest.day,
         path: day.manifest.path,
         locale,
@@ -54,21 +55,23 @@ async function loadArtifactBook(
         bodyPath: body.path,
         bodySource: body.source,
         xhtml: `day-${String(day.manifest.day).padStart(3, "0")}.xhtml`,
-        appendices: day.manifest.appendices.flatMap((appendix) => {
+        appendices: day.manifest.appendices.map((appendix) => {
           const appendixEntry = appendix.locales[locale];
           const appendixBody = day.appendixBodies.find((candidate) => {
             return candidate.appendixId === appendix.id && candidate.locale === locale;
           });
-          if (!appendixBody) return [];
+          if (!appendixBody) {
+            throw new Error(`Registry ${day.manifest.path} missing ${locale} appendix body ${appendix.id}`);
+          }
 
-          return [{
+          return {
             id: appendix.id,
             title: appendixEntry.title,
             bodyPath: appendixBody.path,
             bodySource: appendixBody.source
-          }];
+          };
         })
-      }];
+      };
     })
     .sort((a, b) => a.day - b.day);
 

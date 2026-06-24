@@ -23,7 +23,7 @@ describe("artifact book model", () => {
     }]);
   });
 
-  it("loads published project days as artifact book days", async () => {
+  it("loads project days as artifact book days", async () => {
     const days = await loadArtifactBookDays(root, "en");
     const dayOne = days[0];
 

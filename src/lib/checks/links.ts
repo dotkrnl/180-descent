@@ -94,7 +94,7 @@ function linkTarget(href?: string): { pathname: string; anchor?: string; samePag
 
 async function checkFutureLinks(daysDir: string, futureLinksPath: string): Promise<LinkCheckFailure[]> {
   const registry = await loadContentRegistry({ daysDir });
-  const days = registry.days.filter((day) => day.manifest.published).map((day) => day.manifest.day);
+  const days = registry.days.map((day) => day.manifest.day);
   const maxDay = days.length ? Math.max(...days) : 0;
   const parsed = YAML.parse(await readFile(futureLinksPath, "utf8"));
   const futureLinks = Array.isArray(parsed) ? parsed as FutureLinkEntry[] : [];

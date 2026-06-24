@@ -13,7 +13,6 @@ describe("target content registry", () => {
     const parsed = dayManifestSchema.parse({
       day: 1,
       block: "foundations",
-      published: true,
       locales: {
         en: {
           title: "Minimal",
@@ -28,7 +27,7 @@ describe("target content registry", () => {
       }
     });
 
-    expect(parsed.published).toBe(true);
+    expect(parsed.locales.en.title).toBe("Minimal");
   });
 
   it("rejects partial day manifests", () => {
@@ -81,7 +80,6 @@ describe("target content registry", () => {
     await writeFile(path.join(dayDir, "day.yaml"), [
       "day: 1",
       "block: Fixture",
-      "published: true",
       "locales:",
       "  en:",
       "    title: Fixture",

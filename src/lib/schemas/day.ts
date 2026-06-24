@@ -24,7 +24,6 @@ const appendixSchema = z.object({
 export const dayManifestSchema = z.object({
   day: z.number().int().positive(),
   block: z.string().min(1),
-  published: z.boolean(),
   locales: z.object({
     en: localeContentSchema,
     zh: localeContentSchema

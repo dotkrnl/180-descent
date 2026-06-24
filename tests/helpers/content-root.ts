@@ -40,7 +40,6 @@ export async function writePublishedDay(root: string, options: PublishedDayOptio
   const manifest = [
     "day: 1",
     "block: Fixture",
-    "published: true",
     "locales:",
     "  en:",
     `    title: ${enTitle}`,

@@ -45,7 +45,6 @@ async function createFixtureRoot(): Promise<string> {
   await writeFile(path.join(root, "src/content/days/001-fixture/day.yaml"), [
     "day: 1",
     "block: Fixture",
-    "published: true",
     "locales:",
     "  en:",
     "    title: Fixture",

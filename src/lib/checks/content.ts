@@ -85,12 +85,6 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
   }
 
   for (const day of registry.days) {
-    for (const locale of ["en", "zh"] as const) {
-      if (!day.manifest.locales[locale]) {
-        failures.push({ message: `${day.manifest.path} missing ${locale} locale` });
-      }
-    }
-
     for (const body of day.bodies) {
       const localeData = day.manifest.locales[body.locale];
       checkContentFile({
@@ -98,7 +92,7 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
         relativePath: toPosixRelative(options.root, path.join(day.directory, body.path)),
         source: body.source,
         locale: body.locale,
-        title: localeData?.title,
+        title: localeData.title,
         requiresTitle: true
       }, failures);
     }
