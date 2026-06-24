@@ -195,6 +195,20 @@ SVG/HTML/SCSS diagrams.
 Chinese content should be idiomatic Simplified Chinese, not literal
 line-by-line English.
 
+- Use model-assisted translation in this order unless the user explicitly says
+  otherwise:
+  1. Kimi first, through `opencode` with `kimi-for-coding/k2p7`, for the initial
+     Simplified Chinese draft.
+  2. Gemini second, through Antigravity CLI `agy` with
+     `Gemini 3.5 Flash (High)`, for review, accuracy, terminology, and idiomatic
+     refinement. Use the legacy `gemini` CLI only when explicitly required or
+     when `agy` is unavailable.
+  3. GLM third, through `opencode` with `zhipuai-coding-plan/glm-5.1`, for a
+     final consistency and language refinement pass.
+- Kimi drafting, Gemini review, and GLM refinement can be slow for full lesson
+  bodies, appendices, and introduction updates. Use long-running commands and
+  poll patiently. Once a pass starts, let it finish unless the process exits
+  with an error or the user explicitly stops it.
 - Preserve manifest structure, day numbers, path, citations, URLs, DOI metadata,
   component imports, image alt meaning, and interaction behavior.
 - Localize block titles and print labels through existing data/components; do not
@@ -210,10 +224,35 @@ line-by-line English.
   propositions and titles where appropriate.
 - Avoid dense emphasis in Chinese prose. Use terminology styling and sparse
   color emphasis only when it clarifies structure.
-- Kimi, Gemini, and GLM review passes can be slow. When invoked, let them finish
-  unless the process exits or the user explicitly stops it.
 - Review AI edits manually before accepting: factual accuracy, terminology,
   formatting, component parity, and artifact behavior.
+
+For a normal day, create or update `src/content/days/###-slug/zh.mdx` and any
+Chinese locale fields in `day.yaml`, then run Kimi on the paired English and
+Chinese source files:
+
+```sh
+rtk opencode run --dangerously-skip-permissions -m kimi-for-coding/k2p7 "请以 yolo 模式直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。所有仓库 shell 命令都必须使用 rtk 前缀。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法，并保留和翻译所有说明性注释。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
+```
+
+After manually reviewing Kimi edits, run Gemini as the second pass:
+
+```sh
+rtk agy --dangerously-skip-permissions --model "Gemini 3.5 Flash (High)" --print-timeout 20m -p "请以 yolo 模式直接在本仓库中审核并润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。重点检查 Kimi 初稿的翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+```
+
+After manually reviewing Gemini edits, run GLM as the final consistency pass:
+
+```sh
+rtk opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.1 "请以 yolo 模式直接在本仓库中润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。所有仓库 shell 命令都必须使用 rtk 前缀。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留 imports、component props、manifest/front matter、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+```
+
+For large appendices, use temporary files instead of asking an agent to
+overwrite its input: `/tmp/day-###-appendix-en.md` and
+`/tmp/day-###-appendix-zh.md`. Run Kimi first on the temporary pair, then Gemini
+review, then GLM refinement, manually compare structure against the English
+appendix, and only then insert the result into
+`src/content/days/###-slug/appendices/*.zh.mdx`.
 
 ## Human Refinement Gate
 
