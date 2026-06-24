@@ -18,6 +18,12 @@ import FalsePositiveFactory from "@app/components/lesson/interactives/FalsePosit
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -96,15 +102,17 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <PanelNote>每增加一项看似普通的分析自由度，偶然结果被选中并报告的机会都会增加。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>分析自由度</th><th>具体变动</th><th>为何会抬高假阳性率</th></tr></thead>
-<tbody>
-<tr><td>两个结果指标</td><td>测量两个相关结果，只报告显著的那个。</td><td>噪声获得了两次跨过 p &lt; .05 的机会。</td></tr>
-<tr><td>可选停止</td><td>在 n=20 时观察，需要时再增加参与者。</td><td>停止规则本身成了数据中的另一条路径。</td></tr>
-<tr><td>灵活的子组分析</td><td>尝试整体结果及子组拆分。</td><td>如果在看到数据后才选择，合理的子组检查就变成了多次比较。</td></tr>
-<tr><td>剔除实验条件</td><td>运行三个小组，报告最好的一对。</td><td>报告的对比结果是被特意挑选出来的。</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>分析自由度</DataTableHeader><DataTableHeader>具体变动</DataTableHeader><DataTableHeader>为何会抬高假阳性率</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>两个结果指标</DataTableCell><DataTableCell>测量两个相关结果，只报告显著的那个。</DataTableCell><DataTableCell>噪声获得了两次跨过 p &lt; .05 的机会。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>可选停止</DataTableCell><DataTableCell>在 n=20 时观察，需要时再增加参与者。</DataTableCell><DataTableCell>停止规则本身成了数据中的另一条路径。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>灵活的子组分析</DataTableCell><DataTableCell>尝试整体结果及子组拆分。</DataTableCell><DataTableCell>如果在看到数据后才选择，合理的子组检查就变成了多次比较。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>剔除实验条件</DataTableCell><DataTableCell>运行三个小组，报告最好的一对。</DataTableCell><DataTableCell>报告的对比结果是被特意挑选出来的。</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 西蒙斯、纳尔逊和西蒙逊展示，即使数据中没有真实效应，结合这四种自由度也能将名义上 5% 的假阳性率提高到约 61%。
 
 </FormatAlt>
@@ -158,15 +166,17 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 <PanelNote>同一个真实效应，会随着样本量和噪声变化而呈现出非常不同的统计表现。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>情境</th><th>p 值</th><th>均值差的 95% CI</th><th>Cohen’s d</th><th>实际解读</th></tr></thead>
-<tbody>
-<tr><td>均值差 0.30，每组 n = 20，噪声 = 1.00</td><td>.35</td><td>[-0.34, 0.94]</td><td>0.30</td><td>小效应，估计太不精确。</td></tr>
-<tr><td>均值差 0.30，每组 n = 500，噪声 = 1.00</td><td>&lt; .001</td><td>[0.18, 0.42]</td><td>0.30</td><td>统计证据较明确，估计也更精确，但效应仍然很小。</td></tr>
-<tr><td>均值差 0.80，每组 n = 50，噪声 = 1.00</td><td>&lt; .001</td><td>[0.40, 1.20]</td><td>0.80</td><td>按科恩惯例属于大效应。</td></tr>
-<tr><td>均值差 0.30，每组 n = 50，噪声 = 2.00</td><td>.46</td><td>[-0.49, 1.09]</td><td>0.15</td><td>相对于噪声而言非常小。</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>情境</DataTableHeader><DataTableHeader>p 值</DataTableHeader><DataTableHeader>均值差的 95% CI</DataTableHeader><DataTableHeader>Cohen’s d</DataTableHeader><DataTableHeader>实际解读</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>均值差 0.30，每组 n = 20，噪声 = 1.00</DataTableCell><DataTableCell>.35</DataTableCell><DataTableCell>[-0.34, 0.94]</DataTableCell><DataTableCell>0.30</DataTableCell><DataTableCell>小效应，估计太不精确。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>均值差 0.30，每组 n = 500，噪声 = 1.00</DataTableCell><DataTableCell>&lt; .001</DataTableCell><DataTableCell>[0.18, 0.42]</DataTableCell><DataTableCell>0.30</DataTableCell><DataTableCell>统计证据较明确，估计也更精确，但效应仍然很小。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>均值差 0.80，每组 n = 50，噪声 = 1.00</DataTableCell><DataTableCell>&lt; .001</DataTableCell><DataTableCell>[0.40, 1.20]</DataTableCell><DataTableCell>0.80</DataTableCell><DataTableCell>按科恩惯例属于大效应。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>均值差 0.30，每组 n = 50，噪声 = 2.00</DataTableCell><DataTableCell>.46</DataTableCell><DataTableCell>[-0.49, 1.09]</DataTableCell><DataTableCell>0.15</DataTableCell><DataTableCell>相对于噪声而言非常小。</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 要点不是「p 值越小越好」。p 值会变小，可能因为效应更大，也可能因为样本巨大、噪声更低，或三者同时改变。请同时报告效应量和区间。
 
 </FormatAlt>

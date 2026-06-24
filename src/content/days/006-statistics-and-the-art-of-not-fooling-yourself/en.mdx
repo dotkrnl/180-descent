@@ -18,6 +18,12 @@ import FalsePositiveFactory from "@app/components/lesson/interactives/FalsePosit
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -93,15 +99,17 @@ Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved i
 
 <PanelNote>Each ordinary analytic freedom multiplies the number of chances to report a chance result.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Analytic freedom</th><th>What changes</th><th>Why it inflates false positives</th></tr></thead>
-<tbody>
-<tr><td>Two outcome measures</td><td>Measure two related results and report the one that works.</td><td>Noise gets two chances to cross <MathInline latex={String.raw`p < .05`} />.</td></tr>
-<tr><td>Optional stopping</td><td>Peek at n=20, then add participants if needed.</td><td>The stopping rule itself becomes another path through the data.</td></tr>
-<tr><td>Flexible subgroup analysis</td><td>Try the overall result and subgroup splits.</td><td>Legitimate subgroup checks become multiple comparisons when chosen after seeing the data.</td></tr>
-<tr><td>Drop a condition</td><td>Run three groups, then report the best pair.</td><td>The reported contrast is selected because it looks best.</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>Analytic freedom</DataTableHeader><DataTableHeader>What changes</DataTableHeader><DataTableHeader>Why it inflates false positives</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>Two outcome measures</DataTableCell><DataTableCell>Measure two related results and report the one that works.</DataTableCell><DataTableCell>Noise gets two chances to cross <MathInline latex={String.raw`p < .05`} />.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>Optional stopping</DataTableCell><DataTableCell>Peek at n=20, then add participants if needed.</DataTableCell><DataTableCell>The stopping rule itself becomes another path through the data.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>Flexible subgroup analysis</DataTableCell><DataTableCell>Try the overall result and subgroup splits.</DataTableCell><DataTableCell>Legitimate subgroup checks become multiple comparisons when chosen after seeing the data.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>Drop a condition</DataTableCell><DataTableCell>Run three groups, then report the best pair.</DataTableCell><DataTableCell>The reported contrast is selected because it looks best.</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 Simmons, Nelson, and Simonsohn showed that combining four such freedoms can raise a nominal 5% false-positive rate to about 61% even when the data contain no real effect.
 
 </FormatAlt>
@@ -155,15 +163,17 @@ A <MathInline latex={String.raw`p`} />-value entangles effect size, noise, sampl
 
 <PanelNote>The same true effect can look very different as sample size and noise change.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Scenario</th><th>p-value</th><th>95% CI for mean difference</th><th>Cohen's d</th><th>Practical reading</th></tr></thead>
-<tbody>
-<tr><td>Mean difference 0.30, n = 20 per group, noise = 1.00</td><td>.35</td><td>[-0.34, 0.94]</td><td>0.30</td><td>Small effect, too imprecise to trust.</td></tr>
-<tr><td>Mean difference 0.30, n = 500 per group, noise = 1.00</td><td>&lt; .001</td><td>[0.18, 0.42]</td><td>0.30</td><td>Statistically clear, still small in size.</td></tr>
-<tr><td>Mean difference 0.80, n = 50 per group, noise = 1.00</td><td>&lt; .001</td><td>[0.40, 1.20]</td><td>0.80</td><td>Large by Cohen's convention.</td></tr>
-<tr><td>Mean difference 0.30, n = 50 per group, noise = 2.00</td><td>.46</td><td>[-0.49, 1.09]</td><td>0.15</td><td>Tiny relative to the noise.</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>Scenario</DataTableHeader><DataTableHeader>p-value</DataTableHeader><DataTableHeader>95% CI for mean difference</DataTableHeader><DataTableHeader>Cohen's d</DataTableHeader><DataTableHeader>Practical reading</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>Mean difference 0.30, n = 20 per group, noise = 1.00</DataTableCell><DataTableCell>.35</DataTableCell><DataTableCell>[-0.34, 0.94]</DataTableCell><DataTableCell>0.30</DataTableCell><DataTableCell>Small effect, too imprecise to trust.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>Mean difference 0.30, n = 500 per group, noise = 1.00</DataTableCell><DataTableCell>&lt; .001</DataTableCell><DataTableCell>[0.18, 0.42]</DataTableCell><DataTableCell>0.30</DataTableCell><DataTableCell>Statistically clear, still small in size.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>Mean difference 0.80, n = 50 per group, noise = 1.00</DataTableCell><DataTableCell>&lt; .001</DataTableCell><DataTableCell>[0.40, 1.20]</DataTableCell><DataTableCell>0.80</DataTableCell><DataTableCell>Large by Cohen's convention.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>Mean difference 0.30, n = 50 per group, noise = 2.00</DataTableCell><DataTableCell>.46</DataTableCell><DataTableCell>[-0.49, 1.09]</DataTableCell><DataTableCell>0.15</DataTableCell><DataTableCell>Tiny relative to the noise.</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 The lesson is not "smaller p-values are better." A p-value can shrink because an effect is large, because the sample is huge, because noise is low, or because all three changed. Report the effect size and interval.
 
 </FormatAlt>
