@@ -14,6 +14,7 @@ import LandauerMachine from "@app/components/lesson/interactives/LandauerMachine
 import EntropyDial from "@app/components/lesson/interactives/EntropyDial.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -140,7 +141,10 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 任何现实中的信道都会损坏其传输的消息：线路上的杂音、光盘上的划痕，或是深空中翻转比特的宇宙射线。香农的有噪信道定理只有在你先指定信道模型和约束时才成立——带宽、功率、字母表、噪声规律以及允许的输入分布。在这些假设下，信道具有一个<Term>信道容量</Term><TipNote text={"信道容量是在指定信道和约束下，错误概率可被任意逼近零的最高渐近信息传输速率。"} /> C。只要传输速率低于 C，足够长的编码就可以让译码错误概率任意接近于零；高于 C，则在同一信道模型下无法做到错误率消失。降低速率本身就是故事的一部分；巧妙编码的作用，是让可靠速率保持为正，而不是滑向零。
 
-<blockquote>信道容量是指定信道的渐近边界。在它之下，足够长的编码可以让错误率趋近于零；有限消息仍然要在速率、延迟和错误概率之间权衡。</blockquote>
+<BlockQuote>
+信道容量是指定信道的渐近边界。在它之下，足够长的编码可以让错误率趋近于零；有限消息仍然要在速率、延迟和错误概率之间权衡。
+</BlockQuote>
+
 真正的关键在于：香农证明了这些优秀编码确实存在，但并未指明如何构建它们。他给工程师们留下了一张只标了 X、却没画出路线的藏宝图。追寻这个 X 成为了应用数学界最宏大的探索之一——从保护 CD、二维码以及火星数据回传的里德-所罗门码（Reed–Solomon codes），到 Turbo 码（1993 年），再到如今在 Wi-Fi、5G 数据信道和存储中静默运行的低密度奇偶校验码（LDPC）。每一步都在现实约束下更逼近香农之墙。每当你在不稳定的网络连接下流畅观看电影时，背后不只有信道编码，也有缓冲、重传、拥塞控制、源编码和应用层掩蔽在共同工作。给更常见的符号分配更短的编码——正如摩尔斯电码中为字母「E」分配的单个点，或是霍夫曼编码（1952 年）背后的逻辑——这背后运行着相同的原则：将比特预算花在惊奇度最高的地方。
 
 </ContentSection>

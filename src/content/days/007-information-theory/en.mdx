@@ -14,6 +14,7 @@ import LandauerMachine from "@app/components/lesson/interactives/LandauerMachine
 import EntropyDial from "@app/components/lesson/interactives/EntropyDial.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -137,7 +138,10 @@ Defining information would have been a nice piece of bookkeeping. What made Shan
 
 Every real channel corrupts its messages: static on a line, scratches on a disc, cosmic rays flipping bits in deep space. Shannon's noisy-channel theorem applies once you specify the channel model and constraints — bandwidth, power, alphabet, noise law, and allowed inputs. Under those assumptions the channel has a <Term as="em">capacity</Term><TipNote text={"Channel capacity is the highest asymptotic information rate at which error probability can be driven arbitrarily close to zero for a specified channel and constraints."} /> *C*. At rates below C, sufficiently long codes can drive the decoding-error probability arbitrarily close to zero. Above C, vanishing error is impossible for that same channel model. Lowering the rate is part of the story; clever coding is what keeps the reliable rate positive instead of collapsing toward zero.
 
-<blockquote>Capacity is an asymptotic boundary for a specified channel. Below it, vanishing error is possible with sufficiently long codes; finite messages still trade rate, latency, and error probability.</blockquote>
+<BlockQuote>
+Capacity is an asymptotic boundary for a specified channel. Below it, vanishing error is possible with sufficiently long codes; finite messages still trade rate, latency, and error probability.
+</BlockQuote>
+
 Here's the kicker: Shannon proved the good codes *exist* without saying how to build them. He left engineers a treasure map with an X but no path. Chasing that X became one of the great quests of applied mathematics — Reed–Solomon codes (which armor your CDs, QR codes, and the data beamed back from Mars), then turbo codes (1993), then the low-density parity-check codes now humming inside Wi-Fi, 5G data channels, and storage. Each crept closer to Shannon's wall under real constraints. Every time a movie streams smoothly over a flaky connection, you are watching this theorem work together with buffering, retransmission, congestion control, source coding, and error concealment. The shorter codeword for the commoner symbol — Morse's single dot for "E," the logic behind Huffman coding (1952) — is the same principle running underneath: spend your bits where the surprise is.
 
 </ContentSection>
