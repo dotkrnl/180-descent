@@ -1,8 +1,10 @@
 ---
 interface Props {
   class?: string;
+  label?: string;
 }
 
+const { label } = Astro.props;
 const className = ["threads", Astro.props.class].filter(Boolean).join(" ");
 ---
-<p class={className}><slot /></p>
+<p class={className}>{label && <><strong class="threads-label">{label}</strong> </>}<slot /></p>
