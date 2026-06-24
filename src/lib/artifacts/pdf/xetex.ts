@@ -1557,7 +1557,7 @@ function cleanEyebrowText(value: string): string {
 
 function cleanDecorativePrefix(value: string): string {
   return value
-    .replace(/^[◆◇▪●■□•·▮�￿\s]+/, "")
+    .replace(/^[◆◇▪●■□•·▮\s]+/, "")
     .trim();
 }
 
@@ -1567,7 +1567,7 @@ function cleanFigureCaption(value: string): string {
 }
 
 function isDecorativeOnly(value: string): boolean {
-  return /^[◆◇▪●■□•·▮∞↻�￿\s]+$/.test(value);
+  return /^[◆◇▪●■□•·▮∞↻\s]+$/.test(value);
 }
 
 function romanNumeral(value: number): string {
