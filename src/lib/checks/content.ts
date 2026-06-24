@@ -26,6 +26,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<\/?blockquote(?:\s|>)/, "use <BlockQuote>"],
   [/<h3>/, "use Markdown headings"],
   [/<\/?p(?:\s|>)/, "use Markdown paragraphs, <Lead>, <FormatOnly>, <LessonNote>, or a shared paragraph component"],
+  [/<\/?(?:strong|b|em|span|small)(?:\s|>)/, "use Markdown emphasis or a shared inline component"],
   [/<br\s*\/?>/i, "use Markdown line breaks or a shared block component"],
   [/<\/?code(?:\s|>)/, "use Markdown backticks or fenced code blocks"],
   [/<\/?(?:ul|li)(?:\s|>)/, "use Markdown lists or shared list components"],

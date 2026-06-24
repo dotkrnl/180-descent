@@ -55,6 +55,25 @@ describe("content check", () => {
       }
     ]);
   });
+
+  it("reports raw typographic wrapper markup in MDX content", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        "<em>shortcut emphasis</em>"
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx contains unsupported MDX wrapper markup; use Markdown emphasis or a shared inline component"
+      }
+    ]);
+  });
 });
 
 async function createFixtureRoot(): Promise<string> {
