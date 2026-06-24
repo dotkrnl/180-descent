@@ -30,10 +30,9 @@
     var cFN = byPrefix(prefix, "cFN");
     var cTN = byPrefix(prefix, "cTN");
     var segTP = byPrefix(prefix, "segTP");
-    var segFP = byPrefix(prefix, "segFP");
     var ppvBig = byPrefix(prefix, "ppvBig");
     var ppvCap = byPrefix(prefix, "ppvCap");
-    if (!power || !bias || !brVal || !powVal || !biasVal || !cTP || !cFP || !cFN || !cTN || !segTP || !segFP || !ppvBig || !ppvCap) return;
+    if (!power || !bias || !brVal || !powVal || !biasVal || !cTP || !cFP || !cFN || !cTN || !segTP || !ppvBig || !ppvCap) return;
 
     function render() {
       var nTrue = Number(baseRate.value);
@@ -67,8 +66,7 @@
       var realN = Math.round(ppv * 100);
       var falseN = 100 - realN;
 
-      segTP.style.width = trueWidth + "%";
-      segFP.style.width = (100 - trueWidth) + "%";
+      segTP.value = trueWidth;
       ppvBig.textContent = percent + "%";
       ppvCap.innerHTML = isZh
         ? '为真。这里每 100 个发表的「发现」中，大约 <span class="hl">' + realN + '</span> 个是真的，<span class="hl">' + falseN + '</span> 个只是披着信号外衣的噪音。<span class="ppv-verdict">' + verdictText(percent) + "</span>"

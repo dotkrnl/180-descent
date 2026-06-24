@@ -343,9 +343,10 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 4px color-mix
 .mcell.tn .mc-n{color:var(--ink-soft);}
 .purity-wrap{margin-top:.6rem;}
 .purity-lab{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 .4rem;}
-.purity-bar{height:26px;border-radius:7px;overflow:hidden;display:flex;border:1px solid var(--line-strong);background:var(--paper);}
-.purity-bar .seg-tp{background:color-mix(in srgb,var(--ok) 60%,transparent);height:100%;transition:width .5s ease;}
-.purity-bar .seg-fp{background:color-mix(in srgb,var(--contested) 55%,transparent);height:100%;transition:width .5s ease;}
+.purity-bar{appearance:none;display:block;width:100%;height:26px;border:1px solid var(--line-strong);border-radius:7px;background:color-mix(in srgb,var(--contested) 55%,transparent);overflow:hidden;}
+.purity-bar::-webkit-progress-bar{background:color-mix(in srgb,var(--contested) 55%,transparent);border-radius:inherit;}
+.purity-bar::-webkit-progress-value{background:color-mix(in srgb,var(--ok) 60%,transparent);border-radius:inherit;}
+.purity-bar::-moz-progress-bar{background:color-mix(in srgb,var(--ok) 60%,transparent);border-radius:inherit;}
 .ppv-headline{margin-top:1.1rem;text-align:center;border-top:1px dashed var(--line);padding-top:1.1rem;}
 .ppv-headline .big{font-family:"Fraunces",serif;font-weight:600;font-size:2.6rem;line-height:1;color:var(--accent-deep);}
 .ppv-headline .cap{font-size:.92em;color:var(--ink-soft);margin-top:.45rem;}
