@@ -487,20 +487,31 @@
   }
 
   function readStoredTheme(){
-    try{
-      var theme = window.localStorage && window.localStorage.getItem(themeStorageKey);
-      return theme === "light" || theme === "dark" ? theme : "";
-    }catch(error){
-      return "";
-    }
+    var theme = readStorageValue(themeStorageKey);
+    return theme === "light" || theme === "dark" ? theme : "";
   }
 
   function storeTheme(theme){
+    writeStorageValue(themeStorageKey, theme);
+  }
+
+  function readStorageValue(key){
+    try{
+      return window.localStorage ? window.localStorage.getItem(key) : null;
+    }catch(error){
+      return null;
+    }
+  }
+
+  function writeStorageValue(key, value){
     try{
       if(window.localStorage){
-        window.localStorage.setItem(themeStorageKey, theme);
+        window.localStorage.setItem(key, value);
       }
-    }catch(error){}
+      return true;
+    }catch(error){
+      return false;
+    }
   }
 
   function currentLocale(){
@@ -510,7 +521,7 @@
 
   function readReadingProgress(){
     try{
-      var raw = window.localStorage && window.localStorage.getItem(readingStorageKey);
+      var raw = readStorageValue(readingStorageKey);
       var parsed = raw ? JSON.parse(raw) : {};
       return parsed && typeof parsed === "object" ? parsed : {};
     }catch(error){
@@ -519,11 +530,7 @@
   }
 
   function storeReadingProgress(progress){
-    try{
-      if(window.localStorage){
-        window.localStorage.setItem(readingStorageKey, JSON.stringify(progress));
-      }
-    }catch(error){}
+    writeStorageValue(readingStorageKey, JSON.stringify(progress));
   }
 
   function readPublishedDays(locale){
