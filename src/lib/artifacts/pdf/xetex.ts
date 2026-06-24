@@ -698,6 +698,13 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "DekGrid") {
     return renderChildren(node.children ?? [], state, { block: true });
   }
+  if (name === "MisconceptionList") {
+    return renderHtmlList({ ...node, name: "ul" }, state, false);
+  }
+  if (name === "MisconceptionFix") {
+    const text = renderInlineChildren(node, state, context);
+    return text ? ` ${text}` : "";
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
@@ -1573,7 +1580,8 @@ function isBlockMdxElement(node: MdxNode): boolean {
     "AppendixFigure",
     "AppendixNote",
     "LessonList",
-    "DekGrid"
+    "DekGrid",
+    "MisconceptionList"
   ].includes(node.name ?? "");
 }
 
