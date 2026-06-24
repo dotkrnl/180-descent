@@ -9,7 +9,6 @@ import type { Locale } from "@lib/schemas/day";
 
 interface ContentCheckOptions {
   root: string;
-  daysDir?: string;
 }
 
 interface ContentCheckFailure {
@@ -77,7 +76,7 @@ interface RegistryContentFile {
 
 export async function checkContent(options: ContentCheckOptions): Promise<ContentCheckFailure[]> {
   const failures: ContentCheckFailure[] = [];
-  const daysDir = path.join(options.root, options.daysDir ?? "src/content/days");
+  const daysDir = path.join(options.root, "src/content/days");
   const registry = await loadContentRegistry({ daysDir });
 
   if (!registry.days.length) {
