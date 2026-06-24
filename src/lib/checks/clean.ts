@@ -19,20 +19,25 @@ const FORBIDDEN_TRACKED_PATHS = [
 
 export function checkCleanRepo(options: CleanCheckOptions): CleanCheckFailure[] {
   const failures: CleanCheckFailure[] = [];
+  const trackedPaths = trackedForbiddenPaths(options.root);
 
   for (const [relativePath, reason] of FORBIDDEN_TRACKED_PATHS) {
-    if (hasTrackedPath(options.root, relativePath)) {
+    if (trackedPaths.some((trackedPath) => trackedPath === relativePath || trackedPath.startsWith(`${relativePath}/`))) {
       failures.push({ path: relativePath, reason });
     }
   }
   return failures;
 }
 
-function hasTrackedPath(root: string, relativePath: string): boolean {
-  const result = spawnSync("git", ["ls-files", relativePath], {
+function trackedForbiddenPaths(root: string): string[] {
+  const result = spawnSync("git", ["ls-files", "--", ...FORBIDDEN_TRACKED_PATHS.map(([relativePath]) => relativePath)], {
     cwd: root,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
   });
-  return result.status === 0 && result.stdout.trim().length > 0;
+  if (result.status !== 0) return [];
+  return result.stdout
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
 }
