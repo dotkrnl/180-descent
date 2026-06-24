@@ -10,6 +10,7 @@ import remarkMdx from "remark-mdx";
 import remarkParse from "remark-parse";
 import YAML from "yaml";
 import { prepareLatinFonts, preparePdfFonts } from "@lib/assets/fonts";
+import { brandIconFile, pdfFontsDir } from "@lib/assets/paths";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/downloads";
 import { contentDayFile, contentDaysDir } from "@lib/content/paths";
@@ -1282,7 +1283,7 @@ async function loadRenderedHtml(root: string, locale: Locale, sourceFile: string
 }
 
 function latexPreamble(config: PdfEdition & { root: string }): string {
-  const fontPath = latexPath(path.join(config.root, "src/assets/fonts/pdf") + path.sep);
+  const fontPath = latexPath(pdfFontsDir(config.root) + path.sep);
   const cjkMain = config.locale === "zh" ? "LXGW WenKai" : "Songti SC";
   return String.raw`\documentclass[10pt,openany,oneside]{book}
 \let\cleardoublepage\clearpage
@@ -1402,7 +1403,7 @@ ${config.locale === "zh" ? "" : "\\RaggedRight"}
 }
 
 function titlePageLatex(config: PdfEdition & { root: string }): string {
-  const logo = latexPath(path.join(config.root, "src/assets/images/brand/180-descent-icon.png"));
+  const logo = latexPath(brandIconFile(config.root));
   const isZh = config.locale === "zh";
   const eyebrow = config.subtitle;
   const byline = isZh ? `作者：${config.authors}` : `By ${config.authors}`;

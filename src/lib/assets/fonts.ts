@@ -3,6 +3,7 @@ import { copyFile, mkdir, readFile, readdir, stat, writeFile } from "node:fs/pro
 import { createRequire } from "node:module";
 import path from "node:path";
 import { promisify } from "node:util";
+import { cjkFontsDir, fontsDir, generatedScssFile, katexFontsDir, pdfFontsDir } from "@lib/assets/paths";
 
 const require = createRequire(import.meta.url);
 const execFileAsync = promisify(execFile);
@@ -83,7 +84,7 @@ const packageRoots: Record<AssetPackageName, string> = {
 };
 
 export async function prepareLatinFonts(options: AssetPreparationOptions): Promise<PrepareLatinFontsResult> {
-  const outDir = path.resolve(options.root, "src/assets/fonts");
+  const outDir = fontsDir(options.root);
   await mkdir(outDir, { recursive: true });
 
   for (const asset of latinFontAssets) {
@@ -98,8 +99,8 @@ export async function prepareLatinFonts(options: AssetPreparationOptions): Promi
 }
 
 export async function preparePdfFonts(options: AssetPreparationOptions): Promise<PreparePdfFontsResult> {
-  const sourceDir = path.resolve(options.root, "src/assets/fonts");
-  const outDir = path.resolve(sourceDir, "pdf");
+  const sourceDir = fontsDir(options.root);
+  const outDir = pdfFontsDir(options.root);
   await mkdir(outDir, { recursive: true });
 
   let converted = 0;
@@ -118,8 +119,8 @@ export async function preparePdfFonts(options: AssetPreparationOptions): Promise
 
 export async function prepareCjkFonts(options: AssetPreparationOptions): Promise<PrepareCjkFontsResult> {
   const packageRoot = packageRoots["lxgw-wenkai-webfont"];
-  const outDir = path.resolve(options.root, "src/assets/fonts/cjk");
-  const scssOut = path.resolve(options.root, "src/assets/scss/generated/_cjk.scss");
+  const outDir = cjkFontsDir(options.root);
+  const scssOut = generatedScssFile(options.root, "_cjk.scss");
   const results: PrepareCjkFontsResult["weights"] = [];
 
   await mkdir(outDir, { recursive: true });
@@ -148,8 +149,8 @@ export async function prepareCjkFonts(options: AssetPreparationOptions): Promise
 
 export async function prepareKatexAssets(options: AssetPreparationOptions): Promise<PrepareKatexAssetsResult> {
   const katexRoot = packageRoots.katex;
-  const scssOut = path.resolve(options.root, "src/assets/scss/generated/_katex.scss");
-  const fontsOut = path.resolve(options.root, "src/assets/fonts/katex");
+  const scssOut = generatedScssFile(options.root, "_katex.scss");
+  const fontsOut = katexFontsDir(options.root);
 
   await mkdir(fontsOut, { recursive: true });
   await mkdir(path.dirname(scssOut), { recursive: true });

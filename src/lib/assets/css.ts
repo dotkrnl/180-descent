@@ -2,13 +2,14 @@ import path from "node:path";
 import postcss from "postcss";
 import postcssImport from "postcss-import";
 import { compile } from "sass";
+import { bookScssFile } from "@lib/assets/paths";
 
 interface CompileCssOptions {
   root: string;
 }
 
 export async function compileCss(options: CompileCssOptions): Promise<string> {
-  const entryFile = path.resolve(options.root, "src/assets/scss/book.scss");
+  const entryFile = bookScssFile(options.root);
   const css = compile(entryFile, {
     loadPaths: [path.dirname(entryFile)],
     style: "expanded"

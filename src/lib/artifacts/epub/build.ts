@@ -7,6 +7,7 @@ import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book"
 import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/downloads";
 import { compileCss } from "@lib/assets/css";
 import { stripUnbundledKatexTtfSources } from "@lib/assets/fonts";
+import { fontsDir, katexFontsDir } from "@lib/assets/paths";
 import { readBookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
 import { dayUrlPrefix, siteDayDir, sitePageFile, staticPageUrl } from "@lib/static-site/routes";
@@ -417,7 +418,7 @@ function normalizeEpubFontUrls(css: string): string {
 }
 
 async function collectEpubFonts(root: string): Promise<EpubFont[]> {
-  const fontsRoot = path.join(root, "src/assets/fonts");
+  const fontsRoot = fontsDir(root);
   const fonts: EpubFont[] = [];
 
   for (const fileName of await readdir(fontsRoot)) {
@@ -426,7 +427,7 @@ async function collectEpubFonts(root: string): Promise<EpubFont[]> {
     }
   }
 
-  const katexRoot = path.join(fontsRoot, "katex");
+  const katexRoot = katexFontsDir(root);
   for (const fileName of await readdir(katexRoot)) {
     if (fileName.endsWith(".woff2") || fileName.endsWith(".woff")) {
       fonts.push(epubFont(`fonts/katex/${fileName}`, path.join(katexRoot, fileName)));

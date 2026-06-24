@@ -2,6 +2,7 @@ import { mkdir, readFile, stat, utimes, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
+import { brandIconFile, socialImagesDir } from "@lib/assets/paths";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
@@ -48,9 +49,9 @@ function clampSocialText(value = "", max = 160): string {
 
 export async function generateSocialCards(options: GenerateSocialCardsOptions): Promise<GenerateSocialCardsResult> {
   const root = options.root;
-  const outDir = path.join(root, "src/assets/images/social");
+  const outDir = socialImagesDir(root);
   const bookPath = bookDataFile(root);
-  const brandMarkPath = path.join(root, "src/assets/images/brand/180-descent-icon.png");
+  const brandMarkPath = brandIconFile(root);
   await mkdir(outDir, { recursive: true });
 
   const [book, bookStat, brandMarkStat, brandMarkBase64, dependencyMtimeMs] = await Promise.all([
