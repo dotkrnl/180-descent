@@ -1,0 +1,80 @@
+---
+import type { Locale } from "@lib/schemas/day";
+
+interface Props {
+  locale: Locale;
+}
+
+const locale = Astro.props.locale;
+const zh = locale === "zh";
+const upMarkerId = `theory-laden-sunrise-up-${locale}`;
+const downMarkerId = `theory-laden-sunrise-down-${locale}`;
+const copy = zh
+  ? {
+      aria: "同一幅黎明图像进入两位观察者的眼睛，但第谷把它看作太阳升起，开普勒把它看作地球转动。",
+      title: "同样的光落在同样的眼睛上",
+      tycho: "第谷看见",
+      tychoSub: "静止的地球",
+      tychoMotion: "太阳向上升",
+      kepler: "开普勒看见",
+      keplerSub: "转动的地球",
+      keplerMotion: "地平线下降"
+    }
+  : {
+      aria: "The same dawn image reaches two observers, but Tycho interprets it as the Sun rising while Kepler interprets it as the Earth turning.",
+      title: "same light on the same eyes",
+      tycho: "Tycho sees",
+      tychoSub: "a fixed Earth",
+      tychoMotion: "Sun moves up",
+      kepler: "Kepler sees",
+      keplerSub: "a turning Earth",
+      keplerMotion: "Horizon drops"
+    };
+---
+<div class="theory-laden-sunrise-figure">
+  <svg viewBox="0 0 520 300" role="img" aria-label={copy.aria}>
+    <rect x="1" y="1" width="518" height="298" rx="14" fill="var(--paper)" stroke="var(--line)"></rect>
+    <text x="260" y="30" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="700" fill="var(--ink)">{copy.title}</text>
+    <g fill="none" stroke="var(--brass)" stroke-opacity="0.75" stroke-width="2" stroke-linecap="round">
+      <path d="M222,50 C190,58 154,58 116,50"></path>
+      <path d="M298,50 C330,58 366,58 404,50"></path>
+    </g>
+    <circle cx="260" cy="52" r="15" fill="var(--brass)" fill-opacity="0.82" stroke="var(--brass)" stroke-opacity="0.7" stroke-width="1.5"></circle>
+    <g stroke="var(--ink-soft)" stroke-width="1.5" fill="none" stroke-linecap="round">
+      <path d="M104,50 q12,-9 24,0 q-12,9 -24,0"></path>
+      <circle cx="116" cy="50" r="3" fill="var(--ink-soft)" stroke="none"></circle>
+      <path d="M392,50 q12,-9 24,0 q-12,9 -24,0"></path>
+      <circle cx="404" cy="50" r="3" fill="var(--ink-soft)" stroke="none"></circle>
+    </g>
+    <line x1="260" y1="78" x2="260" y2="278" stroke="var(--line)" stroke-dasharray="4 6"></line>
+
+    <g transform="translate(36 86)">
+      <rect x="0" y="0" width="210" height="174" rx="10" fill="var(--accent)" fill-opacity="0.08" stroke="var(--line-strong)"></rect>
+      <text x="105" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" font-weight="700" fill="var(--accent-deep)">{copy.tycho}</text>
+      <text x="105" y="42" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">{copy.tychoSub}</text>
+      <path d="M18,130 Q105,82 192,130 L192,158 L18,158 Z" fill="var(--accent)" fill-opacity="0.16"></path>
+      <line x1="18" y1="130" x2="192" y2="130" stroke="var(--line-strong)" stroke-width="1.4"></line>
+      <circle cx="105" cy="92" r="19" fill="var(--brass)" fill-opacity="0.78"></circle>
+      <path d="M105,126 L105,62" stroke="var(--accent-deep)" stroke-width="3" fill="none" marker-end={`url(#${upMarkerId})`}></path>
+      <text x="105" y="153" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink)">{copy.tychoMotion}</text>
+    </g>
+
+    <g transform="translate(274 86)">
+      <rect x="0" y="0" width="210" height="174" rx="10" fill="var(--brass)" fill-opacity="0.08" stroke="var(--line-strong)"></rect>
+      <text x="105" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" font-weight="700" fill="var(--brass)">{copy.kepler}</text>
+      <text x="105" y="42" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">{copy.keplerSub}</text>
+      <circle cx="105" cy="78" r="19" fill="var(--brass)" fill-opacity="0.78"></circle>
+      <circle cx="105" cy="78" r="25" fill="none" stroke="var(--brass)" stroke-opacity="0.35" stroke-width="1.2" stroke-dasharray="3 5"></circle>
+      <path d="M20,101 Q105,72 190,101" stroke="var(--line-strong)" stroke-opacity="0.55" stroke-width="1.2" stroke-dasharray="5 5" fill="none"></path>
+      <path d="M20,126 Q105,96 190,126 L190,158 L20,158 Z" fill="var(--accent)" fill-opacity="0.16"></path>
+      <path d="M20,126 Q105,96 190,126" stroke="var(--line-strong)" stroke-width="1.4" fill="none"></path>
+      <path d="M48,98 L48,126" stroke="var(--brass)" stroke-width="3" fill="none" marker-end={`url(#${downMarkerId})`}></path>
+      <path d="M162,98 L162,126" stroke="var(--brass)" stroke-width="3" fill="none" marker-end={`url(#${downMarkerId})`}></path>
+      <text x="105" y="153" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink)">{copy.keplerMotion}</text>
+    </g>
+    <defs>
+      <marker id={upMarkerId} markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--accent-deep)"></path></marker>
+      <marker id={downMarkerId} markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--brass)"></path></marker>
+    </defs>
+  </svg>
+</div>

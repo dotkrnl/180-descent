@@ -29,6 +29,8 @@ import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
+import QuineWebFigure from "@app/components/lesson/figures/QuineWebFigure.astro";
+import TheoryLadenSunriseFigure from "@app/components/lesson/figures/TheoryLadenSunriseFigure.astro";
 
 <Lead drop="T">he main descent gave you the tour: Hume's hole, Popper's escape, Kuhn's mess, Lakatos's repair, and the replication crisis testing the whole quarrel under live fire. This appendix takes the same building and walks you into the basement — past the floorboards, to look at the foundations. And the discovery waiting down there, made over and over by very different people, is strangely consistent: **there are no foundations.** No theory-neutral observation to settle disputes. No non-circular justification for expecting tomorrow. No purely logical algorithm that stamps a claim "science." Just piles driven into a swamp, deep enough to hold for now.</Lead>
 
@@ -148,51 +150,7 @@ Popper's swamp suggested observation isn't bedrock. A philosopher-physicist name
 His thought experiment is unforgettable. Put Tycho Brahe, who believes the Earth stands still, and Johannes Kepler, who believes it spins, on a hill at dawn. The same photons strike the same retinas; a camera would record identical images. And yet — do they see the same thing? Tycho sees the *Sun moving up* from a fixed horizon. Kepler sees a *fixed Sun* revealed as the horizon rolls *down* away from it. The raw sensation may be shared, but the seeing — the meaningful, conceptual act of seeing-as — is structured by theory all the way down.
 
 <FigureBox>
-<svg viewBox="0 0 520 300" role="img" aria-label="The same dawn image reaches two observers, but Tycho interprets it as the Sun rising while Kepler interprets it as the Earth turning.">
-<rect x="1" y="1" width="518" height="298" rx="14" fill="color-mix(in srgb,var(--paper) 88%,var(--accent) 12%)" stroke="var(--line)"></rect>
-<text x="260" y="30" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="700" fill="var(--ink)">same light on the same eyes</text>
-<g fill="none" stroke="color-mix(in srgb,var(--brass) 75%,transparent)" stroke-width="2" stroke-linecap="round">
-<path d="M222,50 C190,58 154,58 116,50"></path>
-<path d="M298,50 C330,58 366,58 404,50"></path>
-</g>
-<circle cx="260" cy="52" r="15" fill="color-mix(in srgb,var(--brass) 82%,transparent)" stroke="color-mix(in srgb,var(--brass) 55%,var(--ink) 15%)" stroke-width="1.5"></circle>
-<g stroke="var(--ink-soft)" stroke-width="1.5" fill="none" stroke-linecap="round">
-<path d="M104,50 q12,-9 24,0 q-12,9 -24,0"></path>
-<circle cx="116" cy="50" r="3" fill="var(--ink-soft)" stroke="none"></circle>
-<path d="M392,50 q12,-9 24,0 q-12,9 -24,0"></path>
-<circle cx="404" cy="50" r="3" fill="var(--ink-soft)" stroke="none"></circle>
-</g>
-<line x1="260" y1="78" x2="260" y2="278" stroke="var(--line)" stroke-dasharray="4 6"></line>
-
-<g transform="translate(36 86)">
-<rect x="0" y="0" width="210" height="174" rx="10" fill="color-mix(in srgb,var(--accent) 8%,transparent)" stroke="var(--line-strong)"></rect>
-<text x="105" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" font-weight="700" fill="var(--accent-deep)">Tycho sees</text>
-<text x="105" y="42" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">a fixed Earth</text>
-<path d="M18,130 Q105,82 192,130 L192,158 L18,158 Z" fill="color-mix(in srgb,var(--accent) 16%,transparent)"></path>
-<line x1="18" y1="130" x2="192" y2="130" stroke="var(--line-strong)" stroke-width="1.4"></line>
-<circle cx="105" cy="92" r="19" fill="color-mix(in srgb,var(--brass) 78%,transparent)"></circle>
-<path d="M105,126 L105,62" stroke="var(--accent-deep)" stroke-width="3" fill="none" marker-end="url(#appendix-d002-hanson-up-en)"></path>
-<text x="105" y="153" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink)">Sun moves up</text>
-</g>
-
-<g transform="translate(274 86)">
-<rect x="0" y="0" width="210" height="174" rx="10" fill="color-mix(in srgb,var(--brass) 8%,transparent)" stroke="var(--line-strong)"></rect>
-<text x="105" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" font-weight="700" fill="var(--brass)">Kepler sees</text>
-<text x="105" y="42" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)">a turning Earth</text>
-<circle cx="105" cy="78" r="19" fill="color-mix(in srgb,var(--brass) 78%,transparent)"></circle>
-<circle cx="105" cy="78" r="25" fill="none" stroke="color-mix(in srgb,var(--brass) 35%,transparent)" stroke-width="1.2" stroke-dasharray="3 5"></circle>
-<path d="M20,101 Q105,72 190,101" stroke="color-mix(in srgb,var(--line-strong) 55%,transparent)" stroke-width="1.2" stroke-dasharray="5 5" fill="none"></path>
-<path d="M20,126 Q105,96 190,126 L190,158 L20,158 Z" fill="color-mix(in srgb,var(--accent) 16%,transparent)"></path>
-<path d="M20,126 Q105,96 190,126" stroke="var(--line-strong)" stroke-width="1.4" fill="none"></path>
-<path d="M48,98 L48,126" stroke="var(--brass)" stroke-width="3" fill="none" marker-end="url(#appendix-d002-hanson-down-en)"></path>
-<path d="M162,98 L162,126" stroke="var(--brass)" stroke-width="3" fill="none" marker-end="url(#appendix-d002-hanson-down-en)"></path>
-<text x="105" y="153" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink)">Horizon drops</text>
-</g>
-<defs>
-<marker id="appendix-d002-hanson-up-en" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--accent-deep)"></path></marker>
-<marker id="appendix-d002-hanson-down-en" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--brass)"></path></marker>
-</defs>
-</svg>
+<TheoryLadenSunriseFigure locale="en" />
 <FigureBoxCaption>Same photons, same retinas — two different sunrises. If observation is theory-laden, there is no neutral umpire to settle a clash of theories.</FigureBoxCaption>
 </FigureBox>
 
@@ -215,32 +173,7 @@ Any statement can be held true come what may, if we make drastic enough adjustme
 *No statement is immune* — not even logic or mathematics. (Quine noted that revising the law of the excluded middle had been floated to simplify quantum mechanics.) There is no privileged core of certainties; there's only a web held taut by experience at the rim and by our preference not to rip up more than we must. Which is the deepest version yet of "no bedrock": not even the laws of thought are nailed down.
 
 <FigureBox>
-<svg viewBox="0 0 320 260" role="img" aria-label="Quine's web of belief: experience strikes the outer edge; logic sits protected at the center.">
-<defs><radialGradient id="appendix-d002-foundations-without-bedrock-webg" cx="50%" cy="50%" r="50%">
-<stop offset="0%" stop-color="color-mix(in srgb,var(--accent) 22%,transparent)"></stop>
-<stop offset="100%" stop-color="transparent"></stop>
-</radialGradient></defs>
-<circle cx="160" cy="130" r="120" fill="url(#appendix-d002-foundations-without-bedrock-webg)" stroke="var(--line-strong)" stroke-width="1"></circle>
-<circle cx="160" cy="130" r="80" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></circle>
-<circle cx="160" cy="130" r="40" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"></circle>
-{/* spokes */}
-<g stroke="var(--line-strong)" stroke-width="0.8" opacity="0.6">
-<line x1="160" y1="10" x2="160" y2="250"></line><line x1="40" y1="130" x2="280" y2="130"></line>
-<line x1="75" y1="45" x2="245" y2="215"></line><line x1="245" y1="45" x2="75" y2="215"></line>
-</g>
-<circle cx="160" cy="130" r="34" fill="var(--raised)" stroke="var(--accent)" stroke-width="1.5"></circle>
-<text x="160" y="128" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">logic,</text>
-<text x="160" y="138" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink)">math</text>
-<rect x="62" y="157" width="196" height="22" rx="7" fill="color-mix(in srgb,var(--paper) 92%,transparent)" stroke="var(--line)" stroke-width=".8"></rect>
-<text x="160" y="170" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">↑ deep, well-protected</text>
-{/* experience strikes */}
-<g stroke="var(--contested)" stroke-width="2">
-<line x1="300" y1="60" x2="270" y2="85" marker-end="url(#appendix-d002-foundations-without-bedrock-strike)"></line>
-</g>
-<text x="250" y="46" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--contested)">experience</text>
-<text x="250" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">edge: observation reports</text>
-<defs><marker id="appendix-d002-foundations-without-bedrock-strike" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--contested)"></path></marker></defs>
-</svg>
+<QuineWebFigure locale="en" />
 <FigureBoxCaption>Quine's web: shocks land at the rim and ripple in, but you decide what gives. The center can always be saved — at a price paid elsewhere.</FigureBoxCaption>
 </FigureBox>
 
