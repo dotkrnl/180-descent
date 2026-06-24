@@ -11,15 +11,19 @@ export async function createEmptyContentRoot(prefix: string): Promise<string> {
 interface PublishedDayOptions {
   enTitle?: string;
   enSummary?: string;
+  enBody?: string;
   zhTitle?: string;
   zhSummary?: string;
+  zhBody?: string;
 }
 
 export async function writePublishedDay(root: string, options: PublishedDayOptions = {}): Promise<void> {
   const enTitle = options.enTitle ?? "Fixture";
   const enSummary = options.enSummary ?? "English summary.";
+  const enBody = options.enBody ?? "";
   const zhTitle = options.zhTitle ?? "夹具";
   const zhSummary = options.zhSummary ?? "中文简介。";
+  const zhBody = options.zhBody ?? "";
   const dayDir = path.join(root, "src/content/days/001-fixture");
   await mkdir(dayDir, { recursive: true });
   await writeFile(path.join(dayDir, "day.yaml"), [
@@ -40,6 +44,6 @@ export async function writePublishedDay(root: string, options: PublishedDayOptio
     "    body: zh.mdx",
     "    status: reviewed"
   ].join("\n"));
-  await writeFile(path.join(dayDir, "en.mdx"), "");
-  await writeFile(path.join(dayDir, "zh.mdx"), "");
+  await writeFile(path.join(dayDir, "en.mdx"), enBody);
+  await writeFile(path.join(dayDir, "zh.mdx"), zhBody);
 }

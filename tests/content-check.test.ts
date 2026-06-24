@@ -1,8 +1,8 @@
-import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
-import os from "node:os";
+import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkContent } from "@lib/checks/content";
+import { createEmptyContentRoot, writePublishedDay } from "./helpers/content-root";
 
 describe("content check", () => {
   it("accepts minimal paired registry content", async () => {
@@ -58,8 +58,7 @@ describe("content check", () => {
 });
 
 async function createFixtureRoot(): Promise<string> {
-  const root = await mkdtemp(path.join(os.tmpdir(), "180-content-check-"));
-  await mkdir(path.join(root, "src/content/days/001-fixture"), { recursive: true });
+  const root = await createEmptyContentRoot("180-content-check-");
   await mkdir(path.join(root, "src/assets/scss"), { recursive: true });
   await writeFile(path.join(root, "src/assets/scss/book.scss"), "@font-face { font-family: Fixture; }\n");
   return root;
@@ -72,27 +71,14 @@ async function writeRegistryDay(
     zh: string;
   }
 ): Promise<void> {
-  const dayDir = path.join(root, "src/content/days/001-fixture");
-  await writeFile(path.join(dayDir, "day.yaml"), [
-    "day: 1",
-    "slug: fixture",
-    "path: 001-fixture",
-    "block: Fixture Block",
-    "published: true",
-    "locales:",
-    "  en:",
-    "    title: Fixture Day",
-    "    summary: Fixture summary.",
-    "    body: en.mdx",
-    "    status: reviewed",
-    "  zh:",
-    "    title: 夹具日",
-    "    summary: 中文夹具摘要。",
-    "    body: zh.mdx",
-    "    status: reviewed"
-  ].join("\n"));
-  await writeFile(path.join(dayDir, "en.mdx"), options.en);
-  await writeFile(path.join(dayDir, "zh.mdx"), options.zh);
+  await writePublishedDay(root, {
+    enTitle: "Fixture Day",
+    enSummary: "Fixture summary.",
+    enBody: options.en,
+    zhTitle: "夹具日",
+    zhSummary: "中文夹具摘要。",
+    zhBody: options.zh
+  });
 }
 
 function body(title: string, locale: "en" | "zh" = "en"): string {

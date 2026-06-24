@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkLinks } from "@lib/checks/links";
+import { writePublishedDay } from "./helpers/content-root";
 
 describe("link checks", () => {
   it("reports broken internal links and missing anchors", async () => {
@@ -44,22 +45,8 @@ describe("link checks", () => {
 async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-check-links-"));
   await mkdir(path.join(root, "_site"), { recursive: true });
-  await mkdir(path.join(root, "src/content/days/001-fixture"), { recursive: true });
   await mkdir(path.join(root, "src/_data"), { recursive: true });
-  await writeFile(path.join(root, "src/content/days/001-fixture/day.yaml"), [
-    "day: 1",
-    "slug: fixture",
-    "path: 001-fixture",
-    "block: Fixture",
-    "published: true",
-    "locales:",
-    "  en:",
-    "    title: Fixture",
-    "    summary: Fixture summary.",
-    "    body: en.mdx",
-    "    status: reviewed"
-  ].join("\n"));
-  await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), "");
+  await writePublishedDay(root);
   await writeFile(path.join(root, "src/_data/future-links.yaml"), "[]\n");
   return root;
 }
