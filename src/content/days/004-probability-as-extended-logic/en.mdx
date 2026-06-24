@@ -15,6 +15,12 @@ import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
@@ -338,15 +344,17 @@ For a century, the frequentist p-value has been science's gatekeeper: get below 
 
 <PanelNote>An e-value is a nonnegative payoff whose expectation under the null is at most 1.</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>Quantity</th><th>Meaning</th><th>Use</th></tr></thead>
-<tbody>
-<tr><td><MathInline latex={String.raw`E = 1`} /></td><td>No net betting gain against the null</td><td>Starting point</td></tr>
-<tr><td>Coin-demo ticket</td><td>A likelihood-ratio payoff: <MathInline latex={String.raw`1.2`} /> for the favored outcome, <MathInline latex={String.raw`0.8`} /> for the other</td><td>Fair in expectation if the coin is truly <MathInline latex={String.raw`\mathrm{P}(\text{heads}) = 0.5`} /></td></tr>
-<tr><td><MathInline latex={String.raw`E = 20`} /></td><td>A twentyfold payoff from a bet fair under the null</td><td>Level-<MathInline latex={String.raw`0.05`} /> rejection threshold because <MathInline latex={String.raw`1/20 = 0.05`} /></td></tr>
-<tr><td>Running wealth</td><td>A test martingale or e-process</td><td>Can be monitored continuously while preserving Type I error control</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>Quantity</DataTableHeader><DataTableHeader>Meaning</DataTableHeader><DataTableHeader>Use</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell><MathInline latex={String.raw`E = 1`} /></DataTableCell><DataTableCell>No net betting gain against the null</DataTableCell><DataTableCell>Starting point</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>Coin-demo ticket</DataTableCell><DataTableCell>A likelihood-ratio payoff: <MathInline latex={String.raw`1.2`} /> for the favored outcome, <MathInline latex={String.raw`0.8`} /> for the other</DataTableCell><DataTableCell>Fair in expectation if the coin is truly <MathInline latex={String.raw`\mathrm{P}(\text{heads}) = 0.5`} /></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell><MathInline latex={String.raw`E = 20`} /></DataTableCell><DataTableCell>A twentyfold payoff from a bet fair under the null</DataTableCell><DataTableCell>Level-<MathInline latex={String.raw`0.05`} /> rejection threshold because <MathInline latex={String.raw`1/20 = 0.05`} /></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>Running wealth</DataTableCell><DataTableCell>A test martingale or e-process</DataTableCell><DataTableCell>Can be monitored continuously while preserving Type I error control</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 The tradeoff is conservatism: an anytime-valid ledger can need stronger or more sustained evidence than a <Term as="em">fixed-horizon</Term><TipNote text={"A fixed-horizon test fixes the sample size in advance and analyzes once at the planned endpoint."} /> test when all modeling assumptions are exactly right.
 
 </FormatAlt>

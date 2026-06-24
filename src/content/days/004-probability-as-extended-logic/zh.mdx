@@ -15,6 +15,12 @@ import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
@@ -338,15 +344,17 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 <PanelNote>e 值是非负回报，其在原假设下的期望值至多为 1。</PanelNote>
 
-<table class="alt-table">
-<thead><tr><th>量</th><th>含义</th><th>用途</th></tr></thead>
-<tbody>
-<tr><td><MathInline latex={String.raw`E = 1`} /></td><td>对原假设没有净赢面</td><td>起点</td></tr>
-<tr><td>硬币演示赌票</td><td>似然比回报：押中的一面出现时乘以 <MathInline latex={String.raw`1.2`} />，另一面出现时乘以 <MathInline latex={String.raw`0.8`} /></td><td>若硬币的真实 <MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.5`} />，则期望上公平</td></tr>
-<tr><td><MathInline latex={String.raw`E = 20`} /></td><td>原假设下公平赌约的二十倍回报</td><td><MathInline latex={String.raw`0.05`} /> 水平的拒绝阈值，因为 <MathInline latex={String.raw`1/20 = 0.05`} /></td></tr>
-<tr><td>滚动财富</td><td>检验鞅或 e 过程</td><td>可持续监控，同时控制第一类错误</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>量</DataTableHeader><DataTableHeader>含义</DataTableHeader><DataTableHeader>用途</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell><MathInline latex={String.raw`E = 1`} /></DataTableCell><DataTableCell>对原假设没有净赢面</DataTableCell><DataTableCell>起点</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>硬币演示赌票</DataTableCell><DataTableCell>似然比回报：押中的一面出现时乘以 <MathInline latex={String.raw`1.2`} />，另一面出现时乘以 <MathInline latex={String.raw`0.8`} /></DataTableCell><DataTableCell>若硬币的真实 <MathInline latex={String.raw`\mathrm{P}(\text{正面}) = 0.5`} />，则期望上公平</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell><MathInline latex={String.raw`E = 20`} /></DataTableCell><DataTableCell>原假设下公平赌约的二十倍回报</DataTableCell><DataTableCell><MathInline latex={String.raw`0.05`} /> 水平的拒绝阈值，因为 <MathInline latex={String.raw`1/20 = 0.05`} /></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>滚动财富</DataTableCell><DataTableCell>检验鞅或 e 过程</DataTableCell><DataTableCell>可持续监控，同时控制第一类错误</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 代价是偏保守：当所有建模假设完全正确时，任意时刻有效的账本可能需要比<Term>固定样本量</Term><TipNote text={"固定样本量检验会预先决定样本数，并只在计划好的终点分析一次。"} />检验更强或更持久的证据。
 
 </FormatAlt>
