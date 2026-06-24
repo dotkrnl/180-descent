@@ -19,7 +19,7 @@ export function renderStatusChip(options: StatusChipOptions): string {
 }
 
 export function renderTipNote(options: TipNoteOptions): string {
-  const label = options.locale === "zh" ? "?, 显示说明" : "?, Show note";
+  const label = options.locale === "zh" ? "显示说明" : "Show note";
   const note = escapeHtml(options.text);
   return `<span class="tip-note" data-tip-text="${note}"><button class="tip-note-mark" type="button" aria-expanded="false" aria-label="${escapeHtml(label)}"></button><span class="tip-note-box" data-tip="${note}" aria-hidden="true"></span></span>`;
 }

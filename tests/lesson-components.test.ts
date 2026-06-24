@@ -10,16 +10,16 @@ describe("lesson MDX components", () => {
     })).toBe('<span class="chip hint" data-print="promising"><i></i>Predictive coding · promising</span>');
   });
 
-  it("renders localized tip notes with the existing DOM contract", () => {
+  it("renders localized tip notes with accessible labels", () => {
     expect(renderTipNote({
       text: "Epistemic means evidence-facing.",
       locale: "en"
-    })).toBe('<span class="tip-note" data-tip-text="Epistemic means evidence-facing."><button class="tip-note-mark" type="button" aria-expanded="false" aria-label="?, Show note"></button><span class="tip-note-box" data-tip="Epistemic means evidence-facing." aria-hidden="true"></span></span>');
+    })).toBe('<span class="tip-note" data-tip-text="Epistemic means evidence-facing."><button class="tip-note-mark" type="button" aria-expanded="false" aria-label="Show note"></button><span class="tip-note-box" data-tip="Epistemic means evidence-facing." aria-hidden="true"></span></span>');
 
     expect(renderTipNote({
       text: "证据相关。",
       locale: "zh"
-    })).toContain('aria-label="?, 显示说明"');
+    })).toContain('aria-label="显示说明"');
   });
 
   it("renders KaTeX without throwing on invalid author input", () => {
