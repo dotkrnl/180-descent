@@ -1,4 +1,5 @@
 import path from "node:path";
+import { toPosixRelative } from "@lib/fs/path";
 
 const MIME_TYPES = new Map([
   [".css", "text/css; charset=utf-8"],
@@ -23,7 +24,7 @@ export function contentType(filePath: string): string {
 }
 
 export function urlForHtml(siteDir: string, filePath: string): string {
-  const rel = path.relative(siteDir, filePath).split(path.sep).join("/");
+  const rel = toPosixRelative(siteDir, filePath);
   if (rel === "index.html") return "/";
   if (rel.endsWith("/index.html")) return `/${rel.slice(0, -"index.html".length)}`;
   return `/${rel}`;
