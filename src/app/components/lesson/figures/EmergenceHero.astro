@@ -1,0 +1,114 @@
+---
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      title: "复杂性与涌现主题图",
+      desc: "图中下方三条局部规则：分离、对齐、凝聚，分别影响许多个体。个体只看附近邻居，但这些局部连接共同形成上方的整体鸟群波形。",
+      local: "局部规则",
+      global: "整体模式",
+      separation: "分离",
+      alignment: "对齐",
+      cohesion: "凝聚",
+      neighbor: "只看邻居",
+      flock: "没有指挥者的鸟群",
+      note: "简单零件 -> 全局秩序"
+    }
+  : {
+      title: "Complexity and emergence hero figure",
+      desc: "The diagram shows three local rules, separation, alignment, and cohesion, feeding many individual agents. Each agent sees only nearby neighbors, but their local connections form the global flock wave above.",
+      local: "local rules",
+      global: "global pattern",
+      separation: "separation",
+      alignment: "alignment",
+      cohesion: "cohesion",
+      neighbor: "neighbors only",
+      flock: "flock without a conductor",
+      note: "simple parts -> global order"
+    };
+---
+<figure class="hero-art emergence-hero">
+  <svg viewBox="0 0 720 360" role="img" aria-labelledby={zh ? "emergence-hero-title-zh emergence-hero-desc-zh" : "emergence-hero-title-en emergence-hero-desc-en"}>
+    <title id={zh ? "emergence-hero-title-zh" : "emergence-hero-title-en"}>{copy.title}</title>
+    <desc id={zh ? "emergence-hero-desc-zh" : "emergence-hero-desc-en"}>{copy.desc}</desc>
+    <defs>
+      <marker id="emergence-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+        <path d="M0 0L10 5L0 10Z" class="emergence-arrow-head"></path>
+      </marker>
+      <linearGradient id="emergence-wave" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" stop-color="var(--accent)" stop-opacity=".22"></stop>
+        <stop offset=".48" stop-color="var(--accent)" stop-opacity=".88"></stop>
+        <stop offset="1" stop-color="var(--brass)" stop-opacity=".72"></stop>
+      </linearGradient>
+    </defs>
+
+    <rect x="18" y="18" width="684" height="324" rx="18" class="emergence-hero-bg"></rect>
+
+    <text x="64" y="62" class="emergence-label">{copy.local}</text>
+    <text x="540" y="62" class="emergence-label end">{copy.global}</text>
+
+    <g class="rule-card" transform="translate(54 245)">
+      <rect width="154" height="58" rx="10"></rect>
+      <path d="M34 30L58 18M34 30L58 42" class="rule-icon"></path>
+      <text x="78" y="36">{copy.separation}</text>
+    </g>
+    <g class="rule-card" transform="translate(283 245)">
+      <rect width="154" height="58" rx="10"></rect>
+      <path d="M35 23H72M35 35H72M35 47H72" class="rule-icon"></path>
+      <text x="92" y="36">{copy.alignment}</text>
+    </g>
+    <g class="rule-card" transform="translate(512 245)">
+      <rect width="154" height="58" rx="10"></rect>
+      <path d="M34 20L62 34L34 48M72 20L44 34L72 48" class="rule-icon"></path>
+      <text x="92" y="36">{copy.cohesion}</text>
+    </g>
+
+    <path class="rule-arrow" d="M132 244C154 213 170 192 197 172" marker-end="url(#emergence-arrow)"></path>
+    <path class="rule-arrow" d="M360 244C359 213 358 190 357 164" marker-end="url(#emergence-arrow)"></path>
+    <path class="rule-arrow" d="M588 244C556 210 530 186 497 164" marker-end="url(#emergence-arrow)"></path>
+
+    <g class="neighbor-net">
+      <path d="M154 161L190 133L229 159L268 126L311 151L357 128L403 151L448 125L492 154L535 134L574 164"></path>
+      <path d="M190 133L268 126M229 159L311 151M357 128L448 125M403 151L492 154M492 154L574 164"></path>
+      <circle cx="154" cy="161" r="5"></circle>
+      <circle cx="190" cy="133" r="5"></circle>
+      <circle cx="229" cy="159" r="5"></circle>
+      <circle cx="268" cy="126" r="5"></circle>
+      <circle cx="311" cy="151" r="5"></circle>
+      <circle cx="357" cy="128" r="5"></circle>
+      <circle cx="403" cy="151" r="5"></circle>
+      <circle cx="448" cy="125" r="5"></circle>
+      <circle cx="492" cy="154" r="5"></circle>
+      <circle cx="535" cy="134" r="5"></circle>
+      <circle cx="574" cy="164" r="5"></circle>
+    </g>
+
+    <g class="boid-field">
+      <path d="M158 108l17 7l-16 8z"></path>
+      <path d="M194 91l17 7l-16 8z"></path>
+      <path d="M235 112l18 7l-17 8z"></path>
+      <path d="M274 88l17 7l-16 8z"></path>
+      <path d="M314 108l17 7l-16 8z"></path>
+      <path d="M356 89l18 7l-17 8z"></path>
+      <path d="M399 111l17 7l-16 8z"></path>
+      <path d="M442 88l17 7l-16 8z"></path>
+      <path d="M486 113l18 7l-17 8z"></path>
+      <path d="M531 96l17 7l-16 8z"></path>
+      <path d="M572 122l17 7l-16 8z"></path>
+    </g>
+
+    <path class="flock-wave" d="M112 113C178 55 238 67 304 102C371 138 425 140 498 92C561 50 619 65 654 111"></path>
+    <path class="flock-wave lower" d="M112 187C178 145 241 151 305 177C374 205 435 207 503 166C563 130 617 137 654 176"></path>
+    <path class="flock-band" d="M112 113C178 55 238 67 304 102C371 138 425 140 498 92C561 50 619 65 654 111L654 176C617 137 563 130 503 166C435 207 374 205 305 177C241 151 178 145 112 187Z"></path>
+
+    <g class="emergence-title-plate">
+      <rect x="236" y="76" width="248" height="28" rx="14"></rect>
+      <text x="360" y="95" text-anchor="middle" class="emergence-annotation">{copy.flock}</text>
+    </g>
+    <text x="360" y="205" text-anchor="middle" class="emergence-annotation small">{copy.neighbor}</text>
+    <text x="360" y="328" text-anchor="middle" class="emergence-caption">{copy.note}</text>
+  </svg>
+</figure>

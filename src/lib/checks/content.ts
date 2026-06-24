@@ -151,6 +151,7 @@ const ARTIFACT_COMPONENTS = new Set([
   "Divider",
   "Emoji",
   "Emphasis",
+  "EmergenceHero",
   "EpistemicBackstopFigure",
   "EscapeCard",
   "EscapeGrid",
