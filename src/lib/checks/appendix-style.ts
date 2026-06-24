@@ -3,7 +3,7 @@ import path from "node:path";
 import { compileCss } from "@lib/assets/css";
 import { loadContentRegistry } from "@lib/content/registry";
 import { toPosixRelative } from "@lib/fs/path";
-import { pathExists, walkFiles } from "@lib/fs/walk";
+import { walkFiles } from "@lib/fs/walk";
 
 interface AppendixStyleCheckOptions {
   root: string;
@@ -84,8 +84,6 @@ async function collectCssClasses(options: AppendixStyleCheckOptions, errors: str
 
   for (const relativeFile of options.cssFiles) {
     const file = path.join(options.root, relativeFile);
-    if (!await pathExists(file)) continue;
-
     const css = await readFile(file, "utf8");
     checkCssForDayScopedSelectors(options.root, file, css, errors);
     collectClassesFromCss(css, out);
@@ -102,7 +100,6 @@ function collectClassesFromCss(css: string, out: Set<string>): void {
 async function collectJsClasses(options: AppendixStyleCheckOptions): Promise<Set<string>> {
   const out = new Set<string>();
   const jsRoot = path.join(options.root, options.jsRoot ?? "src/assets/js/interactions");
-  if (!await pathExists(jsRoot)) return out;
 
   for (const file of await walkFiles(jsRoot, { exts: ".js", ignored: [] })) {
     const js = await readFile(file, "utf8");
@@ -122,8 +119,6 @@ async function collectJsClasses(options: AppendixStyleCheckOptions): Promise<Set
 
 async function collectAppendixFiles(options: AppendixStyleCheckOptions): Promise<string[]> {
   const daysDir = path.join(options.root, options.daysDir ?? "src/content/days");
-  if (!await pathExists(daysDir)) return [];
-
   const registry = await loadContentRegistry({ daysDir });
   return registry.days
     .flatMap((day) => day.appendixBodies.map((body) => path.join(day.directory, body.path)))
