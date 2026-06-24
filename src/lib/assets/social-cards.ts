@@ -103,10 +103,9 @@ async function loadSocialCards(options: {
   book: BookData;
   outDir: string;
 }): Promise<SocialCard[]> {
-  const [enDays, zhDays] = await Promise.all([
-    readRegistryDays(options.root, "en"),
-    readRegistryDays(options.root, "zh")
-  ]);
+  const registry = await loadContentRegistry({ daysDir: contentDaysDir(options.root) });
+  const enDays = registryDays(registry, "en");
+  const zhDays = registryDays(registry, "zh");
 
   return [
     {
@@ -171,8 +170,7 @@ function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string 
 </svg>`;
 }
 
-async function readRegistryDays(root: string, locale: "en" | "zh"): Promise<DayData[]> {
-  const registry = await loadContentRegistry({ daysDir: contentDaysDir(root) });
+function registryDays(registry: Awaited<ReturnType<typeof loadContentRegistry>>, locale: "en" | "zh"): DayData[] {
   return registry.days
     .map((day) => {
       const localeEntry = day.manifest.locales[locale];
