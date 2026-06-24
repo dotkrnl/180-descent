@@ -676,6 +676,12 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "MaturityTimelineItem") {
     return renderChildren(node.children ?? [], state, { block: true });
   }
+  if (name === "TrilemmaKey") {
+    return renderComponentItemize(node, state, "TrilemmaKeyItem");
+  }
+  if (name === "TrilemmaKeyItem") {
+    return renderChildren(node.children ?? [], state, { block: true });
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
