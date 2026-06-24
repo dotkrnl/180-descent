@@ -40,10 +40,7 @@ async function loadArtifactBook(
   const days = registry.days
     .map((day): ArtifactBookDay => {
       const localeEntry = day.manifest.locales[locale];
-      const body = day.bodies.find((candidate) => candidate.locale === locale);
-      if (!body) {
-        throw new Error(`Registry ${day.manifest.path} missing ${locale} body`);
-      }
+      const body = day.bodies[locale];
 
       return {
         day: day.manifest.day,

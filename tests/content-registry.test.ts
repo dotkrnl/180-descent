@@ -54,7 +54,7 @@ describe("target content registry", () => {
 
     expect(registry.days).toHaveLength(1);
     expect(day.manifest.path).toBe("001-fixture");
-    expect(day.bodies.map((body) => body.locale).sort()).toEqual(["en", "zh"]);
+    expect(Object.values(day.bodies).map((body) => body.locale).sort()).toEqual(["en", "zh"]);
     expect(day.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
       "appendix-a:en",
       "appendix-a:zh"
@@ -122,8 +122,8 @@ describe("target content registry", () => {
     ]);
 
     for (const day of registry.days) {
-      expect(day.bodies.map((body) => body.locale).sort()).toEqual(["en", "zh"]);
-      for (const body of [...day.bodies, ...day.appendixBodies]) {
+      expect(Object.values(day.bodies).map((body) => body.locale).sort()).toEqual(["en", "zh"]);
+      for (const body of [...Object.values(day.bodies), ...day.appendixBodies]) {
         expect(body.source).not.toContain("{%");
         expect(body.source).not.toContain("{{");
         expect(body.source).not.toContain("<!-- deep-dive");
@@ -146,7 +146,7 @@ describe("target content registry", () => {
       "echo-chamber",
       "accuracy-domination"
     ]);
-    expect(day001?.bodies[0].source).toContain("<StatusChip");
+    expect(day001?.bodies.en.source).toContain("<StatusChip");
 
     expect(day002?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
       "foundations-without-bedrock:en",
@@ -157,7 +157,7 @@ describe("target content registry", () => {
       "grue-machine",
       "base-rate-engine"
     ]);
-    expect(day002?.bodies[0].source).toContain("blackSwan.src");
+    expect(day002?.bodies.en.source).toContain("blackSwan.src");
 
     expect(day003?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
       "the-deeper-machinery-of-logic:en",
@@ -170,20 +170,20 @@ describe("target content registry", () => {
       "fallacy-spotter",
       "hype-filter-trainer"
     ]);
-    expect(day003?.bodies[0].source).toContain("sherlockHolmes.src");
+    expect(day003?.bodies.en.source).toContain("sherlockHolmes.src");
 
     expect(day004?.appendixBodies).toEqual([]);
     expect(day004?.manifest.interactionScripts).toEqual([
       "probability-machines"
     ]);
-    expect(day004?.bodies[0].source).toContain("montyHall.src");
+    expect(day004?.bodies.en.source).toContain("montyHall.src");
 
     expect(day005?.appendixBodies).toEqual([]);
     expect(day005?.manifest.interactionScripts).toEqual([
       "causation-lab"
     ]);
-    expect(day005?.bodies[0].source).toContain("<DoSeeCalculator");
-    expect(day005?.bodies[0].source).toContain("<MathBlock");
+    expect(day005?.bodies.en.source).toContain("<DoSeeCalculator");
+    expect(day005?.bodies.en.source).toContain("<MathBlock");
 
     expect(day006?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
       "the-deeper-machinery:en",
@@ -196,8 +196,8 @@ describe("target content registry", () => {
       "statistics-lab",
       "statistics-appendices"
     ]);
-    expect(day006?.bodies[0].source).toContain("feynman1959.src");
-    expect(day006?.bodies[0].source).toContain("pValueTailArea.src");
+    expect(day006?.bodies.en.source).toContain("feynman1959.src");
+    expect(day006?.bodies.en.source).toContain("pValueTailArea.src");
     expect(day006?.appendixBodies[0].source).toContain("PValueShapeSimulator");
 
     expect(day007?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
@@ -209,9 +209,9 @@ describe("target content registry", () => {
     expect(day007?.manifest.interactionScripts).toEqual([
       "information-theory"
     ]);
-    expect(day007?.bodies[0].source).toContain("maxwellsDemon.src");
-    expect(day007?.bodies[0].source).toContain("EntropyDial");
-    expect(day007?.bodies[0].source).toContain("<MathBlock");
+    expect(day007?.bodies.en.source).toContain("maxwellsDemon.src");
+    expect(day007?.bodies.en.source).toContain("EntropyDial");
+    expect(day007?.bodies.en.source).toContain("<MathBlock");
     expect(day007?.appendixBodies[0].source).toContain("MutualInformationOverlap");
     expect(day007?.appendixBodies[0].source).toContain("HammingCube");
   });

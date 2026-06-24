@@ -3,6 +3,8 @@ import path from "node:path";
 import { parse as parseYaml } from "yaml";
 import { dayManifestSchema, type DayManifest, type Locale } from "@lib/schemas/day";
 
+const LOCALES: readonly Locale[] = ["en", "zh"];
+
 interface ContentRegistryOptions {
   daysDir: string;
 }
@@ -21,7 +23,7 @@ interface RegistryDay {
   directory: string;
   manifestPath: string;
   manifest: DayManifest;
-  bodies: RegistryBody[];
+  bodies: Record<Locale, RegistryBody>;
   appendixBodies: RegistryAppendixBody[];
 }
 
@@ -61,21 +63,18 @@ async function loadRegistryDay(directory: string): Promise<RegistryDay> {
     path: path.basename(directory)
   };
 
-  const bodies = [];
-  for (const [locale, entry] of Object.entries(manifest.locales)) {
-    bodies.push({
-      locale: locale as Locale,
-      path: entry.body,
-      source: await readReferencedFile(directory, entry.body)
-    });
-  }
+  const bodies: Record<Locale, RegistryBody> = {
+    en: await loadRegistryBody(directory, "en", manifest.locales.en.body),
+    zh: await loadRegistryBody(directory, "zh", manifest.locales.zh.body)
+  };
 
   const appendixBodies = [];
   for (const appendix of manifest.appendices) {
-    for (const [locale, entry] of Object.entries(appendix.locales)) {
+    for (const locale of LOCALES) {
+      const entry = appendix.locales[locale];
       appendixBodies.push({
         appendixId: appendix.id,
-        locale: locale as Locale,
+        locale,
         path: entry.body,
         source: await readReferencedFile(directory, entry.body)
       });
@@ -88,6 +87,14 @@ async function loadRegistryDay(directory: string): Promise<RegistryDay> {
     manifest,
     bodies,
     appendixBodies
+  };
+}
+
+async function loadRegistryBody(root: string, locale: Locale, relativePath: string): Promise<RegistryBody> {
+  return {
+    locale,
+    path: relativePath,
+    source: await readReferencedFile(root, relativePath)
   };
 }
 
@@ -107,13 +114,14 @@ function referencedFilePath(root: string, relativePath: string): string {
 
 export function listRegistryDayLocaleEntries(registry: ContentRegistry): RegistryDayLocaleEntry[] {
   return registry.days.flatMap((day) => {
-    return day.bodies.map((body) => {
-      const localeEntry = day.manifest.locales[body.locale];
+    return LOCALES.map((locale) => {
+      const body = day.bodies[locale];
+      const localeEntry = day.manifest.locales[locale];
 
       return {
         day,
         body,
-        locale: body.locale,
+        locale,
         title: localeEntry.title,
         summary: localeEntry.summary
       };

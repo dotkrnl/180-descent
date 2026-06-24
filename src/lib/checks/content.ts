@@ -85,7 +85,7 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
   }
 
   for (const day of registry.days) {
-    for (const body of day.bodies) {
+    for (const body of Object.values(day.bodies)) {
       const localeData = day.manifest.locales[body.locale];
       checkContentFile({
         label: `${body.locale.toUpperCase()} ${day.manifest.path}`,
