@@ -14,6 +14,7 @@ import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book"
 import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/downloads";
 import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 import { readBookData, type BookData } from "@lib/data/book";
+import { syllabusDataFile } from "@lib/data/paths";
 import type { Locale } from "@lib/schemas/day";
 import { siteDayDir } from "@lib/static-site/routes";
 
@@ -326,7 +327,7 @@ function blockDividerLatex(title: string, blockNumber: number, locale: Locale): 
 }
 
 async function localizedBlockTitles(root: string, locale: Locale): Promise<Map<string, string>> {
-  const syllabus = YAML.parse(await readFile(path.join(root, "src/_data/syllabus-data.yaml"), "utf8")) as SyllabusData;
+  const syllabus = YAML.parse(await readFile(syllabusDataFile(root), "utf8")) as SyllabusData;
   const titles = new Map<string, string>();
   for (const block of syllabus.blocks ?? []) {
     const title = block.title;

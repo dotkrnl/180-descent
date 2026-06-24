@@ -1,9 +1,9 @@
 import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { parse as parseYaml } from "yaml";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
+import { creditsDataFile, syllabusDataFile } from "@lib/data/paths";
 import type { Locale } from "@lib/schemas/day";
 import { dayUrl } from "@lib/static-site/routes";
 
@@ -85,11 +85,11 @@ export async function getBookData(): Promise<BookData> {
 }
 
 export async function getCreditsData(): Promise<CreditsData> {
-  return readYaml<CreditsData>("src/_data/credits.yaml");
+  return readYaml<CreditsData>(creditsDataFile(process.cwd()));
 }
 
 export async function getSyllabus(locale: Locale): Promise<Syllabus> {
-  const raw = await readYaml<unknown>("src/_data/syllabus-data.yaml");
+  const raw = await readYaml<unknown>(syllabusDataFile(process.cwd()));
   return normalizeSyllabus(projectLocale(raw, locale) as RawSyllabus);
 }
 
@@ -152,8 +152,8 @@ export function upcomingSyllabusDays(syllabus: Syllabus, days: ContentDay[], cou
   return upcoming;
 }
 
-async function readYaml<T>(relativePath: string): Promise<T> {
-  return parseYaml(await readFile(path.join(process.cwd(), relativePath), "utf8")) as T;
+async function readYaml<T>(filePath: string): Promise<T> {
+  return parseYaml(await readFile(filePath, "utf8")) as T;
 }
 
 function projectLocale(value: unknown, locale: Locale): unknown {

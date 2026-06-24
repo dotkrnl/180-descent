@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkLinks } from "@lib/checks/links";
+import { futureLinksDataFile } from "@lib/data/paths";
 import { writeContentDay } from "./helpers/content-root";
 
 describe("link checks", () => {
@@ -45,7 +46,7 @@ describe("link checks", () => {
   it("reports future links that still target published days", async () => {
     const root = await createFixtureRoot();
     await writeFile(path.join(root, "_site/index.html"), "");
-    await writeFile(path.join(root, "src/_data/future-links.yaml"), [
+    await writeFile(futureLinksDataFile(root), [
       "- id: day-1-callback",
       "  target_day: 1",
       "  status: pending"
@@ -66,6 +67,6 @@ async function createFixtureRoot(): Promise<string> {
   await mkdir(path.join(root, "_site"), { recursive: true });
   await mkdir(path.join(root, "src/_data"), { recursive: true });
   await writeContentDay(root);
-  await writeFile(path.join(root, "src/_data/future-links.yaml"), "[]\n");
+  await writeFile(futureLinksDataFile(root), "[]\n");
   return root;
 }

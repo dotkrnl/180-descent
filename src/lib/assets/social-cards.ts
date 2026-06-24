@@ -5,6 +5,7 @@ import sharp from "sharp";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
+import { bookDataFile } from "@lib/data/paths";
 import { toPosixRelative } from "@lib/fs/path";
 import { escapeXml } from "@lib/text/escape";
 
@@ -48,7 +49,7 @@ function clampSocialText(value = "", max = 160): string {
 export async function generateSocialCards(options: GenerateSocialCardsOptions): Promise<GenerateSocialCardsResult> {
   const root = options.root;
   const outDir = path.join(root, "src/assets/images/social");
-  const bookPath = path.join(root, "src/_data/book.yaml");
+  const bookPath = bookDataFile(root);
   const brandMarkPath = path.join(root, "src/assets/images/brand/180-descent-icon.png");
   await mkdir(outDir, { recursive: true });
 
@@ -112,7 +113,7 @@ async function loadSocialCards(options: {
       summary: options.book.description,
       kicker: options.book.title,
       day: null,
-      sourcePath: path.join(options.root, "src/_data/book.yaml"),
+      sourcePath: bookDataFile(options.root),
       outPath: path.join(options.outDir, "180-descent.png")
     },
     {
@@ -121,7 +122,7 @@ async function loadSocialCards(options: {
       summary: options.book.zh.description,
       kicker: options.book.zh.title,
       day: null,
-      sourcePath: path.join(options.root, "src/_data/book.yaml"),
+      sourcePath: bookDataFile(options.root),
       outPath: path.join(options.outDir, "180-descent-zh.png")
     },
     ...enDays.map((day) => ({

@@ -4,6 +4,7 @@ import * as cheerio from "cheerio";
 import YAML from "yaml";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
+import { futureLinksDataFile } from "@lib/data/paths";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
 
@@ -24,7 +25,7 @@ interface FutureLinkEntry {
 export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFailure[]> {
   const siteDir = path.join(options.root, "_site");
   const daysDir = contentDaysDir(options.root);
-  const futureLinksPath = path.join(options.root, "src/_data/future-links.yaml");
+  const futureLinksPath = futureLinksDataFile(options.root);
   const failures: LinkCheckFailure[] = [];
   const htmlFiles = await walkFiles(siteDir, { exts: ".html", ignored: [] });
   const idCache = new Map<string, Set<string>>();
