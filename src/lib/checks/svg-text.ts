@@ -7,7 +7,6 @@ export const MIN_SVG_FONT_SIZE = 10.5;
 
 interface SvgTextCheckOptions {
   root: string;
-  roots?: string[];
 }
 
 interface SvgTextCheckFailure {
@@ -20,25 +19,22 @@ const CHECKED_EXTENSIONS = [".astro", ".css", ".html", ".js", ".md", ".mdx", ".n
 const GENERATED_STYLE_PATTERN = /^src\/assets\/scss\/generated\//;
 
 export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFailure[] {
-  const roots = options.roots ?? ["src"];
   const failures: SvgTextCheckFailure[] = [];
+  const absoluteRoot = path.join(options.root, "src");
 
-  for (const root of roots) {
-    const absoluteRoot = path.join(options.root, root);
-    for (const file of walkFilesSync(absoluteRoot, { exts: CHECKED_EXTENSIONS })) {
-      const relativeFile = toPosixRelative(options.root, file);
-      if (GENERATED_STYLE_PATTERN.test(relativeFile)) continue;
+  for (const file of walkFilesSync(absoluteRoot, { exts: CHECKED_EXTENSIONS })) {
+    const relativeFile = toPosixRelative(options.root, file);
+    if (GENERATED_STYLE_PATTERN.test(relativeFile)) continue;
 
-      const source = readFileSync(file, "utf8");
-      if (file.endsWith(".css") || file.endsWith(".js") || file.endsWith(".scss")) {
-        checkSegment(source, source, relativeFile, failures);
-        continue;
-      }
+    const source = readFileSync(file, "utf8");
+    if (file.endsWith(".css") || file.endsWith(".js") || file.endsWith(".scss")) {
+      checkSegment(source, source, relativeFile, failures);
+      continue;
+    }
 
-      const svgPattern = /<svg\b[\s\S]*?<\/svg>/gi;
-      for (const svgMatch of source.matchAll(svgPattern)) {
-        checkSegment(source, svgMatch[0], relativeFile, failures, svgMatch.index ?? 0);
-      }
+    const svgPattern = /<svg\b[\s\S]*?<\/svg>/gi;
+    for (const svgMatch of source.matchAll(svgPattern)) {
+      checkSegment(source, svgMatch[0], relativeFile, failures, svgMatch.index ?? 0);
     }
   }
 
