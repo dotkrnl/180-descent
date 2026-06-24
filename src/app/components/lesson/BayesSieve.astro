@@ -1,0 +1,20 @@
+---
+interface Props {
+  ariaLabel: string;
+  title: string;
+}
+---
+
+<figure class="bayes-sieve">
+  <figcaption>
+    <span class="bs-title">{Astro.props.title}</span>
+    <span class="bs-sub"><slot name="subtitle" /></span>
+  </figcaption>
+  <div class="bs-equation">
+    <slot name="equation" />
+  </div>
+  <div class="bs-table-wrap" role="region" aria-label={Astro.props.ariaLabel} tabindex="0">
+    <slot name="table" />
+  </div>
+  <p class="bs-total"><slot name="total" /></p>
+</figure>

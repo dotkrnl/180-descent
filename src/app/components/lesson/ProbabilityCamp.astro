@@ -1,0 +1,13 @@
+---
+interface Props {
+  heading: string;
+  subhead: string;
+  variant: "freq" | "bayes";
+}
+---
+
+<div class={`camp ${Astro.props.variant}`}>
+  <p class="ch">{Astro.props.heading}</p>
+  <p class="csub">{Astro.props.subhead}</p>
+  <slot />
+</div>

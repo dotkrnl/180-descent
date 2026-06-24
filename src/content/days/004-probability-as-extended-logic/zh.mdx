@@ -14,6 +14,7 @@ import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BayesMeter from "@app/components/lesson/BayesMeter.astro";
+import BayesSieve from "@app/components/lesson/BayesSieve.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -31,11 +32,15 @@ import Highlight from "@app/components/lesson/Highlight.astro";
 import Label from "@app/components/lesson/Label.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import LessonNote from "@app/components/lesson/LessonNote.astro";
+import MathLine from "@app/components/lesson/MathLine.astro";
+import MathLineLabel from "@app/components/lesson/MathLineLabel.astro";
 import Meta from "@app/components/lesson/Meta.astro";
 import Panel from "@app/components/lesson/Panel.astro";
 import QuoteSource from "@app/components/lesson/QuoteSource.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import ProbabilityCamp from "@app/components/lesson/ProbabilityCamp.astro";
+import ProbabilityCamps from "@app/components/lesson/ProbabilityCamps.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import RecapItem from "@app/components/lesson/RecapItem.astro";
 import RecapList from "@app/components/lesson/RecapList.astro";
@@ -162,16 +167,10 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 我们刚才对门做的那套手工操作，其实有个名字，也有个公式。公式看起来冷冰冰，想法却很直接：贝叶斯定理只是在证据到来之后，重新给仍然可能的世界分配权重。
 
-<figure class="bayes-sieve">
-<figcaption>
-<span class="bs-title">贝叶斯像一只筛子</span>
-<span class="bs-sub">证据 <MathInline latex={String.raw`E`} /> =「主持人打开了 3 号门」。每个假设一开始都有同样的先验；随后，谁越能预言这个具体揭示，谁留下的权重就越大。</span>
-</figcaption>
-<div class="bs-equation">
-<MathBlock latex={bayesFormula} />
-</div>
-<div class="bs-table-wrap" role="region" aria-label="贝叶斯概率表" tabindex="0">
-<DataTable class="bs-table">
+<BayesSieve title="贝叶斯像一只筛子" ariaLabel="贝叶斯概率表">
+<Fragment slot="subtitle">证据 <MathInline latex={String.raw`E`} /> =「主持人打开了 3 号门」。每个假设一开始都有同样的先验；随后，谁越能预言这个具体揭示，谁留下的权重就越大。</Fragment>
+<MathBlock slot="equation" latex={bayesFormula} />
+<DataTable slot="table" class="bs-table">
 <DataTableHead>
 <DataTableRow>
 <DataTableHeader><span class="bs-symbol"><MathInline latex={String.raw`H`} /></span><small>本行的藏车位置假设</small></DataTableHeader>
@@ -209,14 +208,13 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </DataTableRow>
 </DataTableBody>
 </DataTable>
-</div>
-<p class="bs-total"><span><MathInline latex={String.raw`P(E)`} /></span> 是证据筛过之后留下的总权重：<Highlight><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></Highlight>。把每个幸存权重都除以这个 <MathInline latex={String.raw`1/2`} />，未打开的 2 号门就拿走了剩余概率中的 <Highlight><MathInline latex={String.raw`2/3`} /></Highlight>。</p>
-</figure>
+<Fragment slot="total"><span><MathInline latex={String.raw`P(E)`} /></span> 是证据筛过之后留下的总权重：<Highlight><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></Highlight>。把每个幸存权重都除以这个 <MathInline latex={String.raw`1/2`} />，未打开的 2 号门就拿走了剩余概率中的 <Highlight><MathInline latex={String.raw`2/3`} /></Highlight>。</Fragment>
+</BayesSieve>
 
-<div class="mathline">
-<MathBlock latex={bayesFormula} />
-<small><span class="post">后验</span>（看到证据后的置信度）= <span class="prior">先验</span>（之前的置信度）× <span class="like">似然</span>（<MathInline latex={String.raw`H`} /> 预测 <MathInline latex={String.raw`E`} /> 的能力），再用 <span class="evidence">证据总量</span> 归一化</small>
-</div>
+<MathLine>
+<MathBlock slot="formula" latex={bayesFormula} />
+<MathLineLabel kind="post">后验</MathLineLabel>（看到证据后的置信度）= <MathLineLabel kind="prior">先验</MathLineLabel>（之前的置信度）× <MathLineLabel kind="like">似然</MathLineLabel>（<MathInline latex={String.raw`H`} /> 预测 <MathInline latex={String.raw`E`} /> 的能力），再用 <MathLineLabel kind="evidence">证据总量</MathLineLabel> 归一化
+</MathLine>
 
 用一句话说：看到证据 <MathInline latex={String.raw`E`} /> 后，你对假设 <MathInline latex={String.raw`H`} /> 的<Term>后验</Term>置信度，等于你的<Term>先验</Term>置信度乘以<Term>似然</Term>——即 <MathInline latex={String.raw`H`} /> 预测你会看到 <MathInline latex={String.raw`E`} /> 的力度——再除以 <MathInline latex={String.raw`E`} /> 本身出现的总体预期。强有力的证据，是你的假设能预见、而对手却预见不到的东西。整台引擎就这么多。信念永远流向最能解释已发生之事的那一方。
 
@@ -275,28 +273,24 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 概率这样优美而统一的理论，为何能在统计学内部引发一场百年内战？因为方程本身无人质疑，争议在于「那些数字意味着什么」。两派使用的是同一套演算——安德烈·柯尔莫戈洛夫 1933 年写下的公理。这些公理刻意不回答概率「是什么」，只规定它「如何表现」。在这副中立骨架上，两派披上了不同的外衣。
 
-<div class="camps">
-<div class="camp freq">
-<p class="ch">频率派</p>
-<p class="csub">概率 = 长期频率</p>
+<ProbabilityCamps>
+<ProbabilityCamp variant="freq" heading="频率派" subhead="概率 = 长期频率">
 <ul>
 <li>概率是事件在无限次重复中出现的频率。「硬币公平」意味着抛掷无穷多次，正面比例趋近一半。</li>
 <li>参数是固定但未知的常数；数据才是随机的。你关心的是：你的方法有多大可能误导你。</li>
 <li>工具：<Highlight>p 值、置信区间、第一/第二类错误</Highlight>（费希尔；奈曼与皮尔逊，1920–30 年代）。</li>
 <li>说不出「火星上曾有生命的概率是 70%」——火星要么有过生命，要么没有，不存在可重复的样本可供计数。</li>
 </ul>
-</div>
-<div class="camp bayes">
-<p class="ch">贝叶斯派</p>
-<p class="csub">概率 = 置信度</p>
+</ProbabilityCamp>
+<ProbabilityCamp variant="bayes" heading="贝叶斯派" subhead="概率 = 置信度">
 <ul>
 <li>概率是一种置信度——你在已知条件下理性地有多确信（直接来自<a href="/zh/days/001-what-is-knowledge/">第 1 日</a>的那只旋钮）。</li>
 <li>参数自身也获得概率分布；你随数据不断用贝叶斯定理更新它们。</li>
 <li>工具：<Highlight>先验、后验、贝叶斯因子</Highlight>。谱系：拉普拉斯 → 杰弗里斯 → 拉姆齐 → 德·菲内蒂 → 萨维奇。</li>
 <li>可以理直气壮地说「火星上曾有生命的概率是 70%」——一次性事件无法重复，但置信度恰好为此而生。</li>
 </ul>
-</div>
-</div>
+</ProbabilityCamp>
+</ProbabilityCamps>
 
 频率派在 20 世纪独领风骚，一半靠道理，一半靠运气。道理在于：它的创立者追求客观性，不信任贝叶斯派的先验，认为那是暗中塞入的主观意见。（费希尔把「逆概率」斥为「必须彻底摒弃」。）运气在于：贝叶斯方法需要大量计算，而廉价计算机姗姗来迟。贝叶斯派至今最敏感的痛点仍是先验——你那个「事前」信念从哪来？凭什么让别人信你的？客观贝叶斯派（杰弗里斯、杰恩斯）寻找规则化的「无信息先验」；主观贝叶斯派则耸耸肩：所有推理总得有个起点。
 

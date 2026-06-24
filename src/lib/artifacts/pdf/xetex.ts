@@ -519,6 +519,11 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "StatusChip") return renderStatusChip(attrs, state);
   if (name === "StatusText") return renderStatusText(attrs, state);
   if (name === "SimpleTable") return renderSimpleTable(attrs, state);
+  if (name === "BayesSieve") return renderBayesSieve(node, attrs, state);
+  if (name === "MathLine") return renderMathLine(node, state);
+  if (name === "MathLineLabel") return renderInlineChildren(node, state, context);
+  if (name === "ProbabilityCamps") return renderChildren(node.children ?? [], state, { block: true });
+  if (name === "ProbabilityCamp") return renderProbabilityCamp(node, attrs, state);
   const renderedSvg = renderRenderedSvgComponent(name, attrs, state);
   if (renderedSvg) return renderedSvg;
   if (name === "svg") return renderInlineSvg(node, state);
@@ -854,6 +859,42 @@ function renderSimpleTable(attrs: Map<string, string | null>, state: MdxRenderSt
   return latexTable({ rows: [headers, ...rows], headerRows: new Set([0]) });
 }
 
+function renderBayesSieve(node: MdxNode, attrs: Map<string, string | null>, state: MdxRenderState): string {
+  const title = latexEscape(resolveExpression(attrs.get("title"), state));
+  const subtitle = renderSlot(node, state, "subtitle", { block: false });
+  const equation = renderSlot(node, state, "equation", { block: true });
+  const table = renderSlot(node, state, "table", { block: true });
+  const total = renderSlot(node, state, "total", { block: false });
+  return [
+    title ? `\\blockheading{${title}}` : "",
+    subtitle ? `\\begin{notepara}${subtitle}\\end{notepara}` : "",
+    equation,
+    table,
+    total ? `\\begin{notepara}${total}\\end{notepara}` : ""
+  ].filter(Boolean).join("\n");
+}
+
+function renderMathLine(node: MdxNode, state: MdxRenderState): string {
+  const formula = renderSlot(node, state, "formula", { block: true });
+  const explanation = renderChildren(
+    (node.children ?? []).filter((child) => mdxAttributes(child).get("slot") !== "formula"),
+    state,
+    { block: false }
+  ).trim();
+  return [formula, explanation ? `\\begin{notepara}${explanation}\\end{notepara}` : ""].filter(Boolean).join("\n");
+}
+
+function renderProbabilityCamp(node: MdxNode, attrs: Map<string, string | null>, state: MdxRenderState): string {
+  const heading = latexEscape(resolveExpression(attrs.get("heading"), state));
+  const subhead = latexEscape(resolveExpression(attrs.get("subhead"), state));
+  const body = renderChildren(node.children ?? [], state, { block: true }).trim();
+  return [
+    heading ? `\\blockheading{${heading}}` : "",
+    subhead ? `\\begin{notepara}${subhead}\\end{notepara}` : "",
+    body
+  ].filter(Boolean).join("\n");
+}
+
 const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["StoppedClockFigure", { selector: ".hero-clock", width: "0.42\\linewidth", height: "0.24\\textheight" }],
   ["SunriseInductionFigure", { selector: ".hero-sun", width: "0.82\\linewidth", height: "0.28\\textheight" }],
@@ -1110,6 +1151,14 @@ function renderChildren(children: MdxNode[], state: MdxRenderState, context: Ren
     state.pendingSectionEyebrow = null;
   }
   return rendered.join(context.tableCell || context.listItem ? " " : "\n\n");
+}
+
+function renderSlot(node: MdxNode, state: MdxRenderState, slot: string, context: RenderContext): string {
+  return renderChildren(
+    (node.children ?? []).filter((child) => mdxAttributes(child).get("slot") === slot),
+    state,
+    context
+  ).trim();
 }
 
 function renderInlineChildren(node: MdxNode, state: MdxRenderState, context: RenderContext): string {
@@ -1586,7 +1635,11 @@ function isBlockMdxElement(node: MdxNode): boolean {
     "LessonList",
     "DekGrid",
     "MisconceptionList",
-    "LessonNote"
+    "LessonNote",
+    "BayesSieve",
+    "MathLine",
+    "ProbabilityCamps",
+    "ProbabilityCamp"
   ].includes(node.name ?? "");
 }
 

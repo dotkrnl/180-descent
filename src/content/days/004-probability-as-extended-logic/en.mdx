@@ -14,6 +14,7 @@ import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BayesMeter from "@app/components/lesson/BayesMeter.astro";
+import BayesSieve from "@app/components/lesson/BayesSieve.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -30,11 +31,15 @@ import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
 import Label from "@app/components/lesson/Label.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import LessonNote from "@app/components/lesson/LessonNote.astro";
+import MathLine from "@app/components/lesson/MathLine.astro";
+import MathLineLabel from "@app/components/lesson/MathLineLabel.astro";
 import Meta from "@app/components/lesson/Meta.astro";
 import Panel from "@app/components/lesson/Panel.astro";
 import QuoteSource from "@app/components/lesson/QuoteSource.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import ProbabilityCamp from "@app/components/lesson/ProbabilityCamp.astro";
+import ProbabilityCamps from "@app/components/lesson/ProbabilityCamps.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import RecapItem from "@app/components/lesson/RecapItem.astro";
 import RecapList from "@app/components/lesson/RecapList.astro";
@@ -161,16 +166,10 @@ The puzzle didn't start with Monty Hall. The statistician **Steve Selvin** posed
 
 What we did to those doors by hand has a name and a formula. The formula looks colder than the idea. Bayes' theorem is just a rule for reweighing live possibilities after evidence arrives:
 
-<figure class="bayes-sieve">
-<figcaption>
-<span class="bs-title">Bayes as a sieve</span>
-<span class="bs-sub">Evidence <MathInline latex={String.raw`E`} /> = "the host opened Door 3." Each hypothesis starts with the same prior, then gets shrunk by how well it predicted that exact reveal.</span>
-</figcaption>
-<div class="bs-equation">
-<MathBlock latex={bayesFormula} />
-</div>
-<div class="bs-table-wrap" role="region" aria-label="Bayesian probability table" tabindex="0">
-<DataTable class="bs-table">
+<BayesSieve title="Bayes as a sieve" ariaLabel="Bayesian probability table">
+<Fragment slot="subtitle">Evidence <MathInline latex={String.raw`E`} /> = "the host opened Door 3." Each hypothesis starts with the same prior, then gets shrunk by how well it predicted that exact reveal.</Fragment>
+<MathBlock slot="equation" latex={bayesFormula} />
+<DataTable slot="table" class="bs-table">
 <DataTableHead>
 <DataTableRow>
 <DataTableHeader><span class="bs-symbol"><MathInline latex={String.raw`H`} /></span><small>this row's car-location claim</small></DataTableHeader>
@@ -208,14 +207,13 @@ What we did to those doors by hand has a name and a formula. The formula looks c
 </DataTableRow>
 </DataTableBody>
 </DataTable>
-</div>
-<p class="bs-total"><span><MathInline latex={String.raw`P(E)`} /></span> is the total weight that survived the evidence: <strong><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></strong>. Divide each surviving weight by that half, and the unopened Door 2 gets <strong><MathInline latex={String.raw`2/3`} /></strong> of the remaining probability.</p>
-</figure>
+<Fragment slot="total"><span><MathInline latex={String.raw`P(E)`} /></span> is the total weight that survived the evidence: <strong><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></strong>. Divide each surviving weight by that half, and the unopened Door 2 gets <strong><MathInline latex={String.raw`2/3`} /></strong> of the remaining probability.</Fragment>
+</BayesSieve>
 
-<div class="mathline">
-<MathBlock latex={bayesFormula} />
-<small><span class="post">posterior</span> (belief after evidence) = <span class="prior">prior</span> (belief before) × <span class="like">likelihood</span> (how well <MathInline latex={String.raw`H`} /> predicts <MathInline latex={String.raw`E`} />), normalized by <span class="evidence">evidence</span></small>
-</div>
+<MathLine>
+<MathBlock slot="formula" latex={bayesFormula} />
+<MathLineLabel kind="post">posterior</MathLineLabel> (belief after evidence) = <MathLineLabel kind="prior">prior</MathLineLabel> (belief before) × <MathLineLabel kind="like">likelihood</MathLineLabel> (how well <MathInline latex={String.raw`H`} /> predicts <MathInline latex={String.raw`E`} />), normalized by <MathLineLabel kind="evidence">evidence</MathLineLabel>
+</MathLine>
 
 In words: your <Term as="em">posterior</Term> belief in a hypothesis <MathInline latex={String.raw`H`} /> after seeing evidence <MathInline latex={String.raw`E`} /> equals your <Term as="em">prior</Term> belief, multiplied by the <Term as="em">likelihood</Term> — how strongly <MathInline latex={String.raw`H`} /> predicted that you'd see <MathInline latex={String.raw`E`} /> — divided by how expected <MathInline latex={String.raw`E`} /> was overall. Strong evidence is evidence your hypothesis predicts and rival hypotheses don't. That's the entire engine. Belief flows toward whatever best predicted what actually happened.
 
@@ -274,28 +272,24 @@ Cox's original proof was a touch too quick. In 1999 the computer scientist **Jos
 
 If probability is this beautiful and unified, why has it been the site of a century-long civil war? Because the equation is agreed on; what's fought over is *what the numbers mean.* Both tribes use the very same calculus — the axioms **Andrey Kolmogorov** wrote down in 1933, which deliberately decline to say what probability *is* and only fix how it must behave. Onto that neutral skeleton, two interpretations are draped.
 
-<div class="camps">
-<div class="camp freq">
-<p class="ch">Frequentist</p>
-<p class="csub">probability = long-run frequency</p>
+<ProbabilityCamps>
+<ProbabilityCamp variant="freq" heading="Frequentist" subhead="probability = long-run frequency">
 <ul>
 <li>A probability is the <b>frequency of an event in infinitely many repetitions.</b> "The coin is fair" means it lands heads half the time over endless flips.</li>
 <li>Parameters are <b>fixed unknown constants</b>; the data are random. You reason about how often your <em>method</em> would mislead you.</li>
 <li>Tools: <b>p-values, confidence intervals, Type I/II error</b> (Fisher; Neyman &amp; Pearson, 1920s–30s).</li>
 <li>Can't coherently say "70% chance there was life on Mars" — Mars either had life or it didn't; there's no repetition to count.</li>
 </ul>
-</div>
-<div class="camp bayes">
-<p class="ch">Bayesian</p>
-<p class="csub">probability = degree of belief</p>
+</ProbabilityCamp>
+<ProbabilityCamp variant="bayes" heading="Bayesian" subhead="probability = degree of belief">
 <ul>
 <li>A probability is a <b>credence</b> — your rational degree of confidence given what you know (straight from <a href="/days/001-what-is-knowledge/">Day 1's dial</a>).</li>
 <li>Parameters get <b>probability distributions</b>; you update them with Bayes' theorem as data arrive.</li>
 <li>Tools: <b>priors, posteriors, Bayes factors.</b> Lineage: Laplace → Jeffreys → Ramsey → de Finetti → Savage.</li>
 <li><b>Happily</b> says "70% chance of past life on Mars" — a one-off claim with no repetitions is exactly what credence is for.</li>
 </ul>
-</div>
-</div>
+</ProbabilityCamp>
+</ProbabilityCamps>
 
 Frequentism dominated the 20th century partly for a good reason and partly for an accident. The good reason: its founders craved *objectivity* and distrusted the Bayesian *prior* as a smuggled-in opinion. (Fisher dismissed "inverse probability" as something that "must be wholly rejected.") The accident: Bayesian methods need heavy computation, which didn't exist until cheap computers arrived. The central Bayesian sore point remains the prior — where does your "before" belief come from, and why should anyone trust yours? Objective Bayesians (Jeffreys, Jaynes) hunt for rule-based priors; subjective Bayesians shrug and say all reasoning starts somewhere.
 
