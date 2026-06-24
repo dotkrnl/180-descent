@@ -2,7 +2,7 @@ import { readdir, stat } from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
 
-export interface WalkOptions {
+interface WalkOptions {
   exts?: string | string[] | Set<string>;
   ignored?: Iterable<string>;
   allowedExtensionsRegex?: RegExp;

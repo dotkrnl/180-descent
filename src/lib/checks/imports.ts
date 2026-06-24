@@ -8,7 +8,7 @@ interface ImportCheckOptions {
   sourceRoots?: readonly string[];
 }
 
-export interface UnusedDefaultImport {
+interface UnusedDefaultImport {
   path: string;
   name: string;
 }

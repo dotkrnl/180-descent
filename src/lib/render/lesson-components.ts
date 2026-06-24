@@ -2,13 +2,13 @@ import { renderToString } from "katex";
 import { escapeHtml } from "@lib/text/escape";
 import type { Locale } from "@lib/schemas/day";
 
-export interface StatusChipOptions {
+interface StatusChipOptions {
   status: string;
   label: string;
   printLabel?: string;
 }
 
-export interface TipNoteOptions {
+interface TipNoteOptions {
   text: string;
   locale?: Locale;
 }
