@@ -47,6 +47,7 @@ import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import Strong from "@app/components/lesson/Strong.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
@@ -61,7 +62,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <ForkingPathsFigure locale="en" />
 
-<Lead class="dropcap">In 2011 three psychologists set out to prove something impossible. They sat twenty undergraduates down, played half of them the Beatles' <em>"When I'm Sixty-Four"</em> and the other half a control tune, then asked a battery of questions — including each person's date of birth. After a perfectly ordinary statistical analysis, they announced their finding: listening to <em>"When I'm Sixty-Four"</em> made people <strong>a year and a half younger</strong>. Not feel younger. Be younger — their birth dates said so, at <MathInline latex={String.raw`p = .04`} />.</Lead>
+<Lead class="dropcap">In 2011 three psychologists set out to prove something impossible. They sat twenty undergraduates down, played half of them the Beatles' *"When I'm Sixty-Four"* and the other half a control tune, then asked a battery of questions — including each person's date of birth. After a perfectly ordinary statistical analysis, they announced their finding: listening to *"When I'm Sixty-Four"* made people **a year and a half younger**. Not feel younger. Be younger — their birth dates said so, at <MathInline latex={String.raw`p = .04`} />.</Lead>
 
 This is, of course, impossible. A song cannot reach back and edit the year you were born. And that was exactly the point. Joseph Simmons, Leif Nelson, and Uri Simonsohn had used only standard, respectable tools, made only choices that any working scientist makes every week — and produced a statistically significant impossibility. Their paper was a deliberately absurd demonstration designed to expose a vulnerability. Today we learn what it exposed, and how a science learns to stop fooling itself.
 
@@ -86,7 +87,7 @@ On **[Day 2](/days/002-scientific-method-and-demarcation/)** we met the replicat
 </BlockQuote>
 
 <ImageFigure src={feynman1959.src} width="899" height="900" class="is-portrait" alt="Richard Feynman standing at a blackboard in 1959.">
-Richard Feynman at a blackboard in 1959. The quote above comes from his 1974 Caltech commencement address on "cargo cult science." <Meta>Image: <em>The Big T</em> 1959, public domain in the United States via Wikimedia Commons.</Meta>
+Richard Feynman at a blackboard in 1959. The quote above comes from his 1974 Caltech commencement address on "cargo cult science." <Meta>Image: *The Big T* 1959, public domain in the United States via Wikimedia Commons.</Meta>
 </ImageFigure>
 Feynman was talking about a kind of integrity that no formula can supply. The cruel twist of modern statistics is that the formulas can still be correct, but after flexible searching they no longer protect the nominal error rate. They lend the warm authority of mathematics to whatever you were already hoping to find.
 
@@ -131,7 +132,7 @@ Simmons, Nelson, and Simonsohn showed that combining four such freedoms can rais
 To not be fooled, you have to know precisely what the instrument reports. Many readers, including trained scientists and a worrying number of the statistics instructors teaching them, get this wrong. So, carefully:
 
 <DefinitionBox title="Definition · the p-value">
-The <em class="term">p-value</em><TipNote text={String.raw`A p-value is a tail probability for data under a specified null model, not the probability that the null hypothesis is true.`} /> is the probability — <strong>computed on the assumption that the <em class="term">null model</em><TipNote text={String.raw`A null model is the world assumed by the p-value calculation, usually a model with no effect plus all stated sampling and modeling assumptions.`} />, the null hypothesis<TipNote text={String.raw`A null hypothesis is the baseline claim being tested, often that there is no effect or no difference.`} />, and every modeling assumption are true</strong> — of getting a result <strong>at least as extreme</strong> as the one you actually observed.
+The <Term as="em">p-value</Term><TipNote text={String.raw`A p-value is a tail probability for data under a specified null model, not the probability that the null hypothesis is true.`} /> is the probability — <Strong>computed on the assumption that the <Term as="em">null model</Term><TipNote text={String.raw`A null model is the world assumed by the p-value calculation, usually a model with no effect plus all stated sampling and modeling assumptions.`} />, the null hypothesis<TipNote text={String.raw`A null hypothesis is the baseline claim being tested, often that there is no effect or no difference.`} />, and every modeling assumption are true</Strong> — of getting a result **at least as extreme** as the one you actually observed.
 </DefinitionBox>
 
 Concrete version: suppose the null model says two groups have the same mean. If a difference this large or larger would occur 3% of the time under that model, then <MathInline latex={String.raw`p = .03`} />. That is *not* a 3% chance the null is true.
@@ -145,7 +146,7 @@ Read it twice. It is a statement about *data, assuming a hypothesis* — written
 <Aside>
 <BlockTitle>Three probabilities people confuse</BlockTitle>
 
-<strong><Term as="em">Alpha</Term></strong><TipNote text={String.raw`Alpha is the false-alarm rate you commit to before looking at the data, conditional on a true null model and a specified testing procedure.`} /> is the long-run Type I error rate of a testing procedure if the null model is true: with <MathInline latex={String.raw`\alpha=.05`} />, about 5% of true-null tests will falsely cross the line. The <strong><Term as="em">false discovery rate</Term></strong><TipNote text={String.raw`The false discovery rate is the fraction of declared discoveries that are false.`} /> asks a different question: among the claims you actually declare significant, what fraction are false? That depends on base rates, power, and selection, not just <MathInline latex={String.raw`\alpha`} />. A <strong><Term as="em">posterior probability</Term></strong><TipNote text={String.raw`A posterior probability is the probability of a hypothesis after combining data with prior information.`} />, such as <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{data})`} />, is different again: it needs a prior. A 5% <MathInline latex={String.raw`\alpha`} /> is neither a 5% false discovery rate nor a 5% chance the null is true.
+<Strong><Term as="em">Alpha</Term></Strong><TipNote text={String.raw`Alpha is the false-alarm rate you commit to before looking at the data, conditional on a true null model and a specified testing procedure.`} /> is the long-run Type I error rate of a testing procedure if the null model is true: with <MathInline latex={String.raw`\alpha=.05`} />, about 5% of true-null tests will falsely cross the line. The <Strong><Term as="em">false discovery rate</Term></Strong><TipNote text={String.raw`The false discovery rate is the fraction of declared discoveries that are false.`} /> asks a different question: among the claims you actually declare significant, what fraction are false? That depends on base rates, power, and selection, not just <MathInline latex={String.raw`\alpha`} />. A <Strong><Term as="em">posterior probability</Term></Strong><TipNote text={String.raw`A posterior probability is the probability of a hypothesis after combining data with prior information.`} />, such as <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{data})`} />, is different again: it needs a prior. A 5% <MathInline latex={String.raw`\alpha`} /> is neither a 5% false discovery rate nor a 5% chance the null is true.
 
 </Aside>
 
@@ -191,7 +192,7 @@ The lesson is not "smaller p-values are better." A p-value can shrink because an
 <Term as="em">Confidence intervals</Term><TipNote text={String.raw`A confidence interval is a range produced by a method with a stated long-run coverage rate, such as 95%.`} /> are sold as the humane alternative to <MathInline latex={String.raw`p`} />-values, and they are better — but they hide their own trap.
 
 <DefinitionBox title="Definition · the 95% confidence interval">
-A 95% CI is produced by a <strong>procedure</strong> that, across many hypothetical repeat experiments, brackets the true value 95% of the time. The "95%" describes the long-run reliability of the <em>method</em>, not the odds for your one particular interval.
+A 95% CI is produced by a **procedure** that, across many hypothetical repeat experiments, brackets the true value 95% of the time. The "95%" describes the long-run reliability of the *method*, not the odds for your one particular interval.
 </DefinitionBox>
 So the natural sentence — "there's a 95% chance the true value is in *this* interval" — is, in the frequentist world, simply false. Your interval either contains the truth or it doesn't; the dice were thrown when you ran the study. (A **Day 4** Bayesian *credible* interval *does* license that sentence — but only after you've committed to a prior. Different tool, different promise.) Nor does a CI mean 95% of your data live inside it, nor that values just outside are impossible. What it gives you, refreshingly, is a *range of effect sizes compatible with your data* — and that reframing, from "yes/no" to "how much, how precisely," is the heart of what reformers call the *new statistics*.
 
@@ -333,7 +334,7 @@ The honest report is the distribution across reasonable specifications; the dish
 
 <RecapList>
 <RecapItem term="Big idea">Statistical tools don't protect you from fooling yourself — used with ordinary human flexibility they help you do it, because the dozens of defensible choices in any analysis (the "garden of forking paths") let noise masquerade as discovery, so the cure is transparency, preregistration, effect sizes with uncertainty, and robustness across reasonable analyses rather than a verdict at a magic threshold.</RecapItem>
-<RecapItem term="Best analogy">The False-Positive Factory: hand yourself enough innocent freedoms and a coin-flip's worth of nothing becomes a 61% chance of "success" — and the garden of forking paths, where the analyses you <em>would have</em> run in nearby worlds inflate your error even if you only ran one.</RecapItem>
+<RecapItem term="Best analogy">The False-Positive Factory: hand yourself enough innocent freedoms and a coin-flip's worth of nothing becomes a 61% chance of "success" — and the garden of forking paths, where the analyses you *would have* run in nearby worlds inflate your error even if you only ran one.</RecapItem>
 <RecapItem term="Live controversy">Whether to lower the threshold (<MathInline latex={String.raw`p < .005`} />), justify it case by case, or retire "statistical significance" altogether — with multiverse and many-analyst studies revealing how alarmingly a single dataset's verdict depends on who analyzes it.</RecapItem>
 </RecapList>
 <Threads>**Threads today ›** information (separating signal from noise; the <MathInline latex={String.raw`p`} />-value as a misread evidence measure) · computation (the lab as a fallible inference engine; the multiverse as brute enumeration) · emergence (science as an error-correcting system larger than any analyst — preregistration, many-analyst crowds, meta-analysis), leading directly into [Information Theory](/days/007-information-theory/).</Threads>
