@@ -6,8 +6,6 @@ import { urlForHtml } from "@lib/static-site/url";
 
 interface SeoCheckOptions {
   root: string;
-  siteDir?: string;
-  siteUrl?: string;
 }
 
 interface SeoCheckResult {
@@ -16,8 +14,8 @@ interface SeoCheckResult {
 }
 
 export async function checkSeo(options: SeoCheckOptions): Promise<SeoCheckResult> {
-  const siteDir = path.resolve(options.root, options.siteDir ?? "_site");
-  const siteUrl = options.siteUrl ?? "https://180d.io";
+  const siteDir = path.resolve(options.root, "_site");
+  const siteUrl = "https://180d.io";
   const errors: string[] = [];
 
   if (!await pathExists(siteDir)) {
