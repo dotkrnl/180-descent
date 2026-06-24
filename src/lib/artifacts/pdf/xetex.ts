@@ -592,11 +592,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     return text ? `{\\ttfamily\\footnotesize\\color{descentMuted}${text}\\par}` : "";
   }
   if (name === "AppendixTimelineList") {
-    return renderComponentItemize(node, state, "AppendixTimelineListItem");
-  }
-  if (name === "AppendixTimelineListYear") {
-    const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
-    return text ? `{\\ttfamily\\footnotesize\\color{descentMuted}${text}}\\quad ` : "";
+    return renderComponentItemize(node, state, "MilestoneItem");
   }
   if (name === "MilestoneList") {
     return renderComponentItemize(node, state, "MilestoneItem");
