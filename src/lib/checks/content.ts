@@ -157,7 +157,7 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
 }
 
 function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  const titleMatch = file.source.match(/^#\s+(.+)$/m) ?? file.source.match(/<h1(?:\s[^>]*)?>([\s\S]*?)<\/h1>/);
+  const titleMatch = file.source.match(/^#\s+(.+)$/m);
   if (!titleMatch) {
     failures.push({ message: `${file.label} has no lesson h1` });
     return;
@@ -172,12 +172,8 @@ function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure
 }
 
 function checkStaticAlternates(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  const webPanels =
-    countMatches(file.source, /class="[^"]*\bpanel\b[^"]*\bweb-only\b[^"]*"/g) +
-    countMatches(file.source, /<Panel\b[^>]*class="[^"]*\bweb-only\b[^"]*"/g);
-  const staticAlternates =
-    countMatches(file.source, /class="[^"]*\bformat-alt\b[^"]*\b(?:print-only|epub-only)\b[^"]*"/g) +
-    countMatches(file.source, /<FormatOnly\b(?=[^>]*\bmedia="print-epub")(?=[^>]*\bvariant="alternate")/g);
+  const webPanels = countMatches(file.source, /<Panel\b[^>]*class="[^"]*\bweb-only\b[^"]*"/g);
+  const staticAlternates = countMatches(file.source, /<FormatOnly\b(?=[^>]*\bmedia="print-epub")(?=[^>]*\bvariant="alternate")/g);
   if (staticAlternates < webPanels) {
     failures.push({
       message: `${file.label} has ${webPanels} web-only panels but only ${staticAlternates} static print/EPUB alternates`
