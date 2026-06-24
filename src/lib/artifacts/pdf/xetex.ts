@@ -1285,8 +1285,8 @@ async function loadRenderedHtml(root: string, locale: Locale, sourceFile: string
   if (!dayPath) return null;
 
   const htmlPath = path.join(siteDayDir(root, locale), dayPath, "index.html");
-  const html = await readFile(htmlPath, "utf8").catch(() => "");
-  return html ? cheerio.load(html) : null;
+  const html = await readFile(htmlPath, "utf8");
+  return cheerio.load(html);
 }
 
 function latexPreamble(config: PdfEdition & { root: string }): string {
