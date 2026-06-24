@@ -266,10 +266,6 @@
       band(by(A2, "ciClass"), Math.min(94, classW * 360), 50);
       band(by(A2, "ciPpi"), Math.min(94, ppiW * 360), 50);
       band(by(A2, "ciNaive"), Math.min(94, naiveW * 360), 50 + bias * 34);
-      ["truthClass", "truthPpi", "truthNaive"].forEach(function (id) {
-        var el = by(A2, id);
-        if (el) el.style.left = "50%";
-      });
       by(A2, "ppiRead").innerHTML = zh
         ? '只有当预测确实携带信息时，PPI 才会缩窄仅靠标注数据得到的区间。偏差校正项负责防止低成本预测变成统计上的一厢情愿。'
         : 'PPI shrinks the labeled-only interval only when predictions are informative. The rectifier is what keeps cheap predictions from becoming statistical wishful thinking.';
@@ -278,8 +274,10 @@
 
   function band(el, pct, center) {
     if (!el) return;
-    el.style.left = (center - pct / 2) + "%";
-    el.style.width = pct + "%";
+    var width = Math.max(0, Math.min(100, pct));
+    var x = Math.max(0, Math.min(100 - width, center - width / 2));
+    el.setAttribute("x", x.toFixed(2));
+    el.setAttribute("width", width.toFixed(2));
   }
 
   function initPaths() {

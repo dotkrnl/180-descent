@@ -195,9 +195,9 @@ const panel = panels[kind];
     <div class="visbox">
       {kind === "ppi" ? (
         <>
-          <div class="ci-row"><span class="ci-label">{zh ? "仅标注" : "labeled-only"}</span><div class="ci-bar"><div class="ci-band classical" id={`${prefix}ciClass`}></div><div class="ci-truth" id={`${prefix}truthClass`}></div></div></div>
-          <div class="ci-row"><span class="ci-label">{zh ? "朴素 ML" : "naive ML"}</span><div class="ci-bar"><div class="ci-band naive" id={`${prefix}ciNaive`}></div><div class="ci-truth" id={`${prefix}truthNaive`}></div></div></div>
-          <div class="ci-row"><span class="ci-label">PPI</span><div class="ci-bar"><div class="ci-band ppi" id={`${prefix}ciPpi`}></div><div class="ci-truth" id={`${prefix}truthPpi`}></div></div></div>
+          <div class="ci-row"><span class="ci-label">{zh ? "仅标注" : "labeled-only"}</span><svg class="ci-bar" viewBox="0 0 100 22" preserveAspectRatio="none" aria-hidden="true"><rect class="ci-band classical" id={`${prefix}ciClass`} x="3" y="3" width="94" height="16" rx="4"></rect><line class="ci-truth" x1="50" y1="-4" x2="50" y2="26"></line></svg></div>
+          <div class="ci-row"><span class="ci-label">{zh ? "朴素 ML" : "naive ML"}</span><svg class="ci-bar" viewBox="0 0 100 22" preserveAspectRatio="none" aria-hidden="true"><rect class="ci-band naive" id={`${prefix}ciNaive`} x="45" y="3" width="10" height="16" rx="4"></rect><line class="ci-truth" x1="50" y1="-4" x2="50" y2="26"></line></svg></div>
+          <div class="ci-row"><span class="ci-label">PPI</span><svg class="ci-bar" viewBox="0 0 100 22" preserveAspectRatio="none" aria-hidden="true"><rect class="ci-band ppi" id={`${prefix}ciPpi`} x="18" y="3" width="64" height="16" rx="4"></rect><line class="ci-truth" x1="50" y1="-4" x2="50" y2="26"></line></svg></div>
           <div class="legend">
             <span><i class="legend-accent"></i> {zh ? "仅标注" : "labels only"}</span>
             <span><i class="legend-contested"></i> {zh ? "朴素预测" : "naive prediction"}</span>
