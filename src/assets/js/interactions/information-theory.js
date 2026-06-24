@@ -123,8 +123,8 @@
       pTails.textContent = q.toFixed(2);
       sHeads.textContent = surpriseHeads.toFixed(2);
       sTails.textContent = surpriseTails.toFixed(2);
-      barHeads.style.width = barWidth(surpriseHeads) + "%";
-      barTails.style.width = barWidth(surpriseTails) + "%";
+      barHeads.value = barWidth(surpriseHeads);
+      barTails.value = barWidth(surpriseTails);
       calculation.textContent = text(
         "H = " + p.toFixed(2) + "×" + surpriseHeads.toFixed(2) + " + " + q.toFixed(2) + "×" + surpriseTails.toFixed(2) + " = " + h.toFixed(2) + " bits/flip.",
         "H = " + p.toFixed(2) + "×" + surpriseHeads.toFixed(2) + " + " + q.toFixed(2) + "×" + surpriseTails.toFixed(2) + " = " + h.toFixed(2) + " 比特/投掷。"
