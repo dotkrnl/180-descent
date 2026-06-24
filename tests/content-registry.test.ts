@@ -24,7 +24,9 @@ describe("target content registry", () => {
           summary: "中文摘要。",
           body: "zh.mdx"
         }
-      }
+      },
+      appendices: [],
+      interactionScripts: []
     });
 
     expect(parsed.locales.en.title).toBe("Minimal");
@@ -40,7 +42,9 @@ describe("target content registry", () => {
           summary: "Minimal summary.",
           body: "en.mdx"
         }
-      }
+      },
+      appendices: [],
+      interactionScripts: []
     })).toThrow();
   });
 
@@ -88,7 +92,9 @@ describe("target content registry", () => {
       "  zh:",
       "    title: 中文夹具",
       "    summary: 中文摘要。",
-      "    body: zh.mdx"
+      "    body: zh.mdx",
+      "appendices: []",
+      "interactionScripts: []"
     ].join("\n"));
 
     await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Manifest reference escapes day directory: ../outside.mdx");

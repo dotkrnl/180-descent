@@ -65,7 +65,11 @@ export async function writePublishedDay(root: string, options: PublishedDayOptio
         `        body: ${appendix.zhBodyPath}`
       );
     }
+  } else {
+    manifest.push("appendices: []");
   }
+
+  manifest.push("interactionScripts: []");
 
   await writeFile(path.join(dayDir, "day.yaml"), manifest.join("\n"));
   await writeFile(path.join(dayDir, "en.mdx"), enBody);

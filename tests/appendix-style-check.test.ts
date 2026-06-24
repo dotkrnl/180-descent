@@ -62,7 +62,8 @@ async function createFixtureRoot(): Promise<string> {
     "        body: appendices/appendix-a.en.mdx",
     "      zh:",
     "        title: 附录 A",
-    "        body: appendices/appendix-a.zh.mdx"
+    "        body: appendices/appendix-a.zh.mdx",
+    "interactionScripts: []"
   ].join("\n"));
   await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), "");
   await writeFile(path.join(root, "src/content/days/001-fixture/zh.mdx"), "");

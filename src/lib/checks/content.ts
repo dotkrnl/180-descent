@@ -71,7 +71,7 @@ interface RegistryContentFile {
   relativePath: string;
   source: string;
   locale: Locale;
-  title?: string;
+  title: string | null;
   requiresTitle: boolean;
 }
 
@@ -103,6 +103,7 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
         relativePath: toPosixRelative(options.root, path.join(day.directory, appendixBody.path)),
         source: appendixBody.source,
         locale: appendixBody.locale,
+        title: null,
         requiresTitle: false
       }, failures);
     }
@@ -157,7 +158,11 @@ function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure
     return;
   }
 
-  if (!file.title) return;
+  if (!file.title) {
+    failures.push({ message: `${file.label} has no manifest title` });
+    return;
+  }
+
   const h1Text = normalizeVisibleText(titleMatch[1]);
   const titleText = normalizeVisibleText(file.title);
   if (h1Text !== titleText) {

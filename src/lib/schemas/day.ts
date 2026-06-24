@@ -28,8 +28,8 @@ export const dayManifestSchema = z.object({
     en: localeContentSchema,
     zh: localeContentSchema
   }).strict(),
-  appendices: z.array(appendixSchema).default([]),
-  interactionScripts: z.array(z.string().min(1)).default([])
+  appendices: z.array(appendixSchema),
+  interactionScripts: z.array(z.string().min(1))
 }).strict();
 
 export type Locale = z.infer<typeof localeSchema>;
