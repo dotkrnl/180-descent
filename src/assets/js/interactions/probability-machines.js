@@ -163,7 +163,7 @@
       say.innerHTML = isZh
         ? '<span class="hl">选一扇门</span>开始。'
         : "<b>Pick a door</b> to begin.";
-      nextWrap.style.display = "none";
+      nextWrap.hidden = true;
     }
 
     function hostOpens(){
@@ -224,7 +224,7 @@
         : "You <b>" + (switched ? "switched to" : "stayed on") + " Door " + (finalPick + 1) + "</b> and " +
           (won ? '<b class="win-text">won the car.</b>' : '<b class="lose-text">got a goat.</b>') +
           " " + (switched ? "Switching is the 2/3 play." : "Staying is the 1/3 play.");
-      nextWrap.style.display = "flex";
+      nextWrap.hidden = false;
       state.phase = "done";
     }
 
@@ -258,7 +258,7 @@
       root.dataset.result = "";
       resetDoorActions();
       setStatus("stepSim", "modeSim");
-      nextWrap.style.display = "none";
+      nextWrap.hidden = true;
       say.innerHTML = isZh
         ? '已并行注入 <span class="hl">1,000 次配对模拟</span>。坚持原选胜率约为 <span class="hl">33%</span>；改换门庭则约为 <span class="hl">67%</span>。你也可以继续手动体验。'
         : "Added <b>1,000 paired simulations</b>. Staying lands near <b>33%</b>; switching near <b>67%</b>. You can keep playing by hand.";
