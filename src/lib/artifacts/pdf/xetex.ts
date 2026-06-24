@@ -16,6 +16,7 @@ import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 import { readBookData, type BookData, type HumanEditorData } from "@lib/data/book";
 import { syllabusDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
+import { isPathInside } from "@lib/fs/path";
 import type { Locale } from "@lib/schemas/day";
 import { siteDayDir } from "@lib/static-site/routes";
 
@@ -1277,8 +1278,8 @@ function resolveImportPath(importPath: string, root: string, sourceDir: string):
 
 async function loadRenderedHtml(root: string, locale: Locale, sourceFile: string): Promise<CheerioRoot | null> {
   const contentRoot = contentDaysDir(root);
+  if (!isPathInside(contentRoot, sourceFile)) return null;
   const relativeSource = path.relative(contentRoot, sourceFile);
-  if (relativeSource.startsWith("..")) return null;
 
   const [dayPath] = relativeSource.split(path.sep);
   if (!dayPath) return null;

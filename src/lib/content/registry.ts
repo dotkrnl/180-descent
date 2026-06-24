@@ -1,6 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { readYamlFile } from "@lib/data/yaml";
+import { isPathInside } from "@lib/fs/path";
 import { dayManifestSchema, type DayManifest, type Locale } from "@lib/schemas/day";
 
 const LOCALES: readonly Locale[] = ["en", "zh"];
@@ -105,8 +106,7 @@ async function readReferencedFile(root: string, relativePath: string): Promise<s
 function referencedFilePath(root: string, relativePath: string): string {
   const normalizedRoot = path.resolve(root);
   const filePath = path.resolve(normalizedRoot, relativePath);
-  const rootPrefix = `${normalizedRoot}${path.sep}`;
-  if (filePath !== normalizedRoot && !filePath.startsWith(rootPrefix)) {
+  if (!isPathInside(normalizedRoot, filePath)) {
     throw new Error(`Manifest reference escapes day directory: ${relativePath}`);
   }
   return filePath;

@@ -1,5 +1,5 @@
 import path from "node:path";
-import { toPosixRelative } from "@lib/fs/path";
+import { isPathInside, toPosixRelative } from "@lib/fs/path";
 
 const MIME_TYPES = new Map([
   [".css", "text/css; charset=utf-8"],
@@ -35,7 +35,7 @@ export function sitePathForUrlPath(siteDir: string, urlPath: string): string {
   const clean = decoded.replace(/^\/+/, "");
   const root = path.resolve(siteDir);
   const resolved = path.resolve(root, clean);
-  return isWithinDirectory(root, resolved) ? resolved : "";
+  return isPathInside(root, resolved) ? resolved : "";
 }
 
 export function sitePathForHref(siteDir: string, siteUrl: string, href: string): string {
@@ -47,8 +47,4 @@ export function sitePathForHref(siteDir: string, siteUrl: string, href: string):
 export function siteHtmlFileForUrl(siteDir: string, urlPath: string): string {
   const routePath = sitePathForUrlPath(siteDir, urlPath);
   return routePath ? path.join(routePath, "index.html") : "";
-}
-
-function isWithinDirectory(root: string, filePath: string): boolean {
-  return filePath === root || filePath.startsWith(`${root}${path.sep}`);
 }
