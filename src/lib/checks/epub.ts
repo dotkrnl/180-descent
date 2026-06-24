@@ -197,7 +197,7 @@ function inspectEpubXml(edition: string, name: string, text: string, zip: JSZip,
   if (/print-hide/.test(text)) {
     errors.push(`${edition} contains print-hidden content in ${name}`);
   }
-  if (/Reference table/.test(text)) {
+  if (/reference table/i.test(text) || /参考表/.test(text)) {
     errors.push(`${edition} contains generic reference-table label in ${name}`);
   }
   for (const match of text.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/gi)) {
