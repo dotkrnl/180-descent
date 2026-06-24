@@ -1,0 +1,199 @@
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { chromium } from "playwright";
+import sharp from "sharp";
+import { walkFiles } from "@lib/fs/walk";
+import { siteDir } from "@lib/static-site/routes";
+import { urlForHtml } from "@lib/static-site/url";
+
+interface VisualCheckOptions {
+  root: string;
+  baseUrl: string;
+  compareUrl?: string;
+  outDir?: string;
+}
+
+interface VisualCheckResult {
+  errors: string[];
+  reportPath: string;
+}
+
+interface PageSnapshot {
+  route: string;
+  viewport: string;
+  url: string;
+  status: number;
+  lang: string;
+  title: string;
+  h1: string;
+  clientWidth: number;
+  scrollWidth: number;
+  scrollHeight: number;
+  screenshots: Record<string, string>;
+}
+
+const VIEWPORTS = [
+  { name: "mobile", width: 390, height: 844 },
+  { name: "desktop", width: 1440, height: 1000 }
+] as const;
+const SCROLL_STOPS = ["top", "middle", "bottom"] as const;
+
+export async function checkVisual(options: VisualCheckOptions): Promise<VisualCheckResult> {
+  const builtSiteDir = siteDir(options.root);
+  const outDir = options.outDir ?? path.join(options.root, "tmp/visual-qa");
+  const reportPath = path.join(outDir, "report.json");
+  const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignored: [] }))
+    .map((file) => urlForHtml(builtSiteDir, file))
+    .sort();
+  const browser = await chromium.launch();
+  const errors: string[] = [];
+  const pages: Array<{ base: PageSnapshot; compare?: PageSnapshot; diffs?: Record<string, number> }> = [];
+
+  await mkdir(outDir, { recursive: true });
+
+  try {
+    for (const route of routes) {
+      for (const viewport of VIEWPORTS) {
+        const base = await inspectPage(browser, options.baseUrl, route, viewport, path.join(outDir, "base"));
+        checkSnapshot(base, errors);
+
+        if (!options.compareUrl) {
+          pages.push({ base });
+          continue;
+        }
+
+        const compare = await inspectPage(browser, options.compareUrl, route, viewport, path.join(outDir, "compare"));
+        checkSnapshot(compare, errors);
+        compareSnapshots(base, compare, errors);
+        pages.push({
+          base,
+          compare,
+          diffs: await screenshotDiffs(base.screenshots, compare.screenshots)
+        });
+      }
+    }
+  } finally {
+    await browser.close();
+  }
+
+  await writeFile(reportPath, JSON.stringify({
+    baseUrl: options.baseUrl,
+    compareUrl: options.compareUrl ?? null,
+    routes,
+    viewports: VIEWPORTS,
+    errors,
+    pages
+  }, null, 2));
+
+  return { errors, reportPath };
+}
+
+async function inspectPage(
+  browser: Awaited<ReturnType<typeof chromium.launch>>,
+  baseUrl: string,
+  route: string,
+  viewport: typeof VIEWPORTS[number],
+  outDir: string
+): Promise<PageSnapshot> {
+  const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
+  const url = new URL(route, normalizedBaseUrl(baseUrl)).href;
+  const response = await page.goto(url, { waitUntil: "networkidle", timeout: 45000 });
+  const metrics = await page.evaluate(() => {
+    const doc = document.documentElement;
+    return {
+      lang: doc.getAttribute("lang") || "",
+      title: document.title.trim(),
+      h1: (document.querySelector("h1")?.textContent || "").replace(/\s+/g, " ").trim(),
+      clientWidth: doc.clientWidth,
+      scrollWidth: doc.scrollWidth,
+      scrollHeight: doc.scrollHeight
+    };
+  });
+  const screenshots: Record<string, string> = {};
+  await mkdir(outDir, { recursive: true });
+
+  for (const stop of SCROLL_STOPS) {
+    const y = scrollYForStop(stop, metrics.scrollHeight, viewport.height);
+    await page.evaluate((scrollY) => window.scrollTo(0, scrollY), y);
+    await page.waitForTimeout(150);
+    const screenshotPath = path.join(outDir, `${safeName(route)}-${viewport.name}-${stop}.png`);
+    await page.screenshot({ path: screenshotPath });
+    screenshots[stop] = screenshotPath;
+  }
+
+  await page.close();
+
+  return {
+    route,
+    viewport: viewport.name,
+    url,
+    status: response?.status() ?? 0,
+    ...metrics,
+    screenshots
+  };
+}
+
+function checkSnapshot(snapshot: PageSnapshot, errors: string[]): void {
+  if (snapshot.status < 200 || snapshot.status >= 400) {
+    errors.push(`${snapshot.url} returned HTTP ${snapshot.status}`);
+  }
+  if (snapshot.scrollWidth > snapshot.clientWidth + 1) {
+    errors.push(`${snapshot.url} overflows horizontally at ${snapshot.viewport}: scrollWidth ${snapshot.scrollWidth}, clientWidth ${snapshot.clientWidth}`);
+  }
+  if (!snapshot.lang) errors.push(`${snapshot.url} is missing html lang`);
+  if (!snapshot.title) errors.push(`${snapshot.url} is missing title`);
+  if (!snapshot.h1 && !snapshot.route.endsWith(".xml")) errors.push(`${snapshot.url} is missing h1`);
+}
+
+function compareSnapshots(base: PageSnapshot, compare: PageSnapshot, errors: string[]): void {
+  const label = `${base.route} ${base.viewport}`;
+  if (base.status !== compare.status) errors.push(`${label}: status changed ${compare.status} -> ${base.status}`);
+  if (base.lang !== compare.lang) errors.push(`${label}: lang changed "${compare.lang}" -> "${base.lang}"`);
+  if (base.title !== compare.title) errors.push(`${label}: title changed "${compare.title}" -> "${base.title}"`);
+  if (base.h1 !== compare.h1) errors.push(`${label}: h1 changed "${compare.h1}" -> "${base.h1}"`);
+  const maxHeight = Math.max(base.scrollHeight, compare.scrollHeight, 1);
+  if (Math.abs(base.scrollHeight - compare.scrollHeight) / maxHeight > 0.2) {
+    errors.push(`${label}: scroll height changed ${compare.scrollHeight} -> ${base.scrollHeight}`);
+  }
+}
+
+async function screenshotDiffs(base: Record<string, string>, compare: Record<string, string>): Promise<Record<string, number>> {
+  const out: Record<string, number> = {};
+  for (const stop of SCROLL_STOPS) {
+    out[stop] = await imageDiffRatio(base[stop], compare[stop]);
+  }
+  return out;
+}
+
+async function imageDiffRatio(aPath: string, bPath: string): Promise<number> {
+  const [a, b] = await Promise.all([
+    sharp(aPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
+    sharp(bPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
+  ]);
+  if (a.info.width !== b.info.width || a.info.height !== b.info.height || a.info.channels !== b.info.channels) return 1;
+
+  let changed = 0;
+  const channels = a.info.channels;
+  for (let index = 0; index < a.data.length; index += channels) {
+    const diff = Math.abs(a.data[index] - b.data[index])
+      + Math.abs(a.data[index + 1] - b.data[index + 1])
+      + Math.abs(a.data[index + 2] - b.data[index + 2]);
+    if (diff > 72) changed += 1;
+  }
+  return changed / (a.data.length / channels);
+}
+
+function scrollYForStop(stop: typeof SCROLL_STOPS[number], scrollHeight: number, viewportHeight: number): number {
+  const max = Math.max(0, scrollHeight - viewportHeight);
+  if (stop === "top") return 0;
+  if (stop === "middle") return Math.round(max / 2);
+  return max;
+}
+
+function normalizedBaseUrl(url: string): string {
+  return url.endsWith("/") ? url : `${url}/`;
+}
+
+function safeName(route: string): string {
+  return route.replace(/^\/|\/$/g, "").replace(/[^A-Za-z0-9]+/g, "-") || "home";
+}

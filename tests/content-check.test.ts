@@ -101,6 +101,44 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports web-only components without static alternates", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<GettierMachine locale="en" />'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "EN 001-fixture has 1 web-only component(s) but only 0 static print/EPUB alternate(s)"
+      }
+    ]);
+  });
+
+  it("reports components without artifact contracts", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        "<NewWidget>Unclassified</NewWidget>"
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx uses <NewWidget> without an artifact contract; classify its web, EPUB, and PDF behavior in checkContent"
+      }
+    ]);
+  });
+
   it("accepts semantic static alternate variants", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {

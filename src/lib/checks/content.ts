@@ -65,6 +65,183 @@ const RAW_INTERACTIVE_PATTERNS: Array<[RegExp, string]> = [
   [/\saria-(?:pressed|checked|expanded|controls)=/i, "interactive ARIA state"],
   [/\sdata-(?:action|case|exit|filter|mode|p|pick|preset|scn|state|step|target|value)=/i, "interactive data hook"]
 ];
+const WEB_ONLY_COMPONENTS = new Set([
+  "BayesTrap",
+  "CausalLadder",
+  "ConfidenceIntervalCoverage",
+  "CredenceDial",
+  "DemarcationLab",
+  "DiscoveryPurityEngine",
+  "DoSeeCalculator",
+  "EValueLedger",
+  "EchoChamber",
+  "EffectSizeDial",
+  "EntropyDial",
+  "FallacySpotter",
+  "FalsePositiveFactory",
+  "FalsePositiveRiskEngine",
+  "GettierMachine",
+  "GrueMachine",
+  "HypeFilterTrainer",
+  "InferenceInspector",
+  "LandauerMachine",
+  "MutualInformationOverlap",
+  "PValueShapeSimulator",
+  "ProbabilityMontyPanel",
+  "SValueBits",
+  "SimpsonReversalMachine",
+  "SpecificationCurve",
+  "StakesDial",
+  "StatisticsIncomingWaveLab"
+]);
+const ARTIFACT_COMPONENTS = new Set([
+  ...WEB_ONLY_COMPONENTS,
+  "AccuracyDomination",
+  "AgrippaTrilemmaMap",
+  "AppendixCard",
+  "AppendixCardBody",
+  "AppendixCardGrid",
+  "AppendixCardMeta",
+  "AppendixCardTitle",
+  "AppendixFigure",
+  "AppendixNote",
+  "AppendixTimeline",
+  "AppendixTimelineBody",
+  "AppendixTimelineCitation",
+  "AppendixTimelineItem",
+  "AppendixTimelineList",
+  "AppendixTimelineTitle",
+  "AppendixTimelineYear",
+  "Aside",
+  "BayesHeaderNote",
+  "BayesMeter",
+  "BayesNote",
+  "BayesSieve",
+  "BayesSymbol",
+  "BayesValue",
+  "BlockQuote",
+  "BlockTitle",
+  "BridgeLabel",
+  "Caption",
+  "CausalDagExamples",
+  "CausationScatterFigure",
+  "Claim",
+  "ClaimHeader",
+  "CompareCard",
+  "CompareCardMeta",
+  "CompareCardTitle",
+  "CompareList",
+  "ComparePanel",
+  "ComputationalCapacityLadderFigure",
+  "ContentSection",
+  "ContinueNote",
+  "ClosureMachine",
+  "CurryHowardBridge",
+  "DataTable",
+  "DataTableBody",
+  "DataTableCell",
+  "DataTableHead",
+  "DataTableHeader",
+  "DataTableRow",
+  "DefinitionBox",
+  "DekGrid",
+  "Divider",
+  "Emoji",
+  "Emphasis",
+  "EpistemicBackstopFigure",
+  "EscapeCard",
+  "EscapeGrid",
+  "FigureBox",
+  "FigureBoxCaption",
+  "ForkingPathsFigure",
+  "FormatOnly",
+  "Formula",
+  "Fragment",
+  "HammingCube",
+  "Hero",
+  "HeroDoorsFigure",
+  "HeroEyebrow",
+  "HeroSubhead",
+  "Highlight",
+  "HybridBox",
+  "HybridTitle",
+  "ImageFigure",
+  "InferenceModesFigure",
+  "InformationPhysicsFrontierMap",
+  "InformationQuestionTree",
+  "IncomingWaveAtlas",
+  "KindsOfKnowingTree",
+  "KnowledgeBeforeBeliefTimeline",
+  "Label",
+  "LadderKey",
+  "LarissaRoadFigure",
+  "Latin",
+  "Lead",
+  "LandauerEnergyLadder",
+  "LessonList",
+  "LessonListItem",
+  "LessonNote",
+  "LogicSchool",
+  "LogicSchools",
+  "MathBenchmarkLadderFigure",
+  "MathBlock",
+  "MathInline",
+  "MathLine",
+  "MathLineLabel",
+  "MaturityTimeline",
+  "MaturityTimelineItem",
+  "Meta",
+  "MilestoneDate",
+  "MilestoneItem",
+  "MilestoneList",
+  "MilestoneTitle",
+  "MiniList",
+  "MiniListItem",
+  "MisconceptionClaim",
+  "MisconceptionFix",
+  "MisconceptionItem",
+  "MisconceptionList",
+  "ModalRings",
+  "OpenScienceReplicationRates",
+  "Panel",
+  "PanelNote",
+  "PanelTitle",
+  "ProbabilityCamp",
+  "ProbabilityCamps",
+  "QuineWebFigure",
+  "QuoteSource",
+  "Recap",
+  "RecapItem",
+  "RecapList",
+  "Roadmap",
+  "SectionEyebrow",
+  "SimpleTable",
+  "SourceNote",
+  "Sources",
+  "SourcesTitle",
+  "SquareOfOppositionFigure",
+  "StatusChip",
+  "StatusChipRow",
+  "StatusText",
+  "StatisticsReformSpectrum",
+  "StoppedClockFigure",
+  "Strong",
+  "SunriseInductionFigure",
+  "TableSubnote",
+  "TableWrap",
+  "Term",
+  "TheoryCard",
+  "TheoryCardLead",
+  "TheoryKey",
+  "TheoryLadenSunriseFigure",
+  "Threads",
+  "TipNote",
+  "TrilemmaKey",
+  "TrilemmaKeyItem",
+  "WhereBlock",
+  "Wrap",
+  "ZeteticNormTensionFigure"
+]);
 
 interface RegistryContentFile {
   label: string;
@@ -149,6 +326,7 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
   checkStaticAlternates(file, failures);
   checkUnsupportedMdxWrappers(file, failures);
   checkRawInteractiveMarkup(file, failures);
+  checkArtifactComponentContract(file, failures);
 }
 
 function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
@@ -197,6 +375,31 @@ function checkRawInteractiveMarkup(file: RegistryContentFile, failures: ContentC
       });
       return;
     }
+  }
+}
+
+function checkArtifactComponentContract(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  const source = stripCodeBlocks(file.source);
+  const unknown = new Set<string>();
+  let webOnly = 0;
+
+  for (const match of source.matchAll(/<([A-Z][A-Za-z0-9]*)\b/g)) {
+    const name = match[1];
+    if (!ARTIFACT_COMPONENTS.has(name)) unknown.add(name);
+    if (WEB_ONLY_COMPONENTS.has(name)) webOnly += 1;
+  }
+
+  for (const name of unknown) {
+    failures.push({
+      message: `${file.relativePath} uses <${name}> without an artifact contract; classify its web, EPUB, and PDF behavior in checkContent`
+    });
+  }
+
+  const staticAlternates = countMatches(source, /<FormatOnly\b(?=[^>]*\bmedia="print-epub")(?=[^>]*\bvariant="alternate")/g);
+  if (staticAlternates < webOnly) {
+    failures.push({
+      message: `${file.label} has ${webOnly} web-only component(s) but only ${staticAlternates} static print/EPUB alternate(s)`
+    });
   }
 }
 

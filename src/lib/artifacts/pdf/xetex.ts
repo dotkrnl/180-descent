@@ -209,6 +209,11 @@ async function buildPdf(config: PdfEdition & { root: string }): Promise<void> {
     const tex = await buildLatexDocument(config, workDir);
     await writeFile(texPath, tex);
     await runXeLaTeX(texPath, workDir);
+    const log = await readFile(path.join(workDir, "book.log"), "utf8");
+    const logIssues = latexLogIssues(log);
+    if (logIssues.length) {
+      throw new Error(`XeTeX log contains layout warnings:\n${logIssues.join("\n")}`);
+    }
 
     await copyFile(outputPath, path.join(downloadsDir(root), config.output));
   } catch (error) {
@@ -527,6 +532,9 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "MathLineLabel") return renderInlineChildren(node, state, context);
   if (name === "ProbabilityCamps") return renderChildren(node.children ?? [], state, { block: true });
   if (name === "ProbabilityCamp") return renderProbabilityCamp(node, attrs, state);
+  if (name === "BlockQuote") {
+    return `\\begin{quotebox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{quotebox}`;
+  }
   const renderedSvg = renderRenderedSvgComponent(name, attrs, state);
   if (renderedSvg) return renderedSvg;
   if (name === "svg") return renderInlineSvg(node, state);
@@ -1107,7 +1115,7 @@ function renderHtmlList(node: MdxNode, state: MdxRenderState, ordered: boolean):
     return renderChildren(node.children ?? [], state, { block: true });
   }
   const items = listItems
-    .map((child) => `\\item ${renderChildren(child.children ?? [], state, { block: true, listItem: true }).trim()}`)
+    .map((child) => `\\item ${renderListItemBody(child, state)}`)
     .join("\n");
   return `\\begin{${env}}\n${items}\n\\end{${env}}`;
 }
@@ -1115,13 +1123,20 @@ function renderHtmlList(node: MdxNode, state: MdxRenderState, ordered: boolean):
 function collectListItems(node: MdxNode): MdxNode[] {
   const items: MdxNode[] = [];
   for (const child of node.children ?? []) {
-    if (child.name === "li") {
+    if (["li", "LessonListItem", "MisconceptionItem"].includes(child.name ?? "")) {
       items.push(child);
     } else if (!["ol", "ul"].includes(child.name ?? "")) {
       items.push(...collectListItems(child));
     }
   }
   return items;
+}
+
+function renderListItemBody(node: MdxNode, state: MdxRenderState): string {
+  const attrs = mdxAttributes(node);
+  const lead = resolveExpression(attrs.get("lead"), state);
+  const body = renderChildren(node.children ?? [], state, { block: true, listItem: true }).trim();
+  return lead ? `\\textbf{${latexEscape(lead)}} ${body}`.trim() : body;
 }
 
 function renderImage(src: string, caption: string, state: MdxRenderState): string {
@@ -1706,6 +1721,28 @@ function execFileSyncish(command: string, args: string[]): void {
 
 function lastLatexLogLines(log: string): string {
   return log.split("\n").slice(-80).join("\n");
+}
+
+function latexLogIssues(log: string): string[] {
+  const strictFontWarnings = process.env.PDF_STRICT_FONT_WARNINGS === "1";
+  const issues: string[] = [];
+  const patterns = [
+    /Overfull \\[hv]box .*$/gm,
+    /Missing character: .*$/gm,
+    ...(strictFontWarnings ? [
+      /LaTeX Font Warning: .*$/gm,
+      /Package (?:fontspec|xeCJK) Warning: .*$/gm
+    ] : [])
+  ];
+
+  for (const pattern of patterns) {
+    for (const match of log.matchAll(pattern)) {
+      issues.push(match[0].trim());
+      if (issues.length >= 20) return issues;
+    }
+  }
+
+  return issues;
 }
 
 function toError(error: unknown): Error {

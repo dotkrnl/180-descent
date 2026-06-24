@@ -46,6 +46,7 @@ The PDF output should match the website's visual vocabulary: serif body text, re
 - PDFs contain no annotations or local/staging day links;
 - standard editions omit appendix content;
 - deep-dive and day-specific editions include appendix content and labels;
-- live interactive control text does not leak into deep-dive PDFs.
+- live interactive control text does not leak into deep-dive PDFs;
+- successful XeTeX logs contain no overfull boxes or missing glyphs.
 
 Browser-specific assertions such as full-bleed page background sampling and Playwright running-header stamping are outside the PDF contract.

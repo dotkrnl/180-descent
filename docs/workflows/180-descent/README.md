@@ -40,7 +40,9 @@ small reusable component when inline JSX must wrap another component. MDX must
 not own raw interactive controls, canvas, behavior ARIA roles, inline event
 handlers, or action/state data hooks. Put those contracts inside
 `lesson/interactives` components and let `npm run check:content` enforce the
-boundary.
+boundary. Every uppercase MDX component tag must also have an explicit artifact
+contract in `check:content`: rendered directly, transparent wrapper, or web-only
+with a static `FormatOnly media="print-epub" variant="alternate"` equivalent.
 
 ## Day Changes
 
@@ -177,8 +179,10 @@ SVG/HTML/SCSS diagrams.
   may drift from the live web component when it improves readability.
 - For PDF-affecting edits, run `npm run build:pdf` and `npm run check:pdf`. When
   changing PDF renderer, figure, table, code, or source-block behavior, also
-  preserve logs with `PDF_KEEP_TEMP=1 npm run build:pdf` and scan for
-  `Overfull`, `Missing character`, and font warnings.
+  preserve logs with `PDF_KEEP_TEMP=1 npm run build:pdf` when deeper diagnosis
+  is needed. The PDF build fails on `Overfull` boxes and `Missing character`
+  glyph loss. Use `PDF_STRICT_FONT_WARNINGS=1 npm run build:pdf` when tightening
+  font-shape substitutions.
 - Visual review scope: for global renderer/style changes, sample at least 20
   pages from each full PDF (`180-descent`, `180-descent-deep-dive`,
   `180-descent-zh`, `180-descent-zh-deep-dive`). For individual day PDFs, first
@@ -220,7 +224,7 @@ asks to publish immediately.
 1. Start the local dev server if it is not already running:
 
 ```sh
-npm run dev -- --port 8080
+rtk npm run dev -- --port 8080
 ```
 
 If port 8080 is unavailable, use another local port and tell the user the URL.
@@ -241,15 +245,15 @@ If port 8080 is unavailable, use another local port and tell the user the URL.
 1. Inspect current branch and diff:
 
 ```sh
-git branch --show-current
-git status --short
-git diff --stat
+rtk git branch --show-current
+rtk git status --short
+rtk git diff --stat
 ```
 
 2. Run:
 
 ```sh
-npm run check
+rtk npm run check
 ```
 
 `npm run check` rebuilds all generated assets and download artifacts, then runs
@@ -262,7 +266,7 @@ cleanliness.
 5. Push the current branch:
 
 ```sh
-git push origin HEAD
+rtk git push origin HEAD
 ```
 
 6. Deploy only when the user asks for deployment.
@@ -270,13 +274,13 @@ git push origin HEAD
 For production:
 
 ```sh
-npm run deploy
+rtk npm run deploy
 ```
 
 For staging:
 
 ```sh
-npm run deploy:staging
+rtk npm run deploy:staging
 ```
 
 7. When asked to visually compare, compare
@@ -285,6 +289,14 @@ npm run deploy:staging
    Chinese at desktop and mobile widths. At minimum, check HTTP status, `lang`,
    title, H1, text/content drift, scroll height, horizontal overflow, and
    screenshots at top/middle/bottom scroll positions for long pages.
+   Use the visual QA command to produce the route inventory, screenshots, and
+   structural comparison report:
+
+```sh
+rtk npm run build:site
+rtk npm run check:visual -- --base https://staging.180-descent.pages.dev --compare https://180d.io --out tmp/visual-qa
+```
+
 8. Treat structural mismatches, language/title/H1 mismatches, horizontal
    overflow, broken math, missing Chinese font behavior, and untranslated
    Chinese print labels as regressions. Distinguish expected content drift from
@@ -300,20 +312,20 @@ Do not edit generated files in `_site/`; they are build outputs.
 For focused edits, run the narrow checks first:
 
 ```sh
-npm run typecheck
-npm test
-npm run check:content
-npm run check:math
-npm run check:appendix-style
-npm run check:links
-npm run check:clean
-npm run check:workflows
+rtk npm run typecheck
+rtk npm test
+rtk npm run check:content
+rtk npm run check:math
+rtk npm run check:appendix-style
+rtk npm run check:links
+rtk npm run check:clean
+rtk npm run check:workflows
 ```
 
 For asset, artifact, global renderer, or release-bound changes, run:
 
 ```sh
-npm run check
+rtk npm run check
 ```
 
 For every affected PDF page, render the page to PNG with Poppler and visually
@@ -322,6 +334,6 @@ confirm the expected output. Do not trust caption text alone.
 For EPUB image changes, inspect the zip:
 
 ```sh
-unzip -l _site/downloads/<file>.epub | rg 'OEBPS/images|image-name'
-unzip -p _site/downloads/<file>.epub OEBPS/content.opf | rg 'image-name|image/jpeg|image/png|image/webp'
+rtk unzip -l _site/downloads/<file>.epub | rtk rg 'OEBPS/images|image-name'
+rtk unzip -p _site/downloads/<file>.epub OEBPS/content.opf | rtk rg 'image-name|image/jpeg|image/png|image/webp'
 ```
