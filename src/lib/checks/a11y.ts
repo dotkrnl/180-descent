@@ -99,9 +99,7 @@ export async function checkStaticAccessibility(options: AccessibilityCheckOption
     }
   }
 
-  const axePages = htmlFiles
-    .map((filePath) => urlForHtml(siteDir, filePath))
-    .filter((url) => !/^\/(?:zh\/)?print(?:-deep)?\//.test(url));
+  const axePages = htmlFiles.map((filePath) => urlForHtml(siteDir, filePath));
 
   return { errors, axePages };
 }

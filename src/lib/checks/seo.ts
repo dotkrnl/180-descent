@@ -42,12 +42,6 @@ async function checkHtml(siteDir: string, siteUrl: string, filePath: string, err
   const html = await readFile(filePath, "utf8");
   const $ = load(html);
 
-  if (!isIndexablePage(url)) {
-    const robots = $('meta[name="robots"]').attr("content") || "";
-    if (!robots.includes("noindex")) errors.push(`${url}: print/duplicate page is missing noindex robots meta`);
-    return;
-  }
-
   const title = $("title").first().text().trim();
   const description = $('meta[name="description"]').attr("content") || "";
   const canonical = $('link[rel="canonical"]').attr("href") || "";
@@ -94,7 +88,6 @@ async function checkSitemap(siteDir: string, errors: string[]): Promise<void> {
 
   const sitemap = await readFile(sitemapPath, "utf8");
   if (!sitemap.includes("<urlset")) errors.push("sitemap.xml: missing urlset");
-  if (sitemap.includes("/print/")) errors.push("sitemap.xml: print duplicate URLs should be excluded");
   if (!sitemap.includes("xhtml:link")) errors.push("sitemap.xml: missing hreflang xhtml:link alternates");
 }
 
@@ -119,10 +112,6 @@ function localPathForHref(siteDir: string, siteUrl: string, href: string): strin
     ? new URL(href)
     : new URL(href, siteUrl);
   return path.join(siteDir, parsed.pathname.replace(/^\/+/, ""));
-}
-
-function isIndexablePage(url: string): boolean {
-  return !/^\/(?:zh\/)?print(?:-deep)?\//.test(url);
 }
 
 async function hasHtmlForUrl(siteDir: string, url: string): Promise<boolean> {

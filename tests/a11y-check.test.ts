@@ -20,14 +20,6 @@ describe("static accessibility check", () => {
     expect(result.axePages).toEqual(["/"]);
   });
 
-  it("skips print duplicate pages for axe", async () => {
-    const root = await createSiteRoot('<meta name="robots" content="noindex">', "print/index.html");
-
-    const result = await checkStaticAccessibility({ root });
-
-    expect(result.errors).toEqual([]);
-    expect(result.axePages).toEqual([]);
-  });
 });
 
 async function createSiteRoot(html: string, relativePath = "index.html"): Promise<string> {

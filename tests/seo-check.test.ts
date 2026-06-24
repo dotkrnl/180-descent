@@ -14,18 +14,6 @@ describe("seo check", () => {
       errors: []
     });
   });
-
-  it("requires noindex metadata on print duplicate pages", async () => {
-    const root = await createSiteRoot();
-    await mkdir(path.join(root, "_site/print"), { recursive: true });
-    await writeFile(path.join(root, "_site/print/index.html"), "<title>Print</title>");
-
-    const result = await checkSeo({ root });
-
-    expect(result.errors).toEqual([
-      "/print/: print/duplicate page is missing noindex robots meta"
-    ]);
-  });
 });
 
 async function createSiteRoot(): Promise<string> {
