@@ -1,0 +1,73 @@
+---
+import type { Locale } from "@lib/schemas/day";
+
+interface Props {
+  locale: Locale;
+}
+
+const zh = Astro.props.locale === "zh";
+const markerId = `information-physics-frontier-arrow-${Astro.props.locale}`;
+const nodes = zh
+  ? [
+      { x: 10, y: 20, stroke: "var(--hint)", lines: ["热力学", "计算"] },
+      { x: 235, y: 20, stroke: "var(--ok)", lines: ["权衡法则", "TUR · 速度极限"] },
+      { x: 460, y: 20, stroke: "var(--ok)", lines: ["计时", "能耗要求"] },
+      { x: 10, y: 130, stroke: "var(--ok)", lines: ["信息引擎", "麦克斯韦妖"] },
+      { x: 235, y: 130, stroke: "var(--hint)", lines: ["量子信息", "热力学"] },
+      { x: 460, y: 130, stroke: "var(--ok)", lines: ["生命系统", "细胞中的熵"] },
+      { x: 235, y: 250, stroke: "var(--ok)", dashed: true, lines: ["黑洞", "信息悖论"] }
+    ]
+  : [
+      { x: 10, y: 20, stroke: "var(--hint)", lines: ["Thermodynamic", "Computing"] },
+      { x: 235, y: 20, stroke: "var(--ok)", lines: ["Trade-off Laws", "TURs · Speed Limits"] },
+      { x: 460, y: 20, stroke: "var(--ok)", lines: ["Cost of", "Timekeeping"] },
+      { x: 10, y: 130, stroke: "var(--ok)", lines: ["Information", "Engines · Demons"] },
+      { x: 235, y: 130, stroke: "var(--hint)", lines: ["Quantum Info", "Thermodynamics"] },
+      { x: 460, y: 130, stroke: "var(--ok)", lines: ["Living Systems", "Entropy in Cells"] },
+      { x: 235, y: 250, stroke: "var(--ok)", dashed: true, lines: ["Black Hole", "Information Paradox"] }
+    ];
+
+const legend = zh
+  ? ["已确立的成果", "初露曙光的线索", "仅限理论（无实验）"]
+  : ["established result", "promising hint", "theory only (no expt)"];
+---
+<div class="information-physics-frontier-map">
+  <svg viewBox="0 0 640 330" role="img" aria-label={zh ? "信息物理学的七个前沿领域。" : "Seven frontier areas of information physics."}>
+    <defs>
+      <marker id={markerId} markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+        <path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"></path>
+      </marker>
+    </defs>
+    <g font-family="IBM Plex Mono,monospace" font-size="10.5">
+      {nodes.map((node) => (
+        <>
+          <rect
+            x={node.x}
+            y={node.y}
+            width="170"
+            height="52"
+            rx="9"
+            fill="var(--raised)"
+            stroke={node.stroke}
+            stroke-width="2"
+            stroke-dasharray={node.dashed ? "4 3" : undefined}
+          ></rect>
+          <text x={node.x + 85} y={node.y + (node.y === 20 ? 22 : 20)} text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="11">{node.lines[0]}</text>
+          <text x={node.x + 85} y={node.y + (node.y === 20 ? 38 : 36)} text-anchor="middle" fill="var(--ink-soft)">{node.lines[1]}</text>
+        </>
+      ))}
+    </g>
+    <g stroke="var(--ink-faint)" stroke-width="1.2" fill="none" marker-end={`url(#${markerId})`}>
+      <line x1="180" y1="46" x2="232" y2="46"></line><line x1="405" y1="46" x2="457" y2="46"></line>
+      <line x1="95" y1="72" x2="95" y2="127"></line><line x1="320" y1="72" x2="320" y2="127"></line><line x1="545" y1="72" x2="545" y2="127"></line>
+      <line x1="180" y1="156" x2="232" y2="156"></line><line x1="405" y1="156" x2="457" y2="156"></line>
+      <line x1="320" y1="182" x2="320" y2="247"></line>
+      <path d="M95,182 C95,230 232,265 232,270"></path><path d="M545,182 C545,230 408,265 408,270"></path>
+    </g>
+    <g font-family="IBM Plex Mono,monospace" font-size="10.5" transform="translate(470,250)">
+      <circle cx="8" cy="6" r="5" fill="var(--ok)"></circle><text x="18" y="10" fill="var(--ink-faint)">{legend[0]}</text>
+      <circle cx="8" cy="24" r="5" fill="var(--hint)"></circle><text x="18" y="28" fill="var(--ink-faint)">{legend[1]}</text>
+      <rect x="2" y="38" width="12" height="10" rx="2" fill="none" stroke="var(--ink-faint)" stroke-dasharray="3 2"></rect><text x="18" y="46" fill="var(--ink-faint)">{legend[2]}</text>
+    </g>
+  </svg>
+</div>

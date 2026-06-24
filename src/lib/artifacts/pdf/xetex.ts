@@ -886,6 +886,7 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["SunriseInductionFigure", { selector: ".hero-sun", width: "0.82\\linewidth", height: "0.28\\textheight" }],
   ["InferenceModesFigure", { selector: ".hero-art", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["InformationQuestionTree", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }],
+  ["InformationPhysicsFrontierMap", { selector: ".information-physics-frontier-map", width: "0.86\\linewidth", height: "0.3\\textheight" }],
   ["ForkingPathsFigure", { selector: ".forking-paths", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["CausationScatterFigure", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }]
 ]);
