@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFilesSync } from "@lib/fs/walk";
@@ -25,8 +25,6 @@ export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFail
 
   for (const root of roots) {
     const absoluteRoot = path.join(options.root, root);
-    if (!existsSync(absoluteRoot)) continue;
-
     for (const file of walkFilesSync(absoluteRoot, { allowedExtensionsRegex: ALLOWED_EXTENSIONS })) {
       const relativeFile = toPosixRelative(options.root, file);
       if (GENERATED_STYLE_PATTERN.test(relativeFile)) continue;

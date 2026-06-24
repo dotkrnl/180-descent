@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { toPosixRelative } from "@lib/fs/path";
-import { pathExists, walkFiles } from "@lib/fs/walk";
+import { walkFiles } from "@lib/fs/walk";
 
 interface MathCheckOptions {
   root: string;
@@ -35,21 +35,17 @@ export async function checkMath(options: MathCheckOptions): Promise<MathCheckRes
   const sourceDir = path.join(options.root, options.sourceDir ?? "src/content/days");
   const siteDir = path.join(options.root, options.siteDir ?? "_site");
   const failures: MathCheckFailure[] = [];
-  const sourceFiles = await pathExists(sourceDir)
-    ? await walkFiles(sourceDir, { exts: ".mdx", ignored: [] })
-    : [];
+  const sourceFiles = await walkFiles(sourceDir, { exts: ".mdx", ignored: [] });
 
   for (const file of sourceFiles) {
     const content = await readFile(file, "utf8");
     failures.push(...scanPatterns(options.root, file, content, RAW_SOURCE_PATTERNS));
   }
 
-  if (await pathExists(siteDir)) {
-    const builtFiles = await walkFiles(siteDir, { exts: ".html", ignored: [] });
-    for (const file of builtFiles) {
-      const content = await readFile(file, "utf8");
-      failures.push(...scanPatterns(options.root, file, content, BUILT_PATTERNS));
-    }
+  const builtFiles = await walkFiles(siteDir, { exts: ".html", ignored: [] });
+  for (const file of builtFiles) {
+    const content = await readFile(file, "utf8");
+    failures.push(...scanPatterns(options.root, file, content, BUILT_PATTERNS));
   }
 
   return {
