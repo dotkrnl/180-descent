@@ -1,6 +1,7 @@
 ---
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import BookShell from "@app/layouts/BookShell.astro";
+import { getBookData } from "@app/site-data";
 import type { RegistryDayLocaleEntry } from "@lib/content/registry";
 import { alternateLocale, dayUrl, staticPageUrl } from "@lib/static-site/routes";
 
@@ -37,6 +38,7 @@ const interactionScriptModules = Object.fromEntries(
 ) as Record<string, string>;
 
 const { entry, previous, next, Body, appendices } = Astro.props;
+const book = await getBookData();
 const isZh = entry.locale === "zh";
 const dayPath = entry.day.manifest.path;
 const canonicalPath = dayUrl(entry.locale, dayPath);
@@ -45,7 +47,7 @@ const downloadPrefix = isZh ? `/downloads/180-descent-zh-day-${dayPath}` : `/dow
 const socialImagePath = isZh ? `/assets/images/social/zh-day-${dayPath}.png` : `/assets/images/social/day-${dayPath}.png`;
 const paddedDay = String(entry.day.manifest.day).padStart(3, "0");
 const dayLabel = isZh ? `第${paddedDay}日` : `Day ${paddedDay}`;
-const remainingDays = 180 - entry.day.manifest.day;
+const remainingDays = book.totalDays - entry.day.manifest.day;
 const navDayLabel = (day: number) => {
   const value = String(day).padStart(3, "0");
   return isZh ? `第${value}日` : `Day ${value}`;
