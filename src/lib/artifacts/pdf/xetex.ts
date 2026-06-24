@@ -675,6 +675,11 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "TrilemmaKeyItem") {
     return renderChildren(node.children ?? [], state, { block: true });
   }
+  if (name === "Roadmap") {
+    const title = latexEscape(resolveExpression(attrs.get("title"), state));
+    const body = renderChildren(node.children ?? [], state, { block: true }).trim();
+    return [title ? `\\blockheading{${title}}` : "", body].filter(Boolean).join("\n");
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
@@ -1544,7 +1549,8 @@ function isBlockMdxElement(node: MdxNode): boolean {
     "Claim",
     "Hero",
     "Wrap",
-    "FormatOnly"
+    "FormatOnly",
+    "Roadmap"
   ].includes(node.name ?? "");
 }
 
@@ -1560,7 +1566,8 @@ function isContainerComponent(name: string): boolean {
     "Wrap",
     "Threads",
     "Divider",
-    "FormatOnly"
+    "FormatOnly",
+    "Roadmap"
   ].includes(name);
 }
 
