@@ -890,6 +890,8 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["ZeteticNormTensionFigure", { selector: ".zetetic-norm-tension-figure", width: "0.82\\linewidth", height: "0.24\\textheight" }],
   ["KnowledgeBeforeBeliefTimeline", { selector: ".knowledge-before-belief-timeline", width: "0.82\\linewidth", height: "0.2\\textheight" }],
   ["EpistemicBackstopFigure", { selector: ".epistemic-backstop-figure", width: "0.82\\linewidth", height: "0.22\\textheight" }],
+  ["LarissaRoadFigure", { selector: ".larissa-road-figure", width: "0.72\\linewidth", height: "0.2\\textheight" }],
+  ["KindsOfKnowingTree", { selector: ".kinds-of-knowing-tree", width: "0.82\\linewidth", height: "0.24\\textheight" }],
   ["ForkingPathsFigure", { selector: ".forking-paths", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["CausationScatterFigure", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }]
 ]);

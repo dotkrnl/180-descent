@@ -1,0 +1,65 @@
+---
+import type { Locale } from "@lib/schemas/day";
+
+interface Props {
+  locale: Locale;
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      aria: "一棵将知识分为命题知识、技艺知识与亲知的树。",
+      root: "知道",
+      rootSub: "这一个词",
+      thatTitle: "命题知识",
+      thatSub: "命题的",
+      howTitle: "技艺知识",
+      howSub: "程序 / 技艺",
+      acquaintanceTitle: "亲知",
+      acquaintanceSub: "亲知",
+      thatExample: "「……银行在营业」",
+      howExample: "「……如何骑自行车」",
+      acquaintanceExample: "「……那张脸 / 这座城市」",
+      footer: "争论焦点：中间的箱子是否其实只是左边的箱子？",
+      italicExamples: false
+    }
+  : {
+      aria: "A tree dividing knowledge into knowing-that, knowing-how, and knowing-by-acquaintance.",
+      root: "\"knows\"",
+      rootSub: "the one word",
+      thatTitle: "knowing-THAT",
+      thatSub: "propositional",
+      howTitle: "knowing-HOW",
+      howSub: "procedural / skill",
+      acquaintanceTitle: "knowing-OF",
+      acquaintanceSub: "by acquaintance",
+      thatExample: "\"…that the bank is open\"",
+      howExample: "\"…how to ride a bike\"",
+      acquaintanceExample: "\"…that face / this city\"",
+      footer: "live debate: is the middle box secretly just the left box?",
+      italicExamples: true
+    };
+---
+<div class="kinds-of-knowing-tree">
+  <svg viewBox="0 0 600 230" role="img" aria-label={copy.aria}>
+    <rect x="235" y="14" width="130" height="44" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"></rect>
+    <text x="300" y="34" text-anchor="middle" font-family="Fraunces,serif" font-size="14" fill="var(--ink)">{copy.root}</text>
+    <text x="300" y="50" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.rootSub}</text>
+    <line x1="300" y1="58" x2="100" y2="96" stroke="var(--line-strong)" stroke-width="1.5"></line>
+    <line x1="300" y1="58" x2="300" y2="96" stroke="var(--line-strong)" stroke-width="1.5"></line>
+    <line x1="300" y1="58" x2="500" y2="96" stroke="var(--line-strong)" stroke-width="1.5"></line>
+    <rect x="30" y="98" width="140" height="50" rx="9" fill="color-mix(in srgb,var(--accent) 10%,transparent)" stroke="var(--line-strong)" stroke-width="1.4"></rect>
+    <text x="100" y="118" text-anchor="middle" font-family="Fraunces,serif" font-size="13" fill="var(--ink)">{copy.thatTitle}</text>
+    <text x="100" y="135" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.thatSub}</text>
+    <rect x="230" y="98" width="140" height="50" rx="9" fill="color-mix(in srgb,var(--accent) 10%,transparent)" stroke="var(--line-strong)" stroke-width="1.4"></rect>
+    <text x="300" y="118" text-anchor="middle" font-family="Fraunces,serif" font-size="13" fill="var(--ink)">{copy.howTitle}</text>
+    <text x="300" y="135" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.howSub}</text>
+    <rect x="430" y="98" width="140" height="50" rx="9" fill="color-mix(in srgb,var(--accent) 10%,transparent)" stroke="var(--line-strong)" stroke-width="1.4"></rect>
+    <text x="500" y="115" text-anchor="middle" font-family="Fraunces,serif" font-size="13" fill="var(--ink)">{copy.acquaintanceTitle}</text>
+    <text x="500" y="132" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.acquaintanceSub}</text>
+    <text x="100" y="178" text-anchor="middle" font-family="Newsreader,serif" font-style={copy.italicExamples ? "italic" : undefined} font-size="11.5" fill="var(--ink-soft)">{copy.thatExample}</text>
+    <text x="300" y="178" text-anchor="middle" font-family="Newsreader,serif" font-style={copy.italicExamples ? "italic" : undefined} font-size="11.5" fill="var(--ink-soft)">{copy.howExample}</text>
+    <text x="500" y="178" text-anchor="middle" font-family="Newsreader,serif" font-style={copy.italicExamples ? "italic" : undefined} font-size="11.5" fill="var(--ink-soft)">{copy.acquaintanceExample}</text>
+    <text x="300" y="212" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--brass)">{copy.footer}</text>
+  </svg>
+</div>

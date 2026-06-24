@@ -1,0 +1,36 @@
+---
+import type { Locale } from "@lib/schemas/day";
+
+interface Props {
+  locale: Locale;
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      aria: "两条从你通往拉里萨的路：仅仅真信念与知识，二者皆抵达。",
+      origin: "你",
+      destination: "拉里萨",
+      trueBelief: "仅仅真信念 — 抵达",
+      knowledge: "知识 — 亦抵达"
+    }
+  : {
+      aria: "Two roads from You to Larissa: mere true belief and knowledge, both arriving.",
+      origin: "YOU",
+      destination: "LARISSA",
+      trueBelief: "mere true belief — arrives",
+      knowledge: "knowledge — also arrives"
+    };
+---
+<div class="larissa-road-figure">
+  <svg viewBox="0 0 440 170" role="img" aria-label={copy.aria}>
+    <text x="40" y="88" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink)">{copy.origin}</text>
+    <circle cx="40" cy="95" r="6" fill="var(--ink)"></circle>
+    <text x="400" y="88" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--brass)">{copy.destination}</text>
+    <circle cx="400" cy="95" r="6" fill="var(--brass)"></circle>
+    <path d="M48,92 C150,40 300,40 392,90" fill="none" stroke="var(--hint)" stroke-width="2" stroke-dasharray="2 5"></path>
+    <path d="M48,98 C150,150 300,150 392,100" fill="none" stroke="var(--accent)" stroke-width="2.5"></path>
+    <text x="220" y="38" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--hint)">{copy.trueBelief}</text>
+    <text x="220" y="165" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--accent)">{copy.knowledge}</text>
+  </svg>
+</div>
