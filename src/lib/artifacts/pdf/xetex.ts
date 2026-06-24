@@ -741,7 +741,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `\\begin{notepara}${text}\\end{notepara}` : "";
   }
-  if (["HeroSubhead", "PanelNote", "Caption", "SourceNote"].includes(name)) {
+  if (["HeroSubhead", "PanelNote", "Caption", "SourceNote", "LadderKey"].includes(name)) {
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `\\begin{notepara}${text}\\end{notepara}` : "";
   }

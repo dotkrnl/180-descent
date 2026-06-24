@@ -1,5 +1,6 @@
 ---
 import Panel from "@app/components/lesson/Panel.astro";
+import LadderKey from "@app/components/lesson/LadderKey.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 
@@ -44,5 +45,5 @@ const zh = Astro.props.locale === "zh";
     <path d="M400,84 C470,60 500,48 540,42" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="3 4"></path>
     <text x="333" y="135" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-32 333 135)">{zh ? "← 边界不同 →" : "← different boundaries →"}</text>
   </svg>
-  <p class="ladder-key">{zh ? "实验室装置并不是比你的笔记本更好的通用计算机：它们隔离的是一个擦除协议，并以足够温和的方式运行来逼近热力学界限。实际芯片还要为速度、可靠性、内存移动、控制、冷却和供电付费。只有始终看清每一层的系统边界，这种比较才有用。" : "The lab experiments are not better general computers than your laptop: they isolate one erasure protocol and run it gently enough to approach the thermodynamic bound. Practical chips spend energy on speed, reliability, memory movement, control, cooling, and power delivery. The comparison is useful only if the boundary around each rung is kept visible."}</p>
+  <LadderKey>{zh ? "实验室装置并不是比你的笔记本更好的通用计算机：它们隔离的是一个擦除协议，并以足够温和的方式运行来逼近热力学界限。实际芯片还要为速度、可靠性、内存移动、控制、冷却和供电付费。只有始终看清每一层的系统边界，这种比较才有用。" : "The lab experiments are not better general computers than your laptop: they isolate one erasure protocol and run it gently enough to approach the thermodynamic bound. Practical chips spend energy on speed, reliability, memory movement, control, cooling, and power delivery. The comparison is useful only if the boundary around each rung is kept visible."}</LadderKey>
 </Panel>
