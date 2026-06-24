@@ -8,9 +8,6 @@ import { walkFiles } from "@lib/fs/walk";
 
 interface LinkCheckOptions {
   root: string;
-  siteDir?: string;
-  daysDir?: string;
-  futureLinksPath?: string;
 }
 
 interface LinkCheckFailure {
@@ -24,9 +21,9 @@ interface FutureLinkEntry {
 }
 
 export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFailure[]> {
-  const siteDir = path.join(options.root, options.siteDir ?? "_site");
-  const daysDir = path.join(options.root, options.daysDir ?? "src/content/days");
-  const futureLinksPath = path.join(options.root, options.futureLinksPath ?? "src/_data/future-links.yaml");
+  const siteDir = path.join(options.root, "_site");
+  const daysDir = path.join(options.root, "src/content/days");
+  const futureLinksPath = path.join(options.root, "src/_data/future-links.yaml");
   const failures: LinkCheckFailure[] = [];
   const htmlFiles = await walkFiles(siteDir, { exts: ".html", ignored: [] });
   const idCache = new Map<string, Set<string>>();
