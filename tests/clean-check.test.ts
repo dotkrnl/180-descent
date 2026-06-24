@@ -7,10 +7,7 @@ import { checkCleanRepo } from "@lib/checks/clean";
 
 describe("clean repo check", () => {
   it("flags tracked generated output", async () => {
-    const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
-    runGit(root, "init");
-    runGit(root, "config", "user.email", "test@example.com");
-    runGit(root, "config", "user.name", "Test User");
+    const root = await createGitRoot();
 
     await mkdir(path.join(root, "_site"), { recursive: true });
     await writeFile(path.join(root, "_site/index.html"), "");
@@ -25,10 +22,7 @@ describe("clean repo check", () => {
   });
 
   it("flags tracked public assets", async () => {
-    const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
-    runGit(root, "init");
-    runGit(root, "config", "user.email", "test@example.com");
-    runGit(root, "config", "user.name", "Test User");
+    const root = await createGitRoot();
 
     await mkdir(path.join(root, "public/assets"), { recursive: true });
     await writeFile(path.join(root, "public/assets/source.txt"), "");
@@ -42,6 +36,14 @@ describe("clean repo check", () => {
     ]);
   });
 });
+
+async function createGitRoot(): Promise<string> {
+  const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
+  runGit(root, "init");
+  runGit(root, "config", "user.email", "test@example.com");
+  runGit(root, "config", "user.name", "Test User");
+  return root;
+}
 
 function runGit(cwd: string, ...args: string[]): void {
   execFileSync("git", args, { cwd, stdio: "ignore" });
