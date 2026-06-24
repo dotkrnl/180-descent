@@ -2,6 +2,7 @@
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import BookShell from "@app/layouts/BookShell.astro";
 import { getBookData } from "@app/site-data";
+import { dayArtifactDownloadUrl } from "@lib/artifacts/downloads";
 import type { RegistryDayLocaleEntry } from "@lib/content/registry";
 import { alternateLocale, dayUrl, staticPageUrl } from "@lib/static-site/routes";
 
@@ -43,7 +44,8 @@ const isZh = entry.locale === "zh";
 const dayPath = entry.day.manifest.path;
 const canonicalPath = dayUrl(entry.locale, dayPath);
 const alternatePath = dayUrl(alternateLocale(entry.locale), dayPath);
-const downloadPrefix = isZh ? `/downloads/180-descent-zh-day-${dayPath}` : `/downloads/180-descent-day-${dayPath}`;
+const dayEpubUrl = dayArtifactDownloadUrl("epub", entry.locale, dayPath);
+const dayPdfUrl = dayArtifactDownloadUrl("pdf", entry.locale, dayPath);
 const socialImagePath = isZh ? `/assets/images/social/zh-day-${dayPath}.png` : `/assets/images/social/day-${dayPath}.png`;
 const paddedDay = String(entry.day.manifest.day).padStart(3, "0");
 const dayLabel = isZh ? `第${paddedDay}日` : `Day ${paddedDay}`;
@@ -76,8 +78,8 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
     <div class="download-strip">
       <div class="wrap wide">
         <span>{isZh ? "下载本日：" : "Download this day:"}</span>
-        <a href={`${downloadPrefix}.epub`}>EPUB</a>
-        <a href={`${downloadPrefix}.pdf`}>PDF</a>
+        <a href={dayEpubUrl}>EPUB</a>
+        <a href={dayPdfUrl}>PDF</a>
       </div>
     </div>
     {!next && (

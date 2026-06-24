@@ -1,3 +1,4 @@
+import { bookDownloadUrls, type BookDownloadUrls } from "@lib/artifacts/downloads";
 import { bookDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
 
@@ -15,7 +16,7 @@ export interface BookData {
   publishedYear: number;
   totalDays: number;
   epubIdentifier: string;
-  downloads: DownloadData;
+  downloads: BookDownloadUrls;
   zh: {
     language: string;
     title: string;
@@ -26,15 +27,8 @@ export interface BookData {
     humanEditor: HumanEditorData;
     description: string;
     epubIdentifier: string;
-    downloads: DownloadData;
+    downloads: BookDownloadUrls;
   };
-}
-
-interface DownloadData {
-  epub: string;
-  pdf: string;
-  deepEpub: string;
-  deepPdf: string;
 }
 
 export interface HumanEditorData {
@@ -56,7 +50,6 @@ interface RawBookData {
   published_year: number;
   total_days: number;
   epub_identifier: string;
-  downloads: RawDownloadData;
   zh: {
     language: string;
     title: string;
@@ -67,19 +60,11 @@ interface RawBookData {
     human_editor: RawHumanEditorData;
     description: string;
     epub_identifier: string;
-    downloads: RawDownloadData;
   };
 }
 
 interface RawBookSiteData {
   site_url: string;
-}
-
-interface RawDownloadData {
-  epub: string;
-  pdf: string;
-  deep_epub: string;
-  deep_pdf: string;
 }
 
 interface RawHumanEditorData {
@@ -103,7 +88,7 @@ export async function readBookData(root: string): Promise<BookData> {
     publishedYear: raw.published_year,
     totalDays: raw.total_days,
     epubIdentifier: raw.epub_identifier,
-    downloads: normalizeDownloads(raw.downloads),
+    downloads: bookDownloadUrls("en"),
     zh: {
       language: raw.zh.language,
       title: raw.zh.title,
@@ -114,7 +99,7 @@ export async function readBookData(root: string): Promise<BookData> {
       humanEditor: normalizeHumanEditor(raw.zh.human_editor),
       description: raw.zh.description,
       epubIdentifier: raw.zh.epub_identifier,
-      downloads: normalizeDownloads(raw.zh.downloads)
+      downloads: bookDownloadUrls("zh")
     }
   };
 }
@@ -122,15 +107,6 @@ export async function readBookData(root: string): Promise<BookData> {
 export async function readBookSiteUrl(root: string): Promise<string> {
   const raw = await readYamlFile<RawBookSiteData>(bookDataFile(root));
   return raw.site_url;
-}
-
-function normalizeDownloads(raw: RawDownloadData): DownloadData {
-  return {
-    epub: raw.epub,
-    pdf: raw.pdf,
-    deepEpub: raw.deep_epub,
-    deepPdf: raw.deep_pdf
-  };
 }
 
 function normalizeHumanEditor(raw: RawHumanEditorData): HumanEditorData {
