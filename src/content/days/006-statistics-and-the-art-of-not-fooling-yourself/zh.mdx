@@ -31,6 +31,8 @@ import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
@@ -313,11 +315,11 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 <Recap>
 <BlockTitle>◆ 今日总结：三句话</BlockTitle>
 
-<dl>
-<div><dt>核心理念</dt><dd>统计工具本身无法防止自欺；当分析选择高度灵活时，它们甚至可能放大偏差。分岔路径花园说明，许多看似合理的选择足以让噪声伪装成发现。因此，更可靠的做法是提高透明度、研究预登记验证性分析、报告效应量及其不确定性，并检验结论能否经受多种合理分析方案，而不是把判断押在一个固定阈值上。</dd></div>
-<div><dt>最佳类比</dt><dd>假阳性工厂：把几种研究者自由度叠加起来，就能将纯噪声中的假阳性率推高到约 61%；以及分岔路径花园，即使你只运行了一个分析，数据稍有不同时本会采用的其他分析路径也会推高你的错误率。</dd></div>
-<div><dt>前沿争议</dt><dd>是将显著性阈值收紧至 p < .005、按具体情况说明 α 的设定依据，还是彻底弃用「统计显著性」——多元宇宙和「同一份数据，众多分析师」研究揭示，同一数据集的结论会在多大程度上取决于分析者。</dd></div>
-</dl>
+<RecapList>
+<RecapItem term="核心理念">统计工具本身无法防止自欺；当分析选择高度灵活时，它们甚至可能放大偏差。分岔路径花园说明，许多看似合理的选择足以让噪声伪装成发现。因此，更可靠的做法是提高透明度、研究预登记验证性分析、报告效应量及其不确定性，并检验结论能否经受多种合理分析方案，而不是把判断押在一个固定阈值上。</RecapItem>
+<RecapItem term="最佳类比">假阳性工厂：把几种研究者自由度叠加起来，就能将纯噪声中的假阳性率推高到约 61%；以及分岔路径花园，即使你只运行了一个分析，数据稍有不同时本会采用的其他分析路径也会推高你的错误率。</RecapItem>
+<RecapItem term="前沿争议">是将显著性阈值收紧至 p < .005、按具体情况说明 α 的设定依据，还是彻底弃用「统计显著性」——多元宇宙和「同一份数据，众多分析师」研究揭示，同一数据集的结论会在多大程度上取决于分析者。</RecapItem>
+</RecapList>
 <Threads><span class="threads-label">今日线索 ›</span> 信息（将信号从噪声中分离；p 值作为一种常被误读的证据度量）· 计算（作为易错推理机的实验室；多元宇宙作为穷举法的应用）· 涌现（科学作为一个超越任何单个分析者的纠错系统——研究预登记、多团队分析、元分析），并直接通向[信息论](/zh/days/007-information-theory/)。</Threads>
 
 </Recap>

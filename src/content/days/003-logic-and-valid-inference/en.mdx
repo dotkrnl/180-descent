@@ -28,6 +28,8 @@ import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
@@ -263,11 +265,11 @@ Twenty-three centuries in, the study of valid inference still leaves real questi
 <Recap>
 <BlockTitle>◆ The day in three sentences</BlockTitle>
 
-<dl>
-<div><dt>Big idea</dt><dd>Reasoning comes in three engines with three different warranties — <em>deduction</em> preserves truth and exposes what follows without adding new content, <em>induction</em> generalizes but can be broken by the next case, and <em>abduction</em> leaps to the best explanation — and inside deduction, validity (good form) is a wholly separate thing from soundness (good form plus true premises).</dd></div>
-<div><dt>Best analogy</dt><dd>Sherlock Holmes's "deductions" are really abductions — the best explanation of the clues, not a guaranteed conclusion — and a valid-but-unsound argument is a beautifully built pipe carrying sewage.</dd></div>
-<div><dt>Live controversy</dt><dd>Whether logic is discovered or invented (and whether there's one true logic or a toolkit of them), now sharpened by a real frontier where proof assistants like Lean verify cutting-edge mathematics at zero tolerance, AI has reached medal-level, and one AI-generated counterexample has become a genuine research milestone — but emphatically has <em>not</em> "solved mathematics."</dd></div>
-</dl>
+<RecapList>
+<RecapItem term="Big idea">Reasoning comes in three engines with three different warranties — <em>deduction</em> preserves truth and exposes what follows without adding new content, <em>induction</em> generalizes but can be broken by the next case, and <em>abduction</em> leaps to the best explanation — and inside deduction, validity (good form) is a wholly separate thing from soundness (good form plus true premises).</RecapItem>
+<RecapItem term="Best analogy">Sherlock Holmes's "deductions" are really abductions — the best explanation of the clues, not a guaranteed conclusion — and a valid-but-unsound argument is a beautifully built pipe carrying sewage.</RecapItem>
+<RecapItem term="Live controversy">Whether logic is discovered or invented (and whether there's one true logic or a toolkit of them), now sharpened by a real frontier where proof assistants like Lean verify cutting-edge mathematics at zero tolerance, AI has reached medal-level, and one AI-generated counterexample has become a genuine research milestone — but emphatically has <em>not</em> "solved mathematics."</RecapItem>
+</RecapList>
 <Threads>**Threads today ›** computation (Curry–Howard: proofs correspond to programs; Boolean algebra in silicon; proof assistants) · information (formalization makes a proof's content machine-checkable) · emergence (massively collaborative proof settling about 22 million implication relations) — with deduction and induction tying back to [Day 1](/days/001-what-is-knowledge/) and [Day 2](/days/002-scientific-method-and-demarcation/), then handing the next question to [Probability as Extended Logic](/days/004-probability-as-extended-logic/).</Threads>
 
 </Recap>

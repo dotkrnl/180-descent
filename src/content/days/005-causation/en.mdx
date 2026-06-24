@@ -26,6 +26,8 @@ import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
@@ -307,11 +309,11 @@ The first equality is ordinary total probability over Z. The second uses the gra
 <Recap>
 <BlockTitle>◆ The day in three sentences</BlockTitle>
 
-<dl>
-<div><dt>Big idea</dt><dd>Causal effects are contrasts between outcomes under specified interventions. Observational and interventional quantities may coincide, but their equality cannot be assumed merely from observational data; it requires a design or causal assumptions encoded in randomization, a graph, a potential-outcomes model, or another defensible identification strategy.</dd></div>
-<div><dt>Best analogy</dt><dd>Ice cream and drowning marching upward together while summer, off-stage, pulls both strings — and the do-operator as a pair of scissors that cuts the strings into a variable so you can see what it really drives.</dd></div>
-<div><dt>Live controversy</dt><dd>Whether causal structure can be inferred from observation alone — often only up to a Markov-equivalence class under standard assumptions, partly recoverable with stronger assumptions (LiNGAM, additive noise) — and the current dispute over whether LLMs do general causal reasoning or mostly retrieve causal talk.</dd></div>
-</dl>
+<RecapList>
+<RecapItem term="Big idea">Causal effects are contrasts between outcomes under specified interventions. Observational and interventional quantities may coincide, but their equality cannot be assumed merely from observational data; it requires a design or causal assumptions encoded in randomization, a graph, a potential-outcomes model, or another defensible identification strategy.</RecapItem>
+<RecapItem term="Best analogy">Ice cream and drowning marching upward together while summer, off-stage, pulls both strings — and the do-operator as a pair of scissors that cuts the strings into a variable so you can see what it really drives.</RecapItem>
+<RecapItem term="Live controversy">Whether causal structure can be inferred from observation alone — often only up to a Markov-equivalence class under standard assumptions, partly recoverable with stronger assumptions (LiNGAM, additive noise) — and the current dispute over whether LLMs do general causal reasoning or mostly retrieve causal talk.</RecapItem>
+</RecapList>
 <Threads>**Threads today ›** information (a graph is the extra information data lacks; the do-operator distinguishes evidence from intervention) · computation (identification as an algorithmic problem; causal discovery as search under assumptions) · emergence (causal structure as a higher-level layer over raw correlation) — with callbacks to [Day 1](/days/001-what-is-knowledge/) (true-by-luck), [Day 2](/days/002-scientific-method-and-demarcation/) (Hume), [Day 3](/days/003-logic-and-valid-inference/) (abduction), and [Day 4](/days/004-probability-as-extended-logic/) (<MathInline latex={String.raw`P(y\mid x)`} />), before the statistical machinery continues in [Statistics &amp; the Art of Not Fooling Yourself](/days/006-statistics-and-the-art-of-not-fooling-yourself/).</Threads>
 
 </Recap>

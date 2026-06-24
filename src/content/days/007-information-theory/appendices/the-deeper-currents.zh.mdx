@@ -18,6 +18,8 @@ import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
@@ -280,11 +282,11 @@ import Threads from "@app/components/lesson/Threads.astro";
 <Recap>
 <BlockTitle>◆ 三句话总结本附录</BlockTitle>
 
-<dl>
-<div><dt>内容增补</dt><dd>在比特之下蕴含着更完整的代数——互信息（统计依赖，也是指定模型下信道容量的核心）和相对熵（错误模型造成的额外码长，与交叉熵和变分自由能相关但并非同义）——此外还包括渐近压缩极限、实用纠错码，以及通过避免不必要擦除来减少耗散的可逆计算。</dd></div>
-<div><dt>宏观视野</dt><dd>信息的物理性并不仅仅局限于擦除比特时的温热：它还向上延伸到计算速度与密度的硬性极限、黑洞熵、在适用理论中的全息边界描述，以及对宇宙累计操作次数的有限且可数的估计。</dd></div>
-<div><dt>其重要性</dt><dd>在香农将信息转化为数字的瞬间，它便超越了工程学的范畴——如今，同一个 H 同样出现在生物多样性、神经网络训练、DNA、时间之矢以及生命热力学中，这正是它成为本课程核心追踪的五条线索之一的原因。</dd></div>
-</dl>
+<RecapList>
+<RecapItem term="内容增补">在比特之下蕴含着更完整的代数——互信息（统计依赖，也是指定模型下信道容量的核心）和相对熵（错误模型造成的额外码长，与交叉熵和变分自由能相关但并非同义）——此外还包括渐近压缩极限、实用纠错码，以及通过避免不必要擦除来减少耗散的可逆计算。</RecapItem>
+<RecapItem term="宏观视野">信息的物理性并不仅仅局限于擦除比特时的温热：它还向上延伸到计算速度与密度的硬性极限、黑洞熵、在适用理论中的全息边界描述，以及对宇宙累计操作次数的有限且可数的估计。</RecapItem>
+<RecapItem term="其重要性">在香农将信息转化为数字的瞬间，它便超越了工程学的范畴——如今，同一个 H 同样出现在生物多样性、神经网络训练、DNA、时间之矢以及生命热力学中，这正是它成为本课程核心追踪的五条线索之一的原因。</RecapItem>
+</RecapList>
 <Threads>深入线索 › 信息（互信息、KL 散度、柯尔莫哥洛夫复杂度）· 能量（可逆计算、Margolus–Levitin、终极笔记本）· 计算（编码、量子信息、全部计算的极限）· 涌现（复杂度作为不可压缩的结构 → 第 8 日）· 演化与生命（作为比特的 DNA、负熵 → 第 77、83–85 日）。</Threads>
 
 </Recap>

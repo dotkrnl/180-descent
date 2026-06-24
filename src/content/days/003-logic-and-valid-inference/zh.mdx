@@ -28,6 +28,8 @@ import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
@@ -263,11 +265,11 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <Recap>
 <BlockTitle>◆ 用三句话概括今日</BlockTitle>
 
-<dl>
-<div><dt>核心观点</dt><dd>推理有几种可靠程度不同的模式：演绎保真，并揭示前提中已蕴涵的结果，却不增添新信息；归纳概括，却可能被下一例打破；溯因跃向最佳解释。在演绎内部，有效性指形式保真；健全性指论证有效且所有前提实际为真。</dd></div>
-<div><dt>最佳类比</dt><dd>夏洛克·福尔摩斯的「演绎」其实是溯因——对线索的最佳解释，而非保证结论——而一个有效却不健全的论证，是一条接合严密却输送污水的管道。</dd></div>
-<div><dt>当下争议</dt><dd>逻辑是发现还是发明（以及是否只有一种真逻辑，还是一套工具），如今被一条真实的前沿所激化：Lean 等证明助手以零容错验证前沿数学，AI 已达奖牌水准，一个 AI 生成的反例也已成为真正的研究里程碑——但它仍未真正「解决数学」。</dd></div>
-</dl>
+<RecapList>
+<RecapItem term="核心观点">推理有几种可靠程度不同的模式：演绎保真，并揭示前提中已蕴涵的结果，却不增添新信息；归纳概括，却可能被下一例打破；溯因跃向最佳解释。在演绎内部，有效性指形式保真；健全性指论证有效且所有前提实际为真。</RecapItem>
+<RecapItem term="最佳类比">夏洛克·福尔摩斯的「演绎」其实是溯因——对线索的最佳解释，而非保证结论——而一个有效却不健全的论证，是一条接合严密却输送污水的管道。</RecapItem>
+<RecapItem term="当下争议">逻辑是发现还是发明（以及是否只有一种真逻辑，还是一套工具），如今被一条真实的前沿所激化：Lean 等证明助手以零容错验证前沿数学，AI 已达奖牌水准，一个 AI 生成的反例也已成为真正的研究里程碑——但它仍未真正「解决数学」。</RecapItem>
+</RecapList>
 <Threads>今日线索 › 计算（柯里–霍华德：证明对应程序；硅芯片中的布尔代数；证明助手） · 信息（形式化使证明内容可被机器核查） · 涌现（大规模协作证明判定约 2200 万个蕴涵关系）——也将演绎与归纳衔接到[第 1 日](/zh/days/001-what-is-knowledge/)与[第 2 日](/zh/days/002-scientific-method-and-demarcation/)，并把下一个问题交给[概率成为逻辑的扩展](/zh/days/004-probability-as-extended-logic/)。</Threads>
 
 </Recap>

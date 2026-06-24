@@ -732,6 +732,15 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `\n{\\ttfamily\\footnotesize\\color{descentMuted}${text}}` : "";
   }
+  if (name === "RecapList") {
+    return renderChildren(node.children ?? [], state, { block: true });
+  }
+  if (name === "RecapItem") {
+    const term = latexEscape(resolveExpression(attrs.get("term"), state));
+    const body = renderChildren(node.children ?? [], state, { block: true }).trim();
+    if (!body) return "";
+    return term ? `\\blockheading{${term}}\n${body}\n` : `${body}\n`;
+  }
   if (name === "FigureBox") {
     return renderChildren(node.children ?? [], state, { block: true });
   }

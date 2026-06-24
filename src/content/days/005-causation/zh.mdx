@@ -26,6 +26,8 @@ import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import Term from "@app/components/lesson/Term.astro";
@@ -309,11 +311,11 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <Recap>
 <BlockTitle>◆ 今日三句话总结</BlockTitle>
 
-<dl>
-<div><dt>核心思想</dt><dd>因果效应是特定干预下结果之间的对照。观测数量与干预数量在数值上可能重合，但我们不能仅凭观测数据就假定它们相等；这需要通过随机化分配、因果图、潜在结果模型或其他可辩护的识别策略所体现的因果设计或因果假设。</dd></div>
-<div><dt>最佳类比</dt><dd>冰淇淋与溺水人数同步上升，而夏季在幕后同时牵动着这两根丝线；do-算子就像一把剪刀，剪断了指向处理变量的因果之弦，以便你看清它真正驱动了什么。</dd></div>
-<div><dt>实时争议</dt><dd>因果结构是否能仅从观测中推断——在标准假设下，通常只能识别到马尔可夫等价类，而在更强假设（LiNGAM、加性噪声模型）下可以部分恢复方向——以及当前关于大模型是在进行通用因果推理，还是大多在检索因果言论的争论。</dd></div>
-</dl>
+<RecapList>
+<RecapItem term="核心思想">因果效应是特定干预下结果之间的对照。观测数量与干预数量在数值上可能重合，但我们不能仅凭观测数据就假定它们相等；这需要通过随机化分配、因果图、潜在结果模型或其他可辩护的识别策略所体现的因果设计或因果假设。</RecapItem>
+<RecapItem term="最佳类比">冰淇淋与溺水人数同步上升，而夏季在幕后同时牵动着这两根丝线；do-算子就像一把剪刀，剪断了指向处理变量的因果之弦，以便你看清它真正驱动了什么。</RecapItem>
+<RecapItem term="实时争议">因果结构是否能仅从观测中推断——在标准假设下，通常只能识别到马尔可夫等价类，而在更强假设（LiNGAM、加性噪声模型）下可以部分恢复方向——以及当前关于大模型是在进行通用因果推理，还是大多在检索因果言论的争论。</RecapItem>
+</RecapList>
 <Threads>**今日线索 ›** 信息（因果图是数据本身所缺乏的额外信息；do-算子区分了证据与干预）· 计算（可识别性作为一个算法问题；因果发现作为一种在假设下的搜索）· 涌现（因果结构是原始相关性之上的更高层级）——并回溯至 [第 1 日](/zh/days/001-what-is-knowledge/)（凭运气正确）、[第 2 日](/zh/days/002-scientific-method-and-demarcation/)（休谟）、[第 3 日](/zh/days/003-logic-and-valid-inference/)（溯因）以及 [第 4 日](/zh/days/004-probability-as-extended-logic/)（<MathInline latex={String.raw`P(y\mid x)`} />），随后进入[统计学与避免自欺的艺术](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)。</Threads>
 
 </Recap>

@@ -31,6 +31,8 @@ import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
@@ -302,11 +304,11 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效�
 <Recap>
 <BlockTitle>◆ 附录要点总结</BlockTitle>
 
-<dl>
-<div><dt>最深层的思想</dt><dd>「<span class="term"><MathInline latex={String.raw`p < .05`} /></span> 检验」是费舍尔的证据衡量标准与内曼-皮尔逊的决策规则的不连贯糅合，许多误读都是这一混合结构的症状。而两个简单的数学事实（连续精确零假设下 <span class="term">p 值</span> 是均匀的；未经校正地反复查看会使越过固定阈值越来越容易）解释了为什么 p 值操纵如此危险。</dd></div>
-<div><dt>最精彩的类比</dt><dd>将 <span class="term">p 值</span> 转化为投掷硬币：<span class="term"><MathInline latex={String.raw`p = .05`} /></span> 的惊异度仅相当于连续四五次正面，有点意思，但远谈不上发现。在 Colquhoun 的特定先验概率、功效和模型设定下，刚好达到 <span class="term"><MathInline latex={String.raw`p \approx .05`} /></span> 的结果可对应约 26% 的假阳性风险；这不是 p 值本身的固定含义。</dd></div>
-<div><dt>建设性的转向</dt><dd>解决之道是工具箱而非禁令：检验严苛性 (Mayo)、带有相容性区间的效应量、S 类 / M 类思维、等效性检验、错误发现率控制以及贝叶斯因子——此外还有能够从数字中审计学科领域的统计取证方法（P-curve、死鱼实验、statcheck）。</dd></div>
-</dl>
+<RecapList>
+<RecapItem term="最深层的思想">「<span class="term"><MathInline latex={String.raw`p < .05`} /></span> 检验」是费舍尔的证据衡量标准与内曼-皮尔逊的决策规则的不连贯糅合，许多误读都是这一混合结构的症状。而两个简单的数学事实（连续精确零假设下 <span class="term">p 值</span> 是均匀的；未经校正地反复查看会使越过固定阈值越来越容易）解释了为什么 p 值操纵如此危险。</RecapItem>
+<RecapItem term="最精彩的类比">将 <span class="term">p 值</span> 转化为投掷硬币：<span class="term"><MathInline latex={String.raw`p = .05`} /></span> 的惊异度仅相当于连续四五次正面，有点意思，但远谈不上发现。在 Colquhoun 的特定先验概率、功效和模型设定下，刚好达到 <span class="term"><MathInline latex={String.raw`p \approx .05`} /></span> 的结果可对应约 26% 的假阳性风险；这不是 p 值本身的固定含义。</RecapItem>
+<RecapItem term="建设性的转向">解决之道是工具箱而非禁令：检验严苛性 (Mayo)、带有相容性区间的效应量、S 类 / M 类思维、等效性检验、错误发现率控制以及贝叶斯因子——此外还有能够从数字中审计学科领域的统计取证方法（P-curve、死鱼实验、statcheck）。</RecapItem>
+</RecapList>
 </Recap>
 
 <Divider />

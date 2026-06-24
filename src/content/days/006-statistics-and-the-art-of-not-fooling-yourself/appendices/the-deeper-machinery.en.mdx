@@ -30,6 +30,8 @@ import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
@@ -297,11 +299,11 @@ Distilled from everything above and in the main lesson — the moves that conver
 <Recap>
 <BlockTitle>◆ The appendix in three sentences</BlockTitle>
 
-<dl>
-<div><dt>Deepest idea</dt><dd>The "<MathInline latex={String.raw`p < .05`} /> test" is an incoherent weld of Fisher's evidence-measure and Neyman–Pearson's decision-rule, and the misreadings everyone makes are symptoms of that original sin — while two simple facts (the <MathInline latex={String.raw`p`} />-value is uniform under the null; peeking eventually crosses any line with certainty) make p-hacking not merely possible but guaranteed.</dd></div>
-<div><dt>Best new analogy</dt><dd>A <MathInline latex={String.raw`p`} />-value translated into coin flips: <MathInline latex={String.raw`p = .05`} /> is the surprise of ~4–5 heads in a row — mildly interesting, never a discovery — which is why the honest false-positive risk of a fresh "significant" result is around 26%, not 5%.</dd></div>
-<div><dt>The constructive turn</dt><dd>The fix is a toolkit, not a ban: severity (Mayo), effect sizes with compatibility intervals, Type S/M thinking, equivalence tests, false-discovery-rate control, and Bayes factors — plus the forensic methods (p-curve, the dead salmon, statcheck) that audit a literature from its own numbers.</dd></div>
-</dl>
+<RecapList>
+<RecapItem term="Deepest idea">The "<MathInline latex={String.raw`p < .05`} /> test" is an incoherent weld of Fisher's evidence-measure and Neyman–Pearson's decision-rule, and the misreadings everyone makes are symptoms of that original sin — while two simple facts (the <MathInline latex={String.raw`p`} />-value is uniform under the null; peeking eventually crosses any line with certainty) make p-hacking not merely possible but guaranteed.</RecapItem>
+<RecapItem term="Best new analogy">A <MathInline latex={String.raw`p`} />-value translated into coin flips: <MathInline latex={String.raw`p = .05`} /> is the surprise of ~4–5 heads in a row — mildly interesting, never a discovery — which is why the honest false-positive risk of a fresh "significant" result is around 26%, not 5%.</RecapItem>
+<RecapItem term="The constructive turn">The fix is a toolkit, not a ban: severity (Mayo), effect sizes with compatibility intervals, Type S/M thinking, equivalence tests, false-discovery-rate control, and Bayes factors — plus the forensic methods (p-curve, the dead salmon, statcheck) that audit a literature from its own numbers.</RecapItem>
+</RecapList>
 </Recap>
 
 <Divider />

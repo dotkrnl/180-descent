@@ -30,6 +30,8 @@ import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
@@ -304,11 +306,11 @@ The honest report is the distribution across reasonable specifications; the dish
 <Recap>
 <BlockTitle>◆ The day in three sentences</BlockTitle>
 
-<dl>
-<div><dt>Big idea</dt><dd>Statistical tools don't protect you from fooling yourself — used with ordinary human flexibility they help you do it, because the dozens of defensible choices in any analysis (the "garden of forking paths") let noise masquerade as discovery, so the cure is transparency, preregistration, effect sizes with uncertainty, and robustness across reasonable analyses rather than a verdict at a magic threshold.</dd></div>
-<div><dt>Best analogy</dt><dd>The False-Positive Factory: hand yourself enough innocent freedoms and a coin-flip's worth of nothing becomes a 61% chance of "success" — and the garden of forking paths, where the analyses you <em>would have</em> run in nearby worlds inflate your error even if you only ran one.</dd></div>
-<div><dt>Live controversy</dt><dd>Whether to lower the threshold (<MathInline latex={String.raw`p < .005`} />), justify it case by case, or retire "statistical significance" altogether — with multiverse and many-analyst studies revealing how alarmingly a single dataset's verdict depends on who analyzes it.</dd></div>
-</dl>
+<RecapList>
+<RecapItem term="Big idea">Statistical tools don't protect you from fooling yourself — used with ordinary human flexibility they help you do it, because the dozens of defensible choices in any analysis (the "garden of forking paths") let noise masquerade as discovery, so the cure is transparency, preregistration, effect sizes with uncertainty, and robustness across reasonable analyses rather than a verdict at a magic threshold.</RecapItem>
+<RecapItem term="Best analogy">The False-Positive Factory: hand yourself enough innocent freedoms and a coin-flip's worth of nothing becomes a 61% chance of "success" — and the garden of forking paths, where the analyses you <em>would have</em> run in nearby worlds inflate your error even if you only ran one.</RecapItem>
+<RecapItem term="Live controversy">Whether to lower the threshold (<MathInline latex={String.raw`p < .005`} />), justify it case by case, or retire "statistical significance" altogether — with multiverse and many-analyst studies revealing how alarmingly a single dataset's verdict depends on who analyzes it.</RecapItem>
+</RecapList>
 <Threads>**Threads today ›** information (separating signal from noise; the <MathInline latex={String.raw`p`} />-value as a misread evidence measure) · computation (the lab as a fallible inference engine; the multiverse as brute enumeration) · emergence (science as an error-correcting system larger than any analyst — preregistration, many-analyst crowds, meta-analysis), leading directly into [Information Theory](/days/007-information-theory/).</Threads>
 
 </Recap>
