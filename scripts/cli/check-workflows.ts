@@ -1,11 +1,11 @@
-import { checkWorkflowSkillLinks } from "@lib/checks/workflows";
+import { checkProjectWorkflow } from "@lib/checks/workflows";
 import { exitOnErrors } from "./support";
 
-const failures = await checkWorkflowSkillLinks(process.cwd());
+const failures = await checkProjectWorkflow(process.cwd());
 
 exitOnErrors(failures, (failure) => `${failure.path}: ${failure.reason}`, {
-  heading: "Workflow link check failed:",
+  heading: "Project workflow check failed:",
   prefix: "- "
 });
 
-console.log("Workflow link check passed.");
+console.log("Project workflow check passed.");

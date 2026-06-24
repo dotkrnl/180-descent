@@ -1,1 +1,0 @@
-../../../docs/workflows/180-descent-assets/README.md

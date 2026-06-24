@@ -2,45 +2,57 @@ import { mkdtemp, mkdir, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkWorkflowSkillLinks } from "@lib/checks/workflows";
+import { checkProjectWorkflow } from "@lib/checks/workflows";
 
-describe("workflow skill links", () => {
-  it("accepts canonical workflow symlinks", async () => {
+describe("project workflow", () => {
+  it("accepts the canonical unified workflow symlink", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-workflow-links-"));
-    await createWorkflowTree(root, true);
+    await createWorkflowTree(root, { linked: true });
 
-    await expect(checkWorkflowSkillLinks(root)).resolves.toEqual([]);
+    await expect(checkProjectWorkflow(root)).resolves.toEqual([]);
   });
 
-  it("rejects copied skill docs", async () => {
+  it("rejects copied project workflow docs", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-workflow-links-"));
-    await createWorkflowTree(root, false);
+    await createWorkflowTree(root, { linked: false });
 
-    const failures = await checkWorkflowSkillLinks(root);
+    const failures = await checkProjectWorkflow(root);
     expect(failures[0]).toEqual({
-      path: ".codex/skills/180-descent-assets/SKILL.md",
-      reason: "Expected symlink to ../../../docs/workflows/180-descent-assets/README.md"
+      path: ".codex/skills/180-descent/SKILL.md",
+      reason: "Expected symlink to ../../../docs/workflows/180-descent/README.md"
+    });
+  });
+
+  it("rejects old split workflow skills", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-workflow-links-"));
+    await createWorkflowTree(root, { linked: true, splitSkill: true });
+
+    const failures = await checkProjectWorkflow(root);
+    expect(failures).toContainEqual({
+      path: ".codex/skills/180-descent-content",
+      reason: "Remove split workflow skill; use .codex/skills/180-descent"
     });
   });
 });
 
-async function createWorkflowTree(root: string, linked: boolean): Promise<void> {
-  for (const workflow of [
-    "180-descent-assets",
-    "180-descent-content",
-    "180-descent-publish"
-  ]) {
-    const skillDir = path.join(root, ".codex/skills", workflow);
-    const workflowDir = path.join(root, "docs/workflows", workflow);
-    await mkdir(skillDir, { recursive: true });
-    await mkdir(workflowDir, { recursive: true });
-    await writeFile(path.join(workflowDir, "README.md"), "---\nname: fixture\n---\n");
+async function createWorkflowTree(
+  root: string,
+  options: { linked: boolean; splitSkill?: boolean }
+): Promise<void> {
+  const skillDir = path.join(root, ".codex/skills/180-descent");
+  const workflowDir = path.join(root, "docs/workflows/180-descent");
+  await mkdir(skillDir, { recursive: true });
+  await mkdir(workflowDir, { recursive: true });
+  await writeFile(path.join(workflowDir, "README.md"), "---\nname: fixture\n---\n");
 
-    const skillPath = path.join(skillDir, "SKILL.md");
-    if (linked) {
-      await symlink(`../../../docs/workflows/${workflow}/README.md`, skillPath);
-    } else {
-      await writeFile(skillPath, "---\nname: copied\n---\n");
-    }
+  const skillPath = path.join(skillDir, "SKILL.md");
+  if (options.linked) {
+    await symlink("../../../docs/workflows/180-descent/README.md", skillPath);
+  } else {
+    await writeFile(skillPath, "---\nname: copied\n---\n");
+  }
+
+  if (options.splitSkill) {
+    await mkdir(path.join(root, ".codex/skills/180-descent-content"), { recursive: true });
   }
 }
