@@ -1,5 +1,4 @@
 import {
-  absoluteUrl,
   getBookData,
   getPublishedDays
 } from "@app/site-data";
@@ -62,6 +61,10 @@ function sitemapUrl(entry: SitemapEntry, siteUrl: string, lastmod: string): stri
     entry.alternate ? `    <xhtml:link rel="alternate" hreflang="x-default" href="${xmlEscape(enUrl)}" />` : "",
     "  </url>"
   ].filter(Boolean).join("\n");
+}
+
+function absoluteUrl(pathname: string, siteUrl: string): string {
+  return new URL(pathname, siteUrl).href;
 }
 
 function xmlEscape(value: string): string {

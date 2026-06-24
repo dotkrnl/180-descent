@@ -156,10 +156,6 @@ export function upcomingSyllabusDays(syllabus: Syllabus, days: PublishedDay[], c
   return upcoming;
 }
 
-export function absoluteUrl(pathname: string, siteUrl: string): string {
-  return new URL(pathname, siteUrl).href;
-}
-
 async function readYaml<T>(relativePath: string): Promise<T> {
   return parseYaml(await readFile(path.join(process.cwd(), relativePath), "utf8")) as T;
 }
