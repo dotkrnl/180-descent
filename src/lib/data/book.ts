@@ -37,7 +37,7 @@ interface DownloadData {
   deepPdf: string;
 }
 
-interface HumanEditorData {
+export interface HumanEditorData {
   name: string;
   url: string;
 }

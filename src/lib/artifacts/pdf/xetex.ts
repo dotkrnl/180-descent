@@ -13,7 +13,7 @@ import { brandIconFile, pdfFontsDir } from "@lib/assets/paths";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/downloads";
 import { contentDayFile, contentDaysDir } from "@lib/content/paths";
-import { readBookData, type BookData } from "@lib/data/book";
+import { readBookData, type BookData, type HumanEditorData } from "@lib/data/book";
 import { syllabusDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
 import type { Locale } from "@lib/schemas/day";
@@ -31,10 +31,7 @@ interface PdfEdition {
   subtitle: string;
   authors: string;
   translators?: string;
-  humanEditor: {
-    name: string;
-    url: string;
-  };
+  humanEditor: HumanEditorData;
   language: string;
   output: string;
   includeDeepDive?: boolean;

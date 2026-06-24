@@ -8,7 +8,7 @@ import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/
 import { compileCss } from "@lib/assets/css";
 import { stripUnbundledKatexTtfSources } from "@lib/assets/fonts";
 import { fontsDir, katexFontsDir } from "@lib/assets/paths";
-import { readBookData } from "@lib/data/book";
+import { readBookData, type HumanEditorData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
 import { dayUrlPrefix, siteDayDir, siteDir, sitePageFile, staticPageUrl } from "@lib/static-site/routes";
 import { escapeXml } from "@lib/text/escape";
@@ -26,10 +26,7 @@ interface EpubMeta {
   subtitle?: string;
   authors: string;
   translators?: string;
-  humanEditor: {
-    name: string;
-    url: string;
-  };
+  humanEditor: HumanEditorData;
   language: string;
   publisher: string;
   epubIdentifier: string;
