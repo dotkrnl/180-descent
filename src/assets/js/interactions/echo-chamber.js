@@ -43,9 +43,14 @@
       if(!circle || !text) return;
       circle.setAttribute("fill", fill);
       circle.setAttribute("stroke", stroke);
-      node.style.opacity = opacity;
+      node.classList.toggle("is-muted", opacity !== "1");
       text.textContent = mark;
       text.setAttribute("fill", markColor || "var(--ink)");
+    }
+
+    function setOutLinksState(state){
+      outLinks.classList.remove("is-hidden", "is-visible", "is-reinforced");
+      outLinks.classList.add(state);
     }
 
     function resetOutsideStroke(){
@@ -65,13 +70,13 @@
       if(echoMode === "bubble"){
         if(!echoExposed){
           oNodes.forEach(function(node){ styleOut(node, "transparent", "var(--line-strong)", "0.3", ""); });
-          outLinks.style.opacity = "0";
+          setOutLinksState("is-hidden");
           echoMsg.className = "echo-msg neutral echo-message";
           echoMsg.innerHTML = "<span class=\"ttl\">" + copy.bubbleTitle + "</span>" + copy.bubbleBody;
         } else {
           oNodes.forEach(function(node){ styleOut(node, "color-mix(in srgb,var(--ok) 22%,var(--paper))", "var(--ok)", "1", "\u2713", "var(--ok)"); });
           outLinks.setAttribute("stroke", "var(--ok)");
-          outLinks.style.opacity = "1";
+          setOutLinksState("is-visible");
           echoMsg.className = "echo-msg pop echo-message";
           echoMsg.innerHTML = "<span class=\"ttl\">" + copy.poppedTitle + "</span>" + copy.poppedBody;
         }
@@ -80,7 +85,7 @@
 
       if(!echoExposed){
         oNodes.forEach(function(node){ styleOut(node, "color-mix(in srgb,var(--contested) 16%,var(--paper))", "var(--contested)", "1", "\u2717", "var(--contested)"); });
-        outLinks.style.opacity = "0";
+        setOutLinksState("is-hidden");
         echoMsg.className = "echo-msg neutral echo-message";
         echoMsg.innerHTML = "<span class=\"ttl\">" + copy.chamberTitle + "</span>" + copy.chamberBody;
       } else {
@@ -91,7 +96,7 @@
         });
         outLinks.setAttribute("stroke", "var(--contested)");
         outLinks.setAttribute("stroke-dasharray", "2 4");
-        outLinks.style.opacity = "0.8";
+        setOutLinksState("is-reinforced");
         echoMsg.className = "echo-msg reinforce echo-message";
         echoMsg.innerHTML = "<span class=\"ttl\">" + copy.backfireTitle + "</span>" + copy.backfireBody;
       }
