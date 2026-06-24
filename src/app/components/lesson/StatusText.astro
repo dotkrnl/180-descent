@@ -1,0 +1,9 @@
+---
+interface Props {
+  status: "ok" | "hint" | "bad";
+  label: string;
+}
+
+const { status, label } = Astro.props;
+---
+<span class:list={["status-text", status]}>[{label}]</span>

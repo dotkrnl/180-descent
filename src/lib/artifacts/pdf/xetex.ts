@@ -521,6 +521,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "MathBlock") return blockMath(resolveExpression(attrs.get("latex"), state));
   if (name === "TipNote") return renderTipNote(attrs, state, context);
   if (name === "StatusChip") return renderStatusChip(attrs, state);
+  if (name === "StatusText") return renderStatusText(attrs, state);
   if (name === "SimpleTable") return renderSimpleTable(attrs, state);
   const renderedSvg = renderRenderedSvgComponent(name, attrs, state);
   if (renderedSvg) return renderedSvg;
@@ -785,6 +786,14 @@ function renderStatusChip(attrs: Map<string, string | null>, state: MdxRenderSta
   const label = resolveExpression(attrs.get("printLabel"), state) || resolveExpression(attrs.get("label"), state);
   const status = resolveExpression(attrs.get("status"), state);
   return label ? statusChipLatex(label, status) : "";
+}
+
+function renderStatusText(attrs: Map<string, string | null>, state: MdxRenderState): string {
+  const label = resolveExpression(attrs.get("label"), state);
+  const status = resolveExpression(attrs.get("status"), state);
+  if (!label) return "";
+  const color = status === "bad" ? "descentBad" : status === "hint" ? "descentHint" : "descentTeal";
+  return `{\\ttfamily\\footnotesize\\bfseries\\color{${color}}[${latexEscape(label)}]}`;
 }
 
 function renderLead(node: MdxNode, attrs: Map<string, string | null>, state: MdxRenderState): string {
