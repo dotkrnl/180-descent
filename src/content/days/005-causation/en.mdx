@@ -14,6 +14,12 @@ import SimpsonReversalMachine from "@app/components/lesson/interactives/SimpsonR
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Hero from "@app/components/lesson/Hero.astro";
@@ -161,14 +167,16 @@ Climb it yourself:
 <FormatAlt class="epub-only print-only">
 ### Pearl's Ladder of Causation
 
-<table class="alt-table">
-<thead><tr><th>Rung</th><th>Verb</th><th>Notation</th><th>Question</th></tr></thead>
-<tbody>
-<tr><td>1. Association</td><td>Seeing</td><td><MathInline latex={String.raw`P(Y\mid X)`} /></td><td>How do outcomes differ among cases where <MathInline latex={String.raw`X`} /> is observed?</td></tr>
-<tr><td>2. Intervention</td><td>Doing</td><td><MathInline latex={String.raw`P(Y\mid \operatorname{do}(X))`} /></td><td>What would happen if <MathInline latex={String.raw`X`} /> were set by intervention?</td></tr>
-<tr><td>3. Counterfactuals</td><td>Imagining</td><td><MathInline latex={String.raw`P(Y_x\mid X',Y')`} /></td><td>What would have happened in a different world, given what actually happened?</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>Rung</DataTableHeader><DataTableHeader>Verb</DataTableHeader><DataTableHeader>Notation</DataTableHeader><DataTableHeader>Question</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>1. Association</DataTableCell><DataTableCell>Seeing</DataTableCell><DataTableCell><MathInline latex={String.raw`P(Y\mid X)`} /></DataTableCell><DataTableCell>How do outcomes differ among cases where <MathInline latex={String.raw`X`} /> is observed?</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>2. Intervention</DataTableCell><DataTableCell>Doing</DataTableCell><DataTableCell><MathInline latex={String.raw`P(Y\mid \operatorname{do}(X))`} /></DataTableCell><DataTableCell>What would happen if <MathInline latex={String.raw`X`} /> were set by intervention?</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>3. Counterfactuals</DataTableCell><DataTableCell>Imagining</DataTableCell><DataTableCell><MathInline latex={String.raw`P(Y_x\mid X',Y')`} /></DataTableCell><DataTableCell>What would have happened in a different world, given what actually happened?</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 In the last line, <MathInline latex={String.raw`Y_x`} /> means "<MathInline latex={String.raw`Y`} /> in the world where <MathInline latex={String.raw`X`} /> is set to <MathInline latex={String.raw`x`} />"; <MathInline latex={String.raw`X'`} /> and <MathInline latex={String.raw`Y'`} /> are the actual facts you condition on.
 
 </FormatAlt>
@@ -207,14 +215,16 @@ A safe causal workflow is: specify the unit, exposure, outcome, timing, and inte
 
 In the default toy structural model, rain makes umbrellas more common and wet clothes more common. Umbrellas reduce wetness, but umbrella users are wetter in the observed data because they are disproportionately standing in rain.
 
-<table class="alt-table">
-<thead><tr><th>Quantity</th><th>What it asks</th><th>Default reading</th></tr></thead>
-<tbody>
-<tr><td><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \text{umbrella}) - \mathrm{P}(\text{wet}\mid \text{no umbrella})`} /></td><td>Seeing: compare existing umbrella users with non-users.</td><td>+0.23 observed risk difference.</td></tr>
-<tr><td><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \operatorname{do}(\text{umbrella})) - \mathrm{P}(\text{wet}\mid \operatorname{do}(\text{no umbrella}))`} /></td><td>Doing: set umbrella use directly and sever its usual causes.</td><td>−0.16 interventional risk difference.</td></tr>
-<tr><td>Back-door adjusted contrast</td><td>Average the rain-specific umbrella contrasts using the population rain mix.</td><td>−0.16, matching the intervention contrast under this model.</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>Quantity</DataTableHeader><DataTableHeader>What it asks</DataTableHeader><DataTableHeader>Default reading</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \text{umbrella}) - \mathrm{P}(\text{wet}\mid \text{no umbrella})`} /></DataTableCell><DataTableCell>Seeing: compare existing umbrella users with non-users.</DataTableCell><DataTableCell>+0.23 observed risk difference.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \operatorname{do}(\text{umbrella})) - \mathrm{P}(\text{wet}\mid \operatorname{do}(\text{no umbrella}))`} /></DataTableCell><DataTableCell>Doing: set umbrella use directly and sever its usual causes.</DataTableCell><DataTableCell>−0.16 interventional risk difference.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>Back-door adjusted contrast</DataTableCell><DataTableCell>Average the rain-specific umbrella contrasts using the population rain mix.</DataTableCell><DataTableCell>−0.16, matching the intervention contrast under this model.</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 Default parameters: <MathInline latex={String.raw`P(S=1)=0.45`} />, <MathInline latex={String.raw`a=-2.0`} />, <MathInline latex={String.raw`b=+2.8`} />, <MathInline latex={String.raw`c=-2.2`} />, <MathInline latex={String.raw`d=-1.485`} />, <MathInline latex={String.raw`e=+4.1`} />. Formula: <MathInline latex={String.raw`P(Y=1 \mid \operatorname{do}(X=x)) = \sum_s P(Y=1 \mid X=x,S=s)P(S=s)`} />. The observed contrast instead uses <MathInline latex={String.raw`P(S=s \mid X=x)`} />, which changes when rain affects umbrella use.
 
 </FormatAlt>

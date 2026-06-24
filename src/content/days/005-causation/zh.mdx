@@ -14,6 +14,12 @@ import SimpsonReversalMachine from "@app/components/lesson/interactives/SimpsonR
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Hero from "@app/components/lesson/Hero.astro";
@@ -160,14 +166,16 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <FormatAlt class="epub-only print-only">
 ### 珀尔的因果之梯
 
-<table class="alt-table">
-<thead><tr><th>层级</th><th>动词</th><th>记号</th><th>问题</th></tr></thead>
-<tbody>
-<tr><td>1. 关联</td><td>观察</td><td><MathInline latex={String.raw`P(Y \mid X)`} /></td><td>在观测到 X 的案例中，结果有何不同？</td></tr>
-<tr><td>2. 干预</td><td>行动</td><td><MathInline latex={String.raw`P(Y \mid \operatorname{do}(X))`} /></td><td>如果通过干预设定了 X，会发生什么？</td></tr>
-<tr><td>3. 反事实</td><td>想象</td><td><MathInline latex={String.raw`P(Y_x \mid X',Y')`} /></td><td>在已知现实结果的前提下，若过去的操作有所不同，平行世界的结果会如何？</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>层级</DataTableHeader><DataTableHeader>动词</DataTableHeader><DataTableHeader>记号</DataTableHeader><DataTableHeader>问题</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>1. 关联</DataTableCell><DataTableCell>观察</DataTableCell><DataTableCell><MathInline latex={String.raw`P(Y \mid X)`} /></DataTableCell><DataTableCell>在观测到 X 的案例中，结果有何不同？</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>2. 干预</DataTableCell><DataTableCell>行动</DataTableCell><DataTableCell><MathInline latex={String.raw`P(Y \mid \operatorname{do}(X))`} /></DataTableCell><DataTableCell>如果通过干预设定了 X，会发生什么？</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>3. 反事实</DataTableCell><DataTableCell>想象</DataTableCell><DataTableCell><MathInline latex={String.raw`P(Y_x \mid X',Y')`} /></DataTableCell><DataTableCell>在已知现实结果的前提下，若过去的操作有所不同，平行世界的结果会如何？</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 在最后一行的记号中，<MathInline latex={String.raw`Y_x`} /> 代表在 X 被干预设定为 x 的平行世界里 Y 的潜在值；<MathInline latex={String.raw`X'`} /> 与 <MathInline latex={String.raw`Y'`} /> 是我们已经观测到的现实事实。
 
 </FormatAlt>
@@ -206,14 +214,16 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 在这个玩具结构模型中，下雨会让带伞和衣服湿的现象都变得更加常见。带伞本身确实能减少淋湿，但在观测数据中，带伞的人衣服反而更湿，因为他们绝大多数都站在雨中。
 
-<table class="alt-table">
-<thead><tr><th>数量</th><th>提问含义</th><th>默认读数</th></tr></thead>
-<tbody>
-<tr><td><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \text{umbrella}) - \mathrm{P}(\text{wet}\mid \text{no umbrella})`} /></td><td>观察：比较现有的带伞者与不带伞者。</td><td>+0.23 观测风险差</td></tr>
-<tr><td><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \operatorname{do}(\text{umbrella})) - \mathrm{P}(\text{wet}\mid \operatorname{do}(\text{no umbrella}))`} /></td><td>干预：直接设定带伞行为，切断其通常原因。</td><td>−0.16 干预风险差</td></tr>
-<tr><td>后门调整对照量</td><td>利用总体的下雨概率加权平均特定下雨状态下的带伞效应。</td><td>−0.16，与该模型下的干预对照量一致。</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>数量</DataTableHeader><DataTableHeader>提问含义</DataTableHeader><DataTableHeader>默认读数</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \text{umbrella}) - \mathrm{P}(\text{wet}\mid \text{no umbrella})`} /></DataTableCell><DataTableCell>观察：比较现有的带伞者与不带伞者。</DataTableCell><DataTableCell>+0.23 观测风险差</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell><MathInline latex={String.raw`\mathrm{P}(\text{wet}\mid \operatorname{do}(\text{umbrella})) - \mathrm{P}(\text{wet}\mid \operatorname{do}(\text{no umbrella}))`} /></DataTableCell><DataTableCell>干预：直接设定带伞行为，切断其通常原因。</DataTableCell><DataTableCell>−0.16 干预风险差</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>后门调整对照量</DataTableCell><DataTableCell>利用总体的下雨概率加权平均特定下雨状态下的带伞效应。</DataTableCell><DataTableCell>−0.16，与该模型下的干预对照量一致。</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 默认参数：<MathInline latex={String.raw`P(S=1)=0.45`} />、<MathInline latex={String.raw`a=-2.0`} />、<MathInline latex={String.raw`b=+2.8`} />、<MathInline latex={String.raw`c=-2.2`} />、<MathInline latex={String.raw`d=-1.485`} />、<MathInline latex={String.raw`e=+4.1`} />。公式：<MathInline latex={String.raw`P(Y=1 \mid \operatorname{do}(X=x)) = \sum_s P(Y=1 \mid X=x,S=s)P(S=s)`} />。而观测对照量则使用了 <MathInline latex={String.raw`P(S=s \mid X=x)`} />，当雨水影响带伞行为时，这一项就会发生改变。
 
 </FormatAlt>
