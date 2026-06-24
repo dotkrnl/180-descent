@@ -158,7 +158,6 @@
           continue;
         }
         notes[i].removeAttribute("data-open");
-        notes[i].removeAttribute("data-align");
         notes[i].removeAttribute("data-place");
         notes[i].removeAttribute("data-positioned");
         notes[i].style.removeProperty("--tip-left");
@@ -191,7 +190,6 @@
         return;
       }
 
-      note.removeAttribute("data-align");
       note.removeAttribute("data-place");
       note.removeAttribute("data-positioned");
       note.style.removeProperty("--tip-left");
@@ -270,7 +268,6 @@
           });
         }else{
           note.removeAttribute("data-open");
-          note.removeAttribute("data-align");
           note.removeAttribute("data-place");
           note.removeAttribute("data-positioned");
           note.style.removeProperty("--tip-left");
