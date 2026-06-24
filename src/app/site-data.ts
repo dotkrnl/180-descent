@@ -38,8 +38,6 @@ interface Syllabus {
   subtitle: string;
   purpose: string;
   method: string;
-  threads: string[];
-  frontierLabels: string[];
   blocks: SyllabusBlock[];
 }
 
@@ -68,8 +66,6 @@ interface RawSyllabus {
   subtitle: string;
   purpose: string;
   method: string;
-  threads: string[];
-  frontier_labels: string[];
   blocks: RawSyllabusBlock[];
 }
 
@@ -176,8 +172,6 @@ function normalizeSyllabus(raw: RawSyllabus): Syllabus {
     subtitle: raw.subtitle,
     purpose: raw.purpose,
     method: raw.method,
-    threads: raw.threads,
-    frontierLabels: raw.frontier_labels,
     blocks: raw.blocks.map((block) => ({
       id: block.id,
       startDay: block.start_day,
