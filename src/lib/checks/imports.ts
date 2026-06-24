@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import ts from "typescript";
 import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 
@@ -14,7 +15,6 @@ interface UnusedDefaultImport {
 }
 
 const DEFAULT_SOURCE_ROOTS = ["src/app", "src/content"] as const;
-const DEFAULT_IMPORT_PATTERN = /^import\s+([A-Za-z_$][\w$]*)(?:\s*,\s*[^;]+)?\s+from\s+["'][^"']+["'];?\s*$/gm;
 
 export async function checkUnusedDefaultImports(options: ImportCheckOptions): Promise<UnusedDefaultImport[]> {
   const failures: UnusedDefaultImport[] = [];
@@ -38,20 +38,67 @@ export async function checkUnusedDefaultImports(options: ImportCheckOptions): Pr
 }
 
 export function findUnusedDefaultImports(source: string): Array<{ name: string }> {
-  const sourceWithoutImports = source
-    .split("\n")
-    .filter((line) => !line.trimStart().startsWith("import "))
-    .join("\n");
+  const imports = importDeclarations(source);
+  const sourceWithoutImports = stripRanges(source, imports.map((entry) => entry.range));
   const unusedImports: Array<{ name: string }> = [];
 
-  for (const match of source.matchAll(DEFAULT_IMPORT_PATTERN)) {
-    const name = match[1];
+  for (const entry of imports) {
+    const name = defaultImportName(entry.text);
+    if (!name) continue;
     if (!hasIdentifier(sourceWithoutImports, name)) {
       unusedImports.push({ name });
     }
   }
 
   return unusedImports;
+}
+
+function importDeclarations(source: string): Array<{ text: string; range: [number, number] }> {
+  const declarations: Array<{ text: string; range: [number, number] }> = [];
+  const lines = source.split(/(?<=\n)/);
+  let offset = 0;
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (!line.trimStart().startsWith("import ")) {
+      offset += line.length;
+      continue;
+    }
+
+    const start = offset;
+    let text = line;
+    offset += line.length;
+    while (!isCompleteImportDeclaration(text) && index + 1 < lines.length) {
+      index += 1;
+      text += lines[index];
+      offset += lines[index].length;
+    }
+    declarations.push({ text, range: [start, offset] });
+  }
+
+  return declarations;
+}
+
+function isCompleteImportDeclaration(text: string): boolean {
+  return /\bfrom\s+["'][^"']+["']\s*;?\s*$/.test(text) || /^import\s+["'][^"']+["']\s*;?\s*$/.test(text.trim());
+}
+
+function defaultImportName(importSource: string): string | null {
+  const sourceFile = ts.createSourceFile("import.ts", importSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const statement = sourceFile.statements[0];
+  if (!statement || !ts.isImportDeclaration(statement)) return null;
+  if (!statement.importClause || statement.importClause.isTypeOnly || !statement.importClause.name) return null;
+  return statement.importClause.name.text;
+}
+
+function stripRanges(source: string, ranges: Array<[number, number]>): string {
+  const chars = source.split("");
+  for (const [start, end] of ranges) {
+    for (let index = start; index < end; index += 1) {
+      chars[index] = " ";
+    }
+  }
+  return chars.join("");
 }
 
 function hasIdentifier(source: string, name: string): boolean {

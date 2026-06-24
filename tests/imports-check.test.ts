@@ -38,4 +38,30 @@ describe("import check", () => {
   it("ignores named-only imports", () => {
     expect(findUnusedDefaultImports('import { Panel } from "./Panel.astro";\n<div />')).toEqual([]);
   });
+
+  it("parses multi-line default imports", () => {
+    expect(findUnusedDefaultImports([
+      "import Hero, {",
+      "  type HeroProps",
+      '} from "./Hero.astro";',
+      "<Hero />"
+    ].join("\n"))).toEqual([]);
+    expect(findUnusedDefaultImports([
+      "import Hero, {",
+      "  type HeroProps",
+      '} from "./Hero.astro";',
+      "<div />"
+    ].join("\n"))).toEqual([{ name: "Hero" }]);
+  });
+
+  it("ignores type-only default imports", () => {
+    expect(findUnusedDefaultImports('import type Hero from "./Hero.astro";\n<div />')).toEqual([]);
+  });
+
+  it("does not consume body content after imports without semicolons", () => {
+    expect(findUnusedDefaultImports([
+      'import Hero from "./Hero.astro"',
+      "<Hero />"
+    ].join("\n"))).toEqual([]);
+  });
 });
