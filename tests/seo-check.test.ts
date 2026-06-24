@@ -14,6 +14,33 @@ describe("seo check", () => {
       errors: []
     });
   });
+
+  it("reports incorrect hreflang targets for paired pages", async () => {
+    const root = await createSiteRoot();
+    await mkdir(path.join(root, "_site/zh"), { recursive: true });
+    await writeFile(path.join(root, "_site/index.html"), indexHtml({
+      alternates: {
+        en: "https://180d.io/",
+        zh: "https://180d.io/wrong/",
+        xDefault: "https://180d.io/zh/"
+      }
+    }));
+    await writeFile(path.join(root, "_site/zh/index.html"), indexHtml({
+      canonicalPath: "/zh/",
+      alternates: {
+        en: "https://180d.io/",
+        zh: "https://180d.io/zh/",
+        xDefault: "https://180d.io/"
+      }
+    }));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "/: hreflang zh-Hans should be https://180d.io/zh/, got https://180d.io/wrong/",
+      "/: hreflang x-default should be https://180d.io/, got https://180d.io/zh/"
+    ]);
+  });
 });
 
 async function createSiteRoot(): Promise<string> {
@@ -31,14 +58,30 @@ async function createSiteRoot(): Promise<string> {
   return root;
 }
 
-function indexHtml(): string {
+function indexHtml(options: {
+  canonicalPath?: string;
+  alternates?: {
+    en: string;
+    zh: string;
+    xDefault: string;
+  };
+} = {}): string {
+  const canonicalPath = options.canonicalPath ?? "/";
+  const alternates = options.alternates
+    ? [
+      `<link rel="alternate" hreflang="en" href="${options.alternates.en}">`,
+      `<link rel="alternate" hreflang="zh-Hans" href="${options.alternates.zh}">`,
+      `<link rel="alternate" hreflang="x-default" href="${options.alternates.xDefault}">`
+    ]
+    : [];
   return [
     "<!doctype html>",
     "<html>",
     "<head>",
     "<title>Fixture</title>",
     '<meta name="description" content="Fixture description">',
-    '<link rel="canonical" href="https://180d.io/">',
+    `<link rel="canonical" href="https://180d.io${canonicalPath}">`,
+    ...alternates,
     '<meta property="og:title" content="Fixture">',
     '<meta property="og:description" content="Fixture description">',
     '<meta property="og:image" content="https://180d.io/social.png">',

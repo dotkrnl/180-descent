@@ -81,6 +81,11 @@ async function checkHtml(siteDir: string, siteUrl: string, filePath: string, err
     const zhHref = $('link[rel="alternate"][hreflang="zh-Hans"]').attr("href") || "";
     const defaultHref = $('link[rel="alternate"][hreflang="x-default"]').attr("href") || "";
     if (!enHref || !zhHref || !defaultHref) errors.push(`${url}: missing reciprocal hreflang alternates`);
+    const expectedEnHref = `${siteUrl}${englishUrl(url)}`;
+    const expectedZhHref = `${siteUrl}${chineseUrl(url)}`;
+    if (enHref && enHref !== expectedEnHref) errors.push(`${url}: hreflang en should be ${expectedEnHref}, got ${enHref}`);
+    if (zhHref && zhHref !== expectedZhHref) errors.push(`${url}: hreflang zh-Hans should be ${expectedZhHref}, got ${zhHref}`);
+    if (defaultHref && defaultHref !== expectedEnHref) errors.push(`${url}: hreflang x-default should be ${expectedEnHref}, got ${defaultHref}`);
   }
 }
 
@@ -153,4 +158,12 @@ function alternateUrl(url: string): string {
   if (url === "/zh/") return "/";
   if (url.startsWith("/zh/")) return url.replace(/^\/zh/, "") || "/";
   return `/zh${url}`;
+}
+
+function englishUrl(url: string): string {
+  return url.startsWith("/zh/") ? alternateUrl(url) : url;
+}
+
+function chineseUrl(url: string): string {
+  return url.startsWith("/zh/") ? url : alternateUrl(url);
 }
