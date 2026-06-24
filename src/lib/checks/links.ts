@@ -3,6 +3,7 @@ import path from "node:path";
 import * as cheerio from "cheerio";
 import YAML from "yaml";
 import { loadContentRegistry } from "@lib/content/registry";
+import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
 
 interface LinkCheckOptions {
@@ -56,13 +57,13 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
           const targetIds = idCache.get(target);
           if (targetIds && !targetIds.has(anchor)) {
             failures.push({
-              message: `Missing anchor ${href} (anchor "${anchor}" not found in ${toRelative(options.root, target)}) referenced from ${toRelative(options.root, file)}`
+              message: `Missing anchor ${href} (anchor "${anchor}" not found in ${toPosixRelative(options.root, target)}) referenced from ${toPosixRelative(options.root, file)}`
             });
           }
         }
       } catch {
         failures.push({
-          message: `Broken internal link ${href} in ${toRelative(options.root, file)}`
+          message: `Broken internal link ${href} in ${toPosixRelative(options.root, file)}`
         });
       }
     }
@@ -113,8 +114,4 @@ async function checkFutureLinks(daysDir: string, futureLinksPath: string): Promi
 
 function isArtifactDownloadPath(pathname: string): boolean {
   return /^\/downloads\/.+\.(?:epub|pdf)$/.test(pathname);
-}
-
-function toRelative(root: string, filePath: string): string {
-  return path.relative(root, filePath).split(path.sep).join("/");
 }

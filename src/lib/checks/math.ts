@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 
 interface MathCheckOptions {
@@ -69,15 +70,11 @@ function scanPatterns(
     pattern.lastIndex = 0;
     if (pattern.test(content)) {
       failures.push({
-        file: toRelative(root, file),
+        file: toPosixRelative(root, file),
         label
       });
     }
   }
 
   return failures;
-}
-
-function toRelative(root: string, filePath: string): string {
-  return path.relative(root, filePath).split(path.sep).join("/");
 }

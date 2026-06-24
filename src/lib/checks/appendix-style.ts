@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { compileCss } from "@lib/assets/css";
 import { loadContentRegistry } from "@lib/content/registry";
+import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 
 interface AppendixStyleCheckOptions {
@@ -137,7 +138,7 @@ function checkBlock(
   jsClasses: Set<string>,
   errors: string[]
 ): void {
-  const relativeFile = toRelative(root, file);
+  const relativeFile = toPosixRelative(root, file);
   if (/<br\s*\/?>\s*<blockquote\b/i.test(block)) {
     errors.push(`${relativeFile}: raw <br> used as spacing before a blockquote inside an appendix`);
   }
@@ -170,7 +171,7 @@ function checkCssForDayScopedSelectors(root: string, file: string, css: string, 
   for (const match of css.matchAll(selectorPattern)) {
     const selector = match[2].trim();
     if (/(?:#|\.)(?:appendix-d\d{3}|day-\d{3}|d\d{3}(?:[-_]|$))/i.test(selector)) {
-      errors.push(`${toRelative(root, file)}: day-scoped CSS selector "${selector}" should be a shared component or utility selector`);
+      errors.push(`${toPosixRelative(root, file)}: day-scoped CSS selector "${selector}" should be a shared component or utility selector`);
     }
   }
 }
@@ -187,8 +188,4 @@ function classNames(block: string): Set<string> {
     }
   }
   return out;
-}
-
-function toRelative(root: string, filePath: string): string {
-  return path.relative(root, filePath).split(path.sep).join("/");
 }

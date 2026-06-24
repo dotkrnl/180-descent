@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { toPosixRelative } from "@lib/fs/path";
 import { walkFilesSync } from "@lib/fs/walk";
 
 export const MIN_SVG_FONT_SIZE = 10.5;
@@ -27,7 +28,7 @@ export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFail
     if (!existsSync(absoluteRoot)) continue;
 
     for (const file of walkFilesSync(absoluteRoot, { allowedExtensionsRegex: ALLOWED_EXTENSIONS })) {
-      const relativeFile = toRelative(options.root, file);
+      const relativeFile = toPosixRelative(options.root, file);
       if (GENERATED_STYLE_PATTERN.test(relativeFile)) continue;
 
       const source = readFileSync(file, "utf8");
@@ -80,8 +81,4 @@ function checkSegment(
 
 function lineNumber(source: string, index: number): number {
   return source.slice(0, index).split(/\r?\n/).length;
-}
-
-function toRelative(root: string, filePath: string): string {
-  return path.relative(root, filePath).split(path.sep).join("/");
 }

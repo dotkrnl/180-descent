@@ -3,6 +3,7 @@ import path from "node:path";
 import * as cheerio from "cheerio";
 import { compileCss } from "@lib/assets/css";
 import { loadContentRegistry } from "@lib/content/registry";
+import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
 import type { Locale } from "@lib/schemas/day";
 
@@ -96,7 +97,7 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
       declaredBodyPaths.add(body.path);
       checkContentFile({
         label: `${body.locale.toUpperCase()} ${day.manifest.path}`,
-        relativePath: toRelative(options.root, path.join(day.directory, body.path)),
+        relativePath: toPosixRelative(options.root, path.join(day.directory, body.path)),
         source: body.source,
         locale: body.locale,
         title: localeData?.title,
@@ -108,7 +109,7 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
       declaredBodyPaths.add(appendixBody.path);
       checkContentFile({
         label: `${appendixBody.locale.toUpperCase()} ${day.manifest.path} appendix ${appendixBody.appendixId}`,
-        relativePath: toRelative(options.root, path.join(day.directory, appendixBody.path)),
+        relativePath: toPosixRelative(options.root, path.join(day.directory, appendixBody.path)),
         source: appendixBody.source,
         locale: appendixBody.locale,
         requiresTitle: false
@@ -237,7 +238,7 @@ async function checkParentMarkdownReferences(root: string, failures: ContentChec
     const text = await readFile(file, "utf8");
     if (PARENT_MARKDOWN_PATTERN.test(text)) {
       failures.push({
-        message: `${toRelative(root, file)} references a parent Markdown file; keep canonical project content inside this repo`
+        message: `${toPosixRelative(root, file)} references a parent Markdown file; keep canonical project content inside this repo`
       });
     }
   }
@@ -257,8 +258,4 @@ function normalizeVisibleText(text: string): string {
     .text()
     .replace(/\s+/g, " ")
     .trim();
-}
-
-function toRelative(root: string, filePath: string): string {
-  return path.relative(root, filePath).split(path.sep).join("/");
 }

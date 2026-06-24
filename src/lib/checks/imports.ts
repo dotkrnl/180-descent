@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 
 interface ImportCheckOptions {
@@ -26,7 +27,7 @@ export async function checkUnusedDefaultImports(options: ImportCheckOptions): Pr
       const source = await readFile(filePath, "utf8");
       for (const unusedImport of findUnusedDefaultImports(source)) {
         failures.push({
-          path: toRelative(options.root, filePath),
+          path: toPosixRelative(options.root, filePath),
           name: unusedImport.name
         });
       }
@@ -59,8 +60,4 @@ function hasIdentifier(source: string, name: string): boolean {
 
 function escapeRegExp(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function toRelative(root: string, filePath: string): string {
-  return path.relative(root, filePath).split(path.sep).join("/");
 }
