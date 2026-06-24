@@ -1,9 +1,5 @@
 export function escapeHtml(value = ""): string {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+  return escapeXml(value);
 }
 
 export function escapeXml(value = ""): string {

@@ -164,7 +164,7 @@ export async function prepareKatexAssets(options: AssetPreparationOptions): Prom
   };
 }
 
-function stripUnbundledKatexTtfSources(css: string): string {
+export function stripUnbundledKatexTtfSources(css: string): string {
   return css.replace(/,url\((?:\.\.\/){1,2}fonts\/katex\/[^)]*?\.ttf\)\s*format\("truetype"\)/g, "");
 }
 

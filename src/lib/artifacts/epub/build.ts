@@ -6,6 +6,7 @@ import JSZip from "jszip";
 import YAML from "yaml";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { compileCss } from "@lib/assets/css";
+import { stripUnbundledKatexTtfSources } from "@lib/assets/fonts";
 import type { Locale } from "@lib/schemas/day";
 import { escapeXml } from "@lib/text/escape";
 
@@ -429,10 +430,6 @@ body{font-size:1em;}
 
 function stripCjkFontFaces(css: string): string {
   return css.replace(/\/\* LXGW WenKai \[[^\]]+\] \*\/\s*@font-face\s*{[\s\S]*?}\s*/g, "");
-}
-
-function stripUnbundledKatexTtfSources(css: string): string {
-  return css.replace(/,url\((?:\.\.\/){1,2}fonts\/katex\/[^)]*?\.ttf\)\s*format\("truetype"\)/g, "");
 }
 
 function normalizeEpubFontUrls(css: string): string {
