@@ -41,17 +41,17 @@ export async function checkProjectWorkflow(root: string): Promise<WorkflowCheckF
   }
 
   for (const skillName of SPLIT_WORKFLOW_SKILLS) {
-    const oldSkillDir = `.codex/skills/${skillName}`;
+    const splitSkillPath = `.codex/skills/${skillName}`;
     try {
-      await lstat(path.join(root, oldSkillDir));
+      await lstat(path.join(root, splitSkillPath));
       failures.push({
-        path: oldSkillDir,
+        path: splitSkillPath,
         reason: "Remove split workflow skill; use .codex/skills/180-descent"
       });
     } catch (error) {
       if (!isMissingPathError(error)) {
         failures.push({
-          path: oldSkillDir,
+          path: splitSkillPath,
           reason: error instanceof Error ? error.message : "Unable to inspect split workflow skill"
         });
       }

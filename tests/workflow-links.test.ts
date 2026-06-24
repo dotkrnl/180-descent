@@ -23,7 +23,7 @@ describe("project workflow", () => {
     });
   });
 
-  it("rejects old split workflow skills", async () => {
+  it("rejects split workflow skill directories", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-workflow-links-"));
     await createWorkflowTree(root, { linked: true, splitSkill: true });
 
