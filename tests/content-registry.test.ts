@@ -41,7 +41,7 @@ describe("target content registry", () => {
       "assets/fixture-diagram.svg",
       "assets/fixture-diagram.zh.svg"
     ]);
-    expect(day.manifest.components[0].webEntry).toBe("fixture-interaction");
+    expect(day.manifest.interactionScripts).toEqual(["fixture-interaction"]);
   });
 
   it("lists renderable locale entries for Astro routes", async () => {
@@ -111,7 +111,7 @@ describe("target content registry", () => {
       "the-edge-of-the-map:en",
       "the-edge-of-the-map:zh"
     ]);
-    expect(day001?.manifest.components.map((component) => component.id)).toEqual([
+    expect(day001?.manifest.interactionScripts).toEqual([
       "clock-ticks",
       "gettier-machine",
       "credence-dial",
@@ -127,7 +127,7 @@ describe("target content registry", () => {
       "foundations-without-bedrock:en",
       "foundations-without-bedrock:zh"
     ]);
-    expect(day002?.manifest.components.map((component) => component.id)).toEqual([
+    expect(day002?.manifest.interactionScripts).toEqual([
       "demarcation-lab",
       "grue-machine",
       "base-rate-engine"
@@ -140,7 +140,7 @@ describe("target content registry", () => {
       "the-unsettled-frontier:en",
       "the-unsettled-frontier:zh"
     ]);
-    expect(day003?.manifest.components.map((component) => component.id)).toEqual([
+    expect(day003?.manifest.interactionScripts).toEqual([
       "inference-inspector",
       "fallacy-spotter",
       "hype-filter-trainer"
@@ -148,13 +148,13 @@ describe("target content registry", () => {
     expect(day003?.bodies[0].source).toContain("sherlockHolmes.src");
 
     expect(day004?.appendixBodies).toEqual([]);
-    expect(day004?.manifest.components.map((component) => component.id)).toEqual([
+    expect(day004?.manifest.interactionScripts).toEqual([
       "probability-machines"
     ]);
     expect(day004?.bodies[0].source).toContain("montyHall.src");
 
     expect(day005?.appendixBodies).toEqual([]);
-    expect(day005?.manifest.components.map((component) => component.id)).toEqual([
+    expect(day005?.manifest.interactionScripts).toEqual([
       "causation-lab"
     ]);
     expect(day005?.bodies[0].source).toContain("<DoSeeCalculator");
@@ -166,7 +166,7 @@ describe("target content registry", () => {
       "the-incoming-wave:en",
       "the-incoming-wave:zh"
     ]);
-    expect(day006?.manifest.components.map((component) => component.id)).toEqual([
+    expect(day006?.manifest.interactionScripts).toEqual([
       "statistics-core",
       "statistics-lab",
       "statistics-appendices"
@@ -181,7 +181,7 @@ describe("target content registry", () => {
       "the-deeper-currents:en",
       "the-deeper-currents:zh"
     ]);
-    expect(day007?.manifest.components.map((component) => component.id)).toEqual([
+    expect(day007?.manifest.interactionScripts).toEqual([
       "information-theory"
     ]);
     expect(day007?.bodies[0].source).toContain("maxwellsDemon.src");

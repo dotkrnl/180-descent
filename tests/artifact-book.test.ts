@@ -6,7 +6,7 @@ const root = process.cwd();
 const fixtureDaysDir = path.join(root, "tests/fixtures/content/days");
 
 describe("artifact book model", () => {
-  it("loads fixture day bodies, appendices, components, and localized assets from the registry", async () => {
+  it("loads fixture day bodies, appendices, and localized assets from the registry", async () => {
     const days = await loadArtifactBookDays(root, "zh", { daysDir: fixtureDaysDir });
     const fixture = days[0];
 
@@ -24,10 +24,6 @@ describe("artifact book model", () => {
     expect(fixture.assets).toEqual([{
       id: "fixture-diagram",
       path: "assets/fixture-diagram.zh.svg"
-    }]);
-    expect(fixture.components).toEqual([{
-      id: "fixture-interaction",
-      webEntry: "fixture-interaction"
     }]);
   });
 
@@ -52,6 +48,5 @@ describe("artifact book model", () => {
       "rest-of-the-map",
       "the-edge-of-the-map"
     ]);
-    expect(dayOne.components.map((component) => component.webEntry)).toContain("echo-chamber");
   });
 });

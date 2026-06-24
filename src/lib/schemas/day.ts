@@ -44,11 +44,6 @@ const assetSchema = z.object({
   files: localizedFilesSchema
 }).strict();
 
-const componentSchema = z.object({
-  id: z.string().min(1),
-  webEntry: z.string().min(1)
-}).strict();
-
 export const dayManifestSchema = z.object({
   day: z.number().int().positive(),
   block: z.string().min(1),
@@ -61,7 +56,7 @@ export const dayManifestSchema = z.object({
     "Day must declare at least one locale"
   ),
   appendices: z.array(appendixSchema).default([]),
-  components: z.array(componentSchema).default([]),
+  interactionScripts: z.array(z.string().min(1)).default([]),
   assets: z.array(assetSchema).default([])
 }).strict();
 

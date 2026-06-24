@@ -10,7 +10,7 @@ The PDF pipeline reads the same Astro/MDX registry as the site and EPUB builders
 
 ## Source Contract
 
-- `src/content/days/###-slug/` is the canonical route path; `day.yaml` remains the canonical manifest for day number, block, localized metadata, appendices, components, and assets.
+- `src/content/days/###-slug/` is the canonical route path; `day.yaml` remains the canonical manifest for day number, block, localized metadata, appendices, interaction scripts, and assets.
 - `en.mdx`, `zh.mdx`, and appendix MDX files are the canonical prose sources.
 - MDX should express content semantically through Markdown and lesson components.
 - Static artifact alternatives belong in semantic MDX components such as `FormatOnly`; live web controls should not leak into PDF output.

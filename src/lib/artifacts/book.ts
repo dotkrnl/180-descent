@@ -19,7 +19,6 @@ export interface ArtifactBookDay {
   xhtml: string;
   appendices: ArtifactBookAppendix[];
   assets: ArtifactBookAsset[];
-  components: ArtifactBookComponent[];
 }
 
 interface ArtifactBookAppendix {
@@ -32,11 +31,6 @@ interface ArtifactBookAppendix {
 interface ArtifactBookAsset {
   id: string;
   path: string;
-}
-
-interface ArtifactBookComponent {
-  id: string;
-  webEntry: string;
 }
 
 interface LoadArtifactBookOptions {
@@ -83,11 +77,7 @@ async function loadArtifactBook(
         assets: day.manifest.assets.flatMap((asset) => {
           const assetPath = asset.files[locale] ?? asset.files.shared;
           return assetPath ? [{ id: asset.id, path: assetPath }] : [];
-        }),
-        components: day.manifest.components.map((component) => ({
-          id: component.id,
-          webEntry: component.webEntry
-        }))
+        })
       }];
     })
     .sort((a, b) => a.day - b.day);

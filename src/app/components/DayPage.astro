@@ -51,10 +51,10 @@ const navDayLabel = (day: number) => {
   return isZh ? `第${value}日` : `Day ${value}`;
 };
 const navHref = (item: DayNavEntry) => `${navPrefix}/${item.path}/`;
-const scripts = entry.day.manifest.components.map((component) => {
-  const script = interactionScriptModules[component.webEntry];
+const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
+  const script = interactionScriptModules[entryName];
   if (!script) {
-    throw new Error(`Missing interaction script for ${component.webEntry}`);
+    throw new Error(`Missing interaction script for ${entryName}`);
   }
   return script;
 });

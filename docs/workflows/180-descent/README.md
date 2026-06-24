@@ -15,7 +15,7 @@ Each published day lives under `src/content/days/###-slug/`. The directory
 name is the canonical URL path.
 
 - `day.yaml` is the typed manifest: day number, block, publish state,
-  locale metadata, appendices, components, and assets.
+  locale metadata, appendices, interaction scripts, and assets.
 - `en.mdx` and `zh.mdx` are the paired main bodies.
 - `appendices/*.en.mdx` and `appendices/*.zh.mdx` are optional paired deep-dive
   bodies declared by manifest id.
@@ -23,7 +23,7 @@ name is the canonical URL path.
 - Reusable static figures live in `src/app/components/lesson/figures/`.
 - Reusable web interactives live in `src/app/components/lesson/interactives/`.
 - Interaction behavior lives in `src/assets/js/interactions/` and is registered
-  through `day.yaml` `components[].webEntry`.
+  through `day.yaml` `interactionScripts`.
 - Asset files live under `src/assets/images/...` and are declared in
   `day.yaml` `assets`.
 - Styling is SCSS-only. Astro layouts import `src/assets/scss/book.scss`; edit
@@ -47,7 +47,7 @@ boundary.
 1. Pick the canonical `###-slug` path from the syllabus and create or edit
    `src/content/days/###-slug/day.yaml`.
 2. Keep English and Chinese locale entries paired when the day is published.
-3. Put page title, summary, block, appendices, components, and assets in
+3. Put page title, summary, block, appendices, interaction scripts, and assets in
    `day.yaml`; do not duplicate directory routing metadata inside the manifest.
 4. Write lesson bodies as real MDX. Import lesson components explicitly at the
    top of each MDX file.
@@ -55,8 +55,8 @@ boundary.
    one-off diagrams readable; move reusable SVGs, complex markup, or any
    interaction-bearing DOM into a lesson component.
 6. Use stable ids and classes inside the reusable component that owns the DOM
-   contract. When adding a live component, add a matching manifest component
-   with `webEntry`.
+   contract. When adding live behavior, add its bundle name to
+   `interactionScripts`.
 7. Keep static artifact equivalents purposeful. EPUB/PDF may drift from the live
    web component when the static form is clearer, but HTML should stay visually
    consistent with the intended web design.
