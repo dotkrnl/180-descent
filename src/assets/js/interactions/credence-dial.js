@@ -45,14 +45,14 @@
       segN.style.width = (n / 2 * 100) + "%";
       if(Math.abs(sum - 1) < 0.005){
         sumtxt.textContent = credenceText.sum + sum.toFixed(2);
-        sumtxt.style.color = "var(--ok)";
+        sumtxt.className = "sum-value coherent";
         ledger.className = "ledger coherent";
         ledgerH.textContent = credenceText.coherent;
         ledgerBody.textContent = credenceText.coherentBody;
         return;
       }
       sumtxt.textContent = credenceText.sum + sum.toFixed(2) + (sum > 1 ? credenceText.over : credenceText.under);
-      sumtxt.style.color = "var(--contested)";
+      sumtxt.className = "sum-value dutch";
       ledger.className = "ledger dutch";
       ledgerH.textContent = credenceText.dutchBook;
       if(sum > 1){
