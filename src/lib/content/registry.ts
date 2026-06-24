@@ -57,7 +57,10 @@ export async function loadContentRegistry(options: ContentRegistryOptions): Prom
 async function loadRegistryDay(directory: string): Promise<RegistryDay> {
   const manifestPath = path.join(directory, "day.yaml");
   const rawManifest = parseYaml(await readFile(manifestPath, "utf8"));
-  const manifest = dayManifestSchema.parse(rawManifest);
+  const manifest: DayManifest = {
+    ...dayManifestSchema.parse(rawManifest),
+    path: path.basename(directory)
+  };
 
   const bodies = [];
   for (const [locale, entry] of Object.entries(manifest.locales)) {

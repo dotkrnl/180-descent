@@ -39,8 +39,6 @@ export async function writePublishedDay(root: string, options: PublishedDayOptio
   await mkdir(dayDir, { recursive: true });
   const manifest = [
     "day: 1",
-    "slug: fixture",
-    "path: 001-fixture",
     "block: Fixture",
     "published: true",
     "locales:",

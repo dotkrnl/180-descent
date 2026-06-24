@@ -55,11 +55,8 @@ const componentSchema = z.object({
 
 export const dayManifestSchema = z.object({
   day: z.number().int().positive(),
-  slug: z.string().min(1),
-  path: z.string().min(1),
   block: z.string().min(1),
   published: z.boolean().default(false),
-  threads: z.array(z.string().min(1)).default([]),
   locales: z.object({
     en: localeContentSchema.optional(),
     zh: localeContentSchema.optional()
@@ -73,4 +70,6 @@ export const dayManifestSchema = z.object({
 }).strict();
 
 export type Locale = z.infer<typeof localeSchema>;
-export type DayManifest = z.infer<typeof dayManifestSchema>;
+export type DayManifest = z.infer<typeof dayManifestSchema> & {
+  path: string;
+};

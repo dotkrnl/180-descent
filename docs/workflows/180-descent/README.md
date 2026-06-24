@@ -11,9 +11,10 @@ publishing, and visual comparison.
 
 ## Source Model
 
-Each published day lives under `src/content/days/###-slug/`.
+Each published day lives under `src/content/days/###-slug/`. The directory
+name is the canonical URL path.
 
-- `day.yaml` is the typed manifest: day number, URL path, block, publish state,
+- `day.yaml` is the typed manifest: day number, block, publish state,
   locale metadata, appendices, components, assets, and artifact variants.
 - `en.mdx` and `zh.mdx` are the paired main bodies.
 - `appendices/*.en.mdx` and `appendices/*.zh.mdx` are optional paired deep-dive
@@ -46,8 +47,8 @@ boundary.
 1. Pick the canonical `###-slug` path from the syllabus and create or edit
    `src/content/days/###-slug/day.yaml`.
 2. Keep English and Chinese locale entries paired when the day is published.
-3. Put page title, summary, block, threads, appendices, components, and assets
-   in `day.yaml`; do not duplicate routing metadata elsewhere.
+3. Put page title, summary, block, appendices, components, and assets in
+   `day.yaml`; do not duplicate directory routing metadata inside the manifest.
 4. Write lesson bodies as real MDX. Import lesson components explicitly at the
    top of each MDX file.
 5. Extract repeated or behavior-bearing markup into Astro components. Keep

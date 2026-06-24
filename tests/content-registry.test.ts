@@ -10,8 +10,6 @@ describe("target content registry", () => {
   it("validates the paired day manifest schema", () => {
     const parsed = dayManifestSchema.parse({
       day: 1,
-      slug: "minimal",
-      path: "001-minimal",
       block: "foundations",
       locales: {
         en: {
