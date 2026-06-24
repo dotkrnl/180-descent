@@ -166,9 +166,9 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
 
   if (file.requiresTitle) {
     checkMainTitle(file, failures);
-    checkStaticAlternates(file, failures);
   }
 
+  checkStaticAlternates(file, failures);
   checkUnsupportedMdxWrappers(file, failures);
   checkRawInteractiveMarkup(file, failures);
   checkUnusedMdxDefaultImports(file, failures);

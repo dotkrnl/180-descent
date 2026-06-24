@@ -15,6 +15,17 @@ interface PublishedDayOptions {
   zhTitle?: string;
   zhSummary?: string;
   zhBody?: string;
+  appendices?: PublishedDayAppendixOptions[];
+}
+
+interface PublishedDayAppendixOptions {
+  id: string;
+  enTitle: string;
+  enBodyPath: string;
+  enBody: string;
+  zhTitle: string;
+  zhBodyPath: string;
+  zhBody: string;
 }
 
 export async function writePublishedDay(root: string, options: PublishedDayOptions = {}): Promise<void> {
@@ -26,7 +37,7 @@ export async function writePublishedDay(root: string, options: PublishedDayOptio
   const zhBody = options.zhBody ?? "";
   const dayDir = path.join(root, "src/content/days/001-fixture");
   await mkdir(dayDir, { recursive: true });
-  await writeFile(path.join(dayDir, "day.yaml"), [
+  const manifest = [
     "day: 1",
     "slug: fixture",
     "path: 001-fixture",
@@ -43,7 +54,34 @@ export async function writePublishedDay(root: string, options: PublishedDayOptio
     `    summary: ${zhSummary}`,
     "    body: zh.mdx",
     "    status: reviewed"
-  ].join("\n"));
+  ];
+
+  if (options.appendices?.length) {
+    manifest.push("appendices:");
+    for (const appendix of options.appendices) {
+      manifest.push(
+        `  - id: ${appendix.id}`,
+        "    locales:",
+        "      en:",
+        `        title: ${appendix.enTitle}`,
+        `        body: ${appendix.enBodyPath}`,
+        "        status: reviewed",
+        "      zh:",
+        `        title: ${appendix.zhTitle}`,
+        `        body: ${appendix.zhBodyPath}`,
+        "        status: reviewed"
+      );
+    }
+  }
+
+  await writeFile(path.join(dayDir, "day.yaml"), manifest.join("\n"));
   await writeFile(path.join(dayDir, "en.mdx"), enBody);
   await writeFile(path.join(dayDir, "zh.mdx"), zhBody);
+
+  for (const appendix of options.appendices ?? []) {
+    await mkdir(path.dirname(path.join(dayDir, appendix.enBodyPath)), { recursive: true });
+    await writeFile(path.join(dayDir, appendix.enBodyPath), appendix.enBody);
+    await mkdir(path.dirname(path.join(dayDir, appendix.zhBodyPath)), { recursive: true });
+    await writeFile(path.join(dayDir, appendix.zhBodyPath), appendix.zhBody);
+  }
 }

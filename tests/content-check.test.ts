@@ -93,6 +93,32 @@ describe("content check", () => {
       }
     ]);
   });
+
+  it("reports appendix web panels without static alternates", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDayWithAppendix(root, {
+      enAppendix: [
+        '<StatusChip status={"ok"} label={"ok"} />',
+        '<Sources></Sources>',
+        '<Panel class="web-only"><p>Interactive only</p></Panel>'
+      ].join("\n"),
+      zhAppendix: [
+        '<StatusChip status={"ok"} label={"已确立"} />',
+        '<Sources></Sources>'
+      ].join("\n")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "EN 001-fixture appendix appendix-a has 1 web-only panels but only 0 static print/EPUB alternates"
+      },
+      {
+        message: "src/content/days/001-fixture/appendices/appendix-a.en.mdx contains unsupported MDX wrapper markup; use Markdown paragraphs, <Lead>, <FormatOnly>, <LessonNote>, or a shared paragraph component"
+      }
+    ]);
+  });
 });
 
 async function createFixtureRoot(): Promise<string> {
@@ -116,6 +142,34 @@ async function writeRegistryDay(
     zhTitle: "夹具日",
     zhSummary: "中文夹具摘要。",
     zhBody: options.zh
+  });
+}
+
+async function writeRegistryDayWithAppendix(
+  root: string,
+  options: {
+    enAppendix: string;
+    zhAppendix: string;
+  }
+): Promise<void> {
+  await writePublishedDay(root, {
+    enTitle: "Fixture Day",
+    enSummary: "Fixture summary.",
+    enBody: body("Fixture Day"),
+    zhTitle: "夹具日",
+    zhSummary: "中文夹具摘要。",
+    zhBody: body("夹具日", "zh"),
+    appendices: [
+      {
+        id: "appendix-a",
+        enTitle: "Appendix A",
+        enBodyPath: "appendices/appendix-a.en.mdx",
+        enBody: options.enAppendix,
+        zhTitle: "附录甲",
+        zhBodyPath: "appendices/appendix-a.zh.mdx",
+        zhBody: options.zhAppendix
+      }
+    ]
   });
 }
 
