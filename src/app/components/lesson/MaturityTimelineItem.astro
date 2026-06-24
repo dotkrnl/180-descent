@@ -1,0 +1,18 @@
+---
+interface Props {
+  status: "ok" | "hint" | "bad";
+  year: string;
+  title: string;
+}
+
+const { status, year, title } = Astro.props;
+---
+
+<div class="tl-item">
+  <div class:list={["tl-dot", status]}></div>
+  <div class="tl-body">
+    <p class="yr">{year}</p>
+    <p class="tt">{title}</p>
+    <slot />
+  </div>
+</div>

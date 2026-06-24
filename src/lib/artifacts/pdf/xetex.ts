@@ -658,6 +658,24 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "MiniListItem") {
     return renderChildren(node.children ?? [], state, { block: true });
   }
+  if (name === "MaturityTimeline") {
+    const items = (node.children ?? [])
+      .filter((child) => child.name === "MaturityTimelineItem")
+      .map((child) => {
+        const childAttrs = mdxAttributes(child);
+        const year = latexEscape(childAttrs.get("year") ?? "");
+        const title = latexEscape(childAttrs.get("title") ?? "");
+        const status = statusChipLatex(childAttrs.get("status") ?? "", childAttrs.get("status") ?? "");
+        const body = renderChildren(child.children ?? [], state, { block: true, listItem: true }).trim();
+        const label = [year, title].filter(Boolean).join(" · ");
+        return `\\item ${status}${status ? "\\enspace " : ""}${label ? `\\textbf{${label}}. ` : ""}${body}`;
+      })
+      .join("\n");
+    return items ? `\\begin{itemize}\n${items}\n\\end{itemize}` : "";
+  }
+  if (name === "MaturityTimelineItem") {
+    return renderChildren(node.children ?? [], state, { block: true });
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }

@@ -15,6 +15,8 @@ import StatisticsIncomingWaveLab from "@app/components/lesson/interactives/Stati
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
+import MaturityTimeline from "@app/components/lesson/MaturityTimeline.astro";
+import MaturityTimelineItem from "@app/components/lesson/MaturityTimelineItem.astro";
 import Meta from "@app/components/lesson/Meta.astro";
 import MiniList from "@app/components/lesson/MiniList.astro";
 import MiniListItem from "@app/components/lesson/MiniListItem.astro";
@@ -274,14 +276,26 @@ Francesca Gino / Data Colada 案例展示了这种力量与危险。Data Colada 
 
 ### 成熟度一瞥
 
-<div class="timeline">
-<div class="tl-item"><div class="tl-dot ok"></div><div class="tl-body"><p class="yr">2021–2024</p><p class="tt">任意时点有效推断整合</p><p>任意时点有效 A/B 测试、e-过程、置信序列和安全检验成为面向序贯研究的新推断框架。</p></div></div>
-<div class="tl-item"><div class="tl-dot ok"></div><div class="tl-body"><p class="yr">2023–2025</p><p class="tt">共形预测开始走向实际应用</p><p>通俗教程、超越可交换性的理论、共形风险控制、条件式保证以及 NLP/LLM 应用拓宽了使用场景。</p></div></div>
-<div class="tl-item"><div class="tl-dot ok"></div><div class="tl-body"><p class="yr">2023–2024</p><p class="tt">预测辅助推断落地</p><p>Science 论文、PPI++ 和 Cross-PPI 实现了利用低成本模型预测加少量金标准标注的有效估计。</p></div></div>
-<div class="tl-item"><div class="tl-dot hint"></div><div class="tl-body"><p class="yr">2023–2025</p><p class="tt">发现后的推断进入实践</p><p>算法稳定性、数据裂变 / 数据稀化以及因果发现后的有效推断直接解决了探索性工作流中的重复利用数据问题。</p></div></div>
-<div class="tl-item"><div class="tl-dot hint"></div><div class="tl-body"><p class="yr">2022–2026</p><p class="tt">隐私感知型推断变得不可回避</p><p>DP 合成数据和差分隐私置信区间迫使分析师将隐私噪声包含在不确定性中，而非将发布的数据视为原始数据。</p></div></div>
-<div class="tl-item"><div class="tl-dot bad"></div><div class="tl-body"><p class="yr">2023–2026</p><p class="tt">LLM 进入研究流水线</p><p>模拟受试者、AI 数据分析师、基准测试污染以及 AI 科学家系统制造了一个新的可复现性问题：不仅在于人类选择了什么，还在于机器选择了什么？</p></div></div>
-</div>
+<MaturityTimeline>
+<MaturityTimelineItem status="ok" year="2021–2024" title="任意时点有效推断整合">
+任意时点有效 A/B 测试、e-过程、置信序列和安全检验成为面向序贯研究的新推断框架。
+</MaturityTimelineItem>
+<MaturityTimelineItem status="ok" year="2023–2025" title="共形预测开始走向实际应用">
+通俗教程、超越可交换性的理论、共形风险控制、条件式保证以及 NLP/LLM 应用拓宽了使用场景。
+</MaturityTimelineItem>
+<MaturityTimelineItem status="ok" year="2023–2024" title="预测辅助推断落地">
+Science 论文、PPI++ 和 Cross-PPI 实现了利用低成本模型预测加少量金标准标注的有效估计。
+</MaturityTimelineItem>
+<MaturityTimelineItem status="hint" year="2023–2025" title="发现后的推断进入实践">
+算法稳定性、数据裂变 / 数据稀化以及因果发现后的有效推断直接解决了探索性工作流中的重复利用数据问题。
+</MaturityTimelineItem>
+<MaturityTimelineItem status="hint" year="2022–2026" title="隐私感知型推断变得不可回避">
+DP 合成数据和差分隐私置信区间迫使分析师将隐私噪声包含在不确定性中，而非将发布的数据视为原始数据。
+</MaturityTimelineItem>
+<MaturityTimelineItem status="bad" year="2023–2026" title="LLM 进入研究流水线">
+模拟受试者、AI 数据分析师、基准测试污染以及 AI 科学家系统制造了一个新的可复现性问题：不仅在于人类选择了什么，还在于机器选择了什么？
+</MaturityTimelineItem>
+</MaturityTimeline>
 </Panel>
 
 </ContentSection>
