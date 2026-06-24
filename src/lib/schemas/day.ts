@@ -46,11 +46,7 @@ const assetSchema = z.object({
 
 const componentSchema = z.object({
   id: z.string().min(1),
-  webEntry: z.string().min(1),
-  artifactVariants: z.object({
-    epub: z.string().min(1),
-    pdf: z.string().min(1)
-  })
+  webEntry: z.string().min(1)
 }).strict();
 
 export const dayManifestSchema = z.object({

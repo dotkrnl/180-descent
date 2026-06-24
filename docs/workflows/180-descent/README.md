@@ -15,7 +15,7 @@ Each published day lives under `src/content/days/###-slug/`. The directory
 name is the canonical URL path.
 
 - `day.yaml` is the typed manifest: day number, block, publish state,
-  locale metadata, appendices, components, assets, and artifact variants.
+  locale metadata, appendices, components, and assets.
 - `en.mdx` and `zh.mdx` are the paired main bodies.
 - `appendices/*.en.mdx` and `appendices/*.zh.mdx` are optional paired deep-dive
   bodies declared by manifest id.
@@ -31,7 +31,7 @@ name is the canonical URL path.
 
 Do not bulk-copy source HTML into project content. Convert material manually,
 case by case, into MDX plus reusable Astro components. Preserve meaning,
-citations, accessibility labels, artifact variants, and bilingual parity
+citations, accessibility labels, static artifact equivalents, and bilingual parity
 deliberately.
 
 MDX may use imported components and ordinary Markdown/MDX prose. Do not use raw
@@ -55,10 +55,10 @@ boundary.
    one-off diagrams readable; move reusable SVGs, complex markup, or any
    interaction-bearing DOM into a lesson component.
 6. Use stable ids and classes inside the reusable component that owns the DOM
-   contract. When adding a live component, add a matching manifest component with
-   `webEntry` plus `artifactVariants.epub` and `artifactVariants.pdf`.
-7. Keep artifact variants purposeful. EPUB/PDF may drift from the live web
-   component when the static form is clearer, but HTML should stay visually
+   contract. When adding a live component, add a matching manifest component
+   with `webEntry`.
+7. Keep static artifact equivalents purposeful. EPUB/PDF may drift from the live
+   web component when the static form is clearer, but HTML should stay visually
    consistent with the intended web design.
 8. Run `npm run build:social-cards` when titles or summaries change.
 
@@ -173,9 +173,8 @@ SVG/HTML/SCSS diagrams.
 - Use `MathInline` and `MathBlock` for math so HTML gets KaTeX and PDF gets
   XeTeX math from the same source.
 - For web interactives, keep behavior in the interactive component and provide a
-  clear static PDF/EPUB representation with `FormatOnly` or manifest artifact
-  variants. Static artifact output may drift from the live web component when it
-  improves readability.
+  clear static PDF/EPUB representation with `FormatOnly`. Static artifact output
+  may drift from the live web component when it improves readability.
 - For PDF-affecting edits, run `npm run build:pdf` and `npm run check:pdf`. When
   changing PDF renderer, figure, table, code, or source-block behavior, also
   preserve logs with `PDF_KEEP_TEMP=1 npm run build:pdf` and scan for

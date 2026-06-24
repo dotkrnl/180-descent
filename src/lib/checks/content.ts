@@ -113,11 +113,6 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
       }, failures);
     }
 
-    for (const component of day.manifest.components) {
-      if (!component.artifactVariants.epub || !component.artifactVariants.pdf) {
-        failures.push({ message: `${day.manifest.path} component ${component.id} must declare EPUB and PDF artifact variants` });
-      }
-    }
   }
 
   await checkCssFonts(options.root, failures);

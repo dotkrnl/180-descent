@@ -41,10 +41,7 @@ describe("target content registry", () => {
       "assets/fixture-diagram.svg",
       "assets/fixture-diagram.zh.svg"
     ]);
-    expect(day.manifest.components[0].artifactVariants).toEqual({
-      epub: "table",
-      pdf: "static-figure"
-    });
+    expect(day.manifest.components[0].webEntry).toBe("fixture-interaction");
   });
 
   it("lists renderable locale entries for Astro routes", async () => {

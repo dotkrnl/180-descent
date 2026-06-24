@@ -27,11 +27,7 @@ describe("artifact book model", () => {
     }]);
     expect(fixture.components).toEqual([{
       id: "fixture-interaction",
-      webEntry: "fixture-interaction",
-      artifactVariants: {
-        epub: "table",
-        pdf: "static-figure"
-      }
+      webEntry: "fixture-interaction"
     }]);
   });
 
@@ -56,6 +52,6 @@ describe("artifact book model", () => {
       "rest-of-the-map",
       "the-edge-of-the-map"
     ]);
-    expect(dayOne.components.map((component) => component.artifactVariants.pdf)).toContain("static-figure");
+    expect(dayOne.components.map((component) => component.webEntry)).toContain("echo-chamber");
   });
 });

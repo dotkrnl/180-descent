@@ -37,10 +37,6 @@ interface ArtifactBookAsset {
 interface ArtifactBookComponent {
   id: string;
   webEntry: string;
-  artifactVariants: {
-    epub: string;
-    pdf: string;
-  };
 }
 
 interface LoadArtifactBookOptions {
@@ -90,8 +86,7 @@ async function loadArtifactBook(
         }),
         components: day.manifest.components.map((component) => ({
           id: component.id,
-          webEntry: component.webEntry,
-          artifactVariants: component.artifactVariants
+          webEntry: component.webEntry
         }))
       }];
     })
