@@ -11,6 +11,8 @@ interface CleanCheckFailure {
 
 const FORBIDDEN_TRACKED_PATHS = [
   ["_site", "Generated site output must not be committed"],
+  ["src/assets/fonts", "Generated font assets must not be committed"],
+  ["src/assets/scss/generated", "Generated SCSS partials must not be committed"],
   ["src/assets/images/social", "Generated social-card PNGs must not be committed"],
   ["public/assets", "Public assets must be imported through Astro instead of committed under public/assets"]
 ] as const;

@@ -35,6 +35,27 @@ describe("clean repo check", () => {
       }
     ]);
   });
+
+  it("flags tracked generated font and SCSS assets", async () => {
+    const root = await createGitRoot();
+
+    await mkdir(path.join(root, "src/assets/fonts/katex"), { recursive: true });
+    await mkdir(path.join(root, "src/assets/scss/generated"), { recursive: true });
+    await writeFile(path.join(root, "src/assets/fonts/katex/KaTeX_Main-Regular.woff2"), "");
+    await writeFile(path.join(root, "src/assets/scss/generated/_katex.scss"), "");
+    runGit(root, "add", "src/assets/fonts/katex/KaTeX_Main-Regular.woff2", "src/assets/scss/generated/_katex.scss");
+
+    expect(checkCleanRepo({ root })).toEqual([
+      {
+        path: "src/assets/fonts",
+        reason: "Generated font assets must not be committed"
+      },
+      {
+        path: "src/assets/scss/generated",
+        reason: "Generated SCSS partials must not be committed"
+      }
+    ]);
+  });
 });
 
 async function createGitRoot(): Promise<string> {
