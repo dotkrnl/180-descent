@@ -3,6 +3,12 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import HammingCube from "@app/components/lesson/interactives/HammingCube.astro";
 import MutualInformationOverlap from "@app/components/lesson/interactives/MutualInformationOverlap.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
@@ -55,15 +61,15 @@ import Threads from "@app/components/lesson/Threads.astro";
 <FormatAlt class="epub-only print-only">
 #### 互信息随取值相同概率变化的对比
 
-<table class="alt-table">
-<thead><tr><th>取值相同的概率 <MathInline latex={String.raw`P(X=Y)`} /></th><th><MathInline latex={String.raw`H(Y\mid X)`} /></th><th><MathInline latex={String.raw`I(X;Y)`} /></th><th>物理阐释</th></tr></thead>
-<tbody>
-<tr><td>0.50</td><td>1.00 比特</td><td>0.00 比特</td><td>独立硬币；X 无法告诉你任何关于 Y 的信息。</td></tr>
-<tr><td>0.75</td><td>0.81 比特</td><td>0.19 比特</td><td>有噪信道；X 消除了少许关于 Y 的不确定性。</td></tr>
-<tr><td>0.90</td><td>0.47 比特</td><td>0.53 比特</td><td>强相关；得知 X 消除了关于 Y 的大部分不确定性。</td></tr>
-<tr><td>1.00</td><td>0.00 比特</td><td>1.00 比特</td><td>完全相同的变量；得知 X 即可完全确定 Y。</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead><DataTableRow><DataTableHeader>取值相同的概率 <MathInline latex={String.raw`P(X=Y)`} /></DataTableHeader><DataTableHeader><MathInline latex={String.raw`H(Y\mid X)`} /></DataTableHeader><DataTableHeader><MathInline latex={String.raw`I(X;Y)`} /></DataTableHeader><DataTableHeader>物理阐释</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>0.50</DataTableCell><DataTableCell>1.00 比特</DataTableCell><DataTableCell>0.00 比特</DataTableCell><DataTableCell>独立硬币；X 无法告诉你任何关于 Y 的信息。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>0.75</DataTableCell><DataTableCell>0.81 比特</DataTableCell><DataTableCell>0.19 比特</DataTableCell><DataTableCell>有噪信道；X 消除了少许关于 Y 的不确定性。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>0.90</DataTableCell><DataTableCell>0.47 比特</DataTableCell><DataTableCell>0.53 比特</DataTableCell><DataTableCell>强相关；得知 X 消除了关于 Y 的大部分不确定性。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>1.00</DataTableCell><DataTableCell>0.00 比特</DataTableCell><DataTableCell>1.00 比特</DataTableCell><DataTableCell>完全相同的变量；得知 X 即可完全确定 Y。</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 </FormatAlt>
 
 <ContentSection>
@@ -132,15 +138,15 @@ import Threads from "@app/components/lesson/Threads.astro";
 <FormatAlt class="epub-only print-only">
 #### 3 比特重复码的最近邻解码
 
-<table class="alt-table">
-<thead><tr><th>接收字</th><th>到 000 的距离</th><th>到 111 的距离</th><th>解码为</th></tr></thead>
-<tbody>
-<tr><td><code>000</code></td><td>0</td><td>3</td><td><code>000</code></td></tr>
-<tr><td><code>001</code>, <code>010</code>, <code>100</code></td><td>1</td><td>2</td><td><code>000</code></td></tr>
-<tr><td><code>011</code>, <code>101</code>, <code>110</code></td><td>2</td><td>1</td><td><code>111</code></td></tr>
-<tr><td><code>111</code></td><td>3</td><td>0</td><td><code>111</code></td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead><DataTableRow><DataTableHeader>接收字</DataTableHeader><DataTableHeader>到 000 的距离</DataTableHeader><DataTableHeader>到 111 的距离</DataTableHeader><DataTableHeader>解码为</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell><code>000</code></DataTableCell><DataTableCell>0</DataTableCell><DataTableCell>3</DataTableCell><DataTableCell><code>000</code></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell><code>001</code>, <code>010</code>, <code>100</code></DataTableCell><DataTableCell>1</DataTableCell><DataTableCell>2</DataTableCell><DataTableCell><code>000</code></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell><code>011</code>, <code>101</code>, <code>110</code></DataTableCell><DataTableCell>2</DataTableCell><DataTableCell>1</DataTableCell><DataTableCell><code>111</code></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell><code>111</code></DataTableCell><DataTableCell>3</DataTableCell><DataTableCell>0</DataTableCell><DataTableCell><code>111</code></DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 码字之间的汉明距离为 3，因此任何单比特错误仍会比另一个码字更接近原始码字。
 
 </FormatAlt>
