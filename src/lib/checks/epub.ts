@@ -17,8 +17,8 @@ interface EpubCheckResult {
 interface EpubEdition {
   file: string;
   deepDive: boolean;
-  appendixPatterns: RegExp[] | null;
-  optionalPattern?: RegExp;
+  appendixPatterns: RegExp[];
+  optionalAppendixLabel: RegExp | null;
   required: string[];
 }
 
@@ -81,10 +81,34 @@ function isInsideSvg(text: string, index: number): boolean {
 
 async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
   const editions: EpubEdition[] = [
-    { file: "_site/downloads/180-descent.epub", deepDive: false, appendixPatterns: ENGLISH_APPENDIX_PATTERNS, required: BOOK_REQUIRED },
-    { file: "_site/downloads/180-descent-deep-dive.epub", deepDive: true, appendixPatterns: ENGLISH_APPENDIX_PATTERNS, optionalPattern: /Optional appendix/, required: BOOK_REQUIRED },
-    { file: "_site/downloads/180-descent-zh.epub", deepDive: false, appendixPatterns: CHINESE_APPENDIX_PATTERNS, required: BOOK_REQUIRED },
-    { file: "_site/downloads/180-descent-zh-deep-dive.epub", deepDive: true, appendixPatterns: CHINESE_APPENDIX_PATTERNS, optionalPattern: /可选附录/, required: BOOK_REQUIRED }
+    {
+      file: "_site/downloads/180-descent.epub",
+      deepDive: false,
+      appendixPatterns: ENGLISH_APPENDIX_PATTERNS,
+      optionalAppendixLabel: null,
+      required: BOOK_REQUIRED
+    },
+    {
+      file: "_site/downloads/180-descent-deep-dive.epub",
+      deepDive: true,
+      appendixPatterns: ENGLISH_APPENDIX_PATTERNS,
+      optionalAppendixLabel: /Optional appendix/,
+      required: BOOK_REQUIRED
+    },
+    {
+      file: "_site/downloads/180-descent-zh.epub",
+      deepDive: false,
+      appendixPatterns: CHINESE_APPENDIX_PATTERNS,
+      optionalAppendixLabel: null,
+      required: BOOK_REQUIRED
+    },
+    {
+      file: "_site/downloads/180-descent-zh-deep-dive.epub",
+      deepDive: true,
+      appendixPatterns: CHINESE_APPENDIX_PATTERNS,
+      optionalAppendixLabel: /可选附录/,
+      required: BOOK_REQUIRED
+    }
   ];
 
   const enDays = await loadArtifactBookDays(root, "en");
@@ -113,8 +137,8 @@ function addPerDayEditions(editions: EpubEdition[], days: ArtifactBookDay[], zh:
     editions.push({
       file,
       deepDive: true,
-      appendixPatterns: isDayOne ? (zh ? CHINESE_APPENDIX_PATTERNS : ENGLISH_APPENDIX_PATTERNS) : null,
-      optionalPattern: zh ? /可选附录/ : /Optional appendix/,
+      appendixPatterns: isDayOne ? (zh ? CHINESE_APPENDIX_PATTERNS : ENGLISH_APPENDIX_PATTERNS) : [],
+      optionalAppendixLabel: zh ? /可选附录/ : /Optional appendix/,
       required: dayRequired
     });
   }
@@ -167,19 +191,21 @@ async function checkEpubEdition(root: string, edition: EpubEdition, errors: stri
 }
 
 function checkDayOneAppendixContent(edition: EpubEdition, searchableDayOne: string, errors: string[]): void {
-  const appendixPatterns = edition.appendixPatterns ?? [];
-
   if (edition.deepDive) {
-    if (edition.optionalPattern && !edition.optionalPattern.test(searchableDayOne)) {
-      errors.push(`${edition.file} is missing optional appendix label matching ${edition.optionalPattern}`);
+    if (!edition.optionalAppendixLabel) {
+      errors.push(`${edition.file} is configured as deep-dive but has no optional appendix label check`);
+      return;
     }
-    for (const pattern of appendixPatterns) {
+    if (!edition.optionalAppendixLabel.test(searchableDayOne)) {
+      errors.push(`${edition.file} is missing optional appendix label matching ${edition.optionalAppendixLabel}`);
+    }
+    for (const pattern of edition.appendixPatterns) {
       if (!pattern.test(searchableDayOne)) {
         errors.push(`${edition.file} is missing deep-dive appendix content matching ${pattern}`);
       }
     }
   } else {
-    for (const pattern of appendixPatterns) {
+    for (const pattern of edition.appendixPatterns) {
       if (pattern.test(searchableDayOne)) {
         errors.push(`${edition.file} contains deep-dive appendix content matching ${pattern}`);
       }
