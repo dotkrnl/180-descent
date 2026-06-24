@@ -16,7 +16,7 @@ interface SvgTextCheckFailure {
   value: number;
 }
 
-const ALLOWED_EXTENSIONS = /\.(astro|css|html|js|md|mdx|njk|scss|svg)$/i;
+const CHECKED_EXTENSIONS = [".astro", ".css", ".html", ".js", ".md", ".mdx", ".njk", ".scss", ".svg"];
 const GENERATED_STYLE_PATTERN = /^src\/assets\/scss\/generated\//;
 
 export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFailure[] {
@@ -25,7 +25,7 @@ export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFail
 
   for (const root of roots) {
     const absoluteRoot = path.join(options.root, root);
-    for (const file of walkFilesSync(absoluteRoot, { allowedExtensionsRegex: ALLOWED_EXTENSIONS })) {
+    for (const file of walkFilesSync(absoluteRoot, { exts: CHECKED_EXTENSIONS })) {
       const relativeFile = toPosixRelative(options.root, file);
       if (GENERATED_STYLE_PATTERN.test(relativeFile)) continue;
 

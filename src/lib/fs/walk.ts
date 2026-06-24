@@ -5,7 +5,6 @@ import path from "node:path";
 interface WalkOptions {
   exts?: string | string[] | Set<string>;
   ignored?: Iterable<string>;
-  allowedExtensionsRegex?: RegExp;
 }
 
 const DEFAULT_IGNORED = new Set([".git", "_site", "node_modules"]);
@@ -22,7 +21,7 @@ export async function walkFiles(dir: string, options: WalkOptions = {}): Promise
       if (!ignored.has(entry.name)) {
         out.push(...await walkFiles(full, options));
       }
-    } else if (matchesExt(entry.name, exts, options.allowedExtensionsRegex)) {
+    } else if (matchesExt(entry.name, exts)) {
       out.push(full);
     }
   }
@@ -40,7 +39,7 @@ export function walkFilesSync(dir: string, options: WalkOptions = {}, out: strin
       if (!ignored.has(entry.name)) {
         walkFilesSync(full, options, out);
       }
-    } else if (matchesExt(entry.name, exts, options.allowedExtensionsRegex)) {
+    } else if (matchesExt(entry.name, exts)) {
       out.push(full);
     }
   }
@@ -65,8 +64,7 @@ function normalizeExts(exts: WalkOptions["exts"]): Set<string> | null {
   return null;
 }
 
-function matchesExt(entryName: string, exts: Set<string> | null, regex?: RegExp): boolean {
-  if (regex) return regex.test(entryName);
+function matchesExt(entryName: string, exts: Set<string> | null): boolean {
   if (!exts) return true;
   return exts.has(path.extname(entryName));
 }
