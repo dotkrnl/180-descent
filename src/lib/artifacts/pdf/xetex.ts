@@ -8,7 +8,6 @@ import { unified } from "unified";
 import remarkGfm from "remark-gfm";
 import remarkMdx from "remark-mdx";
 import remarkParse from "remark-parse";
-import YAML from "yaml";
 import { prepareLatinFonts, preparePdfFonts } from "@lib/assets/fonts";
 import { brandIconFile, pdfFontsDir } from "@lib/assets/paths";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
@@ -16,6 +15,7 @@ import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/
 import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 import { readBookData, type BookData } from "@lib/data/book";
 import { syllabusDataFile } from "@lib/data/paths";
+import { readYamlFile } from "@lib/data/yaml";
 import type { Locale } from "@lib/schemas/day";
 import { siteDayDir } from "@lib/static-site/routes";
 
@@ -337,7 +337,7 @@ function blockDividerLatex(title: string, blockNumber: number, locale: Locale): 
 }
 
 async function localizedBlockTitles(root: string, locale: Locale): Promise<Map<string, string>> {
-  const syllabus = YAML.parse(await readFile(syllabusDataFile(root), "utf8")) as SyllabusData;
+  const syllabus = await readYamlFile<SyllabusData>(syllabusDataFile(root));
   const titles = new Map<string, string>();
   for (const block of syllabus.blocks ?? []) {
     const title = block.title;

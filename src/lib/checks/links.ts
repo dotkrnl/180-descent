@@ -1,10 +1,10 @@
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
-import YAML from "yaml";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { futureLinksDataFile } from "@lib/data/paths";
+import { readYamlFile } from "@lib/data/yaml";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
@@ -96,7 +96,7 @@ async function checkFutureLinks(daysDir: string, futureLinksPath: string): Promi
   const registry = await loadContentRegistry({ daysDir });
   const days = registry.days.map((day) => day.manifest.day);
   const maxDay = days.length ? Math.max(...days) : 0;
-  const parsed = YAML.parse(await readFile(futureLinksPath, "utf8"));
+  const parsed = await readYamlFile<unknown>(futureLinksPath);
   const futureLinks = Array.isArray(parsed) ? parsed as FutureLinkEntry[] : [];
   const failures: LinkCheckFailure[] = [];
 

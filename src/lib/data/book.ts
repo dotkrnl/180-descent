@@ -1,6 +1,5 @@
-import { readFile } from "node:fs/promises";
-import YAML from "yaml";
 import { bookDataFile } from "@lib/data/paths";
+import { readYamlFile } from "@lib/data/yaml";
 
 export interface BookData {
   title: string;
@@ -89,7 +88,7 @@ interface RawHumanEditorData {
 }
 
 export async function readBookData(root: string): Promise<BookData> {
-  const raw = YAML.parse(await readFile(bookDataFile(root), "utf8")) as RawBookData;
+  const raw = await readYamlFile<RawBookData>(bookDataFile(root));
   return {
     title: raw.title,
     subtitle: raw.subtitle,
@@ -121,7 +120,7 @@ export async function readBookData(root: string): Promise<BookData> {
 }
 
 export async function readBookSiteUrl(root: string): Promise<string> {
-  const raw = YAML.parse(await readFile(bookDataFile(root), "utf8")) as RawBookSiteData;
+  const raw = await readYamlFile<RawBookSiteData>(bookDataFile(root));
   return raw.site_url;
 }
 

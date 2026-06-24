@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
-import { parse as parseYaml } from "yaml";
+import { readYamlFile } from "@lib/data/yaml";
 import { dayManifestSchema, type DayManifest, type Locale } from "@lib/schemas/day";
 
 const LOCALES: readonly Locale[] = ["en", "zh"];
@@ -57,7 +57,7 @@ export async function loadContentRegistry(options: ContentRegistryOptions): Prom
 
 async function loadRegistryDay(directory: string): Promise<RegistryDay> {
   const manifestPath = path.join(directory, "day.yaml");
-  const rawManifest = parseYaml(await readFile(manifestPath, "utf8"));
+  const rawManifest = await readYamlFile<unknown>(manifestPath);
   const manifest: DayManifest = {
     ...dayManifestSchema.parse(rawManifest),
     path: path.basename(directory)
