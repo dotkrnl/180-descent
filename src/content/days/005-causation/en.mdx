@@ -30,6 +30,9 @@ import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
+import TheoryCard from "@app/components/lesson/TheoryCard.astro";
+import TheoryCardLead from "@app/components/lesson/TheoryCardLead.astro";
+import TheoryKey from "@app/components/lesson/TheoryKey.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import WhereBlock from "@app/components/lesson/WhereBlock.astro";
 import Wrap from "@app/components/lesson/Wrap.astro";
@@ -85,12 +88,20 @@ The phrase gets attached to Hume, but it is better treated as Mackie's title and
 
 If causation is *more* than constant conjunction, the obvious move is to say what the "more" is. The twentieth century produced several serious answers — different ways to finish the sentence "C causes E means...". They are not simple rivals so much as lenses that modern causal modeling keeps borrowing from.
 
-<div class="theory-key">
-<div class="k"><span class="who2">Lewis · 1973</span><b><em class="term">Counterfactual</em><TipNote text={String.raw`A counterfactual asks what would have happened if some fact had been different.`} />.</b> In simple cases, E counterfactually depends on C: <em>had C not happened, E would not have happened.</em> Lewis then analyzes causation more generally through chains of such causal dependence. Clean and intuitive, but it has to wrestle with backup causes and double-killings (preemption and overdetermination).</div>
-<div class="k"><span class="who2">Reichenbach · Suppes · Cartwright</span><b>Probabilistic.</b> These are different probabilistic programs, but the shared slogan is that causes <em>raise the probability</em> of their effects. Reichenbach's <em class="term">common-cause principle</em><TipNote text={String.raw`The common-cause principle says a surprising correlation often needs either a direct cause or a shared prior cause that explains it.`} />: if A and B are correlated but neither causes the other, a shared cause C "screens them off" — hold C fixed and the correlation dissolves in the model. Summer is the intended common-cause explanation in the toy example.</div>
-<div class="k"><span class="who2">Woodward · 2003</span><b>Interventionist.</b> <MathInline latex={String.raw`C`} /> is a cause of <MathInline latex={String.raw`E`} /> when an appropriate <em class="term">intervention</em><TipNote text={String.raw`An intervention is an idealized change that sets one variable while blocking the usual causes of that variable.`} /> changes <MathInline latex={String.raw`C`} /> while breaking <MathInline latex={String.raw`C`} />'s usual causes, avoiding independent routes to <MathInline latex={String.raw`E`} />, and thereby changes <MathInline latex={String.raw`E`} />. No human needed: volcanoes cause ash even with no one to push the button. This is closely aligned with the interventionist semantics of structural causal models: below, Pearl turns the idea into <MathInline latex={String.raw`\operatorname{do}(C)`} /> and graph surgery.</div>
-<div class="k"><span class="who2">Mackie · 1974</span><b>INUS conditions.</b> A cause can be an insufficient but non-redundant part of an unnecessary but sufficient condition. A short circuit is not enough by itself to burn a house down; it matters because it is a non-redundant part of one sufficient package: short circuit plus oxygen plus flammable material plus no timely suppression.</div>
-</div>
+<TheoryKey>
+<TheoryCard who="Lewis · 1973">
+<TheoryCardLead><Term as="em">Counterfactual</Term><TipNote text={String.raw`A counterfactual asks what would have happened if some fact had been different.`} />.</TheoryCardLead> In simple cases, E counterfactually depends on C: *had C not happened, E would not have happened.* Lewis then analyzes causation more generally through chains of such causal dependence. Clean and intuitive, but it has to wrestle with backup causes and double-killings (preemption and overdetermination).
+</TheoryCard>
+<TheoryCard who="Reichenbach · Suppes · Cartwright">
+<TheoryCardLead>Probabilistic.</TheoryCardLead> These are different probabilistic programs, but the shared slogan is that causes *raise the probability* of their effects. Reichenbach's <Term as="em">common-cause principle</Term><TipNote text={String.raw`The common-cause principle says a surprising correlation often needs either a direct cause or a shared prior cause that explains it.`} />: if A and B are correlated but neither causes the other, a shared cause C "screens them off" — hold C fixed and the correlation dissolves in the model. Summer is the intended common-cause explanation in the toy example.
+</TheoryCard>
+<TheoryCard who="Woodward · 2003">
+<TheoryCardLead>Interventionist.</TheoryCardLead> <MathInline latex={String.raw`C`} /> is a cause of <MathInline latex={String.raw`E`} /> when an appropriate <Term as="em">intervention</Term><TipNote text={String.raw`An intervention is an idealized change that sets one variable while blocking the usual causes of that variable.`} /> changes <MathInline latex={String.raw`C`} /> while breaking <MathInline latex={String.raw`C`} />'s usual causes, avoiding independent routes to <MathInline latex={String.raw`E`} />, and thereby changes <MathInline latex={String.raw`E`} />. No human needed: volcanoes cause ash even with no one to push the button. This is closely aligned with the interventionist semantics of structural causal models: below, Pearl turns the idea into <MathInline latex={String.raw`\operatorname{do}(C)`} /> and graph surgery.
+</TheoryCard>
+<TheoryCard who="Mackie · 1974">
+<TheoryCardLead>INUS conditions.</TheoryCardLead> A cause can be an insufficient but non-redundant part of an unnecessary but sufficient condition. A short circuit is not enough by itself to burn a house down; it matters because it is a non-redundant part of one sufficient package: short circuit plus oxygen plus flammable material plus no timely suppression.
+</TheoryCard>
+</TheoryKey>
 
 <p class="theory-note">One question, several lenses: counterfactual = "what if it hadn't?"; probabilistic = "does it raise the odds, holding rivals fixed?"; INUS = "what role did this part play in a sufficient package?"; interventionist = "what changes under the right kind of intervention?". Structural causal models provide a precise language for many counterfactual and interventionist questions, though they do not settle every philosophical account of causation. The statistical frameworks that follow ask a narrower operational question: once an intervention and target effect have been specified, what assumptions let data identify that effect? Notice how <strong>Cartwright (1979)</strong> sharpened the probabilistic story, because her fix is the hinge of the whole day. Causes raise the probability of effects, yes — <em>but only inside a "causally homogeneous" background</em>, with the relevant other causes held fixed. Forget that proviso and you walk straight into the most beautiful trap in statistics.</p>
 </ContentSection>

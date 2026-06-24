@@ -630,6 +630,20 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
       body
     ].filter(Boolean).join("\n");
   }
+  if (name === "TheoryKey") {
+    return renderChildren(node.children ?? [], state, { block: true });
+  }
+  if (name === "TheoryCard") {
+    const who = latexEscape(attrs.get("who") ?? "");
+    const body = renderChildren(node.children ?? [], state, { block: true }).trim();
+    return [
+      who ? `{\\ttfamily\\footnotesize\\color{descentMuted}${who}\\par}` : "",
+      body
+    ].filter(Boolean).join("\n");
+  }
+  if (name === "TheoryCardLead") {
+    return `\\textbf{${renderInlineChildren(node, state, context)}}`;
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
