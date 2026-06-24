@@ -47,9 +47,9 @@
         base = "<b>Critical stakes.</b> If this deposit is not in by Monday, you could lose the house.";
       }
       if(isZh && err){
-        base += ' <span style="color:var(--contested)">而你的配偶补充：「但银行确实有时会改变周末营业时间。」</span>';
+        base += ' <span class="stakes-warning">而你的配偶补充：「但银行确实有时会改变周末营业时间。」</span>';
       } else if(err){
-        base += ' <span style="color:var(--contested)">And your spouse adds: "but banks do sometimes change their weekend hours."</span>';
+        base += ' <span class="stakes-warning">And your spouse adds: "but banks do sometimes change their weekend hours."</span>';
       }
       return base;
     }
