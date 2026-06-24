@@ -1,11 +1,10 @@
 ---
 interface Props {
   class?: string;
-  style?: string;
 }
 
 const className = ["aside", Astro.props.class].filter(Boolean).join(" ");
 ---
-<div class={className} style={Astro.props.style}>
+<div class={className}>
   <slot />
 </div>
