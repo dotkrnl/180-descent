@@ -4,7 +4,7 @@ import { load } from "cheerio";
 import { readBookSiteUrl } from "@lib/data/book";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { urlForHtml } from "@lib/static-site/url";
+import { siteHtmlFileForUrl, sitePathForHref, urlForHtml } from "@lib/static-site/url";
 
 interface SeoCheckOptions {
   root: string;
@@ -63,11 +63,11 @@ async function checkHtml(siteDir: string, siteUrl: string, filePath: string, err
   if (!manifest) errors.push(`${url}: missing web app manifest link`);
 
   if (ogImage) {
-    const imagePath = localPathForUrl(siteDir, siteUrl, ogImage);
+    const imagePath = sitePathForHref(siteDir, siteUrl, ogImage);
     if (!imagePath || !await pathExists(imagePath)) errors.push(`${url}: og:image does not exist locally (${ogImage})`);
   }
   for (const [label, href] of [["favicon", favicon], ["apple-touch-icon", appleTouchIcon], ["manifest", manifest]] as const) {
-    const localPath = href ? localPathForHref(siteDir, siteUrl, href) : "";
+    const localPath = href ? sitePathForHref(siteDir, siteUrl, href) : "";
     if (href && (!localPath || !await pathExists(localPath))) {
       errors.push(`${url}: ${label} does not exist locally (${href})`);
     }
@@ -113,7 +113,7 @@ async function checkRobots(siteDir: string, siteUrl: string, errors: string[]): 
 }
 
 async function checkManifestIcons(siteDir: string, siteUrl: string, href: string, errors: string[]): Promise<void> {
-  const manifestPath = localPathForHref(siteDir, siteUrl, href);
+  const manifestPath = sitePathForHref(siteDir, siteUrl, href);
   if (!await pathExists(manifestPath)) return;
 
   const manifest = JSON.parse(await readFile(manifestPath, "utf8")) as {
@@ -129,29 +129,16 @@ async function checkManifestIcons(siteDir: string, siteUrl: string, href: string
       errors.push(`${href}: icon src must be a string`);
       continue;
     }
-    const localPath = localPathForHref(siteDir, siteUrl, icon.src);
+    const localPath = sitePathForHref(siteDir, siteUrl, icon.src);
     if (!localPath || !await pathExists(localPath)) {
       errors.push(`${href}: icon does not exist locally (${icon.src})`);
     }
   }
 }
 
-function localPathForUrl(siteDir: string, siteUrl: string, url: string): string {
-  if (!url.startsWith(siteUrl)) return "";
-  const parsed = new URL(url);
-  return path.join(siteDir, parsed.pathname.replace(/^\/+/, ""));
-}
-
-function localPathForHref(siteDir: string, siteUrl: string, href: string): string {
-  if (href.startsWith("http") && !href.startsWith(siteUrl)) return "";
-  const parsed = href.startsWith("http") ? new URL(href) : new URL(href, siteUrl);
-  return path.join(siteDir, parsed.pathname.replace(/^\/+/, ""));
-}
-
 async function hasHtmlForUrl(siteDir: string, url: string): Promise<boolean> {
-  const clean = url.replace(/^\/+/, "");
-  const target = clean ? path.join(siteDir, clean, "index.html") : path.join(siteDir, "index.html");
-  return pathExists(target);
+  const target = siteHtmlFileForUrl(siteDir, url);
+  return Boolean(target) && pathExists(target);
 }
 
 function alternateUrl(url: string): string {

@@ -8,7 +8,7 @@ import { chromium } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
 import { walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { contentType, urlForHtml } from "@lib/static-site/url";
+import { contentType, sitePathForUrlPath, urlForHtml } from "@lib/static-site/url";
 
 interface AccessibilityCheckOptions {
   root: string;
@@ -137,11 +137,8 @@ export async function checkAccessibility(options: AccessibilityCheckOptions): Pr
 }
 
 async function fileForUrl(siteDir: string, urlPath: string): Promise<string> {
-  const decoded = decodeURIComponent(urlPath.split("?")[0]);
-  const clean = decoded.replace(/^\/+/, "");
-  const candidate = path.join(siteDir, clean);
-  const resolved = path.resolve(candidate);
-  if (!resolved.startsWith(siteDir)) return "";
+  const resolved = sitePathForUrlPath(siteDir, urlPath);
+  if (!resolved) return "";
 
   try {
     const stats = await stat(resolved);

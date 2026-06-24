@@ -29,3 +29,26 @@ export function urlForHtml(siteDir: string, filePath: string): string {
   if (rel.endsWith("/index.html")) return `/${rel.slice(0, -"index.html".length)}`;
   return `/${rel}`;
 }
+
+export function sitePathForUrlPath(siteDir: string, urlPath: string): string {
+  const decoded = decodeURIComponent(urlPath.split(/[?#]/)[0]);
+  const clean = decoded.replace(/^\/+/, "");
+  const root = path.resolve(siteDir);
+  const resolved = path.resolve(root, clean);
+  return isWithinDirectory(root, resolved) ? resolved : "";
+}
+
+export function sitePathForHref(siteDir: string, siteUrl: string, href: string): string {
+  if (href.startsWith("http") && !href.startsWith(siteUrl)) return "";
+  const parsed = href.startsWith("http") ? new URL(href) : new URL(href, siteUrl);
+  return sitePathForUrlPath(siteDir, parsed.pathname);
+}
+
+export function siteHtmlFileForUrl(siteDir: string, urlPath: string): string {
+  const routePath = sitePathForUrlPath(siteDir, urlPath);
+  return routePath ? path.join(routePath, "index.html") : "";
+}
+
+function isWithinDirectory(root: string, filePath: string): boolean {
+  return filePath === root || filePath.startsWith(`${root}${path.sep}`);
+}
