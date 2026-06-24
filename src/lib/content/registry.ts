@@ -3,7 +3,7 @@ import path from "node:path";
 import { parse as parseYaml } from "yaml";
 import { dayManifestSchema, type DayManifest, type Locale } from "@lib/schemas/day";
 
-export interface ContentRegistryOptions {
+interface ContentRegistryOptions {
   daysDir: string;
 }
 
@@ -26,7 +26,7 @@ interface RegistryDay {
   assets: string[];
 }
 
-export interface ContentRegistry {
+interface ContentRegistry {
   days: RegistryDay[];
 }
 
