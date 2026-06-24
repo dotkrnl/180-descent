@@ -23,7 +23,7 @@ Each published day lives under `src/content/days/###-slug/`.
 
 Do not bulk-copy source HTML into project content. Convert material manually, case by case, into MDX plus reusable Astro components. Preserve meaning, citations, accessibility labels, and static artifact variants deliberately.
 
-MDX may use imported components and ordinary Markdown/MDX prose, but it must not own raw interactive controls, canvas, behavior ARIA roles, inline event handlers, or action/state data hooks. Put those contracts inside `lesson/interactives` components and let `npm run check:content` enforce the boundary.
+MDX may use imported components and ordinary Markdown/MDX prose. Do not use raw HTML as a formatting shortcut; use Markdown, existing lesson components, or a small reusable component when inline JSX must wrap another component. MDX must not own raw interactive controls, canvas, behavior ARIA roles, inline event handlers, or action/state data hooks. Put those contracts inside `lesson/interactives` components and let `npm run check:content` enforce the boundary.
 
 ## Day Changes
 
@@ -31,7 +31,7 @@ MDX may use imported components and ordinary Markdown/MDX prose, but it must not
 2. Keep English and Chinese locale entries paired when the day is published. If a locale is intentionally absent, its manifest status must explain that state through the existing schema values.
 3. Put page title, summary, block, threads, appendices, components, and assets in `day.yaml`; do not duplicate routing metadata elsewhere.
 4. Write lesson bodies as real MDX. Import lesson components explicitly at the top of each MDX file, for example `Hero`, `TipNote`, `MathInline`, `MathBlock`, `StatusChip`, `SimpleTable`, `ImageFigure`, a figure component, or an interactive component.
-5. Extract repeated or behavior-bearing markup into Astro components. Keep raw HTML in MDX only when it is genuinely semantic prose markup that has no existing component and no interaction behavior.
+5. Extract repeated or behavior-bearing markup into Astro components. Keep one-off diagrams readable; move reusable SVGs, complex markup, or any interaction-bearing DOM into a lesson component.
 6. Use stable ids and classes inside the reusable component that owns the DOM contract. When adding a live component, add a matching manifest component with `webEntry` plus `artifactVariants.epub` and `artifactVariants.pdf`.
 7. Keep artifact variants purposeful. EPUB/PDF may drift from the live web component when the static form is clearer, but HTML should stay visually consistent with the intended web design.
 8. Run `npm run build:social-cards` when titles or summaries change.
@@ -63,7 +63,7 @@ Appendices are declared in `day.yaml` under `appendices`.
 - Keep JavaScript behavior separate in `src/assets/js/interactions/`; avoid inline scripts in content.
 - Add or adjust styles in SCSS modules imported by `book.scss`. Do not add component-local `.css`, duplicate `book.css`, browser-print PDF styles, or one-off generated CSS.
 - Do not add parallel adapter layers, blind importers, or alternate source trees. `npm run check:clean` blocks committed generated output.
-- PDF output is generated from semantic MDX through XeTeX. When a live web component is not suitable for print, provide a semantic `FormatAlt` or `FormatOnly` print alternative instead of relying on DOM controls.
+- PDF output is generated from semantic MDX through XeTeX. When a live web component is not suitable for print, provide a semantic `FormatOnly` print alternative instead of relying on DOM controls.
 
 ## PDF Notes
 
@@ -71,7 +71,7 @@ Appendices are declared in `day.yaml` under `appendices`.
 - Keep diagrams source-of-truth in MDX/Astro/SVG. Reusable complex figures should live in `lesson/figures/`; one-off semantic SVG diagrams may remain inline in MDX because the PDF renderer converts `svg` nodes through `rsvg-convert`. Do not reimplement the same diagram separately in TeX.
 - Use real fenced code blocks for code or pseudocode. The PDF renderer gives them a styled `codebox`; do not fake code with ad hoc HTML grids or paragraphs.
 - Use `MathInline` and `MathBlock` for math so HTML gets KaTeX and PDF gets XeTeX math from the same source.
-- For web interactives, keep behavior in the interactive component and provide a clear static PDF/EPUB representation with `FormatAlt`, `FormatOnly`, or manifest artifact variants. Static artifact output may drift from the live web component when it improves readability.
+- For web interactives, keep behavior in the interactive component and provide a clear static PDF/EPUB representation with `FormatOnly` or manifest artifact variants. Static artifact output may drift from the live web component when it improves readability.
 - For PDF-affecting edits, run `npm run build:pdf` and `npm run check:pdf`. When changing PDF renderer, figure, table, code, or source-block behavior, also preserve logs with `PDF_KEEP_TEMP=1 npm run build:pdf` and scan for `Overfull`, `Missing character`, and font warnings.
 - Visual review scope: for global renderer/style changes, sample at least 20 pages from each full PDF (`180-descent`, `180-descent-deep-dive`, `180-descent-zh`, `180-descent-zh-deep-dive`). For individual day PDFs, first and last page are sufficient unless the changed day contains a new figure, table, code block, or interactive print alternative; then inspect the affected interior page too.
 

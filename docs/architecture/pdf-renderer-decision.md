@@ -13,7 +13,7 @@ The PDF pipeline reads the same Astro/MDX registry as the site and EPUB builders
 - `src/content/days/**/day.yaml` remains the canonical manifest for day number, path, block, localized metadata, appendices, assets, and artifact variants.
 - `en.mdx`, `zh.mdx`, and appendix MDX files are the canonical prose sources.
 - MDX should express content semantically through Markdown and lesson components.
-- Print-only alternatives belong in semantic MDX components such as `FormatAlt` and `FormatOnly`; live web controls should not leak into PDF output.
+- Print-only alternatives belong in semantic MDX components such as `FormatOnly`; live web controls should not leak into PDF output.
 - The XeTeX renderer maps text, headings, lists, blockquotes, tables, `MathInline`, `MathBlock`, `TipNote`, `StatusChip`, `SimpleTable`, and `ImageFigure` directly to LaTeX.
 
 ## Rationale
