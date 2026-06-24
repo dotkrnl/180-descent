@@ -1,16 +1,15 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { loadArtifactBook, loadArtifactBookDays } from "@lib/artifacts/book";
+import { loadArtifactBookDays } from "@lib/artifacts/book";
 
 const root = process.cwd();
 const fixtureDaysDir = path.join(root, "tests/fixtures/content/days");
 
 describe("artifact book model", () => {
   it("loads fixture day bodies, appendices, components, and localized assets from the registry", async () => {
-    const book = await loadArtifactBook(root, "zh", { daysDir: fixtureDaysDir });
-    const fixture = book.days[0];
+    const days = await loadArtifactBookDays(root, "zh", { daysDir: fixtureDaysDir });
+    const fixture = days[0];
 
-    expect(book.locale).toBe("zh");
     expect(fixture.path).toBe("001-fixture");
     expect(fixture.title).toBe("夹具日");
     expect(fixture.bodyPath).toBe("zh.mdx");

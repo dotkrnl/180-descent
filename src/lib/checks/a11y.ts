@@ -14,7 +14,7 @@ export interface AccessibilityCheckOptions {
   siteDir?: string;
 }
 
-export interface StaticAccessibilityResult {
+interface StaticAccessibilityResult {
   errors: string[];
   axePages: string[];
 }
@@ -29,7 +29,7 @@ interface StaticServer {
   origin: string;
 }
 
-export async function checkStaticAccessibility(options: AccessibilityCheckOptions): Promise<StaticAccessibilityResult> {
+async function checkStaticAccessibility(options: AccessibilityCheckOptions): Promise<StaticAccessibilityResult> {
   const siteDir = path.resolve(options.root, options.siteDir ?? "_site");
   const errors: string[] = [];
   const htmlFiles = await walkFiles(siteDir, { exts: ".html", ignored: [] });

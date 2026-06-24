@@ -2,7 +2,7 @@ import path from "node:path";
 import { loadContentRegistry } from "@lib/content/registry";
 import type { Locale } from "@lib/schemas/day";
 
-export interface ArtifactBook {
+interface ArtifactBook {
   locale: Locale;
   days: ArtifactBookDay[];
 }
@@ -47,7 +47,7 @@ export interface LoadArtifactBookOptions {
   daysDir?: string;
 }
 
-export async function loadArtifactBook(
+async function loadArtifactBook(
   root: string,
   locale: Locale,
   options: LoadArtifactBookOptions = {}
