@@ -41,6 +41,16 @@ interface Props {
 }
 
 const book = parseYaml(fs.readFileSync(path.join(process.cwd(), "src/_data/book.yaml"), "utf8")) as BookData;
+const socialImageAssets = Object.fromEntries(
+  Object.entries(import.meta.glob<string>("../../assets/images/social/*.png", {
+    eager: true,
+    import: "default",
+    query: "?url"
+  })).map(([modulePath, imagePath]) => [
+    `/assets/images/social/${modulePath.split("/").pop()}`,
+    imagePath
+  ])
+) as Record<string, string>;
 const { title, description, locale, canonicalPath, alternatePath, scripts = [], socialImagePath, releaseBanner = false } = Astro.props;
 const isZh = locale === "zh";
 const uiTitle = isZh ? book.zh.title : book.title;
@@ -52,8 +62,12 @@ const canonicalUrl = new URL(canonicalPath, book.site_url).href;
 const alternateUrl = alternatePath ? new URL(alternatePath, book.site_url).href : undefined;
 const enUrl = alternateUrl ? (isZh ? alternateUrl : canonicalUrl) : undefined;
 const zhUrl = alternateUrl ? (isZh ? canonicalUrl : alternateUrl) : undefined;
-const socialPath = socialImagePath ?? (isZh ? "/assets/images/social/180-descent-zh.png" : "/assets/images/social/180-descent.png");
-const socialImageUrl = new URL(socialPath, book.site_url).href;
+const requestedSocialImagePath = socialImagePath ?? (isZh ? "/assets/images/social/180-descent-zh.png" : "/assets/images/social/180-descent.png");
+const socialAssetPath = socialImageAssets[requestedSocialImagePath];
+if (!socialAssetPath) {
+  throw new Error(`Missing social image asset: ${requestedSocialImagePath}`);
+}
+const socialImageUrl = new URL(socialAssetPath, book.site_url).href;
 const homeUrl = isZh ? "/zh/" : "/";
 const introUrl = isZh ? "/zh/introduction/" : "/introduction/";
 const syllabusUrl = isZh ? "/zh/syllabus/" : "/syllabus/";

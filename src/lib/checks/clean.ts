@@ -22,6 +22,12 @@ export function checkCleanRepo(options: CleanCheckOptions): CleanCheckFailure[] 
       failures.push({ path: relativePath, reason });
     }
   }
+  if (trackedPathMode(options.root, "public/assets") === "120000") {
+    failures.push({
+      path: "public/assets",
+      reason: "Public assets must not mirror src/assets wholesale"
+    });
+  }
 
   return failures;
 }
@@ -33,4 +39,14 @@ function hasTrackedPath(root: string, relativePath: string): boolean {
     stdio: ["ignore", "pipe", "pipe"]
   });
   return result.status === 0 && result.stdout.trim().length > 0;
+}
+
+function trackedPathMode(root: string, relativePath: string): string | undefined {
+  const result = spawnSync("git", ["ls-files", "-s", relativePath], {
+    cwd: root,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+  if (result.status !== 0) return undefined;
+  return result.stdout.trim().split(/\s+/, 1)[0];
 }

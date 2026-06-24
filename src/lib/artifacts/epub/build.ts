@@ -437,7 +437,7 @@ function normalizeEpubFontUrls(css: string): string {
 }
 
 async function collectEpubFonts(root: string): Promise<EpubFont[]> {
-  const fontsRoot = path.join(root, "_site/assets/fonts");
+  const fontsRoot = path.join(root, "src/assets/fonts");
   const fonts: EpubFont[] = [];
 
   for (const fileName of await readdir(fontsRoot)) {

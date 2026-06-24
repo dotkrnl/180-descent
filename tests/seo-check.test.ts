@@ -22,7 +22,10 @@ async function createSiteRoot(): Promise<string> {
   await writeFile(path.join(root, "_site/social.png"), "");
   await writeFile(path.join(root, "_site/favicon.ico"), "");
   await writeFile(path.join(root, "_site/apple-touch-icon.png"), "");
-  await writeFile(path.join(root, "_site/site.webmanifest"), "{}");
+  await writeFile(path.join(root, "_site/icon-192.png"), "");
+  await writeFile(path.join(root, "_site/site.webmanifest"), JSON.stringify({
+    icons: [{ src: "/icon-192.png" }]
+  }));
   await writeFile(path.join(root, "_site/sitemap.xml"), '<urlset><xhtml:link rel="alternate" /></urlset>');
   await writeFile(path.join(root, "_site/robots.txt"), "Sitemap: https://180d.io/sitemap.xml\n");
   return root;

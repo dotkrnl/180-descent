@@ -67,7 +67,12 @@ async function checkHtml(siteDir: string, siteUrl: string, filePath: string, err
     if (!imagePath || !await pathExists(imagePath)) errors.push(`${url}: og:image does not exist locally (${ogImage})`);
   }
   for (const [label, href] of [["favicon", favicon], ["apple-touch-icon", appleTouchIcon], ["manifest", manifest]] as const) {
-    if (href && !await pathExists(localPathForHref(siteDir, siteUrl, href))) errors.push(`${url}: ${label} does not exist locally (${href})`);
+    if (href && !await pathExists(localPathForHref(siteDir, siteUrl, href))) {
+      errors.push(`${url}: ${label} does not exist locally (${href})`);
+    }
+  }
+  if (manifest) {
+    await checkManifestIcons(siteDir, siteUrl, manifest, errors);
   }
 
   const alt = alternateUrl(url);
@@ -99,6 +104,29 @@ async function checkRobots(siteDir: string, siteUrl: string, errors: string[]): 
   }
   const robots = await readFile(robotsPath, "utf8");
   if (!robots.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) errors.push("robots.txt: missing Sitemap directive");
+}
+
+async function checkManifestIcons(siteDir: string, siteUrl: string, href: string, errors: string[]): Promise<void> {
+  const manifestPath = localPathForHref(siteDir, siteUrl, href);
+  if (!await pathExists(manifestPath)) return;
+
+  const manifest = JSON.parse(await readFile(manifestPath, "utf8")) as {
+    icons?: Array<{ src?: unknown }>;
+  };
+  const icons = manifest.icons ?? [];
+  if (!icons.length) {
+    errors.push(`${href}: missing icons`);
+    return;
+  }
+  for (const icon of icons) {
+    if (typeof icon.src !== "string" || !icon.src) {
+      errors.push(`${href}: icon src must be a string`);
+      continue;
+    }
+    if (!await pathExists(localPathForHref(siteDir, siteUrl, icon.src))) {
+      errors.push(`${href}: icon does not exist locally (${icon.src})`);
+    }
+  }
 }
 
 function localPathForUrl(siteDir: string, siteUrl: string, url: string): string {

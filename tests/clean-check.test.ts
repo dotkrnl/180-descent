@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
@@ -20,6 +20,25 @@ describe("clean repo check", () => {
       {
         path: "_site",
         reason: "Generated site output must not be committed"
+      }
+    ]);
+  });
+
+  it("flags a tracked public assets source mirror", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-clean-check-"));
+    runGit(root, "init");
+    runGit(root, "config", "user.email", "test@example.com");
+    runGit(root, "config", "user.name", "Test User");
+
+    await mkdir(path.join(root, "src/assets"), { recursive: true });
+    await mkdir(path.join(root, "public"), { recursive: true });
+    await symlink("../src/assets", path.join(root, "public/assets"));
+    runGit(root, "add", "public/assets");
+
+    expect(checkCleanRepo({ root })).toEqual([
+      {
+        path: "public/assets",
+        reason: "Public assets must not mirror src/assets wholesale"
       }
     ]);
   });

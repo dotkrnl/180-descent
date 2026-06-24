@@ -11,7 +11,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "dev": "tsx scripts/cli/prepare-assets.ts && astro dev",
+    "dev": "tsx scripts/cli/prepare-assets.ts && npm run build:social-cards && astro dev",
     "build:social-cards": "tsx scripts/cli/generate-social-cards.ts",
     "build:site": "tsx scripts/cli/prepare-assets.ts && npm run build:social-cards && astro build",
     "build:epub": "tsx scripts/cli/build-epub.ts",
