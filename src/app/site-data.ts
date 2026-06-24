@@ -5,6 +5,7 @@ import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
+import { dayUrl } from "@lib/static-site/routes";
 
 interface CreditsData {
   fonts: CreditFont[];
@@ -103,7 +104,7 @@ export async function getContentDays(locale: Locale): Promise<ContentDay[]> {
         title: localeData.title,
         summary: localeData.summary,
         block: day.manifest.block,
-        url: locale === "zh" ? `/zh/days/${day.manifest.path}/` : `/days/${day.manifest.path}/`
+        url: dayUrl(locale, day.manifest.path)
       };
     })
     .sort((a, b) => a.day - b.day);

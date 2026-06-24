@@ -1,6 +1,7 @@
 ---
 import PageShell from "@app/layouts/PageShell.astro";
 import Introduction from "@app/content/introduction.en.mdx";
+import { staticPageUrl } from "@lib/static-site/routes";
 ---
 <PageShell
   locale="en"
@@ -8,8 +9,8 @@ import Introduction from "@app/content/introduction.en.mdx";
   subtitle="How to read a map that descends from foundations to the frontier."
   eyebrow="The 180-day map"
   description="Introduction to The 180-Day Descent."
-  canonicalPath="/introduction/"
-  alternatePath="/zh/introduction/"
+  canonicalPath={staticPageUrl("en", "introduction")}
+  alternatePath={staticPageUrl("zh", "introduction")}
 >
   <Introduction />
 </PageShell>

@@ -15,6 +15,7 @@ import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/
 import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 import { readBookData, type BookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
+import { siteDayDir } from "@lib/static-site/routes";
 
 const execFileAsync = promisify(execFile);
 
@@ -1274,9 +1275,7 @@ async function loadRenderedHtml(root: string, locale: Locale, sourceFile: string
   const [dayPath] = relativeSource.split(path.sep);
   if (!dayPath) return null;
 
-  const htmlPath = locale === "zh"
-    ? path.join(root, "_site/zh/days", dayPath, "index.html")
-    : path.join(root, "_site/days", dayPath, "index.html");
+  const htmlPath = path.join(siteDayDir(root, locale), dayPath, "index.html");
   const html = await readFile(htmlPath, "utf8").catch(() => "");
   return html ? cheerio.load(html) : null;
 }

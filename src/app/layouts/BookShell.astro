@@ -7,6 +7,7 @@ import brandDark from "../../assets/images/brand/180-descent-icon-dark-96.png";
 import faviconLight from "../../assets/images/brand/favicon-32.png";
 import faviconDark from "../../assets/images/brand/favicon-32-dark.png";
 import appleTouchIcon from "../../assets/images/brand/apple-touch-icon.png";
+import { homeUrl, staticPageUrl } from "@lib/static-site/routes";
 
 interface Props {
   title?: string;
@@ -47,11 +48,11 @@ if (!socialAssetPath) {
   throw new Error(`Missing social image asset: ${requestedSocialImagePath}`);
 }
 const socialImageUrl = new URL(socialAssetPath, book.siteUrl).href;
-const homeUrl = isZh ? "/zh/" : "/";
-const introUrl = isZh ? "/zh/introduction/" : "/introduction/";
-const syllabusUrl = isZh ? "/zh/syllabus/" : "/syllabus/";
-const downloadsUrl = isZh ? "/zh/downloads/" : "/downloads/";
-const creditsUrl = isZh ? "/zh/credits/" : "/credits/";
+const homePath = homeUrl(locale);
+const introUrl = staticPageUrl(locale, "introduction");
+const syllabusUrl = staticPageUrl(locale, "syllabus");
+const downloadsUrl = staticPageUrl(locale, "downloads");
+const creditsUrl = staticPageUrl(locale, "credits");
 const currentPath = Astro.url.pathname;
 const structuredData = {
   "@context": "https://schema.org",
@@ -120,7 +121,7 @@ const structuredData = {
     <a class="skip-link" href="#content">{isZh ? "跳到正文" : "Skip to content"}</a>
     <header class="site-topbar">
       <div class="topbar-row">
-        <a class="course" href={homeUrl}>
+        <a class="course" href={homePath}>
           <span class="brand-mark-shell" aria-hidden="true">
             <img class="brand-mark brand-mark-light" src={brandLight.src} width="28" height="28" alt="" decoding="async" />
             <img class="brand-mark brand-mark-dark" src={brandDark.src} width="28" height="28" alt="" decoding="async" />

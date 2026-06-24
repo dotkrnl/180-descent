@@ -11,6 +11,7 @@ import {
   upcomingSyllabusDays
 } from "@app/site-data";
 import type { Locale } from "@lib/schemas/day";
+import { alternateLocale, staticPageUrl } from "@lib/static-site/routes";
 
 interface Props {
   locale: Locale;
@@ -35,8 +36,8 @@ const latestContentDay = days.at(-1)?.day ?? 0;
   subtitle={isZh ? "一张按依赖关系排序、从根基到前沿的地图。" : "A dependency-ordered map from foundations to the frontier."}
   eyebrow={isZh ? "地图" : "The map"}
   description={isZh ? "完整的 180 天课程地图，已发布的课程将在上线时链接。" : "The complete 180-day course map, with published lessons linked as they arrive."}
-  canonicalPath={isZh ? "/zh/syllabus/" : "/syllabus/"}
-  alternatePath={isZh ? "/syllabus/" : "/zh/syllabus/"}
+  canonicalPath={staticPageUrl(locale, "syllabus")}
+  alternatePath={staticPageUrl(alternateLocale(locale), "syllabus")}
 >
   <p class="lede">{isZh ? "课程表是本书穿越世界的路线：它不是一堆互不相关的主题陈列，而是一连串逐级深入的台阶，每一天都为下一天铺就更坚实的地基。它始于追问信念如何赢得信任，继而横跨数学、物理、化学、生命科学、医学、神经科学、人工智能、经济学、社会制度、伦理以及正在塑造未来的种种力量。" : "The syllabus is the book's route through the world: not a shelf of unrelated topics, but a sequence of descents where each day gives the next one firmer ground. It begins by asking how belief earns trust, then moves through mathematics, physics, chemistry, life, medicine, mind, artificial intelligence, economics, societies, ethics, and the future."}</p>
 

@@ -2,6 +2,7 @@
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import BookShell from "@app/layouts/BookShell.astro";
 import type { RegistryDayLocaleEntry } from "@lib/content/registry";
+import { alternateLocale, dayUrl, staticPageUrl } from "@lib/static-site/routes";
 
 interface AppendixRenderEntry {
   id: string;
@@ -38,19 +39,18 @@ const interactionScriptModules = Object.fromEntries(
 const { entry, previous, next, Body, appendices } = Astro.props;
 const isZh = entry.locale === "zh";
 const dayPath = entry.day.manifest.path;
-const canonicalPath = isZh ? `/zh/days/${dayPath}/` : `/days/${dayPath}/`;
-const alternatePath = isZh ? `/days/${dayPath}/` : `/zh/days/${dayPath}/`;
+const canonicalPath = dayUrl(entry.locale, dayPath);
+const alternatePath = dayUrl(alternateLocale(entry.locale), dayPath);
 const downloadPrefix = isZh ? `/downloads/180-descent-zh-day-${dayPath}` : `/downloads/180-descent-day-${dayPath}`;
 const socialImagePath = isZh ? `/assets/images/social/zh-day-${dayPath}.png` : `/assets/images/social/day-${dayPath}.png`;
 const paddedDay = String(entry.day.manifest.day).padStart(3, "0");
 const dayLabel = isZh ? `第${paddedDay}日` : `Day ${paddedDay}`;
 const remainingDays = 180 - entry.day.manifest.day;
-const navPrefix = isZh ? "/zh/days" : "/days";
 const navDayLabel = (day: number) => {
   const value = String(day).padStart(3, "0");
   return isZh ? `第${value}日` : `Day ${value}`;
 };
-const navHref = (item: DayNavEntry) => `${navPrefix}/${item.path}/`;
+const navHref = (item: DayNavEntry) => dayUrl(entry.locale, item.path);
 const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
   const script = interactionScriptModules[entryName];
   if (!script) {
@@ -98,7 +98,7 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
           <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
         </span>
       )}
-      <a class="lesson-nav-card is-syllabus" href={isZh ? "/zh/syllabus/" : "/syllabus/"}>
+      <a class="lesson-nav-card is-syllabus" href={staticPageUrl(entry.locale, "syllabus")}>
         <span>{isZh ? "课程表" : "Map"}</span>
         <strong>{isZh ? "完整课程表" : "Full syllabus"}</strong>
       </a>
@@ -145,7 +145,7 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
           <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
         </span>
       )}
-      <a class="lesson-nav-card is-syllabus" href={isZh ? "/zh/syllabus/" : "/syllabus/"}>
+      <a class="lesson-nav-card is-syllabus" href={staticPageUrl(entry.locale, "syllabus")}>
         <span>{isZh ? "课程表" : "Map"}</span>
         <strong>{isZh ? "完整课程表" : "Full syllabus"}</strong>
       </a>

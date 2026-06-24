@@ -2,6 +2,7 @@
 import PageShell from "@app/layouts/PageShell.astro";
 import { getCreditsData } from "@app/site-data";
 import type { Locale } from "@lib/schemas/day";
+import { alternateLocale, staticPageUrl } from "@lib/static-site/routes";
 
 interface Props {
   locale: Locale;
@@ -17,8 +18,8 @@ const isZh = locale === "zh";
   subtitle={isZh ? "随附资源的许可协议与来源归属。" : "Licenses and source attribution for bundled assets."}
   eyebrow={isZh ? "来源说明" : "Attribution"}
   description={isZh ? "字体与素材的来源说明。" : "Credits for fonts and assets."}
-  canonicalPath={isZh ? "/zh/credits/" : "/credits/"}
-  alternatePath={isZh ? "/credits/" : "/zh/credits/"}
+  canonicalPath={staticPageUrl(locale, "credits")}
+  alternatePath={staticPageUrl(alternateLocale(locale), "credits")}
 >
   <h2>{isZh ? "字体" : "Fonts"}</h2>
   <ul>

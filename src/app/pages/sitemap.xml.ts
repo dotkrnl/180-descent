@@ -2,6 +2,7 @@ import {
   getBookData,
   getContentDays
 } from "@app/site-data";
+import { alternateLocale, dayUrl, homeUrl, staticPageUrl, type StaticPageSlug } from "@lib/static-site/routes";
 import { escapeXml } from "@lib/text/escape";
 
 interface SitemapEntry {
@@ -16,20 +17,12 @@ export async function GET() {
     getContentDays("zh")
   ]);
   const dayPaths = new Set([...enDays, ...zhDays].map((day) => day.path));
+  const staticPages: StaticPageSlug[] = ["introduction", "syllabus", "downloads", "credits"];
   const entries: SitemapEntry[] = [
-    { path: "/", alternate: "/zh/" },
-    { path: "/zh/", alternate: "/" },
-    { path: "/introduction/", alternate: "/zh/introduction/" },
-    { path: "/zh/introduction/", alternate: "/introduction/" },
-    { path: "/syllabus/", alternate: "/zh/syllabus/" },
-    { path: "/zh/syllabus/", alternate: "/syllabus/" },
-    { path: "/downloads/", alternate: "/zh/downloads/" },
-    { path: "/zh/downloads/", alternate: "/downloads/" },
-    { path: "/credits/", alternate: "/zh/credits/" },
-    { path: "/zh/credits/", alternate: "/credits/" },
+    ...localizedEntries((locale) => homeUrl(locale)),
+    ...staticPages.flatMap((slug) => localizedEntries((locale) => staticPageUrl(locale, slug))),
     ...[...dayPaths].sort().flatMap((dayPath) => [
-      { path: `/days/${dayPath}/`, alternate: `/zh/days/${dayPath}/` },
-      { path: `/zh/days/${dayPath}/`, alternate: `/days/${dayPath}/` }
+      ...localizedEntries((locale) => dayUrl(locale, dayPath))
     ])
   ];
   const lastmod = new Date().toISOString().slice(0, 10);
@@ -45,6 +38,13 @@ export async function GET() {
       "Content-Type": "application/xml; charset=utf-8"
     }
   });
+}
+
+function localizedEntries(pathFor: (locale: "en" | "zh") => string): SitemapEntry[] {
+  return (["en", "zh"] as const).map((locale) => ({
+    path: pathFor(locale),
+    alternate: pathFor(alternateLocale(locale))
+  }));
 }
 
 function sitemapUrl(entry: SitemapEntry, siteUrl: string, lastmod: string): string {

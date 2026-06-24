@@ -9,6 +9,7 @@ import { compileCss } from "@lib/assets/css";
 import { stripUnbundledKatexTtfSources } from "@lib/assets/fonts";
 import { readBookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
+import { dayUrlPrefix, siteDayDir, sitePageFile, staticPageUrl } from "@lib/static-site/routes";
 import { escapeXml } from "@lib/text/escape";
 
 type CheerioRoot = ReturnType<typeof cheerio.load>;
@@ -84,10 +85,10 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epubIdentifier: book.epubIdentifier
     },
-    siteDayDir: path.join(root, "_site/days"),
-    dayUrlPrefix: "/days/",
-    introHtml: path.join(root, "_site/introduction/index.html"),
-    introUrl: "/introduction/",
+    siteDayDir: siteDayDir(root, "en"),
+    dayUrlPrefix: dayUrlPrefix("en"),
+    introHtml: sitePageFile(root, "en", "introduction"),
+    introUrl: staticPageUrl("en", "introduction"),
     introTitle: "Introduction",
     introLabel: "Introduction",
     dayLabel: "Day",
@@ -105,10 +106,10 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epubIdentifier: `${book.epubIdentifier}-deep-dive`
     },
-    siteDayDir: path.join(root, "_site/days"),
-    dayUrlPrefix: "/days/",
-    introHtml: path.join(root, "_site/introduction/index.html"),
-    introUrl: "/introduction/",
+    siteDayDir: siteDayDir(root, "en"),
+    dayUrlPrefix: dayUrlPrefix("en"),
+    introHtml: sitePageFile(root, "en", "introduction"),
+    introUrl: staticPageUrl("en", "introduction"),
     introTitle: "Introduction",
     introLabel: "Introduction",
     dayLabel: "Day",
@@ -128,10 +129,10 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epubIdentifier: book.zh.epubIdentifier
     },
-    siteDayDir: path.join(root, "_site/zh/days"),
-    dayUrlPrefix: "/zh/days/",
-    introHtml: path.join(root, "_site/zh/introduction/index.html"),
-    introUrl: "/zh/introduction/",
+    siteDayDir: siteDayDir(root, "zh"),
+    dayUrlPrefix: dayUrlPrefix("zh"),
+    introHtml: sitePageFile(root, "zh", "introduction"),
+    introUrl: staticPageUrl("zh", "introduction"),
     introTitle: "导言",
     introLabel: "导言",
     dayLabel: "第",
@@ -150,10 +151,10 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epubIdentifier: `${book.zh.epubIdentifier}-deep-dive`
     },
-    siteDayDir: path.join(root, "_site/zh/days"),
-    dayUrlPrefix: "/zh/days/",
-    introHtml: path.join(root, "_site/zh/introduction/index.html"),
-    introUrl: "/zh/introduction/",
+    siteDayDir: siteDayDir(root, "zh"),
+    dayUrlPrefix: dayUrlPrefix("zh"),
+    introHtml: sitePageFile(root, "zh", "introduction"),
+    introUrl: staticPageUrl("zh", "introduction"),
     introTitle: "导言",
     introLabel: "导言",
     dayLabel: "第",
@@ -172,8 +173,8 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epubIdentifier: `${book.epubIdentifier}-day`
     },
-    siteDayDir: path.join(root, "_site/days"),
-    dayUrlPrefix: "/days/",
+    siteDayDir: siteDayDir(root, "en"),
+    dayUrlPrefix: dayUrlPrefix("en"),
     dayLabel: "Day"
   });
 
@@ -189,8 +190,8 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       publisher: book.publisher,
       epubIdentifier: `${book.zh.epubIdentifier}-day`
     },
-    siteDayDir: path.join(root, "_site/zh/days"),
-    dayUrlPrefix: "/zh/days/",
+    siteDayDir: siteDayDir(root, "zh"),
+    dayUrlPrefix: dayUrlPrefix("zh"),
     dayLabel: "第"
   });
 }
