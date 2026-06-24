@@ -11,7 +11,6 @@ import { contentType, urlForHtml } from "@lib/static-site/url";
 
 interface AccessibilityCheckOptions {
   root: string;
-  siteDir?: string;
 }
 
 interface StaticAccessibilityResult {
@@ -30,7 +29,7 @@ interface StaticServer {
 }
 
 async function checkStaticAccessibility(options: AccessibilityCheckOptions): Promise<StaticAccessibilityResult> {
-  const siteDir = path.resolve(options.root, options.siteDir ?? "_site");
+  const siteDir = path.resolve(options.root, "_site");
   const errors: string[] = [];
   const htmlFiles = await walkFiles(siteDir, { exts: ".html", ignored: [] });
 
@@ -105,7 +104,7 @@ async function checkStaticAccessibility(options: AccessibilityCheckOptions): Pro
 }
 
 export async function checkAccessibility(options: AccessibilityCheckOptions): Promise<AccessibilityCheckResult> {
-  const siteDir = path.resolve(options.root, options.siteDir ?? "_site");
+  const siteDir = path.resolve(options.root, "_site");
   await stat(siteDir);
 
   const { errors: staticFailures, axePages } = await checkStaticAccessibility(options);
