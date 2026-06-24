@@ -87,7 +87,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </BlockQuote>
 
 <ImageFigure src={feynman1959.src} width="899" height="900" class="is-portrait" alt="1959 年，理查德·费曼站在黑板前。">
-1959 年，理查德·费曼站在黑板前。上方引文出自他 1974 年在加州理工学院关于「货物崇拜科学」的毕业典礼演讲。<span class="meta">图片：<em>The Big T</em> 1959，经 Wikimedia Commons，美国公有领域。</span>
+1959 年，理查德·费曼站在黑板前。上方引文出自他 1974 年在加州理工学院关于「货物崇拜科学」的毕业典礼演讲。<Meta>图片：<em>The Big T</em> 1959，经 Wikimedia Commons，美国公有领域。</Meta>
 </ImageFigure>
 费曼谈论的是公式无法替代的、求真所需的诚实。现代统计学最残酷的转折在于：公式本身仍然可能是正确的，但在灵活搜索之后，错误率便无法再维持在名义水平。它们会给你想看到的结论披上数学权威的外衣。
 
@@ -138,7 +138,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 换成一个小例子：假设零模型认为两组均值相同。如果在这个模型下，观察到当前这么大、甚至更大的差异的概率为 3%，那么 p = .03。这并不表示零假设为真的概率是 3%。
 
 <ImageFigure src={pValueTailAreaZh.src} lightSrc={pValueTailAreaZh.src} darkSrc={pValueTailAreaZhDark.src} width="800" height="460" class="pvalue-figure" alt="课程风格的零模型钟形曲线图，阴影尾部标为 p 值，并强调 P(数据 | 零假设) 不是 P(零假设 | 数据)。">
-阴影尾部就是 p 值：在零模型下，出现如此极端或更极端结果的频率。<span class="meta">改编自 Repapetilto 与 Chen-Pan Liao，经 Wikimedia Commons，CC BY-SA 3.0。</span>
+阴影尾部就是 p 值：在零模型下，出现如此极端或更极端结果的频率。<Meta>改编自 Repapetilto 与 Chen-Pan Liao，经 Wikimedia Commons，CC BY-SA 3.0。</Meta>
 </ImageFigure>
 
 这句话值得再读一遍。它是关于「给定假设下的数据」的陈述——写作 <Highlight><MathInline latex={String.raw`\mathrm{P}(\text{数据}\mid\text{零假设})`} /></Highlight>。它绝对不是关于「给定数据下的假设」的陈述，即 <Highlight><MathInline latex={String.raw`\mathrm{P}(\text{零假设}\mid\text{数据})`} /></Highlight>。混淆这两者正是 [第 4 日](/zh/days/004-probability-as-extended-logic/) 在患病测试问题中警告过的「逆概率」错误：<MathInline latex={String.raw`\mathrm{P}(\text{阳性}\mid\text{患病})`} /> 并不等于 <MathInline latex={String.raw`\mathrm{P}(\text{患病}\mid\text{阳性})`} />，而在没有先验概率的情况下，无论你盯着结果看多久，都无法将前者转化为后者。下面六种误读尤其常见——摘自格陵兰（Greenland）及其同事列出的 25 种常见误读：
