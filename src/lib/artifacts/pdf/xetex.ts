@@ -732,6 +732,13 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `\n{\\ttfamily\\footnotesize\\color{descentMuted}${text}}` : "";
   }
+  if (name === "FigureBox") {
+    return renderChildren(node.children ?? [], state, { block: true });
+  }
+  if (name === "FigureBoxCaption") {
+    const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
+    return text ? `\\begin{notepara}${text}\\end{notepara}` : "";
+  }
   if (["HeroSubhead", "PanelNote", "Caption", "SourceNote"].includes(name)) {
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `\\begin{notepara}${text}\\end{notepara}` : "";
