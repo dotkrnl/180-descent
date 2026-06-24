@@ -16,8 +16,7 @@ describe("clean repo check", () => {
     await writeFile(path.join(root, "_site/index.html"), "");
     runGit(root, "add", "_site/index.html");
 
-    const failures = await checkCleanRepo({ root });
-    expect(failures).toEqual([
+    expect(checkCleanRepo({ root })).toEqual([
       {
         path: "_site",
         reason: "Generated site output must not be committed"

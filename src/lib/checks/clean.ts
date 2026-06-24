@@ -14,7 +14,7 @@ const FORBIDDEN_TRACKED_PATHS = [
   ["src/assets/images/social", "Generated social-card PNGs must not be committed"]
 ] as const;
 
-export async function checkCleanRepo(options: CleanCheckOptions): Promise<CleanCheckFailure[]> {
+export function checkCleanRepo(options: CleanCheckOptions): CleanCheckFailure[] {
   const failures: CleanCheckFailure[] = [];
 
   for (const [relativePath, reason] of FORBIDDEN_TRACKED_PATHS) {

@@ -1,7 +1,7 @@
 import { checkCleanRepo } from "@lib/checks/clean";
 import { exitOnErrors } from "./support";
 
-const failures = await checkCleanRepo({ root: process.cwd() });
+const failures = checkCleanRepo({ root: process.cwd() });
 
 exitOnErrors(failures, (failure) => `${failure.path}: ${failure.reason}`, {
   heading: "Cleanliness check failed:",
