@@ -7,9 +7,6 @@ import { walkFiles } from "@lib/fs/walk";
 
 interface AppendixStyleCheckOptions {
   root: string;
-  daysDir?: string;
-  cssFiles?: string[];
-  jsRoot?: string;
 }
 
 interface AppendixStyleCheckResult {
@@ -75,19 +72,9 @@ export async function checkAppendixStyle(options: AppendixStyleCheckOptions): Pr
 
 async function collectCssClasses(options: AppendixStyleCheckOptions, errors: string[]): Promise<Set<string>> {
   const out = new Set<string>();
-  if (!options.cssFiles) {
-    const css = await compileCss({ root: options.root });
-    checkCssForDayScopedSelectors(options.root, "src/assets/scss/book.scss", css, errors);
-    collectClassesFromCss(css, out);
-    return out;
-  }
-
-  for (const relativeFile of options.cssFiles) {
-    const file = path.join(options.root, relativeFile);
-    const css = await readFile(file, "utf8");
-    checkCssForDayScopedSelectors(options.root, file, css, errors);
-    collectClassesFromCss(css, out);
-  }
+  const css = await compileCss({ root: options.root });
+  checkCssForDayScopedSelectors(options.root, "src/assets/scss/book.scss", css, errors);
+  collectClassesFromCss(css, out);
   return out;
 }
 
@@ -99,7 +86,7 @@ function collectClassesFromCss(css: string, out: Set<string>): void {
 
 async function collectJsClasses(options: AppendixStyleCheckOptions): Promise<Set<string>> {
   const out = new Set<string>();
-  const jsRoot = path.join(options.root, options.jsRoot ?? "src/assets/js/interactions");
+  const jsRoot = path.join(options.root, "src/assets/js/interactions");
 
   for (const file of await walkFiles(jsRoot, { exts: ".js", ignored: [] })) {
     const js = await readFile(file, "utf8");
@@ -118,7 +105,7 @@ async function collectJsClasses(options: AppendixStyleCheckOptions): Promise<Set
 }
 
 async function collectAppendixFiles(options: AppendixStyleCheckOptions): Promise<string[]> {
-  const daysDir = path.join(options.root, options.daysDir ?? "src/content/days");
+  const daysDir = path.join(options.root, "src/content/days");
   const registry = await loadContentRegistry({ daysDir });
   return registry.days
     .flatMap((day) => day.appendixBodies.map((body) => path.join(day.directory, body.path)))
