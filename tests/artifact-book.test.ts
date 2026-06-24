@@ -6,7 +6,7 @@ const root = process.cwd();
 const fixtureDaysDir = path.join(root, "tests/fixtures/content/days");
 
 describe("artifact book model", () => {
-  it("loads fixture day bodies, appendices, and localized assets from the registry", async () => {
+  it("loads fixture day bodies and appendices from the registry", async () => {
     const days = await loadArtifactBookDays(root, "zh", { daysDir: fixtureDaysDir });
     const fixture = days[0];
 
@@ -20,10 +20,6 @@ describe("artifact book model", () => {
       title: "附录 A",
       bodyPath: "appendices/appendix-a.zh.mdx",
       bodySource: expect.stringContaining("中文")
-    }]);
-    expect(fixture.assets).toEqual([{
-      id: "fixture-diagram",
-      path: "assets/fixture-diagram.zh.svg"
     }]);
   });
 

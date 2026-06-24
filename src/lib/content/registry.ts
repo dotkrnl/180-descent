@@ -1,4 +1,4 @@
-import { access, readdir, readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { parse as parseYaml } from "yaml";
 import { dayManifestSchema, type DayManifest, type Locale } from "@lib/schemas/day";
@@ -23,7 +23,6 @@ interface RegistryDay {
   manifest: DayManifest;
   bodies: RegistryBody[];
   appendixBodies: RegistryAppendixBody[];
-  assets: string[];
 }
 
 interface ContentRegistry {
@@ -83,31 +82,17 @@ async function loadRegistryDay(directory: string): Promise<RegistryDay> {
     }
   }
 
-  const assets = [];
-  for (const asset of manifest.assets) {
-    for (const assetPath of Object.values(asset.files)) {
-      if (!assetPath) continue;
-      await assertReferencedFile(directory, assetPath);
-      assets.push(assetPath);
-    }
-  }
-
   return {
     directory,
     manifestPath,
     manifest,
     bodies,
-    appendixBodies,
-    assets
+    appendixBodies
   };
 }
 
 async function readReferencedFile(root: string, relativePath: string): Promise<string> {
   return readFile(referencedFilePath(root, relativePath), "utf8");
-}
-
-async function assertReferencedFile(root: string, relativePath: string): Promise<void> {
-  await access(referencedFilePath(root, relativePath));
 }
 
 function referencedFilePath(root: string, relativePath: string): string {

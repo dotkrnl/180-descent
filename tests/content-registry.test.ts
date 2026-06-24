@@ -29,7 +29,6 @@ describe("target content registry", () => {
     });
 
     expect(parsed.published).toBe(true);
-    expect(parsed.assets).toEqual([]);
   });
 
   it("rejects partial day manifests", () => {
@@ -46,7 +45,7 @@ describe("target content registry", () => {
     })).toThrow();
   });
 
-  it("loads paired locale bodies, appendices, assets, and interaction scripts", async () => {
+  it("loads paired locale bodies, appendices, and interaction scripts", async () => {
     const registry = await loadContentRegistry({ daysDir: fixtureDaysDir });
     const day = registry.days[0];
 
@@ -56,10 +55,6 @@ describe("target content registry", () => {
     expect(day.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
       "appendix-a:en",
       "appendix-a:zh"
-    ]);
-    expect(day.assets).toEqual([
-      "assets/fixture-diagram.svg",
-      "assets/fixture-diagram.zh.svg"
     ]);
     expect(day.manifest.interactionScripts).toEqual(["fixture-interaction"]);
   });
