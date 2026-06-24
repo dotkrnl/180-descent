@@ -1,6 +1,7 @@
 import AppendixTimelineList from "@app/components/lesson/AppendixTimelineList.astro";
 import MilestoneItem from "@app/components/lesson/MilestoneItem.astro";
 import MilestoneDate from "@app/components/lesson/MilestoneDate.astro";
+import MilestoneTitle from "@app/components/lesson/MilestoneTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -19,6 +20,7 @@ import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
 import Panel from "@app/components/lesson/Panel.astro";
@@ -95,17 +97,17 @@ Now the systems doing the climbing. Two open-weights provers reset expectations 
 <DataTableBody>
 <DataTableRow>
 <DataTableCell>DeepSeek-Prover-V2<TableSubnote>Apr 2025</TableSubnote></DataTableCell>
-<DataTableCell><strong>88.9%</strong> on miniF2F-test; <strong>49 / 658</strong> PutnamBench. Works in Lean 4 by recursively breaking a goal into subgoals, then learning from which ones it can close.</DataTableCell>
+<DataTableCell><Highlight>88.9%</Highlight> on miniF2F-test; <Highlight>49 / 658</Highlight> PutnamBench. Works in Lean 4 by recursively breaking a goal into subgoals, then learning from which ones it can close.</DataTableCell>
 <DataTableCell><StatusChip status={"ok"} label={"established"} /><TableSubnote small>open weights, reproducible</TableSubnote></DataTableCell>
 </DataTableRow>
 <DataTableRow>
 <DataTableCell>Goedel-Prover-V2<TableSubnote>Aug 2025</TableSubnote></DataTableCell>
-<DataTableCell><strong>~90%</strong> miniF2F (with self-correction); <strong>86</strong> PutnamBench problems. Its <em>32B</em> model beats rivals 20× larger; an <em>8B</em> version matches a 671B predecessor.</DataTableCell>
+<DataTableCell><Highlight>~90%</Highlight> miniF2F (with self-correction); <Highlight>86</Highlight> PutnamBench problems. Its *32B* model beats rivals 20× larger; an *8B* version matches a 671B predecessor.</DataTableCell>
 <DataTableCell><StatusChip status={"ok"} label={"established"} /><TableSubnote small>smaller & better; open</TableSubnote></DataTableCell>
 </DataTableRow>
 <DataTableRow>
 <DataTableCell>Seed-Prover<TableSubnote>2025</TableSubnote></DataTableCell>
-<DataTableCell>The July 2025 preprint reports full Lean proofs for <strong>5 of 6</strong> IMO 2025 problems, after the contest setting; treat it as a strong but still vendor/preprint claim until artifacts and independent audits settle the details.</DataTableCell>
+<DataTableCell>The July 2025 preprint reports full Lean proofs for <Highlight>5 of 6</Highlight> IMO 2025 problems, after the contest setting; treat it as a strong but still vendor/preprint claim until artifacts and independent audits settle the details.</DataTableCell>
 <DataTableCell><StatusChip status={"hint"} label={"promising"} /><TableSubnote small>gold claim vendor-reported</TableSubnote></DataTableCell>
 </DataTableRow>
 </DataTableBody>
@@ -172,9 +174,9 @@ And yet. Strip away the hype, wait a few months, and something genuine emerges f
 But notice how Tao — a working mathematician, not a marketing department — frames it, because his framing is the model of calibrated thinking this course is trying to install in you. These, he stresses, are the **"lowest-hanging fruit."** Erdős problems "vary widely in difficulty, by several orders of magnitude"; an "open" label "is always provisional"; and the reporting is badly biased, because the failures never get announced — the tool had already been "quietly applied to a significant fraction of the currently open Erdős problems, without notable success." The successes are real and worth celebrating. They are also the easiest problems in the pile, solved with human feedback in the loop, with closely related results already sitting in the literature. The machine is, in Tao's lovely phrase, "clearing out the lowest-hanging fruit and isolating the problems which are genuinely difficult."
 
 <AppendixTimelineList>
-<MilestoneItem status="hype"><MilestoneDate>Oct 2025 · the spike</MilestoneDate><b>"GPT-5 solved 10 unsolved Erdős problems."</b> Announced by OpenAI figures; widely shared as a research breakthrough. <StatusChip status={"bad"} label={"hype"} printLabel={"review"} /></MilestoneItem>
-<MilestoneItem status="real"><MilestoneDate>Oct 2025 · the correction</MilestoneDate><b>"A dramatic misrepresentation" — Thomas Bloom.</b> The problems were solved years ago by humans; the AI found the existing papers. Hassabis: "embarrassing."</MilestoneItem>
-<MilestoneItem status="hint"><MilestoneDate>Jan 2026 · the real thing</MilestoneDate><b>Erdős #728 solved "more or less autonomously," not in existing literature.</b> A few more follow, some Lean-verified and accepted by Tao — but the "lowest-hanging fruit." <StatusChip status={"hint"} label={"promising"} /></MilestoneItem>
+<MilestoneItem status="hype"><MilestoneDate>Oct 2025 · the spike</MilestoneDate><MilestoneTitle>"GPT-5 solved 10 unsolved Erdős problems."</MilestoneTitle> Announced by OpenAI figures; widely shared as a research breakthrough. <StatusChip status={"bad"} label={"hype"} printLabel={"review"} /></MilestoneItem>
+<MilestoneItem status="real"><MilestoneDate>Oct 2025 · the correction</MilestoneDate><MilestoneTitle>"A dramatic misrepresentation" — Thomas Bloom.</MilestoneTitle> The problems were solved years ago by humans; the AI found the existing papers. Hassabis: "embarrassing."</MilestoneItem>
+<MilestoneItem status="hint"><MilestoneDate>Jan 2026 · the real thing</MilestoneDate><MilestoneTitle>Erdős #728 solved "more or less autonomously," not in existing literature.</MilestoneTitle> A few more follow, some Lean-verified and accepted by Tao — but the "lowest-hanging fruit." <StatusChip status={"hint"} label={"promising"} /></MilestoneItem>
 </AppendixTimelineList>
 
 The lesson is not "AI math is fake" — beat three is real, and may well be the leading edge of something large. The lesson is that the *same underlying events* produced a wildly false headline in October and a carefully true statement in January, and the only way to tell them apart was to ask who was speaking, what "solved" and "open" actually meant, and whether the result had been checked. That is the hype filter, working exactly as designed, on a live story. Hold onto the method; you'll need it long after the specific problem numbers are forgotten.
