@@ -9,14 +9,32 @@ describe("clean repo check", () => {
   it("flags tracked generated output", async () => {
     const root = await createGitRoot();
 
+    await mkdir(path.join(root, ".astro"), { recursive: true });
     await mkdir(path.join(root, "_site"), { recursive: true });
+    await mkdir(path.join(root, "dist"), { recursive: true });
+    await mkdir(path.join(root, "tmp"), { recursive: true });
+    await writeFile(path.join(root, ".astro/types.d.ts"), "");
     await writeFile(path.join(root, "_site/index.html"), "");
-    runGit(root, "add", "_site/index.html");
+    await writeFile(path.join(root, "dist/index.html"), "");
+    await writeFile(path.join(root, "tmp/output.txt"), "");
+    runGit(root, "add", ".astro/types.d.ts", "_site/index.html", "dist/index.html", "tmp/output.txt");
 
     expect(checkCleanRepo({ root })).toEqual([
       {
+        path: ".astro",
+        reason: "Generated Astro metadata must not be committed"
+      },
+      {
         path: "_site",
         reason: "Generated site output must not be committed"
+      },
+      {
+        path: "dist",
+        reason: "Generated distribution output must not be committed"
+      },
+      {
+        path: "tmp",
+        reason: "Temporary build output must not be committed"
       }
     ]);
   });

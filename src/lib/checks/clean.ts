@@ -10,7 +10,10 @@ interface CleanCheckFailure {
 }
 
 const FORBIDDEN_TRACKED_PATHS = [
+  [".astro", "Generated Astro metadata must not be committed"],
   ["_site", "Generated site output must not be committed"],
+  ["dist", "Generated distribution output must not be committed"],
+  ["tmp", "Temporary build output must not be committed"],
   ["src/assets/fonts", "Generated font assets must not be committed"],
   ["src/assets/scss/generated", "Generated SCSS partials must not be committed"],
   ["src/assets/images/social", "Generated social-card PNGs must not be committed"],
