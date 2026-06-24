@@ -5,8 +5,6 @@ import { walkFiles } from "@lib/fs/walk";
 
 interface MathCheckOptions {
   root: string;
-  sourceDir?: string;
-  siteDir?: string;
 }
 
 interface MathCheckFailure {
@@ -32,8 +30,8 @@ const BUILT_PATTERNS = [
 ] as const;
 
 export async function checkMath(options: MathCheckOptions): Promise<MathCheckResult> {
-  const sourceDir = path.join(options.root, options.sourceDir ?? "src/content/days");
-  const siteDir = path.join(options.root, options.siteDir ?? "_site");
+  const sourceDir = path.join(options.root, "src/content/days");
+  const siteDir = path.join(options.root, "_site");
   const failures: MathCheckFailure[] = [];
   const sourceFiles = await walkFiles(sourceDir, { exts: ".mdx", ignored: [] });
 
