@@ -41,8 +41,9 @@
       var sum = s + n;
       vS.textContent = s.toFixed(2);
       vN.textContent = n.toFixed(2);
-      segS.style.width = (s / 2 * 100) + "%";
-      segN.style.width = (n / 2 * 100) + "%";
+      segS.setAttribute("width", (s * 100).toFixed(1));
+      segN.setAttribute("x", (s * 100).toFixed(1));
+      segN.setAttribute("width", (n * 100).toFixed(1));
       if(Math.abs(sum - 1) < 0.005){
         sumtxt.textContent = credenceText.sum + sum.toFixed(2);
         sumtxt.className = "sum-value coherent";
