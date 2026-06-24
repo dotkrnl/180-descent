@@ -680,6 +680,11 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const body = renderChildren(node.children ?? [], state, { block: true }).trim();
     return [title ? `\\blockheading{${title}}` : "", body].filter(Boolean).join("\n");
   }
+  if (name === "DefinitionBox") {
+    const title = cleanDecorativePrefix(latexEscape(resolveExpression(attrs.get("title"), state)));
+    const body = renderChildren(node.children ?? [], state, { block: true }).trim();
+    return [title ? `\\eyebrow{${title}}` : "", body].filter(Boolean).join("\n");
+  }
   if (["AppendixTimeline", "AppendixTimelineItem"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
@@ -1550,7 +1555,8 @@ function isBlockMdxElement(node: MdxNode): boolean {
     "Hero",
     "Wrap",
     "FormatOnly",
-    "Roadmap"
+    "Roadmap",
+    "DefinitionBox"
   ].includes(node.name ?? "");
 }
 
@@ -1567,7 +1573,8 @@ function isContainerComponent(name: string): boolean {
     "Threads",
     "Divider",
     "FormatOnly",
-    "Roadmap"
+    "Roadmap",
+    "DefinitionBox"
   ].includes(name);
 }
 

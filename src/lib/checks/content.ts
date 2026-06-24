@@ -27,6 +27,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<p class="web-only">/, 'use <FormatOnly media="web">'],
   [/<p class="epub-only print-only">/, 'use <FormatOnly media="print-epub">'],
   [/<div class="roadmap">/, "use <Roadmap>"],
+  [/<div class="def">/, "use <DefinitionBox>"],
   [/<div class="(?:aside|formula|recap|whereblock|wrap|format-alt epub-only print-only|panel)\b/, "use shared lesson components"],
   [/<div class="(?:regress-map|tri-print)\b/, "use <AgrippaTrilemmaMap>"],
   [/<figure class="(?:hero-clock|hero-doors)\b/, "use shared figure components"],

@@ -25,6 +25,7 @@ import DataTableCell from "@app/components/lesson/DataTableCell.astro";
 import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
+import DefinitionBox from "@app/components/lesson/DefinitionBox.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
@@ -124,10 +125,9 @@ Simmons, Nelson, and Simonsohn showed that combining four such freedoms can rais
 
 To not be fooled, you have to know precisely what the instrument reports. Many readers, including trained scientists and a worrying number of the statistics instructors teaching them, get this wrong. So, carefully:
 
-<div class="def">
-<p class="h">Definition · the p-value</p>
-      The <em class="term">p-value</em><TipNote text={String.raw`A p-value is a tail probability for data under a specified null model, not the probability that the null hypothesis is true.`} /> is the probability — <strong>computed on the assumption that the <em class="term">null model</em><TipNote text={String.raw`A null model is the world assumed by the p-value calculation, usually a model with no effect plus all stated sampling and modeling assumptions.`} />, the null hypothesis<TipNote text={String.raw`A null hypothesis is the baseline claim being tested, often that there is no effect or no difference.`} />, and every modeling assumption are true</strong> — of getting a result <strong>at least as extreme</strong> as the one you actually observed.
-</div>
+<DefinitionBox title="Definition · the p-value">
+The <em class="term">p-value</em><TipNote text={String.raw`A p-value is a tail probability for data under a specified null model, not the probability that the null hypothesis is true.`} /> is the probability — <strong>computed on the assumption that the <em class="term">null model</em><TipNote text={String.raw`A null model is the world assumed by the p-value calculation, usually a model with no effect plus all stated sampling and modeling assumptions.`} />, the null hypothesis<TipNote text={String.raw`A null hypothesis is the baseline claim being tested, often that there is no effect or no difference.`} />, and every modeling assumption are true</strong> — of getting a result <strong>at least as extreme</strong> as the one you actually observed.
+</DefinitionBox>
 
 Concrete version: suppose the null model says two groups have the same mean. If a difference this large or larger would occur 3% of the time under that model, then <MathInline latex={String.raw`p = .03`} />. That is *not* a 3% chance the null is true.
 
@@ -185,10 +185,9 @@ The lesson is not "smaller p-values are better." A p-value can shrink because an
 
 <Term as="em">Confidence intervals</Term><TipNote text={String.raw`A confidence interval is a range produced by a method with a stated long-run coverage rate, such as 95%.`} /> are sold as the humane alternative to <MathInline latex={String.raw`p`} />-values, and they are better — but they hide their own trap.
 
-<div class="def">
-<p class="h">Definition · the 95% confidence interval</p>
-      A 95% CI is produced by a <strong>procedure</strong> that, across many hypothetical repeat experiments, brackets the true value 95% of the time. The "95%" describes the long-run reliability of the <em>method</em>, not the odds for your one particular interval.
-</div>
+<DefinitionBox title="Definition · the 95% confidence interval">
+A 95% CI is produced by a <strong>procedure</strong> that, across many hypothetical repeat experiments, brackets the true value 95% of the time. The "95%" describes the long-run reliability of the <em>method</em>, not the odds for your one particular interval.
+</DefinitionBox>
 So the natural sentence — "there's a 95% chance the true value is in *this* interval" — is, in the frequentist world, simply false. Your interval either contains the truth or it doesn't; the dice were thrown when you ran the study. (A **Day 4** Bayesian *credible* interval *does* license that sentence — but only after you've committed to a prior. Different tool, different promise.) Nor does a CI mean 95% of your data live inside it, nor that values just outside are impossible. What it gives you, refreshingly, is a *range of effect sizes compatible with your data* — and that reframing, from "yes/no" to "how much, how precisely," is the heart of what reformers call the *new statistics*.
 
 <ConfidenceIntervalCoverage locale="en" />

@@ -25,6 +25,7 @@ import DataTableCell from "@app/components/lesson/DataTableCell.astro";
 import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
+import DefinitionBox from "@app/components/lesson/DefinitionBox.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
@@ -127,10 +128,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 要避免被统计结果误导，先要弄清 p 值究竟回答了什么问题。许多读者，包括受过训练的科学家和相当数量的统计学讲师，都会在这里出错。下面这一定义值得仔细读一遍：
 
-<div class="def">
-<p class="h">定义 · p 值</p>
-      <Term>p 值</Term>（p-value）<TipNote text={String.raw`p 值是特定零模型下数据的尾部概率，而非零假设为真的概率。`} />是在指定<Term>零模型</Term><TipNote text={String.raw`零模型是 p 值计算所假定的世界，通常包括无效应模型以及所有抽样和建模假设。`} />及其假设成立时，观察到当前<Term>检验统计量</Term>或更极端值的概率。这里的「零模型成立」包括<Term>零假设</Term><TipNote text={String.raw`零假设是正在被测试的基准断言，通常指没有效应或没有差异。`} />以及相应的抽样和建模假设。
-</div>
+<DefinitionBox title="定义 · p 值">
+<Term>p 值</Term>（p-value）<TipNote text={String.raw`p 值是特定零模型下数据的尾部概率，而非零假设为真的概率。`} />是在指定<Term>零模型</Term><TipNote text={String.raw`零模型是 p 值计算所假定的世界，通常包括无效应模型以及所有抽样和建模假设。`} />及其假设成立时，观察到当前<Term>检验统计量</Term>或更极端值的概率。这里的「零模型成立」包括<Term>零假设</Term><TipNote text={String.raw`零假设是正在被测试的基准断言，通常指没有效应或没有差异。`} />以及相应的抽样和建模假设。
+</DefinitionBox>
 
 换成一个小例子：假设零模型认为两组均值相同。如果在这个模型下，观察到当前这么大、甚至更大的差异的概率为 3%，那么 p = .03。这并不表示零假设为真的概率是 3%。
 
@@ -188,10 +188,9 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 <Term>置信区间</Term>（confidence intervals）<TipNote text={String.raw`置信区间是由某种具有特定长期覆盖率（如 95%）的方法产生的范围。`} />常被视为比 p 值更直观的替代方案，但它同样容易被误读。
 
-<div class="def">
-<p class="h">定义 · 95% 置信区间</p>
-      95% 置信区间中的「95%」描述的是构造区间的方法：如果不断重复同一抽样过程，并用同一种方法计算区间，那么这些区间中约有 95% 会覆盖真实参数。它并不是说，在已经得到某个具体区间之后，真值有 95% 的概率落在其中。
-</div>
+<DefinitionBox title="定义 · 95% 置信区间">
+95% 置信区间中的「95%」描述的是构造区间的方法：如果不断重复同一抽样过程，并用同一种方法计算区间，那么这些区间中约有 95% 会覆盖真实参数。它并不是说，在已经得到某个具体区间之后，真值有 95% 的概率落在其中。
+</DefinitionBox>
 因此，人们自然会说「真实值在<Highlight>这个</Highlight>区间内的概率是 95%」，但在频率学派框架下，这句话是错误的。研究完成后，这个区间要么包含真值，要么不包含；95% 属于方法的长期表现。
 
 [第 4 日](/zh/days/004-probability-as-extended-logic/) 提到的贝叶斯「可信区间」可以作概率解释，但前提是指定先验分布和完整的概率模型。工具不同，承诺也不同。置信区间也不意味着 95% 的数据落在其中，更不意味着区间外的参数值绝无可能。更合适的理解是：它给出了一组在当前模型下与数据较为相容的参数值。区间越宽，估计越不精确；但区间内的值并非得到同等支持。
