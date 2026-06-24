@@ -2,6 +2,7 @@ import {
   getBookData,
   getPublishedDays
 } from "@app/site-data";
+import { escapeXml } from "@lib/text/escape";
 
 interface SitemapEntry {
   path: string;
@@ -54,24 +55,15 @@ function sitemapUrl(entry: SitemapEntry, siteUrl: string, lastmod: string): stri
   const zhUrl = isZh ? loc : alternate;
   return [
     "  <url>",
-    `    <loc>${xmlEscape(loc)}</loc>`,
+    `    <loc>${escapeXml(loc)}</loc>`,
     `    <lastmod>${lastmod}</lastmod>`,
-    entry.alternate ? `    <xhtml:link rel="alternate" hreflang="en" href="${xmlEscape(enUrl)}" />` : "",
-    entry.alternate ? `    <xhtml:link rel="alternate" hreflang="zh-Hans" href="${xmlEscape(zhUrl)}" />` : "",
-    entry.alternate ? `    <xhtml:link rel="alternate" hreflang="x-default" href="${xmlEscape(enUrl)}" />` : "",
+    entry.alternate ? `    <xhtml:link rel="alternate" hreflang="en" href="${escapeXml(enUrl)}" />` : "",
+    entry.alternate ? `    <xhtml:link rel="alternate" hreflang="zh-Hans" href="${escapeXml(zhUrl)}" />` : "",
+    entry.alternate ? `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(enUrl)}" />` : "",
     "  </url>"
   ].filter(Boolean).join("\n");
 }
 
 function absoluteUrl(pathname: string, siteUrl: string): string {
   return new URL(pathname, siteUrl).href;
-}
-
-function xmlEscape(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
 }
