@@ -9,16 +9,18 @@ const execFileAsync = promisify(execFile);
 
 interface AssetPreparationOptions {
   root: string;
-  resolvePackageRoot?: (packageName: string) => string;
 }
+
+type AssetPackageName =
+  | "@fontsource/fraunces"
+  | "@fontsource/ibm-plex-mono"
+  | "@fontsource/newsreader"
+  | "katex"
+  | "lxgw-wenkai-webfont";
 
 interface LatinFontAsset {
-  packageName: string;
+  packageName: AssetPackageName;
   fileName: string;
-}
-
-interface PrepareLatinFontsOptions extends AssetPreparationOptions {
-  assets?: readonly LatinFontAsset[];
 }
 
 interface PrepareLatinFontsResult {
@@ -29,10 +31,6 @@ interface PrepareLatinFontsResult {
 interface CjkFontWeight {
   cssFile: string;
   prefix: string;
-}
-
-interface PrepareCjkFontsOptions extends AssetPreparationOptions {
-  weights?: readonly CjkFontWeight[];
 }
 
 interface PrepareCjkFontsResult {
@@ -76,17 +74,25 @@ const cjkFontWeights: readonly CjkFontWeight[] = [
   { cssFile: "lxgwwenkai-bold.css", prefix: "lxgwwenkai-bold" }
 ];
 
-export async function prepareLatinFonts(options: PrepareLatinFontsOptions): Promise<PrepareLatinFontsResult> {
+const packageRoots: Record<AssetPackageName, string> = {
+  "@fontsource/fraunces": path.dirname(require.resolve("@fontsource/fraunces/package.json")),
+  "@fontsource/ibm-plex-mono": path.dirname(require.resolve("@fontsource/ibm-plex-mono/package.json")),
+  "@fontsource/newsreader": path.dirname(require.resolve("@fontsource/newsreader/package.json")),
+  katex: path.dirname(require.resolve("katex/package.json")),
+  "lxgw-wenkai-webfont": path.dirname(require.resolve("lxgw-wenkai-webfont/package.json"))
+};
+
+export async function prepareLatinFonts(options: AssetPreparationOptions): Promise<PrepareLatinFontsResult> {
   const outDir = path.resolve(options.root, "src/assets/fonts");
   await mkdir(outDir, { recursive: true });
 
-  for (const asset of options.assets ?? latinFontAssets) {
-    const packageRoot = resolvePackageRoot(asset.packageName, options.resolvePackageRoot);
+  for (const asset of latinFontAssets) {
+    const packageRoot = packageRoots[asset.packageName];
     await copyFile(path.join(packageRoot, "files", asset.fileName), path.join(outDir, asset.fileName));
   }
 
   return {
-    copied: (options.assets ?? latinFontAssets).length,
+    copied: latinFontAssets.length,
     outDir
   };
 }
@@ -110,8 +116,8 @@ export async function preparePdfFonts(options: AssetPreparationOptions): Promise
   return { converted, outDir };
 }
 
-export async function prepareCjkFonts(options: PrepareCjkFontsOptions): Promise<PrepareCjkFontsResult> {
-  const packageRoot = resolvePackageRoot("lxgw-wenkai-webfont", options.resolvePackageRoot);
+export async function prepareCjkFonts(options: AssetPreparationOptions): Promise<PrepareCjkFontsResult> {
+  const packageRoot = packageRoots["lxgw-wenkai-webfont"];
   const outDir = path.resolve(options.root, "src/assets/fonts/cjk");
   const scssOut = path.resolve(options.root, "src/assets/scss/generated/_cjk.scss");
   const results: PrepareCjkFontsResult["weights"] = [];
@@ -120,7 +126,7 @@ export async function prepareCjkFonts(options: PrepareCjkFontsOptions): Promise<
   await mkdir(path.dirname(scssOut), { recursive: true });
 
   const cssParts: string[] = [];
-  for (const weight of options.weights ?? cjkFontWeights) {
+  for (const weight of cjkFontWeights) {
     const cssText = await readFile(path.join(packageRoot, weight.cssFile), "utf8");
     const subsets = (await readdir(path.join(packageRoot, "files")))
       .filter((fileName) => fileName.startsWith(`${weight.prefix}-subset-`) && fileName.endsWith(".woff2"));
@@ -141,7 +147,7 @@ export async function prepareCjkFonts(options: PrepareCjkFontsOptions): Promise<
 }
 
 export async function prepareKatexAssets(options: AssetPreparationOptions): Promise<PrepareKatexAssetsResult> {
-  const katexRoot = resolvePackageRoot("katex", options.resolvePackageRoot);
+  const katexRoot = packageRoots.katex;
   const scssOut = path.resolve(options.root, "src/assets/scss/generated/_katex.scss");
   const fontsOut = path.resolve(options.root, "src/assets/fonts/katex");
 
@@ -174,24 +180,5 @@ async function isFresh(output: string, source: string): Promise<boolean> {
     return outputStat.mtimeMs >= sourceStat.mtimeMs;
   } catch {
     return false;
-  }
-}
-
-function resolvePackageRoot(packageName: string, resolver?: (packageName: string) => string): string {
-  if (resolver) return resolver(packageName);
-
-  switch (packageName) {
-    case "@fontsource/fraunces":
-      return path.dirname(require.resolve("@fontsource/fraunces/package.json"));
-    case "@fontsource/ibm-plex-mono":
-      return path.dirname(require.resolve("@fontsource/ibm-plex-mono/package.json"));
-    case "@fontsource/newsreader":
-      return path.dirname(require.resolve("@fontsource/newsreader/package.json"));
-    case "katex":
-      return path.dirname(require.resolve("katex/package.json"));
-    case "lxgw-wenkai-webfont":
-      return path.dirname(require.resolve("lxgw-wenkai-webfont/package.json"));
-    default:
-      throw new Error(`Unsupported asset package: ${packageName}`);
   }
 }
