@@ -208,14 +208,14 @@ const panel = panels[kind];
       ) : kind === "paths" ? (
         <>
           <div class="bigstat"><span id={`${prefix}pathK`}>240</span> <small>{zh ? "条分析路径" : "analysis paths"}</small></div>
-          <div class="metric"><span class="lab">{zh ? "假阳性风险" : "false-positive risk"}</span><div class="meter red"><span id={`${prefix}pathRiskBar`}></span></div><span id={`${prefix}pathRiskPct`}>≈100%</span></div>
-          <div class="metric"><span class="lab">{zh ? "研究预登记" : "preregistered"}</span><div class="meter green"><span class="meter-five"></span></div><span>5%</span></div>
+          <div class="metric"><span class="lab">{zh ? "假阳性风险" : "false-positive risk"}</span><progress class="meter red" id={`${prefix}pathRiskBar`} max="100" value="100"></progress><span id={`${prefix}pathRiskPct`}>≈100%</span></div>
+          <div class="metric"><span class="lab">{zh ? "研究预登记" : "preregistered"}</span><progress class="meter green" max="100" value="5"></progress><span>5%</span></div>
           <p class="note">{zh ? <>一个报告完整多重宇宙的 AI 分析师可以提高透明度。一个悄悄选择最有利路径的 AI 分析师，则是 <span class="term">p 值操纵</span> 的加速器。</> : "An AI analyst that reports the full multiverse can be an honesty machine. An AI analyst that silently selects the prettiest path is a p-hacking accelerator."}</p>
         </>
       ) : (
         <>
           {panel.metrics.map((metric) => (
-            <div class="metric"><span class="lab">{metric.label}</span><div class={`meter ${metric.meter}`.trim()}><span id={`${prefix}${metric.bar}`}></span></div><span id={`${prefix}${metric.valueId}`}>{metric.value}</span></div>
+            <div class="metric"><span class="lab">{metric.label}</span><progress class={`meter ${metric.meter}`.trim()} id={`${prefix}${metric.bar}`} max="100" value="0"></progress><span id={`${prefix}${metric.valueId}`}>{metric.value}</span></div>
           ))}
           <p class="note">{panel.metricNote}</p>
         </>

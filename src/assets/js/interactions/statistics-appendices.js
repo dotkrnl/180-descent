@@ -23,7 +23,7 @@
   }
 
   function setBar(el, pct) {
-    if (el) el.style.setProperty("--pct", Math.max(0, Math.min(100, pct)) + "%");
+    if (el) el.value = Math.max(0, Math.min(100, pct));
   }
 
   function onInput(prefix, ids, fn) {
