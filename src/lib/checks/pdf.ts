@@ -10,7 +10,6 @@ const execFileAsync = promisify(execFile);
 
 interface PdfCheckOptions {
   root: string;
-  debug?: boolean;
 }
 
 interface PdfCheckResult {
@@ -20,7 +19,6 @@ interface PdfCheckResult {
 interface PdfInfo {
   data: Buffer;
   pdf: PDFDocument;
-  pageTexts: string[];
   text: string;
 }
 
@@ -46,11 +44,9 @@ class PdfChecker {
   private readonly pdfCache = new Map<string, PdfInfo>();
   private readonly missingFiles = new Set<string>();
   private readonly errors: string[] = [];
-  private readonly debug: boolean;
+  private readonly debug = process.env.PDF_CHECK_DEBUG === "1";
 
-  constructor(private readonly options: PdfCheckOptions) {
-    this.debug = options.debug ?? process.env.PDF_CHECK_DEBUG === "1";
-  }
+  constructor(private readonly options: PdfCheckOptions) {}
 
   async run(): Promise<string[]> {
     const pdfFiles = await this.collectPdfFiles();
@@ -230,8 +226,7 @@ class PdfChecker {
     const data = await readFile(absolute);
     const pdf = await PDFDocument.load(data);
     const text = await popplerText(absolute);
-    const pageTexts = [text];
-    const info = { data, pdf, pageTexts, text };
+    const info = { data, pdf, text };
     this.pdfCache.set(absolute, info);
     return info;
   }
