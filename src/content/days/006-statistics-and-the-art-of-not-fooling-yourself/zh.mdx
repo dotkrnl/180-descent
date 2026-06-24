@@ -36,6 +36,7 @@ import Label from "@app/components/lesson/Label.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
 import MisconceptionFix from "@app/components/lesson/MisconceptionFix.astro";
+import MisconceptionItem from "@app/components/lesson/MisconceptionItem.astro";
 import MisconceptionList from "@app/components/lesson/MisconceptionList.astro";
 import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
@@ -151,12 +152,12 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </Aside>
 
 <MisconceptionList>
-<li><span>「p = .03 意味着零假设为真的概率只有 3%。」</span><MisconceptionFix>错误。那是 <MathInline latex={String.raw`\mathrm{P}(\text{零假设}\mid\text{数据})`} />——这是一个需要先验分布和完整概率模型的贝叶斯量。p 值本来就是在零假设成立的前提下计算的。</MisconceptionFix></li>
-<li><span>「p = .05 意味着结果纯属偶然的概率是 5%。」</span><MisconceptionFix>错误。p 值的计算已经以零模型为前提；它并不回答「结果纯属偶然的概率是多少」。</MisconceptionFix></li>
-<li><span>「p > .05 意味着没有效应。」</span><MisconceptionFix>错误。没有证据，不等于有证据表明没有——功效不足的研究经常无法检测出真实的效应。</MisconceptionFix></li>
-<li><span>「<MathInline latex={String.raw`1-p`} /> 是备择假设为真的概率。」</span><MisconceptionFix>错误。p 值及其补数都不是关于任何假设的概率。</MisconceptionFix></li>
-<li><span>「p 值告诉你结果能否复现。」</span><MisconceptionFix>错误。单个研究中的小 p 值，并不能说明下一次研究能否复现。</MisconceptionFix></li>
-<li><span>「显著的结果意味着效应很大或很重要。」</span><MisconceptionFix>错误。只要样本量足够大，微不足道的差异也能变得「显著」。显著性 ≠ 大小 ≠ 重要性。</MisconceptionFix></li>
+<MisconceptionItem><span>「p = .03 意味着零假设为真的概率只有 3%。」</span><MisconceptionFix>错误。那是 <MathInline latex={String.raw`\mathrm{P}(\text{零假设}\mid\text{数据})`} />——这是一个需要先验分布和完整概率模型的贝叶斯量。p 值本来就是在零假设成立的前提下计算的。</MisconceptionFix></MisconceptionItem>
+<MisconceptionItem><span>「p = .05 意味着结果纯属偶然的概率是 5%。」</span><MisconceptionFix>错误。p 值的计算已经以零模型为前提；它并不回答「结果纯属偶然的概率是多少」。</MisconceptionFix></MisconceptionItem>
+<MisconceptionItem><span>「p > .05 意味着没有效应。」</span><MisconceptionFix>错误。没有证据，不等于有证据表明没有——功效不足的研究经常无法检测出真实的效应。</MisconceptionFix></MisconceptionItem>
+<MisconceptionItem><span>「<MathInline latex={String.raw`1-p`} /> 是备择假设为真的概率。」</span><MisconceptionFix>错误。p 值及其补数都不是关于任何假设的概率。</MisconceptionFix></MisconceptionItem>
+<MisconceptionItem><span>「p 值告诉你结果能否复现。」</span><MisconceptionFix>错误。单个研究中的小 p 值，并不能说明下一次研究能否复现。</MisconceptionFix></MisconceptionItem>
+<MisconceptionItem><span>「显著的结果意味着效应很大或很重要。」</span><MisconceptionFix>错误。只要样本量足够大，微不足道的差异也能变得「显著」。显著性 ≠ 大小 ≠ 重要性。</MisconceptionFix></MisconceptionItem>
 </MisconceptionList>
 
 最后一种误读尤其隐蔽，因此值得单独展开一节。

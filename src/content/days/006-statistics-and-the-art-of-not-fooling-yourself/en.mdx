@@ -35,6 +35,7 @@ import Label from "@app/components/lesson/Label.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
 import MisconceptionFix from "@app/components/lesson/MisconceptionFix.astro";
+import MisconceptionItem from "@app/components/lesson/MisconceptionItem.astro";
 import MisconceptionList from "@app/components/lesson/MisconceptionList.astro";
 import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
@@ -148,12 +149,12 @@ Read it twice. It is a statement about *data, assuming a hypothesis* — written
 </Aside>
 
 <MisconceptionList>
-<li><b>"<MathInline latex={String.raw`p = .03`} /> means there's a 3% chance the null is true."</b><MisconceptionFix>No. That's <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{data})`} /> — a Bayesian quantity needing a prior. The <MathInline latex={String.raw`p`} />-value already <em>assumes</em> the null.</MisconceptionFix></li>
-<li><b>"<MathInline latex={String.raw`p = .05`} /> means a 5% chance the result is just chance."</b><MisconceptionFix>No. Chance (the null) is the very assumption the calculation is built on; it can't also be the thing in doubt.</MisconceptionFix></li>
-<li><b>"<MathInline latex={String.raw`p > .05`} /> means there is no effect."</b><MisconceptionFix>No. Absence of evidence is not evidence of absence — an underpowered study fails to detect real effects all the time.</MisconceptionFix></li>
-<li><b>"<MathInline latex={String.raw`1-p`} /> is the probability the alternative is true."</b><MisconceptionFix>No. Neither <MathInline latex={String.raw`p`} /> nor its complement is a probability about any hypothesis.</MisconceptionFix></li>
-<li><b>"<em>p</em> tells you the result will replicate."</b><MisconceptionFix>No. A low <MathInline latex={String.raw`p`} /> from one noisy study says little about the next study.</MisconceptionFix></li>
-<li><b>"A significant result is a large or important one."</b><MisconceptionFix>No. With a big enough sample, a trivially small effect is "significant." Significance ≠ size ≠ importance.</MisconceptionFix></li>
+<MisconceptionItem><b>"<MathInline latex={String.raw`p = .03`} /> means there's a 3% chance the null is true."</b><MisconceptionFix>No. That's <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{data})`} /> — a Bayesian quantity needing a prior. The <MathInline latex={String.raw`p`} />-value already <em>assumes</em> the null.</MisconceptionFix></MisconceptionItem>
+<MisconceptionItem><b>"<MathInline latex={String.raw`p = .05`} /> means a 5% chance the result is just chance."</b><MisconceptionFix>No. Chance (the null) is the very assumption the calculation is built on; it can't also be the thing in doubt.</MisconceptionFix></MisconceptionItem>
+<MisconceptionItem><b>"<MathInline latex={String.raw`p > .05`} /> means there is no effect."</b><MisconceptionFix>No. Absence of evidence is not evidence of absence — an underpowered study fails to detect real effects all the time.</MisconceptionFix></MisconceptionItem>
+<MisconceptionItem><b>"<MathInline latex={String.raw`1-p`} /> is the probability the alternative is true."</b><MisconceptionFix>No. Neither <MathInline latex={String.raw`p`} /> nor its complement is a probability about any hypothesis.</MisconceptionFix></MisconceptionItem>
+<MisconceptionItem><b>"<em>p</em> tells you the result will replicate."</b><MisconceptionFix>No. A low <MathInline latex={String.raw`p`} /> from one noisy study says little about the next study.</MisconceptionFix></MisconceptionItem>
+<MisconceptionItem><b>"A significant result is a large or important one."</b><MisconceptionFix>No. With a big enough sample, a trivially small effect is "significant." Significance ≠ size ≠ importance.</MisconceptionFix></MisconceptionItem>
 </MisconceptionList>
 
 That last one is the quiet killer, so it gets its own model.
