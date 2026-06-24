@@ -2,8 +2,8 @@ import { mkdir, readFile, stat, utimes, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
-import yaml from "yaml";
 import { loadContentRegistry } from "@lib/content/registry";
+import { readBookData, type BookData } from "@lib/data/book";
 import { escapeXml } from "@lib/text/escape";
 
 interface GenerateSocialCardsOptions {
@@ -28,15 +28,6 @@ interface SocialCard {
   day_path?: string;
   sourcePath?: string;
   outPath: string;
-}
-
-interface BookData {
-  title: string;
-  description?: string;
-  zh: {
-    title: string;
-    description?: string;
-  };
 }
 
 interface DayData {
@@ -68,7 +59,7 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
   await mkdir(outDir, { recursive: true });
 
   const [book, bookStat, brandMarkStat, brandMarkBase64, dependencyMtimeMs] = await Promise.all([
-    readBookData(bookPath),
+    readBookData(root),
     stat(bookPath),
     stat(brandMarkPath),
     readFile(brandMarkPath, "base64"),
@@ -180,10 +171,6 @@ function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string 
   <image x="897" y="515" width="76" height="76" href="data:image/png;base64,${brandMarkBase64}"/>
   <text x="990" y="564" fill="#5b574e" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">180d.io</text>
 </svg>`;
-}
-
-async function readBookData(bookPath: string): Promise<BookData> {
-  return yaml.parse(await readFile(bookPath, "utf8")) as BookData;
 }
 
 async function readRegistryDays(root: string, locale: "en" | "zh"): Promise<DayData[]> {

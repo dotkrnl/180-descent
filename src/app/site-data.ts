@@ -2,39 +2,8 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { parse as parseYaml } from "yaml";
 import { loadContentRegistry } from "@lib/content/registry";
+import { readBookData, type BookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
-
-interface BookData {
-  title: string;
-  subtitle: string;
-  deep_dive_subtitle?: string;
-  authors: string;
-  description: string;
-  site_url: string;
-  repo: string;
-  language: string;
-  publisher: string;
-  published_year: number;
-  total_days: number;
-  downloads: DownloadData;
-  zh: {
-    language: string;
-    title: string;
-    subtitle: string;
-    deep_dive_subtitle?: string;
-    authors: string;
-    translators: string;
-    description: string;
-    downloads: DownloadData;
-  };
-}
-
-interface DownloadData {
-  epub: string;
-  pdf: string;
-  deep_epub: string;
-  deep_pdf: string;
-}
 
 interface CreditsData {
   fonts: CreditFont[];
@@ -95,7 +64,7 @@ interface SyllabusDay {
 }
 
 export async function getBookData(): Promise<BookData> {
-  return readYaml<BookData>("src/_data/book.yaml");
+  return readBookData(process.cwd());
 }
 
 export async function getCreditsData(): Promise<CreditsData> {

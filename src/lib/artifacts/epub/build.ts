@@ -3,10 +3,10 @@ import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
 import JSZip from "jszip";
-import YAML from "yaml";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { compileCss } from "@lib/assets/css";
 import { stripUnbundledKatexTtfSources } from "@lib/assets/fonts";
+import { readBookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
 import { escapeXml } from "@lib/text/escape";
 
@@ -14,25 +14,6 @@ type CheerioRoot = ReturnType<typeof cheerio.load>;
 
 interface BuildAllEpubsOptions {
   root: string;
-}
-
-interface BookData {
-  title: string;
-  subtitle: string;
-  deep_dive_subtitle: string;
-  authors: string;
-  language: string;
-  publisher: string;
-  epub_identifier: string;
-  zh: {
-    title: string;
-    subtitle: string;
-    deep_dive_subtitle: string;
-    authors: string;
-    translators?: string;
-    language: string;
-    epub_identifier: string;
-  };
 }
 
 interface EpubMeta {
@@ -88,7 +69,7 @@ interface EpubFont {
 
 export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void> {
   const root = options.root;
-  const book = YAML.parse(await readFile(path.join(root, "src/_data/book.yaml"), "utf8")) as BookData;
+  const book = await readBookData(root);
 
   await mkdir(path.join(root, "_site/downloads"), { recursive: true });
 

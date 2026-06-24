@@ -11,27 +11,13 @@ import remarkParse from "remark-parse";
 import YAML from "yaml";
 import { prepareLatinFonts, preparePdfFonts } from "@lib/assets/fonts";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
+import { readBookData, type BookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
 
 const execFileAsync = promisify(execFile);
 
 interface BuildAllPdfsOptions {
   root: string;
-}
-
-interface BookData {
-  title: string;
-  subtitle: string;
-  authors: string;
-  publisher: string;
-  language: string;
-  zh: {
-    title: string;
-    subtitle: string;
-    authors: string;
-    translators?: string;
-    language: string;
-  };
 }
 
 interface PdfEdition {
@@ -124,7 +110,7 @@ interface SyllabusData {
 
 export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> {
   const root = options.root;
-  const book = YAML.parse(await readFile(path.join(root, "src/_data/book.yaml"), "utf8")) as BookData;
+  const book = await readBookData(root);
 
   await prepareLatinFonts({ root });
   await preparePdfFonts({ root });
