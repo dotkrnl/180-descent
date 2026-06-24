@@ -29,6 +29,7 @@ import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourceNote from "@app/components/lesson/SourceNote.astro";
+import TableSubnote from "@app/components/lesson/TableSubnote.astro";
 import Term from "@app/components/lesson/Term.astro";
 
 <Lead>第一个附录更像是「导演剪辑版」——那是已被尘封的历史，虽因篇幅未进正文，其真实性却从无争议。但这份附录不同，阅读它需要换一种姿态。这里讨论的成果大多出现在 2023 至 2026 年之间，许多还新到数学界尚未形成稳定共识。其中有些在五年后看来，可能会是「地壳变动」的起点；而另一些则可能仅仅是虚晃一枪、骗过众人的公关稿。真正的麻烦在于，此时此刻，<Highlight>没人能完全分清孰真孰假</Highlight>——而这恰恰是它们出现在这门关于「有效推理」课程中的原因。在这里，「前沿校准器」不再只是一项教学练习，而是一项活学活用的生存技能，直接施加在那些还带着实验室余温的断言之上。</Lead>
@@ -93,19 +94,19 @@ import Term from "@app/components/lesson/Term.astro";
 <DataTableHead><DataTableRow><DataTableHeader>系统</DataTableHeader><DataTableHeader>核心主张</DataTableHeader><DataTableHeader>状态</DataTableHeader></DataTableRow></DataTableHead>
 <DataTableBody>
 <DataTableRow>
-<DataTableCell>DeepSeek-Prover-V2<br /><span class="table-subnote">2025 年 4 月</span></DataTableCell>
+<DataTableCell>DeepSeek-Prover-V2<br /><TableSubnote>2025 年 4 月</TableSubnote></DataTableCell>
 <DataTableCell>在 miniF2F-test 上达到 <Highlight>88.9%</Highlight>；在 PutnamBench 上解决 <Highlight>49 / 658</Highlight> 题。通过递归地将目标分解为子目标，并从能够闭合的路径中学习，在 Lean 4 中工作。</DataTableCell>
-<DataTableCell><StatusChip status={"ok"} label={"已确立"} /><br /><span class="table-subnote small">开放权重，可复现</span></DataTableCell>
+<DataTableCell><StatusChip status={"ok"} label={"已确立"} /><br /><TableSubnote small>开放权重，可复现</TableSubnote></DataTableCell>
 </DataTableRow>
 <DataTableRow>
-<DataTableCell>Goedel-Prover-V2<br /><span class="table-subnote">2025 年 8 月</span></DataTableCell>
+<DataTableCell>Goedel-Prover-V2<br /><TableSubnote>2025 年 8 月</TableSubnote></DataTableCell>
 <DataTableCell>在 miniF2F 上达到 <Highlight>~90%</Highlight>（含自校正）；解决 <Highlight>86</Highlight> 道 PutnamBench 题目。其 <Highlight>32B</Highlight> 模型击败了规模大 20 倍的对手；<Highlight>8B</Highlight> 版本打平了拥有 671B 参数的前作。</DataTableCell>
-<DataTableCell><StatusChip status={"ok"} label={"已确立"} /><br /><span class="table-subnote small">更小更强；开放权重</span></DataTableCell>
+<DataTableCell><StatusChip status={"ok"} label={"已确立"} /><br /><TableSubnote small>更小更强；开放权重</TableSubnote></DataTableCell>
 </DataTableRow>
 <DataTableRow>
-<DataTableCell>Seed-Prover<br /><span class="table-subnote">2025 年</span></DataTableCell>
+<DataTableCell>Seed-Prover<br /><TableSubnote>2025 年</TableSubnote></DataTableCell>
 <DataTableCell>2025 年 7 月的预印本报告了 2025 年 IMO 六道题中 <Highlight>5 道</Highlight> 的完整 Lean 证明（赛后环境）；在代码库和独立审计敲定细节前，请将其视为强势但仍属厂商自述/预印本阶段的主张。</DataTableCell>
-<DataTableCell><StatusChip status={"hint"} label={"有前景"} /><br /><span class="table-subnote small">厂商报告的金牌成绩</span></DataTableCell>
+<DataTableCell><StatusChip status={"hint"} label={"有前景"} /><br /><TableSubnote small>厂商报告的金牌成绩</TableSubnote></DataTableCell>
 </DataTableRow>
 </DataTableBody>
 </DataTable>

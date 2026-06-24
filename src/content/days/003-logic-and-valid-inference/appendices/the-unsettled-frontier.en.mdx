@@ -29,6 +29,7 @@ import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import SourceNote from "@app/components/lesson/SourceNote.astro";
+import TableSubnote from "@app/components/lesson/TableSubnote.astro";
 import Term from "@app/components/lesson/Term.astro";
 
 <Lead drop="T">he first appendix was the director's cut — settled history, scenes that didn't fit but were never in doubt. This one is different, and you should read it with a different posture. Everything here is from 2023 to 2026; much of it is so fresh that the mathematical community has not finished arguing about what it means. Some of it will look, in five years, like the moment the ground shifted. Some will look like a press release that fooled a lot of people for a week. The honest trouble is that, right now, *nobody can fully tell which is which* — and that is precisely why it belongs in a course about valid inference. This is the hype filter not as a teaching exercise but as a survival skill, applied live, to claims still warm from the lab.</Lead>
@@ -93,19 +94,19 @@ Now the systems doing the climbing. Two open-weights provers reset expectations 
 <DataTableHead><DataTableRow><DataTableHeader>System</DataTableHeader><DataTableHeader>What it claims</DataTableHeader><DataTableHeader>Status</DataTableHeader></DataTableRow></DataTableHead>
 <DataTableBody>
 <DataTableRow>
-<DataTableCell>DeepSeek-Prover-V2<br /><span class="table-subnote">Apr 2025</span></DataTableCell>
+<DataTableCell>DeepSeek-Prover-V2<br /><TableSubnote>Apr 2025</TableSubnote></DataTableCell>
 <DataTableCell><strong>88.9%</strong> on miniF2F-test; <strong>49 / 658</strong> PutnamBench. Works in Lean 4 by recursively breaking a goal into subgoals, then learning from which ones it can close.</DataTableCell>
-<DataTableCell><StatusChip status={"ok"} label={"established"} /><br /><span class="table-subnote small">open weights, reproducible</span></DataTableCell>
+<DataTableCell><StatusChip status={"ok"} label={"established"} /><br /><TableSubnote small>open weights, reproducible</TableSubnote></DataTableCell>
 </DataTableRow>
 <DataTableRow>
-<DataTableCell>Goedel-Prover-V2<br /><span class="table-subnote">Aug 2025</span></DataTableCell>
+<DataTableCell>Goedel-Prover-V2<br /><TableSubnote>Aug 2025</TableSubnote></DataTableCell>
 <DataTableCell><strong>~90%</strong> miniF2F (with self-correction); <strong>86</strong> PutnamBench problems. Its <em>32B</em> model beats rivals 20× larger; an <em>8B</em> version matches a 671B predecessor.</DataTableCell>
-<DataTableCell><StatusChip status={"ok"} label={"established"} /><br /><span class="table-subnote small">smaller &amp; better; open</span></DataTableCell>
+<DataTableCell><StatusChip status={"ok"} label={"established"} /><br /><TableSubnote small>smaller &amp; better; open</TableSubnote></DataTableCell>
 </DataTableRow>
 <DataTableRow>
-<DataTableCell>Seed-Prover<br /><span class="table-subnote">2025</span></DataTableCell>
+<DataTableCell>Seed-Prover<br /><TableSubnote>2025</TableSubnote></DataTableCell>
 <DataTableCell>The July 2025 preprint reports full Lean proofs for <strong>5 of 6</strong> IMO 2025 problems, after the contest setting; treat it as a strong but still vendor/preprint claim until artifacts and independent audits settle the details.</DataTableCell>
-<DataTableCell><StatusChip status={"hint"} label={"promising"} /><br /><span class="table-subnote small">gold claim vendor-reported</span></DataTableCell>
+<DataTableCell><StatusChip status={"hint"} label={"promising"} /><br /><TableSubnote small>gold claim vendor-reported</TableSubnote></DataTableCell>
 </DataTableRow>
 </DataTableBody>
 </DataTable>
