@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
+import { toPosixRelative } from "@lib/fs/path";
 import { escapeXml } from "@lib/text/escape";
 
 interface GenerateSocialCardsOptions {
@@ -89,7 +90,7 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
   const preserved: string[] = [];
   for (const card of pending) {
     const changed = await renderCard(card, brandMarkBase64);
-    const relativePath = path.relative(root, card.outPath);
+    const relativePath = toPosixRelative(root, card.outPath);
     if (changed) {
       generated.push(relativePath);
     } else {
