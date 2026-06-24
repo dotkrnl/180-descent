@@ -11,6 +11,7 @@ import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 
 import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
@@ -157,15 +158,18 @@ import Threads from "@app/components/lesson/Threads.astro";
 <StatusChip status={"hint"} label={"同行评审概念验证"} printLabel={"待审"} />
 </ClaimHeader>
 <h3>Normal Computing 的随机处理单元</h3>
-<p>梅兰森、阿布·哈特尔、艾弗、多纳泰拉、戈登（Melanson, Abu Khater, Aifer, Donatella, Gordon）及其同事在《自然·通讯》（Nature Communications，16: 3757，2025 年 4 月）上发表了《用于人工智能应用的热力学计算系统》。它描述了一个随机处理单元（SPU）的原型：一块印制电路板上集成了八个完全耦合的模拟 RLC 振荡器节点，通过让该耦合系统达到热平衡，来进行高斯采样和矩阵求逆。一篇配套的理论论文（npj Unconventional Computing，2024 年）将线性代数原语映射到了热力学平衡采样上，并声称渐进加速比与矩阵维度呈线性比例关系。</p>
-<p>注意事项：这只是一个「八节点原型」。在实际工作负载中，相比于现代 GPU，它在端到端耗时或能耗上的优势「尚未得到证实」。理论虽然优雅且通过了同行评审，硬件也切实存在，但其性能宣称仍有待大规模验证。<StatusChip status={"hint"} label={"初露曙光"} /></p>
+
+梅兰森、阿布·哈特尔、艾弗、多纳泰拉、戈登（Melanson, Abu Khater, Aifer, Donatella, Gordon）及其同事在《自然·通讯》（Nature Communications，16: 3757，2025 年 4 月）上发表了《用于人工智能应用的热力学计算系统》。它描述了一个随机处理单元（SPU）的原型：一块印制电路板上集成了八个完全耦合的模拟 RLC 振荡器节点，通过让该耦合系统达到热平衡，来进行高斯采样和矩阵求逆。一篇配套的理论论文（npj Unconventional Computing，2024 年）将线性代数原语映射到了热力学平衡采样上，并声称渐进加速比与矩阵维度呈线性比例关系。
+
+注意事项：这只是一个「八节点原型」。在实际工作负载中，相比于现代 GPU，它在端到端耗时或能耗上的优势「尚未得到证实」。理论虽然优雅且通过了同行评审，硬件也切实存在，但其性能宣称仍有待大规模验证。<StatusChip status={"hint"} label={"初露曙光"} />
 </Claim>
 <Claim>
 <ClaimHeader label="硬件 02">
 <StatusChip status={"bad"} label={"公司单方报告 · 未经证实"} printLabel={"待审"} />
 </ClaimHeader>
 <h3>Extropic 的热力学采样单元</h3>
-<p>由纪尧姆·维尔东（Guillaume Verdon）创立的 Extropic 公司正在制造能够以物理速度对基于能量的模型进行原生采样的芯片。其 2025 年 10 月的公开材料展示了 XTR-0 硬件，并给出公司单方报告的模拟或小型基准结果，声称相对于 GPU/VAE 基线可节省约 10,000 倍能耗；但它并未独立证明硬件在生产级工作负载上实现了 GPU 同等性能。据报道，一款更大规模的后续芯片正在规划中。这些数据纯属公司单方报告，基于其内部基准测试，并且「没有经过独立的同行评审」。若被证实，这确实将是颠覆性的突破。但在那之前，该项目依然处于与所有创业公司宣传口号相同的认识论范畴中——有趣、未经证实，且承载着风投行业的巨大变数。请应用第 2 日的教训：超乎寻常的断言，需要超乎寻常的复现。</p>
+
+由纪尧姆·维尔东（Guillaume Verdon）创立的 Extropic 公司正在制造能够以物理速度对基于能量的模型进行原生采样的芯片。其 2025 年 10 月的公开材料展示了 XTR-0 硬件，并给出公司单方报告的模拟或小型基准结果，声称相对于 GPU/VAE 基线可节省约 10,000 倍能耗；但它并未独立证明硬件在生产级工作负载上实现了 GPU 同等性能。据报道，一款更大规模的后续芯片正在规划中。这些数据纯属公司单方报告，基于其内部基准测试，并且「没有经过独立的同行评审」。若被证实，这确实将是颠覆性的突破。但在那之前，该项目依然处于与所有创业公司宣传口号相同的认识论范畴中——有趣、未经证实，且承载着风投行业的巨大变数。请应用第 2 日的教训：超乎寻常的断言，需要超乎寻常的复现。
 </Claim>
 <Aside>
 <BlockTitle>何时才能改变评级标签</BlockTitle>
@@ -221,7 +225,10 @@ Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自�
 
 在 2019–2020 年，一系列研究彻底改变了这一对话。佩宁顿（Penington，JHEP，2020 年），阿尔姆海里、恩格尔哈特、马罗夫与麦克斯菲尔德（Almheiri, Engelhardt, Marolf &amp; Maxfield，JHEP，2019 年），以及阿尔姆海里、哈特曼、马尔达西那、沙古里安与塔吉迪尼（Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini，JHEP，2020 年）发现，如果使用引力路径积分方法中的<Term>副本虫洞</Term>来计算霍金辐射的熵，计算结果会把黑洞内部被称为<Term>孤岛</Term>的非连通时空区域的贡献包含在内。当这些「孤岛」开始发挥作用时，辐射的熵就会迎来拐点并开始减少，从而绘制出一条<Term>佩奇曲线</Term>——这恰恰是在这些受控模型中幺正理论所预测的形状。
 
-<blockquote>孤岛计算是在受控半经典引力模型中的领先理论方案。它们强力支持这些模型中的幺正蒸发；但还不是现实黑洞信息恢复的完整微观解释。</blockquote>
+<BlockQuote>
+孤岛计算是在受控半经典引力模型中的领先理论方案。它们强力支持这些模型中的幺正蒸发；但还不是现实黑洞信息恢复的完整微观解释。
+</BlockQuote>
+
 对此最权威的综述是 Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini 所著的《霍金辐射的熵》（"The entropy of Hawking radiation"，Reviews of Modern Physics 93, 035002, 2021 年）。<StatusChip status={"ok"} label={"作为模型设定中的理论成果已确立"} printLabel={"已确立"} />
 
 注意事项：目前「没有任何实验或天文观测的测试」。该计算完全依赖于特定的理论框架，尚不清楚它是否适用于现实中的四维、非 AdS 时空。这一结论在数学上与该领域的其他定理一样坚实，但目前仍缺乏实验或天文观测检验。<StatusChip status={"hint"} label={"尚无实验检验"} printLabel={"待审"} />
@@ -290,4 +297,3 @@ Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自�
 1. Manzano, G. et al. (2024). "Thermodynamics of Computations…" *Phys. Rev. X* 14: 021026.
 
 </Sources>
-
