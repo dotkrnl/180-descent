@@ -86,11 +86,11 @@ Do not add decorative images just because they are available. Use images when th
 Run:
 
 ```sh
-npm run build
-npm run check:seo
-npm run check:a11y
 npm run check
 ```
+
+`npm run check` rebuilds all generated assets and download artifacts before it
+runs SEO, accessibility, EPUB, PDF, and repository cleanliness validators.
 
 For every affected PDF page, render the page to PNG with Poppler and visually confirm the picture appears. Do not trust caption text alone.
 

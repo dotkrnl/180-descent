@@ -97,7 +97,6 @@ For content-only changes, run:
 ```sh
 npm run typecheck
 npm run test
-npm run build
 npm run check
 ```
 
@@ -114,6 +113,7 @@ npm run check:clean
 For asset or artifact changes, also inspect EPUB/PDF outputs:
 
 ```sh
+npm run build
 npm run check:epub
 npm run check:pdf
 ```

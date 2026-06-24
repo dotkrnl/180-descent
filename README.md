@@ -10,7 +10,6 @@ Creation note: AI systems perform deep research, synthesis, and writing. A human
 
 ```sh
 npm install
-npm run build
 npm run check
 npm run dev
 ```
@@ -36,6 +35,8 @@ npm run deploy:staging
 ```
 
 The Cloudflare Pages project name is `180-descent`.
+
+`npm run check` is self-contained: it rebuilds the site, EPUBs, PDFs, generated fonts, generated SCSS, and social cards before validating the built artifacts. Use `npm run check:built` only when those artifacts are already current and you want to re-run validators without rebuilding.
 
 ## Content Workflow
 

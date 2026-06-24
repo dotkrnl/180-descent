@@ -37,18 +37,19 @@ git diff --stat
 2. Run:
 
 ```sh
-npm run build
-npm run check:seo
-npm run check:a11y
 npm run check
 ```
 
-The SEO check must pass before publishing. It verifies built canonical tags,
+`npm run check` rebuilds all site and download artifacts, then runs every
+validator needed before publishing, including SEO, accessibility, EPUB, and PDF
+checks.
+
+The SEO check verifies built canonical tags,
 meta descriptions, reciprocal `hreflang`, JSON-LD, sitemap/robots discovery,
 local Open Graph social images, favicon, apple-touch-icon, web app manifest,
 and manifest icons.
 
-The accessibility check must pass before publishing. It scans every generated
+The accessibility check scans every generated
 HTML file for image `alt` attributes, named `role="img"` SVGs, named
 links/buttons, visible-label/name matching, valid `aria-checked` roles, heading
 order, and unique landmark names, then runs axe tests against every generated
