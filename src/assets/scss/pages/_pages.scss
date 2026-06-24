@@ -141,7 +141,8 @@
 .fs-opts,.hf-opts{display:grid;grid-template-columns:1fr;gap:.55rem;margin-bottom:1rem;}
 @media(min-width:580px){.fs-opts,.hf-opts{grid-template-columns:repeat(3,minmax(0,1fr));}}
 .fsbtn,.hfbtn{cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:.72rem;background:var(--raised);border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:.55rem .5rem;line-height:1.25;transition:border-color .2s,background .2s,color .2s;}
-.fsbtn:hover,.hfbtn:hover{border-color:var(--accent);color:var(--ink);}
+.fsbtn:hover:not(:disabled),.hfbtn:hover:not(:disabled){border-color:var(--accent);color:var(--ink);}
+.fsbtn:disabled,.hfbtn:disabled{cursor:default;}
 .fsbtn.correct{background:color-mix(in srgb,var(--ok) 16%,transparent);border-color:var(--ok);color:var(--ink);}
 .fsbtn.wrong{background:color-mix(in srgb,var(--contested) 14%,transparent);border-color:var(--contested);color:var(--ink);}
 .fs-explain,.hf-explain{font-size:.92em;color:var(--ink-soft);border-top:1px dashed var(--line);padding-top:.85rem;min-height:3rem;}

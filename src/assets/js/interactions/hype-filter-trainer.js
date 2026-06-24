@@ -101,11 +101,10 @@
       claimEl.textContent = claim.text;
       explainEl.textContent = "";
       nextEl.hidden = true;
-      nextEl.style.display = "none";
       scoreEl.textContent = labels.score + " " + score + " / " + claims.length;
       btns.forEach(function(button){
         button.classList.remove("chosen-ok", "chosen-hint", "chosen-bad", "dim");
-        button.style.cursor = "pointer";
+        button.disabled = false;
       });
     }
 
@@ -116,7 +115,7 @@
       var correct = pick === claim.answer;
       if(correct) score++;
       btns.forEach(function(button){
-        button.style.cursor = "default";
+        button.disabled = true;
         var bp = button.getAttribute("data-pick");
         if(bp === claim.answer) button.classList.add(chosenClass[claim.answer]);
         else button.classList.add("dim");
@@ -128,7 +127,6 @@
       scoreEl.textContent = labels.score + " " + score + " / " + claims.length;
       nextEl.textContent = idx < claims.length - 1 ? labels.next : labels.again;
       nextEl.hidden = false;
-      nextEl.style.display = "inline-block";
     }
 
     btns.forEach(function(button){

@@ -93,7 +93,6 @@
       explainEl.textContent = "";
       explainEl.classList.remove("show");
       nextEl.hidden = true;
-      nextEl.style.display = "none";
       scoreEl.textContent = scoreText();
       round.opts.forEach(function(opt, i){
         var button = document.createElement("button");
@@ -117,7 +116,7 @@
         button.classList.add("wrong");
         all[round.answer].classList.add("correct");
       }
-      all.forEach(function(item){ item.style.cursor = "default"; });
+      all.forEach(function(item){ item.disabled = true; });
       explainEl.textContent = round.why;
       explainEl.classList.add("show");
       scoreEl.textContent = scoreText();
@@ -125,7 +124,6 @@
         ? (isZh ? "下一条论证 ->" : "Next argument ->")
         : (isZh ? "重新开始" : "Play again");
       nextEl.hidden = false;
-      nextEl.style.display = "inline-block";
     }
 
     nextEl.addEventListener("click", function(){
