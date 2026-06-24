@@ -1,4 +1,5 @@
 import AppendixCard from "@app/components/lesson/AppendixCard.astro";
+import AppendixCardBody from "@app/components/lesson/AppendixCardBody.astro";
 import AppendixCardGrid from "@app/components/lesson/AppendixCardGrid.astro";
 import AppendixCardMeta from "@app/components/lesson/AppendixCardMeta.astro";
 import AppendixCardTitle from "@app/components/lesson/AppendixCardTitle.astro";
@@ -155,22 +156,22 @@ And then there are the sting operations — demonstrations built to make the mul
 <AppendixCard>
 <AppendixCardTitle><Emoji>🐟</Emoji> The dead salmon</AppendixCardTitle>
 <AppendixCardMeta>Bennett et al., 2009 · Ig Nobel 2012</AppendixCardMeta>
-<p>Neuroscientists slid a <em>dead</em> Atlantic salmon into an fMRI scanner and "showed" it photographs of human social situations. With no correction for the ~130,000 voxels tested, a cluster of the deceased fish's brain lit up with "significant" activity. The point: test enough things and noise will counterfeit a discovery — in a corpse.</p>
+<AppendixCardBody>Neuroscientists slid a <em>dead</em> Atlantic salmon into an fMRI scanner and "showed" it photographs of human social situations. With no correction for the ~130,000 voxels tested, a cluster of the deceased fish's brain lit up with "significant" activity. The point: test enough things and noise will counterfeit a discovery — in a corpse.</AppendixCardBody>
 </AppendixCard>
 <AppendixCard>
 <AppendixCardTitle><Emoji>🪄</Emoji> Voodoo correlations</AppendixCardTitle>
 <AppendixCardMeta>Vul et al., 2009</AppendixCardMeta>
-<p>Many celebrated brain-and-emotion studies reported correlations so high they exceeded the reliability of their own measures — impossible. The culprit was circular analysis: pick the voxels that correlate most, then report that correlation as if it were independent. The selection <em>is</em> the result. A forking path wearing a lab coat.</p>
+<AppendixCardBody>Many celebrated brain-and-emotion studies reported correlations so high they exceeded the reliability of their own measures — impossible. The culprit was circular analysis: pick the voxels that correlate most, then report that correlation as if it were independent. The selection <em>is</em> the result. A forking path wearing a lab coat.</AppendixCardBody>
 </AppendixCard>
 <AppendixCard>
 <AppendixCardTitle><Emoji>🔢</Emoji> GRIM &amp; the sleuths</AppendixCardTitle>
 <AppendixCardMeta>Brown &amp; Heathers, 2017</AppendixCardMeta>
-<p>The GRIM test checks whether a reported average is even <em>arithmetically possible</em> for the stated sample size and integer answers. Astonishingly often, it isn't. A loose collective of "data detectives" now uses such tools to surface impossible numbers in published papers.</p>
+<AppendixCardBody>The GRIM test checks whether a reported average is even <em>arithmetically possible</em> for the stated sample size and integer answers. Astonishingly often, it isn't. A loose collective of "data detectives" now uses such tools to surface impossible numbers in published papers.</AppendixCardBody>
 </AppendixCard>
 <AppendixCard>
 <AppendixCardTitle><Emoji>🤖</Emoji> statcheck</AppendixCardTitle>
 <AppendixCardMeta>Nuijten et al., 2016</AppendixCardMeta>
-<p>An algorithm that re-computes the <MathInline latex={String.raw`p`} />-values in psychology papers from the reported test statistics. Scanning a quarter-million results, it found that roughly <strong>half</strong> of papers contained at least one inconsistent <MathInline latex={String.raw`p`} />-value, and about <strong>one in eight</strong> an error large enough to potentially flip a conclusion.</p>
+<AppendixCardBody>An algorithm that re-computes the <MathInline latex={String.raw`p`} />-values in psychology papers from the reported test statistics. Scanning a quarter-million results, it found that roughly <strong>half</strong> of papers contained at least one inconsistent <MathInline latex={String.raw`p`} />-value, and about <strong>one in eight</strong> an error large enough to potentially flip a conclusion.</AppendixCardBody>
 </AppendixCard>
 </AppendixCardGrid>
 <LessonNote variant="mono">Hype filter: p-curve and these forensic tools are <StatusChip status={"ok"} label={"established"} /> as diagnostics — but they detect <em>patterns</em>, not guilt; an innocent literature with publication bias can mimic some signatures, so they flag suspicion, not proof.</LessonNote>
