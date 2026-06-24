@@ -39,14 +39,14 @@ interface Syllabus {
   purpose: string;
   method: string;
   threads: string[];
-  frontier_labels: string[];
+  frontierLabels: string[];
   blocks: SyllabusBlock[];
 }
 
 interface SyllabusBlock {
   id: string;
-  start_day: number;
-  end_day: number;
+  startDay: number;
+  endDay: number;
   title: string;
   summary: string;
   days: SyllabusDay[];
@@ -60,7 +60,26 @@ interface SyllabusDay {
   debate?: string;
   note?: string;
   block?: string;
-  block_id?: string;
+  blockId?: string;
+}
+
+interface RawSyllabus {
+  title: string;
+  subtitle: string;
+  purpose: string;
+  method: string;
+  threads: string[];
+  frontier_labels: string[];
+  blocks: RawSyllabusBlock[];
+}
+
+interface RawSyllabusBlock {
+  id: string;
+  start_day: number;
+  end_day: number;
+  title: string;
+  summary: string;
+  days: SyllabusDay[];
 }
 
 export async function getBookData(): Promise<BookData> {
@@ -73,7 +92,7 @@ export async function getCreditsData(): Promise<CreditsData> {
 
 export async function getSyllabus(locale: Locale): Promise<Syllabus> {
   const raw = await readYaml<unknown>("src/_data/syllabus-data.yaml");
-  return projectLocale(raw, locale) as Syllabus;
+  return normalizeSyllabus(projectLocale(raw, locale) as RawSyllabus);
 }
 
 export async function getPublishedDays(locale: Locale): Promise<PublishedDay[]> {
@@ -116,7 +135,7 @@ export function nextSyllabusDay(syllabus: Syllabus, days: PublishedDay[]): Sylla
   for (const block of syllabus.blocks) {
     for (const day of block.days) {
       if (!published.has(day.day)) {
-        return { ...day, block: block.title, block_id: block.id };
+        return { ...day, block: block.title, blockId: block.id };
       }
     }
   }
@@ -129,7 +148,7 @@ export function upcomingSyllabusDays(syllabus: Syllabus, days: PublishedDay[], c
   for (const block of syllabus.blocks) {
     for (const day of block.days) {
       if (!published.has(day.day)) {
-        upcoming.push({ ...day, block: block.title, block_id: block.id });
+        upcoming.push({ ...day, block: block.title, blockId: block.id });
         if (upcoming.length >= count) return upcoming;
       }
     }
@@ -155,4 +174,23 @@ function projectLocale(value: unknown, locale: Locale): unknown {
   }
 
   return Object.fromEntries(Object.entries(record).map(([key, entry]) => [key, projectLocale(entry, locale)]));
+}
+
+function normalizeSyllabus(raw: RawSyllabus): Syllabus {
+  return {
+    title: raw.title,
+    subtitle: raw.subtitle,
+    purpose: raw.purpose,
+    method: raw.method,
+    threads: raw.threads,
+    frontierLabels: raw.frontier_labels,
+    blocks: raw.blocks.map((block) => ({
+      id: block.id,
+      startDay: block.start_day,
+      endDay: block.end_day,
+      title: block.title,
+      summary: block.summary,
+      days: block.days
+    }))
+  };
 }
