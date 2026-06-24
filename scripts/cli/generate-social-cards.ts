@@ -1,11 +1,9 @@
-import { fileURLToPath } from "node:url";
 import { generateSocialCards } from "@lib/assets/social-cards";
 import { runCli } from "./support";
 
 await runCli(async () => {
   const result = await generateSocialCards({
-    root: process.cwd(),
-    dependencyFiles: [fileURLToPath(import.meta.url)]
+    root: process.cwd()
   });
 
   if (!result.generated.length && !result.preserved.length) {

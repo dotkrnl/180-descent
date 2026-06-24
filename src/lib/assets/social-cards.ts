@@ -9,7 +9,6 @@ import { escapeXml } from "@lib/text/escape";
 
 interface GenerateSocialCardsOptions {
   root: string;
-  dependencyFiles?: readonly string[];
 }
 
 interface GenerateSocialCardsResult {
@@ -55,8 +54,6 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
   const outDir = path.join(root, "src/assets/images/social");
   const bookPath = path.join(root, "src/_data/book.yaml");
   const brandMarkPath = path.join(root, "src/assets/images/brand/180-descent-icon.png");
-  const dependencyFiles = [rendererPath, ...(options.dependencyFiles ?? [])];
-
   await mkdir(outDir, { recursive: true });
 
   const [book, bookStat, brandMarkStat, brandMarkBase64, dependencyMtimeMs] = await Promise.all([
@@ -64,7 +61,7 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
     stat(bookPath),
     stat(brandMarkPath),
     readFile(brandMarkPath, "base64"),
-    latestMtime(dependencyFiles)
+    latestMtime([rendererPath])
   ]);
   const cards = await loadSocialCards({ root, book, outDir });
 
