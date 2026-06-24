@@ -5,11 +5,10 @@ import { compile } from "sass";
 
 interface CompileCssOptions {
   root: string;
-  entryFile?: string;
 }
 
 export async function compileCss(options: CompileCssOptions): Promise<string> {
-  const entryFile = path.resolve(options.root, options.entryFile ?? "src/assets/scss/book.scss");
+  const entryFile = path.resolve(options.root, "src/assets/scss/book.scss");
   const css = compile(entryFile, {
     loadPaths: [path.dirname(entryFile)],
     style: "expanded"
