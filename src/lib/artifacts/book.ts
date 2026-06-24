@@ -27,16 +27,8 @@ interface ArtifactBookAppendix {
   bodySource: string;
 }
 
-interface LoadArtifactBookOptions {
-  daysDir?: string;
-}
-
-async function loadArtifactBook(
-  root: string,
-  locale: Locale,
-  options: LoadArtifactBookOptions = {}
-): Promise<ArtifactBook> {
-  const registry = await loadContentRegistry({ daysDir: options.daysDir ?? path.join(root, "src/content/days") });
+async function loadArtifactBook(root: string, locale: Locale): Promise<ArtifactBook> {
+  const registry = await loadContentRegistry({ daysDir: path.join(root, "src/content/days") });
   const days = registry.days
     .map((day): ArtifactBookDay => {
       const localeEntry = day.manifest.locales[locale];
@@ -77,8 +69,7 @@ async function loadArtifactBook(
 
 export async function loadArtifactBookDays(
   root: string,
-  locale: Locale,
-  options: LoadArtifactBookOptions = {}
+  locale: Locale
 ): Promise<ArtifactBookDay[]> {
-  return (await loadArtifactBook(root, locale, options)).days;
+  return (await loadArtifactBook(root, locale)).days;
 }

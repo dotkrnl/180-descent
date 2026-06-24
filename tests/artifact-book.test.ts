@@ -1,26 +1,24 @@
-import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { loadArtifactBookDays } from "@lib/artifacts/book";
 
 const root = process.cwd();
-const fixtureDaysDir = path.join(root, "tests/fixtures/content/days");
 
 describe("artifact book model", () => {
-  it("loads fixture day bodies and appendices from the registry", async () => {
-    const days = await loadArtifactBookDays(root, "zh", { daysDir: fixtureDaysDir });
+  it("loads project Chinese day bodies and appendices from the registry", async () => {
+    const days = await loadArtifactBookDays(root, "zh");
     const fixture = days[0];
 
-    expect(fixture.path).toBe("001-fixture");
-    expect(fixture.title).toBe("夹具日");
+    expect(fixture.path).toBe("001-what-is-knowledge");
+    expect(fixture.title).toBe("知识是什么？");
     expect(fixture.bodyPath).toBe("zh.mdx");
-    expect(fixture.bodySource).toContain("中文");
+    expect(fixture.bodySource).toContain("<StatusChip");
     expect(fixture.xhtml).toBe("day-001.xhtml");
-    expect(fixture.appendices).toEqual([{
-      id: "appendix-a",
-      title: "附录 A",
-      bodyPath: "appendices/appendix-a.zh.mdx",
-      bodySource: expect.stringContaining("中文")
-    }]);
+    expect(fixture.appendices.map((appendix) => appendix.id)).toEqual([
+      "rest-of-the-map",
+      "the-edge-of-the-map"
+    ]);
+    expect(fixture.appendices[0].bodyPath).toBe("appendices/rest-of-the-map.zh.mdx");
+    expect(fixture.appendices[0].bodySource).toContain("<Sources");
   });
 
   it("loads project days as artifact book days", async () => {
