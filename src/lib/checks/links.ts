@@ -1,4 +1,4 @@
-import { access, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
 import { contentDaysDir } from "@lib/content/paths";
@@ -6,7 +6,7 @@ import { loadContentRegistry } from "@lib/content/registry";
 import { futureLinksDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
 import { toPosixRelative } from "@lib/fs/path";
-import { walkFiles } from "@lib/fs/walk";
+import { pathExists, walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
 
 interface LinkCheckOptions {
@@ -51,20 +51,20 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
           ? path.join(builtSiteDir, pathname, "index.html")
           : path.join(builtSiteDir, pathname);
 
-      try {
-        await access(target);
-        if (anchor) {
-          const targetIds = idCache.get(target);
-          if (targetIds && !targetIds.has(anchor)) {
-            failures.push({
-              message: `Missing anchor ${href} (anchor "${anchor}" not found in ${toPosixRelative(options.root, target)}) referenced from ${toPosixRelative(options.root, file)}`
-            });
-          }
-        }
-      } catch {
+      if (!await pathExists(target)) {
         failures.push({
           message: `Broken internal link ${href} in ${toPosixRelative(options.root, file)}`
         });
+        continue;
+      }
+
+      if (anchor) {
+        const targetIds = idCache.get(target);
+        if (targetIds && !targetIds.has(anchor)) {
+          failures.push({
+            message: `Missing anchor ${href} (anchor "${anchor}" not found in ${toPosixRelative(options.root, target)}) referenced from ${toPosixRelative(options.root, file)}`
+          });
+        }
       }
     }
   }
