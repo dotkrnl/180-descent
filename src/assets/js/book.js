@@ -459,7 +459,7 @@
         window.requestAnimationFrame(function(){
           jumpToReadingProgress(progress);
         });
-      }).catch(function(){});
+      });
     }
 
     window.addEventListener("load", function(){
