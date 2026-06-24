@@ -64,6 +64,7 @@ const RAW_INTERACTIVE_PATTERNS: Array<[RegExp, string]> = [
   [/\saria-(?:pressed|checked|expanded|controls)=/i, "interactive ARIA state"],
   [/\sdata-(?:action|case|exit|filter|mode|p|pick|preset|scn|state|step|target|value)=/i, "interactive data hook"]
 ];
+const DEFAULT_MDX_IMPORT_PATTERN = /^import\s+([A-Za-z_$][\w$]*)\s+from\s+["'][^"']+["'];?\s*$/gm;
 
 interface RegistryContentFile {
   label: string;
@@ -170,6 +171,7 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
 
   checkUnsupportedMdxWrappers(file, failures);
   checkRawInteractiveMarkup(file, failures);
+  checkUnusedMdxDefaultImports(file, failures);
 }
 
 function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
@@ -221,6 +223,23 @@ function checkRawInteractiveMarkup(file: RegistryContentFile, failures: ContentC
   }
 }
 
+function checkUnusedMdxDefaultImports(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  const sourceWithoutImports = file.source
+    .split("\n")
+    .filter((line) => !line.trimStart().startsWith("import "))
+    .join("\n");
+  for (const match of file.source.matchAll(DEFAULT_MDX_IMPORT_PATTERN)) {
+    const name = match[1];
+    if (!hasIdentifier(sourceWithoutImports, name)) {
+      failures.push({ message: `${file.relativePath} imports unused ${name}; remove stale MDX imports` });
+    }
+  }
+}
+
+function hasIdentifier(source: string, name: string): boolean {
+  return new RegExp(`(^|[^A-Za-z0-9_$])${escapeRegExp(name)}([^A-Za-z0-9_$]|$)`).test(source);
+}
+
 function stripCodeBlocks(source: string): string {
   return source.replace(/```[\s\S]*?```/g, "");
 }
@@ -257,6 +276,10 @@ function normalizeVisibleText(text: string): string {
     .text()
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function toRelative(root: string, filePath: string): string {
