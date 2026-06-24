@@ -39,12 +39,16 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
     const $ = cheerio.load(await readFile(file, "utf8"));
     for (const a of $("a[href]").toArray()) {
       const href = $(a).attr("href");
-      if (!href || href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("#") || href.startsWith("urn:")) continue;
-      if (!href.startsWith("/")) continue;
+      const targetRef = linkTarget(href);
+      if (!targetRef) continue;
 
-      const [pathname, anchor] = href.split("#");
+      const { pathname, anchor } = targetRef;
       if (isArtifactDownloadPath(pathname)) continue;
-      const target = pathname.endsWith("/") ? path.join(siteDir, pathname, "index.html") : path.join(siteDir, pathname);
+      const target = targetRef.samePage
+        ? file
+        : pathname.endsWith("/")
+          ? path.join(siteDir, pathname, "index.html")
+          : path.join(siteDir, pathname);
 
       try {
         await access(target);
@@ -66,6 +70,25 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
 
   failures.push(...await checkFutureLinks(daysDir, futureLinksPath));
   return failures;
+}
+
+function linkTarget(href?: string): { pathname: string; anchor?: string; samePage?: boolean } | null {
+  if (!href) return null;
+  if (href.startsWith("#")) {
+    return {
+      pathname: "",
+      anchor: href.slice(1),
+      samePage: true
+    };
+  }
+  if (href.startsWith("//") || /^[a-z][a-z0-9+.-]*:/i.test(href)) return null;
+  if (!href.startsWith("/")) return null;
+
+  const parsed = new URL(href, "https://local.invalid");
+  return {
+    pathname: parsed.pathname,
+    anchor: parsed.hash ? parsed.hash.slice(1) : undefined
+  };
 }
 
 async function checkFutureLinks(daysDir: string, futureLinksPath: string): Promise<LinkCheckFailure[]> {

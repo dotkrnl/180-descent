@@ -23,6 +23,25 @@ describe("link checks", () => {
     ]);
   });
 
+  it("parses internal URLs and validates same-page anchors", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "_site/index.html"), [
+      '<main id="present"></main>',
+      '<a href="/target/?from=index#present">target with query</a>',
+      '<a href="#missing">same-page missing</a>',
+      '<a href="//example.com/path">external protocol-relative</a>',
+      '<a href="tel:+15555555555">phone</a>'
+    ].join("\n"));
+    await mkdir(path.join(root, "_site/target"), { recursive: true });
+    await writeFile(path.join(root, "_site/target/index.html"), '<main id="present"></main>');
+
+    const failures = await checkLinks({ root });
+
+    expect(failures.map((failure) => failure.message)).toEqual([
+      'Missing anchor #missing (anchor "missing" not found in _site/index.html) referenced from _site/index.html'
+    ]);
+  });
+
   it("reports future links that still target published days", async () => {
     const root = await createFixtureRoot();
     await writeFile(path.join(root, "_site/index.html"), "");
