@@ -43,7 +43,7 @@ interface ArtifactBookComponent {
   };
 }
 
-export interface LoadArtifactBookOptions {
+interface LoadArtifactBookOptions {
   daysDir?: string;
 }
 

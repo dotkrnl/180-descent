@@ -8,12 +8,12 @@ import { loadArtifactBookDays } from "@lib/artifacts/book";
 
 const execFileAsync = promisify(execFile);
 
-export interface PdfCheckOptions {
+interface PdfCheckOptions {
   root: string;
   debug?: boolean;
 }
 
-export interface PdfCheckResult {
+interface PdfCheckResult {
   errors: string[];
 }
 

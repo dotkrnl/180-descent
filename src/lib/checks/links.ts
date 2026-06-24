@@ -5,14 +5,14 @@ import YAML from "yaml";
 import { loadContentRegistry } from "@lib/content/registry";
 import { walkFiles } from "@lib/fs/walk";
 
-export interface LinkCheckOptions {
+interface LinkCheckOptions {
   root: string;
   siteDir?: string;
   daysDir?: string;
   futureLinksPath?: string;
 }
 
-export interface LinkCheckFailure {
+interface LinkCheckFailure {
   message: string;
 }
 

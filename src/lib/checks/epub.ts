@@ -6,11 +6,11 @@ import path from "node:path";
 import JSZip from "jszip";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 
-export interface EpubCheckOptions {
+interface EpubCheckOptions {
   root: string;
 }
 
-export interface EpubCheckResult {
+interface EpubCheckResult {
   errors: string[];
 }
 

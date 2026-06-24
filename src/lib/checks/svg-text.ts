@@ -4,12 +4,12 @@ import { walkFilesSync } from "@lib/fs/walk";
 
 export const MIN_SVG_FONT_SIZE = 10.5;
 
-export interface SvgTextCheckOptions {
+interface SvgTextCheckOptions {
   root: string;
   roots?: string[];
 }
 
-export interface SvgTextCheckFailure {
+interface SvgTextCheckFailure {
   file: string;
   line: number;
   value: number;

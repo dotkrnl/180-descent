@@ -7,7 +7,7 @@ import { promisify } from "node:util";
 const require = createRequire(import.meta.url);
 const execFileAsync = promisify(execFile);
 
-export interface AssetPreparationOptions {
+interface AssetPreparationOptions {
   root: string;
   resolvePackageRoot?: (packageName: string) => string;
 }
@@ -17,11 +17,11 @@ interface LatinFontAsset {
   fileName: string;
 }
 
-export interface PrepareLatinFontsOptions extends AssetPreparationOptions {
+interface PrepareLatinFontsOptions extends AssetPreparationOptions {
   assets?: readonly LatinFontAsset[];
 }
 
-export interface PrepareLatinFontsResult {
+interface PrepareLatinFontsResult {
   copied: number;
   outDir: string;
 }
@@ -31,11 +31,11 @@ interface CjkFontWeight {
   prefix: string;
 }
 
-export interface PrepareCjkFontsOptions extends AssetPreparationOptions {
+interface PrepareCjkFontsOptions extends AssetPreparationOptions {
   weights?: readonly CjkFontWeight[];
 }
 
-export interface PrepareCjkFontsResult {
+interface PrepareCjkFontsResult {
   scssOut: string;
   weights: Array<{
     prefix: string;
@@ -43,12 +43,12 @@ export interface PrepareCjkFontsResult {
   }>;
 }
 
-export interface PrepareKatexAssetsResult {
+interface PrepareKatexAssetsResult {
   scssOut: string;
   fonts: number;
 }
 
-export interface PreparePdfFontsResult {
+interface PreparePdfFontsResult {
   converted: number;
   outDir: string;
 }

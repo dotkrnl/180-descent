@@ -9,7 +9,7 @@ import { AxeBuilder } from "@axe-core/playwright";
 import { walkFiles } from "@lib/fs/walk";
 import { contentType, urlForHtml } from "@lib/static-site/url";
 
-export interface AccessibilityCheckOptions {
+interface AccessibilityCheckOptions {
   root: string;
   siteDir?: string;
 }
@@ -19,7 +19,7 @@ interface StaticAccessibilityResult {
   axePages: string[];
 }
 
-export interface AccessibilityCheckResult {
+interface AccessibilityCheckResult {
   checkedPages: number;
   failures: string[];
 }

@@ -12,7 +12,7 @@ import { escapeXml } from "@lib/text/escape";
 
 type CheerioRoot = ReturnType<typeof cheerio.load>;
 
-export interface BuildAllEpubsOptions {
+interface BuildAllEpubsOptions {
   root: string;
 }
 

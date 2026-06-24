@@ -4,13 +4,13 @@ import { load } from "cheerio";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import { urlForHtml } from "@lib/static-site/url";
 
-export interface SeoCheckOptions {
+interface SeoCheckOptions {
   root: string;
   siteDir?: string;
   siteUrl?: string;
 }
 
-export interface SeoCheckResult {
+interface SeoCheckResult {
   checkedHtmlFiles: number;
   errors: string[];
 }

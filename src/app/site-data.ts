@@ -4,7 +4,7 @@ import { parse as parseYaml } from "yaml";
 import { loadContentRegistry } from "@lib/content/registry";
 import type { Locale } from "@lib/schemas/day";
 
-export interface BookData {
+interface BookData {
   title: string;
   subtitle: string;
   deep_dive_subtitle?: string;
@@ -36,7 +36,7 @@ interface DownloadData {
   deep_pdf: string;
 }
 
-export interface CreditsData {
+interface CreditsData {
   fonts: CreditFont[];
   images: CreditImage[];
 }
@@ -64,7 +64,7 @@ export interface PublishedDay {
   url: string;
 }
 
-export interface Syllabus {
+interface Syllabus {
   title: string;
   subtitle: string;
   purpose: string;
@@ -83,7 +83,7 @@ interface SyllabusBlock {
   days: SyllabusDay[];
 }
 
-export interface SyllabusDay {
+interface SyllabusDay {
   day: number;
   title: string;
   entry?: string;

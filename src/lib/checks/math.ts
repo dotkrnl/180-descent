@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 
-export interface MathCheckOptions {
+interface MathCheckOptions {
   root: string;
   sourceDir?: string;
   siteDir?: string;
@@ -13,7 +13,7 @@ interface MathCheckFailure {
   label: string;
 }
 
-export interface MathCheckResult {
+interface MathCheckResult {
   checkedSourceFiles: number;
   failures: MathCheckFailure[];
 }

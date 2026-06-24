@@ -13,13 +13,13 @@ interface DayAppendixRenderEntry {
   Body: AstroComponentFactory;
 }
 
-export interface DayNavEntry {
+interface DayNavEntry {
   day: number;
   path: string;
   title: string;
 }
 
-export interface DayPageModules {
+interface DayPageModules {
   Body: AstroComponentFactory;
   appendices: DayAppendixRenderEntry[];
 }

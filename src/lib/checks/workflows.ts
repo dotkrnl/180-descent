@@ -1,7 +1,7 @@
 import { lstat, readlink } from "node:fs/promises";
 import path from "node:path";
 
-export interface WorkflowLinkFailure {
+interface WorkflowLinkFailure {
   path: string;
   reason: string;
 }

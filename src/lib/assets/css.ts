@@ -3,7 +3,7 @@ import postcss from "postcss";
 import postcssImport from "postcss-import";
 import { compile } from "sass";
 
-export interface CompileCssOptions {
+interface CompileCssOptions {
   root: string;
   entryFile?: string;
 }

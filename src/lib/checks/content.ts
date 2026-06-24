@@ -6,12 +6,12 @@ import { loadContentRegistry } from "@lib/content/registry";
 import { walkFiles } from "@lib/fs/walk";
 import type { Locale } from "@lib/schemas/day";
 
-export interface ContentCheckOptions {
+interface ContentCheckOptions {
   root: string;
   daysDir?: string;
 }
 
-export interface ContentCheckFailure {
+interface ContentCheckFailure {
   message: string;
 }
 

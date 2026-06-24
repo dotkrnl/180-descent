@@ -4,14 +4,14 @@ import { compileCss } from "@lib/assets/css";
 import { loadContentRegistry } from "@lib/content/registry";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 
-export interface AppendixStyleCheckOptions {
+interface AppendixStyleCheckOptions {
   root: string;
   daysDir?: string;
   cssFiles?: string[];
   jsRoot?: string;
 }
 
-export interface AppendixStyleCheckResult {
+interface AppendixStyleCheckResult {
   checkedAppendixFiles: number;
   errors: string[];
 }

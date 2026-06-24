@@ -15,7 +15,7 @@ import type { Locale } from "@lib/schemas/day";
 
 const execFileAsync = promisify(execFile);
 
-export interface BuildAllPdfsOptions {
+interface BuildAllPdfsOptions {
   root: string;
 }
 

@@ -1,10 +1,10 @@
 import { spawnSync } from "node:child_process";
 
-export interface CleanCheckOptions {
+interface CleanCheckOptions {
   root: string;
 }
 
-export interface CleanCheckFailure {
+interface CleanCheckFailure {
   path: string;
   reason: string;
 }

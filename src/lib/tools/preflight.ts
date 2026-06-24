@@ -20,7 +20,7 @@ interface ToolSuccess {
   version: string;
 }
 
-export interface ToolFailure {
+interface ToolFailure {
   name: string;
   label?: string;
   category?: ToolCategory;
@@ -29,16 +29,16 @@ export interface ToolFailure {
   error: Error;
 }
 
-export interface PreflightResult {
+interface PreflightResult {
   present: ToolSuccess[];
   missing: ToolFailure[];
 }
 
-export interface PreflightOptions {
+interface PreflightOptions {
   throwOnMissing?: boolean;
 }
 
-export interface PreflightArgs {
+interface PreflightArgs {
   toolNames: string[];
   optional: boolean;
   list: boolean;

@@ -6,12 +6,12 @@ import yaml from "yaml";
 import { loadContentRegistry } from "@lib/content/registry";
 import { escapeXml } from "@lib/text/escape";
 
-export interface GenerateSocialCardsOptions {
+interface GenerateSocialCardsOptions {
   root: string;
   dependencyFiles?: readonly string[];
 }
 
-export interface GenerateSocialCardsResult {
+interface GenerateSocialCardsResult {
   generated: string[];
   preserved: string[];
   skipped: number;
