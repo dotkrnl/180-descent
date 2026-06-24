@@ -16,6 +16,7 @@ interface ContentDayOptions {
   zhSummary?: string;
   zhBody?: string;
   appendices?: ContentDayAppendixOptions[];
+  interactionScripts?: string[];
 }
 
 interface ContentDayAppendixOptions {
@@ -69,7 +70,14 @@ export async function writeContentDay(root: string, options: ContentDayOptions =
     manifest.push("appendices: []");
   }
 
-  manifest.push("interactionScripts: []");
+  if (options.interactionScripts?.length) {
+    manifest.push("interactionScripts:");
+    for (const script of options.interactionScripts) {
+      manifest.push(`  - ${script}`);
+    }
+  } else {
+    manifest.push("interactionScripts: []");
+  }
 
   await writeFile(path.join(dayDir, "day.yaml"), manifest.join("\n"));
   await writeFile(path.join(dayDir, "en.mdx"), enBody);

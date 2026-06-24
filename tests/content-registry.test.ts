@@ -4,8 +4,8 @@ import os from "node:os";
 import { describe, expect, it } from "vitest";
 import { listRegistryDayLocaleEntries, loadContentRegistry } from "@lib/content/registry";
 import { dayManifestSchema } from "@lib/schemas/day";
+import { createEmptyContentRoot, writeContentDay } from "./helpers/content-root";
 
-const fixtureDaysDir = path.join(process.cwd(), "tests/fixtures/content/days");
 const projectDaysDir = path.join(process.cwd(), "src/content/days");
 
 describe("target content registry", () => {
@@ -49,6 +49,7 @@ describe("target content registry", () => {
   });
 
   it("loads paired locale bodies, appendices, and interaction scripts", async () => {
+    const fixtureDaysDir = await createRegistryFixtureDaysDir();
     const registry = await loadContentRegistry({ daysDir: fixtureDaysDir });
     const day = registry.days[0];
 
@@ -63,6 +64,7 @@ describe("target content registry", () => {
   });
 
   it("lists renderable locale entries for Astro routes", async () => {
+    const fixtureDaysDir = await createRegistryFixtureDaysDir();
     const registry = await loadContentRegistry({ daysDir: fixtureDaysDir });
     const routes = listRegistryDayLocaleEntries(registry);
 
@@ -216,3 +218,28 @@ describe("target content registry", () => {
     expect(day007?.appendixBodies[0].source).toContain("HammingCube");
   });
 });
+
+async function createRegistryFixtureDaysDir(): Promise<string> {
+  const root = await createEmptyContentRoot("180-registry-fixture-");
+  await writeContentDay(root, {
+    enTitle: "Fixture Day",
+    enSummary: "Fixture summary.",
+    enBody: "# Fixture Day\nEnglish fixture body.",
+    zhTitle: "中文夹具",
+    zhSummary: "中文夹具摘要。",
+    zhBody: "# 中文夹具\n中文 fixture body.",
+    appendices: [
+      {
+        id: "appendix-a",
+        enTitle: "Appendix A",
+        enBodyPath: "appendices/appendix-a.en.mdx",
+        enBody: "English appendix.",
+        zhTitle: "附录 A",
+        zhBodyPath: "appendices/appendix-a.zh.mdx",
+        zhBody: "中文 appendix."
+      }
+    ],
+    interactionScripts: ["fixture-interaction"]
+  });
+  return path.join(root, "src/content/days");
+}
