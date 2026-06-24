@@ -14,18 +14,14 @@ interface GenerateSocialCardsOptions {
 interface GenerateSocialCardsResult {
   generated: string[];
   preserved: string[];
-  skipped: number;
-  total: number;
 }
 
 interface SocialCard {
   locale: "en" | "zh";
   title: string;
   summary?: string;
-  description?: string;
   kicker?: string;
   day?: number;
-  dayPath?: string;
   sourcePath?: string;
   outPath: string;
 }
@@ -34,7 +30,6 @@ interface DayData {
   locale: "en" | "zh";
   title: string;
   summary?: string;
-  description?: string;
   day?: number;
   dayPath: string;
   sourcePath: string;
@@ -77,9 +72,7 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
   if (!pending.length) {
     return {
       generated: [],
-      preserved: [],
-      skipped: cards.length,
-      total: cards.length
+      preserved: []
     };
   }
 
@@ -97,9 +90,7 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
 
   return {
     generated,
-    preserved,
-    skipped: cards.length - pending.length,
-    total: cards.length
+    preserved
   };
 }
 
@@ -145,7 +136,7 @@ function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string 
   const label = card.day
     ? (isZh ? `第 ${String(card.day).padStart(3, "0")} 日` : `Day ${String(card.day).padStart(3, "0")}`)
     : (isZh ? "从根基到 2026 年研究前沿" : "Foundations to the 2026 research frontier");
-  const summary = clampSocialText(card.summary || card.description || "", isZh ? 132 : 150);
+  const summary = clampSocialText(card.summary || "", isZh ? 132 : 150);
   const titleLines = wrapSocialText(card.title, { maxLines: isZh ? 2 : 3, maxChars: isZh ? 15 : 22 });
   const summaryLines = summary ? wrapSocialText(summary, { maxLines: 3, maxChars: isZh ? 28 : 48 }) : [];
   const titleSize = isZh ? 70 : 78;
