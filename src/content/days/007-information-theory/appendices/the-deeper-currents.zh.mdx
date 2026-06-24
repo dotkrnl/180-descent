@@ -32,6 +32,7 @@ import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import SourceNote from "@app/components/lesson/SourceNote.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
+import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/ComputationalCapacityLadderFigure.astro";
 
 <Lead drop="我">们在主线页面中完成了两件非同寻常的事：我们用比特度量了事实的分量，也看见了遗忘一个比特会释放多少热量——以 zJ 计。这是这门学科的脊梁。然而，仅有脊梁并不能构成完整的躯体。在香农对比特的定义与兰道尔擦除比特的物理含义之间，横跨了我们此前飞速掠过的一个世纪的思想：第二个与熵同样基础的物理量，用于度量一件事物能透露多少关于另一件事物的信息；你的手机能将照片压缩 95% 且在有静电干扰的信道中无瑕传输的深层原因；一只会走迷宫的机械小鼠；以及一连串最终直达宇宙计算极限的物理限制链条。本附录是一场从容的旅程。</Lead>
 
@@ -224,47 +225,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 <PanelNote>两条分开的对数尺度：设备速率以每秒操作次数表示，宇宙则采用劳埃德对累计操作总数的估计。它们相邻出现，是因为二者都约束计算，但维度并不相同。</PanelNote>
 
-<svg viewBox="0 0 640 300" role="img" aria-label="分别显示设备操作速率和宇宙累计操作总数的两条对数图表。">
-<text x="60" y="26" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-soft)">速率 · 每秒操作次数</text>
-<line x1="60" y1="210" x2="610" y2="210" stroke="var(--line-strong)" stroke-width="1.2"></line>
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
-<line x1="70" y1="206" x2="70" y2="214" stroke="var(--line-strong)"></line><text x="70" y="228">10¹⁰</text>
-<line x1="179" y1="206" x2="179" y2="214" stroke="var(--line-strong)"></line><text x="179" y="228">10²⁰</text>
-<line x1="288" y1="206" x2="288" y2="214" stroke="var(--line-strong)"></line><text x="288" y="228">10³⁰</text>
-<line x1="397" y1="206" x2="397" y2="214" stroke="var(--line-strong)"></line><text x="397" y="228">10⁴⁰</text>
-<line x1="506" y1="206" x2="506" y2="214" stroke="var(--line-strong)"></line><text x="506" y="228">10⁵⁰</text>
-<text x="335" y="244" fill="var(--ink-soft)">每秒操作次数（对数）</text>
-</g>
-<g>
-<line x1="92" y1="210" x2="92" y2="95" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3"></line>
-<circle cx="92" cy="95" r="7" fill="var(--accent)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="92" y="83" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">笔记本</text>
-<text x="92" y="72" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">~10¹²/s</text>
-</g>
-<g>
-<line x1="157" y1="210" x2="157" y2="130" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3"></line>
-<circle cx="157" cy="130" r="6" fill="color-mix(in srgb,var(--accent) 60%,transparent)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="170" y="128" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="start">百亿亿次级 ~10¹⁸/s</text>
-</g>
-<g>
-<line x1="517" y1="210" x2="517" y2="60" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="3 3"></line>
-<circle cx="517" cy="60" r="7" fill="var(--brass)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="517" y="48" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="middle">1公斤终极笔记本</text>
-<text x="517" y="37" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">~10^51/s</text>
-</g>
-<text x="60" y="268" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink-soft)">累计 · 自大爆炸以来的操作总数</text>
-<line x1="300" y1="266" x2="610" y2="266" stroke="var(--line-strong)" stroke-width="1.2"></line>
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
-<line x1="300" y1="262" x2="300" y2="270" stroke="var(--line-strong)"></line><text x="300" y="292">10^90</text>
-<line x1="455" y1="262" x2="455" y2="270" stroke="var(--line-strong)"></line><text x="455" y="292">10¹⁰⁵</text>
-<line x1="610" y1="262" x2="610" y2="270" stroke="var(--line-strong)"></line><text x="610" y="292">10^120</text>
-</g>
-<g>
-<circle cx="610" cy="266" r="7" fill="var(--heat)" stroke="var(--raised)" stroke-width="2"></circle>
-<text x="540" y="258" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-soft)" text-anchor="end">宇宙至今</text>
-<text x="540" y="279" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">总计 ~10^120 次操作</text>
-</g>
-</svg>
+<ComputationalCapacityLadderFigure locale="zh" />
 <LadderKey>从你的笔记本电脑到终极笔记本电脑的速率跨越约为 10³⁹ 倍。宇宙标记是另一条累计估计，不是每秒操作次数基准。两条尺度指向同一个朴素结论：计算和万事万物一样，都受物理定律约束。</LadderKey>
 </Panel>
 
