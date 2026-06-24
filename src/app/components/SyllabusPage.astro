@@ -70,7 +70,7 @@ const upcoming = upcomingSyllabusDays(syllabus, days, 6);
           const publishedDay = published.get(day.day);
           return (
             <article class:list={["day-card syllabus-card", { "is-published": Boolean(publishedDay) }]}>
-              <p class="card-kicker">{isZh ? `第 ${padDay(day.day)} 日 / ${book.total_days}${publishedDay ? "" : " · 计划中"}` : `Day ${padDay(day.day)} / ${book.total_days}${publishedDay ? "" : " · Planned"}`}</p>
+              <p class="card-kicker">{isZh ? `第 ${padDay(day.day)} 日 / ${book.totalDays}${publishedDay ? "" : " · 计划中"}` : `Day ${padDay(day.day)} / ${book.totalDays}${publishedDay ? "" : " · Planned"}`}</p>
               <h3>{publishedDay ? <a href={publishedDay.url}>{publishedDay.title}</a> : day.title}</h3>
               {publishedDay && <p>{publishedDay.summary}</p>}
             </article>

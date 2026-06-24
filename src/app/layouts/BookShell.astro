@@ -37,8 +37,8 @@ const uiSubtitle = isZh ? book.zh.subtitle : book.subtitle;
 const uiDescription = isZh ? book.zh.description : book.description;
 const pageTitle = title ? `${title} · ${uiTitle}` : uiTitle;
 const metaDescription = description ?? uiDescription;
-const canonicalUrl = new URL(canonicalPath, book.site_url).href;
-const alternateUrl = alternatePath ? new URL(alternatePath, book.site_url).href : undefined;
+const canonicalUrl = new URL(canonicalPath, book.siteUrl).href;
+const alternateUrl = alternatePath ? new URL(alternatePath, book.siteUrl).href : undefined;
 const enUrl = alternateUrl ? (isZh ? alternateUrl : canonicalUrl) : undefined;
 const zhUrl = alternateUrl ? (isZh ? canonicalUrl : alternateUrl) : undefined;
 const requestedSocialImagePath = socialImagePath ?? (isZh ? "/assets/images/social/180-descent-zh.png" : "/assets/images/social/180-descent.png");
@@ -46,7 +46,7 @@ const socialAssetPath = socialImageAssets[requestedSocialImagePath];
 if (!socialAssetPath) {
   throw new Error(`Missing social image asset: ${requestedSocialImagePath}`);
 }
-const socialImageUrl = new URL(socialAssetPath, book.site_url).href;
+const socialImageUrl = new URL(socialAssetPath, book.siteUrl).href;
 const homeUrl = isZh ? "/zh/" : "/";
 const introUrl = isZh ? "/zh/introduction/" : "/introduction/";
 const syllabusUrl = isZh ? "/zh/syllabus/" : "/syllabus/";

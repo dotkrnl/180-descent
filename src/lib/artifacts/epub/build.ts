@@ -23,7 +23,7 @@ interface EpubMeta {
   translators?: string;
   language: string;
   publisher: string;
-  epub_identifier: string;
+  epubIdentifier: string;
 }
 
 interface EpubConfig {
@@ -82,7 +82,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       authors: book.authors,
       language: book.language,
       publisher: book.publisher,
-      epub_identifier: book.epub_identifier
+      epubIdentifier: book.epubIdentifier
     },
     siteDayDir: path.join(root, "_site/days"),
     dayUrlPrefix: "/days/",
@@ -99,11 +99,11 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
     locale: "en",
     meta: {
       title: `${book.title}: Deep Dive Edition`,
-      subtitle: book.deep_dive_subtitle,
+      subtitle: book.deepDiveSubtitle,
       authors: book.authors,
       language: book.language,
       publisher: book.publisher,
-      epub_identifier: `${book.epub_identifier}-deep-dive`
+      epubIdentifier: `${book.epubIdentifier}-deep-dive`
     },
     siteDayDir: path.join(root, "_site/days"),
     dayUrlPrefix: "/days/",
@@ -126,7 +126,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       translators: book.zh.translators,
       language: book.zh.language,
       publisher: book.publisher,
-      epub_identifier: book.zh.epub_identifier
+      epubIdentifier: book.zh.epubIdentifier
     },
     siteDayDir: path.join(root, "_site/zh/days"),
     dayUrlPrefix: "/zh/days/",
@@ -143,12 +143,12 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
     locale: "zh",
     meta: {
       title: `${book.zh.title}：专题深入版`,
-      subtitle: book.zh.deep_dive_subtitle,
+      subtitle: book.zh.deepDiveSubtitle,
       authors: book.zh.authors,
       translators: book.zh.translators,
       language: book.zh.language,
       publisher: book.publisher,
-      epub_identifier: `${book.zh.epub_identifier}-deep-dive`
+      epubIdentifier: `${book.zh.epubIdentifier}-deep-dive`
     },
     siteDayDir: path.join(root, "_site/zh/days"),
     dayUrlPrefix: "/zh/days/",
@@ -170,7 +170,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       authors: book.authors,
       language: book.language,
       publisher: book.publisher,
-      epub_identifier: `${book.epub_identifier}-day`
+      epubIdentifier: `${book.epubIdentifier}-day`
     },
     siteDayDir: path.join(root, "_site/days"),
     dayUrlPrefix: "/days/",
@@ -188,7 +188,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       translators: book.zh.translators,
       language: book.zh.language,
       publisher: book.publisher,
-      epub_identifier: `${book.zh.epub_identifier}-day`
+      epubIdentifier: `${book.zh.epubIdentifier}-day`
     },
     siteDayDir: path.join(root, "_site/zh/days"),
     dayUrlPrefix: "/zh/days/",
@@ -205,7 +205,7 @@ async function buildDayEpubs(config: DayEpubConfig): Promise<void> {
       meta: {
         ...config.meta,
         title: dayDocumentTitle(day, config),
-        epub_identifier: `${config.meta.epub_identifier}-${String(dayNumber(day)).padStart(3, "0")}`
+        epubIdentifier: `${config.meta.epubIdentifier}-${String(dayNumber(day)).padStart(3, "0")}`
       },
       days: [day],
       introHtml: null,
@@ -540,7 +540,7 @@ function navDocument(items: ArtifactBookDay[], config: EpubConfig): string {
 
 function contentOpf(meta: EpubMeta, manifestItems: string[], spine: string[]): string {
   const modified = "2026-06-19T00:00:00Z";
-  const identifier = `urn:uuid:${epubUuidFromString(meta.epub_identifier)}`;
+  const identifier = `urn:uuid:${epubUuidFromString(meta.epubIdentifier)}`;
   return `<?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="3.0">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
