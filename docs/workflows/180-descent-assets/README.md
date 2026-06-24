@@ -72,8 +72,10 @@ Do not add decorative images just because they are available. Use images when th
 
 ## Artifact Handling
 
-- Use `/assets/images/...` for local site images.
-- `npm run build:epub` must rewrite these paths into `OEBPS/images/...` and add image manifest entries to `content.opf`.
+- Use MDX/Astro imports for images rendered on site pages so Astro emits the final `/_astro/...` URL. Do not restore a `public/assets` mirror or hand-code public `/assets/images/...` URLs for page output.
+- Use `/assets/images/...` only as the local source-path convention in `src/_data/credits.yaml`, day manifests, and artifact code that resolves back to `src/assets/images/...`.
+- `npm run build:epub` must resolve local source image paths into `OEBPS/images/...` and add image manifest entries to `content.opf`.
+- Social/Open Graph cards are generated under ignored `src/assets/images/social/` and resolved by Astro into built `/_astro/...` URLs; do not commit the generated PNGs or expose them through `public/assets`.
 - PDF generation reads semantic MDX and builds with XeTeX. `ImageFigure` sources backed by committed JPEG/PNG/PDF assets are included directly; SVGs are converted with `rsvg-convert`.
 - If a PDF caption appears but the picture does not, check the MDX image import, the resolved asset path, and the XeTeX build log before changing lesson markup.
 - Keep `npm run check:epub` guarding against absolute or missing EPUB image paths.
