@@ -1,5 +1,11 @@
 ---
 import MathInline from "@app/components/lesson/MathInline.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
@@ -123,17 +129,22 @@ const copy = zh ? {
     </div>
 
     <div class="dovs-table" id="dovsParams" aria-live="polite">
-      <table class="alt-table">
-        <thead><tr><th>{copy.paramsHead[0]}</th><th>{copy.paramsHead[1]}</th></tr></thead>
-        <tbody>
-          <tr><td><MathInline latex={String.raw`P(S=1)`} /></td><td>0.45</td></tr>
-          <tr><td><code>a</code></td><td>−2.00</td></tr>
-          <tr><td><code>b</code></td><td>{zh ? "4 × 滑块 = +2.80" : "4 × slider = +2.80"}</td></tr>
-          <tr><td><code>c</code></td><td>−2.20</td></tr>
-          <tr><td><code>d</code></td><td>{zh ? "−3.3 × 滑块 = −1.49" : "−3.3 × slider = −1.49"}</td></tr>
-          <tr><td><code>e</code></td><td>+4.10</td></tr>
-        </tbody>
-      </table>
+      <DataTable>
+        <DataTableHead>
+          <DataTableRow>
+            <DataTableHeader>{copy.paramsHead[0]}</DataTableHeader>
+            <DataTableHeader>{copy.paramsHead[1]}</DataTableHeader>
+          </DataTableRow>
+        </DataTableHead>
+        <DataTableBody>
+          <DataTableRow><DataTableCell><MathInline latex={String.raw`P(S=1)`} /></DataTableCell><DataTableCell>0.45</DataTableCell></DataTableRow>
+          <DataTableRow><DataTableCell><code>a</code></DataTableCell><DataTableCell>−2.00</DataTableCell></DataTableRow>
+          <DataTableRow><DataTableCell><code>b</code></DataTableCell><DataTableCell>{zh ? "4 × 滑块 = +2.80" : "4 × slider = +2.80"}</DataTableCell></DataTableRow>
+          <DataTableRow><DataTableCell><code>c</code></DataTableCell><DataTableCell>−2.20</DataTableCell></DataTableRow>
+          <DataTableRow><DataTableCell><code>d</code></DataTableCell><DataTableCell>{zh ? "−3.3 × 滑块 = −1.49" : "−3.3 × slider = −1.49"}</DataTableCell></DataTableRow>
+          <DataTableRow><DataTableCell><code>e</code></DataTableCell><DataTableCell>+4.10</DataTableCell></DataTableRow>
+        </DataTableBody>
+      </DataTable>
     </div>
 
     <div class="dovs-equations" id="dovsEquations" aria-live="polite"></div>
