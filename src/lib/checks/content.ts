@@ -26,6 +26,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<\/?blockquote(?:\s|>)/, "use <BlockQuote>"],
   [/<p class="web-only">/, 'use <FormatOnly media="web">'],
   [/<p class="epub-only print-only">/, 'use <FormatOnly media="print-epub">'],
+  [/<p class="lede\b/, "use <Lead>"],
   [/<div class="roadmap">/, "use <Roadmap>"],
   [/<div class="def">/, "use <DefinitionBox>"],
   [/<figure class="appendix-figure\b/, "use <AppendixFigure>"],
