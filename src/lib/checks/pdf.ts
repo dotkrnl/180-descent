@@ -31,11 +31,11 @@ export async function checkPdf(options: PdfCheckOptions): Promise<PdfCheckResult
   return { errors: await checker.run() };
 }
 
-export function hasPdfHeader(data: Buffer): boolean {
+function hasPdfHeader(data: Buffer): boolean {
   return data.toString("latin1", 0, 5) === "%PDF-";
 }
 
-export function textMatchesAny(text: string, patterns: RegExp[]): boolean {
+function textMatchesAny(text: string, patterns: RegExp[]): boolean {
   return patterns.some((pattern) => {
     pattern.lastIndex = 0;
     return pattern.test(text);

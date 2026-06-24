@@ -13,7 +13,3 @@ export function escapeXml(value = ""): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
 }
-
-export function escapeRegExp(value: string): string {
-  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
