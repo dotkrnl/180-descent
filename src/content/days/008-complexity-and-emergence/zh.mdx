@@ -1,0 +1,344 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Caption from "@app/components/lesson/Caption.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ComplexityHump from "@app/components/lesson/figures/ComplexityHump.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import GameOfLifeGun from "@app/components/lesson/interactives/GameOfLifeGun.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Highlight from "@app/components/lesson/Highlight.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import LessonList from "@app/components/lesson/LessonList.astro";
+import LessonListItem from "@app/components/lesson/LessonListItem.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import MurmurationEngine from "@app/components/lesson/interactives/MurmurationEngine.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+
+<Hero>
+<HeroEyebrow dayMark="第 008 日 / 180">模块一 · 知识与推理的根基 ·</HeroEyebrow>
+
+# 复杂性与涌现
+
+<HeroSubhead>没有一只鸟在发号施令，没有一只鸟能俯瞰全局，整群鸟却齐刷刷地转向。</HeroSubhead>
+
+<Lead drop="黄">昏时分，罗马上空几千只椋鸟倾泻而出，开始「呼吸」：收拢、分裂、拧紧成一只黑暗的拳头，再舒展成一条飘带。整个过程寂静得诡异，没有一次碰撞。看起来像编排好的舞蹈，坦率地说，像有什么东西在指挥。几个世纪以来，最流行的解释不外乎两种：有只头鸟，或者鸟类之间存在某种心灵感应。真相却更奇怪、也更深刻——<Highlight>根本没有指挥者。</Highlight>每只鸟只盯着身边少数几个邻居，遵守几条局部规则。那个会呼吸的形状，不存在于任何一只鸟的脑袋里。它是<Term>涌现</Term>的：一种只活在整体层面的模式。</Lead>
+
+这种「零件简单，模式精妙」之间的落差，就是今天要深入的主题。它是科学中最深刻、也最未定论的观念之一，背后藏着一个问题，将在后续课程里一直尾随我们：当更高层次出现某种新事物时，它究竟是<Highlight>真正的</Highlight>新，还是只是隔着距离看到的旧物理学？
+
+</Hero>
+
+<Wrap>
+
+<WhereBlock>
+<Label>◆ 我们身在何处</Label>
+
+这一部分为模块一的认识论工具箱收尾，也给我们从课程伊始就若隐若现的那条线命了名。「涌现」在[第 1 日](/zh/days/001-what-is-knowledge/)已轻触过——在那里，「知道」本身已是一种系统层面的性质。今天它才得到正式定义。我们将大量调用[第 7 日](/zh/days/007-information-theory/)，因为今日最大的争议关乎：某个光鲜亮丽的新复杂度指标，是否只是穿了白大褂的<Highlight>压缩</Highlight>。我们还会复用[第 5 日](/zh/days/005-causation/)，因为涌现最难的版本正是关于<Term>下行因果</Term>的命题：整体反过来推动它的组成部分。
+
+</WhereBlock>
+
+<ContentSection>
+<SectionEyebrow>现象</SectionEyebrow>
+
+## 六个或七个邻居，仅此而已
+
+先从我们真正<Highlight>知道</Highlight>的东西说起——用第 1 日那种审慎的意义。2000 年代中期，STARFLAG 项目在罗马一座博物馆楼顶架上立体摄影机，拍摄真实椋鸟群，最多达 <Highlight>2700 只</Highlight>，并重建了每一只鸟的三维位置。然后他们问了一个看似简单的问题：当一只鸟根据邻居调整自己时，它参考的是哪些邻居？
+
+直觉答案是「度量式」的：鸟对周围三米内所有鸟作出反应。数据说不。鸟类追踪的是固定<Highlight>数目</Highlight>的邻居：<Highlight>六到七只</Highlight>，无论这些邻居离它近还是远。鸟群挤紧时，每只鸟仍看同样的六七只；鸟群散开时，仍看同样的六七只，只是它们更远了。这种互动是<Term>拓扑式</Term>的，而非度量式的：它数的是邻居，不是米数。
+
+<BlockQuote>
+「平均而言，每只鸟与固定数量的邻居（六到七只）互动，而不是与固定度量距离内的所有邻居互动。」
+<Meta>Ballerini 等，PNAS，2008。</Meta>
+</BlockQuote>
+
+这为什么重要？因为如果你希望在受攻击时维持群体不散，拓扑规则正是你想要的。当一只隼刺入鸟群、局部密度暴增时，一只按固定半径反应的鸟会突然要追踪几十只邻居，从而应接不暇。一只「盯住最近的七个」的鸟，无论密度如何扭曲都能保持凝聚。这条规则很鲁棒，而且纯粹<Highlight>局部</Highlight>。没有鸟知道鸟群的形状，没有鸟在求解全局模式。模式只是成千上万只鸟各自照看一小块邻域的副作用。
+
+</ContentSection>
+
+<MurmurationEngine locale="zh" />
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>印刷版模型</PanelTitle>
+
+#### 椋鸟群引擎
+
+<PanelNote>这个交互面板可调节三条局部规则。全部关闭时，运动像气体；打开分离、对齐与凝聚后，秩序会以高对齐分数的形式出现。</PanelNote>
+
+<SimpleTable
+  headers={["规则","局部指令","系统效应"]}
+  rows={[["分离","当邻居太近时避开。","防止碰撞，保持个体独立。"],["对齐","与附近鸟的平均航向保持一致。","让群体整齐划一地转向。"],["凝聚","漂向局部质心。","防止鸟群消散。"],["最近邻数量","追踪约六到七个邻居，而非某个半径。","在密度变化时保持凝聚。"]]}
+/>
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow>模型</SectionEyebrow>
+
+## 1986 年写下的三条规则
+
+这个模拟本质上就是<Term>Boids</Term>，由 Craig Reynolds 在 1986 年构建、1987 年于 SIGGRAPH 发表。Reynolds 想为动画制作逼真的群集，结果发现只需要三条局部规则：<Highlight>分离</Highlight>（别挤）、<Highlight>对齐</Highlight>（随邻居转向）、<Highlight>凝聚</Highlight>（留在群里）。仅凭这三条，群集的全套动作就自然涌现：盘旋、绕开障碍、再流畅地汇合。Boids 此后曾驱动电影里的蝙蝠群和无数数字大军。它是经典示范：<Highlight>复杂的整体行为未必需要复杂的整体原因</Highlight>。
+
+Boids 只是同一把戏的一个标本：简单的零件，惊人的整体。
+
+<LessonList variant="clean">
+<LessonListItem lead="蚁群"> 在没有测量员、没有地图的情况下找到通往食物的短路径。每只蚂蚁留下化学踪迹并跟随其他蚂蚁的踪迹；越短的路线被强化得越快。生物学家称之为<Term>痕迹协调</Term>：通过留在环境中的痕迹来协调，而非直接发号施令。</LessonListItem>
+<LessonListItem lead="一锅水"> 能自行组织起来。从底部加热，超过某个阈值后，平静的液体分裂为有序的对流胞：由能量流维持的结构，这也是第 83–85 日生命物理弧线的预告。</LessonListItem>
+<LessonListItem lead="你的大脑"> 正在阅读这个句子，但颅内并没有一个小人在阅读。意义从单个什么都不「懂」的神经元中涌现出来，这个难题更陡峭的版本我们将在第 123–126 日再回来看。</LessonListItem>
+</LessonList>
+
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>当零件开始计算</SectionEyebrow>
+
+## 黏菌那令人抓狂的案例
+
+如果说椋鸟群是涌现之美，那黏菌就是没有大脑却涌现出的智慧。<Term>多头绒泡菌</Term>（Physarum polycephalum）是一个巨大的单细胞，一摊流淌着原生质的黄色团块，酷爱燕麦片。
+
+2010 年，中垣俊之（Toshiyuki Nakagaki）与寺尾厚（Atsushi Tero）领导的团队把燕麦片摆成<Highlight>东京与周边 35 个城镇</Highlight>的地理形状，然后把黏菌放在「东京」上。这团黏菌向外蔓延，吞没食物，再自我修剪：冗余的管道枯萎，高效的管道变粗。大约一天内，它雕塑出的网络在总长度、效率与容错性上都与真实的<Highlight>东京铁路系统</Highlight>颇为相似。
+
+<BlockQuote>
+该模型「以定量方式模仿了那些仅凭语言描述既无法捕捉、也无法量化的现象」。
+<Meta>Wolfgang Marwan，《科学》观点文章，2010 年。</Meta>
+</BlockQuote>
+
+黏菌并不聪明。它只运行一条简单的局部规则：原生质流动好的管道就加固，其余则放弃。当这条规则在每一处同时执行，它就<Highlight>计算</Highlight>出一个接近最优的网络。这个菌落解决了一只蚂蚁无法理解的问题；这团黏菌设计了一条它无法想象的铁路。<Highlight>计算活在互动之中，而非组件之内。</Highlight>
+
+<Aside>
+<BlockTitle>一则有益的提醒</BlockTitle>
+
+很容易把这些故事讲成「零件其实暗中聪明」。要抵制这种冲动。涌现的回报就在于，零件可以像它们看起来那样简单。精妙是组织造就的：取决于谁影响谁的模式。这也是为什么涌现容易被过度宣称。一旦你接受简单规则能产出惊人的整体，再往前走一小步，就会宣称你最喜欢的那条简单规则能解释一切。
+</Aside>
+
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>模型，被磨利</SectionEyebrow>
+
+## 催生一个领域的短语
+
+很长一段时间里，「涌现」是物理学家们带着疑虑说出的词：模糊、略带神秘，仿佛是你缺方程时才会搬出来的东西。1972 年，凝聚态物理学家 <Highlight>Philip W. Anderson</Highlight> 在《科学》上发表了一篇短文，标题后来成为口号：<Highlight>「多即不同」（More Is Different）</Highlight>。
+
+Anderson 的靶子是<Term>还原论</Term>：那种以为一旦掌握基本定律，其余一切就「只不过」是应用物理学的假设。他并不否认还原论。他先承认它，再插入一根楔子，撬开它那傲慢的推论。
+
+<BlockQuote>
+「把万物还原为简单基本定律的能力，并不意味着从这些定律出发就能重建宇宙……在复杂度的每一个层级上，都会出现全新的性质。」
+<Meta>P. W. Anderson，《科学》，1972 年。</Meta>
+</BlockQuote>
+
+知道两个水分子如何互动，并不会自动给你湿润、流动、对流胞，或海啸冲岸的具体方式。这些都是集体层面的真实性质，且遵循自身的规律。新的组织层次有自己的规则、概念和科学。化学不只是符号不便的物理学；生物学也不只是词汇更多的化学。每个层次都从下一层涌现，却在某种真实意义上自主。
+
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>争论</SectionEyebrow>
+
+## 弱与强：断层线
+
+所有人都同意椋鸟群和黏菌是涌现的。争论的焦点是这个词到底可以涵盖什么。
+
+### 弱涌现：科学家的版本
+
+哲学家 <Highlight>Mark Bedau</Highlight> 给出了大多数工作科学家可以使用的谨慎说明。一个性质是<Term>弱涌现</Term>的，当且仅当你无法通过巧妙捷径从规则预测它：要知道系统会做什么，唯一办法就是<Highlight>运行它</Highlight>或模拟它。椋鸟群是弱涌现的。没有简单公式能把三条 Boids 规则输入进去、直接吐出明天鸟群的形状；你得让它飞起来。关键是，弱涌现并不神秘，它完全扎根于零件及其互动。
+
+### 强涌现：激进的版本
+
+一个性质是<Term>强涌现</Term>的，当且仅当关于整体的事实<Highlight>原则上</Highlight>无法从对零件的完整知识中推导出来，哪怕是一个拥有无限算力的神级模拟器也不行。高层次将拥有真正新的因果能力，包括下行因果。<Highlight>David Chalmers</Highlight> 认为，自然界中可能只有一个强涌现的候选者：<Highlight>意识</Highlight>。其余一切都像是弱涌现：令人惊讶，实践中不可还原，原则上却可还原。
+
+为什么不处处拥抱强涌现？因为它撞上 <Highlight>Jaegwon Kim</Highlight> 的<Term>因果排除问题</Term>。假设某个高层次状态导致了一个物理效应。但这个效应在零件层次已经有一个完整的物理原因。要么高层次原因是冗余的，要么效应被过度决定，要么这个主张违反了物理学。捍卫者们有回应，但没有一记 KO。这就是为什么强／弱分界线在生物学、心智与社会系统下仍然活跃。
+
+<StatusChipRow>
+<StatusChip status="ok" label="弱涌现 · 可行的科学" printLabel="可行的科学" />
+<StatusChip status="bad" label="强涌现 · 有争议" printLabel="有争议" />
+</StatusChipRow>
+
+</ContentSection>
+
+<GameOfLifeGun locale="zh" />
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>印刷版模型</PanelTitle>
+
+#### 康威生命游戏
+
+<PanelNote>一个只有两条规则的元胞自动机，却能支持滑翔机、振荡器与通用计算。重要的不是动画，而是没有捷径：许多初始图案必须被运行才能揭示命运。</PanelNote>
+
+<SimpleTable
+  headers={["细胞状态","邻居数量","下一状态"]}
+  rows={[["存活","2 或 3 个存活邻居","继续存活"],["存活","0、1、4、5、6、7 或 8 个存活邻居","死亡"],["死亡","恰好 3 个存活邻居","变为存活"],["死亡","其他任意邻居数","保持死亡"]]}
+/>
+</FormatOnly>
+
+<ContentSection>
+
+请坐稳，想想生命游戏证明了什么。两条规则，作用在一个网格上，就足以构建逻辑门、记忆、时钟和通用计算机。那个「计算机」并不在规则里；它是细胞中的<Highlight>图案</Highlight>。这是弱涌现最干净的图示：你可以完美地知道规则，却仍然别无他法——只能运行它们——才能知道某个初始图案会熄灭、冻结、循环，还是计算。<Highlight>简单法则，无界复杂行为，没有捷径。</Highlight>
+
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>必要的绕路</SectionEyebrow>
+
+## 没人能就「复杂」如何测量达成一致
+
+复杂性科学有一个令人尴尬的秘密：<Highlight>复杂还没有一个公认的单一定义</Highlight>。Seth Lloyd 曾汇编过一份著名的清单，列出几十种候选度量，它们彼此并不一致。这不仅仅是草率。「复杂」同时在做几份工作：描述它有多难、建造它有多难、以及它的组织化程度有多高。
+
+最后一类藏着关键思想。<Highlight>最复杂的东西并不是最随机的。</Highlight>想想晶体、活细胞和一瓶气体。按纯粹的「难以描述」标准，气体获胜，因为完美随机需要最长描述。但气体并不比细胞更复杂。晶体太有序，气体太无序。复杂性住在结构化的、令人惊讶的、既非冻结也非随机的中间地带。
+
+</ContentSection>
+
+<Panel>
+<PanelTitle>图示 · 复杂度—熵驼峰</PanelTitle>
+
+#### 为什么细胞胜过气体，也胜过晶体
+
+<PanelNote>无序从左到右递增：左侧是完全有序，右侧是完全随机。有效复杂度就是那条曲线。它在两端崩塌，在中间的有组织地带达到顶峰——生命、语言与心智都住在这里。</PanelNote>
+
+<ComplexityHump locale="zh" />
+
+<Caption>Murray Gell-Mann 的有效复杂度试图度量一个事物的规律性，同时抛掉纯随机的部分。请记住这个驼峰：组装理论之争，部分就在于这个新指标是否真正捕捉到了这个中间地带，还是只是换了个名字把「难以描述」偷偷塞了进来。</Caption>
+</Panel>
+
+<ContentSection class="frontier">
+<SectionEyebrow>前沿 · 2026</SectionEyebrow>
+
+## 三条活跃前沿，以及开到最大的前沿校准器
+
+涌现是当今科学中一些最大胆、也最容易被过度炒作的论断的栖息地。今日前沿包含一场在同行评审文献中真实而激烈的混战。
+
+<Claim>
+<ClaimHeader label="前沿 01 · 最大的一场">
+<StatusChip status="ok" label="指标 · 已确立" printLabel="已确立" />
+<StatusChip status="hint" label="生物标志 · 有前景" printLabel="有前景" />
+<StatusChip status="bad" label="选择论断 · 有争议" printLabel="有争议" />
+</ClaimHeader>
+
+### 组装理论：复杂度标尺，还是万物理论？
+
+2023 年，<Highlight>Leroy Cronin</Highlight> 与 <Highlight>Sara Walker</Highlight> 领导的团队在《自然》发表了一篇论文，标题为《Assembly theory explains and quantifies selection and evolution》。核心想法很巧妙。拿一个物体，比如一个分子，问：如果可以从基本零件开始、并且能复用任何已造出的片段，最少需要多少步才能把它造出来？这个数就是<Term>组装指数</Term>。把它与拷贝数配对，组装理论声称能检测到选择并复制结构的机制所留下的指纹。杀手级应用是天体生物学：组装指数高于约 <Highlight>15</Highlight> 的分子，被认为极不可能是非生物过程形成的。
+
+这里扎实的东西确实很扎实。组装指数是一个真实、可计算、可实验测量的量。2024 年《ACS Central Science》的一篇论文显示，它能从质谱、核磁共振和红外光谱中读出，而且数据吻合。它在实验室里能区分许多生物样本与非生物样本。
+
+问题在于堆在上面的所有东西。组装理论声称能解释选择、进化、时间和物理—生物桥梁，这些更宏大的论断遭到了强烈反击。Abrahão、Zenil 等人在 2024 年《PLOS Complex Systems》的分析中认为，组装指数在数学上只是标准数据压缩的近似，无法胜过香农熵来完成它所声称的工作。其他批评则攻击生物标志分类和进化论断。
+
+Cronin 与 Walker 作出了回应。他们的辩护正是关键：压缩度量的是字符串中的统计冗余，而组装指数关乎物理因果历史——一个真实物体在世界中被造出的最小路径，并与它有多少拷贝相关。这个区分究竟深刻，还是只是表面换皮，正是仍未定论之处。<Highlight>结论：标尺真实存在；万物理论论断尚未确立。</Highlight>
+</Claim>
+
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>组装理论论断</DataTableHeader><DataTableHeader>前沿校准器状态</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>组装指数是一种可测量的分子复杂度指标。</DataTableCell><DataTableCell><StatusChip status="ok" label="已确立" /></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>指数高于约 15 可在未知样本中用作生物标志。</DataTableCell><DataTableCell><StatusChip status="hint" label="有前景的暗示" printLabel="有前景" /></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>它以生物学认可的方式解释并量化了选择与进化。</DataTableCell><DataTableCell><StatusChip status="bad" label="有争议" /></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>它在根本上不同于压缩、柯尔莫戈罗夫复杂度与香农熵。</DataTableCell><DataTableCell><StatusChip status="bad" label="有争议" /></DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
+
+<Claim>
+<ClaimHeader label="前沿 02">
+<StatusChip status="ok" label="机制 · 已确立" printLabel="已确立" />
+<StatusChip status="bad" label="普适定律 · 有争议" printLabel="有争议" />
+</ClaimHeader>
+
+### 自组织临界性：自己调谐的沙堆
+
+1987 年，Per Bak、Chao Tang 和 Kurt Wiesenfeld 提出了一个迷人的想法：某些系统无需外部调谐，就能把自己驱动到相变的刀锋边缘。他们的模型是一个<Highlight>沙堆</Highlight>。一次撒一粒沙，沙堆变陡，直到各种规模的雪崩把它维持在临界坡度附近。这种<Term>自组织临界性</Term>一度成为地震、森林火灾、物种灭绝、市场崩盘和 1/f 噪声的候选解释。
+
+SOC 是真实的：沙堆类模型确实会自组织到临界性。但它作为复杂性普适引擎的宏大论断并未站稳脚跟。最被炒作的应用——「临界大脑」假说——仍有争议。一种美丽的机制被过度推销成了万物理论。
+</Claim>
+
+<Claim>
+<ClaimHeader label="前沿 03">
+<StatusChip status="hint" label="量化 · 有前景" printLabel="有前景" />
+<StatusChip status="bad" label="强涌现 · 有争议" printLabel="有争议" />
+</ClaimHeader>
+
+### 能给涌现本身标个数字吗？
+
+最新前沿试图把弱涌现与强涌现从扶手椅辩论搬进数学。<Highlight>Erik Hoel</Highlight> 与同事发展了<Term>因果涌现</Term>，用有效信息证明，宏观模型有时能比它由之建立的微观模型携带更多因果信息。<Highlight>Fernando Rosas</Highlight>、<Highlight>Pedro Mediano</Highlight> 与同事则用信息分解来检验：某个宏观特征是否能比任何单独零件更好地预测系统的未来。
+
+这是细致而富有成果的工作，因此配得上「有前景」。但解释上要谨慎。批评者认为，这些度量捕捉的可能是<Highlight>认识论涌现</Highlight>——关于我们最好的模型与描述——而非哲学家所说的本体论强涌现。数学正在落地；它测量的是什么，仍在争论。
+</Claim>
+
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>开放问题</SectionEyebrow>
+
+## 真正未定论的问题
+
+<LessonList variant="clean">
+<LessonListItem lead="强涌现在任何地方都是真实的吗？"> 还是一切都是弱涌现——令人惊讶但可还原，Kim 的排除论证正在悄悄获胜？</LessonListItem>
+<LessonListItem lead="下行因果是真实的力量，还是修辞？"> 整体是否能在微观定律未能涵盖的方面，真正推动它的零件？</LessonListItem>
+<LessonListItem lead="是否存在一个原则性的复杂度度量？"> 还是我们永远只能有一抽屉度量，每种只适合一种工作？</LessonListItem>
+<LessonListItem lead="组装理论是否切中了自然的新关节？"> 还是它只是有用的压缩与信息理论，包装了超出其兑现能力的宏大声明？</LessonListItem>
+<LessonListItem lead="AI 涌现又如何？"> 当大语言模型随着规模扩大而似乎获得新技能时，那是真正的涌现，还是指标的产物？先记住这个问题，第 139 日再回来看。</LessonListItem>
+</LessonList>
+
+</ContentSection>
+
+<Recap>
+<PanelTitle>◆ 今日三句话</PanelTitle>
+<RecapList>
+<RecapItem term="大观念">遵循局部规则的简单零件，可以在没有领导、没有蓝图的情况下生成全局秩序。「多即不同」道出了更高层次可以拥有自己真实模式与法则这一事实。</RecapItem>
+<RecapItem term="最佳类比">那只没有鸟能看见其形状、却会呼吸的椋鸟群，以及那个无法理解铁路、却能计算出一条铁路的黏菌。</RecapItem>
+<RecapItem term="活跃争议">组装理论是一把真实的分子复杂度标尺，但它对选择、进化与时间的解释力仍有争议。</RecapItem>
+</RecapList>
+<Threads label="今日线索 ›">涌现得到正式定义 · 信息以压缩与组装指数的形式回归 · 计算在生命游戏中现身 · 能量流暗示生命。</Threads>
+</Recap>
+
+<Sources>
+<SourcesTitle>来源与延伸阅读</SourcesTitle>
+
+1. Ballerini, M., Cabibbo, N., Candelier, R., et al. (2008). "Interaction ruling animal collective behavior depends on topological rather than metric distance." *PNAS* 105(4): 1232-1237. [doi:10.1073/pnas.0711437105](https://doi.org/10.1073/pnas.0711437105).
+2. Cavagna, A., Cimarelli, A., Giardina, I., et al. (2010). "Scale-free correlations in starling flocks." *PNAS* 107(26): 11865-11870.
+3. Reynolds, C. W. (1987). "Flocks, Herds, and Schools: A Distributed Behavioral Model." *Computer Graphics* 21(4): 25-34.
+4. Anderson, P. W. (1972). "More Is Different." *Science* 177(4047): 393-396. [doi:10.1126/science.177.4047.393](https://www.science.org/doi/10.1126/science.177.4047.393).
+5. Tero, A., Takagi, S., Saigusa, T., et al. (2010). "Rules for Biologically Inspired Adaptive Network Design." *Science* 327(5964): 439-442. [doi:10.1126/science.1177894](https://doi.org/10.1126/science.1177894).
+6. Gardner, M. (1970). "Mathematical Games: The fantastic combinations of John Conway's new solitaire game 'life'." *Scientific American* 223(4): 120-123.
+7. Bedau, M. A. (1997). "Weak Emergence." *Philosophical Perspectives* 11: 375-399.
+8. Chalmers, D. J. (2006). "Strong and Weak Emergence." In *The Re-Emergence of Emergence*, Oxford University Press.
+9. Kim, J. (1999). "Making Sense of Emergence." *Philosophical Studies* 95: 3-36.
+10. Bak, P., Tang, C., and Wiesenfeld, K. (1987). "Self-organized criticality." *Physical Review Letters* 59(4): 381-384. [doi:10.1103/PhysRevLett.59.381](https://doi.org/10.1103/PhysRevLett.59.381).
+11. Bonachela, J. A., et al. (2010). "Self-organization without conservation: are neuronal avalanches generically critical?" *J. Stat. Mech.* P02015. [arXiv:1001.3256](https://arxiv.org/abs/1001.3256).
+12. Sharma, A., Czégel, D., Lachmann, M., Kempes, C. P., Walker, S. I., and Cronin, L. (2023). "Assembly theory explains and quantifies selection and evolution." *Nature* 622: 321-328. [doi:10.1038/s41586-023-06600-9](https://doi.org/10.1038/s41586-023-06600-9).
+13. Marshall, S. M., Mathis, C., Carrick, E., et al. (2021). "Identifying molecules as biosignatures with assembly theory and mass spectrometry." *Nature Communications* 12: 3033.
+14. Jirasek, M., Sharma, A., Bame, J. R., et al. (2024). "Investigating and Quantifying Molecular Complexity Using Assembly Theory and Spectroscopy." *ACS Central Science* 10(5): 1054-1064.
+15. Abrahão, F. S., Hernández-Orozco, S., Kiani, N. A., Tegnér, J., and Zenil, H. (2024). "Assembly Theory is an approximation to algorithmic complexity based on LZ compression that does not explain selection or evolution." *PLOS Complex Systems* 1(1): e0000014.
+16. Uthamacumaran, A., Abrahão, F. S., Kiani, N. A., and Zenil, H. (2024). "On the salient limitations of the methods of assembly theory and their classification of molecular biosignatures." *npj Systems Biology and Applications* 10: 82.
+17. Jaeger, J. (2024). "Assembly Theory: What It Does and What It Does Not Do." *Journal of Molecular Evolution* 92: 87-92.
+18. Walker, S. I., Cronin, L., et al. (2024). "Reply to 'Experimental measurement of assembly indices are required to determine the threshold for life'." *Journal of the Royal Society Interface* 21: 20240367.
+19. Gell-Mann, M., and Lloyd, S. (1996). "Information measures, effective complexity, and total information." *Complexity* 2(1): 44-52.
+20. Hoel, E. P., Albantakis, L., and Tononi, G. (2013). "Quantifying causal emergence shows that macro can beat micro." *PNAS* 110(49): 19790-19795.
+21. Rosas, F. E., Mediano, P. A. M., Jensen, H. J., et al. (2020). "Reconciling emergences: An information-theoretic approach to identify causal emergence in multivariate data." *PLOS Computational Biology* 16(12): e1008289.
+22. Dewhurst, J. (2021). "Causal emergence from effective information: Neither causal nor emergent?" *Thought* 10(3): 158-168.
+23. Schaeffer, R., Miranda, B., and Koyejo, S. (2023). "Are Emergent Abilities of Large Language Models a Mirage?" *NeurIPS 2023*.
+</Sources>
+
+</Wrap>

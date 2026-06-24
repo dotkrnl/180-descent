@@ -1,0 +1,37 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<Panel class="web-only emergence-life">
+  <PanelTitle>{zh ? "交互 · 两条规则生成计算" : "Interactive · computation from a two-rule universe"}</PanelTitle>
+  <h4>{zh ? "康威生命游戏与永不停火的滑翔机枪" : "Conway's Game of Life, and the gun that fires forever"}</h4>
+  <PanelNote>{zh ? "一个由活细胞和死细胞组成的网格，只按邻居数量更新。从这套极简规则中会出现滑翔机、振荡器，以及下方著名的 Gosper 滑翔机枪：一个会不断吐出滑翔机的有限图样。这个玩具宇宙是图灵完备的。" : "A grid of cells, each alive or dead, updates on two rules about live neighbors. From this tiny rulebook come gliders, oscillators, and the famous Gosper glider gun below: a finite pattern that spits out a glider forever. This toy universe is Turing-complete."}</PanelNote>
+
+  <div class="gol-wrap">
+    <div class="gol-stage">
+      <canvas id="gol" width="380" height="220" aria-label={zh ? "正在运行滑翔机枪的康威生命游戏。" : "Conway's Game of Life running a glider gun."}></canvas>
+    </div>
+    <div class="gol-side">
+      <p class="glabel">{zh ? "完整规则" : "The entire rulebook"}</p>
+      <ul class="gol-rules">
+        <li>{zh ? "一个活细胞若有 2 或 3 个活邻居，就继续存活。" : "A live cell with 2 or 3 live neighbors survives."}</li>
+        <li>{zh ? "一个死细胞若恰有 3 个活邻居，就诞生。" : "A dead cell with exactly 3 live neighbors is born."}</li>
+        <li>{zh ? "其他情况全部死亡或保持死亡。" : "Everything else dies or stays dead."}</li>
+      </ul>
+      <div class="emergence-controls no-margin">
+        <button class="simbtn primary" id="gol-play">{zh ? "暂停" : "Pause"}</button>
+        <button class="simbtn" id="gol-gun">{zh ? "滑翔机枪" : "Glider gun"}</button>
+        <button class="simbtn" id="gol-rand">{zh ? "随机汤" : "Random soup"}</button>
+        <button class="simbtn" id="gol-clear">{zh ? "清空" : "Clear"}</button>
+      </div>
+      <p class="gol-note">{zh ? "点击网格可切换细胞。第 " : "Tap the grid to toggle cells. Generation "}<b id="gol-gen">0</b>{zh ? " 代。" : "."}</p>
+    </div>
+  </div>
+</Panel>

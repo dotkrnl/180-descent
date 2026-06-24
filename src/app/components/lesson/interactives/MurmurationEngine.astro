@@ -1,0 +1,49 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<Panel class="web-only emergence-boids">
+  <PanelTitle>{zh ? "交互 · 局部规则生成秩序" : "Interactive · order from local rules"}</PanelTitle>
+  <h4>{zh ? "椋鸟群引擎" : "The Murmuration Engine"}</h4>
+  <PanelNote>{zh ? "每个点都是一个模拟鸟，只服从下方三个局部规则。关闭所有规则，它会变成随机漂移的气体；逐个打开规则，就能看到群体秩序凝结出来。对齐度读数衡量整体朝向的一致程度。代码里从未写过“鸟群”。" : "Every dot is a boid, a simulated bird obeying up to three local rules. Turn all three off and you get a gas; switch them on one at a time and watch a flock condense out of the chaos. The alignment meter reads how unified the headings are. Nothing in the code ever mentions flock."}</PanelNote>
+
+  <div class="emergence-sim-stage">
+    <canvas id="boids" width="900" height="500" aria-label={zh ? "模拟鸟群的动态演示。" : "A live simulation of simulated birds flocking."}></canvas>
+    <div class="emergence-sim-readout">
+      {zh ? "个体" : "boids"}&nbsp;<span id="b-count">180</span><br />
+      {zh ? "对齐度" : "alignment"}&nbsp;<span class="order" id="b-order">0.00</span>
+    </div>
+  </div>
+
+  <div class="emergence-rules">
+    <button class="emergence-rulebtn" id="r-sep" aria-pressed="true">
+      <span class="rtop"><span class="knob"></span><b>{zh ? "分离" : "Separation"}</b></span>
+      <span>{zh ? "远离过近的邻居，避免碰撞。" : "Steer away from neighbors who get too close. Stops collisions."}</span>
+    </button>
+    <button class="emergence-rulebtn" id="r-ali" aria-pressed="true">
+      <span class="rtop"><span class="knob"></span><b>{zh ? "对齐" : "Alignment"}</b></span>
+      <span>{zh ? "匹配最近邻的平均朝向，让群体一起转向。" : "Match the average heading of your nearest neighbors. Makes the flock turn as one."}</span>
+    </button>
+    <button class="emergence-rulebtn" id="r-coh" aria-pressed="true">
+      <span class="rtop"><span class="knob"></span><b>{zh ? "凝聚" : "Cohesion"}</b></span>
+      <span>{zh ? "向局部质心漂移，让群体保持在一起。" : "Drift toward the local center of mass. Keeps the group together."}</span>
+    </button>
+  </div>
+
+  <div class="emergence-controls">
+    <div class="nbr-row">
+      <span>{zh ? "邻居数" : "neighbors"}:&nbsp;<b id="kval">7</b></span>
+      <input type="range" id="kn" min="1" max="20" value="7" aria-label={zh ? "每个模拟鸟追踪的邻居数量" : "Number of neighbors each boid tracks"} />
+    </div>
+    <button class="simbtn" id="b-scatter">{zh ? "打散" : "Scatter"}</button>
+    <button class="simbtn primary" id="b-allon">{zh ? "全部开启" : "All rules on"}</button>
+    <button class="simbtn" id="b-alloff">{zh ? "全部关闭" : "All off"}</button>
+  </div>
+</Panel>

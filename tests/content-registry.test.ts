@@ -113,6 +113,7 @@ describe("target content registry", () => {
     const day005 = daysByPath.get("005-causation");
     const day006 = daysByPath.get("006-statistics-and-the-art-of-not-fooling-yourself");
     const day007 = daysByPath.get("007-information-theory");
+    const day008 = daysByPath.get("008-complexity-and-emergence");
 
     expect([...daysByPath.keys()]).toEqual([
       "001-what-is-knowledge",
@@ -121,7 +122,8 @@ describe("target content registry", () => {
       "004-probability-as-extended-logic",
       "005-causation",
       "006-statistics-and-the-art-of-not-fooling-yourself",
-      "007-information-theory"
+      "007-information-theory",
+      "008-complexity-and-emergence"
     ]);
 
     for (const day of registry.days) {
@@ -217,6 +219,14 @@ describe("target content registry", () => {
     expect(day007?.bodies.en.source).toContain("<MathBlock");
     expect(day007?.appendixBodies[0].source).toContain("MutualInformationOverlap");
     expect(day007?.appendixBodies[0].source).toContain("HammingCube");
+
+    expect(day008?.appendixBodies).toEqual([]);
+    expect(day008?.manifest.interactionScripts).toEqual([
+      "complexity-emergence"
+    ]);
+    expect(day008?.bodies.en.source).toContain("MurmurationEngine");
+    expect(day008?.bodies.en.source).toContain("GameOfLifeGun");
+    expect(day008?.bodies.en.source).toContain("ComplexityHump");
   });
 });
 
