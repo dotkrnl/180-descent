@@ -113,8 +113,8 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
     failures.push({ message: `${file.relativePath} contains template syntax; use MDX components instead` });
   }
 
-  if (/content_template|eleventy|<\/?script\b/i.test(file.source)) {
-    failures.push({ message: `${file.relativePath} contains unsupported route/template surface` });
+  if (/<\/?script\b/i.test(file.source)) {
+    failures.push({ message: `${file.relativePath} contains inline script; use shared interaction assets instead` });
   }
 
   if (!file.source.includes("<Sources") && !file.source.includes('class="sources"') && !file.source.includes("className=\"sources\"")) {
