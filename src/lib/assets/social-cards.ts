@@ -26,7 +26,7 @@ interface SocialCard {
   description?: string;
   kicker?: string;
   day?: number;
-  day_path?: string;
+  dayPath?: string;
   sourcePath?: string;
   outPath: string;
 }
@@ -37,7 +37,7 @@ interface DayData {
   summary?: string;
   description?: string;
   day?: number;
-  day_path: string;
+  dayPath: string;
   sourcePath: string;
 }
 
@@ -132,12 +132,12 @@ async function loadSocialCards(options: {
     ...enDays.map((day) => ({
       ...day,
       kicker: options.book.title,
-      outPath: path.join(options.outDir, `day-${day.day_path}.png`)
+      outPath: path.join(options.outDir, `day-${day.dayPath}.png`)
     })),
     ...zhDays.map((day) => ({
       ...day,
       kicker: options.book.zh.title,
-      outPath: path.join(options.outDir, `zh-day-${day.day_path}.png`)
+      outPath: path.join(options.outDir, `zh-day-${day.dayPath}.png`)
     }))
   ];
 }
@@ -186,7 +186,7 @@ async function readRegistryDays(root: string, locale: "en" | "zh"): Promise<DayD
         title: localeEntry.title,
         summary: localeEntry.summary,
         day: day.manifest.day,
-        day_path: day.manifest.path,
+        dayPath: day.manifest.path,
         sourcePath: day.manifestPath
       };
     });
