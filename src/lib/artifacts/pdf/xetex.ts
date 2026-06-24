@@ -571,6 +571,14 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
 
   if (name === "Lead") return renderLead(node, attrs, state);
   if (name === "ClaimHeader") return renderClaimHeader(node, attrs, state);
+  if (name === "ContinueNote") {
+    const label = cleanDecorativePrefix(attrs.get("label") ?? "");
+    const body = renderChildren(node.children ?? [], state, { block: true }).trim();
+    return [
+      label ? `\\eyebrow{${latexEscape(label)}}` : "",
+      body
+    ].filter(Boolean).join("\n");
+  }
   if (["AppendixCardGrid", "AppendixCard"].includes(name)) {
     return renderChildren(node.children ?? [], state, { block: true });
   }
