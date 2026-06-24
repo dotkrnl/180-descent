@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkAppendixStyle } from "@lib/checks/appendix-style";
+import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 
 describe("appendix style check", () => {
   it("reports forbidden appendix-local classes", async () => {
@@ -31,7 +32,7 @@ describe("appendix style check", () => {
 
 async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-appendix-style-"));
-  await mkdir(path.join(root, "src/content/days/001-fixture/appendices"), { recursive: true });
+  await mkdir(path.join(contentDaysDir(root), "001-fixture/appendices"), { recursive: true });
   await mkdir(path.join(root, "src/assets/scss"), { recursive: true });
   await mkdir(path.join(root, "src/assets/js/interactions"), { recursive: true });
   await writeFile(path.join(root, "src/assets/scss/book.scss"), [
@@ -42,7 +43,7 @@ async function createFixtureRoot(): Promise<string> {
     ".deep-dive-sub{}",
     ".deep-dive-body{}"
   ].join("\n"));
-  await writeFile(path.join(root, "src/content/days/001-fixture/day.yaml"), [
+  await writeFile(contentDayFile(root, "001-fixture", "day.yaml"), [
     "day: 1",
     "block: Fixture",
     "locales:",
@@ -65,12 +66,12 @@ async function createFixtureRoot(): Promise<string> {
     "        body: appendices/appendix-a.zh.mdx",
     "interactionScripts: []"
   ].join("\n"));
-  await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), "");
-  await writeFile(path.join(root, "src/content/days/001-fixture/zh.mdx"), "");
-  await writeFile(path.join(root, "src/content/days/001-fixture/appendices/appendix-a.zh.mdx"), "");
+  await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), "");
+  await writeFile(contentDayFile(root, "001-fixture", "zh.mdx"), "");
+  await writeFile(contentDayFile(root, "001-fixture", "appendices/appendix-a.zh.mdx"), "");
   return root;
 }
 
 async function writeAppendix(root: string, body: string): Promise<void> {
-  await writeFile(path.join(root, "src/content/days/001-fixture/appendices/appendix-a.en.mdx"), body);
+  await writeFile(contentDayFile(root, "001-fixture", "appendices/appendix-a.en.mdx"), body);
 }

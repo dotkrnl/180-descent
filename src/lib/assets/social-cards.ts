@@ -2,6 +2,7 @@ import { mkdir, readFile, stat, utimes, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
+import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
 import { toPosixRelative } from "@lib/fs/path";
@@ -168,7 +169,7 @@ function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string 
 }
 
 async function readRegistryDays(root: string, locale: "en" | "zh"): Promise<DayData[]> {
-  const registry = await loadContentRegistry({ daysDir: path.join(root, "src/content/days") });
+  const registry = await loadContentRegistry({ daysDir: contentDaysDir(root) });
   return registry.days
     .map((day) => {
       const localeEntry = day.manifest.locales[locale];

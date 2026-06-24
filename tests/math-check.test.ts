@@ -3,11 +3,12 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkMath } from "@lib/checks/math";
+import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 
 describe("math check", () => {
   it("reports raw display math patterns in MDX content", async () => {
     const root = await createFixtureRoot();
-    await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), '<p class="formula"><code>x</code></p>');
+    await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), '<p class="formula"><code>x</code></p>');
 
     const result = await checkMath({ root });
 
@@ -47,7 +48,7 @@ describe("math check", () => {
 
 async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-math-check-"));
-  await mkdir(path.join(root, "src/content/days/001-fixture"), { recursive: true });
+  await mkdir(path.join(contentDaysDir(root), "001-fixture"), { recursive: true });
   await mkdir(path.join(root, "_site"), { recursive: true });
   return root;
 }

@@ -1,4 +1,4 @@
-import path from "node:path";
+import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import type { Locale } from "@lib/schemas/day";
 
@@ -28,7 +28,7 @@ interface ArtifactBookAppendix {
 }
 
 async function loadArtifactBook(root: string, locale: Locale): Promise<ArtifactBook> {
-  const registry = await loadContentRegistry({ daysDir: path.join(root, "src/content/days") });
+  const registry = await loadContentRegistry({ daysDir: contentDaysDir(root) });
   const days = registry.days
     .map((day): ArtifactBookDay => {
       const localeEntry = day.manifest.locales[locale];

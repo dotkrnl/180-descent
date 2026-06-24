@@ -1,10 +1,11 @@
 import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { contentDaysDir } from "@lib/content/paths";
 
 export async function createEmptyContentRoot(prefix: string): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), prefix));
-  await mkdir(path.join(root, "src/content/days"), { recursive: true });
+  await mkdir(contentDaysDir(root), { recursive: true });
   return root;
 }
 
@@ -36,7 +37,7 @@ export async function writeContentDay(root: string, options: ContentDayOptions =
   const zhTitle = options.zhTitle ?? "夹具";
   const zhSummary = options.zhSummary ?? "中文简介。";
   const zhBody = options.zhBody ?? "";
-  const dayDir = path.join(root, "src/content/days/001-fixture");
+  const dayDir = path.join(contentDaysDir(root), "001-fixture");
   await mkdir(dayDir, { recursive: true });
   const manifest = [
     "day: 1",

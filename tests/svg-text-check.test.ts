@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkSvgTextSize } from "@lib/checks/svg-text";
+import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 
 describe("svg text size check", () => {
   it("reports SVG font sizes below the minimum", async () => {
@@ -22,9 +23,9 @@ describe("svg text size check", () => {
   it("reports inline SVG font sizes in Astro and MDX files", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-svg-text-"));
     await mkdir(path.join(root, "src/app/components"), { recursive: true });
-    await mkdir(path.join(root, "src/content/days/001-fixture"), { recursive: true });
+    await mkdir(path.join(contentDaysDir(root), "001-fixture"), { recursive: true });
     await writeFile(path.join(root, "src/app/components/Figure.astro"), '<svg><text font-size="9">tiny</text></svg>');
-    await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), '<svg><text style="font-size: 9px">tiny</text></svg>');
+    await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), '<svg><text style="font-size: 9px">tiny</text></svg>');
 
     expect(checkSvgTextSize({ root })).toEqual([
       {

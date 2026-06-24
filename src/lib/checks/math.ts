@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { contentDaysDir } from "@lib/content/paths";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
 
@@ -30,7 +31,7 @@ const BUILT_PATTERNS = [
 ] as const;
 
 export async function checkMath(options: MathCheckOptions): Promise<MathCheckResult> {
-  const sourceDir = path.join(options.root, "src/content/days");
+  const sourceDir = contentDaysDir(options.root);
   const siteDir = path.join(options.root, "_site");
   const failures: MathCheckFailure[] = [];
   const sourceFiles = await walkFiles(sourceDir, { exts: ".mdx", ignored: [] });

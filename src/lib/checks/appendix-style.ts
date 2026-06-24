@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { compileCss } from "@lib/assets/css";
+import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
@@ -105,7 +106,7 @@ async function collectJsClasses(options: AppendixStyleCheckOptions): Promise<Set
 }
 
 async function collectAppendixFiles(options: AppendixStyleCheckOptions): Promise<string[]> {
-  const daysDir = path.join(options.root, "src/content/days");
+  const daysDir = contentDaysDir(options.root);
   const registry = await loadContentRegistry({ daysDir });
   return registry.days
     .flatMap((day) => day.appendixBodies.map((body) => path.join(day.directory, body.path)))

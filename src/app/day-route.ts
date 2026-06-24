@@ -1,5 +1,5 @@
-import path from "node:path";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import { contentDayModulePath, contentDaysDir } from "@lib/content/paths";
 import { listRegistryDayLocaleEntries, loadContentRegistry, type RegistryDayLocaleEntry } from "@lib/content/registry";
 import type { Locale } from "@lib/schemas/day";
 
@@ -33,7 +33,7 @@ export interface RegistryDayRouteProps {
 const mdxModules = import.meta.glob<MdxModule>("/src/content/days/**/*.mdx");
 
 export async function getRegistryDayStaticPaths(locale: Locale) {
-  const registry = await loadContentRegistry({ daysDir: path.join(process.cwd(), "src/content/days") });
+  const registry = await loadContentRegistry({ daysDir: contentDaysDir(process.cwd()) });
   const entries = listRegistryDayLocaleEntries(registry)
     .filter((entry) => entry.locale === locale)
     .sort((a, b) => a.day.manifest.day - b.day.manifest.day);
@@ -66,7 +66,7 @@ export async function loadDayPageModules(entry: RegistryDayLocaleEntry): Promise
 }
 
 async function loadMdxBody(dayPath: string, bodyPath: string): Promise<AstroComponentFactory> {
-  const modulePath = `/src/content/days/${dayPath}/${bodyPath}`;
+  const modulePath = contentDayModulePath(dayPath, bodyPath);
   const loadBody = mdxModules[modulePath];
   if (!loadBody) {
     throw new Error(`Missing MDX module for ${modulePath}`);

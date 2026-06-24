@@ -12,6 +12,7 @@ import YAML from "yaml";
 import { prepareLatinFonts, preparePdfFonts } from "@lib/assets/fonts";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/downloads";
+import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 import { readBookData, type BookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
 
@@ -237,7 +238,7 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
     chunks.push(await mdxToLatex(day.bodySource, {
       root: config.root,
       locale: config.locale,
-      sourceFile: path.join(config.root, "src/content/days", day.path, day.bodyPath),
+      sourceFile: contentDayFile(config.root, day.path, day.bodyPath),
       includeDeepDive: Boolean(config.includeDeepDive),
       workDir
     }));
@@ -249,7 +250,7 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
         chunks.push(await mdxToLatex(appendix.bodySource, {
           root: config.root,
           locale: config.locale,
-          sourceFile: path.join(config.root, "src/content/days", day.path, appendix.bodyPath),
+          sourceFile: contentDayFile(config.root, day.path, appendix.bodyPath),
           includeDeepDive: true,
           workDir
         }));
@@ -930,7 +931,7 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
 
 function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, name: string, spec: SvgAssetSpec): string {
   if (!svg.trim()) return "";
-  const sourceSlug = sanitizeAssetName(path.relative(path.join(state.root, "src/content/days"), state.sourceFile));
+  const sourceSlug = sanitizeAssetName(path.relative(contentDaysDir(state.root), state.sourceFile));
   const assetSlug = sanitizeAssetName(`${sourceSlug}-${name}-${++state.generatedAssetIndex}`);
   const svgPath = path.join(state.workDir, `${assetSlug}.svg`);
   const pdfPath = path.join(state.workDir, `${assetSlug}.pdf`);
@@ -1266,7 +1267,7 @@ function resolveImportPath(importPath: string, root: string, sourceDir: string):
 }
 
 async function loadRenderedHtml(root: string, locale: Locale, sourceFile: string): Promise<CheerioRoot | null> {
-  const contentRoot = path.join(root, "src/content/days");
+  const contentRoot = contentDaysDir(root);
   const relativeSource = path.relative(contentRoot, sourceFile);
   if (relativeSource.startsWith("..")) return null;
 

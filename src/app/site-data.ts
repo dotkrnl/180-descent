@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { parse as parseYaml } from "yaml";
+import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
@@ -92,7 +93,7 @@ export async function getSyllabus(locale: Locale): Promise<Syllabus> {
 }
 
 export async function getContentDays(locale: Locale): Promise<ContentDay[]> {
-  const registry = await loadContentRegistry({ daysDir: path.join(process.cwd(), "src/content/days") });
+  const registry = await loadContentRegistry({ daysDir: contentDaysDir(process.cwd()) });
   return registry.days
     .map((day) => {
       const localeData = day.manifest.locales[locale];

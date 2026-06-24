@@ -2,11 +2,12 @@ import path from "node:path";
 import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import { describe, expect, it } from "vitest";
+import { contentDaysDir } from "@lib/content/paths";
 import { listRegistryDayLocaleEntries, loadContentRegistry } from "@lib/content/registry";
 import { dayManifestSchema } from "@lib/schemas/day";
 import { createEmptyContentRoot, writeContentDay } from "./helpers/content-root";
 
-const projectDaysDir = path.join(process.cwd(), "src/content/days");
+const projectDaysDir = contentDaysDir(process.cwd());
 
 describe("target content registry", () => {
   it("validates the paired day manifest schema", () => {
@@ -241,5 +242,5 @@ async function createRegistryFixtureDaysDir(): Promise<string> {
     ],
     interactionScripts: ["fixture-interaction"]
   });
-  return path.join(root, "src/content/days");
+  return contentDaysDir(root);
 }

@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
 import { compileCss } from "@lib/assets/css";
+import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
@@ -76,7 +77,7 @@ interface RegistryContentFile {
 
 export async function checkContent(options: ContentCheckOptions): Promise<ContentCheckFailure[]> {
   const failures: ContentCheckFailure[] = [];
-  const daysDir = path.join(options.root, "src/content/days");
+  const daysDir = contentDaysDir(options.root);
   const registry = await loadContentRegistry({ daysDir });
 
   if (!registry.days.length) {

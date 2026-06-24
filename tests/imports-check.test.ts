@@ -3,12 +3,13 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkUnusedDefaultImports, findUnusedDefaultImports } from "@lib/checks/imports";
+import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 
 describe("import check", () => {
   it("finds unused default imports in Astro and MDX source files", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-import-check-"));
     await mkdir(path.join(root, "src/app/components"), { recursive: true });
-    await mkdir(path.join(root, "src/content/days/001-fixture"), { recursive: true });
+    await mkdir(path.join(contentDaysDir(root), "001-fixture"), { recursive: true });
 
     await writeFile(path.join(root, "src/app/components/Used.astro"), [
       'import Panel from "./Panel.astro";',
@@ -18,7 +19,7 @@ describe("import check", () => {
       'import Panel from "./Panel.astro";',
       "<div />"
     ].join("\n"));
-    await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), [
+    await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), [
       'import Hero, { type HeroProps } from "@app/components/lesson/Hero.astro";',
       "# Fixture"
     ].join("\n"));
