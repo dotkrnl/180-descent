@@ -588,7 +588,7 @@ function xhtmlManifestItem(id: string, href: string, xhtml: string, properties: 
   return `<item id="${id}" href="${escapeXml(href)}" media-type="application/xhtml+xml"${propertyAttr}/>`;
 }
 
-export function epubUuidFromString(value: string): string {
+function epubUuidFromString(value: string): string {
   const bytes = createHash("sha1").update(String(value)).digest();
   bytes[6] = (bytes[6] & 0x0f) | 0x50;
   bytes[8] = (bytes[8] & 0x3f) | 0x80;
@@ -634,7 +634,7 @@ function epubImageHref(pathOnly: string): string {
   return "";
 }
 
-export function titlePageDocument(config: Pick<EpubConfig, "meta">): string {
+function titlePageDocument(config: Pick<EpubConfig, "meta">): string {
   const isZh = config.meta.language.startsWith("zh");
   const authorLine = isZh ? `作者：${config.meta.authors}` : `By ${config.meta.authors}`;
   const translatorLine = config.meta.translators

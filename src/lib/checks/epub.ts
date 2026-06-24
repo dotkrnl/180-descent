@@ -63,7 +63,7 @@ export async function checkEpub(options: EpubCheckOptions): Promise<EpubCheckRes
   return { errors };
 }
 
-export function decodeXmlEntities(value: string): string {
+function decodeXmlEntities(value: string): string {
   return value
     .replace(/&#x([0-9a-f]+);/gi, (_, hex: string) => String.fromCodePoint(Number.parseInt(hex, 16)))
     .replace(/&#(\d+);/g, (_, dec: string) => String.fromCodePoint(Number.parseInt(dec, 10)))
@@ -74,7 +74,7 @@ export function decodeXmlEntities(value: string): string {
     .replace(/&amp;/g, "&");
 }
 
-export function isInsideSvg(text: string, index: number): boolean {
+function isInsideSvg(text: string, index: number): boolean {
   const before = text.slice(0, index);
   return before.lastIndexOf("<svg") > before.lastIndexOf("</svg>");
 }
