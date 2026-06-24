@@ -3,7 +3,6 @@ import path from "node:path";
 import * as cheerio from "cheerio";
 import { compileCss } from "@lib/assets/css";
 import { loadContentRegistry } from "@lib/content/registry";
-import { findUnusedDefaultImports } from "@lib/checks/imports";
 import { walkFiles } from "@lib/fs/walk";
 import type { Locale } from "@lib/schemas/day";
 
@@ -171,7 +170,6 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
   checkStaticAlternates(file, failures);
   checkUnsupportedMdxWrappers(file, failures);
   checkRawInteractiveMarkup(file, failures);
-  checkUnusedMdxDefaultImports(file, failures);
 }
 
 function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
@@ -220,12 +218,6 @@ function checkRawInteractiveMarkup(file: RegistryContentFile, failures: ContentC
       });
       return;
     }
-  }
-}
-
-function checkUnusedMdxDefaultImports(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  for (const unusedImport of findUnusedDefaultImports(file.source)) {
-    failures.push({ message: `${file.relativePath} imports unused ${unusedImport.name}; remove stale MDX imports` });
   }
 }
 

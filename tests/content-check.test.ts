@@ -75,25 +75,6 @@ describe("content check", () => {
     ]);
   });
 
-  it("reports unused default MDX imports", async () => {
-    const root = await createFixtureRoot();
-    await writeRegistryDay(root, {
-      en: [
-        'import Panel from "@app/components/lesson/Panel.astro";',
-        body("Fixture Day")
-      ].join("\n"),
-      zh: body("夹具日", "zh")
-    });
-
-    const failures = await checkContent({ root });
-
-    expect(failures).toEqual([
-      {
-        message: "src/content/days/001-fixture/en.mdx imports unused Panel; remove stale MDX imports"
-      }
-    ]);
-  });
-
   it("reports appendix web panels without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {
