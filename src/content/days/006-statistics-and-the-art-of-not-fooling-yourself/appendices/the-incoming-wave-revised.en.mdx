@@ -9,6 +9,12 @@ import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import IncomingWaveAtlas from "@app/components/lesson/interactives/IncomingWaveAtlas.astro";
 import StatisticsIncomingWaveLab from "@app/components/lesson/interactives/StatisticsIncomingWaveLab.astro";
@@ -28,6 +34,7 @@ import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import TableWrap from "@app/components/lesson/TableWrap.astro";
 import Term from "@app/components/lesson/Term.astro";
 
 <Lead drop="T">he main lesson taught the old danger: a p-value plus human flexibility can turn noise into literature. This appendix looks forward. The sharpest post-2020 work is not merely “use AI carefully” or “report confidence intervals.” It is a deeper shift: **validity is being moved outside the model, outside the analyst’s discretion, and sometimes outside the raw data itself.** The new tools wrap black boxes in guarantees, split exploration from inference, keep tests valid while people peek, correct AI labels with human truth, quantify privacy noise, and audit the research machine itself. They are powerful. They are also easy to oversell.</Lead>
@@ -357,19 +364,19 @@ AI can give an illusion of understanding: more outputs, more polish, more confid
 
 The strongest post-2020 methods share a pattern. They accept that the model may be a black box, the analyst may explore, the experiment may be monitored continuously, the data may be privatized, and the research system may be too large for manual checking. Then they ask: **where can a guarantee still be attached?**
 
-<div class="table-wrap throughline-wrap">
-<table class="throughline-table">
-<thead><tr><th>Failure mode</th><th>Old temptation</th><th>New wrapper</th><th>What still can fail</th></tr></thead>
-<tbody>
-<tr><td data-label="Failure mode">Optional stopping</td><td data-label="Old temptation">Peek until p &lt; .05</td><td data-label="New wrapper">Anytime-valid p-values, e-processes, confidence sequences</td><td data-label="What still can fail">Power, implementation, and whether people actually use the right procedure</td></tr>
-<tr><td data-label="Failure mode">Black-box predictions</td><td data-label="Old temptation">Treat AI outputs as truth</td><td data-label="New wrapper">Conformal sets, conformal risk control, PPI rectifiers</td><td data-label="What still can fail">Exchangeability, calibration coverage, bad gold labels, deployment shift</td></tr>
-<tr><td data-label="Failure mode">Flexible causal adjustment</td><td data-label="Old temptation">Choose a convenient regression</td><td data-label="New wrapper">DML, orthogonal scores, cross-fitting</td><td data-label="What still can fail">Unmeasured confounding and wrong identification arguments</td></tr>
-<tr><td data-label="Failure mode">Exploratory discovery</td><td data-label="Old temptation">Select then infer as if preplanned</td><td data-label="New wrapper">Post-selection inference, data splitting/fission/thinning, stability corrections</td><td data-label="What still can fail">Power loss, narrow applicability, unreported exploration</td></tr>
-<tr><td data-label="Failure mode">Privacy-filtered data</td><td data-label="Old temptation">Analyze released outputs as raw observations</td><td data-label="New wrapper">Noise-aware DP inference, private bootstrap, valid DP CIs</td><td data-label="What still can fail">Wide intervals, weak utility, misunderstood privacy budgets</td></tr>
-<tr><td data-label="Failure mode">Automated science</td><td data-label="Old temptation">Let the agent report the prettiest result</td><td data-label="New wrapper">Prompt logs, repeated runs, hidden evals, multiverse reporting, forensic triage</td><td data-label="What still can fail">Opaque models, benchmark games, publication incentives</td></tr>
-</tbody>
-</table>
-</div>
+<TableWrap class="throughline-wrap">
+<DataTable class="throughline-table">
+<DataTableHead><DataTableRow><DataTableHeader>Failure mode</DataTableHeader><DataTableHeader>Old temptation</DataTableHeader><DataTableHeader>New wrapper</DataTableHeader><DataTableHeader>What still can fail</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell dataLabel="Failure mode">Optional stopping</DataTableCell><DataTableCell dataLabel="Old temptation">Peek until p &lt; .05</DataTableCell><DataTableCell dataLabel="New wrapper">Anytime-valid p-values, e-processes, confidence sequences</DataTableCell><DataTableCell dataLabel="What still can fail">Power, implementation, and whether people actually use the right procedure</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="Failure mode">Black-box predictions</DataTableCell><DataTableCell dataLabel="Old temptation">Treat AI outputs as truth</DataTableCell><DataTableCell dataLabel="New wrapper">Conformal sets, conformal risk control, PPI rectifiers</DataTableCell><DataTableCell dataLabel="What still can fail">Exchangeability, calibration coverage, bad gold labels, deployment shift</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="Failure mode">Flexible causal adjustment</DataTableCell><DataTableCell dataLabel="Old temptation">Choose a convenient regression</DataTableCell><DataTableCell dataLabel="New wrapper">DML, orthogonal scores, cross-fitting</DataTableCell><DataTableCell dataLabel="What still can fail">Unmeasured confounding and wrong identification arguments</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="Failure mode">Exploratory discovery</DataTableCell><DataTableCell dataLabel="Old temptation">Select then infer as if preplanned</DataTableCell><DataTableCell dataLabel="New wrapper">Post-selection inference, data splitting/fission/thinning, stability corrections</DataTableCell><DataTableCell dataLabel="What still can fail">Power loss, narrow applicability, unreported exploration</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="Failure mode">Privacy-filtered data</DataTableCell><DataTableCell dataLabel="Old temptation">Analyze released outputs as raw observations</DataTableCell><DataTableCell dataLabel="New wrapper">Noise-aware DP inference, private bootstrap, valid DP CIs</DataTableCell><DataTableCell dataLabel="What still can fail">Wide intervals, weak utility, misunderstood privacy budgets</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="Failure mode">Automated science</DataTableCell><DataTableCell dataLabel="Old temptation">Let the agent report the prettiest result</DataTableCell><DataTableCell dataLabel="New wrapper">Prompt logs, repeated runs, hidden evals, multiverse reporting, forensic triage</DataTableCell><DataTableCell dataLabel="What still can fail">Opaque models, benchmark games, publication incentives</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
+</TableWrap>
 The original statistics crisis was not caused by evil people. It was caused by flexible humans using brittle procedures in incentive systems that rewarded clean stories. The next crisis will rhyme: flexible machines using brittle evaluations in incentive systems that reward impressive outputs. The cure is the same at a higher level: make the forks visible, attach guarantees where they belong, and refuse to mistake polish for contact with truth.
 
 </ContentSection>

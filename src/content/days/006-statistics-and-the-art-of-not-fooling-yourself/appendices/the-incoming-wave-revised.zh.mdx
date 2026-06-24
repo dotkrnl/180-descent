@@ -9,6 +9,12 @@ import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import IncomingWaveAtlas from "@app/components/lesson/interactives/IncomingWaveAtlas.astro";
 import StatisticsIncomingWaveLab from "@app/components/lesson/interactives/StatisticsIncomingWaveLab.astro";
@@ -29,6 +35,7 @@ import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import TableWrap from "@app/components/lesson/TableWrap.astro";
 import Term from "@app/components/lesson/Term.astro";
 
 <Lead drop="正">文讨论的危险是：<Term>p 值</Term>加上人类的灵活性，可以将噪声转化为文献。本附录则展望未来。2020 年后最值得关注的研究进展并非仅仅是「谨慎使用 AI」或「报告置信区间」。更深层的变化，是把统计保证落实到具体的工作流环节：停止规则、校准集、金标准标注、选择程序、隐私机制和审计日志。新方法可以在持续查看数据时维持错误率控制，用少量可靠标注校正大规模模型预测，或者把隐私机制产生的额外噪声计入不确定性。但每种方法都只在特定条件下有效，不能把它们当成万能保险。</Lead>
@@ -366,19 +373,19 @@ AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更�
 
 2020 年后最强大的方法共享一个模式。它们接受模型可能是黑盒、分析师可能去探索、实验可能被持续监测、数据可能被隐私保护机制处理、且科研系统可能庞大到无法人工检查。然后它们追问：<Highlight>在哪个环节仍能建立统计保证？</Highlight>
 
-<div class="table-wrap throughline-wrap">
-<table class="throughline-table">
-<thead><tr><th>失效模式</th><th>旧有的诱惑</th><th>新的保障机制</th><th>何处仍会失效</th></tr></thead>
-<tbody>
-<tr><td data-label="失效模式">可选停止</td><td data-label="旧有的诱惑">偷看到 p &lt; .05 为止</td><td data-label="新的保障机制">任意时点有效 p 值、e-过程、置信序列</td><td data-label="何处仍会失效">功效、实施细节、以及人们是否真正使用了正确的程序</td></tr>
-<tr><td data-label="失效模式">黑盒预测</td><td data-label="旧有的诱惑">将 AI 输出视为真值</td><td data-label="新的保障机制">共形集合、共形风险控制、PPI 偏差校正项</td><td data-label="何处仍会失效">可交换性、校准覆盖率、有偏或低质量的金标准标注、部署分布偏移</td></tr>
-<tr><td data-label="失效模式">灵活因果调整</td><td data-label="旧有的诱惑">选择一个随手可用的回归模型</td><td data-label="新的保障机制">DML、正交得分、交叉拟合</td><td data-label="何处仍会失效">未测量的混杂因素和错误的识别论证</td></tr>
-<tr><td data-label="失效模式">探索性发现</td><td data-label="旧有的诱惑">筛选后假装是预先计划的推断</td><td data-label="新的保障机制">选择后推断、数据拆分 / 数据裂变 / 数据稀化、稳定性修正</td><td data-label="何处仍会失效">功效损失、适用范围窄、未报告的探索行为</td></tr>
-<tr><td data-label="失效模式">隐私过滤数据</td><td data-label="旧有的诱惑">将发布的输出视为原始观测值进行分析</td><td data-label="新的保障机制">噪声感知型 DP 推断、差分隐私 bootstrap（自助法）、有效的 DP 置信区间</td><td data-label="何处仍会失效">区间过宽、效用弱、隐私预算设定或解释不当</td></tr>
-<tr><td data-label="失效模式">自动化科学</td><td data-label="旧有的诱惑">让智能体报告最有利的结果</td><td data-label="新的保障机制">提示词日志、重复运行、隐藏测试集评估、多重宇宙报告、统计取证风险筛查</td><td data-label="何处仍会失效">不透明模型、围绕公开基准的策略性优化、发表激励</td></tr>
-</tbody>
-</table>
-</div>
+<TableWrap class="throughline-wrap">
+<DataTable class="throughline-table">
+<DataTableHead><DataTableRow><DataTableHeader>失效模式</DataTableHeader><DataTableHeader>旧有的诱惑</DataTableHeader><DataTableHeader>新的保障机制</DataTableHeader><DataTableHeader>何处仍会失效</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell dataLabel="失效模式">可选停止</DataTableCell><DataTableCell dataLabel="旧有的诱惑">偷看到 p &lt; .05 为止</DataTableCell><DataTableCell dataLabel="新的保障机制">任意时点有效 p 值、e-过程、置信序列</DataTableCell><DataTableCell dataLabel="何处仍会失效">功效、实施细节、以及人们是否真正使用了正确的程序</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="失效模式">黑盒预测</DataTableCell><DataTableCell dataLabel="旧有的诱惑">将 AI 输出视为真值</DataTableCell><DataTableCell dataLabel="新的保障机制">共形集合、共形风险控制、PPI 偏差校正项</DataTableCell><DataTableCell dataLabel="何处仍会失效">可交换性、校准覆盖率、有偏或低质量的金标准标注、部署分布偏移</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="失效模式">灵活因果调整</DataTableCell><DataTableCell dataLabel="旧有的诱惑">选择一个随手可用的回归模型</DataTableCell><DataTableCell dataLabel="新的保障机制">DML、正交得分、交叉拟合</DataTableCell><DataTableCell dataLabel="何处仍会失效">未测量的混杂因素和错误的识别论证</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="失效模式">探索性发现</DataTableCell><DataTableCell dataLabel="旧有的诱惑">筛选后假装是预先计划的推断</DataTableCell><DataTableCell dataLabel="新的保障机制">选择后推断、数据拆分 / 数据裂变 / 数据稀化、稳定性修正</DataTableCell><DataTableCell dataLabel="何处仍会失效">功效损失、适用范围窄、未报告的探索行为</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="失效模式">隐私过滤数据</DataTableCell><DataTableCell dataLabel="旧有的诱惑">将发布的输出视为原始观测值进行分析</DataTableCell><DataTableCell dataLabel="新的保障机制">噪声感知型 DP 推断、差分隐私 bootstrap（自助法）、有效的 DP 置信区间</DataTableCell><DataTableCell dataLabel="何处仍会失效">区间过宽、效用弱、隐私预算设定或解释不当</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="失效模式">自动化科学</DataTableCell><DataTableCell dataLabel="旧有的诱惑">让智能体报告最有利的结果</DataTableCell><DataTableCell dataLabel="新的保障机制">提示词日志、重复运行、隐藏测试集评估、多重宇宙报告、统计取证风险筛查</DataTableCell><DataTableCell dataLabel="何处仍会失效">不透明模型、围绕公开基准的策略性优化、发表激励</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
+</TableWrap>
 最初的统计学危机并不只由恶意造假造成。它也来自灵活的人类在奖励「漂亮故事」的激励系统中，使用脆弱的程序。下一次危机可能有异曲同工之处：灵活的机器在奖励「惊人产出」的激励系统中，使用脆弱的评估方案。其解药在更高层面是一致的：使分岔路径可见，在合适环节建立统计保证，并拒绝将呈现精美误认为已有可靠证据支撑。
 
 </ContentSection>

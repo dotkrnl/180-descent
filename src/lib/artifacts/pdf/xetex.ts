@@ -530,7 +530,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const caption = renderChildren(node.children ?? [], state, { block: false }).trim();
     return renderImage(src, caption, state);
   }
-  if (name === "table") return renderJsxTable(node, state);
+  if (isTableComponent(name)) return renderJsxTable(node, state);
   if (name === "br") return context.tableCell ? " " : "\\\\";
   if (name === "hr") return "\\begin{center}\\rule{0.32\\linewidth}{0.4pt}\\end{center}";
 
@@ -953,19 +953,31 @@ function renderJsxTable(node: MdxNode, state: MdxRenderState): string {
 
 function collectTableRows(node: MdxNode, state: MdxRenderState, table: LatexTable, inHeader: boolean): void {
   const name = node.name ?? "";
-  const header = inHeader || name === "thead";
-  if (name === "tr") {
+  const header = inHeader || name === "thead" || name === "DataTableHead";
+  if (name === "tr" || name === "DataTableRow") {
     const cells = (node.children ?? [])
-      .filter((child) => ["td", "th"].includes(child.name ?? ""))
+      .filter((child) => isTableCellComponent(child.name ?? ""))
       .map((cell) => renderChildren(cell.children ?? [], state, { tableCell: true }).trim().replace(/\s+/g, " "));
     if (cells.length) {
       const index = table.rows.length;
       table.rows.push(cells);
-      if (header || (node.children ?? []).some((child) => child.name === "th")) table.headerRows.add(index);
+      if (header || (node.children ?? []).some((child) => isTableHeaderComponent(child.name ?? ""))) table.headerRows.add(index);
     }
     return;
   }
   for (const child of node.children ?? []) collectTableRows(child, state, table, header);
+}
+
+function isTableComponent(name: string): boolean {
+  return ["table", "DataTable"].includes(name);
+}
+
+function isTableCellComponent(name: string): boolean {
+  return ["td", "th", "DataTableCell", "DataTableHeader"].includes(name);
+}
+
+function isTableHeaderComponent(name: string): boolean {
+  return ["th", "DataTableHeader"].includes(name);
 }
 
 function latexTable(table: LatexTable): string {
@@ -1515,6 +1527,7 @@ function dayBlock(day: ArtifactBookDay): string {
 function isBlockMdxElement(node: MdxNode): boolean {
   return ["mdxJsxFlowElement", "mdxJsxTextElement"].includes(node.type) && [
     "SimpleTable",
+    "DataTable",
     "ImageFigure",
     "MathBlock",
     "table",

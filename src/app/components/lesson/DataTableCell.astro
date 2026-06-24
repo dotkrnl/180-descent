@@ -1,0 +1,12 @@
+---
+interface Props {
+  class?: string;
+  dataLabel?: string;
+}
+
+const { dataLabel } = Astro.props;
+const className = Astro.props.class;
+---
+<td class={className} data-label={dataLabel}>
+  <slot />
+</td>
