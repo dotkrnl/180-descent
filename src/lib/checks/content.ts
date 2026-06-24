@@ -26,6 +26,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<\/?blockquote(?:\s|>)/, "use <BlockQuote>"],
   [/<h3>/, "use Markdown headings"],
   [/<\/?p(?:\s|>)/, "use Markdown paragraphs, <Lead>, <FormatOnly>, <LessonNote>, or a shared paragraph component"],
+  [/<br\s*\/?>/i, "use Markdown line breaks or a shared block component"],
   [/<\/?(?:ul|li)(?:\s|>)/, "use Markdown lists or shared list components"],
   [/<div class="roadmap">/, "use <Roadmap>"],
   [/<div class="def">/, "use <DefinitionBox>"],
