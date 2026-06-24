@@ -40,7 +40,7 @@ The Cloudflare Pages project name is `180-descent`.
 
 ## Content Workflow
 
-Use the single agent-agnostic workflow at `docs/workflows/180-descent-content/` for adding days, adding appendices, editing paired Chinese content, extracting reusable components, and maintaining artifact variants. Codex skills live at `.codex/skills/`.
+Use the single agent-agnostic workflow at `docs/workflows/180-descent/` for adding days, adding appendices, editing paired Chinese content, extracting reusable components, and maintaining artifact variants. Codex skills live at `.codex/skills/`.
 
 Day source is split by responsibility:
 

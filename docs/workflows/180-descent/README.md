@@ -45,9 +45,7 @@ boundary.
 
 1. Pick the canonical `###-slug` path from the syllabus and create or edit
    `src/content/days/###-slug/day.yaml`.
-2. Keep English and Chinese locale entries paired when the day is published. If
-   a locale is intentionally absent, its manifest status must explain that state
-   through the existing schema values.
+2. Keep English and Chinese locale entries paired when the day is published.
 3. Put page title, summary, block, threads, appendices, components, and assets
    in `day.yaml`; do not duplicate routing metadata elsewhere.
 4. Write lesson bodies as real MDX. Import lesson components explicitly at the
