@@ -17,6 +17,12 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -185,16 +191,18 @@ In 1982 his IBM colleague **Charles Bennett** closed the trap on Maxwell's demon
 
 #### The Landauer Erasure Machine
 
-<table class="alt-table">
-<thead><tr><th>Step</th><th>Logical state</th><th>Physical move</th><th>Thermodynamic reading</th></tr></thead>
-<tbody>
-<tr><td>0</td><td>Bit can be 0 or 1</td><td>A barrier separates two stable wells.</td><td>No heat cost is forced by the logic.</td></tr>
-<tr><td>1</td><td>Old value becomes unprotected</td><td>Lower the barrier between wells.</td><td>This can be done reversibly in principle.</td></tr>
-<tr><td>2</td><td>Drive toward 0</td><td>Bias the landscape so both possible starts end left.</td><td>Work is dissipated as heat because the reset maps two possible inputs to one output.</td></tr>
-<tr><td>3</td><td>Bit reads 0</td><td>Raise the barrier again.</td><td>Two possible pasts have become one present.</td></tr>
-<tr><td>4</td><td>One fair unknown bit erased</td><td>Reset complete.</td><td>In the ideal standard model, at least <MathInline latex={String.raw`k_B T \ln 2`} /> of work is required and the corresponding entropy is transferred to the environment.</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>Step</DataTableHeader><DataTableHeader>Logical state</DataTableHeader><DataTableHeader>Physical move</DataTableHeader><DataTableHeader>Thermodynamic reading</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>0</DataTableCell><DataTableCell>Bit can be 0 or 1</DataTableCell><DataTableCell>A barrier separates two stable wells.</DataTableCell><DataTableCell>No heat cost is forced by the logic.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>1</DataTableCell><DataTableCell>Old value becomes unprotected</DataTableCell><DataTableCell>Lower the barrier between wells.</DataTableCell><DataTableCell>This can be done reversibly in principle.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>2</DataTableCell><DataTableCell>Drive toward 0</DataTableCell><DataTableCell>Bias the landscape so both possible starts end left.</DataTableCell><DataTableCell>Work is dissipated as heat because the reset maps two possible inputs to one output.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>3</DataTableCell><DataTableCell>Bit reads 0</DataTableCell><DataTableCell>Raise the barrier again.</DataTableCell><DataTableCell>Two possible pasts have become one present.</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>4</DataTableCell><DataTableCell>One fair unknown bit erased</DataTableCell><DataTableCell>Reset complete.</DataTableCell><DataTableCell>In the ideal standard model, at least <MathInline latex={String.raw`k_B T \ln 2`} /> of work is required and the corresponding entropy is transferred to the environment.</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 </FormatAlt>
 
 <ContentSection class="frontier">

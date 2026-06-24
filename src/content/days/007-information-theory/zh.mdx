@@ -17,6 +17,12 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import DataTable from "@app/components/lesson/DataTable.astro";
+import DataTableBody from "@app/components/lesson/DataTableBody.astro";
+import DataTableCell from "@app/components/lesson/DataTableCell.astro";
+import DataTableHead from "@app/components/lesson/DataTableHead.astro";
+import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
+import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -188,16 +194,18 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 #### 兰道尔擦除机
 
-<table class="alt-table">
-<thead><tr><th>步骤</th><th>逻辑状态</th><th>物理动作</th><th>热力学读数</th></tr></thead>
-<tbody>
-<tr><td>0</td><td>比特可为 0 或 1</td><td>屏障分隔了两个稳定的势阱。</td><td>逻辑本身没有强制产生任何热量开销。</td></tr>
-<tr><td>1</td><td>旧值不再受保护</td><td>降下势阱之间的壁障。</td><td>原则上这可以通过可逆操作完成。</td></tr>
-<tr><td>2</td><td>强行归零</td><td>偏置地貌，使所有可能的初始状态都落到左侧。</td><td>由于重置把两个可能输入映射为一个输出，输入的功会以热量形式耗散。</td></tr>
-<tr><td>3</td><td>比特读数为 0</td><td>再次升起壁障。</td><td>两种可能的过去压缩为了一个现在。</td></tr>
-<tr><td>4</td><td>一个未知公平比特已擦除</td><td>重置完成。</td><td>在理想标准模型中，至少需要 <MathInline latex={String.raw`k_B T \ln 2`} /> 的功，并将相应熵转移到环境。</td></tr>
-</tbody>
-</table>
+<DataTable>
+<DataTableHead>
+<DataTableRow><DataTableHeader>步骤</DataTableHeader><DataTableHeader>逻辑状态</DataTableHeader><DataTableHeader>物理动作</DataTableHeader><DataTableHeader>热力学读数</DataTableHeader></DataTableRow>
+</DataTableHead>
+<DataTableBody>
+<DataTableRow><DataTableCell>0</DataTableCell><DataTableCell>比特可为 0 或 1</DataTableCell><DataTableCell>屏障分隔了两个稳定的势阱。</DataTableCell><DataTableCell>逻辑本身没有强制产生任何热量开销。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>1</DataTableCell><DataTableCell>旧值不再受保护</DataTableCell><DataTableCell>降下势阱之间的壁障。</DataTableCell><DataTableCell>原则上这可以通过可逆操作完成。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>2</DataTableCell><DataTableCell>强行归零</DataTableCell><DataTableCell>偏置地貌，使所有可能的初始状态都落到左侧。</DataTableCell><DataTableCell>由于重置把两个可能输入映射为一个输出，输入的功会以热量形式耗散。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>3</DataTableCell><DataTableCell>比特读数为 0</DataTableCell><DataTableCell>再次升起壁障。</DataTableCell><DataTableCell>两种可能的过去压缩为了一个现在。</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>4</DataTableCell><DataTableCell>一个未知公平比特已擦除</DataTableCell><DataTableCell>重置完成。</DataTableCell><DataTableCell>在理想标准模型中，至少需要 <MathInline latex={String.raw`k_B T \ln 2`} /> 的功，并将相应熵转移到环境。</DataTableCell></DataTableRow>
+</DataTableBody>
+</DataTable>
 </FormatAlt>
 
 <ContentSection class="frontier">
@@ -304,4 +312,3 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </Sources>
 
 </Wrap>
-
