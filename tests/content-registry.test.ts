@@ -23,7 +23,7 @@ describe("target content registry", () => {
     });
 
     expect(parsed.published).toBe(false);
-    expect(parsed.sources.required).toBe(true);
+    expect(parsed.assets).toEqual([]);
   });
 
   it("loads paired locale bodies, appendices, assets, and component declarations", async () => {

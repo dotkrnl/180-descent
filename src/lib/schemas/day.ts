@@ -69,10 +69,7 @@ export const dayManifestSchema = z.object({
   ),
   appendices: z.array(appendixSchema).default([]),
   components: z.array(componentSchema).default([]),
-  assets: z.array(assetSchema).default([]),
-  sources: z.object({
-    required: z.boolean().default(true)
-  }).default({ required: true })
+  assets: z.array(assetSchema).default([])
 }).strict();
 
 export type Locale = z.infer<typeof localeSchema>;
