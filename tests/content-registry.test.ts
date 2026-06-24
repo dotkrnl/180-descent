@@ -26,7 +26,7 @@ describe("target content registry", () => {
     expect(parsed.assets).toEqual([]);
   });
 
-  it("loads paired locale bodies, appendices, assets, and component declarations", async () => {
+  it("loads paired locale bodies, appendices, assets, and interaction scripts", async () => {
     const registry = await loadContentRegistry({ daysDir: fixtureDaysDir });
     const day = registry.days[0];
 
@@ -75,7 +75,7 @@ describe("target content registry", () => {
     await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Manifest reference escapes day directory: ../outside.mdx");
   });
 
-  it("loads project day content with paired appendices and components", async () => {
+  it("loads project day content with paired appendices and interaction scripts", async () => {
     const registry = await loadContentRegistry({ daysDir: projectDaysDir });
     const daysByPath = new Map(registry.days.map((day) => [day.manifest.path, day]));
     const day001 = daysByPath.get("001-what-is-knowledge");
