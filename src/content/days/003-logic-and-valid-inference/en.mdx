@@ -15,7 +15,7 @@ import InferenceInspector from "@app/components/lesson/interactives/InferenceIns
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
 import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
@@ -131,7 +131,7 @@ These are *formal* fallacies — broken shapes. Their cousins, the *informal* fa
 {/* ===================== INTERACTIVE 1 ===================== */}
 <InferenceInspector locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Conditional Forms
 
 <PanelNote>Conditional arguments can be sorted by form before their content is judged.</PanelNote>
@@ -140,7 +140,7 @@ These are *formal* fallacies — broken shapes. Their cousins, the *informal* fa
   headers={["Form","Pattern","Verdict","Why"]}
   rows={[["Modus ponens","If P then Q; P; therefore Q","Valid","Affirming the sufficient condition forces the consequent."],["Modus tollens","If P then Q; not-Q; therefore not-P","Valid","If Q must follow from P, the absence of Q rules P out."],["Affirming the consequent","If P then Q; Q; therefore P","Invalid","Q may have other causes: Joe can live in California without living in San Diego."],["Denying the antecedent","If P then Q; not-P; therefore not-Q","Invalid","Removing one sufficient cause does not remove every route to Q: sprinklers can wet the ground."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>The lineage</SectionEyebrow>

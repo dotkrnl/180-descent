@@ -15,7 +15,7 @@ import InferenceInspector from "@app/components/lesson/interactives/InferenceIns
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
 import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
@@ -131,7 +131,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 {/* ===================== INTERACTIVE 1 ===================== */}
 <InferenceInspector locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 条件论证形式表
 
 <PanelNote>条件论证可在判断内容之前，先按形式分类。</PanelNote>
@@ -140,7 +140,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
   headers={["形式","模式","判定","理由"]}
   rows={[["肯定前件式","若 P 则 Q；P；故 Q","有效","肯定充分条件，结论便逃不掉。"],["否定后件式","若 P 则 Q；非-Q；故非-P","有效","若 Q 必随 P 而来，则 Q 不在场便可排除 P。"],["肯定后件","若 P 则 Q；Q；故 P","无效","Q 可能有别的原因：Joe 可以住在加利福尼亚，却不住在圣迭戈。"],["否定前件","若 P 则 Q；非-P；故非-Q","无效","排除一个充分原因，不等于排除 Q 的所有来路：洒水器仍可打湿地面。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>脉络</SectionEyebrow>

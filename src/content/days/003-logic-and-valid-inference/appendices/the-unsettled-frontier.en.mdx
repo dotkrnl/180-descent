@@ -17,7 +17,7 @@ import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
 import Panel from "@app/components/lesson/Panel.astro";
@@ -263,14 +263,14 @@ You've watched the filter applied six times. Now apply it yourself. Each card be
 
 <HypeFilterTrainer locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### The Hype-Filter Trainer, as a calibration key
 
 <SimpleTable
   headers={["Claim","Best tag","Calibration note"]}
   rows={[["An open 32B Lean prover reaches about 90% on miniF2F.","Established","Lean checking makes correctness auditable; the sampling budget still matters."],["GPT-5 solved ten previously unsolved Erdos problems.","Hype","The contested public version describes literature retrieval, not ten new results."],["FunSearch improved the dimension-8 cap-set construction.","Established","The construction is published and directly checkable, though it was search rather than insight."],["o3 scored over 25% on FrontierMath.","Hype","The number is fragile because of benchmark access and later lower independent testing."],["Erdos problem #728 was more-or-less autonomously advanced and Lean-checked.","Promising","Real and interesting, but still early and with human feedback around the loop."],["Altered word-problem failures prove LLMs cannot reason.","Promising","The fragility result is real; the universal conclusion remains disputed."],["A chain-of-thought transcript faithfully reports the model's actual reasoning.","Hype","Evidence suggests explanations can be post-hoc rationalizations."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 </ContentSection>
 

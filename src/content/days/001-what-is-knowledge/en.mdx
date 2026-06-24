@@ -11,7 +11,7 @@ import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
 import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
@@ -99,7 +99,7 @@ Gettier wasn't first. Bertrand Russell had the stopped-clock case in *Human Know
 {/* ===================== INTERACTIVE 1 ===================== */}
 <GettierMachine locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Gettier Cases
 
 <PanelNote>Key cases:</PanelNote>
@@ -108,7 +108,7 @@ Gettier wasn't first. Bertrand Russell had the stopped-clock case in *Human Know
   headers={["Case","Belief","Truth","Justification","Luck","Verdict"]}
   rows={[["Plain knowing","Yes","Yes","Yes","No","Knowledge on the classic view"],["Stopped clock","Yes","Yes","Yes","Yes","Not knowledge: truth arrives by coincidence"],["Lucky guess","Yes","Yes","No","Yes","Not knowledge: no justification"],["Confident error","Yes","No","Yes","No","Not knowledge: the claim is false"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>The patch wars</SectionEyebrow>
@@ -227,7 +227,7 @@ Every day in this course ends at the research frontier, with each claim tagged f
 {/* ===================== INTERACTIVE 3 ===================== */}
 <CredenceDial locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Credence Coherence
 
 If your credence in *S* and your credence in *not-S* sum to 1.00, the pair is coherent. If they sum above 1.00, you will overpay for bets where exactly one can win. If they sum below 1.00, a bookie can reverse the bets and still guarantee a profit.
@@ -236,7 +236,7 @@ If your credence in *S* and your credence in *not-S* sum to 1.00, the pair is co
   headers={["Credence in S","Credence in not-S","Sum","Result"]}
   rows={[["0.50","0.50","1.00","Coherent"],["0.70","0.60","1.30","Guaranteed 0.30 loss if you buy both $1 bets"],["0.30","0.40","0.70","Guaranteed 0.30 loss if the bookie buys both bets from you"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection class="frontier">
 <Claim>

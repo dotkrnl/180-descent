@@ -18,7 +18,7 @@ import DataTableCell from "@app/components/lesson/DataTableCell.astro";
 import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
 import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
@@ -190,14 +190,14 @@ Which sets up the punchline of the entire day. All of this — Popper, Kuhn, Lak
 {/* ===================== INTERACTIVE 1 ===================== */}
 <DemarcationLab locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Demarcation Criteria
 
 <SimpleTable
   headers={["Claim","Popper","Kuhn","Lakatos","Cluster view"]}
   rows={[["Starlight bends by 1.75 arcseconds","Science","Science","Progressive","Strong scientific profile"],["Mercury retrograde disrupts communication","Not science","Not mature science","Degenerating","Weak profile"],["Class struggle drives history","Often unfalsifiable as used","It depends","Can degenerate","Mixed social science and philosophy"],["String theory","Not yet testable in key forms","Normal science without decisive tests","Open question","Live border case"],["Common descent","Falsifiable","Central biological paradigm","Progressive","Strong scientific profile"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection class="frontier">
 <SectionEyebrow>The frontier · 2026</SectionEyebrow>

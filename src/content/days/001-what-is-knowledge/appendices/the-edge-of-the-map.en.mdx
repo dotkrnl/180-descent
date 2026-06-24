@@ -9,7 +9,6 @@ import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
@@ -175,14 +174,14 @@ The first is a distinction that sounds academic and turns out to be the key to e
 
 <EchoChamber locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Bubble vs. Chamber, as exposure outcomes
 
 <SimpleTable
   headers={["Structure","Outside voices","Exposure outcome","Lesson"]}
   rows={[["Epistemic bubble","Absent, not refuted.","New sources can connect and puncture the bubble.","Exposure can work when the problem is missing information."],["Echo chamber","Present but pre-discredited.","Exposure can reinforce distrust because the chamber predicted hostile outsiders.","The obvious repair can backfire when distrust is built into the structure."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 The second move names a vulnerability inside your own head. In "The Seductions of Clarity" (*Royal Institute of Philosophy Supplement*, 2021), Nguyen argues that the *feeling* of clarity — that satisfying click when everything seems to fall into place — functions as a <Term as="em">thought-terminating heuristic</Term><TipNote text={"A heuristic is a quick rule of thumb: useful because it is fast, risky because it can mislead."} />. We use the sense that a matter has become clear as a signal that we've inquired enough and can stop. Usually fine. But it means clarity can be *weaponized*: a manipulator who can manufacture an exaggerated sense of clarity — a tidy ideology that explains everything, a conspiracy theory where every fact slots satisfyingly into place — can get you to *halt your inquiry early*, before you notice the holes. Notice how this snaps together with §1: clarity is dangerous precisely because it *terminates the zetetic process*. The slickest, most "it all makes sense now" account is, for that very reason, the one to interrogate hardest. The third move completes the toolkit: in "Trust as an Unquestioning Attitude" (*Oxford Studies in Epistemology*, 2022), Nguyen analyzes trust itself as the stance of *not questioning* — of taking something as a settled background you build on without re-checking. Indispensable (you can't re-derive everything from scratch), and exactly therefore exploitable: capture what someone trusts unquestioningly, and you've captured where they'll never think to look.
@@ -209,14 +208,14 @@ The idea (seeded by James Joyce's 1998 "Nonpragmatic Vindication of Probabilism"
 
 <AccuracyDomination locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Accuracy domination, as credence geometry
 
 <SimpleTable
   headers={["Credences","Sum","Geometry","Verdict"]}
   rows={[["P(S)=0.50, P(not-S)=0.50","1.00","On the coherence line.","Undominated: no other credence is closer in every world."],["P(S)=0.80, P(not-S)=0.80","1.60","Above the coherence line.","Dominated by a coherent projection closer to both truth-corners."],["P(S)=0.20, P(not-S)=0.20","0.40","Below the coherence line.","Dominated by a coherent projection closer to both truth-corners."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 What makes this a frontier rather than a footnote: it's an attempt to rebuild the *foundations* of rationality on a single epistemic value — getting close to the truth — and to derive not just <Term as="em">probabilism</Term><TipNote text={"Probabilism is the view that rational degrees of belief should obey the probability axioms."} /> but the update rule (conditionalization) and more besides from accuracy-dominance arguments. If it fully succeeds, the whole Bayesian edifice we started sketching on Day 1 rests on truth, not on betting behavior or psychology. The chip, though, is earned. The *core* dominance theorem for probabilism is established mathematics. The *ambition* — that all epistemic norms fall out of accuracy alone — is contested: the cleanest results lean on technical assumptions (<Term as="em">additivity</Term><TipNote text={"Additivity says that when alternatives cannot both happen, the probability of either one is the sum of their separate probabilities."} />, finitely many propositions) that critics argue smuggle in more than pure "closeness to truth" warrants (Chad Marxen, "Epistemic utility theory's difficult future," *Synthese*, 2021), and rival measures of accuracy can deliver different verdicts. So: a beautiful, genuinely illuminating reframing with a rock-solid center and a contested perimeter — which is, fittingly, the exact shape of this entire appendix.

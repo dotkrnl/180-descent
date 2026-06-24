@@ -15,7 +15,6 @@ import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Lead from "@app/components/lesson/Lead.astro";
@@ -58,7 +57,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 <MutualInformationOverlap locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 #### 互信息随取值相同概率变化的对比
 
 <DataTable>
@@ -70,7 +69,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 <DataTableRow><DataTableCell>1.00</DataTableCell><DataTableCell>0.00 比特</DataTableCell><DataTableCell>1.00 比特</DataTableCell><DataTableCell>完全相同的变量；得知 X 即可完全确定 Y。</DataTableCell></DataTableRow>
 </DataTableBody>
 </DataTable>
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 ### 惊奇税：相对熵
@@ -135,7 +134,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 <HammingCube locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 #### 3 比特重复码的最近邻解码
 
 <DataTable>
@@ -149,7 +148,7 @@ import Threads from "@app/components/lesson/Threads.astro";
 </DataTable>
 码字之间的汉明距离为 3，因此任何单比特错误仍会比另一个码字更接近原始码字。
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 ### 从火星到你的口袋

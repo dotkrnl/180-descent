@@ -25,7 +25,6 @@ import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -97,7 +96,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 {/* ===================== INTERACTIVE 1 ===================== */}
 <FalsePositiveFactory locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 假阳性工厂
 
 <PanelNote>每增加一项看似普通的分析自由度，偶然结果被选中并报告的机会都会增加。</PanelNote>
@@ -115,7 +114,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </DataTable>
 西蒙斯、纳尔逊和西蒙逊展示，即使数据中没有真实效应，结合这四种自由度也能将名义上 5% 的假阳性率提高到约 61%。
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>核心模型</SectionEyebrow>
@@ -161,7 +160,7 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 <EffectSizeDial locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 显著性与大小
 
 <PanelNote>同一个真实效应，会随着样本量和噪声变化而呈现出非常不同的统计表现。</PanelNote>
@@ -179,7 +178,7 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 </DataTable>
 要点不是「p 值越小越好」。p 值会变小，可能因为效应更大，也可能因为样本巨大、噪声更低，或三者同时改变。请同时报告效应量和区间。
 
-</FormatAlt>
+</FormatOnly>
 
 ### 置信区间也常被误读
 
@@ -195,7 +194,7 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 
 <ConfidenceIntervalCoverage locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 <PanelTitle>算例</PanelTitle>
 
 ### 置信区间覆盖率
@@ -206,7 +205,7 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
   headers={["对象","重复使用时会发生什么","正确读法"]}
   rows={[["100 个重复生成的 95% 区间，真实均值 = 0","大约 95 个覆盖 0；大约 5 个漏掉 0。","这个程序具有约 95% 的长期覆盖率。"],["一个观察到的区间，例如 [-0.31, 0.41]","它覆盖真实均值 0。","观察之后，这个区间要么包含 0，要么不包含；95% 属于方法。"],["一个观察到的区间，例如 [0.04, 0.76]","它漏掉真实均值 0。","即使是 95% 的方法，在重复使用中也会产生未覆盖真值的区间。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 ### 为什么小样本研究会夸大检测到的效应
 
@@ -296,7 +295,7 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 </Claim>
 </ContentSection>
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 设定曲线摘要
 
 <PanelNote>同一份合成数据集可以通过多套合理的分析设定进行分析。</PanelNote>
@@ -307,7 +306,7 @@ p 值由效应量、噪声、样本量和模型假设共同决定。只要样本
 />
 诚实的报告是展示所有合理设定下的分布情况；而不诚实的报告则是只展示曲线上最有利的那一点。
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>开放问题</SectionEyebrow>

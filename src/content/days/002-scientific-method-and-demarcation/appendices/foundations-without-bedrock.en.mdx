@@ -13,7 +13,6 @@ import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import EscapeCard from "@app/components/lesson/EscapeCard.astro";
 import EscapeGrid from "@app/components/lesson/EscapeGrid.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import FigureBox from "@app/components/lesson/FigureBox.astro";
 import FigureBoxCaption from "@app/components/lesson/FigureBoxCaption.astro";
@@ -88,14 +87,14 @@ The evidence cannot choose between them, because *every observation confirms bot
 
 <GrueMachine locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Green vs. Grue Projection
 
 <SimpleTable
   headers={["Period","Observed evidence","\"All green\" predicts","\"All grue\" predicts","Lesson"]}
   rows={[["Before 2050","Every examined emerald is green.","Green emeralds.","Green emeralds.","The evidence confirms both descriptions equally."],["After 2050","New observations finally enter the divergent region.","Green emeralds.","Blue emeralds.","Reality can break the tie only after the cutoff is crossed."],["Goodman's point","Past regularity alone does not choose a projectible predicate.","Project green.","Project grue.","Induction needs background habits about which predicates are natural or entrenched."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 The obvious objection — "but *grue* is gerrymandered nonsense, *green* is natural!" — is exactly the trap. Goodman's needle: from *inside* the grue-language, it's *green* that looks weird. Define "bleen" (blue-before-t-or-green-after) and you can define plain old "green" as "grue-before-t-or-bleen-after" — green becomes the funny-looking compound, and grue the simple primitive. There's no view from nowhere that crowns green the natural one. Goodman's own escape was to say we project the predicates that are <Term as="em">entrenched</Term> — the ones our language has used successfully many times before. Which is honest, and also slightly deflating: it grounds the lawfulness of nature not in nature but in the contingent habits of human vocabulary. Hume said our *inferences* rest on custom; Goodman says even the *concepts* we infer with do too. The hole, it turns out, has a basement of its own. <StatusChip status={"hint"} label={"entrenchment · still debated"} printLabel={"debate"} />
@@ -280,14 +279,14 @@ That last number is the killer, and it's the one researchers forget. Here's the 
 
 <DiscoveryPurityEngine locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### The Discovery-Purity Engine, as base-rate scenarios
 
 <SimpleTable
   headers={["Scenario","True hypotheses","Power","Bias","Published positives","PPV"]}
   rows={[["Rosy baseline","100 of 1,000","80%","0%","80 true positives + 45 false positives","64% real"],["Low base rate","20 of 1,000","80%","0%","16 true positives + 49 false positives","25% real"],["Bias added","100 of 1,000","80%","20%","84 true positives + 216 false positives","28% real"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection class="frontier">
 Ioannidis's corollaries fall straight out of the machine, and they read like a map of where the replication crisis hit hardest: the smaller the studies, the smaller the true effects, the more analytical flexibility, the more financial interest, and the *hotter* the field (more teams racing the same question), the lower the chance any given published finding is true. It's not cynicism. It's the geometry of testing rare truths with imperfect instruments. <StatusChip status={"ok"} label={"the model · widely accepted in spirit"} printLabel={"review"} />

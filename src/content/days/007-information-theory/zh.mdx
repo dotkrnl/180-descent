@@ -24,7 +24,6 @@ import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Hero from "@app/components/lesson/Hero.astro";
@@ -119,7 +118,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 {/* ===================== INTERACTIVE 1 ===================== */}
 <EntropyDial locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 <PanelTitle>对照表</PanelTitle>
 
 #### 熵之拨盘
@@ -130,7 +129,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
   headers={["信源","P(正面)","熵","解读"]}
   rows={[["公平硬币","0.50","1.00 比特/投掷","每次投掷都完整回答了一个是/否问题。"],["有偏硬币","0.88","0.53 比特/投掷","常见结果可以用短码表示；罕见结果则需要更长的码字。"],["接近确定源","0.99","0.08 比特/投掷","结果几乎预先已知，因此带来的新信息极少。"],["「q 后是否跟 u？」","0.95","0.29 比特/事件","这是二元事件的熵，不是完整的下一个字符分布。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>历史意义</SectionEyebrow>
@@ -189,7 +188,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 {/* ===================== INTERACTIVE 2 ===================== */}
 <LandauerMachine locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 <PanelTitle>算例</PanelTitle>
 
 #### 兰道尔擦除机
@@ -206,7 +205,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <DataTableRow><DataTableCell>4</DataTableCell><DataTableCell>一个未知公平比特已擦除</DataTableCell><DataTableCell>重置完成。</DataTableCell><DataTableCell>在理想标准模型中，至少需要 <MathInline latex={String.raw`k_B T \ln 2`} /> 的功，并将相应熵转移到环境。</DataTableCell></DataTableRow>
 </DataTableBody>
 </DataTable>
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection class="frontier">
 <SectionEyebrow>前沿 · 2026 年</SectionEyebrow>

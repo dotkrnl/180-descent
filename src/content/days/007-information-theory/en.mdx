@@ -24,7 +24,6 @@ import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Hero from "@app/components/lesson/Hero.astro";
@@ -118,7 +117,7 @@ Shannon's H has the exact algebraic shape — a sum of *p* log *p* — of a quan
 {/* ===================== INTERACTIVE 1 ===================== */}
 <EntropyDial locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 #### The Entropy Dial
 
 <PanelNote>A two-outcome source reaches its maximum entropy when both outcomes are equally likely.</PanelNote>
@@ -127,7 +126,7 @@ Shannon's H has the exact algebraic shape — a sum of *p* log *p* — of a quan
   headers={["Source","P(heads)","Entropy","Reading"]}
   rows={[["Fair coin","0.50","1.00 bit/flip","Every flip answers a full yes/no question."],["Loaded coin","0.88","0.53 bits/flip","The common face is cheap to encode; the rare face is expensive."],["Near-certain source","0.99","0.08 bits/flip","The outcome is almost known in advance, so little information arrives."],["\"u follows q?\"","0.95","0.29 bits/event","This is the entropy of a binary event, not the full next-character distribution."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>Why it mattered</SectionEyebrow>
@@ -186,7 +185,7 @@ In 1982 his IBM colleague **Charles Bennett** closed the trap on Maxwell's demon
 {/* ===================== INTERACTIVE 2 ===================== */}
 <LandauerMachine locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 <PanelTitle>Worked example</PanelTitle>
 
 #### The Landauer Erasure Machine
@@ -203,7 +202,7 @@ In 1982 his IBM colleague **Charles Bennett** closed the trap on Maxwell's demon
 <DataTableRow><DataTableCell>4</DataTableCell><DataTableCell>One fair unknown bit erased</DataTableCell><DataTableCell>Reset complete.</DataTableCell><DataTableCell>In the ideal standard model, at least <MathInline latex={String.raw`k_B T \ln 2`} /> of work is required and the corresponding entropy is transferred to the environment.</DataTableCell></DataTableRow>
 </DataTableBody>
 </DataTable>
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection class="frontier">
 <SectionEyebrow>The frontier · 2026</SectionEyebrow>

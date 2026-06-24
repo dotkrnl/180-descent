@@ -20,7 +20,7 @@ import DataTableCell from "@app/components/lesson/DataTableCell.astro";
 import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -131,7 +131,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 {/* ===================== INTERACTIVE 1 : SIMPSON ===================== */}
 <SimpsonReversalMachine locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 肾结石辛普森反转
 
 <PanelNote>当所有患者汇总时，疗法 B 观测成功率更高；但在小结石和大结石分层内部，疗法 A 的观测成功率都更高。这展示了比例反转，而非疗法优劣的直接因果推荐。</PanelNote>
@@ -142,7 +142,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 />
 汇总比较发生反转，是因为两种疗法的分组中包含了不同比例的小结石和大结石病例。
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 教训是深刻的：你无法单凭一张数据表读出因果关系。完全相同的数字，根据一个甚至可能不在电子表格中的变量，可以支持截然相反的结论。这引出了一个统领后续所有内容的问题——如果数据本身无法告诉你答案，那么什么可以？答案来自一位在 20 世纪 80 年代致力于让机器在不确定性下进行推理的计算机科学家：你需要添加一些数据本身并不包含的东西——一个关于「箭头指向何处」的模型。
@@ -163,7 +163,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 {/* ===================== INTERACTIVE 2 : LADDER ===================== */}
 <CausalLadder locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 珀尔的因果之梯
 
 <DataTable>
@@ -178,7 +178,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </DataTable>
 在最后一行的记号中，<MathInline latex={String.raw`Y_x`} /> 代表在 X 被干预设定为 x 的平行世界里 Y 的潜在值；<MathInline latex={String.raw`X'`} /> 与 <MathInline latex={String.raw`Y'`} /> 是我们已经观测到的现实事实。
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 ### do-算子：观察不等于干预
@@ -207,7 +207,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 {/* ===================== INTERACTIVE 3 : DO vs SEE ===================== */}
 <DoSeeCalculator locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 <PanelTitle>案例详解</PanelTitle>
 
 ### 观察不等于干预
@@ -226,7 +226,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </DataTable>
 默认参数：<MathInline latex={String.raw`P(S=1)=0.45`} />、<MathInline latex={String.raw`a=-2.0`} />、<MathInline latex={String.raw`b=+2.8`} />、<MathInline latex={String.raw`c=-2.2`} />、<MathInline latex={String.raw`d=-1.485`} />、<MathInline latex={String.raw`e=+4.1`} />。公式：<MathInline latex={String.raw`P(Y=1 \mid \operatorname{do}(X=x)) = \sum_s P(Y=1 \mid X=x,S=s)P(S=s)`} />。而观测对照量则使用了 <MathInline latex={String.raw`P(S=s \mid X=x)`} />，当雨水影响带伞行为时，这一项就会发生改变。
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 右图中被切断的箭头就是 do-算子的直观可视化。干预不仅是观察 X，它还会删除指向 X 的箭头，并用你的手取而代之。此时「下雨 → 带伞」的链接被切断，因此在带伞对照中，观测路径「带伞 ← 下雨 → 湿衣」不再开启。在此有向图下，后门调整后的对照量便还原了真实的干预效应。

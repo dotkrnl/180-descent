@@ -18,7 +18,7 @@ import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import IncomingWaveAtlas from "@app/components/lesson/interactives/IncomingWaveAtlas.astro";
 import StatisticsIncomingWaveLab from "@app/components/lesson/interactives/StatisticsIncomingWaveLab.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import MaturityTimeline from "@app/components/lesson/MaturityTimeline.astro";
@@ -80,7 +80,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 <StatisticsIncomingWaveLab kind="peek" locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 可选停止参考
 
 <PanelNote>除非检验是为序贯监测而设计，否则重复查看会提高至少产生一次假警报的几率。</PanelNote>
@@ -93,7 +93,7 @@ import Term from "@app/components/lesson/Term.astro";
 <DataTableRow><DataTableCell>100</DataTableCell><DataTableCell>约 99%</DataTableCell><DataTableCell>5%</DataTableCell></DataTableRow>
 </DataTableBody>
 </DataTable>
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-conformal">
 <SectionEyebrow number="§2"> 为黑盒模型加上一层统计保证</SectionEyebrow>
@@ -115,7 +115,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 <StatisticsIncomingWaveLab kind="conformal" locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 共形风险参考
 
 <PanelNote>共形保证在覆盖率与集合大小之间进行权衡，且取决于校准数据是否与部署环境相似。</PanelNote>
@@ -128,7 +128,7 @@ import Term from "@app/components/lesson/Term.astro";
 <DataTableRow><DataTableCell>部署分布偏移</DataTableCell><DataTableCell>无自动改善</DataTableCell><DataTableCell>可交换性可能被破坏。</DataTableCell></DataTableRow>
 </DataTableBody>
 </DataTable>
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-ppi">
 <SectionEyebrow number="§3"> 利用 AI 预测而不全盘接受其错误</SectionEyebrow>
@@ -150,7 +150,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 <StatisticsIncomingWaveLab kind="ppi" locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 预测辅助推断参考
 
 <PanelNote>PPI 利用模型预测提高精度，依靠金标准标注保证统计有效性。</PanelNote>
@@ -159,7 +159,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
   headers={["估计量","优势","失效模式"]}
   rows={[["仅标注","依靠金标准标注保证统计有效性","标注稀缺时区间较宽。"],["朴素地将 ML 视为真值","非常窄","模型有偏差时可能错过真值。"],["PPI","校正后仍保持的精度","需要具有代表性的金标准标注。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-dml">
 <SectionEyebrow number="§4"> 机器拟合辅助模型，人类负责因果假设</SectionEyebrow>
@@ -214,7 +214,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 <StatisticsIncomingWaveLab kind="paths" locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### AI 分析多重宇宙参考
 
 <PanelNote>更多的提示词、模型、结果和清洗规则会使可能的分析路径成倍增加。</PanelNote>
@@ -223,7 +223,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
   headers={["提示词","模型","结果变量","清洗规则","路径数"]}
   rows={[["4","3","5","4","240"],["10","5","10","5","2,500"],["单一研究预登记方案","1","1","1","1"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-privacy">
 <SectionEyebrow number="§6"> 当发布的数据并非原始数据</SectionEyebrow>
@@ -355,7 +355,7 @@ AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更�
 
 <StatisticsIncomingWaveLab kind="benchmark" locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 基准测试污染参考
 
 <PanelNote>当调优和污染累积时，公开基准测试分数可能会高估未公开测试集上的部署表现。</PanelNote>
@@ -364,7 +364,7 @@ AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更�
   headers={["情况","公开分数","隐藏测试集"]}
   rows={[["干净的留出集，少量提交","更接近实际部署","更可信。"],["存在污染","虚高","如果真正隐藏则影响较小。"],["重复的排行榜调优","无需新能力即可上升","差距揭示了过拟合。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>贯穿其中的主线</SectionEyebrow>

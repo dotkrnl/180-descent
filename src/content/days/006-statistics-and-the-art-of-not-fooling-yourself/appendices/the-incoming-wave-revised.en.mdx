@@ -18,7 +18,7 @@ import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import IncomingWaveAtlas from "@app/components/lesson/interactives/IncomingWaveAtlas.astro";
 import StatisticsIncomingWaveLab from "@app/components/lesson/interactives/StatisticsIncomingWaveLab.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import MaturityTimeline from "@app/components/lesson/MaturityTimeline.astro";
 import MaturityTimelineItem from "@app/components/lesson/MaturityTimelineItem.astro";
@@ -79,7 +79,7 @@ Optional stopping was one of the False-Positive Factory switches. Anytime-valid 
 
 <StatisticsIncomingWaveLab kind="peek" locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Optional-stopping reference
 
 <PanelNote>Repeated looks raise the chance of at least one false alarm unless the test is designed for sequential monitoring.</PanelNote>
@@ -88,7 +88,7 @@ Optional stopping was one of the False-Positive Factory switches. Anytime-valid 
   headers={["Looks at alpha .05","Naive false-alarm risk","Anytime-valid target"]}
   rows={[["1","5%","5%"],["12","About 46%","5%"],["100","About 99%","5%"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-conformal">
 <SectionEyebrow number="§2"> The guarantee that wraps a black box</SectionEyebrow>
@@ -110,7 +110,7 @@ The hype filter: marginal coverage is real; conditional coverage is hard. Under 
 
 <StatisticsIncomingWaveLab kind="conformal" locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Conformal-risk reference
 
 <PanelNote>Conformal guarantees trade coverage against set size and depend on calibration data resembling deployment.</PanelNote>
@@ -119,7 +119,7 @@ The hype filter: marginal coverage is real; conditional coverage is hard. Under 
   headers={["Choice","What improves","What can fail"]}
   rows={[["Lower alpha","Higher target coverage","Larger prediction sets."],["Better model skill","Smaller useful sets","Still needs calibration."],["Deployment shift","Nothing automatically","Exchangeability can break."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-ppi">
 <SectionEyebrow number="§3"> Using AI predictions without swallowing their errors</SectionEyebrow>
@@ -141,7 +141,7 @@ The limitation is practical, not philosophical. You still need a gold-standard l
 
 <StatisticsIncomingWaveLab kind="ppi" locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Prediction-powered inference reference
 
 <PanelNote>PPI uses model predictions for precision and gold labels for validity.</PanelNote>
@@ -150,7 +150,7 @@ The limitation is practical, not philosophical. You still need a gold-standard l
   headers={["Estimator","Strength","Failure mode"]}
   rows={[["Labeled-only","Valid from gold labels","Wide interval when labels are scarce."],["Naive ML-as-truth","Very narrow","Can miss truth when model is biased."],["PPI","Corrected precision","Needs representative gold labels."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-dml">
 <SectionEyebrow number="§4"> Machines for nuisance, humans for assumptions</SectionEyebrow>
@@ -205,7 +205,7 @@ The hype filter: this is not easy, and it is not a substitute for preregistratio
 
 <StatisticsIncomingWaveLab kind="paths" locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### AI-analysis multiverse reference
 
 <PanelNote>More prompts, models, outcomes, and cleaning rules multiply possible analysis paths.</PanelNote>
@@ -214,7 +214,7 @@ The hype filter: this is not easy, and it is not a substitute for preregistratio
   headers={["Prompts","Models","Outcomes","Cleaning rules","Paths"]}
   rows={[["4","3","5","4","240"],["10","5","10","5","2,500"],["One preregistered plan","1","1","1","1"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-revised-privacy">
 <SectionEyebrow number="§6"> When the released data are not the data</SectionEyebrow>
@@ -346,7 +346,7 @@ AI can give an illusion of understanding: more outputs, more polish, more confid
 
 <StatisticsIncomingWaveLab kind="benchmark" locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Benchmark-contamination reference
 
 <PanelNote>Public benchmark scores can overstate hidden deployment performance when tuning and contamination accumulate.</PanelNote>
@@ -355,7 +355,7 @@ AI can give an illusion of understanding: more outputs, more polish, more confid
   headers={["Condition","Public score","Hidden holdout"]}
   rows={[["Clean holdout, few submissions","Closer to deployment","More trustworthy."],["Contamination","Inflated","Less affected if truly hidden."],["Repeated leaderboard tuning","Can rise without new ability","Gap reveals overfitting."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>The through-line</SectionEyebrow>

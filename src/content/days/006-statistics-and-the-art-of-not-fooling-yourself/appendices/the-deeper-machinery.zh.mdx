@@ -28,7 +28,6 @@ import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
@@ -122,7 +121,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 <PValueShapeSimulator locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### p 值形状参考
 
 <PanelNote>该表概括了与模拟实验相同的教训：在连续精确检验的理想化情形中，零假设下的 p 值是均匀的；在存在真实效应时，小 p 值变得更常见。</PanelNote>
@@ -131,7 +130,7 @@ import Term from "@app/components/lesson/Term.astro";
   headers={["设定","预期形状","解读"]}
   rows={[["真实效应 = 0","从 0 到 1 保持平坦","按检验的构造，约 5% 会低于 .05。"],["微弱真实效应","小 p 值略有增多但噪声很大","功效提升缓慢；许多真实效应被漏掉。"],["显著真实效应","极小 p 值明显增多","高检验功效，呈现健康的 P-curve 特征。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 ### 事实二：一直找下去，越过门槛会越来越容易
@@ -193,7 +192,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 <FalsePositiveRiskEngine locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 误报风险参考
 
 <PanelNote>该示例将 <MathInline latex={String.raw`\alpha`} /> 与已发表发现中的误报风险区分开来。</PanelNote>
@@ -206,7 +205,7 @@ import Term from "@app/components/lesson/Term.astro";
 <DataTableRow><DataTableCell>2%</DataTableCell><DataTableCell>50%</DataTableCell><DataTableCell>.05</DataTableCell><DataTableCell>约 83% 的误报。</DataTableCell></DataTableRow>
 </DataTableBody>
 </DataTable>
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 有两个细节让情况变得更糟，而非更好 —— 而它们正是这里的核心本质。
@@ -278,7 +277,7 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效�
 
 <SValueBits locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### S-值参考
 
 <PanelNote>S-值将 p 值转化为比特惊异度：S = -log2(p)。</PanelNote>
@@ -287,7 +286,7 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效�
   headers={["p 值","S-值","硬币投掷类比"]}
   rows={[[".05","4.3 比特","约连续 4 到 5 次正面。"],[".01","6.6 比特","约连续 7 次正面。"],[".005","7.6 比特","约连续 8 次正面。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>实际行动指南</SectionEyebrow>

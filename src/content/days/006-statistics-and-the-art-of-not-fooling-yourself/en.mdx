@@ -25,7 +25,6 @@ import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -94,7 +93,7 @@ Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved i
 {/* ===================== INTERACTIVE 1 ===================== */}
 <FalsePositiveFactory locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### The False-Positive Factory
 
 <PanelNote>Each ordinary analytic freedom multiplies the number of chances to report a chance result.</PanelNote>
@@ -112,7 +111,7 @@ Simmons, Nelson &amp; Simonsohn proved this with arithmetic before they proved i
 </DataTable>
 Simmons, Nelson, and Simonsohn showed that combining four such freedoms can raise a nominal 5% false-positive rate to about 61% even when the data contain no real effect.
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>The core model</SectionEyebrow>
@@ -158,7 +157,7 @@ A <MathInline latex={String.raw`p`} />-value entangles effect size, noise, sampl
 
 <EffectSizeDial locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Significance versus size
 
 <PanelNote>The same true effect can look very different as sample size and noise change.</PanelNote>
@@ -176,7 +175,7 @@ A <MathInline latex={String.raw`p`} />-value entangles effect size, noise, sampl
 </DataTable>
 The lesson is not "smaller p-values are better." A p-value can shrink because an effect is large, because the sample is huge, because noise is low, or because all three changed. Report the effect size and interval.
 
-</FormatAlt>
+</FormatOnly>
 
 ### The interval you've been misreading too
 
@@ -190,7 +189,7 @@ So the natural sentence — "there's a 95% chance the true value is in *this* in
 
 <ConfidenceIntervalCoverage locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 <PanelTitle>Worked example</PanelTitle>
 
 ### Confidence-interval coverage
@@ -201,7 +200,7 @@ So the natural sentence — "there's a 95% chance the true value is in *this* in
   headers={["Object","What happens over repeated use","Correct reading"]}
   rows={[["100 repeated 95% intervals, true mean = 0","About 95 cover 0; about 5 miss 0.","The procedure has about 95% long-run coverage."],["One observed interval, for example [-0.31, 0.41]","It covers the true mean 0.","After observing it, this interval contains 0 or it does not; the 95% belongs to the method."],["One observed interval, for example [0.04, 0.76]","It misses the true mean 0.","A 95% method still produces misses in repeated use."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 ### Why small studies can exaggerate what they detect
 
@@ -287,7 +286,7 @@ If a single analysis can mislead, the modern move is brutally simple: *run them 
 </Claim>
 </ContentSection>
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Specification Curve Summary
 
 <PanelNote>The same synthetic dataset can be analyzed through multiple defensible specifications.</PanelNote>
@@ -298,7 +297,7 @@ If a single analysis can mislead, the modern move is brutally simple: *run them 
 />
 The honest report is the distribution across reasonable specifications; the dishonest report is the prettiest point on the curve.
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>Open questions</SectionEyebrow>

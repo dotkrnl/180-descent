@@ -18,7 +18,7 @@ import DataTableCell from "@app/components/lesson/DataTableCell.astro";
 import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
 import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
@@ -190,14 +190,14 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 {/* ===================== INTERACTIVE 1 ===================== */}
 <DemarcationLab locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 划界标准表
 
 <SimpleTable
   headers={["主张","波普尔","库恩","拉卡托斯","簇群视角"]}
   rows={[["星光弯折 1.75 角秒","科学","科学","进步","强科学画像"],["水星逆行扰乱通讯","非科学","非成熟科学","退化","弱画像"],["阶级斗争驱动历史","按常用方式往往不可证伪","视情况而定","可能退化","社会科学兼哲学的混合"],["弦理论","关键形式尚未可检验","无决定性检验的常规科学","开放问题","鲜活的边界案例"],["共同祖先","可证伪","生物学核心范式","进步","强科学画像"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection class="frontier">
 <SectionEyebrow>前沿 · 2026</SectionEyebrow>

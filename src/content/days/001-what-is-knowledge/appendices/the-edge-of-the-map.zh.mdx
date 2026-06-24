@@ -9,7 +9,6 @@ import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
@@ -185,14 +184,14 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 
 <EchoChamber locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 气泡与回声室：接触后的结果
 
 <SimpleTable
   headers={["结构","外部声音","接触后的结果","启示"]}
   rows={[["认知气泡","缺席，未被反驳。","新来源可以建立连接并戳破气泡。","当问题在于信息缺失时，接触可能奏效。"],["回声室","存在，但预先被质疑。","接触可能强化不信任，因为回声室预言了充满敌意的局外人。","当不信任被内置于结构中时，显而易见的修复手段可能会适得其反。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 第二招指出你大脑内部的一个弱点。在 "The Seductions of Clarity" (Royal Institute of Philosophy Supplement, 2021) 中，Nguyen 认为，清晰的感觉——即当一切似乎都各就各位时那种令人满意的契合感——起到了<Term>终止探究的启发式</Term><TipNote text={"启发式是一种快速的经验规则：快而有用，但也可能系统性误导你。"} />的作用。我们把「事情已经变得清晰」这种感觉当作探究已经足够、可以停止的信号。通常这没问题。但这意味着清晰感可以被武器化：一个能够制造夸大清晰感的操纵者——一种解释一切的整洁意识形态，或一个每个事实都能严丝合缝嵌入其中的阴谋论——可以让你在发现漏洞之前就提前终止探究。请注意这如何与 §1 相衔接：清晰之所以危险，恰恰是因为它终结了探究过程。正因如此，那些最圆滑、最让人觉得「现在一切都说得通了」的说法，反而最需要严加审视。第三招完善了这一工具：在 "Trust as an Unquestioning Attitude" (Oxford Studies in Epistemology, 2022) 中，Nguyen 将信任本身分析为一种不加质疑的立场——即将某事视为已解决的背景，在此基础上构建而不再重新检查。这是必不可少的（你不可能从头推导一切），也正因如此是可以被利用的：夺取了一个人毫无保留信任的东西，你就夺取了他永远不会想到去查核的盲点。
@@ -219,14 +218,14 @@ Don Fallis 从信息论的角度加剧了同样的担忧 ("The Epistemic Threat 
 
 <AccuracyDomination locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 准确性支配，表现为置信度几何
 
 <SimpleTable
   headers={["置信度","总和","几何位置","判断"]}
   rows={[["P(S)=0.50, P(not-S)=0.50","1.00","位于融贯线上。","未被支配：在每个世界中，没有其他置信度更接近事实。"],["P(S)=0.80, P(not-S)=0.80","1.60","位于融贯线上方。","被一个更接近两个真值角的融贯投影所支配。"],["P(S)=0.20, P(not-S)=0.20","0.40","位于融贯线下方。","被一个更接近两个真值角的融贯投影所支配。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 使其成为前沿而非注脚的原因是：它尝试将理性的基础重建在单一的认知价值上——即接近事实——并从准确性支配论证中不仅推导出<Term>概率主义</Term><TipNote text={"概率主义认为：理性的置信度应当遵守概率公理。"} />，还推导出更新规则（条件化）等更多内容。如果它完全成功，那么我们在第 1 日开始勾勒的整个贝叶斯体系将建立在准确性之上，而不是博彩行为或心理学之上。不过，「已确立」这个标签是有根据的。概率主义的核心支配定理是已经确立的数学。但其雄心——即所有的认知规范都仅源于准确性——则有争议：最纯粹的结果依赖于技术假设（<Term>加法性</Term><TipNote text={"加法性指互斥选项不能同时发生时，「其中之一发生」的概率等于各自概率之和。"} />、有限命题），批评者认为这些假设比单纯的「接近事实」所能保证的内容夹带了更多的私货（Chad Marxen, "Epistemic utility theory's difficult future," Synthese, 2021），而且不同的准确性衡量标准可能会得出不同的判断。因此：这是一个美丽且极具启发性的重新构架，拥有坚如磐石的核心和充满争议的外延——这恰好也是整个附录的形状。

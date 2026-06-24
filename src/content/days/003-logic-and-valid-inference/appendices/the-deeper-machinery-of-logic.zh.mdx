@@ -14,7 +14,7 @@ import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
@@ -160,7 +160,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 <FallacySpotter locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 <PanelTitle>课后练习</PanelTitle>
 
 ### 谬误探查器（答案版）
@@ -169,7 +169,7 @@ import Term from "@app/components/lesson/Term.astro";
   headers={["论证形态","对应名称","解析"]}
   rows={[["通过攻击发言者的私生活来否定其气候计划。","诉诸人身","人身攻击无法验证计划本身是否合理。"],["宣称要么削减全部预算，要么面临破产。","虚假两难","论证隐藏了两个极端之间的中间选项。"],["将背痛归咎于新装的红绿灯，因为红绿灯先出现。","事后归因","先后顺序并不等同于因果关系。"],["信任这本书，因为书里说它说的是真的。","循环论证","结论被偷换成了前提。"],["从两个人的表现推断整个城市都很粗鲁。","以偏概全","样本量太小，不足以推导出普遍规律。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 </ContentSection>
 

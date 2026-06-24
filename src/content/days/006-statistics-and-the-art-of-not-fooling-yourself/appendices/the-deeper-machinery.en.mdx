@@ -22,7 +22,6 @@ import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
@@ -115,7 +114,7 @@ Run an exact test with continuous data where nothing is happening, under the ass
 
 <PValueShapeSimulator locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### p-value shape reference
 
 <PanelNote>The table summarizes the same lesson as the simulation: under the continuous exact-test idealization, null p-values are uniform; under a real effect, small p-values become more common.</PanelNote>
@@ -124,7 +123,7 @@ Run an exact test with continuous data where nothing is happening, under the ass
   headers={["Setting","Expected shape","Interpretation"]}
   rows={[["True effect = 0","Flat across 0 to 1","About 5% fall below .05 by construction."],["Small real effect","Left-leaning but noisy","Power rises slowly; many real effects are missed."],["Large real effect","Many very small p-values","High power and a healthy p-curve signature."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 ### Fact two: keep looking, and you're *certain* to win
@@ -186,7 +185,7 @@ A <MathInline latex={String.raw`p`} />-value lives in the world of <MathInline l
 
 <FalsePositiveRiskEngine locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### False-positive risk reference
 
 <PanelNote>The worked example separates alpha from false-positive risk among published discoveries.</PanelNote>
@@ -195,7 +194,7 @@ A <MathInline latex={String.raw`p`} />-value lives in the world of <MathInline l
   headers={["Prior real effects","Power","Alpha","False among significant"]}
   rows={[["50%","50%",".05","About 9% false alarms."],["10%","50%",".05","About 47% false alarms."],["2%","50%",".05","About 83% false alarms."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 Two refinements make the news worse, not better — and they're the real essence here.
@@ -267,7 +266,7 @@ The translation is wonderfully concrete. Ask: how many fair coins would I have t
 
 <SValueBits locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### S-value reference
 
 <PanelNote>The S-value converts a p-value into bits of surprise: S = -log2(p).</PanelNote>
@@ -276,7 +275,7 @@ The translation is wonderfully concrete. Ask: how many fair coins would I have t
   headers={["p-value","S-value","Coin-flip analogy"]}
   rows={[[".05","4.3 bits","About 4 to 5 heads in a row."],[".01","6.6 bits","About 7 heads in a row."],[".005","7.6 bits","About 8 heads in a row."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>What to actually do</SectionEyebrow>

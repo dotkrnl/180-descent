@@ -13,7 +13,6 @@ import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import Divider from "@app/components/lesson/Divider.astro";
 import EscapeCard from "@app/components/lesson/EscapeCard.astro";
 import EscapeGrid from "@app/components/lesson/EscapeGrid.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import FigureBox from "@app/components/lesson/FigureBox.astro";
 import FigureBoxCaption from "@app/components/lesson/FigureBoxCaption.astro";
@@ -88,14 +87,14 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 <GrueMachine locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 绿色 vs. 绿蓝，投影表
 
 <SimpleTable
   headers={["时期","观察到的证据","「全绿」预测","「全绿蓝」预测","启示"]}
   rows={[["2050 年之前","已检查的祖母绿全是绿色。","绿色祖母绿。","绿色祖母绿。","证据同等支持两种描述。"],["2050 年之后","新观察终于进入分歧区域。","绿色祖母绿。","蓝色祖母绿。","只有越过截止线，现实才能打破平局。"],["古德曼的要点","仅凭过去的规律性，无法选出可投射的谓词。","投射绿色。","投射绿蓝。","归纳需要关于哪些谓词自然、哪些已扎根的背景习惯。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 最明显的反驳——「但 grue 是拼凑的胡话，绿色才是自然的！」——恰恰掉进了陷阱。古德曼的回刺是：从 grue 语言的内部看，绿色才是那个古怪的东西。定义「bleen」（t 之前蓝、 t 之后绿），你就可以把朴素的「绿色」重新定义为「t 之前 grue、 t 之后 bleen」——绿色反而成了滑稽的复合物，grue 倒成了简单的本原。没有哪种「上帝视角」能册封绿色为天然的那一个。古德曼自己的出路是：我们投射的是那些已经<Term>扎根</Term>的谓词——也就是我们的语言在过去屡试不爽的那些。这很诚实，却也令人泄气：它不是把自然的规律性奠基于自然本身，而是奠基于人类词汇的偶然习惯。休谟说我们的推断依赖习俗；古德曼说，连我们用来推断的概念也依赖习俗。原来深坑之下，还有一层地下室。 <StatusChip status={"hint"} label={"扎根性 · 仍有争议"} printLabel={"争议/炒作"} />
@@ -280,14 +279,14 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 <DiscoveryPurityEngine locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 发现纯度引擎，基础率场景
 
 <SimpleTable
   headers={["场景","真实假说","功效","偏倚","发表的阳性结果","PPV"]}
   rows={[["乐观基线","100 / 1,000","80%","0%","80 个真阳性 + 45 个假阳性","64% 为真"],["低基础率","20 / 1,000","80%","0%","16 个真阳性 + 49 个假阳性","25% 为真"],["加入偏倚","100 / 1,000","80%","20%","84 个真阳性 + 216 个假阳性","28% 为真"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection class="frontier">
 伊奥安尼迪斯的推论直接从这台机器中流出，读起来像复现危机的受灾地图：研究规模越小、真实效应越小、分析灵活性越大、经济利益越重、领域越热门（越多团队竞逐同一问题），任何一项已发表发现为真的概率就越低。这不是愤世嫉俗——这是用不完美的工具检验稀少真理的几何学。<StatusChip status={"ok"} label={"该模型· 精神上已被广泛接受"} printLabel={"线索"} />

@@ -22,7 +22,6 @@ import DataTableCell from "@app/components/lesson/DataTableCell.astro";
 import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -115,7 +114,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 {/* ===================== INTERACTIVE 1 ===================== */}
 <ProbabilityMontyPanel locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 蒙提霍尔结果表
 
 <PanelNote>在标准规则下，只要第一次选错了，换门就赢。</PanelNote>
@@ -129,7 +128,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 />
 因此，坚持保持最初的 1/3；换门则收割了「第一次选错」那 2/3 的概率。
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>为何如此</SectionEyebrow>
@@ -231,7 +230,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 {/* ===================== INTERACTIVE 2 ===================== */}
 <BayesTrap locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 基础概率陷阱
 
 <PanelNote>默认假设：患病率 0.1%，灵敏度 99%，假阳性率 5%。</PanelNote>
@@ -242,7 +241,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 />
 因此后验概率约为 <MathInline latex={String.raw`0.99/50.94`} />，即 <MathInline latex={String.raw`1.9\%`} />——这就是 Casscells 结果，只是把灵敏度也明说出来。
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>深层思想</SectionEyebrow>
@@ -340,7 +339,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 {/* ===================== INTERACTIVE 3 ===================== */}
 <EValueLedger locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### e 值账本
 
 <PanelNote>e 值是非负回报，其在原假设下的期望值至多为 1。</PanelNote>
@@ -358,7 +357,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </DataTable>
 代价是偏保守：当所有建模假设完全正确时，任意时刻有效的账本可能需要比<Term>固定样本量</Term><TipNote text={"固定样本量检验会预先决定样本数，并只在计划好的终点分析一次。"} />检验更强或更持久的证据。
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 换到科学场景会是什么样？在一项<Term>持续更新的临床元分析</Term><TipNote text={"元分析会用统计方法合并多项研究的结果；持续更新的元分析会随着新研究出现而更新。"} />里，原假设可能是「BCG 疫苗对医护人员感染 COVID-19 没有临床相关效果」。新的随机试验会在不同时间报告结果，研究者希望一有新数据就更新综合分析，同时又不希望每看一次结果，假阳性风险就悄悄升高。ALL-IN 元分析框架正是为这类场景设计的：它允许后续试验的证据陆续加入，同时保留第一类错误率与区间覆盖率保证。在一个 BCG/COVID 应用中，对证据过程来说，「赢」本来意味着累积到足以支持临床相关获益的强证据；但这项任意时刻有效分析没有发现 BCG 能临床相关地降低感染，而住院结局因事件太少，仍不足以下定论。这和硬币玩具是同一结构，只是把正反面换成了医学终点和陆续到来的试验数据。

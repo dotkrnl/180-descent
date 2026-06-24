@@ -772,11 +772,6 @@ function shouldRenderElement(name: string, attrs: Map<string, string | null>, st
     if (media === "deep-dive-print" || media === "deep-dive-epub") return state.includeDeepDive;
     return ["print", "pdf", "print-epub", "epub-print"].includes(media);
   }
-  if (name === "FormatAlt") {
-    const className = attrs.get("class") ?? "";
-    if (/\bweb-only\b/.test(className)) return false;
-    if (/\bprint-only\b|\bformat-alt\b/.test(className)) return true;
-  }
   return true;
 }
 
@@ -1548,7 +1543,6 @@ function isBlockMdxElement(node: MdxNode): boolean {
     "Claim",
     "Hero",
     "Wrap",
-    "FormatAlt",
     "FormatOnly"
   ].includes(node.name ?? "");
 }
@@ -1565,7 +1559,6 @@ function isContainerComponent(name: string): boolean {
     "Wrap",
     "Threads",
     "Divider",
-    "FormatAlt",
     "FormatOnly"
   ].includes(name);
 }

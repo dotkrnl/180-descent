@@ -15,7 +15,6 @@ import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Lead from "@app/components/lesson/Lead.astro";
@@ -58,7 +57,7 @@ Start with two simpler pieces. <Term as="em">Joint entropy</Term> <MathInline la
 
 <MutualInformationOverlap locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 #### Mutual information, as agreement changes
 
 <DataTable>
@@ -70,7 +69,7 @@ Start with two simpler pieces. <Term as="em">Joint entropy</Term> <MathInline la
 <DataTableRow><DataTableCell>1.00</DataTableCell><DataTableCell>0.00 bits</DataTableCell><DataTableCell>1.00 bit</DataTableCell><DataTableCell>Identical variables; knowing X tells you Y completely.</DataTableCell></DataTableRow>
 </DataTableBody>
 </DataTable>
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 ### The surprise tax: relative entropy
@@ -135,7 +134,7 @@ The idea is <Term as="em">Hamming distance</Term>: the number of bit-flips separ
 
 <HammingCube locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 #### The 3-bit repetition code, as nearest-neighbor decoding
 
 <DataTable>
@@ -149,7 +148,7 @@ The idea is <Term as="em">Hamming distance</Term>: the number of bit-flips separ
 </DataTable>
 The codewords are Hamming distance 3 apart, so any one-bit error remains closer to the original codeword than to the other one.
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 ### From Mars to your pocket

@@ -11,7 +11,7 @@ import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
 import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
@@ -99,7 +99,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 {/* ===================== INTERACTIVE 1 ===================== */}
 <GettierMachine locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 盖梯尔案例表
 
 <PanelNote>关键案例：</PanelNote>
@@ -108,7 +108,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
   headers={["案例","信念","为真","证成","运气","判断"]}
   rows={[["普通的知识","是","是","是","否","在经典 JTB（Justified True Belief，证成的真信念）观点下，这是知识"],["停摆的钟","是","是","是","是","非知识：事实只是碰巧成立"],["幸运的猜测","是","是","否","是","非知识：缺乏证成"],["自信的错误","是","否","是","否","非知识：命题为假"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>补丁战</SectionEyebrow>
@@ -227,7 +227,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 {/* ===================== INTERACTIVE 3 ===================== */}
 <CredenceDial locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 置信度融贯表
 
 若你给 S 与非-S 分配的置信度之和为 1.00，则这对置信度是融贯的。若总和大于 1.00，你会为两场不可能同时获胜的赌约过度付费。若总和小于 1.00，庄家可以反向购买赌约，依然保证获利。
@@ -236,7 +236,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
   headers={["S 置信度","非-S 置信度","总和","结果"]}
   rows={[["0.50","0.50","1.00","融贯"],["0.70","0.60","1.30","若你同时购买两场 1 美元赌约，必定损失 0.30"],["0.30","0.40","0.70","你把两张赌票卖得太便宜；无论红牌是否出现，庄家都能让你亏 0.30"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection class="frontier">
 <Claim>

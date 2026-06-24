@@ -22,7 +22,6 @@ import DataTableCell from "@app/components/lesson/DataTableCell.astro";
 import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -114,7 +113,7 @@ Here's the thing the meltdown reveals. The Monty Hall problem isn't a trick or a
 {/* ===================== INTERACTIVE 1 ===================== */}
 <ProbabilityMontyPanel locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Monty Hall Outcomes
 
 <PanelNote>Under the standard host rule, switching wins exactly when the first pick was wrong.</PanelNote>
@@ -128,7 +127,7 @@ Here's the thing the meltdown reveals. The Monty Hall problem isn't a trick or a
 />
 So staying keeps the original 1/3 chance; switching captures the 2/3 chance that the first choice was wrong.
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>Why it works</SectionEyebrow>
@@ -230,7 +229,7 @@ Bayes' theorem doesn't only rescue game-show contestants. It catches a mistake t
 {/* ===================== INTERACTIVE 2 ===================== */}
 <BayesTrap locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### The base-rate trap
 
 <PanelNote>For the default assumptions: 0.1% prevalence, 99% sensitivity, and a 5% false-positive rate.</PanelNote>
@@ -241,7 +240,7 @@ Bayes' theorem doesn't only rescue game-show contestants. It catches a mistake t
 />
 The posterior is therefore about <MathInline latex={String.raw`0.99/50.94`} />, or <MathInline latex={String.raw`1.9\%`} /> — the Casscells result with the sensitivity made explicit.
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>The deep idea</SectionEyebrow>
@@ -340,7 +339,7 @@ For a century, the frequentist p-value has been science's gatekeeper: get below 
 {/* ===================== INTERACTIVE 3 ===================== */}
 <EValueLedger locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### The e-value ledger
 
 <PanelNote>An e-value is a nonnegative payoff whose expectation under the null is at most 1.</PanelNote>
@@ -358,7 +357,7 @@ For a century, the frequentist p-value has been science's gatekeeper: get below 
 </DataTable>
 The tradeoff is conservatism: an anytime-valid ledger can need stronger or more sustained evidence than a <Term as="em">fixed-horizon</Term><TipNote text={"A fixed-horizon test fixes the sample size in advance and analyzes once at the planned endpoint."} /> test when all modeling assumptions are exactly right.
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection class="frontier">
 <Claim>

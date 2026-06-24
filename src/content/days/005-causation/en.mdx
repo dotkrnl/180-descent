@@ -20,7 +20,7 @@ import DataTableCell from "@app/components/lesson/DataTableCell.astro";
 import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -132,7 +132,7 @@ The Reversal Machine below turns that into one picture. Each square is one patie
 {/* ===================== INTERACTIVE 1 : SIMPSON ===================== */}
 <SimpsonReversalMachine locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Kidney-Stone Simpson Reversal
 
 <PanelNote>Treatment B has the higher pooled observed rate, while Treatment A has the higher observed rate inside each stone-size group. This demonstrates a reversal, not a treatment recommendation.</PanelNote>
@@ -143,7 +143,7 @@ The Reversal Machine below turns that into one picture. Each square is one patie
 />
 The pooled comparison reverses because the treatment groups contain different mixtures of small- and large-stone cases.
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 The lesson lands hard: **you cannot read causation off a table of numbers.** The very same digits can support different summaries depending on a variable that may not even be in the spreadsheet. Which raises the question that organizes everything after this — if the data alone won't tell you, what *will*? The answer, from a computer scientist who spent the 1980s building machines that reason under uncertainty, is that you need to add something the data doesn't contain: a **model of which arrows point where.**
@@ -164,7 +164,7 @@ Climb it yourself:
 {/* ===================== INTERACTIVE 2 : LADDER ===================== */}
 <CausalLadder locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Pearl's Ladder of Causation
 
 <DataTable>
@@ -179,7 +179,7 @@ Climb it yourself:
 </DataTable>
 In the last line, <MathInline latex={String.raw`Y_x`} /> means "<MathInline latex={String.raw`Y`} /> in the world where <MathInline latex={String.raw`X`} /> is set to <MathInline latex={String.raw`x`} />"; <MathInline latex={String.raw`X'`} /> and <MathInline latex={String.raw`Y'`} /> are the actual facts you condition on.
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 ### The do-operator: seeing is not doing
@@ -208,7 +208,7 @@ A safe causal workflow is: specify the unit, exposure, outcome, timing, and inte
 {/* ===================== INTERACTIVE 3 : DO vs SEE ===================== */}
 <DoSeeCalculator locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 <PanelTitle>Worked example</PanelTitle>
 
 ### Seeing Is Not Doing
@@ -227,7 +227,7 @@ In the default toy structural model, rain makes umbrellas more common and wet cl
 </DataTable>
 Default parameters: <MathInline latex={String.raw`P(S=1)=0.45`} />, <MathInline latex={String.raw`a=-2.0`} />, <MathInline latex={String.raw`b=+2.8`} />, <MathInline latex={String.raw`c=-2.2`} />, <MathInline latex={String.raw`d=-1.485`} />, <MathInline latex={String.raw`e=+4.1`} />. Formula: <MathInline latex={String.raw`P(Y=1 \mid \operatorname{do}(X=x)) = \sum_s P(Y=1 \mid X=x,S=s)P(S=s)`} />. The observed contrast instead uses <MathInline latex={String.raw`P(S=s \mid X=x)`} />, which changes when rain affects umbrella use.
 
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 That severed arrow in the right-hand graph is the do-operator made visual. Intervening doesn't just *look* at X — it **deletes the arrows pointing into X** and replaces them with your hand. The rain→umbrella link is cut, so the observational path umbrella ← rain → wetness is no longer open in the umbrella contrast. Under this graph, the back-door-adjusted contrast recovers the intervention contrast.

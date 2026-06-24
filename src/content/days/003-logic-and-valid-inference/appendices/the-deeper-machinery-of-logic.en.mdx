@@ -14,7 +14,7 @@ import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
 import Panel from "@app/components/lesson/Panel.astro";
@@ -159,7 +159,7 @@ A special pair deserves its own spotlight, because they are where logic meets th
 
 <FallacySpotter locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 <PanelTitle>Worked exercise</PanelTitle>
 
 ### The Fallacy Spotter, as an answer key
@@ -168,7 +168,7 @@ A special pair deserves its own spotlight, because they are where logic meets th
   headers={["Argument shape","Better name","Why"]}
   rows={[["Dismiss the climate plan by attacking the speaker's private life.","Ad hominem","The personal attack does not test whether the plan is sound."],["Offer only total budget cuts or bankruptcy.","False dilemma","The argument hides partial options between the two extremes."],["Blame a new traffic light for back pain because it came first.","Post hoc","Sequence alone is not causation."],["Trust the book because the book says it is true.","Begging the question","The conclusion is smuggled into the premise."],["Infer that a whole city is rude from two people.","Hasty generalization","The sample is too thin for the sweeping rule."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 </ContentSection>
 

@@ -11,7 +11,6 @@ import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
@@ -88,14 +87,14 @@ Each line looks reasonable; together they seem to show that you know nothing abo
 
 <ClosureMachine locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### The Skeptic's Syllogism, as four exits
 
 <SimpleTable
   headers={["Move","Line refused","Representative view","Cost"]}
   rows={[["Accept all three","None","Skepticism","You do not know you have hands, or much about the external world."],["Reject P1","You do not know you are not a vat-brain","Moore's common-sense reply","Can feel like insisting rather than explaining."],["Reject P2","Closure","Dretske / Nozick relevant alternatives","Closure is deeply intuitive and useful elsewhere."],["Change the standard","A fixed meaning of \"know\"","Contextualism","The skeptic wins in the seminar; ordinary speakers win in ordinary life."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 The doors are worth naming in full. **G. E. Moore** (1939) simply ran the argument backwards: *I am far more sure that here is one hand* (holding it up) *than I am of any fancy premise the skeptic offers* — so if the premises imply I don't know it, so much the worse for the premises. Cheeky, and strangely hard to beat. **Fred Dretske** (1970) and Robert Nozick (1981) took the surgical route: *deny closure.* On Dretske's <Term as="em">relevant alternatives</Term> view, to know something you only need to rule out the *relevant* ways you could be wrong, not every bizarre one. At the zoo you know the animal is a zebra — you've ruled out "it's a horse," "it's a goat" — even though you haven't ruled out "it's a mule cleverly painted to look like a zebra," because in this context that's not a live possibility. Knowledge doesn't automatically transmit to every entailment. The cost is steep: closure is intuitive, and giving it up has consequences elsewhere. **Contextualism** (our next section) offers the diplomat's solution: maybe the skeptic and Moore are *both* right, because "know" means something stricter in the skeptic's seminar than in ordinary life.
@@ -125,14 +124,14 @@ It's Friday. You drive past your bank, which has a long Saturday line, and decid
 
 <StakesDial locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### The Bank Cases
 
 <SimpleTable
   headers={["Case","Evidence","Stakes","Natural verdict","What it tests"]}
   rows={[["Low stakes","You were there two Saturdays ago.","A minor errand.","\"I know it is open.\"","Ordinary standards are easy to meet."],["High stakes","The same memory.","A mortgage deadline.","\"I had better check.\"","Whether practical stakes affect knowledge."],["Error raised","The same memory plus a live doubt.","Any serious consequence.","The claim to know weakens.","Whether context shifts the word or the knower's state."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 Three camps, three diagnoses of the same data. **Contextualism** (DeRose; David Lewis, "Elusive Knowledge," 1996; Stewart Cohen, 1988) locates the shift in the *word*: "knows" is like "tall" or "here" — context-sensitive. Raising the stakes or mentioning error raises the standard a belief must meet for the sentence "S knows" to count as true. Both utterances are correct, in their own conversations. The skeptic is even right in the seminar — he's just jacked the standard sky-high. **Pragmatic encroachment** (Jason Stanley, *Knowledge and Practical Interests*, 2005; Fantl &amp; McGrath; John Hawthorne, *Knowledge and Lotteries*, 2004) puts the shift in the *knower*: what *you* know genuinely depends on what's practically at stake *for you*, because knowledge is supposed to be the thing you can act on. High stakes really can deprive you of knowledge you'd have had when it didn't matter — a startling idea, since it lets practical pressure "encroach" on a supposedly purely factual state. **Invariantism** (the traditional holdout) digs in: "knows" means one fixed thing, the standards don't move, and one of your two verdicts is simply mistaken — you either knew all along or never did, and the stakes just changed how *willing* you were to *say* so. <StatusChip status={"ok"} label={"that the verdicts shift · agreed"} printLabel={"agreed"} /> <StatusChip status={"bad"} label={"why they shift · unresolved"} printLabel={"unresolved"} /> The data is robust; its explanation is one of the most active fault lines in the field.
@@ -156,14 +155,14 @@ This is the deep content of the "safety" idea, and it's worth *seeing*. Picture 
 
 <ModalRings locale="en" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### Safe vs. Lucky, as nearby-worlds cases
 
 <SimpleTable
   headers={["Scenario","Actual world","Nearby worlds","Verdict"]}
   rows={[["Working clock","Your belief is true.","Small variations still leave you right.","Safe: knowledge-grade."],["Stopped clock","Your belief is true at 9:12.","A minute earlier or later, the same belief is false.","Unsafe: veritic luck."],["Fake-barn country","You see the one real barn.","Most nearby looks would have landed on facades.","Unsafe: environmental luck."]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 That single picture retroactively explains the whole mess. The stopped clock fails *hard* — a minute either side and you're wrong, so the neighborhood is a sea of red. Fake-barn country is subtler: the barn you're looking at is genuinely there (the core is green), but you're surrounded by façades, so a glance a hundred meters either way would have fooled you — red neighborhood, no knowledge, even with a true justified belief and no false premise. The patches all failed because each tried to capture "green neighborhood" with a slightly different yardstick, and luck kept finding the gaps.

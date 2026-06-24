@@ -11,7 +11,6 @@ import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import Divider from "@app/components/lesson/Divider.astro";
-import FormatAlt from "@app/components/lesson/FormatAlt.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
@@ -88,14 +87,14 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 <ClosureMachine locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 怀疑论者的三段论：四种出路
 
 <SimpleTable
   headers={["招式","拒绝的行","代表性观点","代价"]}
   rows={[["接受全部三点","无","怀疑论","你不知道你有双手，对外部世界也所知甚少。"],["拒绝 P1","你不知道自己不是缸中之脑","摩尔的常识回应","可能感觉像是在坚持而非解释。"],["拒绝 P2","封闭性","德雷茨克 / 诺齐克的相关替代项理论","封闭性在直觉上根深蒂固，在其他地方也很有用。"],["改变标准","「知道」的固定含义","语境主义","怀疑论者在研讨室里获胜；普通说话者在日常生活中获胜。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 这些回应值得逐项讨论。G. E. 摩尔（1939）只是将论证反向运行：我更确信这里有一只手（举起它）胜过怀疑论者提供的任何精巧前提——因此，如果那些前提蕴涵我不知道这一点，问题就在前提。大胆，却令人难以反驳。弗雷德·德雷茨克（1970）与罗伯特·诺齐克（1981）采取了更精细的路线：否定封闭性。在德雷茨克的<Term>相关替代项</Term>观点看来，要知道某事，你只需排除那些在当前语境中真正相关的出错可能，而不必排除每一种离奇设想。在动物园里，你知道那动物是斑马——你已经排除了「它是马」、「它是山羊」——尽管你尚未排除「它是一头被巧妙漆成斑马样子的骡子」，因为在这一语境中，那不是实际需要认真对待的可能。知识不会自动沿每一个蕴涵传递。问题在于：封闭性本来很像常识；如果否定它，我们还得重新说明，为什么许多看似可靠的推理不再传递知识。语境主义（我们下一节）提供了折中方案：也许怀疑论者和摩尔都是对的，因为「知道」在怀疑论者的研讨室里意味着比普通生活中更严格的东西。
@@ -125,14 +124,14 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 <StakesDial locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 银行案例：利害关系表
 
 <SimpleTable
   headers={["案例","证据","利害关系","自然判断","测试什么"]}
   rows={[["低利害","你两个周六前去过那里。","一件小事。","「我知道它在营业。」","普通标准容易达到。"],["高利害","同样的记忆。","房贷截止日期。","「我最好确认一下。」","实际利害是否影响知识。"],["提出出错可能","同样的记忆加上一个活跃的怀疑。","任何严重后果。","知识声称被削弱。","语境改变的是词语还是认知者的状态。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 三个阵营，对同一数据的三种诊断。语境主义（德罗斯；大卫·刘易斯，"Elusive Knowledge," 1996；斯图尔特·科恩，1988）将转变定位在词语上：「知道」就像「高」或「这里」一样——对语境敏感。提高利害关系或提及错误，会提升一个信念必须达到的标准，才能使「S 知道」这句话为真。两种说法在各自的语境中都对。怀疑论者在研讨室里甚至也是对的——他只是把标准抬到了天际。实际利害介入论（pragmatic encroachment；杰森·斯坦利，Knowledge and Practical Interests, 2005；范特尔与麦格拉思；约翰·霍桑，Knowledge and Lotteries, 2004）则把变化放在认知者这一边：你是否真的知道某事，会随这件事对你的实际利害有多重而改变；毕竟，知识应当足以支撑行动。高利害确实能剥夺你在事情无关紧要时本可拥有的知识——一个令人吃惊的观点，因为它让实践压力「侵入」了一个据称纯粹事实性的状态。不变主义（传统的坚守者）死守阵地：「知道」的含义是固定的，标准不会移动，你的两个判断之一根本就是错的——你要么始终知道，要么从未知道，利害关系改变的只是你愿意这样说的程度。<StatusChip status={"ok"} label={"判断确实会变化· 已达成共识"} printLabel={"已确立"} /> <StatusChip status={"bad"} label={"为何变化· 未解决"} printLabel={"争议/炒作"} /> 数据是坚实的；其解释却是该领域最活跃的争论焦点之一。
@@ -156,14 +155,14 @@ import Threads from "@app/components/lesson/Threads.astro";
 
 <ModalRings locale="zh" />
 
-<FormatAlt class="epub-only print-only">
+<FormatOnly as="div" media="print-epub" class="format-alt">
 ### 安全与幸运：邻近世界案例
 
 <SimpleTable
   headers={["情境","实际世界","邻近世界","判断"]}
   rows={[["正常运行的钟","你的信念为真。","微小变化仍然让你正确。","安全：知识级别。"],["停摆的钟","你的信念在 9:12 为真。","早一分钟或晚一分钟，同样的信念为假。","不安全：成真运气。"],["假谷仓之国","你看见了唯一一座真谷仓。","大多数邻近的一瞥都会落在假谷仓外观上。","不安全：环境运气。"]]}
 />
-</FormatAlt>
+</FormatOnly>
 
 <ContentSection>
 这幅图能把前面的讨论重新整理清楚。停摆的钟彻底失败——左右一分钟你就错了，因此邻近区域是一片红色的海洋。假谷仓之国则更微妙：你看着的谷仓确实在那里（核心是绿色的），但你被假谷仓外观包围，因此往任何方向瞥上一百米都会骗到你——红色邻近区域，没有知识，即便拥有证成的真信念且无假前提。那些补丁之所以不断失效，是因为每一个都试图用略有不同的尺度去捕捉「绿色邻近区域」，而运气不断找到缝隙。
