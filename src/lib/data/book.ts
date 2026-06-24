@@ -63,6 +63,10 @@ interface RawBookData {
   };
 }
 
+interface RawBookSiteData {
+  site_url: string;
+}
+
 interface RawDownloadData {
   epub: string;
   pdf: string;
@@ -98,6 +102,11 @@ export async function readBookData(root: string): Promise<BookData> {
       downloads: normalizeDownloads(raw.zh.downloads)
     }
   };
+}
+
+export async function readBookSiteUrl(root: string): Promise<string> {
+  const raw = YAML.parse(await readFile(bookDataFile(root), "utf8")) as RawBookSiteData;
+  return raw.site_url;
 }
 
 function normalizeDownloads(raw: RawDownloadData): DownloadData {

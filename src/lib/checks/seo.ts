@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { load } from "cheerio";
+import { readBookSiteUrl } from "@lib/data/book";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
 import { urlForHtml } from "@lib/static-site/url";
@@ -16,7 +17,7 @@ interface SeoCheckResult {
 
 export async function checkSeo(options: SeoCheckOptions): Promise<SeoCheckResult> {
   const builtSiteDir = siteDir(options.root);
-  const siteUrl = "https://180d.io";
+  const siteUrl = await readBookSiteUrl(options.root);
   const errors: string[] = [];
 
   if (!await pathExists(builtSiteDir)) {
