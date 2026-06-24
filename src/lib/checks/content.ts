@@ -23,6 +23,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<\/header>/, "use </Hero>"],
   [/<section(?:\s|>)/, "use Markdown structure, <ContentSection>, or <Sources>"],
   [/<\/section>/, "use Markdown structure, </ContentSection>, or </Sources>"],
+  [/<\/?blockquote(?:\s|>)/, "use <BlockQuote>"],
   [/<div class="(?:aside|formula|recap|whereblock|wrap|format-alt epub-only print-only|panel)\b/, "use shared lesson components"],
   [/<figure class="(?:hero-clock|hero-doors)\b/, "use shared figure components"],
   [/<figure class="lesson-figure[^"]*">\s*<img\b/, "use <ImageFigure>"],
