@@ -29,9 +29,10 @@
     "check:a11y": "tsx scripts/cli/check-a11y.ts",
     "check:epub": "tsx scripts/cli/check-epub.ts",
     "check:pdf": "tsx scripts/cli/check-pdf.ts",
-    "check": "tsx scripts/cli/prepare-assets.ts && tsx scripts/cli/preflight.ts && npm run check:links && npm run check:content && npm run check:imports && npm run check:svg-text && npm run check:math && npm run check:appendix-style && npm run check:clean && npm run check:workflows && npm run check:seo && npm run check:a11y && npm run check:epub && npm run check:pdf",
-    "deploy": "npm run build && npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent",
-    "deploy:staging": "npm run build && npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent --branch=staging"
+    "check:built": "npm run check:links && npm run check:content && npm run check:imports && npm run check:svg-text && npm run check:math && npm run check:appendix-style && npm run check:clean && npm run check:workflows && npm run check:seo && npm run check:a11y && npm run check:epub && npm run check:pdf",
+    "check": "npm run build && npm run check:built",
+    "deploy": "npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent",
+    "deploy:staging": "npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent --branch=staging"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.0",
