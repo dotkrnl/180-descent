@@ -244,8 +244,7 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
     if (config.includeDeepDive) {
       for (const appendix of day.appendices) {
         const label = config.locale === "zh" ? "可选附录" : "Optional appendix";
-        const title = appendix.title ?? appendix.id;
-        chunks.push(`\\clearpage\n\\section*{${latexEscape(label)}: ${latexEscape(title)}}`);
+        chunks.push(`\\clearpage\n\\section*{${latexEscape(label)}: ${latexEscape(appendix.title)}}`);
         chunks.push(await mdxToLatex(appendix.bodySource, {
           root: config.root,
           locale: config.locale,

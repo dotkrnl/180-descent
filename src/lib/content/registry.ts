@@ -64,7 +64,6 @@ async function loadRegistryDay(directory: string): Promise<RegistryDay> {
 
   const bodies = [];
   for (const [locale, entry] of Object.entries(manifest.locales)) {
-    if (!entry) continue;
     bodies.push({
       locale: locale as Locale,
       path: entry.body,
@@ -75,7 +74,6 @@ async function loadRegistryDay(directory: string): Promise<RegistryDay> {
   const appendixBodies = [];
   for (const appendix of manifest.appendices) {
     for (const [locale, entry] of Object.entries(appendix.locales)) {
-      if (!entry) continue;
       appendixBodies.push({
         appendixId: appendix.id,
         locale: locale as Locale,
@@ -126,9 +124,6 @@ export function listRegistryDayLocaleEntries(registry: ContentRegistry): Registr
   return registry.days.flatMap((day) => {
     return day.bodies.map((body) => {
       const localeEntry = day.manifest.locales[body.locale];
-      if (!localeEntry) {
-        throw new Error(`Manifest ${day.manifest.path} is missing locale ${body.locale}`);
-      }
 
       return {
         day,

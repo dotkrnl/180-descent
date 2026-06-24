@@ -23,7 +23,7 @@ export interface ArtifactBookDay {
 
 interface ArtifactBookAppendix {
   id: string;
-  title?: string;
+  title: string;
   bodyPath: string;
   bodySource: string;
 }
@@ -48,7 +48,7 @@ async function loadArtifactBook(
     .flatMap((day): ArtifactBookDay[] => {
       const localeEntry = day.manifest.locales[locale];
       const body = day.bodies.find((candidate) => candidate.locale === locale);
-      if (!localeEntry || !body) return [];
+      if (!body) return [];
 
       return [{
         day: day.manifest.day,
@@ -65,11 +65,11 @@ async function loadArtifactBook(
           const appendixBody = day.appendixBodies.find((candidate) => {
             return candidate.appendixId === appendix.id && candidate.locale === locale;
           });
-          if (!appendixEntry || !appendixBody) return [];
+          if (!appendixBody) return [];
 
           return [{
             id: appendix.id,
-            title: appendixEntry.title ?? appendix.title?.[locale],
+            title: appendixEntry.title,
             bodyPath: appendixBody.path,
             bodySource: appendixBody.source
           }];

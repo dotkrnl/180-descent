@@ -8,26 +8,17 @@ const localeContentSchema = z.object({
   summary: z.string().min(1)
 });
 
-const localizedTextSchema = z.object({
-  en: z.string().min(1).optional(),
-  zh: z.string().min(1).optional()
-}).strict();
-
 const appendixLocaleSchema = z.object({
   body: z.string().min(1),
-  title: z.string().min(1).optional()
+  title: z.string().min(1)
 });
 
 const appendixSchema = z.object({
   id: z.string().min(1),
-  title: localizedTextSchema.optional(),
   locales: z.object({
-    en: appendixLocaleSchema.optional(),
-    zh: appendixLocaleSchema.optional()
-  }).strict().refine(
-    (value) => Boolean(value.en || value.zh),
-    "Appendix must declare at least one locale"
-  )
+    en: appendixLocaleSchema,
+    zh: appendixLocaleSchema
+  }).strict()
 });
 
 const localizedFilesSchema = z.object({
@@ -47,14 +38,11 @@ const assetSchema = z.object({
 export const dayManifestSchema = z.object({
   day: z.number().int().positive(),
   block: z.string().min(1),
-  published: z.boolean().default(false),
+  published: z.boolean(),
   locales: z.object({
-    en: localeContentSchema.optional(),
-    zh: localeContentSchema.optional()
-  }).strict().refine(
-    (value) => Boolean(value.en || value.zh),
-    "Day must declare at least one locale"
-  ),
+    en: localeContentSchema,
+    zh: localeContentSchema
+  }).strict(),
   appendices: z.array(appendixSchema).default([]),
   interactionScripts: z.array(z.string().min(1)).default([]),
   assets: z.array(assetSchema).default([])

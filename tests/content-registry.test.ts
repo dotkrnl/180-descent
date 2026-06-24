@@ -13,6 +13,29 @@ describe("target content registry", () => {
     const parsed = dayManifestSchema.parse({
       day: 1,
       block: "foundations",
+      published: true,
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "en.mdx"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      }
+    });
+
+    expect(parsed.published).toBe(true);
+    expect(parsed.assets).toEqual([]);
+  });
+
+  it("rejects partial day manifests", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
       locales: {
         en: {
           title: "Minimal",
@@ -20,10 +43,7 @@ describe("target content registry", () => {
           body: "en.mdx"
         }
       }
-    });
-
-    expect(parsed.published).toBe(false);
-    expect(parsed.assets).toEqual([]);
+    })).toThrow();
   });
 
   it("loads paired locale bodies, appendices, assets, and interaction scripts", async () => {
@@ -62,14 +82,20 @@ describe("target content registry", () => {
     const dayDir = path.join(daysDir, "001-fixture");
     await mkdir(dayDir, { recursive: true });
     await writeFile(path.join(root, "outside.mdx"), "# Outside");
+    await writeFile(path.join(dayDir, "zh.mdx"), "# 中文");
     await writeFile(path.join(dayDir, "day.yaml"), [
       "day: 1",
       "block: Fixture",
+      "published: true",
       "locales:",
       "  en:",
       "    title: Fixture",
       "    summary: Fixture summary.",
-      "    body: ../outside.mdx"
+      "    body: ../outside.mdx",
+      "  zh:",
+      "    title: 中文夹具",
+      "    summary: 中文摘要。",
+      "    body: zh.mdx"
     ].join("\n"));
 
     await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Manifest reference escapes day directory: ../outside.mdx");

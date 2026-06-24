@@ -11,7 +11,7 @@ describe("appendix style check", () => {
 
     const result = await checkAppendixStyle({ root });
 
-    expect(result.checkedAppendixFiles).toBe(1);
+    expect(result.checkedAppendixFiles).toBe(2);
     expect(result.errors).toEqual([
       'src/content/days/001-fixture/appendices/appendix-a.en.mdx: forbidden appendix class "movement". Use <section> with .sec-eyebrow instead of appendix-local section wrappers.'
     ]);
@@ -51,14 +51,23 @@ async function createFixtureRoot(): Promise<string> {
     "    title: Fixture",
     "    summary: Fixture summary.",
     "    body: en.mdx",
+    "  zh:",
+    "    title: 中文夹具",
+    "    summary: 中文摘要。",
+    "    body: zh.mdx",
     "appendices:",
     "  - id: appendix-a",
     "    locales:",
     "      en:",
     "        title: Appendix A",
-    "        body: appendices/appendix-a.en.mdx"
+    "        body: appendices/appendix-a.en.mdx",
+    "      zh:",
+    "        title: 附录 A",
+    "        body: appendices/appendix-a.zh.mdx"
   ].join("\n"));
   await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), "");
+  await writeFile(path.join(root, "src/content/days/001-fixture/zh.mdx"), "");
+  await writeFile(path.join(root, "src/content/days/001-fixture/appendices/appendix-a.zh.mdx"), "");
   return root;
 }
 

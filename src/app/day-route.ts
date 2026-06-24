@@ -54,11 +54,10 @@ export async function loadDayPageModules(entry: RegistryDayLocaleEntry): Promise
 
   for (const appendix of entry.day.manifest.appendices) {
     const localeAppendix = appendix.locales[entry.locale];
-    if (!localeAppendix) continue;
 
     appendices.push({
       id: appendix.id,
-      title: localeAppendix.title ?? appendix.title?.[entry.locale] ?? appendix.id,
+      title: localeAppendix.title,
       Body: await loadMdxBody(entry.day.manifest.path, localeAppendix.body)
     });
   }
