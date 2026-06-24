@@ -1,8 +1,10 @@
 ---
 interface Props {
   class?: string;
+  dayMark?: string;
 }
 
+const { dayMark } = Astro.props;
 const className = ["eyebrow", Astro.props.class].filter(Boolean).join(" ");
 ---
-<p class={className}><slot /></p>
+<p class={className}><slot />{dayMark && <> <span class="daymark">{dayMark}</span></>}</p>

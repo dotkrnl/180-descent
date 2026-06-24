@@ -35,6 +35,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<ul class="mislist">/, "use <MisconceptionList>"],
   [/<span class="fix">/, "use <MisconceptionFix>"],
   [/<span class="table-subnote\b/, "use <TableSubnote>"],
+  [/<span class="daymark">/, "use the <HeroEyebrow> dayMark prop"],
   [/<p class="(?:frontier-watch-note|mono|table-note|theory-note)">/, "use <LessonNote>"],
   [/<figure class="bayes-sieve">/, "use <BayesSieve>"],
   [/<p class="bs-total">/, "use <BayesSieve>"],
