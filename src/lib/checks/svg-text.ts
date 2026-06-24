@@ -15,7 +15,7 @@ interface SvgTextCheckFailure {
   value: number;
 }
 
-const ALLOWED_EXTENSIONS = /\.(css|html|js|md|njk|scss|svg)$/i;
+const ALLOWED_EXTENSIONS = /\.(astro|css|html|js|md|mdx|njk|scss|svg)$/i;
 const GENERATED_STYLE_PATTERN = /^src\/assets\/scss\/generated\//;
 
 export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFailure[] {

@@ -19,6 +19,27 @@ describe("svg text size check", () => {
     ]);
   });
 
+  it("reports inline SVG font sizes in Astro and MDX files", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-svg-text-"));
+    await mkdir(path.join(root, "src/app/components"), { recursive: true });
+    await mkdir(path.join(root, "src/content/days/001-fixture"), { recursive: true });
+    await writeFile(path.join(root, "src/app/components/Figure.astro"), '<svg><text font-size="9">tiny</text></svg>');
+    await writeFile(path.join(root, "src/content/days/001-fixture/en.mdx"), '<svg><text style="font-size: 9px">tiny</text></svg>');
+
+    expect(checkSvgTextSize({ root })).toEqual([
+      {
+        file: "src/app/components/Figure.astro",
+        line: 1,
+        value: 9
+      },
+      {
+        file: "src/content/days/001-fixture/en.mdx",
+        line: 1,
+        value: 9
+      }
+    ]);
+  });
+
   it("ignores generated SCSS partials", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-svg-text-"));
     await mkdir(path.join(root, "src/assets/scss/generated"), { recursive: true });
