@@ -894,6 +894,8 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["KindsOfKnowingTree", { selector: ".kinds-of-knowing-tree", width: "0.82\\linewidth", height: "0.24\\textheight" }],
   ["TheoryLadenSunriseFigure", { selector: ".theory-laden-sunrise-figure", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["QuineWebFigure", { selector: ".quine-web-figure", width: "0.58\\linewidth", height: "0.28\\textheight" }],
+  ["MathBenchmarkLadderFigure", { selector: ".math-benchmark-ladder-figure", width: "0.82\\linewidth", height: "0.3\\textheight" }],
+  ["SquareOfOppositionFigure", { selector: ".square-of-opposition-figure", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["ForkingPathsFigure", { selector: ".forking-paths", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["CausationScatterFigure", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }]
 ]);

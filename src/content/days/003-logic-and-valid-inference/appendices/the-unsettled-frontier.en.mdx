@@ -33,6 +33,7 @@ import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import SourceNote from "@app/components/lesson/SourceNote.astro";
 import TableSubnote from "@app/components/lesson/TableSubnote.astro";
 import Term from "@app/components/lesson/Term.astro";
+import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchmarkLadderFigure.astro";
 
 <Lead drop="T">he first appendix was the director's cut — settled history, scenes that didn't fit but were never in doubt. This one is different, and you should read it with a different posture. Everything here is from 2023 to 2026; much of it is so fresh that the mathematical community has not finished arguing about what it means. Some of it will look, in five years, like the moment the ground shifted. Some will look like a press release that fooled a lot of people for a week. The honest trouble is that, right now, *nobody can fully tell which is which* — and that is precisely why it belongs in a course about valid inference. This is the hype filter not as a teaching exercise but as a survival skill, applied live, to claims still warm from the lab.</Lead>
 
@@ -52,41 +53,7 @@ To follow it you need to understand the scoreboard. Machine provers are ranked o
 
 <PanelNote>As each benchmark is conquered, a harder one is built above it. Today's frontier systems sit near the top of the older rungs and near the bottom of the newest — which is exactly how you'd want a healthy benchmark to behave.</PanelNote>
 
-<svg viewBox="0 0 460 300" role="img" aria-label="A ladder of math benchmarks from nearly-saturated miniF2F up to the hard FrontierMath, with approximate best scores.">
-<defs>
-<linearGradient id="appendix-d003-the-unsettled-frontier-grad" x1="0" y1="1" x2="0" y2="0">
-<stop offset="0%" stop-color="var(--ok)"></stop>
-<stop offset="50%" stop-color="var(--hint)"></stop>
-<stop offset="100%" stop-color="var(--contested)"></stop>
-</linearGradient>
-</defs>
-{/* axis */}
-<line x1="60" y1="20" x2="60" y2="270" stroke="var(--line-strong)" stroke-width="1.5"></line>
-<text x="52" y="26" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">hard</text>
-<text x="52" y="268" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">easy</text>
-{/* rungs */}
-<g font-family="IBM Plex Mono,monospace">
-{/* miniF2F */}
-<rect x="70" y="210" width="300" height="46" rx="8" fill="color-mix(in srgb,var(--ok) 12%,transparent)" stroke="var(--ok)" stroke-width="1.4"></rect>
-<text x="84" y="231" font-size="13" fill="var(--ink)" font-weight="600">miniF2F</text>
-<text x="84" y="247" font-size="10.5" fill="var(--ink-soft)">olympiad-style · ~300 problems · est. 2022</text>
-<text x="356" y="237" text-anchor="end" font-size="15" fill="var(--ok)" font-weight="600">~90%</text>
-<text x="356" y="251" text-anchor="end" font-size="10.5" fill="var(--ink-faint)">nearly saturated</text>
-{/* PutnamBench */}
-<rect x="70" y="140" width="300" height="46" rx="8" fill="color-mix(in srgb,var(--hint) 12%,transparent)" stroke="var(--hint)" stroke-width="1.4"></rect>
-<text x="84" y="161" font-size="13" fill="var(--ink)" font-weight="600">PutnamBench</text>
-<text x="84" y="177" font-size="10.5" fill="var(--ink-soft)">undergraduate · ~660 problems · est. 2024</text>
-<text x="356" y="167" text-anchor="end" font-size="15" fill="var(--hint)" font-weight="600">~13%</text>
-<text x="356" y="181" text-anchor="end" font-size="10.5" fill="var(--ink-faint)">86 / 658 solved</text>
-{/* FrontierMath */}
-<rect x="70" y="70" width="300" height="46" rx="8" fill="color-mix(in srgb,var(--contested) 12%,transparent)" stroke="var(--contested)" stroke-width="1.4"></rect>
-<text x="84" y="91" font-size="13" fill="var(--ink)" font-weight="600">FrontierMath</text>
-<text x="84" y="107" font-size="10.5" fill="var(--ink-soft)">research-level · expert hours each · est. 2024</text>
-<text x="356" y="97" text-anchor="end" font-size="15" fill="var(--contested)" font-weight="600">~10%</text>
-<text x="356" y="111" text-anchor="end" font-size="10.5" fill="var(--ink-faint)">contested — see Disp. V</text>
-</g>
-<text x="215" y="42" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">↑ the field keeps building taller rungs</text>
-</svg>
+<MathBenchmarkLadderFigure locale="en" />
 <Caption class="appendix-caption micro">Scores are best-reported, vary by sampling budget, and move month to month. They are orientation, not gospel — read every number on this page as "approximately, as of early 2026."</Caption>
 </Panel>
 

@@ -31,6 +31,7 @@ import Sources from "@app/components/lesson/Sources.astro";
 import SourceNote from "@app/components/lesson/SourceNote.astro";
 import TableSubnote from "@app/components/lesson/TableSubnote.astro";
 import Term from "@app/components/lesson/Term.astro";
+import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchmarkLadderFigure.astro";
 
 <Lead>第一个附录更像是「导演剪辑版」——那是已被尘封的历史，虽因篇幅未进正文，其真实性却从无争议。但这份附录不同，阅读它需要换一种姿态。这里讨论的成果大多出现在 2023 至 2026 年之间，许多还新到数学界尚未形成稳定共识。其中有些在五年后看来，可能会是「地壳变动」的起点；而另一些则可能仅仅是虚晃一枪、骗过众人的公关稿。真正的麻烦在于，此时此刻，<Highlight>没人能完全分清孰真孰假</Highlight>——而这恰恰是它们出现在这门关于「有效推理」课程中的原因。在这里，「前沿校准器」不再只是一项教学练习，而是一项活学活用的生存技能，直接施加在那些还带着实验室余温的断言之上。</Lead>
 
@@ -50,41 +51,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 <PanelNote>每当一个基准测试被攻克，上方就会建立一个更难的基准。今天的前沿系统处于旧阶梯的顶端和新阶梯的底端——这正是一个健康的基准测试应有的表现。</PanelNote>
 
-<svg viewBox="0 0 460 300" role="img" aria-label="数学基准测试阶梯，从接近饱和的 miniF2F 到极难的 FrontierMath，附带大致的最高得分。">
-<defs>
-<linearGradient id="appendix-d003-the-unsettled-frontier-grad" x1="0" y1="1" x2="0" y2="0">
-<stop offset="0%" stop-color="var(--ok)"></stop>
-<stop offset="50%" stop-color="var(--hint)"></stop>
-<stop offset="100%" stop-color="var(--contested)"></stop>
-</linearGradient>
-</defs>
-{/* axis */}
-<line x1="60" y1="20" x2="60" y2="270" stroke="var(--line-strong)" stroke-width="1.5"></line>
-<text x="52" y="26" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">难</text>
-<text x="52" y="268" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">易</text>
-{/* rungs */}
-<g font-family="IBM Plex Mono,monospace">
-{/* miniF2F */}
-<rect x="70" y="210" width="300" height="46" rx="8" fill="color-mix(in srgb,var(--ok) 12%,transparent)" stroke="var(--ok)" stroke-width="1.4"></rect>
-<text x="84" y="231" font-size="13" fill="var(--ink)" font-weight="600">miniF2F</text>
-<text x="84" y="247" font-size="10.5" fill="var(--ink-soft)">奥数级别 · ~300 题 · 2022 年</text>
-<text x="356" y="237" text-anchor="end" font-size="15" fill="var(--ok)" font-weight="600">~90%</text>
-<text x="356" y="251" text-anchor="end" font-size="10.5" fill="var(--ink-faint)">接近饱和</text>
-{/* PutnamBench */}
-<rect x="70" y="140" width="300" height="46" rx="8" fill="color-mix(in srgb,var(--hint) 12%,transparent)" stroke="var(--hint)" stroke-width="1.4"></rect>
-<text x="84" y="161" font-size="13" fill="var(--ink)" font-weight="600">PutnamBench</text>
-<text x="84" y="177" font-size="10.5" fill="var(--ink-soft)">本科生级别 · ~660 题 · 2024 年</text>
-<text x="356" y="167" text-anchor="end" font-size="15" fill="var(--hint)" font-weight="600">~13%</text>
-<text x="356" y="181" text-anchor="end" font-size="10.5" fill="var(--ink-faint)">已解决 86 / 658</text>
-{/* FrontierMath */}
-<rect x="70" y="70" width="300" height="46" rx="8" fill="color-mix(in srgb,var(--contested) 12%,transparent)" stroke="var(--contested)" stroke-width="1.4"></rect>
-<text x="84" y="91" font-size="13" fill="var(--ink)" font-weight="600">FrontierMath</text>
-<text x="84" y="107" font-size="10.5" fill="var(--ink-soft)">研究级别 · 专家需数小时 · 2024 年</text>
-<text x="356" y="97" text-anchor="end" font-size="15" fill="var(--contested)" font-weight="600">~10%</text>
-<text x="356" y="111" text-anchor="end" font-size="10.5" fill="var(--ink-faint)">存疑——见简报 V</text>
-</g>
-<text x="215" y="42" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">↑ 领域内不断建立更高的阶梯</text>
-</svg>
+<MathBenchmarkLadderFigure locale="zh" />
 <Caption class="appendix-caption micro">得分取自公开报道的最佳水平，随采样预算波动，且逐月变化。这些数据仅供参考，而非教条——请将本页所有数字视为「截至 2026 年初的约数」。</Caption>
 </Panel>
 

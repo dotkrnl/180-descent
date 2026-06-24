@@ -1,0 +1,69 @@
+---
+import type { Locale } from "@lib/schemas/day";
+
+interface Props {
+  locale: Locale;
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      aria: "展示 A、E、I、O 命题及其逻辑关系的对当方阵。",
+      a: "所有 S 都是 P",
+      e: "所有 S 都不是 P",
+      i: "有的 S 是 P",
+      o: "有的 S 不是 P",
+      top: "反对关系",
+      bottom: "下反对关系",
+      left: "差等关系",
+      right: "差等关系",
+      diagonal: "矛盾关系"
+    }
+  : {
+      aria: "The square of opposition with A, E, I, O statements at the corners and their logical relations.",
+      a: "All S are P",
+      e: "No S are P",
+      i: "Some S are P",
+      o: "Some S not P",
+      top: "contraries",
+      bottom: "subcontraries",
+      left: "subalternation",
+      right: "subalternation",
+      diagonal: "contradictories"
+    };
+---
+<div class="square-of-opposition-figure">
+  <svg viewBox="0 0 460 300" role="img" aria-label={copy.aria}>
+    <g font-family="IBM Plex Mono,monospace">
+      <rect x="40" y="36" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.6"></rect>
+      <text x="115" y="58" text-anchor="middle" font-size="15" fill="var(--accent)" font-weight="600">A</text>
+      <text x="115" y="78" text-anchor="middle" font-size="11" fill="var(--ink-soft)">{copy.a}</text>
+      <rect x="270" y="36" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.6"></rect>
+      <text x="345" y="58" text-anchor="middle" font-size="15" fill="var(--accent)" font-weight="600">E</text>
+      <text x="345" y="78" text-anchor="middle" font-size="11" fill="var(--ink-soft)">{copy.e}</text>
+      <rect x="40" y="210" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.6"></rect>
+      <text x="115" y="232" text-anchor="middle" font-size="15" fill="var(--brass)" font-weight="600">I</text>
+      <text x="115" y="252" text-anchor="middle" font-size="11" fill="var(--ink-soft)">{copy.i}</text>
+      <rect x="270" y="210" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.6"></rect>
+      <text x="345" y="232" text-anchor="middle" font-size="15" fill="var(--brass)" font-weight="600">O</text>
+      <text x="345" y="252" text-anchor="middle" font-size="11" fill="var(--ink-soft)">{copy.o}</text>
+    </g>
+    <g stroke="var(--line-strong)" stroke-width="1.4" fill="none" font-family="IBM Plex Mono,monospace" font-size="10.5">
+      <line x1="190" y1="64" x2="268" y2="64"></line>
+      <line x1="190" y1="238" x2="268" y2="238"></line>
+      <line x1="115" y1="92" x2="115" y2="208"></line>
+      <line x1="345" y1="92" x2="345" y2="208"></line>
+    </g>
+    <g stroke="var(--contested)" stroke-width="1.5" fill="none" stroke-dasharray="5 4">
+      <line x1="180" y1="92" x2="285" y2="205"></line>
+      <line x1="280" y1="92" x2="175" y2="205"></line>
+    </g>
+    <g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">
+      <text x="229" y="58" text-anchor="middle">{copy.top}</text>
+      <text x="229" y="252" text-anchor="middle">{copy.bottom}</text>
+      <text x="95" y="155" text-anchor="middle" transform="rotate(-90 95 155)">{copy.left}</text>
+      <text x="365" y="155" text-anchor="middle" transform="rotate(90 365 155)">{copy.right}</text>
+      <text x="230" y="150" text-anchor="middle" fill="var(--contested)" font-size="11">{copy.diagonal}</text>
+    </g>
+  </svg>
+</div>

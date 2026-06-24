@@ -30,6 +30,7 @@ import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Strong from "@app/components/lesson/Strong.astro";
 import Term from "@app/components/lesson/Term.astro";
+import SquareOfOppositionFigure from "@app/components/lesson/figures/SquareOfOppositionFigure.astro";
 
 <Lead drop="T">he main descent told a clean story: three engines of inference, validity versus soundness, the slow alchemy that turned logic into algebra, and a frontier where machines now check proofs without mercy. But a clean story is a curated one. Behind it sits a far stranger and richer landscape — a logic so old it predates its own discoverers' embarrassment, paradoxes that have toppled foundations twice, a tortoise who refuses to be argued with, and a string of theorems no human will ever fully read, accepted as true anyway because a machine vouched for every step. This appendix is the director's cut. It assumes you've watched the film; it adds the scenes that didn't fit, in the same order the film would have used them, so you can read straight through.</Lead>
 
@@ -49,45 +50,7 @@ Every classical categorical statement comes in one of four flavours, and medieva
 
 <PanelNote>Four statement-types, four relationships. The diagonals are the strongest link: contradictories must always disagree.</PanelNote>
 
-<svg viewBox="0 0 460 300" role="img" aria-label="The square of opposition with A, E, I, O statements at the corners and their logical relations.">
-<defs>
-<marker id="appendix-d003-the-deeper-machinery-of-logic-d2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker>
-</defs>
-{/* corners */}
-<g font-family="IBM Plex Mono,monospace">
-<rect x="40" y="36" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.6"></rect>
-<text x="115" y="58" text-anchor="middle" font-size="15" fill="var(--accent)" font-weight="600">A</text>
-<text x="115" y="78" text-anchor="middle" font-size="11" fill="var(--ink-soft)">All S are P</text>
-<rect x="270" y="36" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.6"></rect>
-<text x="345" y="58" text-anchor="middle" font-size="15" fill="var(--accent)" font-weight="600">E</text>
-<text x="345" y="78" text-anchor="middle" font-size="11" fill="var(--ink-soft)">No S are P</text>
-<rect x="40" y="210" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.6"></rect>
-<text x="115" y="232" text-anchor="middle" font-size="15" fill="var(--brass)" font-weight="600">I</text>
-<text x="115" y="252" text-anchor="middle" font-size="11" fill="var(--ink-soft)">Some S are P</text>
-<rect x="270" y="210" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.6"></rect>
-<text x="345" y="232" text-anchor="middle" font-size="15" fill="var(--brass)" font-weight="600">O</text>
-<text x="345" y="252" text-anchor="middle" font-size="11" fill="var(--ink-soft)">Some S not P</text>
-</g>
-{/* edges */}
-<g stroke="var(--line-strong)" stroke-width="1.4" fill="none" font-family="IBM Plex Mono,monospace" font-size="10.5">
-<line x1="190" y1="64" x2="268" y2="64"></line>
-<line x1="190" y1="238" x2="268" y2="238"></line>
-<line x1="115" y1="92" x2="115" y2="208"></line>
-<line x1="345" y1="92" x2="345" y2="208"></line>
-</g>
-{/* diagonals */}
-<g stroke="var(--contested)" stroke-width="1.5" fill="none" stroke-dasharray="5 4">
-<line x1="180" y1="92" x2="285" y2="205"></line>
-<line x1="280" y1="92" x2="175" y2="205"></line>
-</g>
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">
-<text x="229" y="58" text-anchor="middle">contraries</text>
-<text x="229" y="252" text-anchor="middle">subcontraries</text>
-<text x="95" y="155" text-anchor="middle" transform="rotate(-90 95 155)">subalternation</text>
-<text x="365" y="155" text-anchor="middle" transform="rotate(90 365 155)">subalternation</text>
-<text x="230" y="150" text-anchor="middle" fill="var(--contested)" font-size="11">contradictories</text>
-</g>
-</svg>
+<SquareOfOppositionFigure locale="en" />
 <Caption class="appendix-caption">The dashed diagonals are the load-bearing relations: if "All S are P" is true, "Some S are not P" must be false, and vice versa — no exceptions, ever.</Caption>
 </Panel>
 

@@ -1,0 +1,52 @@
+---
+import type { Locale } from "@lib/schemas/day";
+
+interface Props {
+  locale: Locale;
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      aria: "数学基准测试阶梯，从接近饱和的 miniF2F 到极难的 FrontierMath，附带大致的最高得分。",
+      hard: "难",
+      easy: "易",
+      miniDesc: "奥数 · ~300 题 · 2022",
+      putnamDesc: "本科生 · ~660 题 · 2024",
+      frontierDesc: "研究级 · 专家数小时 · 2024",
+      footer: "↑ 领域内不断建立更高的阶梯"
+    }
+  : {
+      aria: "A ladder of math benchmarks from nearly-saturated miniF2F up to the hard FrontierMath, with approximate best scores.",
+      hard: "hard",
+      easy: "easy",
+      miniDesc: "olympiad · ~300 problems · 2022",
+      putnamDesc: "undergrad · ~660 problems · 2024",
+      frontierDesc: "research · expert-hours · 2024",
+      footer: "↑ the field keeps building taller rungs"
+    };
+---
+<div class="math-benchmark-ladder-figure">
+  <svg viewBox="0 0 460 300" role="img" aria-label={copy.aria}>
+    <line x1="60" y1="20" x2="60" y2="270" stroke="var(--line-strong)" stroke-width="1.5"></line>
+    <text x="52" y="26" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.hard}</text>
+    <text x="52" y="268" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.easy}</text>
+    <g font-family="IBM Plex Mono,monospace">
+      <rect x="70" y="210" width="300" height="46" rx="8" fill="var(--ok)" fill-opacity="0.12" stroke="var(--ok)" stroke-width="1.4"></rect>
+      <text x="84" y="231" font-size="13" fill="var(--ink)" font-weight="600">miniF2F</text>
+      <text x="84" y="247" font-size="10.5" fill="var(--ink-soft)">{copy.miniDesc}</text>
+      <text x="356" y="237" text-anchor="end" font-size="15" fill="var(--ok)" font-weight="600">~90%</text>
+
+      <rect x="70" y="140" width="300" height="46" rx="8" fill="var(--hint)" fill-opacity="0.12" stroke="var(--hint)" stroke-width="1.4"></rect>
+      <text x="84" y="161" font-size="13" fill="var(--ink)" font-weight="600">PutnamBench</text>
+      <text x="84" y="177" font-size="10.5" fill="var(--ink-soft)">{copy.putnamDesc}</text>
+      <text x="356" y="167" text-anchor="end" font-size="15" fill="var(--hint)" font-weight="600">~13%</text>
+
+      <rect x="70" y="70" width="300" height="46" rx="8" fill="var(--contested)" fill-opacity="0.12" stroke="var(--contested)" stroke-width="1.4"></rect>
+      <text x="84" y="91" font-size="13" fill="var(--ink)" font-weight="600">FrontierMath</text>
+      <text x="84" y="107" font-size="10.5" fill="var(--ink-soft)">{copy.frontierDesc}</text>
+      <text x="356" y="97" text-anchor="end" font-size="15" fill="var(--contested)" font-weight="600">~10%</text>
+    </g>
+    <text x="215" y="42" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">{copy.footer}</text>
+  </svg>
+</div>

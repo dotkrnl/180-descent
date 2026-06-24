@@ -29,6 +29,7 @@ import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
+import SquareOfOppositionFigure from "@app/components/lesson/figures/SquareOfOppositionFigure.astro";
 
 <Lead>主线航程呈现了一个明晰的故事：推理的几种模式、有效性与健全性的区分、将逻辑转化为代数的漫长炼金术，以及机器开始冷酷地检查证明的前沿地带。但明晰的故事往往经过了精心剪裁。在它背后，隐藏着一幅更为诡谲而富饶的景观：有些逻辑传统古老到后来被重新发现时都显得令人尴尬；有些悖论曾两次撼动逻辑基础；还有一只拒绝被说服的乌龟；以及一系列人类永远无法读完、却因机器背书了每一步而不得不承认其为真的定理。这份附录就是那部「导演剪辑版」。我们假设你已经看过了正片，这里补充了那些被删减的镜头，并依照正片的顺序排列，方便你一读到底。</Lead>
 
@@ -48,45 +49,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 <PanelNote>四种命题类型，四种逻辑关系。对角线是最牢固的纽带：矛盾项必须永远处于对立面。</PanelNote>
 
-<svg viewBox="0 0 460 300" role="img" aria-label="展示 A、E、I、O 命题及其逻辑关系的对当方阵。">
-<defs>
-<marker id="appendix-d003-the-deeper-machinery-of-logic-d2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"></path></marker>
-</defs>
-{/* corners */}
-<g font-family="IBM Plex Mono,monospace">
-<rect x="40" y="36" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.6"></rect>
-<text x="115" y="58" text-anchor="middle" font-size="15" fill="var(--accent)" font-weight="600">A</text>
-<text x="115" y="78" text-anchor="middle" font-size="11" fill="var(--ink-soft)">所有 S 都是 P</text>
-<rect x="270" y="36" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.6"></rect>
-<text x="345" y="58" text-anchor="middle" font-size="15" fill="var(--accent)" font-weight="600">E</text>
-<text x="345" y="78" text-anchor="middle" font-size="11" fill="var(--ink-soft)">所有 S 都不是 P</text>
-<rect x="40" y="210" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.6"></rect>
-<text x="115" y="232" text-anchor="middle" font-size="15" fill="var(--brass)" font-weight="600">I</text>
-<text x="115" y="252" text-anchor="middle" font-size="11" fill="var(--ink-soft)">有的 S 是 P</text>
-<rect x="270" y="210" width="150" height="56" rx="9" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.6"></rect>
-<text x="345" y="232" text-anchor="middle" font-size="15" fill="var(--brass)" font-weight="600">O</text>
-<text x="345" y="252" text-anchor="middle" font-size="11" fill="var(--ink-soft)">有的 S 不是 P</text>
-</g>
-{/* edges */}
-<g stroke="var(--line-strong)" stroke-width="1.4" fill="none" font-family="IBM Plex Mono,monospace" font-size="10.5">
-<line x1="190" y1="64" x2="268" y2="64"></line>
-<line x1="190" y1="238" x2="268" y2="238"></line>
-<line x1="115" y1="92" x2="115" y2="208"></line>
-<line x1="345" y1="92" x2="345" y2="208"></line>
-</g>
-{/* diagonals */}
-<g stroke="var(--contested)" stroke-width="1.5" fill="none" stroke-dasharray="5 4">
-<line x1="180" y1="92" x2="285" y2="205"></line>
-<line x1="280" y1="92" x2="175" y2="205"></line>
-</g>
-<g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--ink-faint)">
-<text x="229" y="58" text-anchor="middle">反对关系</text>
-<text x="229" y="252" text-anchor="middle">下反对关系</text>
-<text x="95" y="155" text-anchor="middle" transform="rotate(-90 95 155)">差等关系</text>
-<text x="365" y="155" text-anchor="middle" transform="rotate(90 365 155)">差等关系</text>
-<text x="230" y="150" text-anchor="middle" fill="var(--contested)" font-size="11">矛盾关系</text>
-</g>
-</svg>
+<SquareOfOppositionFigure locale="zh" />
 <Caption class="appendix-caption">虚线对角线承担了图中最关键的逻辑关系：如果「所有 S 都是 P」为真，那么「有的 S 不是 P」必须为假，反之亦然——绝无例外。</Caption>
 </Panel>
 
