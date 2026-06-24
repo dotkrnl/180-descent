@@ -51,7 +51,6 @@ const ALLOWED_STATE_CLASSES = new Set([
 
 const ALLOWED_MARKER_CLASSES = new Set([
   "base-rate-engine",
-  "chiprow",
   "corner",
   "frontier",
   "grue-machine"
