@@ -1,0 +1,12 @@
+---
+interface Props {
+  variant?: "narrow" | "wide";
+  class?: string;
+}
+
+const variantClass = Astro.props.variant ? `appendix-figure-${Astro.props.variant}` : "";
+const className = ["appendix-figure", variantClass, Astro.props.class].filter(Boolean).join(" ");
+---
+<figure class={className}>
+  <slot />
+</figure>
