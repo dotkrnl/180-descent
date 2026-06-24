@@ -42,10 +42,14 @@ const canonicalPath = isZh ? `/zh/days/${dayPath}/` : `/days/${dayPath}/`;
 const alternatePath = isZh ? `/days/${dayPath}/` : `/zh/days/${dayPath}/`;
 const downloadPrefix = isZh ? `/downloads/180-descent-zh-day-${dayPath}` : `/downloads/180-descent-day-${dayPath}`;
 const socialImagePath = isZh ? `/assets/images/social/zh-day-${dayPath}.png` : `/assets/images/social/day-${dayPath}.png`;
-const dayLabel = isZh ? `第${String(entry.day.manifest.day).padStart(2, "0")}日` : `Day ${String(entry.day.manifest.day).padStart(2, "0")}`;
+const paddedDay = String(entry.day.manifest.day).padStart(3, "0");
+const dayLabel = isZh ? `第${paddedDay}日` : `Day ${paddedDay}`;
 const remainingDays = 180 - entry.day.manifest.day;
 const navPrefix = isZh ? "/zh/days" : "/days";
-const navDayLabel = (day: number) => isZh ? `第${String(day).padStart(3, "0")}日` : `Day ${String(day).padStart(3, "0")}`;
+const navDayLabel = (day: number) => {
+  const value = String(day).padStart(3, "0");
+  return isZh ? `第${value}日` : `Day ${value}`;
+};
 const navHref = (item: DayNavEntry) => `${navPrefix}/${item.path}/`;
 const scripts = entry.day.manifest.components.map((component) => {
   const script = interactionScriptModules[component.webEntry];
@@ -125,7 +129,7 @@ const scripts = entry.day.manifest.components.map((component) => {
         </details>
       ))}
       <p class="endcap">
-        {isZh ? `第 ${String(entry.day.manifest.day).padStart(2, "0")} 日终 · ` : `End of Day ${String(entry.day.manifest.day).padStart(2, "0")} · `}
+        {isZh ? `第 ${paddedDay} 日终 · ` : `End of Day ${paddedDay} · `}
         <span class="gleam">{isZh ? `还有 ${remainingDays} 日等待深入` : `${remainingDays} descents remain`}</span>
       </p>
     </div>

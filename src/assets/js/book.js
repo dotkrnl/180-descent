@@ -682,19 +682,4 @@
     );
   }
 
-  function compactText(text, max){
-    var normalized = String(text || "").replace(/\s+/g, " ").trim();
-    if(normalized.length <= max){
-      return normalized;
-    }
-    return normalized.slice(0, max - 1).trim() + "...";
-  }
-
-  function compactStart(text, max){
-    var normalized = String(text || "").replace(/\s+/g, " ").trim();
-    if(normalized.length <= max){
-      return normalized;
-    }
-    return "..." + normalized.slice(normalized.length - max + 3).trim();
-  }
 })();
