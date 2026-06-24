@@ -19,18 +19,18 @@ interface GenerateSocialCardsResult {
 interface SocialCard {
   locale: "en" | "zh";
   title: string;
-  summary?: string;
-  kicker?: string;
-  day?: number;
-  sourcePath?: string;
+  summary: string;
+  kicker: string;
+  day: number | null;
+  sourcePath: string;
   outPath: string;
 }
 
 interface DayData {
   locale: "en" | "zh";
   title: string;
-  summary?: string;
-  day?: number;
+  summary: string;
+  day: number;
   dayPath: string;
   sourcePath: string;
 }
@@ -62,7 +62,7 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
 
   const pending: SocialCard[] = [];
   for (const card of cards) {
-    const sourceMtimeMs = card.sourcePath ? (await stat(card.sourcePath)).mtimeMs : 0;
+    const sourceMtimeMs = (await stat(card.sourcePath)).mtimeMs;
     const latestSourceMtimeMs = Math.max(bookStat.mtimeMs, brandMarkStat.mtimeMs, dependencyMtimeMs, sourceMtimeMs);
     if (await isSocialCardStale(card.outPath, latestSourceMtimeMs)) {
       pending.push(card);
@@ -109,12 +109,18 @@ async function loadSocialCards(options: {
       locale: "en",
       title: options.book.title,
       summary: options.book.description,
+      kicker: options.book.title,
+      day: null,
+      sourcePath: path.join(options.root, "src/_data/book.yaml"),
       outPath: path.join(options.outDir, "180-descent.png")
     },
     {
       locale: "zh",
       title: options.book.zh.title,
       summary: options.book.zh.description,
+      kicker: options.book.zh.title,
+      day: null,
+      sourcePath: path.join(options.root, "src/_data/book.yaml"),
       outPath: path.join(options.outDir, "180-descent-zh.png")
     },
     ...enDays.map((day) => ({
@@ -132,11 +138,10 @@ async function loadSocialCards(options: {
 
 function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string {
   const isZh = card.locale === "zh";
-  const kicker = card.kicker || (isZh ? "深入一百八十日" : "The 180-Day Descent");
-  const label = card.day
+  const label = card.day !== null
     ? (isZh ? `第 ${String(card.day).padStart(3, "0")} 日` : `Day ${String(card.day).padStart(3, "0")}`)
     : (isZh ? "从根基到 2026 年研究前沿" : "Foundations to the 2026 research frontier");
-  const summary = clampSocialText(card.summary || "", isZh ? 132 : 150);
+  const summary = clampSocialText(card.summary, isZh ? 132 : 150);
   const titleLines = wrapSocialText(card.title, { maxLines: isZh ? 2 : 3, maxChars: isZh ? 15 : 22 });
   const summaryLines = summary ? wrapSocialText(summary, { maxLines: 3, maxChars: isZh ? 28 : 48 }) : [];
   const titleSize = isZh ? 70 : 78;
@@ -153,7 +158,7 @@ function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string 
   <rect x="84" y="72" width="289" height="2" fill="#bd8a38"/>
   <rect x="373" y="72" width="166" height="2" fill="#c54840"/>
   <rect x="539" y="72" width="577" height="2" fill="#1e4942"/>
-  <text x="84" y="145" fill="#6d4d18" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing=".5">${escapeXml(kicker.toUpperCase())}</text>
+  <text x="84" y="145" fill="#6d4d18" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing=".5">${escapeXml(card.kicker.toUpperCase())}</text>
   ${svgMultilineText(titleLines, { x: 84, y: 224, size: titleSize, lineHeight: titleSize * 1.04, color: "#191815", weight: 760, family: socialTitleFont(isZh) })}
   ${svgMultilineText(summaryLines, { x: 84, y: 224 + titleLines.length * titleSize * 1.04 + 40, size: summarySize, lineHeight: summarySize * 1.32, color: "#34312b", weight: 400, family: socialBodyFont(isZh) })}
   <text x="84" y="584" fill="#5b574e" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">${escapeXml(label)}</text>
