@@ -38,7 +38,7 @@ describe("clean repo check", () => {
     expect(checkCleanRepo({ root })).toEqual([
       {
         path: "public/assets",
-        reason: "Public assets must not mirror src/assets wholesale"
+        reason: "Public assets must be imported through Astro instead of committed under public/assets"
       }
     ]);
   });
