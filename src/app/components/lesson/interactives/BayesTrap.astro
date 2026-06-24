@@ -79,11 +79,11 @@ const copy = zh ? {
         <svg id="iconGrid" viewBox="0 0 200 200" role="img" aria-label={copy.gridAria}></svg>
       </div>
       <div class="ia-legend">
-        <span><span class="legend-swatch" style="background:var(--ok)" aria-hidden="true"></span>{copy.legend[0]}</span>
-        <span><span class="legend-swatch" style="background:var(--contested)" aria-hidden="true"></span>{copy.legend[1]}</span>
-        <span><span class="legend-swatch" style="background:var(--line-strong)" aria-hidden="true"></span>{copy.legend[2]}</span>
+        <span><span class="legend-swatch ok" aria-hidden="true"></span>{copy.legend[0]}</span>
+        <span><span class="legend-swatch contested" aria-hidden="true"></span>{copy.legend[1]}</span>
+        <span><span class="legend-swatch neutral" aria-hidden="true"></span>{copy.legend[2]}</span>
       </div>
     </div>
   </div>
-  <p style="font-size:.86em;color:var(--ink-soft);margin:1.1rem 0 0;">{copy.caption} <MathInline latex={copy.positiveGivenSick} /> {zh ? "与" : "with"} <MathInline latex={copy.sickGivenPositive} /> {copy.captionTail}</p>
+  <p class="bayes-trap-caption">{copy.caption} <MathInline latex={copy.positiveGivenSick} /> {zh ? "与" : "with"} <MathInline latex={copy.sickGivenPositive} /> {copy.captionTail}</p>
 </Panel>
