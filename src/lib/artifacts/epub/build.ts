@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { copyFile, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import * as cheerio from "cheerio";
 import JSZip from "jszip";
@@ -90,7 +90,6 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
   const book = YAML.parse(await readFile(path.join(root, "src/_data/book.yaml"), "utf8")) as BookData;
 
   await mkdir(path.join(root, "_site/downloads"), { recursive: true });
-  await mkdir(path.join(root, "dist/downloads"), { recursive: true });
 
   await buildEpub({
     root,
@@ -300,10 +299,7 @@ async function buildEpub(config: EpubConfig): Promise<void> {
   oebps.file("content.opf", contentOpf(config.meta, manifestItems, spine));
 
   const buffer = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" });
-  const distPath = path.join(config.root, "dist/downloads", config.output);
-  const sitePath = path.join(config.root, "_site/downloads", config.output);
-  await writeFile(distPath, buffer);
-  await copyFile(distPath, sitePath);
+  await writeFile(path.join(config.root, "_site/downloads", config.output), buffer);
 }
 
 async function pageToXhtml(

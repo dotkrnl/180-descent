@@ -129,7 +129,6 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
   await prepareLatinFonts({ root });
   await preparePdfFonts({ root });
   await mkdir(path.join(root, "_site/downloads"), { recursive: true });
-  await mkdir(path.join(root, "dist/downloads"), { recursive: true });
 
   await buildPdf({
     root,
@@ -212,10 +211,7 @@ async function buildPdf(config: PdfEdition & { root: string }): Promise<void> {
     await writeFile(texPath, tex);
     await runXeLaTeX(texPath, workDir);
 
-    const distPath = path.join(root, "dist/downloads", config.output);
-    const sitePath = path.join(root, "_site/downloads", config.output);
-    await copyFile(outputPath, distPath);
-    await copyFile(outputPath, sitePath);
+    await copyFile(outputPath, path.join(root, "_site/downloads", config.output));
   } catch (error) {
     const log = await readFile(path.join(workDir, "book.log"), "utf8").catch(() => "");
     const keepNote = process.env.PDF_KEEP_TEMP === "1" ? `\n\nTemporary PDF build directory kept at ${workDir}` : "";

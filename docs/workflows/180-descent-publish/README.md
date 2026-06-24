@@ -80,4 +80,4 @@ npm run deploy:staging
 8. Treat structural mismatches, language/title/H1 mismatches, horizontal overflow, broken math, missing Chinese font behavior, and untranslated Chinese print labels as regressions. Distinguish expected content drift from visual degradation when staging intentionally includes newer content than production.
 9. Report commit hash, branch, push result, deploy URL or deployment status, visual comparison scope, and any residual risks.
 
-Do not edit generated files in `_site/` or `dist/`; they are build outputs.
+Do not edit generated files in `_site/`; they are build outputs.

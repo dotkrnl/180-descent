@@ -22,7 +22,6 @@ const FORBIDDEN_PATHS = [
 
 const FORBIDDEN_TRACKED_PATHS = [
   ["_site", "Generated site output must not be committed"],
-  ["dist", "Generated artifact output must not be committed"],
   ["src/assets/images/social", "Generated social-card PNGs must not be committed"]
 ] as const;
 
