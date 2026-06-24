@@ -24,6 +24,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<section(?:\s|>)/, "use Markdown structure, <ContentSection>, or <Sources>"],
   [/<\/section>/, "use Markdown structure, </ContentSection>, or </Sources>"],
   [/<\/?blockquote(?:\s|>)/, "use <BlockQuote>"],
+  [/<h3>/, "use Markdown headings"],
   [/<p class="web-only">/, 'use <FormatOnly media="web">'],
   [/<p class="epub-only print-only">/, 'use <FormatOnly media="print-epub">'],
   [/<p class="lede\b/, "use <Lead>"],
