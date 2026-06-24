@@ -38,7 +38,9 @@ function trackedForbiddenPaths(root: string): string[] {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
   });
-  if (result.status !== 0) return [];
+  if (result.status !== 0) {
+    throw new Error((result.stderr || result.stdout || `git ls-files exited ${result.status}`).trim());
+  }
   return result.stdout
     .split(/\r?\n/)
     .map((line) => line.trim())
