@@ -18,7 +18,7 @@ export interface GenerateSocialCardsResult {
   total: number;
 }
 
-export interface SocialCard {
+interface SocialCard {
   locale: "en" | "zh";
   title: string;
   summary?: string;
@@ -53,7 +53,7 @@ const rendererPath = fileURLToPath(import.meta.url);
 const CARD_WIDTH = 1200;
 const CARD_HEIGHT = 630;
 
-export function clampSocialText(value = "", max = 160): string {
+function clampSocialText(value = "", max = 160): string {
   const text = String(value || "").replace(/\s+/g, " ").trim();
   return text.length > max ? `${text.slice(0, max - 1).trim()}...` : text;
 }
@@ -114,7 +114,7 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
   };
 }
 
-export async function loadSocialCards(options: {
+async function loadSocialCards(options: {
   root: string;
   book: BookData;
   outDir: string;
@@ -150,7 +150,7 @@ export async function loadSocialCards(options: {
   ];
 }
 
-export function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string {
+function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string {
   const isZh = card.locale === "zh";
   const kicker = card.kicker || (isZh ? "深入一百八十日" : "The 180-Day Descent");
   const label = card.day
@@ -260,7 +260,7 @@ function svgMultilineText(lines: string[], options: {
   return `<text fill="${options.color}" font-family="${escapeXml(options.family)}" font-size="${options.size}" font-weight="${options.weight}">${tspans}</text>`;
 }
 
-export function wrapSocialText(value: string, options: { maxLines: number; maxChars: number }): string[] {
+function wrapSocialText(value: string, options: { maxLines: number; maxChars: number }): string[] {
   const text = String(value || "").replace(/\s+/g, " ").trim();
   if (!text) return [];
 
