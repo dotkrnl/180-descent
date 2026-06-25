@@ -92,40 +92,45 @@ errors, not publication quality.
    translation; run Kimi, then Gemini, then GLM unless the user explicitly
    waives a step; manually review terminology, quote style, status labels,
    figure labels, alt text, and static artifact prose after the model passes.
-3. **Interactives inventory:** make a list of every imported web-only
+3. **Image options offered:** show the user relevant open-license,
+   public-domain, Creative Commons, or official-source image options with title,
+   creator, source, license, and proposed placement. Add selected images as
+   optimized local assets with credits, alt text, and bilingual captions, or
+   record that the options were declined or unsuitable.
+4. **Interactives inventory:** make a list of every imported web-only
    interactive in the main lesson and appendices. For each one, verify it
    renders on the web, is registered in `WEB_ONLY_COMPONENTS`, has a localized
    `FormatOnly media="print-epub" variant="alternate"` block, and initializes
    only when visible on screen.
-4. **Static artifact equivalence:** a print/EPUB alternate for an interactive
+5. **Static artifact equivalence:** a print/EPUB alternate for an interactive
    must be a real static explanation, not a placeholder. If the live widget's
    teaching value is visual, include a static SVG/table/diagram that shows the
    relevant state, curve, grid, or comparison. The text-only summary may
    accompany the figure but must not be the only substitute.
-5. **Figure renderer contract:** every reusable SVG figure used in MDX must be
+6. **Figure renderer contract:** every reusable SVG figure used in MDX must be
    PDF-safe. Avoid relying only on external SCSS for fill, stroke, font size, or
    text positioning; include self-contained SVG styling or literal attributes
    for anything that must survive `rsvg-convert`. Register complex Astro figure
    components in `SVG_COMPONENTS` when the PDF renderer needs to extract them
    from rendered HTML.
-6. **Tooltip discipline:** check prior published days before adding `Term` /
+7. **Tooltip discipline:** check prior published days before adding `Term` /
    `TipNote`. Tooltip only the first visible use of an unexplained technical
    concept. Do not tooltip a term immediately followed by its own plain
    definition in prose.
-7. **Hype-filter discipline:** status tags must use `StatusChip`, stay short,
+8. **Hype-filter discipline:** status tags must use `StatusChip`, stay short,
    and push caveats into prose. Frontier claim blocks must use the established
    claim/status components so labels do not degrade to plain text.
-8. **Mobile typography:** inspect the main page on a narrow mobile viewport.
+9. **Mobile typography:** inspect the main page on a narrow mobile viewport.
    SVG text, status chips, buttons, and long English titles must not overlap,
    shrink below legibility, or run into frames. The mobile rendered-type gate is
    a floor, not a substitute for visual review.
-9. **Artifact visual review:** after `npm run build:site && npm run build:pdf`,
+10. **Artifact visual review:** after `npm run build:site && npm run build:pdf`,
    render every affected day PDF page to PNG with Poppler: page 1, every page
    containing a new figure/table/interactive alternate, and the last page. Check
    both English and Chinese. Look for black rectangles, missing figures, wrong
    repeated diagrams, clipped text, label/frame overlap, stale English in
    Chinese artifacts, and orphaned headings.
-10. **Deployed verification:** after deployment, fetch the deployed day PDFs
+11. **Deployed verification:** after deployment, fetch the deployed day PDFs
     from the preview URL, render the same representative pages, and smoke-check
     English desktop plus Chinese mobile HTML with Playwright. Do not rely only
     on the local `_site` render.
@@ -172,6 +177,11 @@ Appendices are declared in `day.yaml` under `appendices`.
 
 - Prefer original diagrams built as reusable Astro figure or interactive
   components using SVG/HTML and SCSS.
+- When helping add a new day or appendix, proactively present a short list of
+  relevant open-license, public-domain, Creative Commons, or official-source
+  image options before finalizing. Include title, creator, source, license, and
+  proposed placement; add selected assets with local files, credits, alt text,
+  and bilingual captions, or record that no option was selected.
 - Use open-license, public-domain, Creative Commons, or official-source images
   only when they clarify the lesson and reuse is allowed.
 - Do not hotlink external images.
