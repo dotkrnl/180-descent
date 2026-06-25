@@ -12,6 +12,7 @@ import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import Term from "@app/components/lesson/Term.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import Day8StaticFigure from "@app/components/lesson/figures/Day8StaticFigure.astro";
 import CellularAutomataRules from "@app/components/lesson/interactives/CellularAutomataRules.astro";
 import PercolationThreshold from "@app/components/lesson/interactives/PercolationThreshold.astro";
 import RandomBooleanNetwork from "@app/components/lesson/interactives/RandomBooleanNetwork.astro";
@@ -60,6 +61,8 @@ For small *p* you get scattered little islands — nothing reaches across. Crank
 <FormatOnly as="div" media="print-epub" variant="alternate">
 <PanelTitle>Static summary of the interactive · The Percolation Threshold</PanelTitle>
 
+<Day8StaticFigure kind="percolation" locale="en" />
+
 Drag the density slider in the web version. Each cell is filled independently with probability *p*. The simulation hunts for a cluster that touches both the **top and bottom** edges; if one exists, it lights up in teal and the verdict flips to SPANS. Sweep slowly across *p* ≈ 0.59 and the finite grid's probability curve steepens — a few percent of density is the difference between scattered islands and a connected continent, though the exact cliff belongs to the infinite ideal.
 </FormatOnly>
 
@@ -85,6 +88,8 @@ That last class is the prize. Wolfram conjectured, and Matthew Cook later **prov
 <FormatOnly as="div" media="print-epub" variant="alternate">
 <PanelTitle>Static summary of the interactive · Rule 30, Rule 110, and friends</PanelTitle>
 
+<Day8StaticFigure kind="cellular" locale="en" />
+
 The web panel draws elementary cellular automata downward in time from either one central black cell or a random first row. Rule 30 produces chaotic-looking texture, Rule 110 supports universal computation, Rule 90 draws the Sierpiński triangle, Rule 184 resembles traffic flow, and Rule 250 settles into simple order.
 </FormatOnly>
 
@@ -108,6 +113,8 @@ The crucial finding is an **order-chaos transition controlled by connectivity K*
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
 <PanelTitle>Static summary of the interactive · A Random Boolean Network Finding Its Footing</PanelTitle>
+
+<Day8StaticFigure kind="boolean" locale="en" />
 
 A grid of nodes, each ON or OFF, updates from *K* randomly wired inputs by random Boolean rules. The web activity trace shows what fraction of nodes flip each step. Low K tends to flatten into frozen order; high K stays noisy; around **K = 2** the network often enters structured low-level activity near the edge of chaos.
 </FormatOnly>

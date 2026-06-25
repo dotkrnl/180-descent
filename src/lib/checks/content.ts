@@ -162,6 +162,7 @@ const ARTIFACT_COMPONENTS = new Set([
   "DataTableHead",
   "DataTableHeader",
   "DataTableRow",
+  "Day8StaticFigure",
   "DefinitionBox",
   "DekGrid",
   "Divider",

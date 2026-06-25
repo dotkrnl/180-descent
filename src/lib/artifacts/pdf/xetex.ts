@@ -925,11 +925,22 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["ForkingPathsFigure", { selector: ".forking-paths", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["CausationScatterFigure", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["EmergenceHero", { selector: ".emergence-hero", width: "0.86\\linewidth", height: "0.30\\textheight" }],
-  ["ComplexityHump", { selector: ".complexity-hump", width: "0.82\\linewidth", height: "0.26\\textheight" }]
+  ["ComplexityHump", { selector: ".complexity-hump", width: "0.82\\linewidth", height: "0.26\\textheight" }],
+  ["Day8StaticFigure", { selector: ".day8-static-figure", width: "0.86\\linewidth", height: "0.24\\textheight" }]
 ]);
 
 function renderRenderedSvgComponent(name: string, attrs: Map<string, string | null>, state: MdxRenderState): string {
-  const spec = SVG_COMPONENTS.get(name);
+  let spec = SVG_COMPONENTS.get(name);
+  if (name === "Day8StaticFigure") {
+    const kind = resolveExpression(attrs.get("kind"), state).trim();
+    if (kind) {
+      spec = {
+        selector: `.day8-static-figure-${kind}`,
+        width: "0.86\\linewidth",
+        height: "0.24\\textheight"
+      };
+    }
+  }
   if (!spec || !state.renderedHtml) return "";
 
   const index = state.componentCounts.get(spec.selector) ?? 0;

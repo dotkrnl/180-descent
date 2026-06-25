@@ -7,6 +7,11 @@ const zh = Astro.props.locale === "zh";
 ---
 <figure class="complexity-hump">
   <svg viewBox="0 0 520 320" role="img" aria-label={zh ? "一条中间高、两端低的复杂性曲线：完美秩序和完美随机都复杂性低，中间最高。" : "A hump-shaped curve peaking in the middle: complexity is low for both perfect order and perfect randomness, and high in between."}>
+    <style>
+      .hump-axis{stroke:#cabfa8;stroke-width:1.5}.hump-label,.hump-small{font-family:"IBM Plex Mono",monospace;fill:#5d6c72}.hump-label{font-size:12px}.hump-small{font-size:10.5px}
+      .hump-name{font-family:"Fraunces",serif;font-size:14px;fill:#172530}.hump-line{fill:none;stroke:#1d6f78;stroke-width:3}.hump-fill{fill:#dfecea}
+      .hump-dot.side{fill:#93651f}.hump-dot.peak{fill:#2a704a}.hump-drop{stroke:#2a704a;stroke-width:1;stroke-dasharray:3 4;opacity:.6}
+    </style>
     <line x1="56" y1="270" x2="496" y2="270" class="hump-axis"></line>
     <line x1="56" y1="270" x2="56" y2="40" class="hump-axis"></line>
     <text x="276" y="305" text-anchor="middle" class="hump-label">{zh ? "无序 / 熵 ->" : "disorder / entropy ->"}</text>

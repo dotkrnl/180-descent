@@ -12,6 +12,7 @@ import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import Term from "@app/components/lesson/Term.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import Day8StaticFigure from "@app/components/lesson/figures/Day8StaticFigure.astro";
 import CellularAutomataRules from "@app/components/lesson/interactives/CellularAutomataRules.astro";
 import PercolationThreshold from "@app/components/lesson/interactives/PercolationThreshold.astro";
 import RandomBooleanNetwork from "@app/components/lesson/interactives/RandomBooleanNetwork.astro";
@@ -60,6 +61,8 @@ p 很小时，只有零零散散的小岛——没有东西能跨过去。慢慢
 <FormatOnly as="div" media="print-epub" variant="alternate">
 <PanelTitle>交互的静态摘要 · 渗流阈值</PanelTitle>
 
+<Day8StaticFigure kind="percolation" locale="zh" />
+
 网页版可拖动密度滑块。每个格点以概率 p 独立被填充。模拟会寻找一个同时接触顶部和底部边界的簇；若存在，它会以青色高亮，判定翻转为「贯穿」。慢慢扫过 p ≈ 0.59，有限网格中的概率曲线会明显变陡——百分之几的密度差距，就是许多孤岛与一片连通大陆之间的分别；真正精确的悬崖则属于无限理想。
 </FormatOnly>
 
@@ -85,6 +88,8 @@ p 很小时，只有零零散散的小岛——没有东西能跨过去。慢慢
 <FormatOnly as="div" media="print-epub" variant="alternate">
 <PanelTitle>交互的静态摘要 · 规则 30、规则 110 及伙伴</PanelTitle>
 
+<Day8StaticFigure kind="cellular" locale="zh" />
+
 网页版会把基本元胞自动机按时间向下绘出，初始状态可以是中央一个黑色细胞，也可以是随机首行。规则 30 产生混沌式纹理，规则 110 支持通用计算，规则 90 画出谢尔宾斯基三角，规则 184 类似交通流，规则 250 则走向简单秩序。
 </FormatOnly>
 
@@ -108,6 +113,8 @@ p 很小时，只有零零散散的小岛——没有东西能跨过去。慢慢
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
 <PanelTitle>交互的静态摘要 · 一个找到立足点的随机布尔网络</PanelTitle>
+
+<Day8StaticFigure kind="boolean" locale="zh" />
 
 一个节点网格，每个节点开或关，并根据 K 个随机输入和随机布尔规则更新。网页版的活动轨迹显示每一步有多少节点翻转。低 K 往往趋于冻结秩序；高 K 保持噪声；在 **K = 2** 附近，网络常进入结构化的低水平活动，也就是混沌边缘附近。
 </FormatOnly>
