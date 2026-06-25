@@ -19,6 +19,10 @@ interface ContentCheckFailure {
 const PRINT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
 const STATUS_CHIP_LABEL_MAX_CHARS = 28;
 const STATUS_CHIP_LABEL_GATE_START_DAY = 8;
+const UNSTYLED_STATUS_LIST_ITEM_PATTERN =
+  /^-\s+(?!.*<StatusChip\b).*?(?:\b(?:established(?:\s+(?:concept|framework))?|promising(?:\s+hint)?|contested(?:\s*\/\s*hype)?)\b(?:\s+\([^)]*\))?|(?:已确立(?:的(?:概念|框架))?|有前景|有争议(?:／炒作风险)?)(?:（[^）]*）)?)\s*$/gim;
+const REDUNDANT_TERM_TIP_PATTERN =
+  /<Term\b[^>]*>([^<]+)<\/Term><TipNote\b[^>]*\/>\s+(?:\b(?:is|are|means|links|says)\b|指|是|称为|叫做|会|把|用来)/g;
 const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".scss", ".yaml", ".yml"]);
 const PARENT_MARKDOWN_PATTERN = /\.\.\/[^\s"'`)]+\.md\b/;
 const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
@@ -334,6 +338,8 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
 
   checkStaticAlternates(file, failures);
   checkStatusChipLabels(file, failures);
+  checkUnstyledStatusPhrases(file, failures);
+  checkRedundantTermTips(file, failures);
   checkUnsupportedMdxWrappers(file, failures);
   checkRawInteractiveMarkup(file, failures);
   checkArtifactComponentContract(file, failures);
@@ -350,6 +356,28 @@ function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheck
         message: `${file.relativePath} has overlong StatusChip label "${label}" (${label.length} chars); keep hype-filter tags short and move caveats into prose`
       });
     }
+  }
+}
+
+function checkRedundantTermTips(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  for (const match of stripCodeBlocks(file.source).matchAll(REDUNDANT_TERM_TIP_PATTERN)) {
+    failures.push({
+      message: `${file.relativePath} gives <Term>${normalizeVisibleText(match[1])}</Term> a tooltip immediately before the prose defines it; remove the redundant TipNote`
+    });
+  }
+}
+
+function checkUnstyledStatusPhrases(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  const dayNumber = Number(file.relativePath.match(/src\/content\/days\/(\d{3})-/)?.[1]);
+  if (!Number.isFinite(dayNumber) || dayNumber < STATUS_CHIP_LABEL_GATE_START_DAY) return;
+
+  const source = stripCodeBlocks(file.source)
+    .replace(/<StatusChip\b[^>]*\/>/g, "")
+    .replace(/<FormatOnly\b[^>]*>[\s\S]*?<\/FormatOnly>/g, "");
+  for (const match of source.matchAll(UNSTYLED_STATUS_LIST_ITEM_PATTERN)) {
+    failures.push({
+      message: `${file.relativePath} contains unstyled list-item status tag "${normalizeVisibleText(match[0])}"; use <StatusChip> for hype-filter tags`
+    });
   }
 }
 
