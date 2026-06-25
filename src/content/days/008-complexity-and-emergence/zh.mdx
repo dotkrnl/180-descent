@@ -67,9 +67,21 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </WhereBlock>
 
 <Aside>
+<BlockTitle>阅读地图</BlockTitle>
+
+核心正文：涌现与自组织，约 20-25 分钟。附录 I：形式机制与复杂度度量，可选。附录 II：前沿研究案例，可选，且带有日期敏感性。
+</Aside>
+
+<Aside>
 <BlockTitle>四个概念，不是一团雾</BlockTitle>
 
 涌现是不同描述层级之间的关系：某个性质属于排列后的整体，而不属于孤立零件。自组织是没有中央控制时形成秩序的过程。计算不可约性关心预测：有些结果没有通用捷径，只能运行或模拟。强涌现则是关于本体论与因果力的主张。这些概念会重叠，但不是同义词。
+</Aside>
+
+<Aside>
+<BlockTitle>规则之外，还要看这些</BlockTitle>
+
+涌现结果不只取决于局部规则。初始条件、边界条件、环境耦合、观察尺度、粗粒化方式，以及允许系统演化的时间，都会改变你实际看到的整体模式。
 </Aside>
 
 <ContentSection>
@@ -93,7 +105,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <MurmurationEngine locale="zh" />
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
-<PanelTitle>印刷版模型</PanelTitle>
+<PanelTitle>交互的静态摘要</PanelTitle>
 
 <PanelNote>这个交互面板可调节三条局部规则。全部关闭时，运动像气体；打开分离、对齐与凝聚后，秩序会以高对齐分数的形式出现。</PanelNote>
 
@@ -134,7 +146,7 @@ Boids 只是同一把戏的一个标本：简单的零件，惊人的整体。
 <Meta>Wolfgang Marwan，《科学》观点文章，2010 年。</Meta>
 </BlockQuote>
 
-黏菌并不聪明。它只运行一条简单的局部规则：原生质流动好的管道就加固，其余则放弃。当这条规则在每一处同时执行，它就<Highlight>计算</Highlight>出一个接近最优的网络。这个菌落解决了一只蚂蚁无法理解的问题；这团黏菌设计了一条它无法想象的铁路。<Highlight>计算活在互动之中，而非组件之内。</Highlight>
+黏菌并不聪明，也不是在字面执行模型里的简化算法。这个多核单细胞的生长与修剪动力学，会让原生质流动好的管道得到强化、其余管道被放弃；这些局部反馈在每一处同时发生时，便会收敛到一个高效运输网络，而无需显式表征规划问题。这团黏菌设计了一条它无法想象的铁路。<Highlight>计算活在互动之中，而非中央规划器之内。</Highlight>
 
 <Aside>
 <BlockTitle>一则有益的提醒</BlockTitle>
@@ -151,7 +163,7 @@ Boids 只是同一把戏的一个标本：简单的零件，惊人的整体。
 
 很长一段时间里，「涌现」是物理学家们带着疑虑说出的词：模糊、略带神秘，仿佛是你缺方程时才会搬出来的东西。1972 年，凝聚态物理学家 <Highlight>Philip W. Anderson</Highlight> 在《科学》上发表了一篇短文，标题后来成为口号：<Highlight>「多即不同」（More Is Different）</Highlight>。
 
-Anderson 的靶子是<Term>还原论</Term>：那种以为一旦掌握基本定律，其余一切就「只不过」是应用物理学的假设。他并不否认还原论。他先承认它，再插入一根楔子，撬开它那傲慢的推论。
+Anderson 接受<Term>还原论</Term>作为关于基本定律的主张。他的靶子是<Term>建构主义推论</Term>：那种以为一旦掌握基本定律，就足以从中重建每一门更高层科学的更强假设。他先承认基本定律的统一，再插入一根楔子，撬开它那傲慢的推论。
 
 <BlockQuote>
 「把万物还原为简单基本定律的能力，并不意味着从这些定律出发就能重建宇宙……在复杂度的每一个层级上，都会出现全新的性质。」
@@ -167,17 +179,17 @@ Anderson 的靶子是<Term>还原论</Term>：那种以为一旦掌握基本定�
 
 ## 弱与强：断层线
 
-所有人都同意椋鸟群和黏菌是涌现的。争论的焦点是这个词到底可以涵盖什么。
+在广义弱涌现用法下，椋鸟群和黏菌是标准例子。争论的焦点是这个词到底可以涵盖什么。
 
 ### 弱涌现：科学家的版本
 
-哲学家 <Highlight>Mark Bedau</Highlight> 给出了大多数工作科学家可以使用的谨慎说明。一个性质是<Term>弱涌现</Term>的，当且仅当你无法通过简单捷径从规则预测它：在许多情形下，最可靠的办法就是<Highlight>运行它</Highlight>或模拟它。椋鸟群是弱涌现的。没有简单公式能把三条 Boids 规则输入进去、直接吐出明天鸟群的形状；你得让它飞起来。关键是，弱涌现并不神秘，它完全扎根于零件及其互动。
+哲学家 <Highlight>Mark Bedau</Highlight> 给出了大多数工作科学家可以使用的谨慎说明。一个宏观模式是<Term>弱涌现</Term>的，当它确实由微观规则和指定条件推出，但获得它需要运行或等效模拟那些规则。椋鸟群是弱涌现的。只给三条 Boids 规则还不够；还需要初始状态和边界条件，然后让它飞起来。关键是，弱涌现并不神秘，它完全扎根于零件及其互动。
 
 ### 强涌现：激进的版本
 
-一个性质是<Term>强涌现</Term>的，当且仅当关于整体的事实<Highlight>原则上</Highlight>无法从对零件的完整知识中推导出来，哪怕是一个拥有无限算力的神级模拟器也不行。高层次将拥有真正新的因果能力，包括下行因果。<Highlight>David Chalmers</Highlight> 认为，自然界中可能只有一个强涌现的候选者：<Highlight>意识</Highlight>。其余一切都像是弱涌现：令人惊讶，实践中不可还原，原则上却可还原。
+一个性质是<Term>强涌现</Term>的，当且仅当关于整体的事实<Highlight>原则上</Highlight>无法从低层事实与低层定律中推出；关键不只是计算很贵，而是需要真正新的高层事实或规律。高层次将拥有真正新的因果能力，包括下行因果。<Highlight>David Chalmers</Highlight> 认为，自然界中可能只有一个强涌现的候选者：<Highlight>意识</Highlight>。其余一切都像是弱涌现：令人惊讶，实践中不可还原，原则上却可还原。
 
-为什么不处处拥抱强涌现？因为它撞上 <Highlight>Jaegwon Kim</Highlight> 的<Term>因果排除问题</Term>。假设某个高层次状态导致了一个物理效应。但这个效应在零件层次已经有一个完整的物理原因。要么高层次原因是冗余的，要么效应被过度决定，要么这个主张违反了物理学。捍卫者们有回应，但没有一记 KO。这就是为什么强／弱分界线在生物学、心智与社会系统下仍然活跃。
+为什么不处处拥抱强涌现？因为它撞上 <Highlight>Jaegwon Kim</Highlight> 的<Term>因果排除问题</Term>。假设某个高层次状态导致了一个物理效应。但这个效应在零件层次已经有一个完整的物理原因。强涌现就必须放松物理因果闭合、接受系统性的因果过度决定，或否认宏观性质拥有独立因果效力。捍卫者们有回应，但没有一记 KO。这就是为什么强／弱分界线在生物学、心智与社会系统下仍然活跃。
 
 <StatusChipRow>
 <StatusChip status="ok" label="弱涌现 · 可行的科学" printLabel="可行的科学" />
@@ -189,7 +201,7 @@ Anderson 的靶子是<Term>还原论</Term>：那种以为一旦掌握基本定�
 <GameOfLifeGun locale="zh" />
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
-<PanelTitle>印刷版模型</PanelTitle>
+<PanelTitle>交互的静态摘要</PanelTitle>
 
 <PanelNote>一个只有两条规则的元胞自动机，却能支持滑翔机、振荡器与通用计算。重点不是动画，而是限制：不存在能判定任意生命游戏构型所有长期问题的通用算法，虽然许多具体图案可以直接分析。</PanelNote>
 
@@ -244,7 +256,7 @@ Anderson 的靶子是<Term>还原论</Term>：那种以为一旦掌握基本定�
 
 2023 年，<Highlight>Leroy Cronin</Highlight> 与 <Highlight>Sara Walker</Highlight> 领导的团队在《自然》发表了一篇论文，标题为《Assembly theory explains and quantifies selection and evolution》。核心想法很巧妙。拿一个物体，比如一个分子，问：如果可以从基本零件开始、并且能复用任何已造出的片段，最少需要多少步才能把它造出来？这个数就是<Term>组装指数</Term>。把它与拷贝数配对，组装理论声称能检测到选择并复制结构的机制所留下的指纹。杀手级应用是天体生物学：其提出者报告说，在已测试设置中，组装指数高于约 <Highlight>15</Highlight> 的分子很难由非生物过程形成。
 
-这里扎实的东西确实很扎实。组装指数作为思想很清楚，但精确最小值与实验估计值要区分开。2024 年《ACS Central Science》的一篇论文显示，它能从质谱、核磁共振和红外光谱中估计出来，而且数据吻合。它在实验室里能区分许多生物样本与非生物样本。
+这里扎实的东西确实很扎实。组装指数作为思想很清楚，但精确最小值与实验估计值要区分开：实际工作中通常是从碎片化和光谱证据中操作性推断或估计，而不是得到一个与仪器无关的精确最小值。2024 年《ACS Central Science》的一篇论文显示，它能从质谱、核磁共振和红外光谱中估计出来，而且数据吻合。它在实验室里能区分许多生物样本与非生物样本。
 
 问题在于堆在上面的所有东西。组装理论声称能解释选择、进化、时间和物理—生物桥梁，这些更宏大的论断遭到了强烈反击。Abrahão、Zenil 等人在 2024 年《PLOS Complex Systems》的分析中认为，组装指数在数学上只是标准数据压缩的近似，无法胜过香农熵来完成它所声称的工作。其他批评则攻击生物标志分类和进化论断。
 
@@ -256,8 +268,8 @@ Cronin 与 Walker 作出了回应。他们的辩护正是关键：压缩度量�
 <DataTableRow><DataTableHeader>组装理论论断</DataTableHeader><DataTableHeader>前沿校准器状态</DataTableHeader></DataTableRow>
 </DataTableHead>
 <DataTableBody>
-<DataTableRow><DataTableCell>组装指数是一种可测量的分子复杂度指标。</DataTableCell><DataTableCell><StatusChip status="ok" label="已确立" /></DataTableCell></DataTableRow>
-<DataTableRow><DataTableCell>指数高于约 15 被提出者报告为可能的生物标志阈值。</DataTableCell><DataTableCell><StatusChip status="hint" label="有前景的暗示" printLabel="有前景" /></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>组装指数可以从实验数据中估计为一种分子复杂度指标。</DataTableCell><DataTableCell><StatusChip status="ok" label="已确立" /></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>指数高于约 15 被提出者报告为特定数据集和实现中的可能生物标志阈值。</DataTableCell><DataTableCell><StatusChip status="hint" label="有前景的暗示" printLabel="有前景" /></DataTableCell></DataTableRow>
 <DataTableRow><DataTableCell>它以生物学认可的方式解释并量化了选择与进化。</DataTableCell><DataTableCell><StatusChip status="bad" label="有争议" /></DataTableCell></DataTableRow>
 <DataTableRow><DataTableCell>它在根本上不同于压缩、柯尔莫戈罗夫复杂度与香农熵。</DataTableCell><DataTableCell><StatusChip status="bad" label="有争议" /></DataTableCell></DataTableRow>
 </DataTableBody>
@@ -324,25 +336,28 @@ SOC 是真实的：沙堆类模型确实会自组织到临界性。但它作为�
 3. Reynolds, C. W. (1987). "Flocks, Herds, and Schools: A Distributed Behavioral Model." *Computer Graphics* 21(4): 25-34.
 4. Anderson, P. W. (1972). "More Is Different." *Science* 177(4047): 393-396. [doi:10.1126/science.177.4047.393](https://www.science.org/doi/10.1126/science.177.4047.393).
 5. Tero, A., Takagi, S., Saigusa, T., et al. (2010). "Rules for Biologically Inspired Adaptive Network Design." *Science* 327(5964): 439-442. [doi:10.1126/science.1177894](https://doi.org/10.1126/science.1177894).
-6. Gardner, M. (1970). "Mathematical Games: The fantastic combinations of John Conway's new solitaire game 'life'." *Scientific American* 223(4): 120-123.
-7. Rendell, P. (2011). "A Universal Turing Machine in Conway's Game of Life." In *2011 International Conference on High Performance Computing & Simulation*.
-8. Bedau, M. A. (1997). "Weak Emergence." *Philosophical Perspectives* 11: 375-399.
-9. Chalmers, D. J. (2006). "Strong and Weak Emergence." In *The Re-Emergence of Emergence*, Oxford University Press.
-10. Kim, J. (1999). "Making Sense of Emergence." *Philosophical Studies* 95: 3-36.
-11. Bak, P., Tang, C., and Wiesenfeld, K. (1987). "Self-organized criticality." *Physical Review Letters* 59(4): 381-384. [doi:10.1103/PhysRevLett.59.381](https://doi.org/10.1103/PhysRevLett.59.381).
-12. Bonachela, J. A., et al. (2010). "Self-organization without conservation: are neuronal avalanches generically critical?" *J. Stat. Mech.* P02015. [arXiv:1001.3256](https://arxiv.org/abs/1001.3256).
-13. Sharma, A., Czégel, D., Lachmann, M., Kempes, C. P., Walker, S. I., and Cronin, L. (2023). "Assembly theory explains and quantifies selection and evolution." *Nature* 622: 321-328. [doi:10.1038/s41586-023-06600-9](https://doi.org/10.1038/s41586-023-06600-9).
-14. Marshall, S. M., Mathis, C., Carrick, E., et al. (2021). "Identifying molecules as biosignatures with assembly theory and mass spectrometry." *Nature Communications* 12: 3033.
-15. Jirasek, M., Sharma, A., Bame, J. R., et al. (2024). "Investigating and Quantifying Molecular Complexity Using Assembly Theory and Spectroscopy." *ACS Central Science* 10(5): 1054-1064.
-16. Abrahão, F. S., Hernández-Orozco, S., Kiani, N. A., Tegnér, J., and Zenil, H. (2024). "Assembly Theory is an approximation to algorithmic complexity based on LZ compression that does not explain selection or evolution." *PLOS Complex Systems* 1(1): e0000014.
-17. Uthamacumaran, A., Abrahão, F. S., Kiani, N. A., and Zenil, H. (2024). "On the salient limitations of the methods of assembly theory and their classification of molecular biosignatures." *npj Systems Biology and Applications* 10: 82.
-18. Jaeger, J. (2024). "Assembly Theory: What It Does and What It Does Not Do." *Journal of Molecular Evolution* 92: 87-92.
-19. Walker, S. I., Cronin, L., et al. (2024). "Reply to 'Experimental measurement of assembly indices are required to determine the threshold for life'." *Journal of the Royal Society Interface* 21: 20240367.
-20. Gell-Mann, M., and Lloyd, S. (1996). "Information measures, effective complexity, and total information." *Complexity* 2(1): 44-52.
-21. Hoel, E. P., Albantakis, L., and Tononi, G. (2013). "Quantifying causal emergence shows that macro can beat micro." *PNAS* 110(49): 19790-19795.
-22. Rosas, F. E., Mediano, P. A. M., Jensen, H. J., et al. (2020). "Reconciling emergences: An information-theoretic approach to identify causal emergence in multivariate data." *PLOS Computational Biology* 16(12): e1008289.
-23. Dewhurst, J. (2021). "Causal emergence from effective information: Neither causal nor emergent?" *Thought* 10(3): 158-168.
-24. Schaeffer, R., Miranda, B., and Koyejo, S. (2023). "Are Emergent Abilities of Large Language Models a Mirage?" *NeurIPS 2023*.
+6. Marwan, W. (2010). "Amoeba-Inspired Network Design." *Science* 327(5964): 419-420. [doi:10.1126/science.1185570](https://doi.org/10.1126/science.1185570).
+7. Gardner, M. (1970). "Mathematical Games: The fantastic combinations of John Conway's new solitaire game 'life'." *Scientific American* 223(4): 120-123.
+8. Rendell, P. (2011). "A Universal Turing Machine in Conway's Game of Life." In *2011 International Conference on High Performance Computing & Simulation*, 764-772. [doi:10.1109/HPCSim.2011.5999906](https://doi.org/10.1109/HPCSim.2011.5999906).
+9. Izhikevich, E. M., Conway, J. H., and Seth, A. (2015). "Game of Life." *Scholarpedia* 10(6): 1816. [doi:10.4249/scholarpedia.1816](https://doi.org/10.4249/scholarpedia.1816).
+10. Bedau, M. A. (1997). "Weak Emergence." *Philosophical Perspectives* 11: 375-399.
+11. Chalmers, D. J. (2006). "Strong and Weak Emergence." In *The Re-Emergence of Emergence*, Oxford University Press.
+12. Kim, J. (1999). "Making Sense of Emergence." *Philosophical Studies* 95: 3-36.
+13. Bak, P., Tang, C., and Wiesenfeld, K. (1987). "Self-organized criticality." *Physical Review Letters* 59(4): 381-384. [doi:10.1103/PhysRevLett.59.381](https://doi.org/10.1103/PhysRevLett.59.381).
+14. Bonachela, J. A., et al. (2010). "Self-organization without conservation: are neuronal avalanches generically critical?" *J. Stat. Mech.* P02015. [arXiv:1001.3256](https://arxiv.org/abs/1001.3256).
+15. Sharma, A., Czégel, D., Lachmann, M., Kempes, C. P., Walker, S. I., and Cronin, L. (2023). "Assembly theory explains and quantifies selection and evolution." *Nature* 622: 321-328. [doi:10.1038/s41586-023-06600-9](https://doi.org/10.1038/s41586-023-06600-9).
+16. Marshall, S. M., Mathis, C., Carrick, E., et al. (2021). "Identifying molecules as biosignatures with assembly theory and mass spectrometry." *Nature Communications* 12: 3033.
+17. Jirasek, M., Sharma, A., Bame, J. R., et al. (2024). "Investigating and Quantifying Molecular Complexity Using Assembly Theory and Spectroscopy." *ACS Central Science* 10(5): 1054-1064.
+18. Abrahão, F. S., Hernández-Orozco, S., Kiani, N. A., Tegnér, J., and Zenil, H. (2024). "Assembly Theory is an approximation to algorithmic complexity based on LZ compression that does not explain selection or evolution." *PLOS Complex Systems* 1(1): e0000014.
+19. Uthamacumaran, A., Abrahão, F. S., Kiani, N. A., and Zenil, H. (2024). "On the salient limitations of the methods of assembly theory and their classification of molecular biosignatures." *npj Systems Biology and Applications* 10: 82.
+20. Jaeger, J. (2024). "Assembly Theory: What It Does and What It Does Not Do." *Journal of Molecular Evolution* 92: 87-92.
+21. Walker, S. I., Mathis, C., Marshall, S. M., and Cronin, L. (2024). "Experimentally measured assembly indices are required to determine the threshold for life." *Journal of the Royal Society Interface* 21(220): 20240367.
+22. Hazen, R. M., Burns, P. C., Cleaves, H. J. II, and Wong, M. L. (2024). "Reply to 'Experimental measurement of assembly indices are required to determine the threshold for life'." *Journal of the Royal Society Interface* 21(220): 20240622.
+23. Gell-Mann, M., and Lloyd, S. (1996). "Information measures, effective complexity, and total information." *Complexity* 2(1): 44-52.
+24. Hoel, E. P., Albantakis, L., and Tononi, G. (2013). "Quantifying causal emergence shows that macro can beat micro." *PNAS* 110(49): 19790-19795.
+25. Rosas, F. E., Mediano, P. A. M., Jensen, H. J., et al. (2020). "Reconciling emergences: An information-theoretic approach to identify causal emergence in multivariate data." *PLOS Computational Biology* 16(12): e1008289.
+26. Dewhurst, J. (2021). "Causal emergence from effective information: Neither causal nor emergent?" *Thought* 10(3): 158-168.
+27. Schaeffer, R., Miranda, B., and Koyejo, S. (2023). "Are Emergent Abilities of Large Language Models a Mirage?" *NeurIPS 2023*.
 </Sources>
 
 </Wrap>
