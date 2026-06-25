@@ -23,17 +23,17 @@ const zh = Astro.props.locale === "zh";
   </div>
 
   <div class="emergence-rules" role="group" aria-label={zh ? "局部规则开关" : "Local rule toggles"}>
-    <button class="emergence-rulebtn" id="r-sep" aria-pressed="true" aria-label={zh ? "切换分离规则" : "Toggle separation rule"}>
+    <button class="emergence-rulebtn" id="r-sep" aria-pressed="true">
       <span class="rtop"><span class="knob"></span><b>{zh ? "分离" : "Separation"}</b></span>
       <span>{zh ? "远离过近的邻居，避免碰撞。" : "Steer away from neighbors who get too close. Stops collisions."}</span>
     </button>
     {" "}
-    <button class="emergence-rulebtn" id="r-ali" aria-pressed="true" aria-label={zh ? "切换对齐规则" : "Toggle alignment rule"}>
+    <button class="emergence-rulebtn" id="r-ali" aria-pressed="true">
       <span class="rtop"><span class="knob"></span><b>{zh ? "对齐" : "Alignment"}</b></span>
       <span>{zh ? "匹配最近邻的平均朝向，让群体一起转向。" : "Match the average heading of your nearest neighbors. Makes the flock turn as one."}</span>
     </button>
     {" "}
-    <button class="emergence-rulebtn" id="r-coh" aria-pressed="true" aria-label={zh ? "切换凝聚规则" : "Toggle cohesion rule"}>
+    <button class="emergence-rulebtn" id="r-coh" aria-pressed="true">
       <span class="rtop"><span class="knob"></span><b>{zh ? "凝聚" : "Cohesion"}</b></span>
       <span>{zh ? "向局部质心漂移，让群体保持在一起。" : "Drift toward the local center of mass. Keeps the group together."}</span>
     </button>
@@ -46,8 +46,8 @@ const zh = Astro.props.locale === "zh";
     </div>
     <button class="simbtn" id="b-scatter" aria-label={zh ? "打散模拟鸟群" : "Scatter the simulated flock"}>{zh ? "打散" : "Scatter"}</button>
     {" "}
-    <button class="simbtn primary" id="b-allon" aria-label={zh ? "开启全部局部规则" : "Turn all local rules on"}>{zh ? "全部开启" : "All rules on"}</button>
+    <button class="simbtn primary" id="b-allon">{zh ? "全部开启" : "All rules on"}</button>
     {" "}
-    <button class="simbtn" id="b-alloff" aria-label={zh ? "关闭全部局部规则" : "Turn all local rules off"}>{zh ? "全部关闭" : "All off"}</button>
+    <button class="simbtn" id="b-alloff">{zh ? "全部关闭" : "All off"}</button>
   </div>
 </Panel>
