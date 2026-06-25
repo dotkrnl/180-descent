@@ -1,5 +1,7 @@
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -98,7 +100,7 @@ Even the texture of how it learns echoes "real" neural networks: the authors rep
 The web panel shows a grid of local elements relaxing toward a target pattern. The boundary supplies the imposed answer; interior nodes update only from neighboring values and a small local correction. The error trace falls as order propagates inward. This is a schematic of local physical learning, not a reproduction of the transistor-network hardware.
 </FormatOnly>
 
-Why it could change the landscape: such systems may eventually provide lower-energy implementations for suitable learning tasks. This experiment was a proof of principle rather than an energy-efficiency benchmark: real but small, not yet a rival to a GPU. Status: promising.
+Why it could change the landscape: such systems may eventually provide lower-energy implementations for suitable learning tasks. This experiment was a proof of principle rather than an energy-efficiency benchmark: real but small, not yet a rival to a GPU. <StatusChip status="hint" label={"promising"} />
 </ContentSection>
 
 <ContentSection>
@@ -112,7 +114,7 @@ In **"Motile Living Biobots Self-Construct from Adult Human Somatic Progenitor S
 
 This builds directly on the earlier *Xenobots* (made from frog embryo cells, which famously discovered a form of self-replication by pushing loose cells into piles). But Anthrobots raise the stakes: they are made from *adult, wild-type, human* cells, the same cells in your own airway right now.
 
-Why it matters: it suggests a latent "software of life", a capacity for cells to build novel functional multicellular forms. Status: established. Where to keep your skepticism: medical use is early, and cellular "agency" or "intelligence" remains philosophically loaded. Status: contested.
+Why it matters: it suggests a latent "software of life", a capacity for cells to build novel functional multicellular forms. <StatusChip status="ok" label={"established"} /> Where to keep your skepticism: medical use is early, and cellular "agency" or "intelligence" remains philosophically loaded. <StatusChip status="bad" label={"contested"} />
 </ContentSection>
 
 <ContentSection>
@@ -132,7 +134,7 @@ The cleanest example is a phenomenon with the wonderful name <Term as="em">grokk
 The web panel draws the classic grokking signature: training accuracy rises quickly as the model memorizes, then test accuracy remains flat through a long plateau before abruptly jumping. The slider changes the length of that plateau. The figure is schematic and should be read as model-specific evidence for delayed generalization, not a universal phase-transition proof.
 </FormatOnly>
 
-Grokking is now a workhorse for a fast-growing "physics of learning." Two related frontier programs are worth knowing. The Quantization Model of Neural Scaling proposes that network knowledge comes in discrete chunks, while <Term as="em">singular learning theory</Term><TipNote text={"Singular learning theory studies learning systems whose parameter spaces have degeneracies or singularities, using tools from algebraic geometry and Bayesian statistics."} /> reframes training using Bayesian phase-transition language. A 2026 finite-size study treats the phase-transition claim as a falsifiable hypothesis and supplies new tests, while leaving the transition order unresolved. Status: promising, not settled.
+Grokking is now a workhorse for a fast-growing "physics of learning." Two related frontier programs are worth knowing. The Quantization Model of Neural Scaling proposes that network knowledge comes in discrete chunks, while <Term as="em">singular learning theory</Term><TipNote text={"Singular learning theory studies learning systems whose parameter spaces have degeneracies or singularities, using tools from algebraic geometry and Bayesian statistics."} /> reframes training using Bayesian phase-transition language. A 2026 finite-size study treats the phase-transition claim as a falsifiable hypothesis and supplies new tests, while leaving the transition order unresolved. <StatusChip status="hint" label={"promising"} />
 
 The thread we hand forward: where the Day 139 "mirage" paper urges caution about *emergence* as an illusion of metrics, this body of work suggests that *some* emergence inside learning systems is mechanistically real — sharp, structured, and explicable in controlled settings. Both can be true, and untangling them is one of the live frontiers of AI science. (We'll meet it again in full on **Days 138–145**.)
 </ContentSection>
@@ -154,7 +156,7 @@ Salvatore Torquato, who has driven this field, defines it crisply: in a *disorde
 The web panel compares crystal, random, and hyperuniform point fields with the same number of points. A random probe estimates large-scale density variation. The crystal and hyperuniform fields suppress long-range fluctuations, while the random gas fluctuates strongly; the hyperuniform case remains locally disordered while showing low large-scale variation.
 </FormatOnly>
 
-The reason this earns a place on the frontier is a 2025 result. In "Anomalous suppression of large-scale density fluctuations in classical and quantum spin liquids" (*PNAS*, 2025), Duyu Chen, Rhine Samajdar, Yang Jiao, and Torquato reported hyperuniformity in quantum spin liquids. A structural-order concept first defined for sand grains now looks like a broader organizing principle of matter. Status: established.
+The reason this earns a place on the frontier is a 2025 result. In "Anomalous suppression of large-scale density fluctuations in classical and quantum spin liquids" (*PNAS*, 2025), Duyu Chen, Rhine Samajdar, Yang Jiao, and Torquato reported hyperuniformity in quantum spin liquids. A structural-order concept first defined for sand grains now looks like a broader organizing principle of matter. <StatusChip status="ok" label={"established"} />
 </ContentSection>
 
 <ContentSection>
@@ -180,45 +182,53 @@ Topology can shape dynamics. The payoff is open.
 
 The brief for this appendix explicitly asked for the provocative and the unverified — so we close with four ideas that are scientifically *active* but very much not settled. These are included precisely so you can practice the hype filter on live ammunition. Each comes paired with its strongest published counter-argument.
 
-Frontier 01
-
-contested — on timing
+<Claim>
+<ClaimHeader label="Frontier 01">
+<StatusChip status="bad" label={"timing contested"} printLabel={"contested"} />
+</ClaimHeader>
 
 ### Is the Atlantic's great current about to collapse?
 
 The AMOC transports heat northward and strongly influences North Atlantic and European climate alongside atmospheric circulation, geography, and ocean-atmosphere coupling. It is also a textbook tipping system, and complexity science's <Term as="em">early-warning signal</Term><TipNote text={"An early-warning signal is a statistical pattern, such as rising variance or slower recovery, that may indicate a system is nearing a tipping point."} /> toolkit (watching for <Term as="em">critical slowing down</Term><TipNote text={"Critical slowing down means a system recovers more slowly from disturbances as it approaches certain tipping points."} />: a system getting sluggish and wobbly as it nears a cliff) has been turned on it. A widely-covered 2023 statistical study (Ditlevsen & Ditlevsen, *Nature Communications*) now reports, in its corrected version, a bootstrap mean around **2065** with a 95% interval of **2037–2109**, and a 2024 physics-based study (van Westen et al., *Science Advances*) found a concrete warning indicator pointing the same way. **The counter-punch:** a 2025 *Nature* study (Baker et al.) tested 34 climate models and found weakened overturning continuing through this century under the modeled scenarios, sustained by Southern Ocean upwelling. The early-warning *method* is a real complexity-science contribution; the specific collapse date is genuinely disputed and the models disagree.
 
 Ditlevsen & Ditlevsen, *Nat. Commun.* 14:4254 (2023) · van Westen et al., *Sci. Adv.* 10:eadk1189 (2024) · Baker et al., *Nature* 638:987 (2025).
+</Claim>
 
-Frontier 02
-
-contested — universality, not existence
+<Claim>
+<ClaimHeader label="Frontier 02">
+<StatusChip status="bad" label={"universality contested"} printLabel={"contested"} />
+</ClaimHeader>
 
 ### Do living things obey a universal "3/4 power" law?
 
 One of complexity's most celebrated claims is that an animal's metabolic rate scales as its mass to the 3/4 power — supposedly a universal law flowing from the fractal geometry of blood vessels (West, Brown & Enquist). It's beautiful, and it's increasingly under fire. A 2022 review (Glazier, *Proc. R. Soc. B*) marshals *hundreds* of studies documenting that the exponent is **not** a fixed 3/4 but varies systematically — across species, activity levels, and conditions, ranging anywhere from roughly 0.1 to 1.6. The pattern of metabolic scaling is real; the claim that it's a single *universal* constant set by vascular geometry does not survive the full breadth of biological data. A clean cautionary tale about mistaking an *average* for a *law*.
 
 Glazier, "Variable metabolic scaling breaks the law," *Proc. R. Soc. B* 289:20221605 (2022).
+</Claim>
 
-Frontier 03
-
-contested / hype
+<Claim>
+<ClaimHeader label="Frontier 03">
+<StatusChip status="bad" label={"contested/hype"} printLabel={"contested"} />
+</ClaimHeader>
 
 ### A "second law" for information — or physics fan-fiction?
 
 Melvin Vopson has proposed a *second law of infodynamics* (*AIP Advances*, 2022–2023): the claim that the "information entropy" of information-bearing systems stays constant or *decreases* over time — the mirror image of ordinary thermodynamics — with downstream speculations that information might be a form of dark matter and that this is "evidence" we live in a simulation. It's published in a legitimate journal, which is why it's here. But it sits far outside mainstream physics, has no independent confirmation, and the simulation-hypothesis leap is not testable physics. We met its cousin — Vopson's "mass–energy–information equivalence" — being flagged as fringe back on **Day 7**. Treat as a vivid specimen of how a provocative "new law" propagates faster than its evidence. **Skepticism: maximal.**
 
 Vopson & Lepadatu, *AIP Advances* 12:075310 (2022); Vopson, *AIP Advances* 13:105308 (2023). See also Hossenfelder's public rebuttals.
+</Claim>
 
-Frontier 04
-
-contested — on scope & framing
+<Claim>
+<ClaimHeader label="Frontier 04">
+<StatusChip status="bad" label={"scope contested"} printLabel={"contested"} />
+</ClaimHeader>
 
 ### Are your cells, in some real sense, thinking?
 
 Michael Levin (the Anthrobots architect from §4) argues for a sweeping reframing: that <Term as="em">bioelectric</Term><TipNote text={"Bioelectric signals are voltage and ion-flow patterns used by cells and tissues, beyond the familiar electrical signaling of neurons."} /> signaling among cells — the voltages and ion flows that pattern tissues — implements a form of goal-directed <Term as="em">basal cognition</Term><TipNote text={"Basal cognition is the proposed idea that non-neural cells or cell groups can show primitive goal-directed problem solving."} />, a rewritable memory and problem-solving capacity running far below the brain, with "collective intelligence" as a unifying principle across all of biology (*Animal Cognition*, 2023; *Communications Biology*, 2024). The underlying *bioelectric mechanisms* are real, increasingly well-documented, and genuinely exciting: transient bioelectric perturbations in planarians can produce persistent altered regenerative outcomes, interpreted by Levin and colleagues as a form of pattern memory. **What's contested** is the strong cognitive language: whether calling a cell collective "intelligent" or "cognitive" is a deep insight or a stretched metaphor is a live and heated debate. A perfect note to end on, because it drags us right back to the question that opened the whole day — *when is a new high-level description (here, "cognition") carving nature at a joint, and when is it a re-description of the parts?* Sixty years after Anderson, that question is still the one that matters most.
 
 Levin, *Animal Cognition* 26:1865 (2023); McMillen & Levin, *Commun. Biol.* 7:378 (2024).
+</Claim>
 </ContentSection>
 
 <ContentSection>

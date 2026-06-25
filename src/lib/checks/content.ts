@@ -21,6 +21,9 @@ const STATUS_CHIP_LABEL_MAX_CHARS = 28;
 const STATUS_CHIP_LABEL_GATE_START_DAY = 8;
 const UNSTYLED_STATUS_LIST_ITEM_PATTERN =
   /^-\s+(?!.*<StatusChip\b).*?(?:\b(?:established(?:\s+(?:concept|framework))?|promising(?:\s+hint)?|contested(?:\s*\/\s*hype)?)\b(?:\s+\([^)]*\))?|(?:已确立(?:的(?:概念|框架))?|有前景|有争议(?:／炒作风险)?)(?:（[^）]*）)?)\s*$/gim;
+const UNSTYLED_INLINE_STATUS_PATTERN = /\bStatus:\s*(?:established|promising|contested)\b/i;
+const UNSTYLED_FRONTIER_MARKER_PATTERN =
+  /^(?:Frontier\s+\d{2}|前沿\s+\d{2})\s*\n\s*\n\s*(?:established|promising|contested|已确立|有前景|有争议)/gim;
 const REDUNDANT_TERM_TIP_PATTERN =
   /<Term\b[^>]*>([^<]+)<\/Term><TipNote\b[^>]*\/>\s+(?:\b(?:is|are|means|links|says)\b|指|是|称为|叫做|会|把|用来)/g;
 const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".scss", ".yaml", ".yml"]);
@@ -381,6 +384,16 @@ function checkUnstyledStatusPhrases(file: RegistryContentFile, failures: Content
   for (const match of source.matchAll(UNSTYLED_STATUS_LIST_ITEM_PATTERN)) {
     failures.push({
       message: `${file.relativePath} contains unstyled list-item status tag "${normalizeVisibleText(match[0])}"; use <StatusChip> for hype-filter tags`
+    });
+  }
+  if (UNSTYLED_INLINE_STATUS_PATTERN.test(source)) {
+    failures.push({
+      message: `${file.relativePath} contains unstyled inline "Status:" text; use <StatusChip> for hype-filter status labels`
+    });
+  }
+  for (const match of source.matchAll(UNSTYLED_FRONTIER_MARKER_PATTERN)) {
+    failures.push({
+      message: `${file.relativePath} contains unstyled frontier marker "${normalizeVisibleText(match[0])}"; use <ClaimHeader> with <StatusChip>`
     });
   }
 }

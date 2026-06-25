@@ -1,5 +1,7 @@
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -181,45 +183,53 @@ Grokking 正成为研究学习动力学和内部表征的一个常用实验平�
 
 本附录的题设明确要求收录挑衅性的、未经验证的内容——所以我们以四个科学上*活跃*但远未尘埃落定的想法收尾。它们之所以被收录，正是为了让你用炒作过滤器在实弹上练习。每个都附带它最强有力的已发表反方论证。
 
-前沿 01
-
-有争议——关于时间
+<Claim>
+<ClaimHeader label="前沿 01">
+<StatusChip status="bad" label={"时间有争议"} printLabel={"有争议"} />
+</ClaimHeader>
 
 ### 大西洋的大洋环流即将崩溃吗？
 
 AMOC——向北输送热量并强烈影响北大西洋与欧洲气候的海洋环流——是一个教科书式的临界系统，复杂性科学的<Term>早期预警信号</Term><TipNote text={"早期预警信号是可能提示系统接近临界拐点的统计模式，例如方差上升或恢复变慢。"} />工具箱（观察<Term>临界慢化</Term><TipNote text={"临界慢化指系统在接近某些临界拐点时，从扰动中恢复得越来越慢。"} />：系统在逼近断崖时变得迟缓而摇晃）已被用于研究它。一项广受关注的 2023 年统计研究（Ditlevsen & Ditlevsen, Nature Communications）在其更正版中报告 bootstrap 平均约为 **2065**，95% 区间为 **2037–2109**，而 2024 年的一项物理基础研究（van Westen et al., Science Advances）找到了指向同一方向的具体预警指标。反击：2025 年一项 Nature 研究（Baker et al.）测试了 34 个气候模型，发现模型中受南大洋上升流维持的环流在本世纪会减弱但仍延续，并认为在所模拟情景下完全崩溃「不太可能」。早期预警方法是复杂性科学的真实贡献；具体的崩溃日期则确有争议，模型之间意见不一。
 
 Ditlevsen & Ditlevsen, *Nat. Commun.* 14:4254 (2023) · van Westen et al., *Sci. Adv.* 10:eadk1189 (2024) · Baker et al., *Nature* 638:987 (2025).
+</Claim>
 
-前沿 02
-
-有争议——关于普适性，而非是否存在
+<Claim>
+<ClaimHeader label="前沿 02">
+<StatusChip status="bad" label={"普适性有争议"} printLabel={"有争议"} />
+</ClaimHeader>
 
 ### 生物是否服从一条普适的「3/4 幂律」？
 
 复杂性科学最负盛名的主张之一，是动物的代谢率按体重的 3/4 次幂缩放——据称一条从血管分形几何中涌出的普适定律（West, Brown & Enquist）。它很美，也越来越受到攻击。2022 年的一篇综述（Glazier, *Proc. R. Soc. B*）调动了*数百*项研究，证明指数**并非**固定的 3/4，而是系统性地变化——跨越物种、活动水平和条件，大致在 0.1 到 1.6 之间。代谢缩放的模式是真实的；但它是血管几何设定的单一*普适*常数这一说法，无法承受全部生物学数据的考验。一个关于把*平均*误当成*定律*的干净警示故事。
 
 Glazier, *Variable metabolic scaling breaks the law*, *Proc. R. Soc. B* 289:20221605 (2022).
+</Claim>
 
-前沿 03
-
-有争议／炒作风险
+<Claim>
+<ClaimHeader label="前沿 03">
+<StatusChip status="bad" label={"炒作风险"} printLabel={"有争议"} />
+</ClaimHeader>
 
 ### 信息的「第二定律」——新物理，还是证据不足的猜想？
 
 Melvin Vopson 提出了*信息动力学第二定律*（*AIP Advances*, 2022–2023）：该定律声称，承载信息的系统的「信息熵」会保持不变或随时间*下降*——与普通热力学正好镜像——并进一步推测信息可能是一种暗物质形式，且这是「证据」表明我们生活在模拟中。它发表在正规期刊上，这就是它出现在这里的原因。但它远离物理学主流，没有独立验证，而模拟假说的跳跃并非可检验的物理学。我们在**第 7 日**曾遇到过它的表亲——Vopson 的「质-能-信息等价」——被标记为边缘。它是一个很好的警示案例：一个挑衅性的「新定律」传播速度如何超过其证据。**怀疑程度：最高。**
 
 Vopson & Lepadatu, *AIP Advances* 12:075310 (2022); Vopson, *AIP Advances* 13:105308 (2023). 另见 Hossenfelder 的公开反驳。
+</Claim>
 
-前沿 04
-
-有争议——关于范围与表述
+<Claim>
+<ClaimHeader label="前沿 04">
+<StatusChip status="bad" label={"范围有争议"} printLabel={"有争议"} />
+</ClaimHeader>
 
 ### 你的细胞在某种真实意义上会思考吗？
 
 Michael Levin（§4 中 Anthrobots 的设计者）主张一种宏大的重新框架：细胞之间的<Term>生物电</Term><TipNote text={"生物电信号是细胞和组织使用的电压与离子流模式，不只限于神经元放电。"} />信号——塑造组织的电压与离子流——实现了一种目标导向的<Term>基础认知</Term><TipNote text={"基础认知是一种有争议的框架：认为非神经细胞或细胞群也可能表现出原始的目标导向问题解决。"} />，一种远低于大脑的、可重写的记忆和问题解决能力，而「集体智能」则是贯穿整个生物学的统一原则（Animal Cognition, 2023；Communications Biology, 2024）。其底层的生物电机制是真实的、记录日益完善、确实令人兴奋：瞬时生物电扰动可以产生长期改变的再生结果，Levin 及其同事把这解释为一种图案记忆。有争议的是强认知语言：把一个细胞集体称为「智能」或「认知」，究竟是深刻洞察还是过度拉伸的隐喻，仍是一场活跃而激烈的争论。这是结束的最佳音符，因为它把我们直接拽回开启这一整天的问题：一个新的高层描述（此处即「认知」）何时是在自然真正的关节处下刀，何时只是对部分的重新描述？Anderson 提出这一洞见六十年后，这个问题仍然最重要。
 
 Levin, *Animal Cognition* 26:1865 (2023); McMillen & Levin, *Commun. Biol.* 7:378 (2024).
+</Claim>
 </ContentSection>
 
 <ContentSection>
