@@ -226,6 +226,23 @@ line-by-line English.
   color emphasis only when it clarifies structure.
 - Review AI edits manually before accepting: factual accuracy, terminology,
   formatting, component parity, and artifact behavior.
+- Use stable Chinese status labels for frontier claims: `已确立`,
+  `有前景`, and `有争议／炒作风险`. Call the tool `炒作过滤器`;
+  avoid mixing in alternate names such as `前沿校准器` unless a lesson has a
+  specific reason.
+- For Chinese typography, prefer `「」` for propositions, terms as language
+  objects, and short emphasis; use Chinese book title marks for Chinese titles;
+  keep original English paper titles in italics or plain Latin text rather than
+  wrapping them in multiple quote systems. Preserve exact source titles in
+  reference lists.
+- When a technical English word has multiple near-synonyms, do not collapse
+  distinct concepts into one Chinese term. For example, in physics contexts
+  `exceptional point` is `例外点`, `odd elasticity` is `奇弹性`, `stigmergy` is
+  `痕迹协同`, and an order parameter is `序参量`.
+- `FormatOnly` static alternatives for web-only interactives must include the
+  context that lived inside the interactive component: a localized title, the
+  object being shown, and enough rules or captions for PDF/EPUB readers to
+  understand the artifact without the live widget.
 
 For a normal day, create or update `src/content/days/###-slug/zh.mdx` and any
 Chinese locale fields in `day.yaml`, then run Kimi on the paired English and

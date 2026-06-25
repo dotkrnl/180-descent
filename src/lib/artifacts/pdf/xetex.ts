@@ -1312,6 +1312,7 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \usepackage[paperwidth=6in,paperheight=9in,top=0.72in,bottom=0.78in,inner=0.55in,outer=0.55in,headheight=14pt,headsep=11pt,footskip=26pt]{geometry}
 \usepackage{fontspec}
 \usepackage{xeCJK}
+\usepackage{newunicodechar}
 \defaultfontfeatures{Ligatures=TeX}
 \setmainfont[
   Path=${fontPath},
@@ -1333,6 +1334,9 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
   BoldFont=ibm-plex-mono-latin-600-normal.otf,
   Scale=0.82
 ]{IBM Plex Mono}
+\newfontfamily\symbolfallback{STIX Two Text}
+\newunicodechar{ε}{{\symbolfallback ε}}
+\newunicodechar{μ}{{\symbolfallback μ}}
 \setsansfont{Hiragino Sans GB}
 \IfFontExistsTF{${cjkMain}}{\setCJKmainfont{${cjkMain}}}{\setCJKmainfont{Songti SC}}
 \setCJKsansfont{Hiragino Sans GB}
