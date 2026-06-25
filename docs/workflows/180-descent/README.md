@@ -56,13 +56,19 @@ with a static `FormatOnly media="print-epub" variant="alternate"` equivalent.
 5. Extract repeated or behavior-bearing markup into Astro components. Keep
    one-off diagrams readable; move reusable SVGs, complex markup, or any
    interaction-bearing DOM into a lesson component.
-6. Use stable ids and classes inside the reusable component that owns the DOM
+6. Check prior published days before introducing technical vocabulary. If a term
+   has not already been explained in the course or is first introduced in this
+   day/appendix without a plain same-sentence definition, wrap the first visible
+   use with `Term` and add an adjacent `TipNote`. Keep notes concise,
+   factual, bilingual, and artifact-safe; do not add tooltips to ordinary words
+   or terms fully explained by the surrounding sentence.
+7. Use stable ids and classes inside the reusable component that owns the DOM
    contract. When adding live behavior, add its bundle name to
    `interactionScripts`.
-7. Keep static artifact equivalents purposeful. EPUB/PDF may drift from the live
+8. Keep static artifact equivalents purposeful. EPUB/PDF may drift from the live
    web component when the static form is clearer, but HTML should stay visually
    consistent with the intended web design.
-8. Run `npm run build:social-cards` when titles or summaries change.
+9. Run `npm run build:social-cards` when titles or summaries change.
 
 For a new published day, the minimum source set is:
 
