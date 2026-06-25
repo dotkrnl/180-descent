@@ -923,7 +923,9 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["SquareOfOppositionFigure", { selector: ".square-of-opposition-figure", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["ComputationalCapacityLadderFigure", { selector: ".computational-capacity-ladder-figure", width: "0.86\\linewidth", height: "0.3\\textheight" }],
   ["ForkingPathsFigure", { selector: ".forking-paths", width: "0.82\\linewidth", height: "0.3\\textheight" }],
-  ["CausationScatterFigure", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }]
+  ["CausationScatterFigure", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }],
+  ["EmergenceHero", { selector: ".emergence-hero", width: "0.86\\linewidth", height: "0.30\\textheight" }],
+  ["ComplexityHump", { selector: ".complexity-hump", width: "0.82\\linewidth", height: "0.26\\textheight" }]
 ]);
 
 function renderRenderedSvgComponent(name: string, attrs: Map<string, string | null>, state: MdxRenderState): string {
