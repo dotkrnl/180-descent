@@ -12,6 +12,10 @@ import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import Term from "@app/components/lesson/Term.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import GrokkingCurve from "@app/components/lesson/interactives/GrokkingCurve.astro";
+import HyperuniformPointFields from "@app/components/lesson/interactives/HyperuniformPointFields.astro";
+import NonreciprocalPursuit from "@app/components/lesson/interactives/NonreciprocalPursuit.astro";
+import PhysicalLearningNetwork from "@app/components/lesson/interactives/PhysicalLearningNetwork.astro";
 
 <Lead drop="T">his is a 2020–2026 field report, with literature checked through **June 25, 2026**: peer-reviewed papers, conference work, and clearly marked preprints. It is chosen not for how settled everything is, but for how far these ideas might reach if they hold. Some of it will look, in ten years, like the moment the ground shifted. Some will look like a fashionable detour. The whole point of the hype filter we've carried since Day 1 is that **you cannot always tell which is which in advance** — but you can be honest about your uncertainty, label it loudly, and keep your hand on the dial. So that's what we'll do. Read this drawer with the skepticism turned up.</Lead>
 
@@ -46,13 +50,13 @@ The theory landed in the real world in spectacular fashion. In **"Odd dynamics o
 
 Sketch the chase dynamic below.
 
-<Aside>
-<BlockTitle>Integrated reference · Nonreciprocal Pursuit</BlockTitle>
+<NonreciprocalPursuit locale="en" />
 
-Chase and flee.
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Static summary of the interactive · Nonreciprocal Pursuit</PanelTitle>
 
-Interactive source: summarized here for web, EPUB, and PDF.
-</Aside>
+The web panel shows two particle species with deliberately lopsided effective interactions. At low nonreciprocity, the particles settle into mostly static clusters. As the interaction becomes more asymmetric, clusters refuse to equilibrate and begin to travel. The sketch is a toy model, not the starfish-embryo hydrodynamics, but it preserves the key idea: non-mutual interactions can turn an equilibrium-like clump into persistent collective motion.
+</FormatOnly>
 
 A toy, not the real hydrodynamics — but the essential point is honest: make the interaction non-mutual and a system that *should* reach a quiet equilibrium instead enters perpetual, self-organized motion. That refusal to settle is the signature of the whole field.
 </ContentSection>
@@ -86,13 +90,13 @@ In **"Machine learning without a processor: Emergent learning in a nonlinear ana
 
 Even the texture of how it learns echoes "real" neural networks: the authors report it corrects errors in a natural order — first the average, then the slope, then the finer curvature of the target function — a physical cousin of the <Term as="em">spectral bias</Term><TipNote text={"Spectral bias is the tendency of some neural networks to learn low-frequency or simpler components of a function before finer high-frequency detail."} /> seen in artificial networks. Here is a sketch of that descent: dozens of local elements, each obeying only its own neighborhood rule, collectively sliding an error downhill.
 
-<Aside>
-<BlockTitle>Integrated reference · A Network That Tunes Itself</BlockTitle>
+<PhysicalLearningNetwork locale="en" />
 
-Local tuning lowers error.
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Static summary of the interactive · A Network That Tunes Itself</PanelTitle>
 
-Interactive source: summarized here for web, EPUB, and PDF.
-</Aside>
+The web panel shows a grid of local elements relaxing toward a target pattern. The boundary supplies the imposed answer; interior nodes update only from neighboring values and a small local correction. The error trace falls as order propagates inward. This is a schematic of local physical learning, not a reproduction of the transistor-network hardware.
+</FormatOnly>
 
 Why it could change the landscape: such systems may eventually provide lower-energy implementations for suitable learning tasks. This experiment was a proof of principle rather than an energy-efficiency benchmark: real but small, not yet a rival to a GPU. Status: promising.
 </ContentSection>
@@ -120,13 +124,13 @@ The main lesson hinted that the "sudden new abilities" of large AI models might 
 
 The cleanest example is a phenomenon with the wonderful name <Term as="em">grokking</Term><TipNote text={"Grokking is delayed generalization: a model memorizes training examples first, then much later abruptly improves on unseen cases."} /> (Power et al., 2022, and a wave of mechanistic follow-ups). Train a small network on a crisp mathematical task — say, modular arithmetic. At first it simply *memorizes* the training examples: perfect on what it's seen, useless on anything new. And then you keep training, long past the point where it seems anything could change... and **suddenly, often thousands of steps later, it "groks"** — it abruptly shifts to systematic out-of-sample generalization. In particular modular-arithmetic analyses, researchers found the network building an efficient, structured internal algorithm related to trigonometric representations underneath the memorized lookup table, and the moment that efficient circuit outcompetes memorization, generalization snaps on like a switch. The curve is sharp, but whether grokking generally constitutes a universal physical phase transition remains open. Watch the characteristic signature:
 
-<Aside>
-<BlockTitle>Integrated reference · Grokking curve</BlockTitle>
+<GrokkingCurve locale="en" />
 
-Train rises first. Test jumps later.
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Static summary of the interactive · Grokking Curve</PanelTitle>
 
-Interactive source: summarized here for web, EPUB, and PDF.
-</Aside>
+The web panel draws the classic grokking signature: training accuracy rises quickly as the model memorizes, then test accuracy remains flat through a long plateau before abruptly jumping. The slider changes the length of that plateau. The figure is schematic and should be read as model-specific evidence for delayed generalization, not a universal phase-transition proof.
+</FormatOnly>
 
 Grokking is now a workhorse for a fast-growing "physics of learning." Two related frontier programs are worth knowing. The Quantization Model of Neural Scaling proposes that network knowledge comes in discrete chunks, while <Term as="em">singular learning theory</Term><TipNote text={"Singular learning theory studies learning systems whose parameter spaces have degeneracies or singularities, using tools from algebraic geometry and Bayesian statistics."} /> reframes training using Bayesian phase-transition language. A 2026 finite-size study treats the phase-transition claim as a falsifiable hypothesis and supplies new tests, while leaving the transition order unresolved. Status: promising, not settled.
 
@@ -142,13 +146,13 @@ Appendix I's complexity hump told us the interesting stuff lives *between* perfe
 
 Salvatore Torquato, who has driven this field, defines it crisply: in a *disordered hyperuniform* material, the big, long-range density variations that any normal liquid has are *anomalously quenched* in the long-wavelength limit, while the local arrangement stays messy and isotropic. It's "hidden order": disorder up close, crystalline-style discipline at scale. Nature uses it: the light-sensing cones in a chicken's eye are packed this way, and the trick produces remarkable *stealthy* photonic materials that block specific wavelengths of light from any direction — something ordinary crystals (which have preferred directions) cannot do. See the three categories side by side:
 
-<Aside>
-<BlockTitle>Integrated reference · Three point fields</BlockTitle>
+<HyperuniformPointFields locale="en" />
 
-Three point fields reveal hidden order.
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Static summary of the interactive · Three Point Fields</PanelTitle>
 
-Interactive source: summarized here for web, EPUB, and PDF.
-</Aside>
+The web panel compares crystal, random, and hyperuniform point fields with the same number of points. A random probe estimates large-scale density variation. The crystal and hyperuniform fields suppress long-range fluctuations, while the random gas fluctuates strongly; the hyperuniform case remains locally disordered while showing low large-scale variation.
+</FormatOnly>
 
 The reason this earns a place on the frontier is a 2025 result. In "Anomalous suppression of large-scale density fluctuations in classical and quantum spin liquids" (*PNAS*, 2025), Duyu Chen, Rhine Samajdar, Yang Jiao, and Torquato reported hyperuniformity in quantum spin liquids. A structural-order concept first defined for sand grains now looks like a broader organizing principle of matter. Status: established.
 </ContentSection>

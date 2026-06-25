@@ -1,0 +1,33 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<Panel class="web-only frontier-interactive emergence-plm">
+  <PanelTitle>{zh ? "交互 · 局部规则，全局学习" : "Interactive · local rules, global learning"}</PanelTitle>
+  <h3>{zh ? "自我调谐的网络" : "A network that tunes itself"}</h3>
+  <PanelNote>{zh ? "每个节点只根据邻居和边界信号调整。点击训练，观察局部松弛如何让全局误差下降；这只是物理学习思想的示意，不是原实验电路的复刻。" : "Each node adjusts from neighbors and boundary signals. Press Train to watch local relaxation lower a global error; this is a sketch of the physical-learning idea, not a replica of the experiment's electronics."}</PanelNote>
+
+  <div class="frontier-grid">
+    <div class="frontier-stage">
+      <canvas id="plm" width="300" height="300" aria-label={zh ? "节点网格逐渐收敛到目标图案。" : "Grid of nodes relaxing toward a target pattern."}></canvas>
+    </div>
+    <div class="frontier-side">
+      <canvas id="plmtrace" width="300" height="150" aria-label={zh ? "全局误差随训练下降。" : "Global error falling during training."}></canvas>
+      <div class="frontier-readout" aria-live="polite">
+        <span>{zh ? "全局误差" : "global error"} <b id="plm-err">—</b></span>
+        <span>{zh ? "步数" : "step"} <b id="plm-step">0</b></span>
+      </div>
+      <div class="frontier-controls no-margin">
+        <button class="simbtn primary" id="plm-train">{zh ? "训练" : "Train"}</button>
+        <button class="simbtn" id="plm-reset">{zh ? "打乱" : "Scramble"}</button>
+      </div>
+    </div>
+  </div>
+</Panel>

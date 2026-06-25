@@ -119,6 +119,21 @@ html[lang^="zh"] .information-entropy .bigH small{letter-spacing:0;text-transfor
 .rbn-regime,.rbn-rate{font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--ink-soft);margin:.65rem 0 0;}
 .rbn-regime b,.rbn-rate b{color:var(--ink);}
 .rbn-slider{margin:.8rem 0;}
+.frontier-grid{display:grid;grid-template-columns:1fr;gap:1rem;align-items:start;}
+@media(min-width:660px){.frontier-grid{grid-template-columns:minmax(0,.95fr) minmax(15rem,1fr);}}
+.frontier-stage,.frontier-side canvas{border:1px solid var(--line-strong);border-radius:10px;overflow:hidden;background:var(--paper);}
+.frontier-stage canvas,.frontier-side canvas{display:block;width:100%;height:auto;}
+.frontier-wide{margin:.3rem 0 .9rem;}
+.frontier-controls{display:flex;flex-wrap:wrap;gap:.55rem;align-items:center;margin:.8rem 0 0;}
+.frontier-controls.no-margin{margin:.65rem 0 0;}
+.frontier-readout{display:flex;flex-wrap:wrap;gap:.5rem .9rem;margin-top:.65rem;font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-soft);}
+.frontier-readout b{color:var(--accent);}
+.frontier-minihead{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 .4rem;}
+.frontier-seg{display:flex;flex-wrap:wrap;gap:.45rem;margin:.2rem 0 1rem;}
+.frontier-seg button{cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:.7rem;border:1px solid var(--line-strong);background:var(--paper);color:var(--ink-soft);border-radius:8px;padding:.42rem .66rem;}
+.frontier-seg button:hover{border-color:var(--accent);color:var(--ink);}
+.frontier-seg button.sel{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);}
+.frontier-interactive .nbr-row b{color:var(--accent);}
 .complexity-hump svg{display:block;width:100%;height:auto;}
 .complexity-hump .hump-axis{stroke:var(--line-strong);stroke-width:1.5;}
 .complexity-hump .hump-label,.complexity-hump .hump-small{font-family:"IBM Plex Mono",monospace;fill:var(--ink-faint);}
@@ -140,7 +155,10 @@ html[lang^="zh"] .simbtn,
 html[lang^="zh"] .nbr-row,
 html[lang^="zh"] .gol-side .glabel,
 html[lang^="zh"] .perc-label,
-html[lang^="zh"] .perc-value small{letter-spacing:0;text-transform:none;}
+html[lang^="zh"] .perc-value small,
+html[lang^="zh"] .frontier-minihead,
+html[lang^="zh"] .frontier-readout,
+html[lang^="zh"] .frontier-seg button{letter-spacing:0;text-transform:none;}
 .venn-box{text-align:center;}
 .venn-box svg,.tri svg{width:100%;height:auto;}
 .verdict{margin-top:.6rem;border-top:1px dashed var(--line);padding-top:.85rem;text-align:left;}

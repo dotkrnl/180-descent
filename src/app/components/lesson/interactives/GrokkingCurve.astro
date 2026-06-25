@@ -1,0 +1,31 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<Panel class="web-only frontier-interactive emergence-grok">
+  <PanelTitle>{zh ? "交互 · 延迟跃迁" : "Interactive · the delayed snap"}</PanelTitle>
+  <h3>{zh ? "Grokking：先记忆，再突然泛化" : "Grokking: memorize, plateau, generalize"}</h3>
+  <PanelNote>{zh ? "训练准确率很快上升，测试准确率在漫长平台期后才突然跃迁。滑块改变这段平台期的长度。" : "Training accuracy rises early, while test accuracy waits through a long plateau before snapping upward. The slider controls the plateau length."}</PanelNote>
+
+  <div class="frontier-stage frontier-wide">
+    <canvas id="grokcanvas" width="720" height="320" aria-label={zh ? "Grokking 曲线：训练先上升，测试后来跃迁。" : "Grokking curves: train rises first, test jumps later."}></canvas>
+  </div>
+
+  <div class="frontier-controls">
+    <button class="simbtn primary" id="grok-play">{zh ? "重播" : "Replay"}</button>
+    <div class="nbr-row">
+      <span>{zh ? "平台期" : "plateau"}&nbsp;=&nbsp;<b id="grok-delay">{zh ? "中" : "medium"}</b></span>
+      <input type="range" id="grok-slider" min="1" max="100" value="50" aria-label={zh ? "Grokking 前的平台期长度" : "Delay before grokking"} />
+    </div>
+  </div>
+  <div class="frontier-readout" aria-live="polite">
+    <span>{zh ? "阶段" : "phase"} <b id="grok-phase">—</b></span>
+  </div>
+</Panel>

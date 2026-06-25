@@ -7,7 +7,37 @@
   function text(en, zh){ return isZh ? zh : en; }
   function cssVar(name){ return getComputedStyle(document.body).getPropertyValue(name).trim(); }
 
-  (function initBoids(){
+  function mountWhenVisible(selector, init){
+    var target = document.querySelector(selector);
+    if (!target) return;
+    var controls = null;
+    var visible = false;
+    function ensure(){
+      if (!controls) controls = init() || {};
+    }
+    function setVisible(next){
+      if (visible === next) return;
+      visible = next;
+      if (next) {
+        ensure();
+        if (controls.start) controls.start();
+      } else if (controls && controls.stop) {
+        controls.stop();
+      }
+    }
+    if (!("IntersectionObserver" in window)) {
+      setVisible(true);
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries){
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].target === target) setVisible(entries[i].isIntersecting && entries[i].intersectionRatio > 0);
+      }
+    }, { rootMargin: "120px 0px", threshold: 0.01 });
+    observer.observe(target);
+  }
+
+  mountWhenVisible("#boids", function initBoids(){
     var canvas = document.getElementById("boids");
     if (!canvas) return;
     var ctx = canvas.getContext("2d");
@@ -163,18 +193,24 @@
       ctx.globalAlpha = 1;
     }
 
-    var running = true;
+    var animating = false;
     function loop(){
-      if (running) step();
+      if (!animating) return;
+      step();
       draw();
       requestAnimationFrame(loop);
     }
+    function start(){
+      if (reduceMotion || animating) return;
+      animating = true;
+      requestAnimationFrame(loop);
+    }
+    function stop(){ animating = false; }
     if (reduceMotion) {
       for (var warmup = 0; warmup < 200; warmup++) step();
-      running = false;
       draw();
     } else {
-      loop();
+      draw();
     }
 
     function setRule(id, key, on){
@@ -222,9 +258,10 @@
       neighborCount = Number(slider.value);
       label.textContent = String(neighborCount);
     });
-  })();
+    return { start: start, stop: stop };
+  });
 
-  (function initGameOfLife(){
+  mountWhenVisible("#gol", function initGameOfLife(){
     var canvas = document.getElementById("gol");
     if (!canvas) return;
     var ctx = canvas.getContext("2d");
@@ -300,7 +337,9 @@
     gun();
     draw();
 
+    var animating = false;
     function loop(){
+      if (!animating) return;
       if (playing) {
         tick++;
         if (tick % 5 === 0) {
@@ -310,8 +349,13 @@
       }
       requestAnimationFrame(loop);
     }
-    if (!reduceMotion) loop();
-    else playing = false;
+    function start(){
+      if (reduceMotion || animating) return;
+      animating = true;
+      requestAnimationFrame(loop);
+    }
+    function stop(){ animating = false; }
+    if (reduceMotion) playing = false;
 
     function setPlay(on){
       playing = on;
@@ -350,9 +394,10 @@
       }
     }
     canvas.addEventListener("click", function(event){ toggleAt(event.clientX, event.clientY); });
-  })();
+    return { start: start, stop: stop };
+  });
 
-  (function initPercolation(){
+  mountWhenVisible("#perc", function initPercolation(){
     var canvas = document.getElementById("perc");
     if (!canvas) return;
     var ctx = canvas.getContext("2d");
@@ -485,9 +530,9 @@
 
     setProbability(p);
     sample();
-  })();
+  });
 
-  (function initCellularAutomata(){
+  mountWhenVisible("#ca", function initCellularAutomata(){
     var canvas = document.getElementById("ca");
     if (!canvas) return;
     var ctx = canvas.getContext("2d");
@@ -551,9 +596,9 @@
     if (redraw) redraw.addEventListener("click", function(){ randomSeed = false; run(); });
     if (seed) seed.addEventListener("click", function(){ randomSeed = true; run(); });
     run();
-  })();
+  });
 
-  (function initRandomBooleanNetwork(){
+  mountWhenVisible("#nk", function initRandomBooleanNetwork(){
     var canvas = document.getElementById("nk");
     var trace = document.getElementById("nktrace");
     if (!canvas || !trace) return;
@@ -574,7 +619,7 @@
     var wiring = [];
     var rules = [];
     var history = [];
-    var running = true;
+    var animating = false;
 
     function build(){
       wiring = [];
@@ -662,21 +707,25 @@
       draw(history[history.length - 1]);
     }
     function loop(ts){
-      if (running) {
-        if (!loop.last || ts - loop.last > 120) {
-          draw(step());
-          loop.last = ts;
-        }
+      if (!animating) return;
+      if (!loop.last || ts - loop.last > 120) {
+        draw(step());
+        loop.last = ts;
       }
       requestAnimationFrame(loop);
     }
+    function start(){
+      if (reduceMotion || animating) return;
+      animating = true;
+      requestAnimationFrame(loop);
+    }
+    function stop(){ animating = false; }
 
     build();
     if (reduceMotion) {
-      running = false;
       warmup();
     } else {
-      requestAnimationFrame(loop);
+      draw(0);
     }
     slider.addEventListener("input", function(){
       K = Number(slider.value) || 2;
@@ -688,6 +737,494 @@
     if (rewire) rewire.addEventListener("click", function(){
       build();
       if (reduceMotion) warmup();
+      else draw(0);
     });
-  })();
+    return { start: start, stop: stop };
+  });
+
+  mountWhenVisible("#nonrecip", function initNonreciprocalPursuit(){
+    var canvas = document.getElementById("nonrecip");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var slider = document.getElementById("nrslider");
+    var valEl = document.getElementById("nrval");
+    var reset = document.getElementById("nr-reset");
+    var speedEl = document.getElementById("nr-speed");
+    var stateEl = document.getElementById("nr-state");
+    if (!ctx || !slider || !valEl || !reset || !speedEl || !stateEl) return;
+
+    var width = canvas.width;
+    var height = canvas.height;
+    var strength = Number(slider.value) / 100;
+    var count = 140;
+    var particles = [];
+    var animating = false;
+    var smoothSpeed = 0;
+    function rand(a, b){ return a + Math.random() * (b - a); }
+    function spawn(){
+      particles = [];
+      for (var i = 0; i < count; i++) {
+        particles.push({ x: rand(0, width), y: rand(0, height), vx: rand(-0.5, 0.5), vy: rand(-0.5, 0.5), type: i % 2 });
+      }
+    }
+    function step(){
+      var radius = 46;
+      var radius2 = radius * radius;
+      for (var i = 0; i < count; i++) {
+        var a = particles[i];
+        var fx = 0;
+        var fy = 0;
+        for (var j = 0; j < count; j++) {
+          if (j === i) continue;
+          var b = particles[j];
+          var dx = b.x - a.x;
+          var dy = b.y - a.y;
+          if (dx > width / 2) dx -= width;
+          else if (dx < -width / 2) dx += width;
+          if (dy > height / 2) dy -= height;
+          else if (dy < -height / 2) dy += height;
+          var d2 = dx * dx + dy * dy;
+          if (d2 > radius2 || d2 < 0.01) continue;
+          var d = Math.sqrt(d2);
+          var ux = dx / d;
+          var uy = dy / d;
+          if (d < 13) {
+            fx -= ux * 1.1 * (13 - d) / 13;
+            fy -= uy * 1.1 * (13 - d) / 13;
+          }
+          var sign;
+          if (a.type === b.type) {
+            sign = 0.35;
+          } else {
+            var symmetric = 0.35;
+            var asymmetric = a.type === 0 ? 1.4 : -1.4;
+            sign = (1 - strength) * symmetric + strength * asymmetric;
+          }
+          var weight = (radius - d) / radius;
+          fx += ux * sign * 0.07 * weight;
+          fy += uy * sign * 0.07 * weight;
+        }
+        var damping = 0.62 + 0.32 * strength;
+        a.vx = (a.vx + fx) * damping;
+        a.vy = (a.vy + fy) * damping;
+        var sp = Math.sqrt(a.vx * a.vx + a.vy * a.vy);
+        if (sp > 2.4) {
+          a.vx = a.vx / sp * 2.4;
+          a.vy = a.vy / sp * 2.4;
+        }
+      }
+      var totalSpeed = 0;
+      for (var k = 0; k < count; k++) {
+        var p = particles[k];
+        p.x += p.vx;
+        p.y += p.vy;
+        totalSpeed += Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+        if (p.x < 0) p.x += width;
+        else if (p.x >= width) p.x -= width;
+        if (p.y < 0) p.y += height;
+        else if (p.y >= height) p.y -= height;
+      }
+      return totalSpeed / count;
+    }
+    function draw(speed){
+      ctx.fillStyle = cssVar("--paper");
+      ctx.fillRect(0, 0, width, height);
+      var teal = cssVar("--accent");
+      var amber = cssVar("--brass");
+      for (var i = 0; i < count; i++) {
+        var p = particles[i];
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 4.2, 0, Math.PI * 2);
+        ctx.fillStyle = p.type === 0 ? teal : amber;
+        ctx.globalAlpha = 0.86;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      smoothSpeed = smoothSpeed * 0.9 + (speed || 0) * 0.1;
+      speedEl.textContent = smoothSpeed.toFixed(2);
+      if (strength < 0.2) {
+        stateEl.textContent = text("static clusters", "静态团簇");
+        stateEl.style.color = cssVar("--ok");
+      } else if (strength < 0.55) {
+        stateEl.textContent = text("restless drift", "缓慢漂移");
+        stateEl.style.color = cssVar("--hint");
+      } else {
+        stateEl.textContent = text("travelling clusters", "运动团簇");
+        stateEl.style.color = cssVar("--accent");
+      }
+    }
+    function loop(){
+      if (!animating) return;
+      draw(step());
+      requestAnimationFrame(loop);
+    }
+    function start(){
+      if (reduceMotion || animating) return;
+      animating = true;
+      requestAnimationFrame(loop);
+    }
+    function stop(){ animating = false; }
+    function warm(){
+      for (var i = 0; i < 120; i++) step();
+      draw(0);
+    }
+    spawn();
+    if (reduceMotion) warm();
+    else draw(0);
+    slider.addEventListener("input", function(){
+      strength = Number(slider.value) / 100;
+      valEl.textContent = strength.toFixed(2);
+      if (reduceMotion) warm();
+    });
+    reset.addEventListener("click", function(){ spawn(); draw(0); });
+    return { start: start, stop: stop };
+  });
+
+  mountWhenVisible("#plm", function initPhysicalLearningMachine(){
+    var canvas = document.getElementById("plm");
+    var trace = document.getElementById("plmtrace");
+    if (!canvas || !trace) return;
+    var ctx = canvas.getContext("2d");
+    var tctx = trace.getContext("2d");
+    var train = document.getElementById("plm-train");
+    var reset = document.getElementById("plm-reset");
+    var errEl = document.getElementById("plm-err");
+    var stepEl = document.getElementById("plm-step");
+    if (!ctx || !tctx || !train || !reset || !errEl || !stepEl) return;
+
+    var side = 22;
+    var cell = canvas.width / side;
+    var values = [];
+    var target = [];
+    var history = [];
+    var stepCount = 0;
+    var training = false;
+    var animating = false;
+    var last = 0;
+    function idx(x, y){ return y * side + x; }
+    function buildTarget(){
+      target = new Float32Array(side * side);
+      for (var y = 0; y < side; y++) {
+        for (var x = 0; x < side; x++) {
+          target[idx(x, y)] = 0.5 + 0.5 * Math.sin(x / side * Math.PI * 1.5) * Math.cos(y / side * Math.PI * 1.2);
+        }
+      }
+    }
+    function scramble(){
+      values = new Float32Array(side * side);
+      for (var i = 0; i < values.length; i++) values[i] = Math.random();
+      for (var y = 0; y < side; y++) {
+        for (var x = 0; x < side; x++) {
+          if (x === 0 || y === 0 || x === side - 1 || y === side - 1) values[idx(x, y)] = target[idx(x, y)];
+        }
+      }
+      history = [];
+      stepCount = 0;
+    }
+    function relax(){
+      var next = values.slice();
+      for (var y = 1; y < side - 1; y++) {
+        for (var x = 1; x < side - 1; x++) {
+          var i = idx(x, y);
+          var avg = (values[idx(x - 1, y)] + values[idx(x + 1, y)] + values[idx(x, y - 1)] + values[idx(x, y + 1)]) / 4;
+          var goal = 0.85 * avg + 0.15 * target[i];
+          next[i] = values[i] + 0.14 * (goal - values[i]);
+        }
+      }
+      values = next;
+      stepCount++;
+    }
+    function error(){
+      var total = 0;
+      for (var i = 0; i < values.length; i++) {
+        var d = values[i] - target[i];
+        total += d * d;
+      }
+      return Math.sqrt(total / values.length);
+    }
+    function draw(){
+      ctx.fillStyle = cssVar("--paper");
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = cssVar("--accent");
+      for (var y = 0; y < side; y++) {
+        for (var x = 0; x < side; x++) {
+          ctx.globalAlpha = Math.max(0.06, Math.min(1, values[idx(x, y)]));
+          ctx.fillRect(x * cell + 0.5, y * cell + 0.5, cell - 1, cell - 1);
+        }
+      }
+      ctx.globalAlpha = 1;
+      var e = error();
+      history.push(e);
+      if (history.length > trace.width) history.shift();
+      tctx.fillStyle = cssVar("--paper");
+      tctx.fillRect(0, 0, trace.width, trace.height);
+      tctx.strokeStyle = cssVar("--line");
+      tctx.beginPath();
+      tctx.moveTo(0, trace.height - 1);
+      tctx.lineTo(trace.width, trace.height - 1);
+      tctx.stroke();
+      tctx.strokeStyle = cssVar("--accent");
+      tctx.lineWidth = 1.8;
+      tctx.beginPath();
+      for (var h = 0; h < history.length; h++) {
+        var yy = trace.height - 2 - Math.min(history[h], 0.55) / 0.55 * (trace.height - 6);
+        if (h === 0) tctx.moveTo(h, yy);
+        else tctx.lineTo(h, yy);
+      }
+      tctx.stroke();
+      errEl.textContent = e.toFixed(3);
+      stepEl.textContent = String(stepCount);
+    }
+    function loop(ts){
+      if (!animating) return;
+      if (training && ts - last > 33) {
+        relax();
+        relax();
+        draw();
+        last = ts;
+        if (error() < 0.025) {
+          training = false;
+          train.textContent = text("Learned", "已学会");
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+    function start(){
+      if (reduceMotion || animating) return;
+      animating = true;
+      requestAnimationFrame(loop);
+    }
+    function stop(){ animating = false; }
+    buildTarget();
+    scramble();
+    draw();
+    train.addEventListener("click", function(){
+      if (reduceMotion) {
+        for (var i = 0; i < 600; i++) relax();
+        draw();
+        train.textContent = text("Learned", "已学会");
+        return;
+      }
+      training = !training;
+      train.textContent = training ? text("Pause", "暂停") : text("Train", "训练");
+    });
+    reset.addEventListener("click", function(){
+      scramble();
+      training = false;
+      train.textContent = text("Train", "训练");
+      draw();
+    });
+    return { start: start, stop: stop };
+  });
+
+  mountWhenVisible("#grokcanvas", function initGrokkingCurve(){
+    var canvas = document.getElementById("grokcanvas");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var play = document.getElementById("grok-play");
+    var slider = document.getElementById("grok-slider");
+    var delayEl = document.getElementById("grok-delay");
+    var phaseEl = document.getElementById("grok-phase");
+    if (!ctx || !play || !slider || !delayEl || !phaseEl) return;
+
+    var width = canvas.width;
+    var height = canvas.height;
+    var delay = Number(slider.value) / 100;
+    var t = 0;
+    var playing = true;
+    var animating = false;
+    var last = 0;
+    var pad = { l: 54, r: 18, t: 24, b: 40 };
+    function trainAcc(x){ return 1 / (1 + Math.exp(-(x - 0.06) * 60)); }
+    function testAcc(x){
+      var center = 0.25 + delay * 0.6;
+      return 1 / (1 + Math.exp(-(x - center) * 70));
+    }
+    function px(x){ return pad.l + x * (width - pad.l - pad.r); }
+    function py(v){ return height - pad.b - v * (height - pad.t - pad.b); }
+    function draw(){
+      ctx.fillStyle = cssVar("--paper");
+      ctx.fillRect(0, 0, width, height);
+      ctx.strokeStyle = cssVar("--line-strong");
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(pad.l, pad.t - 4);
+      ctx.lineTo(pad.l, height - pad.b);
+      ctx.lineTo(width - pad.r, height - pad.b);
+      ctx.stroke();
+      ctx.fillStyle = cssVar("--ink-faint");
+      ctx.font = "11px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      [0, 0.5, 1].forEach(function(v){
+        var y = py(v);
+        ctx.strokeStyle = cssVar("--line");
+        ctx.beginPath();
+        ctx.moveTo(pad.l, y);
+        ctx.lineTo(width - pad.r, y);
+        ctx.stroke();
+        ctx.fillText(Math.round(v * 100) + "%", pad.l - 8, y + 4);
+      });
+      ctx.textAlign = "center";
+      ctx.fillText(text("training time ->", "训练时间 ->"), (pad.l + width - pad.r) / 2, height - 10);
+      function curve(fn, color){
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        var first = true;
+        for (var i = 0; i <= 240; i++) {
+          var x = i / 240;
+          if (x > t) break;
+          var X = px(x);
+          var Y = py(fn(x));
+          if (first) {
+            ctx.moveTo(X, Y);
+            first = false;
+          } else {
+            ctx.lineTo(X, Y);
+          }
+        }
+        ctx.stroke();
+      }
+      curve(trainAcc, cssVar("--brass"));
+      curve(testAcc, cssVar("--accent"));
+      ctx.font = "12px IBM Plex Mono, monospace";
+      ctx.textAlign = "left";
+      ctx.fillStyle = cssVar("--brass");
+      ctx.fillText(text("train", "训练"), px(0.54), pad.t + 6);
+      ctx.fillStyle = cssVar("--accent");
+      ctx.fillText(text("test", "测试"), px(0.54), pad.t + 24);
+      var center = 0.25 + delay * 0.6;
+      if (t < 0.12) {
+        phaseEl.textContent = text("memorizing", "记忆中");
+        phaseEl.style.color = cssVar("--brass");
+      } else if (t < center - 0.04) {
+        phaseEl.textContent = text("plateau", "平台期");
+        phaseEl.style.color = cssVar("--ink-soft");
+      } else if (t < center + 0.08) {
+        phaseEl.textContent = text("grokking", "突然泛化");
+        phaseEl.style.color = cssVar("--accent");
+      } else {
+        phaseEl.textContent = text("generalized", "已泛化");
+        phaseEl.style.color = cssVar("--ok");
+      }
+    }
+    function loop(ts){
+      if (!animating) return;
+      if (playing && ts - last > 16) {
+        t += 0.004;
+        last = ts;
+        if (t >= 1) {
+          t = 1;
+          playing = false;
+        }
+        draw();
+      }
+      requestAnimationFrame(loop);
+    }
+    function start(){
+      if (reduceMotion || animating) return;
+      animating = true;
+      requestAnimationFrame(loop);
+    }
+    function stop(){ animating = false; }
+    if (reduceMotion) t = 1;
+    draw();
+    play.addEventListener("click", function(){
+      t = 0;
+      playing = true;
+      draw();
+    });
+    slider.addEventListener("input", function(){
+      delay = Number(slider.value) / 100;
+      delayEl.textContent = delay < 0.34 ? text("short", "短") : delay < 0.67 ? text("medium", "中") : text("long", "长");
+      draw();
+    });
+    return { start: start, stop: stop };
+  });
+
+  mountWhenVisible("#hu", function initHyperuniformPointFields(){
+    var canvas = document.getElementById("hu");
+    var bar = document.getElementById("hubar");
+    if (!canvas || !bar) return;
+    var ctx = canvas.getContext("2d");
+    var bctx = bar.getContext("2d");
+    var modeEl = document.getElementById("hu-mode");
+    var varEl = document.getElementById("hu-var");
+    if (!ctx || !bctx || !modeEl || !varEl) return;
+    var width = canvas.width;
+    var height = canvas.height;
+    var mode = "hyper";
+    var points = [];
+    function gen(){
+      points = [];
+      var n = 12;
+      var gap = width / n;
+      if (mode === "random") {
+        for (var i = 0; i < n * n; i++) points.push({ x: Math.random() * width, y: Math.random() * height });
+      } else {
+        for (var y = 0; y < n; y++) {
+          for (var x = 0; x < n; x++) {
+            var jitter = mode === "hyper" ? gap * 0.42 : 2;
+            points.push({ x: gap * (x + 0.5) + (Math.random() - 0.5) * 2 * jitter, y: gap * (y + 0.5) + (Math.random() - 0.5) * 2 * jitter });
+          }
+        }
+      }
+    }
+    function draw(){
+      ctx.fillStyle = cssVar("--paper");
+      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = mode === "hyper" ? cssVar("--accent") : cssVar("--ink-soft");
+      for (var i = 0; i < points.length; i++) {
+        ctx.beginPath();
+        ctx.arc(points[i].x, points[i].y, 3.4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      var radius = width * 0.22;
+      var counts = [];
+      for (var t = 0; t < 40; t++) {
+        var cx = Math.random() * (width - 2 * radius) + radius;
+        var cy = Math.random() * (height - 2 * radius) + radius;
+        var count = 0;
+        for (var p = 0; p < points.length; p++) {
+          var dx = points[p].x - cx;
+          var dy = points[p].y - cy;
+          if (dx * dx + dy * dy < radius * radius) count++;
+        }
+        counts.push(count);
+      }
+      var mean = counts.reduce(function(a, b){ return a + b; }, 0) / counts.length;
+      var variance = counts.reduce(function(a, b){ return a + (b - mean) * (b - mean); }, 0) / counts.length;
+      var index = mean > 0 ? variance / mean : 0;
+      bctx.fillStyle = cssVar("--paper");
+      bctx.fillRect(0, 0, bar.width, bar.height);
+      var frac = Math.min(index / 1.2, 1);
+      bctx.fillStyle = index < 0.45 ? cssVar("--ok") : index < 0.8 ? cssVar("--hint") : cssVar("--contested");
+      bctx.fillRect(10, bar.height / 2 - 14, (bar.width - 20) * frac, 28);
+      bctx.strokeStyle = cssVar("--line-strong");
+      bctx.strokeRect(10, bar.height / 2 - 14, bar.width - 20, 28);
+      bctx.fillStyle = cssVar("--ink-faint");
+      bctx.font = "10px IBM Plex Mono, monospace";
+      bctx.textAlign = "left";
+      bctx.fillText(text("low fluctuation", "低涨落"), 10, bar.height - 6);
+      bctx.textAlign = "right";
+      bctx.fillText(text("high fluctuation", "高涨落"), bar.width - 10, bar.height - 6);
+      varEl.textContent = index.toFixed(2);
+      modeEl.textContent = mode === "hyper" ? text("hyperuniform", "超均匀") : mode === "random" ? text("random", "随机") : text("crystal", "晶体");
+    }
+    gen();
+    draw();
+    document.querySelectorAll("#hu-pick button").forEach(function(button){
+      button.addEventListener("click", function(){
+        document.querySelectorAll("#hu-pick button").forEach(function(other){
+          other.classList.remove("sel");
+          other.setAttribute("aria-pressed", "false");
+        });
+        button.classList.add("sel");
+        button.setAttribute("aria-pressed", "true");
+        mode = button.getAttribute("data-mode") || "hyper";
+        gen();
+        draw();
+      });
+    });
+  });
 })();

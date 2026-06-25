@@ -1,0 +1,47 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const modes = zh
+  ? [
+      ["crystal", "晶体"],
+      ["random", "随机"],
+      ["hyper", "超均匀"]
+    ]
+  : [
+      ["crystal", "Crystal"],
+      ["random", "Random"],
+      ["hyper", "Hyperuniform"]
+    ];
+---
+<Panel class="web-only frontier-interactive emergence-hu">
+  <PanelTitle>{zh ? "交互 · 三种点场" : "Interactive · three point fields"}</PanelTitle>
+  <h3>{zh ? "晶体、随机与超均匀" : "Crystal, random, and hyperuniform"}</h3>
+  <PanelNote>{zh ? "切换三种点阵。右侧密度计用随机大探针估算点数涨落：随机气体涨落高，超均匀图案局部混乱但大尺度涨落低。" : "Toggle the point fields. The density meter estimates count fluctuations with large random probes: random gases fluctuate strongly, while hyperuniform patterns look locally messy but suppress large-scale variation."}</PanelNote>
+
+  <div class="frontier-seg" id="hu-pick" role="group" aria-label={zh ? "选择点场类型" : "Choose point-field type"}>
+    {modes.map(([mode, label]) => (
+      <button type="button" data-mode={mode} class={mode === "hyper" ? "sel" : ""} aria-pressed={mode === "hyper" ? "true" : "false"}>{label}</button>
+    ))}
+  </div>
+
+  <div class="frontier-grid">
+    <div class="frontier-stage">
+      <canvas id="hu" width="300" height="300" aria-label={zh ? "点场排布，可为晶体、随机或超均匀。" : "Point field arranged as crystal, random, or hyperuniform."}></canvas>
+    </div>
+    <div class="frontier-side">
+      <p class="frontier-minihead">{zh ? "大尺度密度涨落" : "large-scale density fluctuation"}</p>
+      <canvas id="hubar" width="300" height="120" aria-label={zh ? "密度涨落指数条。" : "Density fluctuation index bar."}></canvas>
+      <div class="frontier-readout" aria-live="polite">
+        <span>{zh ? "排布" : "arrangement"} <b id="hu-mode">{zh ? "超均匀" : "hyperuniform"}</b></span>
+        <span>{zh ? "涨落指数" : "fluctuation"} <b id="hu-var">—</b></span>
+      </div>
+    </div>
+  </div>
+</Panel>

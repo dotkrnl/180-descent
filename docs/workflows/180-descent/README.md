@@ -102,6 +102,9 @@ Appendices are declared in `day.yaml` under `appendices`.
   `src/app/components/lesson/interactives/`.
 - Keep JavaScript behavior separate in `src/assets/js/interactions/`; avoid
   inline scripts in content.
+- Mount web interactives lazily when their root enters the viewport, and stop
+  animation loops when they leave it. Hidden appendices, collapsed sections, and
+  below-the-fold canvases must not initialize expensive simulations on page open.
 - Add or adjust styles in SCSS modules imported by `book.scss`. Do not add
   component-local `.css`, duplicate `book.css`, browser-print PDF styles, or
   one-off generated CSS.

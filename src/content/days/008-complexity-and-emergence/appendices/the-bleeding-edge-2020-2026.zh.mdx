@@ -2,6 +2,7 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
@@ -11,6 +12,10 @@ import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import Term from "@app/components/lesson/Term.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import GrokkingCurve from "@app/components/lesson/interactives/GrokkingCurve.astro";
+import HyperuniformPointFields from "@app/components/lesson/interactives/HyperuniformPointFields.astro";
+import NonreciprocalPursuit from "@app/components/lesson/interactives/NonreciprocalPursuit.astro";
+import PhysicalLearningNetwork from "@app/components/lesson/interactives/PhysicalLearningNetwork.astro";
 
 <Lead drop="这">份附录是一份 2020–2026 年现场报道，混合了同行评议论文、会议论文、已接收稿件，以及明确标注的预印本；文献核查截至 2026 年 6 月 25 日。选择它们并非因为一切都已定案，而是因为一旦成立，其影响可能极为深远。自第 1 日起我们就强调「炒作过滤器」：面对前沿研究，要诚实标注不确定性，区分已确立结果、有前景线索与仍有炒作风险的论断。下面每一节都按这个原则阅读。</Lead>
 
@@ -45,13 +50,13 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 
 下面这个精简草图展示了核心机制——非互易的「追逐」动力学。
 
-<Aside>
-<BlockTitle>内嵌参考 · 非互易追逐</BlockTitle>
+<NonreciprocalPursuit locale="zh" />
 
-两种粒子。规则被设计成不对称：青色粒子被附近的琥珀色粒子吸引，而琥珀色粒子则逃离附近的青色粒子。双方以不对等的方式追逐或逃离。把**非互易性**滑块从 0（对称，它们只会聚成一团并停下）推向 1（完全不对称），你会看到团块拒绝安定：它们形成、追逐、移动——一种只因有效相互作用不互易而存在的「相」。
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>静态摘要 · 非互易追逐</PanelTitle>
 
-本框概括网页版交互所展示的主要结果。
-</Aside>
+网页版面板展示两种粒子的非对称有效相互作用。非互易性较低时，粒子主要聚成静态团簇；随着相互作用变得更不对称，团簇开始拒绝平衡并持续移动。这个草图不是海星胚胎流体动力学的复刻，但保留了核心思想：非互易相互作用可以把本该安定下来的团块变成持续运动的集体结构。
+</FormatOnly>
 
 这只是玩具，不是真正的流体动力学——但核心观点是诚恳的：让相互作用变得非互易，一个本该达到宁静平衡的系统反而会进入永恒的自组织运动。这种拒绝安定，正是整个领域的标志。
 </ContentSection>
@@ -85,13 +90,13 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 
 甚至连它学习的纹理都与「真正的」神经网络相呼应：作者报告说，它按自然顺序纠正误差——先平均，再斜率，然后是目标函数更精细的曲率——这是人工网络中<Term>谱偏置</Term><TipNote text={"谱偏置指某些神经网络倾向于先学习函数的低频或较简单成分，再学习高频细节。"} />（spectral bias）的物理表亲。下面是这次下降的草图：数十个局部元件，每个只服从自己的邻域规则，共同把误差滑下山坡。
 
-<Aside>
-<BlockTitle>内嵌参考 · 自我调谐的网络</BlockTitle>
+<PhysicalLearningNetwork locale="zh" />
 
-每个可训练元件只利用局部可用的信息调整自己。外部电路负责样本与标签；真正被移除的是中央梯度计算。点击 **Train**，观察局部调谐如何降低全局误差。
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>静态摘要 · 自我调谐的网络</PanelTitle>
 
-本框概括网页版交互所展示的主要结果。
-</Aside>
+网页版面板展示一个局部元件网格如何向目标图案松弛。边界给出被施加的答案；内部节点只依据邻居值和很小的局部校正更新。随着秩序向内传播，误差曲线下降。它是局部物理学习思想的示意，不是原晶体管网络硬件的复刻。
+</FormatOnly>
 
 为何它可能改变格局：这类系统也许最终能为合适的学习任务提供更低能耗的实现，以物理速度运行，而不是先把一切翻译成数字矩阵乘法。诚实的状态：演示真实且经过同行评议，但仍然很小——原理验证，不是能效基准，尚不足以与 GPU 竞争。<StatusChip status="hint" label={"有前景"} />
 </ContentSection>
@@ -120,13 +125,13 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 
 最干净的例子是一种名字很妙的现象：<Term>grokking</Term><TipNote text={"Grokking 指延迟泛化：模型先记住训练样本，很久之后才突然在未见样本上表现变好。"} />（Power et al., 2022，以及随后一系列机制性跟进研究）。让一个小网络学习一个清晰的数学任务——比如模运算。起初它只是*记住*训练样本：见过的题全对，没见过的完全不行。然后你继续训练，远超一切看似不会再变化的节点……突然，在继续训练数千步之后，网络出现了 grokking：从记住训练样本，跃迁到系统性的样本外泛化。在特定的模运算研究中，网络逐渐形成了结构化的三角函数表征；当这套更简洁的算法压过记忆表时，测试准确率便陡然上升。曲线很锐利，但 grokking 是否一般构成普适的物理相变，仍是开放问题。来看它的典型特征：
 
-<Aside>
-<BlockTitle>集成参考 · Grokking：先记忆，经历漫长平台期，再突然泛化</BlockTitle>
+<GrokkingCurve locale="zh" />
 
-一张著名 grokking 曲线的示意图。训练准确率迅速飙升——网络在记忆。接着是一段漫长平坦的高原期，测试准确率（样本外泛化）停留在随机水平，看起来毫无进展……直到突然之间，测试曲线跳高。
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>静态摘要 · Grokking 曲线</PanelTitle>
 
-本框概括网页版交互所展示的主要结果。
-</Aside>
+网页版面板绘出经典 grokking 特征：训练准确率先快速上升，表示模型已经记住训练样本；测试准确率则在漫长平台期后才突然跃迁。滑块改变平台期长度。这张图是教学示意，应理解为特定模型中延迟泛化的证据，而不是普适相变的证明。
+</FormatOnly>
 
 Grokking 正成为研究学习动力学和内部表征的一个常用实验平台。有两个相关的前沿项目值得记住名字。**神经网络规模扩展的量子化模型**（Michaud, Liu, Girit & Tegmark, NeurIPS 2023）提出，网络的知识以离散块——「量子」——形式存在。<Term>奇异学习理论</Term><TipNote text={"奇异学习理论研究参数空间存在退化或奇点的学习系统，工具来自代数几何和贝叶斯统计。"} />则用贝叶斯相变语言重新理解训练。2026 年的一项有限尺寸研究把相变说法当作可证伪假设来检验，并提供了新证据，同时仍把转变阶数留作未决问题。<StatusChip status="hint" label={"有前景"} />
 
@@ -142,13 +147,13 @@ Grokking 正成为研究学习动力学和内部表征的一个常用实验平�
 
 推动这一领域的 Salvatore Torquato 给出了精准定义：在*无序超均匀*材料中，普通液体所具有的大尺度、长程密度变化在长波极限中被*异常地抑制*，而局部排列仍像流体一样混乱、各向同性。它是「隐藏秩序」：近看无序，大尺度却有晶体式纪律。自然界在使用它：鸡眼视网膜上的感光锥细胞就以这种方式排布，而这一技巧还能造出非凡的*隐身*光子材料，能从任意方向阻挡特定波长的光——这是普通晶体（有择优方向）做不到的。三种类别并排看：
 
-<Aside>
-<BlockTitle>集成参考 · 晶体 vs. 随机 vs. 超均匀</BlockTitle>
+<HyperuniformPointFields locale="zh" />
 
-点数相同，三种排布。在它们之间切换，观察右侧的**密度计**：它把一个大圆形「探针」随机丢下，测量不同探针之间内部点数的*变化*。晶体几乎不变（低）。随机气体变化很大（高）。超均匀图案近看和随机一样乱——但它的大尺度密度却几乎不变，几乎像晶体。这种「看起来无序，方差却很低」就是隐藏秩序。
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>静态摘要 · 三种点场</PanelTitle>
 
-本框概括网页版交互所展示的主要结果。
-</Aside>
+网页版面板比较点数相同的晶体、随机与超均匀点场，并用随机大探针估算大尺度密度涨落。晶体和超均匀点场都会压低长程涨落，随机气体则涨落很大；超均匀图案的关键在于，它局部看起来无序，却在大尺度上保持低涨落。
+</FormatOnly>
 
 它之所以登上前沿，是因为一项 2025 年的结果。在「Anomalous suppression of large-scale density fluctuations in classical and quantum spin liquids」（PNAS, 2025）中，Duyu Chen、Rhine Samajdar、Yang Jiao 和 Torquato 报告了量子自旋液体中的超均匀性。当一个最初为沙粒和鸟眼定义的结构有序概念出现在深度量子系统中时，它开始像更广泛的物质组织原则。<StatusChip status="ok" label={"已确立，并正向新领域扩散"} />
 </ContentSection>
