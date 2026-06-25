@@ -1,0 +1,50 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const rules = zh
+  ? [
+      ["30", "第 3 类 · 混沌"],
+      ["110", "第 4 类 · 可计算"],
+      ["90", "分形"],
+      ["184", "交通流"],
+      ["250", "第 2 类"]
+    ]
+  : [
+      ["30", "class 3 · chaos"],
+      ["110", "class 4 · computes"],
+      ["90", "fractal"],
+      ["184", "traffic"],
+      ["250", "class 2"]
+    ];
+---
+<Panel class="web-only emergence-ca">
+  <PanelTitle>{zh ? "交互 · 基本元胞自动机" : "Interactive · elementary automata"}</PanelTitle>
+  <h3>{zh ? "规则 30、规则 110 及伙伴" : "Rule 30, Rule 110, and friends"}</h3>
+  <PanelNote>{zh ? "每往下一行就是一个时间步。默认从顶部中央一个黑色细胞开始，让三格规则把历史向下绘出。切换几条著名规则，比较混沌、通用计算、分形、交通流和冻结秩序如何从同样大小的规则表中出现。" : "Each row down the screen is one time step. By default we start from a single black cell at the top center and let the three-cell rule paint history downward. Switch between famous rules and compare chaos, universal computation, fractals, traffic flow, and frozen order from the same tiny rulebook."}</PanelNote>
+
+  <div class="ca-rulepick" id="ca-pick" role="group" aria-label={zh ? "选择元胞自动机规则" : "Choose cellular automaton rule"}>
+    {rules.map(([rule, tag], index) => (
+      <button type="button" data-rule={rule} class={index === 0 ? "sel" : ""} aria-pressed={index === 0 ? "true" : "false"}>
+        {zh ? `规则 ${rule}` : `Rule ${rule}`} <span>{tag}</span>
+      </button>
+    ))}
+  </div>
+
+  <div class="ca-stage">
+    <canvas id="ca" width="520" height="300" aria-label={zh ? "基本元胞自动机从一行初始状态向下演化。" : "Elementary cellular automaton evolving downward from an initial row."}></canvas>
+  </div>
+
+  <div class="emergence-controls" role="group" aria-label={zh ? "元胞自动机控制" : "Cellular automaton controls"}>
+    <button class="simbtn primary" id="ca-run">{zh ? "重绘" : "Redraw"}</button>
+    {" "}
+    <button class="simbtn" id="ca-seed">{zh ? "随机首行" : "Random first row"}</button>
+    <span class="ca-read">{zh ? "当前规则" : "rule shown"} <b id="ca-num">30</b></span>
+  </div>
+</Panel>

@@ -1,0 +1,34 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+---
+<Panel class="web-only emergence-rbn">
+  <PanelTitle>{zh ? "交互 · 秩序、边缘与混沌" : "Interactive · order, the edge, and chaos"}</PanelTitle>
+  <h3>{zh ? "随机布尔网络找到自己的状态" : "A random Boolean network finding its footing"}</h3>
+  <PanelNote>{zh ? "节点组成网格，每个节点开或关，并根据 K 个随机输入和随机规则同步更新。活动轨迹显示每一步有多少节点翻转。低 K 趋于冻结，高 K 保持噪声，K ≈ 2 附近常出现结构化的低水平活动。" : "A grid of nodes, each ON or OFF, updates from K randomly wired inputs by random rules. The activity trace shows what fraction of nodes flip each step. Low K tends to freeze, high K stays noisy, and near K ≈ 2 the network often settles into structured low-level activity."}</PanelNote>
+
+  <div class="rbn-grid">
+    <div class="rbn-stage">
+      <canvas id="nk" width="300" height="300" aria-label={zh ? "随机布尔网络节点网格。" : "Grid of nodes in a random Boolean network."}></canvas>
+    </div>
+    <div class="rbn-side">
+      <canvas id="nktrace" width="320" height="132" aria-label={zh ? "节点翻转率随时间变化的轨迹。" : "Trace of node flip rate over time."}></canvas>
+      <p class="rbn-regime">{zh ? "状态" : "regime"} <b id="nk-regime">—</b></p>
+      <p class="rbn-rate">{zh ? "当前翻转率" : "current flip rate"} <b id="nk-rate">0%</b></p>
+      <div class="nbr-row rbn-slider">
+        <span>K&nbsp;=&nbsp;<b id="kval2">2</b></span>
+        <input type="range" id="kslider" min="1" max="5" value="2" aria-label={zh ? "每个节点的输入数量 K" : "Number of inputs K per node"} />
+      </div>
+      <div class="emergence-controls no-margin" role="group" aria-label={zh ? "随机布尔网络控制" : "Random Boolean network controls"}>
+        <button class="simbtn primary" id="nk-rewire">{zh ? "重新连线" : "Rewire"}</button>
+      </div>
+    </div>
+  </div>
+</Panel>

@@ -2,6 +2,7 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
@@ -11,6 +12,9 @@ import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import Term from "@app/components/lesson/Term.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import CellularAutomataRules from "@app/components/lesson/interactives/CellularAutomataRules.astro";
+import PercolationThreshold from "@app/components/lesson/interactives/PercolationThreshold.astro";
+import RandomBooleanNetwork from "@app/components/lesson/interactives/RandomBooleanNetwork.astro";
 
 <Lead drop="T">he main descent gave you the headline idea — *more is different* — and the one fight everyone's having about it (Assembly Theory). But emergence is one of those subjects where the best material is in the second drawer down: the precise mathematics of *why* phase transitions provide some of the cleanest controlled examples of wholes exceeding their parts, the eerie little programs that turn a single line of cells into chaos or a printing press, the question of *where exactly* a system has to sit to be capable of interesting behavior at all, and the surprisingly deep problem of saying what "complex" even *means* when "hard to describe" already failed us. This appendix is that drawer. It runs continuously from where we left off — same instinct throughout: **the interesting behavior lives between the parts, not inside them.**</Lead>
 
@@ -25,7 +29,7 @@ In the main lesson we built emergence from the bottom up — local rules (Boids,
 
 When a philosopher wants to argue about emergence, they reach for consciousness. When a *physicist* wants to, they reach for a pot of water crossing a phase boundary — because here, uniquely, emergence comes with airtight mathematics and you can prove the strange thing is real. At one atmosphere, equilibrium water is liquid just above 0°C and ice just below it. In a large enough sample the change can look like a cliff. The forces between any two water molecules don't change one bit as you cross zero. So where does the cliff come from?
 
-The answer is that a mathematically sharp <Term as="em">phase transition</Term><TipNote text={"A phase transition is a collective change of state, such as liquid to solid or magnetic to nonmagnetic, often marked by a sharp change in a macroscopic quantity."} /> is a property of the *collective* — in the standard canonical definition, the exact singularity appears only in the <Term as="em">thermodynamic limit</Term><TipNote text={"The thermodynamic limit is the idealized limit where the number of particles and volume go to infinity while density stays fixed."} />, as the number of particles goes to infinity. Finite systems can still melt, freeze, and show rounded transitions, pseudocritical peaks, and finite-size signatures. What they do not have is the infinitely sharp nonanalyticity of the textbook ideal. "Solid" and "liquid" are not facts about isolated molecules; they are facts about *arrangements of many molecules*. This is Anderson's "more is different" stated with theorems instead of slogans: a new, lawful, predictable collective property that cannot be read off any individual part. <StatusChip status="ok" label={"established — the cleanest emergence we have"} />
+The answer is that a mathematically sharp <Term as="em">phase transition</Term><TipNote text={"A phase transition is a collective change of state, such as liquid to solid or magnetic to nonmagnetic, often marked by a sharp change in a macroscopic quantity."} /> is a property of the *collective* — in the standard canonical definition, the exact singularity appears only in the <Term as="em">thermodynamic limit</Term><TipNote text={"The thermodynamic limit is the idealized limit where the number of particles and volume go to infinity while density stays fixed."} />, as the number of particles goes to infinity. Finite systems can still melt, freeze, and show rounded transitions, pseudocritical peaks, and finite-size signatures. What they do not have is the infinitely sharp nonanalyticity of the textbook ideal. "Solid" and "liquid" are not facts about isolated molecules; they are facts about *arrangements of many molecules*. This is Anderson's "more is different" stated with theorems instead of slogans: a new, lawful, predictable collective property that cannot be read off any individual part. <StatusChip status="ok" label={"established"} />
 
 ### The miracle of universality
 
@@ -51,13 +55,13 @@ The phase transition in §1 is profound but abstract. <Term as="em">Percolation<
 
 For small *p* you get scattered little islands — nothing reaches across. Crank *p* up slowly and the islands grow and merge, still local, still finite... and then, near a *critical threshold* *p<sub>c</sub>*, a giant cluster becomes overwhelmingly likely and stitches one side of the world to the other. In an infinite 2-D square lattice the transition is sharp, with ***p<sub>c</sub>* ≈ 0.5927** for independent site percolation. In any finite grid, the curve is rounded: sometimes a spanning cluster appears below the threshold, sometimes it fails above it. The lesson is still emergent and global, but the mathematical cliff belongs to the infinite ideal. Watch it happen:
 
-<Aside>
-<BlockTitle>Integrated reference · The Percolation Threshold</BlockTitle>
+<PercolationThreshold locale="en" />
 
-Drag the density slider. Each cell is filled independently with probability *p*. The simulation hunts for a cluster that touches both the **top and bottom** edges; if one exists, it lights up in teal and the verdict flips to SPANS. Sweep slowly across *p* ≈ 0.59 and feel the cliff — a few percent of density is the difference between a thousand islands and one connected continent.
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Static summary of the interactive · The Percolation Threshold</PanelTitle>
 
-This box summarizes the main result shown by the web interaction.
-</Aside>
+Drag the density slider in the web version. Each cell is filled independently with probability *p*. The simulation hunts for a cluster that touches both the **top and bottom** edges; if one exists, it lights up in teal and the verdict flips to SPANS. Sweep slowly across *p* ≈ 0.59 and the finite grid's probability curve steepens — a few percent of density is the difference between scattered islands and a connected continent, though the exact cliff belongs to the infinite ideal.
+</FormatOnly>
 
 Two things make percolation worth its own section. First, it is the **minimal model of one kind of tipping point** — a useful skeleton for forest fires, epidemics, rumors, porous rock, and conducting films when the assumptions fit. Those systems have extra physics, behavior, and correlations, so percolation is a model, not the hidden identity of everything. (This is the exact instinct we carry into **Day 9**, where tipping points get their own deep dive, and **Day 12**, where the grid becomes a network.) Second — and this is the payoff of §1 — percolation sits in its *own* universality class. The way the giant cluster emerges near *p<sub>c</sub>* follows power laws with exponents that can be shared across different microscopic settings. The threshold value *p<sub>c</sub>* depends on the lattice; the *critical behavior* around it is universal within the class. <StatusChip status="ok" label={"established"} />
 </ContentSection>
@@ -76,15 +80,15 @@ Conway's Game of Life (main lesson) is a *two-dimensional* <Term as="em">cellula
 
 That last class is the prize. Wolfram conjectured, and Matthew Cook later **proved (work circulated from the 1990s, published 2004)**, that *Rule 110* — a one-line, three-neighbor toy you could code in a tweet — is <Term as="em">Turing-complete</Term><TipNote text={"Turing-complete means a system can, in principle, compute anything that any ordinary computer can compute, given suitable encoding and enough time."} />. A single row of cells flipping by the dumbest imaginable rule can, in principle, compute anything any computer can compute. Let that land: universal computation does not require complicated hardware. It can emerge from very nearly *nothing*. Meanwhile *Rule 30*, from the very same 256, produces such high-quality randomness from its simple deterministic rule that Wolfram's software used it for years as a pseudorandom generator. Its central column has been studied as a pseudorandom source, although that is not the same as established cryptographic security. Same rulebook size, same three-cell neighborhood — one rule computes, one rule is chaos, one rule dies. Run them yourself:
 
-<Aside>
-<BlockTitle>Integrated reference · Rule 30, Rule 110, and friends</BlockTitle>
+<CellularAutomataRules locale="en" />
 
-Each row down the screen is one time step; we start from a **single black cell** at the top center and let the rule paint history downward. Switch between the famous rules and watch four different fates fall out of three-cell logic. Rule 90 even draws a perfect Sierpiński triangle — a fractal nobody put there.
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Static summary of the interactive · Rule 30, Rule 110, and friends</PanelTitle>
 
-This box summarizes the main result shown by the web interaction.
-</Aside>
+The web panel draws elementary cellular automata downward in time from either one central black cell or a random first row. Rule 30 produces chaotic-looking texture, Rule 110 supports universal computation, Rule 90 draws the Sierpiński triangle, Rule 184 resembles traffic flow, and Rule 250 settles into simple order.
+</FormatOnly>
 
-Wolfram packaged all this into a thousand-page book, *A New Kind of Science* (2002), with a sweeping thesis: simple programs are the right language for nature, and complex behavior is *cheap and everywhere* rather than rare and hard-won. The empirical core — that trivial rules generate Class-4 complexity and that Rule 110 is universal — is rock solid and genuinely important. <StatusChip status="ok" label={"established"} /> The grander framing — his "Principle of Computational Equivalence," the claim that almost all non-trivial systems are maximally, equivalently computational, and that this reorganizes all of science — was received frostily by many scientists as overclaiming and under-crediting predecessors. <StatusChip status="bad" label={"contested/hype — the same pattern as Assembly Theory"} /> The lesson rhymes with the main tour: a real and beautiful result, oversold into a theory of everything.
+Wolfram packaged all this into a thousand-page book, *A New Kind of Science* (2002), with a sweeping thesis: simple programs are the right language for nature, and complex behavior is *cheap and everywhere* rather than rare and hard-won. The empirical core — that trivial rules generate Class-4 complexity and that Rule 110 is universal — is rock solid and genuinely important. <StatusChip status="ok" label={"established"} /> The grander framing — his "Principle of Computational Equivalence," the claim that almost all non-trivial systems are maximally, equivalently computational, and that this reorganizes all of science — was received frostily by many scientists as overclaiming and under-crediting predecessors. <StatusChip status="bad" label={"contested/hype"} /> The lesson rhymes with the main tour: a real and beautiful result, oversold into a theory of everything.
 </ContentSection>
 
 <ContentSection>
@@ -100,13 +104,13 @@ Paraphrasing Kauffman's random-Boolean-network argument: order can arise for fre
 
 The crucial finding is an **order-chaos transition controlled by connectivity K**. In the classic unbiased random Boolean ensemble, small perturbations typically shrink below **K ≈ 2** and spread above it. Low-K networks tend toward frozen or simple <Term as="em">attractors</Term><TipNote text={"An attractor is a stable long-run pattern, such as a fixed point or cycle, that a dynamical system falls into from many starting states."} />; high-K networks are sensitive and chaotic-looking. But every finite deterministic Boolean network still eventually enters an attractor — either a fixed point or a cycle. Right around the critical regime, the network can be both robust to small knocks and capable of switching. Kauffman's provocative interpretation: those attractors are like *cell types*. An organism's genome is one wiring; its different cell types (neuron, liver, skin — same DNA, different stable expression patterns, a puzzle we'll meet again on **Day 95**) might be the different attractors the gene network falls into. Some of biology's order, he argued, might be "order for free" — a generic property of networks near the edge, that selection then tunes rather than creates from scratch. Tune K yourself and watch the regimes:
 
-<Aside>
-<BlockTitle>Integrated reference · A Random Boolean Network Finding Its Footing</BlockTitle>
+<RandomBooleanNetwork locale="en" />
 
-A grid of nodes, each ON or OFF, each updating from *K* randomly-wired neighbors by a random rule. The activity trace shows what fraction of nodes flip each step. Low K → it flatlines (frozen). High K → it stays violently noisy (chaos). Around **K = 2** it calms into structured, low-level activity — the edge, where the network is both stable and alive. Push the slider across and watch the personality change.
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Static summary of the interactive · A Random Boolean Network Finding Its Footing</PanelTitle>
 
-This box summarizes the main result shown by the web interaction.
-</Aside>
+A grid of nodes, each ON or OFF, updates from *K* randomly wired inputs by random Boolean rules. The web activity trace shows what fraction of nodes flip each step. Low K tends to flatten into frozen order; high K stays noisy; around **K = 2** the network often enters structured low-level activity near the edge of chaos.
+</FormatOnly>
 
 How does this hold up in 2026? The *mathematical* core is solid: random Boolean networks really do exhibit an order–chaos transition near a critical connectivity, and "order for free" is a genuine, reproducible phenomenon. <StatusChip status="ok" label={"established as mathematics"} /> The *biological* claim — that this is a major source of real organismal order, rivaling selection — remains a minority and <StatusChip status="bad" label={"contested"} /> position; mainstream evolutionary biology still puts selection front and center, and treats Kauffman's attractors-as-cell-types as a suggestive analogy rather than an established mechanism. And the strongest version of the "edge of chaos" slogan — that life and computation *must* sit exactly at criticality — is itself contested, the same family of overclaim as the "critical brain" we met in the main lesson. The honest summary: a real and influential regime, an inspiring hypothesis about its reach, and a frontier still arguing about how far it actually extends.
 </ContentSection>
@@ -154,7 +158,7 @@ Then came one of the most instructive papers of the decade, and it is a perfect 
 
 Paraphrasing Schaeffer, Miranda & Koyejo: emergent abilities can appear under some metrics and disappear under others; the sharpness may be a property of the measurement, not a fundamental change in model capability.
 
-Sit with how precisely this recapitulates the whole day. It is the **Day 6 / measurement** warning, the **main-lesson hype filter**, and the entropy-hump caution all at once: before you call something deeply, fundamentally emergent, *check whether your metric manufactured the surprise.* The debate is not settled — others counter that some capabilities do show genuine sharp transitions even under smooth metrics, that the choice of metric is itself meaningful (we often *care* about exact-match!), and that "predictable in hindsight" isn't the same as "predictable in advance." <StatusChip status="hint" label={"contested — and exactly the right kind of contested"} /> But the paper permanently raised the bar: "emergence" is now a claim you have to *earn* against your measurement choices, not a vibe you get to assert because a curve looked steep.
+Sit with how precisely this recapitulates the whole day. It is the **Day 6 / measurement** warning, the **main-lesson hype filter**, and the entropy-hump caution all at once: before you call something deeply, fundamentally emergent, *check whether your metric manufactured the surprise.* The debate is not settled — others counter that some capabilities do show genuine sharp transitions even under smooth metrics, that the choice of metric is itself meaningful (we often *care* about exact-match!), and that "predictable in hindsight" isn't the same as "predictable in advance." <StatusChip status="hint" label={"contested"} /> But the paper permanently raised the bar: "emergence" is now a claim you have to *earn* against your measurement choices, not a vibe you get to assert because a curve looked steep.
 
 This is the thread we hand directly to **Day 139**, where scaling laws and machine "emergence" get the full deep-dive treatment, and onward to **Days 123–126**, where the very hardest question — whether *genuine* strong emergence (consciousness, the one candidate Chalmers left standing in the main lesson) could ever appear in a system like the one that wrote these words — finally comes due. We end the appendix exactly where the main lesson pointed: holding the discipline to put a number on emergence, and the humility to admit when the number is measuring our ruler instead of the world.
 </ContentSection>

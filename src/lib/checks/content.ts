@@ -17,6 +17,8 @@ interface ContentCheckFailure {
 }
 
 const PRINT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
+const STATUS_CHIP_LABEL_MAX_CHARS = 28;
+const STATUS_CHIP_LABEL_GATE_START_DAY = 8;
 const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".scss", ".yaml", ".yml"]);
 const PARENT_MARKDOWN_PATTERN = /\.\.\/[^\s"'`)]+\.md\b/;
 const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
@@ -67,6 +69,7 @@ const RAW_INTERACTIVE_PATTERNS: Array<[RegExp, string]> = [
 ];
 const WEB_ONLY_COMPONENTS = new Set([
   "BayesTrap",
+  "CellularAutomataRules",
   "CausalLadder",
   "ConfidenceIntervalCoverage",
   "CredenceDial",
@@ -88,8 +91,10 @@ const WEB_ONLY_COMPONENTS = new Set([
   "GameOfLifeGun",
   "MurmurationEngine",
   "MutualInformationOverlap",
+  "PercolationThreshold",
   "PValueShapeSimulator",
   "ProbabilityMontyPanel",
+  "RandomBooleanNetwork",
   "SValueBits",
   "SimpsonReversalMachine",
   "SpecificationCurve",
@@ -328,9 +333,24 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
   }
 
   checkStaticAlternates(file, failures);
+  checkStatusChipLabels(file, failures);
   checkUnsupportedMdxWrappers(file, failures);
   checkRawInteractiveMarkup(file, failures);
   checkArtifactComponentContract(file, failures);
+}
+
+function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  const dayNumber = Number(file.relativePath.match(/src\/content\/days\/(\d{3})-/)?.[1]);
+  if (!Number.isFinite(dayNumber) || dayNumber < STATUS_CHIP_LABEL_GATE_START_DAY) return;
+
+  for (const match of stripCodeBlocks(file.source).matchAll(/<StatusChip\b[^>]*\blabel=(?:\{"([^"]+)"\}|"([^"]+)")/g)) {
+    const label = normalizeVisibleText(match[1] ?? match[2] ?? "");
+    if (label.length > STATUS_CHIP_LABEL_MAX_CHARS) {
+      failures.push({
+        message: `${file.relativePath} has overlong StatusChip label "${label}" (${label.length} chars); keep hype-filter tags short and move caveats into prose`
+      });
+    }
+  }
 }
 
 function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure[]): void {

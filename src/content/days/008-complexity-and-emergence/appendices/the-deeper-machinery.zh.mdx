@@ -2,6 +2,7 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
@@ -11,6 +12,9 @@ import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import Term from "@app/components/lesson/Term.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import CellularAutomataRules from "@app/components/lesson/interactives/CellularAutomataRules.astro";
+import PercolationThreshold from "@app/components/lesson/interactives/PercolationThreshold.astro";
+import RandomBooleanNetwork from "@app/components/lesson/interactives/RandomBooleanNetwork.astro";
 
 <Lead drop="正">文已经介绍了核心观点「多即不同」，以及围绕组装理论展开的主要争论。但涌现真正精彩的内容往往藏在更深一层：相变为何提供了最清晰的数学案例，极简元胞自动机为何能够产生混沌与通用计算，复杂行为通常出现在哪些动力学区域，以及当「难以描述」不足以定义复杂性时，我们还能用什么来度量它。本附录将逐一展开这些问题。贯穿始终的直觉不变：有趣的行为活在部分之间，而非部分内部。</Lead>
 
@@ -51,13 +55,13 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 
 p 很小时，只有零零散散的小岛——没有东西能跨过去。慢慢把 p 调高，小岛长大、合并，仍然局域，仍然有限……然后，在临界阈值 p<sub>c</sub> 附近，巨型簇变得极有可能出现，把世界的一边缝到另一边。对无限大二维方格子上的独立格点渗流，这个神奇数字是 p<sub>c</sub> ≈ 0.5927，且转变是尖锐的。但任何有限网格中的概率曲线都是圆滑的：阈值以下有时也会贯穿，阈值以上有时也会失败。教训仍然是涌现的、全局的；数学悬崖属于无限理想。看它发生：
 
-<Aside>
-<BlockTitle>集成参考 · 渗流阈值</BlockTitle>
+<PercolationThreshold locale="zh" />
 
-拖动密度滑块。每个格点以概率 p 独立被填充。模拟会寻找一个同时接触顶部和底部边界的簇；若存在，它会以青色高亮，判定翻转为「贯穿」。慢慢扫过 p ≈ 0.59，感受悬崖——百分之几的密度差距，就是上千个孤岛与一片连通大陆之间的分别。
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>交互的静态摘要 · 渗流阈值</PanelTitle>
 
-本框概括网页版交互所展示的主要结果。
-</Aside>
+网页版可拖动密度滑块。每个格点以概率 p 独立被填充。模拟会寻找一个同时接触顶部和底部边界的簇；若存在，它会以青色高亮，判定翻转为「贯穿」。慢慢扫过 p ≈ 0.59，有限网格中的概率曲线会明显变陡——百分之几的密度差距，就是许多孤岛与一片连通大陆之间的分别；真正精确的悬崖则属于无限理想。
+</FormatOnly>
 
 渗流值得单独一节，原因有二。第一，它是某一类临界点的最简模型——在假设合适时，可作为森林火灾、流行病、谣言传播、孔隙岩石和导电薄膜的骨架。这些系统当然还有额外的物理、行为与相关性，所以渗流是模型，不是万物背后的同一实体。（这正是我们进入第 9 日的起点，那里临界点会单独深挖；也是第 12 日的起点，那里格子会变成网络。）第二——也是 §1 的回报——渗流属于它自己的普适类。巨簇在 p<sub>c</sub> 附近涌现的方式遵循幂律，其指数可在不同微观设置中共享。阈值 p<sub>c</sub> 取决于晶格；临界行为在类内是普适的。<StatusChip status="ok" label={"已确立"} />
 </ContentSection>
@@ -76,13 +80,13 @@ p 很小时，只有零零散散的小岛——没有东西能跨过去。慢慢
 
 最后一类是宝藏。沃尔弗拉姆猜想，马修·库克后来证明（1990 年代开始流传，2004 年发表），规则 110——一条只占一行的、三邻居的、用一条推文就能写出的玩具规则——是<Term>图灵完备</Term><TipNote text={"图灵完备指一个系统原则上可以计算任何普通计算机能计算的东西，只要编码合适且时间足够。"} />的。一行细胞按照最愚笨可想象的规则翻转，原则上就能计算任何计算机能计算的东西。让这句话沉淀一下：通用计算不需要复杂的硬件，它可以从几乎一无所有中涌现。与此同时，规则 30，同样来自那 256 条规则，因其简单确定性规则产生的高质量随机样输出，曾被沃尔弗拉姆的软件多年用作伪随机数生成器；其中央列也被作为伪随机源研究过，但这并不等于已确立的密码学安全性。规则手册大小相同，邻域相同——一条规则会计算，一条规则是混沌，一条规则会死亡。自己运行看看：
 
-<Aside>
-<BlockTitle>集成参考 · 规则 30、规则 110 及伙伴</BlockTitle>
+<CellularAutomataRules locale="zh" />
 
-屏幕每往下一行就是一个时间步；我们从顶部中央一个单独的黑色细胞开始，让规则把历史向下涂画。切换几条著名规则，看四种不同命运如何从三格逻辑中跌落。规则 90 甚至会画出一个完美的谢尔宾斯基三角——那是没人放进去的分形。
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>交互的静态摘要 · 规则 30、规则 110 及伙伴</PanelTitle>
 
-本框概括网页版交互所展示的主要结果。
-</Aside>
+网页版会把基本元胞自动机按时间向下绘出，初始状态可以是中央一个黑色细胞，也可以是随机首行。规则 30 产生混沌式纹理，规则 110 支持通用计算，规则 90 画出谢尔宾斯基三角，规则 184 类似交通流，规则 250 则走向简单秩序。
+</FormatOnly>
 
 沃尔弗拉姆把这一切打包成一本千页巨著，《一种新科学》（2002），并提出一个宏大论题：简单程序是自然的正确语言，复杂行为是廉价且无处不在的，而非稀有且来之不易。其经验核心——平凡规则能产生第 4 类复杂性，规则 110 具有通用性——坚如磐石，确实重要。<StatusChip status="ok" label={"已确立"} /> 而更宏大的框架——他的「计算等价原理」，声称几乎所有非平凡系统都是最大化的、等价的计算，并且这将重组整个科学——被许多科学家冷淡对待，认为过度宣称、对前人贡献致谢不足。<StatusChip status="bad" label={"有争议／炒作风险"} /> 教训与正文的主线押韵：一个真实而美丽的成果，被过度兜售成万物理论。
 </ContentSection>
@@ -100,13 +104,13 @@ p 很小时，只有零零散散的小岛——没有东西能跨过去。慢慢
 
 关键发现是，这是一个由连接度 K 控制的秩序—混沌转变。在经典无偏随机布尔网络中，小扰动通常在 K ≈ 2 以下收缩、在其以上扩散。低 K 网络倾向于冻结或简单<Term>吸引子</Term><TipNote text={"吸引子是动力系统从许多初始状态都会落入的长期稳定模式，例如不动点或循环。"} />；高 K 网络敏感且看起来混沌。但任何有限确定性布尔网络最终仍会进入吸引子——不动点或循环。就在临界状态附近，网络既能抵抗小扰动，又能被切换。考夫曼的大胆解释：这些吸引子就像细胞类型。一个生物体的基因组是一套连线；它的不同细胞类型（神经元、肝脏、皮肤——同样的 DNA，不同的稳定表达模式，这个谜题我们会在第 95 日再次遇见）可能就是基因网络落入的不同吸引子。他认为，生物学的一部分秩序可能是「免费秩序」——靠近边缘的网络的一般性质，自然选择所做的是进一步微调，而非从零创造。自己拖动 K，观察不同状态：
 
-<Aside>
-<BlockTitle>集成参考 · 一个找到立足点的随机布尔网络</BlockTitle>
+<RandomBooleanNetwork locale="zh" />
 
-一个节点网格，每个节点开或关，每个节点根据来自 K 个随机连线邻居的随机规则更新。活动轨迹显示每步有多少比例的节点翻转。低 K → 它趋于平线（冻结）。高 K → 它保持剧烈噪声（混沌）。在 K = 2 附近，它平息为结构化、低水平的活动——边缘，网络既稳定又鲜活。拖动滑块，观察性格变化。
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>交互的静态摘要 · 一个找到立足点的随机布尔网络</PanelTitle>
 
-本框概括网页版交互所展示的主要结果。
-</Aside>
+一个节点网格，每个节点开或关，并根据 K 个随机输入和随机布尔规则更新。网页版的活动轨迹显示每一步有多少节点翻转。低 K 往往趋于冻结秩序；高 K 保持噪声；在 **K = 2** 附近，网络常进入结构化的低水平活动，也就是混沌边缘附近。
+</FormatOnly>
 
 到 2026 年，这一理论站得住脚吗？其数学核心是牢固的：随机布尔网络确实在临界连接度附近表现出秩序–混沌相变，「免费秩序」是一个真实、可复现的现象。<StatusChip status="ok" label={"数学上已确立"} /> 其生物学论断——这是真实生物体秩序的重要来源，可与选择分庭抗礼——仍然是少数派且有争议的立场；主流演化生物学仍把选择置于核心，把考夫曼的「吸引子即细胞类型」视为富有启发的类比，而非已确立的机制。而「混沌边缘」口号的最强版本——生命与计算必须坐在临界性上——本身也受到争议，与正文里提到的「临界大脑」属于同一类过度宣称。诚实的总结：一个真实而有影响的状态，一个关于其适用范围鼓舞人心的假说，以及一个仍在争论它究竟延伸多远的前沿。<StatusChip status="bad" label={"有争议"} />
 </ContentSection>

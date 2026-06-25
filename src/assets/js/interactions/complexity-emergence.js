@@ -351,4 +351,343 @@
     }
     canvas.addEventListener("click", function(event){ toggleAt(event.clientX, event.clientY); });
   })();
+
+  (function initPercolation(){
+    var canvas = document.getElementById("perc");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var slider = document.getElementById("perc-p");
+    var pValue = document.getElementById("perc-pval");
+    var verdict = document.getElementById("perc-verdict");
+    var filledEl = document.getElementById("perc-filled");
+    var largestEl = document.getElementById("perc-largest");
+    if (!ctx || !slider || !pValue || !verdict || !filledEl || !largestEl) return;
+
+    var n = 34;
+    var cell = canvas.width / n;
+    var p = Number(slider.value) / 100;
+    var grid = [];
+    var cluster = [];
+    var filledCount = 0;
+    var largestCluster = 0;
+    var spans = false;
+
+    function idx(x, y){ return y * n + x; }
+    function setProbability(value){
+      p = Math.max(0, Math.min(1, value));
+      slider.value = String(Math.round(p * 100));
+      pValue.textContent = p.toFixed(2);
+    }
+    function sample(){
+      grid = new Array(n * n);
+      cluster = new Array(n * n).fill(0);
+      filledCount = 0;
+      largestCluster = 0;
+      spans = false;
+      for (var i = 0; i < grid.length; i++) {
+        grid[i] = Math.random() < p ? 1 : 0;
+        if (grid[i]) filledCount++;
+      }
+      analyze();
+      draw();
+    }
+    function analyze(){
+      var seen = new Array(n * n).fill(0);
+      var queue = [];
+      var best = [];
+      var spanCluster = [];
+      var dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+      for (var y = 0; y < n; y++) {
+        for (var x = 0; x < n; x++) {
+          var start = idx(x, y);
+          if (!grid[start] || seen[start]) continue;
+          var touchesTop = false;
+          var touchesBottom = false;
+          var members = [];
+          queue.length = 0;
+          queue.push(start);
+          seen[start] = 1;
+          for (var q = 0; q < queue.length; q++) {
+            var cur = queue[q];
+            var cx = cur % n;
+            var cy = Math.floor(cur / n);
+            members.push(cur);
+            if (cy === 0) touchesTop = true;
+            if (cy === n - 1) touchesBottom = true;
+            for (var d = 0; d < dirs.length; d++) {
+              var nx = cx + dirs[d][0];
+              var ny = cy + dirs[d][1];
+              if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+              var ni = idx(nx, ny);
+              if (grid[ni] && !seen[ni]) {
+                seen[ni] = 1;
+                queue.push(ni);
+              }
+            }
+          }
+          if (members.length > best.length) best = members;
+          if (touchesTop && touchesBottom && members.length > spanCluster.length) spanCluster = members;
+        }
+      }
+      spans = spanCluster.length > 0;
+      largestCluster = best.length;
+      var highlight = spans ? spanCluster : best;
+      for (var h = 0; h < highlight.length; h++) cluster[highlight[h]] = spans ? 2 : 1;
+    }
+    function draw(){
+      var paper = cssVar("--paper") || "#fff";
+      var line = cssVar("--line") || "#ddd";
+      var fill = cssVar("--ink-soft") || "#6b7280";
+      var accent = cssVar("--accent") || "#178f8a";
+      var brass = cssVar("--brass") || "#a66b18";
+      ctx.fillStyle = paper;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = line;
+      ctx.lineWidth = 0.55;
+      for (var y = 0; y < n; y++) {
+        for (var x = 0; x < n; x++) {
+          var i = idx(x, y);
+          var px = Math.floor(x * cell);
+          var py = Math.floor(y * cell);
+          if (grid[i]) {
+            ctx.fillStyle = cluster[i] === 2 ? accent : (cluster[i] === 1 ? brass : fill);
+            ctx.globalAlpha = cluster[i] ? 0.92 : 0.42;
+            ctx.fillRect(px + 1, py + 1, Math.ceil(cell) - 2, Math.ceil(cell) - 2);
+          }
+          ctx.globalAlpha = 1;
+          if (cell >= 10) ctx.strokeRect(px + 0.5, py + 0.5, cell, cell);
+        }
+      }
+      if (spans) {
+        verdict.textContent = text("SPANS · one connected cluster crosses the grid", "贯穿 · 一个连通簇穿过整个网格");
+        verdict.className = "perc-verdict spans";
+      } else {
+        verdict.textContent = text("NO SPAN · only local islands in this sample", "未贯穿 · 此次抽样只有局部岛屿");
+        verdict.className = "perc-verdict no-span";
+      }
+      filledEl.textContent = String(filledCount);
+      largestEl.textContent = String(largestCluster);
+      pValue.textContent = p.toFixed(2);
+    }
+
+    slider.addEventListener("input", function(){
+      setProbability(Number(slider.value) / 100);
+      sample();
+    });
+    var reroll = document.getElementById("perc-reroll");
+    var low = document.getElementById("perc-low");
+    var critical = document.getElementById("perc-critical");
+    var high = document.getElementById("perc-high");
+    if (reroll) reroll.addEventListener("click", sample);
+    if (low) low.addEventListener("click", function(){ setProbability(0.42); sample(); });
+    if (critical) critical.addEventListener("click", function(){ setProbability(0.59); sample(); });
+    if (high) high.addEventListener("click", function(){ setProbability(0.72); sample(); });
+
+    setProbability(p);
+    sample();
+  })();
+
+  (function initCellularAutomata(){
+    var canvas = document.getElementById("ca");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var numEl = document.getElementById("ca-num");
+    if (!ctx || !numEl) return;
+
+    var cols = 208;
+    var cell = canvas.width / cols;
+    var rows = Math.floor(canvas.height / cell);
+    var rule = 30;
+    var randomSeed = false;
+
+    function ruleset(value){
+      var out = [];
+      for (var i = 0; i < 8; i++) out[i] = (value >> i) & 1;
+      return out;
+    }
+    function run(){
+      var table = ruleset(rule);
+      ctx.fillStyle = cssVar("--paper");
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = cssVar("--accent");
+      var row = new Uint8Array(cols);
+      if (randomSeed) {
+        for (var i = 0; i < cols; i++) row[i] = Math.random() < 0.5 ? 1 : 0;
+      } else {
+        row[Math.floor(cols / 2)] = 1;
+      }
+      for (var y = 0; y < rows; y++) {
+        for (var x = 0; x < cols; x++) {
+          if (row[x]) ctx.fillRect(x * cell, y * cell, Math.ceil(cell), Math.ceil(cell));
+        }
+        var next = new Uint8Array(cols);
+        for (var x2 = 0; x2 < cols; x2++) {
+          var left = row[(x2 - 1 + cols) % cols];
+          var center = row[x2];
+          var right = row[(x2 + 1) % cols];
+          next[x2] = table[(left << 2) | (center << 1) | right];
+        }
+        row = next;
+      }
+      numEl.textContent = String(rule);
+    }
+
+    var buttons = document.querySelectorAll("#ca-pick button");
+    buttons.forEach(function(button){
+      button.addEventListener("click", function(){
+        buttons.forEach(function(other){
+          other.classList.remove("sel");
+          other.setAttribute("aria-pressed", "false");
+        });
+        button.classList.add("sel");
+        button.setAttribute("aria-pressed", "true");
+        rule = Number(button.getAttribute("data-rule")) || 30;
+        randomSeed = false;
+        run();
+      });
+    });
+    var redraw = document.getElementById("ca-run");
+    var seed = document.getElementById("ca-seed");
+    if (redraw) redraw.addEventListener("click", function(){ randomSeed = false; run(); });
+    if (seed) seed.addEventListener("click", function(){ randomSeed = true; run(); });
+    run();
+  })();
+
+  (function initRandomBooleanNetwork(){
+    var canvas = document.getElementById("nk");
+    var trace = document.getElementById("nktrace");
+    if (!canvas || !trace) return;
+    var ctx = canvas.getContext("2d");
+    var tctx = trace.getContext("2d");
+    var slider = document.getElementById("kslider");
+    var kval = document.getElementById("kval2");
+    var regimeEl = document.getElementById("nk-regime");
+    var rateEl = document.getElementById("nk-rate");
+    if (!ctx || !tctx || !slider || !kval || !regimeEl || !rateEl) return;
+
+    var side = 24;
+    var total = side * side;
+    var cell = canvas.width / side;
+    var K = Number(slider.value) || 2;
+    var state = new Uint8Array(total);
+    var nextState = new Uint8Array(total);
+    var wiring = [];
+    var rules = [];
+    var history = [];
+    var running = true;
+
+    function build(){
+      wiring = [];
+      rules = [];
+      for (var i = 0; i < total; i++) {
+        var inputs = [];
+        for (var k = 0; k < K; k++) inputs.push(Math.floor(Math.random() * total));
+        wiring.push(inputs);
+        var table = new Uint8Array(1 << K);
+        for (var t = 0; t < table.length; t++) table[t] = Math.random() < 0.5 ? 1 : 0;
+        rules.push(table);
+      }
+      for (var s = 0; s < total; s++) state[s] = Math.random() < 0.5 ? 1 : 0;
+      history = [];
+    }
+    function step(){
+      var flips = 0;
+      for (var i = 0; i < total; i++) {
+        var key = 0;
+        for (var k = 0; k < K; k++) key = (key << 1) | state[wiring[i][k]];
+        var value = rules[i][key];
+        nextState[i] = value;
+        if (value !== state[i]) flips++;
+      }
+      var tmp = state;
+      state = nextState;
+      nextState = tmp;
+      var rate = flips / total;
+      history.push(rate);
+      if (history.length > trace.width) history.shift();
+      return rate;
+    }
+    function draw(rate){
+      ctx.fillStyle = cssVar("--paper");
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      var on = cssVar("--accent");
+      var off = cssVar("--line");
+      for (var i = 0; i < total; i++) {
+        var x = i % side;
+        var y = Math.floor(i / side);
+        ctx.fillStyle = state[i] ? on : off;
+        ctx.globalAlpha = state[i] ? 1 : 0.42;
+        ctx.fillRect(x * cell + 0.5, y * cell + 0.5, cell - 1, cell - 1);
+      }
+      ctx.globalAlpha = 1;
+
+      tctx.fillStyle = cssVar("--paper");
+      tctx.fillRect(0, 0, trace.width, trace.height);
+      tctx.strokeStyle = cssVar("--line");
+      tctx.lineWidth = 1;
+      tctx.beginPath();
+      tctx.moveTo(0, trace.height - 1);
+      tctx.lineTo(trace.width, trace.height - 1);
+      tctx.stroke();
+      tctx.strokeStyle = cssVar("--accent");
+      tctx.lineWidth = 1.6;
+      tctx.beginPath();
+      for (var h = 0; h < history.length; h++) {
+        var yy = trace.height - 1 - history[h] * (trace.height - 7);
+        if (h === 0) tctx.moveTo(h, yy);
+        else tctx.lineTo(h, yy);
+      }
+      tctx.stroke();
+
+      var recent = history.slice(-30);
+      var avg = recent.reduce(function(a, b){ return a + b; }, 0) / (recent.length || 1);
+      var label;
+      var color;
+      if (avg < 0.02) {
+        label = text("frozen / ordered", "冻结／有序");
+        color = cssVar("--ok");
+      } else if (avg > 0.18) {
+        label = text("chaotic", "混沌");
+        color = cssVar("--contested");
+      } else {
+        label = text("near edge of chaos", "接近混沌边缘");
+        color = cssVar("--accent");
+      }
+      regimeEl.textContent = label;
+      regimeEl.style.color = color;
+      rateEl.textContent = Math.round((rate || 0) * 100) + "%";
+    }
+    function warmup(){
+      for (var i = 0; i < 45; i++) step();
+      draw(history[history.length - 1]);
+    }
+    function loop(ts){
+      if (running) {
+        if (!loop.last || ts - loop.last > 120) {
+          draw(step());
+          loop.last = ts;
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+
+    build();
+    if (reduceMotion) {
+      running = false;
+      warmup();
+    } else {
+      requestAnimationFrame(loop);
+    }
+    slider.addEventListener("input", function(){
+      K = Number(slider.value) || 2;
+      kval.textContent = String(K);
+      build();
+      if (reduceMotion) warmup();
+    });
+    var rewire = document.getElementById("nk-rewire");
+    if (rewire) rewire.addEventListener("click", function(){
+      build();
+      if (reduceMotion) warmup();
+    });
+  })();
 })();
