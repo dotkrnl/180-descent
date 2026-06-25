@@ -50,7 +50,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <EmergenceHero locale="en" />
 
-<Lead drop="A">t dusk over Rome, a few thousand starlings pour into the sky and begin to *breathe*: folding, splitting, tightening into a dark fist and unspooling again into a ribbon, all in eerie silence and without a single collision. It looks choreographed. It looks, frankly, like something is conducting it. For centuries that was the going theory: a leader bird, or some shared avian telepathy. The truth turned out to be stranger and far more profound. **There is no conductor.** Each bird watches a handful of its closest neighbors and obeys a few local rules. The breathing shape exists nowhere in any individual bird's head. It is <Term as="em">emergent</Term>: a pattern that lives only at the level of the whole.</Lead>
+<Lead drop="A">t dusk over Rome, a few thousand starlings pour into the sky and begin to *breathe*: folding, splitting, tightening into a dark fist and unspooling again into a ribbon. It looks choreographed. It looks, frankly, like something is conducting it. The measurements say otherwise. **There is no conductor.** Each bird appears to coordinate mainly with a small topological neighborhood, and local responses scale up into the flock-wide wave. The breathing shape exists nowhere in any individual bird's head. It is <Term as="em">emergent</Term>: a pattern that lives only at the level of the whole.</Lead>
 
 That gap between the simplicity of the parts and the sophistication of the pattern is today's descent. It is one of the deepest and least settled ideas in science, and it hides a question that will stalk us for the rest of the course: when something new appears at a higher level, is it *genuinely* new, or just the old physics seen from far away?
 
@@ -65,6 +65,12 @@ This closes Block I's epistemic toolkit and gives a name to a thread that has be
 
 </WhereBlock>
 
+<Aside>
+<BlockTitle>Four ideas, not one</BlockTitle>
+
+Emergence is a relation between levels of description: a pattern belongs to the arrangement, not to an isolated part. Self-organization is a process by which order forms without central control. Computational irreducibility is a prediction problem: for some systems, simulation may be the only general route to the answer. Strong emergence is the ontological claim that a macro-level has irreducible causal powers. These ideas overlap, but they are not synonyms.
+</Aside>
+
 <ContentSection>
 <SectionEyebrow>The phenomenon</SectionEyebrow>
 
@@ -72,14 +78,14 @@ This closes Block I's epistemic toolkit and gives a name to a thread that has be
 
 Start with what we actually *know*, in the careful Day 1 sense. In the mid-2000s, the STARFLAG project put stereoscopic cameras on a rooftop museum in Rome, photographed real starling flocks of up to **2,700 birds**, and reconstructed the 3-D position of every single one. Then they asked a deceptively simple question: when a bird adjusts to its neighbors, which neighbors?
 
-The intuitive answer is *metric*: a bird reacts to everyone within, say, three meters. The data said no. Birds track a fixed *number* of neighbors: **six to seven**, regardless of how near or far those neighbors happen to be. Pack the flock tighter and each bird still watches the same six or seven; spread it out and it watches the same six or seven, now farther away. The interaction is <Term as="em">topological</Term>, not metric: it counts neighbors, not meters.
+The intuitive answer is *metric*: a bird reacts to everyone within, say, three meters. The data said no. STARFLAG inferred that interaction was organized mainly by neighbor rank, with an effective range of roughly **six or seven nearest neighbors**, rather than by a fixed metric radius. Pack the flock tighter and the same topological rule can still operate; spread it out and the effective metric distance changes. The interaction is <Term as="em">topological</Term>, not metric: it counts neighbors, not meters.
 
 <BlockQuote>
 "Each bird interacts on average with a fixed number of neighbors (six to seven), rather than with all neighbors within a fixed metric distance."
 <Meta>Ballerini et al., PNAS, 2008.</Meta>
 </BlockQuote>
 
-Why does this matter? Because a topological rule is exactly what you would want if the goal were to hold a group together under attack. When a falcon stabs into the flock and local density explodes, a fixed-radius bird would suddenly track dozens of neighbors and lose the thread. A "watch my nearest seven" bird keeps its cohesion no matter how density warps. The rule is robust. And it is purely **local**. No bird knows the flock's shape. No bird is solving for the global pattern. The pattern is a side effect of thousands of birds each minding a tiny neighborhood.
+Why does this matter? The STARFLAG authors argued that a topological rule is exactly what you would want if the group must stay coherent as density changes. When a predator compresses part of a flock, a fixed-radius rule would change the number of neighbors tracked; a nearest-neighbor rule is more robust. And it is still **local**. No bird knows the flock's shape. No bird is solving for the global pattern. The pattern is a side effect of thousands of birds each minding a tiny neighborhood.
 
 </ContentSection>
 
@@ -164,7 +170,7 @@ Everyone agrees murmurations and slime molds are emergent. The fight is over wha
 
 ### Weak emergence: the scientist's version
 
-The philosopher **Mark Bedau** gave the careful account most working scientists can use. A property is <Term as="em">weakly emergent</Term> if you cannot predict it from the rules by a clever shortcut: the only way to find out what the system does is to **run it** or simulate it. The murmuration is weakly emergent. There is no simple formula that takes the three Boids rules and spits out tomorrow's flock shape; you have to let it fly. Crucially, weak emergence is not spooky. It is fully grounded in the parts and their interactions.
+The philosopher **Mark Bedau** gave the careful account most working scientists can use. A property is <Term as="em">weakly emergent</Term> if it is grounded in the micro-rules yet not generally predictable by a simple closed-form shortcut: in many cases the route to the macro-pattern is to **run** or simulate the dynamics. The murmuration is weakly emergent in that sense. There is no simple formula that takes the three Boids rules and spits out tomorrow's flock shape; you have to let it fly. Crucially, weak emergence is not spooky. It is fully grounded in the parts and their interactions.
 
 ### Strong emergence: the radical version
 
@@ -184,7 +190,7 @@ Why not embrace strong emergence everywhere? Because it collides with **Jaegwon 
 <FormatOnly as="div" media="print-epub" variant="alternate">
 <PanelTitle>Print model</PanelTitle>
 
-<PanelNote>A two-rule cellular automaton can support gliders, oscillators, and universal computation. The important lesson is not the animation but the absence of a shortcut: many starting patterns must be run to reveal their fate.</PanelNote>
+<PanelNote>A two-rule cellular automaton can support gliders, oscillators, and universal computation. The important lesson is not the animation but the absence of a universal shortcut: many starting patterns must be run to reveal their fate, although many others can be analyzed directly.</PanelNote>
 
 <SimpleTable
   headers={["Cell state","Neighbor count","Next state"]}
@@ -194,7 +200,7 @@ Why not embrace strong emergence everywhere? Because it collides with **Jaegwon 
 
 <ContentSection>
 
-Sit with what the Game of Life proves. Two rules, applied to a grid, are enough to build logic gates, memory, clocks, and a universal computer. The "computer" is nowhere in the rules; it is a pattern *in* the cells. This is the cleanest illustration of weak emergence: you can know the rules perfectly and still have no way, short of running them, to know whether a starting pattern will fizzle, freeze, repeat, or compute. **Simple law, unboundedly complex behavior, no shortcut.**
+Sit with what the Game of Life proves. Two rules, applied to a grid, are enough to build logic gates, memory, clocks, and a universal computer. The "computer" is nowhere in the rules; it is a pattern *in* the cells. This is the cleanest illustration of weak emergence: there is no general algorithm that decides every long-term question about arbitrary Life configurations, although many particular patterns can be analyzed without exhaustive simulation. **Simple law, unboundedly complex behavior, no universal shortcut.**
 
 </ContentSection>
 
@@ -205,18 +211,18 @@ Sit with what the Game of Life proves. Two rules, applied to a grid, are enough 
 
 Here is an embarrassing secret of complexity science: there is **no single agreed definition of complexity**. Seth Lloyd once compiled a famous list of dozens of proposed measures, and they do not agree with each other. This is not mere sloppiness. "Complex" is doing several jobs at once: how hard is it to describe, how hard is it to build, and how organized is it?
 
-That last family hides the key idea. **The most complex things are not the most random ones.** Consider a crystal, a living cell, and a canister of gas. By a pure "hard to describe" measure, the gas wins because perfect randomness needs the longest description. But a gas is not more complex than a cell. A crystal is too ordered; a gas is too disordered. Complexity lives in the structured, surprising, neither-frozen-nor-random middle.
+That last family hides the key teaching heuristic. **The most interesting complex systems are usually not the most random ones.** Consider a crystal, a living cell, and a canister of gas. By a pure "hard to describe" measure, the gas wins because perfect randomness needs the longest description. But that does not make a gas biologically or organizationally more complex than a cell. A crystal is too ordered; a gas is too disordered. Many useful complexity measures peak somewhere in the structured, surprising, neither-frozen-nor-random middle, though not every formal measure has the same hump.
 
 </ContentSection>
 
 <Panel>
 <PanelTitle>Diagram · the complexity-entropy hump</PanelTitle>
 
-<PanelNote>Disorder runs left to right: perfect order on the left, perfect randomness on the right. Effective complexity is the curve. It collapses at both extremes and peaks in the organized middle where life, language, and minds live.</PanelNote>
+<PanelNote>Disorder runs left to right: perfect order on the left, perfect randomness on the right. The curve is a teaching sketch for effective complexity, not a theorem for every complexity measure. It collapses at both extremes and peaks in the organized middle where life, language, and minds live.</PanelNote>
 
 <ComplexityHump locale="en" />
 
-<Caption>Murray Gell-Mann's effective complexity tries to measure the regularities of a thing while throwing away the purely random part. Keep this hump in mind: the Assembly Theory fight is partly about whether a new metric has captured this middle, or smuggled "hard to describe" back in under a new name.</Caption>
+<Caption>Murray Gell-Mann's effective complexity tries to measure the regularities of a thing while throwing away the purely random part. Keep this hump as a heuristic: the Assembly Theory fight is partly about whether a new metric has captured organized structure, or smuggled "hard to describe" back in under a new name.</Caption>
 </Panel>
 
 <ContentSection class="frontier">
@@ -235,9 +241,9 @@ Emergence is where some of the boldest and most overhyped claims in current scie
 
 ### Assembly Theory: a complexity ruler, or a theory of everything?
 
-In 2023, a group led by **Leroy Cronin** and **Sara Walker** published a *Nature* paper titled *"Assembly theory explains and quantifies selection and evolution."* The core idea is clever. Take an object, such as a molecule, and ask: what is the minimum number of steps to build it from basic parts, if you can reuse any piece already made? That number is the <Term as="em">assembly index</Term>. Pair it with copy number, and Assembly Theory claims to detect the fingerprint of a process that selects and reproduces structures. The killer application is astrobiology: a molecule with assembly index above roughly **15** is argued to be extremely unlikely to form abiotically.
+In 2023, a group led by **Leroy Cronin** and **Sara Walker** published a *Nature* paper titled *"Assembly theory explains and quantifies selection and evolution."* The core idea is clever. Take an object, such as a molecule, and ask: what is the minimum number of steps to build it from basic parts, if you can reuse any piece already made? That number is the <Term as="em">assembly index</Term>. In practice, experimental papers estimate or infer this index from spectra rather than exhaustively proving the exact minimum path. Pair it with copy number, and Assembly Theory claims to detect the fingerprint of a process that selects and reproduces structures. The killer application is astrobiology: proponents report that molecules with assembly index above roughly **15** are extremely unlikely to form abiotically in their tested settings.
 
-What is solid here is genuinely solid. The assembly index is a real, computable, experimentally measurable quantity. A 2024 *ACS Central Science* paper showed it can be read from mass spectrometry, NMR, and infrared spectroscopy, and the numbers agree. It separates many biological from abiotic samples in the lab.
+What is solid here is genuinely solid. The assembly index is a real, experimentally measurable molecular-complexity quantity. A 2024 *ACS Central Science* paper showed it can be estimated from mass spectrometry, NMR, and infrared spectroscopy, and the numbers agree. It separates many biological from abiotic samples in the lab.
 
 The trouble is everything stacked on top. The grander claims that Assembly Theory explains selection, evolution, time, and the physics-biology bridge drew fierce backlash. A 2024 *PLOS Complex Systems* analysis by Abrahão, Zenil, and colleagues argued that the assembly index is mathematically an approximation to standard data compression and cannot outperform Shannon entropy for the job it claims. Other critiques attacked the biosignature classification and the evolutionary claims.
 
@@ -250,7 +256,7 @@ Cronin and Walker have pushed back. Their defense is the crux: compression measu
 </DataTableHead>
 <DataTableBody>
 <DataTableRow><DataTableCell>The assembly index is a measurable molecular-complexity metric.</DataTableCell><DataTableCell><StatusChip status="ok" label="Established" /></DataTableCell></DataTableRow>
-<DataTableRow><DataTableCell>Index above about 15 can serve as a biosignature in unknown samples.</DataTableCell><DataTableCell><StatusChip status="hint" label="Promising hint" printLabel="promising" /></DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell>Index above about 15 is reported by proponents as a possible biosignature threshold.</DataTableCell><DataTableCell><StatusChip status="hint" label="Promising hint" printLabel="promising" /></DataTableCell></DataTableRow>
 <DataTableRow><DataTableCell>It explains and quantifies selection and evolution in a way biology recognizes.</DataTableCell><DataTableCell><StatusChip status="bad" label="Contested" /></DataTableCell></DataTableRow>
 <DataTableRow><DataTableCell>It is fundamentally novel versus compression, Kolmogorov complexity, and Shannon entropy.</DataTableCell><DataTableCell><StatusChip status="bad" label="Contested" /></DataTableCell></DataTableRow>
 </DataTableBody>
@@ -318,23 +324,24 @@ This is careful, fertile work, so it earns "promising." The caveat is interpreta
 4. Anderson, P. W. (1972). "More Is Different." *Science* 177(4047): 393-396. [doi:10.1126/science.177.4047.393](https://www.science.org/doi/10.1126/science.177.4047.393).
 5. Tero, A., Takagi, S., Saigusa, T., et al. (2010). "Rules for Biologically Inspired Adaptive Network Design." *Science* 327(5964): 439-442. [doi:10.1126/science.1177894](https://doi.org/10.1126/science.1177894).
 6. Gardner, M. (1970). "Mathematical Games: The fantastic combinations of John Conway's new solitaire game 'life'." *Scientific American* 223(4): 120-123.
-7. Bedau, M. A. (1997). "Weak Emergence." *Philosophical Perspectives* 11: 375-399.
-8. Chalmers, D. J. (2006). "Strong and Weak Emergence." In *The Re-Emergence of Emergence*, Oxford University Press.
-9. Kim, J. (1999). "Making Sense of Emergence." *Philosophical Studies* 95: 3-36.
-10. Bak, P., Tang, C., and Wiesenfeld, K. (1987). "Self-organized criticality." *Physical Review Letters* 59(4): 381-384. [doi:10.1103/PhysRevLett.59.381](https://doi.org/10.1103/PhysRevLett.59.381).
-11. Bonachela, J. A., et al. (2010). "Self-organization without conservation: are neuronal avalanches generically critical?" *J. Stat. Mech.* P02015. [arXiv:1001.3256](https://arxiv.org/abs/1001.3256).
-12. Sharma, A., Czégel, D., Lachmann, M., Kempes, C. P., Walker, S. I., and Cronin, L. (2023). "Assembly theory explains and quantifies selection and evolution." *Nature* 622: 321-328. [doi:10.1038/s41586-023-06600-9](https://doi.org/10.1038/s41586-023-06600-9).
-13. Marshall, S. M., Mathis, C., Carrick, E., et al. (2021). "Identifying molecules as biosignatures with assembly theory and mass spectrometry." *Nature Communications* 12: 3033.
-14. Jirasek, M., Sharma, A., Bame, J. R., et al. (2024). "Investigating and Quantifying Molecular Complexity Using Assembly Theory and Spectroscopy." *ACS Central Science* 10(5): 1054-1064.
-15. Abrahão, F. S., Hernández-Orozco, S., Kiani, N. A., Tegnér, J., and Zenil, H. (2024). "Assembly Theory is an approximation to algorithmic complexity based on LZ compression that does not explain selection or evolution." *PLOS Complex Systems* 1(1): e0000014.
-16. Uthamacumaran, A., Abrahão, F. S., Kiani, N. A., and Zenil, H. (2024). "On the salient limitations of the methods of assembly theory and their classification of molecular biosignatures." *npj Systems Biology and Applications* 10: 82.
-17. Jaeger, J. (2024). "Assembly Theory: What It Does and What It Does Not Do." *Journal of Molecular Evolution* 92: 87-92.
-18. Walker, S. I., Cronin, L., et al. (2024). "Reply to 'Experimental measurement of assembly indices are required to determine the threshold for life'." *Journal of the Royal Society Interface* 21: 20240367.
-19. Gell-Mann, M., and Lloyd, S. (1996). "Information measures, effective complexity, and total information." *Complexity* 2(1): 44-52.
-20. Hoel, E. P., Albantakis, L., and Tononi, G. (2013). "Quantifying causal emergence shows that macro can beat micro." *PNAS* 110(49): 19790-19795.
-21. Rosas, F. E., Mediano, P. A. M., Jensen, H. J., et al. (2020). "Reconciling emergences: An information-theoretic approach to identify causal emergence in multivariate data." *PLOS Computational Biology* 16(12): e1008289.
-22. Dewhurst, J. (2021). "Causal emergence from effective information: Neither causal nor emergent?" *Thought* 10(3): 158-168.
-23. Schaeffer, R., Miranda, B., and Koyejo, S. (2023). "Are Emergent Abilities of Large Language Models a Mirage?" *NeurIPS 2023*.
+7. Rendell, P. (2011). "A Universal Turing Machine in Conway's Game of Life." In *2011 International Conference on High Performance Computing & Simulation*, 764-772. [doi:10.1109/HPCSim.2011.5999906](https://doi.org/10.1109/HPCSim.2011.5999906).
+8. Bedau, M. A. (1997). "Weak Emergence." *Philosophical Perspectives* 11: 375-399.
+9. Chalmers, D. J. (2006). "Strong and Weak Emergence." In *The Re-Emergence of Emergence*, Oxford University Press.
+10. Kim, J. (1999). "Making Sense of Emergence." *Philosophical Studies* 95: 3-36.
+11. Bak, P., Tang, C., and Wiesenfeld, K. (1987). "Self-organized criticality." *Physical Review Letters* 59(4): 381-384. [doi:10.1103/PhysRevLett.59.381](https://doi.org/10.1103/PhysRevLett.59.381).
+12. Bonachela, J. A., et al. (2010). "Self-organization without conservation: are neuronal avalanches generically critical?" *J. Stat. Mech.* P02015. [arXiv:1001.3256](https://arxiv.org/abs/1001.3256).
+13. Sharma, A., Czégel, D., Lachmann, M., Kempes, C. P., Walker, S. I., and Cronin, L. (2023). "Assembly theory explains and quantifies selection and evolution." *Nature* 622: 321-328. [doi:10.1038/s41586-023-06600-9](https://doi.org/10.1038/s41586-023-06600-9).
+14. Marshall, S. M., Mathis, C., Carrick, E., et al. (2021). "Identifying molecules as biosignatures with assembly theory and mass spectrometry." *Nature Communications* 12: 3033.
+15. Jirasek, M., Sharma, A., Bame, J. R., et al. (2024). "Investigating and Quantifying Molecular Complexity Using Assembly Theory and Spectroscopy." *ACS Central Science* 10(5): 1054-1064.
+16. Abrahão, F. S., Hernández-Orozco, S., Kiani, N. A., Tegnér, J., and Zenil, H. (2024). "Assembly Theory is an approximation to algorithmic complexity based on LZ compression that does not explain selection or evolution." *PLOS Complex Systems* 1(1): e0000014.
+17. Uthamacumaran, A., Abrahão, F. S., Kiani, N. A., and Zenil, H. (2024). "On the salient limitations of the methods of assembly theory and their classification of molecular biosignatures." *npj Systems Biology and Applications* 10: 82.
+18. Jaeger, J. (2024). "Assembly Theory: What It Does and What It Does Not Do." *Journal of Molecular Evolution* 92: 87-92.
+19. Walker, S. I., Cronin, L., et al. (2024). "Reply to 'Experimental measurement of assembly indices are required to determine the threshold for life'." *Journal of the Royal Society Interface* 21: 20240367.
+20. Gell-Mann, M., and Lloyd, S. (1996). "Information measures, effective complexity, and total information." *Complexity* 2(1): 44-52.
+21. Hoel, E. P., Albantakis, L., and Tononi, G. (2013). "Quantifying causal emergence shows that macro can beat micro." *PNAS* 110(49): 19790-19795.
+22. Rosas, F. E., Mediano, P. A. M., Jensen, H. J., et al. (2020). "Reconciling emergences: An information-theoretic approach to identify causal emergence in multivariate data." *PLOS Computational Biology* 16(12): e1008289.
+23. Dewhurst, J. (2021). "Causal emergence from effective information: Neither causal nor emergent?" *Thought* 10(3): 158-168.
+24. Schaeffer, R., Miranda, B., and Koyejo, S. (2023). "Are Emergent Abilities of Large Language Models a Mirage?" *NeurIPS 2023*.
 </Sources>
 
 </Wrap>
