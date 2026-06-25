@@ -1,0 +1,246 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+
+<Lead drop="T">he main descent gave you the headline idea — *more is different* — and the one fight everyone's having about it (Assembly Theory). But emergence is one of those subjects where the best material is in the second drawer down: the precise mathematics of *why* a phase transition is the cleanest example of a whole exceeding its parts, the eerie little programs that turn a single line of cells into chaos or a printing press, the question of *where exactly* a system has to sit to be capable of interesting behavior at all, and the surprisingly deep problem of saying what "complex" even *means* when "hard to describe" already failed us. This appendix is that drawer. It runs continuously from where we left off — same instinct throughout: **the interesting behavior lives between the parts, not inside them.**</Lead>
+
+<ContinueNote label={"↩ Picking up the thread"}>
+In the main lesson we built emergence from the bottom up — local rules (Boids, ant stigmergy) → universal computation you can watch (Conway's Life) → the weak/strong fault line (Bedau vs. Chalmers, with Kim's exclusion argument lurking) → the warning that "complex ≠ hard to describe" (the entropy hump) → the hype filter at full stretch on Assembly Theory and self-organized criticality. Everything below *assumes* all of that and goes further into the parts we only gestured at. Nothing here repeats it.
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow>§1 · the physicist's emergence</SectionEyebrow>
+
+## Phase transitions: the whole, with exact equations
+
+When a philosopher wants to argue about emergence, they reach for consciousness. When a *physicist* wants to, they reach for a pot of water reaching a boil — because here, uniquely, emergence comes with airtight mathematics and you can prove the strange thing is real. Cool water gradually and nothing dramatic happens — until you hit 0°C, and suddenly the whole system reorganizes into ice. The transition is **sharp**: a hair below the threshold it's liquid, a hair above it's solid. That sharpness is the puzzle. The forces between any two water molecules don't change one bit as you cross zero. So where does the cliff come from?
+
+The answer is that a *phase transition* is a property of the *collective only* — it literally does not exist for a finite, isolated piece. In the mathematics, a true sharp transition appears only in the *thermodynamic limit*, as the number of particles goes to infinity. A single molecule has no melting point. Ten molecules have no melting point. "Solid" and "liquid" are not facts about molecules at all; they are facts about *arrangements of unthinkably many molecules*. This is Anderson's "more is different" stated with theorems instead of slogans: a genuinely new, lawful, predictable property that **provably** cannot be read off any individual part. <StatusChip status="ok" label={"established — the cleanest emergence we have"} />
+
+### The miracle of universality
+
+Now the part that made physicists fall out of their chairs in the 1970s. Sit exactly *at* a critical point — the precise temperature and pressure where the distinction between two phases is about to vanish (every substance has one) — and the system fluctuates at every scale at once: tiny droplets inside bigger droplets inside bigger ones, with no characteristic size. Fluids do it; magnets do it as they lose their magnetism at the Curie temperature; even some models of neural tissue do it. And here is the shock: at the critical point, **wildly different systems behave identically**. A boiling fluid and a demagnetizing lump of iron — utterly different stuff, different forces, different everything — approach their critical points following the *same* mathematical law, with the *same* numerical exponents.
+
+> Near a critical point, the microscopic details stop mattering. What survives is the symmetry and the dimension — and almost nothing else. The principle of universality, after Kadanoff, Wilson & Fisher
+
+This is called *universality*, and systems that share the same critical behavior form a *universality class*. It is arguably the most profound thing emergence has taught us, because it says the macroscopic world is *allowed to forget* its own microscopic details. You do not need to know what a system is made of to predict how it behaves at its tipping point — you need only its symmetry and its dimensionality. Kenneth Wilson won the 1982 Nobel Prize for the *renormalization group*, the machinery that explains exactly why: as you "zoom out" and average over finer details, irrelevant features wash away and only a few survive. Universality is the deep reason the special sciences are even possible — why economics needn't wait on particle physics, why biology has its own laws. The levels are *screened off* from each other by the mathematics of zooming out. <StatusChip status="ok" label={"established — Nobel 1982"} />
+
+<Aside>
+<BlockTitle>Why this is the keystone of the whole topic</BlockTitle>
+
+Hold universality next to the main lesson's argument about Assembly Theory. The reason "is the assembly index just compression?" is a *hard* question is that emergence genuinely does let high-level descriptions become autonomous — a phase transition really is a new thing with its own laws, not a bookkeeping trick. Universality is the existence proof that **autonomy of levels is real, not hand-waving.** The open question is never "can wholes have their own laws?" (they provably can) but "does *this particular* proposed high-level law carve nature at a joint, or is it a re-description of the parts?" That's the entire game, and §1 is why it's worth playing.
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§2 · the tipping point you can draw</SectionEyebrow>
+
+## Percolation: how a forest decides to burn
+
+The phase transition in §1 is profound but abstract. Percolation is its baby cousin, and it's so simple you can hold it in your hand. Picture a grid. Independently, with probability *p*, fill each cell (a tree in a forest; a conducting grain in a film; an open pore in a rock). Now ask one question: **does a connected cluster of filled cells span the whole grid, edge to edge?**
+
+For small *p* you get scattered little islands — nothing reaches across. Crank *p* up slowly and the islands grow and merge, still local, still finite... and then, at a sharp *critical threshold* *p<sub>c</sub>*, almost overnight a single giant cluster snaps into existence and stitches one side of the world to the other. Below *p<sub>c</sub>*: disconnected. Above: spanning. The change is not gradual — it's a genuine tipping point, an emergent global property (does it span?) that appears suddenly from a smooth change in a purely local rule (fill this cell or don't). For an infinite 2-D square grid the magic number is ***p<sub>c</sub>* ≈ 0.5927**. Watch it happen:
+
+<Aside>
+<BlockTitle>Integrated reference · The Percolation Threshold</BlockTitle>
+
+Drag the density slider. Each cell is filled independently with probability *p*. The simulation hunts for a cluster that touches both the **top and bottom** edges; if one exists, it lights up in teal and the verdict flips to SPANS. Sweep slowly across *p* ≈ 0.59 and feel the cliff — a few percent of density is the difference between a thousand islands and one connected continent.
+
+The standalone source included an interactive demonstration here; this integrated appendix keeps the conceptual summary for web, EPUB, and PDF.
+</Aside>
+
+Two things make percolation worth its own section. First, it is the **minimal model of a tipping point** — the bare skeleton behind forest fires that either fizzle or sweep the whole stand, diseases that either die out or become epidemics, rumors that either flop or go viral, and materials that abruptly start conducting. Strip any of those of its specifics and a percolation threshold is what's left. (This is the exact instinct we carry into **Day 9**, where tipping points get their own deep dive, and **Day 12**, where the grid becomes a network.) Second — and this is the payoff of §1 — percolation sits in its *own* universality class. The way the giant cluster emerges near *p<sub>c</sub>* follows power laws with exponents that don't care whether you're talking about trees, pores, or gossip. The threshold value *p<sub>c</sub>* depends on the lattice; the *critical behavior* around it is universal. <StatusChip status="ok" label={"established"} />
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§3 · programs that shouldn't be able to do that</SectionEyebrow>
+
+## One line of cells, four destinies
+
+Conway's Game of Life (main lesson) is a *two-dimensional* cellular automaton, and a famously rich one. But in the 1980s Stephen Wolfram asked a deceptively dull question: what's the *simplest* cellular automaton that still does something interesting? He stripped it down to a single row of cells, each black or white, updating in discrete steps. Each cell looks only at **itself and its two immediate neighbors** — three cells, eight possible patterns — and a "rule" is just a choice of new color for each of those eight cases. That's 2⁸ = **256 possible rules**, the whole universe of them, each numbered 0–255. You cannot invent a much simpler computational system. And yet Wolfram found that these 256 toy programs sort themselves into exactly **four classes of destiny** — a taxonomy that turns out to echo across all of complex systems:
+
+- Class 1 — Death. Everything collapses to a single uniform state. All structure erased. (The analogue of a crystal freezing, or a system falling into one fixed point.)
+- Class 2 — Frozen order. Settles into stable or simply-repeating local patterns. Predictable forever. (Periodic, dull, safe.)
+- Class 3 — Chaos. Produces aperiodic, random-looking noise with no persistent structure — like Rule 30. (The analogue of a gas; high entropy.)
+- Class 4 — The interesting one. Neither frozen nor random: localized structures that move, persist, collide, and interact — like Rule 110. This is the edge between order and chaos, and it's where computation lives.
+
+That last class is the prize. Wolfram conjectured, and Matthew Cook later **proved (work circulated from the 1990s, published 2004)**, that *Rule 110* — a one-line, three-neighbor toy you could code in a tweet — is **Turing-complete**. A single row of cells flipping by the dumbest imaginable rule can, in principle, compute anything any computer can compute. Let that land: universal computation does not require complicated hardware. It can emerge from very nearly *nothing*. Meanwhile *Rule 30*, from the very same 256, produces such high-quality randomness from its simple deterministic rule that Wolfram's software used it for years as a random-number generator, and its central column has been studied as a source of cryptographic randomness. Same rulebook size, same three-cell neighborhood — one rule computes, one rule is chaos, one rule dies. Run them yourself:
+
+<Aside>
+<BlockTitle>Integrated reference · Rule 30, Rule 110, and friends</BlockTitle>
+
+Each row down the screen is one time step; we start from a **single black cell** at the top center and let the rule paint history downward. Switch between the famous rules and watch four different fates fall out of three-cell logic. Rule 90 even draws a perfect Sierpiński triangle — a fractal nobody put there.
+
+The standalone source included an interactive demonstration here; this integrated appendix keeps the conceptual summary for web, EPUB, and PDF.
+</Aside>
+
+Wolfram packaged all this into a thousand-page book, *A New Kind of Science* (2002), with a sweeping thesis: simple programs are the right language for nature, and complex behavior is *cheap and everywhere* rather than rare and hard-won. The empirical core — that trivial rules generate Class-4 complexity and that Rule 110 is universal — is rock solid and genuinely important. <StatusChip status="ok" label={"established"} /> The grander framing — his "Principle of Computational Equivalence," the claim that almost all non-trivial systems are maximally, equivalently computational, and that this reorganizes all of science — was received frostily by many scientists as overclaiming and under-crediting predecessors. <StatusChip status="bad" label={"contested/hype — the same pattern as Assembly Theory"} /> The lesson rhymes with the main tour: a real and beautiful result, oversold into a theory of everything.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§4 · where interesting things are allowed to happen</SectionEyebrow>
+
+## The edge of chaos & order for free
+
+Notice that Wolfram's Class 4 — the computing class — sits *between* frozen order (Class 2) and chaos (Class 3). That positioning is not a coincidence; it's one of the load-bearing ideas of complexity science, and it has a name: the *edge of chaos*. The intuition, developed by Chris Langton, Norman Packard, and others at the Santa Fe Institute in the late 1980s, is that systems capable of rich behavior — computation, life, adaptation — tend to live in a narrow regime poised right at the boundary between rigid stability and runaway turbulence. Too ordered and nothing ever changes (no new information). Too chaotic and nothing ever persists (no memory). Only at the edge can a system both *store* structure and *transform* it — the two things any computation, or any living thing, must do at once.
+
+The most beautiful demonstration came from the theoretical biologist **Stuart Kauffman**, and it's the antidote to a lazy assumption people make about biology — that all of life's order had to be painstakingly built by natural selection, fought for gene by gene. Kauffman asked: what does a *random* network of interacting genes do, with no selection at all? He modeled it as an *NK network* — N genes (nodes), each switching on or off based on inputs from K others, with the wiring and the rules chosen *completely at random*. Pure chaos, you'd guess. Instead, he found something startling:
+
+> Order arises for free. Even randomly assembled networks fall spontaneously into a small number of stable, repeating patterns — without any tuning, design, or selection at all. Stuart Kauffman, on the NK model (1969; At Home in the Universe, 1995)
+
+The crucial finding is a **phase transition controlled by connectivity K**. When each node listens to very few others (low K), the network freezes — every starting state crashes into the same dull fixed point (Wolfram's Class 1/2). When each node listens to many (high K), the network is chaotic — the tiniest perturbation explodes and nothing is stable (Class 3). But right around the critical value — for the simplest case, **K ≈ 2** — the network sits at the edge: it settles into a *modest* number of distinct stable cycles (Kauffman called them *attractors*), each robust to small knocks but capable of being switched. Kauffman's provocative interpretation: those attractors are like *cell types*. An organism's genome is one wiring; its different cell types (neuron, liver, skin — same DNA, different stable expression patterns, a puzzle we'll meet again on **Day 95**) might be the different attractors the gene network falls into. Some of biology's order, he argued, might be "order for free" — a generic property of networks near the edge, that selection then merely tunes rather than creates from scratch. Tune K yourself and watch the regimes:
+
+<Aside>
+<BlockTitle>Integrated reference · An NK Network Finding Its Footing</BlockTitle>
+
+A grid of nodes, each ON or OFF, each updating from *K* randomly-wired neighbors by a random rule. The activity trace shows what fraction of nodes flip each step. Low K → it flatlines (frozen). High K → it stays violently noisy (chaos). Around **K = 2** it calms into structured, low-level activity — the edge, where the network is both stable and alive. Push the slider across and watch the personality change.
+
+The standalone source included an interactive demonstration here; this integrated appendix keeps the conceptual summary for web, EPUB, and PDF.
+</Aside>
+
+How does this hold up in 2026? The *mathematical* core is solid: random Boolean networks really do exhibit an order–chaos transition near a critical connectivity, and "order for free" is a genuine, reproducible phenomenon. <StatusChip status="ok" label={"established as mathematics"} /> The *biological* claim — that this is a major source of real organismal order, rivaling selection — remains a minority and <StatusChip status="bad" label={"contested"} /> position; mainstream evolutionary biology still puts selection front and center, and treats Kauffman's attractors-as-cell-types as a suggestive analogy rather than an established mechanism. And the strongest version of the "edge of chaos" slogan — that life and computation *must* sit exactly at criticality — is itself contested, the same family of overclaim as the "critical brain" we met in the main lesson. The honest summary: a real and influential regime, an inspiring hypothesis about its reach, and a frontier still arguing about how far it actually extends.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§5 · the ruler problem, in full</SectionEyebrow>
+
+## The complexity zoo: every measure we tried
+
+The main lesson dropped a bombshell and moved on: there is no single agreed measure of complexity, and the "hardest to describe" measure embarrassingly crowns a canister of gas as the most complex thing in the room. The entropy hump fixed the worst of that by measuring only the *regularities*. But that's just one entry in a genuine menagerie. It's worth meeting the others, because each one is trying to capture a different true intuition about what "complex" means — and the fact that they *disagree* is itself the lesson.
+
+- Kolmogorov complexity The length of the shortest program that outputs the object. The purest "difficulty of description." Fatally, it is uncomputable — no algorithm can find it in general (a cousin of the halting problem, Day 27 ) — and it calls random noise maximally complex, which clashes with intuition. The foundation everything else reacts against. established (and provably uncomputable)
+- Logical depth Charles Bennett's fix: complexity is not the size of the shortest program but the running time it needs to produce the object. A random string is shallow (easy to print: just copy it out). A crystal is shallow. But a deeply structured object — a living cell, the digits of π computed far out — takes a short program a long time to generate. Depth measures "the amount of computational history crystallized in a thing." Captures the hump's intuition far better than mere description length. established concept
+- Thermodynamic depth Seth Lloyd & Heinz Pagels' physical sibling of logical depth: how much thermodynamic resource — how many physically dissipative steps — the actual historical process took to assemble the object. Ties complexity to real energy and real history (a callback to Day 7 's "information is physical"). Notably, this is the same intuition — complexity = the cost of the construction path — that Assembly Theory later reached for, which is part of why the "is it new?" fight is so sharp.
+- Effective complexity Murray Gell-Mann & Seth Lloyd: the information content of an object's regularities only , throwing away the random part — the formal version of the entropy hump from the main lesson. Its soft spot: it depends on a judgment about which features count as "regular" versus "random," and that judgment can be subjective. Later shown to be formally related to logical depth (Ay, Müller & Szkoła, 2010).
+- Statistical complexity Jim Crutchfield & Karl Young's ε-machine : build the smallest predictive model of a process — group together all pasts that imply the same future — and measure how much memory that minimal model needs. Zero for a perfect crystal (no memory needed), zero for pure noise (no point remembering), and maximal in the structured middle. A rigorous, computable-in-practice version of the hump. established framework
+
+Seth Lloyd famously responded to a request for "the" definition of complexity by listing **dozens of distinct measures** in use — and his real point was not that one of them is right, but that *"complexity" is not one quantity.* It's a family of related questions: How hard is this to *describe*? How hard to *make*? How hard to *predict*? How much of it is *structure* versus *noise*? How much *history* does it encode? Each measure answers one and botches the others. This isn't a failure of the field to get its act together; it's a discovery that "complex" was always several words wearing one coat. Keep that in your pocket whenever someone unveils *the* complexity metric — including, as the main lesson stressed, the one currently making headlines.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§6 · emergence put to work</SectionEyebrow>
+
+## Stigmergy, grown up
+
+The main lesson met ant trails as a charming example of *stigmergy* — coordination through traces left in the environment rather than direct talk. But that idea didn't stay in the anthill; it became **engineering**. Once you understand that a colony solves shortest-path problems by laying and following pheromone, with shorter paths accumulating scent faster, you can *copy the trick in software*. That's exactly what Marco Dorigo did in 1992 with *Ant Colony Optimization* (ACO): simulated "ants" lay virtual pheromone on the edges of a graph, good routes get reinforced, and the swarm collectively converges on excellent solutions to brutally hard problems like vehicle routing and network design — no ant, and no central planner, ever holding the whole solution. It became a workhorse metaheuristic for real logistics and telecom routing. <StatusChip status="ok" label={"established & deployed"} />
+
+The same philosophy runs through *swarm robotics*: instead of one expensive, complicated robot, deploy hundreds of cheap, near-identical, *locally*-sensing units that follow simple rules and let useful collective behavior emerge — coordinated motion, shape-forming, collective transport. The flagship demonstration is Harvard's **Kilobot** swarm: in a 2014 *Science* paper, Rubenstein, Cornejo & Nagpal ran **1,024 tiny robots** that self-assembled into programmed shapes (a star, a wrench, the letter K) using only local communication with immediate neighbors and a few shared rules — no global coordinates, no overseer. It remains a landmark in showing that *thousands* of trivial agents can be coaxed into deliberate global form. <StatusChip status="ok" label={"established demonstration"} />
+
+<Aside>
+<BlockTitle>The same gear, four ways</BlockTitle>
+
+Step back and the unity is striking. Ant colony, Boids flock, ACO router, Kilobot swarm — all four are the *identical* emergent gear running on different substrates: many simple agents + local interaction + a feedback signal (pheromone, heading, virtual scent, neighbor message) → coherent global behavior nobody designed in one place. The colony was the proof of concept evolution shipped; the rest are humans reverse-engineering it. This is emergence's quiet practical promise — robustness and scalability without central control — and it's why "the computation lives in the interactions" is not just a slogan but a *design strategy*.
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§7 · the freshest fight</SectionEyebrow>
+
+## The newest mirage: did minds "emerge" in machines?
+
+We close where the whole curriculum is heading. Around 2022, researchers reported something that looked like emergence in its most dramatic form: large language models appeared to acquire brand-new abilities *suddenly* as they scaled up. A model of a given size couldn't do three-digit arithmetic at all — essentially zero — and then, past some parameter count, the ability seemed to **switch on**, sharp and unpredictable. The word used, naturally, was *emergent abilities*: skills present in larger models, absent in smaller ones, and (the spicy part) seemingly *not predictable* by extrapolating from smaller models. To a complexity scientist this is irresistible — a phase transition in a learning system, more-is-different for minds.
+
+Then came one of the most instructive papers of the decade, and it is a perfect capstone for this appendix because it weaponizes *exactly* the skepticism we've been building. In **"Are Emergent Abilities of Large Language Models a Mirage?"** (Schaeffer, Miranda & Koyejo, **NeurIPS 2023**), the authors argued that many of these dramatic "switch-on" moments are **artifacts of how we chose to measure**. If you score a task with a harsh all-or-nothing metric — exact-match accuracy, where getting one digit wrong in a long answer counts as total failure — then smooth, gradual underlying improvement gets *rendered* as a sudden cliff. Swap in a continuous, forgiving metric (partial credit, per-token probability) and the very same models reveal **smooth, gradual, predictable** gains. The cliff was in the ruler, not the model.
+
+> Emergent abilities appear in some metrics but not others. The sharpness is often a property of the measurement, not a fundamental change in the model's capability. after Schaeffer, Miranda & Koyejo, NeurIPS 2023
+
+Sit with how precisely this recapitulates the whole day. It is the **Day 6 / measurement** warning, the **main-lesson hype filter**, and the entropy-hump caution all at once: before you call something deeply, fundamentally emergent, *check whether your metric manufactured the surprise.* The debate is not settled — others counter that some capabilities do show genuine sharp transitions even under smooth metrics, that the choice of metric is itself meaningful (we often *care* about exact-match!), and that "predictable in hindsight" isn't the same as "predictable in advance." <StatusChip status="hint" label={"contested — and exactly the right kind of contested"} /> But the paper permanently raised the bar: "emergence" is now a claim you have to *earn* against your measurement choices, not a vibe you get to assert because a curve looked steep.
+
+This is the thread we hand directly to **Day 139**, where scaling laws and machine "emergence" get the full deep-dive treatment, and onward to **Days 123–126**, where the very hardest question — whether *genuine* strong emergence (consciousness, the one candidate Chalmers left standing in the main lesson) could ever appear in a system like the one that wrote these words — finally comes due. We end the appendix exactly where the main lesson pointed: holding the discipline to put a number on emergence, and the humility to admit when the number is measuring our ruler instead of the world.
+</ContentSection>
+
+<Recap>
+<PanelTitle>The appendix in three sentences</PanelTitle>
+
+**The deepest, most rigorous emergence we have is the phase transition** — a property that provably exists only in the collective, with the miracle of universality proving that high-level laws can be genuinely autonomous from their microscopic details (which is precisely *why* "is this new, or just the parts re-described?" is a real and hard question, not a cheap shot).
+
+**Complexity is cheap and lives at an edge:** trivial one-line programs (Rule 110) can compute anything, randomly-wired gene networks fall into order "for free," and the richest behavior — in automata, in life, maybe in minds — clusters in the narrow band between frozen order and chaos.
+
+**And "complex" was never one thing:** a whole zoo of rulers (Kolmogorov, logical and thermodynamic depth, effective and statistical complexity) each captures one true intuition and botches the rest — a humility that pays off the instant anyone, from Wolfram to Assembly Theory to the prophets of machine "emergence," unveils *the* measure of complexity.
+
+**Threads pulled deeper ›** emergence (phase transitions = its theorem-grade case; the edge of chaos as its native habitat) · computation (Rule 110 universality; ε-machines; ACO & swarms as emergence-as-engineering) · information (the complexity zoo as descendants of Shannon/Kolmogorov; thermodynamic depth's "information is physical") · energy (thermodynamic depth; order sustained at criticality) · evolution (Kauffman's "order for free" as the foil to pure selection — the on-ramp to Block VI).
+</Recap>
+
+<Sources>
+<SourcesTitle>Sources & further reading</SourcesTitle>
+
+1. Wilson, K. G. (1983). "The renormalization group and critical phenomena."
+ Reviews of Modern Physics
+ 55(3): 583–600.
+ — Nobel-lecture account of universality and the renormalization group.
+2. Kadanoff, L. P. (2009). "More is the Same; Phase Transitions and Mean Field Theories."
+ Journal of Statistical Physics
+ 137: 777–797.
+ — phase transitions, the thermodynamic limit, and universality, explicitly framed against Anderson.
+3. Stanley, H. E. (1999). "Scaling, universality, and renormalization: Three pillars of modern critical phenomena."
+ Reviews of Modern Physics
+ 71(2): S358–S366.
+4. Stauffer, D. & Aharony, A. (1994).
+ Introduction to Percolation Theory
+ (2nd ed.). Taylor & Francis.
+ — the standard text; 2-D site-percolation threshold p
+ c
+ ≈ 0.5927 and critical exponents.
+5. Wolfram, S. (1984). "Universality and complexity in cellular automata."
+ Physica D
+ 10(1–2): 1–35.
+ — the four classes of cellular-automaton behavior.
+6. Cook, M. (2004). "Universality in Elementary Cellular Automata."
+ Complex Systems
+ 15(1): 1–40.
+ — the proof that Rule 110 is Turing-complete.
+7. Wolfram, S. (2002).
+ A New Kind of Science.
+ Wolfram Media.
+ — Rule 30 as a randomness source; the Principle of Computational Equivalence (and the critical reception thereof).
+8. Langton, C. G. (1990). "Computation at the edge of chaos: Phase transitions and emergent computation."
+ Physica D
+ 42(1–3): 12–37.
+9. Kauffman, S. A. (1969). "Metabolic stability and epigenesis in randomly constructed genetic nets."
+ Journal of Theoretical Biology
+ 22(3): 437–467.
+ — the original NK / random Boolean network model.
+10. Kauffman, S. A. (1995).
+ At Home in the Universe: The Search for the Laws of Self-Organization and Complexity.
+ Oxford University Press.
+ — "order for free"; attractors as cell types; the K≈2 critical regime.
+11. Bennett, C. H. (1988). "Logical Depth and Physical Complexity." In R. Herken (ed.),
+ The Universal Turing Machine: A Half-Century Survey
+ , 227–257.
+ — complexity as computational running time.
+12. Lloyd, S. & Pagels, H. (1988). "Complexity as thermodynamic depth."
+ Annals of Physics
+ 188(1): 186–213.
+13. Gell-Mann, M. & Lloyd, S. (1996). "Information measures, effective complexity, and total information."
+ Complexity
+ 2(1): 44–52. See also Lloyd, S. (2001), "Measures of complexity: a nonexhaustive list,"
+ IEEE Control Systems Magazine
+ 21(4): 7–8.
+14. Crutchfield, J. P. & Young, K. (1989). "Inferring statistical complexity."
+ Physical Review Letters
+ 63(2): 105–108.
+ — ε-machines and statistical complexity.
+15. Dorigo, M., Maniezzo, V. & Colorni, A. (1996). "Ant System: optimization by a colony of cooperating agents."
+ IEEE Transactions on Systems, Man, and Cybernetics, Part B
+ 26(1): 29–41.
+ — Ant Colony Optimization (from Dorigo's 1992 thesis).
+16. Rubenstein, M., Cornejo, A. & Nagpal, R. (2014). "Programmable self-assembly in a thousand-robot swarm."
+ Science
+ 345(6198): 795–799.
+ doi:10.1126/science.1254295.
+ — the 1,024-unit Kilobot swarm.
+17. Schaeffer, R., Miranda, B. & Koyejo, S. (2023). "Are Emergent Abilities of Large Language Models a Mirage?"
+ NeurIPS 2023.
+ arXiv:2304.15004
+ — emergent "abilities" as artifacts of discontinuous metrics. Cf. Wei et al. (2022), "Emergent Abilities of Large Language Models,"
+ TMLR
+ , the original claim.
+</Sources>

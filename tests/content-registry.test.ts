@@ -220,7 +220,12 @@ describe("target content registry", () => {
     expect(day007?.appendixBodies[0].source).toContain("MutualInformationOverlap");
     expect(day007?.appendixBodies[0].source).toContain("HammingCube");
 
-    expect(day008?.appendixBodies).toEqual([]);
+    expect(day008?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "the-bleeding-edge-2020-2026:en",
+      "the-bleeding-edge-2020-2026:zh",
+      "the-deeper-machinery:en",
+      "the-deeper-machinery:zh"
+    ]);
     expect(day008?.manifest.interactionScripts).toEqual([
       "complexity-emergence"
     ]);

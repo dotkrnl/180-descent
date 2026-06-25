@@ -248,10 +248,25 @@ rtk opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.1 "
 ```
 
 For large appendices, use temporary files instead of asking an agent to
-overwrite its input: `/tmp/day-###-appendix-en.md` and
-`/tmp/day-###-appendix-zh.md`. Run Kimi first on the temporary pair, then Gemini
-review, then GLM refinement, manually compare structure against the English
-appendix, and only then insert the result into
+overwrite its input: `/tmp/day-###-appendix-N-en.mdx` and
+`/tmp/day-###-appendix-N-zh.mdx`. Start by clearing the target Chinese appendix
+body or temporary target so stale prose cannot be mistaken for reviewed output.
+Run Kimi first on the temporary pair. If Kimi stalls on a large appendix, split
+the English source at section boundaries into
+`/tmp/day-###-appendix-N-part-M-en.mdx` chunks, have Kimi write matching
+`part-M-zh.mdx` files, then concatenate the translated chunks back into the
+single appendix target before downstream review.
+
+After Kimi, run Gemini review and then GLM refinement on the combined temporary
+appendix. If `agy` requires interactive OAuth, try the legacy `gemini` CLI as the
+documented fallback; if both Gemini paths are unavailable, record the auth
+blocker in the work summary and compensate with a stricter local review for
+English residue, MDX structure, and terminology. If GLM hangs without writing,
+retry a narrower per-appendix pass once; if it still hangs, stop the session,
+record the blocker, and do not leave the process running.
+
+Only after the model-assisted passes and manual structure comparison should the
+temporary result replace
 `src/content/days/###-slug/appendices/*.zh.mdx`.
 
 ## Human Refinement Gate

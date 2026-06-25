@@ -1,0 +1,340 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+
+<Lead drop="到">目前为止，我们讨论的一切在某种程度上都已是定案——那些历经数十年质疑仍屹立不倒的思想，是整个领域的承重墙。而这份附录故意有所不同：它是一趟「正在发生」的巡礼，聚焦复杂性与涌现领域最新发表的同行评议成果；选择它们并非因为已被证实，而是因为一旦成立，其影响可能极为深远。其中一些在十年后会被视为地壳变动的瞬间，另一些则可能只是时髦的岔路。自第 1 日起我们就强调「过滤炒作」，其核心正在于：你无法事先分辨两者——但你可以诚实面对不确定，大声标注它，并把手始终放在旋钮上。这正是我们要做的。请把怀疑的音量调大，再来读这个抽屉。</Lead>
+
+<Aside>
+<BlockTitle>这篇请换种读法</BlockTitle>
+
+第一个附录是教科书级别的：可以作为事实讲授的结果。而这一篇是来自 2020–2026 年的现场报道。其中许多内容确实悬而未决——新鲜、尖锐，有时甚至在其发表者之间也存在争议。我们为每条论断都打了标签，而且这些标签在这里真的在起作用。图例如下，你将在下面每一项看到：
+
+<StatusChip status="ok" label={"已确立——扎实且可重复"} /> <StatusChip status="hint" label={"有希望的线索——真实但尚处早期"} /> <StatusChip status="bad" label={"有争议/炒作——请带着怀疑阅读"} />
+</Aside>
+
+<ContinueNote label={"↩ 两个附录分道扬镳之处"}>
+附录 I 深化了经典——相变与普适性、渗流、元胞自动机、混沌边缘、复杂度指标动物园、群体行为。这一篇则故意避开这些，追逐新东西：故意打破牛顿第三定律的物质、从你自身细胞长出的机器人、无需处理器就能学习的网络，以及一个奇怪的发现：训练中的神经网络内部看起来像是正在经历相变的物质。与以往相同的直觉——有趣的行为发生在部分之间——但指向 2026 年的地平线。
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow>§1 · 最大的新想法</SectionEyebrow>
+
+## 奇异物：第三定律失效之后的涌现
+
+先从一条基础到质疑它都像作弊的定律说起。牛顿第三定律：每一个作用都有一个大小相等、方向相反的反作用。如果我推你，你也会以同样力度推回我。在普通物质中，这牢不可破，也是平衡态物理学之所以如此运行的深层原因。但一踏入生命与驱动系统的世界，这条定律便悄然失效。捕食者追逐猎物，猎物逃离捕食者——但猎物并没有以对等的反向追逐来"推回"捕食者。人群中的从众者向你靠拢，叛逆者则远离你。这些相互作用是**非互易的**：A 对 B 做出反应，而 B 并不镜像地回应 A。结果证明，这一单一而普遍的特征——只要能量在系统中流动就几乎不可避免——竟能开启一整套在平衡态下完全被禁止的物质相。
+
+这是近十年来最具影响力的复杂物理论文之一的核心论点：Michel Fruchart、Ryo Hanai、Peter Littlewood 与 Vincenzo Vitelli 的 *"Non-reciprocal phase transitions"*（*Nature*, 2021）。他们的关键发现是一种全新的相变。在熟悉的物理学中，当一个系统"有序化"时，它会选定一个方向并固定下来（比如磁体指向北方）。Fruchart 等人则证明，非互易系统可以进入另一种相：破缺的对称性会被**动态地恢复**——系统永不落定，而是永远追逐自己的尾巴，自发产生**行波**与**振荡态**。支配这种行为出现的数学，借自一个出人意料的地方：非厄米量子力学的"**奇异点**"（exceptional points），在那里本征值相互碰撞，寻常规则瓦解。
+
+> 非互易性为集群运动、活性物质、同步、神经科学乃至社会动力学中的相变提供了一个统一框架——但凡智能体之间不对等地相互响应之处皆然。据 Fruchart, Hanai, Littlewood & Vitelli, *Nature* 2021
+
+为何它可能改变整个地貌？因为整个壮丽的平衡态统计力学大厦——普适性的来源、解释整体如何不同于部分的深刻理论（附录 I，§1）——是为服从细致平衡与第三定律的系统而建的。生命系统并不服从。非互易物理学正是为生物学实际所处的混乱、受驱、远离平衡的世界建立*普适*相变理论的开端。<StatusChip status="ok" label={"理论已确立 · 正在快速扩展"} />
+
+### 海星胚胎，定格于舞蹈中途
+
+这一理论以引人注目的方式进入了现实世界。在 *"Odd dynamics of living chiral crystals"*（*Nature*, 2022）中，Tzer Han Tan、Jörn Dunkel、Nikta Fakhri 及其同事取来数千枚海星胚胎——每一枚都是朝同一方向轻轻旋转的小球——让它们聚集在一个表面上。它们自发结晶成巨大的有序晶格，跨越数千个生物体，持续数小时。但这并非普通晶体。由于每个胚胎都朝同一方向旋转（即具有手性），晶格展现出**奇异弹性**：当你使其形变时，它会向侧向回推；更令人惊讶的是，它在一个形变循环中能够做净功，从胚胎的旋转中提取能量。被动的平衡态固体（普通晶体、钢梁）绝不可能做到这一点；能量账簿禁止它。海星晶体维持着缓慢、自驱动的手性波在其表面荡漾，一种无需指挥的集体"呼吸"——又是涌现，但一种在你放弃第三定律之前数学上不可能的涌现。
+
+下面这个精简草图展示了核心机制——非互易的"追逐"动力学。
+
+<Aside>
+<BlockTitle>内嵌参考 · 非互易追逐</BlockTitle>
+
+两种粒子。规则被故意设计成不对称：青色粒子被附近的琥珀色粒子吸引，而琥珀色粒子则逃离附近的青色粒子。双方以不对等的方式追逐或逃离——牛顿第三定律被人为打破。把**非互易性**滑块从 0（对称，它们只会聚成一团并停下）推向 1（完全不对称），你会看到团块拒绝安定：它们形成、追逐、移动——一种只因其相互作用不互易而存在的"相"。
+
+独立版本中此处包含一个交互式演示；本集成附录为 web、EPUB 和 PDF 保留了概念性摘要。
+</Aside>
+
+这只是玩具，不是真正的流体动力学——但核心观点是诚恳的：让相互作用变得非互易，一个本该达到宁静平衡的系统反而会进入永恒的自组织运动。这种拒绝安定，正是整个领域的标志。
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§2 · 物理学引导生物学</SectionEyebrow>
+
+## 拓扑缺陷：身体的建筑师
+
+有一个问题听起来该属于遗传学，结果却发现至少部分属于物理学：当一团毫无特征的细胞球决定要长出头时，是什么让那个位置变得特别？一系列令人惊讶的研究表明，答案可以用液晶的语言来书写——就是你笔记本屏幕里的同一种物理学。
+
+在许多组织内部，拉长的细胞及其内部蛋白质纤维像液晶分子一样排列，形成一个取向场。而取向场在数学上被迫包含*拓扑缺陷*——即排列变得未定义、并围绕自身旋转的特殊点（想想你后脑勺的发旋，头发从一个无法"选择"方向的单点螺旋而出）。这些缺陷不是 bug，而是几何结构不可避免的特征。前沿论断是：**生物学已经学会把它们当作地址来读取。**
+
+在「Topological defects in the nematic order of actin fibres as organization centres of Hydra morphogenesis」（*Nature Physics*, 2021）中，Yael Maroudas-Sacks、Kinneret Keren 及其同事观察了水螅——一种能从碎片再生出整个身体的淡水小动物——如何重建自身。他们发现，头部、触手和足部可靠地出现在肌动蛋白取向场中特定缺陷的位置上。缺陷先来；身体部位长在物理学放置奇点的地方。一篇配套的理论论文（*Science Advances*, 2022）提供了机制：一个"+1"缺陷会聚焦机械应力，像一种机械形态发生素一样，将薄膜向外屈曲成突起。
+
+<Aside>
+<BlockTitle>为何这不仅仅是漂亮的关联</BlockTitle>
+
+一个世纪以来，"是什么告诉细胞该在哪里建造？"这个问题一直用化学信号来回答——形态发生素分子在组织中扩散形成的梯度。这项工作并未推翻这一点，而是增加了一个真正不同的层次：组织无法避免地创造出来的机械与几何组织中心，化学信号可以依附其上。这是**涌现作为机制而非隐喻**的清晰案例——取向场的整体几何向下决定局部结构在何处形成。诚实的提醒：证明缺陷标记了这些位置是扎实的；但证明它们导致了结果（而非只是与真正的化学驱动因素同处一地）仍在被敲定。<StatusChip status="ok" label={"关联已确立"} /> <StatusChip status="hint" label={"因果机制仍在厘清"} />
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§3 · 无脑的智能，再次登场</SectionEyebrow>
+
+## 无需处理器也能学习的机器
+
+附录 I 以黏菌和蚁群的无脑计算作结。这是该思想在 2024 年最激进的继承者——它可能会重写我们对学习与硬件的理解。我们默认要"学习"就得有计算机：一个中央处理器运行算法、持有模型、调整权重。物理学习项目提出了一个异端问题：**如果学习只是某些物理系统会做的事，就像河流找到大海——没有处理器、没有算法、没有任何地方持有关于自身的模型呢？**
+
+在 *"Machine learning without a processor: Emergent learning in a nonlinear analog network"*（*PNAS*, 2024）中，Sam Dillavou、Andrea Liu、Douglas Durian 及其同事恰恰造出了这样的东西：一个由非线性电子元件组成的物理网络——只有电阻、二极管和导线，没有芯片——却能学习执行非线性分类任务。诀窍是一种名为*对比局部学习*（contrastive local learning）的方案：网络被展示一个输入并被推向正确输出，每个元件仅利用其自身两端物理上可获得的信息来调整自己。没有元件知道任务。没有元件知道网络。没有全局控制器。然而整个系统作为一个整体下降误差景观并学习——学习真正是物理学的**涌现集体属性**，分布在成千上万个愚笨的部件之中。
+
+甚至连它学习的纹理都与"真正的"神经网络相呼应：作者报告说，它按自然顺序纠正误差——先平均，再斜率，然后是目标函数更精细的曲率——这是人工网络中"谱偏置"（spectral bias）的物理表亲。下面是这次下降的草图：数十个局部元件，每个只服从自己的邻域规则，共同把误差滑下山坡。
+
+<Aside>
+<BlockTitle>内嵌参考 · 自我调谐的网络</BlockTitle>
+
+每个节点持有一个可调值，只"感受"与其相连的邻居。没有中央优化器——每个节点轻轻推动自己，以减少自身当前状态与邻居及强加的边界"答案"所期望状态之间的局部不匹配。点击 **Train**，观察秩序如何从边缘向内传播、全局误差下降——无需处理器，没有任何地方中央计算梯度。
+
+独立版本中此处包含一个交互式演示；本集成附录为 web、EPUB 和 PDF 保留了概念性摘要。
+</Aside>
+
+为何它可能改变格局：如果学习能直接具身于廉价、快速、低功耗的物理物质中，你就能得到以物理速度运行、能耗仅为零头的机器学习——这可能是我们在第 7 天提到的 AI 不断攀升的能源成本的一种答案。诚实的状态：演示真实且经过同行评议，但仍然很小——原理验证，尚不足以与 GPU 竞争。<StatusChip status="hint" label={"有希望的线索——尚处早期，但确实是新范式"} />
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§4 · 生命的备用软件</SectionEyebrow>
+
+## Anthrobots：细胞建造一个你从未有过的自己
+
+接下来是近十年最奇怪、也最令人不安的成果之一。我们习惯于认为身体里的细胞有固定工作——气管细胞永远制造黏液和纤毛，因为这是气管细胞该做的事。前沿发现表明，这极大地低估了它们。一旦脱离身体及其指令，你自己的细胞会自发建造出全新的生物体，其解剖结构和行为前所未见。
+
+在 *"Motile Living Biobots Self-Construct from Adult Human Somatic Progenitor Seed Cells"*（*Advanced Science*, 2023）中，Gizem Gumuskaya 与 Michael Levin 取来成年人类支气管细胞——普通的气道细胞，没有任何基因工程——只是改变了它们的环境。细胞自组装成微小的球形多细胞生物体，团队称之为 *Anthrobots*：直径在三分之一到二分之一毫米之间，覆盖着用作船桨的纤毛来游动，存活数周。不同的 Anthrobots 自发发展出不同的形状和运动方式。而在一项惊人的演示中，它们成群（"superbots"）铺在培养的人类神经元薄片划痕上，促使神经元重新长过伤口——这是神经元自身不会进行的修复。
+
+这直接建立于更早的 *Xenobots*（由青蛙胚胎细胞制成，它们因把松散细胞推成堆而实现某种自我复制而闻名）。但 Anthrobots 提高了赌注：它们由成年、野生型的人类细胞制成，此刻就在你自己气道里的那种细胞。
+
+> 这些细胞未经基因改造，却建造出前所未有的人体细胞身体蓝图。事实证明，细胞的"默认"行为远比我们假设的更有创造力。据 Gumuskaya & Levin, *Advanced Science* 2023
+
+为何重要：它暗示存在一种潜藏的「生命软件」——细胞计算全新功能解剖结构的通用能力，可与其来源的具体生物体分离——并指向用患者自身细胞培育生物机器人进行修复和递送，且无免疫排斥。<StatusChip status="ok" label={"现象已确立且惊人"} /> 应保持怀疑之处：医学前景（在活体人体内定向输送 Anthrobots）还非常早期，而该项目所附带的关于细胞「能动性」和「智能」的宏大表述在哲学上充满负担——这正是 §8 要回到的辩论。<StatusChip status="bad" label={"治疗与\"认知\"论断尚处早期/有争议"} />
+</ContentSection>
+<ContentSection>
+<SectionEyebrow>§5 · 机器内部的实质</SectionEyebrow>
+
+## 机器内部的涌现：grokking 与学习的物理学
+
+主文曾暗示，大模型“突如其来的新能力”或许只是测量造成的假象（也就是第 139 日那场“海市蜃楼”之争）。这是一个重要版本。但还有另一批更新、更深层、且基本独立的研究，把训练中的神经网络内部视为一个真实的物理系统——一个会在学习过程中发生真正相变的系统，拥有序参量与临界点。在这种视角下，涌现看起来远不像海市蜃楼。
+
+最干净的例子是一种名字很妙的现象：*grokking*（Power et al., 2022，以及随后一系列机制性跟进研究）。让一个小网络学习一个清晰的数学任务——比如模运算。起初它只是*死记硬背*训练样本：见过的题全对，没见过的完全不行。然后你继续训练，远超一切看似不会再变化的节点……**突然，往往在数千步之后，它“grokking”了**——它骤然切换成真正的理解，对从未见过的问题也能完美泛化。研究者们把它拆开，发现了一个真实的、机制层面的故事：网络正在默不作声地构建一个*高效、结构化*的内部算法（它真的发现了模运算的三角学结构），覆盖在死记硬背的记忆表之下；一旦这条高效线路胜过了笨拙的记忆，泛化就像开关一样啪地打开。这个转变很锐利，就像水结冰。来看它的典型特征：
+
+<Aside>
+<BlockTitle>集成参考 · Grokking：先死记、再平台、然后突然理解</BlockTitle>
+
+一张著名 grokking 曲线的示意图。训练准确率迅速飙升——网络在记忆。接着是一段漫长平坦的高原期，测试准确率（真正的泛化）停留在随机水平，看起来毫无进展……直到突然之间，测试曲线啪地跳到完美。点击播放，观察那个断崖。滑块控制网络“酝酿”多久后顿悟降临。
+
+独立源文件在此处包含了一个交互式演示；本集成附录为网页、EPUB 和 PDF 保留了概念性摘要。
+</Aside>
+
+Grokking 正成为快速发展的“学习物理学”领域的工作母机。有两个相关的前沿项目值得记住名字。**神经扩展的量子化模型**（Michaud, Liu, Girit & Tegmark, NeurIPS 2023）提出，网络的知识以离散块——“量子”——形式存在，按有用程度依次学习；仅这一想法就能同时解释大模型*平滑的*幂律提升和*突然的*技能闪现：平均看平滑，细节看疙瘩。而**奇异学习理论**（源自 Watanabe；由 Murfet、Hoogland 等人在 2023–2025 年间放大）把整个训练过程重新框定为一系列贝叶斯相变，每一次都用一点准确性换取大量简洁性——由此产生“发展性可解释性”，一种像胚胎学家观察胚胎那样，观察模型中结构如何结晶的方法。<StatusChip status="hint" label={"有希望的线索——严谨、早期、多为玩具规模"} />
+
+我们传递下去的线索：如果说第 139 日的“海市蜃楼”论文敦促我们警惕*涌现*可能只是指标造成的幻觉，那么这批工作则暗示，学习系统内部*某些*涌现是机制上真实的——锐利、结构化、可解释。两者可以同时成立，而厘清它们正是当前 AI 科学最活跃的前沿之一。（我们将在**第 138–145 日**再次完整遇到它。）
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§6 · 一种新秩序</SectionEyebrow>
+
+## 无序超均匀性：藏在无序中的秩序
+
+附录 I 的复杂性驼峰告诉我们，有趣的东西存在于完美有序与完全随机之间。超均匀性正是发现了一种全新物质类别，恰好活在这个缝隙里——它是近年来材料物理学中最安静却最重要的想法之一。它解决的谜题是这样的：我们原本有两种清晰的排列类别：**晶体**（完全有序，每个原子都在格点上）和**无序**的东西，比如液体和玻璃（没有长程规律）。超均匀性是不应该存在的第三类：局部看起来*随机而无序*——没有格点，没有明显图案——但*整体*却像晶体一样平滑均匀，完美晶格所具有的长波密度涨落被彻底压制。
+
+推动这一领域的 Salvatore Torquato 给出了精准定义：在*无序超均匀*材料中，普通液体所具有的大尺度、长程密度变化被*异常地抑制*——被压到零——而局部排列仍像流体一样混乱、各向同性。它是“隐藏秩序”：近看无序，大尺度却有晶体般的纪律。自然界在使用它：鸡眼视网膜上的感光锥细胞就以这种方式排布，而这一技巧还能造出非凡的*隐身*光子材料，能从任意方向阻挡特定波长的光——这是普通晶体（有择优方向）做不到的。三种类别并排看：
+
+<Aside>
+<BlockTitle>集成参考 · 晶体 vs. 随机 vs. 超均匀</BlockTitle>
+
+点数相同，三种排布。在它们之间切换，观察右侧的**密度计**：它把一个大圆形“探针”随机丢下，测量不同探针之间内部点数的*变化*。晶体几乎不变（低）。随机气体变化很大（高）。超均匀图案近看和随机一样乱——但它的大尺度密度却几乎不变，几乎像晶体。这种“看起来无序，方差却很低”就是隐藏秩序。
+
+独立源文件在此处包含了一个交互式演示；本集成附录为网页、EPUB 和 PDF 保留了概念性摘要。
+</Aside>
+
+它之所以登上前沿，是因为一项 2025 年的结果。在「Anomalous suppression of large-scale density fluctuations in classical and quantum spin liquids」（PNAS, 2025）中，Duyu Chen、Rhine Samajdar、Yang Jiao 和 Torquato 首次证明，超均匀性甚至出现在量子自旋液体中——一种奇异、强纠缠的量子物质态。当一个最初为沙粒和鸟眼定义的结构有序概念，自发地出现在深度量子系统中时，它就不再像是猎奇发现，而开始像是物质的基本组织原则，一个与有序和无序并列的真正第三类别。<StatusChip status="ok" label={"已确立，并正向新领域扩散"} />
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§7 · 网络长出第三维</SectionEyebrow>
+
+## 当连接本身可以被切换
+
+几十年来，网络科学（它有自己的专属日子——**第 12 日**）把世界画成点与线：人与人交友、神经元与突触相连，永远是*成对*的。2020 年代的前沿洞察是，这遗漏了某种本质。真实互动常常是*多体*的：三个蛋白只有组成三元组才工作，一群人聊天不止是各自一对一私聊的总和。捕捉这些需要*高阶网络*——不仅由边（点对）构成，还由三角形、四面体和更高维形状（数学家称为*单纯复形*和*超图*）构成。而一旦允许它们，真正新的涌现动力学就会出现。
+
+最引人注目的近例是**三元渗流**（Sun, Radicchi, Kurths & Bianconi, *Nature Communications*, 2023）。回顾附录 I，普通渗流只有一个静态临界点：不断提高连通度，巨簇会啪地出现一次，然后稳定下来。三元渗流给这种平静加入了来自真实系统的转折（比如大脑中一个神经元可以*调控*另两个神经元之间的连接）：在这里，一个节点可以**打开或关闭另外两个节点之间的链接**。于是连通度不再固定——它是*动态*的，链接随着网络自重组而忽明忽暗。结果是惊人的：巨簇不再安定。它可以**振荡**、倍周期，甚至跌入彻底的*混沌*——连通世界的大小每时每刻都在不可预测地闪烁。
+
+<Aside>
+<BlockTitle>统一的雄心</BlockTitle>
+
+这是更宏大的 2025 年项目（Millán、Bianconi 及其同事, *Nature Physics*）的一部分，他们认为系统的*拓扑*——它的高阶形状，由“拓扑狄拉克算符”这类算子捕捉——主动地**塑造**其动力学：哪些模式同步、信号如何扩散、图灵式斑图在哪里形成。其主张是，这种拓扑语言可能成为跨越大脑、气候网络、AI 和量子物质的通用语。它在数学上深刻且发展迅速；它能否在真实复杂系统中带来*新预测*（而非只是优雅的重新表述），仍是开放问题。<StatusChip status="ok" label={"数学已确立"} /> <StatusChip status="hint" label={"现实回报正在浮现"} />
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>§8 · 把怀疑调到最大来阅读</SectionEyebrow>
+
+## 争议前沿：临界拐点与自称的新定律
+
+本附录的题设明确要求收录挑衅性的、未经验证的内容——所以我们以四个科学上*活跃*但远未尘埃落定的想法收尾。它们之所以被收录，正是为了让你用炒作过滤器在实弹上练习。每个都附带它最强有力的已发表反方论证。
+
+前沿 01
+
+有争议——关于时间
+
+### 大西洋的大洋环流即将崩溃吗？
+
+AMOC——让欧洲保持温和的海洋环流——是一个教科书式的临界系统，复杂性科学的早期预警信号工具箱（观察“临界慢化”：系统在逼近断崖时变得迟缓而摇晃）已被用于研究它。一项广受关注的 2023 年统计研究（Ditlevsen & Ditlevsen, Nature Communications）把崩溃的中心估计定在 2057 年左右（窗口很宽，2025–2095），而 2024 年的一项物理基础研究（van Westen et al., Science Advances）找到了指向同一方向的具体预警指标。反击：2025 年一项 Nature 研究（Baker et al.）测试了 34 个气候模型，发现 AMOC 具有韧性——本世纪会减弱但不会崩溃，被南大洋的风维持着——结论是崩溃“不太可能”。早期预警方法是复杂性科学的真实贡献；具体的崩溃日期则确有争议，模型之间意见不一。
+
+Ditlevsen & Ditlevsen, *Nat. Commun.* 14:4254 (2023) · van Westen et al., *Sci. Adv.* 10:eadk1189 (2024) · Baker et al., *Nature* 638:987 (2025).
+
+前沿 02
+
+有争议——关于普适性，而非是否存在
+
+### 生物是否服从一条普适的“3/4 幂律”？
+
+复杂性科学最负盛名的主张之一，是动物的代谢率按体重的 3/4 次幂缩放——据称一条从血管分形几何中涌出的普适定律（West, Brown & Enquist）。它很美，也越来越受到攻击。2022 年的一篇综述（Glazier, *Proc. R. Soc. B*）调动了*数百*项研究，证明指数**并非**固定的 3/4，而是系统性地变化——跨越物种、活动水平和条件，大致在 0.1 到 1.6 之间。代谢缩放的模式是真实的；但它是血管几何设定的单一*普适*常数这一说法，无法承受全部生物学数据的考验。一个关于把*平均*误当成*定律*的干净警示故事。
+
+Glazier, "Variable metabolic scaling breaks the law," *Proc. R. Soc. B* 289:20221605 (2022).
+
+前沿 03
+
+有争议 / 炒作
+
+### 信息的“第二定律”——还是物理幻想小说？
+
+Melvin Vopson 提出了*信息动力学第二定律*（*AIP Advances*, 2022–2023）：该定律声称，承载信息的系统的“信息熵”会保持不变或随时间*下降*——与普通热力学正好镜像——并进一步推测信息可能是一种暗物质形式，且这是“证据”表明我们生活在模拟中。它发表在正规期刊上，这就是它出现在这里的原因。但它远离物理学主流，没有独立验证，而模拟假说的跳跃并非可检验的物理学。我们在**第 7 日**曾遇到过它的表亲——Vopson 的“质-能-信息等价”——被标记为边缘。把它当作一个生动标本：一个挑衅性的“新定律”传播速度如何超过其证据。**怀疑程度：最高。**
+
+Vopson & Lepadatu, *AIP Advances* 12:075310 (2022); Vopson, *AIP Advances* 13:105308 (2023). 另见 Hossenfelder 的公开反驳。
+
+前沿 04
+
+有争议——关于范围与表述
+
+### 你的细胞在某种真实意义上会思考吗？
+
+Michael Levin（§4 中 Anthrobots 的设计者）主张一种宏大的重新框架：细胞之间的生物电信号——塑造组织的电压与离子流——实现了一种目标导向的「基础认知」，一种远低于大脑的、可重写的记忆和问题解决能力，而「集体智能」则是贯穿整个生物学的统一原则（Animal Cognition, 2023；Communications Biology, 2024）。其底层的生物电机制是真实的、记录日益完善、确实令人兴奋——涡虫真的把头部形状的「记忆」储存在生物电状态中。有争议的是强认知语言：把一个细胞集体称为「智能」或「认知」，究竟是深刻洞察还是过度拉伸的隐喻，仍是一场活跃而激烈的争论。这是结束的最佳音符，因为它把我们直接拽回开启这一整天的问题：一个新的高层描述（此处即「认知」）何时是在自然真正的关节处下刀，何时只是对部分的重新描述？Anderson 提出这一洞见六十年后，这个问题仍然最重要。
+
+Levin, *Animal Cognition* 26:1865 (2023); McMillen & Levin, *Commun. Biol.* 7:378 (2024).
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>旋钮，尽在此处</SectionEyebrow>
+
+## 前沿评分卡
+
+八则报道，八个诚实判断。这就是把整个附录压缩进炒作过滤器——2026 年中科学一隅的快照，并明确承认其中若干标签会在未来十年移动。
+
+- 非互易相变与奇异物质——牛顿第三定律失效后出现的新物质相（Nature 2021/2022）。已确立 · 正在扩展
+- 作为形态发生组织者的拓扑缺陷——几何标记身体部位生长位置（Nat. Phys. 2021）。已确立的相关性
+- 物理学习机——无需处理器即可学习的网络（PNAS 2024）。有希望的线索
+- Anthrobots——成体人类细胞自构建全新运动生物体（Adv. Sci. 2023）。现象已确立
+- Grokking 与学习的物理学——训练网络内部的真实相变（2022–2025）。有希望的线索
+- 无序超均匀性——秩序的第三类别，现已进入量子物质（PNAS 2025）。已确立 · 正在扩散
+- 三元 / 高阶网络动力学——渗流中的混沌；拓扑塑造动力学（2023–2025）。数学已确立
+- AMOC 崩溃时间 · 代谢 3/4 定律 · 信息动力学 · 细胞“认知”——争议四重奏。有争议 / 炒作
+</ContentSection>
+
+<Recap>
+<PanelTitle>三句话概括前沿</PanelTitle>
+
+复杂性物理学中最深刻的新潮流是非互易性——一旦允许相互作用打破牛顿第三定律（每个活的、被驱动的系统都会如此），你就能解锁一系列从不稳定下来的全新物质相，并开启一个关于远离平衡世界的涌现的普遍理论，这是平衡统计力学永远无法触及的。
+
+涌现出现在我们没想到它会具有机制性的地方：无需处理器就能学习的物质、自组装成新生物体的人类细胞、即使在量子物质中也存在的“隐藏秩序”超均匀态、重组网络内部的混沌，以及训练神经网络内部的真实相变。
+
+而炒作过滤器的纪律从未如此重要——因为在前沿，最大胆的声称（某条洋流的崩溃日期、某条普适生物定律、信息的“第二定律”、会“思考”的细胞）总是远在能裁决它们的证据到来之前就出现，而诚实的做法是标注你的不确定性，并把手放在旋钮上。
+
+前沿线索 › 涌现（非互易性、缺陷、grokking——涌现正变得机制化） · 能量（奇异物质与物理学习作为远离平衡、低功耗计算；第 7 日提出的 AI 能源问题） · 计算（学习具身于物理；神经网络内部的相变） · 信息（超均匀性作为隐藏秩序；有争议的“信息动力学”） · 演化（Anthrobots 与生物电作为潜在、可重写的“生命软件”——第六模块的入口）。
+</Recap>
+
+<Sources>
+<SourcesTitle>来源与延伸阅读</SourcesTitle>
+
+除非标注为 *preprint* 或 *conf.*（同行评审会议），否则均为同行评审期刊文章。所有标识符均与原始来源核对；未使用未来日期的 arXiv ID。
+
+1. Fruchart, M., Hanai, R., Littlewood, P. B. & Vitelli, V. (2021). "Non-reciprocal phase transitions."
+ Nature
+ 592: 363–369.
+ doi:10.1038/s41586-021-03375-9.
+2. Tan, T. H., Mietke, A., Li, J., Chen, Y., … Dunkel, J. & Fakhri, N. (2022). "Odd dynamics of living chiral crystals."
+ Nature
+ 607: 287–293.
+ doi:10.1038/s41586-022-04889-6.
+3. Fruchart, M., Scheibner, C. & Vitelli, V. (2023). "Odd viscosity and odd elasticity."
+ Annual Review of Condensed Matter Physics
+ 14: 471–510.
+4. Maroudas-Sacks, Y., Garion, L., Shani-Zerbib, L., Livshits, A., Braun, E. & Keren, K. (2021). "Topological defects in the nematic order of actin fibres as organization centres of
+ Hydra
+ morphogenesis."
+ Nature Physics
+ 17: 251–259.
+ doi:10.1038/s41567-020-01083-1.
+5. Vafa, F. & Mahadevan, L., et al. (2022). "Theory of defect-mediated morphogenesis."
+ Science Advances
+ 8: eabk2712.
+ doi:10.1126/sciadv.abk2712.
+6. Dillavou, S., Beyer, B. D., Stern, M., Liu, A. J., Miskin, M. Z. & Durian, D. J. (2024). "Machine learning without a processor: Emergent learning in a nonlinear analog network."
+ PNAS
+ 121(28): e2319718121.
+ doi:10.1073/pnas.2319718121.
+7. Stern, M. & Murugan, A. (2023). "Learning Without Neurons in Physical Systems."
+ Annual Review of Condensed Matter Physics
+ 14: 417–441.
+8. Gumuskaya, G., Srivastava, P., Cooper, B. G., Lesser, H., Semegran, B., Garnier, S. & Levin, M. (2023). "Motile Living Biobots Self-Construct from Adult Human Somatic Progenitor Seed Cells."
+ Advanced Science
+ 11: 2303575.
+ doi:10.1002/advs.202303575.
+9. Power, A., Burda, Y., Edwards, H., Babuschkin, I. & Misra, V. (2022). "Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets."
+ arXiv:2201.02177 (preprint).
+10. Nanda, N., Chan, L., Lieberum, T., Smith, J. & Steinhardt, J. (2023). "Progress measures for grokking via mechanistic interpretability."
+ ICLR 2023 (conf.).
+11. Michaud, E. J., Liu, Z., Girit, U. & Tegmark, M. (2023). "The Quantization Model of Neural Scaling."
+ NeurIPS 2023 (conf.).
+ arXiv:2303.13506.
+12. Hoogland, J., et al. & Murfet, D. (2024). "The developmental landscape of in-context learning."
+ TMLR (conf.).
+ 另见 Lau 等，AISTATS 2025，关于局部学习系数。
+13. Li, K., Hopkins, A. K., Bau, D., Viégas, F., Pfister, H. & Wattenberg, M. (2023). "Emergent World Representations."
+ ICLR 2023 (conf.).
+ arXiv:2210.13382.
+14. Torquato, S. (2018). "Hyperuniform States of Matter."
+ Physics Reports
+ 745: 1–95.
+ ——框架性综述。
+15. Chen, D., Samajdar, R., Jiao, Y. & Torquato, S. (2025). "Anomalous suppression of large-scale density fluctuations in classical and quantum spin liquids."
+ PNAS
+ 122(6): e2416111122.
+ doi:10.1073/pnas.2416111122.
+16. Sun, H., Radicchi, F., Kurths, J. & Bianconi, G. (2023). "The dynamic nature of percolation on networks with triadic interactions."
+ Nature Communications
+ 14: 1308.
+ doi:10.1038/s41467-023-37019-5.
+17. Millán, A. P., Sun, H., Giambagli, L., … Kurths, J. & Bianconi, G. (2025). "Topology shapes dynamics of higher-order networks."
+ Nature Physics
+ 21: 353–361.
+ doi:10.1038/s41567-024-02757-w.
+18. Ditlevsen, P. & Ditlevsen, S. (2023). "Warning of a forthcoming collapse of the Atlantic meridional overturning circulation."
+ Nature Communications
+ 14: 4254.
+ doi:10.1038/s41467-023-39810-w.
+19. van Westen, R. M., Kliphuis, M. & Dijkstra, H. A. (2024). "Physics-based early warning signal shows that AMOC is on tipping course."
+ Science Advances
+ 10: eadk1189.
+ doi:10.1126/sciadv.adk1189.
+20. Baker, J. A., et al. (2025). "Continued Atlantic overturning circulation even under climate extremes."
+ Nature
+ 638: 987–994.
+ doi:10.1038/s41586-024-08544-0.
+21. Glazier, D. S. (2022). "Variable metabolic scaling breaks the law: from 'Newtonian' to 'Darwinian' approaches."
+ Proc. R. Soc. B
+ 289: 20221605.
+ doi:10.1098/rspb.2022.1605.
+22. Vopson, M. M. & Lepadatu, S. (2022). "Second law of information dynamics."
+ AIP Advances
+ 12: 075310.
+ doi:10.1063/5.0100358. [CONTESTED/HYPE]
+23. Levin, M. (2023). "Bioelectric networks: the cognitive glue enabling evolutionary scaling from physiology to mind."
+ Animal Cognition
+ 26: 1865–1891.
+ doi:10.1007/s10071-023-01780-3.
+ · McMillen, P. & Levin, M. (2024). "Collective intelligence: a unifying concept…"
+ Communications Biology
+ 7: 378.
+</Sources>
