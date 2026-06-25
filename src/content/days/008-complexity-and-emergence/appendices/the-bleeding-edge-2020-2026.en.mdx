@@ -8,16 +8,13 @@ import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
-import StatusChip from "@app/components/lesson/StatusChip.astro";
 
 <Lead drop="E">verything so far has been, in one way or another, *settled* — ideas that have survived decades of attack, the load-bearing walls of the field. This appendix is different on purpose. It is a tour of what's being built *right now*: the most recent peer-reviewed work in complexity and emergence, chosen not for how proven it is but for how far it might reach if it holds. Some of it will look, in ten years, like the moment the ground shifted. Some will look like a fashionable detour. The whole point of the hype filter we've carried since Day 1 is that **you cannot always tell which is which in advance** — but you can be honest about your uncertainty, label it loudly, and keep your hand on the dial. So that's what we'll do. Read this drawer with the skepticism turned up.</Lead>
 
 <Aside>
 <BlockTitle>Read this one differently</BlockTitle>
 
-The first appendix was textbook-grade: results you can teach as fact. This one is a **field dispatch from 2020–2026**. Much of it is genuinely unsettled — fresh, provocative, sometimes contested even among the people who published it. We have flagged every claim, and the flags are doing real work here. The legend, which you'll see on every item below:
-
-<StatusChip status="ok" label={"Established — solid, replicated"} /> <StatusChip status="hint" label={"Promising hint — real but early"} /> <StatusChip status="bad" label={"Contested / hype — read skeptically"} />
+Field dispatch, 2020–2026. Status tags: established, promising, contested.
 </Aside>
 
 <ContinueNote label={"↩ Where the two appendices part ways"}>
@@ -27,28 +24,28 @@ Appendix I deepened the *classics* — phase transitions and universality, perco
 <ContentSection>
 <SectionEyebrow>§1 · the biggest new idea</SectionEyebrow>
 
-## Odd matter: emergence after the third law breaks
+## Odd matter
 
 Start with a rule so basic it feels like cheating to question it. Newton's third law: every action has an equal and opposite reaction. If I push you, you push me back, exactly as hard. In ordinary matter this is ironclad, and it's the hidden reason equilibrium physics works the way it does. But step into the world of *living and driven* systems and the law quietly fails. A predator chases prey; the prey flees the predator — but the prey is not "pushing back" on the predator with an equal, opposite chase. A conformist in a crowd moves toward you; a contrarian moves away. These interactions are *non-reciprocal*: A responds to B in a way B does *not* mirror. And it turns out that this single, generic feature — almost unavoidable whenever energy is flowing through a system — unlocks entire phases of matter that are flatly forbidden at equilibrium.
 
 This is the thesis of one of the most influential complexity-physics papers of the decade: Michel Fruchart, Ryo Hanai, Peter Littlewood, and Vincenzo Vitelli's **"Non-reciprocal phase transitions"** (*Nature*, 2021). Their key discovery is a new *kind* of transition. In familiar physics, when a system "orders," it picks a direction and freezes there (a magnet points north). Fruchart and colleagues showed that non-reciprocal systems can instead enter a phase where the broken symmetry is **dynamically restored** — the system never settles, but chases its own tail forever, producing spontaneous *travelling* and *oscillating* states. The mathematics that governs the onset of this behavior is borrowed from a surprising place: the "exceptional points" of non-Hermitian quantum mechanics, where eigenvalues collide and the usual rules buckle.
 
-> Non-reciprocity provides a unifying framework for phase transitions in flocking, active matter, synchronization, neuroscience, and even social dynamics — wherever the agents respond to each other unequally. after Fruchart, Hanai, Littlewood & Vitelli, Nature 2021
+Non-reciprocity links flocking, active matter, synchronization, neuroscience, and social dynamics.
 
-Why is this potentially landscape-changing? Because the entire, gorgeous edifice of equilibrium statistical mechanics — the source of universality, the deep account of how wholes differ from parts (Appendix I, §1) — was built for systems that obey detailed balance and the third law. Living systems don't. Non-reciprocal physics is the beginning of a *general* theory of phase transitions for the messy, driven, far-from-equilibrium world that biology actually inhabits. <StatusChip status="ok" label={"established theory · rapidly expanding"} />
+Why is this potentially landscape-changing? Because equilibrium statistical mechanics was built for systems that obey detailed balance and the third law. Living systems don't. Non-reciprocal physics begins a theory of phase transitions for driven biological matter.
 
 ### Starfish embryos, frozen mid-dance
 
 The theory landed in the real world in spectacular fashion. In **"Odd dynamics of living chiral crystals"** (*Nature*, 2022), Tzer Han Tan, Jörn Dunkel, Nikta Fakhri and colleagues took thousands of *starfish embryos* — each a tiny ball spinning gently in one direction — and let them pack together on a surface. They spontaneously crystallized into a vast ordered lattice spanning thousands of organisms and lasting for hours. But this was no ordinary crystal. Because every embryo spins the same way (it is *chiral*), the lattice exhibited **odd elasticity**: when you deform it, it pushes back in a *sideways* direction, and — astonishingly — it can do net *work* over a deformation cycle, extracting energy from the embryos' rotation. A passive, equilibrium solid (a normal crystal, a steel beam) can never do that; the energy bookkeeping forbids it. The starfish crystal sustained slow, self-powered chiral waves rippling across it, a whole "breathing" with no conductor — emergence again, but of a kind that was mathematically impossible until you let go of the third law.
 
-Watch the core mechanism — non-reciprocal "chase" dynamics — in a stripped-down sketch below.
+Sketch the chase dynamic below.
 
 <Aside>
 <BlockTitle>Integrated reference · Non-Reciprocal Pursuit</BlockTitle>
 
-Two species of particle. The rule is deliberately lopsided: teal particles are *attracted* toward nearby amber ones, while amber particles *flee* from nearby teal. Each chases or runs from the other unequally — Newton's third law is broken by construction. Push the **non-reciprocity** slider from 0 (symmetric, they just clump and stop) up toward 1 (fully lopsided) and watch clumps refuse to settle: they form, chase, and travel — a "phase" that only exists because the interaction isn't mutual.
+Chase and flee.
 
-The standalone source included an interactive demonstration here; this integrated appendix keeps the conceptual summary for web, EPUB, and PDF.
+Interactive source: summarized here for web, EPUB, and PDF.
 </Aside>
 
 A toy, not the real hydrodynamics — but the essential point is honest: make the interaction non-mutual and a system that *should* reach a quiet equilibrium instead enters perpetual, self-organized motion. That refusal to settle is the signature of the whole field.
@@ -68,7 +65,7 @@ In **"Topological defects in the nematic order of actin fibres as organization c
 <Aside>
 <BlockTitle>Why this is more than a pretty correlation</BlockTitle>
 
-For a century, "what tells the cells where to build?" has been answered in terms of chemical signals — gradients of morphogen molecules diffusing through tissue. This work doesn't overturn that, but it adds a genuinely different layer: *mechanical and geometric* organizing centres that the tissue can't avoid creating and that the chemistry can latch onto. It's a clean case of **emergence as mechanism, not metaphor** — the global geometry of an orientation field reaching down to determine where a local structure forms. The honest caveat: showing defects *mark* the sites is solid; proving they *cause* the outcome (rather than being co-located with the real chemical driver) is still being nailed down. <StatusChip status="ok" label={"established correlation"} /> <StatusChip status="hint" label={"causal mechanism still resolving"} />
+Defects mark body sites. Causation remains under study.
 </Aside>
 </ContentSection>
 
@@ -86,12 +83,12 @@ Even the texture of how it learns echoes "real" neural networks: the authors rep
 <Aside>
 <BlockTitle>Integrated reference · A Network That Tunes Itself</BlockTitle>
 
-Each node holds an adjustable value and only "feels" its wired neighbors. There is no central optimizer — every node nudges itself to reduce the local mismatch between where it is and where its neighbors and the imposed boundary "answer" want it to be. Hit **Train** and watch the global error fall as order propagates inward from the edges — learning with no processor, no gradient computed anywhere central.
+Local tuning lowers error.
 
-The standalone source included an interactive demonstration here; this integrated appendix keeps the conceptual summary for web, EPUB, and PDF.
+Interactive source: summarized here for web, EPUB, and PDF.
 </Aside>
 
-**Why it could change the landscape:** if learning can be embodied directly in cheap, fast, low-power physical matter, you get machine learning that runs at the speed of physics with a fraction of the energy — a possible answer to the spiraling energy cost of AI we flagged on **Day 7**. The honest status: the demonstrations are real and peer-reviewed but still *small* — proof of principle, not yet a rival to a GPU. <StatusChip status="hint" label={"promising hint — early, but a genuinely new paradigm"} />
+Why it could change the landscape: learning in cheap physical matter could run fast and use far less energy. The demonstrations are real but small: proof of principle, not yet a rival to a GPU. Status: promising.
 </ContentSection>
 
 <ContentSection>
@@ -105,9 +102,7 @@ In **"Motile Living Biobots Self-Construct from Adult Human Somatic Progenitor S
 
 This builds directly on the earlier *Xenobots* (made from frog embryo cells, which famously discovered a form of self-replication by pushing loose cells into piles). But Anthrobots raise the stakes: they are made from *adult, wild-type, human* cells, the same cells in your own airway right now.
 
-> The cells were not genetically modified, yet they built a body plan no human cell has ever assembled before. The "default" behavior of a cell, it turns out, is far more creative than we assumed. on Gumuskaya & Levin, Advanced Science 2023
-
-**Why it matters:** it suggests there is a kind of latent "software of life" — a generic capacity for cells to compute novel functional anatomies, separable from the specific organism they came from — and points toward biobots grown from a patient's own cells for repair and delivery, with no immune rejection. <StatusChip status="ok" label={"phenomenon established & striking"} /> **Where to keep your skepticism:** the medical promise (targeted Anthrobots in a living human body) is very early, and the more expansive framings of cellular "agency" and "intelligence" attached to this program are philosophically loaded — which is exactly the debate §8 returns to. <StatusChip status="bad" label={"therapeutic & \"cognition\" claims early/contested"} />
+Why it matters: it suggests a latent "software of life", a capacity for cells to build novel functional anatomies. Status: established. Where to keep your skepticism: medical use is early, and cellular "agency" or "intelligence" remains philosophically loaded. Status: contested.
 </ContentSection>
 
 <ContentSection>
@@ -120,14 +115,14 @@ The main lesson hinted that the "sudden new abilities" of large AI models might 
 The cleanest example is a phenomenon with the wonderful name *grokking* (Power et al., 2022, and a wave of mechanistic follow-ups). Train a small network on a crisp mathematical task — say, modular arithmetic. At first it simply *memorizes* the training examples: perfect on what it's seen, useless on anything new. And then you keep training, long past the point where it seems anything could change... and **suddenly, often thousands of steps later, it "groks"** — it abruptly snaps into true understanding, generalizing perfectly to problems it never saw. Researchers cracked it open and found a real, mechanistic story: the network is quietly building an *efficient, structured* internal algorithm (it literally discovers the trigonometry of modular arithmetic) underneath the memorized lookup table, and the moment that efficient circuit outcompetes the clumsy memorization, generalization snaps on like a switch. The transition is sharp, like water freezing. Watch the characteristic signature:
 
 <Aside>
-<BlockTitle>Integrated reference · Grokking: Memorize, Plateau, Then Suddenly Understand</BlockTitle>
+<BlockTitle>Integrated reference · Grokking curve</BlockTitle>
 
-A schematic of the famous grokking curves. Training accuracy shoots up fast — the network memorizes. Then comes a long, flat plateau where test accuracy (real generalization) stays near chance and it looks like nothing is happening... until, abruptly, the test curve snaps to perfect. Press play and watch for the cliff. The slider sets how long the network "broods" before the insight lands.
+Train rises first. Test jumps later.
 
-The standalone source included an interactive demonstration here; this integrated appendix keeps the conceptual summary for web, EPUB, and PDF.
+Interactive source: summarized here for web, EPUB, and PDF.
 </Aside>
 
-Grokking is now a workhorse for a fast-growing "physics of learning." Two related frontier programs are worth knowing by name. The **Quantization Model of Neural Scaling** (Michaud, Liu, Girit & Tegmark, NeurIPS 2023) proposes that a network's knowledge comes in discrete chunks — "quanta" — learned in order of how useful they are, and shows this single idea can explain *both* the smooth power-law improvement of big models *and* the sudden pop of new skills: smooth on average, lumpy in the details. And **singular learning theory** (building on Watanabe; scaled up by Murfet, Hoogland and colleagues, 2023–2025) reframes the entire training process as a sequence of Bayesian phase transitions, each one trading a little accuracy for a lot of simplicity — giving "developmental interpretability," a way to watch structure crystallize in a model the way an embryologist watches an embryo. <StatusChip status="hint" label={"promising hint — rigorous, early, mostly toy-scale"} />
+Grokking is now a workhorse for a fast-growing "physics of learning." Two related frontier programs are worth knowing. The Quantization Model of Neural Scaling proposes that network knowledge comes in discrete chunks, while singular learning theory reframes training as Bayesian phase transitions. Both make learning look less like smooth accumulation and more like structure crystallizing. Status: promising.
 
 The thread we hand forward: where the Day 139 "mirage" paper urges caution about *emergence* as an illusion of metrics, this body of work suggests that *some* emergence inside learning systems is mechanistically real — sharp, structured, and explicable. Both can be true, and untangling them is one of the live frontiers of AI science. (We'll meet it again in full on **Days 138–145**.)
 </ContentSection>
@@ -142,14 +137,14 @@ Appendix I's complexity hump told us the interesting stuff lives *between* perfe
 Salvatore Torquato, who has driven this field, defines it crisply: in a *disordered hyperuniform* material, the big, long-range density variations that any normal liquid has are *anomalously quenched* — squashed to zero — while the local arrangement stays as messy and isotropic as a fluid. It's "hidden order": disorder up close, crystalline discipline at scale. Nature uses it: the light-sensing cones in a chicken's eye are packed this way, and the trick produces remarkable *stealthy* photonic materials that block specific wavelengths of light from any direction — something ordinary crystals (which have preferred directions) cannot do. See the three categories side by side:
 
 <Aside>
-<BlockTitle>Integrated reference · Crystal vs. Random vs. Hyperuniform</BlockTitle>
+<BlockTitle>Integrated reference · Three point fields</BlockTitle>
 
-Same number of points, three arrangements. Toggle between them and watch the **density meter** on the right: it drops a big circular "probe" at random spots and measures how much the count inside *varies* from probe to probe. A crystal barely varies (low). A random gas varies a lot (high). The hyperuniform pattern looks as messy as the random one up close — yet its large-scale density barely varies, almost like the crystal. That low variance despite visible disorder *is* the hidden order.
+Three point fields reveal hidden order.
 
-The standalone source included an interactive demonstration here; this integrated appendix keeps the conceptual summary for web, EPUB, and PDF.
+Interactive source: summarized here for web, EPUB, and PDF.
 </Aside>
 
-The reason this earns a place on the frontier is a 2025 result. In **"Anomalous suppression of large-scale density fluctuations in classical and quantum spin liquids"** (*PNAS*, 2025), Duyu Chen, Rhine Samajdar, Yang Jiao, and Torquato reported the first demonstration that hyperuniformity emerges even in *quantum spin liquids* — exotic, strongly entangled quantum states of matter. When a structural-order concept first defined for sand grains and bird eyes turns up unbidden in deeply quantum systems, it stops looking like a curiosity and starts looking like a **fundamental organizing principle of matter**, a genuine third category alongside ordered and disordered. <StatusChip status="ok" label={"established & spreading into new domains"} />
+The reason this earns a place on the frontier is a 2025 result. In "Anomalous suppression of large-scale density fluctuations in classical and quantum spin liquids" (*PNAS*, 2025), Duyu Chen, Rhine Samajdar, Yang Jiao, and Torquato reported hyperuniformity in quantum spin liquids. A structural-order concept first defined for sand grains now looks like a broader organizing principle of matter. Status: established.
 </ContentSection>
 
 <ContentSection>
@@ -164,14 +159,14 @@ The most striking recent example is **triadic percolation** (Sun, Radicchi, Kurt
 <Aside>
 <BlockTitle>The unifying ambition</BlockTitle>
 
-This is part of a broader 2025 program (Millán, Bianconi and colleagues, *Nature Physics*) arguing that the *topology* of a system — its higher-order shape, captured by operators with names like the "Topological Dirac operator" — actively **shapes** its dynamics: which patterns synchronize, how signals diffuse, where Turing-like patterns form. The claim is that this topological language could become a common tongue across brains, climate networks, AI, and quantum matter. It's mathematically deep and growing fast; whether it delivers *new predictions* in real complex systems (rather than elegant reformulations) is the open question. <StatusChip status="ok" label={"mathematics established"} /> <StatusChip status="hint" label={"real-world payoff emerging"} />
+Topology can shape dynamics. The payoff is open.
 </Aside>
 </ContentSection>
 
 <ContentSection>
 <SectionEyebrow>§8 · read with the skepticism turned all the way up</SectionEyebrow>
 
-## The contested frontier: tipping points & would-be new laws
+## Contested frontier claims
 
 The brief for this appendix explicitly asked for the provocative and the unverified — so we close with four ideas that are scientifically *active* but very much not settled. These are included precisely so you can practice the hype filter on live ammunition. Each comes paired with its strongest published counter-argument.
 
@@ -236,13 +231,13 @@ Eight dispatches, eight honest verdicts. This is the whole appendix compressed i
 <Recap>
 <PanelTitle>The frontier in three sentences</PanelTitle>
 
-**The deepest new current in complexity physics is non-reciprocity** — once you let interactions break Newton's third law (as every living, driven system does), you unlock whole new phases of matter that never settle, and you begin a general theory of emergence for the far-from-equilibrium world that equilibrium statistical mechanics could never reach.
+Non-reciprocity is the new core signal in complexity physics.
 
-**Emergence is showing up in places we didn't expect it to be mechanistic:** matter that learns with no processor, human cells that self-assemble into novel organisms, "hidden order" hyperuniform states even in quantum matter, chaos inside reconfiguring networks, and real phase transitions inside the guts of a training neural network.
+Mechanisms now appear in matter and cells.
 
-**And the discipline of the hype filter has never mattered more** — because at the frontier the boldest claims (a current's collapse date, a universal biological law, a "second law" of information, cells that "think") arrive long before the evidence that would settle them, and the honest move is to *label your uncertainty and keep your hand on the dial.*
+The hype filter matters most at the frontier.
 
-**Threads at the frontier ›** emergence (non-reciprocity, defects, grokking — emergence turning mechanistic) · energy (odd matter & physical learning as far-from-equilibrium, low-power computation; the AI energy question from Day 7) · computation (learning embodied in physics; phase transitions inside neural nets) · information (hyperuniformity as hidden order; the contested "infodynamics") · evolution (Anthrobots & bioelectricity as the latent, re-writable "software of life" — the on-ramp to Block VI).
+Threads: emergence, energy, computation, information, evolution.
 </Recap>
 
 <Sources>
