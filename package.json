@@ -28,10 +28,11 @@
     "check:workflows": "tsx scripts/cli/check-workflows.ts",
     "check:seo": "tsx scripts/cli/check-seo.ts",
     "check:a11y": "tsx scripts/cli/check-a11y.ts",
+    "check:rendered-type": "tsx scripts/cli/check-rendered-type.ts",
     "check:visual": "tsx scripts/cli/check-visual.ts",
     "check:epub": "tsx scripts/cli/check-epub.ts",
     "check:pdf": "tsx scripts/cli/check-pdf.ts",
-    "check:built": "npm run check:links && npm run check:content && npm run check:imports && npm run check:dead && npm run check:svg-text && npm run check:math && npm run check:appendix-style && npm run check:clean && npm run check:workflows && npm run check:seo && npm run check:a11y && npm run check:epub && npm run check:pdf",
+    "check:built": "npm run check:links && npm run check:content && npm run check:imports && npm run check:dead && npm run check:svg-text && npm run check:math && npm run check:appendix-style && npm run check:clean && npm run check:workflows && npm run check:seo && npm run check:a11y && npm run check:rendered-type && npm run check:epub && npm run check:pdf",
     "check": "npm run build && npm run check:built",
     "deploy": "npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent",
     "deploy:staging": "npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent --branch=staging"

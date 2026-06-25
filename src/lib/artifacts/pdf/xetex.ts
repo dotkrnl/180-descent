@@ -1412,7 +1412,7 @@ ${config.locale === "zh" ? "" : "\\RaggedRight"}
 \newcommand{\statuschipok}[1]{\statuschipbase{descentOk}{descentOkBg}{descentOkLine}{#1}}
 \newcommand{\statuschiphint}[1]{\statuschipbase{descentHint}{descentHintBg}{descentHintLine}{#1}}
 \newcommand{\statuschipbad}[1]{\statuschipbase{descentBad}{descentBadBg}{descentBadLine}{#1}}
-\newcommand{\claimtop}[2]{\Needspace{5\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\if\relax\detokenize{#2}\relax\else\enspace #2\fi\par\nopagebreak\smallskip}
+\newcommand{\claimtop}[2]{\Needspace{5\baselineskip}\par\smallskip{\ttfamily\small\color{descentTeal}\MakeUppercase{#1}}\if\relax\detokenize{#2}\relax\else\enspace #2\fi\par\nopagebreak\smallskip}
 \newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=3em\lettrine[lines=2,loversize=0.08,lhang=0.02,nindent=0pt,findent=0.08em]{#1}{#2}\par\endgroup\medskip}
 \newcommand{\leadparanodrop}[1]{\Needspace{6\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=3em#1\par\endgroup\medskip}
 \newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
