@@ -252,8 +252,9 @@ SVG/HTML/SCSS diagrams.
   paragraphs.
 - Use `SimpleTable` only with non-empty literal string-array `headers` and
   non-empty literal string-matrix `rows`; each row must contain at least one
-  cell. `npm run check:content` rejects dynamic, empty, or malformed props
-  because PDF output must not silently drop table content.
+  cell and match the header column count. `npm run check:content` rejects
+  dynamic, empty, malformed, or uneven props because PDF output must not
+  silently drop table content.
 - Use `MathInline` and `MathBlock` for math so HTML gets KaTeX and PDF gets
   XeTeX math from the same source. KaTeX must parse the source; invalid math
   fails the site build instead of rendering as fallback text.
