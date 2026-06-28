@@ -16,6 +16,8 @@ describe("static site URL helpers", () => {
 
     expect(sitePathForUrlPath(siteDir, "/zh/?x=1")).toBe(path.join(siteDir, "zh"));
     expect(siteHtmlFileForUrl(siteDir, "/zh/")).toBe(path.join(siteDir, "zh", "index.html"));
+    expect(siteHtmlFileForUrl(siteDir, "/zh")).toBe(path.join(siteDir, "zh", "index.html"));
+    expect(siteHtmlFileForUrl(siteDir, "/standalone.html")).toBe(path.join(siteDir, "standalone.html"));
     expect(sitePathForUrlPath(siteDir, "/../_site-copy/secret.txt")).toBe("");
   });
 
