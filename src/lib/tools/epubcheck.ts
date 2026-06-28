@@ -3,11 +3,6 @@ import path from "node:path";
 
 export type CommandSpec = [command: string, args: string[]];
 
-const EPUBCHECK_JAR_CANDIDATES = [
-  process.env.EPUBCHECK_JAR,
-  path.join(process.cwd(), "tools/epubcheck/epubcheck.jar")
-].filter((candidate): candidate is string => Boolean(candidate));
-
 const HOMEBREW_PREFIX = process.env.HOMEBREW_PREFIX || (existsSync("/opt/homebrew") ? "/opt/homebrew" : "/usr/local");
 
 export function javaCommands(args: string[]): CommandSpec[] {
@@ -18,11 +13,18 @@ export function javaCommands(args: string[]): CommandSpec[] {
 }
 
 export function epubcheckVersionCommands(): CommandSpec[] {
-  const jar = EPUBCHECK_JAR_CANDIDATES.find((candidate) => existsSync(candidate));
+  const jar = epubcheckJar();
   return jar ? javaCommands(["-jar", jar, "--version"]) : [["epubcheck", ["--version"]]];
 }
 
 export function epubcheckValidationCommands(absoluteFile: string): CommandSpec[] {
-  const jar = EPUBCHECK_JAR_CANDIDATES.find((candidate) => existsSync(candidate));
+  const jar = epubcheckJar();
   return jar ? javaCommands(["-jar", jar, absoluteFile]) : [["epubcheck", [absoluteFile]]];
+}
+
+function epubcheckJar(): string | null {
+  if (process.env.EPUBCHECK_JAR) return process.env.EPUBCHECK_JAR;
+
+  const localJar = path.join(process.cwd(), "tools/epubcheck/epubcheck.jar");
+  return existsSync(localJar) ? localJar : null;
 }

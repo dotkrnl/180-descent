@@ -7,6 +7,7 @@ import {
   PreflightError,
   resolveToolNames
 } from "@lib/tools/preflight";
+import { epubcheckVersionCommands } from "@lib/tools/epubcheck";
 
 describe("typed preflight", () => {
   it("resolves named groups without duplicates", () => {
@@ -51,5 +52,22 @@ describe("typed preflight", () => {
 
   it("throws typed errors when required tools are missing", () => {
     expect(() => checkTools(["missing-tool-fixture"])).toThrow(PreflightError);
+  });
+
+  it("treats EPUBCHECK_JAR as an explicit command override", () => {
+    const previousJar = process.env.EPUBCHECK_JAR;
+    process.env.EPUBCHECK_JAR = "/missing/epubcheck.jar";
+    try {
+      expect(epubcheckVersionCommands()[0]).toEqual([
+        "java",
+        ["-jar", "/missing/epubcheck.jar", "--version"]
+      ]);
+    } finally {
+      if (previousJar === undefined) {
+        delete process.env.EPUBCHECK_JAR;
+      } else {
+        process.env.EPUBCHECK_JAR = previousJar;
+      }
+    }
   });
 });
