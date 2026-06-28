@@ -27,7 +27,7 @@ const interactionScriptModules = Object.fromEntries(
     if (!entry) throw new Error(`Invalid interaction script path: ${modulePath}`);
     return [entry, script];
   })
-) as Record<string, string>;
+);
 
 const { entry, previous, next, Body, appendices } = Astro.props;
 const book = await getBookData();
