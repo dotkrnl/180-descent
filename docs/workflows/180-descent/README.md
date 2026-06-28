@@ -298,9 +298,11 @@ line-by-line English.
 - Review AI edits manually before accepting: factual accuracy, terminology,
   formatting, component parity, and artifact behavior.
 - Use stable Chinese status labels for frontier claims: `已确立`,
-  `有前景`, and `有争议／炒作风险`. Call the tool `炒作过滤器`;
-  avoid mixing in alternate names such as `前沿校准器` unless a lesson has a
-  specific reason.
+  `有前景`, and `有争议／炒作风险`. Call the tool `前沿校准器`;
+  avoid mixing in alternate names.
+- Keep the workflow's Chinese terminology glossary below authoritative for
+  model-assisted translation and review. If a repeated course term is missing,
+  add it before accepting a translation pass.
 - For Chinese typography, prefer `「」` for propositions, terms as language
   objects, and short emphasis; use Chinese book title marks for Chinese titles;
   keep original English paper titles in italics or plain Latin text rather than
@@ -310,10 +312,20 @@ line-by-line English.
   distinct concepts into one Chinese term. For example, in physics contexts
   `exceptional point` is `例外点`, `odd elasticity` is `奇弹性`, `stigmergy` is
   `痕迹协同`, and an order parameter is `序参量`.
+
 - `FormatOnly` static alternatives for web-only interactives must include the
   context that lived inside the interactive component: a localized title, the
   object being shown, and enough rules or captions for PDF/EPUB readers to
   understand the artifact without the live widget.
+
+### Chinese Terminology Glossary
+
+| English | Standard Chinese | Notes |
+| --- | --- | --- |
+| hype filter | 前沿校准器 | Course-wide tool name for judging frontier claims. Do not translate as `炒作过滤器`. |
+| established | 已确立 | Frontier/status label. |
+| promising | 有前景 | Frontier/status label. |
+| contested / hype risk | 有争议／炒作风险 | Frontier/status label; keep chip labels short. |
 
 For a normal day, create or update `src/content/days/###-slug/zh.mdx` and any
 Chinese locale fields in `day.yaml`, then run Kimi on the paired English and
