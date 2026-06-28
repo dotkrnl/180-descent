@@ -2,6 +2,7 @@
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import BookShell from "@app/layouts/BookShell.astro";
 import DayNav from "@app/components/DayNav.astro";
+import type { DayNavEntry } from "@app/day-route";
 import { getBookData } from "@app/site-data";
 import { dayArtifactDownloadUrl } from "@lib/artifacts/downloads";
 import { daySocialImagePath } from "@lib/assets/social-images";
@@ -12,12 +13,6 @@ interface AppendixRenderEntry {
   id: string;
   title: string;
   Body: AstroComponentFactory;
-}
-
-interface DayNavEntry {
-  day: number;
-  path: string;
-  title: string;
 }
 
 interface Props {

@@ -13,7 +13,7 @@ interface DayAppendixRenderEntry {
   Body: AstroComponentFactory;
 }
 
-interface DayNavEntry {
+export interface DayNavEntry {
   day: number;
   path: string;
   title: string;
