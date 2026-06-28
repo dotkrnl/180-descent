@@ -3,9 +3,14 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { closeServer, startStaticSiteServer } from "@lib/static-site/server";
-import { siteFileForUrlPath, sitePathForHref, sitePathForUrlPath, urlForSiteFile } from "@lib/static-site/url";
+import { contentType, siteFileForUrlPath, sitePathForHref, sitePathForUrlPath, urlForSiteFile } from "@lib/static-site/url";
 
 describe("static site URL helpers", () => {
+  it("maps font files to font MIME types", () => {
+    expect(contentType("font.woff")).toBe("font/woff");
+    expect(contentType("font.woff2")).toBe("font/woff2");
+  });
+
   it("maps built site files to canonical URLs", () => {
     const siteDir = path.join(path.sep, "repo", "_site");
 
