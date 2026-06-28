@@ -1,15 +1,13 @@
 import http, { type Server } from "node:http";
 import { stat, readFile } from "node:fs/promises";
-import path from "node:path";
 import type { AddressInfo } from "node:net";
 import { load, type CheerioAPI } from "cheerio";
 import type { Element } from "domhandler";
 import { chromium } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
-import { isPathUnavailableError } from "@lib/fs/errors";
 import { walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { contentType, sitePathForUrlPath, urlForHtml } from "@lib/static-site/url";
+import { contentType, siteFileForUrlPath, urlForHtml } from "@lib/static-site/url";
 
 interface AccessibilityCheckOptions {
   root: string;
@@ -137,24 +135,10 @@ export async function checkAccessibility(options: AccessibilityCheckOptions): Pr
   };
 }
 
-async function fileForUrl(siteDir: string, urlPath: string): Promise<string> {
-  const resolved = sitePathForUrlPath(siteDir, urlPath);
-  if (!resolved) return "";
-
-  try {
-    const stats = await stat(resolved);
-    if (stats.isDirectory()) return path.join(resolved, "index.html");
-    return resolved;
-  } catch (error) {
-    if (!isPathUnavailableError(error)) throw error;
-    return path.join(resolved, "index.html");
-  }
-}
-
 async function startServer(siteDir: string): Promise<StaticServer> {
   const server = http.createServer(async (req, res) => {
     try {
-      const filePath = await fileForUrl(siteDir, req.url || "/");
+      const filePath = siteFileForUrlPath(siteDir, req.url || "/");
       if (!filePath) {
         res.writeHead(403);
         res.end("Forbidden");

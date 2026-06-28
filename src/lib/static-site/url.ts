@@ -45,7 +45,7 @@ export function sitePathForHref(siteDir: string, siteUrl: string, href: string):
   return sitePathForUrlPath(siteDir, parsed.pathname);
 }
 
-export function siteHtmlFileForUrl(siteDir: string, urlPath: string): string {
+export function siteFileForUrlPath(siteDir: string, urlPath: string): string {
   const routePath = sitePathForUrlPath(siteDir, urlPath);
   if (!routePath) return "";
   return path.extname(routePath) ? routePath : path.join(routePath, "index.html");

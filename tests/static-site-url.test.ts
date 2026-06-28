@@ -1,6 +1,6 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { siteHtmlFileForUrl, sitePathForHref, sitePathForUrlPath, urlForHtml } from "@lib/static-site/url";
+import { siteFileForUrlPath, sitePathForHref, sitePathForUrlPath, urlForHtml } from "@lib/static-site/url";
 
 describe("static site URL helpers", () => {
   it("maps built HTML files to canonical route URLs", () => {
@@ -15,9 +15,10 @@ describe("static site URL helpers", () => {
     const siteDir = path.join(path.sep, "repo", "_site");
 
     expect(sitePathForUrlPath(siteDir, "/zh/?x=1")).toBe(path.join(siteDir, "zh"));
-    expect(siteHtmlFileForUrl(siteDir, "/zh/")).toBe(path.join(siteDir, "zh", "index.html"));
-    expect(siteHtmlFileForUrl(siteDir, "/zh")).toBe(path.join(siteDir, "zh", "index.html"));
-    expect(siteHtmlFileForUrl(siteDir, "/standalone.html")).toBe(path.join(siteDir, "standalone.html"));
+    expect(siteFileForUrlPath(siteDir, "/zh/")).toBe(path.join(siteDir, "zh", "index.html"));
+    expect(siteFileForUrlPath(siteDir, "/zh")).toBe(path.join(siteDir, "zh", "index.html"));
+    expect(siteFileForUrlPath(siteDir, "/standalone.html")).toBe(path.join(siteDir, "standalone.html"));
+    expect(siteFileForUrlPath(siteDir, "/favicon.ico")).toBe(path.join(siteDir, "favicon.ico"));
     expect(sitePathForUrlPath(siteDir, "/../_site-copy/secret.txt")).toBe("");
   });
 

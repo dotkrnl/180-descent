@@ -4,7 +4,7 @@ import { load } from "cheerio";
 import { readBookSiteUrl } from "@lib/data/book";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { siteHtmlFileForUrl, sitePathForHref, urlForHtml } from "@lib/static-site/url";
+import { siteFileForUrlPath, sitePathForHref, urlForHtml } from "@lib/static-site/url";
 
 interface SeoCheckOptions {
   root: string;
@@ -137,7 +137,7 @@ async function checkManifestIcons(siteDir: string, siteUrl: string, href: string
 }
 
 async function hasHtmlForUrl(siteDir: string, url: string): Promise<boolean> {
-  const target = siteHtmlFileForUrl(siteDir, url);
+  const target = siteFileForUrlPath(siteDir, url);
   return Boolean(target) && pathExists(target);
 }
 
