@@ -347,6 +347,7 @@ async function checkDayBlocks(
       message: `book.yaml total_days ${book.totalDays} does not match syllabus day count ${syllabusDayCount}`
     });
   }
+  checkPublishedDaySequence(days, failures);
 
   const syllabusBlocks = new Map<number, string>();
   for (const block of syllabus.blocks) {
@@ -365,6 +366,22 @@ async function checkDayBlocks(
       failures.push({
         message: `${day.manifest.path} block "${day.manifest.block}" does not match syllabus block "${expectedBlock}"`
       });
+    }
+  }
+}
+
+function checkPublishedDaySequence(
+  days: Awaited<ReturnType<typeof loadContentRegistry>>["days"],
+  failures: ContentCheckFailure[]
+): void {
+  const sortedDays = [...days].sort((a, b) => a.manifest.day - b.manifest.day);
+  for (const [index, day] of sortedDays.entries()) {
+    const expectedDay = index + 1;
+    if (day.manifest.day !== expectedDay) {
+      failures.push({
+        message: `Published content days must be contiguous from day 1: expected day ${expectedDay}, got day ${day.manifest.day} (${day.manifest.path})`
+      });
+      return;
     }
   }
 }

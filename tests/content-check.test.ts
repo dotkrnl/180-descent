@@ -474,6 +474,25 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports gaps in published content days", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "src/_data/book.yaml"), fixtureBookYaml(3));
+    await writeFile(path.join(root, "src/_data/syllabus-data.yaml"), fixtureSyllabusYaml(3));
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: body("夹具日", "zh")
+    });
+    await writePublishedDay(root, 3);
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "Published content days must be contiguous from day 1: expected day 2, got day 3 (003-fixture)"
+      }
+    ]);
+  });
+
   it("reports appendix web panels without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {
@@ -656,6 +675,31 @@ async function writeRegistryDayWithAppendix(
   });
 }
 
+async function writePublishedDay(root: string, day: number): Promise<void> {
+  const paddedDay = String(day).padStart(3, "0");
+  const title = `Fixture Day ${day}`;
+  const zhTitle = `夹具日 ${day}`;
+  const dayDir = path.join(root, "src/content/days", `${paddedDay}-fixture`);
+  await mkdir(dayDir, { recursive: true });
+  await writeFile(path.join(dayDir, "day.yaml"), [
+    `day: ${day}`,
+    "block: Fixture",
+    "locales:",
+    "  en:",
+    `    title: ${title}`,
+    "    summary: Fixture summary.",
+    "    body: en.mdx",
+    "  zh:",
+    `    title: ${zhTitle}`,
+    "    summary: 中文夹具摘要。",
+    "    body: zh.mdx",
+    "appendices: []",
+    "interactionScripts: []"
+  ].join("\n"));
+  await writeFile(path.join(dayDir, "en.mdx"), body(title));
+  await writeFile(path.join(dayDir, "zh.mdx"), body(zhTitle, "zh"));
+}
+
 function body(title: string, locale: "en" | "zh" = "en"): string {
   return [
     `# ${title}`,
@@ -698,7 +742,7 @@ function fixtureBookYaml(totalDays: number): string {
   ].join("\n");
 }
 
-function fixtureSyllabusYaml(): string {
+function fixtureSyllabusYaml(totalDays = 1): string {
   return [
     "title:",
     "  en: Fixture Syllabus",
@@ -715,7 +759,7 @@ function fixtureSyllabusYaml(): string {
     "blocks:",
     "  - id: I",
     "    start_day: 1",
-    "    end_day: 1",
+    `    end_day: ${totalDays}`,
     "    title:",
     "      en: Fixture",
     "      zh: 夹具",
@@ -723,9 +767,14 @@ function fixtureSyllabusYaml(): string {
     "      en: Fixture block",
     "      zh: 夹具模块",
     "    days:",
-    "      - day: 1",
-    "        title:",
-    "          en: Fixture Day",
-    "          zh: 夹具日"
+    ...Array.from({ length: totalDays }, (_, index) => {
+      const day = index + 1;
+      return [
+        `      - day: ${day}`,
+        "        title:",
+        `          en: ${day === 1 ? "Fixture Day" : `Fixture Day ${day}`}`,
+        `          zh: ${day === 1 ? "夹具日" : `夹具日 ${day}`}`
+      ].join("\n");
+    })
   ].join("\n");
 }
