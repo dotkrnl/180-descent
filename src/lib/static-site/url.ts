@@ -63,7 +63,8 @@ export function siteFileForUrlPath(siteDir: string, urlPath: string): string | n
 
 function decodeUrlPath(urlPath: string): string | null {
   try {
-    return decodeURIComponent(urlPath.split(/[?#]/)[0]);
+    const decoded = decodeURIComponent(urlPath.split(/[?#]/)[0]);
+    return decoded.includes("\0") ? null : decoded;
   } catch {
     return null;
   }

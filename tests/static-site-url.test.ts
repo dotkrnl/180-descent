@@ -32,6 +32,7 @@ describe("static site URL helpers", () => {
     expect(siteFileForUrlPath(siteDir, "/favicon.ico")).toBe(path.join(siteDir, "favicon.ico"));
     expect(sitePathForUrlPath(siteDir, "/../_site-copy/secret.txt")).toBeNull();
     expect(sitePathForUrlPath(siteDir, "/bad-%zz-path")).toBeNull();
+    expect(sitePathForUrlPath(siteDir, "/bad-%00-path")).toBeNull();
     expect(sitePathForUrlPath(siteDir, "favicon.ico")).toBeNull();
     expect(sitePathForUrlPath(siteDir, "https://180d.io/favicon.ico")).toBeNull();
   });
