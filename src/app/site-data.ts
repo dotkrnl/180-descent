@@ -54,6 +54,8 @@ export function padDay(value: number): string {
 }
 
 export function upcomingSyllabusDays(syllabus: Syllabus, days: ContentDay[], count: number): UpcomingSyllabusDay[] {
+  if (count <= 0) return [];
+
   const contentDayNumbers = new Set(days.map((day) => day.day));
   const upcoming: UpcomingSyllabusDay[] = [];
   for (const block of syllabus.blocks) {
