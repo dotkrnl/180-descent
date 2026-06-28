@@ -5,6 +5,7 @@ import { isPathInside } from "@lib/fs/path";
 import { dayManifestSchema, type DayManifest, type Locale } from "@lib/schemas/day";
 
 const LOCALES: readonly Locale[] = ["en", "zh"];
+const DAY_DIRECTORY_PATTERN = /^\d{3}-[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 interface ContentRegistryOptions {
   daysDir: string;
@@ -44,7 +45,12 @@ export async function loadContentRegistry(options: ContentRegistryOptions): Prom
   const entries = await readdir(options.daysDir, { withFileTypes: true });
   const dayDirectories = entries
     .filter((entry) => entry.isDirectory())
-    .map((entry) => path.join(options.daysDir, entry.name))
+    .map((entry) => {
+      if (!DAY_DIRECTORY_PATTERN.test(entry.name)) {
+        throw new Error(`Invalid day directory name: ${entry.name}`);
+      }
+      return path.join(options.daysDir, entry.name);
+    })
     .sort();
 
   const days = [];
@@ -53,7 +59,19 @@ export async function loadContentRegistry(options: ContentRegistryOptions): Prom
   }
 
   days.sort((a, b) => a.manifest.day - b.manifest.day);
+  checkUniqueDayNumbers(days);
   return { days };
+}
+
+function checkUniqueDayNumbers(days: RegistryDay[]): void {
+  const seen = new Map<number, string>();
+  for (const day of days) {
+    const existing = seen.get(day.manifest.day);
+    if (existing) {
+      throw new Error(`Duplicate day number ${day.manifest.day}: ${existing} and ${day.manifest.path}`);
+    }
+    seen.set(day.manifest.day, day.manifest.path);
+  }
 }
 
 async function loadRegistryDay(directory: string): Promise<RegistryDay> {

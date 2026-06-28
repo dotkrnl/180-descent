@@ -185,6 +185,23 @@ describe("target content registry", () => {
     await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Manifest reference must be relative:");
   });
 
+  it("rejects non-canonical day directory names", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-directory-"));
+    const daysDir = path.join(root, "days");
+    await mkdir(path.join(daysDir, "fixture"), { recursive: true });
+
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Invalid day directory name: fixture");
+  });
+
+  it("rejects duplicate day numbers", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-duplicate-"));
+    const daysDir = path.join(root, "days");
+    await writeMinimalDay(daysDir, "001-first", 1);
+    await writeMinimalDay(daysDir, "002-second", 1);
+
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Duplicate day number 1: 001-first and 002-second");
+  });
+
   it("loads project day content with paired appendices and interaction scripts", async () => {
     const registry = await loadContentRegistry({ daysDir: projectDaysDir });
     const daysByPath = new Map(registry.days.map((day) => [day.manifest.path, day]));
@@ -340,4 +357,26 @@ async function createRegistryFixtureDaysDir(): Promise<string> {
     interactionScripts: ["fixture-interaction"]
   });
   return contentDaysDir(root);
+}
+
+async function writeMinimalDay(daysDir: string, dayPath: string, dayNumber: number): Promise<void> {
+  const dayDir = path.join(daysDir, dayPath);
+  await mkdir(dayDir, { recursive: true });
+  await writeFile(path.join(dayDir, "en.mdx"), "# Fixture");
+  await writeFile(path.join(dayDir, "zh.mdx"), "# 中文");
+  await writeFile(path.join(dayDir, "day.yaml"), [
+    `day: ${dayNumber}`,
+    "block: Fixture",
+    "locales:",
+    "  en:",
+    "    title: Fixture",
+    "    summary: Fixture summary.",
+    "    body: en.mdx",
+    "  zh:",
+    "    title: 中文夹具",
+    "    summary: 中文摘要。",
+    "    body: zh.mdx",
+    "appendices: []",
+    "interactionScripts: []"
+  ].join("\n"));
 }
