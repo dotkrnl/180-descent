@@ -446,6 +446,29 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports single-quoted appendix web panels without static alternates", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDayWithAppendix(root, {
+      enAppendix: [
+        '<StatusChip status={"ok"} label={"ok"} />',
+        '<Sources></Sources>',
+        "<Panel class='web-only'>Interactive only</Panel>"
+      ].join("\n"),
+      zhAppendix: [
+        '<StatusChip status={"ok"} label={"已确立"} />',
+        '<Sources></Sources>'
+      ].join("\n")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "EN 001-fixture appendix appendix-a has 1 web-only artifact item(s) but only 0 static print/EPUB alternate(s)"
+      }
+    ]);
+  });
+
   it("reports web-only components without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {
@@ -492,6 +515,24 @@ describe("content check", () => {
         '<Sources></Sources>',
         '<Panel class="web-only">Interactive only</Panel>',
         '<FormatOnly media="print-epub" variant="alternate">Static alternate</FormatOnly>'
+      ].join("\n"),
+      zhAppendix: [
+        '<StatusChip status={"ok"} label={"已确立"} />',
+        '<Sources></Sources>'
+      ].join("\n")
+    });
+
+    await expect(checkContent({ root })).resolves.toEqual([]);
+  });
+
+  it("accepts single-quoted semantic static alternate variants", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDayWithAppendix(root, {
+      enAppendix: [
+        '<StatusChip status={"ok"} label={"ok"} />',
+        '<Sources></Sources>',
+        "<Panel class='web-only'>Interactive only</Panel>",
+        "<FormatOnly media='print-epub' variant='alternate'>Static alternate</FormatOnly>"
       ].join("\n"),
       zhAppendix: [
         '<StatusChip status={"ok"} label={"已确立"} />',

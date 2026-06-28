@@ -645,14 +645,31 @@ function checkArtifactComponentContract(file: RegistryContentFile, failures: Con
     });
   }
 
-  const webOnlyPanels = countMatches(file.source, /<Panel\b[^>]*class="[^"]*\bweb-only\b[^"]*"/g);
+  const webOnlyPanels = countWebOnlyPanels(file.source);
   const webOnly = webOnlyComponents + webOnlyPanels;
-  const staticAlternates = countMatches(file.source, /<FormatOnly\b(?=[^>]*\bmedia="print-epub")(?=[^>]*\bvariant="alternate")/g);
+  const staticAlternates = countStaticArtifactAlternates(file.source);
   if (staticAlternates < webOnly) {
     failures.push({
       message: `${file.label} has ${webOnly} web-only artifact item(s) but only ${staticAlternates} static print/EPUB alternate(s)`
     });
   }
+}
+
+function countWebOnlyPanels(source: string): number {
+  return [...source.matchAll(/<Panel\b[^>]*>/g)]
+    .filter((match) => quotedAttr(match[0], "class")?.split(/\s+/).includes("web-only"))
+    .length;
+}
+
+function countStaticArtifactAlternates(source: string): number {
+  return [...source.matchAll(/<FormatOnly\b[^>]*>/g)]
+    .filter((match) => quotedAttr(match[0], "media") === "print-epub" && quotedAttr(match[0], "variant") === "alternate")
+    .length;
+}
+
+function quotedAttr(tag: string, name: string): string | null {
+  const match = tag.match(new RegExp(`\\b${name}=(["'])(.*?)\\1`));
+  return match ? match[2] : null;
 }
 
 async function checkCssFonts(root: string, failures: ContentCheckFailure[]): Promise<void> {
@@ -671,10 +688,6 @@ async function checkParentMarkdownReferences(root: string, failures: ContentChec
       });
     }
   }
-}
-
-function countMatches(text: string, pattern: RegExp): number {
-  return [...text.matchAll(pattern)].length;
 }
 
 function hasMdxComponent(source: string, name: string): boolean {
