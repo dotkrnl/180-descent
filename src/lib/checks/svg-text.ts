@@ -80,6 +80,18 @@ function checkSegment(
       });
     }
   }
+
+  const setAttributePattern = /\.setAttribute\(\s*["']font-size["']\s*,\s*["']([0-9]*\.?[0-9]+)(?:px)?["']\s*\)/gi;
+  for (const setAttributeMatch of segment.matchAll(setAttributePattern)) {
+    const value = Number(setAttributeMatch[1]);
+    if (value < MIN_SVG_FONT_SIZE) {
+      failures.push({
+        file,
+        line: lineNumber(source, offset + (setAttributeMatch.index ?? 0)),
+        value
+      });
+    }
+  }
 }
 
 function lineNumber(source: string, index: number): number {

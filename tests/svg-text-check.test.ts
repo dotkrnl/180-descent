@@ -41,6 +41,23 @@ describe("svg text size check", () => {
     ]);
   });
 
+  it("reports JavaScript SVG setAttribute font sizes below the minimum", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-svg-text-"));
+    await mkdir(path.join(root, "src/assets/js/interactions"), { recursive: true });
+    await writeFile(path.join(root, "src/assets/js/interactions/fixture.js"), [
+      'label.setAttribute("font-size", "9");',
+      'otherLabel.setAttribute("font-size", "10.5");'
+    ].join("\n"));
+
+    expect(checkSvgTextSize({ root })).toEqual([
+      {
+        file: "src/assets/js/interactions/fixture.js",
+        line: 1,
+        value: 9
+      }
+    ]);
+  });
+
   it("ignores fenced SVG examples without shifting later line numbers", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-svg-text-"));
     await mkdir(path.join(contentDaysDir(root), "001-fixture"), { recursive: true });
