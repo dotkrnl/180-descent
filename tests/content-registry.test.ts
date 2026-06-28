@@ -92,6 +92,30 @@ describe("target content registry", () => {
     })).toThrow();
   });
 
+  it("rejects locale bodies that do not match the canonical locale file", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-locale-body-"));
+    const daysDir = path.join(root, "days");
+    const dayDir = path.join(daysDir, "001-fixture");
+    await mkdir(dayDir, { recursive: true });
+    await writeFile(path.join(dayDir, "day.yaml"), [
+      "day: 1",
+      "block: Fixture",
+      "locales:",
+      "  en:",
+      "    title: Fixture",
+      "    summary: Fixture summary.",
+      "    body: fixture.en.mdx",
+      "  zh:",
+      "    title: 中文夹具",
+      "    summary: 中文摘要。",
+      "    body: zh.mdx",
+      "appendices: []",
+      "interactionScripts: []"
+    ].join("\n"));
+
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow(/en body must be en\.mdx/);
+  });
+
   it("rejects path-like interaction script names", () => {
     expect(() => dayManifestSchema.parse({
       day: 1,
@@ -181,6 +205,38 @@ describe("target content registry", () => {
       ],
       interactionScripts: []
     })).toThrow();
+  });
+
+  it("rejects appendix bodies that do not match the canonical locale suffix", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-appendix-body-"));
+    const daysDir = path.join(root, "days");
+    const dayDir = path.join(daysDir, "001-fixture");
+    await mkdir(dayDir, { recursive: true });
+    await writeFile(path.join(dayDir, "day.yaml"), [
+      "day: 1",
+      "block: Fixture",
+      "locales:",
+      "  en:",
+      "    title: Fixture",
+      "    summary: Fixture summary.",
+      "    body: en.mdx",
+      "  zh:",
+      "    title: 中文夹具",
+      "    summary: 中文摘要。",
+      "    body: zh.mdx",
+      "appendices:",
+      "  - id: appendix-a",
+      "    locales:",
+      "      en:",
+      "        title: Appendix A",
+      "        body: appendices/a.zh.mdx",
+      "      zh:",
+      "        title: 附录 A",
+      "        body: appendices/a.zh.mdx",
+      "interactionScripts: []"
+    ].join("\n"));
+
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow(/en appendix body must be appendices\/<slug>\.en\.mdx/);
   });
 
   it("rejects duplicate appendix ids", () => {
