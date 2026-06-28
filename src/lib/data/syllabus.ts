@@ -32,38 +32,6 @@ export interface SyllabusDay {
   blockId?: string;
 }
 
-interface LocalizedText {
-  en: string;
-  zh: string;
-}
-
-interface RawSyllabus {
-  title: LocalizedText;
-  subtitle: LocalizedText;
-  purpose: LocalizedText;
-  method: LocalizedText;
-  blocks: RawSyllabusBlock[];
-}
-
-interface RawSyllabusBlock {
-  id: string;
-  start_day: number;
-  end_day: number;
-  title: LocalizedText;
-  summary: LocalizedText;
-  days: RawSyllabusDay[];
-}
-
-interface RawSyllabusDay {
-  day: number;
-  title: LocalizedText;
-  entry?: LocalizedText;
-  model?: LocalizedText;
-  debate?: LocalizedText;
-  frontier?: LocalizedText;
-  note?: LocalizedText;
-}
-
 const localizedTextSchema = z.object({
   en: z.string().min(1),
   zh: z.string().min(1)
@@ -96,6 +64,9 @@ const rawSyllabusSchema = z.object({
   blocks: z.array(rawSyllabusBlockSchema)
 }).strict();
 
+type LocalizedText = z.infer<typeof localizedTextSchema>;
+type RawSyllabus = z.infer<typeof rawSyllabusSchema>;
+
 export async function readSyllabusData(root: string, locale: Locale): Promise<Syllabus> {
   return localizeSyllabus(await readRawSyllabus(root), locale);
 }
@@ -106,7 +77,7 @@ export async function readSyllabusBlockTitleMap(root: string, locale: Locale): P
 }
 
 async function readRawSyllabus(root: string): Promise<RawSyllabus> {
-  return rawSyllabusSchema.parse(await readYamlFile<unknown>(syllabusDataFile(root))) as RawSyllabus;
+  return rawSyllabusSchema.parse(await readYamlFile<unknown>(syllabusDataFile(root)));
 }
 
 function localizeSyllabus(raw: RawSyllabus, locale: Locale): Syllabus {

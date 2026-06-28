@@ -37,37 +37,6 @@ export interface HumanEditorData {
   url: string;
 }
 
-interface RawBookData {
-  title: string;
-  subtitle: string;
-  deep_dive_subtitle: string;
-  authors: string;
-  human_editor: HumanEditorData;
-  description: string;
-  site_url: string;
-  repo: string;
-  language: string;
-  publisher: string;
-  published_year: number;
-  total_days: number;
-  epub_identifier: string;
-  zh: {
-    language: string;
-    title: string;
-    subtitle: string;
-    deep_dive_subtitle: string;
-    authors: string;
-    translators: string;
-    human_editor: HumanEditorData;
-    description: string;
-    epub_identifier: string;
-  };
-}
-
-interface RawBookSiteData {
-  site_url: string;
-}
-
 const humanEditorSchema = z.object({
   name: z.string().min(1),
   url: z.string().min(1)
@@ -107,7 +76,7 @@ const bookSiteDataSchema = z.object({
 }).passthrough();
 
 export async function readBookData(root: string): Promise<BookData> {
-  const raw = bookDataSchema.parse(await readYamlFile<unknown>(bookDataFile(root))) as RawBookData;
+  const raw = bookDataSchema.parse(await readYamlFile<unknown>(bookDataFile(root)));
   return {
     title: raw.title,
     subtitle: raw.subtitle,
@@ -139,6 +108,6 @@ export async function readBookData(root: string): Promise<BookData> {
 }
 
 export async function readBookSiteUrl(root: string): Promise<string> {
-  const raw = bookSiteDataSchema.parse(await readYamlFile<unknown>(bookDataFile(root))) as RawBookSiteData;
+  const raw = bookSiteDataSchema.parse(await readYamlFile<unknown>(bookDataFile(root)));
   return raw.site_url;
 }
