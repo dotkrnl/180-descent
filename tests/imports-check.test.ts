@@ -89,6 +89,11 @@ describe("import check", () => {
       "*/",
       "<div />"
     ].join("\n"))).toEqual([]);
+
+    expect(findUnusedDefaultImports([
+      '// import Hero from "./Hero.astro";',
+      "<div />"
+    ].join("\n"))).toEqual([]);
   });
 
   it("ignores identifiers inside comments", () => {

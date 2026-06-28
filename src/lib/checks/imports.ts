@@ -105,7 +105,8 @@ function stripComments(source: string): string {
   return source
     .replace(/<!--[\s\S]*?-->/g, replaceWithSpaces)
     .replace(/\{\/\*[\s\S]*?\*\/\}/g, replaceWithSpaces)
-    .replace(/\/\*[\s\S]*?\*\//g, replaceWithSpaces);
+    .replace(/\/\*[\s\S]*?\*\//g, replaceWithSpaces)
+    .replace(/^[ \t]*\/\/.*$/gm, replaceWithSpaces);
 }
 
 function replaceWithSpaces(text: string): string {
