@@ -8,6 +8,7 @@ import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book"
 import { bookArtifactPaths, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
 import { CHINESE_DAY_ONE_APPENDIX_PATTERNS, ENGLISH_DAY_ONE_APPENDIX_PATTERNS } from "@lib/checks/day-one-appendix-patterns";
 import { toError } from "@lib/errors";
+import { epubcheckValidationCommands, type CommandSpec } from "@lib/tools/epubcheck";
 
 interface EpubCheckOptions {
   root: string;
@@ -22,8 +23,6 @@ interface BaseEpubEdition {
   appendixPatterns: RegExp[];
   required: string[];
 }
-
-type CommandSpec = [command: string, args: string[]];
 
 type EpubEdition = BaseEpubEdition & (
   | {
@@ -44,13 +43,6 @@ const BOOK_REQUIRED = [
   "OEBPS/day-001.xhtml",
   "OEBPS/day-002.xhtml"
 ];
-
-const EPUBCHECK_JAR_CANDIDATES = [
-  process.env.EPUBCHECK_JAR,
-  path.join(process.cwd(), "tools/epubcheck/epubcheck.jar")
-].filter((candidate): candidate is string => Boolean(candidate));
-
-const HOMEBREW_PREFIX = process.env.HOMEBREW_PREFIX || (existsSync("/opt/homebrew") ? "/opt/homebrew" : "/usr/local");
 
 export async function checkEpub(options: EpubCheckOptions): Promise<EpubCheckResult> {
   const errors: string[] = [];
@@ -188,14 +180,7 @@ async function checkEpubEdition(root: string, edition: EpubEdition, errors: stri
 }
 
 function runEpubcheck(absoluteFile: string): SpawnSyncReturns<string> {
-  const jar = EPUBCHECK_JAR_CANDIDATES.find((candidate) => existsSync(candidate));
-  const commands: CommandSpec[] = jar
-    ? [
-      ["java", ["-jar", jar, absoluteFile]],
-      [path.join(HOMEBREW_PREFIX, "opt/openjdk/bin/java"), ["-jar", jar, absoluteFile]]
-    ]
-    : [["epubcheck", [absoluteFile]]];
-  return spawnFirstAvailable(commands);
+  return spawnFirstAvailable(epubcheckValidationCommands(absoluteFile));
 }
 
 function spawnFirstAvailable(commands: CommandSpec[]): SpawnSyncReturns<string> {

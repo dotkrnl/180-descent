@@ -3,6 +3,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
 import { toError } from "@lib/errors";
+import { epubcheckVersionCommands, javaCommands, type CommandSpec } from "@lib/tools/epubcheck";
 
 type ToolCategory = "durable-required";
 
@@ -44,15 +45,6 @@ interface PreflightArgs {
   optional: boolean;
   list: boolean;
 }
-
-type CommandSpec = [command: string, args: string[]];
-
-const EPUBCHECK_JAR_CANDIDATES = [
-  process.env.EPUBCHECK_JAR,
-  path.join(process.cwd(), "tools/epubcheck/epubcheck.jar")
-].filter((candidate): candidate is string => Boolean(candidate));
-
-const HOMEBREW_PREFIX = process.env.HOMEBREW_PREFIX || (existsSync("/opt/homebrew") ? "/opt/homebrew" : "/usr/local");
 
 const TOOLS = {
   node: {
@@ -146,10 +138,7 @@ const TOOLS = {
     usedBy: "official EPUBCheck",
     installHint: "macOS: brew install openjdk | Debian/Ubuntu: apt-get install default-jre",
     check() {
-      return checkCommandVersions([
-        ["java", ["-version"]],
-        [path.join(HOMEBREW_PREFIX, "opt/openjdk/bin/java"), ["-version"]]
-      ]);
+      return checkCommandVersions(javaCommands(["-version"]));
     }
   },
   epubcheck: {
@@ -158,14 +147,7 @@ const TOOLS = {
     usedBy: "official EPUB validation",
     installHint: "macOS: brew install epubcheck | or set EPUBCHECK_JAR / tools/epubcheck/epubcheck.jar",
     check() {
-      const jar = EPUBCHECK_JAR_CANDIDATES.find((candidate) => existsSync(candidate));
-      if (!jar) {
-        return requireVersion("epubcheck", ["--version"], /EPUBCheck v5\.3\.0/);
-      }
-      return requireCommandVersion([
-        ["java", ["-jar", jar, "--version"]],
-        [path.join(HOMEBREW_PREFIX, "opt/openjdk/bin/java"), ["-jar", jar, "--version"]]
-      ], /EPUBCheck v5\.3\.0/);
+      return requireCommandVersion(epubcheckVersionCommands(), /EPUBCheck v5\.3\.0/);
     }
   }
 } satisfies Record<string, ToolDefinition>;
@@ -289,14 +271,6 @@ function commandVersion(command: string, args: string[]): string {
     throw new Error((result.stderr || result.stdout || `${command} exited ${result.status}`).trim());
   }
   return firstLine(`${result.stdout || ""}\n${result.stderr || ""}`) || "available";
-}
-
-function requireVersion(command: string, args: string[], pattern: RegExp): string {
-  const version = commandVersion(command, args);
-  if (!pattern.test(version)) {
-    throw new Error(`${command} version did not match ${pattern}: ${version}`);
-  }
-  return version;
 }
 
 function requireCommandVersion(commands: CommandSpec[], pattern: RegExp): string {
