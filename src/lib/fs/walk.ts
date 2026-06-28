@@ -8,22 +8,28 @@ interface WalkOptions {
   ignoredDirNames?: Iterable<string>;
 }
 
+interface NormalizedWalkOptions {
+  exts: ReadonlySet<string> | null;
+  ignoredDirNames: ReadonlySet<string>;
+}
+
 const DEFAULT_IGNORED = new Set([".git", "_site", "node_modules"]);
 
 export async function walkFiles(dir: string, options: WalkOptions = {}): Promise<string[]> {
-  const exts = normalizeExts(options.exts);
-  const ignoredDirNames = options.ignoredDirNames ? new Set(options.ignoredDirNames) : DEFAULT_IGNORED;
-  const out: string[] = [];
+  return walkFilesInto(dir, normalizeWalkOptions(options), []);
+}
+
+async function walkFilesInto(dir: string, options: NormalizedWalkOptions, out: string[]): Promise<string[]> {
   const entries = (await readdir(dir, { withFileTypes: true }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   for (const entry of entries) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (!ignoredDirNames.has(entry.name)) {
-        out.push(...await walkFiles(full, options));
+      if (!options.ignoredDirNames.has(entry.name)) {
+        await walkFilesInto(full, options, out);
       }
-    } else if (matchesExt(entry.name, exts)) {
+    } else if (matchesExt(entry.name, options.exts)) {
       out.push(full);
     }
   }
@@ -31,20 +37,21 @@ export async function walkFiles(dir: string, options: WalkOptions = {}): Promise
   return out;
 }
 
-export function walkFilesSync(dir: string, options: WalkOptions = {}, out: string[] = []): string[] {
-  const exts = normalizeExts(options.exts);
-  const ignoredDirNames = options.ignoredDirNames ? new Set(options.ignoredDirNames) : DEFAULT_IGNORED;
+export function walkFilesSync(dir: string, options: WalkOptions = {}): string[] {
+  return walkFilesSyncInto(dir, normalizeWalkOptions(options), []);
+}
 
+function walkFilesSyncInto(dir: string, options: NormalizedWalkOptions, out: string[]): string[] {
   const entries = fsSync.readdirSync(dir, { withFileTypes: true })
     .sort((a, b) => a.name.localeCompare(b.name));
 
   for (const entry of entries) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (!ignoredDirNames.has(entry.name)) {
-        walkFilesSync(full, options, out);
+      if (!options.ignoredDirNames.has(entry.name)) {
+        walkFilesSyncInto(full, options, out);
       }
-    } else if (matchesExt(entry.name, exts)) {
+    } else if (matchesExt(entry.name, options.exts)) {
       out.push(full);
     }
   }
@@ -60,6 +67,13 @@ export async function pathExists(filePath: string): Promise<boolean> {
     if (!isPathUnavailableError(error)) throw error;
     return false;
   }
+}
+
+function normalizeWalkOptions(options: WalkOptions): NormalizedWalkOptions {
+  return {
+    exts: normalizeExts(options.exts),
+    ignoredDirNames: options.ignoredDirNames ? new Set(options.ignoredDirNames) : DEFAULT_IGNORED
+  };
 }
 
 function normalizeExts(exts: WalkOptions["exts"]): ReadonlySet<string> | null {
