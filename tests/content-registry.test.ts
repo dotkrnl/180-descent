@@ -49,6 +49,28 @@ describe("target content registry", () => {
     })).toThrow();
   });
 
+  it("rejects unexpected nested manifest fields", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "en.mdx",
+          draft: true
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [],
+      interactionScripts: []
+    })).toThrow();
+  });
+
   it("rejects path-like interaction script names", () => {
     expect(() => dayManifestSchema.parse({
       day: 1,

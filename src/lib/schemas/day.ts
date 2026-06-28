@@ -7,12 +7,12 @@ const localeContentSchema = z.object({
   body: z.string().min(1),
   title: z.string().min(1),
   summary: z.string().min(1)
-});
+}).strict();
 
 const appendixLocaleSchema = z.object({
   body: z.string().min(1),
   title: z.string().min(1)
-});
+}).strict();
 
 const appendixSchema = z.object({
   id: slugSchema,
@@ -20,7 +20,7 @@ const appendixSchema = z.object({
     en: appendixLocaleSchema,
     zh: appendixLocaleSchema
   }).strict()
-});
+}).strict();
 
 export const dayManifestSchema = z.object({
   day: z.number().int().positive(),
