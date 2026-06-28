@@ -70,7 +70,13 @@ export function parseVisualCheckArgs(argv: string[]): VisualCheckCliArgs {
       continue;
     }
 
-    if (name === "--base") {
+    if (name === "--base" && out.baseUrl !== undefined) {
+      out.errors.push("--base was provided more than once");
+    } else if (name === "--compare" && out.compareUrl !== undefined) {
+      out.errors.push("--compare was provided more than once");
+    } else if (name === "--out" && out.outDir !== undefined) {
+      out.errors.push("--out was provided more than once");
+    } else if (name === "--base") {
       out.baseUrl = value;
     } else if (name === "--compare") {
       out.compareUrl = value;

@@ -47,6 +47,26 @@ describe("visual check CLI args", () => {
     });
   });
 
+  it("reports duplicate value options instead of overwriting them", () => {
+    expect(parseVisualCheckArgs([
+      "--base", "https://staging.example",
+      "--base=https://prod.example",
+      "--compare", "https://compare.example",
+      "--compare", "https://other.example",
+      "--out", "tmp/visual",
+      "--out", "tmp/other"
+    ])).toEqual({
+      baseUrl: "https://staging.example",
+      compareUrl: "https://compare.example",
+      outDir: "tmp/visual",
+      errors: [
+        "--base was provided more than once",
+        "--compare was provided more than once",
+        "--out was provided more than once"
+      ]
+    });
+  });
+
   it("fails empty built sites instead of producing an empty visual report", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-visual-check-"));
     const outDir = path.join(root, "tmp/visual");
