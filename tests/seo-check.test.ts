@@ -138,6 +138,31 @@ describe("seo check", () => {
       "/site.webmanifest: icon src must be a string"
     ]);
   });
+
+  it("does not accept commented sitemap markup", async () => {
+    const root = await createSiteRoot();
+    await writeFile(path.join(root, "_site/index.html"), indexHtml());
+    await writeFile(path.join(root, "_site/sitemap.xml"), "<!-- <urlset><xhtml:link rel=\"alternate\" /></urlset> -->");
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "sitemap.xml: missing urlset",
+      "sitemap.xml: missing hreflang xhtml:link alternates"
+    ]);
+  });
+
+  it("does not accept commented robots Sitemap directives", async () => {
+    const root = await createSiteRoot();
+    await writeFile(path.join(root, "_site/index.html"), indexHtml());
+    await writeFile(path.join(root, "_site/robots.txt"), "# Sitemap: https://180d.io/sitemap.xml\n");
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "robots.txt: missing Sitemap directive"
+    ]);
+  });
 });
 
 async function createSiteRoot(): Promise<string> {

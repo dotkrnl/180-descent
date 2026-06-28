@@ -107,8 +107,9 @@ async function checkSitemap(siteDir: string, errors: string[]): Promise<void> {
   }
 
   const sitemap = await readFile(sitemapPath, "utf8");
-  if (!sitemap.includes("<urlset")) errors.push("sitemap.xml: missing urlset");
-  if (!sitemap.includes("xhtml:link")) errors.push("sitemap.xml: missing hreflang xhtml:link alternates");
+  const $ = load(sitemap, { xmlMode: true });
+  if (!$("urlset").length) errors.push("sitemap.xml: missing urlset");
+  if (!$("xhtml\\:link[rel='alternate']").length) errors.push("sitemap.xml: missing hreflang xhtml:link alternates");
 }
 
 async function checkRobots(siteDir: string, siteUrl: string, errors: string[]): Promise<void> {
@@ -118,7 +119,7 @@ async function checkRobots(siteDir: string, siteUrl: string, errors: string[]): 
     return;
   }
   const robots = await readFile(robotsPath, "utf8");
-  if (!robots.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) errors.push("robots.txt: missing Sitemap directive");
+  if (!hasSitemapDirective(robots, `${siteUrl}/sitemap.xml`)) errors.push("robots.txt: missing Sitemap directive");
 }
 
 async function checkManifestIcons(siteDir: string, siteUrl: string, href: string, errors: string[]): Promise<void> {
@@ -182,4 +183,11 @@ function englishUrl(url: string): string {
 
 function chineseUrl(url: string): string {
   return url.startsWith("/zh/") ? url : alternateUrl(url);
+}
+
+function hasSitemapDirective(robots: string, sitemapUrl: string): boolean {
+  return robots.split(/\r?\n/).some((line) => {
+    const trimmed = line.trim();
+    return trimmed === `Sitemap: ${sitemapUrl}`;
+  });
 }
