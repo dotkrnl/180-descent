@@ -55,6 +55,44 @@ describe("credits data", () => {
 
     await expect(readCreditsData(root)).rejects.toThrow();
   });
+
+  it("rejects duplicate font names", async () => {
+    const root = await createCreditsRoot([
+      "fonts:",
+      "  - name: Fixture Font",
+      "    source: https://example.com/font",
+      "    license: OFL-1.1",
+      "  - name: Fixture Font",
+      "    source: https://example.com/other-font",
+      "    license: OFL-1.1",
+      "images: []"
+    ].join("\n"));
+
+    await expect(readCreditsData(root)).rejects.toThrow("duplicate credit font name: Fixture Font");
+  });
+
+  it("rejects duplicate image assets", async () => {
+    const root = await createCreditsRoot([
+      "fonts: []",
+      "images:",
+      "  - title: Fixture Image",
+      "    creator: Fixture Creator",
+      "    source: https://example.com/image",
+      "    license: CC BY 4.0",
+      "    asset: /assets/images/open-license/fixture.jpg",
+      "    notes: Fixture notes.",
+      "  - title: Fixture Image Copy",
+      "    creator: Fixture Creator",
+      "    source: https://example.com/image-copy",
+      "    license: CC BY 4.0",
+      "    asset: /assets/images/open-license/fixture.jpg",
+      "    notes: Fixture notes."
+    ].join("\n"));
+
+    await expect(readCreditsData(root)).rejects.toThrow(
+      "duplicate credit image asset: /assets/images/open-license/fixture.jpg"
+    );
+  });
 });
 
 async function createCreditsRoot(source: string): Promise<string> {

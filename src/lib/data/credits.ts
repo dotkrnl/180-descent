@@ -40,7 +40,31 @@ const creditImageSchema = z.object({
 const creditsDataSchema = z.object({
   fonts: z.array(creditFontSchema),
   images: z.array(creditImageSchema)
-}).strict();
+}).strict().superRefine((credits, context) => {
+  const fontNames = new Set<string>();
+  for (const [index, font] of credits.fonts.entries()) {
+    if (fontNames.has(font.name)) {
+      context.addIssue({
+        code: "custom",
+        path: ["fonts", index, "name"],
+        message: `duplicate credit font name: ${font.name}`
+      });
+    }
+    fontNames.add(font.name);
+  }
+
+  const imageAssets = new Set<string>();
+  for (const [index, image] of credits.images.entries()) {
+    if (imageAssets.has(image.asset)) {
+      context.addIssue({
+        code: "custom",
+        path: ["images", index, "asset"],
+        message: `duplicate credit image asset: ${image.asset}`
+      });
+    }
+    imageAssets.add(image.asset);
+  }
+});
 
 export async function readCreditsData(root: string): Promise<CreditsData> {
   return creditsDataSchema.parse(await readYamlFile(creditsDataFile(root)));
