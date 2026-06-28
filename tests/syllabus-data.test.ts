@@ -63,6 +63,44 @@ describe("syllabus data", () => {
     await expect(readSyllabusData(root, "en")).rejects.toThrow(/outside block I range 1-1/);
   });
 
+  it("rejects out-of-order day rows", async () => {
+    const root = await createFixtureRoot([
+      "title:",
+      "  en: Knowledge Map",
+      "  zh: 知识地图",
+      "subtitle:",
+      "  en: Foundations",
+      "  zh: 根基",
+      "purpose:",
+      "  en: Purpose",
+      "  zh: 目的",
+      "method:",
+      "  en: Method",
+      "  zh: 方法",
+      "blocks:",
+      "  - id: I",
+      "    start_day: 1",
+      "    end_day: 2",
+      "    title:",
+      "      en: Foundations",
+      "      zh: 根基",
+      "    summary:",
+      "      en: First block",
+      "      zh: 第一模块",
+      "    days:",
+      "      - day: 2",
+      "        title:",
+      "          en: Day Two",
+      "          zh: 第二日",
+      "      - day: 1",
+      "        title:",
+      "          en: Day One",
+      "          zh: 第一日"
+    ].join("\n"));
+
+    await expect(readSyllabusData(root, "en")).rejects.toThrow(/block I day row 1 must be day 1/);
+  });
+
   it("rejects duplicate day numbers across blocks", async () => {
     const root = await createFixtureRoot([
       validSyllabusYaml(),

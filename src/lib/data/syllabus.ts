@@ -103,6 +103,15 @@ const rawSyllabusSchema = z.object({
     }
 
     for (const [dayIndex, day] of block.days.entries()) {
+      const expectedDay = block.start_day + dayIndex;
+      if (day.day !== expectedDay) {
+        context.addIssue({
+          code: "custom",
+          path: ["blocks", blockIndex, "days", dayIndex, "day"],
+          message: `block ${block.id} day row ${dayIndex + 1} must be day ${expectedDay}`
+        });
+      }
+
       if (day.day < block.start_day || day.day > block.end_day) {
         context.addIssue({
           code: "custom",
