@@ -57,6 +57,26 @@ describe("syllabus data", () => {
     await expect(readSyllabusData(root, "en")).rejects.toThrow();
   });
 
+  it("rejects empty syllabus block lists", async () => {
+    const root = await createFixtureRoot([
+      "title:",
+      "  en: Knowledge Map",
+      "  zh: 知识地图",
+      "subtitle:",
+      "  en: Foundations",
+      "  zh: 根基",
+      "purpose:",
+      "  en: Purpose",
+      "  zh: 目的",
+      "method:",
+      "  en: Method",
+      "  zh: 方法",
+      "blocks: []"
+    ].join("\n"));
+
+    await expect(readSyllabusData(root, "en")).rejects.toThrow();
+  });
+
   it("rejects day rows outside the declared block range", async () => {
     const root = await createFixtureRoot(validSyllabusYaml().replace("      - day: 1", "      - day: 2"));
 

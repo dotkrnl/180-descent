@@ -59,7 +59,7 @@ const rawSyllabusSchema = z.object({
   subtitle: localizedTextSchema,
   purpose: localizedTextSchema,
   method: localizedTextSchema,
-  blocks: z.array(rawSyllabusBlockSchema)
+  blocks: z.array(rawSyllabusBlockSchema).min(1)
 }).strict().superRefine((syllabus, context) => {
   const seenBlockIds = new Set<string>();
   const seenEnglishBlockTitles = new Set<string>();
