@@ -14,8 +14,8 @@ publishing, and visual comparison.
 Each published day lives under `src/content/days/###-slug/`. The directory
 name is the canonical URL path.
 
-- `day.yaml` is the typed manifest: day number, block, publish state,
-  locale metadata, appendices, interaction scripts, and assets.
+- `day.yaml` is the strict typed manifest: day number, block, locale metadata,
+  appendices, and interaction scripts.
 - `en.mdx` and `zh.mdx` are the paired main bodies.
 - `appendices/*.en.mdx` and `appendices/*.zh.mdx` are optional paired deep-dive
   bodies declared by manifest id.
@@ -24,8 +24,8 @@ name is the canonical URL path.
 - Reusable web interactives live in `src/app/components/lesson/interactives/`.
 - Interaction behavior lives in `src/assets/js/interactions/` and is registered
   through `day.yaml` `interactionScripts`.
-- Asset files live under `src/assets/images/...` and are declared in
-  `day.yaml` `assets`.
+- Asset files live under `src/assets/images/...` and are imported directly from
+  MDX/Astro or resolved by artifact code.
 - Styling is SCSS-only. Astro layouts import `src/assets/scss/book.scss`; edit
   SCSS modules under `src/assets/scss/`, not hand-written `.css` files.
 
@@ -49,7 +49,7 @@ with a static `FormatOnly media="print-epub" variant="alternate"` equivalent.
 1. Pick the canonical `###-slug` path from the syllabus and create or edit
    `src/content/days/###-slug/day.yaml`.
 2. Keep English and Chinese locale entries paired when the day is published.
-3. Put page title, summary, block, appendices, interaction scripts, and assets in
+3. Put page title, summary, block, appendices, and interaction scripts in
    `day.yaml`; do not duplicate directory routing metadata inside the manifest.
 4. Write lesson bodies as real MDX. Import lesson components explicitly at the
    top of each MDX file.
@@ -215,8 +215,8 @@ SVG/HTML/SCSS diagrams.
   `/_astro/...` URLs. Do not restore a `public/assets` mirror or hand-code
   public `/assets/images/...` URLs for page output.
 - Use `/assets/images/...` only as the local source-path convention in
-  `src/_data/credits.yaml`, day manifests, and artifact code that resolves back
-  to `src/assets/images/...`.
+  `src/_data/credits.yaml` and artifact code that resolves back to
+  `src/assets/images/...`.
 - `npm run build:epub` must resolve local source image paths into
   `OEBPS/images/...` and add image manifest entries to `content.opf`.
 - PDF generation reads semantic MDX and builds with XeTeX. `ImageFigure` sources
