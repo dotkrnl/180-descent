@@ -21,6 +21,8 @@ const appendixSchema = z.object({
   }).strict()
 });
 
+const interactionScriptSchema = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
+
 export const dayManifestSchema = z.object({
   day: z.number().int().positive(),
   block: z.string().min(1),
@@ -29,7 +31,7 @@ export const dayManifestSchema = z.object({
     zh: localeContentSchema
   }).strict(),
   appendices: z.array(appendixSchema),
-  interactionScripts: z.array(z.string().min(1))
+  interactionScripts: z.array(interactionScriptSchema)
 }).strict();
 
 export type Locale = z.infer<typeof localeSchema>;

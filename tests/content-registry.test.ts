@@ -49,6 +49,27 @@ describe("target content registry", () => {
     })).toThrow();
   });
 
+  it("rejects path-like interaction script names", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "en.mdx"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [],
+      interactionScripts: ["../clock-ticks.js"]
+    })).toThrow();
+  });
+
   it("loads paired locale bodies, appendices, and interaction scripts", async () => {
     const fixtureDaysDir = await createRegistryFixtureDaysDir();
     const registry = await loadContentRegistry({ daysDir: fixtureDaysDir });
