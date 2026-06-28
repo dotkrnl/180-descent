@@ -41,7 +41,7 @@ interface RawBookData {
   subtitle: string;
   deep_dive_subtitle: string;
   authors: string;
-  human_editor: RawHumanEditorData;
+  human_editor: HumanEditorData;
   description: string;
   site_url: string;
   repo: string;
@@ -57,7 +57,7 @@ interface RawBookData {
     deep_dive_subtitle: string;
     authors: string;
     translators: string;
-    human_editor: RawHumanEditorData;
+    human_editor: HumanEditorData;
     description: string;
     epub_identifier: string;
   };
@@ -67,11 +67,6 @@ interface RawBookSiteData {
   site_url: string;
 }
 
-interface RawHumanEditorData {
-  name: string;
-  url: string;
-}
-
 export async function readBookData(root: string): Promise<BookData> {
   const raw = await readYamlFile<RawBookData>(bookDataFile(root));
   return {
@@ -79,7 +74,7 @@ export async function readBookData(root: string): Promise<BookData> {
     subtitle: raw.subtitle,
     deepDiveSubtitle: raw.deep_dive_subtitle,
     authors: raw.authors,
-    humanEditor: normalizeHumanEditor(raw.human_editor),
+    humanEditor: raw.human_editor,
     description: raw.description,
     siteUrl: raw.site_url,
     repo: raw.repo,
@@ -96,7 +91,7 @@ export async function readBookData(root: string): Promise<BookData> {
       deepDiveSubtitle: raw.zh.deep_dive_subtitle,
       authors: raw.zh.authors,
       translators: raw.zh.translators,
-      humanEditor: normalizeHumanEditor(raw.zh.human_editor),
+      humanEditor: raw.zh.human_editor,
       description: raw.zh.description,
       epubIdentifier: raw.zh.epub_identifier,
       downloads: bookDownloadUrls("zh")
@@ -107,11 +102,4 @@ export async function readBookData(root: string): Promise<BookData> {
 export async function readBookSiteUrl(root: string): Promise<string> {
   const raw = await readYamlFile<RawBookSiteData>(bookDataFile(root));
   return raw.site_url;
-}
-
-function normalizeHumanEditor(raw: RawHumanEditorData): HumanEditorData {
-  return {
-    name: raw.name,
-    url: raw.url
-  };
 }
