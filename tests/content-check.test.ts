@@ -180,10 +180,37 @@ describe("content check", () => {
 
     expect(failures).toEqual([
       {
-        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a literal string-array headers prop"
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a non-empty literal string-array headers prop"
       },
       {
-        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a literal string-matrix rows prop"
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a non-empty literal string-matrix rows prop"
+      }
+    ]);
+  });
+
+  it("reports empty SimpleTable props that PDF output cannot render", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<SimpleTable headers={[]} rows={[["value"]]} />',
+        '<SimpleTable headers={["Header"]} rows={[]} />',
+        '<SimpleTable headers={["Header"]} rows={[[]]} />'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a non-empty literal string-array headers prop"
+      },
+      {
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a non-empty literal string-matrix rows prop"
+      },
+      {
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a non-empty literal string-matrix rows prop"
       }
     ]);
   });
@@ -202,10 +229,10 @@ describe("content check", () => {
 
     expect(failures).toEqual([
       {
-        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a literal string-array headers prop"
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a non-empty literal string-array headers prop"
       },
       {
-        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a literal string-matrix rows prop"
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a non-empty literal string-matrix rows prop"
       }
     ]);
   });

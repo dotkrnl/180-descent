@@ -492,28 +492,29 @@ function literalStatusValue(tag: string): string | null {
 function checkSimpleTables(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
   for (const match of file.source.matchAll(SIMPLE_TABLE_PATTERN)) {
     const tag = match[0];
-    if (!isStringArrayProp(tag, "headers")) {
+    if (!isNonEmptyStringArrayProp(tag, "headers")) {
       failures.push({
-        message: `${file.relativePath} has SimpleTable without a literal string-array headers prop`
+        message: `${file.relativePath} has SimpleTable without a non-empty literal string-array headers prop`
       });
     }
-    if (!isStringMatrixProp(tag, "rows")) {
+    if (!isNonEmptyStringMatrixProp(tag, "rows")) {
       failures.push({
-        message: `${file.relativePath} has SimpleTable without a literal string-matrix rows prop`
+        message: `${file.relativePath} has SimpleTable without a non-empty literal string-matrix rows prop`
       });
     }
   }
 }
 
-function isStringArrayProp(tag: string, prop: string): boolean {
+function isNonEmptyStringArrayProp(tag: string, prop: string): boolean {
   const value = jsonPropValue(tag, prop);
-  return Array.isArray(value) && value.every((item) => typeof item === "string");
+  return Array.isArray(value) && value.length > 0 && value.every((item) => typeof item === "string");
 }
 
-function isStringMatrixProp(tag: string, prop: string): boolean {
+function isNonEmptyStringMatrixProp(tag: string, prop: string): boolean {
   const value = jsonPropValue(tag, prop);
   return Array.isArray(value)
-    && value.every((row) => Array.isArray(row) && row.every((item) => typeof item === "string"));
+    && value.length > 0
+    && value.every((row) => Array.isArray(row) && row.length > 0 && row.every((item) => typeof item === "string"));
 }
 
 function jsonPropValue(tag: string, prop: string): unknown {
