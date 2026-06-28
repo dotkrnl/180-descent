@@ -74,6 +74,22 @@ describe("clean repo check", () => {
       }
     ]);
   });
+
+  it("flags any tracked ignored file", async () => {
+    const root = await createGitRoot();
+
+    await writeFile(path.join(root, ".gitignore"), ".dev.vars\n");
+    await writeFile(path.join(root, ".dev.vars"), "SECRET=value\n");
+    runGit(root, "add", ".gitignore");
+    runGit(root, "add", "--force", ".dev.vars");
+
+    expect(checkCleanRepo({ root })).toEqual([
+      {
+        path: ".dev.vars",
+        reason: "Tracked file matches .gitignore"
+      }
+    ]);
+  });
 });
 
 async function createGitRoot(): Promise<string> {

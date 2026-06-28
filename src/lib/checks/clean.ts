@@ -29,17 +29,38 @@ export function checkCleanRepo(options: CleanCheckOptions): CleanCheckFailure[] 
       failures.push({ path: relativePath, reason });
     }
   }
+  for (const trackedPath of trackedIgnoredPaths(options.root)) {
+    if (isForbiddenTrackedPath(trackedPath)) continue;
+    failures.push({
+      path: trackedPath,
+      reason: "Tracked file matches .gitignore"
+    });
+  }
   return failures;
 }
 
+function isForbiddenTrackedPath(trackedPath: string): boolean {
+  return FORBIDDEN_TRACKED_PATHS.some(([relativePath]) => (
+    trackedPath === relativePath || trackedPath.startsWith(`${relativePath}/`)
+  ));
+}
+
 function trackedForbiddenPaths(root: string): string[] {
-  const result = spawnSync("git", ["ls-files", "--", ...FORBIDDEN_TRACKED_PATHS.map(([relativePath]) => relativePath)], {
+  return gitLines(root, ["ls-files", "--", ...FORBIDDEN_TRACKED_PATHS.map(([relativePath]) => relativePath)]);
+}
+
+function trackedIgnoredPaths(root: string): string[] {
+  return gitLines(root, ["ls-files", "--ignored", "--cached", "--exclude-standard"]);
+}
+
+function gitLines(root: string, args: string[]): string[] {
+  const result = spawnSync("git", args, {
     cwd: root,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
   });
   if (result.status !== 0) {
-    throw new Error((result.stderr || result.stdout || `git ls-files exited ${result.status}`).trim());
+    throw new Error((result.stderr || result.stdout || `git ${args.join(" ")} exited ${result.status}`).trim());
   }
   return result.stdout
     .split(/\r?\n/)
