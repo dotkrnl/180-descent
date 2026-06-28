@@ -365,6 +365,10 @@ ${subtitleMarkup}
     } else if (hrefPath === staticPageUrl(config.locale, "syllabus")) {
       el.attr("href", `nav.xhtml${hash}`);
     } else if (href.startsWith("/")) {
+      if (config.singleDay) {
+        el.attr("href", siteHref(config.siteUrl, href));
+        return;
+      }
       throw new Error(`Unsupported internal EPUB link in ${selfHref}: ${href}`);
     }
   });
