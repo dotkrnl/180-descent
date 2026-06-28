@@ -61,6 +61,21 @@ describe("link checks", () => {
     ]);
   });
 
+  it("validates percent-encoded anchors against decoded element ids", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "_site/index.html"), [
+      '<main id="same page"></main>',
+      '<a href="#same%20page">same page encoded anchor</a>',
+      '<a href="/target/#target%20page">target encoded anchor</a>'
+    ].join("\n"));
+    await mkdir(path.join(root, "_site/target"), { recursive: true });
+    await writeFile(path.join(root, "_site/target/index.html"), '<main id="target page"></main>');
+
+    const failures = await checkLinks({ root });
+
+    expect(failures).toEqual([]);
+  });
+
   it("reports future links that still target published days", async () => {
     const root = await createFixtureRoot();
     await writeSecondContentDay(root);

@@ -76,7 +76,7 @@ function linkTarget(href?: string): { pathname: string; anchor?: string; samePag
   if (href.startsWith("#")) {
     return {
       pathname: "",
-      anchor: href.slice(1),
+      anchor: decodedFragment(href.slice(1)),
       samePage: true
     };
   }
@@ -86,8 +86,16 @@ function linkTarget(href?: string): { pathname: string; anchor?: string; samePag
   const parsed = new URL(href, "https://local.invalid");
   return {
     pathname: parsed.pathname,
-    anchor: parsed.hash ? parsed.hash.slice(1) : undefined
+    anchor: parsed.hash ? decodedFragment(parsed.hash.slice(1)) : undefined
   };
+}
+
+function decodedFragment(fragment: string): string {
+  try {
+    return decodeURIComponent(fragment);
+  } catch {
+    return fragment;
+  }
 }
 
 async function checkFutureLinks(root: string, daysDir: string): Promise<LinkCheckFailure[]> {
