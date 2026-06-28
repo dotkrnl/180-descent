@@ -171,7 +171,7 @@ function checkSnapshot(snapshot: PageSnapshot, errors: string[]): void {
   }
   if (!snapshot.lang) errors.push(`${snapshot.url} is missing html lang`);
   if (!snapshot.title) errors.push(`${snapshot.url} is missing title`);
-  if (!snapshot.h1 && !snapshot.route.endsWith(".xml")) errors.push(`${snapshot.url} is missing h1`);
+  if (!snapshot.h1) errors.push(`${snapshot.url} is missing h1`);
 }
 
 function compareSnapshots(base: PageSnapshot, compare: PageSnapshot, errors: string[]): void {
