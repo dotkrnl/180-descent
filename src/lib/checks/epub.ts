@@ -16,13 +16,21 @@ interface EpubCheckResult {
   errors: string[];
 }
 
-interface EpubEdition {
+interface BaseEpubEdition {
   file: string;
-  deepDive: boolean;
   appendixPatterns: RegExp[];
-  optionalAppendixLabel: RegExp | null;
   required: string[];
 }
+
+type EpubEdition = BaseEpubEdition & (
+  | {
+    deepDive: true;
+    optionalAppendixLabel: RegExp;
+  }
+  | {
+    deepDive: false;
+  }
+);
 
 const BOOK_REQUIRED = [
   "mimetype",
@@ -68,7 +76,6 @@ async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
       file: enStandard,
       deepDive: false,
       appendixPatterns: ENGLISH_DAY_ONE_APPENDIX_PATTERNS,
-      optionalAppendixLabel: null,
       required: BOOK_REQUIRED
     },
     {
@@ -82,7 +89,6 @@ async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
       file: zhStandard,
       deepDive: false,
       appendixPatterns: CHINESE_DAY_ONE_APPENDIX_PATTERNS,
-      optionalAppendixLabel: null,
       required: BOOK_REQUIRED
     },
     {
@@ -173,10 +179,6 @@ async function checkEpubEdition(root: string, edition: EpubEdition, errors: stri
 
 function checkDayOneAppendixContent(edition: EpubEdition, searchableDayOne: string, errors: string[]): void {
   if (edition.deepDive) {
-    if (!edition.optionalAppendixLabel) {
-      errors.push(`${edition.file} is configured as deep-dive but has no optional appendix label check`);
-      return;
-    }
     if (!edition.optionalAppendixLabel.test(searchableDayOne)) {
       errors.push(`${edition.file} is missing optional appendix label matching ${edition.optionalAppendixLabel}`);
     }
