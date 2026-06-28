@@ -205,6 +205,13 @@ describe("import check", () => {
       "<Hero />"
     ].join("\n"))).resolves.toEqual([]);
   });
+
+  it("does not consume body content after imports with trailing comments", async () => {
+    await expect(unusedDefaultImportNames([
+      'import Hero from "./Hero.astro"; // used below',
+      "<Hero />"
+    ].join("\n"))).resolves.toEqual([]);
+  });
 });
 
 async function unusedDefaultImportNames(source: string, relativePath = "src/app/Fixture.astro"): Promise<string[]> {

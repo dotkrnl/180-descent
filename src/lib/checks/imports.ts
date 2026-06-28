@@ -84,7 +84,8 @@ function importDeclarations(source: string): Array<{ text: string; range: [numbe
 }
 
 function isCompleteImportDeclaration(text: string): boolean {
-  return /\bfrom\s+["'][^"']+["']\s*;?\s*$/.test(text) || /^import\s+["'][^"']+["']\s*;?\s*$/.test(text.trim());
+  const statement = text.replace(/[ \t]*\/\/[^\r\n]*(?=\r?\n?$)/, "");
+  return /\bfrom\s+["'][^"']+["']\s*;?\s*$/.test(statement) || /^import\s+["'][^"']+["']\s*;?\s*$/.test(statement.trim());
 }
 
 function defaultImportName(importSource: string): string | null {
