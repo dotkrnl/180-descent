@@ -214,11 +214,11 @@ async function buildDayEpubs(config: DayEpubConfig): Promise<void> {
       meta: {
         ...config.meta,
         title: dayDocumentTitle(day, config),
-        epubIdentifier: `${config.meta.epubIdentifier}-${String(dayNumber(day)).padStart(3, "0")}`
+        epubIdentifier: `${config.meta.epubIdentifier}-${String(day.day).padStart(3, "0")}`
       },
       days: [day],
       introHtml: null,
-      output: dayArtifactName("epub", config.locale, dayPath(day)),
+      output: dayArtifactName("epub", config.locale, day.path),
       singleDay: true,
       includeDeepDive: true
     });
@@ -269,12 +269,12 @@ async function buildEpub(config: EpubConfig): Promise<void> {
   }
 
   for (const day of days) {
-    const htmlPath = path.join(config.siteDayDir, dayPath(day), "index.html");
+    const htmlPath = path.join(config.siteDayDir, day.path, "index.html");
     const title = dayDocumentTitle(day, config);
-    const xhtml = await pageToXhtml(htmlPath, title, dayXhtml(day), config, days, imageAssets);
-    oebps.file(dayXhtml(day), xhtml);
-    manifestItems.push(xhtmlManifestItem(`day${String(dayNumber(day)).padStart(3, "0")}`, dayXhtml(day), xhtml));
-    spine.push(`<itemref idref="day${String(dayNumber(day)).padStart(3, "0")}"/>`);
+    const xhtml = await pageToXhtml(htmlPath, title, day.xhtml, config, days, imageAssets);
+    oebps.file(day.xhtml, xhtml);
+    manifestItems.push(xhtmlManifestItem(`day${String(day.day).padStart(3, "0")}`, day.xhtml, xhtml));
+    spine.push(`<itemref idref="day${String(day.day).padStart(3, "0")}"/>`);
   }
 
   for (const image of imageAssets.values()) {
@@ -338,10 +338,10 @@ ${subtitleMarkup}
     if (!href) return;
     if (href.startsWith(config.dayUrlPrefix)) {
       const slug = href.slice(config.dayUrlPrefix.length).split("/")[0];
-      const day = days.find((candidate) => dayPath(candidate) === slug);
+      const day = days.find((candidate) => candidate.path === slug);
       if (day) {
         const hash = href.includes("#") ? `#${href.split("#")[1]}` : "";
-        el.attr("href", `${dayXhtml(day)}${hash}`);
+        el.attr("href", `${day.xhtml}${hash}`);
       } else {
         el.attr("href", "nav.xhtml");
       }
@@ -526,9 +526,9 @@ function navDocument(items: ArtifactBookDay[], config: EpubConfig): string {
     : "";
   const links = items.map((day) => {
     const label = config.meta.language.startsWith("zh")
-      ? `第 ${dayNumber(day)} 日：${escapeXml(dayTitle(day))}`
-      : `Day ${dayNumber(day)}: ${escapeXml(dayTitle(day))}`;
-    return `<li><a href="${dayXhtml(day)}">${label}</a></li>`;
+      ? `第 ${day.day} 日：${escapeXml(day.title)}`
+      : `Day ${day.day}: ${escapeXml(day.title)}`;
+    return `<li><a href="${day.xhtml}">${label}</a></li>`;
   }).join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
@@ -653,9 +653,9 @@ function titlePageDocument(config: Pick<EpubConfig, "meta">): string {
 
 function dayDocumentTitle(day: ArtifactBookDay, config: Pick<EpubConfig | DayEpubConfig, "meta" | "dayLabel">): string {
   if (config.meta.language.startsWith("zh")) {
-    return `${config.dayLabel} ${dayNumber(day)} 日：${dayTitle(day)}`;
+    return `${config.dayLabel} ${day.day} 日：${day.title}`;
   }
-  return `${config.dayLabel} ${dayNumber(day)}: ${dayTitle(day)}`;
+  return `${config.dayLabel} ${day.day}: ${day.title}`;
 }
 
 function appendixLabels(language = ""): {
@@ -681,20 +681,4 @@ function requiredZipFolder(zip: JSZip, name: string): JSZip {
   const folder = zip.folder(name);
   if (!folder) throw new Error(`Unable to create EPUB folder: ${name}`);
   return folder;
-}
-
-function dayNumber(day: ArtifactBookDay): number {
-  return day.day;
-}
-
-function dayPath(day: ArtifactBookDay): string {
-  return day.path;
-}
-
-function dayTitle(day: ArtifactBookDay): string {
-  return day.title;
-}
-
-function dayXhtml(day: ArtifactBookDay): string {
-  return day.xhtml;
 }
