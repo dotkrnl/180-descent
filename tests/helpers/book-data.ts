@@ -1,0 +1,31 @@
+export function validBookYaml(): string {
+  return [
+    "title: Fixture",
+    "subtitle: Fixture subtitle",
+    "deep_dive_subtitle: Fixture deep dive",
+    "authors: Fixture Author",
+    "human_editor:",
+    "  name: Editor",
+    "  url: https://example.com/editor",
+    "description: Fixture description",
+    "site_url: https://180d.io",
+    "repo: https://example.com/repo",
+    "language: en",
+    "publisher: Fixture Publisher",
+    "published_year: 2026",
+    "total_days: 180",
+    "epub_identifier: 11111111-1111-4111-8111-111111111111",
+    "zh:",
+    "  language: zh-Hans",
+    "  title: Fixture",
+    "  subtitle: Fixture subtitle",
+    "  deep_dive_subtitle: Fixture deep dive",
+    "  authors: Fixture Author",
+    "  translators: Fixture Translator",
+    "  human_editor:",
+    "    name: Editor",
+    "    url: https://example.com/editor",
+    "  description: Fixture description",
+    "  epub_identifier: 22222222-2222-4222-8222-222222222222"
+  ].join("\n");
+}

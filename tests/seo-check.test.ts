@@ -4,6 +4,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkSeo } from "@lib/checks/seo";
 import { bookDataFile } from "@lib/data/paths";
+import { validBookYaml } from "./helpers/book-data";
 
 describe("seo check", () => {
   it("accepts a minimal indexable page with required metadata", async () => {
@@ -169,7 +170,7 @@ async function createSiteRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-seo-check-"));
   await mkdir(path.join(root, "_site"), { recursive: true });
   await mkdir(path.join(root, "src/_data"), { recursive: true });
-  await writeFile(bookDataFile(root), "site_url: https://180d.io\n");
+  await writeFile(bookDataFile(root), validBookYaml());
   await writeFile(path.join(root, "_site/social.png"), "");
   await writeFile(path.join(root, "_site/favicon.ico"), "");
   await writeFile(path.join(root, "_site/apple-touch-icon.png"), "");

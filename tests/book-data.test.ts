@@ -4,10 +4,11 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { readBookData, readBookSiteUrl } from "@lib/data/book";
 import { bookDataFile } from "@lib/data/paths";
+import { validBookYaml } from "./helpers/book-data";
 
 describe("book data", () => {
-  it("loads the site URL from partial metadata", async () => {
-    const root = await createBookRoot("site_url: https://180d.io\n");
+  it("loads the site URL from full metadata", async () => {
+    const root = await createBookRoot(validBookYaml());
 
     await expect(readBookSiteUrl(root)).resolves.toBe("https://180d.io");
   });
@@ -30,6 +31,7 @@ describe("book data", () => {
     const root = await createBookRoot("site_url: https://180d.io\n");
 
     await expect(readBookData(root)).rejects.toThrow();
+    await expect(readBookSiteUrl(root)).rejects.toThrow();
   });
 
   it("rejects invalid URLs in full book metadata", async () => {
