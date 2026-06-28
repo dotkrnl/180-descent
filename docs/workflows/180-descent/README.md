@@ -272,8 +272,7 @@ line-by-line English.
      Simplified Chinese draft.
   2. Gemini second, through Antigravity CLI `agy` with
      `Gemini 3.5 Flash (High)`, for review, accuracy, terminology, and idiomatic
-     refinement. Use the legacy `gemini` CLI only when explicitly required or
-     when `agy` is unavailable.
+     refinement.
   3. GLM third, through `opencode` with `zhipuai-coding-plan/glm-5.1`, for a
      final consistency and language refinement pass.
 - Kimi drafting, Gemini review, and GLM refinement can be slow for full lesson
@@ -351,10 +350,8 @@ the English source at section boundaries into
 single appendix target before downstream review.
 
 After Kimi, run Gemini review and then GLM refinement on the combined temporary
-appendix. If `agy` requires interactive OAuth, try the legacy `gemini` CLI as the
-documented fallback; if both Gemini paths are unavailable, record the auth
-blocker in the work summary and compensate with a stricter local review for
-English residue, MDX structure, and terminology. If GLM hangs without writing,
+appendix. If `agy` requires interactive OAuth or another tool setup step, fix
+that setup before continuing the Chinese gate. If GLM hangs without writing,
 retry a narrower per-appendix pass once; if it still hangs, stop the session,
 record the blocker, and do not leave the process running.
 
