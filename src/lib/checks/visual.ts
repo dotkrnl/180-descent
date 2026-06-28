@@ -90,12 +90,18 @@ export async function checkVisual(options: VisualCheckOptions): Promise<VisualCh
   const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] }))
     .map((file) => urlForSiteFile(builtSiteDir, file))
     .sort();
-  const browser = await chromium.launch();
   const errors: string[] = [];
   const pages: Array<{ base: PageSnapshot; compare?: PageSnapshot; diffs?: Record<string, number> }> = [];
 
   await mkdir(outDir, { recursive: true });
 
+  if (!routes.length) {
+    errors.push("_site contains no HTML files");
+    await writeVisualReport(reportPath, options, routes, errors, pages);
+    return { errors, reportPath };
+  }
+
+  const browser = await chromium.launch();
   try {
     for (const route of routes) {
       for (const viewport of VIEWPORTS) {
@@ -121,6 +127,18 @@ export async function checkVisual(options: VisualCheckOptions): Promise<VisualCh
     await browser.close();
   }
 
+  await writeVisualReport(reportPath, options, routes, errors, pages);
+
+  return { errors, reportPath };
+}
+
+async function writeVisualReport(
+  reportPath: string,
+  options: VisualCheckOptions,
+  routes: string[],
+  errors: string[],
+  pages: Array<{ base: PageSnapshot; compare?: PageSnapshot; diffs?: Record<string, number> }>
+): Promise<void> {
   await writeFile(reportPath, JSON.stringify({
     baseUrl: options.baseUrl,
     compareUrl: options.compareUrl ?? null,
@@ -129,8 +147,6 @@ export async function checkVisual(options: VisualCheckOptions): Promise<VisualCh
     errors,
     pages
   }, null, 2));
-
-  return { errors, reportPath };
 }
 
 async function inspectPage(

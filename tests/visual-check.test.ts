@@ -1,5 +1,8 @@
+import { mkdir, mkdtemp, readFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { parseVisualCheckArgs } from "@lib/checks/visual";
+import { checkVisual, parseVisualCheckArgs } from "@lib/checks/visual";
 
 describe("visual check CLI args", () => {
   it("parses known value options", () => {
@@ -41,6 +44,25 @@ describe("visual check CLI args", () => {
         "Unknown option: --ignored",
         "Unexpected argument: extra"
       ]
+    });
+  });
+
+  it("fails empty built sites instead of producing an empty visual report", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-visual-check-"));
+    const outDir = path.join(root, "tmp/visual");
+    await mkdir(path.join(root, "_site"), { recursive: true });
+
+    const result = await checkVisual({
+      root,
+      baseUrl: "https://example.com",
+      outDir
+    });
+
+    expect(result.errors).toEqual(["_site contains no HTML files"]);
+    await expect(readFile(result.reportPath, "utf8").then(JSON.parse)).resolves.toMatchObject({
+      routes: [],
+      errors: ["_site contains no HTML files"],
+      pages: []
     });
   });
 });
