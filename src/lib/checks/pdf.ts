@@ -122,12 +122,13 @@ class PdfChecker {
   }
 
   private checkBookText(standardText: string, zhText: string): void {
-    for (const [label, text, pattern] of [
+    const checks: TextPatternCheck[] = [
       ["English PDF", standardText, /The Scientific Method/i],
       ["English PDF", standardText, /Probability as/i],
       ["Chinese PDF", zhText, /科学方法|证伪|概率/],
       ["Chinese PDF", zhText, /深入一百八十日/]
-    ] as TextPatternCheck[]) {
+    ];
+    for (const [label, text, pattern] of checks) {
       if (!pattern.test(text)) {
         this.errors.push(`${label} is missing core text matching ${pattern}`);
       }
