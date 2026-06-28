@@ -2,36 +2,39 @@ import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { readBookData, readBookSiteUrl } from "@lib/data/book";
+import { readBookData } from "@lib/data/book";
 import { bookDataFile } from "@lib/data/paths";
 import { validBookYaml } from "./helpers/book-data";
 
 describe("book data", () => {
-  it("loads the site URL from full metadata", async () => {
+  it("loads full metadata", async () => {
     const root = await createBookRoot(validBookYaml());
 
-    await expect(readBookSiteUrl(root)).resolves.toBe("https://180d.io");
-  });
-
-  it("rejects invalid site URLs in partial metadata", async () => {
-    const root = await createBookRoot("site_url: not-a-url\n");
-
-    await expect(readBookSiteUrl(root)).rejects.toThrow();
+    await expect(readBookData(root)).resolves.toMatchObject({
+      siteUrl: "https://180d.io",
+      title: "Fixture",
+      zh: {
+        language: "zh-Hans"
+      }
+    });
   });
 
   it("rejects site URLs that are not bare origins", async () => {
-    const root = await createBookRoot("site_url: https://180d.io/\n");
-    const pathRoot = await createBookRoot("site_url: https://180d.io/course\n");
+    const root = await createBookRoot(
+      validBookYaml().replace("site_url: https://180d.io", "site_url: https://180d.io/")
+    );
+    const pathRoot = await createBookRoot(
+      validBookYaml().replace("site_url: https://180d.io", "site_url: https://180d.io/course")
+    );
 
-    await expect(readBookSiteUrl(root)).rejects.toThrow("site_url must be an origin");
-    await expect(readBookSiteUrl(pathRoot)).rejects.toThrow("site_url must be an origin");
+    await expect(readBookData(root)).rejects.toThrow("site_url must be an origin");
+    await expect(readBookData(pathRoot)).rejects.toThrow("site_url must be an origin");
   });
 
   it("rejects incomplete full book metadata", async () => {
     const root = await createBookRoot("site_url: https://180d.io\n");
 
     await expect(readBookData(root)).rejects.toThrow();
-    await expect(readBookSiteUrl(root)).rejects.toThrow();
   });
 
   it("rejects invalid URLs in full book metadata", async () => {

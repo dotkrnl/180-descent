@@ -107,8 +107,3 @@ export async function readBookData(root: string): Promise<BookData> {
     }
   };
 }
-
-export async function readBookSiteUrl(root: string): Promise<string> {
-  const raw = bookDataSchema.parse(await readYamlFile(bookDataFile(root)));
-  return raw.site_url;
-}
