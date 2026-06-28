@@ -24,6 +24,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | peer review | 同行评议 | Process before publication; not a guarantee of truth. | 同行审查 when used inconsistently |
 | preprint | 预印本 | Label clearly when the evidential status matters. | 预发表稿 |
 | evidence status | 证据状态 | Use for status labeling and frontier judgment. | 证据等级 when no hierarchy is intended |
+| open question / open problem | 未决问题 | Use for unresolved research or course questions. | 开放问题 |
 | credence | 置信度 | Bayesian/epistemology context. | 信心度 |
 | justification | 证成 | Epistemology term. | 正当化 when inconsistent |
 | propositional knowledge | 命题知识 | Knowledge-that. | 陈述性知识 when inconsistent |
