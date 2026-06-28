@@ -242,15 +242,14 @@ function wrapSocialText(value: string, options: { maxLines: number; maxChars: nu
   const text = value.replace(/\s+/g, " ").trim();
   if (!text) return [];
 
-  const tokens = /[\u3400-\u9fff]/.test(text)
-    ? [...text]
-    : text.split(" ");
+  const isCjk = /[\u3400-\u9fff]/.test(text);
+  const joiner = isCjk ? "" : " ";
+  const tokens = isCjk ? [...text] : text.split(" ");
   const lines: string[] = [];
   let line = "";
 
   for (const token of tokens) {
-    const joiner = /[\u3400-\u9fff]/.test(text) ? "" : (line ? " " : "");
-    const candidate = `${line}${joiner}${token}`;
+    const candidate = line ? `${line}${joiner}${token}` : token;
     if (candidate.length > options.maxChars && line) {
       lines.push(line);
       line = token;
@@ -264,7 +263,7 @@ function wrapSocialText(value: string, options: { maxLines: number; maxChars: nu
     lines.push(line);
   }
 
-  if (lines.length && tokens.join(/[\u3400-\u9fff]/.test(text) ? "" : " ").length > lines.join(/[\u3400-\u9fff]/.test(text) ? "" : " ").length) {
+  if (lines.length && tokens.join(joiner).length > lines.join(joiner).length) {
     lines[lines.length - 1] = `${lines[lines.length - 1].replace(/\.{3}$/, "").trim()}...`;
   }
 
