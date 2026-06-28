@@ -5,6 +5,7 @@ import { compileCss } from "@lib/assets/css";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readCreditsData } from "@lib/data/credits";
+import { readSyllabusData } from "@lib/data/syllabus";
 import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import type { Locale } from "@lib/schemas/day";
@@ -286,6 +287,8 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
     failures.push({ message: "No registry days found" });
   }
 
+  await checkDayBlocks(options.root, registry.days, failures);
+
   for (const day of registry.days) {
     for (const body of Object.values(day.bodies)) {
       const localeData = day.manifest.locales[body.locale];
@@ -317,6 +320,33 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
   await checkParentMarkdownReferences(options.root, failures);
 
   return failures;
+}
+
+async function checkDayBlocks(
+  root: string,
+  days: Awaited<ReturnType<typeof loadContentRegistry>>["days"],
+  failures: ContentCheckFailure[]
+): Promise<void> {
+  const syllabus = await readSyllabusData(root, "en");
+  const syllabusBlocks = new Map<number, string>();
+  for (const block of syllabus.blocks) {
+    for (const day of block.days) {
+      syllabusBlocks.set(day.day, block.title);
+    }
+  }
+
+  for (const day of days) {
+    const expectedBlock = syllabusBlocks.get(day.manifest.day);
+    if (!expectedBlock) {
+      failures.push({
+        message: `${day.manifest.path} day ${day.manifest.day} is missing from syllabus-data.yaml`
+      });
+    } else if (day.manifest.block !== expectedBlock) {
+      failures.push({
+        message: `${day.manifest.path} block "${day.manifest.block}" does not match syllabus block "${expectedBlock}"`
+      });
+    }
+  }
 }
 
 async function checkInteractionScripts(

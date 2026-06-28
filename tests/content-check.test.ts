@@ -232,6 +232,27 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports day manifest blocks that do not match the syllabus", async () => {
+    const root = await createFixtureRoot();
+    await writeContentDay(root, {
+      block: "Wrong Block",
+      enTitle: "Fixture Day",
+      enSummary: "Fixture summary.",
+      enBody: body("Fixture Day"),
+      zhTitle: "夹具日",
+      zhSummary: "中文夹具摘要。",
+      zhBody: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: '001-fixture block "Wrong Block" does not match syllabus block "Fixture"'
+      }
+    ]);
+  });
+
   it("reports appendix web panels without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {
@@ -320,6 +341,7 @@ async function createFixtureRoot(): Promise<string> {
   await mkdir(path.join(root, "src/_data"), { recursive: true });
   await mkdir(path.join(root, "src/assets/scss"), { recursive: true });
   await writeFile(path.join(root, "src/_data/credits.yaml"), "fonts: []\nimages: []\n");
+  await writeFile(path.join(root, "src/_data/syllabus-data.yaml"), fixtureSyllabusYaml());
   await writeFile(path.join(root, "src/assets/scss/book.scss"), "@font-face { font-family: Fixture; }\n");
   return root;
 }
@@ -378,5 +400,37 @@ function body(title: string, locale: "en" | "zh" = "en"): string {
       ? '<StatusChip status={"ok"} label={"已确立"} />'
       : '<StatusChip status={"ok"} label={"established"} />',
     "<Sources></Sources>"
+  ].join("\n");
+}
+
+function fixtureSyllabusYaml(): string {
+  return [
+    "title:",
+    "  en: Fixture Syllabus",
+    "  zh: 夹具课程表",
+    "subtitle:",
+    "  en: Fixture subtitle",
+    "  zh: 夹具副标题",
+    "purpose:",
+    "  en: Fixture purpose",
+    "  zh: 夹具目的",
+    "method:",
+    "  en: Fixture method",
+    "  zh: 夹具方法",
+    "blocks:",
+    "  - id: I",
+    "    start_day: 1",
+    "    end_day: 1",
+    "    title:",
+    "      en: Fixture",
+    "      zh: 夹具",
+    "    summary:",
+    "      en: Fixture block",
+    "      zh: 夹具模块",
+    "    days:",
+    "      - day: 1",
+    "        title:",
+    "          en: Fixture Day",
+    "          zh: 夹具日"
   ].join("\n");
 }

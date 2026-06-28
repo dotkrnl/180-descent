@@ -10,6 +10,7 @@ export async function createEmptyContentRoot(prefix: string): Promise<string> {
 }
 
 interface ContentDayOptions {
+  block?: string;
   enTitle?: string;
   enSummary?: string;
   enBody?: string;
@@ -41,7 +42,7 @@ export async function writeContentDay(root: string, options: ContentDayOptions =
   await mkdir(dayDir, { recursive: true });
   const manifest = [
     "day: 1",
-    "block: Fixture",
+    `block: ${options.block ?? "Fixture"}`,
     "locales:",
     "  en:",
     `    title: ${enTitle}`,
