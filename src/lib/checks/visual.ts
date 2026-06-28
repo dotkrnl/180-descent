@@ -174,42 +174,44 @@ async function inspectPage(
 ): Promise<PageSnapshot> {
   const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
   const url = new URL(route, normalizedBaseUrl(baseUrl)).href;
-  const response = await page.goto(url, { waitUntil: "networkidle", timeout: 45000 });
-  const metrics = await page.evaluate(() => {
-    const doc = document.documentElement;
+  try {
+    const response = await page.goto(url, { waitUntil: "networkidle", timeout: 45000 });
+    const metrics = await page.evaluate(() => {
+      const doc = document.documentElement;
+      return {
+        lang: doc.getAttribute("lang") || "",
+        title: document.title.trim(),
+        h1: (document.querySelector("h1")?.textContent || "").replace(/\s+/g, " ").trim(),
+        clientWidth: doc.clientWidth,
+        scrollWidth: doc.scrollWidth,
+        scrollHeight: doc.scrollHeight
+      };
+    });
+    const screenshots: Record<string, string> = {};
+    await mkdir(outDir, { recursive: true });
+
+    for (const stop of SCROLL_STOPS) {
+      const y = scrollYForStop(stop, metrics.scrollHeight, viewport.height);
+      await page.evaluate(async (scrollY) => {
+        window.scrollTo(0, scrollY);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+      }, y);
+      const screenshotPath = path.join(outDir, `${visualRouteFileStem(route)}-${viewport.name}-${stop}.png`);
+      await page.screenshot({ path: screenshotPath });
+      screenshots[stop] = screenshotPath;
+    }
+
     return {
-      lang: doc.getAttribute("lang") || "",
-      title: document.title.trim(),
-      h1: (document.querySelector("h1")?.textContent || "").replace(/\s+/g, " ").trim(),
-      clientWidth: doc.clientWidth,
-      scrollWidth: doc.scrollWidth,
-      scrollHeight: doc.scrollHeight
+      route,
+      viewport: viewport.name,
+      url,
+      status: response?.status() ?? 0,
+      ...metrics,
+      screenshots
     };
-  });
-  const screenshots: Record<string, string> = {};
-  await mkdir(outDir, { recursive: true });
-
-  for (const stop of SCROLL_STOPS) {
-    const y = scrollYForStop(stop, metrics.scrollHeight, viewport.height);
-    await page.evaluate(async (scrollY) => {
-      window.scrollTo(0, scrollY);
-      await new Promise((resolve) => requestAnimationFrame(resolve));
-    }, y);
-    const screenshotPath = path.join(outDir, `${visualRouteFileStem(route)}-${viewport.name}-${stop}.png`);
-    await page.screenshot({ path: screenshotPath });
-    screenshots[stop] = screenshotPath;
+  } finally {
+    await page.close();
   }
-
-  await page.close();
-
-  return {
-    route,
-    viewport: viewport.name,
-    url,
-    status: response?.status() ?? 0,
-    ...metrics,
-    screenshots
-  };
 }
 
 function checkSnapshot(snapshot: PageSnapshot, errors: string[]): void {

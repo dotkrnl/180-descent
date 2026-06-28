@@ -108,23 +108,28 @@ export async function checkAccessibility(options: AccessibilityCheckOptions): Pr
   }
 
   const { server, origin } = await startStaticSiteServer(builtSiteDir, "Accessibility check");
-  const browser = await chromium.launch();
+  let browser: Awaited<ReturnType<typeof chromium.launch>> | null = null;
   const failures = [...staticFailures];
 
   try {
+    browser = await chromium.launch();
     const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
-    const page = await context.newPage();
-    for (const route of routes) {
-      await page.goto(`${origin}${route}`, { waitUntil: "networkidle" });
-      const results = await new AxeBuilder({ page })
-        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-        .analyze();
-      for (const violation of results.violations) {
-        failures.push(summarizeViolation(route, violation));
+    try {
+      const page = await context.newPage();
+      for (const route of routes) {
+        await page.goto(`${origin}${route}`, { waitUntil: "networkidle" });
+        const results = await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+          .analyze();
+        for (const violation of results.violations) {
+          failures.push(summarizeViolation(route, violation));
+        }
       }
+    } finally {
+      await context.close();
     }
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
     await closeServer(server);
   }
 

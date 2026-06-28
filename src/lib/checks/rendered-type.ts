@@ -45,67 +45,71 @@ export async function checkRenderedType(options: RenderedTypeCheckOptions): Prom
   }
 
   const { server, origin } = await startStaticSiteServer(builtSiteDir, "Rendered typography check");
-  const browser = await chromium.launch();
+  let browser: Awaited<ReturnType<typeof chromium.launch>> | null = null;
   const failures: RenderedTypeFailure[] = [];
 
   try {
+    browser = await chromium.launch();
     for (const route of routes) {
       for (const viewport of VIEWPORTS) {
         const page = await browser.newPage({ viewport });
-        await page.goto(new URL(route, origin).href, { waitUntil: "networkidle" });
-        await page.evaluate(() => {
-          for (const details of document.querySelectorAll("details")) {
-            details.setAttribute("open", "");
-          }
-        });
-
-        const minFontSize = viewport.name === "mobile" ? MIN_MOBILE_PANEL_TITLE_FONT_SIZE : MIN_PANEL_TITLE_FONT_SIZE;
-        const pageFailures = await page.evaluate(({ minFontSize, minHumpTextHeight, isMobile }) => {
-          const titleFailures = [...document.querySelectorAll<HTMLElement>(".panel .ptitle")].flatMap((element) => {
-            const style = getComputedStyle(element);
-            const rect = element.getBoundingClientRect();
-            if (style.display === "none" || style.visibility === "hidden" || rect.width === 0 || rect.height === 0) {
-              return [];
+        try {
+          await page.goto(new URL(route, origin).href, { waitUntil: "networkidle" });
+          await page.evaluate(() => {
+            for (const details of document.querySelectorAll("details")) {
+              details.setAttribute("open", "");
             }
-            const fontSize = Number.parseFloat(style.fontSize);
-            if (fontSize >= minFontSize) return [];
-            return [{
-              text: (element.textContent || "").replace(/\s+/g, " ").trim(),
-              value: fontSize,
-              minimum: minFontSize,
-              kind: "panel title font size"
-            }];
           });
 
-          const humpTextFailures = isMobile
-            ? [...document.querySelectorAll<SVGTextElement>(".complexity-hump text")].flatMap((element) => {
-                const rect = element.getBoundingClientRect();
-                if (rect.width === 0 || rect.height === 0) return [];
-                if (rect.height >= minHumpTextHeight) return [];
-                return [{
-                  text: (element.textContent || "").replace(/\s+/g, " ").trim(),
-                  value: rect.height,
-                  minimum: minHumpTextHeight,
-                  kind: "complexity-hump rendered SVG text height"
-                }];
-              })
-            : [];
+          const minFontSize = viewport.name === "mobile" ? MIN_MOBILE_PANEL_TITLE_FONT_SIZE : MIN_PANEL_TITLE_FONT_SIZE;
+          const pageFailures = await page.evaluate(({ minFontSize, minHumpTextHeight, isMobile }) => {
+            const titleFailures = [...document.querySelectorAll<HTMLElement>(".panel .ptitle")].flatMap((element) => {
+              const style = getComputedStyle(element);
+              const rect = element.getBoundingClientRect();
+              if (style.display === "none" || style.visibility === "hidden" || rect.width === 0 || rect.height === 0) {
+                return [];
+              }
+              const fontSize = Number.parseFloat(style.fontSize);
+              if (fontSize >= minFontSize) return [];
+              return [{
+                text: (element.textContent || "").replace(/\s+/g, " ").trim(),
+                value: fontSize,
+                minimum: minFontSize,
+                kind: "panel title font size"
+              }];
+            });
 
-          return [...titleFailures, ...humpTextFailures];
-        }, {
-          minFontSize,
-          minHumpTextHeight: MIN_MOBILE_HUMP_SVG_TEXT_HEIGHT,
-          isMobile: viewport.name === "mobile"
-        });
+            const humpTextFailures = isMobile
+              ? [...document.querySelectorAll<SVGTextElement>(".complexity-hump text")].flatMap((element) => {
+                  const rect = element.getBoundingClientRect();
+                  if (rect.width === 0 || rect.height === 0) return [];
+                  if (rect.height >= minHumpTextHeight) return [];
+                  return [{
+                    text: (element.textContent || "").replace(/\s+/g, " ").trim(),
+                    value: rect.height,
+                    minimum: minHumpTextHeight,
+                    kind: "complexity-hump rendered SVG text height"
+                  }];
+                })
+              : [];
 
-        for (const failure of pageFailures) {
-          failures.push({ route, viewport: viewport.name, ...failure });
+            return [...titleFailures, ...humpTextFailures];
+          }, {
+            minFontSize,
+            minHumpTextHeight: MIN_MOBILE_HUMP_SVG_TEXT_HEIGHT,
+            isMobile: viewport.name === "mobile"
+          });
+
+          for (const failure of pageFailures) {
+            failures.push({ route, viewport: viewport.name, ...failure });
+          }
+        } finally {
+          await page.close();
         }
-        await page.close();
       }
     }
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
     await closeServer(server);
   }
 
