@@ -76,7 +76,7 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 <ContentSection>
 ### 惊奇税：相对熵
 
-熵有一个关系密切的“亲戚”，也是科学中极有用的量。它回答的问题很尖锐：相信一个错误模型，会多消耗多少比特？假设现实从分布 p 中产生结果，而你把世界建模为 q。你每次都按 q 来预估惊奇度，但真实结果服从的是 p。由此增加的平均码长，就是<Term>相对熵 (relative entropy)</Term>，或称<Term>KL 散度 (Kullback–Leibler divergence)</Term>：
+熵有一个关系密切的「亲戚」，也是科学中极有用的量。它回答的问题很尖锐：相信一个错误模型，会多消耗多少比特？假设现实从分布 p 中产生结果，而你把世界建模为 q。你每次都按 q 来预估惊奇度，但真实结果服从的是 p。由此增加的平均码长，就是<Term>相对熵 (relative entropy)</Term>，或称<Term>KL 散度 (Kullback–Leibler divergence)</Term>：
 
 <Formula>
 <MathBlock latex={String.raw`D(p \| q) = \sum_i p_i \log_2 \frac{p_i}{q_i} \geq 0`} />
@@ -113,7 +113,7 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 
 ## 柯尔莫哥洛夫复杂度：信息与计算的交汇
 
-香农熵是信源（一个概率分布）的属性。但这里有一个它无法触及的谜题。考虑两个长度为一百万位的数字字符串：一个是投掷硬币产生的一百万个随机比特，另一个是 <MathInline latex={String.raw`\pi`} /> 的前一百万位数字。在香农看来，如果它们是从“均匀分布的数字信源”中抽样出来的，它们看起来承载着同样密度的信息。然而，<MathInline latex={String.raw`\pi`} /> 可以由一段相对很短的程序重新生成，而典型随机字符串几乎无法压缩。那个看似随机的字符串具有更高的描述复杂度。
+香农熵是信源（一个概率分布）的属性。但这里有一个它无法触及的谜题。考虑两个长度为一百万位的数字字符串：一个是投掷硬币产生的一百万个随机比特，另一个是 <MathInline latex={String.raw`\pi`} /> 的前一百万位数字。在香农看来，如果它们是从「均匀分布的数字信源」中抽样出来的，它们看起来承载着同样密度的信息。然而，<MathInline latex={String.raw`\pi`} /> 可以由一段相对很短的程序重新生成，而典型随机字符串几乎无法压缩。那个看似随机的字符串具有更高的描述复杂度。
 
 那个特征正是它的<Term>柯尔莫哥洛夫复杂度 (Kolmogorov complexity)</Term>（由索洛莫诺夫、柯尔莫哥洛夫与蔡廷在 20 世纪 60 年代独立提出）：输出该字符串的最短计算机程序的长度。它是面对计算本身而非概率模型的压缩极限，并且只在一个由所选通用机决定的加法常数以内与具体机器无关。<MathInline latex={String.raw`\pi`} /> 是极可压缩的（短程序，无限输出）；而典型的长随机字符串在精确计数意义上不可压缩——大多数字符串并没有比自身短多少的描述。这成为算法随机性的一种定义。
 
@@ -128,9 +128,9 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 
 主线页面曾承诺过，在指定信道容量之下，足够长的编码可以渐近实现错误率趋零——只要你能找到那组编码。这场寻宝之旅值得专门讲述，而它始于一个周五晚上在贝尔实验室里备受挫折的男人。
 
-1947 年，理查德·汉明 (Richard Hamming) 在周末可以使用一台继电器计算机，但它总是让他失望：每当它检测到输入中存在错误时，就会直接停机，静静等待周一才来上班的人类操作员。“如果机器能检测到错误，”汉明愤怒地质问，“为什么它不能定位并纠正它呢？”汉明码 (Hamming code)（发表于 1950 年）便诞生自这股怒火中，它是第一个真正的纠错码，并带来了一种从几何角度审视整个领域的全新方式。
+1947 年，理查德·汉明 (Richard Hamming) 在周末可以使用一台继电器计算机，但它总是让他失望：每当它检测到输入中存在错误时，就会直接停机，静静等待周一才来上班的人类操作员。「如果机器能检测到错误，」汉明愤怒地质问，「为什么它不能定位并纠正它呢？」汉明码 (Hamming code)（发表于 1950 年）便诞生自这股怒火中，它是第一个真正的纠错码，并带来了一种从几何角度审视整个领域的全新方式。
 
-其核心思想是<Term>汉明距离 (Hamming distance)</Term>：分隔两个码字所需的比特翻转次数。如果你的有效消息只有 `000` 和 `111`，它们在空间中的距离为 3。单比特错误会把 `000` 变成诸如 `010` 的字符串——但 `010` 仍然比 `111` 更接近 `000`，因此接收端可以通过多数表决来静默纠正它。在比特字符串的这一几何空间中，让你的有效码字拉开足够远的距离，你就能在每个码字周围划分出一个可以纠正错误的保护性“球体”。冗余，在这里被施以了几何学的诡计。
+其核心思想是<Term>汉明距离 (Hamming distance)</Term>：分隔两个码字所需的比特翻转次数。如果你的有效消息只有 `000` 和 `111`，它们在空间中的距离为 3。单比特错误会把 `000` 变成诸如 `010` 的字符串——但 `010` 仍然比 `111` 更接近 `000`，因此接收端可以通过多数表决来静默纠正它。在比特字符串的这一几何空间中，让你的有效码字拉开足够远的距离，你就能在每个码字周围划分出一个可以纠正错误的保护性「球体」。冗余，在这里被施以了几何学的诡计。
 
 </ContentSection>
 
@@ -203,18 +203,18 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 
 ## 计算的终极物理极限
 
-兰道尔原理限制了遗忘的能量。但还有其他阻碍——在速度上、在密度上，以及一块物质所能进行的计算总量的极限上——而追溯它们会将你引向真正令人目眩神迷的方向。2000 年，麻省理工学院的塞斯·劳埃德 (Seth Lloyd) 估算了一台“终极笔记本”：一公斤物质、一升体积，并以物理定律所允许的最高效率被组织起来（《自然》，2000 年 8 月 31 日）。这些是依赖模型的上界估计，不是可制造设备的规格。
+兰道尔原理限制了遗忘的能量。但还有其他阻碍——在速度上、在密度上，以及一块物质所能进行的计算总量的极限上——而追溯它们会将你引向真正令人目眩神迷的方向。2000 年，麻省理工学院的塞斯·劳埃德 (Seth Lloyd) 估算了一台「终极笔记本」：一公斤物质、一升体积，并以物理定律所允许的最高效率被组织起来（《自然》，2000 年 8 月 31 日）。这些是依赖模型的上界估计，不是可制造设备的规格。
 
-速度的上限源自量子力学本身。马戈勒斯-列维京定理 (Margolus–Levitin theorem)（1998 年）用高于基态的能量来约束系统穿过可区分状态的速度，而“操作”的精确定义也取决于具体计数约定。将一公斤静止质量的全部能量（<MathInline latex={String.raw`E=mc^2`} />，约为 <MathInline latex={String.raw`10^{17}`} /> 焦耳）注入劳埃德的理想化计算，你将得到一个约为每秒 <MathInline latex={String.raw`10^{51}`} /> 次操作的物理天花板。而内存的上限则来自对该系统所能占据的状态数的统计：约为 <MathInline latex={String.raw`10^{31}`} /> 比特。这些数字并非工程制造的目标；它们由基本常数 <MathInline latex={String.raw`c`} />、<MathInline latex={String.raw`\hbar`} /> 和 <MathInline latex={String.raw`k_B`} /> 决定。劳埃德也指出了显而易见的障碍：在这一极限下运行的设备会把一公斤物质变成约十亿度的等离子体；他说，这会是一个「封装上的难题」。
+速度的上限源自量子力学本身。马戈勒斯-列维京定理 (Margolus–Levitin theorem)（1998 年）用高于基态的能量来约束系统穿过可区分状态的速度，而「操作」的精确定义也取决于具体计数约定。将一公斤静止质量的全部能量（<MathInline latex={String.raw`E=mc^2`} />，约为 <MathInline latex={String.raw`10^{17}`} /> 焦耳）注入劳埃德的理想化计算，你将得到一个约为每秒 <MathInline latex={String.raw`10^{51}`} /> 次操作的物理天花板。而内存的上限则来自对该系统所能占据的状态数的统计：约为 <MathInline latex={String.raw`10^{31}`} /> 比特。这些数字并非工程制造的目标；它们由基本常数 <MathInline latex={String.raw`c`} />、<MathInline latex={String.raw`\hbar`} /> 和 <MathInline latex={String.raw`k_B`} /> 决定。劳埃德也指出了显而易见的障碍：在这一极限下运行的设备会把一公斤物质变成约十亿度的等离子体；他说，这会是一个「封装上的难题」。
 
 <Aside>
 <BlockTitle>信息存在于表面</BlockTitle>
 
-重力提供了一个最深奥的线索，暗示信息在最底层与物理学交织在一起。贝肯斯坦界限 (Bekenstein bound)（1981 年）本质上是能量—半径熵界：<MathInline latex={String.raw`S \le 2\pi k_B E R/(\hbar c)`} />。当引入引力坍缩和黑洞熵时，面积标度才进入故事：黑洞使相关界限达到饱和，其熵与事件视界面积成正比。这种怪异性——引力区域的最大信息量可以受边界控制——成为了全息原理（由 't Hooft、Susskind 在 20 世纪 90 年代提出） <StatusChip status={"hint"} label={"前沿理论猜想，尚未证实"} printLabel={"有前景"} /> 的温床。在全息对偶适用的理论中，一个引力体可以拥有较低维的边界描述；这比“我们的宇宙编码在遥远二维表面上”要微妙得多。它也引发了黑洞信息悖论，我们将在第 40 日正面对抗它。
+重力提供了一个最深奥的线索，暗示信息在最底层与物理学交织在一起。贝肯斯坦界限 (Bekenstein bound)（1981 年）本质上是能量—半径熵界：<MathInline latex={String.raw`S \le 2\pi k_B E R/(\hbar c)`} />。当引入引力坍缩和黑洞熵时，面积标度才进入故事：黑洞使相关界限达到饱和，其熵与事件视界面积成正比。这种怪异性——引力区域的最大信息量可以受边界控制——成为了全息原理（由 't Hooft、Susskind 在 20 世纪 90 年代提出） <StatusChip status={"hint"} label={"前沿理论猜想，尚未证实"} printLabel={"有前景"} /> 的温床。在全息对偶适用的理论中，一个引力体可以拥有较低维的边界描述；这比「我们的宇宙编码在遥远二维表面上」要微妙得多。它也引发了黑洞信息悖论，我们将在第 40 日正面对抗它。
 
 </Aside>
 
-把这套物理上限推到宇宙尺度，你可以发问：自大爆炸以来，整个宇宙已经计算了多少？劳埃德 2002 年的估计约为：在 <MathInline latex={String.raw`10^{90}`} /> 个普通物质比特上进行了 <MathInline latex={String.raw`10^{120}`} /> 次基本操作；如果计入引力自由度，可容纳的信息量还会高得多。这固然是一个极其巨大的数字，但是有限的。现实本身所执行的计算量存在一个硬性的、可数的上限。这是否意味着宇宙字面上就是一个计算机，仍是一个充满争议的生动阐释 <StatusChip status={"bad"} label={"存在争议——仅为解释，而非结论"} printLabel={"有争议／炒作风险"} />，它是主线页面所标记的“万物源于比特”这一过度解读的近亲。数值界限来自物理；形而上学则是自选的。
+把这套物理上限推到宇宙尺度，你可以发问：自大爆炸以来，整个宇宙已经计算了多少？劳埃德 2002 年的估计约为：在 <MathInline latex={String.raw`10^{90}`} /> 个普通物质比特上进行了 <MathInline latex={String.raw`10^{120}`} /> 次基本操作；如果计入引力自由度，可容纳的信息量还会高得多。这固然是一个极其巨大的数字，但是有限的。现实本身所执行的计算量存在一个硬性的、可数的上限。这是否意味着宇宙字面上就是一个计算机，仍是一个充满争议的生动阐释 <StatusChip status={"bad"} label={"存在争议——仅为解释，而非结论"} printLabel={"有争议／炒作风险"} />，它是主线页面所标记的「万物源于比特」这一过度解读的近亲。数值界限来自物理；形而上学则是自选的。
 
 </ContentSection>
 
@@ -236,10 +236,10 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 
 香农思想的隐秘力量在于，信息一旦化为一个数字，它便不再专属电信通信领域，而开始出现在处理不确定性、多样性或惊奇度的每一个学科之中。以下是对该线索延伸范围的快速巡览，每一项都是通往后文课题的入口：
 
-- 在生态学中，<Term>香农多样性指数 (Shannon diversity index)</Term>——同样是那个 H = −Σ p log p——用于衡量生物多样性：热带雨林具有极高的熵（物种繁多且分布均匀），而单作物农田的熵几乎为零。这正是惊奇度被应用在“这属于哪个物种？”上的体现。
+- 在生态学中，<Term>香农多样性指数 (Shannon diversity index)</Term>——同样是那个 H = −Σ p log p——用于衡量生物多样性：热带雨林具有极高的熵（物种繁多且分布均匀），而单作物农田的熵几乎为零。这正是惊奇度被应用在「这属于哪个物种？」上的体现。
 - 在机器学习中，自回归语言模型的预训练通常最小化经验性的逐词元交叉熵。<Term>困惑度 (perplexity)</Term> 是这一平均损失的指数形式，用来衡量模型在指定数据集上的预测拟合程度，但它并不是模型质量的完整度量。指令微调、偏好优化、强化学习、蒸馏和多模态训练都可能使用其他目标。
 - 在生物学中，DNA 是一个四字母编码，每碱基携带约 2 比特的信息——遗传在此被视作字面意义上的数字信息存储，这一框架将直接在第 77 日引入中心法则，并在第 87–90 日探寻生命的起源。
-- 在物理学中，我们今天所定义的信息熵与热机中的热力学熵被发现——或许——是同一种东西，这也是主线页面所标注的问题，且第 33 日将作为“时间之矢”重新讨论它。
+- 在物理学中，我们今天所定义的信息熵与热机中的热力学熵被发现——或许——是同一种东西，这也是主线页面所标注的问题，且第 33 日将作为「时间之矢」重新讨论它。
 - 在生命本身中，薛定谔关于有机体通过摄入「负熵」（Brillouin 后来称之为 negentropy）来维持生存的思想是信息热力学的雏形——这正是第 83–85 日所围绕的核心谜题，届时今天所学的 <MathInline latex={String.raw`k_B T \ln 2`} /> 将以细胞内部热力学耗散的形式再次出现。
 
 这正是该主题为何在课程中处于目前位置的真实原因，即在 180 天中仅排第七。信息正是因为一旦被度量，便拒绝被禁锢在自身的领域，才与能量、演化、涌现和计算一同，成为了这门课程的五条核心线索之一。它是整张知识地图的结缔组织。
@@ -280,7 +280,7 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 1. Holevo, A. S. (1973). "Bounds for the quantity of information transmitted by a quantum communication channel." *Problems of Information Transmission* 9: 177–183. <Meta>—— 量子系综中可取得的经典信息；普通无辅助量子比特通信受到资源限制。</Meta>
 1. Bennett, C. H. (1973). "Logical Reversibility of Computation." *IBM Journal of Research and Development* 17(6): 525–532. <Meta>—— 可逆计算；包含 Fredkin 与 Toffoli (1982) 可逆逻辑门。</Meta>
 1. Margolus, N. &amp; Levitin, L. B. (1998). "The maximum speed of dynamical evolution." *Physica D* 120: 188–195. <Meta>—— 量子速度极限，<MathInline latex={String.raw`\sim 2E/(\pi\hbar)`} />。</Meta>
-1. Lloyd, S. (2000). "Ultimate physical limits to computation." *Nature* 406: 1047–1054 (31 Aug 2000). <Meta>doi:10.1038/35023282 —— “终极笔记本”：~<MathInline latex={String.raw`10^{51}`} /> 次操作/秒，~<MathInline latex={String.raw`10^{31}`} /> 比特。</Meta> [doi.org/10.1038/35023282](https://doi.org/10.1038/35023282) · Lloyd, S. (2002). "Computational capacity of the universe." *Physical Review Letters* 88: 237901. <Meta>—— ~<MathInline latex={String.raw`10^{120}`} /> 次操作，~<MathInline latex={String.raw`10^{90}`} /> 个普通物质比特。</Meta>
+1. Lloyd, S. (2000). "Ultimate physical limits to computation." *Nature* 406: 1047–1054 (31 Aug 2000). <Meta>doi:10.1038/35023282 —— 「终极笔记本」：~<MathInline latex={String.raw`10^{51}`} /> 次操作/秒，~<MathInline latex={String.raw`10^{31}`} /> 比特。</Meta> [doi.org/10.1038/35023282](https://doi.org/10.1038/35023282) · Lloyd, S. (2002). "Computational capacity of the universe." *Physical Review Letters* 88: 237901. <Meta>—— ~<MathInline latex={String.raw`10^{120}`} /> 次操作，~<MathInline latex={String.raw`10^{90}`} /> 个普通物质比特。</Meta>
 1. Bekenstein, J. D. (1981). "Universal upper bound on the entropy-to-energy ratio…" *Physical Review D* 23: 287. <Meta>—— 能量-半径熵界；结合霍金的黑洞熵，成为后来全息论证的源头之一。[全息原理：前沿理论猜想，尚未证实。]</Meta>
 1. Brillouin, L. (1956). *Science and Information Theory.* Academic Press. <Meta>—— 负熵；测量的信息热力学问题（后由兰道尔-贝内特完善）。</Meta>
 1. Soni, J. &amp; Goodman, R. (2017). *A Mind at Play.* Simon &amp; Schuster. <Meta>—— 香农生平：忒修斯小鼠、终极机器、与爱德华·索普合作的轮盘赌计算机、骑独轮车抛球杂耍。</Meta>

@@ -27,6 +27,8 @@ type JsonPropValue =
   | null;
 
 const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
+const CHINESE_TRANSLATION_CONTENT_DIRS = ["src/content", "src/app/content"] as const;
+const CHINESE_CURLY_DOUBLE_QUOTE_PATTERN = /[“”]/;
 const STATUS_VALUES = new Set(["ok", "hint", "bad"]);
 const STATUS_COMPONENT_PATTERN = /<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*>/g;
 const SIMPLE_TABLE_PATTERN = /<SimpleTable\b[\s\S]*?(?:\/>|<\/SimpleTable>)/g;
@@ -327,6 +329,7 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
   await checkInteractionScripts(options.root, registry.days, failures);
   await checkImageCredits(options.root, failures);
   await checkCssFonts(options.root, failures);
+  await checkChineseQuoteStyle(options.root, failures);
   await checkParentMarkdownReferences(options.root, failures);
 
   return failures;
@@ -780,6 +783,28 @@ async function checkCssFonts(root: string, failures: ContentCheckFailure[]): Pro
   if (!css.includes("@font-face")) {
     failures.push({ message: "CSS does not declare local fonts" });
   }
+}
+
+async function checkChineseQuoteStyle(root: string, failures: ContentCheckFailure[]): Promise<void> {
+  for (const relativeDir of CHINESE_TRANSLATION_CONTENT_DIRS) {
+    const directory = path.join(root, relativeDir);
+    if (!await pathExists(directory)) continue;
+
+    for (const file of await walkFiles(directory, { exts: ".mdx", ignoredDirNames: [] })) {
+      if (!isChineseTranslationMdx(file)) continue;
+
+      const source = stripFencedCodeBlocks(await readFile(file, "utf8"));
+      if (!CHINESE_CURLY_DOUBLE_QUOTE_PATTERN.test(source)) continue;
+
+      failures.push({
+        message: `${toPosixRelative(root, file)} contains curly double quotes; use 「」 in Chinese translation content`
+      });
+    }
+  }
+}
+
+function isChineseTranslationMdx(file: string): boolean {
+  return path.basename(file) === "zh.mdx" || file.endsWith(".zh.mdx");
 }
 
 async function checkParentMarkdownReferences(root: string, failures: ContentCheckFailure[]): Promise<void> {

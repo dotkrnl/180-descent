@@ -128,6 +128,46 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports curly double quotes in Chinese translation content", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        "English “quotes” are allowed here."
+      ].join("\n"),
+      zh: [
+        body("夹具日", "zh"),
+        "中文“引号”需要替换。"
+      ].join("\n")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/zh.mdx contains curly double quotes; use 「」 in Chinese translation content"
+      }
+    ]);
+  });
+
+  it("reports curly double quotes in standalone Chinese app content", async () => {
+    const root = await createFixtureRoot();
+    await mkdir(path.join(root, "src/app/content"), { recursive: true });
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: body("夹具日", "zh")
+    });
+    await writeFile(path.join(root, "src/app/content/introduction.zh.mdx"), "介绍“引号”。");
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/app/content/introduction.zh.mdx contains curly double quotes; use 「」 in Chinese translation content"
+      }
+    ]);
+  });
+
   it("reports invalid status component values", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {
