@@ -46,7 +46,7 @@ const TOOLS = {
   node: {
     label: "Node.js",
     usedBy: "all build/check scripts",
-    installHint: "Install the project Node version, then run npm install.",
+    installHint: "Install the project Node version, then run rtk npm install.",
     check() {
       return process.version;
     }

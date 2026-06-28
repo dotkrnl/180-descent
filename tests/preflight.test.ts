@@ -50,6 +50,18 @@ describe("typed preflight", () => {
     expect(formatPreflightFailure(result.missing)).toContain("Unknown tool: missing-tool-fixture");
   });
 
+  it("formats install hints with project command prefixes", () => {
+    const message = formatPreflightFailure([{
+      name: "node",
+      label: "Node.js",
+      usedBy: "all build/check scripts",
+      installHint: "Install the project Node version, then run rtk npm install.",
+      error: new Error("missing")
+    }]);
+
+    expect(message).toContain("install:   Install the project Node version, then run rtk npm install.");
+  });
+
   it("throws typed errors when required tools are missing", () => {
     expect(() => checkTools(["missing-tool-fixture"])).toThrow(PreflightError);
   });
