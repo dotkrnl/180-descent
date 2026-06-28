@@ -44,7 +44,7 @@ const REDUNDANT_TERM_TIP_PATTERN =
 const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".scss", ".yaml", ".yml"]);
 const CREDITED_IMAGE_EXTS = new Set([".jpg", ".jpeg", ".png", ".svg", ".webp"]);
 const GENERATED_REFERENCE_CHECK_IGNORES = [".astro", "_site", "node_modules", "fonts", "generated", "tmp"];
-const PARENT_MARKDOWN_PATTERN = /\.\.\/[^\s"'`)]+\.md\b/;
+const PARENT_MARKDOWN_PATTERN = /\.\.\/[^\s"'`)]+\.mdx?\b/;
 const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<header class=["']hero wrap["']>/, "use <Hero>"],
   [/<\/header>/, "use </Hero>"],

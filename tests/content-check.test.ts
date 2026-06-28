@@ -369,7 +369,10 @@ describe("content check", () => {
       zh: body("夹具日", "zh")
     });
     await writeFile(path.join(root, "tmp/generated.md"), "[scratch](../outside.md)");
-    await writeFile(path.join(root, "src/app/source.md"), "[bad](../outside.md)");
+    await writeFile(path.join(root, "src/app/source.md"), [
+      "[bad](../outside.md)",
+      "import Outside from '../outside.mdx';"
+    ].join("\n"));
 
     const failures = await checkContent({ root });
 
