@@ -2,7 +2,7 @@ import { z } from "zod";
 import { futureLinksDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
 
-export interface FutureLinkEntry {
+interface FutureLinkEntry {
   id: string;
   from_day: number;
   target_day: number;

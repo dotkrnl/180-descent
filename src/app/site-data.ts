@@ -15,7 +15,7 @@ export interface ContentDay {
   url: string;
 }
 
-export interface UpcomingSyllabusDay extends SyllabusDay {
+interface UpcomingSyllabusDay extends SyllabusDay {
   block: string;
   blockId: string;
 }
