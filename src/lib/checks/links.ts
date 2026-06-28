@@ -3,6 +3,7 @@ import * as cheerio from "cheerio";
 import { builtHtmlFiles } from "@lib/checks/built-site";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
+import { readBookData } from "@lib/data/book";
 import { readFutureLinksData } from "@lib/data/future-links";
 import { toPosixRelative } from "@lib/fs/path";
 import { pathExists } from "@lib/fs/walk";
@@ -24,6 +25,7 @@ interface HtmlDocument {
 
 export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFailure[]> {
   const { builtSiteDir, htmlFiles } = await builtHtmlFiles(options.root, { required: true });
+  const siteUrl = (await readBookData(options.root)).siteUrl;
   const daysDir = contentDaysDir(options.root);
   const failures: LinkCheckFailure[] = [];
   if (!htmlFiles.length) {
@@ -36,7 +38,7 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
     const currentUrl = urlForSiteFile(builtSiteDir, file);
     for (const a of $("a[href]").toArray()) {
       const href = $(a).attr("href");
-      const targetRef = linkTarget(href, currentUrl);
+      const targetRef = linkTarget(href, currentUrl, siteUrl);
       if (!targetRef) continue;
 
       const { pathname, anchor } = targetRef;
@@ -71,15 +73,24 @@ async function loadHtmlDocument(file: string): Promise<HtmlDocument> {
   return { file, $, ids };
 }
 
-function linkTarget(href: string | undefined, currentUrl: string): { pathname: string; anchor?: string } | null {
+function linkTarget(href: string | undefined, currentUrl: string, siteUrl: string): { pathname: string; anchor?: string } | null {
   if (!href) return null;
-  if (href.startsWith("//") || /^[a-z][a-z0-9+.-]*:/i.test(href)) return null;
 
-  const parsed = new URL(href, `https://local.invalid${currentUrl}`);
+  const parsed = parseHref(href, currentUrl, siteUrl);
+  if (!parsed || parsed.origin !== siteUrl) return null;
   return {
     pathname: parsed.pathname,
     anchor: parsed.hash ? decodedFragment(parsed.hash.slice(1)) : undefined
   };
+}
+
+function parseHref(href: string, currentUrl: string, siteUrl: string): URL | null {
+  try {
+    if (href.startsWith("//")) return new URL(`https:${href}`);
+    return new URL(href, `${siteUrl}${currentUrl}`);
+  } catch {
+    return null;
+  }
 }
 
 function decodedFragment(fragment: string): string {

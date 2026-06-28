@@ -3,7 +3,8 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkLinks } from "@lib/checks/links";
-import { futureLinksDataFile } from "@lib/data/paths";
+import { bookDataFile, futureLinksDataFile } from "@lib/data/paths";
+import { validBookYaml } from "./helpers/book-data";
 import { writeContentDay } from "./helpers/content-root";
 
 describe("link checks", () => {
@@ -48,6 +49,8 @@ describe("link checks", () => {
       '<main id="present"></main>',
       '<a href="/target/?from=index#present">target with query</a>',
       '<a href="/target#absent">slashless target missing anchor</a>',
+      '<a href="https://180d.io/absolute-missing/">absolute same-site missing</a>',
+      '<a href="https://example.com/absolute-missing/">absolute external missing</a>',
       '<a href="/bad-%zz-path">malformed path</a>',
       '<a href="/../outside/">escaped path</a>',
       '<a href="#missing">same-page missing</a>',
@@ -61,6 +64,7 @@ describe("link checks", () => {
 
     expect(failures.map((failure) => failure.message)).toEqual([
       'Missing anchor /target#absent (anchor "absent" not found in _site/target/index.html) referenced from _site/index.html',
+      "Broken internal link https://180d.io/absolute-missing/ in _site/index.html",
       "Broken internal link /bad-%zz-path in _site/index.html",
       "Broken internal link /../outside/ in _site/index.html",
       'Missing anchor #missing (anchor "missing" not found in _site/index.html) referenced from _site/index.html'
@@ -197,6 +201,7 @@ async function createFixtureRoot(): Promise<string> {
   await mkdir(path.join(root, "_site"), { recursive: true });
   await mkdir(path.join(root, "src/_data"), { recursive: true });
   await writeContentDay(root);
+  await writeFile(bookDataFile(root), validBookYaml());
   await writeFile(futureLinksDataFile(root), "[]\n");
   return root;
 }
