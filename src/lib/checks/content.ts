@@ -710,19 +710,17 @@ function checkArtifactComponentContract(file: RegistryContentFile, failures: Con
 
 function countWebOnlyPanels(source: string): number {
   return [...source.matchAll(/<Panel\b[^>]*>/g)]
-    .filter((match) => quotedAttr(match[0], "class")?.split(/\s+/).includes("web-only"))
+    .filter((match) => literalStringPropValue(match[0], "class")?.split(/\s+/).includes("web-only"))
     .length;
 }
 
 function countStaticArtifactAlternates(source: string): number {
   return [...source.matchAll(/<FormatOnly\b[^>]*>/g)]
-    .filter((match) => quotedAttr(match[0], "media") === "print-epub" && quotedAttr(match[0], "variant") === "alternate")
+    .filter((match) => {
+      const tag = match[0];
+      return literalStringPropValue(tag, "media") === "print-epub" && literalStringPropValue(tag, "variant") === "alternate";
+    })
     .length;
-}
-
-function quotedAttr(tag: string, name: string): string | null {
-  const match = tag.match(new RegExp(`\\b${name}=(["'])(.*?)\\1`));
-  return match ? match[2] : null;
 }
 
 async function checkCssFonts(root: string, failures: ContentCheckFailure[]): Promise<void> {
