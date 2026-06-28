@@ -166,8 +166,8 @@ function isDayScopedClass(className: string): boolean {
 
 function classNames(block: string): Set<string> {
   const out = new Set<string>();
-  for (const match of block.matchAll(/class(?:Name)?="([^"]+)"/g)) {
-    for (const className of match[1].trim().split(/\s+/)) {
+  for (const match of block.matchAll(/class(?:Name)?=(["'])(.*?)\1/g)) {
+    for (const className of match[2].trim().split(/\s+/)) {
       if (className) out.add(className);
     }
   }
