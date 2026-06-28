@@ -2,6 +2,7 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
+import { toError } from "@lib/errors";
 
 type ToolCategory = "durable-required";
 
@@ -307,8 +308,4 @@ function playwrightBrowserName(executable: string): string {
     .split(path.sep)
     .find((part) => /^chromium(?:_headless_shell)?-\d+$/.test(part))
     ?? executable;
-}
-
-function toError(error: unknown): Error {
-  return error instanceof Error ? error : new Error(String(error));
 }

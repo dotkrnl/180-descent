@@ -16,6 +16,7 @@ import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 import { readBookData, type BookData, type HumanEditorData } from "@lib/data/book";
 import { syllabusDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
+import { toError } from "@lib/errors";
 import { isPathInside } from "@lib/fs/path";
 import type { Locale } from "@lib/schemas/day";
 import { siteDayDir } from "@lib/static-site/routes";
@@ -1760,8 +1761,4 @@ function latexLogIssues(log: string): string[] {
   }
 
   return issues;
-}
-
-function toError(error: unknown): Error {
-  return error instanceof Error ? error : new Error(String(error));
 }
