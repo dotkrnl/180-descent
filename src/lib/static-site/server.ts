@@ -2,6 +2,7 @@ import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import http, { type Server } from "node:http";
 import path from "node:path";
+import { isPathUnavailableError } from "@lib/fs/errors";
 import { contentType, siteFileForUrlPath } from "@lib/static-site/url";
 
 interface StaticSiteServer {
@@ -57,7 +58,8 @@ async function resolveStaticFilePath(filePath: string): Promise<string | null> {
       return resolveStaticFilePath(path.join(filePath, "index.html"));
     }
     return filePath;
-  } catch {
+  } catch (error) {
+    if (!isPathUnavailableError(error)) throw error;
     return null;
   }
 }

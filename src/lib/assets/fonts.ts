@@ -4,6 +4,7 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import { promisify } from "node:util";
 import { cjkFontsDir, fontsDir, generatedScssFile, katexFontsDir, pdfFontsDir } from "@lib/assets/paths";
+import { isPathUnavailableError } from "@lib/fs/errors";
 
 const require = createRequire(import.meta.url);
 const execFileAsync = promisify(execFile);
@@ -139,7 +140,8 @@ async function isFresh(output: string, source: string): Promise<boolean> {
   try {
     const [outputStat, sourceStat] = await Promise.all([stat(output), stat(source)]);
     return outputStat.mtimeMs >= sourceStat.mtimeMs;
-  } catch {
+  } catch (error) {
+    if (!isPathUnavailableError(error)) throw error;
     return false;
   }
 }
