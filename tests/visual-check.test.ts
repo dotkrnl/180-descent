@@ -67,6 +67,18 @@ describe("visual check CLI args", () => {
     });
   });
 
+  it("reports invalid base and compare URLs", () => {
+    expect(parseVisualCheckArgs([
+      "--base", "localhost:4321",
+      "--compare", "/preview"
+    ])).toEqual({
+      errors: [
+        "--base must be an absolute http(s) URL",
+        "--compare must be an absolute http(s) URL"
+      ]
+    });
+  });
+
   it("fails empty built sites instead of producing an empty visual report", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-visual-check-"));
     const outDir = path.join(root, "tmp/visual");

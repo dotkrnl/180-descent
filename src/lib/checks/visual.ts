@@ -69,7 +69,10 @@ export function parseVisualCheckArgs(argv: string[]): VisualCheckCliArgs {
       continue;
     }
 
-    if (name === "--base" && out.baseUrl !== undefined) {
+    const urlError = name === "--base" || name === "--compare" ? visualUrlError(name, value) : null;
+    if (urlError) {
+      out.errors.push(urlError);
+    } else if (name === "--base" && out.baseUrl !== undefined) {
       out.errors.push("--base was provided more than once");
     } else if (name === "--compare" && out.compareUrl !== undefined) {
       out.errors.push("--compare was provided more than once");
@@ -86,6 +89,14 @@ export function parseVisualCheckArgs(argv: string[]): VisualCheckCliArgs {
   }
 
   return out;
+}
+
+function visualUrlError(option: string, value: string): string | null {
+  try {
+    const url = new URL(value);
+    if (url.protocol === "http:" || url.protocol === "https:") return null;
+  } catch {}
+  return `${option} must be an absolute http(s) URL`;
 }
 
 export async function checkVisual(options: VisualCheckOptions): Promise<VisualCheckResult> {
