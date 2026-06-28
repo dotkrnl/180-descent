@@ -166,7 +166,12 @@ describe("content check", () => {
     await writeFile(path.join(root, "src/_data/credits.yaml"), [
       "fonts: []",
       "images:",
-      "  - asset: /assets/images/open-license/missing.jpg"
+      "  - title: Missing Image",
+      "    creator: Fixture Creator",
+      "    source: https://example.com/missing.jpg",
+      "    license: CC BY 4.0",
+      "    asset: /assets/images/open-license/missing.jpg",
+      "    notes: Fixture notes."
     ].join("\n"));
     await writeRegistryDay(root, {
       en: body("Fixture Day"),

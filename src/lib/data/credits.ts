@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { creditsDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
 
@@ -21,6 +22,26 @@ interface CreditImage {
   notes: string;
 }
 
-export function readCreditsData(root: string): Promise<CreditsData> {
-  return readYamlFile<CreditsData>(creditsDataFile(root));
+const creditFontSchema = z.object({
+  name: z.string().min(1),
+  source: z.string().min(1),
+  license: z.string().min(1)
+}).strict();
+
+const creditImageSchema = z.object({
+  title: z.string().min(1),
+  creator: z.string().min(1),
+  source: z.string().min(1),
+  license: z.string().min(1),
+  asset: z.string().min(1),
+  notes: z.string().min(1)
+}).strict();
+
+const creditsDataSchema = z.object({
+  fonts: z.array(creditFontSchema),
+  images: z.array(creditImageSchema)
+}).strict();
+
+export async function readCreditsData(root: string): Promise<CreditsData> {
+  return creditsDataSchema.parse(await readYamlFile<unknown>(creditsDataFile(root)));
 }
