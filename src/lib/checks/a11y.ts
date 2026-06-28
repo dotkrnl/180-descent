@@ -14,7 +14,7 @@ interface AccessibilityCheckOptions {
 
 interface StaticAccessibilityResult {
   errors: string[];
-  axePages: string[];
+  routes: string[];
 }
 
 interface AccessibilityCheckResult {
@@ -94,16 +94,16 @@ async function checkStaticAccessibility(options: AccessibilityCheckOptions): Pro
     }
   }
 
-  const axePages = htmlFiles.map((filePath) => urlForSiteFile(builtSiteDir, filePath));
+  const routes = htmlFiles.map((filePath) => urlForSiteFile(builtSiteDir, filePath));
 
-  return { errors, axePages };
+  return { errors, routes };
 }
 
 export async function checkAccessibility(options: AccessibilityCheckOptions): Promise<AccessibilityCheckResult> {
   const builtSiteDir = siteDir(options.root);
   await stat(builtSiteDir);
 
-  const { errors: staticFailures, axePages } = await checkStaticAccessibility(options);
+  const { errors: staticFailures, routes } = await checkStaticAccessibility(options);
   const { server, origin } = await startStaticSiteServer(builtSiteDir, "Accessibility check");
   const browser = await chromium.launch();
   const failures = [...staticFailures];
@@ -111,13 +111,13 @@ export async function checkAccessibility(options: AccessibilityCheckOptions): Pr
   try {
     const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     const page = await context.newPage();
-    for (const pagePath of axePages) {
-      await page.goto(`${origin}${pagePath}`, { waitUntil: "networkidle" });
+    for (const route of routes) {
+      await page.goto(`${origin}${route}`, { waitUntil: "networkidle" });
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
         .analyze();
       for (const violation of results.violations) {
-        failures.push(summarizeViolation(pagePath, violation));
+        failures.push(summarizeViolation(route, violation));
       }
     }
   } finally {
@@ -126,7 +126,7 @@ export async function checkAccessibility(options: AccessibilityCheckOptions): Pr
   }
 
   return {
-    checkedPages: axePages.length,
+    checkedPages: routes.length,
     failures
   };
 }
