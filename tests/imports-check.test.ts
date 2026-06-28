@@ -105,6 +105,23 @@ describe("import check", () => {
     ].join("\n"))).resolves.toEqual(["Hero"]);
   });
 
+  it("ignores identifiers inside JavaScript comments in expressions", async () => {
+    await expect(unusedDefaultImportNames([
+      'import figure from "./figure.jpg";',
+      "<ImageFigure",
+      "  src={fallback /* figure */}",
+      "/>"
+    ].join("\n"))).resolves.toEqual(["figure"]);
+
+    await expect(unusedDefaultImportNames([
+      'import figure from "./figure.jpg";',
+      "<ImageFigure",
+      "  src={fallback // figure",
+      "  }",
+      "/>"
+    ].join("\n"))).resolves.toEqual(["figure"]);
+  });
+
   it("ignores identifiers in prose and string values", async () => {
     await expect(unusedDefaultImportNames([
       'import Hero from "./Hero.astro";',

@@ -115,7 +115,7 @@ function replaceWithSpaces(text: string): string {
 
 function hasDefaultImportUsage(source: string, name: string): boolean {
   return hasJsxTag(source, name) || bracedExpressions(source).some((expression) => {
-    return hasIdentifier(stripStringLiterals(expression), name);
+    return hasIdentifier(stripJsComments(stripStringLiterals(expression)), name);
   });
 }
 
@@ -187,6 +187,12 @@ function stripStringLiterals(source: string): string {
   }
 
   return chars.join("");
+}
+
+function stripJsComments(source: string): string {
+  return source
+    .replace(/\/\*[\s\S]*?\*\//g, replaceWithSpaces)
+    .replace(/\/\/[^\r\n]*/g, replaceWithSpaces);
 }
 
 function templateExpressionEnd(source: string, openBraceIndex: number): number | null {
