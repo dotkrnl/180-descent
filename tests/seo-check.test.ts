@@ -83,6 +83,20 @@ describe("seo check", () => {
       "/site.webmanifest: icons must be an array"
     ]);
   });
+
+  it("reports invalid manifest icon entries without throwing", async () => {
+    const root = await createSiteRoot();
+    await writeFile(path.join(root, "_site/index.html"), indexHtml());
+    await writeFile(path.join(root, "_site/site.webmanifest"), JSON.stringify({
+      icons: [null]
+    }));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "/site.webmanifest: icon src must be a string"
+    ]);
+  });
 });
 
 async function createSiteRoot(): Promise<string> {

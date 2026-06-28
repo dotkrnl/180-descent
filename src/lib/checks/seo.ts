@@ -119,7 +119,7 @@ async function checkManifestIcons(siteDir: string, siteUrl: string, href: string
 
   let manifest: { icons?: unknown };
   try {
-    const parsed = JSON.parse(await readFile(manifestPath, "utf8")) as unknown;
+    const parsed: unknown = JSON.parse(await readFile(manifestPath, "utf8"));
     manifest = parsed && typeof parsed === "object" ? parsed : {};
   } catch (error) {
     errors.push(`${href}: invalid web manifest JSON (${toError(error).message})`);
@@ -135,15 +135,21 @@ async function checkManifestIcons(siteDir: string, siteUrl: string, href: string
     return;
   }
   for (const icon of icons) {
-    if (typeof icon.src !== "string" || !icon.src) {
+    const src = webManifestIconSrc(icon);
+    if (!src) {
       errors.push(`${href}: icon src must be a string`);
       continue;
     }
-    const localPath = sitePathForHref(siteDir, siteUrl, icon.src);
+    const localPath = sitePathForHref(siteDir, siteUrl, src);
     if (!localPath || !await pathExists(localPath)) {
-      errors.push(`${href}: icon does not exist locally (${icon.src})`);
+      errors.push(`${href}: icon does not exist locally (${src})`);
     }
   }
+}
+
+function webManifestIconSrc(icon: unknown): string | null {
+  if (!icon || typeof icon !== "object" || !("src" in icon)) return null;
+  return typeof icon.src === "string" && icon.src ? icon.src : null;
 }
 
 async function hasHtmlForUrl(siteDir: string, url: string): Promise<boolean> {
