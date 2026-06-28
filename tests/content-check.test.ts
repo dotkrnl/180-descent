@@ -344,10 +344,10 @@ describe("content check", () => {
 
     expect(failures).toEqual([
       {
-        message: "EN 001-fixture appendix appendix-a has 1 web-only panels but only 0 static print/EPUB alternates"
+        message: "src/content/days/001-fixture/appendices/appendix-a.en.mdx contains unsupported MDX wrapper markup; use Markdown paragraphs, <Lead>, <FormatOnly>, <LessonNote>, or a shared paragraph component"
       },
       {
-        message: "src/content/days/001-fixture/appendices/appendix-a.en.mdx contains unsupported MDX wrapper markup; use Markdown paragraphs, <Lead>, <FormatOnly>, <LessonNote>, or a shared paragraph component"
+        message: "EN 001-fixture appendix appendix-a has 1 web-only artifact item(s) but only 0 static print/EPUB alternate(s)"
       }
     ]);
   });
@@ -366,7 +366,7 @@ describe("content check", () => {
 
     expect(failures).toEqual([
       {
-        message: "EN 001-fixture has 1 web-only component(s) but only 0 static print/EPUB alternate(s)"
+        message: "EN 001-fixture has 1 web-only artifact item(s) but only 0 static print/EPUB alternate(s)"
       }
     ]);
   });

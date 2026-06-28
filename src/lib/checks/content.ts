@@ -453,7 +453,6 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
     checkMainTitle(checkedFile, failures);
   }
 
-  checkStaticAlternates(checkedFile, failures);
   checkStatusValues(checkedFile, failures);
   checkStatusChipLabels(checkedFile, failures);
   checkUnstyledStatusPhrases(checkedFile, failures);
@@ -553,16 +552,6 @@ function checkMainTitle(file: RegistryContentFile, failures: ContentCheckFailure
   }
 }
 
-function checkStaticAlternates(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  const webPanels = countMatches(file.source, /<Panel\b[^>]*class="[^"]*\bweb-only\b[^"]*"/g);
-  const staticAlternates = countMatches(file.source, /<FormatOnly\b(?=[^>]*\bmedia="print-epub")(?=[^>]*\bvariant="alternate")/g);
-  if (staticAlternates < webPanels) {
-    failures.push({
-      message: `${file.label} has ${webPanels} web-only panels but only ${staticAlternates} static print/EPUB alternates`
-    });
-  }
-}
-
 function checkUnsupportedMdxWrappers(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
   for (const [pattern, replacement] of UNSUPPORTED_MDX_WRAPPER_PATTERNS) {
     if (pattern.test(file.source)) {
@@ -584,12 +573,12 @@ function checkRawInteractiveMarkup(file: RegistryContentFile, failures: ContentC
 
 function checkArtifactComponentContract(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
   const unknown = new Set<string>();
-  let webOnly = 0;
+  let webOnlyComponents = 0;
 
   for (const match of file.source.matchAll(/<([A-Z][A-Za-z0-9]*)\b/g)) {
     const name = match[1];
     if (!ARTIFACT_COMPONENTS.has(name)) unknown.add(name);
-    if (WEB_ONLY_COMPONENTS.has(name)) webOnly += 1;
+    if (WEB_ONLY_COMPONENTS.has(name)) webOnlyComponents += 1;
   }
 
   for (const name of unknown) {
@@ -598,10 +587,12 @@ function checkArtifactComponentContract(file: RegistryContentFile, failures: Con
     });
   }
 
+  const webOnlyPanels = countMatches(file.source, /<Panel\b[^>]*class="[^"]*\bweb-only\b[^"]*"/g);
+  const webOnly = webOnlyComponents + webOnlyPanels;
   const staticAlternates = countMatches(file.source, /<FormatOnly\b(?=[^>]*\bmedia="print-epub")(?=[^>]*\bvariant="alternate")/g);
   if (staticAlternates < webOnly) {
     failures.push({
-      message: `${file.label} has ${webOnly} web-only component(s) but only ${staticAlternates} static print/EPUB alternate(s)`
+      message: `${file.label} has ${webOnly} web-only artifact item(s) but only ${staticAlternates} static print/EPUB alternate(s)`
     });
   }
 }
