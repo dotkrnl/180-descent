@@ -24,6 +24,7 @@ const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as 
 const STATUS_VALUES = new Set(["ok", "hint", "bad"]);
 const STATUS_COMPONENT_PATTERN = /<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*>/g;
 const STATUS_PROP_PATTERN = /\bstatus\s*=\s*(?:\{\s*(?:"([^"]+)"|'([^']+)')\s*\}|"([^"]+)"|'([^']+)')/;
+const SIMPLE_TABLE_PATTERN = /<SimpleTable\b[\s\S]*?\/>/g;
 const STATUS_CHIP_LABEL_MAX_CHARS = 28;
 const STATUS_CHIP_LABEL_GATE_START_DAY = 8;
 const UNSTYLED_STATUS_LIST_ITEM_PATTERN =
@@ -454,6 +455,7 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
   }
 
   checkStatusValues(checkedFile, failures);
+  checkSimpleTables(checkedFile, failures);
   checkStatusChipLabels(checkedFile, failures);
   checkUnstyledStatusPhrases(checkedFile, failures);
   checkRedundantTermTips(checkedFile, failures);
@@ -485,6 +487,43 @@ function checkStatusValues(file: RegistryContentFile, failures: ContentCheckFail
 function literalStatusValue(tag: string): string | null {
   const match = tag.match(STATUS_PROP_PATTERN);
   return match ? match[1] ?? match[2] ?? match[3] ?? match[4] ?? null : null;
+}
+
+function checkSimpleTables(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  for (const match of file.source.matchAll(SIMPLE_TABLE_PATTERN)) {
+    const tag = match[0];
+    if (!isStringArrayProp(tag, "headers")) {
+      failures.push({
+        message: `${file.relativePath} has SimpleTable without a literal string-array headers prop`
+      });
+    }
+    if (!isStringMatrixProp(tag, "rows")) {
+      failures.push({
+        message: `${file.relativePath} has SimpleTable without a literal string-matrix rows prop`
+      });
+    }
+  }
+}
+
+function isStringArrayProp(tag: string, prop: string): boolean {
+  const value = jsonPropValue(tag, prop);
+  return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+function isStringMatrixProp(tag: string, prop: string): boolean {
+  const value = jsonPropValue(tag, prop);
+  return Array.isArray(value)
+    && value.every((row) => Array.isArray(row) && row.every((item) => typeof item === "string"));
+}
+
+function jsonPropValue(tag: string, prop: string): unknown {
+  const match = tag.match(new RegExp(`\\b${prop}\\s*=\\{([\\s\\S]*?)\\}`));
+  if (!match) return null;
+  try {
+    return JSON.parse(match[1]);
+  } catch {
+    return null;
+  }
 }
 
 function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheckFailure[]): void {

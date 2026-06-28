@@ -165,6 +165,29 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports SimpleTable props that PDF output cannot parse", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<SimpleTable headers={headers} rows={[["value"]]} />',
+        '<SimpleTable headers={["Header"]} rows={rows} />'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a literal string-array headers prop"
+      },
+      {
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a literal string-matrix rows prop"
+      }
+    ]);
+  });
+
   it("does not treat fenced examples as content markers or raw markup", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {
