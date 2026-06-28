@@ -11,7 +11,6 @@ describe("future links data", () => {
       "- id: day-001-to-day-009-systems",
       "  from_day: 1",
       "  target_day: 9",
-      "  target_anchor: null",
       "  text: Systems thinking",
       "  status: pending",
       "  context: coherentism as web/system"
@@ -22,7 +21,6 @@ describe("future links data", () => {
         id: "day-001-to-day-009-systems",
         from_day: 1,
         target_day: 9,
-        target_anchor: null,
         text: "Systems thinking",
         status: "pending",
         context: "coherentism as web/system"
@@ -45,14 +43,12 @@ describe("future links data", () => {
       "- id: day-001-to-day-009-systems",
       "  from_day: 1",
       "  target_day: 9",
-      "  target_anchor: null",
       "  text: Systems thinking",
       "  status: pending",
       "  context: coherentism as web/system",
       "- id: day-001-to-day-009-systems",
       "  from_day: 2",
       "  target_day: 9",
-      "  target_anchor: null",
       "  text: Systems thinking",
       "  status: pending",
       "  context: duplicate callback"
@@ -68,7 +64,6 @@ describe("future links data", () => {
       "- id: day-009-to-day-001-systems",
       "  from_day: 9",
       "  target_day: 1",
-      "  target_anchor: null",
       "  text: Systems thinking",
       "  status: pending",
       "  context: invalid backward callback"

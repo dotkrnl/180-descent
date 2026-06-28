@@ -6,7 +6,6 @@ export interface FutureLinkEntry {
   id: string;
   from_day: number;
   target_day: number;
-  target_anchor: string | null;
   text: string;
   status: "pending" | "resolved";
   context: string;
@@ -16,7 +15,6 @@ const futureLinkEntrySchema = z.object({
   id: z.string().min(1),
   from_day: z.number().int().positive(),
   target_day: z.number().int().positive(),
-  target_anchor: z.string().min(1).nullable(),
   text: z.string().min(1),
   status: z.enum(["pending", "resolved"]),
   context: z.string().min(1)

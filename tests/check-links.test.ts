@@ -57,7 +57,6 @@ describe("link checks", () => {
       "- id: day-2-callback",
       "  from_day: 1",
       "  target_day: 2",
-      "  target_anchor: null",
       "  text: Callback",
       "  status: pending",
       "  context: test callback"
@@ -79,7 +78,6 @@ describe("link checks", () => {
       "- id: day-9-callback",
       "  from_day: 1",
       "  target_day: 9",
-      "  target_anchor: null",
       "  text: Callback",
       "  status: resolved",
       "  context: test callback"
