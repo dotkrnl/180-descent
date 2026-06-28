@@ -17,10 +17,9 @@ npm run dev
 Build outputs:
 
 - Website: `_site/`
-- EPUB: `_site/downloads/180-descent.epub`
-- PDF: `_site/downloads/180-descent.pdf`
-- Deep-dive EPUB: `_site/downloads/180-descent-deep-dive.epub`
-- Deep-dive PDF: `_site/downloads/180-descent-deep-dive.pdf`
+- English book downloads: `_site/downloads/180-descent.{epub,pdf}` and `_site/downloads/180-descent-deep-dive.{epub,pdf}`
+- Chinese book downloads: `_site/downloads/180-descent-zh.{epub,pdf}` and `_site/downloads/180-descent-zh-deep-dive.{epub,pdf}`
+- Per-day downloads: `_site/downloads/180-descent-day-###-slug.{epub,pdf}` and `_site/downloads/180-descent-zh-day-###-slug.{epub,pdf}`
 
 Deploy the current build to Cloudflare Pages:
 
@@ -49,7 +48,7 @@ Day source is split by responsibility:
 - `src/content/days/###-slug/appendices/*.mdx` holds optional deep-dive content declared in the manifest.
 - Reusable figures live in `src/app/components/lesson/figures/`.
 - Reusable interactive DOM lives in `src/app/components/lesson/interactives/`.
-- Interaction behavior lives in `src/assets/js/interactions/` and is registered by manifest `components[].webEntry`.
+- Interaction behavior lives in `src/assets/js/interactions/` and is registered by manifest `interactionScripts`.
 - Styling is SCSS-only under `src/assets/scss/`.
 
 ## Adding A Deep Dive Appendix
