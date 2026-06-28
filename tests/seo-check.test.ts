@@ -165,6 +165,24 @@ describe("seo check", () => {
     expect(result.errors).toEqual([]);
   });
 
+  it("resolves page-relative manifest links against the current page URL", async () => {
+    const root = await createSiteRoot();
+    await mkdir(path.join(root, "_site/app"), { recursive: true });
+    await writeFile(path.join(root, "_site/app/site.webmanifest"), JSON.stringify({
+      icons: [null]
+    }));
+    await writeFile(path.join(root, "_site/app/index.html"), indexHtml({
+      canonicalPath: "/app/",
+      manifest: "site.webmanifest"
+    }));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "/app/site.webmanifest: icon src must be a string"
+    ]);
+  });
+
   it("does not accept commented sitemap markup", async () => {
     const root = await createSiteRoot();
     await writeFile(path.join(root, "_site/index.html"), indexHtml());

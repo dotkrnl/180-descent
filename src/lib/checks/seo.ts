@@ -5,7 +5,7 @@ import { readBookData } from "@lib/data/book";
 import { toError } from "@lib/errors";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { siteFileForUrlPath, sitePathForHref, urlForSiteFile } from "@lib/static-site/url";
+import { siteFileForUrlPath, sitePathForHref, sitePathForUrlPath, urlForSiteFile } from "@lib/static-site/url";
 
 interface SeoCheckOptions {
   root: string;
@@ -50,6 +50,7 @@ async function checkHtml(
   checkedManifests: Set<string>
 ): Promise<void> {
   const url = urlForSiteFile(siteDir, filePath);
+  const pageUrl = new URL(url, siteUrl).href;
   const html = await readFile(filePath, "utf8");
   const $ = load(html);
 
@@ -63,7 +64,7 @@ async function checkHtml(
 
   if (!title) errors.push(`${url}: missing <title>`);
   if (!description) errors.push(`${url}: missing meta description`);
-  if (canonical !== `${siteUrl}${url}`) errors.push(`${url}: canonical should be ${siteUrl}${url}, got ${canonical || "(missing)"}`);
+  if (canonical !== pageUrl) errors.push(`${url}: canonical should be ${pageUrl}, got ${canonical || "(missing)"}`);
   if (!$('meta[property="og:title"]').attr("content")) errors.push(`${url}: missing og:title`);
   if (!$('meta[property="og:description"]').attr("content")) errors.push(`${url}: missing og:description`);
   if (!ogImage) errors.push(`${url}: missing og:image`);
@@ -74,18 +75,19 @@ async function checkHtml(
   if (!manifest) errors.push(`${url}: missing web app manifest link`);
 
   if (ogImage) {
-    const imagePath = sitePathForHref(siteDir, siteUrl, ogImage);
+    const imagePath = sitePathForHref(siteDir, pageUrl, ogImage);
     if (!imagePath || !await pathExists(imagePath)) errors.push(`${url}: og:image does not exist locally (${ogImage})`);
   }
   for (const [label, href] of [["favicon", favicon], ["apple-touch-icon", appleTouchIcon], ["manifest", manifest]] as const) {
-    const localPath = href ? sitePathForHref(siteDir, siteUrl, href) : "";
+    const localPath = href ? sitePathForHref(siteDir, pageUrl, href) : "";
     if (href && (!localPath || !await pathExists(localPath))) {
       errors.push(`${url}: ${label} does not exist locally (${href})`);
     }
   }
-  if (manifest && !checkedManifests.has(manifest)) {
-    checkedManifests.add(manifest);
-    await checkManifestIcons(siteDir, siteUrl, manifest, errors);
+  const manifestUrl = manifest ? sameSiteUrl(pageUrl, manifest) : null;
+  if (manifestUrl && !checkedManifests.has(manifestUrl.href)) {
+    checkedManifests.add(manifestUrl.href);
+    await checkManifestIcons(siteDir, manifestUrl, errors);
   }
 
   const alt = alternateUrl(url);
@@ -125,8 +127,9 @@ async function checkRobots(siteDir: string, siteUrl: string, errors: string[]): 
   if (!hasSitemapDirective(robots, `${siteUrl}/sitemap.xml`)) errors.push("robots.txt: missing Sitemap directive");
 }
 
-async function checkManifestIcons(siteDir: string, siteUrl: string, href: string, errors: string[]): Promise<void> {
-  const manifestPath = sitePathForHref(siteDir, siteUrl, href);
+async function checkManifestIcons(siteDir: string, manifestUrl: URL, errors: string[]): Promise<void> {
+  const href = manifestUrl.pathname;
+  const manifestPath = sitePathForUrlPath(siteDir, manifestUrl.pathname);
   if (!manifestPath || !await pathExists(manifestPath)) return;
 
   let manifest: { icons?: unknown };
@@ -156,18 +159,27 @@ async function checkManifestIcons(siteDir: string, siteUrl: string, href: string
       errors.push(`${href}: icon src must be a string`);
       continue;
     }
-    const localPath = sitePathForManifestIcon(siteDir, siteUrl, href, src);
+    const localPath = sitePathForManifestIcon(siteDir, manifestUrl, src);
     if (!localPath || !await pathExists(localPath)) {
       errors.push(`${href}: icon does not exist locally (${src})`);
     }
   }
 }
 
-function sitePathForManifestIcon(siteDir: string, siteUrl: string, manifestHref: string, iconSrc: string): string | null {
+function sameSiteUrl(pageUrl: string, href: string): URL | null {
   try {
-    const manifestUrl = new URL(manifestHref, siteUrl);
+    const base = new URL(pageUrl);
+    const url = new URL(href, base);
+    return url.origin === base.origin ? url : null;
+  } catch {
+    return null;
+  }
+}
+
+function sitePathForManifestIcon(siteDir: string, manifestUrl: URL, iconSrc: string): string | null {
+  try {
     const iconUrl = new URL(iconSrc, manifestUrl);
-    return sitePathForHref(siteDir, siteUrl, iconUrl.href);
+    return sitePathForHref(siteDir, manifestUrl.href, iconUrl.href);
   } catch {
     return null;
   }
