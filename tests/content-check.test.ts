@@ -137,6 +137,28 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports missing and unregistered interaction scripts", async () => {
+    const root = await createFixtureRoot();
+    await mkdir(path.join(root, "src/assets/js/interactions"), { recursive: true });
+    await writeFile(path.join(root, "src/assets/js/interactions/orphan.js"), "");
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: body("夹具日", "zh"),
+      interactionScripts: ["missing"]
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: '001-fixture declares missing interaction script "missing"'
+      },
+      {
+        message: "src/assets/js/interactions/orphan.js is not registered by any day manifest interactionScripts"
+      }
+    ]);
+  });
+
   it("reports appendix web panels without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {
@@ -232,6 +254,7 @@ async function writeRegistryDay(
   options: {
     en: string;
     zh: string;
+    interactionScripts?: string[];
   }
 ): Promise<void> {
   await writeContentDay(root, {
@@ -240,7 +263,8 @@ async function writeRegistryDay(
     enBody: options.en,
     zhTitle: "夹具日",
     zhSummary: "中文夹具摘要。",
-    zhBody: options.zh
+    zhBody: options.zh,
+    interactionScripts: options.interactionScripts
   });
 }
 

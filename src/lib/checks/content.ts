@@ -5,7 +5,7 @@ import { compileCss } from "@lib/assets/css";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { toPosixRelative } from "@lib/fs/path";
-import { walkFiles } from "@lib/fs/walk";
+import { pathExists, walkFiles } from "@lib/fs/walk";
 import type { Locale } from "@lib/schemas/day";
 import { stripFencedCodeBlocks } from "@lib/text/markdown";
 
@@ -309,10 +309,44 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
     }
   }
 
+  await checkInteractionScripts(options.root, registry.days, failures);
   await checkCssFonts(options.root, failures);
   await checkParentMarkdownReferences(options.root, failures);
 
   return failures;
+}
+
+async function checkInteractionScripts(
+  root: string,
+  days: Awaited<ReturnType<typeof loadContentRegistry>>["days"],
+  failures: ContentCheckFailure[]
+): Promise<void> {
+  const scriptsDir = path.join(root, "src/assets/js/interactions");
+  const declared = new Set<string>();
+
+  for (const day of days) {
+    for (const script of day.manifest.interactionScripts) {
+      declared.add(script);
+
+      if (!await pathExists(path.join(scriptsDir, `${script}.js`))) {
+        failures.push({
+          message: `${day.manifest.path} declares missing interaction script "${script}"`
+        });
+      }
+    }
+  }
+
+  if (!await pathExists(scriptsDir)) return;
+
+  const files = await walkFiles(scriptsDir, { exts: ".js", ignoredDirNames: [] });
+  for (const file of files) {
+    const script = path.basename(file, ".js");
+    if (!declared.has(script)) {
+      failures.push({
+        message: `${toPosixRelative(root, file)} is not registered by any day manifest interactionScripts`
+      });
+    }
+  }
 }
 
 function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
