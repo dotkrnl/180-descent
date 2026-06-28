@@ -8,6 +8,7 @@ import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
 import { bookDataFile } from "@lib/data/paths";
+import { isPathUnavailableError } from "@lib/fs/errors";
 import { toPosixRelative } from "@lib/fs/path";
 import { escapeXml } from "@lib/text/escape";
 
@@ -193,7 +194,8 @@ async function latestMtime(files: readonly string[]): Promise<number> {
 async function isSocialCardStale(outPath: string, sourceMtimeMs: number): Promise<boolean> {
   try {
     return (await stat(outPath)).mtimeMs < sourceMtimeMs;
-  } catch {
+  } catch (error) {
+    if (!isPathUnavailableError(error)) throw error;
     return true;
   }
 }
