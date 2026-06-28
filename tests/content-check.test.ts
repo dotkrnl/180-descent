@@ -75,6 +75,25 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports single-quoted raw wrapper classes in MDX content", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        "<div class='roadmap'>Raw roadmap</div>"
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx contains unsupported MDX wrapper markup; use <Roadmap>"
+      }
+    ]);
+  });
+
   it("allows wrapper markup examples inside fenced code blocks", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {
