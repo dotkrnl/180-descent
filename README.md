@@ -9,9 +9,9 @@ Creation note: AI systems perform deep research, synthesis, and writing. A human
 ## Commands
 
 ```sh
-npm install
-npm run check
-npm run dev
+rtk npm install
+rtk npm run check
+rtk npm run dev
 ```
 
 Build outputs:
@@ -24,18 +24,18 @@ Build outputs:
 Deploy the current build to Cloudflare Pages:
 
 ```sh
-npm run deploy
+rtk npm run deploy
 ```
 
 Deploy a preview build to the staging branch:
 
 ```sh
-npm run deploy:staging
+rtk npm run deploy:staging
 ```
 
 The Cloudflare Pages project name is `180-descent`.
 
-`npm run check` is self-contained: it rebuilds the site, EPUBs, PDFs, generated fonts, generated SCSS, and social cards before validating the built artifacts. Use `npm run check:built` only when those artifacts are already current and you want to re-run validators without rebuilding.
+`rtk npm run check` is self-contained: it rebuilds the site, EPUBs, PDFs, generated fonts, generated SCSS, and social cards before validating the built artifacts. Use `rtk npm run check:built` only when those artifacts are already current and you want to re-run validators without rebuilding.
 
 ## Content Workflow
 
