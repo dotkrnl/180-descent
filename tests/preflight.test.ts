@@ -17,7 +17,20 @@ describe("typed preflight", () => {
     expect(parsePreflightArgs(["--optional", "--list", "--group=epubcheck", "node"])).toEqual({
       toolNames: ["epubcheck", "node"],
       optional: true,
-      list: true
+      list: true,
+      errors: []
+    });
+  });
+
+  it("reports invalid option-shaped arguments", () => {
+    expect(parsePreflightArgs(["--group=", "--unknown", "node"])).toEqual({
+      toolNames: ["node"],
+      optional: false,
+      list: false,
+      errors: [
+        "--group requires a value",
+        "Unknown option: --unknown"
+      ]
     });
   });
 

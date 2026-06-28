@@ -7,9 +7,13 @@ import {
   resolveToolNames
 } from "@lib/tools/preflight";
 
-const { toolNames, optional, list } = parsePreflightArgs(process.argv.slice(2));
+const { toolNames, optional, list, errors } = parsePreflightArgs(process.argv.slice(2));
 
-if (list) {
+if (errors.length) {
+  console.error("Usage: npm run preflight -- [--optional] [--list] [--group=<name>] [tool ...]");
+  console.error(errors.map((error) => `- ${error}`).join("\n"));
+  process.exit(1);
+} else if (list) {
   console.log(formatToolList());
 } else {
   try {

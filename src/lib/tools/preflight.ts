@@ -39,6 +39,7 @@ interface PreflightArgs {
   toolNames: string[];
   optional: boolean;
   list: boolean;
+  errors: string[];
 }
 
 const TOOLS = {
@@ -196,6 +197,7 @@ function isToolGroupName(name: string): name is ToolGroupName {
 
 export function parsePreflightArgs(args: string[]): PreflightArgs {
   const toolNames: string[] = [];
+  const errors: string[] = [];
   let optional = false;
   let list = false;
 
@@ -205,13 +207,20 @@ export function parsePreflightArgs(args: string[]): PreflightArgs {
     } else if (arg === "--list") {
       list = true;
     } else if (arg.startsWith("--group=")) {
-      toolNames.push(arg.slice("--group=".length));
+      const group = arg.slice("--group=".length);
+      if (group) {
+        toolNames.push(group);
+      } else {
+        errors.push("--group requires a value");
+      }
+    } else if (arg.startsWith("--")) {
+      errors.push(`Unknown option: ${arg}`);
     } else {
       toolNames.push(arg);
     }
   }
 
-  return { toolNames, optional, list };
+  return { toolNames, optional, list, errors };
 }
 
 export function formatToolList(): string {
