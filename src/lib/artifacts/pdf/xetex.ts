@@ -1252,7 +1252,7 @@ function parseStringMatrix(value: string): string[][] {
 
 function parseLiteral(value: string): unknown {
   try {
-    return Function(`"use strict"; return (${value});`)() as unknown;
+    return JSON.parse(value);
   } catch {
     return null;
   }
