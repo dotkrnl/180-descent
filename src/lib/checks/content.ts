@@ -356,7 +356,7 @@ async function checkImageCredits(root: string, failures: ContentCheckFailure[]):
   const credits = await readCreditsData(root);
   const creditedAssets = new Set<string>();
 
-  for (const image of credits.images ?? []) {
+  for (const image of credits.images) {
     const asset = image.asset;
     creditedAssets.add(asset);
     if (!asset.startsWith("/assets/images/")) {
