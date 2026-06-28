@@ -167,8 +167,8 @@ Appendices are declared in `day.yaml` under `appendices`.
   one-off generated CSS.
 - Do not add parallel adapter layers, blind importers, alternate source trees, or
   split project workflow skills. `npm run check:clean` blocks committed
-  generated output, and `npm run check:workflows` enforces the single project
-  workflow.
+  generated output and any tracked file that matches `.gitignore`; `npm run
+  check:workflows` enforces the single project workflow.
 - PDF output is generated from semantic MDX through XeTeX. When a live web
   component is not suitable for print, provide a semantic `FormatOnly` print
   alternative instead of relying on DOM controls.
