@@ -30,6 +30,8 @@ describe("link checks", () => {
       '<main id="present"></main>',
       '<a href="/target/?from=index#present">target with query</a>',
       '<a href="/target#absent">slashless target missing anchor</a>',
+      '<a href="/bad-%zz-path">malformed path</a>',
+      '<a href="/../outside/">escaped path</a>',
       '<a href="#missing">same-page missing</a>',
       '<a href="//example.com/path">external protocol-relative</a>',
       '<a href="tel:+15555555555">phone</a>'
@@ -41,6 +43,8 @@ describe("link checks", () => {
 
     expect(failures.map((failure) => failure.message)).toEqual([
       'Missing anchor /target#absent (anchor "absent" not found in _site/target/index.html) referenced from _site/index.html',
+      "Broken internal link /bad-%zz-path in _site/index.html",
+      "Broken internal link /../outside/ in _site/index.html",
       'Missing anchor #missing (anchor "missing" not found in _site/index.html) referenced from _site/index.html'
     ]);
   });

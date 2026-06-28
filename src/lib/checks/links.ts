@@ -1,5 +1,4 @@
 import { readFile } from "node:fs/promises";
-import path from "node:path";
 import * as cheerio from "cheerio";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
@@ -8,6 +7,7 @@ import { readYamlFile } from "@lib/data/yaml";
 import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
+import { siteFileForUrlPath } from "@lib/static-site/url";
 
 interface LinkCheckOptions {
   root: string;
@@ -45,9 +45,9 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
 
       const { pathname, anchor } = targetRef;
       if (isArtifactDownloadPath(pathname)) continue;
-      const target = targetRef.samePage ? file : builtPathForUrlPath(builtSiteDir, pathname);
+      const target = targetRef.samePage ? file : siteFileForUrlPath(builtSiteDir, pathname);
 
-      if (!await pathExists(target)) {
+      if (!target || !await pathExists(target)) {
         failures.push({
           message: `Broken internal link ${href} in ${toPosixRelative(options.root, file)}`
         });
@@ -81,11 +81,15 @@ function linkTarget(href?: string): { pathname: string; anchor?: string; samePag
   if (href.startsWith("//") || /^[a-z][a-z0-9+.-]*:/i.test(href)) return null;
   if (!href.startsWith("/")) return null;
 
-  const parsed = new URL(href, "https://local.invalid");
-  return {
-    pathname: parsed.pathname,
-    anchor: parsed.hash ? parsed.hash.slice(1) : undefined
-  };
+  try {
+    const parsed = new URL(href, "https://local.invalid");
+    return {
+      pathname: parsed.pathname,
+      anchor: parsed.hash ? parsed.hash.slice(1) : undefined
+    };
+  } catch {
+    return { pathname: "" };
+  }
 }
 
 async function checkFutureLinks(daysDir: string, futureLinksPath: string): Promise<LinkCheckFailure[]> {
@@ -110,10 +114,4 @@ async function checkFutureLinks(daysDir: string, futureLinksPath: string): Promi
 
 function isArtifactDownloadPath(pathname: string): boolean {
   return /^\/downloads\/.+\.(?:epub|pdf)$/.test(pathname);
-}
-
-function builtPathForUrlPath(builtSiteDir: string, pathname: string): string {
-  if (pathname.endsWith("/")) return path.join(builtSiteDir, pathname, "index.html");
-  if (!path.extname(pathname)) return path.join(builtSiteDir, pathname, "index.html");
-  return path.join(builtSiteDir, pathname);
 }
