@@ -70,6 +70,41 @@ describe("target content registry", () => {
     })).toThrow();
   });
 
+  it("rejects non-slug appendix ids", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "en.mdx"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [
+        {
+          id: "Appendix A",
+          locales: {
+            en: {
+              title: "Appendix A",
+              body: "appendices/a.en.mdx"
+            },
+            zh: {
+              title: "附录 A",
+              body: "appendices/a.zh.mdx"
+            }
+          }
+        }
+      ],
+      interactionScripts: []
+    })).toThrow();
+  });
+
   it("loads paired locale bodies, appendices, and interaction scripts", async () => {
     const fixtureDaysDir = await createRegistryFixtureDaysDir();
     const registry = await loadContentRegistry({ daysDir: fixtureDaysDir });
