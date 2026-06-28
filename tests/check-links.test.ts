@@ -51,11 +51,12 @@ describe("link checks", () => {
 
   it("reports future links that still target published days", async () => {
     const root = await createFixtureRoot();
+    await writeSecondContentDay(root);
     await writeFile(path.join(root, "_site/index.html"), "");
     await writeFile(futureLinksDataFile(root), [
-      "- id: day-1-callback",
+      "- id: day-2-callback",
       "  from_day: 1",
-      "  target_day: 1",
+      "  target_day: 2",
       "  target_anchor: null",
       "  text: Callback",
       "  status: pending",
@@ -66,7 +67,7 @@ describe("link checks", () => {
 
     expect(failures).toEqual([
       {
-        message: "Future link day-1-callback targets published day 1 but is still pending"
+        message: "Future link day-2-callback targets published day 2 but is still pending"
       }
     ]);
   });
@@ -101,4 +102,26 @@ async function createFixtureRoot(): Promise<string> {
   await writeContentDay(root);
   await writeFile(futureLinksDataFile(root), "[]\n");
   return root;
+}
+
+async function writeSecondContentDay(root: string): Promise<void> {
+  const dayDir = path.join(root, "src/content/days/002-fixture");
+  await mkdir(dayDir, { recursive: true });
+  await writeFile(path.join(dayDir, "day.yaml"), [
+    "day: 2",
+    "block: Fixture",
+    "locales:",
+    "  en:",
+    "    title: Fixture Day 2",
+    "    summary: Fixture summary.",
+    "    body: en.mdx",
+    "  zh:",
+    "    title: 夹具日二",
+    "    summary: 中文夹具摘要。",
+    "    body: zh.mdx",
+    "appendices: []",
+    "interactionScripts: []"
+  ].join("\n"));
+  await writeFile(path.join(dayDir, "en.mdx"), "");
+  await writeFile(path.join(dayDir, "zh.mdx"), "");
 }

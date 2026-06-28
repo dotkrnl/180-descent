@@ -25,6 +25,14 @@ const futureLinkEntrySchema = z.object({
 const futureLinksDataSchema = z.array(futureLinkEntrySchema).superRefine((links, context) => {
   const seen = new Set<string>();
   for (const [index, link] of links.entries()) {
+    if (link.target_day <= link.from_day) {
+      context.addIssue({
+        code: "custom",
+        path: [index, "target_day"],
+        message: `future link ${link.id} target_day must be greater than from_day`
+      });
+    }
+
     if (seen.has(link.id)) {
       context.addIssue({
         code: "custom",

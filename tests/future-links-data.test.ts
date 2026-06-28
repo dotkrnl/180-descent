@@ -62,6 +62,22 @@ describe("future links data", () => {
       "duplicate future link id: day-001-to-day-009-systems"
     );
   });
+
+  it("rejects future links that do not point forward", async () => {
+    const root = await createFixtureRoot([
+      "- id: day-009-to-day-001-systems",
+      "  from_day: 9",
+      "  target_day: 1",
+      "  target_anchor: null",
+      "  text: Systems thinking",
+      "  status: pending",
+      "  context: invalid backward callback"
+    ].join("\n"));
+
+    await expect(readFutureLinksData(root)).rejects.toThrow(
+      "future link day-009-to-day-001-systems target_day must be greater than from_day"
+    );
+  });
 });
 
 async function createFixtureRoot(futureLinksYaml: string): Promise<string> {
