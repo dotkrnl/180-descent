@@ -229,6 +229,19 @@ describe("content check", () => {
     ]);
   });
 
+  it("accepts SimpleTable literal strings that contain braces", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<SimpleTable headers={["Set } notation"]} rows={[["value }"]]} />'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    await expect(checkContent({ root })).resolves.toEqual([]);
+  });
+
   it("reports empty SimpleTable props that PDF output cannot render", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {

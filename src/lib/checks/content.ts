@@ -10,6 +10,7 @@ import { readSyllabusData } from "@lib/data/syllabus";
 import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import type { Locale } from "@lib/schemas/day";
+import { jsExpressionEnd } from "@lib/text/js";
 import { stripFencedCodeBlocks } from "@lib/text/markdown";
 
 interface ContentCheckOptions {
@@ -534,15 +535,36 @@ function isNonEmptyStringMatrix(value: unknown): boolean {
 }
 
 function jsonPropValue(tag: string, prop: string): JsonPropValue {
-  const match = tag.match(new RegExp(`\\b${prop}\\s*=\\{([\\s\\S]*?)\\}`));
-  if (!match) return { kind: "missing" };
-  const source = match[1].trim();
-  if (!source.startsWith("[")) return { kind: "nonliteral" };
+  const source = jsxExpressionPropValue(tag, prop);
+  if (source === null) return { kind: "missing" };
+  if (source.kind === "invalid") return source;
+  if (source.kind === "nonliteral") return source;
+
+  const value = source.value.trim();
+  if (!value.startsWith("[")) return { kind: "nonliteral" };
   try {
-    return { kind: "value", value: JSON.parse(source) };
+    return { kind: "value", value: JSON.parse(value) };
   } catch (error) {
     return { kind: "invalid", error: error instanceof Error ? error.message : String(error) };
   }
+}
+
+function jsxExpressionPropValue(
+  tag: string,
+  prop: string
+): { kind: "invalid"; error: string } | { kind: "nonliteral" } | { kind: "value"; value: string } | null {
+  const match = tag.match(new RegExp(`\\b${prop}\\s*=`));
+  if (!match || match.index === undefined) return null;
+
+  let index = match.index + match[0].length;
+  while (/\s/.test(tag[index] ?? "")) index += 1;
+  if (tag[index] !== "{") return { kind: "nonliteral" };
+
+  const end = jsExpressionEnd(tag, index);
+  if (end === null) {
+    return { kind: "invalid", error: `unterminated ${prop} expression` };
+  }
+  return { kind: "value", value: tag.slice(index + 1, end) };
 }
 
 function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheckFailure[]): void {

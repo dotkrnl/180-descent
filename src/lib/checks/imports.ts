@@ -3,6 +3,7 @@ import path from "node:path";
 import ts from "typescript";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
+import { jsExpressionEnd, jsLiteralOrCommentEnd } from "@lib/text/js";
 import { stripFencedCodeBlocks } from "@lib/text/markdown";
 
 interface ImportCheckOptions {
@@ -131,16 +132,9 @@ function bracedExpressions(source: string): string[] {
   for (let index = 0; index < source.length; index += 1) {
     const char = source[index];
     if (depth > 0) {
-      if (char === '"' || char === "'" || char === "`") {
-        index = quotedLiteralEnd(source, index);
-        continue;
-      }
-      if (char === "/" && source[index + 1] === "/") {
-        index = lineCommentEnd(source, index + 2);
-        continue;
-      }
-      if (char === "/" && source[index + 1] === "*") {
-        index = blockCommentEnd(source, index + 2);
+      const skipEnd = jsLiteralOrCommentEnd(source, index);
+      if (skipEnd !== null) {
+        index = skipEnd;
         continue;
       }
     }
@@ -174,7 +168,7 @@ function stripStringLiterals(source: string): string {
       const char = chars[index];
       if (quote === "`" && char === "$" && chars[index + 1] === "{") {
         chars[index] = " ";
-        const end = templateExpressionEnd(source, index + 1);
+        const end = jsExpressionEnd(source, index + 1);
         if (end === null) {
           index += 1;
           continue;
@@ -207,55 +201,6 @@ function stripJsComments(source: string): string {
   return source
     .replace(/\/\*[\s\S]*?\*\//g, replaceWithSpaces)
     .replace(/\/\/[^\r\n]*/g, replaceWithSpaces);
-}
-
-function templateExpressionEnd(source: string, openBraceIndex: number): number | null {
-  let depth = 1;
-  for (let index = openBraceIndex + 1; index < source.length; index += 1) {
-    const char = source[index];
-    if (char === '"' || char === "'" || char === "`") {
-      index = quotedLiteralEnd(source, index);
-      continue;
-    }
-    if (char === "/" && source[index + 1] === "/") {
-      index = lineCommentEnd(source, index + 2);
-      continue;
-    }
-    if (char === "/" && source[index + 1] === "*") {
-      index = blockCommentEnd(source, index + 2);
-      continue;
-    }
-    if (char === "{") {
-      depth += 1;
-    } else if (char === "}") {
-      depth -= 1;
-      if (depth === 0) return index;
-    }
-  }
-  return null;
-}
-
-function quotedLiteralEnd(source: string, start: number): number {
-  const quote = source[start];
-  for (let index = start + 1; index < source.length; index += 1) {
-    const char = source[index];
-    if (char === "\\") {
-      index += 1;
-    } else if (char === quote) {
-      return index;
-    }
-  }
-  return source.length - 1;
-}
-
-function lineCommentEnd(source: string, start: number): number {
-  const end = source.indexOf("\n", start);
-  return end === -1 ? source.length - 1 : end;
-}
-
-function blockCommentEnd(source: string, start: number): number {
-  const end = source.indexOf("*/", start);
-  return end === -1 ? source.length - 1 : end + 1;
 }
 
 function hasIdentifier(source: string, name: string): boolean {
