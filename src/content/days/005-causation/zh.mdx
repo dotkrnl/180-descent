@@ -287,7 +287,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <Claim>
 <ClaimHeader label="前沿 02">
-<StatusChip status={"hint"} label={"从数据识别方向 · 在特定假设下有效"} printLabel={"前景可期"} />
+<StatusChip status={"hint"} label={"从数据识别方向 · 在特定假设下有效"} printLabel={"有前景"} />
 <StatusChip status={"ok"} label={"随机对照试验与可信度革命 · 已确立"} printLabel={"已确立"} />
 </ClaimHeader>
 ### 从静态数据中识别因果方向——以及为什么随机分配仍是基准
@@ -298,13 +298,13 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <Claim>
 <ClaimHeader label="前沿 03">
-<StatusChip status={"hint"} label={"因果表征学习 · 有前景的项目"} printLabel={"前景可期"} />
-<StatusChip status={"bad"} label={"「LLM 具有因果推理能力」 · 任务依赖"} printLabel={"任务依赖"} />
+<StatusChip status={"hint"} label={"因果表征学习 · 有前景"} printLabel={"有前景"} />
+<StatusChip status={"bad"} label={"LLM 因果推理 · 有争议／炒作风险"} printLabel={"有争议／炒作风险"} />
 </ClaimHeader>
 ### 机器能做到吗？因果机器学习与「因果鹦鹉」
-最炙手可热也最模糊的前沿。<Term>因果表征学习</Term>（Causal Representation Learning）<TipNote text={String.raw`因果表征学习试图从像素、文本或传感器流等原始数据中学习有用的因果变量。`} />（Schölkopf 等，2021 年《IEEE 会报》）提出了一个深刻的问题：经典的因果发现假设变量是现成给定的，但现实世界呈现的却是像素和词语。神经网络能否学习到高层因果变量——这是否能买来对<Term>分布偏移</Term>（Distribution Shift）<TipNote text={String.raw`分布偏移是指模型在部署后看到的数据与其学习时的数据存在差异。`} />的稳健性，而这正是当今深度学习模型所极度欠缺的？这是一个严肃且活跃的研究计划，但其最大的承诺目前仍属于前景可期的线索，尚未在大规模实际应用中兑现。
+最炙手可热也最模糊的前沿。<Term>因果表征学习</Term>（Causal Representation Learning）<TipNote text={String.raw`因果表征学习试图从像素、文本或传感器流等原始数据中学习有用的因果变量。`} />（Schölkopf 等，2021 年《IEEE 会报》）提出了一个深刻的问题：经典的因果发现假设变量是现成给定的，但现实世界呈现的却是像素和词语。神经网络能否学习到高层因果变量——这是否能买来对<Term>分布偏移</Term>（Distribution Shift）<TipNote text={String.raw`分布偏移是指模型在部署后看到的数据与其学习时的数据存在差异。`} />的稳健性，而这正是当今深度学习模型所极度欠缺的？这是一个严肃且活跃的研究计划，但其最大的承诺目前仍属于有前景的线索，尚未在大规模实际应用中兑现。
 
-接着是最具争议的话题：大型语言模型能进行因果推理吗？Kıcıman、Ness、Sharma 和 Tan（TMLR 2024；初始 arXiv 预印本 2023 年）报告称，GPT-4 在自然语言的 Tübingen 双变量因果方向任务上达到了 97% 的准确率——使用的是文本变量描述，而不是数值观测数据——且在反事实评分上表现强劲。一个同时期批评认为，大模型只是在「谈论」因果，而非「具有」因果能力——它们只是在复述其训练语料中浸泡过的因果事实，而非执行珀尔式的因果推断。模型表现高度依赖于具体任务。模型能够检索已知的因果事实，并在语义丰富的基准测试中获得高分，但当去除语言和世界知识捷径，或者需要组合因果机制并将其迁移到新设定时，模型表现就会大幅下降。回想一下[第 1 日的盖梯尔陷阱](/zh/days/001-what-is-knowledge/)的新变体：一个输出正确因果声明的 LLM，若其输出原因与实际的因果结构无关，那么它虽然答对了，但它「知道」吗？关于「LLM 是否在珀尔意义上具有因果推理能力」的结论：<StatusChip status={"bad"} label={"任务依赖；尚未确立为通用因果推理。"} printLabel={"任务依赖"} />它对于辅助因果分析是有用的，但尚未确立其作为通用因果推理器的地位。DoWhy 和 EconML 是现代生态中真正的工具：DoWhy 强调基于图的识别、假设和驳斥；EconML 则强调使用正交和机器学习方法的处理效应估计。关于「因果 AI 将很快取代普通相关性机器学习」的销售话术依然远远领先于证据。
+接着是最具争议的话题：大型语言模型能进行因果推理吗？Kıcıman、Ness、Sharma 和 Tan（TMLR 2024；初始 arXiv 预印本 2023 年）报告称，GPT-4 在自然语言的 Tübingen 双变量因果方向任务上达到了 97% 的准确率——使用的是文本变量描述，而不是数值观测数据——且在反事实评分上表现强劲。一个同时期批评认为，大模型只是在「谈论」因果，而非「具有」因果能力——它们只是在复述其训练语料中浸泡过的因果事实，而非执行珀尔式的因果推断。模型表现高度依赖于具体任务。模型能够检索已知的因果事实，并在语义丰富的基准测试中获得高分，但当去除语言和世界知识捷径，或者需要组合因果机制并将其迁移到新设定时，模型表现就会大幅下降。回想一下[第 1 日的盖梯尔陷阱](/zh/days/001-what-is-knowledge/)的新变体：一个输出正确因果声明的 LLM，若其输出原因与实际的因果结构无关，那么它虽然答对了，但它「知道」吗？关于「LLM 是否在珀尔意义上具有因果推理能力」的结论：<StatusChip status={"bad"} label={"有争议／炒作风险"} printLabel={"有争议／炒作风险"} />表现依赖任务；它对于辅助因果分析是有用的，但尚未确立其作为通用因果推理器的地位。DoWhy 和 EconML 是现代生态中真正的工具：DoWhy 强调基于图的识别、假设和驳斥；EconML 则强调使用正交和机器学习方法的处理效应估计。关于「因果 AI 将很快取代普通相关性机器学习」的销售话术依然远远领先于证据。
 </Claim>
 </ContentSection>
 

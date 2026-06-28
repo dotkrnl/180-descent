@@ -101,7 +101,7 @@ import Term from "@app/components/lesson/Term.astro";
 <BridgeLabel>—— 焊接在一起 ——</BridgeLabel>
 <HybridBox>
 <HybridTitle>零假设仪式（实际教导的内容）</HybridTitle>
-      计算 <Term><MathInline latex={String.raw`p`} /></Term>。将其与神圣的 <Term>.05</Term> 进行比较。将低于这一阈值的行为同时视为费舍尔式的「证据充分」和内曼-皮尔逊式的「已做决策」——在报告精确的 <Term><MathInline latex={String.raw`p`} /></Term> 值时，既把它当成证据等级，又像固定 <Term><MathInline latex={String.raw`\alpha`} /></Term> 决策那样给它设限。心理学家格尔德·吉仁泽 (Gerd Gigerenzer) 将这种不连贯的混杂体称为「零假设仪式」，它被机械地执行，却很少有人真正理解。你在正文中遇到的混乱并不是因为学生注意力不集中，而是因为它本身就被植入了一个从未被设计好的工具中。
+      计算 <Term><MathInline latex={String.raw`p`} /></Term>。将其与神圣的 <Term>.05</Term> 进行比较。将低于这一阈值的行为同时视为费舍尔式的「证据充分」和内曼-皮尔逊式的「已做决策」——在报告精确的 <Term><MathInline latex={String.raw`p`} /></Term> 值时，既把它当成证据强度，又像固定 <Term><MathInline latex={String.raw`\alpha`} /></Term> 决策那样给它设限。心理学家格尔德·吉仁泽 (Gerd Gigerenzer) 将这种不连贯的混杂体称为「零假设仪式」，它被机械地执行，却很少有人真正理解。你在正文中遇到的混乱并不是因为学生注意力不集中，而是因为它本身就被植入了一个从未被设计好的工具中。
 </HybridBox>
 </Panel>
 
@@ -274,7 +274,7 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效�
 
 ## 以硬币投掷计量的 p 值
 
-最后介绍一个简洁的转换，因为它悄悄地翻开了第 7 日的内容。Sander Greenland (2019) 建议我们不要只盯着单独报告的 <Term>p 值</Term>，而是取它的「惊异度」 (surprisal)，这直接借用了信息论的概念：<Term>S-值</Term>，定义为 <MathInline latex={String.raw`S=-\log_2 p`} />。S 值把 p 值转换为以比特表示的惊异度，用来描述数据与受检模型的不相容程度。
+最后介绍一个简洁的转换，因为它悄悄地翻开了第 7 日的内容。Sander Greenland (2019) 建议我们不要只盯着单独报告的 <Term>p 值</Term>，而是取它的「惊异度」 (surprisal)，这直接借用了信息论的概念：<Term>S-值</Term>，定义为 <MathInline latex={String.raw`S=-\log_2 p`} />。S-值把 p 值转换为以比特表示的惊异度，用来描述数据与受检模型的不相容程度。
 
 这种转化非常具体。问：同一枚公平硬币要连续出现多少次正面，才能达到这种罕见程度？那个次数就是 <Term>S-值</Term>。一个 <Term><MathInline latex={String.raw`p = .05`} /></Term> 的结果带有约 <Highlight>4.3 比特</Highlight>，这一惊异度大致相当于公平硬币连续出现四至五次正面的罕见程度。一旦这样表达，魔力就消失了。连续四次正面朝上有点意思，但它算不上发现。
 

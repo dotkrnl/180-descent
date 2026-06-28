@@ -294,6 +294,9 @@ line-by-line English.
   translation or review pass, read
   `docs/workflows/180-descent/zh-terminology-glossary.md` and treat it as the
   authoritative glossary.
+- When adding or standardizing a recurring term, scan prior Chinese days for
+  existing translations before choosing the Chinese form, then update the
+  glossary and normalize affected content in the same change where practical.
 - Prefer natural Chinese rhythm and punctuation. Use Chinese quotes for quoted
   propositions and titles where appropriate.
 - Avoid dense emphasis in Chinese prose. Use terminology styling and sparse

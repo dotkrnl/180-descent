@@ -24,6 +24,97 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | peer review | 同行评议 | Process before publication; not a guarantee of truth. | 同行审查 when used inconsistently |
 | preprint | 预印本 | Label clearly when the evidential status matters. | 预发表稿 |
 | evidence status | 证据状态 | Use for status labeling and frontier judgment. | 证据等级 when no hierarchy is intended |
+| credence | 置信度 | Bayesian/epistemology context. | 信心度 |
+| justification | 证成 | Epistemology term. | 正当化 when inconsistent |
+| propositional knowledge | 命题知识 | Knowledge-that. | 陈述性知识 when inconsistent |
+| Gettier case / problem | 盖梯尔案例 / 盖梯尔问题 | Epistemology examples and problem name. | 葛梯尔 when inconsistent |
+| testimony | 证言 | Epistemology/social knowledge context. | 见证词 when used as epistemic term |
+| epistemic injustice | 认知不正义 | Miranda Fricker context. | 知识不公正 when inconsistent |
+| testimonial injustice | 证言不正义 | Fricker term. | 见证不正义 |
+| hermeneutical injustice | 解释学不正义 | Fricker term. | 诠释不正义 when inconsistent |
+| factive theory of mind | 事实性心智理论 | Day 1 epistemology/cognitive science. | 事实心智理论 |
+| epistemic bubble | 认知气泡 | Social epistemology. | 信息泡泡 when technical |
+| echo chamber | 回声室 | Social epistemology. | 回音室 when inconsistent |
+| bullshit | 扯淡 | Frankfurt sense; keep register deliberate. | 狗屁 unless deliberately colloquial |
+| token | 标记 | LLM/information context. | 令牌 when inconsistent |
+| abduction | 溯因 | Inference to the best explanation. | 逆推 when technical |
+| deduction | 演绎 | Logic/inference. | 推演 when inconsistent |
+| induction | 归纳 | Logic/science. | 归纳法 if term label needs noun |
+| entailment | 蕴涵 | Logic relation. | 蕴含 when inconsistent |
+| validity | 有效性 | Logic argument property. | 有效 when a noun is needed |
+| soundness | 健全性 | Logic proof/argument property. | 可靠性 when the technical proof term is meant |
+| natural deduction | 自然演绎 | Logic system. | 自然推导 |
+| sequent calculus | 相继式演算 | Logic proof system. | 序列演算 when inconsistent |
+| type theory | 类型论 | Logic/foundations. | 型理论 when inconsistent |
+| autoformalization | 自动形式化 | AI/math formalization. | 自动形式化证明 unless narrower |
+| falsifiability | 可证伪性 | Popper/demarcation context. | 可反驳性 when inconsistent |
+| demarcation problem | 划界问题 | Philosophy of science. | 分界问题 when inconsistent |
+| paradigm | 范式 | Kuhn context. | 模式 when technical |
+| underdetermination | 欠决定 | Philosophy of science. | 决定不足 |
+| p-value | p 值 | Statistics; lowercase Latin p. | p值 |
+| e-value | e 值 | Game-theoretic statistics. | e值 |
+| e-process | e 过程 | Sequential/e-value context. | e过程 |
+| anytime-valid inference | 任意时点有效推断 | Sequential/statistical inference. | 任意时刻有效推断 when inconsistent |
+| anytime validity | 任意时点有效性 | Sequential/statistical inference property. | 任意时刻有效性 |
+| safe anytime-valid inference | 安全任意时点有效推断 | Game-theoretic statistics. | 安全任意时刻有效推断 |
+| always-valid inference | 始终有效推断 | Use when translating the Optimizely/Johari title or platform term. | 任意有效推断 |
+| optional stopping | 可选停止 | Repeated looks at data before a planned endpoint. | 选择性停止 |
+| S-value / surprisal value | S-值 | Information/surprisal framing of p values. | S 值 when inconsistent |
+| null hypothesis | 零假设 | Statistics. | 原假设 when inconsistent |
+| alternative hypothesis | 备择假设 | Statistics. | 对立假设 when inconsistent |
+| confidence interval | 置信区间 | Statistics. | 信赖区间 |
+| confidence sequence | 置信序列 | Anytime-valid inference. | 信心序列 |
+| likelihood ratio | 似然比 | Bayesian/statistical evidence. | 可能性比 |
+| Bayes factor | 贝叶斯因子 | Bayesian evidence. | 贝叶斯因素 |
+| martingale | 鞅 | Probability/game-theoretic statistics. | 马丁格尔 |
+| compatibility interval | 相容性区间 | Statistics interpretation of intervals. | 兼容区间 when inconsistent |
+| effect size | 效应量 | Statistics. | 效果量 when inconsistent |
+| statistical power | 检验功效 | Statistics. | 统计功效 when inconsistent |
+| base rate | 基础率 | Statistics/replication crisis. | 基率 when inconsistent |
+| prior odds | 先验比值 | Ioannidis/PPV framing. | 先验赔率 |
+| false positive | 假阳性 | Error outcome. | 伪阳性 when inconsistent |
+| false positive risk | 误报风险 | Replication/Bayesian critique context. | 假阳性风险 when not describing the event itself |
+| positive predictive value | 阳性预测值 | Diagnostic/statistical context. | 正预测值 |
+| false discovery rate | 错误发现率 | Multiple testing. | 假发现率 when inconsistent |
+| family-wise error rate | 族错误率 | Multiple testing. | 家族错误率 |
+| researcher degrees of freedom | 研究者自由度 | QRPs/replication crisis. | 研究者自由 |
+| file drawer problem | 文件抽屉问题 | Publication bias. | 抽屉问题 |
+| HARKing | HARKing | Keep acronym; explain as hypothesizing after results are known. | 结果后假设 unless explanatory prose |
+| registered report | 注册式报告 | Reform practice. | 注册报告 when inconsistent |
+| preregistration | 研究预登记 | Reform practice. | 预注册 when inconsistent |
+| garden of forking paths | 分岔路径花园 | Gelman/Loken concept; 分岔花园 is acceptable as a short local label. | 分叉花园 |
+| equivalence testing | 等效性检验 | Statistics. | 等价性检验 when inconsistent |
+| p-hacking | p 值操纵 | QRPs. | p-hacking without explanation in Chinese prose |
+| causal inference | 因果推断 | Causation/statistics. | 因果推理 when the statistical field is meant |
+| spurious correlation | 虚假相关 | Causation. | 伪相关 when inconsistent |
+| confounder | 混杂因素 | Causal inference. | 混淆变量 when inconsistent |
+| intervention | 干预 | Causal inference. | 介入 when inconsistent |
+| counterfactual | 反事实 | Causation/philosophy. | 反事实条件 when a noun term is needed |
+| do-operator | do-算子 | Pearl causal notation. | do 操作符 |
+| structural causal model | 结构因果模型 | Pearl/SCM context. | 结构性因果模型 when inconsistent |
+| directed acyclic graph / DAG | 有向无环图 | Causal graph/network context. | 有向非循环图 |
+| collider | 对撞结构 | DAG structure; can use 对撞因子 for variable role in prose. | 碰撞器 when not physics |
+| front-door criterion | 前门准则 | Causal identification. | 前门标准 |
+| back-door adjustment | 后门调整 | Causal identification. | 后门调节 |
+| potential outcomes | 潜在结果 | Rubin causal model. | 潜在结局 when inconsistent |
+| causal estimand | 估计目标 | Causal target quantity; explain when needed. | 估计量 when target, not estimator, is meant |
+| randomized controlled trial / RCT | 随机对照试验 | First mention may include RCT. | 随机控制试验 |
+| credibility revolution | 可信度革命 | Economics/causal inference. | 可信性革命 |
+| bit | 比特 | Information theory. | 位 when unit clarity matters |
+| entropy | 熵 | Information or thermodynamics; qualify if ambiguous. | 无序度 as definition |
+| Shannon entropy | 香农熵 | Information theory. | 夏农熵 when inconsistent |
+| mutual information | 互信息 | Information theory. | 相互信息 when inconsistent |
+| joint entropy | 联合熵 | Information theory. | 共同熵 |
+| conditional entropy | 条件熵 | Information theory. | 条件信息熵 |
+| relative entropy / KL divergence | 相对熵 / KL 散度 | Use KL 散度 when naming the divergence. | KL距离 |
+| redundancy | 冗余 | Information theory. | 多余性 |
+| rate-distortion theory | 率失真理论 | Information theory. | 速率失真理论 when inconsistent |
+| Hamming distance | 汉明距离 | Coding/information theory. | 海明距离 when inconsistent |
+| Landauer's principle | 兰道尔原理 | Information thermodynamics. | 兰道尔原则 when inconsistent |
+| Maxwell's demon | 麦克斯韦妖 | Information thermodynamics. | 麦克斯韦恶魔 when inconsistent |
+| reversible computing | 可逆计算 | Computing/thermodynamics. | 可逆运算 |
+| qubit | 量子比特 | Quantum information. | 量子位 when inconsistent |
+| thermodynamic uncertainty relation | 热力学不确定关系 | Stochastic thermodynamics. | 热力学不确定性关系 when inconsistent |
 | weak emergence | 弱涌现 | Bedau-style derivability through simulation. | 弱出现 |
 | strong emergence | 强涌现 | Ontological or causal non-deducibility. | 强出现 |
 | downward causation | 下行因果 | Often only a possibility in strong-emergence debates. | 向下因果 when inconsistent |
@@ -48,6 +139,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | Rule 110 | 规则 110 | Cellular automaton rule name. | 110 号规则 when inconsistent |
 | random Boolean network | 随机布尔网络 | Kauffman-style network; avoid conflating with NK fitness model. | NK 网络 unless the fitness model is meant |
 | attractor | 吸引子 | Dynamical-systems context. | 吸引物 |
+| Kolmogorov complexity | 柯尔莫哥洛夫复杂度 | Algorithmic information theory. | 柯尔莫哥罗夫复杂性, 柯尔莫哥罗夫复杂度 |
 | statistical complexity | 统计复杂度 | Complexity-measure context. | 统计学复杂性 |
 | effective complexity | 有效复杂度 | Gell-Mann/Lloyd context. | 有效复杂性 when inconsistent |
 | thermodynamic depth | 热力学深度 | Historical-information measure. | 热动力学深度 |
