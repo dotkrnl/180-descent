@@ -116,11 +116,16 @@ async function checkManifestIcons(siteDir: string, siteUrl: string, href: string
   const manifestPath = sitePathForHref(siteDir, siteUrl, href);
   if (!manifestPath || !await pathExists(manifestPath)) return;
 
-  let manifest: { icons?: Array<{ src?: unknown }> };
+  let manifest: { icons?: unknown };
   try {
-    manifest = JSON.parse(await readFile(manifestPath, "utf8")) as { icons?: Array<{ src?: unknown }> };
+    const parsed = JSON.parse(await readFile(manifestPath, "utf8")) as unknown;
+    manifest = parsed && typeof parsed === "object" ? parsed : {};
   } catch (error) {
     errors.push(`${href}: invalid web manifest JSON (${error instanceof Error ? error.message : String(error)})`);
+    return;
+  }
+  if (manifest.icons !== undefined && !Array.isArray(manifest.icons)) {
+    errors.push(`${href}: icons must be an array`);
     return;
   }
   const icons = manifest.icons ?? [];
