@@ -146,8 +146,8 @@ function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string 
     ? (isZh ? `第 ${String(card.day).padStart(3, "0")} 日` : `Day ${String(card.day).padStart(3, "0")}`)
     : (isZh ? "从根基到 2026 年研究前沿" : "Foundations to the 2026 research frontier");
   const summary = clampSocialText(card.summary, isZh ? 132 : 150);
-  const titleLines = wrapSocialText(card.title, { maxLines: isZh ? 2 : 3, maxChars: isZh ? 15 : 22 });
-  const summaryLines = summary ? wrapSocialText(summary, { maxLines: 3, maxChars: isZh ? 28 : 48 }) : [];
+  const titleLines = wrapSocialTextForCard(card.title, { maxLines: isZh ? 2 : 3, maxChars: isZh ? 15 : 22 });
+  const summaryLines = summary ? wrapSocialTextForCard(summary, { maxLines: 3, maxChars: isZh ? 28 : 48 }) : [];
   const titleSize = isZh ? 70 : 78;
   const summarySize = isZh ? 34 : 32;
 
@@ -238,13 +238,13 @@ function svgMultilineText(lines: string[], options: {
   return `<text fill="${options.color}" font-family="${escapeXml(options.family)}" font-size="${options.size}" font-weight="${options.weight}">${tspans}</text>`;
 }
 
-function wrapSocialText(value: string, options: { maxLines: number; maxChars: number }): string[] {
+export function wrapSocialTextForCard(value: string, options: { maxLines: number; maxChars: number }): string[] {
   const text = value.replace(/\s+/g, " ").trim();
   if (!text) return [];
 
   const isCjk = /[\u3400-\u9fff]/.test(text);
   const joiner = isCjk ? "" : " ";
-  const tokens = isCjk ? [...text] : text.split(" ");
+  const tokens = isCjk ? [...text] : splitSocialTextTokens(text, options.maxChars);
   const lines: string[] = [];
   let line = "";
 
@@ -264,10 +264,27 @@ function wrapSocialText(value: string, options: { maxLines: number; maxChars: nu
   }
 
   if (lines.length && tokens.join(joiner).length > lines.join(joiner).length) {
-    lines[lines.length - 1] = `${lines[lines.length - 1].replace(/\.{3}$/, "").trim()}...`;
+    lines[lines.length - 1] = truncateSocialLine(lines[lines.length - 1], options.maxChars);
   }
 
   return lines;
+}
+
+function truncateSocialLine(line: string, maxChars: number): string {
+  const ellipsis = "...";
+  const text = line.replace(/\.{3}$/, "").trim();
+  return `${text.slice(0, Math.max(0, maxChars - ellipsis.length)).trim()}${ellipsis}`;
+}
+
+function splitSocialTextTokens(text: string, maxChars: number): string[] {
+  return text.split(" ").flatMap((token) => {
+    if (token.length <= maxChars) return [token];
+    const chunks: string[] = [];
+    for (let index = 0; index < token.length; index += maxChars) {
+      chunks.push(token.slice(index, index + maxChars));
+    }
+    return chunks;
+  });
 }
 
 async function isSameRenderedImage(outPath: string, candidate: Buffer): Promise<boolean> {
