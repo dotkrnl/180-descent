@@ -1,13 +1,11 @@
 ---
 import PageShell from "@app/layouts/PageShell.astro";
 import {
-  contentDaysByNumber,
   getBookData,
   getContentDays,
   getSyllabus,
   nextSyllabusDay,
   padDay,
-  totalSyllabusDays,
   upcomingSyllabusDays
 } from "@app/site-data";
 import type { Locale } from "@lib/schemas/day";
@@ -24,8 +22,8 @@ const [book, syllabus, days] = await Promise.all([
   getSyllabus(locale),
   getContentDays(locale)
 ]);
-const totalDays = totalSyllabusDays(syllabus);
-const contentDays = contentDaysByNumber(days);
+const totalDays = syllabus.blocks.reduce((total, block) => total + block.days.length, 0);
+const contentDays = new Map(days.map((day) => [day.day, day]));
 const nextDay = nextSyllabusDay(syllabus, days);
 const upcoming = upcomingSyllabusDays(syllabus, days, 6);
 const latestContentDay = days.at(-1)?.day ?? 0;

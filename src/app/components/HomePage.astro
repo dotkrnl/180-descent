@@ -1,7 +1,7 @@
 ---
 import BookShell from "@app/layouts/BookShell.astro";
 import DayCard from "@app/components/DayCard.astro";
-import { getBookData, getContentDays, latestDays, padDay } from "@app/site-data";
+import { getBookData, getContentDays, padDay } from "@app/site-data";
 import type { Locale } from "@lib/schemas/day";
 import { alternateLocale, dayUrl, homeUrl, staticPageUrl } from "@lib/static-site/routes";
 
@@ -16,6 +16,7 @@ const isZh = locale === "zh";
 const homePath = homeUrl(locale);
 const alternatePath = homeUrl(alternateLocale(locale));
 const downloads = isZh ? book.zh.downloads : book.downloads;
+const latestPublishedDays = [...days].sort((a, b) => b.day - a.day).slice(0, 10);
 const readingDays = days.map((day) => ({
   day: day.day,
   url: day.url,
@@ -69,7 +70,7 @@ const readingDays = days.map((day) => ({
   <section class="wrap wide">
     <p class="sec-eyebrow">{isZh ? "最新发布" : "Latest descents"}</p>
     <div class="toc-grid">
-      {latestDays(days, 10).map((day) => (
+      {latestPublishedDays.map((day) => (
         <DayCard day={day} locale={locale} totalDays={book.totalDays} />
       ))}
     </div>

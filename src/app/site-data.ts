@@ -53,18 +53,6 @@ export function padDay(value: number): string {
   return String(value).padStart(3, "0");
 }
 
-export function latestDays(days: ContentDay[], count: number): ContentDay[] {
-  return [...days].sort((a, b) => b.day - a.day).slice(0, count);
-}
-
-export function totalSyllabusDays(syllabus: Syllabus): number {
-  return syllabus.blocks.reduce((total, block) => total + block.days.length, 0);
-}
-
-export function contentDaysByNumber(days: ContentDay[]): Map<number, ContentDay> {
-  return new Map(days.map((day) => [day.day, day]));
-}
-
 export function nextSyllabusDay(syllabus: Syllabus, days: ContentDay[]): UpcomingSyllabusDay | undefined {
   const contentDayNumbers = new Set(days.map((day) => day.day));
   for (const block of syllabus.blocks) {
