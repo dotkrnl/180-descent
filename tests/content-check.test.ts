@@ -136,6 +136,29 @@ describe("content check", () => {
     ]);
   });
 
+  it("does not accept prefix-sharing component names as required content markers", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        "# Fixture Day",
+        "<StatusChipRow></StatusChipRow>",
+        "<SourcesTitle>Sources</SourcesTitle>"
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "EN 001-fixture has no sources section"
+      },
+      {
+        message: "EN 001-fixture has no frontier status chips"
+      }
+    ]);
+  });
+
   it("ignores generated files when checking parent Markdown references", async () => {
     const root = await createFixtureRoot();
     await mkdir(path.join(root, "tmp"), { recursive: true });

@@ -393,11 +393,11 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
     failures.push({ message: `${checkedFile.relativePath} contains inline script; use shared interaction assets instead` });
   }
 
-  if (!checkedFile.source.includes("<Sources")) {
+  if (!hasMdxComponent(checkedFile.source, "Sources")) {
     failures.push({ message: `${checkedFile.label} has no sources section` });
   }
 
-  if (!checkedFile.source.includes("<StatusChip")) {
+  if (!hasMdxComponent(checkedFile.source, "StatusChip")) {
     failures.push({ message: `${checkedFile.label} has no frontier status chips` });
   }
 
@@ -562,6 +562,10 @@ async function checkParentMarkdownReferences(root: string, failures: ContentChec
 
 function countMatches(text: string, pattern: RegExp): number {
   return [...text.matchAll(pattern)].length;
+}
+
+function hasMdxComponent(source: string, name: string): boolean {
+  return new RegExp(`<${name}(?:\\s|>|/)`).test(source);
 }
 
 function normalizeVisibleText(text: string): string {
