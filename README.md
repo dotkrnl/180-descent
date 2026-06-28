@@ -43,9 +43,9 @@ Use the single agent-agnostic workflow at `docs/workflows/180-descent/` for addi
 
 Day source is split by responsibility:
 
-- `src/content/days/###-slug/day.yaml` is the typed day manifest.
+- `src/content/days/###-slug/day.yaml` is the typed day manifest; its `day` value must match the directory prefix.
 - `src/content/days/###-slug/en.mdx` and `src/content/days/###-slug/zh.mdx` hold the paired lesson bodies.
-- `src/content/days/###-slug/appendices/*.mdx` holds optional deep-dive content declared in the manifest.
+- `src/content/days/###-slug/appendices/*.en.mdx` and `*.zh.mdx` hold paired optional deep-dive content declared in the manifest.
 - Reusable figures live in `src/app/components/lesson/figures/`.
 - Reusable interactive DOM lives in `src/app/components/lesson/interactives/`.
 - Interaction behavior lives in `src/assets/js/interactions/` and is registered by manifest `interactionScripts`.

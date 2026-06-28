@@ -12,7 +12,8 @@ publishing, and visual comparison.
 ## Source Model
 
 Each published day lives under `src/content/days/###-slug/`. The directory
-name is the canonical URL path.
+name is the canonical URL path, and the manifest `day` number must match the
+three-digit directory prefix.
 
 - `day.yaml` is the strict typed manifest: day number, block, locale metadata,
   appendices, and interaction scripts.
@@ -50,7 +51,8 @@ with a static `FormatOnly media="print-epub" variant="alternate"` equivalent.
    `src/content/days/###-slug/day.yaml`.
 2. Keep English and Chinese locale entries paired when the day is published.
 3. Put page title, summary, block, appendices, and interaction scripts in
-   `day.yaml`; do not duplicate directory routing metadata inside the manifest.
+   `day.yaml`; keep the manifest `day` number synchronized with the directory
+   prefix, and do not duplicate slug routing metadata inside the manifest.
 4. Write lesson bodies as real MDX. Import lesson components explicitly at the
    top of each MDX file.
 5. Extract repeated or behavior-bearing markup into Astro components. Keep
