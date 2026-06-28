@@ -130,6 +130,20 @@ function bracedExpressions(source: string): string[] {
 
   for (let index = 0; index < source.length; index += 1) {
     const char = source[index];
+    if (depth > 0) {
+      if (char === '"' || char === "'" || char === "`") {
+        index = quotedLiteralEnd(source, index);
+        continue;
+      }
+      if (char === "/" && source[index + 1] === "/") {
+        index = lineCommentEnd(source, index + 2);
+        continue;
+      }
+      if (char === "/" && source[index + 1] === "*") {
+        index = blockCommentEnd(source, index + 2);
+        continue;
+      }
+    }
     if (char === "{") {
       if (depth === 0) start = index;
       depth += 1;

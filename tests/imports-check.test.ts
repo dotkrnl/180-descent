@@ -139,6 +139,22 @@ describe("import check", () => {
     ].join("\n"))).resolves.toEqual([]);
   });
 
+  it("does not close braced expressions on braces inside strings or comments", async () => {
+    await expect(unusedDefaultImportNames([
+      'import figure from "./figure.jpg";',
+      '<ImageFigure src={condition ? "}" : figure} />'
+    ].join("\n"))).resolves.toEqual([]);
+
+    await expect(unusedDefaultImportNames([
+      'import figure from "./figure.jpg";',
+      "<ImageFigure",
+      "  src={condition // }",
+      "    ? figure",
+      "    : fallback}",
+      "/>"
+    ].join("\n"))).resolves.toEqual([]);
+  });
+
   it("counts identifiers inside template literal interpolations", async () => {
     await expect(unusedDefaultImportNames([
       'import figure from "./figure.jpg";',
