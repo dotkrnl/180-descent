@@ -117,6 +117,26 @@ describe("content check", () => {
     ]);
   });
 
+  it("ignores generated files when checking parent Markdown references", async () => {
+    const root = await createFixtureRoot();
+    await mkdir(path.join(root, "tmp"), { recursive: true });
+    await mkdir(path.join(root, "src/app"), { recursive: true });
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: body("夹具日", "zh")
+    });
+    await writeFile(path.join(root, "tmp/generated.md"), "[scratch](../outside.md)");
+    await writeFile(path.join(root, "src/app/source.md"), "[bad](../outside.md)");
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/app/source.md references a parent Markdown file; keep canonical project content inside this repo"
+      }
+    ]);
+  });
+
   it("reports appendix web panels without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {

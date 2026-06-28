@@ -28,6 +28,7 @@ const UNSTYLED_FRONTIER_MARKER_PATTERN =
 const REDUNDANT_TERM_TIP_PATTERN =
   /<Term\b[^>]*>([^<]+)<\/Term><TipNote\b[^>]*\/>\s+(?:\b(?:is|are|means|links|says)\b|指|是|称为|叫做|会|把|用来)/g;
 const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".scss", ".yaml", ".yml"]);
+const GENERATED_REFERENCE_CHECK_IGNORES = [".astro", "_site", "node_modules", "fonts", "generated", "tmp"];
 const PARENT_MARKDOWN_PATTERN = /\.\.\/[^\s"'`)]+\.md\b/;
 const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<header class="hero wrap">/, "use <Hero>"],
@@ -485,7 +486,7 @@ async function checkCssFonts(root: string, failures: ContentCheckFailure[]): Pro
 }
 
 async function checkParentMarkdownReferences(root: string, failures: ContentCheckFailure[]): Promise<void> {
-  for (const file of await walkFiles(root, { exts: PROJECT_TEXT_EXTS })) {
+  for (const file of await walkFiles(root, { exts: PROJECT_TEXT_EXTS, ignored: GENERATED_REFERENCE_CHECK_IGNORES })) {
     const text = await readFile(file, "utf8");
     if (PARENT_MARKDOWN_PATTERN.test(text)) {
       failures.push({
