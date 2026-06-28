@@ -8,9 +8,8 @@ describe("font asset preparation", () => {
   it("copies configured latin font files into the site asset directory", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-latin-fonts-"));
 
-    const result = await prepareLatinFonts({ root });
+    await prepareLatinFonts({ root });
 
-    expect(result.copied).toBe(15);
     await expectFile(path.join(root, "src/assets/fonts/fraunces-latin-700-italic.woff2"));
     await expectFile(path.join(root, "src/assets/fonts/newsreader-latin-400-normal.woff2"));
     await expectFile(path.join(root, "src/assets/fonts/ibm-plex-mono-latin-600-normal.woff2"));
@@ -19,13 +18,9 @@ describe("font asset preparation", () => {
   it("copies CJK font subsets and rewrites vendor CSS into a generated SCSS partial", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-cjk-fonts-"));
 
-    const result = await prepareCjkFonts({ root });
+    await prepareCjkFonts({ root });
 
     const css = await readFile(path.join(root, "src/assets/scss/generated/_cjk.scss"), "utf8");
-    expect(result.weights).toEqual([
-      { prefix: "lxgwwenkai-regular", subsets: 97 },
-      { prefix: "lxgwwenkai-bold", subsets: 97 }
-    ]);
     await expectFile(path.join(root, "src/assets/fonts/cjk/lxgwwenkai-regular-subset-21.woff2"));
     await expectFile(path.join(root, "src/assets/fonts/cjk/lxgwwenkai-bold-subset-21.woff2"));
     expect(css).toContain("../../fonts/cjk/lxgwwenkai-regular-subset-21.woff2");
@@ -35,10 +30,9 @@ describe("font asset preparation", () => {
   it("copies KaTeX fonts and rewrites CSS into a generated SCSS partial", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-katex-assets-"));
 
-    const result = await prepareKatexAssets({ root });
+    await prepareKatexAssets({ root });
 
     const css = await readFile(path.join(root, "src/assets/scss/generated/_katex.scss"), "utf8");
-    expect(result.fonts).toBe(40);
     await expectFile(path.join(root, "src/assets/fonts/katex/KaTeX_Main-Regular.woff2"));
     await expectFile(path.join(root, "src/assets/fonts/katex/KaTeX_Main-Regular.woff"));
     expect(css).toContain("../../fonts/katex/KaTeX_Main-Regular.woff2");

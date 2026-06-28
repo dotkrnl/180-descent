@@ -24,25 +24,9 @@ interface LatinFontAsset {
   fileName: string;
 }
 
-interface PrepareLatinFontsResult {
-  copied: number;
-}
-
 interface CjkFontWeight {
   cssFile: string;
   prefix: string;
-}
-
-interface PrepareCjkFontsResult {
-  scssOut: string;
-  weights: Array<{
-    prefix: string;
-    subsets: number;
-  }>;
-}
-
-interface PrepareKatexAssetsResult {
-  fonts: number;
 }
 
 const latinFontAssets: readonly LatinFontAsset[] = [
@@ -76,7 +60,7 @@ const packageRoots: Record<AssetPackageName, string> = {
   "lxgw-wenkai-webfont": path.dirname(require.resolve("lxgw-wenkai-webfont/package.json"))
 };
 
-export async function prepareLatinFonts(options: AssetPreparationOptions): Promise<PrepareLatinFontsResult> {
+export async function prepareLatinFonts(options: AssetPreparationOptions): Promise<void> {
   const outDir = fontsDir(options.root);
   await mkdir(outDir, { recursive: true });
 
@@ -85,9 +69,6 @@ export async function prepareLatinFonts(options: AssetPreparationOptions): Promi
     return copyFile(path.join(packageRoot, "files", asset.fileName), path.join(outDir, asset.fileName));
   }));
 
-  return {
-    copied: latinFontAssets.length
-  };
 }
 
 export async function preparePdfFonts(options: AssetPreparationOptions): Promise<void> {
@@ -105,11 +86,10 @@ export async function preparePdfFonts(options: AssetPreparationOptions): Promise
   }
 }
 
-export async function prepareCjkFonts(options: AssetPreparationOptions): Promise<PrepareCjkFontsResult> {
+export async function prepareCjkFonts(options: AssetPreparationOptions): Promise<void> {
   const packageRoot = packageRoots["lxgw-wenkai-webfont"];
   const outDir = cjkFontsDir(options.root);
   const scssOut = generatedScssFile(options.root, "_cjk.scss");
-  const results: PrepareCjkFontsResult["weights"] = [];
 
   await mkdir(outDir, { recursive: true });
   await mkdir(path.dirname(scssOut), { recursive: true });
@@ -126,17 +106,12 @@ export async function prepareCjkFonts(options: AssetPreparationOptions): Promise
     }));
 
     cssParts.push(cssText.replaceAll("./files/", "../../fonts/cjk/"));
-    results.push({ prefix: weight.prefix, subsets: subsets.length });
   }
 
   await writeFile(scssOut, cssParts.join("\n"));
-  return {
-    scssOut,
-    weights: results
-  };
 }
 
-export async function prepareKatexAssets(options: AssetPreparationOptions): Promise<PrepareKatexAssetsResult> {
+export async function prepareKatexAssets(options: AssetPreparationOptions): Promise<void> {
   const katexRoot = packageRoots.katex;
   const scssOut = generatedScssFile(options.root, "_katex.scss");
   const fontsOut = katexFontsDir(options.root);
@@ -154,10 +129,6 @@ export async function prepareKatexAssets(options: AssetPreparationOptions): Prom
 
   const css = await readFile(path.join(katexRoot, "dist", "katex.min.css"), "utf8");
   await writeFile(scssOut, stripUnbundledKatexTtfSources(css.replaceAll("fonts/", "../../fonts/katex/")));
-
-  return {
-    fonts: fonts.length
-  };
 }
 
 export function stripUnbundledKatexTtfSources(css: string): string {
