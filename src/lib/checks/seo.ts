@@ -50,9 +50,12 @@ async function checkHtml(
   const $ = load(html);
 
   const title = $("title").first().text().trim();
-  const description = $('meta[name="description"]').attr("content") || "";
+  const description = firstAttr($, 'meta[name="description"]', "content");
   const canonical = $('link[rel="canonical"]').attr("href") || "";
-  const ogImage = $('meta[property="og:image"]').attr("content") || "";
+  const ogTitle = firstAttr($, 'meta[property="og:title"]', "content");
+  const ogDescription = firstAttr($, 'meta[property="og:description"]', "content");
+  const ogImage = firstAttr($, 'meta[property="og:image"]', "content");
+  const twitterCard = firstAttr($, 'meta[name="twitter:card"]', "content");
   const favicon = $('link[rel="icon"]').first().attr("href") || "";
   const appleTouchIcon = $('link[rel="apple-touch-icon"]').attr("href") || "";
   const manifest = $('link[rel="manifest"]').attr("href") || "";
@@ -60,10 +63,10 @@ async function checkHtml(
   if (!title) errors.push(`${url}: missing <title>`);
   if (!description) errors.push(`${url}: missing meta description`);
   if (canonical !== pageUrl) errors.push(`${url}: canonical should be ${pageUrl}, got ${canonical || "(missing)"}`);
-  if (!$('meta[property="og:title"]').attr("content")) errors.push(`${url}: missing og:title`);
-  if (!$('meta[property="og:description"]').attr("content")) errors.push(`${url}: missing og:description`);
+  if (!ogTitle) errors.push(`${url}: missing og:title`);
+  if (!ogDescription) errors.push(`${url}: missing og:description`);
   if (!ogImage) errors.push(`${url}: missing og:image`);
-  if (!$('meta[name="twitter:card"]').attr("content")) errors.push(`${url}: missing twitter card metadata`);
+  if (!twitterCard) errors.push(`${url}: missing twitter card metadata`);
   checkStructuredData(url, $, errors);
   if (!favicon) errors.push(`${url}: missing favicon link`);
   if (!appleTouchIcon) errors.push(`${url}: missing apple-touch-icon link`);
@@ -97,6 +100,10 @@ async function checkHtml(
     if (zhHref && zhHref !== expectedZhHref) errors.push(`${url}: hreflang zh-Hans should be ${expectedZhHref}, got ${zhHref}`);
     if (defaultHref && defaultHref !== expectedEnHref) errors.push(`${url}: hreflang x-default should be ${expectedEnHref}, got ${defaultHref}`);
   }
+}
+
+function firstAttr($: ReturnType<typeof load>, selector: string, attribute: string): string {
+  return ($(selector).first().attr(attribute) || "").trim();
 }
 
 function checkStructuredData(url: string, $: ReturnType<typeof load>, errors: string[]): void {

@@ -26,6 +26,25 @@ describe("seo check", () => {
     });
   });
 
+  it("rejects whitespace-only text metadata", async () => {
+    const root = await createSiteRoot();
+    await writeFile(path.join(root, "_site/index.html"), indexHtml({
+      description: "   ",
+      ogTitle: "   ",
+      ogDescription: "   ",
+      twitterCard: "   "
+    }));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "/: missing meta description",
+      "/: missing og:title",
+      "/: missing og:description",
+      "/: missing twitter card metadata"
+    ]);
+  });
+
   it("reports incorrect hreflang targets for paired pages", async () => {
     const root = await createSiteRoot();
     await mkdir(path.join(root, "_site/zh"), { recursive: true });
@@ -253,9 +272,13 @@ async function createSiteRoot(): Promise<string> {
 
 function indexHtml(options: {
   canonicalPath?: string;
+  description?: string;
   favicon?: string;
   jsonLd?: string;
   manifest?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterCard?: string;
   alternates?: {
     en: string;
     zh: string;
@@ -275,13 +298,13 @@ function indexHtml(options: {
     "<html>",
     "<head>",
     "<title>Fixture</title>",
-    '<meta name="description" content="Fixture description">',
+    `<meta name="description" content="${options.description ?? "Fixture description"}">`,
     `<link rel="canonical" href="https://180d.io${canonicalPath}">`,
     ...alternates,
-    '<meta property="og:title" content="Fixture">',
-    '<meta property="og:description" content="Fixture description">',
+    `<meta property="og:title" content="${options.ogTitle ?? "Fixture"}">`,
+    `<meta property="og:description" content="${options.ogDescription ?? "Fixture description"}">`,
     '<meta property="og:image" content="https://180d.io/social.png">',
-    '<meta name="twitter:card" content="summary_large_image">',
+    `<meta name="twitter:card" content="${options.twitterCard ?? "summary_large_image"}">`,
     `<script type="application/ld+json">${options.jsonLd ?? "{}"}</script>`,
     `<link rel="icon" href="${options.favicon ?? "/favicon.ico"}">`,
     '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
