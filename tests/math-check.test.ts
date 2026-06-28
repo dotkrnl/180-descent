@@ -21,6 +21,20 @@ describe("math check", () => {
     ]);
   });
 
+  it("ignores raw math examples inside fenced code blocks", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), [
+      "```mdx",
+      '<MathBlock latex={String.raw`\\[x\\]`} />',
+      '<p class="formula"><code>x</code></p>',
+      "```"
+    ].join("\n"));
+
+    const result = await checkMath({ root });
+
+    expect(result.failures).toEqual([]);
+  });
+
   it("reports unrendered delimiters in built HTML", async () => {
     const root = await createFixtureRoot();
     await writeFile(path.join(root, "_site/index.html"), String.raw`<p>\(x\)</p>`);

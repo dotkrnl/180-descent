@@ -3,6 +3,7 @@ import { contentDaysDir } from "@lib/content/paths";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
+import { stripFencedCodeBlocks } from "@lib/text/markdown";
 
 interface MathCheckOptions {
   root: string;
@@ -37,7 +38,7 @@ export async function checkMath(options: MathCheckOptions): Promise<MathCheckRes
   const sourceFiles = await walkFiles(sourceDir, { exts: ".mdx", ignored: [] });
 
   for (const file of sourceFiles) {
-    const content = await readFile(file, "utf8");
+    const content = stripFencedCodeBlocks(await readFile(file, "utf8"));
     failures.push(...scanPatterns(options.root, file, content, RAW_SOURCE_PATTERNS));
   }
 
