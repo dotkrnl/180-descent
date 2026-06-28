@@ -43,7 +43,6 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
       if (!targetRef) continue;
 
       const { pathname, anchor } = targetRef;
-      if (isArtifactDownloadPath(pathname)) continue;
       const target = siteFileForUrlPath(builtSiteDir, pathname);
 
       if (!target || !await pathExists(target)) {
@@ -138,8 +137,4 @@ async function checkFutureLinks(root: string, daysDir: string, totalDays: number
   }
 
   return failures;
-}
-
-function isArtifactDownloadPath(pathname: string): boolean {
-  return /^\/downloads\/.+\.(?:epub|pdf)$/.test(pathname);
 }

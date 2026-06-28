@@ -86,6 +86,22 @@ describe("link checks", () => {
     expect(failures).toEqual([]);
   });
 
+  it("reports missing download artifacts", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "_site/index.html"), [
+      '<a href="/downloads/180-descent.epub">missing epub</a>',
+      '<a href="/downloads/180-descent.pdf">present pdf</a>'
+    ].join("\n"));
+    await mkdir(path.join(root, "_site/downloads"), { recursive: true });
+    await writeFile(path.join(root, "_site/downloads/180-descent.pdf"), "");
+
+    const failures = await checkLinks({ root });
+
+    expect(failures.map((failure) => failure.message)).toEqual([
+      "Broken internal link /downloads/180-descent.epub in _site/index.html"
+    ]);
+  });
+
   it("resolves relative internal links against the current page", async () => {
     const root = await createFixtureRoot();
     await writeFile(path.join(root, "_site/index.html"), [
