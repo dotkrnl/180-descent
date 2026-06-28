@@ -31,6 +31,7 @@ export function urlForHtml(siteDir: string, filePath: string): string {
 }
 
 export function sitePathForUrlPath(siteDir: string, urlPath: string): string | null {
+  if (!urlPath.startsWith("/")) return null;
   const decoded = decodeUrlPath(urlPath);
   if (!decoded) return null;
   const clean = decoded.replace(/^\/+/, "");
