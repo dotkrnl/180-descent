@@ -97,6 +97,35 @@ describe("seo check", () => {
       "/site.webmanifest: icon src must be a string"
     ]);
   });
+
+  it("checks a shared manifest once", async () => {
+    const root = await createSiteRoot();
+    await mkdir(path.join(root, "_site/zh"), { recursive: true });
+    await writeFile(path.join(root, "_site/index.html"), indexHtml({
+      alternates: {
+        en: "https://180d.io/",
+        zh: "https://180d.io/zh/",
+        xDefault: "https://180d.io/"
+      }
+    }));
+    await writeFile(path.join(root, "_site/zh/index.html"), indexHtml({
+      canonicalPath: "/zh/",
+      alternates: {
+        en: "https://180d.io/",
+        zh: "https://180d.io/zh/",
+        xDefault: "https://180d.io/"
+      }
+    }));
+    await writeFile(path.join(root, "_site/site.webmanifest"), JSON.stringify({
+      icons: [null]
+    }));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "/site.webmanifest: icon src must be a string"
+    ]);
+  });
 });
 
 async function createSiteRoot(): Promise<string> {

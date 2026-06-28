@@ -20,6 +20,7 @@ export async function checkSeo(options: SeoCheckOptions): Promise<SeoCheckResult
   const builtSiteDir = siteDir(options.root);
   const siteUrl = await readBookSiteUrl(options.root);
   const errors: string[] = [];
+  const checkedManifests = new Set<string>();
 
   if (!await pathExists(builtSiteDir)) {
     throw new Error("_site does not exist; run npm run build:site first");
@@ -27,7 +28,7 @@ export async function checkSeo(options: SeoCheckOptions): Promise<SeoCheckResult
 
   const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
   for (const file of htmlFiles) {
-    await checkHtml(builtSiteDir, siteUrl, file, errors);
+    await checkHtml(builtSiteDir, siteUrl, file, errors, checkedManifests);
   }
   await checkSitemap(builtSiteDir, errors);
   await checkRobots(builtSiteDir, siteUrl, errors);
@@ -38,7 +39,13 @@ export async function checkSeo(options: SeoCheckOptions): Promise<SeoCheckResult
   };
 }
 
-async function checkHtml(siteDir: string, siteUrl: string, filePath: string, errors: string[]): Promise<void> {
+async function checkHtml(
+  siteDir: string,
+  siteUrl: string,
+  filePath: string,
+  errors: string[],
+  checkedManifests: Set<string>
+): Promise<void> {
   const url = urlForHtml(siteDir, filePath);
   const html = await readFile(filePath, "utf8");
   const $ = load(html);
@@ -73,7 +80,8 @@ async function checkHtml(siteDir: string, siteUrl: string, filePath: string, err
       errors.push(`${url}: ${label} does not exist locally (${href})`);
     }
   }
-  if (manifest) {
+  if (manifest && !checkedManifests.has(manifest)) {
+    checkedManifests.add(manifest);
     await checkManifestIcons(siteDir, siteUrl, manifest, errors);
   }
 
