@@ -474,7 +474,7 @@ For focused edits, run the narrow checks first:
 rtk npm run typecheck
 rtk npm test
 rtk npm run check:content
-rtk npm run check:math
+rtk npm run check:math:source
 rtk npm run check:appendix-style
 rtk npm run check:imports
 rtk npm run check:dead
@@ -487,6 +487,7 @@ For changes that touch built pages, metadata, accessibility, rendered
 typography, or download artifacts, add the focused built-output validators:
 
 ```sh
+rtk npm run check:math
 rtk npm run check:links
 rtk npm run check:seo
 rtk npm run check:a11y
@@ -495,8 +496,9 @@ rtk npm run check:epub
 rtk npm run check:pdf
 ```
 
-`check:links` validates rendered internal links, including download links, so
-run it only after `_site` and the linked download artifacts are current.
+`check:math` validates rendered KaTeX in built HTML, and `check:links`
+validates rendered internal links, including download links. Run them only
+after `_site` and the linked download artifacts are current.
 
 For asset, artifact, global renderer, or release-bound changes, run:
 

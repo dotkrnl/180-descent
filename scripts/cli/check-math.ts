@@ -1,7 +1,16 @@
 import { checkMath } from "@lib/checks/math";
 import { exitOnErrors } from "./support";
 
-const result = await checkMath({ root: process.cwd(), requireBuiltHtml: true });
+const args = process.argv.slice(2);
+const unknown = args.filter((arg) => arg !== "--source-only");
+if (unknown.length) {
+  console.error("Usage: rtk npm run check:math -- [--source-only]");
+  console.error(unknown.map((arg) => `- Unknown option: ${arg}`).join("\n"));
+  process.exit(1);
+}
+
+const sourceOnly = args.includes("--source-only");
+const result = await checkMath({ root: process.cwd(), requireBuiltHtml: !sourceOnly });
 
 exitOnErrors(result.failures, (failure) => `${failure.file}: ${failure.label}`, {
   footer: [
