@@ -93,17 +93,22 @@ function decodedFragment(fragment: string): string {
 
 async function checkFutureLinks(root: string, daysDir: string): Promise<LinkCheckFailure[]> {
   const registry = await loadContentRegistry({ daysDir });
-  const days = registry.days.map((day) => day.manifest.day);
-  const maxDay = days.length ? Math.max(...days) : 0;
+  const publishedDays = new Set(registry.days.map((day) => day.manifest.day));
   const futureLinks = await readFutureLinksData(root);
   const failures: LinkCheckFailure[] = [];
 
   for (const link of futureLinks) {
-    if (link.status === "pending" && link.target_day <= maxDay) {
+    if (!publishedDays.has(link.from_day)) {
+      failures.push({
+        message: `Future link ${link.id} starts from unpublished day ${link.from_day}`
+      });
+    }
+
+    if (link.status === "pending" && publishedDays.has(link.target_day)) {
       failures.push({
         message: `Future link ${link.id} targets published day ${link.target_day} but is still pending`
       });
-    } else if (link.status === "resolved" && link.target_day > maxDay) {
+    } else if (link.status === "resolved" && !publishedDays.has(link.target_day)) {
       failures.push({
         message: `Future link ${link.id} targets unpublished day ${link.target_day} but is marked resolved`
       });

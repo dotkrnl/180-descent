@@ -141,6 +141,49 @@ describe("link checks", () => {
       }
     ]);
   });
+
+  it("reports future links from unpublished source days", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "_site/index.html"), "");
+    await writeFile(futureLinksDataFile(root), [
+      "- id: day-002-to-day-009-callback",
+      "  from_day: 2",
+      "  target_day: 9",
+      "  text: Callback",
+      "  status: pending",
+      "  context: test callback"
+    ].join("\n"));
+
+    const failures = await checkLinks({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "Future link day-002-to-day-009-callback starts from unpublished day 2"
+      }
+    ]);
+  });
+
+  it("treats publication status as exact day membership", async () => {
+    const root = await createFixtureRoot();
+    await writeThirdContentDay(root);
+    await writeFile(path.join(root, "_site/index.html"), "");
+    await writeFile(futureLinksDataFile(root), [
+      "- id: day-001-to-day-002-callback",
+      "  from_day: 1",
+      "  target_day: 2",
+      "  text: Callback",
+      "  status: resolved",
+      "  context: test callback"
+    ].join("\n"));
+
+    const failures = await checkLinks({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "Future link day-001-to-day-002-callback targets unpublished day 2 but is marked resolved"
+      }
+    ]);
+  });
 });
 
 async function createFixtureRoot(): Promise<string> {
@@ -153,23 +196,33 @@ async function createFixtureRoot(): Promise<string> {
 }
 
 async function writeSecondContentDay(root: string): Promise<void> {
-  const dayDir = path.join(root, "src/content/days/002-fixture");
-  await mkdir(dayDir, { recursive: true });
-  await writeFile(path.join(dayDir, "day.yaml"), [
-    "day: 2",
+  await writeFixtureContentDay(root, 2);
+}
+
+async function writeThirdContentDay(root: string): Promise<void> {
+  await writeFixtureContentDay(root, 3);
+}
+
+async function writeFixtureContentDay(root: string, day: number): Promise<void> {
+  const paddedDay = day.toString().padStart(3, "0");
+  const label = `Day ${day}`;
+  const fixtureDayDir = path.join(root, "src/content/days", `${paddedDay}-fixture`);
+  await mkdir(fixtureDayDir, { recursive: true });
+  await writeFile(path.join(fixtureDayDir, "day.yaml"), [
+    `day: ${day}`,
     "block: Fixture",
     "locales:",
     "  en:",
-    "    title: Fixture Day 2",
+    `    title: Fixture ${label}`,
     "    summary: Fixture summary.",
     "    body: en.mdx",
     "  zh:",
-    "    title: 夹具日二",
+    `    title: Fixture ${label} zh`,
     "    summary: 中文夹具摘要。",
     "    body: zh.mdx",
     "appendices: []",
     "interactionScripts: []"
   ].join("\n"));
-  await writeFile(path.join(dayDir, "en.mdx"), "");
-  await writeFile(path.join(dayDir, "zh.mdx"), "");
+  await writeFile(path.join(fixtureDayDir, "en.mdx"), "");
+  await writeFile(path.join(fixtureDayDir, "zh.mdx"), "");
 }
