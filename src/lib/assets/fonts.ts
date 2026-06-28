@@ -131,6 +131,7 @@ export async function prepareCjkFonts(options: AssetPreparationOptions): Promise
     const cssText = await readFile(path.join(packageRoot, weight.cssFile), "utf8");
     const subsets = (await readdir(path.join(packageRoot, "files")))
       .filter((fileName) => fileName.startsWith(`${weight.prefix}-subset-`) && fileName.endsWith(".woff2"));
+    subsets.sort();
 
     await Promise.all(subsets.map((fileName) => {
       return copyFile(path.join(packageRoot, "files", fileName), path.join(outDir, fileName));
@@ -157,6 +158,7 @@ export async function prepareKatexAssets(options: AssetPreparationOptions): Prom
 
   const fonts = (await readdir(path.join(katexRoot, "dist", "fonts")))
     .filter((fileName) => fileName.endsWith(".woff2") || fileName.endsWith(".woff"));
+  fonts.sort();
 
   await Promise.all(fonts.map((fileName) => {
     return copyFile(path.join(katexRoot, "dist", "fonts", fileName), path.join(fontsOut, fileName));

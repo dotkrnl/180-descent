@@ -430,14 +430,14 @@ async function collectEpubFonts(root: string): Promise<EpubFont[]> {
   const fontsRoot = fontsDir(root);
   const fonts: EpubFont[] = [];
 
-  for (const fileName of await readdir(fontsRoot)) {
+  for (const fileName of (await readdir(fontsRoot)).sort()) {
     if (fileName.endsWith(".woff2")) {
       fonts.push(epubFont(`fonts/${fileName}`, path.join(fontsRoot, fileName)));
     }
   }
 
   const katexRoot = katexFontsDir(root);
-  for (const fileName of await readdir(katexRoot)) {
+  for (const fileName of (await readdir(katexRoot)).sort()) {
     if (fileName.endsWith(".woff2") || fileName.endsWith(".woff")) {
       fonts.push(epubFont(`fonts/katex/${fileName}`, path.join(katexRoot, fileName)));
     }
