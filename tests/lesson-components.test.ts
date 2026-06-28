@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { renderMathHtml, renderStatusChip, renderTipNote } from "@lib/render/lesson-components";
 
 describe("lesson MDX components", () => {
-  it("renders the durable status chip markup", () => {
+  it("renders status chip markup with print labels", () => {
     expect(renderStatusChip({
       status: "hint",
       label: "Predictive coding · promising",
