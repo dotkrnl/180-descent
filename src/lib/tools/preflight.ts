@@ -162,7 +162,10 @@ const TOOLS = {
       if (!jar) {
         return requireVersion("epubcheck", ["--version"], /EPUBCheck v5\.3\.0/);
       }
-      return requireVersion(path.join(HOMEBREW_PREFIX, "opt/openjdk/bin/java"), ["-jar", jar, "--version"], /EPUBCheck v5\.3\.0/);
+      return requireCommandVersion([
+        ["java", ["-jar", jar, "--version"]],
+        [path.join(HOMEBREW_PREFIX, "opt/openjdk/bin/java"), ["-jar", jar, "--version"]]
+      ], /EPUBCheck v5\.3\.0/);
     }
   }
 } satisfies Record<string, ToolDefinition>;
@@ -292,6 +295,14 @@ function requireVersion(command: string, args: string[], pattern: RegExp): strin
   const version = commandVersion(command, args);
   if (!pattern.test(version)) {
     throw new Error(`${command} version did not match ${pattern}: ${version}`);
+  }
+  return version;
+}
+
+function requireCommandVersion(commands: CommandSpec[], pattern: RegExp): string {
+  const version = checkCommandVersions(commands);
+  if (!pattern.test(version)) {
+    throw new Error(`version did not match ${pattern}: ${version}`);
   }
   return version;
 }
