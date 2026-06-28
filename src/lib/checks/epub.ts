@@ -6,6 +6,7 @@ import path from "node:path";
 import JSZip from "jszip";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { bookArtifactName, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
+import { CHINESE_DAY_ONE_APPENDIX_PATTERNS, ENGLISH_DAY_ONE_APPENDIX_PATTERNS } from "@lib/checks/day-one-appendix-patterns";
 
 interface EpubCheckOptions {
   root: string;
@@ -31,26 +32,6 @@ const BOOK_REQUIRED = [
   "OEBPS/introduction.xhtml",
   "OEBPS/day-001.xhtml",
   "OEBPS/day-002.xhtml"
-];
-
-const ENGLISH_APPENDIX_PATTERNS = [
-  /The Rest of the Map/,
-  /The Skeptic['’]s Syllogism, as four exits/,
-  /The Bank Cases/,
-  /Safe vs\. Lucky, as nearby-worlds cases/,
-  /The Edge of the Map/,
-  /Bubble vs\. Chamber, as exposure outcomes/,
-  /Accuracy domination, as credence geometry/
-];
-
-const CHINESE_APPENDIX_PATTERNS = [
-  /地图的其余部分/,
-  /怀疑论者的三段论：四种出路/,
-  /银行案例：利害关系表/,
-  /安全与幸运：邻近世界案例/,
-  /地图的边缘/,
-  /[气⽓]泡与回声室：接触后的结果/,
-  /准确性支配，表现为置信度几何/
 ];
 
 export async function checkEpub(options: EpubCheckOptions): Promise<EpubCheckResult> {
@@ -85,28 +66,28 @@ async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
     {
       file: downloadArtifactPath(bookArtifactName("epub", "en", false)),
       deepDive: false,
-      appendixPatterns: ENGLISH_APPENDIX_PATTERNS,
+      appendixPatterns: ENGLISH_DAY_ONE_APPENDIX_PATTERNS,
       optionalAppendixLabel: null,
       required: BOOK_REQUIRED
     },
     {
       file: downloadArtifactPath(bookArtifactName("epub", "en", true)),
       deepDive: true,
-      appendixPatterns: ENGLISH_APPENDIX_PATTERNS,
+      appendixPatterns: ENGLISH_DAY_ONE_APPENDIX_PATTERNS,
       optionalAppendixLabel: /Optional appendix/,
       required: BOOK_REQUIRED
     },
     {
       file: downloadArtifactPath(bookArtifactName("epub", "zh", false)),
       deepDive: false,
-      appendixPatterns: CHINESE_APPENDIX_PATTERNS,
+      appendixPatterns: CHINESE_DAY_ONE_APPENDIX_PATTERNS,
       optionalAppendixLabel: null,
       required: BOOK_REQUIRED
     },
     {
       file: downloadArtifactPath(bookArtifactName("epub", "zh", true)),
       deepDive: true,
-      appendixPatterns: CHINESE_APPENDIX_PATTERNS,
+      appendixPatterns: CHINESE_DAY_ONE_APPENDIX_PATTERNS,
       optionalAppendixLabel: /可选附录/,
       required: BOOK_REQUIRED
     }
@@ -136,7 +117,7 @@ function addPerDayEditions(editions: EpubEdition[], days: ArtifactBookDay[], zh:
     editions.push({
       file,
       deepDive: true,
-      appendixPatterns: isDayOne ? (zh ? CHINESE_APPENDIX_PATTERNS : ENGLISH_APPENDIX_PATTERNS) : [],
+      appendixPatterns: isDayOne ? (zh ? CHINESE_DAY_ONE_APPENDIX_PATTERNS : ENGLISH_DAY_ONE_APPENDIX_PATTERNS) : [],
       optionalAppendixLabel: zh ? /可选附录/ : /Optional appendix/,
       required: dayRequired
     });

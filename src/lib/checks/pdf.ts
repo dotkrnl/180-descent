@@ -6,6 +6,7 @@ import { promisify } from "node:util";
 import { PDFDocument, PDFName } from "pdf-lib";
 import { loadArtifactBookDays } from "@lib/artifacts/book";
 import { bookArtifactName, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
+import { CHINESE_DAY_ONE_APPENDIX_PATTERNS, ENGLISH_DAY_ONE_APPENDIX_PATTERNS } from "@lib/checks/day-one-appendix-patterns";
 
 const execFileAsync = promisify(execFile);
 
@@ -167,29 +168,13 @@ class PdfChecker {
     zhDeepDiveText: string,
     zhDayOneText: string
   ): void {
-    for (const pattern of [
-      /The Rest of the Map/,
-      /The Skeptic['’]s Syllogism, as four exits/,
-      /The Bank Cases/,
-      /Safe vs\. Lucky, as nearby-worlds cases/,
-      /The Edge of the Map/,
-      /Bubble vs\. Chamber, as exposure outcomes/,
-      /Accuracy domination, as credence geometry/
-    ]) {
+    for (const pattern of ENGLISH_DAY_ONE_APPENDIX_PATTERNS) {
       if (pattern.test(standardText)) this.errors.push(`Standard PDF contains deep-dive appendix content matching ${pattern}`);
       if (!pattern.test(deepDiveText)) this.errors.push(`Deep-dive PDF is missing appendix content matching ${pattern}`);
       if (!pattern.test(dayOneText)) this.errors.push(`Day-specific PDF is missing appendix content matching ${pattern}`);
     }
 
-    for (const pattern of [
-      /地图的其余部分/,
-      /怀疑论者的三段论：四种出路/,
-      /银.案例：利害关系表/,
-      /安全与幸运：邻近世界案例/,
-      /地图的边缘/,
-      /[气⽓]泡与回声室：接触后的结果/,
-      /准确性.配，表现为置信度.何/
-    ]) {
+    for (const pattern of CHINESE_DAY_ONE_APPENDIX_PATTERNS) {
       if (pattern.test(zhText)) this.errors.push(`Standard Chinese PDF contains deep-dive appendix content matching ${pattern}`);
       if (!pattern.test(zhDeepDiveText)) this.errors.push(`Deep-dive Chinese PDF is missing appendix content matching ${pattern}`);
       if (!pattern.test(zhDayOneText)) this.errors.push(`Day-specific Chinese PDF is missing appendix content matching ${pattern}`);
