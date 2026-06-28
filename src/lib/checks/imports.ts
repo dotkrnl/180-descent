@@ -35,7 +35,7 @@ export async function checkUnusedDefaultImports(options: ImportCheckOptions): Pr
   return failures;
 }
 
-export function findUnusedDefaultImports(source: string): Array<{ name: string }> {
+function findUnusedDefaultImports(source: string): Array<{ name: string }> {
   const sourceWithoutCodeBlocks = stripFencedCodeBlocks(source);
   const sourceWithoutComments = stripComments(sourceWithoutCodeBlocks);
   const imports = importDeclarations(sourceWithoutComments);

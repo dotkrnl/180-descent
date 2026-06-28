@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkUnusedDefaultImports, findUnusedDefaultImports } from "@lib/checks/imports";
+import { checkUnusedDefaultImports } from "@lib/checks/imports";
 import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 
 describe("import check", () => {
@@ -36,108 +36,116 @@ describe("import check", () => {
     ]);
   });
 
-  it("ignores named-only imports", () => {
-    expect(findUnusedDefaultImports('import { Panel } from "./Panel.astro";\n<div />')).toEqual([]);
+  it("ignores named-only imports", async () => {
+    await expect(unusedDefaultImportNames('import { Panel } from "./Panel.astro";\n<div />')).resolves.toEqual([]);
   });
 
-  it("parses multi-line default imports", () => {
-    expect(findUnusedDefaultImports([
+  it("parses multi-line default imports", async () => {
+    await expect(unusedDefaultImportNames([
       "import Hero, {",
       "  type HeroProps",
       '} from "./Hero.astro";',
       "<Hero />"
-    ].join("\n"))).toEqual([]);
-    expect(findUnusedDefaultImports([
+    ].join("\n"))).resolves.toEqual([]);
+    await expect(unusedDefaultImportNames([
       "import Hero, {",
       "  type HeroProps",
       '} from "./Hero.astro";',
       "<div />"
-    ].join("\n"))).toEqual([{ name: "Hero" }]);
+    ].join("\n"))).resolves.toEqual(["Hero"]);
   });
 
-  it("ignores type-only default imports", () => {
-    expect(findUnusedDefaultImports('import type Hero from "./Hero.astro";\n<div />')).toEqual([]);
+  it("ignores type-only default imports", async () => {
+    await expect(unusedDefaultImportNames('import type Hero from "./Hero.astro";\n<div />')).resolves.toEqual([]);
   });
 
-  it("ignores imports and identifiers inside fenced code blocks", () => {
-    expect(findUnusedDefaultImports([
+  it("ignores imports and identifiers inside fenced code blocks", async () => {
+    await expect(unusedDefaultImportNames([
       "```ts",
       'import Demo from "./Demo.astro";',
       "<Demo />",
       "```"
-    ].join("\n"))).toEqual([]);
+    ].join("\n"))).resolves.toEqual([]);
 
-    expect(findUnusedDefaultImports([
+    await expect(unusedDefaultImportNames([
       'import Hero from "./Hero.astro";',
       "```mdx",
       "<Hero />",
       "```"
-    ].join("\n"))).toEqual([{ name: "Hero" }]);
+    ].join("\n"))).resolves.toEqual(["Hero"]);
   });
 
-  it("ignores commented-out imports", () => {
-    expect(findUnusedDefaultImports([
+  it("ignores commented-out imports", async () => {
+    await expect(unusedDefaultImportNames([
       "<!--",
       'import Hero from "./Hero.astro";',
       "-->",
       "<div />"
-    ].join("\n"))).toEqual([]);
+    ].join("\n"))).resolves.toEqual([]);
 
-    expect(findUnusedDefaultImports([
+    await expect(unusedDefaultImportNames([
       "/*",
       'import Hero from "./Hero.astro";',
       "*/",
       "<div />"
-    ].join("\n"))).toEqual([]);
+    ].join("\n"))).resolves.toEqual([]);
 
-    expect(findUnusedDefaultImports([
+    await expect(unusedDefaultImportNames([
       '// import Hero from "./Hero.astro";',
       "<div />"
-    ].join("\n"))).toEqual([]);
+    ].join("\n"))).resolves.toEqual([]);
   });
 
-  it("ignores identifiers inside comments", () => {
-    expect(findUnusedDefaultImports([
+  it("ignores identifiers inside comments", async () => {
+    await expect(unusedDefaultImportNames([
       'import Hero from "./Hero.astro";',
       "{/* <Hero /> */}",
       "<!-- <Hero /> -->",
       "/* Hero */"
-    ].join("\n"))).toEqual([{ name: "Hero" }]);
+    ].join("\n"))).resolves.toEqual(["Hero"]);
   });
 
-  it("ignores identifiers in prose and string values", () => {
-    expect(findUnusedDefaultImports([
+  it("ignores identifiers in prose and string values", async () => {
+    await expect(unusedDefaultImportNames([
       'import Hero from "./Hero.astro";',
       "The Hero component used to live here.",
       '<div data-component="Hero" />',
       "<div data-template={`Hero`} />",
       "{\"Hero\"}"
-    ].join("\n"))).toEqual([{ name: "Hero" }]);
+    ].join("\n"))).resolves.toEqual(["Hero"]);
   });
 
-  it("counts identifiers in braced expressions", () => {
-    expect(findUnusedDefaultImports([
+  it("counts identifiers in braced expressions", async () => {
+    await expect(unusedDefaultImportNames([
       'import figure from "./figure.jpg";',
       "<ImageFigure src={figure} />"
-    ].join("\n"))).toEqual([]);
+    ].join("\n"))).resolves.toEqual([]);
   });
 
-  it("counts identifiers inside template literal interpolations", () => {
-    expect(findUnusedDefaultImports([
+  it("counts identifiers inside template literal interpolations", async () => {
+    await expect(unusedDefaultImportNames([
       'import figure from "./figure.jpg";',
       "<ImageFigure src={`${figure}?w=1200`} />"
-    ].join("\n"))).toEqual([]);
+    ].join("\n"))).resolves.toEqual([]);
 
-    expect(findUnusedDefaultImports([
+    await expect(unusedDefaultImportNames([
       'import figure from "./figure.jpg";',
       '<ImageFigure src={`${"figure"}?w=1200`} />'
-    ].join("\n"))).toEqual([{ name: "figure" }]);
+    ].join("\n"))).resolves.toEqual(["figure"]);
   });
 
-  it("does not consume body content after imports without semicolons", () => {
-    expect(findUnusedDefaultImports([
+  it("does not consume body content after imports without semicolons", async () => {
+    await expect(unusedDefaultImportNames([
       'import Hero from "./Hero.astro"',
       "<Hero />"
-    ].join("\n"))).toEqual([]);
+    ].join("\n"))).resolves.toEqual([]);
   });
 });
+
+async function unusedDefaultImportNames(source: string): Promise<string[]> {
+  const root = await mkdtemp(path.join(os.tmpdir(), "180-import-source-"));
+  await mkdir(path.join(root, "src/app"), { recursive: true });
+  await mkdir(path.join(root, "src/content"), { recursive: true });
+  await writeFile(path.join(root, "src/app/Fixture.astro"), source);
+  return (await checkUnusedDefaultImports({ root })).map((failure) => failure.name);
+}
