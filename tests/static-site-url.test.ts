@@ -41,6 +41,7 @@ describe("static site URL helpers", () => {
     const siteUrl = "https://180d.io";
 
     expect(sitePathForHref(siteDir, siteUrl, "/favicon.ico")).toBe(path.join(siteDir, "favicon.ico"));
+    expect(sitePathForHref(siteDir, "https://180d.io/app/", "site.webmanifest")).toBe(path.join(siteDir, "app", "site.webmanifest"));
     expect(sitePathForHref(siteDir, siteUrl, "https://180d.io/social.png")).toBe(path.join(siteDir, "social.png"));
     expect(sitePathForHref(siteDir, siteUrl, "https://example.com/social.png")).toBeNull();
     expect(sitePathForHref(siteDir, siteUrl, "HTTPS://example.com/social.png")).toBeNull();

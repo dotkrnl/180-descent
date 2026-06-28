@@ -44,9 +44,9 @@ export function sitePathForUrlPath(siteDir: string, urlPath: string): string | n
   return isPathInside(root, resolved) ? resolved : null;
 }
 
-export function sitePathForHref(siteDir: string, siteUrl: string, href: string): string | null {
+export function sitePathForHref(siteDir: string, baseUrl: string, href: string): string | null {
   try {
-    const base = new URL(siteUrl);
+    const base = new URL(baseUrl);
     const parsed = new URL(href, base);
     if (parsed.origin !== base.origin) return null;
     return sitePathForUrlPath(siteDir, parsed.pathname);
