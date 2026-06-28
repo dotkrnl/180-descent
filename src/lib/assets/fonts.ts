@@ -87,10 +87,10 @@ export async function prepareLatinFonts(options: AssetPreparationOptions): Promi
   const outDir = fontsDir(options.root);
   await mkdir(outDir, { recursive: true });
 
-  for (const asset of latinFontAssets) {
+  await Promise.all(latinFontAssets.map((asset) => {
     const packageRoot = packageRoots[asset.packageName];
-    await copyFile(path.join(packageRoot, "files", asset.fileName), path.join(outDir, asset.fileName));
-  }
+    return copyFile(path.join(packageRoot, "files", asset.fileName), path.join(outDir, asset.fileName));
+  }));
 
   return {
     copied: latinFontAssets.length,
@@ -132,9 +132,9 @@ export async function prepareCjkFonts(options: AssetPreparationOptions): Promise
     const subsets = (await readdir(path.join(packageRoot, "files")))
       .filter((fileName) => fileName.startsWith(`${weight.prefix}-subset-`) && fileName.endsWith(".woff2"));
 
-    for (const fileName of subsets) {
-      await copyFile(path.join(packageRoot, "files", fileName), path.join(outDir, fileName));
-    }
+    await Promise.all(subsets.map((fileName) => {
+      return copyFile(path.join(packageRoot, "files", fileName), path.join(outDir, fileName));
+    }));
 
     cssParts.push(cssText.replaceAll("./files/", "../../fonts/cjk/"));
     results.push({ prefix: weight.prefix, subsets: subsets.length });
@@ -158,9 +158,9 @@ export async function prepareKatexAssets(options: AssetPreparationOptions): Prom
   const fonts = (await readdir(path.join(katexRoot, "dist", "fonts")))
     .filter((fileName) => fileName.endsWith(".woff2") || fileName.endsWith(".woff"));
 
-  for (const fileName of fonts) {
-    await copyFile(path.join(katexRoot, "dist", "fonts", fileName), path.join(fontsOut, fileName));
-  }
+  await Promise.all(fonts.map((fileName) => {
+    return copyFile(path.join(katexRoot, "dist", "fonts", fileName), path.join(fontsOut, fileName));
+  }));
 
   const css = await readFile(path.join(katexRoot, "dist", "katex.min.css"), "utf8");
   await writeFile(scssOut, stripUnbundledKatexTtfSources(css.replaceAll("fonts/", "../../fonts/katex/")));
