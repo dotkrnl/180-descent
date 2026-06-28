@@ -84,6 +84,23 @@ describe("import check", () => {
     ].join("\n"))).toEqual([{ name: "Hero" }]);
   });
 
+  it("ignores identifiers in prose and string values", () => {
+    expect(findUnusedDefaultImports([
+      'import Hero from "./Hero.astro";',
+      "The Hero component used to live here.",
+      '<div data-component="Hero" />',
+      "<div data-template={`Hero`} />",
+      "{\"Hero\"}"
+    ].join("\n"))).toEqual([{ name: "Hero" }]);
+  });
+
+  it("counts identifiers in braced expressions", () => {
+    expect(findUnusedDefaultImports([
+      'import figure from "./figure.jpg";',
+      "<ImageFigure src={figure} />"
+    ].join("\n"))).toEqual([]);
+  });
+
   it("does not consume body content after imports without semicolons", () => {
     expect(findUnusedDefaultImports([
       'import Hero from "./Hero.astro"',

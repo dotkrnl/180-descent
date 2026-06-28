@@ -45,7 +45,7 @@ export function findUnusedDefaultImports(source: string): Array<{ name: string }
   for (const entry of imports) {
     const name = defaultImportName(entry.text);
     if (!name) continue;
-    if (!hasIdentifier(sourceWithoutComments, name)) {
+    if (!hasDefaultImportUsage(sourceWithoutComments, name)) {
       unusedImports.push({ name });
     }
   }
@@ -110,6 +110,67 @@ function stripComments(source: string): string {
 
 function replaceWithSpaces(text: string): string {
   return text.replace(/[^\r\n]/g, " ");
+}
+
+function hasDefaultImportUsage(source: string, name: string): boolean {
+  return hasJsxTag(source, name) || bracedExpressions(source).some((expression) => {
+    return hasIdentifier(stripStringLiterals(expression), name);
+  });
+}
+
+function hasJsxTag(source: string, name: string): boolean {
+  return new RegExp(`<\\/?\\s*${escapeRegExp(name)}(?=[\\s>/])`).test(source);
+}
+
+function bracedExpressions(source: string): string[] {
+  const expressions: string[] = [];
+  let start: number | null = null;
+  let depth = 0;
+
+  for (let index = 0; index < source.length; index += 1) {
+    const char = source[index];
+    if (char === "{") {
+      if (depth === 0) start = index;
+      depth += 1;
+      continue;
+    }
+    if (char === "}" && depth > 0) {
+      depth -= 1;
+      if (depth === 0 && start !== null) {
+        expressions.push(source.slice(start, index + 1));
+        start = null;
+      }
+    }
+  }
+
+  return expressions;
+}
+
+function stripStringLiterals(source: string): string {
+  const chars = source.split("");
+
+  for (let index = 0; index < chars.length; index += 1) {
+    const quote = chars[index];
+    if (quote !== '"' && quote !== "'" && quote !== "`") continue;
+
+    chars[index] = " ";
+    index += 1;
+    while (index < chars.length) {
+      const char = chars[index];
+      chars[index] = char === "\n" || char === "\r" ? char : " ";
+      if (char === "\\") {
+        index += 1;
+        if (index < chars.length && chars[index] !== "\n" && chars[index] !== "\r") {
+          chars[index] = " ";
+        }
+      } else if (char === quote) {
+        break;
+      }
+      index += 1;
+    }
+  }
+
+  return chars.join("");
 }
 
 function hasIdentifier(source: string, name: string): boolean {
