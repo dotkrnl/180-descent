@@ -27,6 +27,9 @@ export async function checkSeo(options: SeoCheckOptions): Promise<SeoCheckResult
   }
 
   const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
+  if (!htmlFiles.length) {
+    errors.push("_site contains no HTML files");
+  }
   for (const file of htmlFiles) {
     await checkHtml(builtSiteDir, siteUrl, file, errors, checkedManifests);
   }

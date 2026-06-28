@@ -7,6 +7,15 @@ import { bookDataFile } from "@lib/data/paths";
 import { validBookYaml } from "./helpers/book-data";
 
 describe("seo check", () => {
+  it("reports empty built sites instead of passing zero pages", async () => {
+    const root = await createSiteRoot();
+
+    await expect(checkSeo({ root })).resolves.toEqual({
+      checkedHtmlFiles: 0,
+      errors: ["_site contains no HTML files"]
+    });
+  });
+
   it("accepts a minimal indexable page with required metadata", async () => {
     const root = await createSiteRoot();
     await writeFile(path.join(root, "_site/index.html"), indexHtml());
