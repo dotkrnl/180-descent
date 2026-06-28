@@ -32,6 +32,7 @@ The PDF output should match the website's visual vocabulary: serif body text, re
 
 - `latexmk`
 - `xelatex`
+- `fonttools` for WOFF2 to OpenType font preparation
 - `rsvg-convert` for SVG image conversion
 - Poppler `pdftotext` for PDF text extraction during checks
 
