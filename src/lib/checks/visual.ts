@@ -17,6 +17,7 @@ export interface VisualCheckCliArgs {
   baseUrl?: string;
   compareUrl?: string;
   outDir?: string;
+  errors: string[];
 }
 
 interface VisualCheckResult {
@@ -45,20 +46,37 @@ const VIEWPORTS = [
 const SCROLL_STOPS = ["top", "middle", "bottom"] as const;
 
 export function parseVisualCheckArgs(argv: string[]): VisualCheckCliArgs {
-  const out: VisualCheckCliArgs = {};
+  const out: VisualCheckCliArgs = { errors: [] };
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
-    if (!arg.startsWith("--")) continue;
+    if (!arg.startsWith("--")) {
+      out.errors.push(`Unexpected argument: ${arg}`);
+      continue;
+    }
 
-    const inline = arg.match(/^(--[^=]+)=(.+)$/);
-    const name = inline ? inline[1] : arg;
-    const value = inline ? inline[2] : argv[index + 1];
-    if (!value || value.startsWith("--")) continue;
+    const equalsIndex = arg.indexOf("=");
+    const inline = equalsIndex !== -1;
+    const name = inline ? arg.slice(0, equalsIndex) : arg;
+    if (!["--base", "--compare", "--out"].includes(name)) {
+      out.errors.push(`Unknown option: ${name}`);
+      if (!inline && argv[index + 1] && !argv[index + 1].startsWith("--")) index += 1;
+      continue;
+    }
 
-    if (name === "--base") out.baseUrl = value;
-    if (name === "--compare") out.compareUrl = value;
-    if (name === "--out") out.outDir = value;
+    const value = inline ? arg.slice(equalsIndex + 1) : argv[index + 1];
+    if (!value || value.startsWith("--")) {
+      out.errors.push(`${name} requires a value`);
+      continue;
+    }
+
+    if (name === "--base") {
+      out.baseUrl = value;
+    } else if (name === "--compare") {
+      out.compareUrl = value;
+    } else {
+      out.outDir = value;
+    }
     if (!inline) index += 1;
   }
 

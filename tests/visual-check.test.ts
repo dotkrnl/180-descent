@@ -6,12 +6,12 @@ describe("visual check CLI args", () => {
     expect(parseVisualCheckArgs([
       "--base", "https://staging.example",
       "--compare", "https://prod.example",
-      "--out", "tmp/visual",
-      "--ignored", "value"
+      "--out", "tmp/visual"
     ])).toEqual({
       baseUrl: "https://staging.example",
       compareUrl: "https://prod.example",
-      outDir: "tmp/visual"
+      outDir: "tmp/visual",
+      errors: []
     });
   });
 
@@ -23,13 +23,24 @@ describe("visual check CLI args", () => {
     ])).toEqual({
       baseUrl: "https://staging.example",
       compareUrl: "https://prod.example",
-      outDir: "tmp/visual"
+      outDir: "tmp/visual",
+      errors: []
     });
   });
 
-  it("does not invent values for missing option arguments", () => {
+  it("reports missing option arguments", () => {
     expect(parseVisualCheckArgs(["--base", "--compare", "https://prod.example"])).toEqual({
-      compareUrl: "https://prod.example"
+      compareUrl: "https://prod.example",
+      errors: ["--base requires a value"]
+    });
+  });
+
+  it("reports unknown options and positional arguments", () => {
+    expect(parseVisualCheckArgs(["--ignored", "value", "extra"])).toEqual({
+      errors: [
+        "Unknown option: --ignored",
+        "Unexpected argument: extra"
+      ]
     });
   });
 });
