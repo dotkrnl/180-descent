@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { load } from "cheerio";
 import { readBookSiteUrl } from "@lib/data/book";
+import { toError } from "@lib/errors";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
 import { siteFileForUrlPath, sitePathForHref, urlForHtml } from "@lib/static-site/url";
@@ -121,7 +122,7 @@ async function checkManifestIcons(siteDir: string, siteUrl: string, href: string
     const parsed = JSON.parse(await readFile(manifestPath, "utf8")) as unknown;
     manifest = parsed && typeof parsed === "object" ? parsed : {};
   } catch (error) {
-    errors.push(`${href}: invalid web manifest JSON (${error instanceof Error ? error.message : String(error)})`);
+    errors.push(`${href}: invalid web manifest JSON (${toError(error).message})`);
     return;
   }
   if (manifest.icons !== undefined && !Array.isArray(manifest.icons)) {

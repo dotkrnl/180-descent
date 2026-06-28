@@ -1,5 +1,6 @@
 import { lstat, readlink } from "node:fs/promises";
 import path from "node:path";
+import { toError } from "@lib/errors";
 import { isPathUnavailableError } from "@lib/fs/errors";
 
 interface WorkflowCheckFailure {
@@ -37,7 +38,7 @@ export async function checkProjectWorkflow(root: string): Promise<WorkflowCheckF
   } catch (error) {
     failures.push({
       path: WORKFLOW_SKILL_PATH,
-      reason: error instanceof Error ? error.message : "Unable to inspect project workflow skill"
+      reason: toError(error).message
     });
   }
 
@@ -53,7 +54,7 @@ export async function checkProjectWorkflow(root: string): Promise<WorkflowCheckF
       if (!isPathUnavailableError(error)) {
         failures.push({
           path: splitSkillPath,
-          reason: error instanceof Error ? error.message : "Unable to inspect split workflow skill"
+          reason: toError(error).message
         });
       }
     }
