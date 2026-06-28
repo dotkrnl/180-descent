@@ -844,7 +844,8 @@ function statusChipLatex(label: string, status: string): string {
 function renderSimpleTable(attrs: Map<string, string | null>, state: MdxRenderState): string {
   const headers = parseStringArray(resolveExpression(attrs.get("headers"), state), "SimpleTable headers").map(latexEscape);
   const rows = parseStringMatrix(resolveExpression(attrs.get("rows"), state), "SimpleTable rows").map((row) => row.map(latexEscape));
-  if (!headers.length || !rows.length) return "";
+  if (!headers.length) throw new Error(`SimpleTable headers must not be empty in ${sourceLabel(state)}`);
+  if (!rows.length) throw new Error(`SimpleTable rows must not be empty in ${sourceLabel(state)}`);
   return latexTable({ rows: [headers, ...rows], headerRows: new Set([0]) });
 }
 
@@ -1037,12 +1038,14 @@ function renderMarkdownTable(node: MdxNode, state: MdxRenderState): string {
   const rows = (node.children ?? []).map((row) => {
     return (row.children ?? []).map((cell) => renderChildren(cell.children ?? [], state, { tableCell: true }).trim());
   }).filter((row) => row.length);
+  if (!rows.length) throw new Error(`Markdown table must contain at least one row in ${sourceLabel(state)}`);
   return latexTable({ rows, headerRows: new Set(rows.length ? [0] : []) });
 }
 
 function renderJsxTable(node: MdxNode, state: MdxRenderState): string {
   const table: LatexTable = { rows: [], headerRows: new Set() };
   collectTableRows(node, state, table, false);
+  if (!table.rows.length) throw new Error(`DataTable must contain at least one row in ${sourceLabel(state)}`);
   return latexTable(table);
 }
 
