@@ -23,21 +23,22 @@ interface FutureLinkEntry {
   target_day?: unknown;
 }
 
+interface HtmlDocument {
+  file: string;
+  $: cheerio.CheerioAPI;
+  ids: Set<string>;
+}
+
 export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFailure[]> {
   const builtSiteDir = siteDir(options.root);
   const daysDir = contentDaysDir(options.root);
   const futureLinksPath = futureLinksDataFile(options.root);
   const failures: LinkCheckFailure[] = [];
   const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignored: [] });
-  const idCache = new Map<string, Set<string>>();
+  const documents = await Promise.all(htmlFiles.map(loadHtmlDocument));
+  const idCache = new Map(documents.map((document) => [document.file, document.ids]));
 
-  for (const file of htmlFiles) {
-    const $ = cheerio.load(await readFile(file, "utf8"));
-    idCache.set(file, new Set($("[id]").map((_, el) => $(el).attr("id") ?? "").get().filter(Boolean)));
-  }
-
-  for (const file of htmlFiles) {
-    const $ = cheerio.load(await readFile(file, "utf8"));
+  for (const { file, $ } of documents) {
     for (const a of $("a[href]").toArray()) {
       const href = $(a).attr("href");
       const targetRef = linkTarget(href);
@@ -67,6 +68,12 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
 
   failures.push(...await checkFutureLinks(daysDir, futureLinksPath));
   return failures;
+}
+
+async function loadHtmlDocument(file: string): Promise<HtmlDocument> {
+  const $ = cheerio.load(await readFile(file, "utf8"));
+  const ids = new Set($("[id]").map((_, el) => $(el).attr("id") ?? "").get().filter(Boolean));
+  return { file, $, ids };
 }
 
 function linkTarget(href?: string): { pathname: string; anchor?: string; samePage?: boolean } | null {
