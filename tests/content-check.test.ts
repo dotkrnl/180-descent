@@ -610,6 +610,32 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports direct appendix web components without static alternates", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDayWithAppendix(root, {
+      enAppendix: [
+        '<StatusChip status={"ok"} label={"ok"} />',
+        '<Sources></Sources>',
+        '<AccuracyDomination locale="en" />',
+        '<ClosureMachine locale="en" />',
+        '<HammingCube locale="en" />',
+        '<ModalRings locale="en" />'
+      ].join("\n"),
+      zhAppendix: [
+        '<StatusChip status={"ok"} label={"已确立"} />',
+        '<Sources></Sources>'
+      ].join("\n")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "EN 001-fixture appendix appendix-a has 4 web-only artifact item(s) but only 0 static print/EPUB alternate(s)"
+      }
+    ]);
+  });
+
   it("reports components without artifact contracts", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {
