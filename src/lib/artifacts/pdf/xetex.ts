@@ -14,8 +14,7 @@ import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book"
 import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/downloads";
 import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 import { readBookData, type BookData, type HumanEditorData } from "@lib/data/book";
-import { syllabusDataFile } from "@lib/data/paths";
-import { readYamlFile } from "@lib/data/yaml";
+import { readSyllabusBlockTitleMap } from "@lib/data/syllabus";
 import { toError } from "@lib/errors";
 import { isPathInside } from "@lib/fs/path";
 import type { Locale } from "@lib/schemas/day";
@@ -106,14 +105,6 @@ interface SvgAssetSpec {
 
 interface SvgComponentSpec extends SvgAssetSpec {
   selector: string;
-}
-
-type LocalizedValue = string | Record<Locale, string | undefined>;
-
-interface SyllabusData {
-  blocks?: Array<{
-    title?: LocalizedValue;
-  }>;
 }
 
 export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> {
@@ -341,21 +332,7 @@ function blockDividerLatex(title: string, blockNumber: number, locale: Locale): 
 }
 
 async function localizedBlockTitles(root: string, locale: Locale): Promise<Map<string, string>> {
-  const syllabus = await readYamlFile<SyllabusData>(syllabusDataFile(root));
-  const titles = new Map<string, string>();
-  for (const block of syllabus.blocks ?? []) {
-    const title = block.title;
-    const en = localizedString(title, "en");
-    const localized = localizedString(title, locale);
-    if (en && localized) titles.set(en, localized);
-  }
-  return titles;
-}
-
-function localizedString(value: LocalizedValue | undefined, locale: Locale): string {
-  if (!value) return "";
-  if (typeof value === "string") return value;
-  return value[locale] ?? "";
+  return readSyllabusBlockTitleMap(root, locale);
 }
 
 async function mdxToLatex(source: string, options: MdxLatexOptions): Promise<string> {

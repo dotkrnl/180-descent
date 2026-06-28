@@ -2,8 +2,7 @@ import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
 import { readCreditsData, type CreditsData } from "@lib/data/credits";
-import { syllabusDataFile } from "@lib/data/paths";
-import { readYamlFile } from "@lib/data/yaml";
+import { readSyllabusData, type Syllabus, type SyllabusDay } from "@lib/data/syllabus";
 import type { Locale } from "@lib/schemas/day";
 import { dayUrl } from "@lib/static-site/routes";
 
@@ -16,51 +15,6 @@ export interface ContentDay {
   url: string;
 }
 
-interface Syllabus {
-  title: string;
-  subtitle: string;
-  purpose: string;
-  method: string;
-  blocks: SyllabusBlock[];
-}
-
-interface SyllabusBlock {
-  id: string;
-  startDay: number;
-  endDay: number;
-  title: string;
-  summary: string;
-  days: SyllabusDay[];
-}
-
-interface SyllabusDay {
-  day: number;
-  title: string;
-  entry?: string;
-  model?: string;
-  debate?: string;
-  note?: string;
-  block?: string;
-  blockId?: string;
-}
-
-interface RawSyllabus {
-  title: string;
-  subtitle: string;
-  purpose: string;
-  method: string;
-  blocks: RawSyllabusBlock[];
-}
-
-interface RawSyllabusBlock {
-  id: string;
-  start_day: number;
-  end_day: number;
-  title: string;
-  summary: string;
-  days: SyllabusDay[];
-}
-
 export async function getBookData(): Promise<BookData> {
   return readBookData(process.cwd());
 }
@@ -70,8 +24,7 @@ export async function getCreditsData(): Promise<CreditsData> {
 }
 
 export async function getSyllabus(locale: Locale): Promise<Syllabus> {
-  const raw = await readYamlFile<unknown>(syllabusDataFile(process.cwd()));
-  return normalizeSyllabus(projectLocale(raw, locale) as RawSyllabus);
+  return readSyllabusData(process.cwd(), locale);
 }
 
 export async function getContentDays(locale: Locale): Promise<ContentDay[]> {
@@ -131,33 +84,4 @@ export function upcomingSyllabusDays(syllabus: Syllabus, days: ContentDay[], cou
     }
   }
   return upcoming;
-}
-
-function projectLocale(value: unknown, locale: Locale): unknown {
-  if (Array.isArray(value)) return value.map((entry) => projectLocale(entry, locale));
-  if (!value || typeof value !== "object") return value;
-
-  const record = value as Record<string, unknown>;
-  if ("en" in record && "zh" in record && Object.keys(record).every((key) => key === "en" || key === "zh")) {
-    return record[locale];
-  }
-
-  return Object.fromEntries(Object.entries(record).map(([key, entry]) => [key, projectLocale(entry, locale)]));
-}
-
-function normalizeSyllabus(raw: RawSyllabus): Syllabus {
-  return {
-    title: raw.title,
-    subtitle: raw.subtitle,
-    purpose: raw.purpose,
-    method: raw.method,
-    blocks: raw.blocks.map((block) => ({
-      id: block.id,
-      startDay: block.start_day,
-      endDay: block.end_day,
-      title: block.title,
-      summary: block.summary,
-      days: block.days
-    }))
-  };
 }
