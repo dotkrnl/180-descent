@@ -231,7 +231,8 @@ SVG/HTML/SCSS diagrams.
 - If a PDF caption appears but the picture does not, check the MDX image import,
   the resolved asset path, and the XeTeX build log before changing lesson markup.
 - Keep `npm run check:epub` guarding against absolute or missing EPUB image
-  paths.
+  paths, non-local internal links, missing link targets, and missing link
+  anchors.
 - Keep `npm run check:pdf` focused on artifact correctness: valid
   non-interactive PDFs, Poppler-extractable text, appendix inclusion rules, no
   local links, and no live interactive control leakage.
