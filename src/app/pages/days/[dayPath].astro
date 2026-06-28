@@ -3,11 +3,13 @@ import DayPage from "@app/components/DayPage.astro";
 import { getRegistryDayStaticPaths, loadDayPageModules } from "@app/day-route";
 import type { RegistryDayRouteProps } from "@app/day-route";
 
+type Props = RegistryDayRouteProps;
+
 export async function getStaticPaths() {
   return getRegistryDayStaticPaths("en");
 }
 
-const { entry, previous, next } = Astro.props as RegistryDayRouteProps;
+const { entry, previous, next } = Astro.props;
 const { Body, appendices } = await loadDayPageModules(entry);
 ---
 <DayPage entry={entry} previous={previous} next={next} Body={Body} appendices={appendices} />
