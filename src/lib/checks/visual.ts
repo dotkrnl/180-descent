@@ -195,7 +195,7 @@ async function inspectPage(
       window.scrollTo(0, scrollY);
       await new Promise((resolve) => requestAnimationFrame(resolve));
     }, y);
-    const screenshotPath = path.join(outDir, `${safeName(route)}-${viewport.name}-${stop}.png`);
+    const screenshotPath = path.join(outDir, `${visualRouteFileStem(route)}-${viewport.name}-${stop}.png`);
     await page.screenshot({ path: screenshotPath });
     screenshots[stop] = screenshotPath;
   }
@@ -273,6 +273,10 @@ function normalizedBaseUrl(url: string): string {
   return url.endsWith("/") ? url : `${url}/`;
 }
 
-function safeName(route: string): string {
-  return route.replace(/^\/|\/$/g, "").replace(/[^A-Za-z0-9]+/g, "-") || "home";
+export function visualRouteFileStem(route: string): string {
+  const segments = route
+    .split("/")
+    .filter(Boolean)
+    .map((segment) => encodeURIComponent(segment).replace(/%/g, "~"));
+  return segments.join("__") || "home";
 }

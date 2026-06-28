@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkVisual, parseVisualCheckArgs } from "@lib/checks/visual";
+import { checkVisual, parseVisualCheckArgs, visualRouteFileStem } from "@lib/checks/visual";
 
 describe("visual check CLI args", () => {
   it("parses known value options", () => {
@@ -77,6 +77,13 @@ describe("visual check CLI args", () => {
         "--compare must be an absolute http(s) URL"
       ]
     });
+  });
+
+  it("creates collision-resistant screenshot stems from routes", () => {
+    expect(visualRouteFileStem("/")).toBe("home");
+    expect(visualRouteFileStem("/a-b/")).toBe("a-b");
+    expect(visualRouteFileStem("/a/b/")).toBe("a__b");
+    expect(visualRouteFileStem("/zh/days/001-what-is-knowledge/")).toBe("zh__days__001-what-is-knowledge");
   });
 
   it("fails empty built sites instead of producing an empty visual report", async () => {
