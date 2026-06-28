@@ -2,15 +2,16 @@ import { z } from "zod";
 
 const localeSchema = z.enum(["en", "zh"]);
 const slugSchema = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
+const mdxPathSchema = z.string().regex(/^.+\.mdx$/);
 
 const localeContentSchema = z.object({
-  body: z.string().min(1),
+  body: mdxPathSchema,
   title: z.string().min(1),
   summary: z.string().min(1)
 }).strict();
 
 const appendixLocaleSchema = z.object({
-  body: z.string().min(1),
+  body: mdxPathSchema,
   title: z.string().min(1)
 }).strict();
 

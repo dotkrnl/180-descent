@@ -71,6 +71,27 @@ describe("target content registry", () => {
     })).toThrow();
   });
 
+  it("rejects non-MDX locale body paths", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "en.html"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [],
+      interactionScripts: []
+    })).toThrow();
+  });
+
   it("rejects path-like interaction script names", () => {
     expect(() => dayManifestSchema.parse({
       day: 1,
@@ -115,6 +136,41 @@ describe("target content registry", () => {
             en: {
               title: "Appendix A",
               body: "appendices/a.en.mdx"
+            },
+            zh: {
+              title: "附录 A",
+              body: "appendices/a.zh.mdx"
+            }
+          }
+        }
+      ],
+      interactionScripts: []
+    })).toThrow();
+  });
+
+  it("rejects non-MDX appendix body paths", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "en.mdx"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [
+        {
+          id: "appendix-a",
+          locales: {
+            en: {
+              title: "Appendix A",
+              body: "appendices/a.html"
             },
             zh: {
               title: "附录 A",
