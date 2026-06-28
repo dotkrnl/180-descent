@@ -9,15 +9,14 @@ if (args.errors.length) {
   process.exit(1);
 }
 
-const baseUrl = args.baseUrl;
-if (!baseUrl) {
+if (!args.baseUrl) {
   console.error(usage);
   process.exit(1);
 }
 
 const result = await checkVisual({
   root: process.cwd(),
-  baseUrl,
+  baseUrl: args.baseUrl,
   compareUrl: args.compareUrl,
   outDir: args.outDir
 });
