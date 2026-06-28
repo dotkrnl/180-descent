@@ -24,7 +24,7 @@ describe("svg text size check", () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-svg-text-"));
     await mkdir(path.join(root, "src/app/components"), { recursive: true });
     await mkdir(path.join(contentDaysDir(root), "001-fixture"), { recursive: true });
-    await writeFile(path.join(root, "src/app/components/Figure.astro"), '<svg><text font-size="9">tiny</text></svg>');
+    await writeFile(path.join(root, "src/app/components/Figure.astro"), '<svg><text font-size={9}>tiny</text></svg>');
     await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), '<svg><text style="font-size: 9px">tiny</text></svg>');
 
     expect(checkSvgTextSize({ root })).toEqual([

@@ -57,9 +57,9 @@ function checkSegment(
   failures: SvgTextCheckFailure[],
   offset = 0
 ): void {
-  const attrPattern = /font-size\s*=\s*["']([0-9]*\.?[0-9]+)(?:px)?["']/gi;
+  const attrPattern = /font-size\s*=\s*(?:"([0-9]*\.?[0-9]+)(?:px)?"|'([0-9]*\.?[0-9]+)(?:px)?'|\{\s*([0-9]*\.?[0-9]+)\s*\})/gi;
   for (const attrMatch of segment.matchAll(attrPattern)) {
-    const value = Number(attrMatch[1]);
+    const value = Number(firstCapturedValue(attrMatch));
     if (value < MIN_SVG_FONT_SIZE) {
       failures.push({
         file,
@@ -92,6 +92,12 @@ function checkSegment(
       });
     }
   }
+}
+
+function firstCapturedValue(match: RegExpMatchArray): string {
+  const value = match.slice(1).find((entry) => entry !== undefined);
+  if (value === undefined) throw new Error(`Pattern did not capture a numeric value: ${match[0]}`);
+  return value;
 }
 
 function lineNumber(source: string, index: number): number {
