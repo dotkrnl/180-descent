@@ -21,7 +21,7 @@ export function bookArtifactName(format: ArtifactFormat, locale: Locale, deepDiv
   return `180-descent${localePart}${deepDivePart}.${format}`;
 }
 
-export function bookArtifactPaths(format: ArtifactFormat): string[] {
+export function bookArtifactPaths(format: ArtifactFormat): [string, string, string, string] {
   return [
     downloadArtifactPath(bookArtifactName(format, "en", false)),
     downloadArtifactPath(bookArtifactName(format, "en", true)),
