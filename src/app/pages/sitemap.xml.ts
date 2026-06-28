@@ -12,16 +12,12 @@ interface SitemapEntry {
 
 export async function GET() {
   const book = await getBookData();
-  const [enDays, zhDays] = await Promise.all([
-    getContentDays("en"),
-    getContentDays("zh")
-  ]);
-  const dayPaths = new Set([...enDays, ...zhDays].map((day) => day.path));
+  const dayPaths = (await getContentDays("en")).map((day) => day.path);
   const staticPages: StaticPageSlug[] = ["introduction", "syllabus", "downloads", "credits"];
   const entries: SitemapEntry[] = [
     ...localizedEntries((locale) => homeUrl(locale)),
     ...staticPages.flatMap((slug) => localizedEntries((locale) => staticPageUrl(locale, slug))),
-    ...[...dayPaths].sort().flatMap((dayPath) => [
+    ...dayPaths.flatMap((dayPath) => [
       ...localizedEntries((locale) => dayUrl(locale, dayPath))
     ])
   ];
