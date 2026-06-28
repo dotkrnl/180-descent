@@ -9,6 +9,9 @@ describe("static site URL helpers", () => {
     expect(urlForHtml(siteDir, path.join(siteDir, "index.html"))).toBe("/");
     expect(urlForHtml(siteDir, path.join(siteDir, "zh", "index.html"))).toBe("/zh/");
     expect(urlForHtml(siteDir, path.join(siteDir, "robots.txt"))).toBe("/robots.txt");
+    expect(() => urlForHtml(siteDir, path.join(path.sep, "repo", "_site-copy", "index.html"))).toThrow(
+      "HTML file is outside site directory:"
+    );
   });
 
   it("resolves local URL paths without allowing sibling-prefix escapes", () => {

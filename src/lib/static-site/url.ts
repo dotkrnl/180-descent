@@ -24,6 +24,9 @@ export function contentType(filePath: string): string {
 }
 
 export function urlForHtml(siteDir: string, filePath: string): string {
+  if (!isPathInside(siteDir, filePath)) {
+    throw new Error(`HTML file is outside site directory: ${filePath}`);
+  }
   const rel = toPosixRelative(siteDir, filePath);
   if (rel === "index.html") return "/";
   if (rel.endsWith("/index.html")) return `/${rel.slice(0, -"index.html".length)}`;
