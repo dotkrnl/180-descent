@@ -487,7 +487,8 @@ function convertTipNotesToFootnotes($: CheerioRoot, language = "", selfHref = "d
         back: "Back"
       };
   const scopeCandidates = $(".page,.lesson").toArray();
-  const scopes = scopeCandidates.length ? scopeCandidates : [$("body").get(0)].filter(Boolean);
+  const body = $("body").get(0);
+  const scopes = scopeCandidates.length ? scopeCandidates : body ? [body] : [];
   const used = new Set<unknown>();
 
   scopes.forEach((scopeElement, scopeIndex) => {
