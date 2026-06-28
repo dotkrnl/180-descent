@@ -174,6 +174,8 @@ const TOOL_GROUPS = {
   epubcheck: ["java", "epubcheck"]
 } as const;
 
+type ToolGroupName = keyof typeof TOOL_GROUPS;
+
 export class PreflightError extends Error {
   constructor(readonly missing: ToolFailure[]) {
     super("Preflight check failed");
@@ -216,9 +218,12 @@ export function checkTools(required: string[] = [...TOOL_GROUPS.durable], option
 export function resolveToolNames(requested: string[] = []): string[] {
   const names = requested.length ? requested : ["durable"];
   return [...new Set(names.flatMap((name) => {
-    const group = TOOL_GROUPS[name as keyof typeof TOOL_GROUPS];
-    return group ? [...group] : [name];
+    return isToolGroupName(name) ? [...TOOL_GROUPS[name]] : [name];
   }))];
+}
+
+function isToolGroupName(name: string): name is ToolGroupName {
+  return name in TOOL_GROUPS;
 }
 
 export function parsePreflightArgs(args: string[]): PreflightArgs {
