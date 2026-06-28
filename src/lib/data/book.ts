@@ -38,6 +38,10 @@ export interface HumanEditorData {
 }
 
 const urlSchema = z.string().url();
+const epubIdentifierSeedSchema = z.string()
+  .regex(/^[A-Za-z0-9][A-Za-z0-9:._-]*$/, {
+    message: "epub_identifier must be a stable identifier seed without whitespace"
+  });
 const siteUrlSchema = urlSchema.refine((value) => value === new URL(value).origin, {
   message: "site_url must be an origin without a trailing slash, path, query, or hash"
 });
@@ -56,7 +60,7 @@ const localizedBookSchema = z.object({
   translators: z.string().min(1),
   human_editor: humanEditorSchema,
   description: z.string().min(1),
-  epub_identifier: z.string().min(1)
+  epub_identifier: epubIdentifierSeedSchema
 }).strict();
 
 const bookDataSchema = z.object({
@@ -72,7 +76,7 @@ const bookDataSchema = z.object({
   publisher: z.string().min(1),
   published_year: z.number().int().positive(),
   total_days: z.number().int().positive(),
-  epub_identifier: z.string().min(1),
+  epub_identifier: epubIdentifierSeedSchema,
   zh: localizedBookSchema
 }).strict();
 

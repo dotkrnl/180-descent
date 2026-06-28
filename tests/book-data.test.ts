@@ -70,6 +70,18 @@ describe("book data", () => {
 
     await expect(readBookData(root)).rejects.toThrow();
   });
+
+  it("rejects unstable EPUB identifier seeds", async () => {
+    const root = await createBookRoot(
+      validBookYaml().replace("epub_identifier: 11111111-1111-4111-8111-111111111111", "epub_identifier: not stable")
+    );
+    const zhRoot = await createBookRoot(
+      validBookYaml().replace("epub_identifier: 22222222-2222-4222-8222-222222222222", "epub_identifier: not stable")
+    );
+
+    await expect(readBookData(root)).rejects.toThrow("epub_identifier must be a stable identifier seed");
+    await expect(readBookData(zhRoot)).rejects.toThrow("epub_identifier must be a stable identifier seed");
+  });
 });
 
 async function createBookRoot(source: string): Promise<string> {
