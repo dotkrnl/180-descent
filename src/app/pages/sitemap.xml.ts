@@ -17,9 +17,7 @@ export async function GET() {
   const entries: SitemapEntry[] = [
     ...localizedEntries((locale) => homeUrl(locale)),
     ...staticPages.flatMap((slug) => localizedEntries((locale) => staticPageUrl(locale, slug))),
-    ...dayPaths.flatMap((dayPath) => [
-      ...localizedEntries((locale) => dayUrl(locale, dayPath))
-    ])
+    ...dayPaths.flatMap((dayPath) => localizedEntries((locale) => dayUrl(locale, dayPath)))
   ];
   const body = [
     '<?xml version="1.0" encoding="UTF-8"?>',
