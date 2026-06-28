@@ -462,8 +462,22 @@ rtk npm run check:content
 rtk npm run check:math
 rtk npm run check:appendix-style
 rtk npm run check:links
+rtk npm run check:imports
+rtk npm run check:dead
+rtk npm run check:svg-text
 rtk npm run check:clean
 rtk npm run check:workflows
+```
+
+For changes that touch built pages, metadata, accessibility, rendered
+typography, or download artifacts, add the focused built-output validators:
+
+```sh
+rtk npm run check:seo
+rtk npm run check:a11y
+rtk npm run check:rendered-type
+rtk npm run check:epub
+rtk npm run check:pdf
 ```
 
 For asset, artifact, global renderer, or release-bound changes, run:
