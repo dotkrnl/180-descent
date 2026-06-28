@@ -31,7 +31,8 @@ export function urlForHtml(siteDir: string, filePath: string): string {
 }
 
 export function sitePathForUrlPath(siteDir: string, urlPath: string): string {
-  const decoded = decodeURIComponent(urlPath.split(/[?#]/)[0]);
+  const decoded = decodeUrlPath(urlPath);
+  if (!decoded) return "";
   const clean = decoded.replace(/^\/+/, "");
   const root = path.resolve(siteDir);
   const resolved = path.resolve(root, clean);
@@ -49,4 +50,12 @@ export function siteFileForUrlPath(siteDir: string, urlPath: string): string {
   const routePath = sitePathForUrlPath(siteDir, urlPath);
   if (!routePath) return "";
   return path.extname(routePath) ? routePath : path.join(routePath, "index.html");
+}
+
+function decodeUrlPath(urlPath: string): string {
+  try {
+    return decodeURIComponent(urlPath.split(/[?#]/)[0]);
+  } catch {
+    return "";
+  }
 }

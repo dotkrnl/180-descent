@@ -20,6 +20,7 @@ describe("static site URL helpers", () => {
     expect(siteFileForUrlPath(siteDir, "/standalone.html")).toBe(path.join(siteDir, "standalone.html"));
     expect(siteFileForUrlPath(siteDir, "/favicon.ico")).toBe(path.join(siteDir, "favicon.ico"));
     expect(sitePathForUrlPath(siteDir, "/../_site-copy/secret.txt")).toBe("");
+    expect(sitePathForUrlPath(siteDir, "/bad-%zz-path")).toBe("");
   });
 
   it("resolves only same-site hrefs", () => {
