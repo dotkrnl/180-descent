@@ -107,17 +107,15 @@ async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
 
 function addPerDayEditions(editions: EpubEdition[], days: ArtifactBookDay[], zh: boolean): void {
   for (const day of days) {
-    const dayPath = day.path;
-    const dayNumber = day.day;
-    const file = downloadArtifactPath(dayArtifactName("epub", zh ? "zh" : "en", dayPath));
+    const file = downloadArtifactPath(dayArtifactName("epub", zh ? "zh" : "en", day.path));
 
-    const isDayOne = dayNumber === 1;
+    const isDayOne = day.day === 1;
     const dayRequired = [
       "mimetype",
       "META-INF/container.xml",
       "OEBPS/content.opf",
       "OEBPS/nav.xhtml",
-      `OEBPS/day-${String(dayNumber).padStart(3, "0")}.xhtml`
+      `OEBPS/day-${String(day.day).padStart(3, "0")}.xhtml`
     ];
     editions.push({
       file,

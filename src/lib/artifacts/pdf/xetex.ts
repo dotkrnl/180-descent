@@ -236,8 +236,8 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
   let currentBlock = "";
   let blockNumber = 0;
   for (const day of days) {
-    if (!config.singleDay && dayBlock(day) !== currentBlock) {
-      currentBlock = dayBlock(day);
+    if (!config.singleDay && day.block !== currentBlock) {
+      currentBlock = day.block;
       blockNumber++;
       chunks.push(blockDividerLatex(blockTitles.get(currentBlock) ?? currentBlock, blockNumber, config.locale));
     }
@@ -1626,10 +1626,6 @@ function sanitizeAssetName(value: string): string {
     .replace(/[^A-Za-z0-9_-]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 96) || "asset";
-}
-
-function dayBlock(day: ArtifactBookDay): string {
-  return day.block;
 }
 
 function isBlockMdxElement(node: MdxNode): boolean {
