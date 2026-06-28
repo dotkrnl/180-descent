@@ -13,6 +13,12 @@ interface VisualCheckOptions {
   outDir?: string;
 }
 
+export interface VisualCheckCliArgs {
+  baseUrl?: string;
+  compareUrl?: string;
+  outDir?: string;
+}
+
 interface VisualCheckResult {
   errors: string[];
   reportPath: string;
@@ -37,6 +43,25 @@ const VIEWPORTS = [
   { name: "desktop", width: 1440, height: 1000 }
 ] as const;
 const SCROLL_STOPS = ["top", "middle", "bottom"] as const;
+
+export function parseVisualCheckArgs(argv: string[]): VisualCheckCliArgs {
+  const out: VisualCheckCliArgs = {};
+
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+    if (!arg.startsWith("--")) continue;
+
+    const value = argv[index + 1];
+    if (!value || value.startsWith("--")) continue;
+
+    if (arg === "--base") out.baseUrl = value;
+    if (arg === "--compare") out.compareUrl = value;
+    if (arg === "--out") out.outDir = value;
+    index += 1;
+  }
+
+  return out;
+}
 
 export async function checkVisual(options: VisualCheckOptions): Promise<VisualCheckResult> {
   const builtSiteDir = siteDir(options.root);

@@ -1,20 +1,8 @@
-import { checkVisual } from "@lib/checks/visual";
+import { checkVisual, parseVisualCheckArgs } from "@lib/checks/visual";
 import { exitOnErrors } from "./support";
 
-const args = new Map<string, string>();
-for (let index = 2; index < process.argv.length; index += 1) {
-  const arg = process.argv[index];
-  if (!arg.startsWith("--")) continue;
-  const value = process.argv[index + 1];
-  if (!value || value.startsWith("--")) {
-    args.set(arg.slice(2), "1");
-  } else {
-    args.set(arg.slice(2), value);
-    index += 1;
-  }
-}
-
-const baseUrl = args.get("base");
+const args = parseVisualCheckArgs(process.argv.slice(2));
+const baseUrl = args.baseUrl;
 if (!baseUrl) {
   console.error("Usage: npm run check:visual -- --base <url> [--compare <url>] [--out tmp/visual-qa]");
   process.exit(1);
@@ -23,8 +11,8 @@ if (!baseUrl) {
 const result = await checkVisual({
   root: process.cwd(),
   baseUrl,
-  compareUrl: args.get("compare"),
-  outDir: args.get("out")
+  compareUrl: args.compareUrl,
+  outDir: args.outDir
 });
 
 console.log(`Visual QA report: ${result.reportPath}`);
