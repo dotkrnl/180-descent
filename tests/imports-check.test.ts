@@ -59,6 +59,22 @@ describe("import check", () => {
     expect(findUnusedDefaultImports('import type Hero from "./Hero.astro";\n<div />')).toEqual([]);
   });
 
+  it("ignores imports and identifiers inside fenced code blocks", () => {
+    expect(findUnusedDefaultImports([
+      "```ts",
+      'import Demo from "./Demo.astro";',
+      "<Demo />",
+      "```"
+    ].join("\n"))).toEqual([]);
+
+    expect(findUnusedDefaultImports([
+      'import Hero from "./Hero.astro";',
+      "```mdx",
+      "<Hero />",
+      "```"
+    ].join("\n"))).toEqual([{ name: "Hero" }]);
+  });
+
   it("does not consume body content after imports without semicolons", () => {
     expect(findUnusedDefaultImports([
       'import Hero from "./Hero.astro"',

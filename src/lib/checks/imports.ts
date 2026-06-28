@@ -35,8 +35,9 @@ export async function checkUnusedDefaultImports(options: ImportCheckOptions): Pr
 }
 
 export function findUnusedDefaultImports(source: string): Array<{ name: string }> {
-  const imports = importDeclarations(source);
-  const sourceWithoutImports = stripRanges(source, imports.map((entry) => entry.range));
+  const sourceWithoutCodeBlocks = stripCodeBlocks(source);
+  const imports = importDeclarations(sourceWithoutCodeBlocks);
+  const sourceWithoutImports = stripRanges(sourceWithoutCodeBlocks, imports.map((entry) => entry.range));
   const unusedImports: Array<{ name: string }> = [];
 
   for (const entry of imports) {
@@ -96,6 +97,10 @@ function stripRanges(source: string, ranges: Array<[number, number]>): string {
     }
   }
   return chars.join("");
+}
+
+function stripCodeBlocks(source: string): string {
+  return source.replace(/```[\s\S]*?```/g, "");
 }
 
 function hasIdentifier(source: string, name: string): boolean {
