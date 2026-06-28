@@ -117,7 +117,7 @@ describe("seo check", () => {
     ]);
   });
 
-  it("reports manifest icons without string sources", async () => {
+  it("reports manifest icons without non-blank string sources", async () => {
     const root = await createSiteRoot();
     await writeFile(path.join(root, "_site/index.html"), indexHtml());
     await writeFile(path.join(root, "_site/site.webmanifest"), JSON.stringify({
@@ -127,7 +127,21 @@ describe("seo check", () => {
     const result = await checkSeo({ root });
 
     expect(result.errors).toEqual([
-      "/site.webmanifest: icon src must be a string"
+      "/site.webmanifest: icon src must be a non-blank string"
+    ]);
+  });
+
+  it("rejects whitespace-only manifest icon sources", async () => {
+    const root = await createSiteRoot();
+    await writeFile(path.join(root, "_site/index.html"), indexHtml());
+    await writeFile(path.join(root, "_site/site.webmanifest"), JSON.stringify({
+      icons: [{ src: "   " }]
+    }));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "/site.webmanifest: icon src must be a non-blank string"
     ]);
   });
 
@@ -156,7 +170,7 @@ describe("seo check", () => {
     const result = await checkSeo({ root });
 
     expect(result.errors).toEqual([
-      "/site.webmanifest: icon src must be a string"
+      "/site.webmanifest: icon src must be a non-blank string"
     ]);
   });
 
@@ -190,7 +204,7 @@ describe("seo check", () => {
     const result = await checkSeo({ root });
 
     expect(result.errors).toEqual([
-      "/app/site.webmanifest: icon src must be a string"
+      "/app/site.webmanifest: icon src must be a non-blank string"
     ]);
   });
 

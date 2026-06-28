@@ -170,7 +170,7 @@ async function checkManifestIcons(siteDir: string, manifestUrl: URL, errors: str
   for (const icon of icons) {
     const src = webManifestIconSrc(icon);
     if (!src) {
-      errors.push(`${href}: icon src must be a string`);
+      errors.push(`${href}: icon src must be a non-blank string`);
       continue;
     }
     const localPath = sitePathForManifestIcon(siteDir, manifestUrl, src);
@@ -201,7 +201,7 @@ function sitePathForManifestIcon(siteDir: string, manifestUrl: URL, iconSrc: str
 
 function webManifestIconSrc(icon: unknown): string | null {
   if (!icon || typeof icon !== "object" || !("src" in icon)) return null;
-  return typeof icon.src === "string" && icon.src ? icon.src : null;
+  return typeof icon.src === "string" && icon.src.trim() ? icon.src : null;
 }
 
 async function hasHtmlForUrl(siteDir: string, url: string): Promise<boolean> {
