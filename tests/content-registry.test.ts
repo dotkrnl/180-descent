@@ -92,6 +92,48 @@ describe("target content registry", () => {
     })).toThrow();
   });
 
+  it("rejects locale body paths that escape the day directory", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "../outside.mdx"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [],
+      interactionScripts: []
+    })).toThrow("MDX body path must be a relative POSIX path within the day directory");
+  });
+
+  it("rejects absolute locale body paths", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "/tmp/en.mdx"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [],
+      interactionScripts: []
+    })).toThrow("MDX body path must be a relative POSIX path within the day directory");
+  });
+
   it("rejects locale bodies that do not match the canonical locale file", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-locale-body-"));
     const daysDir = path.join(root, "days");
@@ -378,7 +420,9 @@ describe("target content registry", () => {
       "interactionScripts: []"
     ].join("\n"));
 
-    await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Manifest reference escapes day directory: ../outside.mdx");
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow(
+      "MDX body path must be a relative POSIX path within the day directory"
+    );
   });
 
   it("rejects absolute manifest file references", async () => {
@@ -404,7 +448,9 @@ describe("target content registry", () => {
       "interactionScripts: []"
     ].join("\n"));
 
-    await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Manifest reference must be relative:");
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow(
+      "MDX body path must be a relative POSIX path within the day directory"
+    );
   });
 
   it("rejects non-canonical day directory names", async () => {

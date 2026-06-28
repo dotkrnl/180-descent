@@ -3,7 +3,11 @@ import { z } from "zod";
 const localeSchema = z.enum(["en", "zh"]);
 const manifestLocales = ["en", "zh"] as const;
 const slugSchema = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
-const mdxPathSchema = z.string().regex(/^.+\.mdx$/);
+const mdxPathSchema = z.string()
+  .regex(/^.+\.mdx$/)
+  .refine((value) => isRelativeDayPath(value), {
+    message: "MDX body path must be a relative POSIX path within the day directory"
+  });
 
 const localeContentSchema = z.object({
   body: mdxPathSchema,
@@ -62,6 +66,12 @@ function checkUniqueValues(values: string[], path: Array<string | number>, label
     }
     seen.add(value);
   }
+}
+
+function isRelativeDayPath(value: string): boolean {
+  return !value.startsWith("/")
+    && !value.includes("\\")
+    && !value.split("/").includes("..");
 }
 
 export type Locale = z.infer<typeof localeSchema>;
