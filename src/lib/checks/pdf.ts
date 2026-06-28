@@ -7,6 +7,7 @@ import { PDFDocument, PDFName } from "pdf-lib";
 import { loadArtifactBookDays } from "@lib/artifacts/book";
 import { bookArtifactPaths, dayArtifactName, dayArtifactPaths, downloadArtifactPath } from "@lib/artifacts/downloads";
 import { CHINESE_DAY_ONE_APPENDIX_PATTERNS, ENGLISH_DAY_ONE_APPENDIX_PATTERNS } from "@lib/checks/day-one-appendix-patterns";
+import { toError } from "@lib/errors";
 
 const execFileAsync = promisify(execFile);
 
@@ -20,7 +21,7 @@ interface PdfInfo {
   text: string;
 }
 
-type TextPatternCheck = [label: string, text: string, pattern: RegExp];
+type TextPatternCheck = [label: string, text: string | null, pattern: RegExp];
 
 export async function checkPdf(options: PdfCheckOptions): Promise<string[]> {
   const checker = new PdfChecker(options);
@@ -41,6 +42,7 @@ function textMatchesAny(text: string, patterns: RegExp[]): boolean {
 class PdfChecker {
   private readonly pdfCache = new Map<string, PdfInfo>();
   private readonly missingFiles = new Set<string>();
+  private readonly invalidFiles = new Set<string>();
   private readonly errors: string[] = [];
   private readonly debug = process.env.PDF_CHECK_DEBUG === "1";
 
@@ -86,12 +88,9 @@ class PdfChecker {
     }
 
     const info = await this.pdfInfo(file);
+    if (!info) return;
     const raw = info.data.toString("latin1");
     const annotationCount = countPdfAnnotations(info);
-
-    if (!hasPdfHeader(info.data)) {
-      this.errors.push(`${file} does not start with a PDF header`);
-    }
 
     if (info.pdf.getPageCount() < 1) {
       this.errors.push(`${file} has no pages`);
@@ -117,7 +116,7 @@ class PdfChecker {
     }
   }
 
-  private checkBookText(standardText: string, zhText: string): void {
+  private checkBookText(standardText: string | null, zhText: string | null): void {
     const checks: TextPatternCheck[] = [
       ["English PDF", standardText, /The Scientific Method/i],
       ["English PDF", standardText, /Probability as/i],
@@ -125,17 +124,17 @@ class PdfChecker {
       ["Chinese PDF", zhText, /深入一百八十日/]
     ];
     for (const [label, text, pattern] of checks) {
-      if (!pattern.test(text)) {
+      if (text !== null && !pattern.test(text)) {
         this.errors.push(`${label} is missing core text matching ${pattern}`);
       }
     }
   }
 
   private checkAppendixLabels(
-    deepDiveText: string,
-    dayOneText: string,
-    zhDeepDiveText: string,
-    zhDayOneText: string
+    deepDiveText: string | null,
+    dayOneText: string | null,
+    zhDeepDiveText: string | null,
+    zhDayOneText: string | null
   ): void {
     const checks: TextPatternCheck[] = [
       ["Deep-dive PDF", deepDiveText, /Optional appendix/i],
@@ -144,30 +143,30 @@ class PdfChecker {
       ["Day-specific Chinese PDF", zhDayOneText, /可选附录/]
     ];
     for (const [label, text, pattern] of checks) {
-      if (!pattern.test(text)) {
+      if (text !== null && !pattern.test(text)) {
         this.errors.push(`${label} is missing optional appendix label matching ${pattern}`);
       }
     }
   }
 
   private checkAppendixContent(
-    standardText: string,
-    deepDiveText: string,
-    dayOneText: string,
-    zhText: string,
-    zhDeepDiveText: string,
-    zhDayOneText: string
+    standardText: string | null,
+    deepDiveText: string | null,
+    dayOneText: string | null,
+    zhText: string | null,
+    zhDeepDiveText: string | null,
+    zhDayOneText: string | null
   ): void {
     for (const pattern of ENGLISH_DAY_ONE_APPENDIX_PATTERNS) {
-      if (pattern.test(standardText)) this.errors.push(`Standard PDF contains deep-dive appendix content matching ${pattern}`);
-      if (!pattern.test(deepDiveText)) this.errors.push(`Deep-dive PDF is missing appendix content matching ${pattern}`);
-      if (!pattern.test(dayOneText)) this.errors.push(`Day-specific PDF is missing appendix content matching ${pattern}`);
+      if (standardText !== null && pattern.test(standardText)) this.errors.push(`Standard PDF contains deep-dive appendix content matching ${pattern}`);
+      if (deepDiveText !== null && !pattern.test(deepDiveText)) this.errors.push(`Deep-dive PDF is missing appendix content matching ${pattern}`);
+      if (dayOneText !== null && !pattern.test(dayOneText)) this.errors.push(`Day-specific PDF is missing appendix content matching ${pattern}`);
     }
 
     for (const pattern of CHINESE_DAY_ONE_APPENDIX_PATTERNS) {
-      if (pattern.test(zhText)) this.errors.push(`Standard Chinese PDF contains deep-dive appendix content matching ${pattern}`);
-      if (!pattern.test(zhDeepDiveText)) this.errors.push(`Deep-dive Chinese PDF is missing appendix content matching ${pattern}`);
-      if (!pattern.test(zhDayOneText)) this.errors.push(`Day-specific Chinese PDF is missing appendix content matching ${pattern}`);
+      if (zhText !== null && pattern.test(zhText)) this.errors.push(`Standard Chinese PDF contains deep-dive appendix content matching ${pattern}`);
+      if (zhDeepDiveText !== null && !pattern.test(zhDeepDiveText)) this.errors.push(`Deep-dive Chinese PDF is missing appendix content matching ${pattern}`);
+      if (zhDayOneText !== null && !pattern.test(zhDayOneText)) this.errors.push(`Day-specific Chinese PDF is missing appendix content matching ${pattern}`);
     }
 
     const liveControlPatterns = [
@@ -177,7 +176,7 @@ class PdfChecker {
       /Expose to outside voices/,
       /Snap onto the coherence line/
     ];
-    if (textMatchesAny(deepDiveText, liveControlPatterns)) {
+    if (deepDiveText !== null && textMatchesAny(deepDiveText, liveControlPatterns)) {
       this.errors.push("Deep-dive PDF contains live interactive control text");
     }
 
@@ -191,30 +190,47 @@ class PdfChecker {
       /对 S 的置信度/,
       /吸附到融贯线上/
     ];
-    if (textMatchesAny(zhDeepDiveText, zhLiveControlPatterns)) {
+    if (zhDeepDiveText !== null && textMatchesAny(zhDeepDiveText, zhLiveControlPatterns)) {
       this.errors.push("Deep-dive Chinese PDF contains live interactive control text");
     }
   }
 
-  private async pdfInfo(pdfPath: string): Promise<PdfInfo> {
+  private async pdfInfo(pdfPath: string): Promise<PdfInfo | null> {
+    if (this.invalidFiles.has(pdfPath)) return null;
+
     const absolute = this.absolute(pdfPath);
     const cached = this.pdfCache.get(absolute);
     if (cached) return cached;
     const data = await readFile(absolute);
-    const pdf = await PDFDocument.load(data);
+
+    if (!hasPdfHeader(data)) {
+      this.invalidFiles.add(pdfPath);
+      this.errors.push(`${pdfPath} does not start with a PDF header`);
+      return null;
+    }
+
+    let pdf: PDFDocument;
+    try {
+      pdf = await PDFDocument.load(data);
+    } catch (error) {
+      this.invalidFiles.add(pdfPath);
+      this.errors.push(`${pdfPath} cannot be parsed as PDF (${toError(error).message})`);
+      return null;
+    }
+
     const text = await popplerText(absolute);
     const info = { data, pdf, text };
     this.pdfCache.set(absolute, info);
     return info;
   }
 
-  private async extractPdfText(pdfPath: string): Promise<string> {
+  private async extractPdfText(pdfPath: string): Promise<string | null> {
     if (!existsSync(this.absolute(pdfPath))) {
       this.reportMissing(pdfPath);
-      return "";
+      return null;
     }
 
-    return (await this.pdfInfo(pdfPath)).text;
+    return (await this.pdfInfo(pdfPath))?.text ?? null;
   }
 
   private absolute(relativePath: string): string {
