@@ -22,7 +22,7 @@ describe("lesson MDX components", () => {
     })).toContain('aria-label="显示说明"');
   });
 
-  it("fails invalid author math", () => {
+  it("renders KaTeX and rejects invalid LaTeX", () => {
     expect(renderMathHtml("P(H \\mid E)", true)).toContain("katex-display");
     expect(() => renderMathHtml("\\notacommand", false)).toThrow("Undefined control sequence");
   });
