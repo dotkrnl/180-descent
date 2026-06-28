@@ -1,6 +1,7 @@
 import { bookDownloadUrls, type BookDownloadUrls } from "@lib/artifacts/downloads";
 import { bookDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
+import { z } from "zod";
 
 export interface BookData {
   title: string;
@@ -67,8 +68,46 @@ interface RawBookSiteData {
   site_url: string;
 }
 
+const humanEditorSchema = z.object({
+  name: z.string().min(1),
+  url: z.string().min(1)
+}).strict();
+
+const localizedBookSchema = z.object({
+  language: z.string().min(1),
+  title: z.string().min(1),
+  subtitle: z.string().min(1),
+  deep_dive_subtitle: z.string().min(1),
+  authors: z.string().min(1),
+  translators: z.string().min(1),
+  human_editor: humanEditorSchema,
+  description: z.string().min(1),
+  epub_identifier: z.string().min(1)
+}).strict();
+
+const bookDataSchema = z.object({
+  title: z.string().min(1),
+  subtitle: z.string().min(1),
+  deep_dive_subtitle: z.string().min(1),
+  authors: z.string().min(1),
+  human_editor: humanEditorSchema,
+  description: z.string().min(1),
+  site_url: z.string().min(1),
+  repo: z.string().min(1),
+  language: z.string().min(1),
+  publisher: z.string().min(1),
+  published_year: z.number().int().positive(),
+  total_days: z.number().int().positive(),
+  epub_identifier: z.string().min(1),
+  zh: localizedBookSchema
+}).strict();
+
+const bookSiteDataSchema = z.object({
+  site_url: z.string().min(1)
+}).passthrough();
+
 export async function readBookData(root: string): Promise<BookData> {
-  const raw = await readYamlFile<RawBookData>(bookDataFile(root));
+  const raw = bookDataSchema.parse(await readYamlFile<unknown>(bookDataFile(root))) as RawBookData;
   return {
     title: raw.title,
     subtitle: raw.subtitle,
@@ -100,6 +139,6 @@ export async function readBookData(root: string): Promise<BookData> {
 }
 
 export async function readBookSiteUrl(root: string): Promise<string> {
-  const raw = await readYamlFile<RawBookSiteData>(bookDataFile(root));
+  const raw = bookSiteDataSchema.parse(await readYamlFile<unknown>(bookDataFile(root))) as RawBookSiteData;
   return raw.site_url;
 }
