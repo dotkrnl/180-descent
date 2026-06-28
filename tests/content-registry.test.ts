@@ -134,6 +134,29 @@ describe("target content registry", () => {
     })).toThrow("MDX body path must be a relative POSIX path within the day directory");
   });
 
+  it("rejects non-normalized locale body paths", () => {
+    for (const body of ["./en.mdx", "appendices//en.mdx", "appendices/./en.mdx"]) {
+      expect(() => dayManifestSchema.parse({
+        day: 1,
+        block: "foundations",
+        locales: {
+          en: {
+            title: "Minimal",
+            summary: "Minimal summary.",
+            body
+          },
+          zh: {
+            title: "最小示例",
+            summary: "中文摘要。",
+            body: "zh.mdx"
+          }
+        },
+        appendices: [],
+        interactionScripts: []
+      })).toThrow("MDX body path must be a relative POSIX path within the day directory");
+    }
+  });
+
   it("rejects locale bodies that do not match the canonical locale file", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-locale-body-"));
     const daysDir = path.join(root, "days");

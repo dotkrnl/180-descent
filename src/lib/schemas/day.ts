@@ -69,9 +69,10 @@ function checkUniqueValues(values: string[], path: Array<string | number>, label
 }
 
 function isRelativeDayPath(value: string): boolean {
+  const segments = value.split("/");
   return !value.startsWith("/")
     && !value.includes("\\")
-    && !value.split("/").includes("..");
+    && segments.every((segment) => segment && segment !== "." && segment !== "..");
 }
 
 export type Locale = z.infer<typeof localeSchema>;
