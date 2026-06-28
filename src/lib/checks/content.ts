@@ -315,43 +315,48 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
 }
 
 function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  if (/[{]%|%}/.test(file.source)) {
-    failures.push({ message: `${file.relativePath} contains template syntax; use MDX components instead` });
+  const checkedFile = {
+    ...file,
+    source: stripFencedCodeBlocks(file.source)
+  };
+
+  if (/[{]%|%}/.test(checkedFile.source)) {
+    failures.push({ message: `${checkedFile.relativePath} contains template syntax; use MDX components instead` });
   }
 
-  if (/<\/?script\b/i.test(file.source)) {
-    failures.push({ message: `${file.relativePath} contains inline script; use shared interaction assets instead` });
+  if (/<\/?script\b/i.test(checkedFile.source)) {
+    failures.push({ message: `${checkedFile.relativePath} contains inline script; use shared interaction assets instead` });
   }
 
-  if (!file.source.includes("<Sources")) {
-    failures.push({ message: `${file.label} has no sources section` });
+  if (!checkedFile.source.includes("<Sources")) {
+    failures.push({ message: `${checkedFile.label} has no sources section` });
   }
 
-  if (!file.source.includes("<StatusChip")) {
-    failures.push({ message: `${file.label} has no frontier status chips` });
+  if (!checkedFile.source.includes("<StatusChip")) {
+    failures.push({ message: `${checkedFile.label} has no frontier status chips` });
   }
 
-  if (file.source.includes("fonts.googleapis.com")) {
-    failures.push({ message: `${file.relativePath} references remote Google Fonts` });
+  if (checkedFile.source.includes("fonts.googleapis.com")) {
+    failures.push({ message: `${checkedFile.relativePath} references remote Google Fonts` });
   }
 
   for (const phrase of PRINT_UNFRIENDLY_PHRASES) {
-    if (file.source.includes(phrase)) {
-      failures.push({ message: `${file.relativePath} contains print-unfriendly phrase: ${phrase}` });
+    if (checkedFile.source.includes(phrase)) {
+      failures.push({ message: `${checkedFile.relativePath} contains print-unfriendly phrase: ${phrase}` });
     }
   }
 
-  if (file.requiresTitle) {
-    checkMainTitle(file, failures);
+  if (checkedFile.requiresTitle) {
+    checkMainTitle(checkedFile, failures);
   }
 
-  checkStaticAlternates(file, failures);
-  checkStatusChipLabels(file, failures);
-  checkUnstyledStatusPhrases(file, failures);
-  checkRedundantTermTips(file, failures);
-  checkUnsupportedMdxWrappers(file, failures);
-  checkRawInteractiveMarkup(file, failures);
-  checkArtifactComponentContract(file, failures);
+  checkStaticAlternates(checkedFile, failures);
+  checkStatusChipLabels(checkedFile, failures);
+  checkUnstyledStatusPhrases(checkedFile, failures);
+  checkRedundantTermTips(checkedFile, failures);
+  checkUnsupportedMdxWrappers(checkedFile, failures);
+  checkRawInteractiveMarkup(checkedFile, failures);
+  checkArtifactComponentContract(checkedFile, failures);
 }
 
 function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheckFailure[]): void {

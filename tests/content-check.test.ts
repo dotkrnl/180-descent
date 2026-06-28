@@ -90,6 +90,33 @@ describe("content check", () => {
     await expect(checkContent({ root })).resolves.toEqual([]);
   });
 
+  it("does not treat fenced examples as content markers or raw markup", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        "# Fixture Day",
+        "```mdx",
+        '<StatusChip status={"ok"} label={"established"} />',
+        "<Sources></Sources>",
+        "<script>alert('example')</script>",
+        "{% example %}",
+        "```"
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "EN 001-fixture has no sources section"
+      },
+      {
+        message: "EN 001-fixture has no frontier status chips"
+      }
+    ]);
+  });
+
   it("reports appendix web panels without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {
