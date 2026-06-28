@@ -22,8 +22,8 @@ describe("lesson MDX components", () => {
     })).toContain('aria-label="显示说明"');
   });
 
-  it("renders invalid author math as source text", () => {
+  it("fails invalid author math", () => {
     expect(renderMathHtml("P(H \\mid E)", true)).toContain("katex-display");
-    expect(renderMathHtml("\\notacommand", false)).toContain("notacommand");
+    expect(() => renderMathHtml("\\notacommand", false)).toThrow("Undefined control sequence");
   });
 });
