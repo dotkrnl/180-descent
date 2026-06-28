@@ -5,15 +5,6 @@ interface ErrorListOptions {
   footer?: string | readonly string[];
 }
 
-export async function runCli(action: () => Promise<void>): Promise<void> {
-  try {
-    await action();
-  } catch (error) {
-    console.error(error);
-    process.exit(1);
-  }
-}
-
 export function exitOnErrors<T>(
   errors: readonly T[],
   format: (error: T) => string,
