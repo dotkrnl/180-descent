@@ -151,14 +151,15 @@ async function checkEpubEdition(root: string, edition: EpubEdition, errors: stri
   }
 
   const xmlFiles = Object.keys(zip.files).filter((file) => /\.(xhtml|opf|xml)$/i.test(file));
+  const xmlTexts = new Map<string, string>();
+  for (const name of xmlFiles) {
+    const entry = zip.file(name);
+    if (entry) xmlTexts.set(name, await entry.async("string"));
+  }
   const xmlTemp = await mkdtemp(path.join(os.tmpdir(), "180-epub-xml-"));
   try {
-    for (const name of xmlFiles) {
-      const entry = zip.file(name);
-      if (!entry) continue;
-
-      const text = await entry.async("string");
-      inspectEpubXml(edition.file, name, text, zip, errors);
+    for (const [name, text] of xmlTexts) {
+      inspectEpubXml(edition.file, name, text, zip, xmlTexts, errors);
       await lintXmlFile(edition.file, name, text, xmlTemp, errors);
     }
   } finally {
@@ -217,7 +218,14 @@ function checkDayOneAppendixContent(edition: EpubEdition, searchableDayOne: stri
   }
 }
 
-function inspectEpubXml(edition: string, name: string, text: string, zip: JSZip, errors: string[]): void {
+function inspectEpubXml(
+  edition: string,
+  name: string,
+  text: string,
+  zip: JSZip,
+  xmlTexts: Map<string, string>,
+  errors: string[]
+): void {
   if (/<script\b/i.test(text)) {
     errors.push(`${edition} contains script tag in ${name}`);
   }
@@ -230,17 +238,17 @@ function inspectEpubXml(edition: string, name: string, text: string, zip: JSZip,
   if (/reference table/i.test(text) || /参考表/.test(text)) {
     errors.push(`${edition} contains generic reference-table label in ${name}`);
   }
-  for (const match of text.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/gi)) {
-    const src = match[1];
+  for (const match of text.matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)) {
+    const src = decodeXmlEntities(match[2]);
     if (/^(?:\/|https?:)/i.test(src)) {
       errors.push(`${edition} contains non-local EPUB image src in ${name}: ${src}`);
     } else if (src.startsWith("images/") && !zip.file(`OEBPS/${src}`)) {
       errors.push(`${edition} references missing EPUB image in ${name}: ${src}`);
     }
   }
-  for (const match of text.matchAll(/<a\b[^>]*\bhref="([^"]+)"/gi)) {
-    const href = match[1];
-    if (!href || href.startsWith("#")) continue;
+  for (const match of text.matchAll(/<a\b[^>]*\bhref=(["'])(.*?)\1/gi)) {
+    const href = decodeXmlEntities(match[2]);
+    if (!href || href === "#") continue;
     if (/^(?:https?:|mailto:|tel:)/i.test(href)) continue;
     if (href.startsWith("/") || href.startsWith("//")) {
       errors.push(`${edition} contains non-local EPUB link in ${name}: ${href}`);
@@ -248,9 +256,17 @@ function inspectEpubXml(edition: string, name: string, text: string, zip: JSZip,
     }
 
     const hrefPath = href.split(/[?#]/)[0];
-    const zipPath = path.posix.normalize(path.posix.join(path.posix.dirname(name), hrefPath));
+    const zipPath = hrefPath
+      ? path.posix.normalize(path.posix.join(path.posix.dirname(name), hrefPath))
+      : name;
     if (!zipPath.startsWith("OEBPS/") || !zip.file(zipPath)) {
       errors.push(`${edition} references missing EPUB link target in ${name}: ${href}`);
+      continue;
+    }
+
+    const fragment = hrefFragment(href);
+    if (fragment && !epubXmlIds(xmlTexts.get(zipPath) ?? "").has(fragment)) {
+      errors.push(`${edition} references missing EPUB link anchor in ${name}: ${href}`);
     }
   }
   const namedEntities = text.match(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)[A-Za-z][A-Za-z0-9]+;/g);
@@ -263,6 +279,22 @@ function inspectEpubXml(edition: string, name: string, text: string, zip: JSZip,
   if (orphanSvgTags.length) {
     errors.push(`${edition} contains SVG child tags outside <svg> in ${name}: ${[...new Set(orphanSvgTags)].join(", ")}`);
   }
+}
+
+function hrefFragment(href: string): string | null {
+  const hashIndex = href.indexOf("#");
+  if (hashIndex < 0) return null;
+  const fragment = href.slice(hashIndex + 1);
+  if (!fragment) return null;
+  try {
+    return decodeURIComponent(fragment);
+  } catch {
+    return fragment;
+  }
+}
+
+function epubXmlIds(text: string): Set<string> {
+  return new Set([...text.matchAll(/\sid=(["'])(.*?)\1/g)].map((match) => decodeXmlEntities(match[2])));
 }
 
 async function lintXmlFile(edition: string, name: string, text: string, xmlTemp: string, errors: string[]): Promise<void> {
