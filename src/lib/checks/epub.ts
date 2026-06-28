@@ -14,10 +14,6 @@ interface EpubCheckOptions {
   root: string;
 }
 
-interface EpubCheckResult {
-  errors: string[];
-}
-
 interface BaseEpubEdition {
   file: string;
   appendixPatterns: RegExp[];
@@ -44,7 +40,7 @@ const BOOK_REQUIRED = [
   "OEBPS/day-002.xhtml"
 ];
 
-export async function checkEpub(options: EpubCheckOptions): Promise<EpubCheckResult> {
+export async function checkEpub(options: EpubCheckOptions): Promise<string[]> {
   const errors: string[] = [];
   const editions = await collectEpubEditions(options.root);
 
@@ -52,7 +48,7 @@ export async function checkEpub(options: EpubCheckOptions): Promise<EpubCheckRes
     await checkEpubEdition(options.root, edition, errors);
   }
 
-  return { errors };
+  return errors;
 }
 
 function decodeXmlEntities(value: string): string {

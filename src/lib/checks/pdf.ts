@@ -14,10 +14,6 @@ interface PdfCheckOptions {
   root: string;
 }
 
-interface PdfCheckResult {
-  errors: string[];
-}
-
 interface PdfInfo {
   data: Buffer;
   pdf: PDFDocument;
@@ -26,9 +22,9 @@ interface PdfInfo {
 
 type TextPatternCheck = [label: string, text: string, pattern: RegExp];
 
-export async function checkPdf(options: PdfCheckOptions): Promise<PdfCheckResult> {
+export async function checkPdf(options: PdfCheckOptions): Promise<string[]> {
   const checker = new PdfChecker(options);
-  return { errors: await checker.run() };
+  return checker.run();
 }
 
 function hasPdfHeader(data: Buffer): boolean {
