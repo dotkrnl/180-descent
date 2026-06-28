@@ -22,7 +22,7 @@ interface MathCheckResult {
 const RAW_SOURCE_PATTERNS = [
   { pattern: /class="formula"[^>]*>[\s\S]*?<p\s+class="eq"/, label: "raw .formula .eq (use <MathBlock> instead)" },
   { pattern: /<p\s+class="formula"><code>/, label: "raw <p class=formula><code> (use <MathBlock> instead)" },
-  { pattern: /\\\[.*\\\]/, label: "raw \\[ \\] delimiters (use <MathBlock> instead)" },
+  { pattern: /\\\[[\s\S]*?\\\]/, label: "raw \\[ \\] delimiters (use <MathBlock> instead)" },
   { pattern: /<text[^>]*>[^<]*\\\(/, label: "KaTeX delimiter inside SVG text (SVG text cannot render KaTeX)" }
 ] as const;
 

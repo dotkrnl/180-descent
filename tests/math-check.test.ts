@@ -21,6 +21,24 @@ describe("math check", () => {
     ]);
   });
 
+  it("reports multiline raw display math delimiters in MDX content", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), [
+      "\\[",
+      "x + y",
+      "\\]"
+    ].join("\n"));
+
+    const result = await checkMath({ root });
+
+    expect(result.failures).toEqual([
+      {
+        file: "src/content/days/001-fixture/en.mdx",
+        label: "raw \\[ \\] delimiters (use <MathBlock> instead)"
+      }
+    ]);
+  });
+
   it("ignores raw math examples inside fenced code blocks", async () => {
     const root = await createFixtureRoot();
     await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), [
