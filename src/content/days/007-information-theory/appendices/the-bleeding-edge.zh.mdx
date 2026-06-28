@@ -39,7 +39,7 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 
 ### 七条前沿线索，同一套问题
 
-<PanelNote>信息物理的近期前沿延伸出七条活跃线索。颜色只表示证据状态：青色代表已确立，琥珀色代表初露曙光；虚线边框表示目前主要停留在理论模型中，尚无实验检验。</PanelNote>
+<PanelNote>信息物理的近期前沿延伸出七条活跃线索。颜色只表示证据状态：青色代表已确立，琥珀色代表有前景；虚线边框表示目前主要停留在理论模型中，尚无实验检验。</PanelNote>
 
 <InformationPhysicsFrontierMap locale="zh" />
 </Panel>
@@ -133,17 +133,17 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 
 <Claim>
 <ClaimHeader label="硬件 01">
-<StatusChip status={"hint"} label={"同行评审概念验证"} printLabel={"待审"} />
+<StatusChip status={"hint"} label={"同行评审概念验证"} printLabel={"有前景"} />
 </ClaimHeader>
 ### Normal Computing 的随机处理单元
 
 梅兰森、阿布·哈特尔、艾弗、多纳泰拉、戈登（Melanson, Abu Khater, Aifer, Donatella, Gordon）及其同事在《自然·通讯》（Nature Communications，16: 3757，2025 年 4 月）上发表了《用于人工智能应用的热力学计算系统》。它描述了一个随机处理单元（SPU）的原型：一块印制电路板上集成了八个完全耦合的模拟 RLC 振荡器节点，通过让该耦合系统达到热平衡，来进行高斯采样和矩阵求逆。一篇配套的理论论文（npj Unconventional Computing，2024 年）将线性代数原语映射到了热力学平衡采样上，并声称渐进加速比与矩阵维度呈线性比例关系。
 
-注意事项：这只是一个「八节点原型」。在实际工作负载中，相比于现代 GPU，它在端到端耗时或能耗上的优势「尚未得到证实」。理论虽然优雅且通过了同行评审，硬件也切实存在，但其性能宣称仍有待大规模验证。<StatusChip status={"hint"} label={"初露曙光"} />
+注意事项：这只是一个「八节点原型」。在实际工作负载中，相比于现代 GPU，它在端到端耗时或能耗上的优势「尚未得到证实」。理论虽然优雅且通过了同行评审，硬件也切实存在，但其性能宣称仍有待大规模验证。<StatusChip status={"hint"} label={"有前景"} />
 </Claim>
 <Claim>
 <ClaimHeader label="硬件 02">
-<StatusChip status={"bad"} label={"公司单方报告 · 未经证实"} printLabel={"待审"} />
+<StatusChip status={"bad"} label={"公司单方报告 · 未经证实"} printLabel={"有争议／炒作风险"} />
 </ClaimHeader>
 ### Extropic 的热力学采样单元
 
@@ -152,7 +152,7 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 <Aside>
 <BlockTitle>何时才能改变评级标签</BlockTitle>
 
-要将热力学计算的标签从 <StatusChip status={"hint"} label={"初露曙光"} /> 升级为 <StatusChip status={"ok"} label={"已确立"} />，必须有「独立的、经同行评审的基准测试」，证明其在实际机器学习工作负载上——而非仅在孤立的计算原语中——相对于现代 GPU 具有端到端的优势（无论是实际运行时间还是能耗）。一份预印本论文（arXiv:2503.09980，2025 年）指出，模拟拟静态推理在原理上可以可逆地进行（不存在兰道尔能耗下限），而模型训练则依然存在基础的能耗下限。其物理学逻辑是自洽的，但工程实现仍处于极早期阶段。
+要将热力学计算的标签从 <StatusChip status={"hint"} label={"有前景"} /> 升级为 <StatusChip status={"ok"} label={"已确立"} />，必须有「独立的、经同行评审的基准测试」，证明其在实际机器学习工作负载上——而非仅在孤立的计算原语中——相对于现代 GPU 具有端到端的优势（无论是实际运行时间还是能耗）。一份预印本论文（arXiv:2503.09980，2025 年）指出，模拟拟静态推理在原理上可以可逆地进行（不存在兰道尔能耗下限），而模型训练则依然存在基础的能耗下限。其物理学逻辑是自洽的，但工程实现仍处于极早期阶段。
 
 </Aside>
 
@@ -167,7 +167,7 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 
 ### 多体引擎
 
-Chor 等人（2023）将西拉德引擎从单粒子系统扩展到多体胶体悬浮液，利用集体数量涨落来提取有用功。后续的一项工作（arXiv:2512.01942，2025 年 12 月预印本）描述了一种「活塞式信息引擎」，它纯粹通过条件测量从平衡态热浴中收集功——这相当于在群体层面上实现麦克斯韦妖。<StatusChip status={"ok"} label={"PRResearch 论文已确立"} printLabel={"已确立"} /> <StatusChip status={"hint"} label={"活塞引擎预印本待审"} printLabel={"待审"} />
+Chor 等人（2023）将西拉德引擎从单粒子系统扩展到多体胶体悬浮液，利用集体数量涨落来提取有用功。后续的一项工作（arXiv:2512.01942，2025 年 12 月预印本）描述了一种「活塞式信息引擎」，它纯粹通过条件测量从平衡态热浴中收集功——这相当于在群体层面上实现麦克斯韦妖。<StatusChip status={"ok"} label={"PRResearch 论文已确立"} printLabel={"已确立"} /> <StatusChip status={"hint"} label={"活塞引擎预印本 · 有前景"} printLabel={"有前景"} />
 
 ### 量子引擎为量子电池充电
 
@@ -175,7 +175,7 @@ Chor 等人（2023）将西拉德引擎从单粒子系统扩展到多体胶体�
 
 ### 自主麦克斯韦妖
 
-至少从 Koski 及其同事 2015 年的单电子实验开始，自主麦克斯韦妖就已经被实验展示。在这类系统中，测量和反馈由器件内部实现，而不是由外部定时控制器执行。但这并不意味着器件不使用非平衡资源，也不意味着它不产生熵；完整分析仍必须包含其能量与熵资源。较新的量子点整流器（PRR，2019 年）、随机重置麦克斯韦妖（PRR，2023 年）以及基于晶体管的麦克斯韦妖（PRB，2025 年）则把这种设计模式继续推向纳米尺度能量收集。<StatusChip status={"hint"} label={"初露曙光——单体实现已确立"} printLabel={"已确立"} />
+至少从 Koski 及其同事 2015 年的单电子实验开始，自主麦克斯韦妖就已经被实验展示。在这类系统中，测量和反馈由器件内部实现，而不是由外部定时控制器执行。但这并不意味着器件不使用非平衡资源，也不意味着它不产生熵；完整分析仍必须包含其能量与熵资源。较新的量子点整流器（PRR，2019 年）、随机重置麦克斯韦妖（PRR，2023 年）以及基于晶体管的麦克斯韦妖（PRB，2025 年）则把这种设计模式继续推向纳米尺度能量收集。<StatusChip status={"hint"} label={"有前景——单体实现已确立"} printLabel={"有前景"} />
 
 ### 将真实的分子马达作为麦克斯韦妖
 
@@ -190,7 +190,7 @@ Chor 等人（2023）将西拉德引擎从单粒子系统扩展到多体胶体�
 
 Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自发对称性破缺，在 D-Wave Advantage 量子退火器上同时擦除了 256 个量子比特。这一集体翻转实现了接近 <MathInline latex={String.raw`k_B T \ln 2`} /> 的单比特擦除耗散，成功率达 ~99.9%，而单比特作用量（能量 × 时间）低至 <MathInline latex={String.raw`10^{-22}`} /> erg·s——其速度和能效都极其惊人。其关键在于：协同效应使系统能够集体越过势垒，而不是逐个比特地跨越。<StatusChip status={"ok"} label={"已确立"} />
 
-另一个独立的理论项目则探索了<Term>辅助系统协助擦除</Term>（ancilla-assisted erasure，arXiv:2402.15812，2024 年），即通过引入一个辅助量子系统来转移存储器中的熵，从而在特定的运行状态下，向局部热浴中释放「少于」 <MathInline latex={String.raw`k_B T \ln 2`} /> 的热量。作者强调，这并没有违反第二定律——包括辅助系统在内的总熵依然增加——但局部发热量确实能降到教科书上的经典下限之下。这为超低耗散量子计算的研究指引了方向，而非所谓的免费午餐。<StatusChip status={"hint"} label={"初露曙光——特定机制下适用，预印本"} printLabel={"初露曙光"} />
+另一个独立的理论项目则探索了<Term>辅助系统协助擦除</Term>（ancilla-assisted erasure，arXiv:2402.15812，2024 年），即通过引入一个辅助量子系统来转移存储器中的熵，从而在特定的运行状态下，向局部热浴中释放「少于」 <MathInline latex={String.raw`k_B T \ln 2`} /> 的热量。作者强调，这并没有违反第二定律——包括辅助系统在内的总熵依然增加——但局部发热量确实能降到教科书上的经典下限之下。这为超低耗散量子计算的研究指引了方向，而非所谓的免费午餐。<StatusChip status={"hint"} label={"有前景——特定机制下适用，预印本"} printLabel={"有前景"} />
 
 </ContentSection>
 
@@ -209,7 +209,7 @@ Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自�
 
 对此最权威的综述是 Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini 所著的《霍金辐射的熵》（"The entropy of Hawking radiation"，Reviews of Modern Physics 93, 035002, 2021 年）。<StatusChip status={"ok"} label={"作为模型设定中的理论成果已确立"} printLabel={"已确立"} />
 
-注意事项：目前「没有任何实验或天文观测的测试」。该计算完全依赖于特定的理论框架，尚不清楚它是否适用于现实中的四维、非 AdS 时空。这一结论在数学上与该领域的其他定理一样坚实，但目前仍缺乏实验或天文观测检验。<StatusChip status={"hint"} label={"尚无实验检验"} printLabel={"待审"} />
+注意事项：目前「没有任何实验或天文观测的测试」。该计算完全依赖于特定的理论框架，尚不清楚它是否适用于现实中的四维、非 AdS 时空。这一结论在数学上与该领域的其他定理一样坚实，但目前仍缺乏实验或天文观测检验。<StatusChip status={"hint"} label={"尚无实验检验"} printLabel={"有前景"} />
 
 </ContentSection>
 

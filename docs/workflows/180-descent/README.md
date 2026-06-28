@@ -290,61 +290,51 @@ line-by-line English.
   localized props or localized component data when needed.
 - Add Chinese-specific styling only through existing SCSS modules, especially
   `src/assets/scss/content/_zh.scss`, unless a shared style is more appropriate.
-- Keep terminology consistent across existing Chinese days.
+- Keep terminology consistent across existing Chinese days. Before any Chinese
+  translation or review pass, read
+  `docs/workflows/180-descent/zh-terminology-glossary.md` and treat it as the
+  authoritative glossary.
 - Prefer natural Chinese rhythm and punctuation. Use Chinese quotes for quoted
   propositions and titles where appropriate.
 - Avoid dense emphasis in Chinese prose. Use terminology styling and sparse
   color emphasis only when it clarifies structure.
 - Review AI edits manually before accepting: factual accuracy, terminology,
   formatting, component parity, and artifact behavior.
-- Use stable Chinese status labels for frontier claims: `已确立`,
-  `有前景`, and `有争议／炒作风险`. Call the tool `前沿校准器`;
-  avoid mixing in alternate names.
-- Keep the workflow's Chinese terminology glossary below authoritative for
-  model-assisted translation and review. If a repeated course term is missing,
-  add it before accepting a translation pass.
+- If a repeated course term is missing, newly standardized, or found
+  inconsistent, update `docs/workflows/180-descent/zh-terminology-glossary.md`
+  in the same change and fix the affected content where practical.
 - For Chinese typography, prefer `「」` for propositions, terms as language
   objects, and short emphasis; use Chinese book title marks for Chinese titles;
   keep original English paper titles in italics or plain Latin text rather than
   wrapping them in multiple quote systems. Preserve exact source titles in
   reference lists.
 - When a technical English word has multiple near-synonyms, do not collapse
-  distinct concepts into one Chinese term. For example, in physics contexts
-  `exceptional point` is `例外点`, `odd elasticity` is `奇弹性`, `stigmergy` is
-  `痕迹协同`, and an order parameter is `序参量`.
+  distinct concepts into one Chinese term. Follow the glossary for status
+  labels, frontier-method names, and technical terms.
 
 - `FormatOnly` static alternatives for web-only interactives must include the
   context that lived inside the interactive component: a localized title, the
   object being shown, and enough rules or captions for PDF/EPUB readers to
   understand the artifact without the live widget.
 
-### Chinese Terminology Glossary
-
-| English | Standard Chinese | Notes |
-| --- | --- | --- |
-| hype filter | 前沿校准器 | Course-wide tool name for judging frontier claims. Do not translate as `炒作过滤器`. |
-| established | 已确立 | Frontier/status label. |
-| promising | 有前景 | Frontier/status label. |
-| contested / hype risk | 有争议／炒作风险 | Frontier/status label; keep chip labels short. |
-
 For a normal day, create or update `src/content/days/###-slug/zh.mdx` and any
 Chinese locale fields in `day.yaml`, then run Kimi on the paired English and
 Chinese source files:
 
 ```sh
-rtk opencode run --dangerously-skip-permissions -m kimi-for-coding/k2p7 "请以 yolo 模式直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。所有仓库 shell 命令都必须使用 rtk 前缀。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法，并保留和翻译所有说明性注释。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
+rtk opencode run --dangerously-skip-permissions -m kimi-for-coding/k2p7 "请以 yolo 模式直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。所有仓库 shell 命令都必须使用 rtk 前缀。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法，并保留和翻译所有说明性注释。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
 ```
 
 After manually reviewing Kimi edits, run Gemini as the second pass:
 
 ```sh
-rtk agy --dangerously-skip-permissions --model "Gemini 3.5 Flash (High)" --print-timeout 20m -p "请以 yolo 模式直接在本仓库中审核并润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。重点检查 Kimi 初稿的翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+rtk agy --dangerously-skip-permissions --model "Gemini 3.5 Flash (High)" --print-timeout 20m -p "请以 yolo 模式直接在本仓库中审核并润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。重点检查 Kimi 初稿的翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件，以及需要 Codex 决定的遗留问题。"
 ```
 
 After manually reviewing Gemini edits, run GLM as the final consistency pass:
 
 ```sh
-rtk opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.1 "请以 yolo 模式直接在本仓库中润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。所有仓库 shell 命令都必须使用 rtk 前缀。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留 imports、component props、manifest/front matter、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+rtk opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.1 "请以 yolo 模式直接在本仓库中润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。所有仓库 shell 命令都必须使用 rtk 前缀。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留 imports、component props、manifest/front matter、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
 ```
 
 For large appendices, use temporary files instead of asking an agent to
