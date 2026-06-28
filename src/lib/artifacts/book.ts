@@ -2,11 +2,6 @@ import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import type { Locale } from "@lib/schemas/day";
 
-interface ArtifactBook {
-  locale: Locale;
-  days: ArtifactBookDay[];
-}
-
 export interface ArtifactBookDay {
   day: number;
   path: string;
@@ -27,9 +22,12 @@ interface ArtifactBookAppendix {
   bodySource: string;
 }
 
-async function loadArtifactBook(root: string, locale: Locale): Promise<ArtifactBook> {
+export async function loadArtifactBookDays(
+  root: string,
+  locale: Locale
+): Promise<ArtifactBookDay[]> {
   const registry = await loadContentRegistry({ daysDir: contentDaysDir(root) });
-  const days = registry.days
+  return registry.days
     .map((day): ArtifactBookDay => {
       const localeEntry = day.manifest.locales[locale];
       const body = day.bodies[locale];
@@ -63,13 +61,4 @@ async function loadArtifactBook(root: string, locale: Locale): Promise<ArtifactB
       };
     })
     .sort((a, b) => a.day - b.day);
-
-  return { locale, days };
-}
-
-export async function loadArtifactBookDays(
-  root: string,
-  locale: Locale
-): Promise<ArtifactBookDay[]> {
-  return (await loadArtifactBook(root, locale)).days;
 }
