@@ -1,4 +1,4 @@
-import { lstat, readlink } from "node:fs/promises";
+import { lstat, readlink, stat } from "node:fs/promises";
 import path from "node:path";
 import { toError } from "@lib/errors";
 
@@ -27,6 +27,15 @@ export async function checkProjectWorkflow(root: string): Promise<WorkflowCheckF
           path: WORKFLOW_SKILL_PATH,
           reason: `Expected symlink target ${WORKFLOW_TARGET}, got ${target}`
         });
+      } else {
+        try {
+          await stat(path.join(root, WORKFLOW_SKILL_PATH));
+        } catch (error) {
+          failures.push({
+            path: WORKFLOW_TARGET,
+            reason: toError(error).message
+          });
+        }
       }
     }
   } catch (error) {
