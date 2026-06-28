@@ -40,10 +40,14 @@ export function sitePathForUrlPath(siteDir: string, urlPath: string): string {
 }
 
 export function sitePathForHref(siteDir: string, siteUrl: string, href: string): string {
-  const base = new URL(siteUrl);
-  const parsed = new URL(href, base);
-  if (parsed.origin !== base.origin) return "";
-  return sitePathForUrlPath(siteDir, parsed.pathname);
+  try {
+    const base = new URL(siteUrl);
+    const parsed = new URL(href, base);
+    if (parsed.origin !== base.origin) return "";
+    return sitePathForUrlPath(siteDir, parsed.pathname);
+  } catch {
+    return "";
+  }
 }
 
 export function siteFileForUrlPath(siteDir: string, urlPath: string): string {

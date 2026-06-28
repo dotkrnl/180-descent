@@ -32,5 +32,7 @@ describe("static site URL helpers", () => {
     expect(sitePathForHref(siteDir, siteUrl, "https://example.com/social.png")).toBe("");
     expect(sitePathForHref(siteDir, siteUrl, "HTTPS://example.com/social.png")).toBe("");
     expect(sitePathForHref(siteDir, siteUrl, "//example.com/social.png")).toBe("");
+    expect(sitePathForHref(siteDir, siteUrl, "http://[")).toBe("");
+    expect(sitePathForHref(siteDir, "not a url", "/favicon.ico")).toBe("");
   });
 });
