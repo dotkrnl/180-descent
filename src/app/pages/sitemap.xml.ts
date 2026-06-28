@@ -25,11 +25,10 @@ export async function GET() {
       ...localizedEntries((locale) => dayUrl(locale, dayPath))
     ])
   ];
-  const lastmod = new Date().toISOString().slice(0, 10);
   const body = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
-    ...entries.map((entry) => sitemapUrl(entry, book.siteUrl, lastmod)),
+    ...entries.map((entry) => sitemapUrl(entry, book.siteUrl)),
     "</urlset>"
   ].join("\n");
 
@@ -47,7 +46,7 @@ function localizedEntries(pathFor: (locale: "en" | "zh") => string): SitemapEntr
   }));
 }
 
-function sitemapUrl(entry: SitemapEntry, siteUrl: string, lastmod: string): string {
+function sitemapUrl(entry: SitemapEntry, siteUrl: string): string {
   const loc = absoluteUrl(entry.path, siteUrl);
   const alternate = entry.alternate ? absoluteUrl(entry.alternate, siteUrl) : "";
   const isZh = entry.path.startsWith("/zh/");
@@ -56,7 +55,6 @@ function sitemapUrl(entry: SitemapEntry, siteUrl: string, lastmod: string): stri
   return [
     "  <url>",
     `    <loc>${escapeXml(loc)}</loc>`,
-    `    <lastmod>${lastmod}</lastmod>`,
     entry.alternate ? `    <xhtml:link rel="alternate" hreflang="en" href="${escapeXml(enUrl)}" />` : "",
     entry.alternate ? `    <xhtml:link rel="alternate" hreflang="zh-Hans" href="${escapeXml(zhUrl)}" />` : "",
     entry.alternate ? `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(enUrl)}" />` : "",
