@@ -4,7 +4,7 @@ import { chromium } from "playwright";
 import sharp from "sharp";
 import { walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { urlForHtml } from "@lib/static-site/url";
+import { urlForSiteFile } from "@lib/static-site/url";
 
 interface VisualCheckOptions {
   root: string;
@@ -70,7 +70,7 @@ export async function checkVisual(options: VisualCheckOptions): Promise<VisualCh
   const outDir = options.outDir ?? path.join(options.root, "tmp/visual-qa");
   const reportPath = path.join(outDir, "report.json");
   const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] }))
-    .map((file) => urlForHtml(builtSiteDir, file))
+    .map((file) => urlForSiteFile(builtSiteDir, file))
     .sort();
   const browser = await chromium.launch();
   const errors: string[] = [];

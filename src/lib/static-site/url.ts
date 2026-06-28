@@ -23,9 +23,9 @@ export function contentType(filePath: string): string {
   return MIME_TYPES.get(path.extname(filePath).toLowerCase()) || "application/octet-stream";
 }
 
-export function urlForHtml(siteDir: string, filePath: string): string {
+export function urlForSiteFile(siteDir: string, filePath: string): string {
   if (!isPathInside(siteDir, filePath)) {
-    throw new Error(`HTML file is outside site directory: ${filePath}`);
+    throw new Error(`Site file is outside site directory: ${filePath}`);
   }
   const rel = toPosixRelative(siteDir, filePath);
   if (rel === "index.html") return "/";

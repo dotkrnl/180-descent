@@ -5,7 +5,7 @@ import path from "node:path";
 import { chromium } from "playwright";
 import { walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { contentType, sitePathForUrlPath, urlForHtml } from "@lib/static-site/url";
+import { contentType, sitePathForUrlPath, urlForSiteFile } from "@lib/static-site/url";
 import { exitOnErrors } from "./support";
 
 const MIN_PANEL_TITLE_FONT_SIZE = 13;
@@ -28,7 +28,7 @@ interface RenderedTypeFailure {
 const root = process.cwd();
 const builtSiteDir = siteDir(root);
 const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] }))
-  .map((file) => urlForHtml(builtSiteDir, file))
+  .map((file) => urlForSiteFile(builtSiteDir, file))
   .sort();
 const server = createServer(async (request, response) => {
   try {

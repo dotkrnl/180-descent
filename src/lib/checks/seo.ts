@@ -5,7 +5,7 @@ import { readBookData } from "@lib/data/book";
 import { toError } from "@lib/errors";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { siteFileForUrlPath, sitePathForHref, urlForHtml } from "@lib/static-site/url";
+import { siteFileForUrlPath, sitePathForHref, urlForSiteFile } from "@lib/static-site/url";
 
 interface SeoCheckOptions {
   root: string;
@@ -46,7 +46,7 @@ async function checkHtml(
   errors: string[],
   checkedManifests: Set<string>
 ): Promise<void> {
-  const url = urlForHtml(siteDir, filePath);
+  const url = urlForSiteFile(siteDir, filePath);
   const html = await readFile(filePath, "utf8");
   const $ = load(html);
 

@@ -1,16 +1,16 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { siteFileForUrlPath, sitePathForHref, sitePathForUrlPath, urlForHtml } from "@lib/static-site/url";
+import { siteFileForUrlPath, sitePathForHref, sitePathForUrlPath, urlForSiteFile } from "@lib/static-site/url";
 
 describe("static site URL helpers", () => {
-  it("maps built HTML files to canonical route URLs", () => {
+  it("maps built site files to canonical URLs", () => {
     const siteDir = path.join(path.sep, "repo", "_site");
 
-    expect(urlForHtml(siteDir, path.join(siteDir, "index.html"))).toBe("/");
-    expect(urlForHtml(siteDir, path.join(siteDir, "zh", "index.html"))).toBe("/zh/");
-    expect(urlForHtml(siteDir, path.join(siteDir, "robots.txt"))).toBe("/robots.txt");
-    expect(() => urlForHtml(siteDir, path.join(path.sep, "repo", "_site-copy", "index.html"))).toThrow(
-      "HTML file is outside site directory:"
+    expect(urlForSiteFile(siteDir, path.join(siteDir, "index.html"))).toBe("/");
+    expect(urlForSiteFile(siteDir, path.join(siteDir, "zh", "index.html"))).toBe("/zh/");
+    expect(urlForSiteFile(siteDir, path.join(siteDir, "robots.txt"))).toBe("/robots.txt");
+    expect(() => urlForSiteFile(siteDir, path.join(path.sep, "repo", "_site-copy", "index.html"))).toThrow(
+      "Site file is outside site directory:"
     );
   });
 

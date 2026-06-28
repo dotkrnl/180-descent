@@ -6,7 +6,7 @@ import { chromium } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
 import { walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { contentType, siteFileForUrlPath, urlForHtml } from "@lib/static-site/url";
+import { contentType, siteFileForUrlPath, urlForSiteFile } from "@lib/static-site/url";
 
 interface AccessibilityCheckOptions {
   root: string;
@@ -33,7 +33,7 @@ async function checkStaticAccessibility(options: AccessibilityCheckOptions): Pro
   const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
 
   for (const filePath of htmlFiles) {
-    const url = urlForHtml(builtSiteDir, filePath);
+    const url = urlForSiteFile(builtSiteDir, filePath);
     const html = await readFile(filePath, "utf8");
     const $ = load(html);
 
@@ -99,7 +99,7 @@ async function checkStaticAccessibility(options: AccessibilityCheckOptions): Pro
     }
   }
 
-  const axePages = htmlFiles.map((filePath) => urlForHtml(builtSiteDir, filePath));
+  const axePages = htmlFiles.map((filePath) => urlForSiteFile(builtSiteDir, filePath));
 
   return { errors, axePages };
 }
