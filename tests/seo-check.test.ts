@@ -59,6 +59,16 @@ describe("seo check", () => {
       "/site.webmanifest: icon does not exist locally (https://example.com/icon-192.png)"
     ]);
   });
+
+  it("reports invalid web manifests without throwing", async () => {
+    const root = await createSiteRoot();
+    await writeFile(path.join(root, "_site/index.html"), indexHtml());
+    await writeFile(path.join(root, "_site/site.webmanifest"), "{");
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors[0]).toMatch(/^\/site\.webmanifest: invalid web manifest JSON/);
+  });
 });
 
 async function createSiteRoot(): Promise<string> {

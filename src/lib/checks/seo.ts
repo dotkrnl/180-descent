@@ -114,11 +114,15 @@ async function checkRobots(siteDir: string, siteUrl: string, errors: string[]): 
 
 async function checkManifestIcons(siteDir: string, siteUrl: string, href: string, errors: string[]): Promise<void> {
   const manifestPath = sitePathForHref(siteDir, siteUrl, href);
-  if (!await pathExists(manifestPath)) return;
+  if (!manifestPath || !await pathExists(manifestPath)) return;
 
-  const manifest = JSON.parse(await readFile(manifestPath, "utf8")) as {
-    icons?: Array<{ src?: unknown }>;
-  };
+  let manifest: { icons?: Array<{ src?: unknown }> };
+  try {
+    manifest = JSON.parse(await readFile(manifestPath, "utf8")) as { icons?: Array<{ src?: unknown }> };
+  } catch (error) {
+    errors.push(`${href}: invalid web manifest JSON (${error instanceof Error ? error.message : String(error)})`);
+    return;
+  }
   const icons = manifest.icons ?? [];
   if (!icons.length) {
     errors.push(`${href}: missing icons`);
