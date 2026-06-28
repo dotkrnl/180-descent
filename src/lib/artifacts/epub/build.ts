@@ -6,7 +6,7 @@ import JSZip from "jszip";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { bookArtifactName, dayArtifactName, downloadsDir } from "@lib/artifacts/downloads";
 import { compileCss } from "@lib/assets/css";
-import { stripUnbundledKatexTtfSources } from "@lib/assets/fonts";
+import { prepareCjkFonts, prepareKatexAssets, prepareLatinFonts, stripUnbundledKatexTtfSources } from "@lib/assets/fonts";
 import { fontsDir, katexFontsDir } from "@lib/assets/paths";
 import { readBookData, type HumanEditorData } from "@lib/data/book";
 import type { Locale } from "@lib/schemas/day";
@@ -78,6 +78,9 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
   const root = options.root;
   const book = await readBookData(root);
 
+  await prepareLatinFonts({ root });
+  await prepareCjkFonts({ root });
+  await prepareKatexAssets({ root });
   await mkdir(downloadsDir(root), { recursive: true });
 
   await buildEpub({
