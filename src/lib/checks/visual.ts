@@ -13,7 +13,7 @@ interface VisualCheckOptions {
   outDir?: string;
 }
 
-export interface VisualCheckCliArgs {
+interface VisualCheckCliArgs {
   baseUrl?: string;
   compareUrl?: string;
   outDir?: string;

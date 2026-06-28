@@ -4,7 +4,7 @@ import http, { type Server } from "node:http";
 import path from "node:path";
 import { contentType, siteFileForUrlPath } from "@lib/static-site/url";
 
-export interface StaticSiteServer {
+interface StaticSiteServer {
   server: Server;
   origin: string;
 }
