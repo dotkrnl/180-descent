@@ -187,7 +187,7 @@ function summarizeViolation(
 }
 
 function attrSelectorValue(value: string): string {
-  return String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }
 
 function elementName($: CheerioAPI, el: Element): string {
@@ -218,7 +218,7 @@ function visibleLabel($: CheerioAPI, el: Element): string {
 }
 
 function labelTokens(value: string): string[] {
-  return String(value || "")
+  return value
     .toLowerCase()
     .match(/[\p{L}\p{N}?]+/gu) || [];
 }
@@ -226,7 +226,7 @@ function labelTokens(value: string): string[] {
 function labelMatchesName(label: string, name: string): boolean {
   const tokens = labelTokens(label);
   if (!tokens.length) return true;
-  const haystack = String(name || "").toLowerCase();
+  const haystack = name.toLowerCase();
   return tokens.every((token) => haystack.includes(token));
 }
 
