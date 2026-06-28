@@ -126,7 +126,7 @@ exitOnErrors(
 
 console.log(`Rendered typography check passed. Minimum panel title font size: ${MIN_PANEL_TITLE_FONT_SIZE}px desktop, ${MIN_MOBILE_PANEL_TITLE_FONT_SIZE}px mobile; minimum mobile complexity-hump SVG label height: ${MIN_MOBILE_HUMP_SVG_TEXT_HEIGHT}px.`);
 
-async function resolveStaticFile(candidate: string): Promise<string> {
+async function resolveStaticFile(candidate: string | null): Promise<string> {
   if (!candidate) return "";
   try {
     const info = await stat(candidate);

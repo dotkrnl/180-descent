@@ -154,7 +154,7 @@ function webManifestIconSrc(icon: unknown): string | null {
 
 async function hasHtmlForUrl(siteDir: string, url: string): Promise<boolean> {
   const target = siteFileForUrlPath(siteDir, url);
-  return Boolean(target) && pathExists(target);
+  return target ? pathExists(target) : false;
 }
 
 function alternateUrl(url: string): string {

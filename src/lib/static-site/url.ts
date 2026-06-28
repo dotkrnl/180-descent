@@ -30,36 +30,36 @@ export function urlForHtml(siteDir: string, filePath: string): string {
   return `/${rel}`;
 }
 
-export function sitePathForUrlPath(siteDir: string, urlPath: string): string {
+export function sitePathForUrlPath(siteDir: string, urlPath: string): string | null {
   const decoded = decodeUrlPath(urlPath);
-  if (!decoded) return "";
+  if (!decoded) return null;
   const clean = decoded.replace(/^\/+/, "");
   const root = path.resolve(siteDir);
   const resolved = path.resolve(root, clean);
-  return isPathInside(root, resolved) ? resolved : "";
+  return isPathInside(root, resolved) ? resolved : null;
 }
 
-export function sitePathForHref(siteDir: string, siteUrl: string, href: string): string {
+export function sitePathForHref(siteDir: string, siteUrl: string, href: string): string | null {
   try {
     const base = new URL(siteUrl);
     const parsed = new URL(href, base);
-    if (parsed.origin !== base.origin) return "";
+    if (parsed.origin !== base.origin) return null;
     return sitePathForUrlPath(siteDir, parsed.pathname);
   } catch {
-    return "";
+    return null;
   }
 }
 
-export function siteFileForUrlPath(siteDir: string, urlPath: string): string {
+export function siteFileForUrlPath(siteDir: string, urlPath: string): string | null {
   const routePath = sitePathForUrlPath(siteDir, urlPath);
-  if (!routePath) return "";
+  if (!routePath) return null;
   return path.extname(routePath) ? routePath : path.join(routePath, "index.html");
 }
 
-function decodeUrlPath(urlPath: string): string {
+function decodeUrlPath(urlPath: string): string | null {
   try {
     return decodeURIComponent(urlPath.split(/[?#]/)[0]);
   } catch {
-    return "";
+    return null;
   }
 }

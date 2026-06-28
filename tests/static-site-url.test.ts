@@ -19,8 +19,8 @@ describe("static site URL helpers", () => {
     expect(siteFileForUrlPath(siteDir, "/zh")).toBe(path.join(siteDir, "zh", "index.html"));
     expect(siteFileForUrlPath(siteDir, "/standalone.html")).toBe(path.join(siteDir, "standalone.html"));
     expect(siteFileForUrlPath(siteDir, "/favicon.ico")).toBe(path.join(siteDir, "favicon.ico"));
-    expect(sitePathForUrlPath(siteDir, "/../_site-copy/secret.txt")).toBe("");
-    expect(sitePathForUrlPath(siteDir, "/bad-%zz-path")).toBe("");
+    expect(sitePathForUrlPath(siteDir, "/../_site-copy/secret.txt")).toBeNull();
+    expect(sitePathForUrlPath(siteDir, "/bad-%zz-path")).toBeNull();
   });
 
   it("resolves only same-site hrefs", () => {
@@ -29,10 +29,10 @@ describe("static site URL helpers", () => {
 
     expect(sitePathForHref(siteDir, siteUrl, "/favicon.ico")).toBe(path.join(siteDir, "favicon.ico"));
     expect(sitePathForHref(siteDir, siteUrl, "https://180d.io/social.png")).toBe(path.join(siteDir, "social.png"));
-    expect(sitePathForHref(siteDir, siteUrl, "https://example.com/social.png")).toBe("");
-    expect(sitePathForHref(siteDir, siteUrl, "HTTPS://example.com/social.png")).toBe("");
-    expect(sitePathForHref(siteDir, siteUrl, "//example.com/social.png")).toBe("");
-    expect(sitePathForHref(siteDir, siteUrl, "http://[")).toBe("");
-    expect(sitePathForHref(siteDir, "not a url", "/favicon.ico")).toBe("");
+    expect(sitePathForHref(siteDir, siteUrl, "https://example.com/social.png")).toBeNull();
+    expect(sitePathForHref(siteDir, siteUrl, "HTTPS://example.com/social.png")).toBeNull();
+    expect(sitePathForHref(siteDir, siteUrl, "//example.com/social.png")).toBeNull();
+    expect(sitePathForHref(siteDir, siteUrl, "http://[")).toBeNull();
+    expect(sitePathForHref(siteDir, "not a url", "/favicon.ico")).toBeNull();
   });
 });
