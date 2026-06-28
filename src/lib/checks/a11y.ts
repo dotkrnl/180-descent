@@ -104,6 +104,13 @@ export async function checkAccessibility(options: AccessibilityCheckOptions): Pr
   await stat(builtSiteDir);
 
   const { errors: staticFailures, routes } = await checkStaticAccessibility(options);
+  if (!routes.length) {
+    return {
+      checkedPages: 0,
+      failures: [...staticFailures, "_site contains no HTML files"]
+    };
+  }
+
   const { server, origin } = await startStaticSiteServer(builtSiteDir, "Accessibility check");
   const browser = await chromium.launch();
   const failures = [...staticFailures];
