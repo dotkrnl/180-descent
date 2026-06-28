@@ -51,13 +51,15 @@ export function parseVisualCheckArgs(argv: string[]): VisualCheckCliArgs {
     const arg = argv[index];
     if (!arg.startsWith("--")) continue;
 
-    const value = argv[index + 1];
+    const inline = arg.match(/^(--[^=]+)=(.+)$/);
+    const name = inline ? inline[1] : arg;
+    const value = inline ? inline[2] : argv[index + 1];
     if (!value || value.startsWith("--")) continue;
 
-    if (arg === "--base") out.baseUrl = value;
-    if (arg === "--compare") out.compareUrl = value;
-    if (arg === "--out") out.outDir = value;
-    index += 1;
+    if (name === "--base") out.baseUrl = value;
+    if (name === "--compare") out.compareUrl = value;
+    if (name === "--out") out.outDir = value;
+    if (!inline) index += 1;
   }
 
   return out;
