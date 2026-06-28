@@ -498,7 +498,7 @@
   function readStorageValue(key){
     try{
       return window.localStorage ? window.localStorage.getItem(key) : null;
-    }catch(error){
+    }catch{
       return null;
     }
   }
@@ -509,7 +509,7 @@
         window.localStorage.setItem(key, value);
       }
       return true;
-    }catch(error){
+    }catch{
       return false;
     }
   }
@@ -524,7 +524,7 @@
       var raw = readStorageValue(readingStorageKey);
       var parsed = raw ? JSON.parse(raw) : {};
       return parsed && typeof parsed === "object" ? parsed : {};
-    }catch(error){
+    }catch{
       return {};
     }
   }
@@ -548,7 +548,7 @@
       return days.filter(isValidReadingRecord).sort(function(a, b){
         return Number(a.day) - Number(b.day);
       });
-    }catch(error){
+    }catch{
       return [];
     }
   }
@@ -654,7 +654,7 @@
     var path = "";
     try{
       path = new URL(url, window.location.origin).pathname;
-    }catch(error){
+    }catch{
       path = String(url || "").split("#")[0].split("?")[0];
     }
 
