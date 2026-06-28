@@ -4,7 +4,7 @@ import { execFile } from "node:child_process";
 import path from "node:path";
 import { promisify } from "node:util";
 import { PDFDocument, PDFName } from "pdf-lib";
-import { loadArtifactBookDays } from "@lib/artifacts/book";
+import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { bookArtifactPaths, dayArtifactName, dayArtifactPaths, downloadArtifactPath } from "@lib/artifacts/downloads";
 import { CHINESE_DAY_ONE_APPENDIX_PATTERNS, ENGLISH_DAY_ONE_APPENDIX_PATTERNS } from "@lib/checks/day-one-appendix-patterns";
 import { toError } from "@lib/errors";
@@ -39,6 +39,15 @@ function textMatchesAny(text: string, patterns: RegExp[]): boolean {
   });
 }
 
+function dayArtifactPathForDay(
+  days: ArtifactBookDay[],
+  locale: ArtifactBookDay["locale"],
+  dayNumber: number
+): string | null {
+  const day = days.find((candidate) => candidate.day === dayNumber);
+  return day ? downloadArtifactPath(dayArtifactName("pdf", locale, day.path)) : null;
+}
+
 class PdfChecker {
   private readonly pdfCache = new Map<string, PdfInfo>();
   private readonly missingFiles = new Set<string>();
@@ -49,7 +58,9 @@ class PdfChecker {
   constructor(private readonly options: PdfCheckOptions) {}
 
   async run(): Promise<string[]> {
-    const pdfFiles = await this.collectPdfFiles();
+    const enDays = await loadArtifactBookDays(this.options.root, "en");
+    const zhDays = await loadArtifactBookDays(this.options.root, "zh");
+    const pdfFiles = this.collectPdfFiles(enDays, zhDays);
     for (const file of pdfFiles) {
       await this.checkPdfHeaderTextAndLinks(file);
     }
@@ -60,8 +71,10 @@ class PdfChecker {
     const deepDiveText = await this.extractPdfText(deepDivePdf);
     const zhText = await this.extractPdfText(zhPdf);
     const zhDeepDiveText = await this.extractPdfText(zhDeepDivePdf);
-    const dayOneText = await this.extractPdfText(downloadArtifactPath(dayArtifactName("pdf", "en", "001-what-is-knowledge")));
-    const zhDayOneText = await this.extractPdfText(downloadArtifactPath(dayArtifactName("pdf", "zh", "001-what-is-knowledge")));
+    const dayOnePdf = dayArtifactPathForDay(enDays, "en", 1);
+    const zhDayOnePdf = dayArtifactPathForDay(zhDays, "zh", 1);
+    const dayOneText = dayOnePdf ? await this.extractPdfText(dayOnePdf) : null;
+    const zhDayOneText = zhDayOnePdf ? await this.extractPdfText(zhDayOnePdf) : null;
 
     this.checkBookText(standardText, zhText);
     this.checkAppendixLabels(deepDiveText, dayOneText, zhDeepDiveText, zhDayOneText);
@@ -70,9 +83,7 @@ class PdfChecker {
     return this.errors;
   }
 
-  private async collectPdfFiles(): Promise<string[]> {
-    const enDays = await loadArtifactBookDays(this.options.root, "en");
-    const zhDays = await loadArtifactBookDays(this.options.root, "zh");
+  private collectPdfFiles(enDays: ArtifactBookDay[], zhDays: ArtifactBookDay[]): string[] {
     return [
       ...bookArtifactPaths("pdf"),
       ...dayArtifactPaths("pdf", "en", enDays.map((day) => day.path)),

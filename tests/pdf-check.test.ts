@@ -12,6 +12,7 @@ describe("pdf check helpers", () => {
     const errors = await checkPdf({ root });
 
     expect(errors).toContain(`${bookArtifactPaths("pdf")[0]} is missing`);
+    expect(errors).not.toContain("_site/downloads/180-descent-day-001-what-is-knowledge.pdf is missing");
     expect(errors).not.toContain("English PDF is missing core text matching /The Scientific Method/i");
   });
 
@@ -23,6 +24,7 @@ describe("pdf check helpers", () => {
 
     expect(errors).toContain(`${dayArtifactPaths("pdf", "en", ["001-fixture"])[0]} is missing`);
     expect(errors).toContain(`${dayArtifactPaths("pdf", "zh", ["001-fixture"])[0]} is missing`);
+    expect(errors).not.toContain("_site/downloads/180-descent-day-001-what-is-knowledge.pdf is missing");
   });
 
   it("reports invalid PDF artifacts without throwing", async () => {
