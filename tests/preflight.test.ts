@@ -38,7 +38,7 @@ describe("typed preflight", () => {
   it("formats the tool list", () => {
     const list = formatToolList();
     expect(list).toContain("Preflight groups:");
-    expect(list).toContain("durable:");
+    expect(list).toContain("build:");
     expect(list).toContain("epubcheck - official EPUB validation");
   });
 

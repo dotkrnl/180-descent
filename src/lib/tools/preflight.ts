@@ -137,10 +137,8 @@ const TOOLS = {
   }
 } satisfies Record<string, ToolDefinition>;
 
-const TOOLS_BY_NAME: Record<string, ToolDefinition | undefined> = TOOLS;
-
 const TOOL_GROUPS = {
-  durable: ["node", "npm", "pdftotext", "latexmk", "xelatex", "fonttools", "rsvg", "xmllint", "playwright", "java", "epubcheck"],
+  build: ["node", "npm", "pdftotext", "latexmk", "xelatex", "fonttools", "rsvg", "xmllint", "playwright", "java", "epubcheck"],
   epubcheck: ["java", "epubcheck"]
 } as const;
 
@@ -152,13 +150,13 @@ export class PreflightError extends Error {
   }
 }
 
-export function checkTools(required: string[] = [...TOOL_GROUPS.durable], options: PreflightOptions = {}): PreflightResult {
+export function checkTools(required: string[] = [...TOOL_GROUPS.build], options: PreflightOptions = {}): PreflightResult {
   const throwOnMissing = options.throwOnMissing ?? true;
   const missing: ToolFailure[] = [];
   const present: ToolSuccess[] = [];
 
   for (const name of required) {
-    const tool = TOOLS_BY_NAME[name];
+    const tool = TOOLS[name as keyof typeof TOOLS];
     if (!tool) {
       missing.push({ name, error: new Error(`Unknown tool: ${name}`) });
       continue;
@@ -185,7 +183,7 @@ export function checkTools(required: string[] = [...TOOL_GROUPS.durable], option
 }
 
 export function resolveToolNames(requested: string[] = []): string[] {
-  const names = requested.length ? requested : ["durable"];
+  const names = requested.length ? requested : ["build"];
   return [...new Set(names.flatMap((name) => {
     return isToolGroupName(name) ? [...TOOL_GROUPS[name]] : [name];
   }))];
