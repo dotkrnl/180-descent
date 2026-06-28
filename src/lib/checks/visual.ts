@@ -141,8 +141,10 @@ async function inspectPage(
 
   for (const stop of SCROLL_STOPS) {
     const y = scrollYForStop(stop, metrics.scrollHeight, viewport.height);
-    await page.evaluate((scrollY) => window.scrollTo(0, scrollY), y);
-    await page.waitForTimeout(150);
+    await page.evaluate(async (scrollY) => {
+      window.scrollTo(0, scrollY);
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+    }, y);
     const screenshotPath = path.join(outDir, `${safeName(route)}-${viewport.name}-${stop}.png`);
     await page.screenshot({ path: screenshotPath });
     screenshots[stop] = screenshotPath;
