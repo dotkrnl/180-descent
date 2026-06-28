@@ -249,7 +249,8 @@ SVG/HTML/SCSS diagrams.
   string-matrix `rows`; `npm run check:content` rejects dynamic or malformed
   props because PDF output must not silently drop table content.
 - Use `MathInline` and `MathBlock` for math so HTML gets KaTeX and PDF gets
-  XeTeX math from the same source.
+  XeTeX math from the same source. KaTeX must parse the source; invalid math
+  fails the site build instead of rendering as fallback text.
 - For web interactives, keep behavior in the interactive component and provide a
   clear static PDF/EPUB representation with `FormatOnly`. Static artifact output
   may drift from the live web component when it improves readability.
