@@ -76,11 +76,16 @@ function checkUniqueDayNumbers(days: RegistryDay[]): void {
 
 async function loadRegistryDay(directory: string): Promise<RegistryDay> {
   const manifestPath = path.join(directory, "day.yaml");
+  const directoryName = path.basename(directory);
   const rawManifest = await readYamlFile(manifestPath);
   const manifest: DayManifest = {
     ...dayManifestSchema.parse(rawManifest),
-    path: path.basename(directory)
+    path: directoryName
   };
+  const directoryDay = Number.parseInt(directoryName.slice(0, 3), 10);
+  if (manifest.day !== directoryDay) {
+    throw new Error(`Manifest day ${manifest.day} does not match directory ${directoryName}`);
+  }
 
   const bodies: Record<Locale, RegistryBody> = {
     en: await loadRegistryBody(directory, "en", manifest.locales.en.body),

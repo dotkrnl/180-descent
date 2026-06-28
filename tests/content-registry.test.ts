@@ -276,9 +276,19 @@ describe("target content registry", () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-duplicate-"));
     const daysDir = path.join(root, "days");
     await writeMinimalDay(daysDir, "001-first", 1);
-    await writeMinimalDay(daysDir, "002-second", 1);
+    await writeMinimalDay(daysDir, "001-second", 1);
 
-    await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Duplicate day number 1: 001-first and 002-second");
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Duplicate day number 1: 001-first and 001-second");
+  });
+
+  it("rejects manifest day numbers that do not match the directory prefix", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-day-prefix-"));
+    const daysDir = path.join(root, "days");
+    await writeMinimalDay(daysDir, "009-fixture", 1);
+
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow(
+      "Manifest day 1 does not match directory 009-fixture"
+    );
   });
 
   it("loads project day content with paired appendices and interaction scripts", async () => {
