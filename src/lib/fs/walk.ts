@@ -1,7 +1,7 @@
 import { readdir, stat } from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
-import { isMissingPathError } from "@lib/fs/errors";
+import { isPathUnavailableError } from "@lib/fs/errors";
 
 interface WalkOptions {
   exts?: string | string[] | Set<string>;
@@ -53,7 +53,7 @@ export async function pathExists(filePath: string): Promise<boolean> {
     await stat(filePath);
     return true;
   } catch (error) {
-    if (!isMissingPathError(error)) throw error;
+    if (!isPathUnavailableError(error)) throw error;
     return false;
   }
 }

@@ -1,6 +1,6 @@
 import { lstat, readlink } from "node:fs/promises";
 import path from "node:path";
-import { isMissingPathError } from "@lib/fs/errors";
+import { isPathUnavailableError } from "@lib/fs/errors";
 
 interface WorkflowCheckFailure {
   path: string;
@@ -50,7 +50,7 @@ export async function checkProjectWorkflow(root: string): Promise<WorkflowCheckF
         reason: "Remove split workflow skill; use .codex/skills/180-descent"
       });
     } catch (error) {
-      if (!isMissingPathError(error)) {
+      if (!isPathUnavailableError(error)) {
         failures.push({
           path: splitSkillPath,
           reason: error instanceof Error ? error.message : "Unable to inspect split workflow skill"

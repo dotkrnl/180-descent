@@ -6,7 +6,7 @@ import { load, type CheerioAPI } from "cheerio";
 import type { Element } from "domhandler";
 import { chromium } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
-import { isMissingPathError } from "@lib/fs/errors";
+import { isPathUnavailableError } from "@lib/fs/errors";
 import { walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
 import { contentType, sitePathForUrlPath, urlForHtml } from "@lib/static-site/url";
@@ -146,7 +146,7 @@ async function fileForUrl(siteDir: string, urlPath: string): Promise<string> {
     if (stats.isDirectory()) return path.join(resolved, "index.html");
     return resolved;
   } catch (error) {
-    if (!isMissingPathError(error)) throw error;
+    if (!isPathUnavailableError(error)) throw error;
     return path.join(resolved, "index.html");
   }
 }
