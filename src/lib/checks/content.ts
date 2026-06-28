@@ -520,6 +520,10 @@ function checkSimpleTables(file: RegistryContentFile, failures: ContentCheckFail
       failures.push({
         message: `${file.relativePath} has SimpleTable without a non-empty literal string-matrix rows prop`
       });
+    } else if (headers.kind === "value" && isNonEmptyStringArray(headers.value) && rows.kind === "value" && hasMismatchedRowWidth(headers.value, rows.value)) {
+      failures.push({
+        message: `${file.relativePath} has SimpleTable rows whose column count does not match headers`
+      });
     }
   }
 }
@@ -532,6 +536,11 @@ function isNonEmptyStringMatrix(value: unknown): boolean {
   return Array.isArray(value)
     && value.length > 0
     && value.every((row) => Array.isArray(row) && row.length > 0 && row.every((item) => typeof item === "string"));
+}
+
+function hasMismatchedRowWidth(headers: unknown, rows: unknown): boolean {
+  if (!Array.isArray(headers) || !Array.isArray(rows)) return false;
+  return rows.some((row) => Array.isArray(row) && row.length !== headers.length);
 }
 
 function jsonPropValue(tag: string, prop: string): JsonPropValue {

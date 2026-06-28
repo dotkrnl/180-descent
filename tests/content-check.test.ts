@@ -269,6 +269,25 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports SimpleTable rows that do not match header width", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<SimpleTable headers={["A", "B"]} rows={[["one"], ["two", "three", "four"]]} />'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable rows whose column count does not match headers"
+      }
+    ]);
+  });
+
   it("checks SimpleTable props on explicit closing tags", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {

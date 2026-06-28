@@ -847,6 +847,7 @@ function renderSimpleTable(attrs: Map<string, string | null>, state: MdxRenderSt
   if (!headers.length) throw new Error(`SimpleTable headers must not be empty in ${sourceLabel(state)}`);
   if (!rows.length) throw new Error(`SimpleTable rows must not be empty in ${sourceLabel(state)}`);
   if (rows.some((row) => !row.length)) throw new Error(`SimpleTable rows must not contain empty rows in ${sourceLabel(state)}`);
+  if (rows.some((row) => row.length !== headers.length)) throw new Error(`SimpleTable row widths must match headers in ${sourceLabel(state)}`);
   return latexTable({ rows: [headers, ...rows], headerRows: new Set([0]) });
 }
 
