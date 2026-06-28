@@ -40,8 +40,8 @@ HTML as a formatting shortcut; use Markdown, existing lesson components, or a
 small reusable component when inline JSX must wrap another component. MDX must
 not own raw interactive controls, canvas, behavior ARIA roles, inline event
 handlers, or action/state data hooks. Put those contracts inside
-`lesson/interactives` components and let `npm run check:content` enforce the
-boundary. Every uppercase MDX component tag must also have an explicit artifact
+`lesson/interactives` components and let `rtk npm run check:content` enforce
+the boundary. Every uppercase MDX component tag must also have an explicit artifact
 contract in `check:content`: rendered directly, transparent wrapper, or web-only
 with a static `FormatOnly media="print-epub" variant="alternate"` equivalent.
 
@@ -70,7 +70,7 @@ with a static `FormatOnly media="print-epub" variant="alternate"` equivalent.
 8. Keep static artifact equivalents purposeful. EPUB/PDF may drift from the live
    web component when the static form is clearer, but HTML should stay visually
    consistent with the intended web design.
-9. Run `npm run build:social-cards` when titles or summaries change.
+9. Run `rtk npm run build:social-cards` when titles or summaries change.
 
 For a new published day, the minimum source set is:
 
@@ -83,8 +83,8 @@ For a new published day, the minimum source set is:
 ### New Day Acceptance Gate
 
 Do not treat a newly added day as done until all of these are true. This gate is
-mandatory even when `npm run check` passes; automated checks catch structural
-errors, not publication quality.
+mandatory even when `rtk npm run check` passes; automated checks catch
+structural errors, not publication quality.
 
 1. **Source parity:** compare `day.yaml`, English MDX, Chinese MDX, and every
    declared appendix pair. Confirm every appendix listed in the manifest has
@@ -126,7 +126,8 @@ errors, not publication quality.
    SVG text, status chips, buttons, and long English titles must not overlap,
    shrink below legibility, or run into frames. The mobile rendered-type gate is
    a floor, not a substitute for visual review.
-10. **Artifact visual review:** after `npm run build:site && npm run build:pdf`,
+10. **Artifact visual review:** after `rtk npm run build:site` and
+   `rtk npm run build:pdf`,
    render every affected day PDF page to PNG with Poppler: page 1, every page
    containing a new figure/table/interactive alternate, and the last page. Check
    both English and Chinese. Look for black rectangles, missing figures, wrong
@@ -169,8 +170,8 @@ Appendices are declared in `day.yaml` under `appendices`.
   component-local `.css`, duplicate `book.css`, browser-print PDF styles, or
   one-off generated CSS.
 - Do not add parallel adapter layers, blind importers, or alternate source
-  trees. `npm run check:clean` blocks committed
-  generated output and any tracked file that matches `.gitignore`; `npm run
+  trees. `rtk npm run check:clean` blocks committed
+  generated output and any tracked file that matches `.gitignore`; `rtk npm run
   check:workflows` enforces the single project workflow.
 - PDF output is generated from semantic MDX through XeTeX. When a live web
   component is not suitable for print, provide a semantic `FormatOnly` print
@@ -220,7 +221,7 @@ SVG/HTML/SCSS diagrams.
 - Use `/assets/images/...` only as the local source-path convention in
   `src/_data/credits.yaml` and artifact code that resolves back to
   `src/assets/images/...`.
-- `npm run build:epub` must resolve local source image paths into
+- `rtk npm run build:epub` must resolve local source image paths into
   `OEBPS/images/...` and add image manifest entries to `content.opf`.
 - EPUB generation rewrites packaged day links to local `day-###.xhtml`
   documents and the syllabus map link to `nav.xhtml`. Single-day EPUBs preserve
@@ -231,10 +232,10 @@ SVG/HTML/SCSS diagrams.
   converted with `rsvg-convert`.
 - If a PDF caption appears but the picture does not, check the MDX image import,
   the resolved asset path, and the XeTeX build log before changing lesson markup.
-- Keep `npm run check:epub` guarding against absolute or missing EPUB image
+- Keep `rtk npm run check:epub` guarding against absolute or missing EPUB image
   paths, non-local internal links, missing link targets, and missing link
   anchors.
-- Keep `npm run check:pdf` focused on artifact correctness: valid
+- Keep `rtk npm run check:pdf` focused on artifact correctness: valid
   non-interactive PDFs, Poppler-extractable text, appendix inclusion rules, no
   local links, and no live interactive control leakage.
 
@@ -253,7 +254,7 @@ SVG/HTML/SCSS diagrams.
   paragraphs.
 - Use `SimpleTable` only with non-empty literal string-array `headers` and
   non-empty literal string-matrix `rows`; each row must contain at least one
-  cell and match the header column count. `npm run check:content` rejects
+  cell and match the header column count. `rtk npm run check:content` rejects
   dynamic, empty, malformed, or uneven props because PDF output must not
   silently drop table content.
 - Use `MathInline` and `MathBlock` for math so HTML gets KaTeX and PDF gets
@@ -262,12 +263,12 @@ SVG/HTML/SCSS diagrams.
 - For web interactives, keep behavior in the interactive component and provide a
   clear static PDF/EPUB representation with `FormatOnly`. Static artifact output
   may drift from the live web component when it improves readability.
-- For PDF-affecting edits, run `npm run build:pdf` and `npm run check:pdf`. When
-  changing PDF renderer, figure, table, code, or source-block behavior, also
-  preserve logs with `PDF_KEEP_TEMP=1 npm run build:pdf` when deeper diagnosis
-  is needed. The PDF build fails on `Overfull` boxes and `Missing character`
-  glyph loss. Use `PDF_STRICT_FONT_WARNINGS=1 npm run build:pdf` when tightening
-  font-shape substitutions.
+- For PDF-affecting edits, run `rtk npm run build:pdf` and
+  `rtk npm run check:pdf`. When changing PDF renderer, figure, table, code, or
+  source-block behavior, set `PDF_KEEP_TEMP=1` for `rtk npm run build:pdf` when
+  deeper diagnosis is needed. The PDF build fails on `Overfull` boxes and
+  `Missing character` glyph loss. Set `PDF_STRICT_FONT_WARNINGS=1` for
+  `rtk npm run build:pdf` when tightening font-shape substitutions.
 - Visual review scope: for global renderer/style changes, sample at least 20
   pages from each full PDF (`180-descent`, `180-descent-deep-dive`,
   `180-descent-zh`, `180-descent-zh-deep-dive`). For individual day PDFs, first
@@ -414,8 +415,8 @@ rtk git diff --stat
 rtk npm run check
 ```
 
-`npm run check` rebuilds all generated assets and download artifacts, then runs
-all validators, including SEO, accessibility, EPUB, PDF, and repository
+`rtk npm run check` rebuilds all generated assets and download artifacts, then
+runs all validators, including SEO, accessibility, EPUB, PDF, and repository
 cleanliness.
 
 3. Stage only intended files. Never stage unrelated user changes.
