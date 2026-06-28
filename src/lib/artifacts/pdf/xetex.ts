@@ -107,6 +107,10 @@ interface SvgComponentSpec extends SvgAssetSpec {
   selector: string;
 }
 
+const TABLE_COMPONENTS = new Set(["table", "DataTable"]);
+const TABLE_CELL_COMPONENTS = new Set(["td", "th", "DataTableCell", "DataTableHeader"]);
+const TABLE_HEADER_COMPONENTS = new Set(["th", "DataTableHeader"]);
+
 export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> {
   const root = options.root;
   const book = await readBookData(root);
@@ -1076,15 +1080,15 @@ function unwrapTableCell(node: MdxNode): MdxNode | null {
 }
 
 function isTableComponent(name: string): boolean {
-  return ["table", "DataTable"].includes(name);
+  return TABLE_COMPONENTS.has(name);
 }
 
 function isTableCellComponent(name: string): boolean {
-  return ["td", "th", "DataTableCell", "DataTableHeader"].includes(name);
+  return TABLE_CELL_COMPONENTS.has(name);
 }
 
 function isTableHeaderComponent(name: string): boolean {
-  return ["th", "DataTableHeader"].includes(name);
+  return TABLE_HEADER_COMPONENTS.has(name);
 }
 
 function latexTable(table: LatexTable): string {
