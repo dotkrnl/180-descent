@@ -68,6 +68,20 @@ describe("math check", () => {
     ]);
   });
 
+  it("can require built HTML files", async () => {
+    const root = await createFixtureRoot();
+
+    const result = await checkMath({ root, requireBuiltHtml: true });
+
+    expect(result.checkedBuiltFiles).toBe(0);
+    expect(result.failures).toEqual([
+      {
+        file: "_site",
+        label: "contains no HTML files"
+      }
+    ]);
+  });
+
   it("allows prose-font KaTeX CSS overrides", async () => {
     const root = await createFixtureRoot();
     await mkdir(path.join(root, "src/assets/scss/base"), { recursive: true });

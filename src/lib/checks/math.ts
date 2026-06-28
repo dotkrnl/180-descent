@@ -7,6 +7,7 @@ import { stripFencedCodeBlocks } from "@lib/text/markdown";
 
 interface MathCheckOptions {
   root: string;
+  requireBuiltHtml?: boolean;
 }
 
 interface MathCheckFailure {
@@ -44,6 +45,13 @@ export async function checkMath(options: MathCheckOptions): Promise<MathCheckRes
   }
 
   const builtFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
+  if (options.requireBuiltHtml && !builtFiles.length) {
+    failures.push({
+      file: "_site",
+      label: "contains no HTML files"
+    });
+  }
+
   for (const file of builtFiles) {
     const content = await readFile(file, "utf8");
     failures.push(...scanPatterns(options.root, file, content, BUILT_PATTERNS));

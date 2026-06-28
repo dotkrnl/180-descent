@@ -1,7 +1,7 @@
 import { checkMath } from "@lib/checks/math";
 import { exitOnErrors } from "./support";
 
-const result = await checkMath({ root: process.cwd() });
+const result = await checkMath({ root: process.cwd(), requireBuiltHtml: true });
 
 exitOnErrors(result.failures, (failure) => `${failure.file}: ${failure.label}`, {
   footer: [
