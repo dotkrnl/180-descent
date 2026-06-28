@@ -272,22 +272,28 @@ function wrapSocialText(value: string, options: { maxLines: number; maxChars: nu
 }
 
 async function isSameRenderedImage(outPath: string, candidate: Buffer): Promise<boolean> {
+  let existing: Buffer;
   try {
-    const existing = await readFile(outPath);
-    if (existing.equals(candidate)) {
-      return true;
-    }
+    existing = await readFile(outPath);
+  } catch (error) {
+    if (!isPathUnavailableError(error)) throw error;
+    return false;
+  }
 
-    const [existingPixels, candidatePixels] = await Promise.all([
-      sharp(existing).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
-      sharp(candidate).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
-    ]);
+  if (existing.equals(candidate)) {
+    return true;
+  }
 
-    return existingPixels.info.width === candidatePixels.info.width
-      && existingPixels.info.height === candidatePixels.info.height
-      && existingPixels.info.channels === candidatePixels.info.channels
-      && existingPixels.data.equals(candidatePixels.data);
+  const candidatePixels = await sharp(candidate).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  let existingPixels: typeof candidatePixels;
+  try {
+    existingPixels = await sharp(existing).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   } catch {
     return false;
   }
+
+  return existingPixels.info.width === candidatePixels.info.width
+    && existingPixels.info.height === candidatePixels.info.height
+    && existingPixels.info.channels === candidatePixels.info.channels
+    && existingPixels.data.equals(candidatePixels.data);
 }
