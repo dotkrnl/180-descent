@@ -16,6 +16,7 @@ interface MathCheckFailure {
 
 interface MathCheckResult {
   checkedSourceFiles: number;
+  checkedBuiltFiles: number;
   failures: MathCheckFailure[];
 }
 
@@ -50,6 +51,7 @@ export async function checkMath(options: MathCheckOptions): Promise<MathCheckRes
 
   return {
     checkedSourceFiles: sourceFiles.length,
+    checkedBuiltFiles: builtFiles.length,
     failures
   };
 }

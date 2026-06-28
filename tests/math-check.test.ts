@@ -13,6 +13,7 @@ describe("math check", () => {
     const result = await checkMath({ root });
 
     expect(result.checkedSourceFiles).toBe(1);
+    expect(result.checkedBuiltFiles).toBe(0);
     expect(result.failures).toEqual([
       {
         file: "src/content/days/001-fixture/en.mdx",

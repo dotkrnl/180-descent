@@ -10,4 +10,4 @@ exitOnErrors(result.failures, (failure) => `${failure.file}: ${failure.label}`, 
   ]
 });
 
-console.log(`Math lint passed for ${result.checkedSourceFiles} files. KaTeX output is clean.`);
+console.log(`Math lint passed for ${result.checkedSourceFiles} source files and ${result.checkedBuiltFiles} built HTML files.`);
