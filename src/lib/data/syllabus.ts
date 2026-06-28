@@ -77,7 +77,7 @@ export async function readSyllabusBlockTitleMap(root: string, locale: Locale): P
 }
 
 async function readRawSyllabus(root: string): Promise<RawSyllabus> {
-  return rawSyllabusSchema.parse(await readYamlFile<unknown>(syllabusDataFile(root)));
+  return rawSyllabusSchema.parse(await readYamlFile(syllabusDataFile(root)));
 }
 
 function localizeSyllabus(raw: RawSyllabus, locale: Locale): Syllabus {

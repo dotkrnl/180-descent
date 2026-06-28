@@ -76,7 +76,7 @@ function checkUniqueDayNumbers(days: RegistryDay[]): void {
 
 async function loadRegistryDay(directory: string): Promise<RegistryDay> {
   const manifestPath = path.join(directory, "day.yaml");
-  const rawManifest = await readYamlFile<unknown>(manifestPath);
+  const rawManifest = await readYamlFile(manifestPath);
   const manifest: DayManifest = {
     ...dayManifestSchema.parse(rawManifest),
     path: path.basename(directory)

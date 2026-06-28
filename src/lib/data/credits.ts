@@ -43,5 +43,5 @@ const creditsDataSchema = z.object({
 }).strict();
 
 export async function readCreditsData(root: string): Promise<CreditsData> {
-  return creditsDataSchema.parse(await readYamlFile<unknown>(creditsDataFile(root)));
+  return creditsDataSchema.parse(await readYamlFile(creditsDataFile(root)));
 }

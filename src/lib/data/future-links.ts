@@ -25,5 +25,5 @@ const futureLinkEntrySchema = z.object({
 const futureLinksDataSchema = z.array(futureLinkEntrySchema);
 
 export async function readFutureLinksData(root: string): Promise<FutureLinkEntry[]> {
-  return futureLinksDataSchema.parse(await readYamlFile<unknown>(futureLinksDataFile(root)));
+  return futureLinksDataSchema.parse(await readYamlFile(futureLinksDataFile(root)));
 }

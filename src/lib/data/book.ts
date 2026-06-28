@@ -76,7 +76,7 @@ const bookSiteDataSchema = z.object({
 }).passthrough();
 
 export async function readBookData(root: string): Promise<BookData> {
-  const raw = bookDataSchema.parse(await readYamlFile<unknown>(bookDataFile(root)));
+  const raw = bookDataSchema.parse(await readYamlFile(bookDataFile(root)));
   return {
     title: raw.title,
     subtitle: raw.subtitle,
@@ -108,6 +108,6 @@ export async function readBookData(root: string): Promise<BookData> {
 }
 
 export async function readBookSiteUrl(root: string): Promise<string> {
-  const raw = bookSiteDataSchema.parse(await readYamlFile<unknown>(bookDataFile(root)));
+  const raw = bookSiteDataSchema.parse(await readYamlFile(bookDataFile(root)));
   return raw.site_url;
 }
