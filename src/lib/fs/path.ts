@@ -7,5 +7,6 @@ export function toPosixRelative(root: string, filePath: string): string {
 export function isPathInside(root: string, filePath: string): boolean {
   const normalizedRoot = path.resolve(root);
   const normalizedFilePath = path.resolve(filePath);
-  return normalizedFilePath === normalizedRoot || normalizedFilePath.startsWith(`${normalizedRoot}${path.sep}`);
+  const relative = path.relative(normalizedRoot, normalizedFilePath);
+  return relative === "" || (!!relative && !relative.startsWith("..") && !path.isAbsolute(relative));
 }
