@@ -2,25 +2,19 @@
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import BookShell from "@app/layouts/BookShell.astro";
 import DayNav from "@app/components/DayNav.astro";
-import type { DayNavEntry } from "@app/day-route";
+import type { DayAppendixRenderEntry, DayNavEntry } from "@app/day-route";
 import { getBookData } from "@app/site-data";
 import { dayArtifactDownloadUrl } from "@lib/artifacts/downloads";
 import { daySocialImagePath } from "@lib/assets/social-images";
 import type { RegistryDayLocaleEntry } from "@lib/content/registry";
 import { alternateLocale, dayUrl } from "@lib/static-site/routes";
 
-interface AppendixRenderEntry {
-  id: string;
-  title: string;
-  Body: AstroComponentFactory;
-}
-
 interface Props {
   entry: RegistryDayLocaleEntry;
   previous?: DayNavEntry;
   next?: DayNavEntry;
   Body: AstroComponentFactory;
-  appendices: AppendixRenderEntry[];
+  appendices: DayAppendixRenderEntry[];
 }
 
 const interactionScriptModules = Object.fromEntries(
