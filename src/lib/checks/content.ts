@@ -4,8 +4,7 @@ import * as cheerio from "cheerio";
 import { compileCss } from "@lib/assets/css";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
-import { creditsDataFile } from "@lib/data/paths";
-import { readYamlFile } from "@lib/data/yaml";
+import { readCreditsData } from "@lib/data/credits";
 import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import type { Locale } from "@lib/schemas/day";
@@ -17,12 +16,6 @@ interface ContentCheckOptions {
 
 interface ContentCheckFailure {
   message: string;
-}
-
-interface CreditsData {
-  images?: Array<{
-    asset?: unknown;
-  }>;
 }
 
 const PRINT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
@@ -360,7 +353,7 @@ async function checkInteractionScripts(
 }
 
 async function checkImageCredits(root: string, failures: ContentCheckFailure[]): Promise<void> {
-  const credits = await readYamlFile<CreditsData>(creditsDataFile(root));
+  const credits = await readCreditsData(root);
   const creditedAssets = new Set<string>();
 
   for (const image of credits.images ?? []) {

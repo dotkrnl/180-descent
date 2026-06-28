@@ -1,29 +1,11 @@
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readBookData, type BookData } from "@lib/data/book";
-import { creditsDataFile, syllabusDataFile } from "@lib/data/paths";
+import { readCreditsData, type CreditsData } from "@lib/data/credits";
+import { syllabusDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
 import type { Locale } from "@lib/schemas/day";
 import { dayUrl } from "@lib/static-site/routes";
-
-interface CreditsData {
-  fonts: CreditFont[];
-  images: CreditImage[];
-}
-
-interface CreditFont {
-  name: string;
-  source: string;
-  license: string;
-}
-
-interface CreditImage {
-  title: string;
-  creator: string;
-  source: string;
-  license: string;
-  notes: string;
-}
 
 export interface ContentDay {
   day: number;
@@ -84,7 +66,7 @@ export async function getBookData(): Promise<BookData> {
 }
 
 export async function getCreditsData(): Promise<CreditsData> {
-  return readYamlFile<CreditsData>(creditsDataFile(process.cwd()));
+  return readCreditsData(process.cwd());
 }
 
 export async function getSyllabus(locale: Locale): Promise<Syllabus> {
