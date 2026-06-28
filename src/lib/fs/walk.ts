@@ -14,7 +14,8 @@ export async function walkFiles(dir: string, options: WalkOptions = {}): Promise
   const exts = normalizeExts(options.exts);
   const ignoredDirNames = options.ignoredDirNames ? new Set(options.ignoredDirNames) : DEFAULT_IGNORED;
   const out: string[] = [];
-  const entries = await readdir(dir, { withFileTypes: true });
+  const entries = (await readdir(dir, { withFileTypes: true }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   for (const entry of entries) {
     const full = path.join(dir, entry.name);
@@ -34,7 +35,10 @@ export function walkFilesSync(dir: string, options: WalkOptions = {}, out: strin
   const exts = normalizeExts(options.exts);
   const ignoredDirNames = options.ignoredDirNames ? new Set(options.ignoredDirNames) : DEFAULT_IGNORED;
 
-  for (const entry of fsSync.readdirSync(dir, { withFileTypes: true })) {
+  const entries = fsSync.readdirSync(dir, { withFileTypes: true })
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  for (const entry of entries) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       if (!ignoredDirNames.has(entry.name)) {

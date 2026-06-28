@@ -27,4 +27,17 @@ describe("filesystem walk helpers", () => {
       path.join(root, "src", "keep.txt")
     ]);
   });
+
+  it("returns paths in stable sorted order", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-fs-walk-"));
+    await mkdir(path.join(root, "b"), { recursive: true });
+    await mkdir(path.join(root, "a"), { recursive: true });
+    await writeFile(path.join(root, "b", "second.txt"), "");
+    await writeFile(path.join(root, "a", "first.txt"), "");
+
+    await expect(walkFiles(root, { exts: ".txt" })).resolves.toEqual([
+      path.join(root, "a", "first.txt"),
+      path.join(root, "b", "second.txt")
+    ]);
+  });
 });
