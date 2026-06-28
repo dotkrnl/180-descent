@@ -19,7 +19,8 @@ if (list) {
       console.log(`ok ${tool.name} (${tool.category}): ${tool.version}`);
     }
     for (const tool of result.missing) {
-      console.log(`missing ${tool.name} (${tool.category}): ${tool.error.message}`);
+      const category = tool.category ? ` (${tool.category})` : "";
+      console.log(`missing ${tool.name}${category}: ${tool.error.message}`);
     }
     if (result.missing.length && optional) {
       console.log("Optional preflight completed with missing tools.");
