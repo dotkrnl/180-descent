@@ -4,7 +4,7 @@ import { bookArtifactPaths, dayArtifactPaths } from "@lib/artifacts/downloads";
 import { createEmptyContentRoot, writeContentDay } from "./helpers/content-root";
 
 describe("pdf check helpers", () => {
-  it("reports missing required artifacts without throwing", async () => {
+  it("reports missing book artifacts", async () => {
     const root = await createEmptyContentRoot("180-pdf-missing-");
 
     const result = await checkPdf({ root });

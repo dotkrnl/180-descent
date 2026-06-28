@@ -60,7 +60,7 @@ describe("seo check", () => {
     ]);
   });
 
-  it("reports invalid web manifests without throwing", async () => {
+  it("reports malformed web manifest JSON", async () => {
     const root = await createSiteRoot();
     await writeFile(path.join(root, "_site/index.html"), indexHtml());
     await writeFile(path.join(root, "_site/site.webmanifest"), "{");
@@ -70,7 +70,7 @@ describe("seo check", () => {
     expect(result.errors[0]).toMatch(/^\/site\.webmanifest: invalid web manifest JSON/);
   });
 
-  it("reports non-array manifest icons without throwing", async () => {
+  it("reports non-array manifest icons", async () => {
     const root = await createSiteRoot();
     await writeFile(path.join(root, "_site/index.html"), indexHtml());
     await writeFile(path.join(root, "_site/site.webmanifest"), JSON.stringify({
@@ -84,7 +84,7 @@ describe("seo check", () => {
     ]);
   });
 
-  it("reports invalid manifest icon entries without throwing", async () => {
+  it("reports manifest icons without string sources", async () => {
     const root = await createSiteRoot();
     await writeFile(path.join(root, "_site/index.html"), indexHtml());
     await writeFile(path.join(root, "_site/site.webmanifest"), JSON.stringify({

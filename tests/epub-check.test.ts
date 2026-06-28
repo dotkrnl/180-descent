@@ -4,7 +4,7 @@ import { bookArtifactPaths, dayArtifactPaths } from "@lib/artifacts/downloads";
 import { createEmptyContentRoot, writeContentDay } from "./helpers/content-root";
 
 describe("epub check helpers", () => {
-  it("reports missing required artifacts without throwing", async () => {
+  it("reports missing book artifacts", async () => {
     const root = await createEmptyContentRoot("180-epub-missing-");
 
     const result = await checkEpub({ root });

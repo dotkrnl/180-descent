@@ -22,7 +22,7 @@ describe("lesson MDX components", () => {
     })).toContain('aria-label="显示说明"');
   });
 
-  it("renders KaTeX without throwing on invalid author input", () => {
+  it("renders invalid author math as source text", () => {
     expect(renderMathHtml("P(H \\mid E)", true)).toContain("katex-display");
     expect(renderMathHtml("\\notacommand", false)).toContain("notacommand");
   });
