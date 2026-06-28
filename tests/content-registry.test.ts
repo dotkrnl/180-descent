@@ -103,6 +103,32 @@ describe("target content registry", () => {
     await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Manifest reference escapes day directory: ../outside.mdx");
   });
 
+  it("rejects absolute manifest file references", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-absolute-"));
+    const daysDir = path.join(root, "days");
+    const dayDir = path.join(daysDir, "001-fixture");
+    await mkdir(dayDir, { recursive: true });
+    await writeFile(path.join(dayDir, "en.mdx"), "# Fixture");
+    await writeFile(path.join(dayDir, "zh.mdx"), "# 中文");
+    await writeFile(path.join(dayDir, "day.yaml"), [
+      "day: 1",
+      "block: Fixture",
+      "locales:",
+      "  en:",
+      "    title: Fixture",
+      "    summary: Fixture summary.",
+      `    body: ${path.join(dayDir, "en.mdx")}`,
+      "  zh:",
+      "    title: 中文夹具",
+      "    summary: 中文摘要。",
+      "    body: zh.mdx",
+      "appendices: []",
+      "interactionScripts: []"
+    ].join("\n"));
+
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Manifest reference must be relative:");
+  });
+
   it("loads project day content with paired appendices and interaction scripts", async () => {
     const registry = await loadContentRegistry({ daysDir: projectDaysDir });
     const daysByPath = new Map(registry.days.map((day) => [day.manifest.path, day]));

@@ -104,6 +104,9 @@ async function readReferencedFile(root: string, relativePath: string): Promise<s
 }
 
 function referencedFilePath(root: string, relativePath: string): string {
+  if (path.isAbsolute(relativePath)) {
+    throw new Error(`Manifest reference must be relative: ${relativePath}`);
+  }
   const normalizedRoot = path.resolve(root);
   const filePath = path.resolve(normalizedRoot, relativePath);
   if (!isPathInside(normalizedRoot, filePath)) {
