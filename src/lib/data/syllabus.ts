@@ -63,8 +63,28 @@ const rawSyllabusSchema = z.object({
   method: localizedTextSchema,
   blocks: z.array(rawSyllabusBlockSchema)
 }).strict().superRefine((syllabus, context) => {
+  const seenBlockIds = new Set<string>();
+  const seenEnglishBlockTitles = new Set<string>();
   const seenDays = new Map<number, string>();
   for (const [blockIndex, block] of syllabus.blocks.entries()) {
+    if (seenBlockIds.has(block.id)) {
+      context.addIssue({
+        code: "custom",
+        path: ["blocks", blockIndex, "id"],
+        message: `duplicate syllabus block id: ${block.id}`
+      });
+    }
+    seenBlockIds.add(block.id);
+
+    if (seenEnglishBlockTitles.has(block.title.en)) {
+      context.addIssue({
+        code: "custom",
+        path: ["blocks", blockIndex, "title", "en"],
+        message: `duplicate syllabus block English title: ${block.title.en}`
+      });
+    }
+    seenEnglishBlockTitles.add(block.title.en);
+
     if (block.start_day > block.end_day) {
       context.addIssue({
         code: "custom",

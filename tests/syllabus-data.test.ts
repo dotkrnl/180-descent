@@ -84,6 +84,26 @@ describe("syllabus data", () => {
 
     await expect(readSyllabusData(root, "en")).rejects.toThrow(/appears in both block I and block II/);
   });
+
+  it("rejects duplicate block ids", async () => {
+    const root = await createFixtureRoot([
+      validSyllabusYaml(),
+      validBlockYaml({ id: "I", startDay: 2, endDay: 2, titleEn: "Duplicate", titleZh: "重复" })
+    ].join("\n"));
+
+    await expect(readSyllabusData(root, "en")).rejects.toThrow(/duplicate syllabus block id: I/);
+  });
+
+  it("rejects duplicate English block titles", async () => {
+    const root = await createFixtureRoot([
+      validSyllabusYaml(),
+      validBlockYaml({ id: "II", startDay: 2, endDay: 2, titleEn: "Foundations", titleZh: "重复" })
+    ].join("\n"));
+
+    await expect(readSyllabusBlockTitleMap(root, "zh")).rejects.toThrow(
+      /duplicate syllabus block English title: Foundations/
+    );
+  });
 });
 
 async function createFixtureRoot(syllabusYaml: string): Promise<string> {
@@ -134,5 +154,30 @@ function validSyllabusYaml(): string {
     "        frontier:",
     "          en: Bayesian epistemology",
     "          zh: 贝叶斯认识论"
+  ].join("\n");
+}
+
+function validBlockYaml(options: {
+  id: string;
+  startDay: number;
+  endDay: number;
+  titleEn: string;
+  titleZh: string;
+}): string {
+  return [
+    `  - id: ${options.id}`,
+    `    start_day: ${options.startDay}`,
+    `    end_day: ${options.endDay}`,
+    "    title:",
+    `      en: ${options.titleEn}`,
+    `      zh: ${options.titleZh}`,
+    "    summary:",
+    "      en: Duplicate block",
+    "      zh: 重复模块",
+    "    days:",
+    `      - day: ${options.startDay}`,
+    "        title:",
+    "          en: Duplicate Day",
+    "          zh: 重复日"
   ].join("\n");
 }
