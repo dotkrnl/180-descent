@@ -76,6 +76,29 @@ describe("link checks", () => {
     expect(failures).toEqual([]);
   });
 
+  it("resolves relative internal links against the current page", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "_site/index.html"), [
+      '<a href="target/#present">relative target</a>',
+      '<a href="missing/">relative missing</a>'
+    ].join("\n"));
+    await mkdir(path.join(root, "_site/section"), { recursive: true });
+    await writeFile(path.join(root, "_site/section/index.html"), [
+      '<main id="local"></main>',
+      '<a href="?view=1#local">same page query anchor</a>',
+      '<a href="../target/#absent">parent target missing anchor</a>'
+    ].join("\n"));
+    await mkdir(path.join(root, "_site/target"), { recursive: true });
+    await writeFile(path.join(root, "_site/target/index.html"), '<main id="present"></main>');
+
+    const failures = await checkLinks({ root });
+
+    expect(failures.map((failure) => failure.message)).toEqual([
+      "Broken internal link missing/ in _site/index.html",
+      'Missing anchor ../target/#absent (anchor "absent" not found in _site/target/index.html) referenced from _site/section/index.html'
+    ]);
+  });
+
   it("reports future links that still target published days", async () => {
     const root = await createFixtureRoot();
     await writeSecondContentDay(root);

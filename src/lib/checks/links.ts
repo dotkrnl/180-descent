@@ -6,7 +6,7 @@ import { readFutureLinksData } from "@lib/data/future-links";
 import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { siteFileForUrlPath } from "@lib/static-site/url";
+import { siteFileForUrlPath, urlForSiteFile } from "@lib/static-site/url";
 
 interface LinkCheckOptions {
   root: string;
@@ -34,14 +34,15 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
   const idCache = new Map(documents.map((document) => [document.file, document.ids]));
 
   for (const { file, $ } of documents) {
+    const currentUrl = urlForSiteFile(builtSiteDir, file);
     for (const a of $("a[href]").toArray()) {
       const href = $(a).attr("href");
-      const targetRef = linkTarget(href);
+      const targetRef = linkTarget(href, currentUrl);
       if (!targetRef) continue;
 
       const { pathname, anchor } = targetRef;
       if (isArtifactDownloadPath(pathname)) continue;
-      const target = targetRef.samePage ? file : siteFileForUrlPath(builtSiteDir, pathname);
+      const target = siteFileForUrlPath(builtSiteDir, pathname);
 
       if (!target || !await pathExists(target)) {
         failures.push({
@@ -71,19 +72,11 @@ async function loadHtmlDocument(file: string): Promise<HtmlDocument> {
   return { file, $, ids };
 }
 
-function linkTarget(href?: string): { pathname: string; anchor?: string; samePage?: boolean } | null {
+function linkTarget(href: string | undefined, currentUrl: string): { pathname: string; anchor?: string } | null {
   if (!href) return null;
-  if (href.startsWith("#")) {
-    return {
-      pathname: "",
-      anchor: decodedFragment(href.slice(1)),
-      samePage: true
-    };
-  }
   if (href.startsWith("//") || /^[a-z][a-z0-9+.-]*:/i.test(href)) return null;
-  if (!href.startsWith("/")) return null;
 
-  const parsed = new URL(href, "https://local.invalid");
+  const parsed = new URL(href, `https://local.invalid${currentUrl}`);
   return {
     pathname: parsed.pathname,
     anchor: parsed.hash ? decodedFragment(parsed.hash.slice(1)) : undefined

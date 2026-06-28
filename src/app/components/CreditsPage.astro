@@ -11,6 +11,16 @@ interface Props {
 const { locale } = Astro.props;
 const credits = await getCreditsData();
 const isZh = locale === "zh";
+const sourceLabel = isZh ? "来源" : "source";
+
+function isWebUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
 ---
 <PageShell
   locale={locale}
@@ -24,7 +34,7 @@ const isZh = locale === "zh";
   <h2>{isZh ? "字体" : "Fonts"}</h2>
   <ul>
     {credits.fonts.map((font) => (
-      <li><strong>{font.name}</strong>{isZh ? "：" : ": "}{font.license}, <a href={font.source}>{isZh ? "来源" : "source"}</a></li>
+      <li><strong>{font.name}</strong>{isZh ? "：" : ": "}{font.license}, {isWebUrl(font.source) ? <a href={font.source}>{sourceLabel}</a> : font.source}</li>
     ))}
   </ul>
 
@@ -32,7 +42,7 @@ const isZh = locale === "zh";
   <ul>
     {credits.images.map((image) => (
       <li>
-        <strong>{image.title}</strong>{isZh ? "，作者：" : " by "}{image.creator}{isZh ? "；" : ": "}{image.license}, <a href={image.source}>{isZh ? "来源" : "source"}</a>{isZh ? "。" : ". "}{image.notes}
+        <strong>{image.title}</strong>{isZh ? "，作者：" : " by "}{image.creator}{isZh ? "；" : ": "}{image.license}, {isWebUrl(image.source) ? <a href={image.source}>{sourceLabel}</a> : image.source}{isZh ? "。" : ". "}{image.notes}
       </li>
     ))}
   </ul>
