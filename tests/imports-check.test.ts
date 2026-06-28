@@ -75,6 +75,22 @@ describe("import check", () => {
     ].join("\n"))).toEqual([{ name: "Hero" }]);
   });
 
+  it("ignores commented-out imports", () => {
+    expect(findUnusedDefaultImports([
+      "<!--",
+      'import Hero from "./Hero.astro";',
+      "-->",
+      "<div />"
+    ].join("\n"))).toEqual([]);
+
+    expect(findUnusedDefaultImports([
+      "/*",
+      'import Hero from "./Hero.astro";',
+      "*/",
+      "<div />"
+    ].join("\n"))).toEqual([]);
+  });
+
   it("ignores identifiers inside comments", () => {
     expect(findUnusedDefaultImports([
       'import Hero from "./Hero.astro";',

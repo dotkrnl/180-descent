@@ -37,15 +37,15 @@ export async function checkUnusedDefaultImports(options: ImportCheckOptions): Pr
 
 export function findUnusedDefaultImports(source: string): Array<{ name: string }> {
   const sourceWithoutCodeBlocks = stripFencedCodeBlocks(source);
-  const imports = importDeclarations(sourceWithoutCodeBlocks);
-  const sourceWithoutImports = stripRanges(sourceWithoutCodeBlocks, imports.map((entry) => entry.range));
-  const sourceWithoutComments = stripComments(sourceWithoutImports);
+  const sourceWithoutComments = stripComments(sourceWithoutCodeBlocks);
+  const imports = importDeclarations(sourceWithoutComments);
+  const sourceWithoutImports = stripRanges(sourceWithoutComments, imports.map((entry) => entry.range));
   const unusedImports: Array<{ name: string }> = [];
 
   for (const entry of imports) {
     const name = defaultImportName(entry.text);
     if (!name) continue;
-    if (!hasDefaultImportUsage(sourceWithoutComments, name)) {
+    if (!hasDefaultImportUsage(sourceWithoutImports, name)) {
       unusedImports.push({ name });
     }
   }
