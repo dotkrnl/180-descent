@@ -53,11 +53,7 @@ export async function loadContentRegistry(options: ContentRegistryOptions): Prom
     })
     .sort();
 
-  const days = [];
-  for (const directory of dayDirectories) {
-    days.push(await loadRegistryDay(directory));
-  }
-
+  const days = await Promise.all(dayDirectories.map(loadRegistryDay));
   days.sort((a, b) => a.manifest.day - b.manifest.day);
   checkUniqueDayNumbers(days);
   return { days };
