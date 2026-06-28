@@ -7,6 +7,18 @@ import { futureLinksDataFile } from "@lib/data/paths";
 import { writeContentDay } from "./helpers/content-root";
 
 describe("link checks", () => {
+  it("reports empty built sites instead of passing zero pages", async () => {
+    const root = await createFixtureRoot();
+
+    const failures = await checkLinks({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "_site contains no HTML files"
+      }
+    ]);
+  });
+
   it("reports broken internal links and missing anchors", async () => {
     const root = await createFixtureRoot();
     await writeFile(path.join(root, "_site/index.html"), [
