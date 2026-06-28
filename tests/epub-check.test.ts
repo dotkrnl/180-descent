@@ -34,16 +34,30 @@ describe("epub check helpers", () => {
 
     expect(errors).toContain(`${edition} references missing EPUB link anchor in OEBPS/day-001.xhtml: day-002.xhtml#missing-anchor`);
   });
+
+  it("reports invalid numeric XML entities without crashing", async () => {
+    const root = await createEmptyContentRoot("180-epub-invalid-entity-");
+    const edition = bookArtifactPaths("epub")[0];
+    await writeEpubFixture(root, edition, "<p>Invalid entity &#x110000;</p>");
+
+    const errors = await checkEpub({ root });
+
+    expect(errors.some((error) => error.startsWith(`${edition} XML parse failed in OEBPS/day-001.xhtml`))).toBe(true);
+  });
 });
 
-async function writeEpubFixture(root: string, relativePath: string): Promise<void> {
+async function writeEpubFixture(
+  root: string,
+  relativePath: string,
+  dayOneBody = "<p><a href='day-002.xhtml#missing-anchor'>Next</a></p>"
+): Promise<void> {
   const zip = new JSZip();
   zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
   zip.file("META-INF/container.xml", '<?xml version="1.0" encoding="UTF-8"?><container/>');
   zip.file("OEBPS/content.opf", '<?xml version="1.0" encoding="UTF-8"?><package/>');
   zip.file("OEBPS/nav.xhtml", xhtml("<nav/>"));
   zip.file("OEBPS/introduction.xhtml", xhtml("<p>Intro</p>"));
-  zip.file("OEBPS/day-001.xhtml", xhtml("<p><a href='day-002.xhtml#missing-anchor'>Next</a></p>"));
+  zip.file("OEBPS/day-001.xhtml", xhtml(dayOneBody));
   zip.file("OEBPS/day-002.xhtml", xhtml('<p id="present-anchor">Target</p>'));
 
   const outputPath = path.join(root, relativePath);

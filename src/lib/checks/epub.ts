@@ -54,13 +54,21 @@ export async function checkEpub(options: EpubCheckOptions): Promise<string[]> {
 
 function decodeXmlEntities(value: string): string {
   return value
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex: string) => String.fromCodePoint(Number.parseInt(hex, 16)))
-    .replace(/&#(\d+);/g, (_, dec: string) => String.fromCodePoint(Number.parseInt(dec, 10)))
+    .replace(/&#x([0-9a-f]+);/gi, (entity: string, hex: string) => decodeXmlCodePoint(entity, Number.parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (entity: string, dec: string) => decodeXmlCodePoint(entity, Number.parseInt(dec, 10)))
     .replace(/&apos;/g, "'")
     .replace(/&quot;/g, "\"")
     .replace(/&gt;/g, ">")
     .replace(/&lt;/g, "<")
     .replace(/&amp;/g, "&");
+}
+
+function decodeXmlCodePoint(entity: string, codePoint: number): string {
+  try {
+    return String.fromCodePoint(codePoint);
+  } catch {
+    return entity;
+  }
 }
 
 function isInsideSvg(text: string, index: number): boolean {
