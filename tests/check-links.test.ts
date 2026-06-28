@@ -209,7 +209,6 @@ describe("link checks", () => {
       }
     ]);
   });
-
 });
 
 async function createFixtureRoot(): Promise<string> {
