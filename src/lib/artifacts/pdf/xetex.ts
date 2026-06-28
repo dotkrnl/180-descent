@@ -1132,7 +1132,6 @@ function renderListItemBody(node: MdxNode, state: MdxRenderState): string {
 
 function renderImage(src: string, caption: string, state: MdxRenderState): string {
   const filePath = prepareImagePath(src, state);
-  if (!filePath) return caption ? `\\begin{notepara}${caption}\\end{notepara}` : "";
   const safePath = latexPath(filePath);
   const safeCaption = caption || "";
   return [
@@ -1146,10 +1145,12 @@ function renderImage(src: string, caption: string, state: MdxRenderState): strin
   ].filter(Boolean).join("\n");
 }
 
-function prepareImagePath(src: string, state: MdxRenderState): string | null {
-  if (!src) return null;
+function prepareImagePath(src: string, state: MdxRenderState): string {
+  if (!src) throw new Error("PDF image source is empty");
   const rawPath = path.isAbsolute(src) ? src : path.resolve(state.sourceDir, src);
-  if (!/\.(png|jpe?g|pdf)$/i.test(rawPath) && !/\.svg$/i.test(rawPath)) return null;
+  if (!/\.(png|jpe?g|pdf)$/i.test(rawPath) && !/\.svg$/i.test(rawPath)) {
+    throw new Error(`Unsupported PDF image asset type: ${src}`);
+  }
   if (!/\.svg$/i.test(rawPath)) return rawPath;
   const output = path.join(state.workDir, `${path.basename(rawPath, ".svg")}.pdf`);
   execFileSyncish("rsvg-convert", ["-f", "pdf", "-o", output, rawPath]);

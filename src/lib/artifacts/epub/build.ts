@@ -354,7 +354,6 @@ ${subtitleMarkup}
   $("img[src]").each((_, img) => {
     const el = $(img);
     const epubImage = registerEpubImage(el.attr("src"), imageAssets, config.root);
-    if (!epubImage) return;
 
     el.attr("src", epubImage.href);
     el.removeAttr("srcset");
@@ -585,10 +584,14 @@ function epubUuidFromString(value: string): string {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20, 32)}`;
 }
 
-function registerEpubImage(src: string | undefined, imageAssets: Map<string, EpubImage>, root: string): EpubImage | null {
+function registerEpubImage(src: string | undefined, imageAssets: Map<string, EpubImage>, root: string): EpubImage {
   const pathOnly = (src ?? "").split(/[?#]/)[0];
+  if (!pathOnly) throw new Error("EPUB image source is empty");
+
   const href = epubImageHref(pathOnly);
-  if (!href) return null;
+  if (!href) {
+    throw new Error(`EPUB image must be a site asset under /assets/images/ or /_astro/: ${src}`);
+  }
 
   const extension = path.extname(pathOnly).toLowerCase();
   const mediaTypes: Record<string, string> = {
@@ -599,7 +602,7 @@ function registerEpubImage(src: string | undefined, imageAssets: Map<string, Epu
     ".webp": "image/webp"
   };
   const mediaType = mediaTypes[extension];
-  if (!mediaType) return null;
+  if (!mediaType) throw new Error(`Unsupported EPUB image asset type: ${src}`);
 
   if (!imageAssets.has(href)) {
     imageAssets.set(href, {
@@ -610,7 +613,7 @@ function registerEpubImage(src: string | undefined, imageAssets: Map<string, Epu
     });
   }
 
-  return imageAssets.get(href) ?? null;
+  return imageAssets.get(href)!;
 }
 
 function epubImageHref(pathOnly: string): string | null {
