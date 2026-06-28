@@ -70,6 +70,18 @@ describe("seo check", () => {
     expect(result.errors[0]).toMatch(/^\/site\.webmanifest: invalid web manifest JSON/);
   });
 
+  it("reports non-object web manifests", async () => {
+    const root = await createSiteRoot();
+    await writeFile(path.join(root, "_site/index.html"), indexHtml());
+    await writeFile(path.join(root, "_site/site.webmanifest"), JSON.stringify([]));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "/site.webmanifest: web manifest must be a JSON object"
+    ]);
+  });
+
   it("reports non-array manifest icons", async () => {
     const root = await createSiteRoot();
     await writeFile(path.join(root, "_site/index.html"), indexHtml());

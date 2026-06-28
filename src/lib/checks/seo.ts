@@ -128,7 +128,11 @@ async function checkManifestIcons(siteDir: string, siteUrl: string, href: string
   let manifest: { icons?: unknown };
   try {
     const parsed: unknown = JSON.parse(await readFile(manifestPath, "utf8"));
-    manifest = parsed && typeof parsed === "object" ? parsed : {};
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      errors.push(`${href}: web manifest must be a JSON object`);
+      return;
+    }
+    manifest = parsed;
   } catch (error) {
     errors.push(`${href}: invalid web manifest JSON (${toError(error).message})`);
     return;
