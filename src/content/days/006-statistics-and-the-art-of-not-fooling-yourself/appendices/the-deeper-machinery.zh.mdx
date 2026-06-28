@@ -141,7 +141,7 @@ import Term from "@app/components/lesson/Term.astro";
 <ContentSection>
 ### 事实二：一直找下去，越过门槛会越来越容易
 
-正文中「假阳性工厂」的「可选停止」开关隐藏了一个本该更加著名的结论。假设你在每增加一名受试者后就进行一次检验，并在 <Term><MathInline latex={String.raw`p`} /></Term> 跌破 .05 的那一刻立即停止。无论是否存在真实效应，未经校正的反复查看都会改变检验程序的长期性质；在零假设成立时，假阳性风险尤其清楚地暴露出来。更准确地说，在零假设成立、反复查看结果且不作校正的理想化条件下，随着查看次数增加，最终越过固定显著性阈值的概率可以趋近于 1，而不是保持在 5%。Anscombe 在 1954 年证明了这一点，Armitage 等人在 1969 年进一步强调了它：只要反复查看的次数足够多，随样本增加而不断波动的 <Term>p 值</Term> 即使在零假设成立时，也很可能仅仅由于运气而跌破任何固定界线。
+正文中「假阳性工厂」的「可选停止」开关隐藏了一个本该更加著名的结论。假设你在每增加一名受试者后就进行一次检验，并在 <Term><MathInline latex={String.raw`p`} /></Term> 跌破 .05 的那一刻立即停止。无论是否存在真实效应，未经校正的反复查看都会改变检验程序的长期性质；在零假设成立时，误报风险尤其清楚地暴露出来。更准确地说，在零假设成立、反复查看结果且不作校正的理想化条件下，随着查看次数增加，最终越过固定显著性阈值的概率可以趋近于 1，而不是保持在 5%。Anscombe 在 1954 年证明了这一点，Armitage 等人在 1969 年进一步强调了它：只要反复查看的次数足够多，随样本增加而不断波动的 <Term>p 值</Term> 即使在零假设成立时，也很可能仅仅由于运气而跌破任何固定界线。
 
 这就是为什么反复查看中间结果不仅是某种轻微的过失，而是一种结构性的漏洞——也是为什么<Highlight>第 4 日</Highlight>提到的 <Term>e 值</Term> 和任意时点有效检验是如此优雅的解决方案：经过正确构造的任意时点有效程序，在其模型和技术条件成立时，允许研究者根据已观察的数据决定是否继续采样，同时保持规定的错误率或证据保证。这也是为什么必须监测积累数据以确保安全的真实临床试验会使用<Term><MathInline latex={String.raw`\alpha`} /> 支出</Term> (alpha spending) 和成组序贯设计——它们在每次中期查看时支付少量的统计税，从而使总的第一类错误预算仍维持在 5%。未经校正的可选停止会破坏错误率控制；而通过支出规则进行的停止，则是 20 世纪统计学的重要成就之一。
 
@@ -216,7 +216,7 @@ import Term from "@app/components/lesson/Term.astro";
 <ContentSection>
 有两个细节让情况变得更糟，而非更好 —— 而它们正是这里的核心本质。
 
-「情况比网格显示的更严峻」 (Colquhoun)。上述计算器使用整个 .05 「尾部」作为误报率。但 David Colquhoun (2014, 2017) 指出，一个<Highlight>恰好</Highlight>位于 <Term><MathInline latex={String.raw`p = .05`} /></Term> 的结果，在真实效应下发生的可能性几乎不比在零假设下更高，因此其误报风险比尾部显示的更高。在 Colquhoun 所采用的特定先验概率、功效和模型设定下，刚好达到 <Term><MathInline latex={String.raw`p \approx .05`} /></Term> 的结果可对应约 <Highlight>26%</Highlight> 的假阳性风险。这个数字不是 p 值本身的固定含义。如果要求真正的发现率，<Term><MathInline latex={String.raw`p < .05`} /></Term> 的阈值实在不够严格。这就是正文中提到的 Benjamin 等人推动将阈值收紧至 .005 的量化核心。
+「情况比网格显示的更严峻」 (Colquhoun)。上述计算器使用整个 .05 「尾部」作为误报率。但 David Colquhoun (2014, 2017) 指出，一个<Highlight>恰好</Highlight>位于 <Term><MathInline latex={String.raw`p = .05`} /></Term> 的结果，在真实效应下发生的可能性几乎不比在零假设下更高，因此其误报风险比尾部显示的更高。在 Colquhoun 所采用的特定先验概率、功效和模型设定下，刚好达到 <Term><MathInline latex={String.raw`p \approx .05`} /></Term> 的结果可对应约 <Highlight>26%</Highlight> 的误报风险。这个数字不是 p 值本身的固定含义。如果要求真正的发现率，<Term><MathInline latex={String.raw`p < .05`} /></Term> 的阈值实在不够严格。这就是正文中提到的 Benjamin 等人推动将阈值收紧至 .005 的量化核心。
 
 「零假设几乎从不完全正确」 (Meehl 的普遍微弱相关现象)。Paul Meehl 观察到，在大规模社会科学数据集中，「一切」都与「一切」存在微弱的相关性 —— 出生顺序与政治倾向、身高与幽默感 —— 因为世界是一个由微弱真实联系交织成的致密网络，他称之为<Term>普遍微弱相关现象</Term> (crud factor)。因此，一个「精确为零」的点零假设其实是一个稻草人；只要样本量够大，你就能拒绝任何一对变量之间的零假设。此时「统计显著」仅证明了你的样本量够大，而非你发现了任何有意义的东西。这就是显著性与重要性是两码事的深层原因。
 
@@ -238,7 +238,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 ### 更好的错误分类：S 类与 M 类错误
 
-Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效世界中，经典的第 I 类 / 第 II 类错误框架没有涵盖这里最关键的问题。另外两种更尖锐的失败更重要。<Term>S 类（方向）错误</Term> (Type S / sign error) 是指搞错了「方向」——结论认为某种治疗有效，实则有害。<Term>M 类（幅度）错误</Term> (Type M / magnitude error) 是指「夸大倍数」——你的「显著」估计值比真实值大了多少倍。他们的论点直指正文中的「赢家诅咒」：在低功效研究中，被筛选为显著的效应估计可能明显高于真实效应；在某些设定下，夸大程度可达到数倍。已发表效应可能是被系统性放大的版本。
+Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低检验功效世界中，经典的第 I 类 / 第 II 类错误框架没有涵盖这里最关键的问题。另外两种更尖锐的失败更重要。<Term>S 类（方向）错误</Term> (Type S / sign error) 是指搞错了「方向」——结论认为某种治疗有效，实则有害。<Term>M 类（幅度）错误</Term> (Type M / magnitude error) 是指「夸大倍数」——你的「显著」估计值比真实值大了多少倍。他们的论点直指正文中的「赢家诅咒」：在低检验功效研究中，被筛选为显著的效应估计可能明显高于真实效应；在某些设定下，夸大程度可达到数倍。已发表效应可能是被系统性放大的版本。
 
 ### 如何为「无实质效应」提供证据：等效性检验
 
@@ -320,7 +320,7 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低功效�
 
 <RecapList>
 <RecapItem term="最深层的思想">「<Term><MathInline latex={String.raw`p < .05`} /></Term> 检验」是费舍尔的证据衡量标准与内曼-皮尔逊的决策规则的不连贯糅合，许多误读都是这一混合结构的症状。而两个简单的数学事实（连续精确零假设下 <Term>p 值</Term> 是均匀的；未经校正地反复查看会使越过固定阈值越来越容易）解释了为什么 p 值操纵如此危险。</RecapItem>
-<RecapItem term="最精彩的类比">将 <Term>p 值</Term> 转化为投掷硬币：<Term><MathInline latex={String.raw`p = .05`} /></Term> 的惊异度仅相当于连续四五次正面，有点意思，但远谈不上发现。在 Colquhoun 的特定先验概率、功效和模型设定下，刚好达到 <Term><MathInline latex={String.raw`p \approx .05`} /></Term> 的结果可对应约 26% 的假阳性风险；这不是 p 值本身的固定含义。</RecapItem>
+<RecapItem term="最精彩的类比">将 <Term>p 值</Term> 转化为投掷硬币：<Term><MathInline latex={String.raw`p = .05`} /></Term> 的惊异度仅相当于连续四五次正面，有点意思，但远谈不上发现。在 Colquhoun 的特定先验概率、功效和模型设定下，刚好达到 <Term><MathInline latex={String.raw`p \approx .05`} /></Term> 的结果可对应约 26% 的误报风险；这不是 p 值本身的固定含义。</RecapItem>
 <RecapItem term="建设性的转向">解决之道是工具箱而非禁令：检验严苛性 (Mayo)、带有相容性区间的效应量、S 类 / M 类思维、等效性检验、错误发现率控制以及贝叶斯因子——此外还有能够从数字中审计学科领域的统计取证方法（P-curve、死鱼实验、statcheck）。</RecapItem>
 </RecapList>
 </Recap>
