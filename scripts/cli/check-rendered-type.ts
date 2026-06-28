@@ -51,8 +51,11 @@ const server = createServer(async (request, response) => {
 await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
 
 const address = server.address();
-const port = typeof address === "object" && address ? address.port : 0;
-const baseUrl = `http://127.0.0.1:${port}`;
+if (!address || typeof address === "string") {
+  await new Promise<void>((resolve) => server.close(() => resolve()));
+  throw new Error("Rendered typography check server did not bind to a TCP port");
+}
+const baseUrl = `http://127.0.0.1:${address.port}`;
 const browser = await chromium.launch();
 const failures: RenderedTypeFailure[] = [];
 
