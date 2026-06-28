@@ -152,21 +152,11 @@ function validateManifestReferences(root: string, manifest: DayManifest): void {
 function checkCanonicalBodyPaths(manifest: DayManifest): void {
   checkLocaleBodyPath(manifest.locales.en.body, "en");
   checkLocaleBodyPath(manifest.locales.zh.body, "zh");
-  for (const appendix of manifest.appendices) {
-    checkAppendixBodyPath(appendix.locales.en.body, "en");
-    checkAppendixBodyPath(appendix.locales.zh.body, "zh");
-  }
 }
 
 function checkLocaleBodyPath(value: string, locale: Locale): void {
   if (value !== `${locale}.mdx`) {
     throw new Error(`${locale} body must be ${locale}.mdx`);
-  }
-}
-
-function checkAppendixBodyPath(value: string, locale: Locale): void {
-  if (!new RegExp(`^appendices\\/[a-z0-9]+(?:-[a-z0-9]+)*\\.${locale}\\.mdx$`).test(value)) {
-    throw new Error(`${locale} appendix body must be appendices/<slug>.${locale}.mdx`);
   }
 }
 

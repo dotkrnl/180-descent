@@ -18,8 +18,8 @@ three-digit directory prefix.
 - `day.yaml` is the strict typed manifest: day number, block, locale metadata,
   appendices, and interaction scripts.
 - `en.mdx` and `zh.mdx` are the paired main bodies.
-- `appendices/*.en.mdx` and `appendices/*.zh.mdx` are optional paired deep-dive
-  bodies declared by manifest id.
+- `appendices/<id>.en.mdx` and `appendices/<id>.zh.mdx` are optional paired
+  deep-dive bodies; `<id>` must match the manifest appendix id.
 - Shared prose/layout components live in `src/app/components/lesson/`.
 - Reusable static figures live in `src/app/components/lesson/figures/`.
 - Reusable web interactives live in `src/app/components/lesson/interactives/`.
@@ -142,7 +142,8 @@ errors, not publication quality.
 Appendices are declared in `day.yaml` under `appendices`.
 
 - Give each appendix a stable `id`.
-- Add locale-specific body paths and titles.
+- Add locale-specific body paths and titles. Body paths must be
+  `appendices/<id>.en.mdx` and `appendices/<id>.zh.mdx`.
 - Keep optional appendix content inside the appendix MDX file, not hidden in the
   main day body.
 - Include static PDF/EPUB equivalents for any web-only controls.

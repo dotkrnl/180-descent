@@ -194,11 +194,11 @@ describe("target content registry", () => {
           locales: {
             en: {
               title: "Appendix A",
-              body: "appendices/a.html"
+              body: "appendices/appendix-a.html"
             },
             zh: {
               title: "附录 A",
-              body: "appendices/a.zh.mdx"
+              body: "appendices/appendix-a.zh.mdx"
             }
           }
         }
@@ -232,11 +232,42 @@ describe("target content registry", () => {
       "        body: appendices/a.zh.mdx",
       "      zh:",
       "        title: 附录 A",
-      "        body: appendices/a.zh.mdx",
+      "        body: appendices/appendix-a.zh.mdx",
       "interactionScripts: []"
     ].join("\n"));
 
-    await expect(loadContentRegistry({ daysDir })).rejects.toThrow(/en appendix body must be appendices\/<slug>\.en\.mdx/);
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow(
+      "en appendix body must be appendices/appendix-a.en.mdx"
+    );
+  });
+
+  it("rejects appendix bodies whose file slug does not match the appendix id", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "en.mdx"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [
+        {
+          id: "appendix-a",
+          locales: {
+            en: { title: "Appendix A", body: "appendices/other.en.mdx" },
+            zh: { title: "附录 A", body: "appendices/appendix-a.zh.mdx" }
+          }
+        }
+      ],
+      interactionScripts: []
+    })).toThrow("en appendix body must be appendices/appendix-a.en.mdx");
   });
 
   it("rejects duplicate appendix ids", () => {
@@ -259,15 +290,15 @@ describe("target content registry", () => {
         {
           id: "appendix-a",
           locales: {
-            en: { title: "Appendix A", body: "appendices/a.en.mdx" },
-            zh: { title: "附录 A", body: "appendices/a.zh.mdx" }
+            en: { title: "Appendix A", body: "appendices/appendix-a.en.mdx" },
+            zh: { title: "附录 A", body: "appendices/appendix-a.zh.mdx" }
           }
         },
         {
           id: "appendix-a",
           locales: {
-            en: { title: "Appendix A2", body: "appendices/a2.en.mdx" },
-            zh: { title: "附录 A2", body: "appendices/a2.zh.mdx" }
+            en: { title: "Appendix A2", body: "appendices/appendix-a.en.mdx" },
+            zh: { title: "附录 A2", body: "appendices/appendix-a.zh.mdx" }
           }
         }
       ],

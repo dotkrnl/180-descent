@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const localeSchema = z.enum(["en", "zh"]);
+const manifestLocales = ["en", "zh"] as const;
 const slugSchema = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 const mdxPathSchema = z.string().regex(/^.+\.mdx$/);
 
@@ -35,6 +36,18 @@ export const dayManifestSchema = z.object({
 }).strict().superRefine((manifest, context) => {
   checkUniqueValues(manifest.appendices.map((appendix) => appendix.id), ["appendices"], "appendix id", context);
   checkUniqueValues(manifest.interactionScripts, ["interactionScripts"], "interaction script", context);
+  for (const [appendixIndex, appendix] of manifest.appendices.entries()) {
+    for (const locale of manifestLocales) {
+      const expected = `appendices/${appendix.id}.${locale}.mdx`;
+      if (appendix.locales[locale].body !== expected) {
+        context.addIssue({
+          code: "custom",
+          path: ["appendices", appendixIndex, "locales", locale, "body"],
+          message: `${locale} appendix body must be ${expected}`
+        });
+      }
+    }
+  }
 });
 
 function checkUniqueValues(values: string[], path: Array<string | number>, label: string, context: z.RefinementCtx): void {
