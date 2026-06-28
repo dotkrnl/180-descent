@@ -90,6 +90,25 @@ describe("content check", () => {
     await expect(checkContent({ root })).resolves.toEqual([]);
   });
 
+  it("reports artifact-unfriendly alternate prose", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        "Static version"
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx contains artifact-unfriendly phrase: Static version"
+      }
+    ]);
+  });
+
   it("does not treat fenced examples as content markers or raw markup", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {

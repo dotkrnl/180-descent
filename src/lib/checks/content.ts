@@ -18,7 +18,7 @@ interface ContentCheckFailure {
   message: string;
 }
 
-const PRINT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
+const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
 const STATUS_CHIP_LABEL_MAX_CHARS = 28;
 const STATUS_CHIP_LABEL_GATE_START_DAY = 8;
 const UNSTYLED_STATUS_LIST_ITEM_PATTERN =
@@ -405,9 +405,9 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
     failures.push({ message: `${checkedFile.relativePath} references remote Google Fonts` });
   }
 
-  for (const phrase of PRINT_UNFRIENDLY_PHRASES) {
+  for (const phrase of ARTIFACT_UNFRIENDLY_PHRASES) {
     if (checkedFile.source.includes(phrase)) {
-      failures.push({ message: `${checkedFile.relativePath} contains print-unfriendly phrase: ${phrase}` });
+      failures.push({ message: `${checkedFile.relativePath} contains artifact-unfriendly phrase: ${phrase}` });
     }
   }
 
