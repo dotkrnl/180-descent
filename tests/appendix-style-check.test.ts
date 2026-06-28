@@ -40,6 +40,15 @@ describe("appendix style check", () => {
     ]);
   });
 
+  it("does not read prefix-sharing data attributes as classes", async () => {
+    const root = await createFixtureRoot();
+    await writeAppendix(root, '<div data-class="movement" data-className={"unknown-appendix-class"}></div>');
+
+    const result = await checkAppendixStyle({ root });
+
+    expect(result.errors).toEqual([]);
+  });
+
   it("reports missing shared CSS ownership", async () => {
     const root = await createFixtureRoot();
     await writeAppendix(root, '<div class="unknown-appendix-class"></div>');
