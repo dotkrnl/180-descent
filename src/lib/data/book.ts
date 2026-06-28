@@ -37,9 +37,11 @@ export interface HumanEditorData {
   url: string;
 }
 
+const urlSchema = z.string().url();
+
 const humanEditorSchema = z.object({
   name: z.string().min(1),
-  url: z.string().min(1)
+  url: urlSchema
 }).strict();
 
 const localizedBookSchema = z.object({
@@ -61,8 +63,8 @@ const bookDataSchema = z.object({
   authors: z.string().min(1),
   human_editor: humanEditorSchema,
   description: z.string().min(1),
-  site_url: z.string().min(1),
-  repo: z.string().min(1),
+  site_url: urlSchema,
+  repo: urlSchema,
   language: z.string().min(1),
   publisher: z.string().min(1),
   published_year: z.number().int().positive(),
@@ -72,7 +74,7 @@ const bookDataSchema = z.object({
 }).strict();
 
 const bookSiteDataSchema = z.object({
-  site_url: z.string().min(1)
+  site_url: urlSchema
 }).passthrough();
 
 export async function readBookData(root: string): Promise<BookData> {
