@@ -41,6 +41,18 @@ describe("credits data", () => {
     await expect(readCreditsData(root)).rejects.toThrow();
   });
 
+  it("rejects blank required credit strings", async () => {
+    const root = await createCreditsRoot([
+      "fonts:",
+      "  - name: '   '",
+      "    source: https://example.com/font",
+      "    license: OFL-1.1",
+      "images: []"
+    ].join("\n"));
+
+    await expect(readCreditsData(root)).rejects.toThrow("must not be blank");
+  });
+
   it("rejects image assets outside the site image tree", async () => {
     const root = await createCreditsRoot([
       "fonts: []",

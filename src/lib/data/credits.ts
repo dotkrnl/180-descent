@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { creditsDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
+import { nonBlankString } from "@lib/schemas/text";
 
 export interface CreditsData {
   fonts: CreditFont[];
@@ -32,18 +33,18 @@ const imageAssetSchema = z.string()
   });
 
 const creditFontSchema = z.object({
-  name: z.string().min(1),
-  source: z.string().min(1),
-  license: z.string().min(1)
+  name: nonBlankString,
+  source: nonBlankString,
+  license: nonBlankString
 }).strict();
 
 const creditImageSchema = z.object({
-  title: z.string().min(1),
-  creator: z.string().min(1),
-  source: z.string().min(1),
-  license: z.string().min(1),
+  title: nonBlankString,
+  creator: nonBlankString,
+  source: nonBlankString,
+  license: nonBlankString,
   asset: imageAssetSchema,
-  notes: z.string().min(1)
+  notes: nonBlankString
 }).strict();
 
 const creditsDataSchema = z.object({

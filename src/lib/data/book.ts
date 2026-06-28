@@ -1,6 +1,7 @@
 import { bookDownloadUrls, type BookDownloadUrls } from "@lib/artifacts/downloads";
 import { bookDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
+import { nonBlankString } from "@lib/schemas/text";
 import { z } from "zod";
 
 export interface BookData {
@@ -47,33 +48,33 @@ const siteUrlSchema = urlSchema.refine((value) => value === new URL(value).origi
 });
 
 const humanEditorSchema = z.object({
-  name: z.string().min(1),
+  name: nonBlankString,
   url: urlSchema
 }).strict();
 
 const localizedBookSchema = z.object({
-  language: z.string().min(1),
-  title: z.string().min(1),
-  subtitle: z.string().min(1),
-  deep_dive_subtitle: z.string().min(1),
-  authors: z.string().min(1),
-  translators: z.string().min(1),
+  language: nonBlankString,
+  title: nonBlankString,
+  subtitle: nonBlankString,
+  deep_dive_subtitle: nonBlankString,
+  authors: nonBlankString,
+  translators: nonBlankString,
   human_editor: humanEditorSchema,
-  description: z.string().min(1),
+  description: nonBlankString,
   epub_identifier: epubIdentifierSeedSchema
 }).strict();
 
 const bookDataSchema = z.object({
-  title: z.string().min(1),
-  subtitle: z.string().min(1),
-  deep_dive_subtitle: z.string().min(1),
-  authors: z.string().min(1),
+  title: nonBlankString,
+  subtitle: nonBlankString,
+  deep_dive_subtitle: nonBlankString,
+  authors: nonBlankString,
   human_editor: humanEditorSchema,
-  description: z.string().min(1),
+  description: nonBlankString,
   site_url: siteUrlSchema,
   repo: urlSchema,
-  language: z.string().min(1),
-  publisher: z.string().min(1),
+  language: nonBlankString,
+  publisher: nonBlankString,
   published_year: z.number().int().positive(),
   total_days: z.number().int().positive(),
   epub_identifier: epubIdentifierSeedSchema,

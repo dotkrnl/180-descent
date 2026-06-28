@@ -57,6 +57,12 @@ describe("syllabus data", () => {
     await expect(readSyllabusData(root, "en")).rejects.toThrow();
   });
 
+  it("rejects blank localized text", async () => {
+    const root = await createFixtureRoot(validSyllabusYaml().replace("  en: Knowledge Map", "  en: '   '"));
+
+    await expect(readSyllabusData(root, "en")).rejects.toThrow("must not be blank");
+  });
+
   it("rejects empty syllabus block lists", async () => {
     const root = await createFixtureRoot([
       "title:",

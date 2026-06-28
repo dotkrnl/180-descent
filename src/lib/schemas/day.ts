@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { nonBlankString } from "@lib/schemas/text";
 
 const localeSchema = z.enum(["en", "zh"]);
 const manifestLocales = ["en", "zh"] as const;
@@ -11,13 +12,13 @@ const mdxPathSchema = z.string()
 
 const localeContentSchema = z.object({
   body: mdxPathSchema,
-  title: z.string().min(1),
-  summary: z.string().min(1)
+  title: nonBlankString,
+  summary: nonBlankString
 }).strict();
 
 const appendixLocaleSchema = z.object({
   body: mdxPathSchema,
-  title: z.string().min(1)
+  title: nonBlankString
 }).strict();
 
 const appendixSchema = z.object({
@@ -30,7 +31,7 @@ const appendixSchema = z.object({
 
 export const dayManifestSchema = z.object({
   day: z.number().int().positive(),
-  block: z.string().min(1),
+  block: nonBlankString,
   locales: z.object({
     en: localeContentSchema,
     zh: localeContentSchema

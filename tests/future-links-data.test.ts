@@ -38,6 +38,19 @@ describe("future links data", () => {
     await expect(readFutureLinksData(root)).rejects.toThrow();
   });
 
+  it("rejects blank future link text fields", async () => {
+    const root = await createFixtureRoot([
+      "- id: day-001-to-day-009-systems",
+      "  from_day: 1",
+      "  target_day: 9",
+      "  text: '   '",
+      "  status: pending",
+      "  context: coherentism as web/system"
+    ].join("\n"));
+
+    await expect(readFutureLinksData(root)).rejects.toThrow("must not be blank");
+  });
+
   it("rejects duplicate future link ids", async () => {
     const root = await createFixtureRoot([
       "- id: day-001-to-day-009-systems",

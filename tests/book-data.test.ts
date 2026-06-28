@@ -37,6 +37,14 @@ describe("book data", () => {
     await expect(readBookData(root)).rejects.toThrow();
   });
 
+  it("rejects blank required metadata strings", async () => {
+    const root = await createBookRoot(
+      validBookYaml().replace("title: Fixture", "title: '   '")
+    );
+
+    await expect(readBookData(root)).rejects.toThrow("must not be blank");
+  });
+
   it("rejects invalid URLs in full book metadata", async () => {
     const root = await createBookRoot([
       "title: Fixture",

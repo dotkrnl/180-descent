@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { futureLinksDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
+import { nonBlankString } from "@lib/schemas/text";
 
 interface FutureLinkEntry {
   id: string;
@@ -14,12 +15,12 @@ interface FutureLinkEntry {
 const futureLinkIdPattern = /^day-(\d{3})(?:-[a-z0-9]+)*-to-day-(\d{3})(?:-[a-z0-9]+)*$/;
 
 const futureLinkEntrySchema = z.object({
-  id: z.string().min(1),
+  id: nonBlankString,
   from_day: z.number().int().positive(),
   target_day: z.number().int().positive(),
-  text: z.string().min(1),
+  text: nonBlankString,
   status: z.enum(["pending", "resolved"]),
-  context: z.string().min(1)
+  context: nonBlankString
 }).strict();
 
 const futureLinksDataSchema = z.array(futureLinkEntrySchema).superRefine((links, context) => {

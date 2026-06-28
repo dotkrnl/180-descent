@@ -71,6 +71,27 @@ describe("target content registry", () => {
     })).toThrow();
   });
 
+  it("rejects blank manifest text fields", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "   ",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "en.mdx"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [],
+      interactionScripts: []
+    })).toThrow("must not be blank");
+  });
+
   it("rejects non-MDX locale body paths", () => {
     expect(() => dayManifestSchema.parse({
       day: 1,

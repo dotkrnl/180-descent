@@ -2,6 +2,7 @@ import { z } from "zod";
 import { syllabusDataFile } from "@lib/data/paths";
 import { readYamlFile } from "@lib/data/yaml";
 import type { Locale } from "@lib/schemas/day";
+import { nonBlankString } from "@lib/schemas/text";
 
 export interface Syllabus {
   title: string;
@@ -31,8 +32,8 @@ export interface SyllabusDay {
 }
 
 const localizedTextSchema = z.object({
-  en: z.string().min(1),
-  zh: z.string().min(1)
+  en: nonBlankString,
+  zh: nonBlankString
 }).strict();
 
 const rawSyllabusDaySchema = z.object({
@@ -46,7 +47,7 @@ const rawSyllabusDaySchema = z.object({
 }).strict();
 
 const rawSyllabusBlockSchema = z.object({
-  id: z.string().min(1),
+  id: nonBlankString,
   start_day: z.number().int().positive(),
   end_day: z.number().int().positive(),
   title: localizedTextSchema,
