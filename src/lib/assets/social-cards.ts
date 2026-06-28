@@ -43,8 +43,8 @@ const rendererPath = fileURLToPath(import.meta.url);
 const CARD_WIDTH = 1200;
 const CARD_HEIGHT = 630;
 
-function clampSocialText(value = "", max = 160): string {
-  const text = String(value || "").replace(/\s+/g, " ").trim();
+function clampSocialText(value: string, max = 160): string {
+  const text = value.replace(/\s+/g, " ").trim();
   return text.length > max ? `${text.slice(0, max - 1).trim()}...` : text;
 }
 
@@ -242,7 +242,7 @@ function svgMultilineText(lines: string[], options: {
 }
 
 function wrapSocialText(value: string, options: { maxLines: number; maxChars: number }): string[] {
-  const text = String(value || "").replace(/\s+/g, " ").trim();
+  const text = value.replace(/\s+/g, " ").trim();
   if (!text) return [];
 
   const tokens = /[\u3400-\u9fff]/.test(text)
