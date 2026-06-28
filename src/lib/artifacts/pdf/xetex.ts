@@ -919,16 +919,23 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
       };
     }
   }
-  if (!spec || !state.renderedHtml) return "";
+  if (!spec) return "";
+  if (!state.renderedHtml) {
+    throw new Error(`Rendered HTML is required to render PDF figure ${name} in ${sourceLabel(state)}`);
+  }
 
   const index = state.componentCounts.get(spec.selector) ?? 0;
   state.componentCounts.set(spec.selector, index + 1);
 
   const rootElement = state.renderedHtml(spec.selector).eq(index);
-  if (!rootElement.length) return "";
+  if (!rootElement.length) {
+    throw new Error(`Missing rendered PDF figure ${name} (${spec.selector}) in ${sourceLabel(state)}`);
+  }
 
   const svgElements = rootElement.find("svg");
-  if (svgElements.length !== 1) return "";
+  if (svgElements.length !== 1) {
+    throw new Error(`Expected one rendered PDF figure SVG for ${name} (${spec.selector}) in ${sourceLabel(state)}, found ${svgElements.length}`);
+  }
 
   const svg = state.renderedHtml.xml(svgElements.first());
   const caption = latexEscape(
@@ -939,7 +946,7 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
 }
 
 function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, name: string, spec: SvgAssetSpec): string {
-  if (!svg.trim()) return "";
+  if (!svg.trim()) throw new Error(`PDF SVG asset is empty for ${name} in ${sourceLabel(state)}`);
   const sourceSlug = sanitizeAssetName(path.relative(contentDaysDir(state.root), state.sourceFile));
   const assetSlug = sanitizeAssetName(`${sourceSlug}-${name}-${++state.generatedAssetIndex}`);
   const svgPath = path.join(state.workDir, `${assetSlug}.svg`);
@@ -957,6 +964,10 @@ function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, nam
     "\\end{center}",
     "\\vspace{0.1in}"
   ].filter(Boolean).join("\n");
+}
+
+function sourceLabel(state: MdxRenderState): string {
+  return path.relative(state.root, state.sourceFile);
 }
 
 function renderInlineSvg(node: MdxNode, state: MdxRenderState): string {
