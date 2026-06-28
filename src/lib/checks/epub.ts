@@ -8,6 +8,7 @@ import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book"
 import { bookArtifactPaths, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
 import { CHINESE_DAY_ONE_APPENDIX_PATTERNS, ENGLISH_DAY_ONE_APPENDIX_PATTERNS } from "@lib/checks/day-one-appendix-patterns";
 import { toError } from "@lib/errors";
+import type { Locale } from "@lib/schemas/day";
 import { epubcheckValidationCommands, type CommandSpec } from "@lib/tools/epubcheck";
 
 interface EpubCheckOptions {
@@ -100,14 +101,15 @@ async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
 
   const enDays = await loadArtifactBookDays(root, "en");
   const zhDays = await loadArtifactBookDays(root, "zh");
-  addPerDayEditions(editions, enDays, false);
-  addPerDayEditions(editions, zhDays, true);
+  addPerDayEditions(editions, enDays, "en");
+  addPerDayEditions(editions, zhDays, "zh");
   return editions;
 }
 
-function addPerDayEditions(editions: EpubEdition[], days: ArtifactBookDay[], zh: boolean): void {
+function addPerDayEditions(editions: EpubEdition[], days: ArtifactBookDay[], locale: Locale): void {
   for (const day of days) {
-    const file = downloadArtifactPath(dayArtifactName("epub", zh ? "zh" : "en", day.path));
+    const file = downloadArtifactPath(dayArtifactName("epub", locale, day.path));
+    const isZh = locale === "zh";
 
     const isDayOne = day.day === 1;
     const dayRequired = [
@@ -120,8 +122,8 @@ function addPerDayEditions(editions: EpubEdition[], days: ArtifactBookDay[], zh:
     editions.push({
       file,
       deepDive: true,
-      appendixPatterns: isDayOne ? (zh ? CHINESE_DAY_ONE_APPENDIX_PATTERNS : ENGLISH_DAY_ONE_APPENDIX_PATTERNS) : [],
-      optionalAppendixLabel: zh ? /可选附录/ : /Optional appendix/,
+      appendixPatterns: isDayOne ? (isZh ? CHINESE_DAY_ONE_APPENDIX_PATTERNS : ENGLISH_DAY_ONE_APPENDIX_PATTERNS) : [],
+      optionalAppendixLabel: isZh ? /可选附录/ : /Optional appendix/,
       required: dayRequired
     });
   }
