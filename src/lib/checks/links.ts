@@ -80,15 +80,11 @@ function linkTarget(href?: string): { pathname: string; anchor?: string; samePag
   if (href.startsWith("//") || /^[a-z][a-z0-9+.-]*:/i.test(href)) return null;
   if (!href.startsWith("/")) return null;
 
-  try {
-    const parsed = new URL(href, "https://local.invalid");
-    return {
-      pathname: parsed.pathname,
-      anchor: parsed.hash ? parsed.hash.slice(1) : undefined
-    };
-  } catch {
-    return { pathname: "" };
-  }
+  const parsed = new URL(href, "https://local.invalid");
+  return {
+    pathname: parsed.pathname,
+    anchor: parsed.hash ? parsed.hash.slice(1) : undefined
+  };
 }
 
 async function checkFutureLinks(root: string, daysDir: string): Promise<LinkCheckFailure[]> {
