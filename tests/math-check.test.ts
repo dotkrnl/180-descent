@@ -22,6 +22,27 @@ describe("math check", () => {
     ]);
   });
 
+  it("reports single-quoted raw formula markup in MDX content", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), [
+      "<p class='formula'><code>x</code></p>",
+      "<div class='formula'><p class='eq'>y</p></div>"
+    ].join("\n"));
+
+    const result = await checkMath({ root });
+
+    expect(result.failures).toEqual([
+      {
+        file: "src/content/days/001-fixture/en.mdx",
+        label: "raw .formula .eq (use <MathBlock> instead)"
+      },
+      {
+        file: "src/content/days/001-fixture/en.mdx",
+        label: "raw <p class=formula><code> (use <MathBlock> instead)"
+      }
+    ]);
+  });
+
   it("reports multiline raw display math delimiters in MDX content", async () => {
     const root = await createFixtureRoot();
     await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), [
