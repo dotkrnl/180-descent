@@ -23,7 +23,7 @@ export async function checkSeo(options: SeoCheckOptions): Promise<SeoCheckResult
   const checkedManifests = new Set<string>();
 
   if (!await pathExists(builtSiteDir)) {
-    throw new Error("_site does not exist; run npm run build:site first");
+    throw new Error("_site does not exist; run rtk npm run build:site first");
   }
 
   const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
