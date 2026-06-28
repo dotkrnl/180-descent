@@ -3,7 +3,7 @@ import BookShell from "@app/layouts/BookShell.astro";
 import DayCard from "@app/components/DayCard.astro";
 import { getBookData, getContentDays, padDay } from "@app/site-data";
 import type { Locale } from "@lib/schemas/day";
-import { alternateLocale, dayUrl, homeUrl, staticPageUrl } from "@lib/static-site/routes";
+import { alternateLocale, homeUrl, staticPageUrl } from "@lib/static-site/routes";
 
 interface Props {
   locale: Locale;
@@ -16,7 +16,13 @@ const isZh = locale === "zh";
 const homePath = homeUrl(locale);
 const alternatePath = homeUrl(alternateLocale(locale));
 const downloads = isZh ? book.zh.downloads : book.downloads;
-const latestPublishedDays = [...days].sort((a, b) => b.day - a.day).slice(0, 10);
+const publishedDays = [...days].sort((a, b) => a.day - b.day);
+const firstPublishedDay = publishedDays[0];
+const latestPublishedDays = [...publishedDays].reverse().slice(0, 10);
+const readingStartUrl = firstPublishedDay?.url ?? staticPageUrl(locale, "syllabus");
+const readingStartLabel = firstPublishedDay
+  ? (isZh ? `从第 ${firstPublishedDay.day} 日开始` : `Start Day ${firstPublishedDay.day}`)
+  : (isZh ? "查看课程表" : "View syllabus");
 const readingDays = days.map((day) => ({
   day: day.day,
   url: day.url,
@@ -50,7 +56,7 @@ const readingDays = days.map((day) => ({
     <div class="download-grid home-actions">
       <article class="download-card" data-reading-card data-reading-locale={locale} data-reading-continue-kicker={isZh ? "继续上次阅读" : "Continue where you left off"}>
         <p class="card-kicker" data-reading-kicker>{isZh ? "在线阅读" : "Read online"}</p>
-        <h2><a href={dayUrl(locale, "001-what-is-knowledge")} data-reading-link>{isZh ? "从第 1 日开始" : "Start Day 1"}</a></h2>
+        <h2><a href={readingStartUrl} data-reading-link>{readingStartLabel}</a></h2>
         <p data-reading-summary>{isZh ? "从原点出发，横跨数学、物理、生命、心智、智能与文明，直抵研究前沿。" : "A descent from first reasons through mathematics, physics, life, mind, intelligence, civilization, and the research frontier."}</p>
       </article>
       <script type="application/json" data-reading-days data-reading-locale={locale} set:html={JSON.stringify(readingDays)} />
