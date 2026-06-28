@@ -26,7 +26,6 @@ interface LatinFontAsset {
 
 interface PrepareLatinFontsResult {
   copied: number;
-  outDir: string;
 }
 
 interface CjkFontWeight {
@@ -43,13 +42,7 @@ interface PrepareCjkFontsResult {
 }
 
 interface PrepareKatexAssetsResult {
-  scssOut: string;
   fonts: number;
-}
-
-interface PreparePdfFontsResult {
-  converted: number;
-  outDir: string;
 }
 
 const latinFontAssets: readonly LatinFontAsset[] = [
@@ -93,17 +86,15 @@ export async function prepareLatinFonts(options: AssetPreparationOptions): Promi
   }));
 
   return {
-    copied: latinFontAssets.length,
-    outDir
+    copied: latinFontAssets.length
   };
 }
 
-export async function preparePdfFonts(options: AssetPreparationOptions): Promise<PreparePdfFontsResult> {
+export async function preparePdfFonts(options: AssetPreparationOptions): Promise<void> {
   const sourceDir = fontsDir(options.root);
   const outDir = pdfFontsDir(options.root);
   await mkdir(outDir, { recursive: true });
 
-  let converted = 0;
   for (const asset of latinFontAssets) {
     const source = path.join(sourceDir, asset.fileName);
     const output = path.join(outDir, asset.fileName.replace(/\.woff2$/, ".otf"));
@@ -111,10 +102,7 @@ export async function preparePdfFonts(options: AssetPreparationOptions): Promise
     await execFileAsync("fonttools", ["ttLib.woff2", "decompress", source, "-o", output], {
       maxBuffer: 1024 * 1024 * 4
     });
-    converted++;
   }
-
-  return { converted, outDir };
 }
 
 export async function prepareCjkFonts(options: AssetPreparationOptions): Promise<PrepareCjkFontsResult> {
@@ -168,7 +156,6 @@ export async function prepareKatexAssets(options: AssetPreparationOptions): Prom
   await writeFile(scssOut, stripUnbundledKatexTtfSources(css.replaceAll("fonts/", "../../fonts/katex/")));
 
   return {
-    scssOut,
     fonts: fonts.length
   };
 }
