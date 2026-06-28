@@ -578,7 +578,7 @@ function xhtmlManifestItem(id: string, href: string, xhtml: string, properties: 
 }
 
 function epubUuidFromString(value: string): string {
-  const bytes = createHash("sha1").update(String(value)).digest();
+  const bytes = createHash("sha1").update(value).digest();
   bytes[6] = (bytes[6] & 0x0f) | 0x50;
   bytes[8] = (bytes[8] & 0x3f) | 0x80;
   const hex = bytes.subarray(0, 16).toString("hex");
