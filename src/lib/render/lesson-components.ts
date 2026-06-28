@@ -25,7 +25,7 @@ export function renderTipNote(options: TipNoteOptions): string {
 }
 
 export function renderMathHtml(latex: string, displayMode = false): string {
-  return renderToString(String(latex).trim(), {
+  return renderToString(latex.trim(), {
     displayMode,
     throwOnError: false,
     output: "html"
