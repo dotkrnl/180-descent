@@ -25,6 +25,18 @@ describe("epub check helpers", () => {
     expect(errors).toContain(`${dayArtifactPaths("epub", "zh", ["001-fixture"])[0]} is missing`);
   });
 
+  it("reports invalid EPUB artifacts without throwing", async () => {
+    const root = await createEmptyContentRoot("180-epub-invalid-");
+    const artifact = bookArtifactPaths("epub")[0];
+    const artifactPath = path.join(root, artifact);
+    await mkdir(path.dirname(artifactPath), { recursive: true });
+    await writeFile(artifactPath, "not an epub");
+
+    const errors = await checkEpub({ root });
+
+    expect(errors.some((error) => error.startsWith(`${artifact} cannot be parsed as EPUB ZIP (`))).toBe(true);
+  });
+
   it("reports missing local EPUB link anchors", async () => {
     const root = await createEmptyContentRoot("180-epub-anchor-missing-");
     const edition = bookArtifactPaths("epub")[0];

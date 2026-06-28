@@ -145,7 +145,13 @@ async function checkEpubEdition(root: string, edition: EpubEdition, errors: stri
   }
 
   const data = await readFile(absoluteFile);
-  const zip = await JSZip.loadAsync(data);
+  let zip: JSZip;
+  try {
+    zip = await JSZip.loadAsync(data);
+  } catch (error) {
+    errors.push(`${edition.file} cannot be parsed as EPUB ZIP (${toError(error).message})`);
+    return;
+  }
 
   for (const file of edition.required) {
     if (!zip.file(file)) {
