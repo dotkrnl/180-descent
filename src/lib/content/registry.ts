@@ -56,6 +56,7 @@ export async function loadContentRegistry(options: ContentRegistryOptions): Prom
   const days = await Promise.all(dayDirectories.map(loadRegistryDay));
   days.sort((a, b) => a.manifest.day - b.manifest.day);
   checkUniqueDayNumbers(days);
+  checkSequentialDayNumbers(days);
   return { days };
 }
 
@@ -67,6 +68,17 @@ function checkUniqueDayNumbers(days: RegistryDay[]): void {
       throw new Error(`Duplicate day number ${day.manifest.day}: ${existing} and ${day.manifest.path}`);
     }
     seen.set(day.manifest.day, day.manifest.path);
+  }
+}
+
+function checkSequentialDayNumbers(days: RegistryDay[]): void {
+  for (const [index, day] of days.entries()) {
+    const expectedDay = index + 1;
+    if (day.manifest.day !== expectedDay) {
+      throw new Error(
+        `Published content days must be contiguous from day 1: expected day ${expectedDay}, got day ${day.manifest.day} (${day.manifest.path})`
+      );
+    }
   }
 }
 

@@ -542,25 +542,6 @@ describe("content check", () => {
     ]);
   });
 
-  it("reports gaps in published content days", async () => {
-    const root = await createFixtureRoot();
-    await writeFile(path.join(root, "src/_data/book.yaml"), fixtureBookYaml(3));
-    await writeFile(path.join(root, "src/_data/syllabus-data.yaml"), fixtureSyllabusYaml(3));
-    await writeRegistryDay(root, {
-      en: body("Fixture Day"),
-      zh: body("夹具日", "zh")
-    });
-    await writePublishedDay(root, 3);
-
-    const failures = await checkContent({ root });
-
-    expect(failures).toEqual([
-      {
-        message: "Published content days must be contiguous from day 1: expected day 2, got day 3 (003-fixture)"
-      }
-    ]);
-  });
-
   it("reports appendix web panels without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {

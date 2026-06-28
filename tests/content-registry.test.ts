@@ -514,6 +514,17 @@ describe("target content registry", () => {
     await expect(loadContentRegistry({ daysDir })).rejects.toThrow("Duplicate day number 1: 001-first and 001-second");
   });
 
+  it("rejects gaps in published content days", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-gap-"));
+    const daysDir = path.join(root, "days");
+    await writeMinimalDay(daysDir, "001-first", 1);
+    await writeMinimalDay(daysDir, "003-third", 3);
+
+    await expect(loadContentRegistry({ daysDir })).rejects.toThrow(
+      "Published content days must be contiguous from day 1: expected day 2, got day 3 (003-third)"
+    );
+  });
+
   it("rejects manifest day numbers that do not match the directory prefix", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-registry-day-prefix-"));
     const daysDir = path.join(root, "days");

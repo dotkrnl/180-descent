@@ -210,27 +210,6 @@ describe("link checks", () => {
     ]);
   });
 
-  it("treats publication status as exact day membership", async () => {
-    const root = await createFixtureRoot();
-    await writeThirdContentDay(root);
-    await writeFile(path.join(root, "_site/index.html"), "");
-    await writeFile(futureLinksDataFile(root), [
-      "- id: day-001-to-day-002-callback",
-      "  from_day: 1",
-      "  target_day: 2",
-      "  text: Callback",
-      "  status: resolved",
-      "  context: test callback"
-    ].join("\n"));
-
-    const failures = await checkLinks({ root });
-
-    expect(failures).toEqual([
-      {
-        message: "Future link day-001-to-day-002-callback targets unpublished day 2 but is marked resolved"
-      }
-    ]);
-  });
 });
 
 async function createFixtureRoot(): Promise<string> {
@@ -245,10 +224,6 @@ async function createFixtureRoot(): Promise<string> {
 
 async function writeSecondContentDay(root: string): Promise<void> {
   await writeFixtureContentDay(root, 2);
-}
-
-async function writeThirdContentDay(root: string): Promise<void> {
-  await writeFixtureContentDay(root, 3);
 }
 
 async function writeFixtureContentDay(root: string, day: number): Promise<void> {
