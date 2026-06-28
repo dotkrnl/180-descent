@@ -1,5 +1,5 @@
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
-import { spawnSync } from "node:child_process";
+import { spawnSync, type SpawnSyncReturns } from "node:child_process";
 import { existsSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -7,6 +7,7 @@ import JSZip from "jszip";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { bookArtifactPaths, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
 import { CHINESE_DAY_ONE_APPENDIX_PATTERNS, ENGLISH_DAY_ONE_APPENDIX_PATTERNS } from "@lib/checks/day-one-appendix-patterns";
+import { toError } from "@lib/errors";
 
 interface EpubCheckOptions {
   root: string;
@@ -21,6 +22,8 @@ interface BaseEpubEdition {
   appendixPatterns: RegExp[];
   required: string[];
 }
+
+type CommandSpec = [command: string, args: string[]];
 
 type EpubEdition = BaseEpubEdition & (
   | {
@@ -41,6 +44,13 @@ const BOOK_REQUIRED = [
   "OEBPS/day-001.xhtml",
   "OEBPS/day-002.xhtml"
 ];
+
+const EPUBCHECK_JAR_CANDIDATES = [
+  process.env.EPUBCHECK_JAR,
+  path.join(process.cwd(), "tools/epubcheck/epubcheck.jar")
+].filter((candidate): candidate is string => Boolean(candidate));
+
+const HOMEBREW_PREFIX = process.env.HOMEBREW_PREFIX || (existsSync("/opt/homebrew") ? "/opt/homebrew" : "/usr/local");
 
 export async function checkEpub(options: EpubCheckOptions): Promise<EpubCheckResult> {
   const errors: string[] = [];
@@ -167,7 +177,7 @@ async function checkEpubEdition(root: string, edition: EpubEdition, errors: stri
     await rm(xmlTemp, { recursive: true, force: true });
   }
 
-  const epubcheck = spawnSync("epubcheck", [absoluteFile], { encoding: "utf8" });
+  const epubcheck = runEpubcheck(absoluteFile);
   if (epubcheck.status !== 0) {
     errors.push([
       `${edition.file} failed official EPUBCheck`,
@@ -175,6 +185,36 @@ async function checkEpubEdition(root: string, edition: EpubEdition, errors: stri
       epubcheck.stderr.trim()
     ].filter(Boolean).join("\n"));
   }
+}
+
+function runEpubcheck(absoluteFile: string): SpawnSyncReturns<string> {
+  const jar = EPUBCHECK_JAR_CANDIDATES.find((candidate) => existsSync(candidate));
+  const commands: CommandSpec[] = jar
+    ? [
+      ["java", ["-jar", jar, absoluteFile]],
+      [path.join(HOMEBREW_PREFIX, "opt/openjdk/bin/java"), ["-jar", jar, absoluteFile]]
+    ]
+    : [["epubcheck", [absoluteFile]]];
+  return spawnFirstAvailable(commands);
+}
+
+function spawnFirstAvailable(commands: CommandSpec[]): SpawnSyncReturns<string> {
+  let lastResult: SpawnSyncReturns<string> | null = null;
+  for (const [command, args] of commands) {
+    const result = spawnSync(command, args, { encoding: "utf8" });
+    lastResult = result;
+    if (!result.error) return result;
+  }
+
+  const message = lastResult?.error ? toError(lastResult.error).message : "No EPUBCheck command configured";
+  return {
+    status: 1,
+    signal: null,
+    output: [null, "", message],
+    pid: 0,
+    stdout: "",
+    stderr: message
+  };
 }
 
 function checkDayOneAppendixContent(edition: EpubEdition, searchableDayOne: string, errors: string[]): void {
