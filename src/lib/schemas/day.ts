@@ -31,7 +31,24 @@ export const dayManifestSchema = z.object({
   }).strict(),
   appendices: z.array(appendixSchema),
   interactionScripts: z.array(slugSchema)
-}).strict();
+}).strict().superRefine((manifest, context) => {
+  checkUniqueValues(manifest.appendices.map((appendix) => appendix.id), ["appendices"], "appendix id", context);
+  checkUniqueValues(manifest.interactionScripts, ["interactionScripts"], "interaction script", context);
+});
+
+function checkUniqueValues(values: string[], path: Array<string | number>, label: string, context: z.RefinementCtx): void {
+  const seen = new Set<string>();
+  for (const [index, value] of values.entries()) {
+    if (seen.has(value)) {
+      context.addIssue({
+        code: "custom",
+        path: [...path, index],
+        message: `duplicate ${label}: ${value}`
+      });
+    }
+    seen.add(value);
+  }
+}
 
 export type Locale = z.infer<typeof localeSchema>;
 export type DayManifest = z.infer<typeof dayManifestSchema> & {

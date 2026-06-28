@@ -127,6 +127,63 @@ describe("target content registry", () => {
     })).toThrow();
   });
 
+  it("rejects duplicate appendix ids", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "en.mdx"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [
+        {
+          id: "appendix-a",
+          locales: {
+            en: { title: "Appendix A", body: "appendices/a.en.mdx" },
+            zh: { title: "附录 A", body: "appendices/a.zh.mdx" }
+          }
+        },
+        {
+          id: "appendix-a",
+          locales: {
+            en: { title: "Appendix A2", body: "appendices/a2.en.mdx" },
+            zh: { title: "附录 A2", body: "appendices/a2.zh.mdx" }
+          }
+        }
+      ],
+      interactionScripts: []
+    })).toThrow(/duplicate appendix id: appendix-a/);
+  });
+
+  it("rejects duplicate interaction scripts", () => {
+    expect(() => dayManifestSchema.parse({
+      day: 1,
+      block: "foundations",
+      locales: {
+        en: {
+          title: "Minimal",
+          summary: "Minimal summary.",
+          body: "en.mdx"
+        },
+        zh: {
+          title: "最小示例",
+          summary: "中文摘要。",
+          body: "zh.mdx"
+        }
+      },
+      appendices: [],
+      interactionScripts: ["clock-ticks", "clock-ticks"]
+    })).toThrow(/duplicate interaction script: clock-ticks/);
+  });
+
   it("loads paired locale bodies, appendices, and interaction scripts", async () => {
     const fixtureDaysDir = await createRegistryFixtureDaysDir();
     const registry = await loadContentRegistry({ daysDir: fixtureDaysDir });
