@@ -363,7 +363,7 @@ function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheck
   const dayNumber = Number(file.relativePath.match(/src\/content\/days\/(\d{3})-/)?.[1]);
   if (!Number.isFinite(dayNumber) || dayNumber < STATUS_CHIP_LABEL_GATE_START_DAY) return;
 
-  for (const match of stripFencedCodeBlocks(file.source).matchAll(/<StatusChip\b[^>]*\blabel=(?:\{"([^"]+)"\}|"([^"]+)")/g)) {
+  for (const match of file.source.matchAll(/<StatusChip\b[^>]*\blabel=(?:\{"([^"]+)"\}|"([^"]+)")/g)) {
     const label = normalizeVisibleText(match[1] ?? match[2] ?? "");
     if (label.length > STATUS_CHIP_LABEL_MAX_CHARS) {
       failures.push({
@@ -374,7 +374,7 @@ function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheck
 }
 
 function checkRedundantTermTips(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  for (const match of stripFencedCodeBlocks(file.source).matchAll(REDUNDANT_TERM_TIP_PATTERN)) {
+  for (const match of file.source.matchAll(REDUNDANT_TERM_TIP_PATTERN)) {
     failures.push({
       message: `${file.relativePath} gives <Term>${normalizeVisibleText(match[1])}</Term> a tooltip immediately before the prose defines it; remove the redundant TipNote`
     });
@@ -385,7 +385,7 @@ function checkUnstyledStatusPhrases(file: RegistryContentFile, failures: Content
   const dayNumber = Number(file.relativePath.match(/src\/content\/days\/(\d{3})-/)?.[1]);
   if (!Number.isFinite(dayNumber) || dayNumber < STATUS_CHIP_LABEL_GATE_START_DAY) return;
 
-  const source = stripFencedCodeBlocks(file.source)
+  const source = file.source
     .replace(/<StatusChip\b[^>]*\/>/g, "")
     .replace(/<FormatOnly\b[^>]*>[\s\S]*?<\/FormatOnly>/g, "");
   for (const match of source.matchAll(UNSTYLED_STATUS_LIST_ITEM_PATTERN)) {
@@ -435,18 +435,16 @@ function checkStaticAlternates(file: RegistryContentFile, failures: ContentCheck
 }
 
 function checkUnsupportedMdxWrappers(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  const source = stripFencedCodeBlocks(file.source);
   for (const [pattern, replacement] of UNSUPPORTED_MDX_WRAPPER_PATTERNS) {
-    if (pattern.test(source)) {
+    if (pattern.test(file.source)) {
       failures.push({ message: `${file.relativePath} contains unsupported MDX wrapper markup; ${replacement}` });
     }
   }
 }
 
 function checkRawInteractiveMarkup(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  const source = stripFencedCodeBlocks(file.source);
   for (const [pattern, label] of RAW_INTERACTIVE_PATTERNS) {
-    if (pattern.test(source)) {
+    if (pattern.test(file.source)) {
       failures.push({
         message: `${file.relativePath} contains raw interactive markup (${label}); extract it to a lesson component`
       });
@@ -456,11 +454,10 @@ function checkRawInteractiveMarkup(file: RegistryContentFile, failures: ContentC
 }
 
 function checkArtifactComponentContract(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  const source = stripFencedCodeBlocks(file.source);
   const unknown = new Set<string>();
   let webOnly = 0;
 
-  for (const match of source.matchAll(/<([A-Z][A-Za-z0-9]*)\b/g)) {
+  for (const match of file.source.matchAll(/<([A-Z][A-Za-z0-9]*)\b/g)) {
     const name = match[1];
     if (!ARTIFACT_COMPONENTS.has(name)) unknown.add(name);
     if (WEB_ONLY_COMPONENTS.has(name)) webOnly += 1;
@@ -472,7 +469,7 @@ function checkArtifactComponentContract(file: RegistryContentFile, failures: Con
     });
   }
 
-  const staticAlternates = countMatches(source, /<FormatOnly\b(?=[^>]*\bmedia="print-epub")(?=[^>]*\bvariant="alternate")/g);
+  const staticAlternates = countMatches(file.source, /<FormatOnly\b(?=[^>]*\bmedia="print-epub")(?=[^>]*\bvariant="alternate")/g);
   if (staticAlternates < webOnly) {
     failures.push({
       message: `${file.label} has ${webOnly} web-only component(s) but only ${staticAlternates} static print/EPUB alternate(s)`
