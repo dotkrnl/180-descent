@@ -2,8 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
 import sharp from "sharp";
-import { walkFiles } from "@lib/fs/walk";
-import { siteDir } from "@lib/static-site/routes";
+import { builtHtmlFiles } from "@lib/checks/built-site";
 import { urlForSiteFile } from "@lib/static-site/url";
 
 interface VisualCheckOptions {
@@ -90,10 +89,10 @@ export function parseVisualCheckArgs(argv: string[]): VisualCheckCliArgs {
 }
 
 export async function checkVisual(options: VisualCheckOptions): Promise<VisualCheckResult> {
-  const builtSiteDir = siteDir(options.root);
+  const { builtSiteDir, htmlFiles } = await builtHtmlFiles(options.root, { required: true });
   const outDir = options.outDir ?? path.join(options.root, "tmp/visual-qa");
   const reportPath = path.join(outDir, "report.json");
-  const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] }))
+  const routes = htmlFiles
     .map((file) => urlForSiteFile(builtSiteDir, file))
     .sort();
   const errors: string[] = [];

@@ -7,6 +7,12 @@ import { futureLinksDataFile } from "@lib/data/paths";
 import { writeContentDay } from "./helpers/content-root";
 
 describe("link checks", () => {
+  it("reports missing built sites with build guidance", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-check-links-"));
+
+    await expect(checkLinks({ root })).rejects.toThrow("_site does not exist; run rtk npm run build:site first");
+  });
+
   it("reports empty built sites instead of passing zero pages", async () => {
     const root = await createFixtureRoot();
 

@@ -1,10 +1,10 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { load } from "cheerio";
+import { builtHtmlFiles } from "@lib/checks/built-site";
 import { readBookData } from "@lib/data/book";
 import { toError } from "@lib/errors";
-import { pathExists, walkFiles } from "@lib/fs/walk";
-import { siteDir } from "@lib/static-site/routes";
+import { pathExists } from "@lib/fs/walk";
 import { siteFileForUrlPath, sitePathForHref, sitePathForUrlPath, urlForSiteFile } from "@lib/static-site/url";
 
 interface SeoCheckOptions {
@@ -17,16 +17,11 @@ interface SeoCheckResult {
 }
 
 export async function checkSeo(options: SeoCheckOptions): Promise<SeoCheckResult> {
-  const builtSiteDir = siteDir(options.root);
+  const { builtSiteDir, htmlFiles } = await builtHtmlFiles(options.root, { required: true });
   const siteUrl = (await readBookData(options.root)).siteUrl;
   const errors: string[] = [];
   const checkedManifests = new Set<string>();
 
-  if (!await pathExists(builtSiteDir)) {
-    throw new Error("_site does not exist; run rtk npm run build:site first");
-  }
-
-  const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
   if (!htmlFiles.length) {
     errors.push("_site contains no HTML files");
   }

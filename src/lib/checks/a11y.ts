@@ -1,10 +1,9 @@
-import { stat, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { load, type CheerioAPI } from "cheerio";
 import type { Element } from "domhandler";
 import { chromium } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
-import { walkFiles } from "@lib/fs/walk";
-import { siteDir } from "@lib/static-site/routes";
+import { builtHtmlFiles } from "@lib/checks/built-site";
 import { closeServer, startStaticSiteServer } from "@lib/static-site/server";
 import { urlForSiteFile } from "@lib/static-site/url";
 
@@ -22,10 +21,8 @@ interface AccessibilityCheckResult {
   failures: string[];
 }
 
-async function checkStaticAccessibility(options: AccessibilityCheckOptions): Promise<StaticAccessibilityResult> {
-  const builtSiteDir = siteDir(options.root);
+async function checkStaticAccessibility(builtSiteDir: string, htmlFiles: string[]): Promise<StaticAccessibilityResult> {
   const errors: string[] = [];
-  const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
 
   for (const filePath of htmlFiles) {
     const url = urlForSiteFile(builtSiteDir, filePath);
@@ -100,10 +97,9 @@ async function checkStaticAccessibility(options: AccessibilityCheckOptions): Pro
 }
 
 export async function checkAccessibility(options: AccessibilityCheckOptions): Promise<AccessibilityCheckResult> {
-  const builtSiteDir = siteDir(options.root);
-  await stat(builtSiteDir);
+  const { builtSiteDir, htmlFiles } = await builtHtmlFiles(options.root, { required: true });
 
-  const { errors: staticFailures, routes } = await checkStaticAccessibility(options);
+  const { errors: staticFailures, routes } = await checkStaticAccessibility(builtSiteDir, htmlFiles);
   if (!routes.length) {
     return {
       checkedPages: 0,

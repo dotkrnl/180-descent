@@ -6,6 +6,19 @@ import { checkMath } from "@lib/checks/math";
 import { contentDayFile, contentDaysDir } from "@lib/content/paths";
 
 describe("math check", () => {
+  it("does not require built HTML for source-only checks", async () => {
+    const root = await createSourceOnlyFixtureRoot();
+    await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), "Plain source.");
+
+    const result = await checkMath({ root });
+
+    expect(result).toEqual({
+      checkedSourceFiles: 1,
+      checkedBuiltFiles: 0,
+      failures: []
+    });
+  });
+
   it("reports raw display math patterns in MDX content", async () => {
     const root = await createFixtureRoot();
     await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), '<p class="formula"><code>x</code></p>');
@@ -118,5 +131,11 @@ async function createFixtureRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-math-check-"));
   await mkdir(path.join(contentDaysDir(root), "001-fixture"), { recursive: true });
   await mkdir(path.join(root, "_site"), { recursive: true });
+  return root;
+}
+
+async function createSourceOnlyFixtureRoot(): Promise<string> {
+  const root = await mkdtemp(path.join(os.tmpdir(), "180-math-check-"));
+  await mkdir(path.join(contentDaysDir(root), "001-fixture"), { recursive: true });
   return root;
 }

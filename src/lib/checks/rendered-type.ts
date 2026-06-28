@@ -1,6 +1,5 @@
 import { chromium } from "playwright";
-import { walkFiles } from "@lib/fs/walk";
-import { siteDir } from "@lib/static-site/routes";
+import { builtHtmlFiles } from "@lib/checks/built-site";
 import { closeServer, startStaticSiteServer } from "@lib/static-site/server";
 import { urlForSiteFile } from "@lib/static-site/url";
 
@@ -33,8 +32,8 @@ const VIEWPORTS = [
 ] as const;
 
 export async function checkRenderedType(options: RenderedTypeCheckOptions): Promise<RenderedTypeCheckResult> {
-  const builtSiteDir = siteDir(options.root);
-  const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] }))
+  const { builtSiteDir, htmlFiles } = await builtHtmlFiles(options.root, { required: true });
+  const routes = htmlFiles
     .map((file) => urlForSiteFile(builtSiteDir, file))
     .sort();
 

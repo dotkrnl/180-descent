@@ -1,11 +1,11 @@
 import { readFile } from "node:fs/promises";
 import * as cheerio from "cheerio";
+import { builtHtmlFiles } from "@lib/checks/built-site";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { readFutureLinksData } from "@lib/data/future-links";
 import { toPosixRelative } from "@lib/fs/path";
-import { pathExists, walkFiles } from "@lib/fs/walk";
-import { siteDir } from "@lib/static-site/routes";
+import { pathExists } from "@lib/fs/walk";
 import { siteFileForUrlPath, urlForSiteFile } from "@lib/static-site/url";
 
 interface LinkCheckOptions {
@@ -23,10 +23,9 @@ interface HtmlDocument {
 }
 
 export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFailure[]> {
-  const builtSiteDir = siteDir(options.root);
+  const { builtSiteDir, htmlFiles } = await builtHtmlFiles(options.root, { required: true });
   const daysDir = contentDaysDir(options.root);
   const failures: LinkCheckFailure[] = [];
-  const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
   if (!htmlFiles.length) {
     failures.push({ message: "_site contains no HTML files" });
   }
