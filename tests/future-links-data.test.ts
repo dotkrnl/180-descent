@@ -73,6 +73,36 @@ describe("future links data", () => {
       "future link day-009-to-day-001-systems target_day must be greater than from_day"
     );
   });
+
+  it("rejects future link ids that do not match their days", async () => {
+    const root = await createFixtureRoot([
+      "- id: day-001-to-day-009-systems",
+      "  from_day: 2",
+      "  target_day: 9",
+      "  text: Systems thinking",
+      "  status: pending",
+      "  context: mismatched source day"
+    ].join("\n"));
+
+    await expect(readFutureLinksData(root)).rejects.toThrow(
+      "future link day-001-to-day-009-systems id days must match from_day and target_day"
+    );
+  });
+
+  it("rejects future link ids outside the canonical format", async () => {
+    const root = await createFixtureRoot([
+      "- id: day-9-callback",
+      "  from_day: 1",
+      "  target_day: 9",
+      "  text: Systems thinking",
+      "  status: pending",
+      "  context: invalid id format"
+    ].join("\n"));
+
+    await expect(readFutureLinksData(root)).rejects.toThrow(
+      "future link day-9-callback must use day-NNN-to-day-NNN id format"
+    );
+  });
 });
 
 async function createFixtureRoot(futureLinksYaml: string): Promise<string> {

@@ -54,7 +54,7 @@ describe("link checks", () => {
     await writeSecondContentDay(root);
     await writeFile(path.join(root, "_site/index.html"), "");
     await writeFile(futureLinksDataFile(root), [
-      "- id: day-2-callback",
+      "- id: day-001-to-day-002-callback",
       "  from_day: 1",
       "  target_day: 2",
       "  text: Callback",
@@ -66,7 +66,7 @@ describe("link checks", () => {
 
     expect(failures).toEqual([
       {
-        message: "Future link day-2-callback targets published day 2 but is still pending"
+        message: "Future link day-001-to-day-002-callback targets published day 2 but is still pending"
       }
     ]);
   });
@@ -75,7 +75,7 @@ describe("link checks", () => {
     const root = await createFixtureRoot();
     await writeFile(path.join(root, "_site/index.html"), "");
     await writeFile(futureLinksDataFile(root), [
-      "- id: day-9-callback",
+      "- id: day-001-to-day-009-callback",
       "  from_day: 1",
       "  target_day: 9",
       "  text: Callback",
@@ -87,7 +87,7 @@ describe("link checks", () => {
 
     expect(failures).toEqual([
       {
-        message: "Future link day-9-callback targets unpublished day 9 but is marked resolved"
+        message: "Future link day-001-to-day-009-callback targets unpublished day 9 but is marked resolved"
       }
     ]);
   });

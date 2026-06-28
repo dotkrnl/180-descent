@@ -11,6 +11,8 @@ interface FutureLinkEntry {
   context: string;
 }
 
+const futureLinkIdPattern = /^day-(\d{3})(?:-[a-z0-9]+)*-to-day-(\d{3})(?:-[a-z0-9]+)*$/;
+
 const futureLinkEntrySchema = z.object({
   id: z.string().min(1),
   from_day: z.number().int().positive(),
@@ -23,6 +25,24 @@ const futureLinkEntrySchema = z.object({
 const futureLinksDataSchema = z.array(futureLinkEntrySchema).superRefine((links, context) => {
   const seen = new Set<string>();
   for (const [index, link] of links.entries()) {
+    const idMatch = futureLinkIdPattern.exec(link.id);
+    if (!idMatch) {
+      context.addIssue({
+        code: "custom",
+        path: [index, "id"],
+        message: `future link ${link.id} must use day-NNN-to-day-NNN id format`
+      });
+    } else {
+      const [, fromDay, targetDay] = idMatch;
+      if (Number(fromDay) !== link.from_day || Number(targetDay) !== link.target_day) {
+        context.addIssue({
+          code: "custom",
+          path: [index, "id"],
+          message: `future link ${link.id} id days must match from_day and target_day`
+        });
+      }
+    }
+
     if (link.target_day <= link.from_day) {
       context.addIssue({
         code: "custom",
