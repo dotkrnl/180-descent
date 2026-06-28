@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFilesSync } from "@lib/fs/walk";
+import { stripFencedCodeBlocksPreservingLines } from "@lib/text/markdown";
 
 export const MIN_SVG_FONT_SIZE = 10.5;
 
@@ -17,6 +18,7 @@ interface SvgTextCheckFailure {
 
 const CHECKED_EXTENSIONS = [".astro", ".css", ".html", ".js", ".md", ".mdx", ".njk", ".scss", ".svg"];
 const GENERATED_STYLE_PATTERN = /^src\/assets\/scss\/generated\//;
+const MARKDOWN_FILE_PATTERN = /\.mdx?$/;
 
 export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFailure[] {
   const failures: SvgTextCheckFailure[] = [];
@@ -26,7 +28,7 @@ export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFail
     const relativeFile = toPosixRelative(options.root, file);
     if (GENERATED_STYLE_PATTERN.test(relativeFile)) continue;
 
-    const source = readFileSync(file, "utf8");
+    const source = sourceForSvgTextCheck(file);
     if (file.endsWith(".css") || file.endsWith(".js") || file.endsWith(".scss")) {
       checkSegment(source, source, relativeFile, failures);
       continue;
@@ -39,6 +41,13 @@ export function checkSvgTextSize(options: SvgTextCheckOptions): SvgTextCheckFail
   }
 
   return failures;
+}
+
+function sourceForSvgTextCheck(file: string): string {
+  const source = readFileSync(file, "utf8");
+  return MARKDOWN_FILE_PATTERN.test(file)
+    ? stripFencedCodeBlocksPreservingLines(source)
+    : source;
 }
 
 function checkSegment(

@@ -41,6 +41,26 @@ describe("svg text size check", () => {
     ]);
   });
 
+  it("ignores fenced SVG examples without shifting later line numbers", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-svg-text-"));
+    await mkdir(path.join(contentDaysDir(root), "001-fixture"), { recursive: true });
+    await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), [
+      "```html",
+      '<svg><text font-size="9">example</text></svg>',
+      "```",
+      "",
+      '<svg><text font-size="9">tiny</text></svg>'
+    ].join("\n"));
+
+    expect(checkSvgTextSize({ root })).toEqual([
+      {
+        file: "src/content/days/001-fixture/en.mdx",
+        line: 5,
+        value: 9
+      }
+    ]);
+  });
+
   it("ignores generated SCSS partials", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-svg-text-"));
     await mkdir(path.join(root, "src/assets/scss/generated"), { recursive: true });
