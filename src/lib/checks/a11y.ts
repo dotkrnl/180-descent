@@ -81,18 +81,20 @@ async function checkStaticAccessibility(options: AccessibilityCheckOptions): Pro
       previousHeadingLevel = level;
     });
 
-    const landmarkCounts = new Map<string, number>();
+    const landmarkCounts = new Map<string, Map<string, number>>();
     $("header,nav,main,footer,aside,form,section[aria-label],section[aria-labelledby],[role='banner'],[role='navigation'],[role='main'],[role='contentinfo'],[role='complementary'],[role='form'],[role='region']").each((_, el) => {
       const role = landmarkRole(el);
       if (!role) return;
       const name = landmarkName($, el);
-      const key = `${role}|${name}`;
-      landmarkCounts.set(key, (landmarkCounts.get(key) || 0) + 1);
+      const roleCounts = landmarkCounts.get(role) ?? new Map<string, number>();
+      roleCounts.set(name, (roleCounts.get(name) ?? 0) + 1);
+      landmarkCounts.set(role, roleCounts);
     });
-    for (const [key, count] of landmarkCounts) {
-      const [role, name] = key.split("|");
-      if (name && count > 1) {
-        errors.push(`${url}: ${count} ${role} landmarks share accessible name "${name}"`);
+    for (const [role, nameCounts] of landmarkCounts) {
+      for (const [name, count] of nameCounts) {
+        if (name && count > 1) {
+          errors.push(`${url}: ${count} ${role} landmarks share accessible name "${name}"`);
+        }
       }
     }
   }
