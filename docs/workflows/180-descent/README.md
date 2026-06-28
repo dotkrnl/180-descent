@@ -245,6 +245,9 @@ SVG/HTML/SCSS diagrams.
 - Use real fenced code blocks for code or pseudocode. The PDF renderer gives
   them a styled `codebox`; do not fake code with ad hoc HTML grids or
   paragraphs.
+- Use `SimpleTable` only with literal string-array `headers` and literal
+  string-matrix `rows`; `npm run check:content` rejects dynamic or malformed
+  props because PDF output must not silently drop table content.
 - Use `MathInline` and `MathBlock` for math so HTML gets KaTeX and PDF gets
   XeTeX math from the same source.
 - For web interactives, keep behavior in the interactive component and provide a
