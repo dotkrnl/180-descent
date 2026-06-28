@@ -17,7 +17,7 @@ interface GenerateSocialCardsOptions {
 
 interface GenerateSocialCardsResult {
   generated: string[];
-  preserved: string[];
+  refreshed: string[];
 }
 
 interface SocialCard {
@@ -76,25 +76,25 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
   if (!pending.length) {
     return {
       generated: [],
-      preserved: []
+      refreshed: []
     };
   }
 
   const generated: string[] = [];
-  const preserved: string[] = [];
+  const refreshed: string[] = [];
   for (const card of pending) {
     const changed = await renderCard(card, brandMarkBase64);
     const relativePath = toPosixRelative(root, card.outPath);
     if (changed) {
       generated.push(relativePath);
     } else {
-      preserved.push(relativePath);
+      refreshed.push(relativePath);
     }
   }
 
   return {
     generated,
-    preserved
+    refreshed
   };
 }
 
