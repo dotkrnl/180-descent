@@ -260,6 +260,10 @@ function inspectEpubXml(
     }
 
     const srcPath = src.split(/[?#]/)[0];
+    if (hasParentPathSegment(srcPath)) {
+      errors.push(`${edition} contains parent-directory EPUB image src in ${name}: ${src}`);
+      continue;
+    }
     const zipPath = srcPath
       ? path.posix.normalize(path.posix.join(path.posix.dirname(name), srcPath))
       : "";
@@ -277,6 +281,10 @@ function inspectEpubXml(
     }
 
     const hrefPath = href.split(/[?#]/)[0];
+    if (hasParentPathSegment(hrefPath)) {
+      errors.push(`${edition} contains parent-directory EPUB link in ${name}: ${href}`);
+      continue;
+    }
     const zipPath = hrefPath
       ? path.posix.normalize(path.posix.join(path.posix.dirname(name), hrefPath))
       : name;
@@ -300,6 +308,10 @@ function inspectEpubXml(
   if (orphanSvgTags.length) {
     errors.push(`${edition} contains SVG child tags outside <svg> in ${name}: ${[...new Set(orphanSvgTags)].join(", ")}`);
   }
+}
+
+function hasParentPathSegment(value: string): boolean {
+  return value.split("/").includes("..");
 }
 
 function hrefFragment(href: string): string | null {

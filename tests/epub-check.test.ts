@@ -57,6 +57,24 @@ describe("epub check helpers", () => {
     expect(errors).toContain(`${edition} references missing EPUB image in OEBPS/day-001.xhtml: missing.png`);
   });
 
+  it("rejects parent-directory EPUB references before path normalization", async () => {
+    const root = await createEmptyContentRoot("180-epub-parent-ref-");
+    const edition = bookArtifactPaths("epub")[0];
+    await writeEpubFixture(root, edition, [
+      '<p><a href="../OEBPS/day-002.xhtml#present-anchor">Normalized link</a></p>',
+      '<p><img src="../OEBPS/images/present.png" alt="Normalized image"/></p>'
+    ].join(""));
+
+    const errors = await checkEpub({ root });
+
+    expect(errors).toContain(
+      `${edition} contains parent-directory EPUB link in OEBPS/day-001.xhtml: ../OEBPS/day-002.xhtml#present-anchor`
+    );
+    expect(errors).toContain(
+      `${edition} contains parent-directory EPUB image src in OEBPS/day-001.xhtml: ../OEBPS/images/present.png`
+    );
+  });
+
   it("reports invalid numeric XML entities without crashing", async () => {
     const root = await createEmptyContentRoot("180-epub-invalid-entity-");
     const edition = bookArtifactPaths("epub")[0];
@@ -81,6 +99,7 @@ async function writeEpubFixture(
   zip.file("OEBPS/introduction.xhtml", xhtml("<p>Intro</p>"));
   zip.file("OEBPS/day-001.xhtml", xhtml(dayOneBody));
   zip.file("OEBPS/day-002.xhtml", xhtml('<p id="present-anchor">Target</p>'));
+  zip.file("OEBPS/images/present.png", "");
 
   const outputPath = path.join(root, relativePath);
   await mkdir(path.dirname(outputPath), { recursive: true });
