@@ -1,7 +1,8 @@
-import { createReadStream } from "node:fs";
+import { createReadStream, type ReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import http, { type Server } from "node:http";
 import path from "node:path";
+import { pipeline } from "node:stream/promises";
 import { isPathUnavailableError } from "@lib/fs/errors";
 import { contentType, siteFileForUrlPath } from "@lib/static-site/url";
 
@@ -20,9 +21,16 @@ export async function startStaticSiteServer(siteDir: string, label: string): Pro
         return;
       }
 
+      const stream = createReadStream(filePath);
+      await waitForStreamOpen(stream);
       response.writeHead(200, { "content-type": contentType(filePath) });
-      createReadStream(filePath).pipe(response);
+      await pipeline(stream, response);
     } catch (error) {
+      if (response.writableEnded) return;
+      if (response.headersSent) {
+        response.destroy();
+        return;
+      }
       response.writeHead(500);
       response.end(String(error));
     }
@@ -62,4 +70,19 @@ async function resolveStaticFilePath(filePath: string): Promise<string | null> {
     if (!isPathUnavailableError(error)) throw error;
     return null;
   }
+}
+
+async function waitForStreamOpen(stream: ReadStream): Promise<void> {
+  await new Promise<void>((resolve, reject) => {
+    const onOpen = (): void => {
+      stream.off("error", onError);
+      resolve();
+    };
+    const onError = (error: Error): void => {
+      stream.off("open", onOpen);
+      reject(error);
+    };
+    stream.once("open", onOpen);
+    stream.once("error", onError);
+  });
 }

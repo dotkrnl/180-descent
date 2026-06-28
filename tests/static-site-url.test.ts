@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
@@ -66,6 +66,21 @@ describe("static site URL helpers", () => {
       await expect(fetch(new URL("/missing", origin).href).then((response) => response.status)).resolves.toBe(404);
     } finally {
       await closeServer(server);
+    }
+  });
+
+  it("returns a server error when an existing file cannot be streamed", async () => {
+    const siteDir = await mkdtemp(path.join(os.tmpdir(), "180-static-site-server-"));
+    const lockedFile = path.join(siteDir, "locked.html");
+    await writeFile(lockedFile, "<h1>Locked</h1>");
+    await chmod(lockedFile, 0o000);
+
+    const { server, origin } = await startStaticSiteServer(siteDir, "Test static site");
+    try {
+      await expect(fetch(new URL("/locked.html", origin).href).then((response) => response.status)).resolves.toBe(500);
+    } finally {
+      await closeServer(server);
+      await chmod(lockedFile, 0o600);
     }
   });
 });
