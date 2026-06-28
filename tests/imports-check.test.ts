@@ -75,6 +75,15 @@ describe("import check", () => {
     ].join("\n"))).toEqual([{ name: "Hero" }]);
   });
 
+  it("ignores identifiers inside comments", () => {
+    expect(findUnusedDefaultImports([
+      'import Hero from "./Hero.astro";',
+      "{/* <Hero /> */}",
+      "<!-- <Hero /> -->",
+      "/* Hero */"
+    ].join("\n"))).toEqual([{ name: "Hero" }]);
+  });
+
   it("does not consume body content after imports without semicolons", () => {
     expect(findUnusedDefaultImports([
       'import Hero from "./Hero.astro"',

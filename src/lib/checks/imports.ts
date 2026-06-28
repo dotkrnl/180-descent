@@ -39,12 +39,13 @@ export function findUnusedDefaultImports(source: string): Array<{ name: string }
   const sourceWithoutCodeBlocks = stripFencedCodeBlocks(source);
   const imports = importDeclarations(sourceWithoutCodeBlocks);
   const sourceWithoutImports = stripRanges(sourceWithoutCodeBlocks, imports.map((entry) => entry.range));
+  const sourceWithoutComments = stripComments(sourceWithoutImports);
   const unusedImports: Array<{ name: string }> = [];
 
   for (const entry of imports) {
     const name = defaultImportName(entry.text);
     if (!name) continue;
-    if (!hasIdentifier(sourceWithoutImports, name)) {
+    if (!hasIdentifier(sourceWithoutComments, name)) {
       unusedImports.push({ name });
     }
   }
@@ -98,6 +99,17 @@ function stripRanges(source: string, ranges: Array<[number, number]>): string {
     }
   }
   return chars.join("");
+}
+
+function stripComments(source: string): string {
+  return source
+    .replace(/<!--[\s\S]*?-->/g, replaceWithSpaces)
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, replaceWithSpaces)
+    .replace(/\/\*[\s\S]*?\*\//g, replaceWithSpaces);
+}
+
+function replaceWithSpaces(text: string): string {
+  return text.replace(/[^\r\n]/g, " ");
 }
 
 function hasIdentifier(source: string, name: string): boolean {
