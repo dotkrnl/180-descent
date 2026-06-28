@@ -261,6 +261,7 @@ async function lintXmlFile(edition: string, name: string, text: string, xmlTemp:
   if (parsed.status !== 0) {
     errors.push([
       `${edition} XML parse failed in ${name}`,
+      parsed.error ? toError(parsed.error).message : "",
       parsed.stderr.trim()
     ].filter(Boolean).join("\n"));
   }
