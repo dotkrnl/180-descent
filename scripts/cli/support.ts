@@ -2,7 +2,7 @@ interface ErrorListOptions {
   heading?: string;
   prefix?: string;
   separator?: string;
-  footer?: string | readonly string[];
+  footer?: readonly string[];
 }
 
 export function exitOnErrors<T>(
@@ -22,13 +22,8 @@ export function exitOnErrors<T>(
   const separator = options.separator ?? "\n";
   console.error(errors.map((error) => `${prefix}${format(error)}`).join(separator));
 
-  const footer = options.footer;
-  if (Array.isArray(footer)) {
-    for (const line of footer) {
-      console.error(line);
-    }
-  } else if (footer) {
-    console.error(footer);
+  for (const line of options.footer ?? []) {
+    console.error(line);
   }
 
   process.exit(1);
