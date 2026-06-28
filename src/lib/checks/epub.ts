@@ -238,6 +238,21 @@ function inspectEpubXml(edition: string, name: string, text: string, zip: JSZip,
       errors.push(`${edition} references missing EPUB image in ${name}: ${src}`);
     }
   }
+  for (const match of text.matchAll(/<a\b[^>]*\bhref="([^"]+)"/gi)) {
+    const href = match[1];
+    if (!href || href.startsWith("#")) continue;
+    if (/^(?:https?:|mailto:|tel:)/i.test(href)) continue;
+    if (href.startsWith("/") || href.startsWith("//")) {
+      errors.push(`${edition} contains non-local EPUB link in ${name}: ${href}`);
+      continue;
+    }
+
+    const hrefPath = href.split(/[?#]/)[0];
+    const zipPath = path.posix.normalize(path.posix.join(path.posix.dirname(name), hrefPath));
+    if (!zipPath.startsWith("OEBPS/") || !zip.file(zipPath)) {
+      errors.push(`${edition} references missing EPUB link target in ${name}: ${href}`);
+    }
+  }
   const namedEntities = text.match(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)[A-Za-z][A-Za-z0-9]+;/g);
   if (namedEntities) {
     errors.push(`${edition} contains XML-unsafe named entities in ${name}: ${[...new Set(namedEntities)].join(", ")}`);
