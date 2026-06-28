@@ -45,11 +45,7 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
 
       const { pathname, anchor } = targetRef;
       if (isArtifactDownloadPath(pathname)) continue;
-      const target = targetRef.samePage
-        ? file
-        : pathname.endsWith("/")
-          ? path.join(builtSiteDir, pathname, "index.html")
-          : path.join(builtSiteDir, pathname);
+      const target = targetRef.samePage ? file : builtPathForUrlPath(builtSiteDir, pathname);
 
       if (!await pathExists(target)) {
         failures.push({
@@ -114,4 +110,10 @@ async function checkFutureLinks(daysDir: string, futureLinksPath: string): Promi
 
 function isArtifactDownloadPath(pathname: string): boolean {
   return /^\/downloads\/.+\.(?:epub|pdf)$/.test(pathname);
+}
+
+function builtPathForUrlPath(builtSiteDir: string, pathname: string): string {
+  if (pathname.endsWith("/")) return path.join(builtSiteDir, pathname, "index.html");
+  if (!path.extname(pathname)) return path.join(builtSiteDir, pathname, "index.html");
+  return path.join(builtSiteDir, pathname);
 }
