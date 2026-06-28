@@ -110,7 +110,7 @@ const TOOLS = {
   playwright: {
     label: "Playwright Chromium browser",
     usedBy: "check-a11y, web screenshot QA",
-    installHint: "npx playwright install chromium",
+    installHint: "rtk npx playwright install chromium",
     check() {
       const executable = chromium.executablePath();
       if (!existsSync(executable)) {

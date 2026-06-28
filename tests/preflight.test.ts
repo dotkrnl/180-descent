@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import { chromium } from "playwright";
+import { describe, expect, it, vi } from "vitest";
 import {
   checkTools,
   formatPreflightFailure,
@@ -60,6 +61,19 @@ describe("typed preflight", () => {
     }]);
 
     expect(message).toContain("install:   Install the project Node version, then run rtk npm install.");
+  });
+
+  it("lists RTK-wrapped Playwright installation guidance", () => {
+    const executablePath = vi.spyOn(chromium, "executablePath").mockReturnValue("/missing/chromium");
+    try {
+      const result = checkTools(["playwright"], { throwOnMissing: false });
+      const message = formatPreflightFailure(result.missing);
+
+      expect(message).not.toContain("install:   npx playwright install chromium");
+      expect(message).toContain("rtk npx playwright install chromium");
+    } finally {
+      executablePath.mockRestore();
+    }
   });
 
   it("throws typed errors when required tools are missing", () => {
