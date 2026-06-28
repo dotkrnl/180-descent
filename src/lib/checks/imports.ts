@@ -15,6 +15,8 @@ interface UnusedDefaultImport {
   name: string;
 }
 
+type SourceExt = ".astro" | ".mdx";
+
 const DEFAULT_SOURCE_ROOTS = ["src/app", "src/content"] as const;
 
 export async function checkUnusedDefaultImports(options: ImportCheckOptions): Promise<UnusedDefaultImport[]> {
@@ -24,7 +26,7 @@ export async function checkUnusedDefaultImports(options: ImportCheckOptions): Pr
     const absoluteRoot = path.join(options.root, sourceRoot);
     for (const filePath of await walkFiles(absoluteRoot, { exts: new Set([".astro", ".mdx"]) })) {
       const source = await readFile(filePath, "utf8");
-      for (const unusedImport of findUnusedDefaultImports(source)) {
+      for (const unusedImport of findUnusedDefaultImports(source, path.extname(filePath) as SourceExt)) {
         failures.push({
           path: toPosixRelative(options.root, filePath),
           name: unusedImport.name
@@ -36,17 +38,18 @@ export async function checkUnusedDefaultImports(options: ImportCheckOptions): Pr
   return failures;
 }
 
-function findUnusedDefaultImports(source: string): Array<{ name: string }> {
+function findUnusedDefaultImports(source: string, ext: SourceExt): Array<{ name: string }> {
   const sourceWithoutCodeBlocks = stripFencedCodeBlocks(source);
   const sourceWithoutComments = stripComments(sourceWithoutCodeBlocks);
   const imports = importDeclarations(sourceWithoutComments);
   const sourceWithoutImports = stripRanges(sourceWithoutComments, imports.map((entry) => entry.range));
+  const jsUsageSource = jsUsageRegions(sourceWithoutImports, ext).join("\n");
   const unusedImports: Array<{ name: string }> = [];
 
   for (const entry of imports) {
     const name = defaultImportName(entry.text);
     if (!name) continue;
-    if (!hasDefaultImportUsage(sourceWithoutImports, name)) {
+    if (!hasDefaultImportUsage(sourceWithoutImports, jsUsageSource, name)) {
       unusedImports.push({ name });
     }
   }
@@ -114,10 +117,51 @@ function replaceWithSpaces(text: string): string {
   return text.replace(/[^\r\n]/g, " ");
 }
 
-function hasDefaultImportUsage(source: string, name: string): boolean {
-  return hasJsxTag(source, name) || bracedExpressions(source).some((expression) => {
-    return hasIdentifier(stripJsComments(stripStringLiterals(expression)), name);
-  });
+function jsUsageRegions(source: string, ext: SourceExt): string[] {
+  if (ext === ".astro") return [astroFrontmatter(source)].filter((entry): entry is string => entry !== null);
+  return mdxExportDeclarations(source);
+}
+
+function astroFrontmatter(source: string): string | null {
+  const opening = source.match(/^---\r?\n/);
+  if (!opening) return null;
+
+  const start = opening[0].length;
+  const closing = source.slice(start).search(/\r?\n---\s*(?:\r?\n|$)/);
+  return closing === -1 ? null : source.slice(start, start + closing);
+}
+
+function mdxExportDeclarations(source: string): string[] {
+  const declarations: string[] = [];
+  const lines = source.split(/(?<=\n)/);
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (!line.trimStart().startsWith("export ")) continue;
+
+    let text = line;
+    while (!isCompleteExportDeclaration(text) && index + 1 < lines.length) {
+      index += 1;
+      text += lines[index];
+    }
+    declarations.push(text);
+  }
+
+  return declarations;
+}
+
+function isCompleteExportDeclaration(text: string): boolean {
+  const sourceFile = ts.createSourceFile("export.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const diagnostics = (sourceFile as ts.SourceFile & { parseDiagnostics: readonly ts.Diagnostic[] }).parseDiagnostics;
+  return sourceFile.statements.length > 0 && diagnostics.length === 0;
+}
+
+function hasDefaultImportUsage(source: string, jsUsageSource: string, name: string): boolean {
+  return hasIdentifier(stripJsComments(stripStringLiterals(jsUsageSource)), name)
+    || hasJsxTag(source, name)
+    || bracedExpressions(source).some((expression) => {
+      return hasIdentifier(stripJsComments(stripStringLiterals(expression)), name);
+    });
 }
 
 function hasJsxTag(source: string, name: string): boolean {

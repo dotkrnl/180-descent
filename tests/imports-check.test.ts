@@ -139,6 +139,38 @@ describe("import check", () => {
     ].join("\n"))).resolves.toEqual([]);
   });
 
+  it("counts identifiers in Astro frontmatter code", async () => {
+    await expect(unusedDefaultImportNames([
+      "---",
+      'import figure from "./figure.jpg";',
+      "const imageSrc = figure.src;",
+      "---",
+      "<div />"
+    ].join("\n"))).resolves.toEqual([]);
+
+    await expect(unusedDefaultImportNames([
+      "---",
+      'import figure from "./figure.jpg";',
+      'const label = "figure";',
+      "---",
+      "<div />"
+    ].join("\n"))).resolves.toEqual(["figure"]);
+  });
+
+  it("counts identifiers in MDX export declarations", async () => {
+    await expect(unusedDefaultImportNames([
+      'import figure from "./figure.jpg";',
+      "export const imageSrc = figure.src;",
+      "# Fixture"
+    ].join("\n"), "src/content/Fixture.mdx")).resolves.toEqual([]);
+
+    await expect(unusedDefaultImportNames([
+      'import figure from "./figure.jpg";',
+      'export const label = "figure";',
+      "# Fixture"
+    ].join("\n"), "src/content/Fixture.mdx")).resolves.toEqual(["figure"]);
+  });
+
   it("does not close braced expressions on braces inside strings or comments", async () => {
     await expect(unusedDefaultImportNames([
       'import figure from "./figure.jpg";',
@@ -175,10 +207,11 @@ describe("import check", () => {
   });
 });
 
-async function unusedDefaultImportNames(source: string): Promise<string[]> {
+async function unusedDefaultImportNames(source: string, relativePath = "src/app/Fixture.astro"): Promise<string[]> {
   const root = await mkdtemp(path.join(os.tmpdir(), "180-import-source-"));
   await mkdir(path.join(root, "src/app"), { recursive: true });
   await mkdir(path.join(root, "src/content"), { recursive: true });
-  await writeFile(path.join(root, "src/app/Fixture.astro"), source);
+  await mkdir(path.dirname(path.join(root, relativePath)), { recursive: true });
+  await writeFile(path.join(root, relativePath), source);
   return (await checkUnusedDefaultImports({ root })).map((failure) => failure.name);
 }
