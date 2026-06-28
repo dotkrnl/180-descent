@@ -62,7 +62,48 @@ const rawSyllabusSchema = z.object({
   purpose: localizedTextSchema,
   method: localizedTextSchema,
   blocks: z.array(rawSyllabusBlockSchema)
-}).strict();
+}).strict().superRefine((syllabus, context) => {
+  const seenDays = new Map<number, string>();
+  for (const [blockIndex, block] of syllabus.blocks.entries()) {
+    if (block.start_day > block.end_day) {
+      context.addIssue({
+        code: "custom",
+        path: ["blocks", blockIndex, "start_day"],
+        message: `block ${block.id} start_day must be <= end_day`
+      });
+    }
+
+    const expectedDays = block.end_day - block.start_day + 1;
+    if (block.days.length !== expectedDays) {
+      context.addIssue({
+        code: "custom",
+        path: ["blocks", blockIndex, "days"],
+        message: `block ${block.id} must contain ${expectedDays} day(s) for its declared range`
+      });
+    }
+
+    for (const [dayIndex, day] of block.days.entries()) {
+      if (day.day < block.start_day || day.day > block.end_day) {
+        context.addIssue({
+          code: "custom",
+          path: ["blocks", blockIndex, "days", dayIndex, "day"],
+          message: `day ${day.day} is outside block ${block.id} range ${block.start_day}-${block.end_day}`
+        });
+      }
+
+      const existingBlock = seenDays.get(day.day);
+      if (existingBlock) {
+        context.addIssue({
+          code: "custom",
+          path: ["blocks", blockIndex, "days", dayIndex, "day"],
+          message: `day ${day.day} appears in both block ${existingBlock} and block ${block.id}`
+        });
+      } else {
+        seenDays.set(day.day, block.id);
+      }
+    }
+  }
+});
 
 type LocalizedText = z.infer<typeof localizedTextSchema>;
 type RawSyllabus = z.infer<typeof rawSyllabusSchema>;

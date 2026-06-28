@@ -56,6 +56,34 @@ describe("syllabus data", () => {
 
     await expect(readSyllabusData(root, "en")).rejects.toThrow();
   });
+
+  it("rejects day rows outside the declared block range", async () => {
+    const root = await createFixtureRoot(validSyllabusYaml().replace("      - day: 1", "      - day: 2"));
+
+    await expect(readSyllabusData(root, "en")).rejects.toThrow(/outside block I range 1-1/);
+  });
+
+  it("rejects duplicate day numbers across blocks", async () => {
+    const root = await createFixtureRoot([
+      validSyllabusYaml(),
+      "  - id: II",
+      "    start_day: 1",
+      "    end_day: 1",
+      "    title:",
+      "      en: Duplicate",
+      "      zh: 重复",
+      "    summary:",
+      "      en: Duplicate block",
+      "      zh: 重复模块",
+      "    days:",
+      "      - day: 1",
+      "        title:",
+      "          en: Duplicate Day",
+      "          zh: 重复日"
+    ].join("\n"));
+
+    await expect(readSyllabusData(root, "en")).rejects.toThrow(/appears in both block I and block II/);
+  });
 });
 
 async function createFixtureRoot(syllabusYaml: string): Promise<string> {
