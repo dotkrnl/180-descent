@@ -167,8 +167,8 @@ Appendices are declared in `day.yaml` under `appendices`.
 - Add or adjust styles in SCSS modules imported by `book.scss`. Do not add
   component-local `.css`, duplicate `book.css`, browser-print PDF styles, or
   one-off generated CSS.
-- Do not add parallel adapter layers, blind importers, alternate source trees, or
-  split project workflow skills. `npm run check:clean` blocks committed
+- Do not add parallel adapter layers, blind importers, or alternate source
+  trees. `npm run check:clean` blocks committed
   generated output and any tracked file that matches `.gitignore`; `npm run
   check:workflows` enforces the single project workflow.
 - PDF output is generated from semantic MDX through XeTeX. When a live web

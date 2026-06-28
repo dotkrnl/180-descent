@@ -23,21 +23,11 @@ describe("project workflow", () => {
     });
   });
 
-  it("rejects split workflow skill directories", async () => {
-    const root = await mkdtemp(path.join(os.tmpdir(), "180-workflow-links-"));
-    await createWorkflowTree(root, { linked: true, splitSkill: true });
-
-    const failures = await checkProjectWorkflow(root);
-    expect(failures).toContainEqual({
-      path: ".codex/skills/180-descent-content",
-      reason: "Remove split workflow skill; use .codex/skills/180-descent"
-    });
-  });
 });
 
 async function createWorkflowTree(
   root: string,
-  options: { linked: boolean; splitSkill?: boolean }
+  options: { linked: boolean }
 ): Promise<void> {
   const skillDir = path.join(root, ".codex/skills/180-descent");
   const workflowDir = path.join(root, "docs/workflows/180-descent");
@@ -52,7 +42,4 @@ async function createWorkflowTree(
     await writeFile(skillPath, "---\nname: copied\n---\n");
   }
 
-  if (options.splitSkill) {
-    await mkdir(path.join(root, ".codex/skills/180-descent-content"), { recursive: true });
-  }
 }
