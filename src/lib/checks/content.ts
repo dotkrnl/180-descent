@@ -4,6 +4,7 @@ import * as cheerio from "cheerio";
 import { compileCss } from "@lib/assets/css";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
+import { readBookData } from "@lib/data/book";
 import { readCreditsData } from "@lib/data/credits";
 import { readSyllabusData } from "@lib/data/syllabus";
 import { toPosixRelative } from "@lib/fs/path";
@@ -327,7 +328,15 @@ async function checkDayBlocks(
   days: Awaited<ReturnType<typeof loadContentRegistry>>["days"],
   failures: ContentCheckFailure[]
 ): Promise<void> {
+  const book = await readBookData(root);
   const syllabus = await readSyllabusData(root, "en");
+  const syllabusDayCount = syllabus.blocks.reduce((total, block) => total + block.days.length, 0);
+  if (book.totalDays !== syllabusDayCount) {
+    failures.push({
+      message: `book.yaml total_days ${book.totalDays} does not match syllabus day count ${syllabusDayCount}`
+    });
+  }
+
   const syllabusBlocks = new Map<number, string>();
   for (const block of syllabus.blocks) {
     for (const day of block.days) {

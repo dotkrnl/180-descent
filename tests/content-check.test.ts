@@ -253,6 +253,23 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports book totals that do not match the syllabus day count", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "src/_data/book.yaml"), fixtureBookYaml(2));
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "book.yaml total_days 2 does not match syllabus day count 1"
+      }
+    ]);
+  });
+
   it("reports appendix web panels without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {
@@ -340,6 +357,7 @@ async function createFixtureRoot(): Promise<string> {
   const root = await createEmptyContentRoot("180-content-check-");
   await mkdir(path.join(root, "src/_data"), { recursive: true });
   await mkdir(path.join(root, "src/assets/scss"), { recursive: true });
+  await writeFile(path.join(root, "src/_data/book.yaml"), fixtureBookYaml(1));
   await writeFile(path.join(root, "src/_data/credits.yaml"), "fonts: []\nimages: []\n");
   await writeFile(path.join(root, "src/_data/syllabus-data.yaml"), fixtureSyllabusYaml());
   await writeFile(path.join(root, "src/assets/scss/book.scss"), "@font-face { font-family: Fixture; }\n");
@@ -400,6 +418,38 @@ function body(title: string, locale: "en" | "zh" = "en"): string {
       ? '<StatusChip status={"ok"} label={"已确立"} />'
       : '<StatusChip status={"ok"} label={"established"} />',
     "<Sources></Sources>"
+  ].join("\n");
+}
+
+function fixtureBookYaml(totalDays: number): string {
+  return [
+    "title: Fixture",
+    "subtitle: Fixture subtitle",
+    "deep_dive_subtitle: Fixture deep dive",
+    "authors: Fixture Author",
+    "human_editor:",
+    "  name: Editor",
+    "  url: https://example.com/editor",
+    "description: Fixture description",
+    "site_url: https://180d.io",
+    "repo: https://example.com/repo",
+    "language: en",
+    "publisher: Fixture Publisher",
+    "published_year: 2026",
+    `total_days: ${totalDays}`,
+    "epub_identifier: 11111111-1111-4111-8111-111111111111",
+    "zh:",
+    "  language: zh-Hans",
+    "  title: Fixture",
+    "  subtitle: Fixture subtitle",
+    "  deep_dive_subtitle: Fixture deep dive",
+    "  authors: Fixture Author",
+    "  translators: Fixture Translator",
+    "  human_editor:",
+    "    name: Editor",
+    "    url: https://example.com/editor",
+    "  description: Fixture description",
+    "  epub_identifier: 22222222-2222-4222-8222-222222222222"
   ].join("\n");
 }
 
