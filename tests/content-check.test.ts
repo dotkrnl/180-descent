@@ -184,6 +184,32 @@ describe("content check", () => {
     ]);
   });
 
+  it("checks braced single-quoted StatusChip labels", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "src/_data/book.yaml"), fixtureBookYaml(8));
+    await writeFile(path.join(root, "src/_data/syllabus-data.yaml"), fixtureSyllabusYaml(8));
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: body("夹具日", "zh")
+    });
+    for (let day = 2; day < 8; day += 1) {
+      await writePublishedDay(root, day);
+    }
+    await writePublishedDay(root, 8, [
+      "# Fixture Day 8",
+      '<StatusChip status={"ok"} label={\'established under assumptions\'} />',
+      "<Sources></Sources>"
+    ].join("\n"));
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: 'src/content/days/008-fixture/en.mdx has overlong StatusChip label "established under assumptions" (29 chars); keep hype-filter tags short and move caveats into prose'
+      }
+    ]);
+  });
+
   it("reports SimpleTable props that PDF output cannot parse", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {
@@ -675,7 +701,7 @@ async function writeRegistryDayWithAppendix(
   });
 }
 
-async function writePublishedDay(root: string, day: number): Promise<void> {
+async function writePublishedDay(root: string, day: number, enBody?: string): Promise<void> {
   const paddedDay = String(day).padStart(3, "0");
   const title = `Fixture Day ${day}`;
   const zhTitle = `夹具日 ${day}`;
@@ -696,7 +722,7 @@ async function writePublishedDay(root: string, day: number): Promise<void> {
     "appendices: []",
     "interactionScripts: []"
   ].join("\n"));
-  await writeFile(path.join(dayDir, "en.mdx"), body(title));
+  await writeFile(path.join(dayDir, "en.mdx"), enBody ?? body(title));
   await writeFile(path.join(dayDir, "zh.mdx"), body(zhTitle, "zh"));
 }
 

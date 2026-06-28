@@ -30,7 +30,6 @@ type JsonPropValue =
 const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
 const STATUS_VALUES = new Set(["ok", "hint", "bad"]);
 const STATUS_COMPONENT_PATTERN = /<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*>/g;
-const STATUS_PROP_PATTERN = /\bstatus\s*=\s*(?:\{\s*(?:"([^"]+)"|'([^']+)')\s*\}|"([^"]+)"|'([^']+)')/;
 const SIMPLE_TABLE_PATTERN = /<SimpleTable\b[\s\S]*?(?:\/>|<\/SimpleTable>)/g;
 const STATUS_CHIP_LABEL_MAX_CHARS = 28;
 const STATUS_CHIP_LABEL_GATE_START_DAY = 8;
@@ -509,7 +508,11 @@ function checkStatusValues(file: RegistryContentFile, failures: ContentCheckFail
 }
 
 function literalStatusValue(tag: string): string | null {
-  const match = tag.match(STATUS_PROP_PATTERN);
+  return literalStringPropValue(tag, "status");
+}
+
+function literalStringPropValue(tag: string, prop: string): string | null {
+  const match = tag.match(new RegExp(`\\b${prop}\\s*=\\s*(?:\\{\\s*(?:"([^"]+)"|'([^']+)')\\s*\\}|"([^"]+)"|'([^']+)')`));
   return match ? match[1] ?? match[2] ?? match[3] ?? match[4] ?? null : null;
 }
 
@@ -597,11 +600,13 @@ function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheck
   const dayNumber = Number(file.relativePath.match(/src\/content\/days\/(\d{3})-/)?.[1]);
   if (!Number.isFinite(dayNumber) || dayNumber < STATUS_CHIP_LABEL_GATE_START_DAY) return;
 
-  for (const match of file.source.matchAll(/<StatusChip\b[^>]*\blabel=(?:\{"([^"]+)"\}|"([^"]+)"|'([^']+)')/g)) {
-    const label = normalizeVisibleText(match[1] ?? match[2] ?? match[3] ?? "");
-    if (label.length > STATUS_CHIP_LABEL_MAX_CHARS) {
+  for (const match of file.source.matchAll(/<StatusChip\b[^>]*>/g)) {
+    const label = literalStringPropValue(match[0], "label");
+    if (!label) continue;
+    const normalizedLabel = normalizeVisibleText(label);
+    if (normalizedLabel.length > STATUS_CHIP_LABEL_MAX_CHARS) {
       failures.push({
-        message: `${file.relativePath} has overlong StatusChip label "${label}" (${label.length} chars); keep hype-filter tags short and move caveats into prose`
+        message: `${file.relativePath} has overlong StatusChip label "${normalizedLabel}" (${normalizedLabel.length} chars); keep hype-filter tags short and move caveats into prose`
       });
     }
   }
