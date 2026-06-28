@@ -250,7 +250,14 @@ function inspectEpubXml(
     const src = decodeXmlEntities(match[2]);
     if (/^(?:\/|https?:)/i.test(src)) {
       errors.push(`${edition} contains non-local EPUB image src in ${name}: ${src}`);
-    } else if (src.startsWith("images/") && !zip.file(`OEBPS/${src}`)) {
+      continue;
+    }
+
+    const srcPath = src.split(/[?#]/)[0];
+    const zipPath = srcPath
+      ? path.posix.normalize(path.posix.join(path.posix.dirname(name), srcPath))
+      : "";
+    if (!zipPath || !zipPath.startsWith("OEBPS/") || !zip.file(zipPath)) {
       errors.push(`${edition} references missing EPUB image in ${name}: ${src}`);
     }
   }

@@ -35,6 +35,16 @@ describe("epub check helpers", () => {
     expect(errors).toContain(`${edition} references missing EPUB link anchor in OEBPS/day-001.xhtml: day-002.xhtml#missing-anchor`);
   });
 
+  it("reports missing relative EPUB images outside the images directory", async () => {
+    const root = await createEmptyContentRoot("180-epub-image-missing-");
+    const edition = bookArtifactPaths("epub")[0];
+    await writeEpubFixture(root, edition, '<p><img src="missing.png" alt="Missing"/></p>');
+
+    const errors = await checkEpub({ root });
+
+    expect(errors).toContain(`${edition} references missing EPUB image in OEBPS/day-001.xhtml: missing.png`);
+  });
+
   it("reports invalid numeric XML entities without crashing", async () => {
     const root = await createEmptyContentRoot("180-epub-invalid-entity-");
     const edition = bookArtifactPaths("epub")[0];
