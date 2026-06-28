@@ -3,7 +3,7 @@ export function escapeHtml(value = ""): string {
 }
 
 export function escapeXml(value = ""): string {
-  return String(value)
+  return value
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
