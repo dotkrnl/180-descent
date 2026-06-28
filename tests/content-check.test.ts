@@ -159,6 +159,32 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports missing and uncredited open-license image assets", async () => {
+    const root = await createFixtureRoot();
+    await mkdir(path.join(root, "src/assets/images/open-license"), { recursive: true });
+    await writeFile(path.join(root, "src/assets/images/open-license/orphan.jpg"), "");
+    await writeFile(path.join(root, "src/_data/credits.yaml"), [
+      "fonts: []",
+      "images:",
+      "  - asset: /assets/images/open-license/missing.jpg"
+    ].join("\n"));
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "credits image asset does not exist: /assets/images/open-license/missing.jpg"
+      },
+      {
+        message: "/assets/images/open-license/orphan.jpg is missing from credits.yaml images"
+      }
+    ]);
+  });
+
   it("reports appendix web panels without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {
@@ -244,7 +270,9 @@ describe("content check", () => {
 
 async function createFixtureRoot(): Promise<string> {
   const root = await createEmptyContentRoot("180-content-check-");
+  await mkdir(path.join(root, "src/_data"), { recursive: true });
   await mkdir(path.join(root, "src/assets/scss"), { recursive: true });
+  await writeFile(path.join(root, "src/_data/credits.yaml"), "fonts: []\nimages: []\n");
   await writeFile(path.join(root, "src/assets/scss/book.scss"), "@font-face { font-family: Fixture; }\n");
   return root;
 }

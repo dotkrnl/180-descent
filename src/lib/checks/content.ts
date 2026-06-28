@@ -4,6 +4,8 @@ import * as cheerio from "cheerio";
 import { compileCss } from "@lib/assets/css";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
+import { creditsDataFile } from "@lib/data/paths";
+import { readYamlFile } from "@lib/data/yaml";
 import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import type { Locale } from "@lib/schemas/day";
@@ -17,6 +19,12 @@ interface ContentCheckFailure {
   message: string;
 }
 
+interface CreditsData {
+  images?: Array<{
+    asset?: unknown;
+  }>;
+}
+
 const PRINT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
 const STATUS_CHIP_LABEL_MAX_CHARS = 28;
 const STATUS_CHIP_LABEL_GATE_START_DAY = 8;
@@ -28,6 +36,7 @@ const UNSTYLED_FRONTIER_MARKER_PATTERN =
 const REDUNDANT_TERM_TIP_PATTERN =
   /<Term\b[^>]*>([^<]+)<\/Term><TipNote\b[^>]*\/>\s+(?:\b(?:is|are|means|links|says)\b|指|是|称为|叫做|会|把|用来)/g;
 const PROJECT_TEXT_EXTS = new Set([".astro", ".cjs", ".css", ".html", ".json", ".md", ".mdx", ".mjs", ".scss", ".yaml", ".yml"]);
+const CREDITED_IMAGE_EXTS = new Set([".jpg", ".jpeg", ".png", ".svg", ".webp"]);
 const GENERATED_REFERENCE_CHECK_IGNORES = [".astro", "_site", "node_modules", "fonts", "generated", "tmp"];
 const PARENT_MARKDOWN_PATTERN = /\.\.\/[^\s"'`)]+\.md\b/;
 const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
@@ -310,6 +319,7 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
   }
 
   await checkInteractionScripts(options.root, registry.days, failures);
+  await checkImageCredits(options.root, failures);
   await checkCssFonts(options.root, failures);
   await checkParentMarkdownReferences(options.root, failures);
 
@@ -345,6 +355,37 @@ async function checkInteractionScripts(
       failures.push({
         message: `${toPosixRelative(root, file)} is not registered by any day manifest interactionScripts`
       });
+    }
+  }
+}
+
+async function checkImageCredits(root: string, failures: ContentCheckFailure[]): Promise<void> {
+  const credits = await readYamlFile<CreditsData>(creditsDataFile(root));
+  const creditedAssets = new Set<string>();
+
+  for (const image of credits.images ?? []) {
+    const asset = image.asset;
+    if (typeof asset !== "string" || !asset) {
+      failures.push({ message: "credits image entry is missing an asset path" });
+      continue;
+    }
+    creditedAssets.add(asset);
+    if (!asset.startsWith("/assets/images/")) {
+      failures.push({ message: `credits image asset must use /assets/images/: ${asset}` });
+      continue;
+    }
+    if (!await pathExists(path.join(root, "src", asset.slice(1)))) {
+      failures.push({ message: `credits image asset does not exist: ${asset}` });
+    }
+  }
+
+  const openLicenseDir = path.join(root, "src/assets/images/open-license");
+  if (!await pathExists(openLicenseDir)) return;
+
+  for (const file of await walkFiles(openLicenseDir, { exts: CREDITED_IMAGE_EXTS, ignoredDirNames: [] })) {
+    const asset = `/${toPosixRelative(path.join(root, "src"), file)}`;
+    if (!creditedAssets.has(asset)) {
+      failures.push({ message: `${asset} is missing from credits.yaml images` });
     }
   }
 }
