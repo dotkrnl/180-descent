@@ -394,7 +394,7 @@ If port 8080 is unavailable, use another local port and tell the user the URL.
    edits.
 3. If selected text cannot be found uniquely in source, patch manually or adjust
    the selected range, refresh, and verify.
-4. After the user says the refinement pass is done, check `git status -sb` and
+4. After the user says the refinement pass is done, check `rtk git status -sb` and
    inspect the source diff. Confirm refinements are in tracked source files under
    `src/` or workflow files, never only `_site/`.
 5. Rebuild and rerun checks after accepted refinements.
