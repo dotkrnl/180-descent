@@ -35,6 +35,7 @@ interface EpubMeta {
 interface EpubConfig {
   root: string;
   locale: Locale;
+  siteUrl: string;
   meta: EpubMeta;
   siteDayDir: string;
   dayUrlPrefix: string;
@@ -52,6 +53,7 @@ interface EpubConfig {
 interface DayEpubConfig {
   root: string;
   locale: Locale;
+  siteUrl: string;
   meta: EpubMeta;
   siteDayDir: string;
   dayUrlPrefix: string;
@@ -81,6 +83,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
   await buildEpub({
     root,
     locale: "en",
+    siteUrl: book.siteUrl,
     meta: {
       title: book.title,
       subtitle: book.subtitle,
@@ -103,6 +106,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
   await buildEpub({
     root,
     locale: "en",
+    siteUrl: book.siteUrl,
     meta: {
       title: `${book.title}: Deep Dive Edition`,
       subtitle: book.deepDiveSubtitle,
@@ -126,6 +130,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
   await buildEpub({
     root,
     locale: "zh",
+    siteUrl: book.siteUrl,
     meta: {
       title: book.zh.title,
       subtitle: book.zh.subtitle,
@@ -149,6 +154,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
   await buildEpub({
     root,
     locale: "zh",
+    siteUrl: book.siteUrl,
     meta: {
       title: `${book.zh.title}：专题深入版`,
       subtitle: book.zh.deepDiveSubtitle,
@@ -173,6 +179,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
   await buildDayEpubs({
     root,
     locale: "en",
+    siteUrl: book.siteUrl,
     meta: {
       title: book.title,
       subtitle: book.subtitle,
@@ -190,6 +197,7 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
   await buildDayEpubs({
     root,
     locale: "zh",
+    siteUrl: book.siteUrl,
     meta: {
       title: book.zh.title,
       subtitle: book.zh.subtitle,
@@ -336,19 +344,25 @@ ${subtitleMarkup}
     const el = $(anchor);
     const href = el.attr("href");
     if (!href) return;
+    const hrefPath = href.split(/[?#]/)[0];
+    const hash = href.includes("#") ? `#${href.split("#")[1]}` : "";
     if (href.startsWith(config.dayUrlPrefix)) {
       const slug = href.slice(config.dayUrlPrefix.length).split("/")[0];
       const day = days.find((candidate) => candidate.path === slug);
-      if (day) {
-        const hash = href.includes("#") ? `#${href.split("#")[1]}` : "";
-        el.attr("href", `${day.xhtml}${hash}`);
-      } else {
-        el.attr("href", "nav.xhtml");
+      if (!day) {
+        if (config.singleDay) {
+          el.attr("href", siteHref(config.siteUrl, href));
+          return;
+        }
+        throw new Error(`EPUB link targets unpublished day in ${selfHref}: ${href}`);
       }
-    } else if (href === config.introUrl) {
-      el.attr("href", "introduction.xhtml");
-    } else if (href.startsWith("/") && !href.includes("/downloads/")) {
-      el.attr("href", "nav.xhtml");
+      el.attr("href", `${day.xhtml}${hash}`);
+    } else if (config.introUrl && hrefPath === config.introUrl) {
+      el.attr("href", `introduction.xhtml${hash}`);
+    } else if (hrefPath === staticPageUrl(config.locale, "syllabus")) {
+      el.attr("href", `nav.xhtml${hash}`);
+    } else if (href.startsWith("/")) {
+      throw new Error(`Unsupported internal EPUB link in ${selfHref}: ${href}`);
     }
   });
   $("img[src]").each((_, img) => {
@@ -374,6 +388,10 @@ ${subtitleMarkup}
     ${body}
   </body>
 </html>`;
+}
+
+function siteHref(siteUrl: string, href: string): string {
+  return new URL(href, `${siteUrl}/`).href;
 }
 
 async function epubCss(root: string): Promise<string> {

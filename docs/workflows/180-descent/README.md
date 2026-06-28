@@ -221,6 +221,10 @@ SVG/HTML/SCSS diagrams.
   `src/assets/images/...`.
 - `npm run build:epub` must resolve local source image paths into
   `OEBPS/images/...` and add image manifest entries to `content.opf`.
+- EPUB generation rewrites packaged day links to local `day-###.xhtml`
+  documents and the syllabus map link to `nav.xhtml`. Single-day EPUBs preserve
+  cross-day links as absolute `site_url` links because those target days are not
+  packaged in the per-day file.
 - PDF generation reads semantic MDX and builds with XeTeX. `ImageFigure` sources
   backed by committed JPEG/PNG/PDF assets are included directly; SVGs are
   converted with `rsvg-convert`.
