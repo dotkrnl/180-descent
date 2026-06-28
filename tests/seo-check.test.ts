@@ -149,6 +149,22 @@ describe("seo check", () => {
     ]);
   });
 
+  it("resolves relative manifest icons against the manifest URL", async () => {
+    const root = await createSiteRoot();
+    await mkdir(path.join(root, "_site/app"), { recursive: true });
+    await writeFile(path.join(root, "_site/app/site.webmanifest"), JSON.stringify({
+      icons: [{ src: "icon-192.png" }]
+    }));
+    await writeFile(path.join(root, "_site/app/icon-192.png"), "");
+    await writeFile(path.join(root, "_site/index.html"), indexHtml({
+      manifest: "/app/site.webmanifest"
+    }));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([]);
+  });
+
   it("does not accept commented sitemap markup", async () => {
     const root = await createSiteRoot();
     await writeFile(path.join(root, "_site/index.html"), indexHtml());
@@ -195,6 +211,7 @@ async function createSiteRoot(): Promise<string> {
 function indexHtml(options: {
   canonicalPath?: string;
   favicon?: string;
+  manifest?: string;
   alternates?: {
     en: string;
     zh: string;
@@ -224,7 +241,7 @@ function indexHtml(options: {
     '<script type="application/ld+json">{}</script>',
     `<link rel="icon" href="${options.favicon ?? "/favicon.ico"}">`,
     '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
-    '<link rel="manifest" href="/site.webmanifest">',
+    `<link rel="manifest" href="${options.manifest ?? "/site.webmanifest"}">`,
     "</head>",
     "<body></body>",
     "</html>"

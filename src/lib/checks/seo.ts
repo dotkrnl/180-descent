@@ -156,10 +156,20 @@ async function checkManifestIcons(siteDir: string, siteUrl: string, href: string
       errors.push(`${href}: icon src must be a string`);
       continue;
     }
-    const localPath = sitePathForHref(siteDir, siteUrl, src);
+    const localPath = sitePathForManifestIcon(siteDir, siteUrl, href, src);
     if (!localPath || !await pathExists(localPath)) {
       errors.push(`${href}: icon does not exist locally (${src})`);
     }
+  }
+}
+
+function sitePathForManifestIcon(siteDir: string, siteUrl: string, manifestHref: string, iconSrc: string): string | null {
+  try {
+    const manifestUrl = new URL(manifestHref, siteUrl);
+    const iconUrl = new URL(iconSrc, manifestUrl);
+    return sitePathForHref(siteDir, siteUrl, iconUrl.href);
+  } catch {
+    return null;
   }
 }
 
