@@ -188,6 +188,28 @@ describe("content check", () => {
     ]);
   });
 
+  it("checks SimpleTable props on explicit closing tags", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<SimpleTable headers={headers} rows={rows}></SimpleTable>'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a literal string-array headers prop"
+      },
+      {
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a literal string-matrix rows prop"
+      }
+    ]);
+  });
+
   it("does not treat fenced examples as content markers or raw markup", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {

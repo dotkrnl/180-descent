@@ -24,7 +24,7 @@ const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as 
 const STATUS_VALUES = new Set(["ok", "hint", "bad"]);
 const STATUS_COMPONENT_PATTERN = /<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*>/g;
 const STATUS_PROP_PATTERN = /\bstatus\s*=\s*(?:\{\s*(?:"([^"]+)"|'([^']+)')\s*\}|"([^"]+)"|'([^']+)')/;
-const SIMPLE_TABLE_PATTERN = /<SimpleTable\b[\s\S]*?\/>/g;
+const SIMPLE_TABLE_PATTERN = /<SimpleTable\b[\s\S]*?(?:\/>|<\/SimpleTable>)/g;
 const STATUS_CHIP_LABEL_MAX_CHARS = 28;
 const STATUS_CHIP_LABEL_GATE_START_DAY = 8;
 const UNSTYLED_STATUS_LIST_ITEM_PATTERN =
