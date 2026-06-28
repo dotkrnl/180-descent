@@ -1,11 +1,12 @@
 ---
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import BookShell from "@app/layouts/BookShell.astro";
+import DayNav from "@app/components/DayNav.astro";
 import { getBookData } from "@app/site-data";
 import { dayArtifactDownloadUrl } from "@lib/artifacts/downloads";
 import { daySocialImagePath } from "@lib/assets/social-images";
 import type { RegistryDayLocaleEntry } from "@lib/content/registry";
-import { alternateLocale, dayUrl, staticPageUrl } from "@lib/static-site/routes";
+import { alternateLocale, dayUrl } from "@lib/static-site/routes";
 
 interface AppendixRenderEntry {
   id: string;
@@ -51,11 +52,6 @@ const socialImagePath = daySocialImagePath(entry.locale, dayPath);
 const paddedDay = String(entry.day.manifest.day).padStart(3, "0");
 const dayLabel = isZh ? `第${paddedDay}日` : `Day ${paddedDay}`;
 const remainingDays = book.totalDays - entry.day.manifest.day;
-const navDayLabel = (day: number) => {
-  const value = String(day).padStart(3, "0");
-  return isZh ? `第${value}日` : `Day ${value}`;
-};
-const navHref = (item: DayNavEntry) => dayUrl(entry.locale, item.path);
 const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
   const script = interactionScriptModules[entryName];
   if (!script) {
@@ -91,34 +87,7 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
         </div>
       </aside>
     )}
-    <nav class="lesson-nav lesson-nav-top wrap wide" aria-label={isZh ? "日课导航（顶部）" : "Top day navigation"}>
-      {previous ? (
-        <a class="lesson-nav-card" href={navHref(previous)}>
-          <span>{isZh ? "上一篇" : "Previous"}</span>
-          <strong>{navDayLabel(previous.day)} · {previous.title}</strong>
-        </a>
-      ) : (
-        <span class="lesson-nav-card is-disabled">
-          <span>{isZh ? "上一篇" : "Previous"}</span>
-          <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
-        </span>
-      )}
-      <a class="lesson-nav-card is-syllabus" href={staticPageUrl(entry.locale, "syllabus")}>
-        <span>{isZh ? "课程表" : "Map"}</span>
-        <strong>{isZh ? "完整课程表" : "Full syllabus"}</strong>
-      </a>
-      {next ? (
-        <a class="lesson-nav-card" href={navHref(next)}>
-          <span>{isZh ? "下一篇" : "Next"}</span>
-          <strong>{navDayLabel(next.day)} · {next.title}</strong>
-        </a>
-      ) : (
-        <span class="lesson-nav-card is-disabled">
-          <span>{isZh ? "下一篇" : "Next"}</span>
-          <strong>{isZh ? "尚未发布" : "Not published yet"}</strong>
-        </span>
-      )}
-    </nav>
+    <DayNav locale={entry.locale} previous={previous} next={next} position="top" />
     <Body />
     <div class="wrap">
       {appendices.map(({ id, title, Body: AppendixBody }) => (
@@ -138,33 +107,6 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
         <span class="gleam">{isZh ? `还有 ${remainingDays} 日等待深入` : `${remainingDays} descents remain`}</span>
       </p>
     </div>
-    <nav class="lesson-nav lesson-nav-bottom wrap wide" aria-label={isZh ? "日课导航（底部）" : "Bottom day navigation"}>
-      {previous ? (
-        <a class="lesson-nav-card" href={navHref(previous)}>
-          <span>{isZh ? "上一篇" : "Previous"}</span>
-          <strong>{navDayLabel(previous.day)} · {previous.title}</strong>
-        </a>
-      ) : (
-        <span class="lesson-nav-card is-disabled">
-          <span>{isZh ? "上一篇" : "Previous"}</span>
-          <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
-        </span>
-      )}
-      <a class="lesson-nav-card is-syllabus" href={staticPageUrl(entry.locale, "syllabus")}>
-        <span>{isZh ? "课程表" : "Map"}</span>
-        <strong>{isZh ? "完整课程表" : "Full syllabus"}</strong>
-      </a>
-      {next ? (
-        <a class="lesson-nav-card" href={navHref(next)}>
-          <span>{isZh ? "下一篇" : "Next"}</span>
-          <strong>{navDayLabel(next.day)} · {next.title}</strong>
-        </a>
-      ) : (
-        <span class="lesson-nav-card is-disabled">
-          <span>{isZh ? "下一篇" : "Next"}</span>
-          <strong>{isZh ? "尚未发布" : "Not published yet"}</strong>
-        </span>
-      )}
-    </nav>
+    <DayNav locale={entry.locale} previous={previous} next={next} position="bottom" />
   </article>
 </BookShell>

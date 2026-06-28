@@ -1,0 +1,56 @@
+---
+import type { Locale } from "@lib/schemas/day";
+import { dayUrl, staticPageUrl } from "@lib/static-site/routes";
+
+interface DayNavEntry {
+  day: number;
+  path: string;
+  title: string;
+}
+
+interface Props {
+  locale: Locale;
+  previous?: DayNavEntry;
+  next?: DayNavEntry;
+  position: "top" | "bottom";
+}
+
+const { locale, previous, next, position } = Astro.props;
+const isZh = locale === "zh";
+const navDayLabel = (day: number) => {
+  const value = String(day).padStart(3, "0");
+  return isZh ? `第${value}日` : `Day ${value}`;
+};
+const navHref = (item: DayNavEntry) => dayUrl(locale, item.path);
+const positionName = position === "top" ? (isZh ? "顶部" : "Top") : (isZh ? "底部" : "Bottom");
+const ariaLabel = isZh ? `日课导航（${positionName}）` : `${positionName} day navigation`;
+const className = `lesson-nav lesson-nav-${position} wrap wide`;
+---
+<nav class={className} aria-label={ariaLabel}>
+  {previous ? (
+    <a class="lesson-nav-card" href={navHref(previous)}>
+      <span>{isZh ? "上一篇" : "Previous"}</span>
+      <strong>{navDayLabel(previous.day)} · {previous.title}</strong>
+    </a>
+  ) : (
+    <span class="lesson-nav-card is-disabled">
+      <span>{isZh ? "上一篇" : "Previous"}</span>
+      <strong>{isZh ? "全书起点" : "Start of the book"}</strong>
+    </span>
+  )}
+  <a class="lesson-nav-card is-syllabus" href={staticPageUrl(locale, "syllabus")}>
+    <span>{isZh ? "课程表" : "Map"}</span>
+    <strong>{isZh ? "完整课程表" : "Full syllabus"}</strong>
+  </a>
+  {next ? (
+    <a class="lesson-nav-card" href={navHref(next)}>
+      <span>{isZh ? "下一篇" : "Next"}</span>
+      <strong>{navDayLabel(next.day)} · {next.title}</strong>
+    </a>
+  ) : (
+    <span class="lesson-nav-card is-disabled">
+      <span>{isZh ? "下一篇" : "Next"}</span>
+      <strong>{isZh ? "尚未发布" : "Not published yet"}</strong>
+    </span>
+  )}
+</nav>
