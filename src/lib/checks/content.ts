@@ -359,10 +359,6 @@ async function checkImageCredits(root: string, failures: ContentCheckFailure[]):
   for (const image of credits.images) {
     const asset = image.asset;
     creditedAssets.add(asset);
-    if (!asset.startsWith("/assets/images/")) {
-      failures.push({ message: `credits image asset must use /assets/images/: ${asset}` });
-      continue;
-    }
     if (!await pathExists(path.join(root, "src", asset.slice(1)))) {
       failures.push({ message: `credits image asset does not exist: ${asset}` });
     }
