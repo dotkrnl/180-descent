@@ -429,8 +429,9 @@ function checkStaticAlternates(file: RegistryContentFile, failures: ContentCheck
 }
 
 function checkUnsupportedMdxWrappers(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  const source = stripCodeBlocks(file.source);
   for (const [pattern, replacement] of UNSUPPORTED_MDX_WRAPPER_PATTERNS) {
-    if (pattern.test(file.source)) {
+    if (pattern.test(source)) {
       failures.push({ message: `${file.relativePath} contains unsupported MDX wrapper markup; ${replacement}` });
     }
   }

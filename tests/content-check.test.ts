@@ -75,6 +75,21 @@ describe("content check", () => {
     ]);
   });
 
+  it("allows wrapper markup examples inside fenced code blocks", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        "```html",
+        '<section><p><em>example only</em></p></section>',
+        "```"
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    await expect(checkContent({ root })).resolves.toEqual([]);
+  });
+
   it("reports appendix web panels without static alternates", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDayWithAppendix(root, {
