@@ -101,6 +101,18 @@ describe("import check", () => {
     ].join("\n"))).toEqual([]);
   });
 
+  it("counts identifiers inside template literal interpolations", () => {
+    expect(findUnusedDefaultImports([
+      'import figure from "./figure.jpg";',
+      "<ImageFigure src={`${figure}?w=1200`} />"
+    ].join("\n"))).toEqual([]);
+
+    expect(findUnusedDefaultImports([
+      'import figure from "./figure.jpg";',
+      '<ImageFigure src={`${"figure"}?w=1200`} />'
+    ].join("\n"))).toEqual([{ name: "figure" }]);
+  });
+
   it("does not consume body content after imports without semicolons", () => {
     expect(findUnusedDefaultImports([
       'import Hero from "./Hero.astro"',
