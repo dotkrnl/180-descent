@@ -64,7 +64,7 @@ async function checkHtml(
   if (!$('meta[property="og:description"]').attr("content")) errors.push(`${url}: missing og:description`);
   if (!ogImage) errors.push(`${url}: missing og:image`);
   if (!$('meta[name="twitter:card"]').attr("content")) errors.push(`${url}: missing twitter card metadata`);
-  if (!$('script[type="application/ld+json"]').length) errors.push(`${url}: missing JSON-LD structured data`);
+  checkStructuredData(url, $, errors);
   if (!favicon) errors.push(`${url}: missing favicon link`);
   if (!appleTouchIcon) errors.push(`${url}: missing apple-touch-icon link`);
   if (!manifest) errors.push(`${url}: missing web app manifest link`);
@@ -96,6 +96,25 @@ async function checkHtml(
     if (enHref && enHref !== expectedEnHref) errors.push(`${url}: hreflang en should be ${expectedEnHref}, got ${enHref}`);
     if (zhHref && zhHref !== expectedZhHref) errors.push(`${url}: hreflang zh-Hans should be ${expectedZhHref}, got ${zhHref}`);
     if (defaultHref && defaultHref !== expectedEnHref) errors.push(`${url}: hreflang x-default should be ${expectedEnHref}, got ${defaultHref}`);
+  }
+}
+
+function checkStructuredData(url: string, $: ReturnType<typeof load>, errors: string[]): void {
+  const scripts = $('script[type="application/ld+json"]').toArray();
+  if (!scripts.length) {
+    errors.push(`${url}: missing JSON-LD structured data`);
+    return;
+  }
+
+  for (const script of scripts) {
+    try {
+      const parsed: unknown = JSON.parse($(script).text().trim());
+      if (!parsed || typeof parsed !== "object") {
+        errors.push(`${url}: JSON-LD structured data must be a JSON object or array`);
+      }
+    } catch (error) {
+      errors.push(`${url}: invalid JSON-LD structured data (${toError(error).message})`);
+    }
   }
 }
 

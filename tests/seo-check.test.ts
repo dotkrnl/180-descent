@@ -70,6 +70,17 @@ describe("seo check", () => {
     ]);
   });
 
+  it("reports invalid JSON-LD structured data", async () => {
+    const root = await createSiteRoot();
+    await writeFile(path.join(root, "_site/index.html"), indexHtml({
+      jsonLd: "{"
+    }));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors[0]).toMatch(/^\/: invalid JSON-LD structured data/);
+  });
+
   it("reports malformed web manifest JSON", async () => {
     const root = await createSiteRoot();
     await writeFile(path.join(root, "_site/index.html"), indexHtml());
@@ -229,6 +240,7 @@ async function createSiteRoot(): Promise<string> {
 function indexHtml(options: {
   canonicalPath?: string;
   favicon?: string;
+  jsonLd?: string;
   manifest?: string;
   alternates?: {
     en: string;
@@ -256,7 +268,7 @@ function indexHtml(options: {
     '<meta property="og:description" content="Fixture description">',
     '<meta property="og:image" content="https://180d.io/social.png">',
     '<meta name="twitter:card" content="summary_large_image">',
-    '<script type="application/ld+json">{}</script>',
+    `<script type="application/ld+json">${options.jsonLd ?? "{}"}</script>`,
     `<link rel="icon" href="${options.favicon ?? "/favicon.ico"}">`,
     '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
     `<link rel="manifest" href="${options.manifest ?? "/site.webmanifest"}">`,
