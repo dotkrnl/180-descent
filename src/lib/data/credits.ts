@@ -24,8 +24,11 @@ interface CreditImage {
 
 const imageAssetSchema = z.string()
   .regex(/^\/assets\/images\/.+\.(?:jpe?g|png|svg|webp)$/)
-  .refine((asset) => !asset.split("/").includes(".."), {
-    message: "image asset must not contain parent directory segments"
+  .refine((asset) => {
+    const [, ...segments] = asset.split("/");
+    return segments.every((segment) => segment && segment !== "." && segment !== "..");
+  }, {
+    message: "image asset must be a normalized absolute path under /assets/images"
   });
 
 const creditFontSchema = z.object({

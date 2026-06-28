@@ -68,7 +68,28 @@ describe("credits data", () => {
       "    notes: Fixture notes."
     ].join("\n"));
 
-    await expect(readCreditsData(root)).rejects.toThrow("image asset must not contain parent directory segments");
+    await expect(readCreditsData(root)).rejects.toThrow(
+      "image asset must be a normalized absolute path under /assets/images"
+    );
+  });
+
+  it("rejects non-normalized image asset paths", async () => {
+    for (const asset of ["/assets/images/open-license//fixture.jpg", "/assets/images/./fixture.jpg"]) {
+      const root = await createCreditsRoot([
+        "fonts: []",
+        "images:",
+        "  - title: Fixture Image",
+        "    creator: Fixture Creator",
+        "    source: https://example.com/image",
+        "    license: CC BY 4.0",
+        `    asset: ${asset}`,
+        "    notes: Fixture notes."
+      ].join("\n"));
+
+      await expect(readCreditsData(root)).rejects.toThrow(
+        "image asset must be a normalized absolute path under /assets/images"
+      );
+    }
   });
 
   it("rejects non-image asset extensions", async () => {
