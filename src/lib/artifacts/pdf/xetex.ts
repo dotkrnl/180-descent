@@ -842,8 +842,8 @@ function statusChipLatex(label: string, status: string): string {
 }
 
 function renderSimpleTable(attrs: Map<string, string | null>, state: MdxRenderState): string {
-  const headers = parseStringArray(resolveExpression(attrs.get("headers"), state)).map(latexEscape);
-  const rows = parseStringMatrix(resolveExpression(attrs.get("rows"), state)).map((row) => row.map(latexEscape));
+  const headers = parseStringArray(resolveExpression(attrs.get("headers"), state), "SimpleTable headers").map(latexEscape);
+  const rows = parseStringMatrix(resolveExpression(attrs.get("rows"), state), "SimpleTable rows").map((row) => row.map(latexEscape));
   if (!headers.length || !rows.length) return "";
   return latexTable({ rows: [headers, ...rows], headerRows: new Set([0]) });
 }
@@ -1239,22 +1239,30 @@ function resolveImageExpression(value: string | null | undefined, state: MdxRend
   return expression;
 }
 
-function parseStringArray(value: string): string[] {
-  const parsed = parseLiteral(value);
-  return Array.isArray(parsed) ? parsed.map((item) => String(item)) : [];
+function parseStringArray(value: string, label: string): string[] {
+  const parsed = parseLiteral(value, label);
+  if (!Array.isArray(parsed) || parsed.some((item) => typeof item !== "string")) {
+    throw new Error(`${label} must be a literal string array`);
+  }
+  return parsed;
 }
 
-function parseStringMatrix(value: string): string[][] {
-  const parsed = parseLiteral(value);
-  if (!Array.isArray(parsed)) return [];
-  return parsed.map((row) => Array.isArray(row) ? row.map((item) => String(item)) : [String(row)]);
+function parseStringMatrix(value: string, label: string): string[][] {
+  const parsed = parseLiteral(value, label);
+  if (
+    !Array.isArray(parsed) ||
+    parsed.some((row) => !Array.isArray(row) || row.some((item) => typeof item !== "string"))
+  ) {
+    throw new Error(`${label} must be a literal string matrix`);
+  }
+  return parsed;
 }
 
-function parseLiteral(value: string): unknown {
+function parseLiteral(value: string, label: string): unknown {
   try {
     return JSON.parse(value);
-  } catch {
-    return null;
+  } catch (error) {
+    throw new Error(`${label} is not valid JSON: ${toError(error).message}`);
   }
 }
 
