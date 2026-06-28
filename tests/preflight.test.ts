@@ -25,7 +25,7 @@ describe("typed preflight", () => {
     const list = formatToolList();
     expect(list).toContain("Preflight groups:");
     expect(list).toContain("durable:");
-    expect(list).toContain("epubcheck [durable-required]");
+    expect(list).toContain("epubcheck - official EPUB validation");
   });
 
   it("reports unknown tools without executing external commands", () => {

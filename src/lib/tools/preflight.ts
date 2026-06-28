@@ -5,11 +5,8 @@ import { chromium } from "playwright";
 import { toError } from "@lib/errors";
 import { epubcheckVersionCommands, javaCommands, type CommandSpec } from "@lib/tools/epubcheck";
 
-type ToolCategory = "durable-required";
-
 interface ToolDefinition {
   label: string;
-  category: ToolCategory;
   usedBy: string;
   installHint: string;
   check: () => string;
@@ -18,14 +15,12 @@ interface ToolDefinition {
 interface ToolSuccess {
   name: string;
   label: string;
-  category: ToolCategory;
   version: string;
 }
 
 interface ToolFailure {
   name: string;
   label?: string;
-  category?: ToolCategory;
   usedBy?: string;
   installHint?: string;
   error: Error;
@@ -49,7 +44,6 @@ interface PreflightArgs {
 const TOOLS = {
   node: {
     label: "Node.js",
-    category: "durable-required",
     usedBy: "all build/check scripts",
     installHint: "Install the project Node version, then run npm install.",
     check() {
@@ -58,7 +52,6 @@ const TOOLS = {
   },
   npm: {
     label: "npm",
-    category: "durable-required",
     usedBy: "all package scripts",
     installHint: "Install npm with Node.js.",
     check() {
@@ -67,7 +60,6 @@ const TOOLS = {
   },
   pdftotext: {
     label: "Poppler pdftotext",
-    category: "durable-required",
     usedBy: "check-pdf text extraction",
     installHint: "macOS: brew install poppler | Debian/Ubuntu: apt-get install poppler-utils",
     check() {
@@ -76,7 +68,6 @@ const TOOLS = {
   },
   latexmk: {
     label: "latexmk",
-    category: "durable-required",
     usedBy: "build-pdf XeTeX orchestration",
     installHint: "macOS: brew install texlive | Debian/Ubuntu: apt-get install texlive-xetex latexmk",
     check() {
@@ -85,7 +76,6 @@ const TOOLS = {
   },
   xelatex: {
     label: "XeLaTeX",
-    category: "durable-required",
     usedBy: "build-pdf",
     installHint: "macOS: brew install texlive | Debian/Ubuntu: apt-get install texlive-xetex",
     check() {
@@ -94,7 +84,6 @@ const TOOLS = {
   },
   fonttools: {
     label: "fonttools",
-    category: "durable-required",
     usedBy: "build-pdf WOFF2 to OpenType font preparation",
     installHint: "macOS: brew install fonttools | Debian/Ubuntu: apt-get install fonttools",
     check() {
@@ -103,7 +92,6 @@ const TOOLS = {
   },
   rsvg: {
     label: "rsvg-convert",
-    category: "durable-required",
     usedBy: "build-pdf SVG image conversion",
     installHint: "macOS: brew install librsvg | Debian/Ubuntu: apt-get install librsvg2-bin",
     check() {
@@ -112,7 +100,6 @@ const TOOLS = {
   },
   xmllint: {
     label: "xmllint (libxml2)",
-    category: "durable-required",
     usedBy: "check-epub XML fast checks",
     installHint: "macOS: brew install libxml2 | Debian/Ubuntu: apt-get install libxml2-utils",
     check() {
@@ -121,7 +108,6 @@ const TOOLS = {
   },
   playwright: {
     label: "Playwright Chromium browser",
-    category: "durable-required",
     usedBy: "check-a11y, web screenshot QA",
     installHint: "npx playwright install chromium",
     check() {
@@ -134,7 +120,6 @@ const TOOLS = {
   },
   java: {
     label: "Java runtime",
-    category: "durable-required",
     usedBy: "official EPUBCheck",
     installHint: "macOS: brew install openjdk | Debian/Ubuntu: apt-get install default-jre",
     check() {
@@ -143,7 +128,6 @@ const TOOLS = {
   },
   epubcheck: {
     label: "EPUBCheck 5.3.0",
-    category: "durable-required",
     usedBy: "official EPUB validation",
     installHint: "macOS: brew install epubcheck | or set EPUBCHECK_JAR / tools/epubcheck/epubcheck.jar",
     check() {
@@ -180,12 +164,11 @@ export function checkTools(required: string[] = [...TOOL_GROUPS.durable], option
     }
     try {
       const version = tool.check();
-      present.push({ name, label: tool.label, category: tool.category, version });
+      present.push({ name, label: tool.label, version });
     } catch (error) {
       missing.push({
         name,
         label: tool.label,
-        category: tool.category,
         usedBy: tool.usedBy,
         installHint: tool.installHint,
         error: toError(error)
@@ -239,7 +222,7 @@ export function formatToolList(): string {
   lines.push("");
   lines.push("Tools:");
   for (const [name, tool] of Object.entries(TOOLS)) {
-    lines.push(`  ${name} [${tool.category}] - ${tool.usedBy}`);
+    lines.push(`  ${name} - ${tool.usedBy}`);
   }
   return lines.join("\n");
 }
@@ -249,7 +232,6 @@ export function formatPreflightFailure(missing: ToolFailure[]): string {
   for (const failure of missing) {
     lines.push("");
     lines.push(`  ${failure.label || failure.name}`);
-    if (failure.category) lines.push(`    category:  ${failure.category}`);
     if (failure.usedBy) lines.push(`    needed by: ${failure.usedBy}`);
     if (failure.installHint) lines.push(`    install:   ${failure.installHint}`);
     if (failure.error.message) lines.push(`    detail:    ${failure.error.message}`);

@@ -16,11 +16,10 @@ if (list) {
     const names = resolveToolNames(toolNames);
     const result = checkTools(names, { throwOnMissing: !optional });
     for (const tool of result.present) {
-      console.log(`ok ${tool.name} (${tool.category}): ${tool.version}`);
+      console.log(`ok ${tool.name}: ${tool.version}`);
     }
     for (const tool of result.missing) {
-      const category = tool.category ? ` (${tool.category})` : "";
-      console.log(`missing ${tool.name}${category}: ${tool.error.message}`);
+      console.log(`missing ${tool.name}: ${tool.error.message}`);
     }
     if (result.missing.length && optional) {
       console.log("Optional preflight completed with missing tools.");
