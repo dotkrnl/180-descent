@@ -29,6 +29,17 @@ describe("appendix style check", () => {
     ]);
   });
 
+  it("reports braced string-literal appendix-local classes", async () => {
+    const root = await createFixtureRoot();
+    await writeAppendix(root, '<div className={"movement"}></div>');
+
+    const result = await checkAppendixStyle({ root });
+
+    expect(result.errors).toEqual([
+      'src/content/days/001-fixture/appendices/appendix-a.en.mdx: forbidden appendix class "movement". Use <section> with .sec-eyebrow instead of appendix-local section wrappers.'
+    ]);
+  });
+
   it("reports missing shared CSS ownership", async () => {
     const root = await createFixtureRoot();
     await writeAppendix(root, '<div class="unknown-appendix-class"></div>');
