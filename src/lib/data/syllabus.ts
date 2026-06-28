@@ -28,8 +28,6 @@ export interface SyllabusDay {
   debate?: string;
   frontier?: string;
   note?: string;
-  block?: string;
-  blockId?: string;
 }
 
 const localizedTextSchema = z.object({

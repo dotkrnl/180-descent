@@ -15,6 +15,11 @@ export interface ContentDay {
   url: string;
 }
 
+export interface UpcomingSyllabusDay extends SyllabusDay {
+  block: string;
+  blockId: string;
+}
+
 export async function getBookData(): Promise<BookData> {
   return readBookData(process.cwd());
 }
@@ -60,7 +65,7 @@ export function contentDaysByNumber(days: ContentDay[]): Map<number, ContentDay>
   return new Map(days.map((day) => [day.day, day]));
 }
 
-export function nextSyllabusDay(syllabus: Syllabus, days: ContentDay[]): SyllabusDay | undefined {
+export function nextSyllabusDay(syllabus: Syllabus, days: ContentDay[]): UpcomingSyllabusDay | undefined {
   const contentDayNumbers = new Set(days.map((day) => day.day));
   for (const block of syllabus.blocks) {
     for (const day of block.days) {
@@ -72,9 +77,9 @@ export function nextSyllabusDay(syllabus: Syllabus, days: ContentDay[]): Syllabu
   return undefined;
 }
 
-export function upcomingSyllabusDays(syllabus: Syllabus, days: ContentDay[], count: number): SyllabusDay[] {
+export function upcomingSyllabusDays(syllabus: Syllabus, days: ContentDay[], count: number): UpcomingSyllabusDay[] {
   const contentDayNumbers = new Set(days.map((day) => day.day));
-  const upcoming: SyllabusDay[] = [];
+  const upcoming: UpcomingSyllabusDay[] = [];
   for (const block of syllabus.blocks) {
     for (const day of block.days) {
       if (!contentDayNumbers.has(day.day)) {
