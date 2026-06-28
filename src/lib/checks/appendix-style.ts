@@ -90,7 +90,7 @@ async function collectJsClasses(options: AppendixStyleCheckOptions): Promise<Set
   const out = new Set<string>();
   const jsRoot = path.join(options.root, "src/assets/js/interactions");
 
-  for (const file of await walkFiles(jsRoot, { exts: ".js", ignored: [] })) {
+  for (const file of await walkFiles(jsRoot, { exts: ".js", ignoredDirNames: [] })) {
     const js = await readFile(file, "utf8");
     for (const match of js.matchAll(/querySelector(?:All)?\(\s*["'`]([^"'`]+)["'`]\s*\)/g)) {
       for (const selectorMatch of match[1].matchAll(/\.(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g)) {

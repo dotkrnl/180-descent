@@ -486,7 +486,7 @@ async function checkCssFonts(root: string, failures: ContentCheckFailure[]): Pro
 }
 
 async function checkParentMarkdownReferences(root: string, failures: ContentCheckFailure[]): Promise<void> {
-  for (const file of await walkFiles(root, { exts: PROJECT_TEXT_EXTS, ignored: GENERATED_REFERENCE_CHECK_IGNORES })) {
+  for (const file of await walkFiles(root, { exts: PROJECT_TEXT_EXTS, ignoredDirNames: GENERATED_REFERENCE_CHECK_IGNORES })) {
     const text = await readFile(file, "utf8");
     if (PARENT_MARKDOWN_PATTERN.test(text)) {
       failures.push({

@@ -34,7 +34,7 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
   const daysDir = contentDaysDir(options.root);
   const futureLinksPath = futureLinksDataFile(options.root);
   const failures: LinkCheckFailure[] = [];
-  const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignored: [] });
+  const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
   const documents = await Promise.all(htmlFiles.map(loadHtmlDocument));
   const idCache = new Map(documents.map((document) => [document.file, document.ids]));
 

@@ -35,14 +35,14 @@ export async function checkMath(options: MathCheckOptions): Promise<MathCheckRes
   const sourceDir = contentDaysDir(options.root);
   const builtSiteDir = siteDir(options.root);
   const failures: MathCheckFailure[] = [];
-  const sourceFiles = await walkFiles(sourceDir, { exts: ".mdx", ignored: [] });
+  const sourceFiles = await walkFiles(sourceDir, { exts: ".mdx", ignoredDirNames: [] });
 
   for (const file of sourceFiles) {
     const content = stripFencedCodeBlocks(await readFile(file, "utf8"));
     failures.push(...scanPatterns(options.root, file, content, RAW_SOURCE_PATTERNS));
   }
 
-  const builtFiles = await walkFiles(builtSiteDir, { exts: ".html", ignored: [] });
+  const builtFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
   for (const file of builtFiles) {
     const content = await readFile(file, "utf8");
     failures.push(...scanPatterns(options.root, file, content, BUILT_PATTERNS));

@@ -67,7 +67,7 @@ export async function checkVisual(options: VisualCheckOptions): Promise<VisualCh
   const builtSiteDir = siteDir(options.root);
   const outDir = options.outDir ?? path.join(options.root, "tmp/visual-qa");
   const reportPath = path.join(outDir, "report.json");
-  const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignored: [] }))
+  const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] }))
     .map((file) => urlForHtml(builtSiteDir, file))
     .sort();
   const browser = await chromium.launch();

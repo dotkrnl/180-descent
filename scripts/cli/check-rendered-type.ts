@@ -27,7 +27,7 @@ interface RenderedTypeFailure {
 
 const root = process.cwd();
 const builtSiteDir = siteDir(root);
-const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignored: [] }))
+const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] }))
   .map((file) => urlForHtml(builtSiteDir, file))
   .sort();
 const server = createServer(async (request, response) => {

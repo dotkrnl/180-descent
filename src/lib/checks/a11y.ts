@@ -31,7 +31,7 @@ interface StaticServer {
 async function checkStaticAccessibility(options: AccessibilityCheckOptions): Promise<StaticAccessibilityResult> {
   const builtSiteDir = siteDir(options.root);
   const errors: string[] = [];
-  const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignored: [] });
+  const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
 
   for (const filePath of htmlFiles) {
     const url = urlForHtml(builtSiteDir, filePath);

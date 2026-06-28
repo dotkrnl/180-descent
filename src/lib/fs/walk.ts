@@ -5,21 +5,21 @@ import { isPathUnavailableError } from "@lib/fs/errors";
 
 interface WalkOptions {
   exts?: string | string[] | Set<string>;
-  ignored?: Iterable<string>;
+  ignoredDirNames?: Iterable<string>;
 }
 
 const DEFAULT_IGNORED = new Set([".git", "_site", "node_modules"]);
 
 export async function walkFiles(dir: string, options: WalkOptions = {}): Promise<string[]> {
   const exts = normalizeExts(options.exts);
-  const ignored = options.ignored ? new Set(options.ignored) : DEFAULT_IGNORED;
+  const ignoredDirNames = options.ignoredDirNames ? new Set(options.ignoredDirNames) : DEFAULT_IGNORED;
   const out: string[] = [];
   const entries = await readdir(dir, { withFileTypes: true });
 
   for (const entry of entries) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (!ignored.has(entry.name)) {
+      if (!ignoredDirNames.has(entry.name)) {
         out.push(...await walkFiles(full, options));
       }
     } else if (matchesExt(entry.name, exts)) {
@@ -32,12 +32,12 @@ export async function walkFiles(dir: string, options: WalkOptions = {}): Promise
 
 export function walkFilesSync(dir: string, options: WalkOptions = {}, out: string[] = []): string[] {
   const exts = normalizeExts(options.exts);
-  const ignored = options.ignored ? new Set(options.ignored) : DEFAULT_IGNORED;
+  const ignoredDirNames = options.ignoredDirNames ? new Set(options.ignoredDirNames) : DEFAULT_IGNORED;
 
   for (const entry of fsSync.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (!ignored.has(entry.name)) {
+      if (!ignoredDirNames.has(entry.name)) {
         walkFilesSync(full, options, out);
       }
     } else if (matchesExt(entry.name, exts)) {
