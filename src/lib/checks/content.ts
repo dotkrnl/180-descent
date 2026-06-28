@@ -69,7 +69,7 @@ const UNSUPPORTED_MDX_WRAPPER_PATTERNS: Array<[RegExp, string]> = [
   [/<figure class="(?:hero-clock|hero-doors)\b/, "use shared figure components"],
   [/<figure class="lesson-figure[^"]*">\s*<img\b/, "use <ImageFigure>"],
   [/<div class="mh-machine"\b/, "use <ProbabilityMontyPanel>"],
-  [/<div class="atlas"\b/, "use <IncomingWaveAtlas> or <WaveAtlas>"]
+  [/<div class="atlas"\b/, "use <IncomingWaveAtlas>"]
 ];
 const RAW_INTERACTIVE_PATTERNS: Array<[RegExp, string]> = [
   [/<(?:button|input|select|textarea|canvas)\b/i, "raw control or canvas"],
