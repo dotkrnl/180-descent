@@ -51,6 +51,21 @@ describe("appendix style check", () => {
     ]);
   });
 
+  it("accepts appendix classes owned by classList calls in interaction scripts", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "src/assets/js/interactions/fixture.js"), [
+      'panel.classList.add("js-owned")',
+      'panel.classList.remove("js-hidden", dynamicClass)',
+      'panel.classList.toggle("js-active", active)',
+      'panel.classList.replace("js-before", "js-after")'
+    ].join("\n"));
+    await writeAppendix(root, '<div class="js-owned js-hidden js-active js-before js-after"></div>');
+
+    const result = await checkAppendixStyle({ root });
+
+    expect(result.errors).toEqual([]);
+  });
+
   it("ignores appendix-local class examples inside fenced code blocks", async () => {
     const root = await createFixtureRoot();
     await writeAppendix(root, [

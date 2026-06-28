@@ -102,8 +102,21 @@ async function collectJsClasses(options: AppendixStyleCheckOptions): Promise<Set
         if (className && !className.includes("$")) out.add(className);
       }
     }
+    for (const match of js.matchAll(/classList\.(?:add|remove|toggle|replace)\(([^)]*)\)/g)) {
+      for (const className of literalClassListArgs(match[1])) {
+        out.add(className);
+      }
+    }
   }
   return out;
+}
+
+function literalClassListArgs(args: string): string[] {
+  const classes: string[] = [];
+  for (const match of args.matchAll(/["'`]([A-Za-z_-][A-Za-z0-9_-]*)["'`]/g)) {
+    classes.push(match[1]);
+  }
+  return classes;
 }
 
 async function collectAppendixFiles(options: AppendixStyleCheckOptions): Promise<string[]> {
