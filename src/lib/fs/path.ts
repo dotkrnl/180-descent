@@ -8,5 +8,5 @@ export function isPathInside(root: string, filePath: string): boolean {
   const normalizedRoot = path.resolve(root);
   const normalizedFilePath = path.resolve(filePath);
   const relative = path.relative(normalizedRoot, normalizedFilePath);
-  return relative === "" || (!!relative && !relative.startsWith("..") && !path.isAbsolute(relative));
+  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
 }
