@@ -20,6 +20,12 @@ interface ContentCheckFailure {
   message: string;
 }
 
+type JsonPropValue =
+  | { kind: "missing" }
+  | { kind: "nonliteral" }
+  | { kind: "invalid"; error: string }
+  | { kind: "value"; value: unknown };
+
 const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
 const STATUS_VALUES = new Set(["ok", "hint", "bad"]);
 const STATUS_COMPONENT_PATTERN = /<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*>/g;
@@ -492,12 +498,24 @@ function literalStatusValue(tag: string): string | null {
 function checkSimpleTables(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
   for (const match of file.source.matchAll(SIMPLE_TABLE_PATTERN)) {
     const tag = match[0];
-    if (!isNonEmptyStringArrayProp(tag, "headers")) {
+    const headers = jsonPropValue(tag, "headers");
+    const rows = jsonPropValue(tag, "rows");
+
+    if (headers.kind === "invalid") {
+      failures.push({
+        message: `${file.relativePath} has SimpleTable headers prop that is not valid JSON: ${headers.error}`
+      });
+    } else if (!isNonEmptyStringArray(headers.kind === "value" ? headers.value : null)) {
       failures.push({
         message: `${file.relativePath} has SimpleTable without a non-empty literal string-array headers prop`
       });
     }
-    if (!isNonEmptyStringMatrixProp(tag, "rows")) {
+
+    if (rows.kind === "invalid") {
+      failures.push({
+        message: `${file.relativePath} has SimpleTable rows prop that is not valid JSON: ${rows.error}`
+      });
+    } else if (!isNonEmptyStringMatrix(rows.kind === "value" ? rows.value : null)) {
       failures.push({
         message: `${file.relativePath} has SimpleTable without a non-empty literal string-matrix rows prop`
       });
@@ -505,25 +523,25 @@ function checkSimpleTables(file: RegistryContentFile, failures: ContentCheckFail
   }
 }
 
-function isNonEmptyStringArrayProp(tag: string, prop: string): boolean {
-  const value = jsonPropValue(tag, prop);
+function isNonEmptyStringArray(value: unknown): boolean {
   return Array.isArray(value) && value.length > 0 && value.every((item) => typeof item === "string");
 }
 
-function isNonEmptyStringMatrixProp(tag: string, prop: string): boolean {
-  const value = jsonPropValue(tag, prop);
+function isNonEmptyStringMatrix(value: unknown): boolean {
   return Array.isArray(value)
     && value.length > 0
     && value.every((row) => Array.isArray(row) && row.length > 0 && row.every((item) => typeof item === "string"));
 }
 
-function jsonPropValue(tag: string, prop: string): unknown {
+function jsonPropValue(tag: string, prop: string): JsonPropValue {
   const match = tag.match(new RegExp(`\\b${prop}\\s*=\\{([\\s\\S]*?)\\}`));
-  if (!match) return null;
+  if (!match) return { kind: "missing" };
+  const source = match[1].trim();
+  if (!source.startsWith("[")) return { kind: "nonliteral" };
   try {
-    return JSON.parse(match[1]);
-  } catch {
-    return null;
+    return { kind: "value", value: JSON.parse(source) };
+  } catch (error) {
+    return { kind: "invalid", error: error instanceof Error ? error.message : String(error) };
   }
 }
 

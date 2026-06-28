@@ -188,6 +188,28 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports malformed SimpleTable JSON props precisely", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<SimpleTable headers={["Header",]} rows={[[value]]} />'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: expect.stringMatching(/^src\/content\/days\/001-fixture\/en\.mdx has SimpleTable headers prop that is not valid JSON:/)
+      },
+      {
+        message: expect.stringMatching(/^src\/content\/days\/001-fixture\/en\.mdx has SimpleTable rows prop that is not valid JSON:/)
+      }
+    ]);
+  });
+
   it("reports empty SimpleTable props that PDF output cannot render", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {
