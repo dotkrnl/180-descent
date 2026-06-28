@@ -64,6 +64,7 @@ const rawSyllabusSchema = z.object({
   const seenBlockIds = new Set<string>();
   const seenEnglishBlockTitles = new Set<string>();
   const seenDays = new Map<number, string>();
+  let expectedStartDay = 1;
   for (const [blockIndex, block] of syllabus.blocks.entries()) {
     if (seenBlockIds.has(block.id)) {
       context.addIssue({
@@ -82,6 +83,17 @@ const rawSyllabusSchema = z.object({
       });
     }
     seenEnglishBlockTitles.add(block.title.en);
+
+    if (block.start_day !== expectedStartDay) {
+      context.addIssue({
+        code: "custom",
+        path: ["blocks", blockIndex, "start_day"],
+        message: blockIndex === 0
+          ? `first block start_day must be 1, got ${block.start_day}`
+          : `block ${block.id} start_day must be ${expectedStartDay} after previous block range, got ${block.start_day}`
+      });
+    }
+    expectedStartDay = block.end_day + 1;
 
     if (block.start_day > block.end_day) {
       context.addIssue({

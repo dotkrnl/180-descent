@@ -123,6 +123,17 @@ describe("syllabus data", () => {
     await expect(readSyllabusData(root, "en")).rejects.toThrow(/appears in both block I and block II/);
   });
 
+  it("rejects gaps between block ranges", async () => {
+    const root = await createFixtureRoot([
+      validSyllabusYaml(),
+      validBlockYaml({ id: "II", startDay: 3, endDay: 3, titleEn: "Second", titleZh: "第二" })
+    ].join("\n"));
+
+    await expect(readSyllabusData(root, "en")).rejects.toThrow(
+      /block II start_day must be 2 after previous block range, got 3/
+    );
+  });
+
   it("rejects duplicate block ids", async () => {
     const root = await createFixtureRoot([
       validSyllabusYaml(),
