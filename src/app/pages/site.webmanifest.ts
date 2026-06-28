@@ -1,14 +1,7 @@
-import icon192 from "../../assets/images/brand/icon-192.png";
-import icon512 from "../../assets/images/brand/icon-512.png";
-
-interface ManifestImageAsset {
-  src: string;
-}
+import icon192 from "../../assets/images/brand/icon-192.png?url";
+import icon512 from "../../assets/images/brand/icon-512.png?url";
 
 export function GET() {
-  const icon192Path = (icon192 as unknown as ManifestImageAsset).src;
-  const icon512Path = (icon512 as unknown as ManifestImageAsset).src;
-
   return new Response(JSON.stringify({
     name: "The 180-Day Descent",
     short_name: "180 Descent",
@@ -20,12 +13,12 @@ export function GET() {
     theme_color: "#f7f3ea",
     icons: [
       {
-        src: icon192Path,
+        src: icon192,
         sizes: "192x192",
         type: "image/png"
       },
       {
-        src: icon512Path,
+        src: icon512,
         sizes: "512x512",
         type: "image/png"
       }
