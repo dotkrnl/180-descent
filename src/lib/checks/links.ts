@@ -25,7 +25,8 @@ interface HtmlDocument {
 
 export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFailure[]> {
   const { builtSiteDir, htmlFiles } = await builtHtmlFiles(options.root, { required: true });
-  const siteUrl = (await readBookData(options.root)).siteUrl;
+  const book = await readBookData(options.root);
+  const siteUrl = book.siteUrl;
   const daysDir = contentDaysDir(options.root);
   const failures: LinkCheckFailure[] = [];
   if (!htmlFiles.length) {
@@ -63,7 +64,7 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
     }
   }
 
-  failures.push(...await checkFutureLinks(options.root, daysDir));
+  failures.push(...await checkFutureLinks(options.root, daysDir, book.totalDays));
   return failures;
 }
 
@@ -101,13 +102,24 @@ function decodedFragment(fragment: string): string {
   }
 }
 
-async function checkFutureLinks(root: string, daysDir: string): Promise<LinkCheckFailure[]> {
+async function checkFutureLinks(root: string, daysDir: string, totalDays: number): Promise<LinkCheckFailure[]> {
   const registry = await loadContentRegistry({ daysDir });
   const publishedDays = new Set(registry.days.map((day) => day.manifest.day));
   const futureLinks = await readFutureLinksData(root);
   const failures: LinkCheckFailure[] = [];
 
   for (const link of futureLinks) {
+    if (link.from_day > totalDays) {
+      failures.push({
+        message: `Future link ${link.id} starts from day ${link.from_day}, beyond book total_days ${totalDays}`
+      });
+    }
+    if (link.target_day > totalDays) {
+      failures.push({
+        message: `Future link ${link.id} targets day ${link.target_day}, beyond book total_days ${totalDays}`
+      });
+    }
+
     if (!publishedDays.has(link.from_day)) {
       failures.push({
         message: `Future link ${link.id} starts from unpublished day ${link.from_day}`

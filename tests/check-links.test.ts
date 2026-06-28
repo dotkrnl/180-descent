@@ -173,6 +173,27 @@ describe("link checks", () => {
     ]);
   });
 
+  it("reports future links beyond the declared book length", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "_site/index.html"), "");
+    await writeFile(futureLinksDataFile(root), [
+      "- id: day-001-to-day-181-callback",
+      "  from_day: 1",
+      "  target_day: 181",
+      "  text: Callback",
+      "  status: pending",
+      "  context: impossible callback"
+    ].join("\n"));
+
+    const failures = await checkLinks({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "Future link day-001-to-day-181-callback targets day 181, beyond book total_days 180"
+      }
+    ]);
+  });
+
   it("treats publication status as exact day membership", async () => {
     const root = await createFixtureRoot();
     await writeThirdContentDay(root);
