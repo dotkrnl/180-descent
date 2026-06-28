@@ -56,19 +56,19 @@ export async function generateSocialCards(options: GenerateSocialCardsOptions): 
   const brandMarkPath = brandIconFile(root);
   await mkdir(outDir, { recursive: true });
 
-  const [book, bookStat, brandMarkStat, brandMarkBase64, dependencyMtimeMs] = await Promise.all([
+  const [book, bookStat, brandMarkStat, brandMarkBase64, rendererStat] = await Promise.all([
     readBookData(root),
     stat(bookPath),
     stat(brandMarkPath),
     readFile(brandMarkPath, "base64"),
-    latestMtime([rendererPath])
+    stat(rendererPath)
   ]);
   const cards = await loadSocialCards({ root, book, outDir });
 
   const pending: SocialCard[] = [];
   for (const card of cards) {
     const sourceMtimeMs = (await stat(card.sourcePath)).mtimeMs;
-    const latestSourceMtimeMs = Math.max(bookStat.mtimeMs, brandMarkStat.mtimeMs, dependencyMtimeMs, sourceMtimeMs);
+    const latestSourceMtimeMs = Math.max(bookStat.mtimeMs, brandMarkStat.mtimeMs, rendererStat.mtimeMs, sourceMtimeMs);
     if (await isSocialCardStale(card.outPath, latestSourceMtimeMs)) {
       pending.push(card);
     }
@@ -184,11 +184,6 @@ function registryDays(registry: Awaited<ReturnType<typeof loadContentRegistry>>,
         sourcePath: day.manifestPath
       };
     });
-}
-
-async function latestMtime(files: readonly string[]): Promise<number> {
-  const mtimes = await Promise.all(files.map(async (filePath) => (await stat(filePath)).mtimeMs));
-  return Math.max(...mtimes);
 }
 
 async function isSocialCardStale(outPath: string, sourceMtimeMs: number): Promise<boolean> {
