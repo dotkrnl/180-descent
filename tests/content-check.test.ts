@@ -115,7 +115,7 @@ describe("content check", () => {
       en: [
         "# Fixture Day",
         '<StatusChip status={"promising"} label={"promising"} />',
-        '<StatusText status="contested" label="contested" />',
+        "<StatusText status='contested' label='contested' />",
         '<MaturityTimelineItem status="established" year="2026" title="Fixture"></MaturityTimelineItem>',
         "<Sources></Sources>"
       ].join("\n"),

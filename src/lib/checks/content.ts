@@ -462,8 +462,8 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
 }
 
 function checkStatusValues(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  for (const match of file.source.matchAll(/<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*\bstatus=(?:\{"([^"]+)"\}|"([^"]+)")/g)) {
-    const status = match[2] ?? match[3] ?? "";
+  for (const match of file.source.matchAll(/<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*\bstatus=(?:\{"([^"]+)"\}|"([^"]+)"|'([^']+)')/g)) {
+    const status = match[2] ?? match[3] ?? match[4] ?? "";
     if (!STATUS_VALUES.has(status)) {
       failures.push({
         message: `${file.relativePath} has invalid ${match[1]} status "${status}"; use ok, hint, or bad`
@@ -476,8 +476,8 @@ function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheck
   const dayNumber = Number(file.relativePath.match(/src\/content\/days\/(\d{3})-/)?.[1]);
   if (!Number.isFinite(dayNumber) || dayNumber < STATUS_CHIP_LABEL_GATE_START_DAY) return;
 
-  for (const match of file.source.matchAll(/<StatusChip\b[^>]*\blabel=(?:\{"([^"]+)"\}|"([^"]+)")/g)) {
-    const label = normalizeVisibleText(match[1] ?? match[2] ?? "");
+  for (const match of file.source.matchAll(/<StatusChip\b[^>]*\blabel=(?:\{"([^"]+)"\}|"([^"]+)"|'([^']+)')/g)) {
+    const label = normalizeVisibleText(match[1] ?? match[2] ?? match[3] ?? "");
     if (label.length > STATUS_CHIP_LABEL_MAX_CHARS) {
       failures.push({
         message: `${file.relativePath} has overlong StatusChip label "${label}" (${label.length} chars); keep hype-filter tags short and move caveats into prose`
