@@ -628,12 +628,19 @@ function registerEpubImage(src: string | undefined, imageAssets: Map<string, Epu
 
   const image = {
     href,
-    filePath: path.join(siteDir(root), pathOnly.slice(1)),
+    filePath: epubImageFilePath(root, pathOnly),
     mediaType,
     id: `img_${href.replace(/[^a-z0-9]/gi, "_")}`
   };
   imageAssets.set(href, image);
   return image;
+}
+
+export function epubImageFilePath(root: string, pathOnly: string): string {
+  if (pathOnly.startsWith("/assets/images/")) {
+    return path.join(root, "src", pathOnly.slice(1));
+  }
+  return path.join(siteDir(root), pathOnly.slice(1));
 }
 
 function epubImageHref(pathOnly: string): string | null {
