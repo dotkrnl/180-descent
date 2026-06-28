@@ -30,8 +30,11 @@ async function checkStaticAccessibility(builtSiteDir: string, htmlFiles: string[
     const $ = load(html);
 
     $("img").each((index, el) => {
-      if (!$(el).attr("alt") && $(el).attr("alt") !== "") {
+      const alt = $(el).attr("alt");
+      if (alt === undefined) {
         errors.push(`${url}: img ${index + 1} is missing alt`);
+      } else if (alt !== "" && !alt.trim()) {
+        errors.push(`${url}: img ${index + 1} has whitespace-only alt`);
       }
     });
 

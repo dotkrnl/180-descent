@@ -35,4 +35,25 @@ describe("accessibility check", () => {
     expect(result.failures).toContain('/: svg[role="img"] 1 is missing an accessible name');
     expect(result.failures).toContain('/: svg[role="img"] 2 is missing an accessible name');
   });
+
+  it("rejects whitespace-only image alt text without rejecting decorative empty alt", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-a11y-check-"));
+    await mkdir(path.join(root, "_site"), { recursive: true });
+    await writeFile(path.join(root, "_site/index.html"), [
+      "<!doctype html>",
+      '<html lang="en">',
+      "<head><title>Fixture</title></head>",
+      "<body>",
+      "<h1>Fixture</h1>",
+      '<img src="/decorative.png" alt="">',
+      '<img src="/bad.png" alt="   ">',
+      "</body>",
+      "</html>"
+    ].join("\n"));
+
+    const result = await checkAccessibility({ root });
+
+    expect(result.failures).toContain("/: img 2 has whitespace-only alt");
+    expect(result.failures).not.toContain("/: img 1 is missing alt");
+  });
 });
