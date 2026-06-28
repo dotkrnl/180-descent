@@ -36,7 +36,7 @@ async function checkStaticAccessibility(builtSiteDir: string, htmlFiles: string[
     });
 
     $('svg[role="img"]').each((index, el) => {
-      if (!$(el).attr("aria-label") && !$(el).attr("aria-labelledby")) {
+      if (!svgAccessibleName($, el)) {
         errors.push(`${url}: svg[role="img"] ${index + 1} is missing an accessible name`);
       }
     });
@@ -158,19 +158,19 @@ function attrSelectorValue(value: string): string {
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }
 
+function svgAccessibleName($: CheerioAPI, el: Element): string {
+  const ariaLabel = $(el).attr("aria-label");
+  if (ariaLabel && ariaLabel.trim()) return ariaLabel.trim();
+
+  return labelledByText($, el);
+}
+
 function elementName($: CheerioAPI, el: Element): string {
   const ariaLabel = $(el).attr("aria-label");
   if (ariaLabel && ariaLabel.trim()) return ariaLabel.trim();
 
-  const labelledBy = $(el).attr("aria-labelledby");
-  if (labelledBy) {
-    const text = labelledBy
-      .split(/\s+/)
-      .map((id) => $(`[id="${attrSelectorValue(id)}"]`).text().trim())
-      .filter(Boolean)
-      .join(" ");
-    if (text) return text;
-  }
+  const labelledBy = labelledByText($, el);
+  if (labelledBy) return labelledBy;
 
   const text = $(el).text().trim();
   if (text) return text;
@@ -202,16 +202,17 @@ function landmarkName($: CheerioAPI, el: Element): string {
   const ariaLabel = $(el).attr("aria-label");
   if (ariaLabel && ariaLabel.trim()) return ariaLabel.trim();
 
-  const labelledBy = $(el).attr("aria-labelledby");
-  if (labelledBy) {
-    return labelledBy
-      .split(/\s+/)
-      .map((id) => $(`[id="${attrSelectorValue(id)}"]`).text().trim())
-      .filter(Boolean)
-      .join(" ");
-  }
+  return labelledByText($, el);
+}
 
-  return "";
+function labelledByText($: CheerioAPI, el: Element): string {
+  const labelledBy = $(el).attr("aria-labelledby");
+  if (!labelledBy) return "";
+  return labelledBy
+    .split(/\s+/)
+    .map((id) => $(`[id="${attrSelectorValue(id)}"]`).text().trim())
+    .filter(Boolean)
+    .join(" ");
 }
 
 function landmarkRole(el: Element): string {
