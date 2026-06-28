@@ -18,6 +18,14 @@ describe("book data", () => {
     await expect(readBookSiteUrl(root)).rejects.toThrow();
   });
 
+  it("rejects site URLs that are not bare origins", async () => {
+    const root = await createBookRoot("site_url: https://180d.io/\n");
+    const pathRoot = await createBookRoot("site_url: https://180d.io/course\n");
+
+    await expect(readBookSiteUrl(root)).rejects.toThrow("site_url must be an origin");
+    await expect(readBookSiteUrl(pathRoot)).rejects.toThrow("site_url must be an origin");
+  });
+
   it("rejects incomplete full book metadata", async () => {
     const root = await createBookRoot("site_url: https://180d.io\n");
 

@@ -38,6 +38,9 @@ export interface HumanEditorData {
 }
 
 const urlSchema = z.string().url();
+const siteUrlSchema = urlSchema.refine((value) => value === new URL(value).origin, {
+  message: "site_url must be an origin without a trailing slash, path, query, or hash"
+});
 
 const humanEditorSchema = z.object({
   name: z.string().min(1),
@@ -63,7 +66,7 @@ const bookDataSchema = z.object({
   authors: z.string().min(1),
   human_editor: humanEditorSchema,
   description: z.string().min(1),
-  site_url: urlSchema,
+  site_url: siteUrlSchema,
   repo: urlSchema,
   language: z.string().min(1),
   publisher: z.string().min(1),
@@ -74,7 +77,7 @@ const bookDataSchema = z.object({
 }).strict();
 
 const bookSiteDataSchema = z.object({
-  site_url: urlSchema
+  site_url: siteUrlSchema
 }).passthrough();
 
 export async function readBookData(root: string): Promise<BookData> {
