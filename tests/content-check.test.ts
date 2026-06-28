@@ -137,6 +137,34 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports status components without literal status values", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        "# Fixture Day",
+        '<StatusChip status={frontierStatus} label={"dynamic"} />',
+        '<StatusText label="missing" />',
+        '<MaturityTimelineItem status={statusByYear[2026]} year="2026" title="Fixture"></MaturityTimelineItem>',
+        "<Sources></Sources>"
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx has StatusChip without a literal status; use ok, hint, or bad"
+      },
+      {
+        message: "src/content/days/001-fixture/en.mdx has StatusText without a literal status; use ok, hint, or bad"
+      },
+      {
+        message: "src/content/days/001-fixture/en.mdx has MaturityTimelineItem without a literal status; use ok, hint, or bad"
+      }
+    ]);
+  });
+
   it("does not treat fenced examples as content markers or raw markup", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {

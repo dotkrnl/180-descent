@@ -22,6 +22,8 @@ interface ContentCheckFailure {
 
 const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
 const STATUS_VALUES = new Set(["ok", "hint", "bad"]);
+const STATUS_COMPONENT_PATTERN = /<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*>/g;
+const STATUS_PROP_PATTERN = /\bstatus\s*=\s*(?:\{\s*(?:"([^"]+)"|'([^']+)')\s*\}|"([^"]+)"|'([^']+)')/;
 const STATUS_CHIP_LABEL_MAX_CHARS = 28;
 const STATUS_CHIP_LABEL_GATE_START_DAY = 8;
 const UNSTYLED_STATUS_LIST_ITEM_PATTERN =
@@ -462,14 +464,28 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
 }
 
 function checkStatusValues(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
-  for (const match of file.source.matchAll(/<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*\bstatus=(?:\{"([^"]+)"\}|"([^"]+)"|'([^']+)')/g)) {
-    const status = match[2] ?? match[3] ?? match[4] ?? "";
+  for (const match of file.source.matchAll(STATUS_COMPONENT_PATTERN)) {
+    const component = match[1];
+    const tag = match[0];
+    const status = literalStatusValue(tag);
+    if (!status) {
+      failures.push({
+        message: `${file.relativePath} has ${component} without a literal status; use ok, hint, or bad`
+      });
+      continue;
+    }
+
     if (!STATUS_VALUES.has(status)) {
       failures.push({
-        message: `${file.relativePath} has invalid ${match[1]} status "${status}"; use ok, hint, or bad`
+        message: `${file.relativePath} has invalid ${component} status "${status}"; use ok, hint, or bad`
       });
     }
   }
+}
+
+function literalStatusValue(tag: string): string | null {
+  const match = tag.match(STATUS_PROP_PATTERN);
+  return match ? match[1] ?? match[2] ?? match[3] ?? match[4] ?? null : null;
 }
 
 function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
