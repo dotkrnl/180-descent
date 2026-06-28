@@ -56,6 +56,36 @@ describe("credits data", () => {
     await expect(readCreditsData(root)).rejects.toThrow();
   });
 
+  it("rejects parent directory segments in image assets", async () => {
+    const root = await createCreditsRoot([
+      "fonts: []",
+      "images:",
+      "  - title: Fixture Image",
+      "    creator: Fixture Creator",
+      "    source: https://example.com/image",
+      "    license: CC BY 4.0",
+      "    asset: /assets/images/../fixture.jpg",
+      "    notes: Fixture notes."
+    ].join("\n"));
+
+    await expect(readCreditsData(root)).rejects.toThrow("image asset must not contain parent directory segments");
+  });
+
+  it("rejects non-image asset extensions", async () => {
+    const root = await createCreditsRoot([
+      "fonts: []",
+      "images:",
+      "  - title: Fixture Image",
+      "    creator: Fixture Creator",
+      "    source: https://example.com/image",
+      "    license: CC BY 4.0",
+      "    asset: /assets/images/open-license/fixture.txt",
+      "    notes: Fixture notes."
+    ].join("\n"));
+
+    await expect(readCreditsData(root)).rejects.toThrow();
+  });
+
   it("rejects duplicate font names", async () => {
     const root = await createCreditsRoot([
       "fonts:",

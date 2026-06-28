@@ -22,6 +22,12 @@ interface CreditImage {
   notes: string;
 }
 
+const imageAssetSchema = z.string()
+  .regex(/^\/assets\/images\/.+\.(?:jpe?g|png|svg|webp)$/)
+  .refine((asset) => !asset.split("/").includes(".."), {
+    message: "image asset must not contain parent directory segments"
+  });
+
 const creditFontSchema = z.object({
   name: z.string().min(1),
   source: z.string().min(1),
@@ -33,7 +39,7 @@ const creditImageSchema = z.object({
   creator: z.string().min(1),
   source: z.string().min(1),
   license: z.string().min(1),
-  asset: z.string().regex(/^\/assets\/images\/.+/),
+  asset: imageAssetSchema,
   notes: z.string().min(1)
 }).strict();
 
