@@ -1,11 +1,8 @@
-import { createReadStream } from "node:fs";
-import { stat } from "node:fs/promises";
-import { createServer } from "node:http";
-import path from "node:path";
 import { chromium } from "playwright";
 import { walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { contentType, sitePathForUrlPath, urlForSiteFile } from "@lib/static-site/url";
+import { closeServer, startStaticSiteServer } from "@lib/static-site/server";
+import { urlForSiteFile } from "@lib/static-site/url";
 import { exitOnErrors } from "./support";
 
 const MIN_PANEL_TITLE_FONT_SIZE = 13;
@@ -30,32 +27,7 @@ const builtSiteDir = siteDir(root);
 const routes = (await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] }))
   .map((file) => urlForSiteFile(builtSiteDir, file))
   .sort();
-const server = createServer(async (request, response) => {
-  try {
-    const requestedPath = new URL(request.url || "/", "http://localhost").pathname;
-    const candidate = sitePathForUrlPath(builtSiteDir, requestedPath);
-    const filePath = await resolveStaticFile(candidate);
-    if (!filePath) {
-      response.writeHead(404);
-      response.end("Not found");
-      return;
-    }
-    response.writeHead(200, { "content-type": contentType(filePath) });
-    createReadStream(filePath).pipe(response);
-  } catch (error) {
-    response.writeHead(500);
-    response.end(String(error));
-  }
-});
-
-await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
-
-const address = server.address();
-if (!address || typeof address === "string") {
-  await new Promise<void>((resolve) => server.close(() => resolve()));
-  throw new Error("Rendered typography check server did not bind to a TCP port");
-}
-const baseUrl = `http://127.0.0.1:${address.port}`;
+const { server, origin } = await startStaticSiteServer(builtSiteDir, "Rendered typography check");
 const browser = await chromium.launch();
 const failures: RenderedTypeFailure[] = [];
 
@@ -63,7 +35,7 @@ try {
   for (const route of routes) {
     for (const viewport of VIEWPORTS) {
       const page = await browser.newPage({ viewport });
-      await page.goto(new URL(route, baseUrl).href, { waitUntil: "networkidle" });
+      await page.goto(new URL(route, origin).href, { waitUntil: "networkidle" });
       await page.evaluate(() => {
         for (const details of document.querySelectorAll("details")) {
           details.setAttribute("open", "");
@@ -116,7 +88,7 @@ try {
   }
 } finally {
   await browser.close();
-  await new Promise<void>((resolve) => server.close(() => resolve()));
+  await closeServer(server);
 }
 
 exitOnErrors(
@@ -128,16 +100,3 @@ exitOnErrors(
 );
 
 console.log(`Rendered typography check passed. Minimum panel title font size: ${MIN_PANEL_TITLE_FONT_SIZE}px desktop, ${MIN_MOBILE_PANEL_TITLE_FONT_SIZE}px mobile; minimum mobile complexity-hump SVG label height: ${MIN_MOBILE_HUMP_SVG_TEXT_HEIGHT}px.`);
-
-async function resolveStaticFile(candidate: string | null): Promise<string | null> {
-  if (!candidate) return null;
-  try {
-    const info = await stat(candidate);
-    if (info.isDirectory()) {
-      return resolveStaticFile(path.join(candidate, "index.html"));
-    }
-    return candidate;
-  } catch {
-    return null;
-  }
-}

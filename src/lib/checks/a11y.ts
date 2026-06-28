@@ -1,4 +1,3 @@
-import http, { type Server } from "node:http";
 import { stat, readFile } from "node:fs/promises";
 import { load, type CheerioAPI } from "cheerio";
 import type { Element } from "domhandler";
@@ -6,7 +5,8 @@ import { chromium } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
 import { walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
-import { contentType, siteFileForUrlPath, urlForSiteFile } from "@lib/static-site/url";
+import { closeServer, startStaticSiteServer } from "@lib/static-site/server";
+import { urlForSiteFile } from "@lib/static-site/url";
 
 interface AccessibilityCheckOptions {
   root: string;
@@ -20,11 +20,6 @@ interface StaticAccessibilityResult {
 interface AccessibilityCheckResult {
   checkedPages: number;
   failures: string[];
-}
-
-interface StaticServer {
-  server: Server;
-  origin: string;
 }
 
 async function checkStaticAccessibility(options: AccessibilityCheckOptions): Promise<StaticAccessibilityResult> {
@@ -109,7 +104,7 @@ export async function checkAccessibility(options: AccessibilityCheckOptions): Pr
   await stat(builtSiteDir);
 
   const { errors: staticFailures, axePages } = await checkStaticAccessibility(options);
-  const { server, origin } = await startServer(builtSiteDir);
+  const { server, origin } = await startStaticSiteServer(builtSiteDir, "Accessibility check");
   const browser = await chromium.launch();
   const failures = [...staticFailures];
 
@@ -127,42 +122,12 @@ export async function checkAccessibility(options: AccessibilityCheckOptions): Pr
     }
   } finally {
     await browser.close();
-    await new Promise<void>((resolve) => server.close(() => resolve()));
+    await closeServer(server);
   }
 
   return {
     checkedPages: axePages.length,
     failures
-  };
-}
-
-async function startServer(siteDir: string): Promise<StaticServer> {
-  const server = http.createServer(async (req, res) => {
-    try {
-      const filePath = siteFileForUrlPath(siteDir, req.url || "/");
-      if (!filePath) {
-        res.writeHead(403);
-        res.end("Forbidden");
-        return;
-      }
-      const body = await readFile(filePath);
-      res.writeHead(200, { "content-type": contentType(filePath) });
-      res.end(body);
-    } catch {
-      res.writeHead(404);
-      res.end("Not found");
-    }
-  });
-
-  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", () => resolve()));
-  const address = server.address();
-  if (!address || typeof address === "string") {
-    await new Promise<void>((resolve) => server.close(() => resolve()));
-    throw new Error("Accessibility check server did not bind to a TCP port");
-  }
-  return {
-    server,
-    origin: `http://127.0.0.1:${address.port}`
   };
 }
 

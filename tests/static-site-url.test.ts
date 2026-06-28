@@ -1,5 +1,8 @@
+import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { closeServer, startStaticSiteServer } from "@lib/static-site/server";
 import { siteFileForUrlPath, sitePathForHref, sitePathForUrlPath, urlForSiteFile } from "@lib/static-site/url";
 
 describe("static site URL helpers", () => {
@@ -40,4 +43,28 @@ describe("static site URL helpers", () => {
     expect(sitePathForHref(siteDir, siteUrl, "http://[")).toBeNull();
     expect(sitePathForHref(siteDir, "not a url", "/favicon.ico")).toBeNull();
   });
+
+  it("serves site files and directory indexes", async () => {
+    const siteDir = await mkdtemp(path.join(os.tmpdir(), "180-static-site-server-"));
+    await mkdir(path.join(siteDir, "zh"), { recursive: true });
+    await writeFile(path.join(siteDir, "index.html"), "<h1>Home</h1>");
+    await writeFile(path.join(siteDir, "zh", "index.html"), "<h1>Zh</h1>");
+    await writeFile(path.join(siteDir, "robots.txt"), "User-agent: *");
+
+    const { server, origin } = await startStaticSiteServer(siteDir, "Test static site");
+    try {
+      await expect(fetchText(new URL("/", origin).href)).resolves.toBe("<h1>Home</h1>");
+      await expect(fetchText(new URL("/zh/?x=1", origin).href)).resolves.toBe("<h1>Zh</h1>");
+      await expect(fetchText(new URL("/robots.txt", origin).href)).resolves.toBe("User-agent: *");
+      await expect(fetch(new URL("/missing", origin).href).then((response) => response.status)).resolves.toBe(404);
+    } finally {
+      await closeServer(server);
+    }
+  });
 });
+
+async function fetchText(url: string): Promise<string> {
+  const response = await fetch(url);
+  expect(response.status).toBe(200);
+  return response.text();
+}
