@@ -3,7 +3,7 @@ import { escapeHtml } from "@lib/text/escape";
 import type { Locale } from "@lib/schemas/day";
 
 interface StatusChipOptions {
-  status: string;
+  status: "ok" | "hint" | "bad";
   label: string;
   printLabel?: string;
 }

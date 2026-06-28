@@ -109,6 +109,34 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports invalid status component values", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        "# Fixture Day",
+        '<StatusChip status={"promising"} label={"promising"} />',
+        '<StatusText status="contested" label="contested" />',
+        '<MaturityTimelineItem status="established" year="2026" title="Fixture"></MaturityTimelineItem>',
+        "<Sources></Sources>"
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: 'src/content/days/001-fixture/en.mdx has invalid StatusChip status "promising"; use ok, hint, or bad'
+      },
+      {
+        message: 'src/content/days/001-fixture/en.mdx has invalid StatusText status "contested"; use ok, hint, or bad'
+      },
+      {
+        message: 'src/content/days/001-fixture/en.mdx has invalid MaturityTimelineItem status "established"; use ok, hint, or bad'
+      }
+    ]);
+  });
+
   it("does not treat fenced examples as content markers or raw markup", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {

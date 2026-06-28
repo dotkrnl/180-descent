@@ -21,6 +21,7 @@ interface ContentCheckFailure {
 }
 
 const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
+const STATUS_VALUES = new Set(["ok", "hint", "bad"]);
 const STATUS_CHIP_LABEL_MAX_CHARS = 28;
 const STATUS_CHIP_LABEL_GATE_START_DAY = 8;
 const UNSTYLED_STATUS_LIST_ITEM_PATTERN =
@@ -451,12 +452,24 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
   }
 
   checkStaticAlternates(checkedFile, failures);
+  checkStatusValues(checkedFile, failures);
   checkStatusChipLabels(checkedFile, failures);
   checkUnstyledStatusPhrases(checkedFile, failures);
   checkRedundantTermTips(checkedFile, failures);
   checkUnsupportedMdxWrappers(checkedFile, failures);
   checkRawInteractiveMarkup(checkedFile, failures);
   checkArtifactComponentContract(checkedFile, failures);
+}
+
+function checkStatusValues(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  for (const match of file.source.matchAll(/<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*\bstatus=(?:\{"([^"]+)"\}|"([^"]+)")/g)) {
+    const status = match[2] ?? match[3] ?? "";
+    if (!STATUS_VALUES.has(status)) {
+      failures.push({
+        message: `${file.relativePath} has invalid ${match[1]} status "${status}"; use ok, hint, or bad`
+      });
+    }
+  }
 }
 
 function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
