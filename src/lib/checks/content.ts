@@ -511,8 +511,15 @@ function literalStatusValue(tag: string): string | null {
 }
 
 function literalStringPropValue(tag: string, prop: string): string | null {
-  const match = tag.match(new RegExp(`\\b${prop}\\s*=\\s*(?:\\{\\s*(?:"([^"]+)"|'([^']+)')\\s*\\}|"([^"]+)"|'([^']+)')`));
-  return match ? match[1] ?? match[2] ?? match[3] ?? match[4] ?? null : null;
+  const source = jsxPropValueSource(tag, prop);
+  if (!source || source.kind === "invalid") return null;
+
+  const value = source.value.trim();
+  const literal = value.startsWith("{") && value.endsWith("}")
+    ? value.slice(1, -1).trim()
+    : value;
+  const match = literal.match(/^(?:"([^"]+)"|'([^']+)')$/);
+  return match ? match[1] ?? match[2] ?? null : null;
 }
 
 function checkSimpleTables(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
@@ -585,18 +592,77 @@ function jsxExpressionPropValue(
   tag: string,
   prop: string
 ): { kind: "invalid"; error: string } | { kind: "value"; value: string } | null {
-  const match = tag.match(new RegExp(`\\b${prop}\\s*=`));
-  if (!match || match.index === undefined) return null;
+  const source = jsxPropValueSource(tag, prop);
+  if (!source || source.kind === "invalid") return source;
+  if (!source.value.trimStart().startsWith("{")) return null;
+  return { kind: "value", value: source.value.trim().slice(1, -1) };
+}
 
-  let index = match.index + match[0].length;
-  while (/\s/.test(tag[index] ?? "")) index += 1;
-  if (tag[index] !== "{") return null;
+function jsxPropValueSource(
+  tag: string,
+  prop: string
+): { kind: "invalid"; error: string } | { kind: "value"; value: string } | null {
+  const valueStart = jsxPropValueStart(tag, prop);
+  if (valueStart === null) return null;
 
-  const end = jsExpressionEnd(tag, index);
-  if (end === null) {
-    return { kind: "invalid", error: `unterminated ${prop} expression` };
+  const char = tag[valueStart];
+  if (char === "{") {
+    const end = jsExpressionEnd(tag, valueStart);
+    if (end === null) return { kind: "invalid", error: `unterminated ${prop} expression` };
+    return { kind: "value", value: tag.slice(valueStart, end + 1) };
   }
-  return { kind: "value", value: tag.slice(index + 1, end) };
+  if (char === "\"" || char === "'") {
+    const end = jsxQuotedValueEnd(tag, valueStart);
+    if (end === null) return { kind: "invalid", error: `unterminated ${prop} string` };
+    return { kind: "value", value: tag.slice(valueStart, end + 1) };
+  }
+
+  let end = valueStart;
+  while (end < tag.length && !/[\s/>]/.test(tag[end])) end += 1;
+  return { kind: "value", value: tag.slice(valueStart, end) };
+}
+
+function jsxPropValueStart(tag: string, prop: string): number | null {
+  for (let index = 0; index < tag.length; index += 1) {
+    const char = tag[index];
+    if (char === "\"" || char === "'") {
+      const end = jsxQuotedValueEnd(tag, index);
+      index = end ?? tag.length;
+      continue;
+    }
+    if (char === "{") {
+      const end = jsExpressionEnd(tag, index);
+      index = end ?? tag.length;
+      continue;
+    }
+
+    if (!tag.startsWith(prop, index)) continue;
+    if (isJsxNameChar(tag[index - 1] ?? "") || isJsxNameChar(tag[index + prop.length] ?? "")) continue;
+
+    let valueStart = index + prop.length;
+    while (/\s/.test(tag[valueStart] ?? "")) valueStart += 1;
+    if (tag[valueStart] !== "=") continue;
+    valueStart += 1;
+    while (/\s/.test(tag[valueStart] ?? "")) valueStart += 1;
+    return valueStart;
+  }
+  return null;
+}
+
+function jsxQuotedValueEnd(source: string, start: number): number | null {
+  const quote = source[start];
+  for (let index = start + 1; index < source.length; index += 1) {
+    if (source[index] === "\\") {
+      index += 1;
+      continue;
+    }
+    if (source[index] === quote) return index;
+  }
+  return null;
+}
+
+function isJsxNameChar(char: string): boolean {
+  return /[A-Za-z0-9_$:-]/.test(char);
 }
 
 function checkStatusChipLabels(file: RegistryContentFile, failures: ContentCheckFailure[]): void {

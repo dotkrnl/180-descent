@@ -184,6 +184,26 @@ describe("content check", () => {
     ]);
   });
 
+  it("does not read status values from prefix-sharing props", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        "# Fixture Day",
+        '<StatusChip data-status="ok" label="dynamic" />',
+        "<Sources></Sources>"
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx has StatusChip without a literal status; use ok, hint, or bad"
+      }
+    ]);
+  });
+
   it("checks braced single-quoted StatusChip labels", async () => {
     const root = await createFixtureRoot();
     await writeFile(path.join(root, "src/_data/book.yaml"), fixtureBookYaml(8));
@@ -217,6 +237,28 @@ describe("content check", () => {
         body("Fixture Day"),
         '<SimpleTable headers={headers} rows={[["value"]]} />',
         '<SimpleTable headers={["Header"]} rows={rows} />'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a non-empty literal string-array headers prop"
+      },
+      {
+        message: "src/content/days/001-fixture/en.mdx has SimpleTable without a non-empty literal string-matrix rows prop"
+      }
+    ]);
+  });
+
+  it("does not read SimpleTable data props as renderer props", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<SimpleTable data-headers={["Header"]} data-rows={[["value"]]} />'
       ].join("\n"),
       zh: body("夹具日", "zh")
     });
@@ -671,6 +713,30 @@ describe("content check", () => {
     });
 
     await expect(checkContent({ root })).resolves.toEqual([]);
+  });
+
+  it("does not count prefix-sharing FormatOnly props as static alternates", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDayWithAppendix(root, {
+      enAppendix: [
+        '<StatusChip status={"ok"} label={"ok"} />',
+        '<Sources></Sources>',
+        '<Panel class="web-only">Interactive only</Panel>',
+        '<FormatOnly data-media="print-epub" data-variant="alternate">Static alternate</FormatOnly>'
+      ].join("\n"),
+      zhAppendix: [
+        '<StatusChip status={"ok"} label={"已确立"} />',
+        '<Sources></Sources>'
+      ].join("\n")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "EN 001-fixture appendix appendix-a has 1 web-only artifact item(s) but only 0 static print/EPUB alternate(s)"
+      }
+    ]);
   });
 
   it("accepts braced-literal semantic static alternate variants", async () => {
