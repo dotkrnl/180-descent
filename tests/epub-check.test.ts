@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { checkEpub } from "@lib/checks/epub";
-import { bookArtifactName, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
+import { bookArtifactPaths, dayArtifactPaths } from "@lib/artifacts/downloads";
 import { createEmptyContentRoot, writeContentDay } from "./helpers/content-root";
 
 describe("epub check helpers", () => {
@@ -9,7 +9,7 @@ describe("epub check helpers", () => {
 
     const result = await checkEpub({ root });
 
-    expect(result.errors).toContain(`${downloadArtifactPath(bookArtifactName("epub", "en", false))} is missing`);
+    expect(result.errors).toContain(`${bookArtifactPaths("epub")[0]} is missing`);
   });
 
   it("reports missing per-day artifacts", async () => {
@@ -18,7 +18,7 @@ describe("epub check helpers", () => {
 
     const result = await checkEpub({ root });
 
-    expect(result.errors).toContain(`${downloadArtifactPath(dayArtifactName("epub", "en", "001-fixture"))} is missing`);
-    expect(result.errors).toContain(`${downloadArtifactPath(dayArtifactName("epub", "zh", "001-fixture"))} is missing`);
+    expect(result.errors).toContain(`${dayArtifactPaths("epub", "en", ["001-fixture"])[0]} is missing`);
+    expect(result.errors).toContain(`${dayArtifactPaths("epub", "zh", ["001-fixture"])[0]} is missing`);
   });
 });

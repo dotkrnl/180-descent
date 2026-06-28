@@ -21,9 +21,22 @@ export function bookArtifactName(format: ArtifactFormat, locale: Locale, deepDiv
   return `180-descent${localePart}${deepDivePart}.${format}`;
 }
 
+export function bookArtifactPaths(format: ArtifactFormat): string[] {
+  return [
+    downloadArtifactPath(bookArtifactName(format, "en", false)),
+    downloadArtifactPath(bookArtifactName(format, "en", true)),
+    downloadArtifactPath(bookArtifactName(format, "zh", false)),
+    downloadArtifactPath(bookArtifactName(format, "zh", true))
+  ];
+}
+
 export function dayArtifactName(format: ArtifactFormat, locale: Locale, dayPath: string): string {
   const localePart = locale === "zh" ? "-zh" : "";
   return `180-descent${localePart}-day-${dayPath}.${format}`;
+}
+
+export function dayArtifactPaths(format: ArtifactFormat, locale: Locale, dayPaths: string[]): string[] {
+  return dayPaths.map((dayPath) => downloadArtifactPath(dayArtifactName(format, locale, dayPath)));
 }
 
 function artifactDownloadUrl(fileName: string): string {

@@ -5,7 +5,7 @@ import path from "node:path";
 import { promisify } from "node:util";
 import { PDFDocument, PDFName } from "pdf-lib";
 import { loadArtifactBookDays } from "@lib/artifacts/book";
-import { bookArtifactName, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
+import { bookArtifactPaths, dayArtifactName, dayArtifactPaths, downloadArtifactPath } from "@lib/artifacts/downloads";
 import { CHINESE_DAY_ONE_APPENDIX_PATTERNS, ENGLISH_DAY_ONE_APPENDIX_PATTERNS } from "@lib/checks/day-one-appendix-patterns";
 
 const execFileAsync = promisify(execFile);
@@ -57,10 +57,11 @@ class PdfChecker {
     }
 
     this.debugStep("extract edition text");
-    const standardText = await this.extractPdfText(downloadArtifactPath(bookArtifactName("pdf", "en", false)));
-    const deepDiveText = await this.extractPdfText(downloadArtifactPath(bookArtifactName("pdf", "en", true)));
-    const zhText = await this.extractPdfText(downloadArtifactPath(bookArtifactName("pdf", "zh", false)));
-    const zhDeepDiveText = await this.extractPdfText(downloadArtifactPath(bookArtifactName("pdf", "zh", true)));
+    const [standardPdf, deepDivePdf, zhPdf, zhDeepDivePdf] = bookArtifactPaths("pdf");
+    const standardText = await this.extractPdfText(standardPdf);
+    const deepDiveText = await this.extractPdfText(deepDivePdf);
+    const zhText = await this.extractPdfText(zhPdf);
+    const zhDeepDiveText = await this.extractPdfText(zhDeepDivePdf);
     const dayOneText = await this.extractPdfText(downloadArtifactPath(dayArtifactName("pdf", "en", "001-what-is-knowledge")));
     const zhDayOneText = await this.extractPdfText(downloadArtifactPath(dayArtifactName("pdf", "zh", "001-what-is-knowledge")));
 
@@ -72,21 +73,13 @@ class PdfChecker {
   }
 
   private async collectPdfFiles(): Promise<string[]> {
-    const pdfFiles = [
-      downloadArtifactPath(bookArtifactName("pdf", "en", false)),
-      downloadArtifactPath(bookArtifactName("pdf", "en", true)),
-      downloadArtifactPath(bookArtifactName("pdf", "zh", false)),
-      downloadArtifactPath(bookArtifactName("pdf", "zh", true))
-    ];
     const enDays = await loadArtifactBookDays(this.options.root, "en");
     const zhDays = await loadArtifactBookDays(this.options.root, "zh");
-    for (const day of enDays) {
-      pdfFiles.push(downloadArtifactPath(dayArtifactName("pdf", "en", day.path)));
-    }
-    for (const day of zhDays) {
-      pdfFiles.push(downloadArtifactPath(dayArtifactName("pdf", "zh", day.path)));
-    }
-    return pdfFiles;
+    return [
+      ...bookArtifactPaths("pdf"),
+      ...dayArtifactPaths("pdf", "en", enDays.map((day) => day.path)),
+      ...dayArtifactPaths("pdf", "zh", zhDays.map((day) => day.path))
+    ];
   }
 
   private async checkPdfHeaderTextAndLinks(file: string): Promise<void> {

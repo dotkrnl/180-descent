@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import JSZip from "jszip";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
-import { bookArtifactName, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
+import { bookArtifactPaths, dayArtifactName, downloadArtifactPath } from "@lib/artifacts/downloads";
 import { CHINESE_DAY_ONE_APPENDIX_PATTERNS, ENGLISH_DAY_ONE_APPENDIX_PATTERNS } from "@lib/checks/day-one-appendix-patterns";
 
 interface EpubCheckOptions {
@@ -62,30 +62,31 @@ function isInsideSvg(text: string, index: number): boolean {
 }
 
 async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
+  const [enStandard, enDeepDive, zhStandard, zhDeepDive] = bookArtifactPaths("epub");
   const editions: EpubEdition[] = [
     {
-      file: downloadArtifactPath(bookArtifactName("epub", "en", false)),
+      file: enStandard,
       deepDive: false,
       appendixPatterns: ENGLISH_DAY_ONE_APPENDIX_PATTERNS,
       optionalAppendixLabel: null,
       required: BOOK_REQUIRED
     },
     {
-      file: downloadArtifactPath(bookArtifactName("epub", "en", true)),
+      file: enDeepDive,
       deepDive: true,
       appendixPatterns: ENGLISH_DAY_ONE_APPENDIX_PATTERNS,
       optionalAppendixLabel: /Optional appendix/,
       required: BOOK_REQUIRED
     },
     {
-      file: downloadArtifactPath(bookArtifactName("epub", "zh", false)),
+      file: zhStandard,
       deepDive: false,
       appendixPatterns: CHINESE_DAY_ONE_APPENDIX_PATTERNS,
       optionalAppendixLabel: null,
       required: BOOK_REQUIRED
     },
     {
-      file: downloadArtifactPath(bookArtifactName("epub", "zh", true)),
+      file: zhDeepDive,
       deepDive: true,
       appendixPatterns: CHINESE_DAY_ONE_APPENDIX_PATTERNS,
       optionalAppendixLabel: /可选附录/,
