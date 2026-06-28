@@ -1,6 +1,5 @@
 import http, { type Server } from "node:http";
 import { stat, readFile } from "node:fs/promises";
-import type { AddressInfo } from "node:net";
 import { load, type CheerioAPI } from "cheerio";
 import type { Element } from "domhandler";
 import { chromium } from "playwright";
@@ -154,7 +153,11 @@ async function startServer(siteDir: string): Promise<StaticServer> {
   });
 
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", () => resolve()));
-  const address = server.address() as AddressInfo;
+  const address = server.address();
+  if (!address || typeof address === "string") {
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+    throw new Error("Accessibility check server did not bind to a TCP port");
+  }
   return {
     server,
     origin: `http://127.0.0.1:${address.port}`
