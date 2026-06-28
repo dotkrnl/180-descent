@@ -39,6 +39,29 @@ describe("future links data", () => {
 
     await expect(readFutureLinksData(root)).rejects.toThrow();
   });
+
+  it("rejects duplicate future link ids", async () => {
+    const root = await createFixtureRoot([
+      "- id: day-001-to-day-009-systems",
+      "  from_day: 1",
+      "  target_day: 9",
+      "  target_anchor: null",
+      "  text: Systems thinking",
+      "  status: pending",
+      "  context: coherentism as web/system",
+      "- id: day-001-to-day-009-systems",
+      "  from_day: 2",
+      "  target_day: 9",
+      "  target_anchor: null",
+      "  text: Systems thinking",
+      "  status: pending",
+      "  context: duplicate callback"
+    ].join("\n"));
+
+    await expect(readFutureLinksData(root)).rejects.toThrow(
+      "duplicate future link id: day-001-to-day-009-systems"
+    );
+  });
 });
 
 async function createFixtureRoot(futureLinksYaml: string): Promise<string> {

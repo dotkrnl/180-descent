@@ -22,7 +22,19 @@ const futureLinkEntrySchema = z.object({
   context: z.string().min(1)
 }).strict();
 
-const futureLinksDataSchema = z.array(futureLinkEntrySchema);
+const futureLinksDataSchema = z.array(futureLinkEntrySchema).superRefine((links, context) => {
+  const seen = new Set<string>();
+  for (const [index, link] of links.entries()) {
+    if (seen.has(link.id)) {
+      context.addIssue({
+        code: "custom",
+        path: [index, "id"],
+        message: `duplicate future link id: ${link.id}`
+      });
+    }
+    seen.add(link.id);
+  }
+});
 
 export async function readFutureLinksData(root: string): Promise<FutureLinkEntry[]> {
   return futureLinksDataSchema.parse(await readYamlFile(futureLinksDataFile(root)));

@@ -99,6 +99,10 @@ async function checkFutureLinks(root: string, daysDir: string): Promise<LinkChec
       failures.push({
         message: `Future link ${link.id} targets published day ${link.target_day} but is still pending`
       });
+    } else if (link.status === "resolved" && link.target_day > maxDay) {
+      failures.push({
+        message: `Future link ${link.id} targets unpublished day ${link.target_day} but is marked resolved`
+      });
     }
   }
 

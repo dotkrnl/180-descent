@@ -70,6 +70,28 @@ describe("link checks", () => {
       }
     ]);
   });
+
+  it("reports resolved future links that target unpublished days", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "_site/index.html"), "");
+    await writeFile(futureLinksDataFile(root), [
+      "- id: day-9-callback",
+      "  from_day: 1",
+      "  target_day: 9",
+      "  target_anchor: null",
+      "  text: Callback",
+      "  status: resolved",
+      "  context: test callback"
+    ].join("\n"));
+
+    const failures = await checkLinks({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "Future link day-9-callback targets unpublished day 9 but is marked resolved"
+      }
+    ]);
+  });
 });
 
 async function createFixtureRoot(): Promise<string> {
