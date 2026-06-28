@@ -53,18 +53,6 @@ export function padDay(value: number): string {
   return String(value).padStart(3, "0");
 }
 
-export function nextSyllabusDay(syllabus: Syllabus, days: ContentDay[]): UpcomingSyllabusDay | undefined {
-  const contentDayNumbers = new Set(days.map((day) => day.day));
-  for (const block of syllabus.blocks) {
-    for (const day of block.days) {
-      if (!contentDayNumbers.has(day.day)) {
-        return { ...day, block: block.title, blockId: block.id };
-      }
-    }
-  }
-  return undefined;
-}
-
 export function upcomingSyllabusDays(syllabus: Syllabus, days: ContentDay[], count: number): UpcomingSyllabusDay[] {
   const contentDayNumbers = new Set(days.map((day) => day.day));
   const upcoming: UpcomingSyllabusDay[] = [];

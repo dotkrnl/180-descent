@@ -4,7 +4,6 @@ import {
   getBookData,
   getContentDays,
   getSyllabus,
-  nextSyllabusDay,
   padDay,
   upcomingSyllabusDays
 } from "@app/site-data";
@@ -24,8 +23,8 @@ const [book, syllabus, days] = await Promise.all([
 ]);
 const totalDays = syllabus.blocks.reduce((total, block) => total + block.days.length, 0);
 const contentDays = new Map(days.map((day) => [day.day, day]));
-const nextDay = nextSyllabusDay(syllabus, days);
 const upcoming = upcomingSyllabusDays(syllabus, days, 6);
+const nextDay = upcoming[0];
 const latestContentDay = days.at(-1)?.day ?? 0;
 ---
 <PageShell
