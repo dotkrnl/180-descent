@@ -5,6 +5,7 @@ import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
 import { toPosixRelative } from "@lib/fs/path";
 import { walkFiles } from "@lib/fs/walk";
+import { stripFencedCodeBlocks } from "@lib/text/markdown";
 
 interface AppendixStyleCheckOptions {
   root: string;
@@ -62,7 +63,7 @@ export async function checkAppendixStyle(options: AppendixStyleCheckOptions): Pr
   const appendixFiles = await collectAppendixFiles(options);
 
   for (const file of appendixFiles) {
-    checkBlock(options.root, file, await readFile(file, "utf8"), cssClasses, jsClasses, errors);
+    checkBlock(options.root, file, stripFencedCodeBlocks(await readFile(file, "utf8")), cssClasses, jsClasses, errors);
   }
 
   return {

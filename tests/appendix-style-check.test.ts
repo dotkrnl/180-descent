@@ -28,6 +28,19 @@ describe("appendix style check", () => {
       'src/content/days/001-fixture/appendices/appendix-a.en.mdx: appendix class "unknown-appendix-class" has no shared CSS rule or JS owner'
     ]);
   });
+
+  it("ignores appendix-local class examples inside fenced code blocks", async () => {
+    const root = await createFixtureRoot();
+    await writeAppendix(root, [
+      "```html",
+      '<div class="movement unknown-appendix-class"></div>',
+      "```"
+    ].join("\n"));
+
+    const result = await checkAppendixStyle({ root });
+
+    expect(result.errors).toEqual([]);
+  });
 });
 
 async function createFixtureRoot(): Promise<string> {
