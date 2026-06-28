@@ -22,10 +22,9 @@ interface ContentCheckFailure {
 }
 
 type JsonPropValue =
-  | { kind: "missing" }
-  | { kind: "nonliteral" }
   | { kind: "invalid"; error: string }
-  | { kind: "value"; value: unknown };
+  | { kind: "value"; value: unknown }
+  | null;
 
 const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
 const STATUS_VALUES = new Set(["ok", "hint", "bad"]);
@@ -522,25 +521,30 @@ function checkSimpleTables(file: RegistryContentFile, failures: ContentCheckFail
     const headers = jsonPropValue(tag, "headers");
     const rows = jsonPropValue(tag, "rows");
 
-    if (headers.kind === "invalid") {
+    if (headers?.kind === "invalid") {
       failures.push({
         message: `${file.relativePath} has SimpleTable headers prop that is not valid JSON: ${headers.error}`
       });
-    } else if (!isNonEmptyStringArray(headers.kind === "value" ? headers.value : null)) {
+    } else if (!isNonEmptyStringArray(headers?.value)) {
       failures.push({
         message: `${file.relativePath} has SimpleTable without a non-empty literal string-array headers prop`
       });
     }
 
-    if (rows.kind === "invalid") {
+    if (rows?.kind === "invalid") {
       failures.push({
         message: `${file.relativePath} has SimpleTable rows prop that is not valid JSON: ${rows.error}`
       });
-    } else if (!isNonEmptyStringMatrix(rows.kind === "value" ? rows.value : null)) {
+    } else if (!isNonEmptyStringMatrix(rows?.value)) {
       failures.push({
         message: `${file.relativePath} has SimpleTable without a non-empty literal string-matrix rows prop`
       });
-    } else if (headers.kind === "value" && isNonEmptyStringArray(headers.value) && rows.kind === "value" && hasMismatchedRowWidth(headers.value, rows.value)) {
+    } else if (
+      headers?.kind === "value"
+      && rows?.kind === "value"
+      && isNonEmptyStringArray(headers.value)
+      && hasMismatchedRowWidth(headers.value, rows.value)
+    ) {
       failures.push({
         message: `${file.relativePath} has SimpleTable rows whose column count does not match headers`
       });
@@ -565,12 +569,11 @@ function hasMismatchedRowWidth(headers: unknown, rows: unknown): boolean {
 
 function jsonPropValue(tag: string, prop: string): JsonPropValue {
   const source = jsxExpressionPropValue(tag, prop);
-  if (source === null) return { kind: "missing" };
+  if (source === null) return null;
   if (source.kind === "invalid") return source;
-  if (source.kind === "nonliteral") return source;
 
   const value = source.value.trim();
-  if (!value.startsWith("[")) return { kind: "nonliteral" };
+  if (!value.startsWith("[")) return null;
   try {
     return { kind: "value", value: JSON.parse(value) };
   } catch (error) {
@@ -581,13 +584,13 @@ function jsonPropValue(tag: string, prop: string): JsonPropValue {
 function jsxExpressionPropValue(
   tag: string,
   prop: string
-): { kind: "invalid"; error: string } | { kind: "nonliteral" } | { kind: "value"; value: string } | null {
+): { kind: "invalid"; error: string } | { kind: "value"; value: string } | null {
   const match = tag.match(new RegExp(`\\b${prop}\\s*=`));
   if (!match || match.index === undefined) return null;
 
   let index = match.index + match[0].length;
   while (/\s/.test(tag[index] ?? "")) index += 1;
-  if (tag[index] !== "{") return { kind: "nonliteral" };
+  if (tag[index] !== "{") return null;
 
   const end = jsExpressionEnd(tag, index);
   if (end === null) {
