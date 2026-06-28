@@ -2,8 +2,7 @@ import { readFile } from "node:fs/promises";
 import * as cheerio from "cheerio";
 import { contentDaysDir } from "@lib/content/paths";
 import { loadContentRegistry } from "@lib/content/registry";
-import { futureLinksDataFile } from "@lib/data/paths";
-import { readYamlFile } from "@lib/data/yaml";
+import { readFutureLinksData } from "@lib/data/future-links";
 import { toPosixRelative } from "@lib/fs/path";
 import { pathExists, walkFiles } from "@lib/fs/walk";
 import { siteDir } from "@lib/static-site/routes";
@@ -17,12 +16,6 @@ interface LinkCheckFailure {
   message: string;
 }
 
-interface FutureLinkEntry {
-  id?: unknown;
-  status?: unknown;
-  target_day?: unknown;
-}
-
 interface HtmlDocument {
   file: string;
   $: cheerio.CheerioAPI;
@@ -32,7 +25,6 @@ interface HtmlDocument {
 export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFailure[]> {
   const builtSiteDir = siteDir(options.root);
   const daysDir = contentDaysDir(options.root);
-  const futureLinksPath = futureLinksDataFile(options.root);
   const failures: LinkCheckFailure[] = [];
   const htmlFiles = await walkFiles(builtSiteDir, { exts: ".html", ignoredDirNames: [] });
   const documents = await Promise.all(htmlFiles.map(loadHtmlDocument));
@@ -66,7 +58,7 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
     }
   }
 
-  failures.push(...await checkFutureLinks(daysDir, futureLinksPath));
+  failures.push(...await checkFutureLinks(options.root, daysDir));
   return failures;
 }
 
@@ -99,19 +91,17 @@ function linkTarget(href?: string): { pathname: string; anchor?: string; samePag
   }
 }
 
-async function checkFutureLinks(daysDir: string, futureLinksPath: string): Promise<LinkCheckFailure[]> {
+async function checkFutureLinks(root: string, daysDir: string): Promise<LinkCheckFailure[]> {
   const registry = await loadContentRegistry({ daysDir });
   const days = registry.days.map((day) => day.manifest.day);
   const maxDay = days.length ? Math.max(...days) : 0;
-  const parsed = await readYamlFile<unknown>(futureLinksPath);
-  const futureLinks = Array.isArray(parsed) ? parsed as FutureLinkEntry[] : [];
+  const futureLinks = await readFutureLinksData(root);
   const failures: LinkCheckFailure[] = [];
 
   for (const link of futureLinks) {
-    const targetDay = Number(link.target_day);
-    if (link.status === "pending" && Number.isFinite(targetDay) && targetDay <= maxDay) {
+    if (link.status === "pending" && link.target_day <= maxDay) {
       failures.push({
-        message: `Future link ${String(link.id)} targets published day ${targetDay} but is still pending`
+        message: `Future link ${link.id} targets published day ${link.target_day} but is still pending`
       });
     }
   }

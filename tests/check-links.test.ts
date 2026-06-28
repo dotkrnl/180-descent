@@ -54,8 +54,12 @@ describe("link checks", () => {
     await writeFile(path.join(root, "_site/index.html"), "");
     await writeFile(futureLinksDataFile(root), [
       "- id: day-1-callback",
+      "  from_day: 1",
       "  target_day: 1",
-      "  status: pending"
+      "  target_anchor: null",
+      "  text: Callback",
+      "  status: pending",
+      "  context: test callback"
     ].join("\n"));
 
     const failures = await checkLinks({ root });
