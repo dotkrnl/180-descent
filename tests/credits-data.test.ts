@@ -40,6 +40,21 @@ describe("credits data", () => {
 
     await expect(readCreditsData(root)).rejects.toThrow();
   });
+
+  it("rejects image assets outside the site image tree", async () => {
+    const root = await createCreditsRoot([
+      "fonts: []",
+      "images:",
+      "  - title: Fixture Image",
+      "    creator: Fixture Creator",
+      "    source: https://example.com/image",
+      "    license: CC BY 4.0",
+      "    asset: /downloads/fixture.jpg",
+      "    notes: Fixture notes."
+    ].join("\n"));
+
+    await expect(readCreditsData(root)).rejects.toThrow();
+  });
 });
 
 async function createCreditsRoot(source: string): Promise<string> {

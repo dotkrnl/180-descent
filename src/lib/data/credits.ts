@@ -33,7 +33,7 @@ const creditImageSchema = z.object({
   creator: z.string().min(1),
   source: z.string().min(1),
   license: z.string().min(1),
-  asset: z.string().min(1),
+  asset: z.string().regex(/^\/assets\/images\/.+/),
   notes: z.string().min(1)
 }).strict();
 
