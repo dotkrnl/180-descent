@@ -16,7 +16,7 @@ interface SvgTextCheckFailure {
   value: number;
 }
 
-const CHECKED_EXTENSIONS = [".astro", ".css", ".html", ".js", ".md", ".mdx", ".njk", ".scss", ".svg"];
+const CHECKED_EXTENSIONS = new Set([".astro", ".css", ".html", ".js", ".md", ".mdx", ".njk", ".scss", ".svg"]);
 const GENERATED_STYLE_PATTERN = /^src\/assets\/scss\/generated\//;
 const MARKDOWN_FILE_PATTERN = /\.mdx?$/;
 

@@ -4,7 +4,7 @@ import path from "node:path";
 import { isPathUnavailableError } from "@lib/fs/errors";
 
 interface WalkOptions {
-  exts?: string | string[] | Set<string>;
+  exts?: string | ReadonlySet<string>;
   ignoredDirNames?: Iterable<string>;
 }
 
@@ -58,15 +58,13 @@ export async function pathExists(filePath: string): Promise<boolean> {
   }
 }
 
-function normalizeExts(exts: WalkOptions["exts"]): Set<string> | null {
+function normalizeExts(exts: WalkOptions["exts"]): ReadonlySet<string> | null {
   if (!exts) return null;
   if (typeof exts === "string") return new Set([exts]);
-  if (exts instanceof Set) return exts;
-  if (Array.isArray(exts)) return new Set(exts);
-  return null;
+  return exts;
 }
 
-function matchesExt(entryName: string, exts: Set<string> | null): boolean {
+function matchesExt(entryName: string, exts: ReadonlySet<string> | null): boolean {
   if (!exts) return true;
   return exts.has(path.extname(entryName));
 }
