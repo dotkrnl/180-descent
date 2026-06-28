@@ -622,16 +622,17 @@ function registerEpubImage(src: string | undefined, imageAssets: Map<string, Epu
   const mediaType = mediaTypes[extension];
   if (!mediaType) throw new Error(`Unsupported EPUB image asset type: ${src}`);
 
-  if (!imageAssets.has(href)) {
-    imageAssets.set(href, {
-      href,
-      filePath: path.join(siteDir(root), pathOnly.slice(1)),
-      mediaType,
-      id: `img_${href.replace(/[^a-z0-9]/gi, "_")}`
-    });
-  }
+  const existing = imageAssets.get(href);
+  if (existing) return existing;
 
-  return imageAssets.get(href)!;
+  const image = {
+    href,
+    filePath: path.join(siteDir(root), pathOnly.slice(1)),
+    mediaType,
+    id: `img_${href.replace(/[^a-z0-9]/gi, "_")}`
+  };
+  imageAssets.set(href, image);
+  return image;
 }
 
 function epubImageHref(pathOnly: string): string | null {

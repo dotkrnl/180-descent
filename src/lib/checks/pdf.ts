@@ -198,7 +198,8 @@ class PdfChecker {
 
   private async pdfInfo(pdfPath: string): Promise<PdfInfo> {
     const absolute = this.absolute(pdfPath);
-    if (this.pdfCache.has(absolute)) return this.pdfCache.get(absolute)!;
+    const cached = this.pdfCache.get(absolute);
+    if (cached) return cached;
     const data = await readFile(absolute);
     const pdf = await PDFDocument.load(data);
     const text = await popplerText(absolute);

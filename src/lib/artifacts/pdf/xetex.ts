@@ -1238,7 +1238,8 @@ function mdxAttributes(node: MdxNode): Map<string, string | null> {
 function resolveExpression(value: string | null | undefined, state: MdxRenderState): string {
   if (!value) return "";
   const trimmed = value.trim();
-  if (state.constants.has(trimmed)) return state.constants.get(trimmed)!;
+  const constant = state.constants.get(trimmed);
+  if (constant !== undefined) return constant;
   const raw = trimmed.match(/^String\.raw`([\s\S]*)`$/);
   if (raw) return raw[1];
   const template = trimmed.match(/^`([\s\S]*)`$/);
