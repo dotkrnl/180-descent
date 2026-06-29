@@ -490,15 +490,16 @@ const print = {
       const total = 200, peakAt = 100;
       const tri = t => Math.max(0, t <= peakAt ? t / peakAt : (2 * peakAt - t) / peakAt);
       const f = [], lev = [];
-      let s = 2;
+      let s = 0;
       for (let i = 0; i <= total; i++) {
         f[i] = peak * tri(i);
-        if (i < total) {
-          s = Math.max(0, s + (f[i] - drain));
-          lev[i + 1] = s;
-        }
       }
-      lev[0] = 2;
+      lev[0] = s;
+      for (let i = 1; i <= total; i++) {
+        const net = ((f[i - 1] + f[i]) / 2) - drain;
+        s = Math.max(0, s + net * 0.05);
+        lev[i] = s;
+      }
       const c1 = drain < peak && drain > 0 ? peakAt * drain / peak : drain <= 0 ? 0 : null;
       const c2 = drain < peak && drain > 0 ? 2 * peakAt - peakAt * drain / peak : drain <= 0 ? total : null;
       const drawFlow = () => {
