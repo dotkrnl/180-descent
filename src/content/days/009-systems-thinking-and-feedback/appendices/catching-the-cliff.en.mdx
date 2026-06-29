@@ -8,6 +8,7 @@ import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
@@ -18,10 +19,10 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 
 <Day9StaticFigure kind="cliff" locale="en" />
 
-<Lead drop="F">or sixty years, the science of tipping points could do one honest thing: feel the ground going soft. As the main descent showed, a system approaching a cliff *slows down* — it wobbles wider and recovers slower, and those statistical tremors (rising variance, rising autocorrelation) are a genuine early-warning signal. But that signal is frustratingly mute. It tells you that *something* is coming without telling you *what*, or *when*, or what the world looks like on the far side. Since about 2020, a burst of work — much of it leaning on machine learning, satellites, and fresh mathematics — has been trying to turn that mute tremor into something that speaks. This appendix is a field report from that frontier: five live research programs from the last six years, each genuinely exciting, none yet finished, and all run through the hype filter without mercy. Treat every claim here as a dispatch from a moving front, not a settled map.</Lead>
+<Lead drop="F">or sixty years, the science of tipping points could do one honest thing: feel the ground going soft. As Day 9 showed, a system approaching a cliff *slows down* — it wobbles wider and recovers slower, and those statistical tremors (rising variance, rising autocorrelation) are a genuine early-warning signal. But that signal is frustratingly mute. It tells you that *something* is coming without telling you *what*, or *when*, or what the world looks like on the far side. Since about 2020, a burst of work — much of it leaning on machine learning, satellites, and fresh mathematics — has been trying to turn that mute tremor into something that speaks. This appendix is a field report from that frontier: five live research programs from the last six years, each genuinely exciting, none yet finished, and all run through the hype filter without mercy. Treat every claim here as a dispatch from a moving front, not a settled map.</Lead>
 
 <ContinueNote label={"↩ What you already have (and we won't repeat)"}>
-From the **main file**: fold bifurcations, hysteresis, critical slowing down, the generic early-warning signals (Scheffer et al. 2009), Ben-Yami et al. 2024 on why dates are hard, and the climate specifics (AMOC, Amazon, coral, the 2022 threshold table). From **Appendix I**: Holling resilience, the B/N/R tipping taxonomy, tipping cascades, Daisyworld. Here we build *on* all of it — and only cover work published **2020 or later**.
+From **Day 9**: fold bifurcations, hysteresis, critical slowing down, the generic early-warning signals (Scheffer et al. 2009), Ben-Yami et al. 2024 on why dates are hard, and the climate specifics (AMOC, Amazon, coral, the 2022 threshold table). From **Appendix I**: Holling resilience, the B/N/R tipping taxonomy, tipping cascades, Daisyworld. Here we build *on* all of it — and only cover work published **2020 or later**.
 </ContinueNote>
 
 <StatusChipRow>
@@ -29,11 +30,13 @@ From the **main file**: fold bifurcations, hysteresis, critical slowing down, th
 </StatusChipRow>
 
 <ContentSection>
+<SectionEyebrow number="Dispatch 1">teaching machines to hear the tremor</SectionEyebrow>
+
 ## An AI that knows the shape of catastrophe
 
 Start with the deepest problem in the classic warning signals: they are *generic to a fault*. Rising variance and autocorrelation appear before almost any kind of tipping, which is their strength — they work everywhere — but also their weakness: they cannot tell you which *kind* of tipping is coming, and so they cannot tell you what the new world will be like. Will the system jump abruptly to a far-off state? Start oscillating wildly? Slide gently into a new regime? The generic signal shrugs at all three.
 
-In 2021, a team led by Thomas Bury, with Chris Bauch, Madhur Anand, and — note the name — **Marten Scheffer and Tim Lenton** themselves (the founders of the classic approach, now helping to supersede it), published a striking result in *PNAS*. Their insight rests on a beautiful piece of mathematics from the main file's world: as *any* system nears a tipping point, its dynamics collapse onto one of a small number of universal templates called *normal forms* (the fold, the Hopf, the transcritical — the basic ways a stable state can lose stability). There are only a handful. So Bury's team trained a deep neural network — a *convolutional-plus-recurrent* hybrid — on hundreds of thousands of simulated time series drawn from these universal templates, teaching it the subtle fingerprints of *each* route to collapse.
+In 2021, a team led by Thomas Bury, with Chris Bauch, Madhur Anand, and — note the name — **Marten Scheffer and Tim Lenton** themselves (the founders of the classic approach, now helping to supersede it), published a striking result in *PNAS*. Their insight rests on a beautiful piece of mathematics from Day 9's world: as *any* system nears a tipping point, its dynamics collapse onto one of a small number of universal templates called *normal forms* (the fold, the Hopf, the transcritical — the basic ways a stable state can lose stability). There are only a handful. So Bury's team trained a deep neural network — a *convolutional-plus-recurrent* hybrid — on hundreds of thousands of simulated time series drawn from these universal templates, teaching it the subtle fingerprints of *each* route to collapse.
 
 The payoff: their network spots tipping points in systems it was *never trained on* — including real climate and ecological data and a thermoacoustic experiment — more sensitively and with fewer false alarms than the classic indicators. And crucially, it does the thing the old signals can't: it names the *type* of bifurcation, telling you whether the new state will be a sudden jump, an oscillation, or a gentle shift. Bauch called it a potential "game-changer for the ability to anticipate big shifts." A 2025 follow-up (Zhuge, Li &amp; Chen, *Royal Society Open Science*) pushed the approach toward the messiness of reality, designing a network to predict tipping occurrence even in the *irregularly sampled* time series that real-world monitoring actually produces — one of the sharpest limitations of the original method.
 
@@ -48,10 +51,12 @@ The payoff: their network spots tipping points in systems it was *never trained 
 />
 </FormatOnly>
 
-The honest label: this is a real and important advance, but its triumphs are still mostly *in silico* and on a handful of empirical cases. Whether a normal-form-trained network reliably calls tipping points in the full, noisy, high-dimensional mess of the real Earth system — with enough lead time to matter — remains to be demonstrated at scale. <StatusChip status="hint" label="uncertain" printLabel="promising hint — strong in simulation, real-world track record still thin" />
+The honest label: this is a real and important advance, but its triumphs are still mostly *in silico* and on a handful of empirical cases. Whether a normal-form-trained network reliably calls tipping points in the full, noisy, high-dimensional mess of the real Earth system — with enough lead time to matter — remains to be demonstrated at scale. <StatusChip status="hint" label="promising, not settled" printLabel="promising hint — strong in simulation, real-world track record still thin" />
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow number="Dispatch 2">rehearsing the collapse in a machine</SectionEyebrow>
+
 ## The digital twin that visits the far side
 
 Detecting that a cliff is near is one thing. A bolder 2020–2021 program asks: can a machine, having only ever watched a system behave *normally*, predict the exact point at which it will collapse — and then describe the alien world beyond? The tool is *reservoir computing*, a strikingly efficient flavour of recurrent neural network that has proven almost uncannily good at learning the "grammar" of chaotic systems from raw data, with no model of the underlying physics.
@@ -62,13 +67,15 @@ In a 2021 *Physical Review Research* paper, Ling-Wei Kong, Ying-Cheng Lai, and c
 The dream is a wind tunnel for catastrophe: a learned replica you can crash a thousand times to map the edge of a system you must never actually break.
 </BlockQuote>
 
-It is a genuinely beautiful idea, and on benchmark chaotic systems it works. But here the hype filter bites hardest. These successes are on relatively low-dimensional, well-sampled, cleanly-measured mathematical systems. The real climate is high-dimensional, sparsely observed, and non-stationary in ways that can defeat the method's core assumption that the future "rhymes" with the trained past. The same community has published sober "Catch-22" analyses of reservoir computing's limits. A digital twin of a chaotic toy is a triumph; a trustworthy digital twin of the AMOC does not yet exist. <StatusChip status="hint" label="uncertain" printLabel="promising" /> <StatusChip status="bad" label="contested" printLabel="real-Earth application — contested/unproven" />
+It is a genuinely beautiful idea, and on benchmark chaotic systems it works. But here the hype filter bites hardest. These successes are on relatively low-dimensional, well-sampled, cleanly-measured mathematical systems. The real climate is high-dimensional, sparsely observed, and non-stationary in ways that can defeat the method's core assumption that the future "rhymes" with the trained past. The same community has published sober "Catch-22" analyses of reservoir computing's limits. A digital twin of a chaotic toy is a triumph; a trustworthy digital twin of the AMOC does not yet exist. <StatusChip status="hint" label="toy systems promising" printLabel="promising" /> <StatusChip status="bad" label="Earth-scale unproven" printLabel="real-Earth application — contested/unproven" />
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow number="Dispatch 3">the cliff that isn't there</SectionEyebrow>
+
 ## How a pattern lets a system dodge the edge
 
-Now a result that doesn't predict tipping points so much as *question* them — and it may be the most quietly radical idea in this whole appendix. The standard picture, the one the main file sold you, is stark: push an ecosystem past its threshold and it collapses, abruptly and as a whole, from green to desert. In 2021, Max Rietkerk and colleagues argued in *Science* that for systems spread out in *space*, this picture is often wrong — and wrong in a hopeful direction.
+Now a result that doesn't predict tipping points so much as *question* them — and it may be the most quietly radical idea in this whole appendix. The standard picture, the one Day 9 gave you, is stark: push an ecosystem past its threshold and it collapses, abruptly and as a whole, from green to desert. In 2021, Max Rietkerk and colleagues argued in *Science* that for systems spread out in *space*, this picture is often wrong — and wrong in a hopeful direction.
 
 Their claim: instead of collapsing all at once, a spatially extended system under stress can **reorganize into a pattern** — the spots, stripes, and labyrinths of vegetation you can see from the air in drylands the world over. These are *Turing patterns*, the self-organized structures Alan Turing predicted in 1952. And here is the twist that upends the textbook: where ecologists had long read these patterns as *warning signs* of imminent collapse, Rietkerk's analysis says they can be the opposite — a **sign of resilience**. By breaking into patches, the system survives at stress levels far beyond where a uniform version would have tipped. It trades total collapse for a graceful, often reversible retreat into pattern. The cliff is replaced by a ramp.
 
@@ -83,13 +90,15 @@ Their claim: instead of collapsing all at once, a spatially extended system unde
 />
 </FormatOnly>
 
-Why it matters, and where the caution lives: if Rietkerk is right, then a whole class of ecosystems — and perhaps Earth-system components — flagged as "tipping-prone" may be substantially *more* resilient than the catastrophic-collapse models imply, because those models ignored spatial dynamics. That is genuinely good news, carefully argued with both mathematics and field observations. But it is a *review and a theoretical framework*, not a universal law: how far the escape hatch generalizes — to ice sheets, to the Amazon, to the whole Earth system — is exactly the open question its authors pose. And it cuts both ways for warning signals, because it means a pattern can signal either approaching collapse *or* hard-won persistence, and telling those apart is hard. <StatusChip status="hint" label="uncertain" printLabel="promising — and paradigm-shifting if it generalizes" />
+Why it matters, and where the caution lives: if Rietkerk is right, then a whole class of ecosystems — and perhaps Earth-system components — flagged as "tipping-prone" may be substantially *more* resilient than the catastrophic-collapse models imply, because those models ignored spatial dynamics. That is genuinely good news, carefully argued with both mathematics and field observations. But it is a *review and a theoretical framework*, not a universal law: how far the escape hatch generalizes — to ice sheets, to the Amazon, to the whole Earth system — is exactly the open question its authors pose. And it cuts both ways for warning signals, because it means a pattern can signal either approaching collapse *or* hard-won persistence, and telling those apart is hard. <StatusChip status="hint" label="promising if generalizes" printLabel="promising — and paradigm-shifting if it generalizes" />
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow number="Dispatch 4">a stethoscope for the planet</SectionEyebrow>
+
 ## Reading the Earth's resilience from orbit
 
-The classic warning signals were born on small, clean datasets — a whole-lake experiment, an ice core. The post-2020 leap is to compute them *everywhere at once*, by turning decades of satellite imagery into a planetary resilience monitor. The logic is unchanged from the main file — a system losing resilience recovers more slowly, so its autocorrelation creeps up — but the canvas is now the entire land surface, pixel by pixel.
+The classic warning signals were born on small, clean datasets — a whole-lake experiment, an ice core. The post-2020 leap is to compute them *everywhere at once*, by turning decades of satellite imagery into a planetary resilience monitor. The logic is unchanged from Day 9 — a system losing resilience recovers more slowly, so its autocorrelation creeps up — but the canvas is now the entire land surface, pixel by pixel.
 
 The results have arrived in a rush. In 2021, Niklas Boers found statistically significant early-warning signals across *eight independent* observational fingerprints of the AMOC, concluding the Atlantic circulation may have drifted, over the last century, "from relatively stable conditions to a point close to a critical transition" (*Nature Climate Change*). The same year, Boers and Rypdal reported critical slowing down suggesting the western Greenland Ice Sheet sits near a tipping point (*PNAS*). Then the satellites opened up the biosphere: in 2022, two landmark papers — Smith, Traxl &amp; Boers in *Nature Climate Change*, and Forzieri and colleagues in *Nature* — used satellite vegetation indices to show that forests across much of the planet have been **losing resilience since the early 2000s**, most worryingly in the tropics, even as some northern forests gained it. Tim Lenton's group has proposed building all of this into a permanent "*resilience sensing system for the biosphere*" (2022) — an early-warning dashboard for the living planet.
 
@@ -99,26 +108,32 @@ The results have arrived in a rush. In 2021, Niklas Boers found statistically si
 This is the frontier where it is easiest to over-read a result, so the caveats are load-bearing. A 2024 study in *Nature Ecology &amp; Evolution* showed that satellite resilience estimates become *unreliable in high-biomass regions* like dense tropical forest — precisely where we most want to trust them — partly because thick canopies saturate the optical signal. Other 2023–2025 work has flagged that data gaps, outliers, and the choice of instrument can distort these indicators, and a 2025 *Nature Climate Change* analysis argued that early-warning signals for climate tipping points can be fundamentally **ambiguous**. The signals are real and the global pattern of declining resilience is striking — but a rising autocorrelation in one noisy pixel is a hypothesis, not a verdict.
 </Aside>
 
-And the AMOC story carries its own built-in counterweight, which is exactly how healthy science should look. Even as the observational warning signals accumulated, a 2025 *Nature* study argued that wind-driven upwelling in the Southern Ocean may stabilize the Atlantic circulation enough to make an outright collapse *this century* unlikely. Both findings are serious; both are peer-reviewed; the disagreement is the actual state of the science. The fair 2026 summary: real, observation-based evidence of resilience loss is now being read off the planet for the first time <StatusChip status="hint" label="promising" printLabel="genuinely new capability" />, but converting those signals into confident statements about *which* system tips *when* remains contested <StatusChip status="bad" label="contested" printLabel="contested" />.
+And the AMOC story carries its own built-in counterweight, which is exactly how healthy science should look. Even as the observational warning signals accumulated, a 2025 *Nature* study argued that wind-driven upwelling in the Southern Ocean may stabilize the Atlantic circulation enough to make an outright collapse *this century* unlikely. Both findings are serious; both are peer-reviewed; the disagreement is the actual state of the science. The fair 2026 summary: real, observation-based evidence of resilience loss is now being read off the planet for the first time <StatusChip status="hint" label="new capability" printLabel="genuinely new capability" />, but converting those signals into confident statements about *which* system tips *when* remains contested <StatusChip status="bad" label="timing contested" printLabel="contested" />.
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow number="Dispatch 5">the good kind of runaway</SectionEyebrow>
+
 ## Setting off the cascades we want
 
 Every tipping point in this course so far has been a thing to fear or forecast. The final frontier program flips the sign. If a reinforcing loop can drag a system into ruin, the reasoning goes, then a reinforcing loop can also be deliberately *seeded* to flip a system toward something good — and fast. This is the science of *positive tipping points*, and it has become one of the most active and consequential corners of systems thinking since 2020, precisely because the math of decarbonization demands it: holding warming near 1.5°C requires emissions to fall faster than any gradual, linear policy is delivering. Only self-accelerating change is fast enough.
 
 The agenda-setting paper was Ilona Otto, Jonathan Donges, and colleagues in *PNAS* (2020), who convened experts to identify "social tipping elements" — leverage-rich subsystems where a modest, well-placed push could trigger runaway change toward carbon neutrality. Their candidates: energy markets, financial divestment, carbon-neutral cities, norms and values, education, and — note the callback to Appendix I's leverage ladder — *information disclosure*. Tim Lenton's group followed with a framework for "*operationalising*" these points (2022) and a method to identify them while, in their own careful words, "avoiding wishful thinking about their existence." The clearest real-world example is already here: the collapsing cost of solar power and batteries has, in sector after sector, crossed the point where clean energy simply out-competes fossil fuels, triggering self-reinforcing adoption — an **S-curve**, the signature of a reinforcing loop winning. Reinforcing feedback, the villain of the climate story, recast as its best hope.
 
-The hype filter here is unusual, because the object is partly *normative* — a goal as much as a fact. Some positive tipping points are demonstrably real and already past (the UK's exit from coal; solar's cost crossover). Others are hopeful conjectures about social systems whose contagion dynamics we understand far less well than a melting ice sheet — and critics (in replies to Otto et al.) warned that treating society like a physical system risks ignoring conflict, politics, and "how change actually happens." <StatusChip status="ok" label="established" printLabel="some cases established" /> <StatusChip status="hint" label="uncertain" printLabel="the general program — promising but partly aspirational" />
+The hype filter here is unusual, because the object is partly *normative* — a goal as much as a fact. Some positive tipping points are demonstrably real and already past (the UK's exit from coal; solar's cost crossover). Others are hopeful conjectures about social systems whose contagion dynamics we understand far less well than a melting ice sheet — and critics (in replies to Otto et al.) warned that treating society like a physical system risks ignoring conflict, politics, and "how change actually happens." <StatusChip status="ok" label="some cases real" printLabel="some cases established" /> <StatusChip status="hint" label="social spread uncertain" printLabel="the general program — promising but partly aspirational" />
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow>The frontier at a glance</SectionEyebrow>
+
 ## Six years, one accelerating field
 
 <Day9StaticFigure kind="timeline" locale="en" />
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow>The honest scorecard</SectionEyebrow>
+
 ## Where each claim actually stands, mid-2026
 
 - <Highlight>Deep learning can detect tipping &amp; name the bifurcation type.</Highlight> Bury et al., PNAS 2021; Zhuge et al., R. Soc. Open Sci. 2025. <Highlight>Verdict:</Highlight> promising. Excellent in simulation &amp; a few empirical cases; broad real-world reliability unproven.
@@ -126,10 +141,12 @@ The hype filter here is unusual, because the object is partly *normative* — a 
 - <Highlight>Spatial patterns let systems evade catastrophic tipping.</Highlight> Rietkerk et al., Science 2021. <Highlight>Verdict:</Highlight> promising / paradigm-shifting. Well-argued theory + field cases; generality to ice sheets/whole Earth is open.
 - <Highlight>We can read resilience loss off satellites globally.</Highlight> Smith et al. &amp; Forzieri et al., 2022; Boers, Nat. Clim. Change 2021. <Highlight>Verdict:</Highlight> new capability, caveated. Striking global pattern; estimates unreliable in dense forest, signals can be ambiguous.
 - <Highlight>Positive tipping points can be triggered to speed decarbonization.</Highlight> Otto et al., PNAS 2020; Lenton et al., 2022. <Highlight>Verdict:</Highlight> some cases real, partly aspirational. Solar/coal cases established; social contagion far less predictable than physics.
-- <Highlight>But can we name the collapse date?</Highlight> Ben-Yami et al., Sci. Adv. 2024 (from the main file). <Highlight>Verdict:</Highlight> not yet. Detecting lost resilience ≠ forecasting timing. The deepest unsolved problem of all.
+- <Highlight>But can we name the collapse date?</Highlight> Ben-Yami et al., Sci. Adv. 2024 (from Day 9). <Highlight>Verdict:</Highlight> not yet. Detecting lost resilience ≠ forecasting timing. The deepest unsolved problem of all.
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow>Open questions on the live edge</SectionEyebrow>
+
 ## What the next six years must answer
 
 - **Can any method give a trustworthy lead time?** Every program here improves *detection*; none has convincingly cracked *timing* for a real, half-observed Earth-system component. This is the field's central, stubborn gap.
@@ -149,7 +166,7 @@ The hype filter here is unusual, because the object is partly *normative* — a 
 **The honest bottom line:** detection is improving fast and is genuinely new, but forecasting a specific collapse *date* for a real system remains unsolved, and the most exciting tools are still proving themselves against clean simulations rather than the noisy planet — promise, not yet proof.
 </Recap>
 
-<ContinueNote label={"→ back to the main thread"}>
+<ContinueNote label={"→ back to the descent"}>
 This was the bleeding edge of Day 9. The descent itself resumes at **Day 10 — Models, Maps &amp; Idealization** — which is the perfect next question, because nearly every tool in this appendix is a *model* betting that the future will rhyme with the trained past. When is that bet a lamp, and when is it a lie? Tomorrow we interrogate the models themselves.
 </ContinueNote>
 
@@ -173,5 +190,5 @@ This was the bleeding edge of Day 9. The descent itself resumes at **Day 10 — 
 15. Otto, I. M., Donges, J. F., Cremades, R. et al. (2020). "Social tipping dynamics for stabilizing Earth's climate by 2050." *PNAS* 117(5): 2354–2365 (21 Jan 2020). doi:10.1073/pnas.1900577117 — six social tipping elements. See critical replies: Smith et al. &amp; Willis, PNAS 2020. [doi.org/10.1073/pnas.1900577117](https://doi.org/10.1073/pnas.1900577117)
 16. Lenton, T. M., Benson, S., Smith, T. et al. (2022). "Operationalising positive tipping points towards global sustainability." *Global Sustainability* 5: e1. doi:10.1017/sus.2021.30.
 17. "Continued Atlantic overturning circulation even under climate extremes." *Nature* (2025). — Southern-Ocean upwelling may make AMOC collapse this century unlikely; the peer-reviewed counterweight.
-18. Ben-Yami, M., Morr, A., Bathiany, S. &amp; Boers, N. (2024). "Uncertainties too large to predict tipping times of major Earth system components from historical data." *Science Advances* 10(31): eadl4841. doi:10.1126/sciadv.adl4841 — the standing limit on date-prediction (also cited in the main file).
+18. Ben-Yami, M., Morr, A., Bathiany, S. &amp; Boers, N. (2024). "Uncertainties too large to predict tipping times of major Earth system components from historical data." *Science Advances* 10(31): eadl4841. doi:10.1126/sciadv.adl4841 — the standing limit on date-prediction (also cited in Day 9).
 </Sources>

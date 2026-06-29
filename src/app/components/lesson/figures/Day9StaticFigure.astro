@@ -62,8 +62,8 @@ const copy = {
     ? { title: "霍林的两种恢复力", narrow: "窄而深", wide: "宽而浅", fast: "回弹快 · 大冲击会翻", slow: "恢复慢 · 可吸收大冲击", cap: "快速回弹与大冲击耐受并不是同一件事。" }
     : { title: "Holling's two resiliences", narrow: "narrow & deep", wide: "wide & shallow", fast: "snaps back fast · tips from a big shock", slow: "slow to recover · absorbs big shocks", cap: "Fast return and large-shock tolerance are not the same thing." },
   "tipping-types": zh
-    ? { title: "三种临界", bif: "B · 分岔", noise: "N · 噪声", rate: "R · 速率", cap: "三条通向翻车的路：阈值、冲击，以及变化太快。" }
-    : { title: "Three tipping routes", bif: "B · bifurcation", noise: "N · noise", rate: "R · rate", cap: "Three ways to tip: threshold, shock, and change applied too fast." },
+    ? { title: "三种临界", bif: "阈值：盆地消失", noise: "冲击：被踢过山脊", rate: "速率：变化太快", cap: "三条通向翻车的路：跨过阈值、遭遇大冲击，或变化快到系统跟不上。" }
+    : { title: "Three tipping routes", bif: "Threshold: basin disappears", noise: "Shock: kicked over the ridge", rate: "Rate: change arrives too fast", cap: "Three ways to tip: cross a threshold, get hit by a large shock, or change faster than the system can track." },
   cliff: zh
     ? { title: "追踪悬崖", now: "现在", forecast: "预测：何时，以及落到哪里", far: "彼岸", cap: "旧科学能感到地面变软；新科学想知道日期、深度，以及彼岸山谷的地图。" }
     : { title: "Catching the cliff", now: "now", forecast: "forecast: when, and where it lands", far: "the far side", cap: "The old science could feel the ground softening; the new science wants the date, depth, and far-side map." },
@@ -375,30 +375,48 @@ const years = [
   )}
 
   {kind === "tipping-types" && (
-    <svg viewBox="0 0 640 280" role="img" aria-label={copy.title}>
-      <rect x="12" y="12" width="616" height="246" rx="14" fill={raised} stroke={line}></rect>
-      <g transform="translate(20 32)">
-        <text x="100" y="22" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={accentDeep}>{copy.bif}</text>
-        <path d="M30 130 C70 130 75 80 100 80 C125 80 130 130 170 130" fill="none" stroke={lineStrong} stroke-width="1.8" stroke-dasharray="3 4"></path>
-        <path d="M30 160 C70 160 78 160 100 160 C122 160 130 160 170 160" fill="none" stroke={soft} stroke-width="2.4"></path>
-        <circle cx="100" cy="156" r="7" fill={accent}></circle>
-        <text x="100" y="210" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{zh ? "山谷消失" : "valley vanishes"}</text>
+    <svg viewBox="0 0 420 520" role="img" aria-label={copy.title}>
+      <defs>
+        <marker id="day9-tip-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill={danger}></path></marker>
+        <marker id="day9-tip-arrow-ok" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill={ok}></path></marker>
+      </defs>
+      <rect x="10" y="10" width="400" height="486" rx="14" fill={raised} stroke={line}></rect>
+      <text x="28" y="36" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={accentDeep}>{copy.title}</text>
+
+      <g transform="translate(26 62)">
+        <rect x="0" y="0" width="368" height="122" rx="10" fill={paper} stroke={line}></rect>
+        <text x="16" y="24" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={accentDeep}>{copy.bif}</text>
+        <text x="16" y="44" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "驱动因素越过临界值；旧稳定态不再存在。" : "Driver crosses a limit; the old stable state no longer exists."}</text>
+        <path d="M36 92 C75 92 80 52 108 52 C137 52 142 92 180 92" fill="none" stroke={lineStrong} stroke-width="1.8" stroke-dasharray="3 4"></path>
+        <path d="M210 92 C252 92 268 82 318 78" fill="none" stroke={soft} stroke-width="2.5"></path>
+        <circle cx="107" cy="51" r="6.5" fill={accent}></circle>
+        <circle cx="315" cy="77" r="6.5" fill={danger}></circle>
+        <path d="M185 70 L205 70" stroke={danger} stroke-width="1.8" marker-end="url(#day9-tip-arrow)"></path>
+        <line x1="198" y1="50" x2="198" y2="104" stroke={danger} stroke-width="1.4" stroke-dasharray="3 4"></line>
+        <text x="198" y="115" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{zh ? "阈值" : "threshold"}</text>
       </g>
-      <g transform="translate(220 32)">
-        <text x="100" y="22" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={warn}>{copy.noise}</text>
-        <path d="M30 140 C70 140 70 80 100 80 C130 80 130 140 170 140" fill="none" stroke={soft} stroke-width="2.4"></path>
-        <circle cx="62" cy="113" r="7" fill={warn}></circle>
-        <path d="M62 106 q25 -28 52 -2" fill="none" stroke={danger} stroke-width="1.7" stroke-dasharray="2 3"></path>
-        <text x="100" y="210" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{zh ? "随机踢过山脊" : "random kick over ridge"}</text>
+
+      <g transform="translate(26 202)">
+        <rect x="0" y="0" width="368" height="122" rx="10" fill={paper} stroke={line}></rect>
+        <text x="16" y="24" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={warn}>{copy.noise}</text>
+        <text x="16" y="44" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "阈值还没越过；一次大扰动把系统推出盆地。" : "Threshold is not crossed; one large disturbance pushes it out."}</text>
+        <path d="M46 92 C92 92 93 50 132 50 C171 50 172 92 218 92" fill="none" stroke={soft} stroke-width="2.5"></path>
+        <circle cx="76" cy="74" r="6.5" fill={warn}></circle>
+        <path d="M76 68 C104 32 143 38 168 66" fill="none" stroke={danger} stroke-width="1.9" stroke-dasharray="3 4" marker-end="url(#day9-tip-arrow)"></path>
+        <text x="260" y="79" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "大冲击" : "large shock"}</text>
+        <path d="M242 76 L226 76" stroke={danger} stroke-width="1.5" marker-end="url(#day9-tip-arrow)"></path>
       </g>
-      <g transform="translate(420 32)">
-        <text x="100" y="22" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={danger}>{copy.rate}</text>
-        <g transform="rotate(-13 100 120)">
-          <path d="M30 130 C70 130 70 80 100 80 C130 80 130 130 170 130" fill="none" stroke={soft} stroke-width="2.4"></path>
-        </g>
-        <circle cx="68" cy="128" r="7" fill={danger}></circle>
-        <path d="M68 128 q12 14 -8 26" fill="none" stroke={danger} stroke-width="1.7"></path>
-        <text x="100" y="210" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{zh ? "地板倾斜太快" : "floor tilts too fast"}</text>
+
+      <g transform="translate(26 342)">
+        <rect x="0" y="0" width="368" height="122" rx="10" fill={paper} stroke={line}></rect>
+        <text x="16" y="24" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={danger}>{copy.rate}</text>
+        <text x="16" y="44" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "终点相同；慢变可跟上，快变会甩出去。" : "Same destination; slow change tracks, fast change spills out."}</text>
+        <path d="M42 86 C88 86 91 52 132 52 C174 52 178 86 224 86" fill="none" stroke={soft} stroke-width="2.5"></path>
+        <path d="M46 108 L198 78" stroke={ok} stroke-width="1.7" marker-end="url(#day9-tip-arrow-ok)"></path>
+        <path d="M48 68 L198 104" stroke={danger} stroke-width="1.9" marker-end="url(#day9-tip-arrow)"></path>
+        <circle cx="132" cy="52" r="6.5" fill={danger}></circle>
+        <text x="250" y="75" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ok}>{zh ? "慢：能追踪" : "slow: tracks"}</text>
+        <text x="250" y="98" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{zh ? "快：会翻车" : "fast: tips"}</text>
       </g>
     </svg>
   )}

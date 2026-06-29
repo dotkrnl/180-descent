@@ -26,11 +26,11 @@ const text = {
     ? { eyebrow: "交互 · 梅多斯的杠杆点", title: "系统中的干预位置", note: "按唐娜拉·梅多斯从 12（最弱）到 1（最强）排序。点击任意横档，查看为什么越高越有力，也越难触及。", top: "↑ 更强杠杆 · 更难触及", bottom: "↓ 更弱杠杆 · 争论最密集" }
     : { eyebrow: "Interactive · Meadows' leverage points", title: "Places to Intervene in a System", note: "Ranked from 12 (weakest) to 1 (strongest), after Donella Meadows. Tap any rung to see why higher leverage is stronger and harder to reach.", top: "↑ stronger leverage · harder to reach", bottom: "↓ weaker leverage · where everyone fights" },
   daisyworld: zh
-    ? { eyebrow: "交互 · 雏菊世界的寓言", title: "一个自己守住温度的世界", note: "拖动太阳亮度。蓝线是有雏菊的温度，虚线是没有生命的裸岩。雏菊会在很宽范围内把温度压平成平台，直到恒星过亮而崩溃。", lum: "太阳亮度", life: "有生命温度", dead: "裸岩温度", dim: "昏暗年轻星", hot: "更热恒星", edge: "接近断点", collapse: "越过崩溃" }
-    : { eyebrow: "Interactive · the parable of Daisyworld", title: "A World That Holds Its Own Temperature", note: "Drag solar luminosity. The blue curve is temperature with daisies; the dashed line is a dead rock. Daisies flatten temperature across a wide range, until the star becomes too bright and the system collapses.", lum: "Solar luminosity", life: "Temp · with life", dead: "Temp · dead rock", dim: "Young, dim star", hot: "Hotter star", edge: "Near the breaking point", collapse: "Past collapse" },
+    ? { eyebrow: "交互 · 雏菊世界的寓言", title: "一个自己守住温度的世界", note: "拖动太阳亮度。虚线是没有生命的裸岩；蓝线是黑白雏菊反馈后的行星温度。黑雏菊在暗星下增温，白雏菊在亮星下冷却，中段形成平台，直到恒星太亮而调节失败。", lum: "太阳亮度", life: "有生命温度", dead: "裸岩温度", dim: "昏暗年轻星", hot: "更热恒星", edge: "接近断点", collapse: "越过崩溃", black: "黑", white: "白", bare: "裸地" }
+    : { eyebrow: "Interactive · the parable of Daisyworld", title: "A World That Holds Its Own Temperature", note: "Drag solar luminosity. The dashed line is a lifeless rock; the blue line is planetary temperature after black-white daisy feedback. Black daisies warm a dim star, white daisies cool a bright one, and the middle becomes a plateau until regulation fails.", lum: "Solar luminosity", life: "Temp · with life", dead: "Temp · dead rock", dim: "Young, dim star", hot: "Hotter star", edge: "Near the breaking point", collapse: "Past collapse", black: "black", white: "white", bare: "bare" },
   classifier: zh
-    ? { eyebrow: "交互 · 同样的震颤，三道不同的悬崖", title: "分类器听到了你听不到的什么", note: "选择一条崩溃路径。通用预警信号在三种情况下都会上升；分类器读取接近过程的形状，给出分岔类型。", route: "崩溃路径", fold: "折叠 · 跳跃", hopf: "霍普夫 · 振荡", trans: "跨临界 · 滑移", variance: "方差", ac: "滞后一阶自相关" }
-    : { eyebrow: "Interactive · the same tremor, three different cliffs", title: "What a Classifier Hears That You Can't", note: "Pick a route to collapse. Generic warning signals rise in all three cases; the classifier reads the shape of approach and names the bifurcation.", route: "Route to collapse", fold: "Fold · jump", hopf: "Hopf · oscillate", trans: "Transcritical · slide", variance: "Variance", ac: "Lag-1 autocorr." },
+    ? { eyebrow: "交互 · 同样的震颤，三道不同的悬崖", title: "分类器听到了你听不到的什么", note: "选择一条崩溃路径。方差和自相关都可能升高，所以单靠警报强度不够；分类器读取接近悬崖的形状，区分跳跃、振荡和稳定性交换。", route: "崩溃路径", fold: "折叠 · 跳跃", hopf: "霍普夫 · 振荡", trans: "跨临界 · 滑移", variance: "方差", ac: "滞后一阶自相关" }
+    : { eyebrow: "Interactive · the same tremor, three different cliffs", title: "What a Classifier Hears That You Can't", note: "Pick a route to collapse. Variance and autocorrelation can rise in all three, so alarm strength is not enough; the classifier reads the approach shape and separates a jump, an oscillation, and a stability exchange.", route: "Route to collapse", fold: "Fold · jump", hopf: "Hopf · oscillate", trans: "Transcritical · slide", variance: "Variance", ac: "Lag-1 autocorr." },
   evasion: zh
     ? { eyebrow: "交互 · 规避还是崩溃", title: "空间斑图的逃生舱口", note: "提高环境压力。关闭自组织，系统到临界点会整体崩溃；打开它，系统会裂成图灵式斑图并撑过更高压力。", stress: "环境压力", mode: "空间自组织", off: "关闭 · 均匀", on: "开启 · 允许斑图" }
     : { eyebrow: "Interactive · evade or collapse", title: "The Escape Hatch of Spatial Patterns", note: "Raise environmental stress. With self-organization off, the system collapses at its tipping point; turn it on and patterns let it persist far longer.", stress: "Environmental stress", mode: "Spatial self-organization", off: "Off · uniform", on: "On · patterns allowed" }
@@ -266,7 +266,7 @@ const print = {
     <div class="day9-grid">
       <div class="day9-controls">
         <label>{text.lum} <strong data-out="lum">1.00</strong><input data-role="lum" type="range" min="60" max="170" value="100" /></label>
-        <div class="day9-planet" data-role="bar"><span data-seg="black">black</span><span data-seg="white">white</span><span data-seg="bare">bare</span></div>
+        <div class="day9-planet" data-role="bar"><span data-seg="black">{text.black}</span><span data-seg="white">{text.white}</span><span data-seg="bare">{text.bare}</span></div>
         <div class="day9-readouts two">
           <div><span>{text.life}</span><strong data-out="life">-</strong></div>
           <div><span>{text.dead}</span><strong data-out="dead">-</strong></div>
@@ -366,8 +366,10 @@ const print = {
         ["2","Paradigms","Change the worldview from which goals arise."],
         ["1","Transcend paradigms","Hold models lightly enough to replace them."]
       ],
-      daisyGood:"life is regulating temperature", daisyCold:"too cold for daisies", daisyHot:"too hot: Daisyworld collapses",
-      classifier:{fold:["Fold bifurcation","A sudden jump into a distant state."], hopf:["Hopf bifurcation","The future is oscillation, not a single new level."], trans:["Transcritical bifurcation","A stability exchange: one state yields to another."]},
+      daisyGood:"mixed daisies hold the plateau", daisyCold:"black daisies warm a dim world", daisyWhite:"white daisies reflect a hot star", daisyHot:"too hot: regulation collapses", daisyDead:"too cold for daisies",
+      plateau:"habitable plateau", rock:"dead rock", withLife:"with daisies", luminosity:"solar luminosity",
+      classifier:{fold:["Fold bifurcation","Generic warning rises, then the state jumps to a distant basin."], hopf:["Hopf bifurcation","The warning comes with growing oscillation: the future is a cycle."], trans:["Transcritical bifurcation","Two branches trade stability; one state slides out as another takes over."]},
+      sharedWarn:"shared warning: variance and autocorrelation rise", fingerprint:"route fingerprint", foldLand:"jump to new basin", hopfLand:"growing cycle", transLand:"stability exchange",
       evHold:"Uniform vegetation still holds.", evCrash:"Uniform vegetation collapses abruptly.", evPattern:"Patterns trade uniform cover for persistence.", evSparse:"Patterned cover is sparse but alive."
     },
     zh: {
@@ -388,8 +390,10 @@ const print = {
         ["2","范式","改变目标所来自的世界观。"],
         ["1","超越范式","轻拿模型，随时能替换它们。"]
       ],
-      daisyGood:"生命正在调节温度", daisyCold:"太冷，雏菊无法生长", daisyHot:"太热：雏菊世界崩溃",
-      classifier:{fold:["折叠分岔","系统突然跳到远处状态。"], hopf:["霍普夫分岔","未来是振荡，而非单一新水平。"], trans:["跨临界分岔","稳定性交换：一个状态让位给另一个。"]},
+      daisyGood:"黑白雏菊共同守住平台", daisyCold:"黑雏菊给暗星增温", daisyWhite:"白雏菊反射过热恒星", daisyHot:"太热：调节崩溃", daisyDead:"太冷，雏菊无法生长",
+      plateau:"适生平台", rock:"裸岩", withLife:"有雏菊", luminosity:"太阳亮度",
+      classifier:{fold:["折叠分岔","通用预警上升，随后状态跳入远处盆地。"], hopf:["霍普夫分岔","预警伴随振荡放大：未来是一个周期。"], trans:["跨临界分岔","两条分支交换稳定性；一个状态滑出，另一个接管。"]},
+      sharedWarn:"共同预警：方差和自相关上升", fingerprint:"路径指纹", foldLand:"跳入新盆地", hopfLand:"振荡增大", transLand:"稳定性交换",
       evHold:"均匀植被仍能撑住。", evCrash:"均匀植被突然崩溃。", evPattern:"斑图用均匀覆盖换取坚持。", evSparse:"斑图覆盖稀疏，但仍活着。"
     }
   };
@@ -685,26 +689,59 @@ const print = {
   }
 
   function daisy(L) {
-    const dead = -20 + L * 42;
-    let black = Math.max(0, Math.min(.55, (1.05-L)*1.15));
-    let white = Math.max(0, Math.min(.65, (L-.94)*1.05));
-    if (L < .68 || L > 1.58) { black=0; white=0; }
-    const life = black || white ? 22 + (L-1)*4 + black*9 - white*8 : dead;
-    return {dead, life, black, white, bare: Math.max(0, 1-black-white)};
+    const dead = -22 + L * 44;
+    const growth = t => Math.max(0, 1 - Math.pow((t - 22) / 18, 2));
+    let black = 0.02, white = 0.02, bare = 0.96, temp = dead;
+    for (let k = 0; k < 36; k++) {
+      const albedo = black * 0.25 + white * 0.75 + bare * 0.5;
+      temp = dead + (0.5 - albedo) * 36;
+      const blackLocal = temp + 7.5;
+      const whiteLocal = temp - 7.5;
+      let nb = growth(blackLocal) * Math.max(0, 1 - Math.max(0, L - 1.42) * 2.2);
+      let nw = growth(whiteLocal) * Math.max(0, 1 - Math.max(0, 0.74 - L) * 2.5);
+      const total = nb + nw;
+      if (total < 0.035) {
+        black = 0; white = 0; bare = 1; temp = dead;
+        break;
+      }
+      const cover = Math.min(0.82, 0.2 + total * 0.48);
+      black = cover * nb / total;
+      white = cover * nw / total;
+      bare = Math.max(0, 1 - black - white);
+    }
+    const albedo = black * 0.25 + white * 0.75 + bare * 0.5;
+    const life = black || white ? dead + (0.5 - albedo) * 36 : dead;
+    return {dead, life, black, white, bare};
   }
   function initDaisy(root, lang) {
     const slider=q(root,"[data-role=lum]"), svg=q(root,"[data-role=plot]");
     const draw = () => {
-      const L=Number(slider.value)/100, d=daisy(L);
-      clear(svg); axes(svg,600,330);
-      const xs=[]; for(let i=60;i<=170;i+=2){ const x=i/100, dd=daisy(x); xs.push({x,life:dd.life,dead:dd.dead}); }
-      const y = v => 275 - (v + 30) / 90 * 230, x = L => 50 + (L-.6)/1.1*520;
+      const L=Number(slider.value)/100, d=daisy(L), tt=T[lang];
+      clear(svg);
+      const W=600,H=330,mL=54,mR=18,mT=20,mB=38,yMin=-6,yMax=54;
+      const x = v => mL + (v-.6)/1.1*(W-mL-mR);
+      const y = v => mT + (1 - (v-yMin)/(yMax-yMin))*(H-mT-mB);
+      svg.append(el("rect",{x:0,y:0,width:W,height:H,rx:10,fill:C.raised,stroke:C.line}));
+      svg.append(el("rect",{x:mL,y:y(30),width:W-mL-mR,height:y(12)-y(30),fill:`color-mix(in srgb, ${C.ok} 13%, transparent)`}));
+      [0,15,30,45].forEach(v=>{
+        svg.append(el("line",{x1:mL,y1:y(v),x2:W-mR,y2:y(v),stroke:C.line,"stroke-dasharray":"2 5"}));
+        const t=el("text",{x:mL-8,y:y(v)+3,"text-anchor":"end","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.faint}); t.textContent=`${v}°`; svg.append(t);
+      });
+      svg.append(el("line",{x1:mL,y1:mT,x2:mL,y2:H-mB,stroke:C.line}));
+      svg.append(el("line",{x1:mL,y1:H-mB,x2:W-mR,y2:H-mB,stroke:C.line}));
+      const xs=[]; for(let i=60;i<=170;i+=2){ const lx=i/100, dd=daisy(lx); xs.push({x:lx,life:dd.life,dead:dd.dead}); }
       svg.append(el("path",{d:path(xs.map(p=>[x(p.x),y(p.dead)])),fill:"none",stroke:C.faint,"stroke-width":2,"stroke-dasharray":"5 5"}));
-      svg.append(el("path",{d:path(xs.map(p=>[x(p.x),y(p.life)])),fill:"none",stroke:C.accent,"stroke-width":3}));
-      svg.append(el("circle",{cx:x(L),cy:y(d.life),r:7,fill:C.accent}));
+      svg.append(el("path",{d:path(xs.map(p=>[x(p.x),y(p.life)])),fill:"none",stroke:C.accent,"stroke-width":3.2,"stroke-linecap":"round","stroke-linejoin":"round"}));
+      svg.append(el("line",{x1:x(L),y1:mT,x2:x(L),y2:H-mB,stroke:C.brass,"stroke-width":1.5,"stroke-dasharray":"4 4"}));
+      svg.append(el("circle",{cx:x(L),cy:y(d.life),r:7,fill:C.accent,stroke:C.raised,"stroke-width":2}));
+      svg.append(el("circle",{cx:x(L),cy:y(d.dead),r:4,fill:C.faint}));
+      const plateau = el("text",{x:x(1.08),y:y(26)-8,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.ok}); plateau.textContent=tt.plateau; svg.append(plateau);
+      const labLife = el("text",{x:W-mR-6,y:y(daisy(1.28).life)-7,"text-anchor":"end","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.accent}); labLife.textContent=tt.withLife; svg.append(labLife);
+      const labRock = el("text",{x:W-mR-6,y:y(daisy(1.48).dead)+14,"text-anchor":"end","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.faint}); labRock.textContent=tt.rock; svg.append(labRock);
+      const axis = el("text",{x:(mL+W-mR)/2,y:H-10,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.faint}); axis.textContent=tt.luminosity; svg.append(axis);
       q(root,"[data-out=lum]").textContent=L.toFixed(2); q(root,"[data-out=life]").textContent=`${d.life.toFixed(1)}°C`; q(root,"[data-out=dead]").textContent=`${d.dead.toFixed(1)}°C`;
       q(root,"[data-seg=black]").style.width=`${d.black*100}%`; q(root,"[data-seg=white]").style.width=`${d.white*100}%`; q(root,"[data-seg=bare]").style.width=`${d.bare*100}%`;
-      q(root,"[data-out=state]").textContent = L<.68 ? T[lang].daisyCold : L>1.58 ? T[lang].daisyHot : T[lang].daisyGood;
+      q(root,"[data-out=state]").textContent = !d.black && !d.white ? (L < .72 ? tt.daisyDead : tt.daisyHot) : d.black > d.white * 1.4 ? tt.daisyCold : d.white > d.black * 1.4 ? tt.daisyWhite : tt.daisyGood;
     };
     qa(root,"[data-preset]").forEach(b=>b.addEventListener("click",()=>{slider.value=b.dataset.preset; draw();}));
     slider.addEventListener("input", draw); draw();
@@ -713,11 +750,37 @@ const print = {
   function initClassifier(root, lang) {
     let mode="fold"; const svg=q(root,"[data-role=plot]");
     const draw=()=> {
-      clear(svg); axes(svg,600,300);
-      const pts=[]; for(let i=0;i<140;i++){ const t=i/139; let v; if(mode==="fold") v=80+t*55+(t>.76?85*(t-.76)*4:0); else if(mode==="hopf") v=135+Math.sin(t*42)*(5+t*34); else v=82+t*105-16*Math.exp(-t*8); pts.push([50+t*520,230-v]); }
-      svg.append(el("path",{d:path(pts),fill:"none",stroke:C.accent,"stroke-width":3}));
-      q(root,"[data-bar=var]").style.width="82%"; q(root,"[data-bar=ac]").style.width="90%";
-      const c=T[lang].classifier[mode]; q(root,"[data-out=state]").textContent=c[0]; q(root,"[data-out=expl]").textContent=c[1];
+      const tt=T[lang], W=600,H=300,mL=48,mR=18,mT=18,mB=32;
+      clear(svg);
+      svg.append(el("rect",{x:0,y:0,width:W,height:H,rx:10,fill:C.raised,stroke:C.line}));
+      svg.append(el("rect",{x:mL,y:mT,width:W-mL-mR,height:H-mT-mB,rx:8,fill:C.paper,stroke:C.line}));
+      [0.25,0.5,0.75].forEach(g=>svg.append(el("line",{x1:mL,y1:mT+g*(H-mT-mB),x2:W-mR,y2:mT+g*(H-mT-mB),stroke:C.line,"stroke-dasharray":"2 5"})));
+      const X=t=>mL+t*(W-mL-mR), Y=v=>mT+(1-v)*(H-mT-mB);
+      const pts=[]; const warn=[];
+      for(let i=0;i<150;i++){
+        const t=i/149; let v;
+        if(mode==="fold") v=.28+t*.23+(t>.73?Math.pow((t-.73)/.27,2)*.38:0);
+        else if(mode==="hopf") v=.52+Math.sin(t*46)*(0.025+t*.16);
+        else v=.26+t*.48-.08*Math.exp(-t*8);
+        pts.push([X(t),Y(v)]);
+        warn.push([X(t),Y(.18+Math.pow(t,1.7)*.58)]);
+      }
+      svg.append(el("path",{d:path(warn),fill:"none",stroke:C.warn,"stroke-width":2,"stroke-dasharray":"4 5",opacity:.82}));
+      svg.append(el("path",{d:path(pts),fill:"none",stroke:C.accent,"stroke-width":3.1,"stroke-linecap":"round","stroke-linejoin":"round"}));
+      if(mode==="trans"){
+        const other=[]; for(let i=0;i<150;i++){ const t=i/149; other.push([X(t),Y(.78-t*.45)]); }
+        svg.append(el("path",{d:path(other),fill:"none",stroke:C.faint,"stroke-width":2,"stroke-dasharray":"5 5"}));
+      }
+      const marker=pts[Math.floor(pts.length*.78)];
+      svg.append(el("circle",{cx:marker[0],cy:marker[1],r:6.5,fill:C.accent,stroke:C.raised,"stroke-width":2}));
+      const warnLabel=el("text",{x:mL+10,y:H-mB-12,"font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.warn}); warnLabel.textContent=tt.sharedWarn; svg.append(warnLabel);
+      const fp=el("text",{x:W-mR-8,y:mT+17,"text-anchor":"end","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.accent}); fp.textContent=tt.fingerprint; svg.append(fp);
+      const landingText = mode==="fold" ? tt.foldLand : mode==="hopf" ? tt.hopfLand : tt.transLand;
+      const land=el("text",{x:W-mR-8,y:mT+36,"text-anchor":"end","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.faint}); land.textContent=landingText; svg.append(land);
+      q(root,"[data-bar=var]").style.width=mode==="trans"?"66%":"84%"; q(root,"[data-bar=ac]").style.width=mode==="hopf"?"72%":"90%";
+      q(root,"[data-out=var]").textContent=mode==="trans"?T[lang].medium:T[lang].high;
+      q(root,"[data-out=ac]").textContent=mode==="hopf"?(lang==="zh"?"相位线索":"phase clue"):"→ 1";
+      const c=tt.classifier[mode]; q(root,"[data-out=state]").textContent=c[0]; q(root,"[data-out=expl]").textContent=c[1];
     };
     qa(root,"[data-bc]").forEach(b=>b.addEventListener("click",()=>{mode=b.dataset.bc; setPressed(qa(root,"[data-bc]"),mode,"data-bc"); draw();}));
     draw();

@@ -8,6 +8,7 @@ import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
@@ -18,10 +19,10 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 
 <Day9StaticFigure kind="cliff" locale="zh" />
 
-<Lead drop="六">十年来，临界拐点科学只敢诚实地做一件事：感觉脚下的地面正在变软。正如主文件所示，接近悬崖的系统会<Highlight>慢下来</Highlight>——它摇晃得更宽、恢复得更慢，而那些统计震颤（方差增大、自相关增大）是真实的<Highlight>早期预警信号</Highlight>。但这个信号令人沮丧地沉默。它告诉你<Highlight>有东西</Highlight>正在到来，却不告诉你<Highlight>是什么</Highlight>、<Highlight>何时</Highlight>，或者彼岸的世界长什么样。大约从 2020 年起，一波工作——大量依赖机器学习、卫星和新的数学——一直试图把这沉默的震颤变成会说话的东西。本附录是那片前沿的现场报道：过去六年里五个活跃的研究项目，每一个都真正激动人心，没有一个已经完成，全部无情地通过了<Highlight>前沿校准器</Highlight>。请把这里的每个主张都当作来自移动前线的急件，而不是一张已绘好的地图。</Lead>
+<Lead drop="六">十年来，临界拐点科学只敢诚实地做一件事：感觉脚下的地面正在变软。正如第 9 日所示，接近悬崖的系统会<Highlight>慢下来</Highlight>——它摇晃得更宽、恢复得更慢，而那些统计震颤（方差增大、自相关增大）是真实的<Highlight>早期预警信号</Highlight>。但这个信号令人沮丧地沉默。它告诉你<Highlight>有东西</Highlight>正在到来，却不告诉你<Highlight>是什么</Highlight>、<Highlight>何时</Highlight>，或者彼岸的世界长什么样。大约从 2020 年起，一波工作——大量依赖机器学习、卫星和新的数学——一直试图把这沉默的震颤变成会说话的东西。本附录是那片前沿的现场报道：过去六年里五个活跃的研究项目，每一个都真正激动人心，没有一个已经完成，全部无情地通过了<Highlight>前沿校准器</Highlight>。请把这里的每个主张都当作来自移动前线的急件，而不是一张已绘好的地图。</Lead>
 
 <ContinueNote label={"↩ 你已拥有的（不再重复）"}>
-来自<Highlight>主文件</Highlight>：折叠分岔、滞后、临界慢化、通用早期预警信号（Scheffer 等，2009）、本-亚米等 2024 关于为何日期难定，以及气候细节（AMOC、亚马逊、珊瑚、2022 年阈值表）。来自<Highlight>附录一</Highlight>：霍林恢复力、B/N/R 临界分类、临界连锁、雏菊世界。这里我们在这一切之上继续搭建——只覆盖<Highlight>2020 年及以后</Highlight>发表的工作。
+来自<Highlight>第 9 日</Highlight>：折叠分岔、滞后、临界慢化、通用早期预警信号（Scheffer 等，2009）、本-亚米等 2024 关于为何日期难定，以及气候细节（AMOC、亚马逊、珊瑚、2022 年阈值表）。来自<Highlight>附录一</Highlight>：霍林恢复力、B/N/R 临界分类、临界连锁、雏菊世界。这里我们在这一切之上继续搭建——只覆盖<Highlight>2020 年及以后</Highlight>发表的工作。
 </ContinueNote>
 
 <StatusChipRow>
@@ -29,11 +30,13 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 </StatusChipRow>
 
 <ContentSection>
+<SectionEyebrow number="Dispatch 1">教机器听见震颤</SectionEyebrow>
+
 ## 知道灾难形状的 AI
 
 从经典预警信号最深的问题开始：它们<Highlight>通用到近乎缺陷</Highlight>。方差和自相关上升几乎出现在任何临界之前，这是它们的力量——放之四海而皆准——但也是弱点：它们无法告诉你将要来临的是<Highlight>哪一种</Highlight>临界，因此无法告诉你新世界会是什么样。系统会突然跳到一个遥远状态？开始剧烈振荡？还是温柔地滑入新<Highlight>状态</Highlight>？通用信号对三者都耸耸肩。
 
-2021 年，托马斯·伯里领衔的团队——成员包括克里斯·鲍奇、玛杜尔·阿南德，还有——注意名字——<Highlight>马滕·舍费尔和蒂姆·伦顿</Highlight>本人（经典方法的创始人，如今却帮助超越它）——在《美国科学院院刊》（PNAS）发表了一个<Highlight>引人注目</Highlight>的结果。他们的洞见建立在主文件世界里一块美丽的数学上：当<Highlight>任何</Highlight>系统接近临界拐点时，其动力学都会坍缩到少数几个通用模板之一，叫做<Highlight>标准型</Highlight>（折叠、霍普夫、跨临界——稳定状态失去稳定性的基本方式）。只有少数几种。于是伯里的团队训练了一个深度神经网络——<Highlight>卷积加循环</Highlight>的混合架构——用从这几类标准型中抽取的数十万个模拟时间序列训练它，教会它识别<Highlight>每一条</Highlight>崩溃路径的微妙指纹。
+2021 年，托马斯·伯里领衔的团队——成员包括克里斯·鲍奇、玛杜尔·阿南德，还有——注意名字——<Highlight>马滕·舍费尔和蒂姆·伦顿</Highlight>本人（经典方法的创始人，如今却帮助超越它）——在《美国科学院院刊》（PNAS）发表了一个<Highlight>引人注目</Highlight>的结果。他们的洞见建立在第 9 日世界里一块美丽的数学上：当<Highlight>任何</Highlight>系统接近临界拐点时，其动力学都会坍缩到少数几个通用模板之一，叫做<Highlight>标准型</Highlight>（折叠、霍普夫、跨临界——稳定状态失去稳定性的基本方式）。只有少数几种。于是伯里的团队训练了一个深度神经网络——<Highlight>卷积加循环</Highlight>的混合架构——用从这几类标准型中抽取的数十万个模拟时间序列训练它，教会它识别<Highlight>每一条</Highlight>崩溃路径的微妙指纹。
 
 回报是：他们的网络能在<Highlight>从未训练过</Highlight>的系统中发现临界拐点——包括真实气候与生态数据，以及一项热声实验——比经典指标更敏感、误报更少。关键且重要的是，它做了旧信号做不到的事：它说出<Highlight>分岔的类型</Highlight>，告诉你新状态将是突然跳跃、振荡，还是温和转变。鲍奇称这可能「改变我们预见重大转变的能力」。2025 年的一篇后续（诸葛、李、陈，《皇家学会开放科学》）把该方法推向现实的混乱，设计了一个网络来预测<Highlight>不规则采样</Highlight>时间序列中的临界发生——而真实世界监测恰恰产生这种数据，这也是原方法最尖锐的局限之一。
 
@@ -48,10 +51,12 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 />
 </FormatOnly>
 
-诚实的标签：这是一项真实而重要的进展，但它的胜利仍主要在<Highlight>计算机模拟</Highlight>和少数经验案例中。一个用标准型训练的网络，能否在嘈杂、高维的真实地球系统全貌中可靠地呼叫临界拐点——并留出足够的提前量——仍有待大规模证明。<StatusChip status="hint" label="不确定" printLabel="有前景的暗示——模拟中很强，现实世界履历仍薄" />
+诚实的标签：这是一项真实而重要的进展，但它的胜利仍主要在<Highlight>计算机模拟</Highlight>和少数经验案例中。一个用标准型训练的网络，能否在嘈杂、高维的真实地球系统全貌中可靠地呼叫临界拐点——并留出足够的提前量——仍有待大规模证明。<StatusChip status="hint" label="有前景但未定论" printLabel="有前景的暗示——模拟中很强，现实世界履历仍薄" />
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow number="Dispatch 2">在机器里预演崩溃</SectionEyebrow>
+
 ## 造访远侧的数字孪生
 
 检测到悬崖临近是一回事。一个更大胆的 2020–2021 项目问：一台机器，如果只见过系统<Highlight>正常</Highlight>时的行为，能否预测它将在哪一点崩溃——然后描述彼岸那个陌生的世界？工具是<Highlight>储备池计算</Highlight>，一种效率惊人的循环神经网络，它以近乎不可思议的能力从原始数据中学习混沌系统的「语法」，而无需底层物理模型。
@@ -62,13 +67,15 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 梦想是一座灾难风洞：一个学会的重制品，你可以让它坠毁一千次，以测绘一个你永远不能真正打破的系统的边缘。
 </BlockQuote>
 
-这是一个真正美丽的想法，在基准混沌系统上有效。但在这里，前沿校准器咬得最狠。这些成功是相对低维、采样良好、测量干净的数学系统。真实气候高维、观测稀疏、非平稳，这些都会破坏该方法的核心假设——未来会与训练过的过去「押韵」。同一社群也发表了关于储备池计算局限的冷静「进退两难」分析。一个混沌玩具的数字孪生是<Highlight>胜利</Highlight>；一个可信赖的 AMOC 数字孪生尚不存在。<StatusChip status="hint" label="不确定" printLabel="有前景" /> <StatusChip status="bad" label="有争议" printLabel="真实地球应用——有争议/未证实" />
+这是一个真正美丽的想法，在基准混沌系统上有效。但在这里，前沿校准器咬得最狠。这些成功是相对低维、采样良好、测量干净的数学系统。真实气候高维、观测稀疏、非平稳，这些都会破坏该方法的核心假设——未来会与训练过的过去「押韵」。同一社群也发表了关于储备池计算局限的冷静「进退两难」分析。一个混沌玩具的数字孪生是<Highlight>胜利</Highlight>；一个可信赖的 AMOC 数字孪生尚不存在。<StatusChip status="hint" label="玩具系统有前景" printLabel="有前景" /> <StatusChip status="bad" label="地球尺度未证实" printLabel="真实地球应用——有争议/未证实" />
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow number="Dispatch 3">那个并不存在的悬崖</SectionEyebrow>
+
 ## 斑图如何让系统避开悬崖
 
-现在是一个不怎么预测临界点、反而<Highlight>质疑</Highlight>它们的成果——它可能是本附录最安静的激进想法。标准图景，也就是主文件卖给你的那个，是严峻的：把生态系统推过阈值，它就会突然、整体地崩溃，从绿变沙。2021 年，马克斯·里特克尔克和同事在《科学》提出，对于<Highlight>空间上延展</Highlight>的系统，这个图景常常是错的——而且是朝着有希望的方向错。
+现在是一个不怎么预测临界点、反而<Highlight>质疑</Highlight>它们的成果——它可能是本附录最安静的激进想法。标准图景，也就是第 9 日给你的那个，是严峻的：把生态系统推过阈值，它就会突然、整体地崩溃，从绿变沙。2021 年，马克斯·里特克尔克和同事在《科学》提出，对于<Highlight>空间上延展</Highlight>的系统，这个图景常常是错的——而且是朝着有希望的方向错。
 
 他们的主张：受压力的空间延展系统不会一次性崩溃，而是可以<Highlight>重组为一种斑图</Highlight>——你在世界各地干旱区上空能看到的植被斑点、条纹和迷宫。这些是<Highlight>图灵斑图</Highlight>，艾伦·图灵 1952 年预言过的自组织结构。而这里有一个颠覆教科书的<Highlight>转折</Highlight>：生态学家长期把这些斑图读作崩溃即将来临的<Highlight>警告信号</Highlight>，里特克尔克的分析却说它们可能相反——是<Highlight>恢复力的标志</Highlight>。通过碎裂成斑块，系统在远超均匀版本会翻车的压力水平下存活。它用全面崩溃换取一种优雅、常常可逆的斑图撤退。悬崖被替换成了斜坡。
 
@@ -83,13 +90,15 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 />
 </FormatOnly>
 
-为何重要，以及谨慎之处在哪里：如果里特克尔克是对的，那么整类被标记为「容易临界」的生态系统——也许还包括地球系统组成部分——可能比灾难性崩溃模型暗示的<Highlight>更有恢复力</Highlight>，因为那些模型忽略了空间动力学。这是真正的好消息，既有数学也有野外观测的仔细论证。但它是一篇<Highlight>综述和理论框架</Highlight>，不是普遍定律：这个逃生舱口能推广多远——到冰盖、到亚马逊、到整个地球系统——正是作者自己提出的开放问题。而且它正反两面都切中预警信号，因为斑图既可能意味着接近崩溃，也可能意味着来之不易的坚持，而区分两者很难。<StatusChip status="hint" label="不确定" printLabel="有前景——若能推广则将范式转移" />
+为何重要，以及谨慎之处在哪里：如果里特克尔克是对的，那么整类被标记为「容易临界」的生态系统——也许还包括地球系统组成部分——可能比灾难性崩溃模型暗示的<Highlight>更有恢复力</Highlight>，因为那些模型忽略了空间动力学。这是真正的好消息，既有数学也有野外观测的仔细论证。但它是一篇<Highlight>综述和理论框架</Highlight>，不是普遍定律：这个逃生舱口能推广多远——到冰盖、到亚马逊、到整个地球系统——正是作者自己提出的开放问题。而且它正反两面都切中预警信号，因为斑图既可能意味着接近崩溃，也可能意味着来之不易的坚持，而区分两者很难。<StatusChip status="hint" label="能推广才有前景" printLabel="有前景——若能推广则将范式转移" />
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow number="Dispatch 4">给行星听诊</SectionEyebrow>
+
 ## 从轨道读取地球恢复力
 
-经典预警信号诞生于小而干净的数据集——全湖实验、冰芯。2020 年后的跃迁是<Highlight>同时处处计算</Highlight>它们，把几十年的卫星影像变成一台行星恢复力监测仪。逻辑与主文件相同——失去恢复力的系统恢复得更慢，所以它的自相关悄悄上升——但画布现在成了整个陆地表面，逐像素。
+经典预警信号诞生于小而干净的数据集——全湖实验、冰芯。2020 年后的跃迁是<Highlight>同时处处计算</Highlight>它们，把几十年的卫星影像变成一台行星恢复力监测仪。逻辑与第 9 日相同——失去恢复力的系统恢复得更慢，所以它的自相关悄悄上升——但画布现在成了整个陆地表面，逐像素。
 
 结果蜂拥而至。2021 年，尼古拉斯·伯斯在 AMOC 的<Highlight>八个独立</Highlight>观测指纹中发现了统计显著的早期预警信号，结论是过去一个世纪大西洋环流可能已从「相对稳定状态漂移到了接近临界转变的点」（《自然·气候变化》）。同年，伯斯与吕普达尔报告了临界慢化，表明格陵兰西部冰盖靠近临界拐点（PNAS）。随后卫星打开了生物圈：2022 年两篇里程碑论文——史密斯、特拉克斯尔与伯斯在《自然·气候变化》，以及福尔齐耶里等人在《自然》——用卫星植被指数显示，地球大片森林自 2000 年代初以来一直在<Highlight>丧失恢复力</Highlight>，热带最令人担忧，尽管一些北方森林的恢复力有所增加。蒂姆·伦顿的团队提议把所有这些建成一个永久的「<Highlight>生物圈恢复力感知系统</Highlight>」（2022）——一个面向活星球的早期预警仪表盘。
 
@@ -99,26 +108,32 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 这是最容易过度解读结果的前沿，因此这些警告是承重墙。2024 年《自然·生态与演化》的一项研究表明，卫星恢复力估计在高生物量区域（如茂密热带雨林）变得<Highlight>不可靠</Highlight>——恰恰是我们最想信任它们的地方——部分因为浓密树冠使光学信号饱和。2023–2025 年的其他工作指出，数据缺口、异常值和仪器选择都会扭曲这些指标；而 2025 年《自然·气候变化》的一项分析则认为，气候临界点的早期预警信号可能根本上<Highlight>模棱两可</Highlight>。信号真实存在，全球恢复力下降的格局引人注目——但一个嘈杂像素里上升的自相关只是一个假设，不是判决。
 </Aside>
 
-AMOC 的故事自带内置平衡重，这正是健康科学应有的样子。即便观测预警信号不断累积，2025 年一项《自然》研究认为，南大洋风驱动上升流可能足以稳定大西洋环流，让本世纪发生<Highlight>彻底</Highlight>崩溃成为<Highlight>不太可能</Highlight>。两项发现都严肃，都经过同行评议；分歧本身就是科学的实际状态。公平的 2026 年总结：基于观测的恢复力丧失证据首次正被从行星上读取 <StatusChip status="hint" label="有前景" printLabel="真正的新能力" />，但把这些信号转化成关于<Highlight>哪个</Highlight>系统何时翻转的自信陈述，仍 <StatusChip status="bad" label="有争议" printLabel="有争议" />。
+AMOC 的故事自带内置平衡重，这正是健康科学应有的样子。即便观测预警信号不断累积，2025 年一项《自然》研究认为，南大洋风驱动上升流可能足以稳定大西洋环流，让本世纪发生<Highlight>彻底</Highlight>崩溃成为<Highlight>不太可能</Highlight>。两项发现都严肃，都经过同行评议；分歧本身就是科学的实际状态。公平的 2026 年总结：基于观测的恢复力丧失证据首次正被从行星上读取 <StatusChip status="hint" label="新能力" printLabel="真正的新能力" />，但把这些信号转化成关于<Highlight>哪个</Highlight>系统何时翻转的自信陈述，仍 <StatusChip status="bad" label="时机有争议" printLabel="有争议" />。
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow number="Dispatch 5">好的那种失控</SectionEyebrow>
+
 ## 触发我们想要的多米诺
 
 到目前为止，课程里每个临界点都是要害怕或预测的东西。最后一个前沿项目把符号翻转。推理是：如果增强回路能把系统拖入毁灭，那么增强回路也可以被有意<Highlight>播种</Highlight>，让系统翻向好事——而且很快。这就是<Highlight>正向临界点</Highlight>科学，自 2020 年以来它成了系统思维最活跃、后果最深远的角落之一，原因正是脱碳的数学要求它：要把升温守在 1.5°C 附近，排放下降速度必须超过任何渐进线性政策所能提供的。只有自我加速的变化才够快。
 
 奠定议程的论文是伊洛娜·奥托、乔纳森·东格斯等人在 PNAS（2020）的工作，他们召集专家识别「<Highlight>社会临界要素</Highlight>」——杠杆丰富的子系统，在那里一次适度而精准的推动可能触发向碳中和的失控变化。他们的候选：能源市场、金融撤资、碳中和城市、规范与价值观、教育，以及——注意回调到附录一的杠杆梯子——<Highlight>信息披露</Highlight>。蒂姆·伦顿的团队随后提出了一个「<Highlight>操作化</Highlight>」这些点的框架（2022），以及一种识别方法，并用他们自己谨慎的话说，「避免一厢情愿地认为它们存在」。最清晰的现实例子已经在这里：太阳能和电池成本的坍塌，已在一个又一个行业跨过了清洁能源干脆跑赢化石燃料的点，触发自我增强的采用——一条<Highlight>S 曲线</Highlight>，增强回路获胜的签名。增强反馈，气候故事里的反派，被重铸为最大希望。
 
-这里的前沿校准器很不寻常，因为对象部分地是<Highlight>规范性的</Highlight>——既是目标，也是事实。一些正向临界点<Highlight>确实</Highlight>真实且已成过去（英国退出煤炭；太阳能成本<Highlight>交叉点</Highlight>）。另一些则是关于社会系统的充满希望猜想，我们对它们<Highlight>传播</Highlight>动力学的理解远不如对融化冰盖的理解——批评者（在对奥托等的回复中）警告，把社会当作物理系统会忽略冲突、政治和「变化实际如何发生」。<StatusChip status="ok" label="已确立" printLabel="部分案例已确立" /> <StatusChip status="hint" label="不确定" printLabel="整个项目——有前景但部分只是愿望" />
+这里的前沿校准器很不寻常，因为对象部分地是<Highlight>规范性的</Highlight>——既是目标，也是事实。一些正向临界点<Highlight>确实</Highlight>真实且已成过去（英国退出煤炭；太阳能成本<Highlight>交叉点</Highlight>）。另一些则是关于社会系统的充满希望猜想，我们对它们<Highlight>传播</Highlight>动力学的理解远不如对融化冰盖的理解——批评者（在对奥托等的回复中）警告，把社会当作物理系统会忽略冲突、政治和「变化实际如何发生」。<StatusChip status="ok" label="部分案例真实" printLabel="部分案例已确立" /> <StatusChip status="hint" label="社会传播不确定" printLabel="整个项目——有前景但部分只是愿望" />
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow>前沿概览</SectionEyebrow>
+
 ## 六年，一个加速的田野
 
 <Day9StaticFigure kind="timeline" locale="zh" />
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow>诚实记分牌</SectionEyebrow>
+
 ## 各主张实际位置，2026 年中
 
 - <Highlight>深度学习能检测临界并命名分岔类型。</Highlight>伯里等，PNAS 2021；诸葛等，R. Soc. Open Sci. 2025。<Highlight>判断：</Highlight>有前景。模拟和少数经验案例中表现极佳；广泛的现实可靠性尚未证实。
@@ -126,10 +141,12 @@ AMOC 的故事自带内置平衡重，这正是健康科学应有的样子。即
 - <Highlight>空间斑图让系统规避灾难性临界。</Highlight>里特克尔克等，Science 2021。<Highlight>判断：</Highlight>有前景，可能带来范式转移。论证充分的理论加野外案例；能否推广到冰盖或整个地球仍是开放问题。
 - <Highlight>我们能从全球卫星上读取恢复力丧失。</Highlight>史密斯等与福尔齐耶里等，2022；伯斯，Nat. Clim. Change 2021。<Highlight>判断：</Highlight>新能力，但附带条件。引人注目的全球格局；茂密森林中估计不可靠，信号可能模棱两可。
 - <Highlight>正向临界点可被触发以加速脱碳。</Highlight>奥托等，PNAS 2020；伦顿等，2022。<Highlight>判断：</Highlight>部分案例真实，部分仍是愿望。太阳能/煤炭案例已确立；社会传播远比物理难预测。
-- <Highlight>但我们能命名崩溃日期吗？</Highlight>本-亚米等，Sci. Adv. 2024（来自主文件）。<Highlight>判断：</Highlight>还不能。检测恢复力丧失不等于预测时机。这是最深层的未解问题。
+- <Highlight>但我们能命名崩溃日期吗？</Highlight>本-亚米等，Sci. Adv. 2024（来自第 9 日）。<Highlight>判断：</Highlight>还不能。检测恢复力丧失不等于预测时机。这是最深层的未解问题。
 </ContentSection>
 
 <ContentSection>
+<SectionEyebrow>活前沿上的开放问题</SectionEyebrow>
+
 ## 未来六年必须回答的问题
 
 - <Highlight>有任何方法能提供可信的提前量吗？</Highlight>这里的每个项目都改进了<Highlight>检测</Highlight>；没有一个<Highlight>令人信服地</Highlight>破解了真实、半观测地球系统组成部分的<Highlight>时机</Highlight>。这是该领域核心而顽固的缺口。
@@ -149,7 +166,7 @@ AMOC 的故事自带内置平衡重，这正是健康科学应有的样子。即
 <Highlight>诚实的底线：</Highlight>检测正在快速改善，而且是真正的新东西；但为真实系统预测具体崩溃<Highlight>日期</Highlight>仍未解决，最令人兴奋的工具仍在干净模拟中证明自己，而不是在嘈杂的行星上——这是承诺，还不是证明。
 </Recap>
 
-<ContinueNote label={"→ 回到主线"}>
+<ContinueNote label={"→ 回到下降旅程"}>
 这是第 9 日的最前线。下降本身在<Highlight>第 10 日——模型、地图与理想化</Highlight>继续，而这是再好不过的下一个问题，因为本附录里几乎每个工具都是一个<Highlight>模型</Highlight>，在赌未来会与训练过的过去押韵。什么时候这个赌是一盏灯，什么时候是一个谎言？明天我们审问模型本身。
 </ContinueNote>
 
@@ -173,5 +190,5 @@ AMOC 的故事自带内置平衡重，这正是健康科学应有的样子。即
 15. Otto, I. M., Donges, J. F., Cremades, R. et al. (2020). "Social tipping dynamics for stabilizing Earth's climate by 2050." *PNAS* 117(5): 2354–2365 (21 Jan 2020). doi:10.1073/pnas.1900577117 —— 六个社会临界要素。见批评回复：Smith et al. &amp; Willis, PNAS 2020。[doi.org/10.1073/pnas.1900577117](https://doi.org/10.1073/pnas.1900577117)
 16. Lenton, T. M., Benson, S., Smith, T. et al. (2022). "Operationalising positive tipping points towards global sustainability." *Global Sustainability* 5: e1. doi:10.1017/sus.2021.30.
 17. "Continued Atlantic overturning circulation even under climate extremes." *Nature* (2025). —— 南大洋上升流可能使本世纪 AMOC 崩溃不太可能；同行评议的平衡重。
-18. Ben-Yami, M., Morr, A., Bathiany, S. &amp; Boers, N. (2024). "Uncertainties too large to predict tipping times of major Earth system components from historical data." *Science Advances* 10(31): eadl4841. doi:10.1126/sciadv.adl4841 —— 日期预测的长期限制（主文件亦引用）。
+18. Ben-Yami, M., Morr, A., Bathiany, S. &amp; Boers, N. (2024). "Uncertainties too large to predict tipping times of major Earth system components from historical data." *Science Advances* 10(31): eadl4841. doi:10.1126/sciadv.adl4841 —— 日期预测的长期限制（第 9 日亦引用）。
 </Sources>
