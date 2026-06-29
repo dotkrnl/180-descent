@@ -1,0 +1,858 @@
+---
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  kind: "feedback" | "bathtub" | "tipping" | "leverage" | "daisyworld" | "classifier" | "evasion";
+  locale?: "en" | "zh";
+}
+
+const kind = Astro.props.kind;
+const zh = Astro.props.locale === "zh";
+
+const text = {
+  feedback: zh
+    ? { eyebrow: "交互 · 搭建它，再打破它", title: "反馈引擎", note: "房间起初很冷，控制器想要 21°C。调高增益和延迟，看一只平静的恒温器变成麦克斯韦的噩梦；再翻成正反馈，看目标追寻者变成失控者。", gain: "增益", delay: "延迟", wiring: "接线", neg: "负反馈 · 稳定", pos: "正反馈 · 失控", calm: "平静控制", hunt: "振荡", tear: "撕裂", squeal: "尖啸" }
+    : { eyebrow: "Interactive · build it and break it", title: "The Feedback Engine", note: "A room starts cold; the controller wants 21°C. Turn up gain and delay, and watch a calm thermostat become Maxwell's nightmare. Then flip the wire to positive feedback and see a goal-seeker become a runaway.", gain: "Gain", delay: "Delay", wiring: "Wiring", neg: "Negative · stabilizing", pos: "Positive · runaway", calm: "Calm control", hunt: "The hunt", tear: "Tear it apart", squeal: "The squeal" },
+  bathtub: zh
+    ? { eyebrow: "交互 · 反直觉的水槽", title: "水位为何持续上升", note: "水龙头先升高再降低；排水口由你设定。只要流入大于流出，水位就继续上升，并且峰值会滞后于水龙头峰值。", inflow: "水龙头 · 峰值流入", outflow: "排水口 · 恒定流出", co2: "CO2 水槽", balance: "保持平衡", empty: "排水获胜" }
+    : { eyebrow: "Interactive · the counterintuitive tub", title: "Why the Water Keeps Rising", note: "The faucet ramps up and back down; the drain is whatever you set it to. As long as inflow exceeds outflow, the level keeps rising, and its peak lags the faucet peak.", inflow: "Faucet · peak inflow", outflow: "Drain · constant outflow", co2: "The CO2 tub", balance: "Hold it steady", empty: "Drain wins" },
+  tipping: zh
+    ? { eyebrow: "交互 · 感受临界拐点", title: "稳定地貌", note: "拖动驱动因素让山谷变形。临近临界点时，盆地变平，方差与自相关上升。推过折叠点后，再往回拖也不会马上回来：这就是滞后。", driver: "驱动因素", res: "恢复力", variance: "方差", ac: "自相关", safe: "安全稳定", edge: "在边缘", reset: "重置球" }
+    : { eyebrow: "Interactive · feel the tipping point", title: "The Stability Landscape", note: "Drag the driver to deform the valleys. Near the tipping point the basin flattens, variance rises, and autocorrelation climbs. Push past the fold, then drag back: the return is delayed by hysteresis.", driver: "Driver", res: "Resilience", variance: "Variance", ac: "Autocorr.", safe: "Safe & stable", edge: "On the edge", reset: "Reset ball" },
+  leverage: zh
+    ? { eyebrow: "交互 · 梅多斯的杠杆点", title: "系统中的干预位置", note: "按唐娜拉·梅多斯从 12（最弱）到 1（最强）排序。点击任意横档，查看为什么越高越有力，也越难触及。", top: "↑ 更强杠杆 · 更难触及", bottom: "↓ 更弱杠杆 · 争论最密集" }
+    : { eyebrow: "Interactive · Meadows' leverage points", title: "Places to Intervene in a System", note: "Ranked from 12 (weakest) to 1 (strongest), after Donella Meadows. Tap any rung to see why higher leverage is stronger and harder to reach.", top: "↑ stronger leverage · harder to reach", bottom: "↓ weaker leverage · where everyone fights" },
+  daisyworld: zh
+    ? { eyebrow: "交互 · 雏菊世界的寓言", title: "一个自己守住温度的世界", note: "拖动太阳亮度。蓝线是有雏菊的温度，虚线是没有生命的裸岩。雏菊会在很宽范围内把温度压平成平台，直到恒星过亮而崩溃。", lum: "太阳亮度", life: "有生命温度", dead: "裸岩温度", dim: "昏暗年轻星", hot: "更热恒星", edge: "接近断点", collapse: "越过崩溃" }
+    : { eyebrow: "Interactive · the parable of Daisyworld", title: "A World That Holds Its Own Temperature", note: "Drag solar luminosity. The blue curve is temperature with daisies; the dashed line is a dead rock. Daisies flatten temperature across a wide range, until the star becomes too bright and the system collapses.", lum: "Solar luminosity", life: "Temp · with life", dead: "Temp · dead rock", dim: "Young, dim star", hot: "Hotter star", edge: "Near the breaking point", collapse: "Past collapse" },
+  classifier: zh
+    ? { eyebrow: "交互 · 同样的震颤，三道不同的悬崖", title: "分类器听到了你听不到的什么", note: "选择一条崩溃路径。通用预警信号在三种情况下都会上升；分类器读取接近过程的形状，给出分岔类型。", route: "崩溃路径", fold: "折叠 · 跳跃", hopf: "霍普夫 · 振荡", trans: "跨临界 · 滑移", variance: "方差", ac: "滞后一阶自相关" }
+    : { eyebrow: "Interactive · the same tremor, three different cliffs", title: "What a Classifier Hears That You Can't", note: "Pick a route to collapse. Generic warning signals rise in all three cases; the classifier reads the shape of approach and names the bifurcation.", route: "Route to collapse", fold: "Fold · jump", hopf: "Hopf · oscillate", trans: "Transcritical · slide", variance: "Variance", ac: "Lag-1 autocorr." },
+  evasion: zh
+    ? { eyebrow: "交互 · 规避还是崩溃", title: "空间斑图的逃生舱口", note: "提高环境压力。关闭自组织，系统到临界点会整体崩溃；打开它，系统会裂成图灵式斑图并撑过更高压力。", stress: "环境压力", mode: "空间自组织", off: "关闭 · 均匀", on: "开启 · 允许斑图" }
+    : { eyebrow: "Interactive · evade or collapse", title: "The Escape Hatch of Spatial Patterns", note: "Raise environmental stress. With self-organization off, the system collapses at its tipping point; turn it on and patterns let it persist far longer.", stress: "Environmental stress", mode: "Spatial self-organization", off: "Off · uniform", on: "On · patterns allowed" }
+}[kind];
+
+const print = {
+  feedback: zh
+    ? {
+        title: "静态替代 · 反馈引擎",
+        caption: "增益和延迟共同决定控制回路是收敛、振荡，还是失控；符号一旦翻成正反馈，误差会喂养误差。",
+        columns: ["设置", "系统行为", "要点"],
+        rows: [
+          ["低增益、短延迟、负反馈", "平稳靠近 21°C", "修正足够温和，也来得足够早。"],
+          ["高增益、长延迟、负反馈", "围绕目标来回振荡", "修正抵达时状态已经变了，系统开始追着自己的影子跑。"],
+          ["正反馈", "偏差越修越大", "回路符号翻转后，目标追踪者变成失控放大器。"]
+        ]
+      }
+    : {
+        title: "Static alternate · Feedback Engine",
+        caption: "Gain and delay decide whether a control loop converges, oscillates, or runs away; flip the sign to positive feedback and error feeds error.",
+        columns: ["Setting", "System behavior", "Point"],
+        rows: [
+          ["Low gain, short delay, negative feedback", "Settles toward 21°C", "Correction is gentle enough and arrives early enough."],
+          ["High gain, long delay, negative feedback", "Oscillates around the target", "Correction arrives after the state has changed, so the loop chases itself."],
+          ["Positive feedback", "Deviation amplifies", "A sign flip turns goal-seeking into runaway amplification."]
+        ]
+      },
+  bathtub: zh
+    ? {
+        title: "静态替代 · 水槽累积",
+        caption: "水位是存量；水龙头和排水口是流量。只要流入仍大于流出，水位就继续上升，即使水龙头已经开始关小。",
+        columns: ["阶段", "流量关系", "水位"],
+        rows: [
+          ["水龙头上升", "流入大于流出", "快速上升"],
+          ["水龙头回落但仍高于排水", "流入仍大于流出", "继续上升"],
+          ["水龙头低于排水", "流出大于流入", "才开始下降"]
+        ]
+      }
+    : {
+        title: "Static alternate · Bathtub accumulation",
+        caption: "The level is a stock; faucet and drain are flows. The level keeps rising as long as inflow still exceeds outflow, even after the faucet starts closing.",
+        columns: ["Phase", "Flow relation", "Water level"],
+        rows: [
+          ["Faucet rising", "Inflow exceeds outflow", "Rises quickly"],
+          ["Faucet falling but still above drain", "Inflow still exceeds outflow", "Keeps rising"],
+          ["Faucet below drain", "Outflow exceeds inflow", "Only then falls"]
+        ]
+      },
+  tipping: zh
+    ? {
+        title: "静态替代 · 稳定地貌",
+        caption: "驱动因素把山谷压平时，恢复力下降，方差和自相关上升；越过折叠点后，系统进入另一个盆地，回程出现滞后。",
+        columns: ["位置", "预警信号", "结果"],
+        rows: [
+          ["深盆地", "恢复力高，方差低", "扰动后会回到原状态"],
+          ["临界边缘", "恢复力低，方差和自相关高", "小扰动也可能触发翻转"],
+          ["越过折叠点", "旧盆地消失", "回撤驱动因素也不会立刻回来"]
+        ]
+      }
+    : {
+        title: "Static alternate · Stability landscape",
+        caption: "As the driver flattens the valley, resilience falls while variance and autocorrelation rise; after the fold, the system lands in another basin and hysteresis delays return.",
+        columns: ["Position", "Warning signal", "Result"],
+        rows: [
+          ["Deep basin", "High resilience, low variance", "Perturbations return to the old state"],
+          ["Near the edge", "Low resilience, high variance and autocorrelation", "Small shocks can trigger a transition"],
+          ["Past the fold", "The old basin is gone", "Undoing the driver is not enough for immediate return"]
+        ]
+      },
+  leverage: zh
+    ? {
+        title: "静态替代 · 梅多斯杠杆点",
+        caption: "从弱到强，系统干预点大致从参数、缓冲和管路，走向信息流、规则、自组织、目标和范式。",
+        columns: ["层级", "例子", "为什么重要"],
+        rows: [
+          ["12-10", "参数、缓冲、存量-流量结构", "最容易争论，也最常只是微调。"],
+          ["9-6", "延迟、平衡回路、增强回路、信息流", "改变反馈如何抵达行动者。"],
+          ["5-1", "规则、自组织、目标、范式、超越范式", "改变系统真正优化和想象的东西。"]
+        ]
+      }
+    : {
+        title: "Static alternate · Meadows' leverage points",
+        caption: "From weak to strong, interventions move from parameters, buffers, and plumbing toward information flows, rules, self-organization, goals, and paradigms.",
+        columns: ["Level", "Examples", "Why it matters"],
+        rows: [
+          ["12-10", "Parameters, buffers, stock-flow structure", "Most visible, often only tuning."],
+          ["9-6", "Delays, balancing loops, reinforcing loops, information flows", "Changes how feedback reaches actors."],
+          ["5-1", "Rules, self-organization, goals, paradigms, transcending paradigms", "Changes what the system optimizes for and can imagine."]
+        ]
+      },
+  daisyworld: zh
+    ? {
+        title: "静态替代 · 雏菊世界",
+        caption: "有生命的星球把温度曲线压成平台：黑雏菊在暗星下吸热，白雏菊在亮星下反射热，直到亮度太高而崩溃。",
+        columns: ["太阳亮度", "雏菊组成", "温度结果"],
+        rows: [
+          ["偏暗", "黑雏菊较多", "吸收更多热量，世界被暖起来"],
+          ["中等", "黑白雏菊共同调节", "温度保持在适生平台"],
+          ["过亮", "雏菊死亡", "调节失败，温度跟随裸岩上升"]
+        ]
+      }
+    : {
+        title: "Static alternate · Daisyworld",
+        caption: "Life flattens the temperature curve: black daisies warm a dim world, white daisies reflect heat on a bright one, until luminosity gets too high and regulation collapses.",
+        columns: ["Solar luminosity", "Daisy mix", "Temperature result"],
+        rows: [
+          ["Dim", "More black daisies", "Absorbs heat and warms the world"],
+          ["Moderate", "Black and white daisies regulate together", "Temperature stays on a habitable plateau"],
+          ["Too bright", "Daisies die out", "Regulation fails and temperature follows dead rock"]
+        ]
+      },
+  classifier: zh
+    ? {
+        title: "静态替代 · 临界分类器",
+        caption: "方差和自相关在多种临界路径中都会上升；分类器试图读取接近崩溃的形状，区分折叠、霍普夫和跨临界分岔。",
+        columns: ["路径", "形状", "落点"],
+        rows: [
+          ["折叠", "缓慢接近后突然跳跃", "系统落入远处状态"],
+          ["霍普夫", "振荡幅度增长", "未来不是新水平，而是周期振荡"],
+          ["跨临界", "两种稳定性互换", "一个状态滑让给另一个状态"]
+        ]
+      }
+    : {
+        title: "Static alternate · Tipping classifier",
+        caption: "Variance and autocorrelation rise in many routes to tipping; the classifier reads the shape of approach to separate fold, Hopf, and transcritical bifurcations.",
+        columns: ["Route", "Shape", "Landing"],
+        rows: [
+          ["Fold", "Slow approach, then sudden jump", "System lands in a distant state"],
+          ["Hopf", "Oscillation grows", "The future is a cycle, not a new level"],
+          ["Transcritical", "Stabilities exchange", "One state slides out as another takes over"]
+        ]
+      },
+  evasion: zh
+    ? {
+        title: "静态替代 · 斑图规避",
+        caption: "均匀系统会在压力达到临界点时整体崩溃；允许空间自组织时，系统可以裂成斑图，用稀疏覆盖换取更长存活。",
+        columns: ["模式", "压力升高时", "教训"],
+        rows: [
+          ["均匀", "跨过阈值后整体崩溃", "没有空间结构可供系统退守"],
+          ["允许斑图", "形成斑块并撑过更高压力", "自组织可以暂时规避临界点"],
+          ["压力过高", "斑图也变稀并失败", "规避不是免疫，只是买时间"]
+        ]
+      }
+    : {
+        title: "Static alternate · Pattern evasion",
+        caption: "A uniform system collapses at its threshold; with spatial self-organization, it can break into patterns and trade uniform cover for longer persistence.",
+        columns: ["Mode", "As stress rises", "Lesson"],
+        rows: [
+          ["Uniform", "Collapses once the threshold is crossed", "No spatial structure remains to retreat into"],
+          ["Patterns allowed", "Forms patches and persists under higher stress", "Self-organization can evade a tipping point for a while"],
+          ["Stress too high", "Patterns thin out and fail", "Evasion is not immunity; it buys time"]
+        ]
+      }
+}[kind];
+---
+<Panel class="day9-interactive web-only" data-day9-kind={kind} data-locale={zh ? "zh" : "en"}>
+  <PanelTitle>{text.eyebrow}</PanelTitle>
+  <h3>{text.title}</h3>
+  <PanelNote>{text.note}</PanelNote>
+
+  {kind === "feedback" && (
+    <div class="day9-grid">
+      <div class="day9-controls">
+        <label>{text.gain} <strong data-out="gain">0.14</strong><input data-role="gain" type="range" min="0" max="100" value="20" /></label>
+        <label>{text.delay} <strong data-out="delay">4</strong><input data-role="delay" type="range" min="0" max="40" value="4" /></label>
+        <span class="day9-kicker">{text.wiring}</span>
+        <div class="day9-seg">
+          <button data-sign="neg" aria-pressed="true">{text.neg}</button>
+          <button data-sign="pos" aria-pressed="false">{text.pos}</button>
+        </div>
+        <div class="day9-presets">
+          <button data-preset="calm">{text.calm}</button>
+          <button data-preset="hunt">{text.hunt}</button>
+          <button data-preset="tear">{text.tear}</button>
+          <button data-preset="squeal">{text.squeal}</button>
+        </div>
+      </div>
+      <div class="day9-plot">
+        <svg data-role="plot" viewBox="0 0 600 270" role="img" aria-label={text.title}></svg>
+        <div class="day9-verdict"><strong data-out="state"></strong><span data-out="expl"></span></div>
+      </div>
+    </div>
+  )}
+
+  {kind === "bathtub" && (
+    <div class="day9-grid">
+      <div class="day9-controls">
+        <label>{text.inflow} <strong data-out="in">8.0</strong><input data-role="in" type="range" min="10" max="100" value="80" /></label>
+        <label>{text.outflow} <strong data-out="out">3.0</strong><input data-role="out" type="range" min="0" max="100" value="30" /></label>
+        <div class="day9-callout" data-out="msg"></div>
+        <div class="day9-presets">
+          <button data-preset="co2">{text.co2}</button>
+          <button data-preset="balance">{text.balance}</button>
+          <button data-preset="empty">{text.empty}</button>
+        </div>
+      </div>
+      <div class="day9-plot">
+        <svg data-role="flow" viewBox="0 0 600 150" role="img" aria-label={text.inflow}></svg>
+        <svg data-role="level" viewBox="0 0 600 168" role="img" aria-label={text.outflow}></svg>
+      </div>
+    </div>
+  )}
+
+  {kind === "tipping" && (
+    <div class="day9-grid">
+      <div class="day9-controls">
+        <label>{text.driver} <strong data-out="driver">-0.25</strong><input data-role="driver" type="range" min="-60" max="60" value="-25" /></label>
+        <div class="day9-readouts">
+          <div><span>{text.res}</span><strong data-out="res">high</strong><i data-bar="res"></i></div>
+          <div><span>{text.variance}</span><strong data-out="var">low</strong><i data-bar="var"></i></div>
+          <div><span>{text.ac}</span><strong data-out="ac">0.20</strong><i data-bar="ac"></i></div>
+        </div>
+        <div class="day9-verdict"><strong data-out="state"></strong><span data-out="expl"></span></div>
+        <div class="day9-presets">
+          <button data-preset="safe">{text.safe}</button>
+          <button data-preset="edge">{text.edge}</button>
+          <button data-preset="reset">{text.reset}</button>
+        </div>
+      </div>
+      <div class="day9-plot"><svg data-role="plot" viewBox="0 0 600 330" role="img" aria-label={text.title}></svg></div>
+    </div>
+  )}
+
+  {kind === "leverage" && (
+    <>
+      <div class="day9-ladder-note">{text.top}</div>
+      <div class="day9-ladder" data-role="ladder"></div>
+      <div class="day9-ladder-note">{text.bottom}</div>
+    </>
+  )}
+
+  {kind === "daisyworld" && (
+    <div class="day9-grid">
+      <div class="day9-controls">
+        <label>{text.lum} <strong data-out="lum">1.00</strong><input data-role="lum" type="range" min="60" max="170" value="100" /></label>
+        <div class="day9-planet" data-role="bar"><span data-seg="black">black</span><span data-seg="white">white</span><span data-seg="bare">bare</span></div>
+        <div class="day9-readouts two">
+          <div><span>{text.life}</span><strong data-out="life">-</strong></div>
+          <div><span>{text.dead}</span><strong data-out="dead">-</strong></div>
+        </div>
+        <div class="day9-callout" data-out="state"></div>
+        <div class="day9-presets">
+          <button data-preset="80">{text.dim}</button>
+          <button data-preset="120">{text.hot}</button>
+          <button data-preset="150">{text.edge}</button>
+          <button data-preset="165">{text.collapse}</button>
+        </div>
+      </div>
+      <div class="day9-plot"><svg data-role="plot" viewBox="0 0 600 330" role="img" aria-label={text.title}></svg></div>
+    </div>
+  )}
+
+  {kind === "classifier" && (
+    <div class="day9-grid">
+      <div class="day9-controls">
+        <span class="day9-kicker">{text.route}</span>
+        <div class="day9-seg three">
+          <button data-bc="fold" aria-pressed="true">{text.fold}</button>
+          <button data-bc="hopf" aria-pressed="false">{text.hopf}</button>
+          <button data-bc="trans" aria-pressed="false">{text.trans}</button>
+        </div>
+        <div class="day9-readouts">
+          <div><span>{text.variance}</span><strong data-out="var">rising</strong><i data-bar="var"></i></div>
+          <div><span>{text.ac}</span><strong data-out="ac">→ 1</strong><i data-bar="ac"></i></div>
+        </div>
+        <div class="day9-verdict"><strong data-out="state"></strong><span data-out="expl"></span></div>
+      </div>
+      <div class="day9-plot"><svg data-role="plot" viewBox="0 0 600 300" role="img" aria-label={text.title}></svg></div>
+    </div>
+  )}
+
+  {kind === "evasion" && (
+    <div class="day9-grid">
+      <div class="day9-controls">
+        <label>{text.stress} <strong data-out="stress">0.30</strong><input data-role="stress" type="range" min="0" max="100" value="30" /></label>
+        <span class="day9-kicker">{text.mode}</span>
+        <div class="day9-seg">
+          <button data-ev="off" aria-pressed="true">{text.off}</button>
+          <button data-ev="on" aria-pressed="false">{text.on}</button>
+        </div>
+        <div class="day9-vgrid" data-role="grid" aria-hidden="true"></div>
+        <div class="day9-verdict"><strong data-out="state"></strong><span data-out="expl"></span></div>
+      </div>
+      <div class="day9-plot"><svg data-role="plot" viewBox="0 0 600 300" role="img" aria-label={text.title}></svg></div>
+    </div>
+  )}
+</Panel>
+
+<FormatOnly as="div" media="web" variant="alternate" class="day9-print-alt day9-internal-alt">
+  <h3>{print.title}</h3>
+  <p>{print.caption}</p>
+  <table>
+    <thead>
+      <tr>{print.columns.map((column) => <th>{column}</th>)}</tr>
+    </thead>
+    <tbody>
+      {print.rows.map((row) => <tr>{row.map((cell) => <td>{cell}</td>)}</tr>)}
+    </tbody>
+  </table>
+</FormatOnly>
+
+<script is:inline>
+(() => {
+  const C = {
+    ink: "var(--ink, #172530)",
+    faint: "var(--ink-faint, #64747b)",
+    line: "var(--line, #cfc4ad)",
+    paper: "var(--paper, #f5f3ec)",
+    raised: "var(--raised, #fbfaf5)",
+    accent: "var(--accent, #1d6f78)",
+    deep: "var(--accent-deep, #13525a)",
+    brass: "var(--brass, #93651f)",
+    ok: "var(--ok, #2a704a)",
+    warn: "var(--hint, #b76636)",
+    danger: "var(--heat, #a8442d)"
+  };
+  const T = {
+    en: {
+      stable:"stable control", hunt:"hunting", runaway:"runaway", calm:"The loop settles toward the setpoint.", oscillate:"Delay makes correction arrive late, so the loop hunts around the target.", break:"The correction is too aggressive for the lag; oscillations grow.", positive:"The sign is flipped: error feeds error.",
+      rising:"The level is still rising because inflow exceeds outflow.", peak:"The level peaks only after the faucet falls below the drain.", falling:"The drain wins; the stock falls.",
+      high:"high", medium:"medium", low:"low", tipped:"tipped", edge:"near the edge", safe:"safe basin", hysteresis:"The ball has crossed into the other basin; undoing the driver is not enough.",
+      ladder:[
+        ["12","Parameters","Taxes, subsidies, constants. Easy to fight over; usually weak."],
+        ["11","Buffer sizes","The size of stabilizing stocks relative to flows."],
+        ["10","Stock-flow structure","Pipes, roads, inventories, buffers: the physical plumbing."],
+        ["9","Delays","Shorten or lengthen lags before they create oscillation."],
+        ["8","Balancing loops","Strengthen the loop that corrects drift."],
+        ["7","Reinforcing loops","Slow the runaway before it dominates."],
+        ["6","Information flows","Give actors the feedback they were missing."],
+        ["5","Rules","Change incentives, penalties, boundaries, permissions."],
+        ["4","Self-organization","Let the system evolve new structure."],
+        ["3","Goals","Change what the system is optimizing for."],
+        ["2","Paradigms","Change the worldview from which goals arise."],
+        ["1","Transcend paradigms","Hold models lightly enough to replace them."]
+      ],
+      daisyGood:"life is regulating temperature", daisyCold:"too cold for daisies", daisyHot:"too hot: Daisyworld collapses",
+      classifier:{fold:["Fold bifurcation","A sudden jump into a distant state."], hopf:["Hopf bifurcation","The future is oscillation, not a single new level."], trans:["Transcritical bifurcation","A stability exchange: one state yields to another."]},
+      evHold:"Uniform vegetation still holds.", evCrash:"Uniform vegetation collapses abruptly.", evPattern:"Patterns trade uniform cover for persistence.", evSparse:"Patterned cover is sparse but alive."
+    },
+    zh: {
+      stable:"稳定控制", hunt:"开始振荡", runaway:"失控", calm:"回路收敛到设定点。", oscillate:"延迟让修正来得太晚，于是目标周围来回振荡。", break:"修正相对滞后过于猛烈，振荡会放大。", positive:"符号翻转了：误差喂养误差。",
+      rising:"水位仍在上升，因为流入大于流出。", peak:"只有水龙头降到排水口以下后，水位才到峰值。", falling:"排水获胜；存量下降。",
+      high:"高", medium:"中", low:"低", tipped:"已翻转", edge:"接近边缘", safe:"安全盆地", hysteresis:"球已经进了另一个盆；撤回驱动因素还不够。",
+      ladder:[
+        ["12","参数","税率、补贴、常数。容易争吵，通常很弱。"],
+        ["11","缓冲大小","稳定性存量相对于流量的大小。"],
+        ["10","存量-流量结构","管道、道路、库存、缓冲：物理管路。"],
+        ["9","延迟","在时滞制造振荡前缩短或拉长它。"],
+        ["8","平衡回路","加强纠偏的回路。"],
+        ["7","增强回路","在失控主导前减缓它。"],
+        ["6","信息流","把缺失的反馈交给行动者。"],
+        ["5","规则","改变激励、惩罚、边界和许可。"],
+        ["4","自组织","让系统演化出新结构。"],
+        ["3","目标","改变系统正在优化的东西。"],
+        ["2","范式","改变目标所来自的世界观。"],
+        ["1","超越范式","轻拿模型，随时能替换它们。"]
+      ],
+      daisyGood:"生命正在调节温度", daisyCold:"太冷，雏菊无法生长", daisyHot:"太热：雏菊世界崩溃",
+      classifier:{fold:["折叠分岔","系统突然跳到远处状态。"], hopf:["霍普夫分岔","未来是振荡，而非单一新水平。"], trans:["跨临界分岔","稳定性交换：一个状态让位给另一个。"]},
+      evHold:"均匀植被仍能撑住。", evCrash:"均匀植被突然崩溃。", evPattern:"斑图用均匀覆盖换取坚持。", evSparse:"斑图覆盖稀疏，但仍活着。"
+    }
+  };
+  const el = (name, attrs = {}, children = []) => {
+    const n = document.createElementNS("http://www.w3.org/2000/svg", name);
+    Object.entries(attrs).forEach(([k,v]) => n.setAttribute(k, v));
+    children.forEach(c => n.appendChild(c));
+    return n;
+  };
+  const path = pts => pts.map((p,i) => `${i ? "L" : "M"}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
+  const clear = svg => { while (svg.firstChild) svg.removeChild(svg.firstChild); };
+  const axes = (svg, w, h) => {
+    svg.append(el("rect", {x:0,y:0,width:w,height:h,rx:10,fill:C.raised,stroke:C.line}));
+    svg.append(el("line", {x1:44,y1:h-34,x2:w-18,y2:h-34,stroke:C.line}));
+    svg.append(el("line", {x1:44,y1:18,x2:44,y2:h-34,stroke:C.line}));
+  };
+  const q = (root, s) => root.querySelector(s);
+  const qa = (root, s) => Array.from(root.querySelectorAll(s));
+  const setPressed = (buttons, active, attr) => buttons.forEach(b => b.setAttribute("aria-pressed", b.getAttribute(attr) === active ? "true" : "false"));
+
+  function initFeedback(root, lang) {
+    let sign = "neg";
+    const gain = q(root, "[data-role=gain]"), delay = q(root, "[data-role=delay]"), svg = q(root, "[data-role=plot]");
+    const draw = () => {
+      const g = Number(gain.value) / 140 + 0.02, d = Number(delay.value), target = 21, hist = Array(60).fill(18);
+      const data = [];
+      let temp = 18;
+      for (let i=0;i<120;i++) {
+        const seen = hist[Math.max(0, hist.length - 1 - Math.round(d))] || temp;
+        const error = target - seen;
+        const heat = sign === "neg" ? g * error : -g * error;
+        temp += heat + (16 - temp) * 0.018;
+        hist.push(temp);
+        data.push(temp);
+      }
+      clear(svg); axes(svg,600,270);
+      const pts = data.map((v,i) => [44 + i * 4.45, 220 - (v - 10) * 8]);
+      svg.append(el("line",{x1:44,y1:220-(target-10)*8,x2:580,y2:220-(target-10)*8,stroke:C.brass,"stroke-dasharray":"4 5"}));
+      svg.append(el("path",{d:path(pts),fill:"none",stroke: sign==="neg" ? C.accent : C.danger,"stroke-width":3}));
+      q(root,"[data-out=gain]").textContent = g.toFixed(2);
+      q(root,"[data-out=delay]").textContent = Math.round(d);
+      const amp = Math.max(...data.slice(-50)) - Math.min(...data.slice(-50));
+      const tt = T[lang];
+      const st = sign === "pos" ? [tt.runaway, tt.positive] : amp < 1.2 ? [tt.stable, tt.calm] : amp < 8 ? [tt.hunt, tt.oscillate] : [tt.runaway, tt.break];
+      q(root,"[data-out=state]").textContent = st[0];
+      q(root,"[data-out=expl]").textContent = st[1];
+    };
+    qa(root,"[data-sign]").forEach(b => b.addEventListener("click", () => { sign = b.dataset.sign; setPressed(qa(root,"[data-sign]"), sign, "data-sign"); draw(); }));
+    qa(root,"[data-preset]").forEach(b => b.addEventListener("click", () => {
+      const p = b.dataset.preset; sign = p === "squeal" ? "pos" : "neg"; gain.value = p==="calm"?20:p==="hunt"?55:p==="tear"?88:55; delay.value = p==="calm"?4:p==="hunt"?22:p==="tear"?34:10; setPressed(qa(root,"[data-sign]"), sign, "data-sign"); draw();
+    }));
+    gain.addEventListener("input", draw); delay.addEventListener("input", draw); draw();
+  }
+
+  function initBathtub(root, lang) {
+    const inf = q(root,"[data-role=in]"), out = q(root,"[data-role=out]"), flow = q(root,"[data-role=flow]"), level = q(root,"[data-role=level]");
+    const draw = () => {
+      const peak = Number(inf.value) / 10, drain = Number(out.value) / 10;
+      const f = [], lev = []; let s = 20;
+      for (let i=0;i<100;i++) { const x=i/99; const v = peak * Math.exp(-Math.pow((x-.42)/.22,2)); f.push(v); s += (v - drain) * .34; lev.push(s); }
+      clear(flow); axes(flow,600,150); clear(level); axes(level,600,168);
+      flow.append(el("path",{d:path(f.map((v,i)=>[44+i*5.35,122-v*10])),fill:"none",stroke:C.accent,"stroke-width":3}));
+      flow.append(el("line",{x1:44,y1:122-drain*10,x2:580,y2:122-drain*10,stroke:C.danger,"stroke-width":2,"stroke-dasharray":"5 5"}));
+      const maxL = Math.max(...lev), minL = Math.min(...lev);
+      level.append(el("path",{d:path(lev.map((v,i)=>[44+i*5.35,132-(v-minL)/(maxL-minL+1)*95])),fill:"none",stroke:C.brass,"stroke-width":3}));
+      q(root,"[data-out=in]").textContent = peak.toFixed(1); q(root,"[data-out=out]").textContent = drain.toFixed(1);
+      const peakAt = lev.indexOf(maxL), faucetPeak = f.indexOf(Math.max(...f)); const tt=T[lang];
+      q(root,"[data-out=msg]").textContent = maxL < lev[0] ? tt.falling : peakAt > faucetPeak + 5 ? tt.peak : tt.rising;
+    };
+    qa(root,"[data-preset]").forEach(b => b.addEventListener("click", () => { const p=b.dataset.preset; inf.value=p==="empty"?35:p==="balance"?45:80; out.value=p==="empty"?70:p==="balance"?45:30; draw(); }));
+    inf.addEventListener("input", draw); out.addEventListener("input", draw); draw();
+  }
+
+  function initTipping(root, lang) {
+    const slider = q(root,"[data-role=driver]"), svg=q(root,"[data-role=plot]"); let basin="left";
+    const potential = (x,a) => .16*Math.pow(x,4) - .5*x*x + a*x;
+    const draw = () => {
+      const a = Number(slider.value)/60;
+      if (basin === "left" && a > .45) basin = "right";
+      if (basin === "right" && a < -.45) basin = "left";
+      const pts=[]; let min=-10, max=10;
+      for (let i=0;i<=160;i++) { const x=-1.8+i*3.6/160, y=potential(x,a); min=Math.min(min,y); max=Math.max(max,y); pts.push([x,y]); }
+      const map = p => [60+(p[0]+1.8)/3.6*500, 280-(p[1]-min)/(max-min)*220];
+      const ballX = basin === "left" ? -Math.sqrt(Math.max(.05,(1-a)/2)) : Math.sqrt(Math.max(.05,(1+a)/2));
+      clear(svg); axes(svg,600,330);
+      svg.append(el("path",{d:path(pts.map(map)),fill:"none",stroke:C.accent,"stroke-width":3}));
+      svg.append(el("circle",{cx:map([ballX,potential(ballX,a)])[0],cy:map([ballX,potential(ballX,a)])[1]-8,r:11,fill:basin==="left"?C.accent:C.danger,stroke:C.raised,"stroke-width":3}));
+      const nearness = Math.max(0, 1 - Math.abs(.45 - Math.abs(a)) / .45);
+      q(root,"[data-out=driver]").textContent = a.toFixed(2);
+      q(root,"[data-out=res]").textContent = basin==="right" ? T[lang].tipped : nearness>.75 ? T[lang].low : nearness>.38 ? T[lang].medium : T[lang].high;
+      q(root,"[data-out=var]").textContent = nearness>.55 ? T[lang].high : T[lang].low;
+      q(root,"[data-out=ac]").textContent = (0.2 + nearness*.72).toFixed(2);
+      q(root,"[data-bar=res]").style.width = `${Math.max(8,100-nearness*82)}%`; q(root,"[data-bar=var]").style.width = `${20+nearness*75}%`; q(root,"[data-bar=ac]").style.width = `${20+nearness*75}%`;
+      q(root,"[data-out=state]").textContent = basin==="right" ? T[lang].tipped : nearness>.65 ? T[lang].edge : T[lang].safe;
+      q(root,"[data-out=expl]").textContent = basin==="right" ? T[lang].hysteresis : "";
+    };
+    qa(root,"[data-preset]").forEach(b => b.addEventListener("click", () => { if (b.dataset.preset==="reset") basin="left"; slider.value = b.dataset.preset==="edge"?25:b.dataset.preset==="safe"?-35:slider.value; draw(); }));
+    slider.addEventListener("input", draw); draw();
+  }
+
+  function initLeverage(root, lang) {
+    const host=q(root,"[data-role=ladder]"), items=T[lang].ladder;
+    host.innerHTML="";
+    items.forEach((it, idx) => {
+      const b=document.createElement("button"); b.className="day9-rung"; b.setAttribute("aria-expanded", idx===0 ? "true":"false");
+      b.innerHTML=`<span>${it[0]}</span><strong>${it[1]}</strong><em>${it[2]}</em>`;
+      b.addEventListener("click",()=>b.setAttribute("aria-expanded", b.getAttribute("aria-expanded")==="true"?"false":"true"));
+      host.appendChild(b);
+    });
+  }
+
+  function daisy(L) {
+    const dead = -20 + L * 42;
+    let black = Math.max(0, Math.min(.55, (1.05-L)*1.15));
+    let white = Math.max(0, Math.min(.65, (L-.94)*1.05));
+    if (L < .68 || L > 1.58) { black=0; white=0; }
+    const life = black || white ? 22 + (L-1)*4 + black*9 - white*8 : dead;
+    return {dead, life, black, white, bare: Math.max(0, 1-black-white)};
+  }
+  function initDaisy(root, lang) {
+    const slider=q(root,"[data-role=lum]"), svg=q(root,"[data-role=plot]");
+    const draw = () => {
+      const L=Number(slider.value)/100, d=daisy(L);
+      clear(svg); axes(svg,600,330);
+      const xs=[]; for(let i=60;i<=170;i+=2){ const x=i/100, dd=daisy(x); xs.push({x,life:dd.life,dead:dd.dead}); }
+      const y = v => 275 - (v + 30) / 90 * 230, x = L => 50 + (L-.6)/1.1*520;
+      svg.append(el("path",{d:path(xs.map(p=>[x(p.x),y(p.dead)])),fill:"none",stroke:C.faint,"stroke-width":2,"stroke-dasharray":"5 5"}));
+      svg.append(el("path",{d:path(xs.map(p=>[x(p.x),y(p.life)])),fill:"none",stroke:C.accent,"stroke-width":3}));
+      svg.append(el("circle",{cx:x(L),cy:y(d.life),r:7,fill:C.accent}));
+      q(root,"[data-out=lum]").textContent=L.toFixed(2); q(root,"[data-out=life]").textContent=`${d.life.toFixed(1)}°C`; q(root,"[data-out=dead]").textContent=`${d.dead.toFixed(1)}°C`;
+      q(root,"[data-seg=black]").style.width=`${d.black*100}%`; q(root,"[data-seg=white]").style.width=`${d.white*100}%`; q(root,"[data-seg=bare]").style.width=`${d.bare*100}%`;
+      q(root,"[data-out=state]").textContent = L<.68 ? T[lang].daisyCold : L>1.58 ? T[lang].daisyHot : T[lang].daisyGood;
+    };
+    qa(root,"[data-preset]").forEach(b=>b.addEventListener("click",()=>{slider.value=b.dataset.preset; draw();}));
+    slider.addEventListener("input", draw); draw();
+  }
+
+  function initClassifier(root, lang) {
+    let mode="fold"; const svg=q(root,"[data-role=plot]");
+    const draw=()=> {
+      clear(svg); axes(svg,600,300);
+      const pts=[]; for(let i=0;i<140;i++){ const t=i/139; let v; if(mode==="fold") v=80+t*55+(t>.76?85*(t-.76)*4:0); else if(mode==="hopf") v=135+Math.sin(t*42)*(5+t*34); else v=82+t*105-16*Math.exp(-t*8); pts.push([50+t*520,230-v]); }
+      svg.append(el("path",{d:path(pts),fill:"none",stroke:C.accent,"stroke-width":3}));
+      q(root,"[data-bar=var]").style.width="82%"; q(root,"[data-bar=ac]").style.width="90%";
+      const c=T[lang].classifier[mode]; q(root,"[data-out=state]").textContent=c[0]; q(root,"[data-out=expl]").textContent=c[1];
+    };
+    qa(root,"[data-bc]").forEach(b=>b.addEventListener("click",()=>{mode=b.dataset.bc; setPressed(qa(root,"[data-bc]"),mode,"data-bc"); draw();}));
+    draw();
+  }
+
+  function initEvasion(root, lang) {
+    let patterned=false; const slider=q(root,"[data-role=stress]"), svg=q(root,"[data-role=plot]"), grid=q(root,"[data-role=grid]");
+    const paintGrid=(stress)=>{ grid.innerHTML=""; for(let i=0;i<64;i++){ const cell=document.createElement("i"); const r=Math.hypot((i%8)-3.5,Math.floor(i/8)-3.5); const alive=patterned ? (Math.sin(i*2.3+stress*8)+Math.cos(r*2.4)>-.2 && stress<.92) : stress<.58; cell.style.opacity=alive?1:.18; grid.appendChild(cell);} };
+    const draw=()=> {
+      const s=Number(slider.value)/100; clear(svg); axes(svg,600,300);
+      const hom=[], pat=[]; for(let i=0;i<=100;i++){ const x=i/100; hom.push([50+x*520,240-(x<.58?160-95*x:8)]); pat.push([50+x*520,240-(x<.9?150-85*x+18*Math.sin(x*10):10)]); }
+      svg.append(el("path",{d:path(hom),fill:"none",stroke:C.danger,"stroke-width":3,"stroke-dasharray": patterned ? "3 5":"0"}));
+      svg.append(el("path",{d:path(pat),fill:"none",stroke:C.accent,"stroke-width":3,opacity:patterned?1:.35}));
+      svg.append(el("circle",{cx:50+s*520,cy: patterned ? 240-(s<.9?150-85*s+18*Math.sin(s*10):10) : 240-(s<.58?160-95*s:8),r:7,fill:patterned?C.accent:C.danger}));
+      q(root,"[data-out=stress]").textContent=s.toFixed(2); paintGrid(s);
+      q(root,"[data-out=state]").textContent = patterned ? (s>.82?T[lang].evSparse:T[lang].evPattern) : (s>.58?T[lang].evCrash:T[lang].evHold);
+      q(root,"[data-out=expl]").textContent = "";
+    };
+    qa(root,"[data-ev]").forEach(b=>b.addEventListener("click",()=>{patterned=b.dataset.ev==="on"; setPressed(qa(root,"[data-ev]"),patterned?"on":"off","data-ev"); draw();}));
+    slider.addEventListener("input", draw); draw();
+  }
+
+  const initRoot = root => {
+    if (root.dataset.day9Ready) return;
+    root.dataset.day9Ready = "1";
+    const kind=root.dataset.day9Kind, lang=root.dataset.locale || "en";
+    if (kind==="feedback") initFeedback(root, lang);
+    if (kind==="bathtub") initBathtub(root, lang);
+    if (kind==="tipping") initTipping(root, lang);
+    if (kind==="leverage") initLeverage(root, lang);
+    if (kind==="daisyworld") initDaisy(root, lang);
+    if (kind==="classifier") initClassifier(root, lang);
+    if (kind==="evasion") initEvasion(root, lang);
+  };
+
+  const roots = Array.from(document.querySelectorAll("[data-day9-kind]"));
+  if (!("IntersectionObserver" in window)) {
+    roots.forEach(initRoot);
+    return;
+  }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      initRoot(entry.target);
+    });
+  }, { rootMargin: "160px 0px" });
+  roots.forEach(root => {
+    if (root.dataset.day9Ready) return;
+    observer.observe(root);
+  });
+})();
+</script>
+
+<style>
+  .day9-print-alt h3 {
+    margin-top: 0;
+  }
+
+  .day9-internal-alt {
+    display: none !important;
+  }
+
+  .day9-print-alt table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: .8rem;
+    font-size: .88rem;
+  }
+
+  .day9-print-alt th,
+  .day9-print-alt td {
+    border: 1px solid var(--line, #cfc4ad);
+    padding: .45rem .55rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .day9-print-alt th {
+    color: var(--accent-deep, #13525a);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .72rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .day9-interactive h3 {
+    margin-top: .35rem;
+  }
+
+  .day9-grid {
+    display: grid;
+    grid-template-columns: minmax(13rem, .9fr) minmax(0, 1.6fr);
+    gap: 1rem;
+    align-items: start;
+    margin-top: 1rem;
+  }
+
+  .day9-controls {
+    display: grid;
+    gap: .75rem;
+  }
+
+  .day9-controls label {
+    display: grid;
+    gap: .35rem;
+    color: var(--ink-soft, #41545d);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .78rem;
+    letter-spacing: .02em;
+    min-width: 0;
+  }
+
+  .day9-controls strong {
+    color: var(--accent-deep, #13525a);
+  }
+
+  .day9-controls input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent, #1d6f78);
+  }
+
+  .day9-kicker,
+  .day9-ladder-note {
+    color: var(--ink-faint, #64747b);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .72rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .day9-seg,
+  .day9-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+
+  .day9-seg button,
+  .day9-presets button {
+    border: 1px solid var(--line, #cfc4ad);
+    border-radius: 6px;
+    background: var(--raised, #fbfaf5);
+    color: var(--ink, #172530);
+    cursor: pointer;
+    font: inherit;
+    min-width: 0;
+  }
+
+  .day9-seg button,
+  .day9-presets button {
+    padding: .42rem .55rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .74rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+
+  .day9-seg button[aria-pressed="true"] {
+    border-color: var(--accent, #1d6f78);
+    background: color-mix(in srgb, var(--accent, #1d6f78) 14%, var(--raised, #fbfaf5));
+    color: var(--accent-deep, #13525a);
+  }
+
+  .day9-plot svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: .55rem;
+  }
+
+  .day9-verdict,
+  .day9-callout {
+    border-top: 1px solid var(--line, #cfc4ad);
+    padding-top: .55rem;
+    color: var(--ink-soft, #41545d);
+    font-size: .9rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .day9-verdict strong {
+    display: block;
+    color: var(--accent-deep, #13525a);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .85rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  .day9-readouts {
+    display: grid;
+    gap: .45rem;
+  }
+
+  .day9-readouts.two {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .day9-readouts div {
+    border: 1px solid var(--line, #cfc4ad);
+    border-radius: 6px;
+    padding: .5rem;
+    background: var(--raised, #fbfaf5);
+    min-width: 0;
+  }
+
+  .day9-readouts span {
+    display: block;
+    color: var(--ink-faint, #64747b);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .68rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .day9-readouts i {
+    display: block;
+    height: .35rem;
+    width: 40%;
+    margin-top: .35rem;
+    border-radius: 999px;
+    background: var(--accent, #1d6f78);
+  }
+
+  .day9-ladder {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: .38rem;
+    margin: .55rem 0;
+  }
+
+  :global(.day9-rung) {
+    border: 1px solid var(--line, #cfc4ad);
+    border-radius: 6px;
+    background: var(--raised, #fbfaf5);
+    color: var(--ink, #172530);
+    cursor: pointer;
+    display: grid;
+    font: inherit;
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+    gap: .45rem .7rem;
+    min-width: 0;
+    width: 100%;
+    padding: .55rem .7rem;
+    text-align: left;
+  }
+
+  :global(.day9-rung span) {
+    color: var(--brass, #93651f);
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  :global(.day9-rung strong) {
+    color: var(--ink, #172530);
+    overflow-wrap: anywhere;
+  }
+
+  :global(.day9-rung em) {
+    display: none;
+    grid-column: 2;
+    color: var(--ink-soft, #41545d);
+    font-style: normal;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  :global(.day9-rung[aria-expanded="true"]) {
+    border-color: var(--accent, #1d6f78);
+    background: color-mix(in srgb, var(--accent, #1d6f78) 10%, var(--raised, #fbfaf5));
+  }
+
+  :global(.day9-rung[aria-expanded="true"] em) {
+    display: block;
+  }
+
+  .day9-planet {
+    display: flex;
+    overflow: hidden;
+    min-height: 2.2rem;
+    border: 1px solid var(--line, #cfc4ad);
+    border-radius: 6px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .7rem;
+  }
+
+  .day9-planet span {
+    display: grid;
+    place-items: center;
+    min-width: 0;
+    overflow: hidden;
+    color: white;
+  }
+
+  .day9-planet [data-seg="black"] { background: #2b2b2b; }
+  .day9-planet [data-seg="white"] { background: color-mix(in srgb, var(--paper, #f5f3ec) 78%, white); color: var(--ink, #172530); }
+  .day9-planet [data-seg="bare"] { background: var(--brass, #93651f); }
+
+  .day9-vgrid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 3px;
+    max-width: 11rem;
+  }
+
+  :global(.day9-vgrid i) {
+    display: block;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: var(--ok, #2a704a);
+  }
+
+  @media (max-width: 760px) {
+    .day9-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

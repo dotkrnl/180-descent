@@ -8,24 +8,24 @@ const zh = Astro.props.locale === "zh";
 <figure class="complexity-hump">
   <svg viewBox="0 0 520 340" role="img" aria-label={zh ? "一条中间高、两端低的复杂性曲线：完美秩序和完美随机都复杂性低，中间最高。" : "A hump-shaped curve peaking in the middle: complexity is low for both perfect order and perfect randomness, and high in between."}>
     <style>
-      .hump-axis{stroke:#cabfa8;stroke-width:1.5}.hump-label,.hump-small{font-family:"IBM Plex Mono",monospace;fill:#5d6c72}.hump-label{font-size:12px}.hump-small{font-size:10.5px}
-      .hump-name{font-family:"Fraunces",serif;font-size:14px;fill:#172530}.hump-line{fill:none;stroke:#1d6f78;stroke-width:3}.hump-fill{fill:#dfecea}
-      .hump-dot.side{fill:#93651f}.hump-dot.peak{fill:#2a704a}.hump-drop{stroke:#2a704a;stroke-width:1;stroke-dasharray:3 4;opacity:.6}
+      .hump-axis{stroke:var(--line-strong,#cabfa8);stroke-width:1.5}.hump-label,.hump-small{font-family:"IBM Plex Mono",monospace;fill:var(--ink-faint,#5d6c72)}.hump-label{font-size:13px}.hump-small{font-size:11.5px}
+      .hump-name{font-family:"Fraunces",serif;font-size:14px;fill:var(--ink,#172530)}.hump-line{fill:none;stroke:var(--accent,#1d6f78);stroke-width:3}.hump-fill{fill:color-mix(in srgb,var(--accent,#1d6f78) 11%,transparent)}
+      .hump-dot.side{fill:var(--brass,#93651f)}.hump-dot.peak{fill:var(--ok,#2a704a)}.hump-drop{stroke:var(--ok,#2a704a);stroke-width:1;stroke-dasharray:3 4;opacity:.6}
     </style>
     <line x1="56" y1="286" x2="496" y2="286" class="hump-axis"></line>
     <line x1="56" y1="286" x2="56" y2="56" class="hump-axis"></line>
     <text x="276" y="324" text-anchor="middle" class="hump-label">{zh ? "无序 / 熵 ->" : "disorder / entropy ->"}</text>
-    <text x="30" y="170" text-anchor="middle" class="hump-label" transform="rotate(-90 30 170)">{zh ? "复杂性" : "complexity"}</text>
+    <text x="70" y="34" text-anchor="start" class="hump-label">{zh ? "复杂性 ↑" : "complexity ↑"}</text>
     <path d="M56,284 C150,271 196,86 276,86 C356,86 402,271 496,284" class="hump-line"></path>
     <path d="M56,284 C150,271 196,86 276,86 C356,86 402,271 496,284 L496,286 L56,286 Z" class="hump-fill"></path>
     <circle cx="80" cy="278" r="5" class="hump-dot side"></circle>
-    <text x="82" y="276" text-anchor="middle" class="hump-name">{zh ? "晶体" : "crystal"}</text>
+    <text x="82" y="258" text-anchor="middle" class="hump-name">{zh ? "晶体" : "crystal"}</text>
     <text x="146" y="214" text-anchor="middle" class="hump-small">{zh ? "过于有序" : "too ordered"}</text>
     <circle cx="276" cy="86" r="6" class="hump-dot peak"></circle>
-    <text x="276" y="80" text-anchor="middle" class="hump-name">{zh ? "活细胞" : "a living cell"}</text>
-    <text x="276" y="28" text-anchor="middle" class="hump-small">{zh ? "有结构且出人意料" : "structured + surprising"}</text>
+    <text x="276" y="68" text-anchor="middle" class="hump-name">{zh ? "活细胞" : "a living cell"}</text>
+    <text x="392" y="48" text-anchor="middle" class="hump-small">{zh ? "有结构且出人意料" : "structured + surprising"}</text>
     <circle cx="472" cy="278" r="5" class="hump-dot side"></circle>
-    <text x="472" y="276" text-anchor="middle" class="hump-name">{zh ? "气体" : "gas"}</text>
+    <text x="472" y="258" text-anchor="middle" class="hump-name">{zh ? "气体" : "gas"}</text>
     <text x="402" y="214" text-anchor="middle" class="hump-small">{zh ? "过于随机" : "too random"}</text>
     <line x1="276" y1="92" x2="276" y2="286" class="hump-drop"></line>
   </svg>

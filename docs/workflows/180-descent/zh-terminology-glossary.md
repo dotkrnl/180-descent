@@ -162,3 +162,50 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | Anthrobots | Anthrobots | Keep project term in Latin; explain as motile multicellular biobots. | 人形机器人 |
 | epsilon-machine | ε-机器 | Computational mechanics. | epsilon-机器, ε-机 unless source context requires |
 | C_mu / Cμ | `C_\mu` / `C<sub>μ</sub>` | Use Greek mu, not Latin letters. | C_{mu}, C<sub>mu</sub> |
+| feedback | 反馈 | System output returns to influence its own input; central to systems thinking. | 回馈 |
+| systems thinking | 系统思维 | Study of stocks, flows, feedback loops, and whole-system behaviour. | 系统思考 when used inconsistently |
+| negative feedback / balancing feedback | 负反馈 / 平衡反馈 | Loop that resists change and seeks a goal (labelled B). | 消极反馈 |
+| positive feedback / reinforcing feedback | 正反馈 / 增强反馈 | Loop that amplifies change (labelled R); not a value judgment. | 积极反馈 as value judgment |
+| control theory | 控制理论 | Mathematical study of feedback and stability (e.g., governors). | 控制论 when conflated with cybernetics |
+| cybernetics | 控制论 | Wiener's science of feedback, information, and control across substrates. | 赛博控制论 unless needed |
+| stock | 存量 | Anything that accumulates in a system. | 库存 when not technical |
+| flow | 流量 | Rate that changes a stock. | 流动 when ambiguous |
+| stocks and flows | 存量与流量 | Core grammar of system dynamics. | 库存与流 |
+| system dynamics | 系统动力学 | Forrester/Meadows discipline of modelling systems with stocks, flows, and feedback. | 系统动态学 |
+| causal loop diagram | 因果回路图 | Diagram of arrows showing what affects what, with R/B labels. | 因果循环图 |
+| system archetypes | 系统基模 | Recurring feedback-loop shapes (tragedy of the commons, etc.). | 系统原型 when inconsistent |
+| delay | 延迟 | Lag in a feedback loop; turns correction into oscillation. | 时滞 when inconsistent |
+| nonlinearity | 非线性 | Effect not proportional to cause; common in feedback systems. | 非线性关系 |
+| bullwhip effect | 牛鞭效应 | Amplification of demand fluctuations up a supply chain. | 长鞭效应 |
+| leverage points | 杠杆点 | Meadows' ranked places to intervene in a system. | 杠杆点列表 |
+| reductionism | 还原论 | Method of understanding by breaking into parts. | 简化论 |
+| holism | 整体论 | Emphasis on whole-system patterns and connections. | 整体主义 when inconsistent |
+| open system | 开放系统 | System exchanging matter/energy with its surroundings. | 开放体系 |
+| tipping point | 临界拐点 | Threshold where reinforcing feedback carries a system to a new state. | 临界点 when conflated with critical point |
+| critical transition | 临界转变 | Abrupt shift between alternative stable states. | 关键转变 |
+| fold bifurcation | 折叠分岔 | Mathematical shape of a tipping point with hysteresis. | 折叠分支 |
+| hysteresis | 滞后 | Return path differs from forward path; reversal needs extra push. | 迟滞 when inconsistent |
+| critical slowing down | 临界慢化 | Slowed recovery from perturbations near a tipping point. | 临界减速 |
+| early-warning signals | 早期预警信号 | Statistical patterns (variance/autocorrelation rise) signalling lost resilience. | 早期预警指标 when inconsistent |
+| resilience | 恢复力 | Capacity to absorb shocks and/or recover; see engineering vs ecological. | 韧性 when inconsistent |
+| engineering resilience | 工程恢复力 | Speed of return after a small perturbation. | 工程韧性 |
+| ecological resilience | 生态恢复力 | Size of shock a system can absorb before flipping. | 生态韧性 |
+| bifurcation tipping (B-tipping) | 分岔临界（B-临界） | Tipping by crossing a threshold where a stable state vanishes. | 分岔翻转 |
+| noise-induced tipping (N-tipping) | 噪声诱导临界（N-临界） | Tipping caused by a large random fluctuation below the threshold. | 噪声驱动翻转 |
+| rate-induced tipping (R-tipping) | 速率诱导临界（R-临界） | Tipping caused by the speed, not just magnitude, of change. | 速率驱动翻转 |
+| tipping cascades | 临界连锁 | One tipping element pushing another toward its threshold. | 临界级联 when inconsistent |
+| homeostasis | 稳态 | Maintenance of stable internal conditions by negative feedback. | 体内平衡 |
+| allostasis | 变稳态 | Stability through predictive, anticipatory change. | 异稳态 when inconsistent |
+| feedforward | 前馈 | Anticipatory adjustment before an error occurs. | 前馈控制 |
+| variety | 多样性 | Number of distinct disturbances a regulator may face. | 变异度 |
+| Law of Requisite Variety | 必需多样性定律 | Regulator must command at least as much variety as disturbances. | 必要多样性定律 when inconsistent |
+| normal form | 标准型 | Universal mathematical template near a bifurcation (fold, Hopf, etc.). | 范式 when conflated with Kuhn's paradigm |
+| reservoir computing | 储备池计算 | Recurrent neural-network approach for learning chaotic dynamics. | 水库计算 |
+| digital twin | 数字孪生 | Data-driven computational stand-in of a real system. | 数字双胞胎 |
+| Turing patterns | 图灵斑图 | Self-organized spatial patterns predicted by Alan Turing. | 图灵图案 |
+| positive tipping points | 正向临界点 | Reinforcing feedback deliberately seeded to flip toward good outcomes. | 积极临界点 |
+| social tipping elements | 社会临界要素 | Leverage-rich subsystems where small pushes may trigger rapid social change. | 社会翻转要素 |
+| AMOC | 大西洋经向翻转环流 | Atlantic Meridional Overturning Circulation; a climate tipping element. | AMOC 环流 |
+| Gaia hypothesis | 盖亚假说 | Lovelock's idea of life-planet self-regulation. | 盖亚理论 when overstated |
+| Daisyworld | 雏菊世界 | Lovelock-Watson toy model of feedback-driven planetary temperature regulation. | 黛西世界 |
+| panarchy | 泛层循环 | Holling's nested adaptive cycles across scales. | 泛archy |

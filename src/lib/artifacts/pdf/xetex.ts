@@ -911,7 +911,8 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["CausationScatterFigure", { selector: ".hero-fig", width: "0.82\\linewidth", height: "0.3\\textheight" }],
   ["EmergenceHero", { selector: ".emergence-hero", width: "0.86\\linewidth", height: "0.30\\textheight" }],
   ["ComplexityHump", { selector: ".complexity-hump", width: "0.82\\linewidth", height: "0.26\\textheight" }],
-  ["Day8StaticFigure", { selector: ".day8-static-figure", width: "0.86\\linewidth", height: "0.24\\textheight" }]
+  ["Day8StaticFigure", { selector: ".day8-static-figure", width: "0.86\\linewidth", height: "0.24\\textheight" }],
+  ["Day9StaticFigure", { selector: ".day9-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }]
 ]);
 
 function renderRenderedSvgComponent(name: string, attrs: Map<string, string | null>, state: MdxRenderState): string {
@@ -923,6 +924,16 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
         selector: `.day8-static-figure-${kind}`,
         width: "0.86\\linewidth",
         height: "0.24\\textheight"
+      };
+    }
+  }
+  if (name === "Day9StaticFigure") {
+    const kind = resolveExpression(attrs.get("kind"), state).trim();
+    if (kind) {
+      spec = {
+        selector: `.day9-static-figure-${kind}`,
+        width: "0.86\\linewidth",
+        height: kind === "thermostat" || kind === "deep-loops" || kind === "cliff" || kind === "governor" ? "0.22\\textheight" : "0.28\\textheight"
       };
     }
   }

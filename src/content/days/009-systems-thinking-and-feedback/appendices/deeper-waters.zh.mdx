@@ -1,0 +1,235 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import AppendixCard from "@app/components/lesson/AppendixCard.astro";
+import AppendixCardBody from "@app/components/lesson/AppendixCardBody.astro";
+import AppendixCardGrid from "@app/components/lesson/AppendixCardGrid.astro";
+import AppendixCardTitle from "@app/components/lesson/AppendixCardTitle.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Highlight from "@app/components/lesson/Highlight.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
+import Term from "@app/components/lesson/Term.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day9StaticFigure from "@app/components/lesson/figures/Day9StaticFigure.astro";
+import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive.astro";
+
+<Day9StaticFigure kind="deep-loops" locale="zh" />
+
+<Lead drop="正">文把我们留在了一颗正在失稳的行星边缘，带着一个来之不易的区分：检测系统的<Highlight>恢复力丧失</Highlight>，并不等于说出它会在哪一年崩溃。这个差距——感知脆弱与预测失败之间——正是本附录的入口。下面所有内容都活在这个缝隙里。我们已经认识了系统思维的骨架：恒温器、调速器、存量与流量、浴缸、山谷里滚动的球。现在我们要越过教科书，走进引擎室——那些缔造这门科学的怪人、他们发现的深层定律，以及他们最疯狂的想法：一颗没有大脑、没有计划的行星，仅凭反馈就能在数十亿年里稳住自己的温度。以下内容都不是为了「通过」今天而必须掌握的；它们全是精华。</Lead>
+
+<ContinueNote label={"↩ 从主楼层带下来的内容"}>
+以下内容默认你已掌握（因此不再重复）：<Highlight>负/平衡（B）</Highlight>回路稳定系统，<Highlight>正/增强（R）</Highlight>回路让系统失控；<Highlight>存量</Highlight>累积<Highlight>流量</Highlight>带来的东西；<Highlight>延迟</Highlight>把修正变成振荡；带有<Highlight>滞后</Highlight>的<Highlight>折叠分岔</Highlight>是临界拐点的形状；<Highlight>临界慢化</Highlight>是它的警示信号。我们会在这些基础上继续往下加盖楼层。
+</ContinueNote>
+
+<StatusChipRow>
+<StatusChip status="hint" label="深度潜流" />
+</StatusChipRow>
+
+<ContentSection>
+## 战争、渡轮与晚宴如何发明控制论
+
+诺伯特·维纳原本不是要创立一门控制科学。他是要打下飞机。1940 年，英国正遭轰炸，这位美国数学家接到一个极其务实的问题：防空炮手打不中快速飞机，因为炮弹需要时间爬升，等它到达时飞机已经移动。要命中目标，你不能瞄准它<Highlight>现在在哪里</Highlight>，而要瞄准它<Highlight>将会在哪里</Highlight>——你必须<Highlight>预测</Highlight>。维纳建造了一个统计预测器，把飞行员规避机动当作需要外推的嘈杂信号；在与它搏斗的过程中，他注意到了一件会消耗他余生的事：大炮、雷达和躲避的飞行员形成了一个单一的<Highlight>回路</Highlight>——感知、预测、修正，而这个回路同样能描述一只潜行捕猎的动物、一只伸手取杯的手、一个大脑。预测与反馈是同一枚硬币的两面。（历史学家彼得·加里森认为，这种战时把人与机器熔进一个反馈回路的做法，悄然塑造了<Highlight>控制论</Highlight>的整个世界观。）
+
+故事的硬件一面更精彩，而且它早十年就发生在一艘通勤渡轮上。1927 年 8 月，年轻的贝尔实验室工程师<Highlight>哈罗德·布莱克</Highlight>正在横渡哈德逊河，被一个问题卡住：长途电话的放大器会轻微失真，而经过数千英里的中继器，这些轻微失真累积成一片杂音。布莱克灵光一闪，把这一顿悟写在手边仅有的纸上——一份《纽约时报》——这个点子几近悖谬：故意把放大器<Highlight>输出</Highlight>的一部分<Highlight>反号</Highlight>馈送回输入，让放大器持续修正自己的错误。他在用增益换取精度。<Highlight>负反馈放大器</Highlight>让跨洲电话成为可能，也顺便验证了麦克斯韦在主文件里的老警告：反馈可以稳定，但接错线它就会尖叫。没过几年，<Highlight>哈里·奈奎斯特</Highlight>和<Highlight>亨德里克·博德</Highlight>（都在贝尔实验室）就算出了反馈回路何时稳定、何时爆发振荡的数学——控制与灾难之间那条线的形式化工程。
+
+然后是晚宴。1946 到 1953 年间，一群本世纪最不安分的大脑轮番相聚于乔赛亚·梅西基金会资助的一系列会议——<Highlight>梅西会议</Highlight>——他们想知道，反馈、信息与控制是否可能是一门跨越机器、大脑与社会的统一语言。嘉宾名单密集到近乎滑稽：维纳、通才<Highlight>约翰·冯·诺依曼</Highlight>、神经生理学家<Highlight>沃伦·麦卡洛克</Highlight>、人类学家<Highlight>玛格丽特·米德</Highlight>与<Highlight>格雷戈里·贝特森</Highlight>，以及英国精神病学家<Highlight>W·罗斯·阿什比</Highlight>。这口大熔炉里诞生了一种信念：<Highlight>组织本身</Highlight>——细胞里、恒温器里、市场里、心智里——可以作为一门学科来研究。后来的思想家，以<Highlight>海因茨·冯·福斯特</Highlight>为首，又加上了一个令人眩晕的<Highlight>转折</Highlight>，他们称之为<Highlight>二阶控制论</Highlight>：观察系统的观察者本身也与系统构成一个反馈回路，因此并不存在「无处之见」。科学家观察社会时，观察行为就在改变社会；一种「控制论的控制论」。当本课程抵达心智科学时，我们还会遇见那条咬自己尾巴的蛇。
+
+### 阿什比定律：只有多样性才能吸收多样性
+
+那个时期涌现的深层定律中，最值得一并带走的是阿什比的。它听起来简单到不像深刻的。一个调节器——恒温器、免疫系统、政府、守门员——面对的世界可以向它抛出若干种不同的扰动。把这个数字叫做世界的<Highlight>多样性</Highlight>。阿什比证明：<Highlight>要保持一个结果稳定，调节器必须掌握至少与所面对扰动同样多的多样性。</Highlight>只有多样性才能吸收多样性。只会一种固定扑救的守门员挡不住射向四面八方的球；只有十种抗体的免疫系统打不赢一千种病原体；只有一根杠杆的政策治理不了一个能往一百个方向出错的社会。这就是<Highlight>必需多样性定律</Highlight>，它铁一般地解释了为什么简单控制器会在复杂世界中失败——也解释了为什么每个成功的调节器，<Highlight>暗地里</Highlight>都和它的问题一样复杂。
+
+<Day9StaticFigure kind="ashby" locale="zh" />
+
+把这个定律揣进口袋。它以后会变形再现：解释大语言模型为何需要惊人规模才能应对语言的多样性；解释生物多样性如何缓冲生态系统；也解释「你无法管理你无法匹配的东西」这句话背后的安静数学。
+</ContentSection>
+
+<ContentSection>
+## 你的身体里有一万台恒温器
+
+远在维纳之前，地球上最精密的反馈机器就坐在每一位读者的身体里。1865 年，法国生理学家<Highlight>克洛德·贝尔纳</Highlight>注意到一件本该引起更大轰动的事：浸润我们细胞的液体——<Highlight>内环境</Highlight>（<Term>milieu intérieur</Term>，即「内部环境」）——即便外界剧烈波动，也保持着惊人的恒定。无论你是身处暴风雪还是桑拿房，你的血液都是同样温暖、咸度适中、糖分平衡的汤。贝尔纳的这句话成了生物学中被引用最多的名言之一：内环境的恒定是自由而独立生活的条件。七十年后，美国生理学家<Highlight>沃尔特·坎农</Highlight>给这种现象起了名字——<Term>稳态</Term><TipNote text="稳态指生物体通过负反馈维持内部环境相对稳定的状态。"/>，「稳定状态」——并阐明它是由我们一直在追踪的负反馈回路实现的，只不过材质从黄铜换成了血肉与激素。
+
+例子一旦看见就无处不在。你的血糖是一个由两股相反流量调节的存量：餐后血糖升高，胰腺释放<Highlight>胰岛素</Highlight>把葡萄糖推进细胞；血糖下降时，<Highlight>胰高血糖素</Highlight>又把储备中的葡萄糖释放出来——一台用两种激素做传感器和开关的恒温器。你的核心体温靠出汗、发抖和血液重新分配维持在大约 37°C。你的血压由<Highlight>压力感受反射</Highlight>每秒监管：动脉里的牵张感受器感知压力，反射性地调整心率以对抗它。站得太快时，你会感到那半秒钟的滞后，然后回路才追上——那短暂的眩晕就是延迟导致的超调，是你的压力反射在做啤酒游戏式的踉跄。你不是一台恒温器；你是一个由它们组成的、大多时候都为你争吵的繁忙共和国。
+
+<Aside>
+<BlockTitle>有用的例外：当身体想要一次失控</BlockTitle>
+
+生物学大多追求稳定，因此大多使用负反馈。但偶尔它也需要一个<Highlight>事件</Highlight>——快速、果断、不可逆——于是它会小心地借用<Highlight>正反馈</Highlight>。分娩是经典例子：婴儿头部撑开宫颈，触发催产素，催产素加强宫缩，宫缩进一步撑开宫颈——一个爆炸性的 R 回路，不断升温，直到婴儿娩出才关闭。血液凝固级联也是如此；神经元放电也是如此，一股微弱电荷会猛然打开闸门，让洪流涌入。正反馈不是身体的敌人，它是身体的<Highlight>起爆器</Highlight>——少用，且总有一只手按在关闭开关上。
+</Aside>
+
+到这里，本附录又绕回了课程的第一天。旧的稳态图景纯粹是<Highlight>反应性</Highlight>的：等待偏差，然后修正。但生理学家越来越青睐一个更丰富的概念，叫做<Term>变稳态</Term><TipNote text="变稳态指身体通过预测需求并提前调整，而非等待误差出现后再修正，以维持稳定。"/>——「通过变化实现稳定」——在这种图景中，身体根本不等待误差。它<Highlight>预测</Highlight>需求并提前调整：你的皮质醇在醒来前升高，你的心率在用力之前就开始<Highlight>攀升</Highlight>，而不是作为反应。调节变成了<Highlight>前馈</Highlight>，不只是反馈——预判性控制。如果这听起来耳熟，那是对的：它是<Highlight>第 1 日的预测性大脑</Highlight>的<Highlight>身体</Highlight>表亲，弗里斯顿那台通过预先建模世界来最小化惊奇的机器。控制论最深的现代转向，是意识到最优秀的控制器不只是对世界作出反应——它们能看见世界正在到来。
+</ContentSection>
+
+<ContentSection>
+## 一间社会主义控制室与一个末日模型
+
+如果反馈能支配身体和机器，那么难以抗拒的诱惑就是：为什么不用它来支配<Highlight>经济</Highlight>呢？1971 年，英国管理理论家<Highlight>斯塔福德·比尔</Highlight>——一位抽雪茄、练瑜伽的「管理控制论」大师——受萨尔瓦多·阿连德新当选的社会主义政府邀请，为整个智利做这件事。成果——<Highlight>Cybersyn 计划</Highlight>（西班牙语里叫 Synco）——是技术史上最奇怪、最令人难忘的事件之一：试图把整个国民经济当作一个单一的自我调节有机体来实时运行，而计算能力只有一台大型机和几百台电传机。
+
+<Day9StaticFigure kind="cybersyn" locale="zh" />
+
+这个系统有每日心跳。工厂通过改造过的电传网络（「Cybernet」）把生产数字发往圣地亚哥的一台中央计算机，当某个数字偏离预期范围时，系统就发回警告——一条全国性的神经系统在发出疼痛信号。它的核心是那个<Highlight>操作室</Highlight>：一间六边形房间，七把白色玻璃纤维转椅，每把扶手上有大按钮，面对墙上的屏幕，显示经济状态。它看起来像星舰舰桥，本应是管理者能够<Highlight>看见</Highlight>国家反馈回路并驾驭它们的地方。它最辉煌的时刻出现在 1972 年 10 月：卡车主罢工威胁要掐断国家供应链；政府用 Cybernet 电传网络近乎实时地协调几千辆忠诚卡车，让国家免于挨饿。一年多以后，项目在一个下午死亡——1973 年 9 月 11 日的军事政变卷走了阿连德，也卷走了 Cybersyn。它仍是有史以来最雄心勃勃的尝试：用显式反馈来治理一个社会，兼具启发与警示。<StatusChip status="hint" label="有前景" printLabel="真实系统，确实运转过" />——尽管它若要在规模上真正<Highlight>奏效</Highlight>，会直接撞上阿什比定律：一间控制室能否掌握足以匹配整个经济的多样性？
+
+### 那个拒绝死去的模型
+
+另一个试图建模整个系统的伟大尝试更安静，但余响更大。我们在主文件里把《增长的极限》（1972）作为唐娜拉·梅多斯的作品遇见；这里说说它到底<Highlight>做了</Highlight>什么，以及为什么五十年后仍在争论。麻省理工的一个团队用<Highlight>系统动力学</Highlight>模型 <Highlight>World3</Highlight> 把五个紧密回环的全球存量——人口、粮食生产、工业产出、污染、不可再生资源——联系起来，让它按不同假设运行到 2100 年。头条式的「标准运行」大致按「一切照旧」推进，产生了一个令人不安的形状：增长持续数十年，然后在 21 世纪因资源枯竭和污染追上来而出现<Highlight>过冲</Highlight>，人口与产出急剧下降。反应激烈。经济学家猛烈抨击：模型粗糙，资源估计悲观，忽略了价格驱动的适应与人类智慧。对一代人来说，「增长的极限」成了历史据称已经证伪的末日预言代名词。
+
+然后数据开始到来。2008 年和 2014 年，澳大利亚物理学家<Highlight>格雷厄姆·特纳</Highlight>（CSIRO）把三四十年的现实统计与 1972 年的情景比较，不安地发现世界一直以诡异的精确度跟踪「标准运行」。2021 年，分析师<Highlight>盖娅·赫林顿</Highlight>用新数据更新了比较，得出类似结论：经验趋势最接近模型的「一切照旧」和「综合技术」运行，两者都意味着增长将在 2040 年代左右停滞。诚实的、经过前沿校准的阅读在这里很重要，因为它两边都切。这<Highlight>不是</Highlight>一个被验证的预言——World3 是粗糙模型，吻合部分出于巧合，「标准运行目前吻合」对任何下降的确切时间或必然性都说得很少。<StatusChip status="bad" label="炒作风险" printLabel="「被证明正确」——有争议／炒作风险" />。但那种懒散的否定——说它干脆就是<Highlight>错的</Highlight>——也是假的。<StatusChip status="ok" label="已确立" printLabel="数据追踪研究是真实的" />。真相是更令人不安的中间地带：一个五十岁的过冲系统模型还没有被现实打脸。这正好把你交给明天的问题——<Highlight>我们该在多大程度上相信一个模型？</Highlight>——但我们跑得太快了。
+</ContentSection>
+
+<ContentSection>
+## 十二处推手
+
+唐娜拉·梅多斯写过的最实用的东西是一份排序清单。我们在主文件里勾勒过它——<Highlight>参数最弱，范式最强</Highlight>——但完整的梯子值得认真看，因为它几乎把我们对「如何改变系统」的直觉完全颠倒。我们本能地伸手去够底部横档（调一个数字、定一个目标），恰恰因为它们容易抓、容易推。麻烦在于它们也是<Highlight>最弱的</Highlight>。真正的力量高高在上：杠杆巨大，但手点难抓。爬一爬这个梯子；点击任意横档打开它。
+
+<Day9Interactive kind="leverage" locale="zh" />
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
+### 梅多斯杠杆点分组
+
+<SimpleTable
+  headers={["层级","例子","为什么重要"]}
+  rows={[["12-10","参数、缓冲、存量-流量结构","最容易看见，也常常只是微调。"],["9-6","延迟、平衡回路、增强回路、信息流","改变反馈如何抵达行动者。"],["5-1","规则、自组织、目标、范式、超越范式","改变系统真正优化和能够想象的东西。"]]}
+/>
+</FormatOnly>
+
+注意这个教训的形状。税收微调与目标——大多数政治争论的全部实质——住在底部。变革性的横档关乎<Highlight>反馈</Highlight>（8–6 层：加强平衡回路、减缓增强回路、增加缺失的信息渠道），然后关乎<Highlight>结构与规则</Highlight>（5–4 层），最后关乎<Highlight>目的与世界观</Highlight>（3–1 层）。梅多斯最喜欢的高杠杆信息修复例子几乎精巧到不真实：荷兰一处住宅区因设计偶然，有些家庭的电表装在显眼的前厅，有些则藏在地下室。电表可见的家庭用电量明显更少——大约少三分之一——唯一原因是原本隐藏的反馈回路突然被看见了。没有税收，没有规则，没有新技术。只是信息补完了回路。这就是杠杆。
+</ContentSection>
+
+<ContentSection>
+## 反复出现的同样陷阱
+
+画够多因果回路图，你会注意到一件解放的事：同样的少数回路<Highlight>形状</Highlight>制造了世界上惊人比例的慢性问题。福雷斯特、梅多斯和<Highlight>彼得·圣吉</Highlight>把这些反复出现的结构编目为<Highlight>系统基模</Highlight>——功能障碍的常备角色。学会识别几个，你就能一眼诊断许多卡住的局面，并且（更有用地）预测显而易见的修复会在哪里反噬。下面是最有用的几个，每个都是一口气能说完的回路故事。
+
+<AppendixCardGrid>
+<AppendixCard>
+<AppendixCardTitle><Highlight>公地悲剧</Highlight> · R</AppendixCardTitle>
+<AppendixCardBody>每个使用者获利 → 大家一起过度使用 → 共享资源崩溃 → 所有人受损</AppendixCardBody>
+<AppendixCardBody>当资源共有而收益私有时，每个理性行动者都会多拿一点，个体收益的增强拉力把公共牧场啃光。修复位于梯子高处：改变规则或信息，让过度使用的成本被使用者感受到。</AppendixCardBody>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><Highlight>转移负担</Highlight> · B</AppendixCardTitle>
+<AppendixCardBody>问题 → 快速症状性缓解 → 缓解 → 真正能力萎缩 → 问题恶化</AppendixCardBody>
+<AppendixCardBody>这是「成瘾」基模。症状性缓解解除了可能推动根本解决的压力——于是底层能力萎缩，依赖加深。缓解是真实的；这就是陷阱。</AppendixCardBody>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><Highlight>治标不治本</Highlight> · B</AppendixCardTitle>
+<AppendixCardBody>问题 → 修复 → 快速缓解 → 延迟的副作用 → 问题以更重形式回来</AppendixCardBody>
+<AppendixCardBody>一个方案短期效果美妙，却悄悄种下长期后果，让问题以更糟的形式重现。借钱填补缺口；喷洒害虫同时消灭其天敌。延迟隐藏了成本。</AppendixCardBody>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><Highlight>富者愈富</Highlight> · R</AppendixCardTitle>
+<AppendixCardBody>A 早期获胜 → A 获得更多资源 → A 赢得更多 → B 饿死</AppendixCardBody>
+<AppendixCardBody>当胜利者被奖励以再次获胜的手段时，微小初始差异会放大为失控的主导——市场垄断、学术声望、学校不平等背后的「富者愈富」回路。纯增强反馈，规模化。</AppendixCardBody>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><Highlight>增长极限</Highlight> · R+B</AppendixCardTitle>
+<AppendixCardBody>增长引擎（R）加速 → 撞上隐藏约束（B） → 增长停滞或崩溃</AppendixCardBody>
+<AppendixCardBody>每个增强的成功最终都会遇到一个没看见的<Highlight>平衡</Highlight>极限——资源、市场规模、承载能力。World3 模型就是把这个基模写到行星尺度。增长从来不会简单继续；它要与天花板谈判。</AppendixCardBody>
+</AppendixCard>
+<AppendixCard>
+<AppendixCardTitle><Highlight>升级</Highlight> · R</AppendixCardTitle>
+<AppendixCardBody>A 行动 → B 反制 → A 升级 → B 升级 → 双方更糟</AppendixCardBody>
+<AppendixCardBody>两个平衡回路，各自试图恢复<Highlight>自己</Highlight>的安全感，却耦合成一个单一的增强螺旋：军备竞赛、价格战、社交媒体愤怒循环。没人不理性；是结构在造成伤害。</AppendixCardBody>
+</AppendixCard>
+</AppendixCardGrid>
+
+深层要点不是目录本身——而是<Highlight>结构驱动行为</Highlight>。在每个基模中，善意的人们基于局部合理选择，却集体制造出可怕结果，原因不是谁愚蠢，而是他们嵌入的回路在把他们推向那里。换人，陷阱仍在；改结构，行为自己变。这就是系统思维全部信条的一句话版本。
+</ContentSection>
+
+<ContentSection>
+## 恢复力如何死亡——三种不同方式
+
+主文件给了你临界拐点的一种图像：山谷变平，直到球滚出去。这是对的，但它只是系统可能翻车的三种不同方式之一，把它们混为一谈会在气候争论中造成真正的混乱。首先，我们需要更锐利地理解系统「翻倒」时真正失去的是什么——为此我们回到生态学家<Highlight>C·S·「巴兹」·霍林</Highlight> 1973 年的奠基论文，他把所有人都叫「稳定性」的两件事撬开了。
+
+<Highlight>工程恢复力</Highlight>是系统被敲了一下之后<Highlight>多快</Highlight>弹回来——山谷壁的陡峭程度。<Highlight>生态恢复力</Highlight>则完全是另一回事：系统在翻进另一个盆之前能吸收<Highlight>多大</Highlight>冲击——山谷的<Highlight>宽度</Highlight>，它能吞下的扰动大小。这两者可能朝相反方向拉扯，而这正是要紧之处。一个系统可能对小的敲击弹回得很漂亮（高工程恢复力），却坐在一个狭窄盆地里，一次大冲击就会永远翻倒（低生态恢复力）。效率往往通过悄悄消耗第二个来购买第一个。主文件量的是山谷的<Highlight>深度</Highlight>；霍林教你也要看它的<Highlight>宽度</Highlight>。
+
+<Day9StaticFigure kind="resilience" locale="zh" />
+
+现在，三条通向崩溃的路。动力系统理论家（尤其彼得·阿什温及其同事在 2012 年一篇澄清论文中）把临界分成了三种机制，这个区分真正具有启发性：
+
+<Day9StaticFigure kind="tipping-types" locale="zh" />
+
+<Highlight>分岔临界（B-临界）</Highlight>是我们已经知道的那种：把驱动因素推过阈值，稳定状态消失。<Highlight>噪声诱导临界（N-临界）</Highlight>是驱动因素还安全地低于阈值，但一次足够大的随机涨落——一场异常热浪、一场百年一遇的暴风雨——还是把系统踢过了山脊。然后是真正反直觉的：<Highlight>速率诱导临界（R-临界）</Highlight>，关键不是驱动因素移动了<Highlight>多远</Highlight>，而是<Highlight>多快</Highlight>。一个能从容跟上缓慢变化的系统，可能被<Highlight>同样大小</Highlight>但太快施加的变化推翻——山谷底倾斜得比球能滚过去还快，于是它<Highlight>滚落出去</Highlight>，尽管同样变化若是悠闲进行就能幸存。这对气候<Highlight>令人警醒</Highlight>，因为它意味着温度的阈值不是唯一危险；升温<Highlight>速率</Highlight>的阈值可能同样重要。生态系统和冰不只关心我们最终到达哪里，也关心我们多快到达那里。
+
+### 多米诺，与更新的轮子
+
+两个最后的想法为深层理论收尾。第一个是让气候科学家夜不能寐的：<Highlight>临界连锁</Highlight>。地球的临界要素并非独立——它们互相连线，一个翻倒会把另一个推向边缘。波茨坦研究所的建模工作（旺德林、东格斯等，2021）发现，要素之间的相互作用总体上倾向于<Highlight>降低</Highlight>安全阈值并提高多米诺效应的几率，大冰盖往往充当第一块多米诺，削弱的大西洋传送带则作为传播者。量级仍然真正不确定 <StatusChip status="hint" label="不确定" printLabel="有前景但尚未确定" />，但发现的方向令人担忧：耦合系统比其各部分之和更脆弱——第 8 日的涌现，穿上了它最黑暗的外套。
+
+第二个想法奇怪地令人安慰。生态学家霍林晚年提出，复杂系统不只是坐在盆里或翻出盆外——它们会经历一个反复出现的<Highlight>适应性循环</Highlight>：快速增长阶段，然后是漫长的刚性积累与效率阶段，然后是突然的释放或崩溃（他把它标为 Ω，「创造性破坏」），然后是肥沃的重组，新的增长从中萌发。在这种视角下，崩溃不只是灾难；它也是系统为更新清理棋盘，而这些循环在不同尺度上互相嵌套——他把这个框架称为<Highlight>泛层循环</Highlight>（panarchy）。它提醒我们，「翻倒」并不总是故事的终点。有时它只是两个故事之间的铰链。
+</ContentSection>
+
+<ContentSection>
+## 雏菊世界：无主的稳态
+
+我们在系统思维几乎变成哲学的地方结束。1970 年代，化学家<Highlight>詹姆斯·洛夫洛克</Highlight>提出了<Highlight>盖亚假说</Highlight>：生命与地球表面形成一个单一的自我调节系统，把温度、大气化学、海洋盐度维持生命所需的狭窄范围内——就像身体维持它的内环境。这个想法很美，却立刻遭到一个毁灭性反对：它似乎要求<Highlight>远见</Highlight>。行星上的微生物怎么会「想要」调节气候？演化没有目标；自然选择作用于个体生物，而非行星。为整体利益而进行的调节看起来像是把目的论偷偷塞进了生物学——而生物学家，<Highlight>理所当然地</Highlight>，不允许这样。
+
+洛夫洛克的回答，与<Highlight>安德鲁·沃森</Highlight>在 1983 年一起构建，是科学中最优雅的玩具模型之一，它彻底解决了这个反对。它叫<Highlight>雏菊世界</Highlight>，里面没有一点生物学家的含糊其辞——只有反馈。想象一颗灰色行星绕着一颗缓慢变亮的恒星运转，上面播种了两种雏菊：<Highlight>黑色</Highlight>雏菊吸收阳光、温暖周围；<Highlight>白色</Highlight>雏菊反射阳光、保持凉爽。每朵雏菊只是在一个舒适温度附近生长最快，太热或太冷就死亡。没有远见，没有合作，没有行星「目的」——只有个体雏菊自私地在最适合的地方生长。看看它们盲目的反馈对整个世界温度做了什么。
+
+<Day9Interactive kind="daisyworld" locale="zh" />
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
+### 雏菊世界：没有远见的调节
+
+<SimpleTable
+  headers={["太阳亮度","雏菊组成","温度结果"]}
+  rows={[["偏暗","黑雏菊较多","吸收更多热量，世界被暖起来"],["中等","黑白雏菊共同调节","温度保持在适生平台"],["过亮","雏菊死亡","调节失败，温度跟随裸岩上升"]]}
+/>
+</FormatOnly>
+
+那段平坦的高原就是全部要点——而模型里没有一丝远见。当恒星昏暗时，只有黑色雏菊能立足；它们蔓延，让行星变暗、变暖——一个增强回路，把世界<Highlight>自举</Highlight>到宜居温度。随着恒星变亮，行星本将过热，白色雏菊开始比黑色更有竞争力（它们更凉，因此在炎热中长得更好），而随着白色覆盖蔓延，它反射更多阳光，<Highlight>冷却</Highlight>行星。雏菊的组成自动转变以抵消变化的太阳。<Highlight>稳健的</Highlight>行星自我调节从自私的局部生长加反馈中涌现出来——正是第 8 日的「多即不同」，现在维持着一个世界存活。雏菊世界没有证明盖亚为真；地球生物圈确实为生命利益主动调节行星这一强主张仍 <StatusChip status="bad" label="有争议" printLabel="有争议" />。但它粉碎了「这种调节会<Highlight>要求</Highlight>远见」的指控——这是一个深刻的结果。目的似的行为可以从纯粹机制中<Highlight>涌现出来</Highlight>。行星保持温度，与你的身体保持温度，原因相同：不是因为任何东西想要它，而是因为回路就那么接的。
+</ContentSection>
+
+<ContentSection>
+## 本附录打开的问题
+
+- <Highlight>必需多样性是治理的硬上限吗？</Highlight>如果阿什比是对的，无论 Cybersyn 还是别的什么，一间控制室永远不可能匹配整个经济的多样性。这会注定中央计划失败，还是只意味着复杂性必须用<Highlight>分布式</Highlight>控制而非一个英雄般的仪表盘来应对？
+- <Highlight>调节在多大程度上是预测性的？</Highlight>变稳态说身体看见需求正在到来。大脑（第 1 日）可能也一样。这种预判性、前馈性控制能向下延伸多远——到单个细胞？到生态系统？
+- <Highlight>速率诱导临界会改变气候目标吗？</Highlight>如果系统可以因变化<Highlight>速度</Highlight>而翻车，而不仅是大小，那么「守住 1.5°C」可能必要但不充分——接近的<Highlight>节奏</Highlight>可能独立地重要。
+- <Highlight>崩溃有时是更新吗？</Highlight>泛层循环把 Ω 阶段重构为创造性破坏。什么时候临界拐点是必须阻止的灾难，什么时候是僵化系统重组所需的铰链？
+- <Highlight>如果雏菊世界无需远见就能自我调节，还有什么也行？</Highlight>市场、免疫系统、语言，也许心智——自然界里有多少看似「目的」的东西，其实只是我们尚未画出回路的反馈？
+</ContentSection>
+
+<Recap>
+<PanelTitle>◆ 本附录三句话</PanelTitle>
+
+<Highlight>历史：</Highlight>反馈控制从战时大炮和渡轮草图成长为控制论，其最深定律——阿什比的必需多样性——说调节器必须和面对的麻烦一样多样；你可以在自己身体里一万个稳态回路中，以及智利那间注定失败的未来主义控制室里，感受到这条定律。
+
+<Highlight>深层理论：</Highlight>恢复力有两种口味（快反弹与大冲击耐受），它们可以无形地此消彼长；系统有三种翻车方式——跨阈值、被随机<Highlight>冲击</Highlight>、以及最狡猾的、被推得太<Highlight>快</Highlight>；而耦合的临界要素让整个系统比零件之和更脆弱。
+
+<Highlight>顶点：</Highlight>雏菊世界证明，一颗行星可以仅凭自私的局部生长加反馈，在漫长岁月里稳住自己的温度——无主的稳态，也是科学最干净的演示：目的似的有序可以从盲目机制中涌现。
+</Recap>
+
+<ContinueNote label={"→ 回到主线"}>
+这里的一切都是对第 9 日的深化。下降本身在<Highlight>第 10 日——模型、地图与理想化</Highlight>继续：我们刚刚信任了 World3、杠杆梯子和一个由雏菊组成的行星来教我们真实的东西——所以明天我们要问那个潜伏在所有这些之下的问题。<Highlight>地图不是领土；所有模型都是错的，但有些有用。</Highlight>什么时候简化是一盏灯，什么时候是一个谎言？
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>资料与延伸阅读</SourcesTitle>
+
+1. Wiener, N. (1948). *Cybernetics.* MIT Press. 另见 Galison, P. (1994). "The Ontology of the Enemy: Norbert Wiener and the Cybernetic Vision." *Critical Inquiry* 21(1): 228–266. —— 防空预测器作为反馈思维的种子。
+2. Black, H. S. (1934). "Stabilized Feedback Amplifiers." *Bell System Technical Journal* 13(1): 1–18.（构想于 1927 年 8 月；美国专利 2,102,671，1937 年）—— 负反馈电子学的渡轮草图起源。
+3. Nyquist, H. (1932). "Regeneration Theory." *Bell System Technical Journal*; Bode, H. (1945). *Network Analysis and Feedback Amplifier Design.* —— 反馈的稳定性数学。
+4. Macy Conferences on Cybernetics (1946–1953). 见 Heims, S. J. (1991). *The Cybernetics Group.* MIT Press; Pias, C. (ed.) (2016). *Cybernetics: The Macy Conferences 1946–1953.* —— 维纳、冯·诺依曼、麦卡洛克、米德、贝特森、阿什比。
+5. von Foerster, H. (1974). *Cybernetics of Cybernetics.* Univ. of Illinois. —— 二阶控制论；观察者身处回路之中。
+6. Ashby, W. R. (1956). *An Introduction to Cybernetics.* Chapman &amp; Hall. —— 必需多样性定律；稳态机。[full text](http://pespmc1.vub.ac.be/ASHBBOOK.html)
+7. Bernard, C. (1865). *Introduction à l'étude de la médecine expérimentale.* —— 内环境（milieu intérieur）。
+8. Cannon, W. B. (1932). *The Wisdom of the Body.* Norton. —— 创造「稳态」（术语 1926 年引入）。
+9. Sterling, P. (2012). "Allostasis: A model of predictive regulation." *Physiology &amp; Behavior* 106(1): 5–15.（概念：Sterling &amp; Eyer 1988）—— 通过预判性变化实现稳定；与预测性调节的关联。
+10. Medina, E. (2011). *Cybernetic Revolutionaries: Technology and Politics in Allende's Chile.* MIT Press; Beer, S. (1972). *Brain of the Firm.* —— Cybersyn 计划（1971–73）与可存活系统模型。
+11. Meadows, D. H., Meadows, D. L., Randers, J. &amp; Behrens, W. W. (1972). *The Limits to Growth.* Universe Books. —— World3 模型。
+12. Turner, G. M. (2008). "A comparison of The Limits to Growth with 30 years of reality." *Global Environmental Change* 18(3): 397–411; Turner (2014), MSSI Research Paper No. 4, Univ. of Melbourne. —— 数据跟踪「标准运行」。
+13. Herrington, G. (2021). "Update to limits to growth: Comparing the World3 model with empirical data." *Journal of Industrial Ecology* 25(3): 614–626. doi:10.1111/jiec.13084 —— 经验数据最接近 BAU2 / 综合技术运行。[doi.org/10.1111/jiec.13084](https://doi.org/10.1111/jiec.13084)
+14. Meadows, D. H. (1999). *Leverage Points: Places to Intervene in a System.* The Sustainability Institute. —— 排序的十二个杠杆点；荷兰电表例子（亦见《系统之美》2008）。[donellameadows.org](https://donellameadows.org/archives/leverage-points-places-to-intervene-in-a-system/)
+15. Senge, P. (1990). *The Fifth Discipline.* Doubleday. —— 系统基模（承福雷斯特与梅多斯谱系）。
+16. Holling, C. S. (1973). "Resilience and Stability of Ecological Systems." *Annual Review of Ecology and Systematics* 4: 1–23. —— 工程恢复力与生态恢复力。Gunderson, L. &amp; Holling, C. S. (2002). *Panarchy.* Island Press. —— 适应性循环。
+17. Ashwin, P., Wieczorek, S., Vitolo, R. &amp; Cox, P. (2012). "Tipping points in open systems: bifurcation, noise-induced and rate-dependent examples in the climate system." *Phil. Trans. R. Soc. A* 370: 1166–1184. doi:10.1098/rsta.2011.0306 —— B / N / R 分类。[doi.org/10.1098/rsta.2011.0306](https://doi.org/10.1098/rsta.2011.0306)
+18. Wunderling, N., Donges, J. F., Kurths, J. &amp; Winkelmann, R. (2021). "Interacting tipping elements increase risk of climate tipping cascades." *Earth System Dynamics* 12: 601–619. doi:10.5194/esd-12-601-2021 —— 耦合降低阈值；冰盖作为触发者。[doi.org/10.5194/esd-12-601-2021](https://doi.org/10.5194/esd-12-601-2021)
+19. Watson, A. J. &amp; Lovelock, J. E. (1983). "Biological homeostasis of the global environment: the parable of Daisyworld." *Tellus B* 35(4): 284–289. doi:10.1111/j.1600-0889.1983.tb00031.x —— 无需远见的自我调节。[doi.org/10.1111/j.1600-0889.1983.tb00031.x](https://doi.org/10.1111/j.1600-0889.1983.tb00031.x)
+</Sources>

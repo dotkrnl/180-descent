@@ -31,25 +31,25 @@ const copy = zh
     };
 ---
 <figure class="hero-art emergence-hero">
-  <svg viewBox="0 0 720 360" role="img" aria-labelledby={zh ? "emergence-hero-title-zh emergence-hero-desc-zh" : "emergence-hero-title-en emergence-hero-desc-en"}>
+  <svg viewBox="0 0 360 220" role="img" aria-labelledby={zh ? "emergence-hero-title-zh emergence-hero-desc-zh" : "emergence-hero-title-en emergence-hero-desc-en"}>
     <title id={zh ? "emergence-hero-title-zh" : "emergence-hero-title-en"}>{copy.title}</title>
     <desc id={zh ? "emergence-hero-desc-zh" : "emergence-hero-desc-en"}>{copy.desc}</desc>
     <style>
-      .emergence-hero-bg{fill:#f7f4ed;stroke:#cabfa8;stroke-width:1}
-      .emergence-label,.emergence-caption,.emergence-annotation{font-family:"IBM Plex Mono",monospace;fill:#5d6c72;letter-spacing:.08em}
-      .emergence-label{font-size:11px;text-transform:uppercase}.emergence-label.end{text-anchor:end}
-      .emergence-caption{font-size:12px;fill:#13525a}.emergence-annotation{font-family:"Fraunces",serif;font-size:17px;fill:#172530}
-      .emergence-annotation.small{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:#5d6c72;letter-spacing:.06em;text-transform:uppercase}
-      .emergence-title-plate rect{fill:#f5f3ec;stroke:#ddd7c8;stroke-width:1}
-      .rule-card rect{fill:#f6f3ea;stroke:#cabfa8}.rule-card text{font-family:"IBM Plex Mono",monospace;font-size:11px;fill:#172530;letter-spacing:.03em;text-anchor:middle}
-      .rule-icon{fill:none;stroke:#1d6f78;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.rule-arrow{fill:none;stroke:#cabfa8;stroke-width:1.2;stroke-dasharray:4 5;opacity:.8}
-      .emergence-arrow-head{fill:#cabfa8}.neighbor-net path{fill:none;stroke:#cabfa8;stroke-width:1.1;opacity:.7}.neighbor-net circle{fill:#f5f3ec;stroke:#1d6f78;stroke-width:1.7}
-      .boid-field path{fill:#172530;opacity:.7}.boid-field path:nth-child(3n){fill:#13525a}.boid-field path:nth-child(4n){fill:#93651f}
-      .flock-band{fill:url(#emergence-wave);opacity:.22}.flock-wave{fill:none;stroke:#13525a;stroke-width:2.1;stroke-linecap:round}.flock-wave.lower{stroke:#93651f;stroke-width:1.5;opacity:.72}
+      .emergence-hero-bg{fill:var(--raised,#fbfaf5);stroke:var(--line-strong,#cabfa8);stroke-width:1}
+      .emergence-label,.emergence-caption,.emergence-annotation{font-family:"IBM Plex Mono",monospace;fill:var(--ink-faint,#5d6c72);letter-spacing:.08em}
+      .emergence-label{font-size:10.5px;text-transform:uppercase}.emergence-label.end{text-anchor:end}
+      .emergence-caption{font-size:10.5px;fill:var(--accent-deep,#13525a)}.emergence-annotation{font-family:"Fraunces",serif;font-size:13.5px;fill:var(--ink,#172530)}
+      .emergence-annotation.small{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--ink-faint,#5d6c72);letter-spacing:.03em;text-transform:uppercase}
+      .emergence-title-plate rect{fill:var(--paper,#f5f3ec);stroke:var(--line,#ddd7c8);stroke-width:1}
+      .rule-card rect{fill:var(--paper,#f5f3ec);stroke:var(--line-strong,#cabfa8)}.rule-card text{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--ink,#172530);letter-spacing:0;text-anchor:middle}
+      .rule-icon{fill:none;stroke:var(--accent,#1d6f78);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.rule-arrow{fill:none;stroke:var(--line-strong,#cabfa8);stroke-width:1.1;stroke-dasharray:3 4;opacity:.65}
+      .emergence-arrow-head{fill:var(--line-strong,#cabfa8)}.neighbor-net path{fill:none;stroke:var(--line-strong,#cabfa8);stroke-width:1.2;opacity:.55}.neighbor-net circle{fill:var(--paper,#f5f3ec);stroke:var(--accent,#1d6f78);stroke-width:1.8}
+      .boid-field path{fill:var(--ink,#172530);opacity:.78}.boid-field path:nth-child(3n){fill:var(--accent-deep,#13525a)}.boid-field path:nth-child(4n){fill:var(--brass,#93651f)}
+      .flock-band{fill:url(#emergence-wave);opacity:.22}.flock-wave{fill:none;stroke:var(--accent-deep,#13525a);stroke-width:1.8;stroke-linecap:round}.flock-wave.lower{stroke:var(--brass,#93651f);stroke-width:1.2;opacity:.72}
     </style>
     <defs>
-      <marker id="emergence-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-        <path d="M0 0L10 5L0 10Z" class="emergence-arrow-head"></path>
+      <marker id="emergence-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+        <path d="M0 0L6 3L0 6Z" class="emergence-arrow-head"></path>
       </marker>
       <linearGradient id="emergence-wave" x1="0" x2="1" y1="0" y2="0">
         <stop offset="0" stop-color="var(--accent)" stop-opacity=".22"></stop>
@@ -58,70 +58,58 @@ const copy = zh
       </linearGradient>
     </defs>
 
-    <rect x="18" y="18" width="684" height="324" rx="18" class="emergence-hero-bg"></rect>
+    <rect x="8" y="8" width="344" height="198" rx="14" class="emergence-hero-bg"></rect>
 
-    <text x="64" y="62" class="emergence-label">{copy.local}</text>
-    <text x="540" y="62" class="emergence-label end">{copy.global}</text>
+    <text x="20" y="31" class="emergence-label">{copy.local}</text>
+    <text x="340" y="31" class="emergence-label end">{copy.global}</text>
 
-    <g class="rule-card" transform="translate(42 245)">
-      <rect width="172" height="58" rx="10"></rect>
-      <path d="M34 30L58 18M34 30L58 42" class="rule-icon"></path>
-      <text x="118" y="36">{copy.separation}</text>
-    </g>
-    <g class="rule-card" transform="translate(274 245)">
-      <rect width="172" height="58" rx="10"></rect>
-      <path d="M35 23H72M35 35H72M35 47H72" class="rule-icon"></path>
-      <text x="122" y="36">{copy.alignment}</text>
-    </g>
-    <g class="rule-card" transform="translate(506 245)">
-      <rect width="172" height="58" rx="10"></rect>
-      <path d="M34 20L62 34L34 48M72 20L44 34L72 48" class="rule-icon"></path>
-      <text x="122" y="36">{copy.cohesion}</text>
-    </g>
-
-    <path class="rule-arrow" d="M132 244C154 213 170 192 197 172" marker-end="url(#emergence-arrow)"></path>
-    <path class="rule-arrow" d="M360 244C359 213 358 190 357 164" marker-end="url(#emergence-arrow)"></path>
-    <path class="rule-arrow" d="M588 244C556 210 530 186 497 164" marker-end="url(#emergence-arrow)"></path>
-
-    <g class="neighbor-net">
-      <path d="M154 161L190 133L229 159L268 126L311 151L357 128L403 151L448 125L492 154L535 134L574 164"></path>
-      <path d="M190 133L268 126M229 159L311 151M357 128L448 125M403 151L492 154M492 154L574 164"></path>
-      <circle cx="154" cy="161" r="5"></circle>
-      <circle cx="190" cy="133" r="5"></circle>
-      <circle cx="229" cy="159" r="5"></circle>
-      <circle cx="268" cy="126" r="5"></circle>
-      <circle cx="311" cy="151" r="5"></circle>
-      <circle cx="357" cy="128" r="5"></circle>
-      <circle cx="403" cy="151" r="5"></circle>
-      <circle cx="448" cy="125" r="5"></circle>
-      <circle cx="492" cy="154" r="5"></circle>
-      <circle cx="535" cy="134" r="5"></circle>
-      <circle cx="574" cy="164" r="5"></circle>
-    </g>
+    <path class="flock-wave" d="M32 70C66 36 98 44 132 64C168 86 200 86 236 58C272 31 315 40 336 72"></path>
+    <path class="flock-wave lower" d="M32 112C66 90 100 92 134 108C171 126 205 126 240 103C275 82 316 86 336 111"></path>
+    <path class="flock-band" d="M32 70C66 36 98 44 132 64C168 86 200 86 236 58C272 31 315 40 336 72L336 111C316 86 275 82 240 103C205 126 171 126 134 108C100 92 66 90 32 112Z"></path>
 
     <g class="boid-field">
-      <path d="M158 108l17 7l-16 8z"></path>
-      <path d="M194 91l17 7l-16 8z"></path>
-      <path d="M235 112l18 7l-17 8z"></path>
-      <path d="M274 88l17 7l-16 8z"></path>
-      <path d="M314 108l17 7l-16 8z"></path>
-      <path d="M356 89l18 7l-17 8z"></path>
-      <path d="M399 111l17 7l-16 8z"></path>
-      <path d="M442 88l17 7l-16 8z"></path>
-      <path d="M486 113l18 7l-17 8z"></path>
-      <path d="M531 96l17 7l-16 8z"></path>
-      <path d="M572 122l17 7l-16 8z"></path>
+      <path d="M70 68l11 4l-10 6z"></path>
+      <path d="M104 55l11 4l-10 6z"></path>
+      <path d="M139 73l11 4l-10 6z"></path>
+      <path d="M178 62l11 4l-10 6z"></path>
+      <path d="M219 75l11 4l-10 6z"></path>
+      <path d="M260 57l11 4l-10 6z"></path>
+      <path d="M298 72l11 4l-10 6z"></path>
     </g>
 
-    <path class="flock-wave" d="M112 113C178 55 238 67 304 102C371 138 425 140 498 92C561 50 619 65 654 111"></path>
-    <path class="flock-wave lower" d="M112 187C178 145 241 151 305 177C374 205 435 207 503 166C563 130 617 137 654 176"></path>
-    <path class="flock-band" d="M112 113C178 55 238 67 304 102C371 138 425 140 498 92C561 50 619 65 654 111L654 176C617 137 563 130 503 166C435 207 374 205 305 177C241 151 178 145 112 187Z"></path>
+    <g class="neighbor-net">
+      <path d="M65 116L96 101L129 116L166 102L202 116L240 101L282 118"></path>
+      <path d="M96 101L166 102M129 116L202 116M202 116L282 118"></path>
+      <circle cx="65" cy="116" r="3.3"></circle><circle cx="96" cy="101" r="3.3"></circle><circle cx="129" cy="116" r="3.3"></circle>
+      <circle cx="166" cy="102" r="3.3"></circle><circle cx="202" cy="116" r="3.3"></circle><circle cx="240" cy="101" r="3.3"></circle><circle cx="282" cy="118" r="3.3"></circle>
+    </g>
 
     <g class="emergence-title-plate">
-      <rect x="236" y="76" width="248" height="28" rx="14"></rect>
-      <text x="360" y="95" text-anchor="middle" class="emergence-annotation">{copy.flock}</text>
+      <rect x="92" y="44" width="176" height="23" rx="11.5"></rect>
+      <text x="180" y="60" text-anchor="middle" class="emergence-annotation">{copy.flock}</text>
     </g>
-    <text x="360" y="205" text-anchor="middle" class="emergence-annotation small">{copy.neighbor}</text>
-    <text x="360" y="328" text-anchor="middle" class="emergence-caption">{copy.note}</text>
+    <text x="180" y="139" text-anchor="middle" class="emergence-annotation small">{copy.neighbor}</text>
+
+    <path class="rule-arrow" d="M82 158C95 146 108 138 128 130" marker-end="url(#emergence-arrow)"></path>
+    <path class="rule-arrow" d="M180 158C180 148 180 140 180 132" marker-end="url(#emergence-arrow)"></path>
+    <path class="rule-arrow" d="M278 158C264 146 250 138 232 130" marker-end="url(#emergence-arrow)"></path>
+
+    <g class="rule-card" transform="translate(20 158)">
+      <rect width="104" height="33" rx="7"></rect>
+      <path d="M16 17L31 10M16 17L31 24" class="rule-icon"></path>
+      <text x="71" y="21">{copy.separation}</text>
+    </g>
+    <g class="rule-card" transform="translate(128 158)">
+      <rect width="104" height="33" rx="7"></rect>
+      <path d="M17 12H38M17 18H38M17 24H38" class="rule-icon"></path>
+      <text x="72" y="21">{copy.alignment}</text>
+    </g>
+    <g class="rule-card" transform="translate(236 158)">
+      <rect width="104" height="33" rx="7"></rect>
+      <path d="M16 10L32 18L16 26M40 10L24 18L40 26" class="rule-icon"></path>
+      <text x="73" y="21">{copy.cohesion}</text>
+    </g>
+
+    <text x="180" y="202" text-anchor="middle" class="emergence-caption">{copy.note}</text>
   </svg>
 </figure>

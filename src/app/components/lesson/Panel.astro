@@ -2,10 +2,12 @@
 interface Props {
   class?: string;
   id?: string;
+  [key: string]: unknown;
 }
 
-const className = ["panel", Astro.props.class].filter(Boolean).join(" ");
+const { class: passedClass, id, ...attrs } = Astro.props;
+const className = ["panel", passedClass].filter(Boolean).join(" ");
 ---
-<div id={Astro.props.id} class={className}>
+<div id={id} class={className} {...attrs}>
   <slot />
 </div>

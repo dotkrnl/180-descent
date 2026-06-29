@@ -91,7 +91,10 @@ structural errors, not publication quality.
    both locale bodies, both bodies are imported/rendered, and the web page
    exposes each appendix in the intended order.
 2. **Chinese flow completed:** clear stale Chinese target prose before
-   translation; run Kimi, then Gemini, then GLM unless the user explicitly
+   translation, then initialize each target Chinese file from a direct,
+   untranslated copy of its paired English source before running Kimi. Do not
+   give Kimi a Codex-authored or human-authored draft translation, summary, or
+   abridged target. Run Kimi, then Gemini, then GLM unless the user explicitly
    waives a step; manually review terminology, quote style, status labels,
    figure labels, alt text, and static artifact prose after the model passes.
 3. **Image options offered:** show the user relevant open-license,
@@ -284,7 +287,7 @@ line-by-line English.
 - Use model-assisted translation in this order unless the user explicitly says
   otherwise:
   1. Kimi first, through `opencode` with `kimi-for-coding/k2p7`, for the initial
-     Simplified Chinese draft.
+     Simplified Chinese translation pass from the direct English copy.
   2. Gemini second, through Antigravity CLI `agy` with
      `Gemini 3.5 Flash (High)`, for review, accuracy, terminology, and idiomatic
      refinement.
@@ -292,8 +295,10 @@ line-by-line English.
      final consistency and language refinement pass.
 - Kimi drafting, Gemini review, and GLM refinement can be slow for full lesson
   bodies, appendices, and introduction updates. Use long-running commands and
-  poll patiently. Once a pass starts, let it finish unless the process exits
-  with an error or the user explicitly stops it.
+  poll patiently. Once a Kimi or GLM pass starts, do not interrupt it for
+  silence, duration, repeated reads, apparent stalls, or lack of visible edits;
+  keep polling until the process exits on its own. Do not send Ctrl-C to Kimi or
+  GLM as a workflow shortcut.
 - Preserve manifest structure, day numbers, path, citations, URLs, DOI metadata,
   component imports, image alt meaning, and interaction behavior.
 - Localize block titles and print labels through existing data/components; do not
@@ -334,9 +339,12 @@ line-by-line English.
   object being shown, and enough rules or captions for PDF/EPUB readers to
   understand the artifact without the live widget.
 
-For a normal day, create or update `src/content/days/###-slug/zh.mdx` and any
-Chinese locale fields in `day.yaml`, then run Kimi on the paired English and
-Chinese source files:
+For a normal day, create or update any Chinese locale fields in `day.yaml`, then
+replace `src/content/days/###-slug/zh.mdx` with a direct, untranslated copy of
+`src/content/days/###-slug/en.mdx` before running Kimi on the paired files. This
+copy is the translation input, not a finished Chinese file; it may temporarily
+fail title or locale checks until Kimi completes. Do not seed Kimi with a
+Codex-authored or human-authored Chinese draft, summary, or abridged version.
 
 ```sh
 rtk opencode run --dangerously-skip-permissions -m kimi-for-coding/k2p7 "请以 yolo 模式直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。所有仓库 shell 命令都必须使用 rtk 前缀。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法，并保留和翻译所有说明性注释。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
@@ -356,10 +364,11 @@ rtk opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.1 "
 
 For large appendices, use temporary files instead of asking an agent to
 overwrite its input: `/tmp/day-###-appendix-N-en.mdx` and
-`/tmp/day-###-appendix-N-zh.mdx`. Start by clearing the target Chinese appendix
-body or temporary target so stale prose cannot be mistaken for reviewed output.
-Run Kimi first on the temporary pair. If Kimi stalls on a large appendix, split
-the English source at section boundaries into
+`/tmp/day-###-appendix-N-zh.mdx`. Start by replacing the temporary Chinese
+target with a direct, untranslated copy of the paired English appendix source so
+stale Chinese prose cannot be mistaken for reviewed output. Run Kimi first on
+the temporary pair. If Kimi stalls on a large appendix, split the English source
+at section boundaries into
 `/tmp/day-###-appendix-N-part-M-en.mdx` chunks, have Kimi write matching
 `part-M-zh.mdx` files, then concatenate the translated chunks back into the
 single appendix target before downstream review.

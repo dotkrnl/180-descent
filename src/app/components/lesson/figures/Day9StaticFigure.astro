@@ -1,0 +1,388 @@
+---
+interface Props {
+  kind:
+    | "thermostat"
+    | "governor"
+    | "loops"
+    | "thresholds"
+    | "deep-loops"
+    | "ashby"
+    | "cybersyn"
+    | "resilience"
+    | "tipping-types"
+    | "cliff"
+    | "timeline";
+  locale?: "en" | "zh";
+}
+
+const kind = Astro.props.kind;
+const zh = Astro.props.locale === "zh";
+
+const ink = "var(--ink, #172530)";
+const soft = "var(--ink-soft, #41545d)";
+const faint = "var(--ink-faint, #64747b)";
+const line = "var(--line, #cfc4ad)";
+const lineStrong = "var(--line-strong, #a99570)";
+const paper = "var(--paper, #f5f3ec)";
+const raised = "var(--raised, #fbfaf5)";
+const accent = "var(--accent, #1d6f78)";
+const accentDeep = "var(--accent-deep, #13525a)";
+const brass = "var(--brass, #93651f)";
+const ok = "var(--ok, #2a704a)";
+const warn = "var(--hint, #b76636)";
+const danger = "var(--heat, #a8442d)";
+
+const copy = {
+  thermostat: zh
+    ? { title: "恒温器反馈环", set: "设定 21° · 当前 18°", tag: "感知 → 比较 → 修正 → 再次感知", cap: "恒温器：一台廉价机器，能守住一个目标，抵抗世界的拉扯。" }
+    : { title: "Thermostat feedback loop", set: "SET 21° · NOW 18°", tag: "sense → compare → correct → sense again", cap: "The thermostat: a cheap machine that holds a goal against a world trying to pull it away." },
+  governor: zh
+    ? { title: "离心调速器", top: "随发动机旋转", valve: "蒸汽阀", cap: "转速加快 → 飞球外张 → 套筒上升 → 阀门关闭 → 机器减速。" }
+    : { title: "Centrifugal governor", top: "spins with the engine", valve: "steam valve", cap: "Faster spin → balls fly outward → sleeve rises → valve closes → engine slows." },
+  loops: zh
+    ? { title: "增强与平衡回路", pop: "人口", births: "出生", crowd: "拥挤", scarce: "稀缺", r: "增强", b: "平衡", cap: "每个真实人口都是增长引擎与限制刹车之间的拔河。" }
+    : { title: "Reinforcing and balancing loops", pop: "population", births: "births", crowd: "crowding", scarce: "scarcity", r: "reinforcing", b: "balancing", cap: "Every real population is a tug-of-war between growth engines and limiting brakes." },
+  thresholds: zh
+    ? { title: "气候临界阈值", current: "当前升温", paris: "巴黎 1.5°C", cap: "中心估计与不确定范围；几项下界已经进入当前升温区间。" }
+    : { title: "Climate tipping thresholds", current: "current warming", paris: "Paris 1.5°C", cap: "Central estimates and uncertainty ranges; several lower bounds already overlap today's warming." },
+  "deep-loops": zh
+    ? { title: "回路套着回路", cap: "回路之内还有回路；看得越深，回路越多。" }
+    : { title: "Loops inside loops", cap: "Loops inside loops inside loops. The deeper you look, the more there are." },
+  ashby: zh
+    ? { title: "必需多样性定律", disturbances: "扰动（多样性 = D）", system: "系统", outcome: "结果能否稳定？", regulator: "调节器", responses: "响应（多样性 = R）", rule: "需要 R ≥ D", cap: "调节器只能中和与它拥有的响应种类同样多的麻烦。" }
+    : { title: "Law of Requisite Variety", disturbances: "disturbances (variety = D)", system: "system", outcome: "outcome held steady?", regulator: "regulator", responses: "responses (variety = R)", rule: "needs R ≥ D", cap: "A regulator can only neutralize as many kinds of trouble as it has kinds of response." },
+  cybersyn: zh
+    ? { title: "Cybersyn 操作室", cap: "七把转椅、大按钮扶手、墙上的经济状态：个人电脑出现前的国家反馈仪表盘。" }
+    : { title: "Cybersyn Opsroom", cap: "Seven chairs, big-button armrests, the economy on the walls: a national feedback dashboard before personal computers." },
+  resilience: zh
+    ? { title: "霍林的两种恢复力", narrow: "窄而深", wide: "宽而浅", fast: "回弹快 · 大冲击会翻", slow: "恢复慢 · 可吸收大冲击", cap: "快速回弹与大冲击耐受并不是同一件事。" }
+    : { title: "Holling's two resiliences", narrow: "narrow & deep", wide: "wide & shallow", fast: "snaps back fast · tips from a big shock", slow: "slow to recover · absorbs big shocks", cap: "Fast return and large-shock tolerance are not the same thing." },
+  "tipping-types": zh
+    ? { title: "三种临界", bif: "B · 分岔", noise: "N · 噪声", rate: "R · 速率", cap: "三条通向翻车的路：阈值、冲击，以及变化太快。" }
+    : { title: "Three tipping routes", bif: "B · bifurcation", noise: "N · noise", rate: "R · rate", cap: "Three ways to tip: threshold, shock, and change applied too fast." },
+  cliff: zh
+    ? { title: "追踪悬崖", now: "现在", forecast: "预测：何时，以及落到哪里", far: "彼岸", cap: "旧科学能感到地面变软；新科学想知道日期、深度，以及彼岸山谷的地图。" }
+    : { title: "Catching the cliff", now: "now", forecast: "forecast: when, and where it lands", far: "the far side", cap: "The old science could feel the ground softening; the new science wants the date, depth, and far-side map." },
+  timeline: zh
+    ? { title: "2020-2026 前沿时间线", cap: "色彩：预测、规避与恢复力感知、正向临界点、现实检验。" }
+    : { title: "2020-2026 frontier timeline", cap: "Colour: prediction, evasion and resilience-sensing, positive tipping, and reality checks." }
+}[kind];
+
+const marks = [
+  { label: "AMOC", lo: 1.4, mid: 4.0, hi: 8.0, hot: false },
+  { label: zh ? "珊瑚礁" : "Coral reefs", lo: 1.0, mid: 1.2, hi: 1.5, hot: true },
+  { label: zh ? "格陵兰" : "Greenland", lo: 0.8, mid: 1.5, hi: 3.0, hot: true },
+  { label: zh ? "西南极" : "W. Antarctica", lo: 1.0, mid: 1.5, hi: 3.0, hot: true },
+  { label: zh ? "亚马逊" : "Amazon", lo: 2.0, mid: 3.5, hi: 6.0, hot: false },
+  { label: zh ? "永久冻土" : "Permafrost", lo: 3.0, mid: 4.0, hi: 6.0, hot: false }
+];
+
+const years = [
+  { y: 2020, label: zh ? "社会临界" : "social tipping", color: ok, x: 60, row: 70 },
+  { y: 2021, label: zh ? "AI 分类" : "AI classifier", color: accent, x: 150, row: 120 },
+  { y: 2021, label: zh ? "斑图规避" : "pattern evasion", color: brass, x: 150, row: 190 },
+  { y: 2022, label: zh ? "卫星恢复力" : "satellite resilience", color: brass, x: 250, row: 95 },
+  { y: 2023, label: zh ? "数字孪生" : "digital twins", color: accent, x: 350, row: 165 },
+  { y: 2024, label: zh ? "日期太不确定" : "dates too uncertain", color: danger, x: 450, row: 115 },
+  { y: 2025, label: zh ? "不规则采样 AI" : "irregular-sample AI", color: accent, x: 545, row: 205 }
+];
+---
+<figure class={`day9-static-figure day9-static-figure-${kind}`}>
+  {kind === "thermostat" && (
+    <svg viewBox="0 0 300 330" role="img" aria-label={copy.title}>
+      <defs>
+        <linearGradient id="day9-thermo-glass" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color={raised}></stop>
+          <stop offset="100%" stop-color={paper}></stop>
+        </linearGradient>
+        <marker id="day9-thermo-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 z" fill={accent}></path>
+        </marker>
+      </defs>
+      <rect x="24" y="18" width="252" height="272" rx="18" fill={raised} stroke={line}></rect>
+      <path d="M188 78 C228 80 244 112 232 142 C221 169 190 171 176 196" fill="none" stroke={accent} stroke-width="2.2" stroke-dasharray="4 6" stroke-linecap="round" marker-end="url(#day9-thermo-arrow)" opacity=".9"></path>
+      <rect x="70" y="52" width="54" height="154" rx="27" fill={paper} stroke={lineStrong} stroke-width="2"></rect>
+      <rect x="88" y="70" width="18" height="118" rx="9" fill="url(#day9-thermo-glass)" stroke={line} stroke-width="1"></rect>
+      <rect x="92" y="122" width="10" height="66" rx="5" fill={accent}></rect>
+      <circle cx="97" cy="214" r="31" fill={paper} stroke={lineStrong} stroke-width="2"></circle>
+      <circle cx="97" cy="214" r="21" fill={accent}></circle>
+      <circle cx="90" cy="205" r="5" fill={raised} opacity=".72"></circle>
+      {[0, 1, 2, 3, 4, 5].map((i) => <line x1="130" y1={75 + i * 23} x2={i === 3 ? 154 : 145} y2={75 + i * 23} stroke={i === 3 ? brass : faint} stroke-width={i === 3 ? 1.8 : 1}></line>)}
+      <text x="162" y="80" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>24°</text>
+      <text x="162" y="149" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>21°</text>
+      <text x="162" y="195" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>18°</text>
+      <g transform="translate(172 90)">
+        <rect x="0" y="0" width="76" height="42" rx="8" fill={paper} stroke={line}></rect>
+        <text x="38" y="17" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "设定" : "set"}</text>
+        <text x="38" y="34" text-anchor="middle" font-family="Fraunces, serif" font-size="18" fill={brass}>21°</text>
+        <rect x="0" y="58" width="76" height="42" rx="8" fill={paper} stroke={line}></rect>
+        <text x="38" y="75" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "现在" : "now"}</text>
+        <text x="38" y="92" text-anchor="middle" font-family="Fraunces, serif" font-size="18" fill={accent}>18°</text>
+        <rect x="0" y="116" width="76" height="34" rx="8" fill={paper} stroke={accent} stroke-width="1.3"></rect>
+        <text x="38" y="137" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accentDeep}>{zh ? "加热开启" : "heat on"}</text>
+      </g>
+      <text x="150" y={zh ? 276 : 270} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={accentDeep}>
+        {zh ? (
+          copy.tag
+        ) : (
+          <>
+            <tspan x="150" dy="0">sense → compare → correct</tspan>
+            <tspan x="150" dy="15">sense again</tspan>
+          </>
+        )}
+      </text>
+    </svg>
+  )}
+
+  {kind === "governor" && (
+    <svg viewBox="0 0 260 250" role="img" aria-label={copy.title}>
+      <defs>
+        <marker id="day9-gov-arrow" markerWidth="4" markerHeight="4" refX="3.4" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 z" fill={warn}></path></marker>
+      </defs>
+      <rect x="10" y="10" width="240" height="222" rx="14" fill={raised} stroke={line}></rect>
+      <text x="130" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={faint}>{copy.top}</text>
+      <rect x="106" y="200" width="48" height="14" rx="2" fill={lineStrong}></rect>
+      <rect x="123" y="164" width="14" height="40" fill={faint}></rect>
+      <text x="130" y="232" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{copy.valve}</text>
+      <line x1="130" y1="48" x2="130" y2="166" stroke={ink} stroke-width="4" stroke-linecap="round"></line>
+      <circle cx="130" cy="44" r="6" fill={ink}></circle>
+      <rect x="118" y="134" width="24" height="9" rx="2" fill={brass}></rect>
+      <line x1="130" y1="60" x2="74" y2="110" stroke={soft} stroke-width="3" stroke-linecap="round"></line>
+      <line x1="130" y1="60" x2="186" y2="110" stroke={soft} stroke-width="3" stroke-linecap="round"></line>
+      <circle cx="68" cy="116" r="13" fill={accent}></circle>
+      <circle cx="192" cy="116" r="13" fill={accent}></circle>
+      <line x1="74" y1="122" x2="120" y2="138" stroke={faint} stroke-width="2"></line>
+      <line x1="186" y1="122" x2="140" y2="138" stroke={faint} stroke-width="2"></line>
+      <path d="M55 99 C42 110 42 128 55 139" fill="none" stroke={warn} stroke-width="1.35" stroke-linecap="round" marker-end="url(#day9-gov-arrow)"></path>
+      <path d="M205 99 C218 110 218 128 205 139" fill="none" stroke={warn} stroke-width="1.35" stroke-linecap="round" marker-end="url(#day9-gov-arrow)"></path>
+    </svg>
+  )}
+
+  {kind === "loops" && (
+    <svg viewBox="0 0 360 260" role="img" aria-label={copy.title}>
+      <defs><marker id="day9-loop-head" markerWidth="5" markerHeight="5" refX="4.3" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 z" fill={faint}></path></marker></defs>
+      <rect x="8" y="8" width="344" height="232" rx="12" fill={raised} stroke={line}></rect>
+      <g transform="translate(18 22)">
+        <circle cx="82" cy="108" r="58" fill="none" stroke={brass} stroke-width="1.8"></circle>
+        <text x="82" y="103" text-anchor="middle" font-family="Fraunces, serif" font-size="28" fill={brass}>R</text>
+        <text x="82" y="126" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.r}</text>
+        <rect x="38" y="0" width="88" height="28" rx="6" fill={paper} stroke={lineStrong}></rect>
+        <text x="82" y="18" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{copy.pop}</text>
+        <rect x="38" y="186" width="88" height="28" rx="6" fill={paper} stroke={lineStrong}></rect>
+        <text x="82" y="204" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{copy.births}</text>
+        <path d="M82 30 C138 48 138 166 82 186" fill="none" stroke={faint} stroke-width="1.7" marker-end="url(#day9-loop-head)"></path>
+        <path d="M82 186 C26 166 26 48 82 30" fill="none" stroke={faint} stroke-width="1.7" marker-end="url(#day9-loop-head)"></path>
+      </g>
+      <g transform="translate(178 22)">
+        <circle cx="82" cy="108" r="58" fill="none" stroke={accent} stroke-width="1.8"></circle>
+        <text x="82" y="103" text-anchor="middle" font-family="Fraunces, serif" font-size="28" fill={accent}>B</text>
+        <text x="82" y="126" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.b}</text>
+        <rect x="38" y="0" width="88" height="28" rx="6" fill={paper} stroke={lineStrong}></rect>
+        <text x="82" y="18" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{copy.pop}</text>
+        <rect x="38" y="182" width="88" height="36" rx="6" fill={paper} stroke={lineStrong}></rect>
+        <text x="82" y="197" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{copy.crowd}</text>
+        <text x="82" y="211" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{copy.scarce}</text>
+        <path d="M82 30 C138 48 138 164 82 182" fill="none" stroke={faint} stroke-width="1.7" marker-end="url(#day9-loop-head)"></path>
+        <path d="M82 182 C26 164 26 48 82 30" fill="none" stroke={faint} stroke-width="1.7" marker-end="url(#day9-loop-head)"></path>
+      </g>
+    </svg>
+  )}
+
+  {kind === "thresholds" && (
+    <svg viewBox="0 0 360 320" role="img" aria-label={copy.title}>
+      <rect x="8" y="8" width="344" height="292" rx="12" fill={raised} stroke={line}></rect>
+      <text x="20" y="32" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accentDeep}>{copy.title}</text>
+      <g transform="translate(100 58)">
+        {[0, 1.5, 3, 4.5, 6, 7.5].map((v) => <g><line x1={v * 28} y1="0" x2={v * 28} y2="194" stroke={line} stroke-dasharray={v === 1.5 ? "3 5" : "0"}></line><text x={v * 28} y="220" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{v}</text></g>)}
+        <rect x={1.3 * 28 - 1.5} y="0" width="3" height="194" fill={brass} opacity=".74"></rect>
+        <text x={1.3 * 28 + 8} y="-8" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.current}</text>
+        <text x={1.5 * 28 + 8} y="209" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.paris}</text>
+        {marks.map((m, i) => {
+          const y = 20 + i * 30;
+          return <g>
+            <text x="-12" y={y + 4} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{m.label}</text>
+            <line x1={m.lo * 28} y1={y} x2={m.hi * 28} y2={y} stroke={m.hot ? danger : accent} stroke-width="8" stroke-linecap="round" opacity=".26"></line>
+            <circle cx={m.mid * 28} cy={y} r="5" fill={m.hot ? danger : accent}></circle>
+          </g>;
+        })}
+      </g>
+    </svg>
+  )}
+
+  {kind === "deep-loops" && (
+    <svg viewBox="0 0 220 230" role="img" aria-label={copy.title}>
+      <defs>
+        <marker id="day9-lp" markerWidth="4.5" markerHeight="4.5" refX="3.8" refY="2.25" orient="auto"><path d="M0,0 L4.5,2.25 L0,4.5 z" fill={accent}></path></marker>
+        <marker id="day9-lp2" markerWidth="4.5" markerHeight="4.5" refX="3.8" refY="2.25" orient="auto"><path d="M0,0 L4.5,2.25 L0,4.5 z" fill={brass}></path></marker>
+      </defs>
+      <circle cx="110" cy="110" r="92" fill="none" stroke={line} stroke-width="1"></circle>
+      <path d="M110 22 A88 88 0 1 1 30 84" fill="none" stroke={accent} stroke-width="2.2" stroke-dasharray="3 7" marker-end="url(#day9-lp)" opacity=".85"></path>
+      <path d="M110 52 A58 58 0 1 0 168 122" fill="none" stroke={brass} stroke-width="2.2" stroke-dasharray="3 7" marker-end="url(#day9-lp2)" opacity=".85"></path>
+      <path d="M110 82 A28 28 0 1 1 84 96" fill="none" stroke={accentDeep} stroke-width="2.2" stroke-dasharray="3 6" marker-end="url(#day9-lp)" opacity=".9"></path>
+      <circle cx="110" cy="110" r="6" fill={ink}></circle>
+      <circle cx="110" cy="110" r="2.4" fill={accent}></circle>
+    </svg>
+  )}
+
+  {kind === "ashby" && (
+    <svg viewBox="0 0 360 220" role="img" aria-label={copy.title}>
+      <defs>
+        <marker id="day9-ah1" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 z" fill={danger}></path></marker>
+        <marker id="day9-ah2" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 z" fill={accent}></path></marker>
+      </defs>
+      <rect x="8" y="8" width="344" height="194" rx="12" fill={raised} stroke={line}></rect>
+      <text x="72" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>
+        {zh ? <><tspan x="72" dy="0">扰动</tspan><tspan x="72" dy="11">多样性 = D</tspan></> : <><tspan x="72" dy="0">disturbances</tspan><tspan x="72" dy="11">variety = D</tspan></>}
+      </text>
+      <g stroke={danger} stroke-width="1.55" marker-end="url(#day9-ah1)">
+        <line x1="30" y1="62" x2="126" y2="92"></line><line x1="30" y1="84" x2="126" y2="100"></line>
+        <line x1="30" y1="106" x2="126" y2="108"></line><line x1="30" y1="128" x2="126" y2="116"></line>
+        <line x1="30" y1="150" x2="126" y2="124"></line>
+      </g>
+      <rect x="130" y="78" width="76" height="58" rx="8" fill={paper} stroke={lineStrong} stroke-width="1.4"></rect>
+      <text x="168" y="101" text-anchor="middle" font-family="Fraunces, serif" font-size="13" fill={ink}>{copy.system}</text>
+      <text x="168" y="119" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>
+        {zh ? <><tspan x="168" dy="0">结果能否</tspan><tspan x="168" dy="11">稳定？</tspan></> : <><tspan x="168" dy="0">outcome held</tspan><tspan x="168" dy="11">steady?</tspan></>}
+      </text>
+      <rect x="250" y="62" width="82" height="90" rx="8" fill={paper} stroke={accent} stroke-width="1.6"></rect>
+      <text x="291" y="87" text-anchor="middle" font-family="Fraunces, serif" font-size="13" fill={accentDeep}>{copy.regulator}</text>
+      <text x="291" y="110" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>
+        {zh ? <><tspan x="291" dy="0">响应</tspan><tspan x="291" dy="11">多样性 = R</tspan></> : <><tspan x="291" dy="0">responses</tspan><tspan x="291" dy="11">variety = R</tspan></>}
+      </text>
+      <text x="291" y="139" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accentDeep}>{copy.rule}</text>
+      <path d="M250 108 C230 108 224 108 210 108" fill="none" stroke={accent} stroke-width="1.6" marker-end="url(#day9-ah2)"></path>
+      <path d="M168 136 C168 176 291 176 291 156" fill="none" stroke={faint} stroke-width="1.25" stroke-dasharray="3 4" marker-end="url(#day9-ah2)"></path>
+    </svg>
+  )}
+
+  {kind === "cybersyn" && (
+    <svg viewBox="0 0 640 260" role="img" aria-label={copy.title}>
+      <rect x="20" y="18" width="600" height="220" rx="16" fill={raised} stroke={line}></rect>
+      <polygon points="320,48 454,105 454,182 320,220 186,182 186,105" fill="none" stroke={lineStrong} stroke-width="1.7" stroke-dasharray="4 5"></polygon>
+      <rect x="268" y="50" width="48" height="32" rx="3" fill={paper} stroke={accent}></rect>
+      <rect x="328" y="50" width="48" height="32" rx="3" fill={paper} stroke={brass}></rect>
+      <g fill={soft}>
+        <circle cx="320" cy="132" r="10"></circle>
+        <circle cx="248" cy="112" r="10"></circle><circle cx="392" cy="112" r="10"></circle>
+        <circle cx="226" cy="164" r="10"></circle><circle cx="414" cy="164" r="10"></circle>
+        <circle cx="280" cy="194" r="10"></circle><circle cx="360" cy="194" r="10"></circle>
+      </g>
+      <circle cx="320" cy="153" r="36" fill="none" stroke={faint} stroke-width="1" stroke-dasharray="2 4"></circle>
+      <text x="320" y="32" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={accentDeep}>{copy.title}</text>
+    </svg>
+  )}
+
+  {kind === "resilience" && (
+    <svg viewBox="0 0 640 270" role="img" aria-label={copy.title}>
+      <defs><marker id="day9-bh" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 z" fill={danger}></path></marker></defs>
+      <rect x="12" y="12" width="616" height="238" rx="14" fill={raised} stroke={line}></rect>
+      <path d="M60 88 C110 88 115 220 150 220 C185 220 190 88 240 88" fill="none" stroke={soft} stroke-width="2.6"></path>
+      <circle cx="150" cy="216" r="9" fill={accent} stroke={raised} stroke-width="2.5"></circle>
+      <text x="150" y="50" text-anchor="middle" font-family="Fraunces, serif" font-size="15" fill={ink}>{copy.narrow}</text>
+      <text x="150" y="240" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{copy.fast}</text>
+      <path d="M150 208 q22 -10 0 -20" fill="none" stroke={ok} stroke-width="1.8"></path>
+      <path d="M360 138 C430 138 430 203 480 203 C530 203 530 138 600 138" fill="none" stroke={soft} stroke-width="2.6"></path>
+      <circle cx="480" cy="199" r="9" fill={brass} stroke={raised} stroke-width="2.5"></circle>
+      <text x="480" y="50" text-anchor="middle" font-family="Fraunces, serif" font-size="15" fill={ink}>{copy.wide}</text>
+      <text x="480" y="240" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{copy.slow}</text>
+      <path d="M450 176 L515 176" stroke={danger} stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#day9-bh)"></path>
+    </svg>
+  )}
+
+  {kind === "tipping-types" && (
+    <svg viewBox="0 0 640 280" role="img" aria-label={copy.title}>
+      <rect x="12" y="12" width="616" height="246" rx="14" fill={raised} stroke={line}></rect>
+      <g transform="translate(20 32)">
+        <text x="100" y="22" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={accentDeep}>{copy.bif}</text>
+        <path d="M30 130 C70 130 75 80 100 80 C125 80 130 130 170 130" fill="none" stroke={lineStrong} stroke-width="1.8" stroke-dasharray="3 4"></path>
+        <path d="M30 160 C70 160 78 160 100 160 C122 160 130 160 170 160" fill="none" stroke={soft} stroke-width="2.4"></path>
+        <circle cx="100" cy="156" r="7" fill={accent}></circle>
+        <text x="100" y="210" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{zh ? "山谷消失" : "valley vanishes"}</text>
+      </g>
+      <g transform="translate(220 32)">
+        <text x="100" y="22" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={warn}>{copy.noise}</text>
+        <path d="M30 140 C70 140 70 80 100 80 C130 80 130 140 170 140" fill="none" stroke={soft} stroke-width="2.4"></path>
+        <circle cx="62" cy="113" r="7" fill={warn}></circle>
+        <path d="M62 106 q25 -28 52 -2" fill="none" stroke={danger} stroke-width="1.7" stroke-dasharray="2 3"></path>
+        <text x="100" y="210" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{zh ? "随机踢过山脊" : "random kick over ridge"}</text>
+      </g>
+      <g transform="translate(420 32)">
+        <text x="100" y="22" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={danger}>{copy.rate}</text>
+        <g transform="rotate(-13 100 120)">
+          <path d="M30 130 C70 130 70 80 100 80 C130 80 130 130 170 130" fill="none" stroke={soft} stroke-width="2.4"></path>
+        </g>
+        <circle cx="68" cy="128" r="7" fill={danger}></circle>
+        <path d="M68 128 q12 14 -8 26" fill="none" stroke={danger} stroke-width="1.7"></path>
+        <text x="100" y="210" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{zh ? "地板倾斜太快" : "floor tilts too fast"}</text>
+      </g>
+    </svg>
+  )}
+
+  {kind === "cliff" && (
+    <svg viewBox="0 0 500 250" role="img" aria-label={copy.title}>
+      <defs><marker id="day9-hm" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill={accent}></path></marker></defs>
+      <path d="M30 102 L210 102 C240 102 245 104 250 122 L265 212" fill="none" stroke={lineStrong} stroke-width="2.6"></path>
+      <path d="M30 102 L210 102 C240 102 245 104 250 122" fill="none" stroke={soft} stroke-width="2.6"></path>
+      <path d="M310 190 L470 190" fill="none" stroke={lineStrong} stroke-width="2.6"></path>
+      <circle cx="160" cy="92" r="10" fill={accent} stroke={raised} stroke-width="3"></circle>
+      <path d="M175 90 C260 52 370 72 410 162" fill="none" stroke={accent} stroke-width="1.9" stroke-dasharray="3 6" marker-end="url(#day9-hm)" opacity=".8"></path>
+      <circle cx="405" cy="180" r="10" fill="none" stroke={brass} stroke-width="2" stroke-dasharray="3 3"></circle>
+      <text x="160" y="68" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{copy.now}</text>
+      <text x="312" y="42" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={accentDeep}>{copy.forecast}</text>
+      <text x="405" y="158" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={brass}>{copy.far}</text>
+    </svg>
+  )}
+
+  {kind === "timeline" && (
+    <svg viewBox="0 0 640 380" role="img" aria-label={copy.title}>
+      <rect x="12" y="12" width="616" height="342" rx="14" fill={raised} stroke={line}></rect>
+      <line x1="60" y1="300" x2="570" y2="300" stroke={lineStrong} stroke-width="2"></line>
+      {years.map((item) => (
+        <g>
+          <line x1={item.x} y1="300" x2={item.x} y2={item.row + 22} stroke={item.color} stroke-width="1.4" stroke-dasharray="3 4"></line>
+          <circle cx={item.x} cy="300" r="6" fill={item.color}></circle>
+          <rect x={item.x - 55} y={item.row - 4} width="110" height="42" rx="7" fill={paper} stroke={item.color} opacity=".96"></rect>
+          <text x={item.x} y={item.row + 12} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={item.color}>{item.y}</text>
+          <text x={item.x} y={item.row + 29} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{item.label}</text>
+        </g>
+      ))}
+      {[2020, 2021, 2022, 2023, 2024, 2025, 2026].map((year, i) => <text x={60 + i * 85} y="326" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{year}</text>)}
+    </svg>
+  )}
+
+  <figcaption>{copy.cap}</figcaption>
+</figure>
+
+<style>
+  .day9-static-figure {
+    margin: 1.5rem auto;
+    max-width: min(100%, 42rem);
+    width: 100%;
+    text-align: center;
+  }
+
+  .day9-static-figure-thermostat,
+  .day9-static-figure-deep-loops,
+  .day9-static-figure-cliff,
+  .day9-static-figure-governor {
+    max-width: min(100%, 28rem);
+  }
+
+  .day9-static-figure svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  .day9-static-figure figcaption {
+    max-width: 36rem;
+    margin: .55rem auto 0;
+    color: var(--ink-faint);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .75rem;
+    line-height: 1.5;
+    letter-spacing: .02em;
+  }
+</style>
