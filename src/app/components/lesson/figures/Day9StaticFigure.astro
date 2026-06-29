@@ -151,9 +151,11 @@ const years = [
       <rect x="12" y="10" width="256" height="236" rx="14" fill={raised} stroke={line}></rect>
       <text x="140" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{copy.top}</text>
       <g transform="translate(140 68)">
-        <g class="governor-spin-ring">
-          <ellipse cx="0" cy="0" rx="36" ry="9" fill="none" stroke={warn} stroke-width="1.45" stroke-dasharray="7 7" opacity=".85"></ellipse>
-          <path d="M26 -6 C38 0 38 8 25 13" fill="none" stroke={warn} stroke-width="1.45" stroke-linecap="round" marker-end="url(#day9-gov-arrow)"></path>
+        <g class="governor-spin-ring" aria-hidden="true">
+          <ellipse class="governor-orbit-track" cx="0" cy="0" rx="38" ry="9" fill="none" stroke={warn} stroke-width="1.45" stroke-dasharray="7 7" opacity=".82"></ellipse>
+          <path d="M22 -7 C36 -5 42 0 34 6" fill="none" stroke={warn} stroke-width="1.45" stroke-linecap="round" marker-end="url(#day9-gov-arrow)"></path>
+          <circle class="governor-orbit-dot-front" cx="-26" cy="7" r="3.2" fill={warn}></circle>
+          <circle class="governor-orbit-dot-back" cx="26" cy="-7" r="2.4" fill={warn} opacity=".45"></circle>
         </g>
       </g>
       <rect x="116" y="210" width="48" height="14" rx="2" fill={lineStrong}></rect>
@@ -515,10 +517,22 @@ const years = [
     animation: day9-governor-valve 2.8s ease-in-out infinite;
   }
 
-  .governor-spin-ring {
+  .governor-orbit-track {
+    animation: day9-governor-orbit-dash 1.15s linear infinite;
+  }
+
+  .governor-orbit-dot-front,
+  .governor-orbit-dot-back {
     transform-box: fill-box;
     transform-origin: 50% 50%;
-    animation: day9-governor-spin 1.4s linear infinite;
+  }
+
+  .governor-orbit-dot-front {
+    animation: day9-governor-orbit-front 1.15s ease-in-out infinite;
+  }
+
+  .governor-orbit-dot-back {
+    animation: day9-governor-orbit-back 1.15s ease-in-out infinite;
   }
 
   @keyframes day9-governor-arms {
@@ -536,15 +550,27 @@ const years = [
     50% { transform: scaleX(.45); opacity: .72; }
   }
 
-  @keyframes day9-governor-spin {
-    to { transform: rotate(360deg); }
+  @keyframes day9-governor-orbit-dash {
+    to { stroke-dashoffset: -28; }
+  }
+
+  @keyframes day9-governor-orbit-front {
+    0%, 100% { transform: translateX(0); opacity: 1; }
+    50% { transform: translateX(52px); opacity: .42; }
+  }
+
+  @keyframes day9-governor-orbit-back {
+    0%, 100% { transform: translateX(0); opacity: .42; }
+    50% { transform: translateX(-52px); opacity: 1; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .governor-arms,
     .governor-sleeve,
     .governor-valve,
-    .governor-spin-ring {
+    .governor-orbit-track,
+    .governor-orbit-dot-front,
+    .governor-orbit-dot-back {
       animation: none;
     }
   }
