@@ -377,48 +377,57 @@ const years = [
   )}
 
   {kind === "tipping-types" && (
-    <svg viewBox="0 0 420 520" role="img" aria-label={copy.title}>
+    <svg viewBox="0 0 420 600" role="img" aria-label={copy.title}>
       <defs>
         <marker id="day9-tip-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill={danger}></path></marker>
         <marker id="day9-tip-arrow-ok" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill={ok}></path></marker>
       </defs>
-      <rect x="10" y="10" width="400" height="486" rx="14" fill={raised} stroke={line}></rect>
+      <rect x="10" y="10" width="400" height="566" rx="14" fill={raised} stroke={line}></rect>
       <text x="28" y="36" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={accentDeep}>{copy.title}</text>
 
       <g transform="translate(26 62)">
-        <rect x="0" y="0" width="368" height="122" rx="10" fill={paper} stroke={line}></rect>
+        <rect x="0" y="0" width="368" height="144" rx="10" fill={paper} stroke={line}></rect>
         <text x="16" y="24" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={accentDeep}>{copy.bif}</text>
-        <text x="16" y="44" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "驱动因素越过临界值；旧稳定态不再存在。" : "Driver crosses a limit; the old stable state no longer exists."}</text>
-        <path d="M36 92 C75 92 80 52 108 52 C137 52 142 92 180 92" fill="none" stroke={lineStrong} stroke-width="1.8" stroke-dasharray="3 4"></path>
-        <path d="M210 92 C252 92 268 82 318 78" fill="none" stroke={soft} stroke-width="2.5"></path>
-        <circle cx="107" cy="51" r="6.5" fill={accent}></circle>
-        <circle cx="315" cy="77" r="6.5" fill={danger}></circle>
-        <path d="M185 70 L205 70" stroke={danger} stroke-width="1.8" marker-end="url(#day9-tip-arrow)"></path>
-        <line x1="198" y1="50" x2="198" y2="104" stroke={danger} stroke-width="1.4" stroke-dasharray="3 4"></line>
-        <text x="198" y="115" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{zh ? "阈值" : "threshold"}</text>
+        <text x="16" y="44" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>
+          <tspan x="16" dy="0">{zh ? "驱动越过临界值；" : "Driver passes a limit;"}</tspan>
+          <tspan x="16" dy="14">{zh ? "旧稳定态不再存在。" : "the old stable state vanishes."}</tspan>
+        </text>
+        <path d="M36 114 C75 114 80 74 108 74 C137 74 142 114 180 114" fill="none" stroke={lineStrong} stroke-width="1.8" stroke-dasharray="3 4"></path>
+        <path d="M210 114 C252 114 268 104 318 100" fill="none" stroke={soft} stroke-width="2.5"></path>
+        <circle cx="107" cy="73" r="6.5" fill={accent}></circle>
+        <circle cx="315" cy="99" r="6.5" fill={danger}></circle>
+        <path d="M185 92 L205 92" stroke={danger} stroke-width="1.8" marker-end="url(#day9-tip-arrow)"></path>
+        <line x1="198" y1="72" x2="198" y2="126" stroke={danger} stroke-width="1.4" stroke-dasharray="3 4"></line>
+        <text x="198" y="137" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{zh ? "阈值" : "threshold"}</text>
       </g>
 
-      <g transform="translate(26 202)">
-        <rect x="0" y="0" width="368" height="122" rx="10" fill={paper} stroke={line}></rect>
+      <g transform="translate(26 222)">
+        <rect x="0" y="0" width="368" height="144" rx="10" fill={paper} stroke={line}></rect>
         <text x="16" y="24" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={warn}>{copy.noise}</text>
-        <text x="16" y="44" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "阈值还没越过；一次大扰动把系统推出盆地。" : "Threshold is not crossed; one large disturbance pushes it out."}</text>
-        <path d="M46 92 C92 92 93 50 132 50 C171 50 172 92 218 92" fill="none" stroke={soft} stroke-width="2.5"></path>
-        <circle cx="76" cy="74" r="6.5" fill={warn}></circle>
-        <path d="M76 68 C104 32 143 38 168 66" fill="none" stroke={danger} stroke-width="1.9" stroke-dasharray="3 4" marker-end="url(#day9-tip-arrow)"></path>
-        <text x="260" y="79" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "大冲击" : "large shock"}</text>
-        <path d="M242 76 L226 76" stroke={danger} stroke-width="1.5" marker-end="url(#day9-tip-arrow)"></path>
+        <text x="16" y="44" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>
+          <tspan x="16" dy="0">{zh ? "驱动仍低于阈值；" : "Driver stays below threshold;"}</tspan>
+          <tspan x="16" dy="14">{zh ? "大扰动把系统踢出去。" : "a large disturbance kicks it out."}</tspan>
+        </text>
+        <path d="M46 116 C92 116 93 74 132 74 C171 74 172 116 218 116" fill="none" stroke={soft} stroke-width="2.5"></path>
+        <circle cx="76" cy="98" r="6.5" fill={warn}></circle>
+        <path d="M76 92 C104 56 143 62 168 90" fill="none" stroke={danger} stroke-width="1.9" stroke-dasharray="3 4" marker-end="url(#day9-tip-arrow)"></path>
+        <text x="260" y="103" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "大冲击" : "large shock"}</text>
+        <path d="M242 100 L226 100" stroke={danger} stroke-width="1.5" marker-end="url(#day9-tip-arrow)"></path>
       </g>
 
-      <g transform="translate(26 342)">
-        <rect x="0" y="0" width="368" height="122" rx="10" fill={paper} stroke={line}></rect>
+      <g transform="translate(26 382)">
+        <rect x="0" y="0" width="368" height="144" rx="10" fill={paper} stroke={line}></rect>
         <text x="16" y="24" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={danger}>{copy.rate}</text>
-        <text x="16" y="44" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "终点相同；慢变可跟上，快变会甩出去。" : "Same destination; slow change tracks, fast change spills out."}</text>
-        <path d="M42 86 C88 86 91 52 132 52 C174 52 178 86 224 86" fill="none" stroke={soft} stroke-width="2.5"></path>
-        <path d="M46 108 L198 78" stroke={ok} stroke-width="1.7" marker-end="url(#day9-tip-arrow-ok)"></path>
-        <path d="M48 68 L198 104" stroke={danger} stroke-width="1.9" marker-end="url(#day9-tip-arrow)"></path>
-        <circle cx="132" cy="52" r="6.5" fill={danger}></circle>
-        <text x="250" y="75" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ok}>{zh ? "慢：能追踪" : "slow: tracks"}</text>
-        <text x="250" y="98" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{zh ? "快：会翻车" : "fast: tips"}</text>
+        <text x="16" y="44" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>
+          <tspan x="16" dy="0">{zh ? "终点相同；" : "Same destination;"}</tspan>
+          <tspan x="16" dy="14">{zh ? "变化太快就跟不上。" : "too fast to track."}</tspan>
+        </text>
+        <path d="M42 106 C88 106 91 72 132 72 C174 72 178 106 224 106" fill="none" stroke={soft} stroke-width="2.5"></path>
+        <path d="M46 128 L198 98" stroke={ok} stroke-width="1.7" marker-end="url(#day9-tip-arrow-ok)"></path>
+        <path d="M48 88 L198 124" stroke={danger} stroke-width="1.9" marker-end="url(#day9-tip-arrow)"></path>
+        <circle cx="132" cy="72" r="6.5" fill={danger}></circle>
+        <text x="250" y="95" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ok}>{zh ? "慢：能追踪" : "slow: tracks"}</text>
+        <text x="250" y="118" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{zh ? "快：会翻车" : "fast: tips"}</text>
       </g>
     </svg>
   )}

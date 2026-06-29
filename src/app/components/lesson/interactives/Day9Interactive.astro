@@ -26,8 +26,8 @@ const text = {
     ? { eyebrow: "交互 · 梅多斯的杠杆点", title: "系统中的干预位置", note: "按唐娜拉·梅多斯从 12（最弱）到 1（最强）排序。点击任意横档，查看为什么越高越有力，也越难触及。", top: "↑ 更强杠杆 · 更难触及", bottom: "↓ 更弱杠杆 · 争论最密集" }
     : { eyebrow: "Interactive · Meadows' leverage points", title: "Places to Intervene in a System", note: "Ranked from 12 (weakest) to 1 (strongest), after Donella Meadows. Tap any rung to see why higher leverage is stronger and harder to reach.", top: "↑ stronger leverage · harder to reach", bottom: "↓ weaker leverage · where everyone fights" },
   daisyworld: zh
-    ? { eyebrow: "交互 · 雏菊世界的寓言", title: "一个自己守住温度的世界", note: "拖动太阳亮度。虚线是没有生命的裸岩；蓝线是黑白雏菊反馈后的行星温度。黑雏菊在暗星下增温，白雏菊在亮星下冷却，中段形成平台，直到恒星太亮而调节失败。", lum: "太阳亮度", life: "有生命温度", dead: "裸岩温度", dim: "昏暗年轻星", hot: "更热恒星", edge: "接近断点", collapse: "越过崩溃", black: "黑", white: "白", bare: "裸地" }
-    : { eyebrow: "Interactive · the parable of Daisyworld", title: "A World That Holds Its Own Temperature", note: "Drag solar luminosity. The dashed line is a lifeless rock; the blue line is planetary temperature after black-white daisy feedback. Black daisies warm a dim star, white daisies cool a bright one, and the middle becomes a plateau until regulation fails.", lum: "Solar luminosity", life: "Temp · with life", dead: "Temp · dead rock", dim: "Young, dim star", hot: "Hotter star", edge: "Near the breaking point", collapse: "Past collapse", black: "black", white: "white", bare: "bare" },
+    ? { eyebrow: "交互 · 雏菊世界的寓言", title: "一个自己守住温度的世界", note: "拖动太阳亮度。虚线是没有生命的裸岩；蓝线是黑白雏菊反馈后的行星温度。太暗或太亮时雏菊无法维持，世界跟随裸岩；中间范围内，黑雏菊增温、白雏菊降温，把温度压成更平的平台。", lum: "太阳亮度", life: "有生命温度", dead: "裸岩温度", cold: "太暗", dim: "昏暗年轻星", hot: "更热恒星", edge: "接近断点", collapse: "越过崩溃", black: "黑", white: "白", bare: "裸地" }
+    : { eyebrow: "Interactive · the parable of Daisyworld", title: "A World That Holds Its Own Temperature", note: "Drag solar luminosity. The dashed line is a lifeless rock; the blue line is planetary temperature after black-white daisy feedback. Too dim or too bright and daisies cannot hold; in the middle, black daisies warm and white daisies cool, flattening the temperature into a regulating plateau.", lum: "Solar luminosity", life: "Temp · with life", dead: "Temp · dead rock", cold: "Too dim", dim: "Young, dim star", hot: "Hotter star", edge: "Near the breaking point", collapse: "Past collapse", black: "black", white: "white", bare: "bare" },
   classifier: zh
     ? { eyebrow: "交互 · 同样的震颤，三道不同的悬崖", title: "分类器听到了你听不到的什么", note: "选择一条崩溃路径。方差和自相关都可能升高，所以单靠警报强度不够；分类器读取接近悬崖的形状，区分跳跃、振荡和稳定性交换。", route: "崩溃路径", fold: "折叠 · 跳跃", hopf: "霍普夫 · 振荡", trans: "跨临界 · 滑移", variance: "方差", ac: "滞后一阶自相关" }
     : { eyebrow: "Interactive · the same tremor, three different cliffs", title: "What a Classifier Hears That You Can't", note: "Pick a route to collapse. Variance and autocorrelation can rise in all three, so alarm strength is not enough; the classifier reads the approach shape and separates a jump, an oscillation, and a stability exchange.", route: "Route to collapse", fold: "Fold · jump", hopf: "Hopf · oscillate", trans: "Transcritical · slide", variance: "Variance", ac: "Lag-1 autocorr." },
@@ -124,9 +124,10 @@ const print = {
   daisyworld: zh
     ? {
         title: "静态替代 · 雏菊世界",
-        caption: "有生命的星球把温度曲线压成平台：黑雏菊在暗星下吸热，白雏菊在亮星下反射热，直到亮度太高而崩溃。",
+        caption: "有生命的星球在中间亮度范围内把温度曲线压成平台；太暗或太亮时雏菊都无法维持，调节失败。",
         columns: ["太阳亮度", "雏菊组成", "温度结果"],
         rows: [
+          ["太暗", "雏菊无法维持", "调节失败，世界跟随裸岩"],
           ["偏暗", "黑雏菊较多", "吸收更多热量，世界被暖起来"],
           ["中等", "黑白雏菊共同调节", "温度保持在适生平台"],
           ["过亮", "雏菊死亡", "调节失败，温度跟随裸岩上升"]
@@ -134,9 +135,10 @@ const print = {
       }
     : {
         title: "Static alternate · Daisyworld",
-        caption: "Life flattens the temperature curve: black daisies warm a dim world, white daisies reflect heat on a bright one, until luminosity gets too high and regulation collapses.",
+        caption: "Life flattens the temperature curve inside a middle luminosity range; too dim or too bright and daisies cannot persist, so regulation fails.",
         columns: ["Solar luminosity", "Daisy mix", "Temperature result"],
         rows: [
+          ["Too dim", "Daisies cannot persist", "Regulation fails; temperature follows dead rock"],
           ["Dim", "More black daisies", "Absorbs heat and warms the world"],
           ["Moderate", "Black and white daisies regulate together", "Temperature stays on a habitable plateau"],
           ["Too bright", "Daisies die out", "Regulation fails and temperature follows dead rock"]
@@ -265,7 +267,7 @@ const print = {
   {kind === "daisyworld" && (
     <div class="day9-grid">
       <div class="day9-controls">
-        <label>{text.lum} <strong data-out="lum">1.00</strong><input data-role="lum" type="range" min="60" max="170" value="100" /></label>
+        <label>{text.lum} <strong data-out="lum">1.00</strong><input data-role="lum" type="range" min="35" max="170" value="100" /></label>
         <div class="day9-planet" data-role="bar"><span data-seg="black">{text.black}</span><span data-seg="white">{text.white}</span><span data-seg="bare">{text.bare}</span></div>
         <div class="day9-readouts two">
           <div><span>{text.life}</span><strong data-out="life">-</strong></div>
@@ -273,6 +275,7 @@ const print = {
         </div>
         <div class="day9-callout" data-out="state"></div>
         <div class="day9-presets">
+          <button data-preset="40">{text.cold}</button>
           <button data-preset="80">{text.dim}</button>
           <button data-preset="120">{text.hot}</button>
           <button data-preset="150">{text.edge}</button>
@@ -366,8 +369,8 @@ const print = {
         ["2","Paradigms","Change the worldview from which goals arise."],
         ["1","Transcend paradigms","Hold models lightly enough to replace them."]
       ],
-      daisyGood:"mixed daisies hold the plateau", daisyCold:"black daisies warm a dim world", daisyWhite:"white daisies reflect a hot star", daisyHot:"too hot: regulation collapses", daisyDead:"too cold for daisies",
-      plateau:"habitable plateau", rock:"dead rock", withLife:"with daisies", luminosity:"solar luminosity",
+      daisyGood:"mixed daisies hold the plateau", daisyCold:"black daisies warm a dim world", daisyWhite:"white daisies reflect a hot star", daisyHot:"too hot: regulation collapses", daisyDead:"too cold: regulation never starts",
+      plateau:"regulating range", rock:"dead rock", withLife:"with daisies", luminosity:"solar luminosity", coldFail:"too dim", hotFail:"too bright", blackWarms:"black warms", whiteCools:"white cools",
       classifier:{fold:["Fold bifurcation","Generic warning rises, then the state jumps to a distant basin."], hopf:["Hopf bifurcation","The warning comes with growing oscillation: the future is a cycle."], trans:["Transcritical bifurcation","Two branches trade stability; one state slides out as another takes over."]},
       sharedWarn:"shared warning: variance and autocorrelation rise", fingerprint:"route fingerprint", foldLand:"jump to new basin", hopfLand:"growing cycle", transLand:"stability exchange",
       evHold:"Uniform vegetation still holds.", evCrash:"Uniform vegetation collapses abruptly.", evPattern:"Patterns trade uniform cover for persistence.", evSparse:"Patterned cover is sparse but alive."
@@ -390,8 +393,8 @@ const print = {
         ["2","范式","改变目标所来自的世界观。"],
         ["1","超越范式","轻拿模型，随时能替换它们。"]
       ],
-      daisyGood:"黑白雏菊共同守住平台", daisyCold:"黑雏菊给暗星增温", daisyWhite:"白雏菊反射过热恒星", daisyHot:"太热：调节崩溃", daisyDead:"太冷，雏菊无法生长",
-      plateau:"适生平台", rock:"裸岩", withLife:"有雏菊", luminosity:"太阳亮度",
+      daisyGood:"黑白雏菊共同守住平台", daisyCold:"黑雏菊给暗星增温", daisyWhite:"白雏菊反射过热恒星", daisyHot:"太热：调节崩溃", daisyDead:"太冷：调节无法启动",
+      plateau:"调节范围", rock:"裸岩", withLife:"有雏菊", luminosity:"太阳亮度", coldFail:"太暗", hotFail:"太亮", blackWarms:"黑雏菊增温", whiteCools:"白雏菊降温",
       classifier:{fold:["折叠分岔","通用预警上升，随后状态跳入远处盆地。"], hopf:["霍普夫分岔","预警伴随振荡放大：未来是一个周期。"], trans:["跨临界分岔","两条分支交换稳定性；一个状态滑出，另一个接管。"]},
       sharedWarn:"共同预警：方差和自相关上升", fingerprint:"路径指纹", foldLand:"跳入新盆地", hopfLand:"振荡增大", transLand:"稳定性交换",
       evHold:"均匀植被仍能撑住。", evCrash:"均匀植被突然崩溃。", evPattern:"斑图用均匀覆盖换取坚持。", evSparse:"斑图覆盖稀疏，但仍活着。"
@@ -719,26 +722,43 @@ const print = {
     const draw = () => {
       const L=Number(slider.value)/100, d=daisy(L), tt=T[lang];
       clear(svg);
-      const W=600,H=330,mL=54,mR=18,mT=20,mB=38,yMin=-6,yMax=54;
-      const x = v => mL + (v-.6)/1.1*(W-mL-mR);
+      const W=600,H=330,mL=54,mR=18,mT=20,mB=38,yMin=-8,yMax=54;
+      const x = v => mL + (v-.35)/1.35*(W-mL-mR);
       const y = v => mT + (1 - (v-yMin)/(yMax-yMin))*(H-mT-mB);
+      const defs = el("defs");
+      const warmMarker = el("marker", { id: "day9-daisy-warm-arrow", markerWidth: 7, markerHeight: 7, refX: 6, refY: 3.5, orient: "auto" });
+      warmMarker.append(el("path", { d: "M0,0 L7,3.5 L0,7 z", fill: C.warn }));
+      const coolMarker = el("marker", { id: "day9-daisy-cool-arrow", markerWidth: 7, markerHeight: 7, refX: 6, refY: 3.5, orient: "auto" });
+      coolMarker.append(el("path", { d: "M0,0 L7,3.5 L0,7 z", fill: C.ok }));
+      defs.append(warmMarker, coolMarker);
+      svg.append(defs);
       svg.append(el("rect",{x:0,y:0,width:W,height:H,rx:10,fill:C.raised,stroke:C.line}));
-      svg.append(el("rect",{x:mL,y:y(30),width:W-mL-mR,height:y(12)-y(30),fill:`color-mix(in srgb, ${C.ok} 13%, transparent)`}));
+      svg.append(el("rect",{x:mL,y:mT,width:W-mL-mR,height:H-mT-mB,rx:8,fill:C.paper,stroke:C.line,opacity:.72}));
+      svg.append(el("rect",{x:x(.35),y:mT,width:x(.45)-x(.35),height:H-mT-mB,fill:`color-mix(in srgb, ${C.danger} 11%, transparent)`}));
+      svg.append(el("rect",{x:x(1.52),y:mT,width:x(1.7)-x(1.52),height:H-mT-mB,fill:`color-mix(in srgb, ${C.danger} 11%, transparent)`}));
+      svg.append(el("rect",{x:x(.55),y:y(30),width:x(1.45)-x(.55),height:y(12)-y(30),fill:`color-mix(in srgb, ${C.ok} 15%, transparent)`}));
       [0,15,30,45].forEach(v=>{
         svg.append(el("line",{x1:mL,y1:y(v),x2:W-mR,y2:y(v),stroke:C.line,"stroke-dasharray":"2 5"}));
         const t=el("text",{x:mL-8,y:y(v)+3,"text-anchor":"end","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.faint}); t.textContent=`${v}°`; svg.append(t);
       });
       svg.append(el("line",{x1:mL,y1:mT,x2:mL,y2:H-mB,stroke:C.line}));
       svg.append(el("line",{x1:mL,y1:H-mB,x2:W-mR,y2:H-mB,stroke:C.line}));
-      const xs=[]; for(let i=60;i<=170;i+=2){ const lx=i/100, dd=daisy(lx); xs.push({x:lx,life:dd.life,dead:dd.dead}); }
+      const xs=[]; for(let i=35;i<=170;i+=2){ const lx=i/100, dd=daisy(lx); xs.push({x:lx,life:dd.life,dead:dd.dead}); }
       svg.append(el("path",{d:path(xs.map(p=>[x(p.x),y(p.dead)])),fill:"none",stroke:C.faint,"stroke-width":2,"stroke-dasharray":"5 5"}));
       svg.append(el("path",{d:path(xs.map(p=>[x(p.x),y(p.life)])),fill:"none",stroke:C.accent,"stroke-width":3.2,"stroke-linecap":"round","stroke-linejoin":"round"}));
+      const warm = daisy(.58), cool = daisy(1.34);
+      svg.append(el("line",{x1:x(.58),y1:y(warm.dead),x2:x(.58),y2:y(warm.life),stroke:C.warn,"stroke-width":1.8,"marker-end":"url(#day9-daisy-warm-arrow)"}));
+      svg.append(el("line",{x1:x(1.34),y1:y(cool.dead),x2:x(1.34),y2:y(cool.life),stroke:C.ok,"stroke-width":1.8,"marker-end":"url(#day9-daisy-cool-arrow)"}));
       svg.append(el("line",{x1:x(L),y1:mT,x2:x(L),y2:H-mB,stroke:C.brass,"stroke-width":1.5,"stroke-dasharray":"4 4"}));
       svg.append(el("circle",{cx:x(L),cy:y(d.life),r:7,fill:C.accent,stroke:C.raised,"stroke-width":2}));
       svg.append(el("circle",{cx:x(L),cy:y(d.dead),r:4,fill:C.faint}));
-      const plateau = el("text",{x:x(1.08),y:y(26)-8,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.ok}); plateau.textContent=tt.plateau; svg.append(plateau);
-      const labLife = el("text",{x:W-mR-6,y:y(daisy(1.28).life)-7,"text-anchor":"end","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.accent}); labLife.textContent=tt.withLife; svg.append(labLife);
-      const labRock = el("text",{x:W-mR-6,y:y(daisy(1.48).dead)+14,"text-anchor":"end","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.faint}); labRock.textContent=tt.rock; svg.append(labRock);
+      const plateau = el("text",{x:x(1),y:y(31)-9,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.ok}); plateau.textContent=tt.plateau; svg.append(plateau);
+      const coldFail = el("text",{x:x(.4),y:mT+16,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.danger}); coldFail.textContent=tt.coldFail; svg.append(coldFail);
+      const hotFail = el("text",{x:x(1.61),y:mT+16,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.danger}); hotFail.textContent=tt.hotFail; svg.append(hotFail);
+      const warmLabel = el("text",{x:x(.62),y:y(8)-8,"font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.warn}); warmLabel.textContent=tt.blackWarms; svg.append(warmLabel);
+      const coolLabel = el("text",{x:x(1.16),y:y(35)+3,"font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.ok}); coolLabel.textContent=tt.whiteCools; svg.append(coolLabel);
+      const labLife = el("text",{x:x(1.31),y:y(daisy(1.28).life)+15,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.accent}); labLife.textContent=tt.withLife; svg.append(labLife);
+      const labRock = el("text",{x:x(1.46),y:y(daisy(1.46).dead)-8,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.faint}); labRock.textContent=tt.rock; svg.append(labRock);
       const axis = el("text",{x:(mL+W-mR)/2,y:H-10,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:C.faint}); axis.textContent=tt.luminosity; svg.append(axis);
       q(root,"[data-out=lum]").textContent=L.toFixed(2); q(root,"[data-out=life]").textContent=`${d.life.toFixed(1)}°C`; q(root,"[data-out=dead]").textContent=`${d.dead.toFixed(1)}°C`;
       q(root,"[data-seg=black]").style.width=`${d.black*100}%`; q(root,"[data-seg=white]").style.width=`${d.white*100}%`; q(root,"[data-seg=bare]").style.width=`${d.bare*100}%`;
