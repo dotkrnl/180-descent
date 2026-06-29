@@ -96,14 +96,20 @@ A *stock* is anything that accumulates: water in a bathtub, money in an account,
 A stock rises whenever its inflow exceeds its outflow — no matter what the flows themselves happen to be doing.
 </BlockQuote>
 
-Read that twice, because human intuition violently disagrees with it. The man who formalized stocks and flows into a working discipline was **Jay Forrester**, an MIT engineer who had built flight simulators and pioneering computer memory before turning, in the 1950s, to a stranger machine: the corporation. Hired to explain why a General Electric appliance plant kept lurching through three-year cycles of frantic hiring and brutal layoffs — with *steady* consumer demand — Forrester showed the booms and busts weren't caused by the market at all. They were manufactured *inside* the company, by the delays and feedback loops in how managers reacted to inventory and orders. The cycles were a property of the system's *structure*, not its environment. He called the new field *system dynamics*, and its core insight was unsettling: **complex systems are counterintuitive.** They actively mislead the people inside them.
+Read that twice, because human intuition violently disagrees with it. Why? Because we are very good at tracking visible motion and very bad at mentally integrating a rate over time. When the faucet curve falls, the eye wants the level to fall with it. But a stock is not a copy of either flow; it is the running total of the **difference** between inflow and outflow. So a falling inflow can still raise the stock if it remains above the outflow. That small distinction is the whole trap.
+
+The man who formalized stocks and flows into a working discipline was **Jay Forrester**, an MIT engineer who had built flight simulators and pioneering computer memory before turning, in the 1950s, to a stranger machine: the corporation. Hired to explain why a General Electric appliance plant kept lurching through three-year cycles of frantic hiring and brutal layoffs — with *steady* consumer demand — Forrester showed the booms and busts weren't caused by the market at all. They were manufactured *inside* the company, by the delays and feedback loops in how managers reacted to inventory and orders. The cycles were a property of the system's *structure*, not its environment. He called the new field *system dynamics*, and its core insight was unsettling: **complex systems are counterintuitive.** They actively mislead the people inside them.
 
 Forrester's most influential student was the extraordinary **Donella Meadows**, lead author of the 1972 global bestseller *The Limits to Growth* and, decades later, of the field's beloved primer, *Thinking in Systems.* Meadows had a gift for turning equations into plain English, and she returned again and again to the humblest possible teaching device: a bathtub.
 
 <Aside>
 <BlockTitle>The 36% problem</BlockTitle>
 
-This is not a metaphor for how hard accumulation is — it is a measured fact. The MIT researchers Linda Booth Sweeney and John Sterman handed highly educated graduate students a simple graph: here is the inflow to a tub over time, here is the outflow; sketch the water level. It requires no arithmetic, only the rule above. **Only about 36% drew the right shape.** Most committed the same error, the "correlation heuristic": they drew the *level* rising and falling in step with the *inflow*, as if the stock should mimic the flow. It doesn't — and the gap between those two curves is where a startling amount of real-world confusion lives, as the next panel makes vivid.
+This is real, not a course anecdote. The source is Linda Booth Sweeney and John Sterman's 2000 *System Dynamics Review* paper, "Bathtub dynamics: initial results of a systems thinking inventory." They gave highly educated graduate students a simple graph: here is the inflow to a tub over time, here is the outflow; sketch the water level. It requires no calculus, only the rule above. **Only about 36% drew the right shape.** A 2009 follow-up by Cronin, Gonzalez, and Sterman named the dominant mistake the **correlation heuristic**: people drew the *level* rising and falling in step with the *inflow*, as if the stock should mimic the flow. It doesn't.
+
+<Day9StaticFigure kind="bathtub-errors" locale="en" />
+
+The mistake seems trivial only after you see the right graph. Before that, the wrong answer feels visually natural: "the faucet is going down, so the level should go down." The hidden operation is accumulation. As long as the area where inflow exceeds outflow is still growing, the water level keeps rising.
 </Aside>
 
 Why should you care about a tub? Because the atmosphere is one. Carbon dioxide is a stock; our emissions are the inflow; natural sinks (oceans, plants) are the drain. Right now humans pour CO₂ into the air at roughly twice the rate the drain can remove it. Sterman has shown that the very same 36%-style error infects public reasoning about climate: many people assume that if we simply *stop increasing* emissions, concentrations will level off. They won't. As long as the faucet beats the drain, the level keeps climbing. To *stabilize* the stock, you must cut the inflow all the way down to meet the outflow — a far more demanding ask, and one that the bathtub teaches in about ten seconds once you actually watch it.
@@ -127,6 +133,8 @@ Wire stocks, flows, and feedback together and you can draw almost any system as 
 
 <Day9StaticFigure kind="loops" locale="en" />
 
+More people → more births → *more people* is an **R** loop: the engine of growth. But more people → more crowding and scarcity → *fewer* net births is a **B** loop: the brake. Every real population is a tug-of-war between the two, and most real systems mix both: a reinforcing loop creates motion, a balancing loop sets limits, and delay decides whether the result is smooth or chaotic.
+
 Two complications turn these tidy diagrams into the stuff of real-world disaster. The first is **delay**. A balancing loop with a long lag doesn't gently settle — it overshoots, like a shower with a slow water heater that scalds you the instant after you've cranked the cold. (You felt this directly in the Feedback Engine: add delay and the calm thermostat starts to hunt.) The second is **nonlinearity**: in systems with feedback, doubling the cause rarely doubles the effect. Push gently and nothing happens; push a little harder and the whole thing lurches.
 
 The canonical demonstration is a game. MIT's *Beer Distribution Game* sits players along a supply chain — retailer, wholesaler, distributor, factory — each ordering from the next, each separated by shipping delays, none able to see the whole. The customer demand is almost flat: a single, modest, one-time bump. And yet, reliably, every time it's played, that tiny ripple at the retail end amplifies into wild, accelerating swings of frantic over-ordering and despairing cancellation upstream — the **bullwhip effect.** John Sterman's classic 1989 study showed the cause isn't stupidity or greed; it's that people, unable to perceive the feedback structure they're embedded in, systematically misjudge the delays and overreact. The lesson is humbling and it generalizes far beyond beer: *well-meaning people, reacting sensibly to what's in front of them, reliably destabilize a system whose loops they cannot see.*
@@ -145,7 +153,7 @@ Here we can be more precise than the old slogans, because **Day 8** already gave
 </ContentSection>
 
 <ContentSection>
-## When the loop runs away: tipping points
+## The edge: when loops run away
 
 Now we cash it all in on the highest-stakes system of all. Most of the time, the Earth's great systems are governed by balancing loops — push them and they push back toward where they were. A forest cools and humidifies the air above it; an ice sheet's bright surface reflects sunlight and keeps itself frozen. Stability, bought by negative feedback. But hidden inside many of these systems is a sleeping *reinforcing* loop — and if a driver (say, warming) pushes hard enough, the R loop can wake, overpower the B loops, and carry the system, all by itself, into a completely different state. That threshold is a *tipping point*, and crossing it can be abrupt, self-sustaining, and very hard to undo.
 
@@ -154,7 +162,7 @@ The mathematics is the theory of *critical transitions*, charted most influentia
 Most beautifully, the theory predicts a **warning sign.** As a valley flattens toward its tipping point, the ball recovers ever more sluggishly from each random jostle — a phenomenon called *critical slowing down*. Statistically, this shows up as *rising variance* (the ball wanders further) and *rising autocorrelation* (each moment looks more like the last, because the system can't spring back). These *early-warning signals*, introduced in a landmark 2009 *Nature* paper by Scheffer and colleagues, are the same regardless of whether the system is a lake, a power grid, or an ice sheet. The panel below lets you feel all three ideas at once.
 
 <Panel>
-<PanelTitle>Edge 01</PanelTitle>
+<PanelTitle>Edge 01 · warning signal</PanelTitle>
 
 <StatusChipRow>
 <StatusChip status="ok" label="established" printLabel="Critical slowing down · established" />
@@ -180,7 +188,7 @@ Most beautifully, the theory predicts a **warning sign.** As a valley flattens t
 
 <ContentSection>
 <Panel>
-<PanelTitle>Edge 02</PanelTitle>
+<PanelTitle>Edge 02 · climate thresholds</PanelTitle>
 
 <StatusChipRow>
 <StatusChip status="ok" label="established" printLabel="Tipping elements exist · established" />
@@ -197,7 +205,7 @@ Most beautifully, the theory predicts a **warning sign.** As a valley flattens t
 </Panel>
 
 <Panel>
-<PanelTitle>Edge 03</PanelTitle>
+<PanelTitle>Edge 03 · AMOC caution</PanelTitle>
 
 <StatusChipRow>
 <StatusChip status="ok" label="established" printLabel="AMOC weakening &amp; at risk · established" />

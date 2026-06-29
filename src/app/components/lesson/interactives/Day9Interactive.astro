@@ -14,14 +14,14 @@ const zh = Astro.props.locale === "zh";
 
 const text = {
   feedback: zh
-    ? { eyebrow: "交互 · 搭建它，再打破它", title: "反馈引擎", note: "房间起初很冷，控制器想要 21°C。调高增益和延迟，看一只平静的恒温器变成麦克斯韦的噩梦；再翻成正反馈，看目标追寻者变成失控者。", gain: "增益", delay: "延迟", wiring: "接线", neg: "负反馈 · 稳定", pos: "正反馈 · 失控", calm: "平静控制", hunt: "振荡", tear: "撕裂", squeal: "尖啸" }
-    : { eyebrow: "Interactive · build it and break it", title: "The Feedback Engine", note: "A room starts cold; the controller wants 21°C. Turn up gain and delay, and watch a calm thermostat become Maxwell's nightmare. Then flip the wire to positive feedback and see a goal-seeker become a runaway.", gain: "Gain", delay: "Delay", wiring: "Wiring", neg: "Negative · stabilizing", pos: "Positive · runaway", calm: "Calm control", hunt: "The hunt", tear: "Tear it apart", squeal: "The squeal" },
+    ? { eyebrow: "交互 · 搭建它，再打破它", title: "反馈引擎", note: "房间起初很冷，控制器想要 21°C。调高增益（修正有多猛）和延迟（读数有多陈旧），看一只平静的恒温器变成麦克斯韦的噩梦：追逐、振荡，最后把自己撕裂。再把接线翻成正反馈，看目标追踪者变成失控者。", gain: "增益 — 修正强度", delay: "延迟 — 读数滞后", wiring: "接线", neg: "负反馈 · 稳定", pos: "正反馈 · 失控", calm: "平静控制", hunt: "振荡", tear: "撕裂", squeal: "尖啸" }
+    : { eyebrow: "Interactive · build it and break it", title: "The Feedback Engine", note: "A room starts cold; the controller wants 21°C. Turn up the gain (how aggressively it corrects) and the delay (how stale its readings are), and watch a calm thermostat turn into Maxwell's nightmare: hunting, oscillating, and finally tearing itself apart. Then flip the wire to positive feedback and see a goal-seeker become a runaway.", gain: "Gain — correction strength", delay: "Delay — lag in the reading", wiring: "Wiring", neg: "Negative · stabilizing", pos: "Positive · runaway", calm: "Calm control", hunt: "The hunt", tear: "Tear it apart", squeal: "The squeal" },
   bathtub: zh
-    ? { eyebrow: "交互 · 反直觉的水槽", title: "水位为何持续上升", note: "水龙头先升高再降低；排水口由你设定。只要流入大于流出，水位就继续上升，并且峰值会滞后于水龙头峰值。", inflow: "水龙头 · 峰值流入", outflow: "排水口 · 恒定流出", co2: "CO2 水槽", balance: "保持平衡", empty: "排水获胜" }
-    : { eyebrow: "Interactive · the counterintuitive tub", title: "Why the Water Keeps Rising", note: "The faucet ramps up and back down; the drain is whatever you set it to. As long as inflow exceeds outflow, the level keeps rising, and its peak lags the faucet peak.", inflow: "Faucet · peak inflow", outflow: "Drain · constant outflow", co2: "The CO2 tub", balance: "Hold it steady", empty: "Drain wins" },
+    ? { eyebrow: "交互 · 反直觉的水槽", title: "水位为何持续上升", note: "水龙头（上图）先升高、再降低，形成一个峰。排水口由你设定。下图是水位。关键是：只要水龙头仍大于排水口，水位就持续上升；它只会在水龙头降到排水口以下之后才到峰值。存量滞后于流量。", inflow: "水龙头 — 峰值流入", outflow: "排水口 — 恒定流出", co2: "CO2 水槽", balance: "保持平衡", empty: "排水获胜" }
+    : { eyebrow: "Interactive · the counterintuitive tub", title: "Why the Water Keeps Rising", note: "The faucet (top) ramps up, then ramps back down: a hump. The drain is whatever you set it to. The bottom chart is the water level. The thing to notice: the level keeps rising the whole time the faucet beats the drain, and only peaks after the faucet has already started shutting off. Stock lags flow.", inflow: "Faucet — peak inflow", outflow: "Drain — constant outflow", co2: "The CO2 tub", balance: "Hold it steady", empty: "Drain wins" },
   tipping: zh
-    ? { eyebrow: "交互 · 感受临界拐点", title: "稳定地貌", note: "拖动驱动因素让山谷变形。临近临界点时，盆地变平，方差与自相关上升。推过折叠点后，再往回拖也不会马上回来：这就是滞后。", driver: "驱动因素", res: "恢复力", variance: "方差", ac: "自相关", safe: "安全稳定", edge: "在边缘", reset: "重置球" }
-    : { eyebrow: "Interactive · feel the tipping point", title: "The Stability Landscape", note: "Drag the driver to deform the valleys. Near the tipping point the basin flattens, variance rises, and autocorrelation climbs. Push past the fold, then drag back: the return is delayed by hysteresis.", driver: "Driver", res: "Resilience", variance: "Variance", ac: "Autocorr.", safe: "Safe & stable", edge: "On the edge", reset: "Reset ball" },
+    ? { eyebrow: "交互 · 感受临界拐点", title: "稳定地貌", note: "拖动驱动因素，让山谷变形。球坐在自己的盆地里，并会微微抖动。越接近临界点，盆地越平，球的游走范围（方差）和迟滞性（自相关）越高；推过折叠点后，再往回拖也不会马上回来。那段回不去的距离，就是滞后。", driver: "驱动因素（如升温）", res: "恢复力", variance: "方差", ac: "自相关", safe: "安全稳定", edge: "在边缘", reset: "重置球" }
+    : { eyebrow: "Interactive · feel the tipping point", title: "The Stability Landscape", note: "Drag the driver to deform the valleys. The ball sits in its basin, and jitters. Watch two things as you push toward a tipping point: the basin flattens, and the ball's wandering (variance) and sluggishness (autocorrelation) climb. Push past the fold, then drag the driver back: the gap before return is hysteresis.", driver: "Driver (e.g. warming)", res: "Resilience", variance: "Variance", ac: "Autocorr.", safe: "Safe & stable", edge: "On the edge", reset: "Reset ball" },
   leverage: zh
     ? { eyebrow: "交互 · 梅多斯的杠杆点", title: "系统中的干预位置", note: "按唐娜拉·梅多斯从 12（最弱）到 1（最强）排序。点击任意横档，查看为什么越高越有力，也越难触及。", top: "↑ 更强杠杆 · 更难触及", bottom: "↓ 更弱杠杆 · 争论最密集" }
     : { eyebrow: "Interactive · Meadows' leverage points", title: "Places to Intervene in a System", note: "Ranked from 12 (weakest) to 1 (strongest), after Donella Meadows. Tap any rung to see why higher leverage is stronger and harder to reach.", top: "↑ stronger leverage · harder to reach", bottom: "↓ weaker leverage · where everyone fights" },
@@ -349,9 +349,9 @@ const print = {
   };
   const T = {
     en: {
-      stable:"stable control", hunt:"hunting", runaway:"runaway", calm:"The loop settles toward the setpoint.", oscillate:"Delay makes correction arrive late, so the loop hunts around the target.", break:"The correction is too aggressive for the lag; oscillations grow.", positive:"The sign is flipped: error feeds error.",
-      rising:"The level is still rising because inflow exceeds outflow.", peak:"The level peaks only after the faucet falls below the drain.", falling:"The drain wins; the stock falls.",
-      high:"high", medium:"medium", low:"low", tipped:"tipped", edge:"near the edge", safe:"safe basin", hysteresis:"The ball has crossed into the other basin; undoing the driver is not enough.",
+      stable:"Calm control — it settles", overshoot:"Overshoot, then settle", hunt:"Hunting — it oscillates", runaway:"Runaway — the gap explodes", unstable:"Unstable — it tears itself apart", calm:"Negative feedback doing its quiet job: the room climbs to 21°C and holds. Sense, compare, correct.", overshootExpl:"It reaches the goal but punches past it first, then eases back. A little delay buys a little overshoot.", oscillate:"The loop is stable but underdamped: lag makes it chase its own tail, swinging above and below 21°C.", break:"Gain × delay is too high. The controller reacts to stale readings, overshoots, then overcorrects the overshoot.", positive:"Positive feedback: every gap from the goal is amplified, not corrected. The smallest deviation feeds on itself.",
+      rising:"The faucet beats the drain, so the water keeps rising. The peak comes only after inflow falls below outflow.", peak:"The level peaks after the faucet has already started shutting off. Stock lags flow.", falling:"The drain always wins; the stock falls.",
+      high:"high", medium:"medium", low:"low", fallingRes:"falling", critical:"critical", tipped:"Tipped — new basin", edge:"On the brink — fold approaching", safe:"Stable — deep basin", resilience:"Resilience falling", hysteresis:"The valley vanished and the ball rolled into the other basin. Drag back: it will not return until the driver moves far the other way.", resGood:"A steep valley: knock the ball and it springs right back. The early-warning signals are quiet.", resWarn:"The basin is flattening. The ball recovers more slowly and wanders further: critical slowing down beginning.", resEdge:"The valley is nearly flat. Recovery is glacial, variance is high, and autocorrelation nears 1.",
       ladder:[
         ["12","Parameters","Taxes, subsidies, constants. Easy to fight over; usually weak."],
         ["11","Buffer sizes","The size of stabilizing stocks relative to flows."],
@@ -371,9 +371,9 @@ const print = {
       evHold:"Uniform vegetation still holds.", evCrash:"Uniform vegetation collapses abruptly.", evPattern:"Patterns trade uniform cover for persistence.", evSparse:"Patterned cover is sparse but alive."
     },
     zh: {
-      stable:"稳定控制", hunt:"开始振荡", runaway:"失控", calm:"回路收敛到设定点。", oscillate:"延迟让修正来得太晚，于是目标周围来回振荡。", break:"修正相对滞后过于猛烈，振荡会放大。", positive:"符号翻转了：误差喂养误差。",
-      rising:"水位仍在上升，因为流入大于流出。", peak:"只有水龙头降到排水口以下后，水位才到峰值。", falling:"排水获胜；存量下降。",
-      high:"高", medium:"中", low:"低", tipped:"已翻转", edge:"接近边缘", safe:"安全盆地", hysteresis:"球已经进了另一个盆；撤回驱动因素还不够。",
+      stable:"平静控制——会收敛", overshoot:"先超调，再稳定", hunt:"追逐——开始振荡", runaway:"失控——偏差爆炸", unstable:"不稳定——撕裂自身", calm:"负反馈在安静工作：房间升到 21°C 并守住。感知、比较、修正。", overshootExpl:"它抵达目标，却先冲过头，然后慢慢回落。一点延迟会买来一点超调。", oscillate:"回路仍稳定，但阻尼不足：滞后让它追着自己的尾巴，在 21°C 两侧摆动。", break:"增益 × 延迟太高。控制器对陈旧读数反应，超调，然后继续过度修正。", positive:"正反馈会放大目标偏差，而不是修正偏差。最小的偏离都会喂养自身。",
+      rising:"水龙头仍大于排水口，所以水位继续上升。峰值只会在流入低于流出之后出现。", peak:"水位峰值出现在水龙头已经开始关小之后。存量滞后于流量。", falling:"排水口始终占优；存量下降。",
+      high:"高", medium:"中", low:"低", fallingRes:"下降", critical:"临界", tipped:"已翻转——新盆地", edge:"临界边缘——折叠将至", safe:"稳定——深盆地", resilience:"恢复力下降", hysteresis:"旧山谷消失，球滚入另一个盆地。往回拖也不会马上回来，必须把驱动因素推到很远的另一边。", resGood:"山谷很陡：球被碰一下也会弹回。早期预警信号很安静。", resWarn:"盆地正在变平。球恢复更慢、晃得更远：临界慢化开始。", resEdge:"山谷几乎平了。恢复极慢，方差高，自相关接近 1。",
       ladder:[
         ["12","参数","税率、补贴、常数。容易争吵，通常很弱。"],
         ["11","缓冲大小","稳定性存量相对于流量的大小。"],
@@ -414,26 +414,61 @@ const print = {
     let sign = "neg";
     const gain = q(root, "[data-role=gain]"), delay = q(root, "[data-role=delay]"), svg = q(root, "[data-role=plot]");
     const draw = () => {
-      const g = Number(gain.value) / 140 + 0.02, d = Number(delay.value), target = 21, hist = Array(60).fill(18);
+      const g = Number(gain.value) / 100 * 0.7, d = Math.round(Number(delay.value)), target = 21, ambient = 10, cooling = 0.05, total = 200;
       const data = [];
-      let temp = 18;
-      for (let i=0;i<120;i++) {
-        const seen = hist[Math.max(0, hist.length - 1 - Math.round(d))] || temp;
+      let temp = ambient;
+      let diverged = false;
+      for (let i = 0; i <= total; i++) {
+        const seen = data[Math.max(0, i - d)] ?? temp;
         const error = target - seen;
         const heat = sign === "neg" ? g * error : -g * error;
-        temp += heat + (16 - temp) * 0.018;
-        hist.push(temp);
+        temp += heat - cooling * (temp - ambient);
+        if (!Number.isFinite(temp) || temp > 140 || temp < -80) {
+          diverged = true;
+          temp = Math.max(-80, Math.min(140, temp));
+        }
         data.push(temp);
       }
-      clear(svg); axes(svg,600,270);
-      const pts = data.map((v,i) => [44 + i * 4.45, 220 - (v - 10) * 8]);
-      svg.append(el("line",{x1:44,y1:220-(target-10)*8,x2:580,y2:220-(target-10)*8,stroke:C.brass,"stroke-dasharray":"4 5"}));
-      svg.append(el("path",{d:path(pts),fill:"none",stroke: sign==="neg" ? C.accent : C.danger,"stroke-width":3}));
+      const W = 600, H = 270, mL = 44, mR = 14, mT = 18, mB = 28, yMin = 0, yMax = 40;
+      const X = i => mL + (i / total) * (W - mL - mR);
+      const Y = v => mT + (1 - (Math.max(yMin, Math.min(yMax, v)) - yMin) / (yMax - yMin)) * (H - mT - mB);
+      clear(svg);
+      svg.append(el("rect", { x: mL, y: mT, width: W - mL - mR, height: H - mT - mB, rx: 8, fill: C.paper, stroke: C.line }));
+      [10, 20, 30].forEach(v => {
+        svg.append(el("line", { x1: mL, y1: Y(v), x2: W - mR, y2: Y(v), stroke: C.line, "stroke-dasharray": "2 5" }));
+        const t = el("text", { x: mL - 6, y: Y(v) + 3, "text-anchor": "end", "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.faint });
+        t.textContent = `${v}°`;
+        svg.append(t);
+      });
+      svg.append(el("line", { x1: mL, y1: Y(ambient), x2: W - mR, y2: Y(ambient), stroke: C.faint, "stroke-dasharray": "1 4", opacity: ".65" }));
+      svg.append(el("line", { x1: mL, y1: Y(target), x2: W - mR, y2: Y(target), stroke: C.brass, "stroke-width": "1.5", "stroke-dasharray": "6 4" }));
+      const goal = el("text", { x: W - mR - 2, y: Y(target) - 6, "text-anchor": "end", "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.brass });
+      goal.textContent = "goal 21°";
+      svg.append(goal);
       q(root,"[data-out=gain]").textContent = g.toFixed(2);
-      q(root,"[data-out=delay]").textContent = Math.round(d);
-      const amp = Math.max(...data.slice(-50)) - Math.min(...data.slice(-50));
+      q(root,"[data-out=delay]").textContent = `${d}${lang === "zh" ? " 步" : " steps"}`;
+      const recent = data.slice(-80);
+      const amp = Math.max(...recent) - Math.min(...recent);
+      let crossings = 0, prev = 0;
+      recent.forEach(v => {
+        const s = Math.sign(v - target);
+        if (prev && s && s !== prev) crossings++;
+        if (s) prev = s;
+      });
       const tt = T[lang];
-      const st = sign === "pos" ? [tt.runaway, tt.positive] : amp < 1.2 ? [tt.stable, tt.calm] : amp < 8 ? [tt.hunt, tt.oscillate] : [tt.runaway, tt.break];
+      const st = sign === "pos"
+        ? [tt.runaway, tt.positive, C.danger]
+        : diverged || Math.max(...data.map(v => Math.abs(v))) > 80
+          ? [tt.unstable, tt.break, C.danger]
+          : amp > 1.2 && crossings >= 4
+            ? [tt.hunt, tt.oscillate, C.warn]
+            : amp > .4
+              ? [tt.overshoot, tt.overshootExpl, C.warn]
+              : [tt.stable, tt.calm, C.ok];
+      svg.append(el("path", { d: path(data.map((v, i) => [X(i), Y(v)])), fill: "none", stroke: st[2], "stroke-width": 2.6, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+      const time = el("text", { x: (mL + W - mR) / 2, y: H - 5, "text-anchor": "middle", "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.faint });
+      time.textContent = "time ->";
+      svg.append(time);
       q(root,"[data-out=state]").textContent = st[0];
       q(root,"[data-out=expl]").textContent = st[1];
     };
@@ -448,46 +483,194 @@ const print = {
     const inf = q(root,"[data-role=in]"), out = q(root,"[data-role=out]"), flow = q(root,"[data-role=flow]"), level = q(root,"[data-role=level]");
     const draw = () => {
       const peak = Number(inf.value) / 10, drain = Number(out.value) / 10;
-      const f = [], lev = []; let s = 20;
-      for (let i=0;i<100;i++) { const x=i/99; const v = peak * Math.exp(-Math.pow((x-.42)/.22,2)); f.push(v); s += (v - drain) * .34; lev.push(s); }
-      clear(flow); axes(flow,600,150); clear(level); axes(level,600,168);
-      flow.append(el("path",{d:path(f.map((v,i)=>[44+i*5.35,122-v*10])),fill:"none",stroke:C.accent,"stroke-width":3}));
-      flow.append(el("line",{x1:44,y1:122-drain*10,x2:580,y2:122-drain*10,stroke:C.danger,"stroke-width":2,"stroke-dasharray":"5 5"}));
-      const maxL = Math.max(...lev), minL = Math.min(...lev);
-      level.append(el("path",{d:path(lev.map((v,i)=>[44+i*5.35,132-(v-minL)/(maxL-minL+1)*95])),fill:"none",stroke:C.brass,"stroke-width":3}));
-      q(root,"[data-out=in]").textContent = peak.toFixed(1); q(root,"[data-out=out]").textContent = drain.toFixed(1);
-      const peakAt = lev.indexOf(maxL), faucetPeak = f.indexOf(Math.max(...f)); const tt=T[lang];
-      q(root,"[data-out=msg]").textContent = maxL < lev[0] ? tt.falling : peakAt > faucetPeak + 5 ? tt.peak : tt.rising;
+      const total = 200, peakAt = 100;
+      const tri = t => Math.max(0, t <= peakAt ? t / peakAt : (2 * peakAt - t) / peakAt);
+      const f = [], lev = [];
+      let s = 2;
+      for (let i = 0; i <= total; i++) {
+        f[i] = peak * tri(i);
+        if (i < total) {
+          s = Math.max(0, s + (f[i] - drain));
+          lev[i + 1] = s;
+        }
+      }
+      lev[0] = 2;
+      const c1 = drain < peak && drain > 0 ? peakAt * drain / peak : drain <= 0 ? 0 : null;
+      const c2 = drain < peak && drain > 0 ? 2 * peakAt - peakAt * drain / peak : drain <= 0 ? total : null;
+      const drawFlow = () => {
+        const W = 600, H = 150, mL = 40, mR = 14, mT = 14, mB = 22;
+        const maxF = Math.max(peak, drain, 1) * 1.12;
+        const X = t => mL + (t / total) * (W - mL - mR);
+        const Y = v => mT + (1 - v / maxF) * (H - mT - mB);
+        clear(flow);
+        flow.append(el("rect", { x: mL, y: mT, width: W - mL - mR, height: H - mT - mB, rx: 7, fill: C.paper, stroke: C.line }));
+        if (c1 !== null && c2 !== null && c2 > c1) {
+          const shaded = [[X(c1), Y(drain)]];
+          for (let t = Math.ceil(c1); t <= Math.floor(c2); t++) shaded.push([X(t), Y(f[t])]);
+          shaded.push([X(c2), Y(drain)]);
+          flow.append(el("path", { d: `${path(shaded)} Z`, fill: `color-mix(in srgb, ${C.accent} 16%, transparent)` }));
+        }
+        flow.append(el("path", { d: path(f.map((v, i) => [X(i), Y(v)])), fill: "none", stroke: C.accent, "stroke-width": 2.4, "stroke-linejoin": "round" }));
+        flow.append(el("line", { x1: mL, y1: Y(drain), x2: W - mR, y2: Y(drain), stroke: C.brass, "stroke-width": 2, "stroke-dasharray": "6 4" }));
+        [c1, c2].forEach(c => {
+          if (c !== null && c > 0 && c < total) flow.append(el("line", { x1: X(c), y1: mT, x2: X(c), y2: H - mB, stroke: C.faint, "stroke-dasharray": "2 3", opacity: ".7" }));
+        });
+        const fi = el("text", { x: mL + 4, y: mT + 14, "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.accent });
+        fi.textContent = lang === "zh" ? "水龙头（流入）" : "faucet (inflow)";
+        flow.append(fi);
+        const dr = el("text", { x: W - mR - 2, y: Y(drain) - 5, "text-anchor": "end", "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.brass });
+        dr.textContent = lang === "zh" ? "排水" : "drain";
+        flow.append(dr);
+      };
+      const drawLevel = () => {
+        const W = 600, H = 168, mL = 40, mR = 14, mT = 16, mB = 24;
+        const maxL = Math.max(...lev, 1) * 1.12;
+        const X = t => mL + (t / total) * (W - mL - mR);
+        const Y = v => mT + (1 - v / maxL) * (H - mT - mB);
+        const pk = lev.indexOf(Math.max(...lev));
+        clear(level);
+        level.append(el("rect", { x: mL, y: mT, width: W - mL - mR, height: H - mT - mB, rx: 7, fill: C.paper, stroke: C.line }));
+        level.append(el("path", { d: `${path([[X(0), Y(0)], ...lev.map((v, i) => [X(i), Y(v)]), [X(total), Y(0)]])} Z`, fill: `color-mix(in srgb, ${C.accent} 13%, transparent)` }));
+        level.append(el("path", { d: path(lev.map((v, i) => [X(i), Y(v)])), fill: "none", stroke: C.deep, "stroke-width": 2.8, "stroke-linejoin": "round" }));
+        if (pk > 1 && pk < total) {
+          level.append(el("line", { x1: X(pk), y1: mT, x2: X(pk), y2: H - mB, stroke: C.faint, "stroke-dasharray": "2 3", opacity: ".7" }));
+          level.append(el("circle", { cx: X(pk), cy: Y(lev[pk]), r: 4.8, fill: C.deep }));
+          const pt = el("text", { x: Math.min(X(pk) + 8, W - mR - 104), y: Y(lev[pk]) - 7, "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.deep });
+          pt.textContent = lang === "zh" ? "水位峰值" : "level peaks here";
+          level.append(pt);
+        }
+        const lab = el("text", { x: mL + 4, y: mT + 14, "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.deep });
+        lab.textContent = lang === "zh" ? "水位（存量）" : "water level (stock)";
+        level.append(lab);
+        const time = el("text", { x: (mL + W - mR) / 2, y: H - 5, "text-anchor": "middle", "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.faint });
+        time.textContent = "time ->";
+        level.append(time);
+      };
+      drawFlow();
+      drawLevel();
+      q(root,"[data-out=in]").textContent = peak.toFixed(1);
+      q(root,"[data-out=out]").textContent = drain.toFixed(1);
+      const tt = T[lang];
+      q(root,"[data-out=msg]").textContent = drain >= peak ? tt.falling : (c2 !== null ? tt.rising : tt.peak);
     };
-    qa(root,"[data-preset]").forEach(b => b.addEventListener("click", () => { const p=b.dataset.preset; inf.value=p==="empty"?35:p==="balance"?45:80; out.value=p==="empty"?70:p==="balance"?45:30; draw(); }));
+    qa(root,"[data-preset]").forEach(b => b.addEventListener("click", () => { const p=b.dataset.preset; inf.value=p==="empty"?35:p==="balance"?60:80; out.value=p==="empty"?70:p==="balance"?60:42; draw(); }));
     inf.addEventListener("input", draw); out.addEventListener("input", draw); draw();
   }
 
   function initTipping(root, lang) {
-    const slider = q(root,"[data-role=driver]"), svg=q(root,"[data-role=plot]"); let basin="left";
-    const potential = (x,a) => .16*Math.pow(x,4) - .5*x*x + a*x;
-    const draw = () => {
-      const a = Number(slider.value)/60;
-      if (basin === "left" && a > .45) basin = "right";
-      if (basin === "right" && a < -.45) basin = "left";
-      const pts=[]; let min=-10, max=10;
-      for (let i=0;i<=160;i++) { const x=-1.8+i*3.6/160, y=potential(x,a); min=Math.min(min,y); max=Math.max(max,y); pts.push([x,y]); }
-      const map = p => [60+(p[0]+1.8)/3.6*500, 280-(p[1]-min)/(max-min)*220];
-      const ballX = basin === "left" ? -Math.sqrt(Math.max(.05,(1-a)/2)) : Math.sqrt(Math.max(.05,(1+a)/2));
-      clear(svg); axes(svg,600,330);
-      svg.append(el("path",{d:path(pts.map(map)),fill:"none",stroke:C.accent,"stroke-width":3}));
-      svg.append(el("circle",{cx:map([ballX,potential(ballX,a)])[0],cy:map([ballX,potential(ballX,a)])[1]-8,r:11,fill:basin==="left"?C.accent:C.danger,stroke:C.raised,"stroke-width":3}));
-      const nearness = Math.max(0, 1 - Math.abs(.45 - Math.abs(a)) / .45);
-      q(root,"[data-out=driver]").textContent = a.toFixed(2);
-      q(root,"[data-out=res]").textContent = basin==="right" ? T[lang].tipped : nearness>.75 ? T[lang].low : nearness>.38 ? T[lang].medium : T[lang].high;
-      q(root,"[data-out=var]").textContent = nearness>.55 ? T[lang].high : T[lang].low;
-      q(root,"[data-out=ac]").textContent = (0.2 + nearness*.72).toFixed(2);
-      q(root,"[data-bar=res]").style.width = `${Math.max(8,100-nearness*82)}%`; q(root,"[data-bar=var]").style.width = `${20+nearness*75}%`; q(root,"[data-bar=ac]").style.width = `${20+nearness*75}%`;
-      q(root,"[data-out=state]").textContent = basin==="right" ? T[lang].tipped : nearness>.65 ? T[lang].edge : T[lang].safe;
-      q(root,"[data-out=expl]").textContent = basin==="right" ? T[lang].hysteresis : "";
+    const slider = q(root,"[data-role=driver]"), svg=q(root,"[data-role=plot]");
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const tt = T[lang];
+    const W = 600, H = 330, mL = 20, mR = 20, mT = 24, mB = 32, xmin = -1.8, xmax = 1.8, Vlo = -1.0, Vhi = 1.1;
+    const PX = x => mL + ((x - xmin) / (xmax - xmin)) * (W - mL - mR);
+    const PY = v => mT + (1 - (Math.max(Vlo, Math.min(Vhi, v)) - Vlo) / (Vhi - Vlo)) * (H - mT - mB);
+    const V = (x, h) => x*x*x*x/4 - x*x/2 - h*x;
+    let ballSide = -1, curX = -1, targetX = -1, trail = [], tippedFlash = 0, stopped = false;
+
+    const stableRoots = h => {
+      const roots = [];
+      const f = x => x*x*x - x - h;
+      let px = xmin, prev = f(px);
+      for (let x = xmin + .006; x <= xmax; x += .006) {
+        const cur = f(x);
+        if ((prev < 0 && cur > 0) || (prev > 0 && cur < 0)) {
+          let a = px, b = x, fa = prev;
+          for (let k = 0; k < 36; k++) {
+            const mid = (a + b) / 2, fm = f(mid);
+            if ((fa < 0 && fm < 0) || (fa > 0 && fm > 0)) { a = mid; fa = fm; } else { b = mid; }
+          }
+          roots.push((a + b) / 2);
+        }
+        prev = cur;
+        px = x;
+      }
+      return roots.filter(r => (3*r*r - 1) > 0);
     };
-    qa(root,"[data-preset]").forEach(b => b.addEventListener("click", () => { if (b.dataset.preset==="reset") basin="left"; slider.value = b.dataset.preset==="edge"?25:b.dataset.preset==="safe"?-35:slider.value; draw(); }));
-    slider.addEventListener("input", draw); draw();
+    const pickBall = h => {
+      const roots = stableRoots(h);
+      const same = roots.filter(r => ballSide < 0 ? r < 0 : r > 0);
+      if (same.length) return { x: same[0], tipped: false };
+      if (roots.length) {
+        const x = roots[0];
+        ballSide = Math.sign(x) || ballSide;
+        return { x, tipped: true };
+      }
+      return { x: 0, tipped: false };
+    };
+    const metrics = x => {
+      const curv = Math.max(.0001, 3*x*x - 1);
+      return { curv, variance: 1 / curv, ac: Math.exp(-curv * .9) };
+    };
+    const status = m => {
+      if (tippedFlash > 0) return [tt.tipped, tt.hysteresis, C.danger];
+      if (m.curv > .55) return [tt.safe, tt.resGood, C.ok];
+      if (m.curv > .18) return [tt.resilience, tt.resWarn, C.warn];
+      return [tt.edge, tt.resEdge, C.danger];
+    };
+    const draw = () => {
+      const h = Number(slider.value) / 100;
+      const picked = pickBall(h);
+      if (picked.tipped) { tippedFlash = 1; trail = []; }
+      targetX = picked.x;
+      const m = metrics(targetX);
+      const spread = Math.min(.55, .04 * Math.sqrt(m.variance));
+      if (!reduce) {
+        curX += (targetX - curX) * .25;
+        curX += (Math.random() - .5) * spread * .3;
+        curX = targetX + (curX - targetX) * .85;
+        trail.push(curX);
+        if (trail.length > 26) trail.shift();
+      } else {
+        curX = targetX;
+      }
+      clear(svg);
+      svg.append(el("rect", { x: mL, y: mT, width: W - mL - mR, height: H - mT - mB, rx: 8, fill: C.paper, stroke: C.line }));
+      const pts = [];
+      for (let i = 0; i <= 180; i++) {
+        const x = xmin + i * (xmax - xmin) / 180;
+        pts.push([PX(x), PY(V(x, h))]);
+      }
+      svg.append(el("path", { d: path(pts), fill: "none", stroke: C.soft || C.faint, "stroke-width": 2.4, "stroke-linejoin": "round" }));
+      trail.forEach((x, i) => {
+        svg.append(el("circle", { cx: PX(x), cy: PY(V(x, h)), r: 3, fill: C.danger, opacity: (i / Math.max(1, trail.length) * .42 + .06).toFixed(2) }));
+      });
+      svg.append(el("circle", { cx: PX(curX), cy: PY(V(curX, h)) - 1, r: 11, fill: tippedFlash > 0 ? C.danger : C.accent, stroke: C.raised, "stroke-width": 3 }));
+      const axis = el("text", { x: W / 2, y: H - 8, "text-anchor": "middle", "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.faint });
+      axis.textContent = lang === "zh" ? "系统状态 ->（山谷 = 稳定；山脊 = 不稳定）" : "system state -> (valleys = stable; ridge = unstable)";
+      svg.append(axis);
+      [["state A", -1], ["state B", 1]].forEach(([label, x]) => {
+        const t = el("text", { x: PX(x), y: mT + 15, "text-anchor": "middle", "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.faint });
+        t.textContent = lang === "zh" ? (x < 0 ? "状态 A" : "状态 B") : label;
+        svg.append(t);
+      });
+      q(root,"[data-out=driver]").textContent = `${h >= 0 ? "+" : ""}${h.toFixed(2)}`;
+      const resN = Math.max(0, Math.min(1, m.curv / 2));
+      q(root,"[data-bar=res]").style.width = `${Math.max(6, resN * 100).toFixed(0)}%`;
+      q(root,"[data-bar=res]").style.background = m.curv > .55 ? C.ok : m.curv > .18 ? C.warn : C.danger;
+      q(root,"[data-out=res]").textContent = m.curv > .55 ? tt.high : m.curv > .18 ? tt.fallingRes : tt.critical;
+      const varN = Math.max(0, Math.min(1, (m.variance - 1) / 12));
+      q(root,"[data-bar=var]").style.width = `${Math.max(6, varN * 100).toFixed(0)}%`;
+      q(root,"[data-out=var]").textContent = m.variance < 1.6 ? tt.low : m.variance < 4 ? tt.fallingRes : tt.high;
+      q(root,"[data-bar=ac]").style.width = `${Math.max(6, m.ac * 100).toFixed(0)}%`;
+      q(root,"[data-out=ac]").textContent = m.ac.toFixed(2);
+      const st = status(m);
+      q(root,"[data-out=state]").textContent = st[0];
+      q(root,"[data-out=expl]").textContent = st[1];
+      if (tippedFlash > 0) tippedFlash = Math.max(0, tippedFlash - .025);
+    };
+    const frame = () => {
+      if (stopped || !root.isConnected) return;
+      draw();
+      if (!reduce) requestAnimationFrame(frame);
+    };
+    qa(root,"[data-preset]").forEach(b => b.addEventListener("click", () => {
+      if (b.dataset.preset === "reset") { ballSide = -1; slider.value = -25; curX = -1; trail = []; tippedFlash = 0; }
+      if (b.dataset.preset === "edge") { ballSide = -1; slider.value = 38; curX = -.62; trail = []; tippedFlash = 0; }
+      if (b.dataset.preset === "safe") { ballSide = -1; slider.value = -34; curX = -1.1; trail = []; tippedFlash = 0; }
+      if (reduce) draw();
+    }));
+    slider.addEventListener("input", () => { if (reduce) draw(); });
+    if (reduce) draw(); else requestAnimationFrame(frame);
   }
 
   function initLeverage(root, lang) {
