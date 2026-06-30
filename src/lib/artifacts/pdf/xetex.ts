@@ -930,10 +930,18 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
   if (name === "Day9StaticFigure") {
     const kind = resolveExpression(attrs.get("kind"), state).trim();
     if (kind) {
+      const day9Width = kind === "thresholds" || kind === "timeline" ? "0.98\\linewidth" : "0.86\\linewidth";
+      const day9Height = kind === "thresholds"
+        ? "0.42\\textheight"
+        : kind === "timeline"
+          ? "0.3\\textheight"
+          : kind === "thermostat" || kind === "deep-loops" || kind === "cliff" || kind === "governor"
+            ? "0.22\\textheight"
+            : "0.28\\textheight";
       spec = {
         selector: `.day9-static-figure-${kind}`,
-        width: "0.86\\linewidth",
-        height: kind === "thermostat" || kind === "deep-loops" || kind === "cliff" || kind === "governor" ? "0.22\\textheight" : "0.28\\textheight"
+        width: day9Width,
+        height: day9Height
       };
     }
   }
