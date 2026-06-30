@@ -416,12 +416,18 @@ function renderHeading(node: MdxNode, state: MdxRenderState): string {
   const text = renderInlineChildren(node, state, { heading: true });
   const eyebrow = state.pendingSectionEyebrow;
   state.pendingSectionEyebrow = null;
-  if (eyebrow && node.depth === 2) return `\\sectionwithlabel{${eyebrow}}{${text}}`;
-  if (eyebrow && node.depth === 3) return `\\subsectionwithlabel{${eyebrow}}{${text}}`;
+  const needsFigureSpace =
+    text.includes("六年，一个加速的领域")
+    || text.includes("Six years, an accelerating field")
+    || text.includes("稳定地貌的预警信号")
+    || text.includes("Warning signals in the stability landscape");
+  const prefix = needsFigureSpace ? "\\Needspace{0.55\\textheight}\n" : "";
+  if (eyebrow && node.depth === 2) return `${prefix}\\sectionwithlabel{${eyebrow}}{${text}}`;
+  if (eyebrow && node.depth === 3) return `${prefix}\\subsectionwithlabel{${eyebrow}}{${text}}`;
   if (node.depth === 1) return `\\pdfdaytitle{${text}}`;
-  if (node.depth === 2) return `\\section{${text}}`;
-  if (node.depth === 3) return `\\subsection{${text}}`;
-  return `\\blockheading{${text}}`;
+  if (node.depth === 2) return `${prefix}\\section{${text}}`;
+  if (node.depth === 3) return `${prefix}\\subsection{${text}}`;
+  return `${prefix}\\blockheading{${text}}`;
 }
 
 function renderList(node: MdxNode, state: MdxRenderState): string {
@@ -930,11 +936,13 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
   if (name === "Day9StaticFigure") {
     const kind = resolveExpression(attrs.get("kind"), state).trim();
     if (kind) {
-      const day9Width = kind === "thresholds" || kind === "timeline" ? "0.98\\linewidth" : "0.86\\linewidth";
+      const day9Width = kind === "thresholds" || kind === "timeline" ? "0.98\\linewidth" : kind === "tipping-types" ? "0.9\\linewidth" : "0.86\\linewidth";
       const day9Height = kind === "thresholds"
-        ? "0.42\\textheight"
+        ? "0.5\\textheight"
         : kind === "timeline"
-          ? "0.3\\textheight"
+          ? "0.34\\textheight"
+          : kind === "tipping-types"
+            ? "0.46\\textheight"
           : kind === "thermostat" || kind === "deep-loops" || kind === "cliff" || kind === "governor"
             ? "0.22\\textheight"
             : "0.28\\textheight";
@@ -1120,6 +1128,7 @@ function latexTable(table: LatexTable): string {
   const size = columnCount >= 5 ? "\\scriptsize" : "\\footnotesize";
   const columns = Array.from({ length: columnCount }, () => `>{\\raggedright\\arraybackslash}p{${width}\\linewidth}`).join("");
   const lines = [
+    "\\Needspace{8\\baselineskip}",
     "\\begingroup",
     size,
     "\\setlength{\\tabcolsep}{3pt}",
@@ -1380,6 +1389,10 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \newfontfamily\symbolfallback{STIX Two Text}
 \newunicodechar{ε}{{\symbolfallback ε}}
 \newunicodechar{μ}{{\symbolfallback μ}}
+\newunicodechar{Ω}{{\symbolfallback Ω}}
+\newunicodechar{→}{{\symbolfallback →}}
+\newunicodechar{←}{{\symbolfallback ←}}
+\newunicodechar{↔}{{\symbolfallback ↔}}
 \setsansfont{Hiragino Sans GB}
 \IfFontExistsTF{${cjkMain}}{\setCJKmainfont{${cjkMain}}}{\setCJKmainfont{Songti SC}}
 \setCJKsansfont{Hiragino Sans GB}
@@ -1523,7 +1536,10 @@ function latexEscape(value: string): string {
     .replaceAll("≠", "\\ensuremath{\\neq}")
     .replaceAll("≈", "\\ensuremath{\\approx}")
     .replaceAll("≤", "\\ensuremath{\\leq}")
-    .replaceAll("≥", "\\ensuremath{\\geq}");
+    .replaceAll("≥", "\\ensuremath{\\geq}")
+    .replaceAll("→", "\\ensuremath{\\rightarrow}")
+    .replaceAll("←", "\\ensuremath{\\leftarrow}")
+    .replaceAll("↔", "\\ensuremath{\\leftrightarrow}");
 }
 
 function normalizeText(value: string): string {
@@ -1547,9 +1563,9 @@ function normalizePdfGlyphs(value: string): string {
     .replace(/[\u00c0-\u024f\u1e00-\u1eff\u2070-\u209f]/g, (char) => char.normalize("NFKD").replace(/[\u0300-\u036f]/g, ""))
     .replace(/[Łł]/g, (char) => char === "Ł" ? "L" : "l")
     .replace(/[ı]/g, "i")
-    .replace(/[→⇒]/g, " -> ")
-    .replace(/[←⇐]/g, " <- ")
-    .replace(/[↔⇔]/g, " <-> ")
+    .replace(/[⇒]/g, "→")
+    .replace(/[⇐]/g, "←")
+    .replace(/[⇔]/g, "↔")
     .replace(/[∀]/g, "forall ")
     .replace(/[∃]/g, "exists ")
     .replace(/[¬]/g, "not ")
@@ -1557,7 +1573,6 @@ function normalizePdfGlyphs(value: string): string {
     .replace(/[βΒ]/g, "beta")
     .replace(/[π]/g, "pi")
     .replace(/[Σ]/g, "Sigma")
-    .replace(/[Ω]/g, "Omega")
     .replace(/[ℤ]/g, "Z")
     .replace(/[□]/g, "box")
     .replace(/[◇]/g, "diamond")
@@ -1565,7 +1580,7 @@ function normalizePdfGlyphs(value: string): string {
     .replace(/[≈]/g, " approximately ")
     .replace(/[≅]/g, " approximately equal ")
     .replace(/[↑]/g, " up ")
-    .replace(/[↩]/g, " return ")
+    .replace(/[↩]/g, "←")
     .replace(/[\u200b\u200c\u200d\ufeff]/g, "")
     .replace(/[🐟🪄🔢🤖]/gu, "")
     .replace(/[†‡]/g, "");
