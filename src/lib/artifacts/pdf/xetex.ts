@@ -1026,7 +1026,10 @@ function xmlEscape(value: string): string {
 function prepareSvgForRsvg(svg: string): string {
   let prepared = svg
     .replace(/color-mix\(in srgb,\s*(var\(--[^)]+\)|#[0-9a-fA-F]{3,8}|[a-zA-Z]+)\s+\d+%,\s*transparent\)/g, "$1")
-    .replace(/var\(--([^)]+)\)/g, (_, name: string) => SVG_COLOR_VARS.get(name.trim()) ?? "#1d2424");
+    .replace(/var\(--([^,)]+)(?:,\s*([^)]+))?\)/g, (_, name: string, fallback?: string) => {
+      const value = SVG_COLOR_VARS.get(name.trim()) ?? fallback?.trim() ?? "#1d2424";
+      return value;
+    });
   if (!/\sxmlns=/.test(prepared)) {
     prepared = prepared.replace("<svg", "<svg xmlns=\"http://www.w3.org/2000/svg\"");
   }
