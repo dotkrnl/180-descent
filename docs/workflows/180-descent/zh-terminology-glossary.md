@@ -17,7 +17,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 
 | English/source term | Standard Chinese | Scope and notes | Avoid |
 | --- | --- | --- | --- |
-| hype filter | 前沿校准器 | Course-wide tool name for judging frontier claims. | 炒作过滤器, 过滤炒作 |
+| hype filter / frontier calibrator | 前沿校准器 / 防炒作过滤器 | Use `前沿校准器` for the course-wide coined tool name and exercise labels. Use `防炒作过滤器` when the prose literally means filtering hype or guarding against overclaiming. `炒作过滤器` is acceptable in compact labels. | 过滤炒作 |
 | established | 已确立 | Frontier/status label. Keep chip labels short. | 可靠成熟, 扎实且可重复 |
 | promising | 有前景 | Frontier/status label for evidence that is real but still early. | 线索, 初露曙光 |
 | contested / hype risk | 有争议／炒作风险 | Frontier/status label for disputed scope, framing, or evidence. | 争议/炒作, 炒作 |
@@ -171,6 +171,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | stock | 存量 | Anything that accumulates in a system. | 库存 when not technical |
 | flow | 流量 | Rate that changes a stock. | 流动 when ambiguous |
 | stocks and flows | 存量与流量 | Core grammar of system dynamics. | 库存与流 |
+| bathtub model / bathtub problem | 浴缸模型 / 浴缸难题 | Use `浴缸` for stock-flow teaching examples. Use `汇` or `自然汇` only for sink/reservoir meanings. | 水槽模型, 水槽难题 |
 | system dynamics | 系统动力学 | Forrester/Meadows discipline of modelling systems with stocks, flows, and feedback. | 系统动态学 |
 | causal loop diagram | 因果回路图 | Diagram of arrows showing what affects what, with R/B labels. | 因果循环图 |
 | system archetypes | 系统基模 | Recurring feedback-loop shapes (tragedy of the commons, etc.). | 系统原型 when inconsistent |
@@ -181,15 +182,15 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | reductionism | 还原论 | Method of understanding by breaking into parts. | 简化论 |
 | holism | 整体论 | Emphasis on whole-system patterns and connections. | 整体主义 when inconsistent |
 | open system | 开放系统 | System exchanging matter/energy with its surroundings. | 开放体系 |
-| tipping point | 临界拐点 | Threshold where reinforcing feedback carries a system to a new state. | 临界点 when conflated with critical point |
+| tipping point | 临界点 | Threshold where reinforcing feedback carries a system to a new state; `临界转变` when emphasizing the transition. `临界拐点` only if explicitly quoting a legacy title or rhetorical phrase. | 临界拐点 in technical prose |
 | critical transition | 临界转变 | Abrupt shift between alternative stable states. | 关键转变 |
 | fold bifurcation | 折叠分岔 | Mathematical shape of a tipping point with hysteresis. | 折叠分支 |
-| hysteresis | 滞后 | Return path differs from forward path; reversal needs extra push. | 迟滞 when inconsistent |
+| hysteresis | 迟滞 | Return path differs from forward path; reversal needs extra push. Keep distinct from ordinary feedback delay (`延迟`/`滞后`). | 滞后 when the technical hysteresis sense is meant |
 | critical slowing down | 临界慢化 | Slowed recovery from perturbations near a tipping point. | 临界减速 |
 | early-warning signals | 早期预警信号 | Statistical patterns (variance/autocorrelation rise) signalling lost resilience. | 早期预警指标 when inconsistent |
-| resilience | 恢复力 | Capacity to absorb shocks and/or recover; see engineering vs ecological. | 韧性 when inconsistent |
-| engineering resilience | 工程恢复力 | Speed of return after a small perturbation. | 工程韧性 |
-| ecological resilience | 生态恢复力 | Size of shock a system can absorb before flipping. | 生态韧性 |
+| resilience | 韧性 | Capacity to absorb shocks and/or recover; first mention may gloss as `韧性（resilience，也可译作恢复力）`. Use `恢复力` only when deliberately emphasizing speed of return or in legacy/source phrasing. | 恢复力 as the default climate/systems term |
+| engineering resilience | 工程韧性 | Speed of return after a small perturbation; explain as emphasizing `恢复速度` when useful. | 工程恢复力 |
+| ecological resilience | 生态韧性 | Size of shock a system can absorb before flipping. | 生态恢复力 |
 | bifurcation tipping (B-tipping) | 分岔临界（B-临界） | Tipping by crossing a threshold where a stable state vanishes. | 分岔翻转 |
 | noise-induced tipping (N-tipping) | 噪声诱导临界（N-临界） | Tipping caused by a large random fluctuation below the threshold. | 噪声驱动翻转 |
 | rate-induced tipping (R-tipping) | 速率诱导临界（R-临界） | Tipping caused by the speed, not just magnitude, of change. | 速率驱动翻转 |
