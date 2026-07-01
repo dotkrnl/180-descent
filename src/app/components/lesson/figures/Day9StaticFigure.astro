@@ -307,23 +307,25 @@ const years = [
 
       <g transform="translate(46 166)">
         <rect x="0" y="0" width="548" height="146" rx="8" fill={paper} stroke={line}></rect>
-        <line x1="42" y1="118" x2="520" y2="118" stroke={lineStrong}></line>
-        <line x1="42" y1="18" x2="42" y2="118" stroke={lineStrong}></line>
-        {[42, 162, 282, 402, 520].map((x) => <line x1={x} y1="18" x2={x} y2="118" stroke={line} stroke-dasharray="2 6"></line>)}
-
-        <path d="M42 92 L126 92 L126 84 L190 84 L190 92 L520 92" fill="none" stroke={faint} stroke-width="2.1" stroke-linejoin="round"></path>
-        <path d="M42 91 C92 89 112 78 140 77 C176 75 196 103 230 101 C264 99 284 84 318 86 C356 89 378 97 418 95 C458 93 484 90 520 91" fill="none" stroke={ok} stroke-width="2.2" stroke-linecap="round"></path>
-        <path d="M42 91 C86 91 110 68 142 65 C180 61 202 116 238 118 C276 120 300 62 336 59 C376 56 392 111 432 112 C468 113 486 82 520 84" fill="none" stroke={accent} stroke-width="2.5" stroke-linecap="round"></path>
-        <path d="M42 91 C82 91 106 51 142 47 C184 43 196 132 238 134 C280 136 300 36 340 33 C382 30 394 130 436 132 C478 134 486 64 520 61" fill="none" stroke={danger} stroke-width="2.8" stroke-linecap="round"></path>
-
-        <text x="12" y="22" transform="rotate(-90 12 22)" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.swing}</text>
-        <text x="282" y="138" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "时间 →" : "time →"}</text>
-        <g transform="translate(286 16)">
-          <line x1="0" y1="0" x2="18" y2="0" stroke={faint} stroke-width="2.1"></line>
-          <text x="24" y="3.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.demand}</text>
-          <line x1={zh ? 126 : 152} y1="0" x2={zh ? 144 : 170} y2="0" stroke={danger} stroke-width="2.8" stroke-linecap="round"></line>
-          <text x={zh ? 150 : 176} y="3.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{zh ? "上游放大" : "upstream amplification"}</text>
-        </g>
+        <text x="12" y="24" transform="rotate(-90 12 24)" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.swing}</text>
+        <path d="M236 136 L348 136" fill="none" stroke={faint} stroke-width="1.3" marker-end="url(#day9-bullwhip-order)" opacity=".72"></path>
+        <text x="226" y="139.5" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "时间" : "time"}</text>
+        {[72, 162, 252, 342, 432].map((x) => <line x1={x} y1="17" x2={x} y2="122" stroke={line} stroke-dasharray="2 6" opacity=".8"></line>)}
+        {[
+          [copy.customer, "M0 0 L44 0 L44 -4 L88 -4 L88 0 L392 0", 28, faint, "1x"],
+          [copy.retail, "M0 0 C78 0 94 -5 126 -5 C164 -5 178 5 214 5 C250 5 272 0 392 0", 50, ok, "2x"],
+          [copy.wholesale, "M0 0 C112 0 128 -8 162 -8 C204 -8 220 9 258 9 C300 9 318 -4 348 -4 C366 -4 378 0 392 0", 72, accent, "3x"],
+          [copy.distributor, "M0 0 C144 0 160 -11 198 -11 C242 -11 258 13 298 13 C338 13 354 -6 376 -6 C384 -6 388 0 392 0", 94, brass, "5x"],
+          [copy.factory, "M0 0 C176 0 194 -15 236 -16 C282 -17 300 18 340 19 C368 20 378 4 392 4", 116, danger, "8x"]
+        ].map(([label, d, y, color, mult]) => (
+          <g transform={`translate(78 ${y})`}>
+            <text x="-12" y="3.8" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{label}</text>
+            <line x1="0" y1="0" x2="392" y2="0" stroke={line} stroke-width="1"></line>
+            <path d={d as string} fill="none" stroke={color as string} stroke-width={label === copy.customer ? "2.1" : "2.5"} stroke-linecap="round" stroke-linejoin="round"></path>
+            <text x="410" y="3.8" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={color as string}>{mult}</text>
+          </g>
+        ))}
+        <text x="504" y="22" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{zh ? "越往上游越大" : "larger upstream"}</text>
       </g>
     </svg>
   )}
