@@ -679,12 +679,18 @@ describe("target content registry", () => {
     expect(day009?.bodies.en.source).toContain("Day9Interactive");
     expect(day009?.bodies.en.source).toContain("Day9StaticFigure");
 
-    expect(day010?.appendixBodies).toEqual([]);
+    expect(day010?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "the-cutting-room-floor:en",
+      "the-cutting-room-floor:zh"
+    ]);
     expect(day010?.manifest.interactionScripts).toEqual([
       "models-maps-idealization"
     ]);
     expect(day010?.bodies.en.source).toContain("Day10IdealizationDial");
     expect(day010?.bodies.en.source).toContain("Day10StaticFigure");
+    const day010EnglishAppendix = day010?.appendixBodies.find((body) => body.locale === "en");
+    expect(day010EnglishAppendix?.source).toContain("Levins");
+    expect(day010EnglishAppendix?.source).toContain("SimpleTable");
   });
 });
 

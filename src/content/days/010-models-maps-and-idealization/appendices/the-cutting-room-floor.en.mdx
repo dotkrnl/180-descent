@@ -1,0 +1,247 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+
+<Lead drop="T">he main descent ran a straight line: from Borges's empire-sized map, through the spherical cow, into the realism debate, and out the far end at a neural network that forecasts the weather without knowing a single law of physics. It was a clean arc, and it left an enormous amount on the cutting-room floor. The realism fight is four centuries older than van Fraassen. The craft of "lying usefully" has a precise grammar nobody mentioned. And the strangest question of all, **how do you trust a model whose innards no human can survey?**, loops all the way back to Day 1.</Lead>
+
+<ContinueNote label="◆ What's down here">
+Six rooms the main tour skipped: **(1)** the older war between realism and instrumentalism; **(2)** the ether's one triumphant prediction, and how realism fights back with "divide and conquer"; **(3)** why the whole realism debate may be a base-rate fallacy, a straight callback to **[Day 4](/days/004-probability-as-extended-logic/)**; **(4)** the real grammar of idealization, and Levins's "pick two" triangle; **(5)** what models actually are: mediators, fictions, and Maxwell's imaginary gears; and **(6)** the trust problem, from verification's 1994 bombshell to "computational reliabilism," which is just **[Day 1](/days/001-what-is-knowledge/)**'s reliabilism wearing a lab coat.
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow number="Room I">the long prehistory</SectionEyebrow>
+
+## Saving the phenomena: an argument four centuries deep
+
+The main page framed realism versus instrumentalism as a twentieth-century affair: Putnam, Laudan, van Fraassen. But the fight is ancient, and for most of its life the instrumentalists were winning. The tradition even has a battle cry, handed down from Greek astronomy: *sōzein ta phainomena*, "to save the phenomena." The job of a model, on this old view, was never to say what the heavens **are**, only to reproduce what they appear to do, to get the dots in the right places on the right nights.
+
+Ptolemy's epicycles, wheels turning on wheels to explain the planets' loop-the-loops, were the original useful fiction. Many of his readers, and most medieval astronomers, treated them frankly as calculating devices. Nobody had to believe the sky was full of literal gears. The gears just had to work. That is instrumentalism in its cradle, a thousand years before the word existed.
+
+The drama sharpened with Copernicus. When *On the Revolutions of the Heavenly Spheres* went to press in 1543, the Lutheran theologian Andreas Osiander slipped an unsigned preface into the front, without the dying Copernicus's blessing, assuring readers that the wild new sun-centered scheme need not be true, only a convenient hypothesis for computing positions. It was a peace treaty with the authorities, written in pure instrumentalist ink: relax, it is just a better calculator.
+
+<Aside>
+<BlockTitle>The cardinal was an instrumentalist</BlockTitle>
+
+The cleanest statement of the divide comes from Galileo's own prosecutor. In 1615, Cardinal Robert Bellarmine told the Copernican Paolo Foscarini that one could hold heliocentrism perfectly well *ex suppositione*, hypothetically, as a device that saves the appearances, but **not** as a claim about how the world physically is. Speak of it as a model, fine. Speak of it as the truth, and you have a problem. The Church's position was textbook instrumentalism. Galileo's heresy was realism: the insistence that the best model is telling you what is actually there. The same fault line runs straight through to the neural weather model on the main page.
+</Aside>
+
+By the early 1900s the physicist-philosopher Pierre Duhem, whom we met on **[Day 2](/days/002-scientific-method-and-demarcation/)** for the "you can always blame an auxiliary" thesis, had turned this into a full doctrine. A physical theory, Duhem argued in *The Aim and Structure of Physical Theory* (1906), is not an explanation of hidden reality but an economical classification of experimental laws: a supremely compressed filing system for the phenomena. Truth about unseen causes was not the goal. Tidy, predictive bookkeeping was. Three hundred years of "save the phenomena," distilled. The modern instrumentalist owes Duhem the blueprint.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Room II">realism strikes back</SectionEyebrow>
+
+## The ether's one perfect prophecy
+
+The main page used the luminiferous ether as Exhibit A in Laudan's graveyard, a wildly successful theory whose central object turned out not to exist. But the ether's case is far more disturbing than a simple "it worked, then it died," and the reason is a single beautiful episode that the realist keeps in her back pocket.
+
+Around 1818, the French Academy ran a prize competition on the nature of light. Augustin Fresnel submitted his wave theory: light as vibrations in the ether. On the judging panel sat Siméon Denis Poisson, a committed believer in the rival particle theory, who did some math with Fresnel's equations and triumphantly derived an apparently absurd consequence. If Fresnel were right, the shadow of a small round disc should have a **bright spot dead in its center**, where the waves bending around every edge arrive back in step. Ridiculous, said Poisson: a clear *reductio* that sinks the whole wave theory. Another judge, François Arago, went to the bench and actually did the experiment. The spot was **there**.
+
+This is the realist's haymaker, and it has a name: a <Term as="em">novel prediction</Term><TipNote text={"A novel prediction is a specific successful prediction of something not used to build or tune the model, especially when the result was surprising."} />. The ether theory did not merely accommodate facts already known. Anyone can curve-fit the past. It predicted something nobody had ever seen and no one expected, a detail so specific and strange that its coming true looks like no coincidence at all. This is the no-miracles argument from the main page at full strength: surely a theory cannot pull a rabbit like that out of a hat unless it has hold of something real. And yet there is no ether. The single best evidence realism ever assembled was produced by a theory we now call false. The graveyard, it turns out, contains a genius.
+
+### Divide and conquer
+
+So how does the realist survive her own best example? With a move sometimes called selective, or divide-and-conquer, realism, sharpened by Philip Kitcher and Stathis Psillos in the 1990s. The trick is to stop being a realist about whole theories and become one about parts. In any successful theory, only some posits actually do the predictive heavy lifting: the **working posits**. Others are **idle**, along for the ride. Be a realist only about the working parts.
+
+Run the ether through this filter and watch it sort itself. What did the real work in deriving Poisson's spot? Not the substance "ether," not its density, its elasticity, or the question of what it was made of. The work was done by the **mathematical form of the wave equations**: the relationships, the structure. And those carried over into Maxwell's field theory and beyond. The idle metaphysical filler, the stuff of the ether, is exactly what got buried. So the pessimistic induction loses some of its teeth. Science did not keep the furniture and then throw it out; it kept the structure, which survived revolution, and quietly dropped the decoration. This is precisely the structural realism the main page ended on, now shown doing real work against its hardest case.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Room III">the callback to Day 4</SectionEyebrow>
+
+## Is the whole debate a base-rate fallacy?
+
+Here is the room that should make a Day 4 graduate sit up. Recall the base-rate fallacy: a test that is 99% accurate for a disease that afflicts 1 in 10,000 still flags far more healthy people than sick ones, because you forgot to ask how common the disease is to begin with. Confusing *P*(positive | sick) with *P*(sick | positive) is the classic trap.
+
+In 2004, the philosophers P. D. Magnus and Craig Callender pointed out that **both** sides of the realism war may be walking straight into it. Look again at the no-miracles argument. It wants to conclude that a successful theory is probably true, that is, that *P*(theory true | theory successful) is high. But by Bayes' theorem, you cannot get there from *P*(success | truth) alone. You also need the **base rate**: the prior proportion of true theories in the pool of candidate theories science draws from. And that number is not just unknown. Magnus and Callender argue that it is unknowable, because there is no fair way to count or sample all candidate theories that could have existed for mature sciences. No base rate, no inference.
+
+The same blade cuts the pessimistic induction, which tries to push *P*(theory true | success) low from the historical record of failures, and trips over the same missing denominator. Magnus and Callender's diagnosis is almost clinical: framed probabilistically, the grand "wholesale" arguments are not just unresolved; they may be malformed, each a base-rate fallacy in a frock coat. Colin Howson made a closely related charge against no-miracles in 2000. The Day 4 machinery does not just describe this dispute. It may quietly dissolve it. <StatusChip status="hint" label="live dispute" printLabel="live philosophical dispute" />
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Room IV">the grammar of useful lies</SectionEyebrow>
+
+## Idealization has rules, and a famous tradeoff
+
+The main page treated "deliberately false assumptions" as one thing. The literature is fussier, and the distinctions matter. First, separate two moves people lump together. <Term as="em">Abstraction</Term> is leaving something out: modeling a planet's orbit without mentioning its color. True as far as it goes, just silent. Idealization is actively misrepresenting: declaring the plane frictionless when you know full well it is not. The frictionless plane is not a gap in the description. It is a fib. The two feel similar and behave very differently.
+
+Then there are kinds of idealization, and the third one is the one the main page skipped. There is Galilean idealization, which distorts for tractability and promises to add detail back later, and minimalist idealization, the spherical cow strategy that keeps only the causal factors thought to matter. But there is also <Term as="em">multiple-models idealization</Term><TipNote text={"Multiple-models idealization deliberately uses several incompatible models of the same target, each simplified in a different way, to see what survives across them."} />: building several mutually incompatible models of the same thing, each false in a different direction, and triangulating among them. No single map is trusted. The agreement between differently wrong maps is.
+
+<BlockQuote>
+"Our truth is the intersection of independent lies."
+<Meta>Richard Levins, "The Strategy of Model Building in Population Biology," 1966.</Meta>
+</BlockQuote>
+
+Levins's point, now called <Term as="em">robustness analysis</Term><TipNote text={"Robustness analysis looks for results that persist across models with different simplifying assumptions."} />, is that if you attack a problem with several models built on different simplifying falsehoods, and they all spit out the same qualitative result, then that result probably depends on the real shared structure of the problem rather than on any one model's particular lie. The lies are independent. Their intersection is where truth is most likely hiding.
+
+Levins is also the source of modeling's most famous impossibility claim: you cannot maximize **generality**, **realism**, and **precision** all at once. Push any two as far as they will go and the third has to give. The dial on the main page measured fidelity against usefulness. Levins's triangle is the same wisdom in three dimensions: pick your sacrifice.
+</ContentSection>
+
+<Panel>
+<PanelTitle>Modeling tradeoff · Levins's triangle</PanelTitle>
+<PanelNote>No model maxes all three desiderata. The source version made this a click-through triangle; the static appendix keeps all three states visible for web, EPUB, and PDF readers.</PanelNote>
+
+<SimpleTable
+  headers={["Sacrifice","Keep","Strategy","Example"]}
+  rows={[["Precision","Generality + realism","Robust qualitative models that capture the direction of change without decimal-point claims.","Theoretical ecology and toy economic or physical models that isolate a mechanism."],["Realism","Generality + precision","Clean, exactly solvable models built on assumptions known to be false.","Frictionless planes, perfectly rational agents, infinite populations."],["Generality","Realism + precision","High-resolution models of one specific target, accurate but narrow.","A digital twin of this aircraft, this lake, or this patient."]]}/>
+
+Orzack and Sober (1993) argued that the three-way tradeoff is not a strict theorem. Sometimes one desideratum can improve without another immediately falling. The disciplined version is therefore not "pick two forever." It is "know which dimension your current modeling move is spending."
+</Panel>
+
+<ContentSection>
+<SectionEyebrow number="Room V">what is a model, really?</SectionEyebrow>
+
+## Mediators, fictions, and Maxwell's imaginary gears
+
+Step back and ask the question the main page tiptoed around: when a scientist "has a model," what kind of thing is it? Three answers illuminate different corners.
+
+**A theory is a family of models.** On the older syntactic picture, a scientific theory was a big set of sentences: axioms and their logical consequences. The modern <Term as="em">semantic view</Term> says no. A theory is better understood as a collection of abstract structures, together with a claim that some real system is similar to one of them in specified respects. Newtonian mechanics is not fundamentally a wall of equations. It is a toolkit of idealized systems, the pendulum, the two-body orbit, the harmonic oscillator, plus the bet that bits of the world resemble them closely enough. Ronald Giere called the resulting stance <Term as="em">perspectival realism</Term><TipNote text={"Perspectival realism says scientific representations can be genuinely world-directed while remaining partial, purpose-bound perspectives rather than mirror copies."} />: our models are like instruments, each giving a partial, perspective-bound view, true to the world the way a map is true, never the way a mirror is.
+
+**Models are mediators.** In the influential 1999 collection *Models as Mediators*, Mary Morgan and Margaret Morrison argued that models are not simply read off from theory, nor simply summaries of data. They sit between, partly autonomous from both. You build a model the way you build an instrument, making pragmatic choices theory does not dictate; then, crucially, you learn by manipulating it, the way you learn by turning the knobs on an apparatus. A model is a tool you think with, not just a picture you look at. This is also why simulation, in the next room, can feel so much like experiment.
+
+**Models are fictions.** The most provocative view takes the frictionless plane at its word: it is a fiction, an object that does not exist, described as if it did. The idea is old. Hans Vaihinger's 1911 *The Philosophy of "As If"* argued that whole swathes of science and mathematics run on useful falsehoods we knowingly treat as if true. Recall the Day 3 surprise that Sherlock Holmes's "deductions" are really abductions: here is its cousin. A scientific model may be closer to a character in a novel than to a photograph. The ideal gas is a bit like Sherlock: not real, never was, but reasoning about what it would do delivers real understanding.
+
+<Aside>
+<BlockTitle>The man who built a machine he knew was false</BlockTitle>
+
+The patron example sits next to the main page's Fresnel-to-Maxwell story. To derive his immortal equations of electromagnetism, James Clerk Maxwell first built an outrageous mechanical contraption: a space packed with spinning "molecular vortices," separated by little rolling "idle wheels." He did not believe space was full of gears. He called it an illustration, a fiction to think with. Out the other end came Maxwell's equations: structure that was true, midwifed by a model that was false. His mentor Lord Kelvin took the creed to the hilt: "I never satisfy myself until I can make a mechanical model of a thing." The fiction was scaffolding. The structure was the keeper. That is the whole of Day 10 in one Victorian anecdote.
+</Aside>
+
+### Cartwright's dappled world
+
+One more turn of the screw deepens the entity realism from the main page. Nancy Cartwright, who gave us "the laws of physics lie," built that thought into a whole worldview in *The Dappled World* (1999). Her claim: fundamental laws are true only inside models, and they describe the real world only where we have painstakingly engineered, or luckily found, a <Term as="em">nomological machine</Term><TipNote text={"A nomological machine is a stable arrangement that reliably produces lawlike behavior, such as an experimental setup or a well-isolated natural system."} />: a shielded, stable, repeating arrangement of parts that produces lawlike regularity. A physics lab is such a machine. So is the solar system, roughly.
+
+But most of the world is not shielded or stable, and there the tidy laws simply do not reach. They hold only *ceteris paribus*, all else equal, and all else is never equal. The world, for Cartwright, is not a pyramid with grand laws at the base but a patchwork: a dappled quilt of little domains where different models work and between which nothing universal runs. Read her way, "all models are wrong" stops being a remark about our maps and becomes a claim about reality: the laws themselves were idealizations all along. <StatusChip status="hint" label="live position" printLabel="live philosophical position" />
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Room VI">the trust problem</SectionEyebrow>
+
+## Verifying the unsurveyable, and a bombshell from 1994
+
+Engineers who stake lives on simulations drew a hard distinction long ago. <Term as="em">Verification</Term><TipNote text={"Verification asks whether the code or calculation correctly solves the model that was specified."} /> asks: did we **solve the equations right?** Is the code a faithful numerical solution of the model we wrote down? <Term as="em">Validation</Term><TipNote text={"Validation asks whether the model corresponds well enough to the real target system for the intended purpose."} /> asks the harder thing: did we **solve the right equations?** Does the model actually correspond to the world? Solve-it-right versus solve-the-right-thing. Almost every dispute about trusting a model is really a dispute about validation.
+
+And then, in 1994, three researchers detonated a small bomb under the word itself. In *Science*, Naomi Oreskes, Kristin Shrader-Frechette, and Kenneth Belitz argued that for models of **open natural systems**, climate, groundwater, ecosystems, verification and validation are impossible in principle. Their reasoning lands on three course threads at once. Natural systems are never closed, so you can never control all the inputs. Model solutions are non-unique, so a good fit never proves your model is the right one, which is the underdetermination from the main page. And confirming a model by matching its predictions to data is, strictly, the fallacy of affirming the consequent from **[Day 3](/days/003-logic-and-valid-inference/)**: if my model is right, I will see X; I see X; therefore my model is right. Their verdict on the word "validation" is severe: it falsely implies a legitimacy the model cannot earn. The primary value of models, they argued, is heuristic. They are instruments for thinking, not certificates of truth. <StatusChip status="ok" label="established" printLabel="established argument" />
+
+### So how do we trust the black box?
+
+This is where the main page's neural weather model comes back to haunt us. If you cannot validate a model of an open system, and you cannot even survey the billions of weights inside a learned emulator, Humphreys's epistemic opacity from the main page, then on what grounds could you ever trust its forecast?
+
+Juan Durán and Nico Formanek proposed one answer in 2018: <Term as="em">computational reliabilism</Term><TipNote text={"Computational reliabilism treats simulation output as justified when it is produced by a process with a strong reliability record, even if the full process is opaque."} />. Stop and feel the click. Reliabilism was Day 1: the idea that a belief is justified not because you can recite an argument for it from the inside, but because it was produced by a reliable process, such as good vision or sound memory. Durán and Formanek point that externalist answer at simulations. You do not need to see inside the opaque model to trust its output; you need evidence that the process producing it is reliable.
+
+That evidence looks like a track record of verification and validation where checking is possible, robustness across independent methods, a history of the technique succeeding where it could be checked, and the judgment of experts who know its failure modes. Trust migrates from transparency to reliability. The black box can be known the way a witness can be known: not by cracking open the skull, but by examining the record. The thing that defined a justified belief in a human brain on Day 1 turns out to define a trustworthy answer from a machine on Day 10. <StatusChip status="hint" label="debated" printLabel="principled, still debated" />
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>Bonus room</SectionEyebrow>
+
+## Where "digital twin" actually came from
+
+The main page leaned on the 2024 National Academies definition: bidirectional, continually updated, predictive. Where did that idea come from, and what makes the strict definition matter?
+
+The ancestor flew on **Apollo**. NASA built physical twins of its spacecraft and kept them on the ground. When Apollo 13's oxygen tank ruptured 200,000 miles from home, engineers fed live telemetry into ground-based simulators and physical mockups to improvise fixes for a craft they could not touch. A model on Earth, updated with data from its endangered counterpart in space, used to make a life-or-death decision: that is the platonic form of a digital twin, decades before the phrase existed.
+
+The modern concept was laid out by **Michael Grieves** in 2002, in a University of Michigan product-lifecycle lecture: a slide already showing real space, virtual space, and data flowing both ways between them. The catchy name came later. NASA's **John Vickers** coined "Digital Twin" around 2010, and it entered NASA's technology roadmap. From about 2014, Siemens, Dassault, GE, ANSYS, and the rest stamped it across their marketing, which is exactly why a sober definition became necessary, and why the National Academies drew the line where they did.
+
+That line is best seen as a three-rung ladder, following Kritzinger and colleagues (2018): what earns the name "twin" is not how detailed the model is, but **how the data flows**.
+
+The taxonomy is deliberately austere. A plain digital model can be enormous and beautiful; a true twin can be visually boring. The difference is the loop.
+</ContentSection>
+
+<Panel>
+<PanelTitle>Diagram in prose · what earns the name</PanelTitle>
+<PanelNote>The only thing that changes across the three is the data link between the physical object and its virtual copy. Dashed means manual or absent; solid means automatic.</PanelNote>
+
+<SimpleTable
+  headers={["Rung","Data link","What it is"]}
+  rows={[["Digital model","No automatic link","A CAD drawing or stand-alone simulation. You update it by hand, if at all. Many marketed twins are really just this."],["Digital shadow","One-way automatic link","Live sensor data flows from the physical object into the model, but the model cannot act back. Think live dashboard."],["Digital twin","Bidirectional automatic link","Data flows both ways: the model mirrors the object and steers it. Only this rung earns the strict name."]]}/>
+</Panel>
+
+<ContentSection>
+<SectionEyebrow>Bonus room</SectionEyebrow>
+
+## A model of a model of a model
+
+One last vista reframes the whole frontier. The main page set up a contrast between clean physics-based models and messy black-box machine-learning emulators, sharper in the telling than in reality. Two facts blur it.
+
+First: "physics-based" climate models are not pure first principles either. They cannot resolve a cloud or a thunderstorm, because those are far smaller than the grid, so they fake the small stuff with <Term as="em">parameterizations</Term><TipNote text={"Parameterizations are simplified formulas that stand in for processes too small or complex to represent directly in a simulation grid."} />: simplified stand-ins whose knobs are tuned until the model reproduces the climate already observed. Climate scientists openly call this "the art and science of climate model tuning." A model hand-tuned to match known climate, then trusted to predict an unknown one, is leaning on exactly the kind of fit that Oreskes warned cannot validate anything. The principled model has fudge in it too.
+
+Second: when a simulation is itself too expensive to run thousands of times, scientists build a cheap statistical stand-in for the simulation, called an <Term as="em">emulator</Term><TipNote text={"An emulator, or surrogate, is a cheaper model trained to approximate the outputs of a more expensive simulation."} /> or surrogate. Follow the chain: the world is approximated by a **simulation**, a model of the world, which is approximated by an **emulator**, a model of the model. Each rung is faster, cheaper, and a little more wrong. The AI weather models from the main page are simply the newest, most powerful rung of that ladder: surrogates that learned to mimic decades of atmosphere directly. "All models are wrong" turns out to be recursive. We routinely build wrong models of our wrong models, and the trick, every time, is knowing which lie is good enough for the job in hand.
+
+Zoom all the way out and the day sits on a four-step staircase that the computer scientist Jim Gray called the **four paradigms** of science.
+</ContentSection>
+
+<Panel>
+<PanelTitle>The arc · how science has learned to know</PanelTitle>
+<PanelNote>Each paradigm did not replace the last. It stacked on top. Today's AI emulators are the fourth, and the realism-versus-instrumentalism question rides up the staircase with them.</PanelNote>
+
+<SimpleTable
+  headers={["Paradigm","Verb","What it does"]}
+  rows={[["1. Empirical","describe","Observe and record the world: star charts, notebooks, instruments."],["2. Theoretical","explain","Compress observations into laws and equations: Newton, Maxwell, and the birth of the realism debate."],["3. Computational","simulate","When equations are unsolvable by hand, run them on a machine: the third mode, with its own epistemology."],["4. Data-driven","learn","Let models learn patterns directly from oceans of data, often with no explicit theory inside: GraphCast, GenCast, NeuralGCM."]]}/>
+
+The fourth rung is precisely where an instrumentalist feels at home and a realist feels uneasy, which is why this thousand-year-old argument suddenly matters for a weather app.
+</Panel>
+
+<ContentSection>
+<SectionEyebrow>Coda</SectionEyebrow>
+
+## The aphorism, audited
+
+Let us give the day's slogan the same scrutiny we gave everything else. "All models are wrong, but some are useful" is true, but it has hardened into a thought-terminating cliché, a phrase people reach for to wave away the hard question instead of answering it. The real questions are the ones it skips: wrong **how**? Wrong **for what**? Some models are vastly wronger than others, and the difference between a useful map and a misleading one is the entire game. Statisticians like Andrew Gelman have pushed back precisely here. The aphorism, taken as a shrug, can excuse sloppy work and dull the urge to check.
+
+George Box himself was no nihilist about it. The same papers that gave us "all models are wrong" warn just as hard against the opposite error: mistaking the model for the world, or "worrying about the wrong things" because you have fallen in love with your own elaboration. The discipline he was pointing at is not "models are wrong, so relax." It is the harder thing this course is built around: **calibrated judgment about the specific gap between this map and this purpose**. A good modeler is not someone who has stopped lying. It is someone who knows exactly which lie they are telling, and exactly what it is good for.
+</ContentSection>
+
+<Recap>
+<PanelTitle>◆ The appendix in three sentences</PanelTitle>
+
+**Big idea:** the realism-versus-instrumentalism fight is four centuries old, may be a base-rate fallacy on both sides, and ultimately turns on a trust question answered not by seeing inside a model but by judging the reliability of the process that made it.
+
+**Best new analogy:** Maxwell deriving true equations from a clockwork of imaginary gears he knew were false: fiction as scaffolding, structure as keeper, paired with Levins's "intersection of independent lies."
+
+**Sharpest callback:** computational reliabilism is literally Day 1's reliabilism aimed at simulations: you trust an opaque model the way you trust a witness, by its record rather than by cracking it open.
+
+<Threads label="Threads gathered">computation, simulation, and emulation as modes three and four of science · information as compression and robustness as independent evidence · emergence in Cartwright's patchwork world and tuning across scales · all braided back through Days 1-4.</Threads>
+</Recap>
+
+<Sources>
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. Duhem, P. (1906). *The Aim and Structure of Physical Theory*. Theory as economical classification, not explanation. See also Duhem, *To Save the Phenomena* (1908).
+1. Osiander's anonymous preface to Copernicus, *De revolutionibus orbium coelestium* (1543); Cardinal Bellarmine's 1615 letter to Foscarini. See *Stanford Encyclopedia of Philosophy*, "Scientific Realism." [plato.stanford.edu/entries/scientific-realism](https://plato.stanford.edu/entries/scientific-realism/)
+1. The Arago/Poisson bright spot: French Academy prize competition, c. 1818-1819; Fresnel's wave theory and the predicted-then-observed spot in a circular shadow. [en.wikipedia.org/wiki/Arago_spot](https://en.wikipedia.org/wiki/Arago_spot)
+1. Psillos, S. (1999). *Scientific Realism: How Science Tracks Truth*. Routledge. Divide-and-conquer realism; working versus idle posits. Kitcher, P. (1993). *The Advancement of Science*.
+1. Magnus, P. D. & Callender, C. (2004). "Realist Ennui and the Base Rate Fallacy." *Philosophy of Science* 71(3): 320-338. [philpapers.org/rec/MAGREA-2](https://philpapers.org/rec/MAGREA-2) See also Howson (2000), *Hume's Problem*.
+1. Levins, R. (1966). "The Strategy of Model Building in Population Biology." *American Scientist* 54(4): 421-431. Generality/realism/precision tradeoff, robustness, and "our truth is the intersection of independent lies." Critique: Orzack & Sober (1993), *American Naturalist* 148:201.
+1. Morgan, M. & Morrison, M., eds. (1999). *Models as Mediators*. Cambridge University Press.
+1. Giere, R. N. (1988/2006). *Explaining Science*; *Scientific Perspectivism*. University of Chicago Press. The semantic/model-based view and perspectival realism.
+1. Vaihinger, H. (1911). *Die Philosophie des Als Ob* (*The Philosophy of "As If"*, English trans. 1924). Useful fictions. See also Frigg & Hartmann, "Models in Science," *Stanford Encyclopedia of Philosophy*. [plato.stanford.edu/entries/models-science](https://plato.stanford.edu/entries/models-science/)
+1. Maxwell, J. C. (1861-62). "On Physical Lines of Force." *Philosophical Magazine*. The mechanical vortex and idle-wheel model of the electromagnetic field.
+1. Cartwright, N. (1999). *The Dappled World: A Study of the Boundaries of Science*. Cambridge University Press. Nomological machines, ceteris paribus laws, and the patchwork world.
+1. Oreskes, N., Shrader-Frechette, K. & Belitz, K. (1994). "Verification, Validation, and Confirmation of Numerical Models in the Earth Sciences." *Science* 263(5147): 641-646. doi:10.1126/science.263.5147.641. [science.org](https://www.science.org/doi/10.1126/science.263.5147.641)
+1. Durán, J. M. & Formanek, N. (2018). "Grounds for Trust: Essential Epistemic Opacity and Computational Reliabilism." *Minds and Machines* 28(4): 645-666. doi:10.1007/s11023-018-9481-6. [link.springer.com](https://link.springer.com/article/10.1007/s11023-018-9481-6)
+1. Grieves, M. (2002 concept; 2014 white paper "Digital Twin: Manufacturing Excellence through Virtual Factory Replication"); John Vickers/NASA technology-roadmap usage around 2010; Grieves & Vickers, "Origins of the Digital Twin Concept" (2016).
+1. Kritzinger, W. et al. (2018). "Digital Twin in manufacturing: A categorical literature review and classification." *IFAC-PapersOnLine* 51(11): 1016-1022. Digital model / digital shadow / digital twin by data-flow automation.
+1. Kennedy, M. C. & O'Hagan, A. (2001). "Bayesian calibration of computer models." *Journal of the Royal Statistical Society B* 63(3): 425-464. Gaussian-process emulators and surrogates of expensive simulators.
+1. Hourdin, F. et al. (2017). "The Art and Science of Climate Model Tuning." *Bulletin of the American Meteorological Society* 98(3): 589-602.
+1. Hey, T., Tansley, S. & Tolle, K., eds. (2009). *The Fourth Paradigm: Data-Intensive Scientific Discovery*. Microsoft Research. Jim Gray's empirical -> theoretical -> computational -> data-driven framing.
+1. On "all models are wrong" as cliché: Andrew Gelman, "Statistical Modeling, Causal Inference, and Social Science" (blog, various), and the nuance in Box's own 1976/1979 papers.
+
+Source hygiene: as on the main page, several post-cutoff or future-dated arXiv identifiers surfaced during source research and were **not** relied upon; every source above is a dated publication, institutional page, or encyclopedia entry.
+</Sources>
