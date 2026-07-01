@@ -5,6 +5,7 @@ interface Props {
     | "governor"
     | "loops"
     | "bathtub-errors"
+    | "bullwhip"
     | "thresholds"
     | "deep-loops"
     | "ashby"
@@ -44,8 +45,11 @@ const copy = {
     ? { title: "增强与平衡回路", pop: "人口", births: "出生", crowd: "拥挤", scarce: "稀缺", r: "增强", b: "平衡", cap: "每个真实人口都是增长引擎与限制刹车之间的拔河。" }
     : { title: "Reinforcing and balancing loops", pop: "population", births: "births", crowd: "crowding", scarce: "scarcity", r: "reinforcing", b: "balancing", cap: "Every real population is a tug-of-war between growth engines and limiting brakes." },
   "bathtub-errors": zh
-    ? { title: "浴缸难题：常见错法", correct: "正确：存量继续上升", wrong: "常见错误：存量模仿流入", inflow: "流入", outflow: "流出", level: "水位", cap: "斯威尼与斯特曼的浴缸题：许多人画出的不是累积曲线，而是与流入同步起伏的曲线。" }
-    : { title: "The bathtub problem: the common wrong graph", correct: "correct: stock keeps rising", wrong: "common error: stock copies inflow", inflow: "inflow", outflow: "outflow", level: "level", cap: "Booth Sweeney and Sterman's bathtub task: many people draw the stock as if it should rise and fall with the inflow." },
+    ? { title: "浴缸难题：常见错法", correct: "正确：存量继续上升", wrong: "常见错误：存量模仿流入", inflow: "流入", outflow: "流出", level: "水位", legendIn: "蓝实线：流入（水龙头）", legendOut: "棕虚线：流出（排水口）", legendLevel: "绿/红线：水位（存量）", cap: "斯威尼与斯特曼的浴缸题：许多人画出的不是累积曲线，而是与流入同步起伏的曲线。" }
+    : { title: "The bathtub problem: the common wrong graph", correct: "correct: stock keeps rising", wrong: "common error: stock copies inflow", inflow: "inflow", outflow: "outflow", level: "level", legendIn: "solid blue: inflow (faucet)", legendOut: "dashed brown: outflow (drain)", legendLevel: "green/red: water level (stock)", cap: "Booth Sweeney and Sterman's bathtub task: many people draw the stock as if it should rise and fall with the inflow." },
+  bullwhip: zh
+    ? { title: "牛鞭效应：小需求，大波动", customer: "客户需求", retail: "零售商", wholesale: "批发商", distributor: "分销商", factory: "工厂", orders: "订单向上游传递", shipments: "发货向下游返回", demand: "小幅需求变化", swing: "订单波动", cap: "啤酒游戏的要点：终端需求只有小幅变化，但延迟和局部反应会让上游订单波动层层放大。" }
+    : { title: "Bullwhip effect: small demand, big amplification", customer: "customer demand", retail: "retailer", wholesale: "wholesaler", distributor: "distributor", factory: "factory", orders: "orders move upstream", shipments: "shipments return downstream", demand: "small demand bump", swing: "order swings", cap: "The Beer Game lesson: a modest change in end demand becomes larger order swings upstream as delay and local reactions amplify it." },
   thresholds: zh
     ? { title: "气候临界阈值", current: "当前升温", paris: "巴黎 1.5°C", cap: "中心估计与不确定范围；几项下界已经进入当前升温区间。" }
     : { title: "Climate tipping thresholds", current: "current warming", paris: "Paris 1.5°C", cap: "Central estimates and uncertainty ranges; several lower bounds already overlap today's warming." },
@@ -227,6 +231,12 @@ const years = [
         <text x="14" y="18" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ok}>{copy.correct}</text>
         <text x="236" y="50" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{copy.inflow}</text>
         <text x="236" y="96" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.outflow}</text>
+        <g transform="translate(38 130)">
+          <line x1="0" y1="0" x2="18" y2="0" stroke={accent} stroke-width="2.4" stroke-linecap="round"></line>
+          <text x="24" y="3.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.legendIn}</text>
+          <line x1={zh ? 128 : 160} y1="0" x2={zh ? 146 : 178} y2="0" stroke={brass} stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round"></line>
+          <text x={zh ? 152 : 184} y="3.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.legendOut}</text>
+        </g>
       </g>
       <g transform="translate(24 205)">
         <rect x="0" y="0" width="312" height="146" rx="8" fill={paper} stroke={line}></rect>
@@ -237,6 +247,11 @@ const years = [
         <path d="M30 112 C62 104 88 82 116 52 C143 24 168 32 194 62 C223 94 252 112 288 116" fill="none" stroke={danger} stroke-width="3" stroke-linecap="round"></path>
         <text x="14" y="18" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{copy.wrong}</text>
         <text x="252" y="42" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{copy.level}</text>
+        <g transform="translate(38 132)">
+          <line x1="0" y1="0" x2="18" y2="0" stroke={ok} stroke-width="2.4" stroke-linecap="round"></line>
+          <line x1="10" y1="0" x2="28" y2="0" stroke={danger} stroke-width="2.4" stroke-linecap="round"></line>
+          <text x="36" y="3.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.legendLevel}</text>
+        </g>
       </g>
       <text x="180" y="376" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>
         {zh ? (
@@ -251,6 +266,65 @@ const years = [
           </>
         )}
       </text>
+    </svg>
+  )}
+
+  {kind === "bullwhip" && (
+    <svg viewBox="0 0 640 380" role="img" aria-label={copy.title}>
+      <defs>
+        <marker id="day9-bullwhip-order" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" fill={accent}></path>
+        </marker>
+        <marker id="day9-bullwhip-ship" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" fill={brass}></path>
+        </marker>
+      </defs>
+      <rect x="10" y="10" width="620" height="346" rx="12" fill={raised} stroke={line}></rect>
+      <text x="24" y="34" font-family="IBM Plex Mono, monospace" font-size="11" fill={accentDeep}>{copy.title}</text>
+
+      <g transform="translate(26 56)">
+        {[
+          [copy.customer, 0, faint],
+          [copy.retail, 120, accent],
+          [copy.wholesale, 240, accent],
+          [copy.distributor, 360, accent],
+          [copy.factory, 480, danger]
+        ].map(([label, x, color]) => (
+          <g transform={`translate(${x} 0)`}>
+            <rect x="0" y="0" width="94" height="42" rx="8" fill={paper} stroke={color as string} stroke-width="1.4"></rect>
+            <text x="47" y="25" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{label}</text>
+          </g>
+        ))}
+        {[96, 216, 336, 456].map((x) => (
+          <>
+            <path d={`M${x} 14 L${x + 42} 14`} fill="none" stroke={accent} stroke-width="1.6" marker-end="url(#day9-bullwhip-order)"></path>
+            <path d={`M${x + 42} 31 L${x} 31`} fill="none" stroke={brass} stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#day9-bullwhip-ship)"></path>
+          </>
+        ))}
+        <text x="286" y="64" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{copy.orders}</text>
+        <text x="286" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.shipments}</text>
+      </g>
+
+      <g transform="translate(46 166)">
+        <rect x="0" y="0" width="548" height="146" rx="8" fill={paper} stroke={line}></rect>
+        <line x1="42" y1="118" x2="520" y2="118" stroke={lineStrong}></line>
+        <line x1="42" y1="18" x2="42" y2="118" stroke={lineStrong}></line>
+        {[42, 162, 282, 402, 520].map((x) => <line x1={x} y1="18" x2={x} y2="118" stroke={line} stroke-dasharray="2 6"></line>)}
+
+        <path d="M42 92 L126 92 L126 84 L190 84 L190 92 L520 92" fill="none" stroke={faint} stroke-width="2.1" stroke-linejoin="round"></path>
+        <path d="M42 91 C92 89 112 78 140 77 C176 75 196 103 230 101 C264 99 284 84 318 86 C356 89 378 97 418 95 C458 93 484 90 520 91" fill="none" stroke={ok} stroke-width="2.2" stroke-linecap="round"></path>
+        <path d="M42 91 C86 91 110 68 142 65 C180 61 202 116 238 118 C276 120 300 62 336 59 C376 56 392 111 432 112 C468 113 486 82 520 84" fill="none" stroke={accent} stroke-width="2.5" stroke-linecap="round"></path>
+        <path d="M42 91 C82 91 106 51 142 47 C184 43 196 132 238 134 C280 136 300 36 340 33 C382 30 394 130 436 132 C478 134 486 64 520 61" fill="none" stroke={danger} stroke-width="2.8" stroke-linecap="round"></path>
+
+        <text x="12" y="22" transform="rotate(-90 12 22)" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.swing}</text>
+        <text x="282" y="138" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "时间 →" : "time →"}</text>
+        <g transform="translate(286 16)">
+          <line x1="0" y1="0" x2="18" y2="0" stroke={faint} stroke-width="2.1"></line>
+          <text x="24" y="3.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.demand}</text>
+          <line x1={zh ? 126 : 152} y1="0" x2={zh ? 144 : 170} y2="0" stroke={danger} stroke-width="2.8" stroke-linecap="round"></line>
+          <text x={zh ? 150 : 176} y="3.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={danger}>{zh ? "上游放大" : "upstream amplification"}</text>
+        </g>
+      </g>
     </svg>
   )}
 
@@ -490,6 +564,7 @@ const years = [
   }
 
   .day9-static-figure-bathtub-errors,
+  .day9-static-figure-bullwhip,
   .day9-static-figure-loops,
   .day9-static-figure-thresholds {
     max-width: min(100%, 46rem);

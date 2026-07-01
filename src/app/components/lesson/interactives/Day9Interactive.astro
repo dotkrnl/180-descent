@@ -493,7 +493,8 @@ const print = {
       const total = 200, peakAt = 100;
       const tri = t => Math.max(0, t <= peakAt ? t / peakAt : (2 * peakAt - t) / peakAt);
       const f = [], lev = [];
-      let s = 0;
+      let s = Number(root.dataset.startStock || "0");
+      if (!Number.isFinite(s) || s < 0) s = 0;
       for (let i = 0; i <= total; i++) {
         f[i] = peak * tri(i);
       }
@@ -510,6 +511,9 @@ const print = {
         const maxF = Math.max(peak, drain, 1) * 1.12;
         const X = t => mL + (t / total) * (W - mL - mR);
         const Y = v => mT + (1 - v / maxF) * (H - mT - mB);
+        const legend = lang === "zh"
+          ? ["蓝实线：流入（水龙头）", "棕虚线：流出（排水口）", "浅蓝区：流入 > 流出"]
+          : ["solid blue: inflow (faucet)", "dashed brown: outflow (drain)", "pale fill: inflow > outflow"];
         clear(flow);
         flow.append(el("rect", { x: mL, y: mT, width: W - mL - mR, height: H - mT - mB, rx: 7, fill: C.paper, stroke: C.line }));
         if (c1 !== null && c2 !== null && c2 > c1) {
@@ -523,12 +527,20 @@ const print = {
         [c1, c2].forEach(c => {
           if (c !== null && c > 0 && c < total) flow.append(el("line", { x1: X(c), y1: mT, x2: X(c), y2: H - mB, stroke: C.faint, "stroke-dasharray": "2 3", opacity: ".7" }));
         });
-        const fi = el("text", { x: mL + 4, y: mT + 14, "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.accent });
-        fi.textContent = lang === "zh" ? "水龙头（流入）" : "faucet (inflow)";
-        flow.append(fi);
-        const dr = el("text", { x: W - mR - 2, y: Y(drain) - 5, "text-anchor": "end", "font-family": "IBM Plex Mono, monospace", "font-size": "10.5", fill: C.brass });
-        dr.textContent = lang === "zh" ? "排水" : "drain";
-        flow.append(dr);
+        flow.append(el("rect", { x: mL + 8, y: mT + 8, width: W - mL - mR - 16, height: 34, rx: 7, fill: C.raised, stroke: C.line, opacity: ".94" }));
+        flow.append(el("line", { x1: mL + 20, y1: mT + 20, x2: mL + 44, y2: mT + 20, stroke: C.accent, "stroke-width": 2.5, "stroke-linecap": "round" }));
+        const inflowLegend = el("text", { x: mL + 50, y: mT + 23.5, "font-family": "IBM Plex Mono, monospace", "font-size": "10", fill: C.ink });
+        inflowLegend.textContent = legend[0];
+        flow.append(inflowLegend);
+        const outX = lang === "zh" ? mL + 220 : mL + 242;
+        flow.append(el("line", { x1: outX, y1: mT + 20, x2: outX + 24, y2: mT + 20, stroke: C.brass, "stroke-width": 2.1, "stroke-dasharray": "6 4", "stroke-linecap": "round" }));
+        const outflowLegend = el("text", { x: outX + 30, y: mT + 23.5, "font-family": "IBM Plex Mono, monospace", "font-size": "10", fill: C.ink });
+        outflowLegend.textContent = legend[1];
+        flow.append(outflowLegend);
+        flow.append(el("rect", { x: mL + 20, y: mT + 29, width: 24, height: 8, rx: 2, fill: `color-mix(in srgb, ${C.accent} 16%, transparent)` }));
+        const fillLegend = el("text", { x: mL + 50, y: mT + 37.5, "font-family": "IBM Plex Mono, monospace", "font-size": "10", fill: C.faint });
+        fillLegend.textContent = legend[2];
+        flow.append(fillLegend);
       };
       const drawLevel = () => {
         const W = 600, H = 168, mL = 40, mR = 14, mT = 16, mB = 24;
@@ -561,7 +573,13 @@ const print = {
       const tt = T[lang];
       q(root,"[data-out=msg]").textContent = drain >= peak ? tt.falling : (c2 !== null ? tt.rising : tt.peak);
     };
-    qa(root,"[data-preset]").forEach(b => b.addEventListener("click", () => { const p=b.dataset.preset; inf.value=p==="empty"?35:p==="balance"?60:80; out.value=p==="empty"?70:p==="balance"?60:42; draw(); }));
+    qa(root,"[data-preset]").forEach(b => b.addEventListener("click", () => {
+      const p=b.dataset.preset;
+      inf.value=p==="empty"?35:p==="balance"?60:80;
+      out.value=p==="empty"?70:p==="balance"?30:42;
+      root.dataset.startStock=p==="empty"?"8":p==="balance"?"5":"0";
+      draw();
+    }));
     inf.addEventListener("input", draw); out.addEventListener("input", draw); draw();
   }
 

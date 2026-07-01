@@ -17,7 +17,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 
 | English/source term | Standard Chinese | Scope and notes | Avoid |
 | --- | --- | --- | --- |
-| hype filter / frontier calibrator | 前沿校准器 / 防炒作过滤器 | Use `前沿校准器` for the course-wide coined tool name and exercise labels. Use `防炒作过滤器` when the prose literally means filtering hype or guarding against overclaiming. `炒作过滤器` is acceptable in compact labels. | 过滤炒作 |
+| hype filter / frontier calibrator | 前沿校准器 | Course-wide coined tool name for calibrating frontier claims and guarding against hype. Use consistently in headings, prose, labels, and appendices. | 防炒作过滤器, 炒作过滤器, 过滤炒作 |
 | established | 已确立 | Frontier/status label. Keep chip labels short. | 可靠成熟, 扎实且可重复 |
 | promising | 有前景 | Frontier/status label for evidence that is real but still early. | 线索, 初露曙光 |
 | contested / hype risk | 有争议／炒作风险 | Frontier/status label for disputed scope, framing, or evidence. | 争议/炒作, 炒作 |
