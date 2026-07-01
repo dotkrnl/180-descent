@@ -210,3 +210,24 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | Gaia hypothesis | 盖亚假说 | Lovelock's idea of life-planet self-regulation. | 盖亚理论 when overstated |
 | Daisyworld | 雏菊世界 | Lovelock-Watson toy model of feedback-driven planetary temperature regulation. | 黛西世界 |
 | panarchy | 泛层循环 | Holling's nested adaptive cycles across scales. | 泛archy |
+| model | 模型 | A deliberate useful distortion of a target system for a purpose. | 模式 when conflated with pattern |
+| map (as representation) | 地图 | Useful distortion preserving structure for a purpose; in the map–territory relation. | 映射 when mathematical/technical |
+| territory | 领土 | The target system or reality in the map–territory relation. | 疆域 when archaic/literal |
+| idealization | 理想化 | Deliberately false assumptions used to reveal structure. | 理想化模型 unless specifying a model |
+| Galilean idealization | 伽利略式理想化 | Remove complicating factors to make the core relation tractable. | 伽利略理想化 |
+| minimalist idealization | 极简理想化 | Include only causal factors thought to be essential. | 最小主义理想化 |
+| scientific realism | 科学实在论 | Successful mature theories are approximately true about unobservables. | 科学现实主义 |
+| instrumentalism | 工具主义 | Theories are useful instruments for prediction, not descriptions of reality. | 工具理性 |
+| no-miracles argument | 无奇迹论证 | Predictive success is best explained by approximate truth. | 无奇迹论 |
+| pessimistic meta-induction | 悲观元归纳 | Past successful theories turned out false, so current ones may too. | 悲观归纳 |
+| structural realism | 结构实在论 | Keep mathematical structure; hold entities loosely. | 结构现实主义 |
+| entity realism | 实体实在论 | Believe entities you can manipulate; be skeptical of grand laws. | 实体现实主义 |
+| constructive empiricism | 建构经验论 | Accept empirically adequate theories; stay agnostic on unobservables. | 建设性经验主义 |
+| anti-realism / anti-realist | 反实在论 / 反实在论者 | Scientific position denying that successful theories are approximately true about unobservables; includes instrumentalism and constructive empiricism. | 反现实主义 when inconsistent |
+| save the phenomena | 拯救现象 | Philosophical phrase: a theory that fits observations without claiming to describe underlying reality; contrast with describing the real world. | 挽救现象 |
+| empirical adequacy | 经验充分性 | Agreement between observable consequences and evidence. | 经验恰当性 |
+| simulation | 模拟 | Computer-based surrogate of a target system. | 仿真 when conflated with emulation |
+| epistemic opacity | 认识论不透明性 | Steps too numerous for any human to survey. | 认知不透明 when not epistemology-specific |
+| VVUQ | VVUQ | Verification, validation, and uncertainty quantification. | 验证、确认与不确定性量化 as acronym expansion |
+| forecast skill | 预报技巧 | Predictive performance measured against observations. | 预测能力 when not technical |
+| mechanism | 机制 | Causal process or inner workings producing an effect. | 机理 when narrower biomedical sense |

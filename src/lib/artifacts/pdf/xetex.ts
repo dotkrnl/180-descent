@@ -918,7 +918,8 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["EmergenceHero", { selector: ".emergence-hero", width: "0.86\\linewidth", height: "0.30\\textheight" }],
   ["ComplexityHump", { selector: ".complexity-hump", width: "0.82\\linewidth", height: "0.26\\textheight" }],
   ["Day8StaticFigure", { selector: ".day8-static-figure", width: "0.86\\linewidth", height: "0.24\\textheight" }],
-  ["Day9StaticFigure", { selector: ".day9-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }]
+  ["Day9StaticFigure", { selector: ".day9-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }],
+  ["Day10StaticFigure", { selector: ".day10-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }]
 ]);
 
 function renderRenderedSvgComponent(name: string, attrs: Map<string, string | null>, state: MdxRenderState): string {
@@ -950,6 +951,16 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
         selector: `.day9-static-figure-${kind}`,
         width: day9Width,
         height: day9Height
+      };
+    }
+  }
+  if (name === "Day10StaticFigure") {
+    const kind = resolveExpression(attrs.get("kind"), state).trim();
+    if (kind) {
+      spec = {
+        selector: `.day10-static-figure-${kind}`,
+        width: kind === "weather-chart" ? "0.98\\linewidth" : "0.86\\linewidth",
+        height: kind === "weather-chart" ? "0.36\\textheight" : "0.26\\textheight"
       };
     }
   }

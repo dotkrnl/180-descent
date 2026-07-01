@@ -1,0 +1,284 @@
+import tabulaPeutingeriana from "../../../assets/images/open-license/tabula-peutingeriana-konrad-miller-crop.jpg";
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Highlight from "@app/components/lesson/Highlight.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import ImageFigure from "@app/components/lesson/ImageFigure.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.astro";
+import Day10IdealizationDial from "@app/components/lesson/interactives/Day10IdealizationDial.astro";
+
+<Hero>
+<HeroEyebrow dayMark="第 010 日 / 180">模块一 · 知识与推理的根基 ·</HeroEyebrow>
+
+# 模型、地图与理想化
+
+<HeroSubhead>一张完美的地图就是一张无用的地图。那么，一张好地图究竟好在哪里？</HeroSubhead>
+
+<Day10StaticFigure kind="hero-map" locale="zh" />
+
+<Lead drop="一">九四六年，豪尔赫·路易斯·博尔赫斯在一篇短文里描写了一个帝国：那里的制图师技艺精湛，且对精确痴迷到了极点，于是绘制了一幅比例为一比一的帝国地图。它点对点地覆盖了全部领土，像第二层皮肤一样铺展在国土之上，成为有史以来最精确的地图。然而它也是废物。下一代人抛弃了它，旅人日后只会在沙漠里发现「褴褛的残片」。</Lead>
+
+这个玩笑大有深意。地图之所以有用，恰恰因为它不是领土：它缩小、压平、筛选，把几乎一切都扔掉了。保留下来的，才是你真正需要的东西：<Highlight>可用的结构</Highlight>。每一个科学模型都在玩同一套把戏。一旦看清这一点，一个更硬的问题就浮现出来：当那些最出色的理论谈论我们永远无法直接看见的东西时，它们是在描述实在，还是在绘制一幅异常出色的地图？
+</Hero>
+
+<Wrap>
+
+<StatusChipRow>
+<StatusChip status="ok" label="核心模型" />
+<StatusChip status="hint" label="前沿活跃" printLabel="模拟前沿活跃" />
+</StatusChipRow>
+
+<WhereBlock>
+<Label>◆ 我们身在何处</Label>
+
+昨天（**[第 9 日](/zh/days/009-systems-thinking-and-feedback/)**）我们画了回路、浴缸和稳定山谷。那些图每一张都是<Term>模型</Term>：我们之所以信任它，是因为它比世界更简单。今天，我们把镜头对准工具本身。我们会兑现 **[第 7 日](/zh/days/007-information-theory/)** 关于压缩的承诺，复用 **[第 8 日](/zh/days/008-complexity-and-emergence/)** 关于介于有序与随机之间的描述，并再次遇见 **[第 1 日](/zh/days/001-what-is-knowledge/)**——只是换了新的伪装：一个因为错误理由而预测正确的模型。
+</WhereBlock>
+
+<ContentSection>
+<SectionEyebrow>模型</SectionEyebrow>
+
+## 地图不是领土
+
+这句话出自阿尔弗雷德·科尔兹比（Alfred Korzybski）。1933 年，他试图矫正一种糟糕的人类习惯：把自己的词语和符号错当成实在本身。完整的句子才是关键：
+
+<BlockQuote>
+「地图不是它所代表的领土，但如果正确，它与领土具有相似的结构，这正是其用处所在。」
+<Meta>阿尔弗雷德·科尔兹比，《科学与理智》（Science and Sanity），1933 年。</Meta>
+</BlockQuote>
+
+「相似结构」这个子句，把整个建模理论浓缩在了一句话里。地图如果复制一切，就如博尔赫斯所示，毫无用处；如果什么都不复制，也毫无用处。它的价值在于中间地带：为特定目的保留关键关系，同时丢弃其余。地铁图是扭曲的杰作——距离是错的，角度是错的，河流被画成卡通——但它保留了站点顺序与换乘关系，因为那才是乘客需要的。
+
+<ImageFigure src={tabulaPeutingeriana.src} width="1800" height="453" alt="《波伊廷格地图》的局部，罗马道路被拉成一条长带，城市和海岸线按路线关系排列。">
+《波伊廷格地图》不是按比例复制地理空间。它牺牲形状与距离，保留旅人需要的东西：道路、站点和先后关系。
+</ImageFigure>
+
+所以，模型不是世界的小型真实副本，而是一种<Highlight>有用的扭曲</Highlight>。迈克尔·韦斯伯格（Michael Weisberg）在《模拟与相似》（Simulation and Similarity）中给出了精确的哲学版本：模型不必与目标完全相同，甚至不必与之完全同构；它只需在相关方面、达到任务所需的相似程度即可。
+
+### 所有模型都是错的
+
+乔治·E·P·博克斯（George E. P. Box）给了统计学一句最便携的话：「所有模型都是错的，但有些有用。」引证轨迹本身就是一堂小型的防炒作滤镜课。他在 1976 年的论文《科学与统计学》中埋下了种子：因为所有模型都是错的，科学家无法通过无限细化得到一个正确的模型。精炼的格言出现在 1979 年会议论文的章节标题里，而那个我们熟悉的「本质上是」措辞，则落在他 1987 年与诺曼·德雷珀（Norman Draper）合著的教科书里。
+
+三个日期，一个用十年打磨的念头。这句口号是真的，但人们随口附带的引证常常不是。核查收据——我们会在 **第 149 日** 大规模地做这件事。
+
+<Aside>
+<BlockTitle>比博尔赫斯更老的玩笑</BlockTitle>
+
+博尔赫斯并非第一个想到一比一地图的人。刘易斯·卡罗尔（Lewis Carroll）在 1893 年出版的《西尔薇与布鲁诺完结篇》（Sylvie and Bruno Concluded）里，有个角色夸耀一幅比例「一英里对一英里」的国家地图。为什么它从未铺开？农民们反对，因为那会遮住阳光、杀死庄稼。于是他们干脆用国家本身来当自己的地图。领土永远是最精确的模型，也是最无用的模型。
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>技艺</SectionEyebrow>
+
+## 球形牛，以及科学家为何故意说谎
+
+有一则老笑话。一位奶农雇物理学家提高产奶量。数月后他们带回了方案，但只适用于<Highlight>真空中的球形牛</Highlight>。
+
+笑话之所以好笑，是因为它说的是真的。故意为假的假设不是科学的 bug，而是它最锋利的工具之一。伽利略的自由落体定律只在真空中、无空气阻力、无自转、理想重力场下才干净。没有一条完全成立。厄南·麦克马林（Ernan McMullin）把这叫作<Term>伽利略式理想化</Term><TipNote text="伽利略式理想化故意扭曲问题，通常通过移除复杂因素，使核心关系变得数学上可处理。"/>：先扭曲问题以让机制显形，再在需要时把细节加回来。
+
+有时，简化甚至更深。无摩擦平面不只是让算术变容易，它通过移除掩盖惯性的东西，把惯性揭示出来。这种<Term>极简理想化</Term><TipNote text="极简理想化只包含被认为具有本质性的因果因素，用故意为假的设定来隔离机制。"/>与其说是对世界的近似，不如说是一种关于「什么才重要」的论证。球形牛、理想气体、质点、遗传学里的无限群体、无摩擦滑轮，都在说：忽略这些噪声，看剩下的结构。
+
+因此，「所有模型都是错的」并不是绝望的劝告，而是专注的劝告。一个试图在所有方面都对的世界模型，就是博尔赫斯的那幅地图：全面、忠实、死寂。艺术在于选择把哪些错误坐实。
+</ContentSection>
+
+<Day10IdealizationDial locale="zh" />
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>静态替代 · 理想化刻度盘</PanelTitle>
+
+<PanelNote>这个可交互刻度盘从高度抽象滑向一比一复刻。保真度随细节增加而上升，但有用性在中段达到峰值，等到模型和目标一样复杂时便崩溃。</PanelNote>
+
+<Day10StaticFigure kind="dial-curve" locale="zh" />
+
+<SimpleTable
+  headers={["区域","例子","教训"]}
+  rows={[["细节太少","把奶牛简化为质点","简化把你要用的关键属性也删掉了。"],["有用的中段","地铁图或理想气体","模型为任务保留了所需的结构。"],["细节太多","博尔赫斯的一比一地图","最大保真度会摧毁压缩、清晰度和可用性。"]]}
+/>
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow>辩论</SectionEyebrow>
+
+## 我们的地图是在描述真实世界，还是仅仅好用？
+
+在这里，实践问题变成了哲学上最深的一场争吵。物理学谈论电子、夸克、场、时空曲率：这些实体与结构没人能直接看见。理论却好得惊人。这种成功是否意味着那些看不见的家具确实在那里，大致如其所述？还是说，电子只是强大簿记系统里的条目，对预测观察有用，却不告诉我们底层实在长什么样？
+
+<Term>科学实在论</Term><TipNote text="科学实在论认为，成功的成熟科学理论至少在近似意义上是真的，包括许多关于不可观察实体的断言。"/>者会说，如果我们的最佳理论没有抓住实在，成功就近乎奇迹。这就是与希拉里·普特南（Hilary Putnam）和 J·J·C·斯马特（J. J. C. Smart）关联的<Highlight>无奇迹论证</Highlight>：对持续的预测成功来说，最佳解释就是：理论确实为真。
+
+反实在论者的回击来自历史。拉里·劳丹（Larry Laudan）1981 年的论文《对收敛实在论的驳斥》（"A Confutation of Convergent Realism"）列举了一个又一个昔日成功、如今却被视为错误的理论：
+
+- **燃素**：被认为存在于可燃物中的火之物质。
+- **热质**：把热当作不可见流体来处理。
+- **光以太**：据当时假设，光在其中传播的介质。
+- **水晶球壳**：承载行星的壳层。
+- **生命力**：生命物质的特殊火花。
+
+这一拳很狠。过去的成功并不能保证指向真实实体。凭什么认为我们今天的成功终于做到了？这就是<Term>悲观元归纳</Term><TipNote text="悲观元归纳认为，由于许多过去成功的理论后来都被证明是错的，今天成功的理论也可能最终是错的。"/>。再加上<Term>欠决定</Term><TipNote text="欠决定指多个理论可以拟合同一份证据，因此仅凭证据可能无法选出唯一为真的理论。"/>，实在论者就面临一个严重问题：同一片地面可以塞进多张地图。
+
+### 四种与张力共存的方式
+
+<SimpleTable
+  headers={["立场","可观察预测","不可见实体","数学结构"]}
+  rows={[["科学实在论","足够真实","真实，大致如其所述","追踪真实关系"],["结构实在论","足够真实","对实体保持松动","结构才是存活下来的东西"],["实体实在论","足够真实","能被实验操纵时即为真实","宏大定律可能只在模型中成立"],["建构经验论","经验上充分","保持不可知","接受地图，而不承诺其为真"]]}
+/>
+
+结构实在论，与约翰·沃拉尔（John Worrall）关联，是最具地图味儿的折中。看看以太。菲涅耳的以太消失了；麦克斯韦的电磁场取而代之。但数学结构的某些部分在革命中存活了下来。也许科学积累结构比积累「家具」更可靠。保留方程；对实体轻轻拿放。
+
+实体实在论，与伊恩·哈金（Ian Hacking）和南希·卡特赖特（Nancy Cartwright）关联，从预测走向干预。哈金的口号是：如果你能喷电子，电子就是真的。相信你能操控来干活的实体；对包裹它们的宏大理论更存疑。卡特赖特则从另一侧下刀，在《物理定律是如何说谎的》（How the Laws of Physics Lie）中指出：基本定律支配的是模型里的理想化对象，而不是世界里乱糟糟的对象。
+
+把这张表攥紧。计算机即将把它的每一行都逼到阳光下。
+</ContentSection>
+
+<ContentSection class="frontier">
+<SectionEyebrow>前沿 · 2026</SectionEyebrow>
+
+## 旧争论在硅中重生
+
+历史上，科学只有两条学习路径：思考世界，和戳弄世界。近几十年，第三条路径强势挤了进来：<Highlight>模拟</Highlight>。气候模型在代码里跑过一个世纪。喷气发动机的数字孪生在裂纹形成前就预判它。训练出来的天气预报模型胜过了物理求解器。这算哪一类知识？
+
+埃里克·温斯伯格（Eric Winsberg）主张，模拟有自身的认识论：它们能产生真正的知识，其辩护方式无法还原为纸笔理论或实验室实验。保罗·汉弗莱斯（Paul Humphreys）把这种不安命名为<Term>认识论不透明性</Term><TipNote text="认识论不透明性指没有人能逐步审视产生某个计算结果的全部相关步骤的局面。"/>。一个过程可以形式化地规定，却大到没有任何人能逐行检查。
+
+<Claim>
+<ClaimHeader label="边缘 01">
+<StatusChip status="ok" label="框架" printLabel="孪生框架" />
+<StatusChip status="bad" label="数字孪生炒作" printLabel="炒作有争议" />
+</ClaimHeader>
+
+### 数字孪生：模型何时配得上这个名字？
+
+「数字孪生」被过度营销，因此要使用严格来源：2024 年美国国家科学院报告《数字孪生的基础研究缺口与未来方向》（Foundational Research Gaps and Future Directions for Digital Twins）。真正的数字孪生不只是模拟。它要有虚拟表示、来自物理对应物的动态数据更新、预测能力、决策价值，以及一条虚拟–物理双向回路。那条反馈回路才是门槛。
+
+难题在于信任。报告强调<Term>VVUQ</Term><TipNote text="VVUQ：验证代码、确认模型-世界拟合、量化不确定性。"/>是一个持续过程，不是一次性盖章。物理系统会变，数据会变，决策会变，孪生在使用过程中必须被重新验证。
+</Claim>
+
+<Claim>
+<ClaimHeader label="边缘 02">
+<StatusChip status="ok" label="启动" printLabel="DestinE 已启动" />
+<StatusChip status="hint" label="预报技巧仍在成长" printLabel="技巧在发展" />
+<StatusChip status="bad" label="全地球孪生" printLabel="2030 路线图" />
+</ClaimHeader>
+
+### 一整颗行星的数字孪生
+
+最宏大的版本是欧洲的 **Destination Earth** 计划，由 ECMWF、ESA 和 EUMETSAT 共建。2024 年 6 月，其首次系统发布上线了两个孪生：「天气引发极端事件」与「气候变化适应」。极端事件孪生包含一个全球分辨率约 4.4 公里的组件，并针对选定事件提供区域放大。
+
+这是一个已确立的启动里程碑。但它还不是「地球数字孪生」这个短语所暗示的科幻对象。更高分辨率并不自动意味着对每项任务都有更好的预报，而欧洲 2030 年建成完整地球系统孪生的目标仍停留在路线图上。
+</Claim>
+
+<Claim>
+<ClaimHeader label="边缘 03">
+<StatusChip status="ok" label="单器官" printLabel="FFR-CT 已用" />
+<StatusChip status="bad" label="全患者" printLabel="全患者仍是愿景" />
+</ClaimHeader>
+
+### 临床数字孪生：一个真正例外
+
+医学热爱「你的数字孪生」这个想法：一个正在运行的身体模型，医生可以在上面测试干预。冷静的文献却稀薄得多。2025 年 npj Digital Medicine 上的一项范围综述发现，149 篇使用这个标签的医疗研究中，只有 18 篇完全符合美国国家科学院的定义，只有两篇提到 VVUQ。
+
+例外恰恰证明了规则。HeartFlow 的 FFR-CT 接收冠状动脉 CT 扫描，为患者建立血流计算流体动力学模型，以判断某处阻塞是否正在让心脏挨饿。它在 2014 年获得 FDA De Novo 许可。范围狭窄、物理性强、决策明确——这就是它有效的原因。
+</Claim>
+
+<Claim>
+<ClaimHeader label="边缘 04">
+<StatusChip status="ok" label="预报技巧" />
+<StatusChip status="bad" label="物理宣称" printLabel="理解物理机制有争议" />
+</ClaimHeader>
+
+### 不写方程也能预报天气
+
+几十年来，天气预报意味着在巨型计算机上求解大气物理。随后，从过去天气中训练出来的机器学习模型追上了、并在多项基准测试中超越了领先的物理系统。GraphCast、盘古天气（Pangu-Weather）、GenCast 不是新闻稿里博眼球的噱头；它们的头版结果发表在 Science 和 Nature 上。
+</Claim>
+
+<Day10StaticFigure kind="weather-chart" locale="zh" />
+
+哲学刺痛来得直接。按预报用户唯一关心的标准，这些训练出来的系统可以比那些由显式物理方程构建的系统<Highlight>经验上更充分</Highlight>。可它们的内部是不透明的权重，而非具名的机制。建构经验论者可以耸肩：预测本来就是目标。实在论者却该担心：如果预测可以在没有可解释表征的情况下到来，无奇迹论证就会失去部分力量。
+
+结构实在论者指向了混合回应。谷歌的 NeuralGCM 保留了一个可微分的大气动力学核心，并用机器学习去补物理处理不好的部分。保留可信的结构；学习那些闭合项。这就是工程实践中的结构实在论。但提醒依然重要：与其他训练出来的系统一样，NeuralGCM 预计难以大幅超出训练分布覆盖的范围进行外推。机制可能正是你在地图边缘最需要的。
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>未决问题</SectionEyebrow>
+
+## 真正未决的问题
+
+- **模拟是科学的第三支柱，还是只是装备了更好机器的应用数学？** 温斯伯格与玛格丽特·莫里森（Margaret Morrison）主张一种独特的认识论；批评者仍将其视为扩展了的建模。
+- **预测而不表征，会削弱科学实在论吗？** 如果一个无机制模型能比物理模型更好地预报，成功本身看起来就不太像真理的证据。
+- **训练出来的模型能外推吗？** 天气预报结果在训练数据覆盖的区间内最强。新气候与罕见极端事件才是经验试金石。
+- **模型何时配得上数字孪生之名？** 美国国家科学院划了一条严格的线。许多打着这个旗号的产品并没有跨过去。
+- **当模型本身是一个 AI 系统时会发生什么？** 如果一个语言模型产生了一个真实且证据充分的主张，它是在描述实在，还是只充当了一张经验上充分的地图？我们会在 AI 模块回到这个问题。
+</ContentSection>
+
+<Recap>
+<PanelTitle>◆ 三句话总结今日</PanelTitle>
+<RecapList>
+<RecapItem term="大观念">每一个模型都是一次故意而有用的扭曲：它为特定目的保留结构，同时舍弃其余几乎一切。最困难的问题是，我们最成功的地图究竟在描述真实世界，还是仅仅「拯救现象」。</RecapItem>
+<RecapItem term="最佳类比">博尔赫斯的一比一地图与真空中的球形牛：完美的保真度可能毫无用处，而一个故意为假的简化却能恰好揭示关键所在。</RecapItem>
+<RecapItem term="当下争议">数字孪生与 AI 天气模型在硅中重新打开了科学实在论问题，尤其是在预测成功却没有人类可读机制的时候。</RecapItem>
+</RecapList>
+<Threads label="今日线索">计算（模拟作为科学的第三种模式） · 信息（模型是有损压缩） · 涌现（多尺度模型与数字孪生） · 理想化中的能量与演化。</Threads>
+</Recap>
+
+<ContinueNote label="明日 → 第 11 日">
+### 启发法、偏见与理性
+
+今天我们看着科学故意简化世界。明天镜头转向内部：心智本身也运行在捷径之上。你会遇见银行职员琳达、系统 1 与系统 2，以及关于启发法究竟是该纠正的缺陷，还是稀缺条件下的适应性赌注的理性之争。
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>来源与延伸阅读</SourcesTitle>
+
+1. Korzybski, A. (1933). Science and Sanity: An Introduction to Non-Aristotelian Systems and General Semantics. 地图–领土关系，第 58 页。[wikipedia.org/wiki/Map-territory_relation](https://en.wikipedia.org/wiki/Map%E2%80%93territory_relation)
+1. Borges, J. L. (1946). "Del rigor en la ciencia" / "On Exactitude in Science." [wikipedia.org/wiki/On_Exactitude_in_Science](https://en.wikipedia.org/wiki/On_Exactitude_in_Science)
+1. Carroll, L. (1893). Sylvie and Bruno Concluded, ch. XI. [wikisource.org](https://en.wikisource.org/wiki/Sylvie_and_Bruno_Concluded)
+1. Box, G. E. P. (1976). "Science and Statistics." Journal of the American Statistical Association 71(356): 791-799. doi:10.1080/01621459.1976.10480949
+1. Box, G. E. P. (1979). "Robustness in the Strategy of Scientific Model Building," in Launer & Wilkinson (eds.), Robustness in Statistics, 201-236.
+1. Box, G. E. P. &amp; Draper, N. R. (1987). Empirical Model-Building and Response Surfaces. Wiley.
+1. Weisberg, M. (2013). Simulation and Similarity: Using Models to Understand the World. Oxford University Press.
+1. McMullin, E. (1985). "Galilean Idealization." Studies in History and Philosophy of Science 16(3): 247-273.
+1. Putnam, H. (1975); Smart, J. J. C. (1963). 参见斯坦福哲学百科全书「科学实在论」条目。[plato.stanford.edu/entries/scientific-realism](https://plato.stanford.edu/entries/scientific-realism/)
+1. Laudan, L. (1981). "A Confutation of Convergent Realism." Philosophy of Science 48(1): 19-49. [jstor.org/stable/187066](https://www.jstor.org/stable/187066)
+1. van Fraassen, B. C. (1980). The Scientific Image. Oxford University Press.
+1. Worrall, J. (1989). "Structural Realism: The Best of Both Worlds?" Dialectica 43(1-2): 99-124.
+1. Hacking, I. (1983). Representing and Intervening. Cambridge University Press.
+1. Cartwright, N. (1983). How the Laws of Physics Lie. Oxford University Press.
+1. Winsberg, E. (2010). Science in the Age of Computer Simulation. University of Chicago Press. Humphreys, P. (2009)，论认识论不透明性。
+1. National Academies of Sciences, Engineering, and Medicine. (2024). Foundational Research Gaps and Future Directions for Digital Twins. doi:10.17226/26894. [nationalacademies.org/read/26894](https://www.nationalacademies.org/read/26894/chapter/2)
+1. European Commission / ECMWF. Destination Earth 系统发布，2024 年 6 月 10 日。[destination-earth.eu](https://destination-earth.eu/news/destination-earth-system-launch/) · [destine.ecmwf.int](https://destine.ecmwf.int/)
+1. Tudor, Burton, et al. (2025). "A scoping review of human digital twins in healthcare applications and usage patterns." npj Digital Medicine 8: 587. doi:10.1038/s41746-025-01910-w
+1. FDA. HeartFlow FFR-CT De Novo DEN130045; HeartFlow FFR-CT 许可材料，2014 年。
+1. Lam, R. et al. (2023). "Learning skillful medium-range global weather forecasting." Science 382(6677): 1416-1421. doi:10.1126/science.adi2336
+1. Bi, K. et al. (2023). "Accurate medium-range global weather forecasting with 3D neural networks." Nature 619: 533-538. doi:10.1038/s41586-023-06185-3
+1. Price, I. et al. (2024). "Probabilistic weather forecasting with machine learning." Nature. doi:10.1038/s41586-024-08252-9
+1. Kochkov, D. et al. (2024). "Neural general circulation models for weather and climate." Nature 632: 1060-1066. doi:10.1038/s41586-024-07744-y
+
+来源卫生：研究过程中出现的未来日期 arXiv 标识符已被丢弃，视为不可靠。上述前沿主张依赖同行评议论文、官方项目页面或机构报告。
+</Sources>
+
+</Wrap>

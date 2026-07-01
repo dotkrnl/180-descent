@@ -1,0 +1,118 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+
+const copy = zh
+  ? {
+      eyebrow: "交互 · 保真度与有用性的权衡",
+      title: "理想化旋钮",
+      note: "把旋钮从干净示意图拖向近乎一比一的复刻。保真度会一路上升；有用性先上升、到达峰值，然后在模型膨胀回疆域本身时坍塌。甜点不在两端。",
+      detail: "细节 / 保真度",
+      fidelity: "对现实的保真度",
+      usefulness: "有用性",
+      presets: "载入一个例子",
+      mapLabel: "简化地图",
+      plotLabel: "保真度上升，而有用性呈倒 U 形的曲线图。",
+      examples: [
+        ["6", "质点"],
+        ["22", "地铁图"],
+        ["48", "天气模型"],
+        ["82", "飞行模拟器"],
+        ["100", "博尔赫斯一比一地图"]
+      ]
+    }
+  : {
+      eyebrow: "Interactive · fidelity versus usefulness",
+      title: "The Idealization Dial",
+      note: "Drag from a clean schematic toward a near one-to-one replica. Fidelity keeps climbing; usefulness rises, peaks, and then collapses as the model swells back toward the territory itself. The sweet spot is not at either edge.",
+      detail: "Detail / fidelity",
+      fidelity: "Fidelity to reality",
+      usefulness: "Usefulness",
+      presets: "Load an example",
+      mapLabel: "Stylized map",
+      plotLabel: "A chart where fidelity rises and usefulness forms an inverted U.",
+      examples: [
+        ["6", "Point mass"],
+        ["22", "Subway map"],
+        ["48", "Weather model"],
+        ["82", "Flight simulator"],
+        ["100", "Borges's 1:1 map"]
+      ]
+    };
+---
+<Panel class="day10-dial web-only" data-day10-dial data-locale={zh ? "zh" : "en"}>
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="day10-dial-grid">
+    <div class="day10-mapview">
+      <svg data-role="map" viewBox="0 0 220 220" role="img" aria-label={copy.mapLabel}>
+        <rect x="0" y="0" width="220" height="220" rx="12" fill="var(--paper)"></rect>
+        <g stroke="var(--accent)" fill="none" stroke-width="2.2" stroke-linecap="round">
+          <path d="M24,164 C62,132 78,98 130,88 C164,82 180,60 204,54"></path>
+          <path d="M42,45 L108,122 L166,176"></path>
+        </g>
+        <circle data-role="city" cx="108" cy="122" r="5" fill="var(--contested)"></circle>
+        <g data-role="detail" stroke="var(--ink-faint)" stroke-width=".7" opacity="0"></g>
+        <g data-role="clutter" opacity="0"></g>
+      </svg>
+      <p class="day10-map-label" data-out="map-label"></p>
+    </div>
+
+    <div class="day10-dial-controls">
+      <label class="day10-range-label">
+        <span>{copy.detail}</span>
+        <strong data-out="detail">28%</strong>
+      </label>
+      <input data-role="dial" type="range" min="0" max="100" value="28" aria-label={copy.detail} />
+
+      <svg class="day10-plot" viewBox="0 0 340 180" role="img" aria-label={copy.plotLabel}>
+        <line x1="36" y1="146" x2="316" y2="146" stroke="var(--line-strong)" stroke-width="1"></line>
+        <line x1="36" y1="18" x2="36" y2="146" stroke="var(--line-strong)" stroke-width="1"></line>
+        <text x="176" y="169" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)">{zh ? "更多细节 ->" : "more detail ->"}</text>
+        <text x="20" y="84" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-90 20 84)">{zh ? "价值" : "value"}</text>
+        <path data-role="fidelity-curve" fill="none" stroke="var(--accent)" stroke-width="2.3"></path>
+        <path data-role="usefulness-curve" fill="none" stroke="var(--brass)" stroke-width="2.3"></path>
+        <line data-role="marker-line" x1="36" y1="18" x2="36" y2="146" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3" opacity=".5"></line>
+        <circle data-role="fidelity-dot" cx="36" cy="146" r="4" fill="var(--accent)"></circle>
+        <circle data-role="usefulness-dot" cx="36" cy="146" r="4" fill="var(--brass)"></circle>
+        <rect x="210" y="12" width="104" height="40" rx="6" fill="var(--raised)" opacity=".92"></rect>
+        <circle cx="220" cy="24" r="4" fill="var(--accent)"></circle>
+        <text x="229" y="27" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-soft)">{zh ? "保真度" : "fidelity"}</text>
+        <circle cx="220" cy="42" r="4" fill="var(--brass)"></circle>
+        <text x="229" y="45" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-soft)">{zh ? "有用性" : "usefulness"}</text>
+      </svg>
+
+      <div class="day10-meters">
+        <div class="day10-meter">
+          <p>{copy.fidelity}</p>
+          <strong data-out="fidelity">0.34</strong>
+        </div>
+        <div class="day10-meter is-useful">
+          <p>{copy.usefulness}</p>
+          <strong data-out="usefulness">0.86</strong>
+        </div>
+      </div>
+
+      <div class="day10-verdict">
+        <strong data-out="verdict-title"></strong>
+        <span data-out="verdict-body"></span>
+      </div>
+
+      <div class="day10-presets">
+        <p>{copy.presets}</p>
+        <div>
+          {copy.examples.map(([value, label]) => <button type="button" data-preset={value}>{label}</button>)}
+        </div>
+      </div>
+    </div>
+  </div>
+</Panel>

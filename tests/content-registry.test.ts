@@ -546,6 +546,8 @@ describe("target content registry", () => {
     const day006 = daysByPath.get("006-statistics-and-the-art-of-not-fooling-yourself");
     const day007 = daysByPath.get("007-information-theory");
     const day008 = daysByPath.get("008-complexity-and-emergence");
+    const day009 = daysByPath.get("009-systems-thinking-and-feedback");
+    const day010 = daysByPath.get("010-models-maps-and-idealization");
 
     expect([...daysByPath.keys()]).toEqual([
       "001-what-is-knowledge",
@@ -555,7 +557,9 @@ describe("target content registry", () => {
       "005-causation",
       "006-statistics-and-the-art-of-not-fooling-yourself",
       "007-information-theory",
-      "008-complexity-and-emergence"
+      "008-complexity-and-emergence",
+      "009-systems-thinking-and-feedback",
+      "010-models-maps-and-idealization"
     ]);
 
     for (const day of registry.days) {
@@ -664,6 +668,23 @@ describe("target content registry", () => {
     expect(day008?.bodies.en.source).toContain("MurmurationEngine");
     expect(day008?.bodies.en.source).toContain("GameOfLifeGun");
     expect(day008?.bodies.en.source).toContain("ComplexityHump");
+
+    expect(day009?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "catching-the-cliff:en",
+      "catching-the-cliff:zh",
+      "deeper-waters:en",
+      "deeper-waters:zh"
+    ]);
+    expect(day009?.manifest.interactionScripts).toEqual([]);
+    expect(day009?.bodies.en.source).toContain("Day9Interactive");
+    expect(day009?.bodies.en.source).toContain("Day9StaticFigure");
+
+    expect(day010?.appendixBodies).toEqual([]);
+    expect(day010?.manifest.interactionScripts).toEqual([
+      "models-maps-idealization"
+    ]);
+    expect(day010?.bodies.en.source).toContain("Day10IdealizationDial");
+    expect(day010?.bodies.en.source).toContain("Day10StaticFigure");
   });
 });
 

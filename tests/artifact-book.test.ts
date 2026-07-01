@@ -33,7 +33,9 @@ describe("artifact book model", () => {
       "005-causation",
       "006-statistics-and-the-art-of-not-fooling-yourself",
       "007-information-theory",
-      "008-complexity-and-emergence"
+      "008-complexity-and-emergence",
+      "009-systems-thinking-and-feedback",
+      "010-models-maps-and-idealization"
     ]);
     expect(dayOne.title).toBe("What Is Knowledge?");
     expect(dayOne.bodyPath).toBe("en.mdx");

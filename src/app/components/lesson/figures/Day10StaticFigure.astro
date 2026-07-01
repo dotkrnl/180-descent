@@ -1,0 +1,176 @@
+---
+interface Props {
+  kind: "hero-map" | "dial-curve" | "weather-chart";
+  locale?: "en" | "zh";
+}
+
+const kind = Astro.props.kind;
+const zh = Astro.props.locale === "zh";
+
+const ink = "var(--ink, #172530)";
+const soft = "var(--ink-soft, #41545d)";
+const faint = "var(--ink-faint, #5d6c72)";
+const line = "var(--line, #ddd7c8)";
+const lineStrong = "var(--line-strong, #cabfa8)";
+const paper = "var(--paper, #f5f3ec)";
+const raised = "var(--raised, #fbfaf5)";
+const accent = "var(--accent, #1d6f78)";
+const accentDeep = "var(--accent-deep, #13525a)";
+const brass = "var(--brass, #93651f)";
+const ok = "var(--ok, #2a704a)";
+const contested = "var(--contested, #a23c34)";
+
+const copy = {
+  hero: zh
+    ? {
+        aria: "一张与帝国等大的地图覆盖在疆域之上，右下角已经卷起破败。",
+        tag: "比例尺：一英里对一英里",
+        caption: "博尔赫斯想象的帝国造出一张与疆域同样大小的地图；后人让它在荒野里腐烂。"
+      }
+    : {
+        aria: "An empire-sized one-to-one map laid over the territory it depicts, peeling and decaying at one corner.",
+        tag: "scale: one mile to the mile",
+        caption: "Borges imagined an empire that built a map the exact size of its territory. Their descendants let it rot."
+      },
+  dial: zh
+    ? {
+        aria: "一张图显示保真度随细节上升，而有用性先上升后在一比一地图处崩塌。",
+        title: "理想化的甜点不在两端",
+        detail: "更多细节",
+        value: "价值",
+        fidelity: "保真度",
+        usefulness: "有用性",
+        tooBare: "过度抽象",
+        useful: "可用中段",
+        tooMuch: "淹没于细节",
+        caption: "一个好模型保留任务需要的结构，而不是追求最大细节。保真度可以持续上升；有用性通常不会。"
+      }
+    : {
+        aria: "A chart showing fidelity rising with detail while usefulness rises, peaks, and collapses at the one-to-one map.",
+        title: "The useful model lives away from both edges",
+        detail: "more detail",
+        value: "value",
+        fidelity: "fidelity",
+        usefulness: "usefulness",
+        tooBare: "too bare",
+        useful: "useful middle",
+        tooMuch: "detail swamp",
+        caption: "A good model preserves the structure needed for a task rather than maximizing detail. Fidelity can keep rising; usefulness usually cannot."
+      },
+  weather: zh
+    ? {
+        aria: "三条横向柱形图比较 AI 天气模型击败物理预报系统的验证目标比例。",
+        title: "AI 天气模型何时击败方程组",
+        parity: "平手线 50%",
+        caption: "这些数字来自同行评议论文的回测目标；它们证明预测技能，不证明模型内部已经理解物理。",
+        rows: [
+          ["GraphCast", "90%", "DeepMind · Science"],
+          ["GenCast", "97.2%", "DeepMind · Nature"],
+          ["Pangu-Weather", "优于 IFS", "Huawei · Nature"]
+        ]
+      }
+    : {
+        aria: "Three horizontal bars comparing how often AI weather models beat physics-based forecast systems.",
+        title: "When learned weather models beat the equations",
+        parity: "parity 50%",
+        caption: "These are peer-reviewed hindcast targets. They establish forecast skill, not that the model's interior understands physics.",
+        rows: [
+          ["GraphCast", "90%", "DeepMind · Science"],
+          ["GenCast", "97.2%", "DeepMind · Nature"],
+          ["Pangu-Weather", "beats IFS", "Huawei · Nature"]
+        ]
+      }
+};
+
+const weatherWidths = [90, 97.2, 99];
+---
+<figure class={`figbox day10-static-figure day10-static-figure-${kind}`}>
+  {kind === "hero-map" && (
+    <>
+      <svg viewBox="0 0 360 240" role="img" aria-label={copy.hero.aria}>
+        <defs>
+          <linearGradient id="day10-land" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color={raised}></stop>
+            <stop offset="100%" stop-color={paper}></stop>
+          </linearGradient>
+        </defs>
+        <path d="M28,150 C40,96 92,70 130,86 C150,60 210,52 236,84 C292,72 330,110 320,158 C332,196 286,222 232,210 C196,232 120,230 92,206 C44,212 18,186 28,150 Z" fill="url(#day10-land)" stroke={lineStrong} stroke-width="1.6"></path>
+        <path d="M96,196 C128,168 132,140 168,128 C196,118 206,96 232,92" fill="none" stroke={accent} stroke-width="1.5" opacity=".65"></path>
+        <path d="M210,206 C214,176 244,164 268,150" fill="none" stroke={accent} stroke-width="1.2" opacity=".55"></path>
+        <circle cx="176" cy="150" r="4.8" fill={contested}></circle>
+        <circle cx="176" cy="150" r="9" fill="none" stroke={contested} stroke-width="1" opacity=".5"></circle>
+        <text x="176" y="138" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{zh ? "首都" : "capital"}</text>
+        <g opacity=".94">
+          <path d="M40,140 C52,86 104,60 142,76 C162,50 222,42 248,74 C304,62 342,100 332,148 L300,176 C300,176 250,210 196,198 C160,220 84,218 56,194 C36,188 30,166 40,140 Z" fill="none" stroke={brass} stroke-width="1.7" stroke-dasharray="5 4"></path>
+          <line x1="92" y1="70" x2="92" y2="200" stroke={brass} stroke-width=".7" opacity=".45"></line>
+          <line x1="158" y1="58" x2="158" y2="210" stroke={brass} stroke-width=".7" opacity=".45"></line>
+          <line x1="224" y1="58" x2="224" y2="206" stroke={brass} stroke-width=".7" opacity=".45"></line>
+          <line x1="60" y1="118" x2="330" y2="118" stroke={brass} stroke-width=".7" opacity=".45"></line>
+          <line x1="56" y1="166" x2="320" y2="166" stroke={brass} stroke-width=".7" opacity=".45"></line>
+        </g>
+        <path d="M300,176 C286,190 268,196 252,192 C268,182 276,176 282,168 Z" fill={paper} stroke={brass} stroke-width="1.1" opacity=".96"></path>
+        <text x="300" y="206" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "残破边角" : "tattered ruins"}</text>
+        <text x="180" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing=".8" fill={contested}>{copy.hero.tag}</text>
+      </svg>
+      <figcaption>{copy.hero.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "dial-curve" && (
+    <>
+      <svg viewBox="0 0 520 250" role="img" aria-label={copy.dial.aria}>
+        <rect x="18" y="14" width="484" height="206" rx="14" fill={raised} stroke={line}></rect>
+        <text x="260" y="42" text-anchor="middle" font-family="Fraunces, serif" font-size="19" font-weight="600" fill={ink}>{copy.dial.title}</text>
+        <line x1="70" y1="184" x2="454" y2="184" stroke={lineStrong} stroke-width="1.4"></line>
+        <line x1="70" y1="62" x2="70" y2="184" stroke={lineStrong} stroke-width="1.4"></line>
+        <text x="262" y="211" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.dial.detail}</text>
+        <text x="42" y="126" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform="rotate(-90 42 126)">{copy.dial.value}</text>
+        <path d="M70 184 C128 116 170 74 214 68 C270 61 324 94 362 141 C392 169 420 183 454 184" fill="none" stroke={brass} stroke-width="3" stroke-linecap="round"></path>
+        <path d="M70 184 C116 138 162 108 210 91 C280 66 358 55 454 51" fill="none" stroke={accent} stroke-width="3" stroke-linecap="round"></path>
+        <line x1="206" y1="58" x2="206" y2="184" stroke={ink} stroke-width="1" stroke-dasharray="4 5" opacity=".45"></line>
+        <circle cx="206" cy="70" r="5" fill={accent}></circle>
+        <circle cx="206" cy="69" r="5" fill={brass}></circle>
+        <g font-family="IBM Plex Mono, monospace" font-size="10.5">
+          <circle cx="344" cy="72" r="4" fill={accent}></circle><text x="354" y="76" fill={soft}>{copy.dial.fidelity}</text>
+          <circle cx="344" cy="92" r="4" fill={brass}></circle><text x="354" y="96" fill={soft}>{copy.dial.usefulness}</text>
+        </g>
+        <text x="91" y="202" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.dial.tooBare}</text>
+        <text x="173" y="202" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.dial.useful}</text>
+        <text x="374" y="202" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.dial.tooMuch}</text>
+      </svg>
+      <figcaption>{copy.dial.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "weather-chart" && (
+    <>
+      <svg viewBox="0 0 620 330" role="img" aria-label={copy.weather.aria}>
+        <rect x="18" y="18" width="584" height="282" rx="14" fill={raised} stroke={line}></rect>
+        <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.weather.title}</text>
+        <line x1="186" y1="82" x2="186" y2="246" stroke={lineStrong} stroke-width="1"></line>
+        <line x1="380" y1="82" x2="380" y2="246" stroke={faint} stroke-width="1" stroke-dasharray="5 5" opacity=".65"></line>
+        <text x="380" y="270" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.weather.parity}</text>
+        {copy.weather.rows.map((row, index) => {
+          const y = 96 + index * 64;
+          const width = weatherWidths[index] * 3.5;
+          const valueLabel = index === 2 ? row[1] : `${row[1]} ${zh ? "目标" : "targets"}`;
+          const valueX = Math.min(526, 186 + width - 10);
+          return (
+            <g>
+              <text x="72" y={y + 12} font-family="Fraunces, serif" font-size="16" font-weight="600" fill={ink}>{row[0]}</text>
+              <text x="72" y={y + 30} font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{row[2]}</text>
+              <rect x="186" y={y} width="360" height="30" rx="7" fill={paper} stroke={lineStrong}></rect>
+              <rect x="186" y={y} width={width} height="30" rx="7" fill={index === 2 ? ok : accent}></rect>
+              <text x={valueX} y={y + 20} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill="#fff">{valueLabel}</text>
+            </g>
+          );
+        })}
+        <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>
+          <text x="186" y="270" text-anchor="middle">0%</text>
+          <text x="546" y="270" text-anchor="middle">100%</text>
+        </g>
+      </svg>
+      <figcaption>{copy.weather.caption}</figcaption>
+    </>
+  )}
+</figure>
