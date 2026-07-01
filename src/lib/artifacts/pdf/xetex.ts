@@ -1390,6 +1390,16 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \newunicodechar{ε}{{\symbolfallback ε}}
 \newunicodechar{μ}{{\symbolfallback μ}}
 \newunicodechar{Ω}{{\symbolfallback Ω}}
+\newunicodechar{₀}{{\symbolfallback ₀}}
+\newunicodechar{₁}{{\symbolfallback ₁}}
+\newunicodechar{₂}{{\symbolfallback ₂}}
+\newunicodechar{₃}{{\symbolfallback ₃}}
+\newunicodechar{₄}{{\symbolfallback ₄}}
+\newunicodechar{₅}{{\symbolfallback ₅}}
+\newunicodechar{₆}{{\symbolfallback ₆}}
+\newunicodechar{₇}{{\symbolfallback ₇}}
+\newunicodechar{₈}{{\symbolfallback ₈}}
+\newunicodechar{₉}{{\symbolfallback ₉}}
 \newunicodechar{→}{{\symbolfallback →}}
 \newunicodechar{←}{{\symbolfallback ←}}
 \newunicodechar{↔}{{\symbolfallback ↔}}
@@ -1532,6 +1542,7 @@ function latexEscape(value: string): string {
     .replaceAll("~", "\\textasciitilde{}")
     .replaceAll("^", "\\textasciicircum{}");
   return escaped
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+/g, (match) => `\\textsuperscript{${superScriptCharacters(match)}}`)
     .replace(/”\s*(?=[A-Za-z\\])/g, "”\\ ")
     .replaceAll("≠", "\\ensuremath{\\neq}")
     .replaceAll("≈", "\\ensuremath{\\approx}")
@@ -1540,6 +1551,24 @@ function latexEscape(value: string): string {
     .replaceAll("→", "\\ensuremath{\\rightarrow}")
     .replaceAll("←", "\\ensuremath{\\leftarrow}")
     .replaceAll("↔", "\\ensuremath{\\leftrightarrow}");
+}
+
+function superScriptCharacters(value: string): string {
+  const characters = new Map([
+    ["⁰", "0"],
+    ["¹", "1"],
+    ["²", "2"],
+    ["³", "3"],
+    ["⁴", "4"],
+    ["⁵", "5"],
+    ["⁶", "6"],
+    ["⁷", "7"],
+    ["⁸", "8"],
+    ["⁹", "9"],
+    ["⁺", "+"],
+    ["⁻", "-"]
+  ]);
+  return [...value].map((char) => characters.get(char) ?? char).join("");
 }
 
 function normalizeText(value: string): string {
@@ -1560,7 +1589,7 @@ function normalizePdfGlyphs(value: string): string {
   return (hasCjk ? value : value
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, ""))
-    .replace(/[\u00c0-\u024f\u1e00-\u1eff\u2070-\u209f]/g, (char) => char.normalize("NFKD").replace(/[\u0300-\u036f]/g, ""))
+    .replace(/[\u00c0-\u024f\u1e00-\u1eff]/g, (char) => char.normalize("NFKD").replace(/[\u0300-\u036f]/g, ""))
     .replace(/[Łł]/g, (char) => char === "Ł" ? "L" : "l")
     .replace(/[ı]/g, "i")
     .replace(/[⇒]/g, "→")
