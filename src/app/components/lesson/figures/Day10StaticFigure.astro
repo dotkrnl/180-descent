@@ -1,6 +1,6 @@
 ---
 interface Props {
-  kind: "hero-map" | "dial-curve" | "weather-chart";
+  kind: "hero-map" | "dial-curve" | "weather-chart" | "frontier-map" | "extrapolation-cliff";
   locale?: "en" | "zh";
 }
 
@@ -80,9 +80,74 @@ const copy = {
           ["Pangu-Weather", "beats IFS", "Huawei · Nature"]
         ]
       }
+    ,
+  frontier: zh
+    ? {
+        aria: "一张散点图按证据强度和潜在影响排列十三项 AI 建模前沿工作。",
+        title: "十三条前沿之龙",
+        x: "证据更扎实",
+        y: "潜在影响更大",
+        thin: "大主张，薄冰",
+        solid: "真正革命",
+        caption: "位置取决于判断，而非测量。绿色靠右的工作已经较稳；左上角的宏大说法仍需要等待验证。",
+        labels: ["托卡马克", "Aurora", "FunSearch", "泄漏", "外推", "GNoME", "MatterGen", "AI-Descartes", "Prithvi", "KAN", "虚拟细胞", "cBottle", "AI Scientist"]
+      }
+    : {
+        aria: "A scatter plot arranging thirteen AI modeling frontier developments by evidential strength and potential impact.",
+        title: "Thirteen frontier dragons",
+        x: "stronger evidence",
+        y: "larger impact if true",
+        thin: "big claim, thin ice",
+        solid: "the real revolution",
+        caption: "The positions are a calibration exercise, not a measurement. Green work toward the right is comparatively solid; the upper-left claims are still dragons.",
+        labels: ["Tokamak", "Aurora", "FunSearch", "Leakage", "Extrapolation", "GNoME", "MatterGen", "AI-Descartes", "Prithvi", "KAN", "Virtual cell", "cBottle", "AI Scientist"]
+      },
+  cliff: zh
+    ? {
+        aria: "一张折线图显示真实升温持续上升，而机器学习代理模型在训练范围外向熟悉气候回漂。",
+        title: "外推悬崖",
+        trained: "训练范围",
+        warming: "施加升温",
+        temp: "预测全球温度",
+        truth: "真实趋势",
+        emulator: "代理模型",
+        edge: "训练边缘",
+        drift: "回漂到熟悉处",
+        caption: "这个图是示意，不复刻某篇论文的图。它表达 NeuralGCM 与 ACE2 警示的失效模式：训练区内技能很强，不等于训练区外有机制性理解。"
+      }
+    : {
+        aria: "A line chart where true warming continues upward while a machine-learning emulator drifts back toward the familiar climate outside the training range.",
+        title: "The extrapolation cliff",
+        trained: "trained here",
+        warming: "warming applied",
+        temp: "predicted global temperature",
+        truth: "truth",
+        emulator: "emulator",
+        edge: "edge of training",
+        drift: "drifts back to the familiar",
+        caption: "This is a schematic, not a reproduction of a paper figure. It captures the failure mode flagged by NeuralGCM and ACE2: skill inside the training climate is not mechanism outside it."
+      }
 };
 
 const weatherWidths = [90, 97.2, 99];
+const frontierItems = [
+  { n: 1, x: 0.90, y: 0.76, t: "ok" },
+  { n: 2, x: 0.72, y: 0.84, t: "ok" },
+  { n: 3, x: 0.83, y: 0.62, t: "ok" },
+  { n: 4, x: 0.88, y: 0.86, t: "ok" },
+  { n: 5, x: 0.84, y: 0.80, t: "ok" },
+  { n: 6, x: 0.60, y: 0.70, t: "hint" },
+  { n: 7, x: 0.66, y: 0.66, t: "hint" },
+  { n: 8, x: 0.58, y: 0.72, t: "hint" },
+  { n: 9, x: 0.45, y: 0.60, t: "hint" },
+  { n: 10, x: 0.35, y: 0.58, t: "hint" },
+  { n: 11, x: 0.20, y: 0.92, t: "bad" },
+  { n: 12, x: 0.30, y: 0.74, t: "bad" },
+  { n: 13, x: 0.16, y: 0.55, t: "bad" }
+];
+const frontierColor = (status: string) => status === "ok" ? ok : status === "hint" ? brass : contested;
+const sx = (x: number) => 82 + 420 * x;
+const sy = (y: number) => 258 - 188 * y;
 ---
 <figure class={`figbox day10-static-figure day10-static-figure-${kind}`}>
   {kind === "hero-map" && (
@@ -171,6 +236,79 @@ const weatherWidths = [90, 97.2, 99];
         </g>
       </svg>
       <figcaption>{copy.weather.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "frontier-map" && (
+    <>
+      <svg viewBox="0 0 690 430" role="img" aria-label={copy.frontier.aria}>
+        <rect x="18" y="18" width="654" height="382" rx="14" fill={raised} stroke={line}></rect>
+        <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.frontier.title}</text>
+        <rect x="82" y="70" width="210" height="94" fill={contested} opacity=".08"></rect>
+        <rect x="292" y="70" width="210" height="94" fill={ok} opacity=".08"></rect>
+        <line x1="82" y1="258" x2="512" y2="258" stroke={lineStrong} stroke-width="1.4"></line>
+        <line x1="82" y1="70" x2="82" y2="258" stroke={lineStrong} stroke-width="1.4"></line>
+        <line x1="292" y1="70" x2="292" y2="258" stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
+        <line x1="82" y1="164" x2="512" y2="164" stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
+        <text x="297" y="293" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.frontier.x}</text>
+        <text x="48" y="166" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform="rotate(-90 48 166)">{copy.frontier.y}</text>
+        <text x="94" y="87" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.frontier.thin}</text>
+        <text x="500" y="87" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ok}>{copy.frontier.solid}</text>
+        {frontierItems.map((item) => (
+          <g>
+            <circle cx={sx(item.x)} cy={sy(item.y)} r="12" fill={frontierColor(item.t)} stroke={raised} stroke-width="2"></circle>
+            <text x={sx(item.x)} y={sy(item.y) + 4} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill="#fff">{item.n}</text>
+          </g>
+        ))}
+        <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>
+          {copy.frontier.labels.slice(0, 7).map((label, index) => {
+            const y = 112 + index * 22;
+            return (
+              <g>
+                <circle cx="512" cy={y - 4} r="7" fill={frontierColor(frontierItems[index].t)}></circle>
+                <text x="525" y={y}>{frontierItems[index].n}. {label}</text>
+              </g>
+            );
+          })}
+          {copy.frontier.labels.slice(7).map((label, index) => {
+            const item = frontierItems[index + 7];
+            const y = 112 + index * 22;
+            return (
+              <g>
+                <circle cx="512" cy={y + 154} r="7" fill={frontierColor(item.t)}></circle>
+                <text x="525" y={y + 158}>{item.n}. {label}</text>
+              </g>
+            );
+          })}
+        </g>
+      </svg>
+      <figcaption>{copy.frontier.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "extrapolation-cliff" && (
+    <>
+      <svg viewBox="0 0 620 330" role="img" aria-label={copy.cliff.aria}>
+        <rect x="18" y="18" width="584" height="282" rx="14" fill={raised} stroke={line}></rect>
+        <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.cliff.title}</text>
+        <rect x="92" y="78" width="190" height="150" fill={accent} opacity=".09"></rect>
+        <text x="187" y="74" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{copy.cliff.trained}</text>
+        <line x1="92" y1="228" x2="532" y2="228" stroke={lineStrong} stroke-width="1.4"></line>
+        <line x1="92" y1="78" x2="92" y2="228" stroke={lineStrong} stroke-width="1.4"></line>
+        <text x="312" y="266" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.cliff.warming}  (+0K · +1K · +2K · +3K · +4K)</text>
+        <text x="52" y="153" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform="rotate(-90 52 153)">{copy.cliff.temp}</text>
+        <path d="M92,214 L195,190 L298,160 L410,123 L510,88" fill="none" stroke={soft} stroke-width="3" stroke-linecap="round"></path>
+        <circle cx="510" cy="88" r="5" fill={soft}></circle>
+        <text x="518" y="85" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{copy.cliff.truth}</text>
+        <path d="M92,215 L195,191 L298,162 L410,164 L510,199" fill="none" stroke={contested} stroke-width="3" stroke-linecap="round"></path>
+        <circle cx="510" cy="199" r="5" fill={contested}></circle>
+        <text x="518" y="203" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.cliff.emulator}</text>
+        <line x1="282" y1="78" x2="282" y2="228" stroke={brass} stroke-width="1.2" stroke-dasharray="5 5"></line>
+        <text x="292" y="98" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.cliff.edge}</text>
+        <path d="M423,160 C452,170 474,184 496,205" fill="none" stroke={brass} stroke-width="1.4"></path>
+        <text x="383" y="213" font-family="Fraunces, serif" font-size="15" font-style="italic" fill={brass}>{copy.cliff.drift}</text>
+      </svg>
+      <figcaption>{copy.cliff.caption}</figcaption>
     </>
   )}
 </figure>

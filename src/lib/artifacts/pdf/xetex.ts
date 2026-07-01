@@ -957,10 +957,20 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
   if (name === "Day10StaticFigure") {
     const kind = resolveExpression(attrs.get("kind"), state).trim();
     if (kind) {
+      const day10Width = kind === "weather-chart" || kind === "frontier-map" || kind === "extrapolation-cliff"
+        ? "0.98\\linewidth"
+        : "0.86\\linewidth";
+      const day10Height = kind === "frontier-map"
+        ? "0.42\\textheight"
+        : kind === "extrapolation-cliff"
+          ? "0.34\\textheight"
+        : kind === "weather-chart"
+          ? "0.36\\textheight"
+          : "0.26\\textheight";
       spec = {
         selector: `.day10-static-figure-${kind}`,
-        width: kind === "weather-chart" ? "0.98\\linewidth" : "0.86\\linewidth",
-        height: kind === "weather-chart" ? "0.36\\textheight" : "0.26\\textheight"
+        width: day10Width,
+        height: day10Height
       };
     }
   }

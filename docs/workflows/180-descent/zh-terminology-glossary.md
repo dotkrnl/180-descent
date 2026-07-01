@@ -218,6 +218,12 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | minimalist idealization | 极简理想化 | Include only causal factors thought to be essential. | 最小主义理想化 |
 | scientific realism | 科学实在论 | Successful mature theories are approximately true about unobservables. | 科学现实主义 |
 | instrumentalism | 工具主义 | Theories are useful instruments for prediction, not descriptions of reality. | 工具理性 |
+| foundation model | 基础模型 | Large pretrained model adaptable to many downstream tasks; use especially for AI/science models. | 地基模型, 基座模型 when inconsistent |
+| physics-informed neural network / PINN | 物理信息神经网络 / PINN | Neural network trained with physics/equation constraints in the loss. First mention may include English acronym. | 物理启发神经网络 when referring specifically to PINNs |
+| symbolic regression | 符号回归 | Search for compact mathematical expressions that fit data and may reveal interpretable laws. | 符号化回归 |
+| data leakage | 数据泄漏 | ML evaluation problem where target/test/future information leaks into training or preprocessing. | 数据泄露 when inconsistent |
+| link uncertainty | 关联不确定性 | Sullivan's ML-understanding term: uncertainty about whether the model is empirically linked to the target in the right way. | 链接不确定性 |
+| epistemic technology | 认识技术 | Alvarado-style term for AI as a technology operating on knowledge itself. | 认知技术 if used inconsistently |
 | no-miracles argument | 无奇迹论证 | Predictive success is best explained by approximate truth. | 无奇迹论 |
 | pessimistic meta-induction | 悲观元归纳 | Past successful theories turned out false, so current ones may too. | 悲观归纳 |
 | structural realism | 结构实在论 | Keep mathematical structure; hold entities loosely. | 结构现实主义 |
