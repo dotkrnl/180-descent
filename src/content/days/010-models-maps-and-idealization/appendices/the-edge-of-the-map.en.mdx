@@ -2,6 +2,7 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
@@ -20,6 +21,8 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 <Lead drop="O">ld mapmakers had an honest habit: where surveys stopped and rumor began, they drew monsters and wrote *hic sunt dracones* — here be dragons. The main day and Appendix I mapped relatively settled country: Borges, Bellarmine, verification, reliabilism, and the old realism fight. This appendix sails off the edge. Most of what follows is from 2020 or later, much of it from the last few years, and a good share of it will turn out to be wrong. That is the point. The frontier is where calibration matters most.</Lead>
 
 <ContinueNote label="◆ Read this first">
+You can skip this; it adds frontier examples and source-calibration detail to the main argument.
+
 Every claim below carries a tag. <StatusChip status="ok" label="established" /> means peer-reviewed, reproduced, or hardware-validated. <StatusChip status="hint" label="promising" /> means credible but early, narrow, or still preprint-shaped. <StatusChip status="bad" label="contested" printLabel="contested or hype-framed" /> means the evidence is thin, the framing is inflated, or independent review has already deflated the claim. The Day 10 skill — calibrated judgment about how wrong a model is, and for what — is exactly the skill needed to read this frontier.
 </ContinueNote>
 
@@ -49,9 +52,16 @@ The useful question is not "is this impressive?" The useful question has two axe
 
 <Panel>
 <PanelTitle>Frontier map · impact if true x evidence</PanelTitle>
-<PanelNote>Positions are judgment calls, not measurements. The table keeps the source interactive's receipts visible for web, EPUB, and PDF readers.</PanelNote>
+<PanelNote>Positions are judgment calls, not measurements. Numbered points are unpacked in the receipts table below.</PanelNote>
 
 <Day10StaticFigure kind="frontier-map" locale="en" />
+</Panel>
+
+<FormatOnly as="div" media="print" class="pdf-page-break" />
+
+<Panel>
+<PanelTitle>Frontier receipts</PanelTitle>
+<PanelNote>The table keeps the source interactive's receipts visible for web, EPUB, and PDF readers.</PanelNote>
 
 <SimpleTable
   headers={["Work","Status","Why it sits there"]}

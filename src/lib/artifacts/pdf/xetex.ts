@@ -549,6 +549,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   const attrs = mdxAttributes(node);
 
   if (!shouldRenderElement(name, attrs, state)) return "";
+  if (name === "FormatOnly" && isPdfPageBreak(attrs)) return "\\clearpage";
 
   if (name === "MathInline") return inlineMath(resolveExpression(attrs.get("latex"), state));
   if (name === "MathBlock") return blockMath(resolveExpression(attrs.get("latex"), state));
@@ -859,6 +860,10 @@ function shouldRenderElement(name: string, attrs: Map<string, string | null>, st
     return ["print", "pdf", "print-epub", "epub-print"].includes(media);
   }
   return true;
+}
+
+function isPdfPageBreak(attrs: Map<string, string | null>): boolean {
+  return /\bpdf-page-break\b/.test(attrs.get("class") ?? "");
 }
 
 function renderTipNote(attrs: Map<string, string | null>, state: MdxRenderState, context: RenderContext): string {
@@ -1543,6 +1548,8 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5em}
 \tolerance=1800
+\pretolerance=10000
+\hyphenpenalty=10000
 \emergencystretch=3em
 ${config.locale === "zh" ? "" : "\\RaggedRight"}
 \exhyphenpenalty=10000

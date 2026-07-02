@@ -59,25 +59,25 @@ const copy = {
       },
   weather: zh
     ? {
-        aria: "三条横向柱形图概括 AI 天气模型在同行评议基准中的目标指标占比或预报时间收益。",
-        title: "基准胜利到底说了什么",
+        aria: "两条横向柱形图显示 GraphCast 和 GenCast 的目标指标占比；另一个单独标注显示 Pangu-Weather 的预报时间收益。",
+        title: "三条头部基准声明，不是同一个指标",
         parity: "目标占比 50%",
-        caption: "GraphCast 与 GenCast 报告的是目标指标占比；Pangu-Weather 报告的是相对 IFS 的预报时间收益。它们证明预报技能或速度，不证明模型内部已经理解物理。",
+        caption: "GraphCast 与 GenCast 报告的是目标指标占比；Pangu-Weather 报告的是相对 IFS 的预报时间收益，因此单独列出。它们证明预报技能或速度，不证明模型内部已经理解物理。",
         rows: [
           ["GraphCast", "90% 目标", "DeepMind · Science"],
           ["GenCast", "97.2% 目标", "DeepMind · Nature"],
-          ["Pangu-Weather", "10-15 小时收益", "Huawei · Nature"]
+          ["Pangu-Weather", "10-15 小时收益", "不同指标 · Huawei · Nature"]
         ]
       }
     : {
-        aria: "Three horizontal bars summarizing peer-reviewed AI weather benchmark target shares or forecast-time gains.",
-        title: "What the benchmark wins actually say",
+        aria: "Two horizontal bars show GraphCast and GenCast target-metric shares, with a separate callout for Pangu-Weather forecast-time gains.",
+        title: "Three headline benchmark claims, not one common metric",
         parity: "target share 50%",
-        caption: "GraphCast and GenCast report target-metric shares; Pangu-Weather reports forecast-time gains over IFS. They establish forecast skill or speed, not that the model's interior understands physics.",
+        caption: "GraphCast and GenCast report target-metric shares; Pangu-Weather reports forecast-time gains over IFS, so it is separated from the percentage axis. They establish forecast skill or speed, not that the model's interior understands physics.",
         rows: [
           ["GraphCast", "90% targets", "DeepMind · Science"],
           ["GenCast", "97.2% targets", "DeepMind · Nature"],
-          ["Pangu-Weather", "10-15 h gain", "Huawei · Nature"]
+          ["Pangu-Weather", "10-15 h gain", "different metric · Huawei · Nature"]
         ]
       }
     ,
@@ -89,7 +89,7 @@ const copy = {
         y: "潜在影响更大",
         thin: "大主张，薄冰",
         solid: "真正革命",
-        caption: "位置取决于判断，而非测量。绿色靠右的工作已经较稳；左上角的宏大说法仍需要等待验证。",
+        caption: "位置取决于判断，而非测量。只直接标出少数代表点；完整编号见下方表格。",
         labels: ["托卡马克", "Aurora", "FunSearch", "泄漏", "外推", "GNoME", "MatterGen", "AI-Descartes", "Prithvi", "KAN", "虚拟细胞", "cBottle", "AI Scientist"]
       }
     : {
@@ -99,7 +99,7 @@ const copy = {
         y: "larger impact if true",
         thin: "big claim, thin ice",
         solid: "the real revolution",
-        caption: "The positions are a calibration exercise, not a measurement. Green work toward the right is comparatively solid; the upper-left claims are still dragons.",
+        caption: "The positions are a calibration exercise, not a measurement. Only representative points are labeled directly; the full numbering is in the table below.",
         labels: ["Tokamak", "Aurora", "FunSearch", "Leakage", "Extrapolation", "GNoME", "MatterGen", "AI-Descartes", "Prithvi", "KAN", "Virtual cell", "cBottle", "AI Scientist"]
       },
   cliff: zh
@@ -129,7 +129,7 @@ const copy = {
       }
 };
 
-const weatherWidths = [90, 97.2, 72];
+const weatherWidths = [90, 97.2];
 const frontierItems = [
   { n: 1, x: 0.90, y: 0.76, t: "ok" },
   { n: 2, x: 0.72, y: 0.84, t: "ok" },
@@ -145,9 +145,22 @@ const frontierItems = [
   { n: 12, x: 0.30, y: 0.74, t: "bad" },
   { n: 13, x: 0.16, y: 0.55, t: "bad" }
 ];
+type FrontierCallout = {
+  index: number;
+  dx: number;
+  dy: number;
+  anchor: "start" | "middle" | "end";
+};
+const frontierCallouts: FrontierCallout[] = [
+  { index: 0, dx: 20, dy: 4, anchor: "start" },
+  { index: 1, dx: -20, dy: -18, anchor: "end" },
+  { index: 2, dx: -18, dy: 28, anchor: "end" },
+  { index: 10, dx: 18, dy: 30, anchor: "start" },
+  { index: 12, dx: 18, dy: -12, anchor: "start" }
+];
 const frontierColor = (status: string) => status === "ok" ? ok : status === "hint" ? brass : contested;
-const sx = (x: number) => 82 + 420 * x;
-const sy = (y: number) => 258 - 188 * y;
+const sx = (x: number) => 88 + 470 * x;
+const sy = (y: number) => 282 - 220 * y;
 const figureAria = kind === "hero-map"
   ? copy.hero.aria
   : kind === "dial-curve"
@@ -221,10 +234,10 @@ const figureAria = kind === "hero-map"
       <svg viewBox="0 0 620 330" aria-hidden="true" focusable="false">
         <rect x="18" y="18" width="584" height="282" rx="14" fill={raised} stroke={line}></rect>
         <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.weather.title}</text>
-        <line x1="186" y1="82" x2="186" y2="246" stroke={lineStrong} stroke-width="1"></line>
-        <line x1="380" y1="82" x2="380" y2="246" stroke={faint} stroke-width="1" stroke-dasharray="5 5" opacity=".65"></line>
-        <text x="380" y="270" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.weather.parity}</text>
-        {copy.weather.rows.map((row, index) => {
+        <line x1="186" y1="82" x2="186" y2="202" stroke={lineStrong} stroke-width="1"></line>
+        <line x1="380" y1="82" x2="380" y2="202" stroke={faint} stroke-width="1" stroke-dasharray="5 5" opacity=".65"></line>
+        <text x="380" y="220" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.weather.parity}</text>
+        {copy.weather.rows.slice(0, 2).map((row, index) => {
           const y = 96 + index * 64;
           const width = weatherWidths[index] * 3.5;
           const valueLabel = row[1];
@@ -234,14 +247,21 @@ const figureAria = kind === "hero-map"
               <text x="72" y={y + 12} font-family="Fraunces, serif" font-size="16" font-weight="600" fill={ink}>{row[0]}</text>
               <text x="72" y={y + 30} font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{row[2]}</text>
               <rect x="186" y={y} width="360" height="30" rx="7" fill={paper} stroke={lineStrong}></rect>
-              <rect x="186" y={y} width={width} height="30" rx="7" fill={index === 2 ? ok : accent}></rect>
+              <rect x="186" y={y} width={width} height="30" rx="7" fill={accent}></rect>
               <text x={valueX} y={y + 20} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill="#fff">{valueLabel}</text>
             </g>
           );
         })}
         <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>
-          <text x="186" y="270" text-anchor="middle">0%</text>
-          <text x="546" y="270" text-anchor="middle">100%</text>
+          <text x="186" y="220" text-anchor="middle">0%</text>
+          <text x="546" y="220" text-anchor="middle">100%</text>
+        </g>
+        <g>
+          <rect x="88" y="238" width="444" height="42" rx="8" fill={paper} stroke={lineStrong}></rect>
+          <circle cx="110" cy="259" r="7" fill={ok}></circle>
+          <text x="126" y="254" font-family="Fraunces, serif" font-size="15" font-weight="600" fill={ink}>{copy.weather.rows[2][0]}</text>
+          <text x="126" y="272" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.weather.rows[2][2]}</text>
+          <text x="510" y="264" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill={ok}>{copy.weather.rows[2][1]}</text>
         </g>
       </svg>
       <figcaption>{copy.weather.caption}</figcaption>
@@ -253,16 +273,14 @@ const figureAria = kind === "hero-map"
       <svg viewBox="0 0 690 430" aria-hidden="true" focusable="false">
         <rect x="18" y="18" width="654" height="382" rx="14" fill={raised} stroke={line}></rect>
         <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.frontier.title}</text>
-        <rect x="82" y="70" width="210" height="94" fill={contested} opacity=".08"></rect>
-        <rect x="292" y="70" width="210" height="94" fill={ok} opacity=".08"></rect>
-        <line x1="82" y1="258" x2="512" y2="258" stroke={lineStrong} stroke-width="1.4"></line>
-        <line x1="82" y1="70" x2="82" y2="258" stroke={lineStrong} stroke-width="1.4"></line>
-        <line x1="292" y1="70" x2="292" y2="258" stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
-        <line x1="82" y1="164" x2="512" y2="164" stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
-        <text x="297" y="293" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.frontier.x}</text>
-        <text x="48" y="166" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform="rotate(-90 48 166)">{copy.frontier.y}</text>
-        <text x="94" y="87" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.frontier.thin}</text>
-        <text x="500" y="87" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ok}>{copy.frontier.solid}</text>
+        <rect x="88" y="62" width="235" height="110" fill={contested} opacity=".08"></rect>
+        <rect x="323" y="62" width="235" height="110" fill={ok} opacity=".08"></rect>
+        <line x1="88" y1="282" x2="558" y2="282" stroke={lineStrong} stroke-width="1.4"></line>
+        <line x1="88" y1="62" x2="88" y2="282" stroke={lineStrong} stroke-width="1.4"></line>
+        <line x1="323" y1="62" x2="323" y2="282" stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
+        <line x1="88" y1="172" x2="558" y2="172" stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
+        <text x="323" y="318" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.frontier.x}</text>
+        <text x="48" y="172" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform="rotate(-90 48 172)">{copy.frontier.y}</text>
         {frontierItems.map((item) => (
           <g>
             <circle cx={sx(item.x)} cy={sy(item.y)} r="12" fill={frontierColor(item.t)} stroke={raised} stroke-width="2"></circle>
@@ -270,23 +288,13 @@ const figureAria = kind === "hero-map"
           </g>
         ))}
         <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>
-          {copy.frontier.labels.slice(0, 7).map((label, index) => {
-            const y = 112 + index * 22;
+          {frontierCallouts.map((callout) => {
+            const item = frontierItems[callout.index]!;
+            const x = sx(item.x);
+            const y = sy(item.y);
+            const label = `${item.n}. ${copy.frontier.labels[callout.index]}`;
             return (
-              <g>
-                <circle cx="512" cy={y - 4} r="7" fill={frontierColor(frontierItems[index].t)}></circle>
-                <text x="525" y={y}>{frontierItems[index].n}. {label}</text>
-              </g>
-            );
-          })}
-          {copy.frontier.labels.slice(7).map((label, index) => {
-            const item = frontierItems[index + 7];
-            const y = 112 + index * 22;
-            return (
-              <g>
-                <circle cx="512" cy={y + 154} r="7" fill={frontierColor(item.t)}></circle>
-                <text x="525" y={y + 158}>{item.n}. {label}</text>
-              </g>
+              <text x={x + callout.dx} y={y + callout.dy} text-anchor={callout.anchor}>{label}</text>
             );
           })}
         </g>
