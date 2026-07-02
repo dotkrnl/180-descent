@@ -681,7 +681,9 @@ describe("target content registry", () => {
 
     expect(day010?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
       "the-cutting-room-floor:en",
-      "the-cutting-room-floor:zh"
+      "the-cutting-room-floor:zh",
+      "the-edge-of-the-map:en",
+      "the-edge-of-the-map:zh"
     ]);
     expect(day010?.manifest.interactionScripts).toEqual([
       "models-maps-idealization"

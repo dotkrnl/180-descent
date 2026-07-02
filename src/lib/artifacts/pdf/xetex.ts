@@ -33,6 +33,9 @@ interface PdfEdition {
   authors: string;
   translators?: string;
   humanEditor: HumanEditorData;
+  description: string;
+  siteUrl: string;
+  publisher: string;
   language: string;
   output: string;
   includeDeepDive?: boolean;
@@ -46,6 +49,7 @@ interface MdxLatexOptions {
   sourceFile: string;
   includeDeepDive: boolean;
   workDir: string;
+  siteUrl: string;
 }
 
 interface MdxRenderState {
@@ -55,11 +59,13 @@ interface MdxRenderState {
   sourceDir: string;
   includeDeepDive: boolean;
   workDir: string;
+  siteUrl: string;
   imports: Map<string, string>;
   constants: Map<string, string>;
   renderedHtml: CheerioRoot | null;
   componentCounts: Map<string, number>;
   generatedAssetIndex: number;
+  bookmarkIndex: number;
   pendingSectionEyebrow: string | null;
 }
 
@@ -126,6 +132,9 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     subtitle: book.subtitle,
     authors: book.authors,
     humanEditor: book.humanEditor,
+    description: book.description,
+    siteUrl: book.siteUrl,
+    publisher: book.publisher,
     language: book.language,
     output: bookArtifactName("pdf", "en", false)
   });
@@ -137,6 +146,9 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     subtitle: book.subtitle,
     authors: book.authors,
     humanEditor: book.humanEditor,
+    description: book.description,
+    siteUrl: book.siteUrl,
+    publisher: book.publisher,
     language: book.language,
     output: bookArtifactName("pdf", "en", true),
     includeDeepDive: true
@@ -150,6 +162,9 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     authors: book.zh.authors,
     translators: book.zh.translators,
     humanEditor: book.zh.humanEditor,
+    description: book.zh.description,
+    siteUrl: book.siteUrl,
+    publisher: book.publisher,
     language: book.zh.language,
     output: bookArtifactName("pdf", "zh", false)
   });
@@ -162,6 +177,9 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     authors: book.zh.authors,
     translators: book.zh.translators,
     humanEditor: book.zh.humanEditor,
+    description: book.zh.description,
+    siteUrl: book.siteUrl,
+    publisher: book.publisher,
     language: book.zh.language,
     output: bookArtifactName("pdf", "zh", true),
     includeDeepDive: true
@@ -184,6 +202,9 @@ async function buildDayPdfs(root: string, locale: Locale, book: BookData): Promi
       authors: zh ? book.zh.authors : book.authors,
       translators: zh ? book.zh.translators : undefined,
       humanEditor: zh ? book.zh.humanEditor : book.humanEditor,
+      description: zh ? book.zh.description : book.description,
+      siteUrl: book.siteUrl,
+      publisher: book.publisher,
       language: zh ? book.zh.language : book.language,
       output: dayArtifactName("pdf", locale, day.path),
       days: [day],
@@ -251,19 +272,26 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
       locale: config.locale,
       sourceFile: contentDayFile(config.root, day.path, day.bodyPath),
       includeDeepDive: Boolean(config.includeDeepDive),
-      workDir
+      workDir,
+      siteUrl: config.siteUrl
     }));
 
     if (config.includeDeepDive) {
       for (const appendix of day.appendices) {
         const label = config.locale === "zh" ? "可选附录" : "Optional appendix";
-        chunks.push(`\\clearpage\n\\section*{${latexEscape(label)}: ${latexEscape(appendix.title)}}`);
+        const appendixTitle = `${label}: ${appendix.title}`;
+        chunks.push([
+          "\\clearpage",
+          pdfBookmarkLatex(1, appendixTitle, `appendix-${day.path}-${appendix.bodyPath}`),
+          `\\section*{${latexEscape(appendixTitle)}}`
+        ].join("\n"));
         chunks.push(await mdxToLatex(appendix.bodySource, {
           root: config.root,
           locale: config.locale,
           sourceFile: contentDayFile(config.root, day.path, appendix.bodyPath),
           includeDeepDive: true,
-          workDir
+          workDir,
+          siteUrl: config.siteUrl
         }));
       }
     }
@@ -284,6 +312,7 @@ async function introductionLatex(config: PdfEdition & { root: string }, workDir:
   return [
     `\\chapter*{${latexEscape(title)}}`,
     `\\markboth{${latexEscape(title)}}{${latexEscape(title)}}`,
+    pdfBookmarkLatex(0, title, `introduction-${config.locale}`),
     `\\addcontentsline{toc}{chapter}{${latexEscape(title)}}`,
     "\\begin{pdfintro}",
     await mdxToLatex(source, {
@@ -291,7 +320,8 @@ async function introductionLatex(config: PdfEdition & { root: string }, workDir:
       locale: config.locale,
       sourceFile,
       includeDeepDive: Boolean(config.includeDeepDive),
-      workDir
+      workDir,
+      siteUrl: config.siteUrl
     }),
     "\\end{pdfintro}"
   ].join("\n\n");
@@ -299,11 +329,21 @@ async function introductionLatex(config: PdfEdition & { root: string }, workDir:
 
 function dayLatex(day: ArtifactBookDay, config: PdfEdition): string {
   const prefix = pdfDayLabel(day.day, config.locale);
+  const title = `${prefix}: ${day.title}`;
   return [
     "\\clearpage",
-    `\\chaptermark{${latexEscape(prefix)}: ${latexEscape(day.title)}}`,
-    `\\addcontentsline{toc}{chapter}{${latexEscape(prefix)}: ${latexEscape(day.title)}}`
+    pdfBookmarkLatex(0, title, `day-${String(day.day).padStart(3, "0")}-${config.locale}`),
+    `\\chaptermark{${latexEscape(title)}}`,
+    `\\addcontentsline{toc}{chapter}{${latexEscape(title)}}`
   ].filter(Boolean).join("\n\n");
+}
+
+function pdfBookmarkLatex(level: number, title: string, anchor: string): string {
+  return pdfBookmarkEscapedLatex(level, latexEscape(title), anchor);
+}
+
+function pdfBookmarkEscapedLatex(level: number, escapedTitle: string, anchor: string): string {
+  return `\\phantomsection\n\\pdfbookmark[${level}]{${escapedTitle}}{${sanitizeBookmarkAnchor(anchor)}}`;
 }
 
 function pdfDayLabel(day: number, locale: Locale): string {
@@ -349,6 +389,7 @@ async function mdxToLatex(source: string, options: MdxLatexOptions): Promise<str
     renderedHtml: await loadRenderedHtml(options.root, options.locale, options.sourceFile),
     componentCounts: new Map(),
     generatedAssetIndex: 0,
+    bookmarkIndex: 0,
     pendingSectionEyebrow: null
   };
   return renderChildren(tree.children ?? [], state, { block: true }).replace(/\n{3,}/g, "\n\n").trim();
@@ -390,7 +431,7 @@ function renderNode(node: MdxNode, state: MdxRenderState, context: RenderContext
     case "thematicBreak":
       return "\\begin{center}\\rule{0.32\\linewidth}{0.4pt}\\end{center}";
     case "link":
-      return renderInlineChildren(node, state, context);
+      return renderLink(node, state, context);
     case "image":
       return renderImage(node.url ?? "", latexEscape(node.value ?? ""), state);
     case "table":
@@ -736,13 +777,21 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "HybridBox") {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
-  if (["Aside", "Panel", "Recap", "WhereBlock", "Formula"].includes(name)) {
+  if (name === "Panel") {
+    const needspace = nodeContainsLargeBlock(node) ? "0.72\\textheight" : "0.38\\textheight";
+    return `\\Needspace{${needspace}}\n\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
+  }
+  if (["Aside", "Recap", "WhereBlock", "Formula"].includes(name)) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
   if (name === "Sources") {
     return `\\begin{sourcesbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{sourcesbox}`;
   }
-  if (["BlockTitle", "PanelTitle", "SourcesTitle"].includes(name)) {
+  if (name === "SourcesTitle") {
+    const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }));
+    return text ? `${pdfBookmarkEscapedLatex(2, text, `sources-${sourceLabel(state)}-${++state.bookmarkIndex}`)}\n\\subsection*{${text}}` : "";
+  }
+  if (["BlockTitle", "PanelTitle"].includes(name)) {
     const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }));
     return text ? `\\subsection*{${text}}` : "";
   }
@@ -794,6 +843,12 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   }
 
   return "";
+}
+
+function nodeContainsLargeBlock(node: MdxNode): boolean {
+  if (node.type === "table" || isTableComponent(node.name ?? "")) return true;
+  if (SVG_COMPONENTS.has(node.name ?? "")) return true;
+  return (node.children ?? []).some(nodeContainsLargeBlock);
 }
 
 function shouldRenderElement(name: string, attrs: Map<string, string | null>, state: MdxRenderState): boolean {
@@ -1149,7 +1204,7 @@ function latexTable(table: LatexTable): string {
   const size = columnCount >= 5 ? "\\scriptsize" : "\\footnotesize";
   const columns = Array.from({ length: columnCount }, () => `>{\\raggedright\\arraybackslash}p{${width}\\linewidth}`).join("");
   const lines = [
-    "\\Needspace{8\\baselineskip}",
+    "\\Needspace{12\\baselineskip}",
     "\\begingroup",
     size,
     "\\setlength{\\tabcolsep}{3pt}",
@@ -1158,17 +1213,28 @@ function latexTable(table: LatexTable): string {
     "\\sloppy",
     `\\begin{longtable}{@{}${columns}@{}}`,
   ];
-  for (const [index, row] of table.rows.entries()) {
+  let startIndex = 0;
+  if (table.headerRows.has(0)) {
+    const header = latexTableRow(table.rows[0], true);
+    lines.push(header, "\\hline", "\\endfirsthead", header, "\\hline", "\\endhead");
+    startIndex = 1;
+  }
+  for (const [offset, row] of table.rows.slice(startIndex).entries()) {
+    const index = offset + startIndex;
     const isHeader = table.headerRows.has(index);
-    const cells = row.map((cell) => {
-      const content = cell || "\\strut";
-      return isHeader ? `\\tablehead{${content}}` : content;
-    });
-    lines.push(cells.join(" & ") + " \\\\");
+    lines.push(latexTableRow(row, isHeader));
     lines.push("\\hline");
   }
   lines.push("\\end{longtable}", "\\endgroup");
   return lines.join("\n");
+}
+
+function latexTableRow(row: string[], isHeader: boolean): string {
+  const cells = row.map((cell) => {
+    const content = cell || "\\strut";
+    return isHeader ? `\\tablehead{${content}}` : content;
+  });
+  return cells.join(" & ") + " \\\\";
 }
 
 function renderHtmlList(node: MdxNode, state: MdxRenderState, ordered: boolean): string {
@@ -1380,6 +1446,7 @@ async function loadRenderedHtml(root: string, locale: Locale, sourceFile: string
 function latexPreamble(config: PdfEdition & { root: string }): string {
   const fontPath = latexPath(pdfFontsDir(config.root) + path.sep);
   const cjkMain = config.locale === "zh" ? "LXGW WenKai" : "Songti SC";
+  const keywords = pdfKeywords(config);
   return String.raw`\documentclass[10pt,openany,oneside]{book}
 \let\cleardoublepage\clearpage
 \usepackage[paperwidth=6in,paperheight=9in,top=0.72in,bottom=0.78in,inner=0.55in,outer=0.55in,headheight=14pt,headsep=11pt,footskip=26pt]{geometry}
@@ -1445,6 +1512,17 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \usepackage{lettrine}
 \usepackage[most]{tcolorbox}
 \usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\hypersetup{
+  unicode=true,
+  hidelinks,
+  bookmarksopen=true,
+  bookmarksdepth=2,
+  pdftitle={${latexEscape(config.title)}},
+  pdfauthor={${latexEscape(config.authors)}},
+  pdfsubject={${latexEscape(config.description || config.subtitle)}},
+  pdfkeywords={${latexEscape(keywords)}}
+}
 \definecolor{descentTeal}{HTML}{13525A}
 \definecolor{descentInk}{HTML}{1D2424}
 \definecolor{descentMuted}{HTML}{667579}
@@ -1513,6 +1591,15 @@ ${config.locale === "zh" ? "" : "\\RaggedRight"}
 \captionsetup{font=small,labelformat=empty,textfont={color=descentMuted}}
 \XeTeXlinebreaklocale "zh"
 \XeTeXlinebreakskip = 0pt plus 1pt`;
+}
+
+function pdfKeywords(config: PdfEdition): string {
+  const common = config.locale === "zh"
+    ? ["知识", "科学", "哲学", "推理", "模型", "地图", "理想化"]
+    : ["knowledge", "science", "philosophy", "reasoning", "models", "maps", "idealization"];
+  return [config.title, config.subtitle, config.publisher, ...common]
+    .filter(Boolean)
+    .join(", ");
 }
 
 function titlePageLatex(config: PdfEdition & { root: string }): string {
@@ -1685,6 +1772,22 @@ function normalizeInlineLatex(value: string): string {
     .trim();
 }
 
+function renderLink(node: MdxNode, state: MdxRenderState, context: RenderContext): string {
+  const text = renderInlineChildren(node, state, context) || latexEscape(node.url ?? "");
+  const href = normalizePdfHref(node.url ?? "", state);
+  if (!href) return text;
+  return `\\href{${latexHrefEscape(href)}}{${text}}`;
+}
+
+function normalizePdfHref(href: string, state: MdxRenderState): string {
+  const trimmed = href.trim();
+  if (!trimmed || trimmed.startsWith("#")) return "";
+  if (/^(?:https?:|mailto:)/i.test(trimmed)) return trimmed;
+  if (trimmed.startsWith("//")) return `https:${trimmed}`;
+  if (trimmed.startsWith("/")) return `${state.siteUrl}${trimmed}`;
+  return "";
+}
+
 function cleanEyebrowText(value: string): string {
   return cleanDecorativePrefix(value)
     .replace(/\s+·\s*$/, "")
@@ -1735,6 +1838,25 @@ function romanNumeral(value: number): string {
 
 function latexPath(value: string): string {
   return value.replaceAll("\\", "/").replaceAll(" ", "\\space ");
+}
+
+function latexHrefEscape(value: string): string {
+  return value
+    .replaceAll("\\", "/")
+    .replaceAll(" ", "%20")
+    .replaceAll("%", "\\%")
+    .replaceAll("#", "\\#")
+    .replaceAll("&", "\\&")
+    .replaceAll("_", "\\_")
+    .replaceAll("{", "\\{")
+    .replaceAll("}", "\\}");
+}
+
+function sanitizeBookmarkAnchor(value: string): string {
+  return value
+    .replace(/[^A-Za-z0-9:-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 120) || "bookmark";
 }
 
 function sanitizeAssetName(value: string): string {

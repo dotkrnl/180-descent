@@ -42,7 +42,7 @@ import Day10IdealizationDial from "@app/components/lesson/interactives/Day10Idea
 
 <Day10StaticFigure kind="hero-map" locale="en" />
 
-<Lead drop="I">n a single paragraph published in 1946, Jorge Luis Borges describes an empire whose cartographers grew so skilled, and so obsessed with exactitude, that they drew a map of the empire on the scale of **one mile to the mile**. It coincided with the territory point for point, lay over the country like a second skin, and became the most accurate map ever made. It was also worthless. The next generation abandoned it, and travelers found only "tattered ruins" in the desert.</Lead>
+<Lead drop="I">n a single paragraph published in 1946, Jorge Luis Borges describes an empire whose cartographers grew so skilled, and so obsessed with exactitude, that they drew a map the size of the empire itself. It coincided with the territory point for point, lay over the country like a second skin, and became the most accurate map ever made. It was also worthless. Carroll supplied the even neater joke, a map on the scale of **one mile to the mile**; Borges supplied the ruin.</Lead>
 
 The joke has teeth. A map is useful precisely because it is not the territory: it shrinks, flattens, selects, and throws nearly everything away. What survives is the thing you came for: structure you can use. Every scientific model performs the same trick. And once you see that, a harder question opens: when our best theories talk about things we can never see, are they describing reality, or only drawing very good maps?
 </Hero>
@@ -59,6 +59,12 @@ The joke has teeth. A map is useful precisely because it is not the territory: i
 
 Yesterday (**[Day 9](/days/009-systems-thinking-and-feedback/)**) we drew loops, bathtubs, and stability valleys. Every one of those diagrams was a model: a tool we trusted because it was simpler than the world. Today we turn the lens onto the tools themselves. We cash out **[Day 7](/days/007-information-theory/)** on compression, reuse **[Day 8](/days/008-complexity-and-emergence/)** on descriptions that sit between order and randomness, and meet **[Day 1](/days/001-what-is-knowledge/)** again in a new disguise: a model that predicts correctly for the wrong reason.
 </WhereBlock>
+
+<Aside>
+<BlockTitle>New here? Pocket glossary</BlockTitle>
+
+A <Term as="em">model</Term> is a purpose-built representation; an <Term as="em">idealization</Term> is a disciplined distortion; <Term as="em">empirical adequacy</Term> means getting the observable predictions right without claiming the hidden machinery is real; <Term as="em">underdetermination</Term> means more than one theory can fit the same evidence; <Term as="em">VVUQ</Term> means verification, validation, and uncertainty quantification; a strict <Term as="em">digital twin</Term> has live data and a bidirectional loop; a <Term as="em">hindcast</Term> tests a model against past events; <Term as="em">reanalysis</Term> reconstructs past weather by blending observations with a model; and <Term as="em">epistemic opacity</Term> means no human can inspect every step of the computation.
+</Aside>
 
 <ContentSection>
 <SectionEyebrow>The model</SectionEyebrow>
@@ -150,7 +156,7 @@ The punch is brutal. Past success did not guarantee reference to real entities. 
 
 Structural realism, associated with John Worrall, is the most map-like compromise. Look at the ether. Fresnel's ether disappeared; Maxwell's electromagnetic field replaced it. But parts of the mathematical structure survived the revolution. Maybe science accumulates structure more reliably than it accumulates furniture. Keep the equations; hold the entities loosely.
 
-Entity realism, associated with Ian Hacking and Nancy Cartwright, moves from prediction to intervention. Hacking's slogan was that if you can spray electrons, they are real. Believe in entities you can manipulate to do work; be more skeptical of the grand theory around them. Cartwright drove the knife in from the other side in *How the Laws of Physics Lie*: fundamental laws govern idealized objects in models, not messy objects in the world.
+Entity realism, anchored here by Ian Hacking, moves from prediction to intervention. Hacking's slogan was that if you can spray electrons, they are real. Believe in entities you can manipulate to do work; be more skeptical of the grand theory around them. Cartwright supplies the complementary warning from *How the Laws of Physics Lie*: fundamental laws often govern idealized objects in carefully built models, not messy objects in the world.
 
 Hold onto this table. Computers are about to force every row of it into the open.
 </ContentSection>
@@ -186,7 +192,7 @@ The hard problem is trust. The report emphasizes <Term as="em">VVUQ</Term><TipNo
 
 ### A digital twin of the whole planet
 
-The most ambitious version is Europe's **Destination Earth** program, built with ECMWF, ESA, and EUMETSAT. In June 2024, its first system release brought two twins online: Weather-Induced Extremes and Climate Change Adaptation. The extremes twin includes a global component at roughly 4.4 km resolution, with regional zooms for selected events.
+The most ambitious version is Europe's **Destination Earth** program, built with ECMWF, ESA, and EUMETSAT. In June 2024, its first system release brought two twins online: Weather-Induced Extremes and Climate Change Adaptation. The extremes twin includes a km-scale global component, roughly 2-4 km depending on configuration and release notes, with regional zooms for selected events.
 
 That is an established launch milestone. It is not yet the science-fiction object implied by the phrase "digital twin of Earth." Higher resolution does not automatically mean a better forecast for every task, and the European goal of a full Earth-system twin by 2030 remains a roadmap.
 </Claim>
@@ -197,11 +203,11 @@ That is an established launch milestone. It is not yet the science-fiction objec
 <StatusChip status="bad" label="Whole patient" printLabel="whole patient aspirational" />
 </ClaimHeader>
 
-### Clinical digital twins: one real exception
+### Clinical twins: a narrow cousin that works
 
 Medicine loves the idea of a digital twin of **you**: a running model of your body on which doctors could test interventions. The sober literature is far thinner. A 2025 scoping review in *npj Digital Medicine* found that only 18 of 149 healthcare studies using the label fully met the National Academies definition, and only two mentioned VVUQ.
 
-The exception proves the rule. HeartFlow's FFR-CT takes a coronary CT scan and builds a patient-specific computational-fluid-dynamics model of blood flow to assess whether a blockage is starving the heart. It received FDA De Novo clearance in 2014. The scope is narrow, physical, and decision-specific. That is why it works.
+The narrow cousin proves the rule. HeartFlow's FFR-CT takes a coronary CT scan and builds a patient-specific computational-fluid-dynamics model of blood flow to assess whether a blockage is starving the heart. It received FDA De Novo clearance in 2014. The scope is narrow, physical, and decision-specific. That is why it works. But it is not a clean full digital twin under the strict National Academies definition: the CT-derived model represents a patient at the time of imaging; it is not a dynamically updating, bidirectional virtual-physical loop.
 </Claim>
 
 <Claim>
@@ -210,14 +216,14 @@ The exception proves the rule. HeartFlow's FFR-CT takes a coronary CT scan and b
 <StatusChip status="bad" label="Physics claim" printLabel="physics contested" />
 </ClaimHeader>
 
-### Forecasting weather without writing the equations
+### Forecasting weather without hand-coding the forecast equations
 
-For decades, weather forecasting meant solving atmospheric physics on enormous computers. Then machine-learning models trained on past weather caught up with, and in several benchmarks surpassed, leading physics-based systems. GraphCast, Pangu-Weather, and GenCast are not press-release curiosities; their headline results were published in *Science* and *Nature*.
+For decades, weather forecasting meant solving atmospheric physics on enormous computers. Then machine-learning models trained on reanalysis and past weather caught up with, and on several <Term as="em">benchmark hindcasts</Term><TipNote text={"A hindcast tests a forecast model by asking it to predict past events from earlier data, then comparing the forecast with what actually happened."} /> surpassed, leading physics-based systems. GraphCast, Pangu-Weather, and GenCast are not press-release curiosities; their headline results were published in *Science* and *Nature*.
 </Claim>
 
 <Day10StaticFigure kind="weather-chart" locale="en" />
 
-The philosophical sting is sharp. By the only measure a forecast user cares about, these learned systems can be more empirically adequate than the systems built from explicit physical equations. Yet their interiors are opaque weights, not named mechanisms. A constructive empiricist can shrug: prediction was the goal. A realist should worry: if prediction can arrive without interpretable representation, the no-miracles argument loses some force.
+The philosophical sting is sharp. By headline forecast-skill measures many users care about, these learned systems can be more empirically adequate than the systems built from explicit physical equations. Yet their interiors are opaque weights, not named mechanisms, and real users also care about uncertainty, calibration, extremes, robustness, and operational constraints. A constructive empiricist can shrug: prediction was the goal. A realist should worry more carefully: success alone is a less clean route to realism when the successful model is opaque and trained from prior model/data products.
 
 The structural realist points to the hybrid response. Google's NeuralGCM keeps a differentiable atmospheric dynamics core and uses machine learning for parts the physics handles badly. Keep the trusted structure; learn the closures. That is structural realism as engineering practice. But the caveat matters: like other learned systems, NeuralGCM is not expected to extrapolate far beyond its training regime. Mechanism may be exactly what you need at the edge of the map.
 </ContentSection>
@@ -253,12 +259,12 @@ Today we watched science simplify the world on purpose. Tomorrow the lens turns 
 <Sources>
 <SourcesTitle>Sources &amp; further reading</SourcesTitle>
 
-1. Korzybski, A. (1933). *Science and Sanity: An Introduction to Non-Aristotelian Systems and General Semantics*. Map-territory relation, p. 58. [wikipedia.org/wiki/Map-territory_relation](https://en.wikipedia.org/wiki/Map%E2%80%93territory_relation)
-1. Borges, J. L. (1946). "Del rigor en la ciencia" / "On Exactitude in Science." [wikipedia.org/wiki/On_Exactitude_in_Science](https://en.wikipedia.org/wiki/On_Exactitude_in_Science)
-1. Carroll, L. (1893). *Sylvie and Bruno Concluded*, ch. XI. [wikisource.org](https://en.wikisource.org/wiki/Sylvie_and_Bruno_Concluded)
+1. Korzybski, A. (1933). *Science and Sanity: An Introduction to Non-Aristotelian Systems and General Semantics*. Map-territory relation, p. 58. [archive.org/details/sciencesanityint00korz](https://archive.org/details/sciencesanityint00korz)
+1. Borges, J. L. (1946). "Del rigor en la ciencia" / "On Exactitude in Science." Original publication listed by the Borges Center, *Los Anales de Buenos Aires* 1.3 (March 1946), p. 53. [borges.pitt.edu/bibliography/1946-1](https://www.borges.pitt.edu/bibliography/1946-1)
+1. Carroll, L. (1893). *Sylvie and Bruno Concluded*, ch. XI. [wikisource.org/wiki/Sylvie_and_Bruno_Concluded/Chapter_11](https://en.wikisource.org/wiki/Sylvie_and_Bruno_Concluded/Chapter_11)
 1. Box, G. E. P. (1976). "Science and Statistics." *Journal of the American Statistical Association* 71(356): 791-799. doi:10.1080/01621459.1976.10480949
-1. Box, G. E. P. (1979). "Robustness in the Strategy of Scientific Model Building," in Launer & Wilkinson (eds.), *Robustness in Statistics*, 201-236.
-1. Box, G. E. P. & Draper, N. R. (1987). *Empirical Model-Building and Response Surfaces*. Wiley.
+1. Box, G. E. P. (1979). "Robustness in the Strategy of Scientific Model Building," in Launer & Wilkinson (eds.), *Robustness in Statistics*, 201-236; aphorism as section heading, p. 202.
+1. Box, G. E. P. & Draper, N. R. (1987). *Empirical Model-Building and Response Surfaces*. Wiley; "Essentially" wording, p. 424.
 1. Weisberg, M. (2013). *Simulation and Similarity: Using Models to Understand the World*. Oxford University Press.
 1. McMullin, E. (1985). "Galilean Idealization." *Studies in History and Philosophy of Science* 16(3): 247-273.
 1. Putnam, H. (1975); Smart, J. J. C. (1963). See *Stanford Encyclopedia of Philosophy*, "Scientific Realism." [plato.stanford.edu/entries/scientific-realism](https://plato.stanford.edu/entries/scientific-realism/)
@@ -271,13 +277,13 @@ Today we watched science simplify the world on purpose. Tomorrow the lens turns 
 1. National Academies of Sciences, Engineering, and Medicine. (2024). *Foundational Research Gaps and Future Directions for Digital Twins*. doi:10.17226/26894. [nationalacademies.org/read/26894](https://www.nationalacademies.org/read/26894/chapter/2)
 1. European Commission / ECMWF. Destination Earth system launch, 10 June 2024. [destination-earth.eu](https://destination-earth.eu/news/destination-earth-system-launch/) · [destine.ecmwf.int](https://destine.ecmwf.int/)
 1. Tudor, Burton, et al. (2025). "A scoping review of human digital twins in healthcare applications and usage patterns." *npj Digital Medicine* 8: 587. doi:10.1038/s41746-025-01910-w
-1. FDA. HeartFlow FFR-CT De Novo DEN130045; HeartFlow FFR-CT clearance materials, 2014.
+1. FDA. HeartFlow FFR-CT De Novo DEN130045, decision date 26 November 2014; De Novo database entry and decision summary. [accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/denovo.cfm?ID=DEN130045](https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/denovo.cfm?ID=DEN130045) · [accessdata.fda.gov/cdrh_docs/reviews/den130045.Pdf](https://www.accessdata.fda.gov/cdrh_docs/reviews/den130045.Pdf)
 1. Lam, R. et al. (2023). "Learning skillful medium-range global weather forecasting." *Science* 382(6677): 1416-1421. doi:10.1126/science.adi2336
 1. Bi, K. et al. (2023). "Accurate medium-range global weather forecasting with 3D neural networks." *Nature* 619: 533-538. doi:10.1038/s41586-023-06185-3
-1. Price, I. et al. (2024). "Probabilistic weather forecasting with machine learning." *Nature*. doi:10.1038/s41586-024-08252-9
+1. Price, I. et al. (published online 2024; issue 2025). "Probabilistic weather forecasting with machine learning." *Nature* 637: 84-90. doi:10.1038/s41586-024-08252-9
 1. Kochkov, D. et al. (2024). "Neural general circulation models for weather and climate." *Nature* 632: 1060-1066. doi:10.1038/s41586-024-07744-y
 
-Source hygiene: future-dated arXiv identifiers surfaced during source research and were discarded as unreliable. The frontier claims above rely on peer-reviewed papers, official program pages, or institutional reports.
+Editor note on source hygiene: future-dated arXiv identifiers surfaced during drafting and were discarded as unreliable; the frontier claims above rely on peer-reviewed papers, official program pages, regulatory databases, or institutional reports.
 </Sources>
 
 </Wrap>

@@ -111,9 +111,15 @@ class PdfChecker {
       this.errors.push(`${file} has no extractable text`);
     }
 
-    if (annotationCount > 0) {
-      this.errors.push(`${file} contains ${annotationCount} PDF annotation(s); PDF output must be non-interactive`);
+    if (annotationCount === 0) {
+      this.errors.push(`${file} has no clickable PDF link annotations`);
     }
+
+    if (!hasPdfOutlines(info)) {
+      this.errors.push(`${file} has no PDF outline/bookmarks`);
+    }
+
+    this.checkPdfMetadata(file, info);
 
     for (const pattern of [
       /127\.0\.0\.1/,
@@ -123,6 +129,21 @@ class PdfChecker {
     ]) {
       if (pattern.test(raw)) {
         this.errors.push(`${file} contains forbidden PDF link matching ${pattern}`);
+      }
+    }
+  }
+
+  private checkPdfMetadata(file: string, info: PdfInfo): void {
+    const metadata: Array<[label: string, value: string | undefined]> = [
+      ["title", info.pdf.getTitle()],
+      ["author", info.pdf.getAuthor()],
+      ["subject", info.pdf.getSubject()],
+      ["keywords", info.pdf.getKeywords()]
+    ];
+
+    for (const [label, value] of metadata) {
+      if (!value?.trim()) {
+        this.errors.push(`${file} is missing PDF ${label} metadata`);
       }
     }
   }
@@ -274,4 +295,8 @@ function countPdfAnnotations({ pdf }: PdfInfo): number {
     count += annotations?.size?.() ?? 0;
   }
   return count;
+}
+
+function hasPdfOutlines({ pdf }: PdfInfo): boolean {
+  return Boolean(pdf.catalog.get(PDFName.of("Outlines")));
 }

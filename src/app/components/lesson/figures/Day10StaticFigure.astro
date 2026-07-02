@@ -24,12 +24,12 @@ const copy = {
   hero: zh
     ? {
         aria: "一张与帝国等大的地图覆盖在疆域之上，右下角已经卷起破败。",
-        tag: "比例尺：一英里对一英里",
+        tag: "比例尺：与帝国同大",
         caption: "博尔赫斯想象的帝国造出一张与疆域同样大小的地图；后人让它在荒野里腐烂。"
       }
     : {
         aria: "An empire-sized one-to-one map laid over the territory it depicts, peeling and decaying at one corner.",
-        tag: "scale: one mile to the mile",
+        tag: "scale: empire-sized",
         caption: "Borges imagined an empire that built a map the exact size of its territory. Their descendants let it rot."
       },
   dial: zh
@@ -59,25 +59,25 @@ const copy = {
       },
   weather: zh
     ? {
-        aria: "三条横向柱形图比较 AI 天气模型击败物理预报系统的验证目标比例。",
-        title: "AI 天气模型何时击败方程组",
-        parity: "平手线 50%",
-        caption: "这些数字来自同行评议论文的回测目标；它们证明预测技能，不证明模型内部已经理解物理。",
+        aria: "三条横向柱形图概括 AI 天气模型在同行评议基准中的目标指标占比或预报时间收益。",
+        title: "基准胜利到底说了什么",
+        parity: "目标占比 50%",
+        caption: "GraphCast 与 GenCast 报告的是目标指标占比；Pangu-Weather 报告的是相对 IFS 的预报时间收益。它们证明预报技能或速度，不证明模型内部已经理解物理。",
         rows: [
-          ["GraphCast", "90%", "DeepMind · Science"],
-          ["GenCast", "97.2%", "DeepMind · Nature"],
-          ["Pangu-Weather", "优于 IFS", "Huawei · Nature"]
+          ["GraphCast", "90% 目标", "DeepMind · Science"],
+          ["GenCast", "97.2% 目标", "DeepMind · Nature"],
+          ["Pangu-Weather", "10-15 小时收益", "Huawei · Nature"]
         ]
       }
     : {
-        aria: "Three horizontal bars comparing how often AI weather models beat physics-based forecast systems.",
-        title: "When learned weather models beat the equations",
-        parity: "parity 50%",
-        caption: "These are peer-reviewed hindcast targets. They establish forecast skill, not that the model's interior understands physics.",
+        aria: "Three horizontal bars summarizing peer-reviewed AI weather benchmark target shares or forecast-time gains.",
+        title: "What the benchmark wins actually say",
+        parity: "target share 50%",
+        caption: "GraphCast and GenCast report target-metric shares; Pangu-Weather reports forecast-time gains over IFS. They establish forecast skill or speed, not that the model's interior understands physics.",
         rows: [
-          ["GraphCast", "90%", "DeepMind · Science"],
-          ["GenCast", "97.2%", "DeepMind · Nature"],
-          ["Pangu-Weather", "beats IFS", "Huawei · Nature"]
+          ["GraphCast", "90% targets", "DeepMind · Science"],
+          ["GenCast", "97.2% targets", "DeepMind · Nature"],
+          ["Pangu-Weather", "10-15 h gain", "Huawei · Nature"]
         ]
       }
     ,
@@ -129,7 +129,7 @@ const copy = {
       }
 };
 
-const weatherWidths = [90, 97.2, 99];
+const weatherWidths = [90, 97.2, 72];
 const frontierItems = [
   { n: 1, x: 0.90, y: 0.76, t: "ok" },
   { n: 2, x: 0.72, y: 0.84, t: "ok" },
@@ -148,11 +148,20 @@ const frontierItems = [
 const frontierColor = (status: string) => status === "ok" ? ok : status === "hint" ? brass : contested;
 const sx = (x: number) => 82 + 420 * x;
 const sy = (y: number) => 258 - 188 * y;
+const figureAria = kind === "hero-map"
+  ? copy.hero.aria
+  : kind === "dial-curve"
+    ? copy.dial.aria
+    : kind === "weather-chart"
+      ? copy.weather.aria
+      : kind === "frontier-map"
+        ? copy.frontier.aria
+        : copy.cliff.aria;
 ---
-<figure class={`figbox day10-static-figure day10-static-figure-${kind}`}>
+<figure class={`figbox day10-static-figure day10-static-figure-${kind}`} aria-label={figureAria}>
   {kind === "hero-map" && (
     <>
-      <svg viewBox="0 0 360 240" role="img" aria-label={copy.hero.aria}>
+      <svg viewBox="0 0 360 240" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="day10-land" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color={raised}></stop>
@@ -183,7 +192,7 @@ const sy = (y: number) => 258 - 188 * y;
 
   {kind === "dial-curve" && (
     <>
-      <svg viewBox="0 0 520 250" role="img" aria-label={copy.dial.aria}>
+      <svg viewBox="0 0 520 250" aria-hidden="true" focusable="false">
         <rect x="18" y="14" width="484" height="206" rx="14" fill={raised} stroke={line}></rect>
         <text x="260" y="42" text-anchor="middle" font-family="Fraunces, serif" font-size="19" font-weight="600" fill={ink}>{copy.dial.title}</text>
         <line x1="70" y1="184" x2="454" y2="184" stroke={lineStrong} stroke-width="1.4"></line>
@@ -209,7 +218,7 @@ const sy = (y: number) => 258 - 188 * y;
 
   {kind === "weather-chart" && (
     <>
-      <svg viewBox="0 0 620 330" role="img" aria-label={copy.weather.aria}>
+      <svg viewBox="0 0 620 330" aria-hidden="true" focusable="false">
         <rect x="18" y="18" width="584" height="282" rx="14" fill={raised} stroke={line}></rect>
         <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.weather.title}</text>
         <line x1="186" y1="82" x2="186" y2="246" stroke={lineStrong} stroke-width="1"></line>
@@ -218,7 +227,7 @@ const sy = (y: number) => 258 - 188 * y;
         {copy.weather.rows.map((row, index) => {
           const y = 96 + index * 64;
           const width = weatherWidths[index] * 3.5;
-          const valueLabel = index === 2 ? row[1] : `${row[1]} ${zh ? "目标" : "targets"}`;
+          const valueLabel = row[1];
           const valueX = Math.min(526, 186 + width - 10);
           return (
             <g>
@@ -241,7 +250,7 @@ const sy = (y: number) => 258 - 188 * y;
 
   {kind === "frontier-map" && (
     <>
-      <svg viewBox="0 0 690 430" role="img" aria-label={copy.frontier.aria}>
+      <svg viewBox="0 0 690 430" aria-hidden="true" focusable="false">
         <rect x="18" y="18" width="654" height="382" rx="14" fill={raised} stroke={line}></rect>
         <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.frontier.title}</text>
         <rect x="82" y="70" width="210" height="94" fill={contested} opacity=".08"></rect>
@@ -288,7 +297,7 @@ const sy = (y: number) => 258 - 188 * y;
 
   {kind === "extrapolation-cliff" && (
     <>
-      <svg viewBox="0 0 620 330" role="img" aria-label={copy.cliff.aria}>
+      <svg viewBox="0 0 620 330" aria-hidden="true" focusable="false">
         <rect x="18" y="18" width="584" height="282" rx="14" fill={raised} stroke={line}></rect>
         <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.cliff.title}</text>
         <rect x="92" y="78" width="190" height="150" fill={accent} opacity=".09"></rect>
