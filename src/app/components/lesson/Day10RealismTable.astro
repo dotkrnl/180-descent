@@ -1,0 +1,116 @@
+---
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+type Mark = "yes" | "maybe" | "no";
+interface Row {
+  position: string;
+  anchor: string;
+  predictions: string;
+  entities: string;
+  structure: string;
+  mark: [Mark, Mark, Mark];
+}
+
+const headers = zh
+  ? ["立场与锚点", "可观察预测", "不可见实体", "数学结构"]
+  : ["Position & anchor", "Observable predictions", "Unseen entities", "Mathematical structure"];
+
+const rows: Row[] = zh
+  ? [
+      {
+        position: "科学实在论",
+        anchor: "普特南 · 斯马特 · 无奇迹",
+        predictions: "是理论近似为真的证据",
+        entities: "往往真实，且被近似描述",
+        structure: "往往追踪真实关系",
+        mark: ["yes", "yes", "yes"]
+      },
+      {
+        position: "结构实在论",
+        anchor: "沃拉尔 1989 · 两全其美",
+        predictions: "是某些结构被保留下来的证据",
+        entities: "对实体说法保持宽松",
+        structure: "结构是最可能幸存的部分",
+        mark: ["yes", "maybe", "yes"]
+      },
+      {
+        position: "实体实在论",
+        anchor: "哈金；加上卡特赖特式定律怀疑",
+        predictions: "预测重要，但干预更重要",
+        entities: "能被操纵来工作的实体值得相信",
+        structure: "宏大定律可能是理想化的，或只在局部成立",
+        mark: ["yes", "yes", "no"]
+      },
+      {
+        position: "建构经验主义",
+        anchor: "范·弗拉森 1980",
+        predictions: "理论必须经验上充分",
+        entities: "暂不相信不可见实体真实存在",
+        structure: "是有用表征，不承诺其为真",
+        mark: ["yes", "no", "no"]
+      }
+    ]
+  : [
+      {
+        position: "Scientific realism",
+        anchor: "Putnam · Smart · no miracles",
+        predictions: "Evidence for approximate truth",
+        entities: "Often real, approximately described",
+        structure: "Often tracks real relations",
+        mark: ["yes", "yes", "yes"]
+      },
+      {
+        position: "Structural realism",
+        anchor: "Worrall 1989 · best of both worlds",
+        predictions: "Evidence that some structure is preserved",
+        entities: "Entity claims held more loosely",
+        structure: "Structure is the main survivor",
+        mark: ["yes", "maybe", "yes"]
+      },
+      {
+        position: "Entity realism",
+        anchor: "Hacking; with Cartwright-style law skepticism",
+        predictions: "Prediction matters, but intervention matters more",
+        entities: "Believe in entities we can manipulate",
+        structure: "Grand laws may be idealized or local",
+        mark: ["yes", "yes", "no"]
+      },
+      {
+        position: "Constructive empiricism",
+        anchor: "van Fraassen 1980",
+        predictions: "Must be empirically adequate",
+        entities: "Withhold belief",
+        structure: "Useful representation, not believed as true",
+        mark: ["yes", "no", "no"]
+      }
+    ];
+
+const symbols = {
+  yes: "✓",
+  maybe: "~",
+  no: "×"
+};
+---
+<div class="day10-realism-wrap" tabindex="0" role="region" aria-label={zh ? "四种科学实在论立场对照表，可横向滚动" : "Four-position scientific realism table, horizontally scrollable"}>
+  <table class="day10-realism">
+    <thead>
+      <tr>{headers.map((header) => <th scope="col">{header}</th>)}</tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr>
+          <th scope="row">
+            {row.position}
+            <small>{row.anchor}</small>
+          </th>
+          <td><span class={`mk ${row.mark[0]}`}>{symbols[row.mark[0]]}</span><span class="g">{row.predictions}</span></td>
+          <td><span class={`mk ${row.mark[1]}`}>{symbols[row.mark[1]]}</span><span class="g">{row.entities}</span></td>
+          <td><span class={`mk ${row.mark[2]}`}>{symbols[row.mark[2]]}</span><span class="g">{row.structure}</span></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

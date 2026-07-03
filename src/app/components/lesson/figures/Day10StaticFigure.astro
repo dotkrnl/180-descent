@@ -1,6 +1,6 @@
 ---
 interface Props {
-  kind: "hero-map" | "dial-curve" | "weather-chart" | "frontier-map" | "extrapolation-cliff";
+  kind: "hero-map" | "dial-curve" | "weather-chart" | "levins-triangle" | "frontier-map" | "extrapolation-cliff";
   locale?: "en" | "zh";
 }
 
@@ -81,6 +81,43 @@ const copy = {
         ]
       }
     ,
+  levins: zh
+    ? {
+        aria: "一个列文斯三角显示一般性、逼真性和精确性三个顶点，以及保留任意两项时必须牺牲的第三项。",
+        title: "列文斯三角：保留两项，花掉一项",
+        generality: "一般性",
+        realism: "逼真性",
+        precision: "精确性",
+        center: "选择你的牺牲",
+        keepGR: "保留：一般性 + 逼真性",
+        spendP: "牺牲精确性",
+        grLines: ["稳健定性模型：跨系统", "抓方向，不追小数点。"],
+        keepGP: "保留：一般性 + 精确性",
+        spendR: "牺牲逼真性",
+        gpLines: ["干净可求解的玩具模型：", "假设很假，机制清楚。"],
+        keepRP: "保留：逼真性 + 精确性",
+        spendG: "牺牲一般性",
+        rpLines: ["这架飞机、这座湖、这位患者：", "准确，但狭窄。"],
+        caption: "列文斯的取舍不是说永远只能二选一；它提醒你看清当前模型正在花掉哪一种价值。"
+      }
+    : {
+        aria: "A Levins triangle shows generality, realism, and precision as three vertices, with each edge preserving two and sacrificing the third.",
+        title: "Levins's triangle: keep two, spend one",
+        generality: "Generality",
+        realism: "Realism",
+        precision: "Precision",
+        center: "pick your sacrifice",
+        keepGR: "keep: generality + realism",
+        spendP: "spend precision",
+        grLines: ["Robust qualitative models:", "direction, not decimals."],
+        keepGP: "keep: generality + precision",
+        spendR: "spend realism",
+        gpLines: ["Clean solvable toys:", "false setup, clear mechanism."],
+        keepRP: "keep: realism + precision",
+        spendG: "spend generality",
+        rpLines: ["This aircraft, lake, or patient:", "accurate, but narrow."],
+        caption: "Levins's tradeoff is not a law saying you can only ever pick two. It is a prompt to name which modeling virtue this move is spending."
+      },
   frontier: zh
     ? {
         aria: "一张散点图按证据强度和潜在影响排列十三项 AI 建模前沿工作。",
@@ -89,7 +126,9 @@ const copy = {
         y: "潜在影响更大",
         thin: "大主张，薄冰",
         solid: "真正革命",
-        caption: "位置取决于判断，而非测量。只直接标出少数代表点；完整编号见下方表格。",
+        legend: ["已确立", "有前景", "有争议／炒作"],
+        low: "较窄但可用",
+        caption: "位置取决于判断，而非测量。颜色标出证据状态；完整编号见下方表格。",
         labels: ["托卡马克", "Aurora", "FunSearch", "泄漏", "外推", "GNoME", "MatterGen", "AI-Descartes", "Prithvi", "KAN", "虚拟细胞", "cBottle", "AI Scientist"]
       }
     : {
@@ -99,7 +138,9 @@ const copy = {
         y: "larger impact if true",
         thin: "big claim, thin ice",
         solid: "the real revolution",
-        caption: "The positions are a calibration exercise, not a measurement. Only representative points are labeled directly; the full numbering is in the table below.",
+        legend: ["established", "promising", "contested"],
+        low: "narrow but useful",
+        caption: "The positions are a calibration exercise, not a measurement. Color marks evidential status; the full numbering is in the table below.",
         labels: ["Tokamak", "Aurora", "FunSearch", "Leakage", "Extrapolation", "GNoME", "MatterGen", "AI-Descartes", "Prithvi", "KAN", "Virtual cell", "cBottle", "AI Scientist"]
       },
   cliff: zh
@@ -152,7 +193,7 @@ type FrontierCallout = {
   anchor: "start" | "middle" | "end";
 };
 const frontierCallouts: FrontierCallout[] = [
-  { index: 0, dx: 20, dy: 4, anchor: "start" },
+  { index: 0, dx: -4, dy: 26, anchor: "start" },
   { index: 1, dx: -20, dy: -18, anchor: "end" },
   { index: 2, dx: -18, dy: 28, anchor: "end" },
   { index: 10, dx: 18, dy: 30, anchor: "start" },
@@ -167,9 +208,11 @@ const figureAria = kind === "hero-map"
     ? copy.dial.aria
     : kind === "weather-chart"
       ? copy.weather.aria
-      : kind === "frontier-map"
-        ? copy.frontier.aria
-        : copy.cliff.aria;
+      : kind === "levins-triangle"
+        ? copy.levins.aria
+        : kind === "frontier-map"
+          ? copy.frontier.aria
+          : copy.cliff.aria;
 ---
 <figure class={`figbox day10-static-figure day10-static-figure-${kind}`} aria-label={figureAria}>
   {kind === "hero-map" && (
@@ -268,17 +311,71 @@ const figureAria = kind === "hero-map"
     </>
   )}
 
+  {kind === "levins-triangle" && (
+    <>
+      <svg viewBox="0 0 660 430" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
+        <rect x="18" y="18" width="624" height="382" rx="14" fill={raised} stroke={line}></rect>
+        <text x="330" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill={ink}>{copy.levins.title}</text>
+        <g font-family="IBM Plex Mono, monospace">
+          <line x1="330" y1="98" x2="158" y2="304" stroke={ok} stroke-width="5" stroke-linecap="round" opacity=".74"></line>
+          <line x1="330" y1="98" x2="502" y2="304" stroke={brass} stroke-width="5" stroke-linecap="round" opacity=".76"></line>
+          <line x1="158" y1="304" x2="502" y2="304" stroke={accent} stroke-width="5" stroke-linecap="round" opacity=".72"></line>
+          <line x1="330" y1="98" x2="158" y2="304" stroke={lineStrong} stroke-width="1.2" stroke-linecap="round"></line>
+          <line x1="330" y1="98" x2="502" y2="304" stroke={lineStrong} stroke-width="1.2" stroke-linecap="round"></line>
+          <line x1="158" y1="304" x2="502" y2="304" stroke={lineStrong} stroke-width="1.2" stroke-linecap="round"></line>
+        </g>
+        <g>
+          <circle cx="330" cy="98" r="18" fill={raised} stroke={brass} stroke-width="3"></circle>
+          <circle cx="158" cy="304" r="18" fill={raised} stroke={ok} stroke-width="3"></circle>
+          <circle cx="502" cy="304" r="18" fill={raised} stroke={accent} stroke-width="3"></circle>
+          <text x="330" y="75" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" fill={brass}>{copy.levins.generality}</text>
+          <text x="158" y="338" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" fill={ok}>{copy.levins.realism}</text>
+          <text x="502" y="338" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" fill={accent}>{copy.levins.precision}</text>
+          <text x="330" y="214" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{copy.levins.center}</text>
+        </g>
+        <g>
+          <rect x="54" y="92" width="194" height="86" rx="9" fill={paper} stroke={lineStrong}></rect>
+          <text x="68" y="116" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill={ok}>{copy.levins.keepGR}</text>
+          <text x="68" y="134" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.levins.spendP}</text>
+          {copy.levins.grLines.map((line, index) => (
+            <text x="68" y={154 + index * 16} font-family="Fraunces, serif" font-size="13" fill={soft}>{line}</text>
+          ))}
+        </g>
+        <g>
+          <rect x="412" y="92" width="194" height="86" rx="9" fill={paper} stroke={lineStrong}></rect>
+          <text x="426" y="116" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill={brass}>{copy.levins.keepGP}</text>
+          <text x="426" y="134" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.levins.spendR}</text>
+          {copy.levins.gpLines.map((line, index) => (
+            <text x="426" y={154 + index * 16} font-family="Fraunces, serif" font-size="13" fill={soft}>{line}</text>
+          ))}
+        </g>
+        <g>
+          <rect x="225" y="314" width="220" height="76" rx="9" fill={paper} stroke={lineStrong}></rect>
+          <text x="240" y="336" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill={accent}>{copy.levins.keepRP}</text>
+          <text x="240" y="354" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.levins.spendG}</text>
+          {copy.levins.rpLines.map((line, index) => (
+            <text x="240" y={370 + index * 16} font-family="Fraunces, serif" font-size="13" fill={soft}>{line}</text>
+          ))}
+        </g>
+      </svg>
+      <figcaption>{copy.levins.caption}</figcaption>
+    </>
+  )}
+
   {kind === "frontier-map" && (
     <>
       <svg viewBox="0 0 690 430" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="18" y="18" width="654" height="382" rx="14" fill={raised} stroke={line}></rect>
-        <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.frontier.title}</text>
+        <text x="345" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.frontier.title}</text>
         <rect x="88" y="62" width="235" height="110" fill={contested} opacity=".08"></rect>
         <rect x="323" y="62" width="235" height="110" fill={ok} opacity=".08"></rect>
         <line x1="88" y1="282" x2="558" y2="282" stroke={lineStrong} stroke-width="1.4"></line>
         <line x1="88" y1="62" x2="88" y2="282" stroke={lineStrong} stroke-width="1.4"></line>
         <line x1="323" y1="62" x2="323" y2="282" stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
         <line x1="88" y1="172" x2="558" y2="172" stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
+        <text x="102" y="101" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={contested}>{copy.frontier.thin}</text>
+        <text x="544" y="82" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={ok}>{copy.frontier.solid}</text>
+        <text x="544" y="264" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.frontier.low}</text>
         <text x="323" y="318" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.frontier.x}</text>
         <text x="48" y="172" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform="rotate(-90 48 172)">{copy.frontier.y}</text>
         {frontierItems.map((item) => (
@@ -297,6 +394,15 @@ const figureAria = kind === "hero-map"
               <text x={x + callout.dx} y={y + callout.dy} text-anchor={callout.anchor}>{label}</text>
             );
           })}
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>
+          <rect x="568" y="96" width="94" height="72" rx="8" fill={paper} stroke={lineStrong}></rect>
+          {[ok, brass, contested].map((color, index) => (
+            <g>
+              <circle cx="582" cy={116 + index * 20} r="5.5" fill={color}></circle>
+              <text x="594" y={120 + index * 20}>{copy.frontier.legend[index]}</text>
+            </g>
+          ))}
         </g>
       </svg>
       <figcaption>{copy.frontier.caption}</figcaption>

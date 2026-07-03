@@ -3,6 +3,7 @@ import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Highlight from "@app/components/lesson/Highlight.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Latin from "@app/components/lesson/Latin.astro";
@@ -19,6 +20,7 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.astro";
 
 <Lead drop="正">文走了一条笔直的下降线：从博尔赫斯那幅帝国尺寸的地图，穿过球形牛，一头扎进实在论之争，最后落在一个内部没有人类可读物理方程、却能预报天气的神经网络。弧线干净利落，却也把大量素材留在了剪辑室的地板上。实在论与工具主义之争比范·弗拉森老了四个世纪；「有用地说谎」这门手艺有一套精确的语法，正文里只字未提；而最奇怪的那个问题——如何信任一个内部无人能一览无余的模型？——一路绕回[第 1 日](/zh/days/001-what-is-knowledge/)。</Lead>
 
@@ -101,9 +103,13 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 <PanelTitle>建模取舍 · 列文斯三角</PanelTitle>
 <PanelNote>没有任何模型能同时拉满三项。原始版本是可点击的三角；静态附录把三种状态都展开，方便网页、EPUB 和 PDF 阅读。</PanelNote>
 
+<Day10StaticFigure kind="levins-triangle" locale="zh" />
+
+<FormatOnly as="div" media="web">
 <SimpleTable
   headers={["牺牲","保留","策略","例子"]}
   rows={[["精确性","一般性 + 逼真性","稳健的定性模型，把握变化方向，不做小数点后断言。","理论生态学，以及隔离某种机制的玩具经济或物理模型。"],["逼真性","一般性 + 精确性","简洁、可精确求解的模型，建立在明知为假的假设上。","无摩擦平面、完全理性主体、无限种群。"],["一般性","逼真性 + 精确性","某一具体目标的高分辨率模型，准确但狭窄。","这架飞机、这座湖、这位患者的数字孪生。"]]}/>
+</FormatOnly>
 
 Orzack 与 Sober（1993）认为，三向取舍并非严格定理。有时某一项目可以提升而不立刻牺牲另一项。因此，有纪律的版本不是「永远只能二选一」，而是「清楚你当前这一步花的是哪个维度」。
 </Panel>

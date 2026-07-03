@@ -3,6 +3,7 @@ import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
 import Panel from "@app/components/lesson/Panel.astro";
@@ -17,6 +18,7 @@ import StatusChip from "@app/components/lesson/StatusChip.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
+import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.astro";
 
 <Lead drop="T">he main descent ran a straight line: from Borges's empire-sized map, through the spherical cow, into the realism debate, and out the far end at a neural network that forecasts the weather without human-readable physical equations written inside it. It was a clean arc, and it left an enormous amount on the cutting-room floor. The realism fight is four centuries older than van Fraassen. The craft of "lying usefully" has a precise grammar nobody mentioned. And the strangest question of all, **how do you trust a model whose innards no human can survey?**, loops all the way back to Day 1.</Lead>
 
@@ -99,9 +101,13 @@ Levins is also the source of modeling's most famous impossibility claim: you can
 <PanelTitle>Modeling tradeoff · Levins's triangle</PanelTitle>
 <PanelNote>No model maxes all three desiderata. The source version made this a click-through triangle; the static appendix keeps all three states visible for web, EPUB, and PDF readers.</PanelNote>
 
+<Day10StaticFigure kind="levins-triangle" locale="en" />
+
+<FormatOnly as="div" media="web">
 <SimpleTable
   headers={["Sacrifice","Keep","Strategy","Example"]}
   rows={[["Precision","Generality + realism","Robust qualitative models that capture the direction of change without decimal-point claims.","Theoretical ecology and toy economic or physical models that isolate a mechanism."],["Realism","Generality + precision","Clean, exactly solvable models built on assumptions known to be false.","Frictionless planes, perfectly rational agents, infinite populations."],["Generality","Realism + precision","High-resolution models of one specific target, accurate but narrow.","A digital twin of this aircraft, this lake, or this patient."]]}/>
+</FormatOnly>
 
 Orzack and Sober (1993) argued that the three-way tradeoff is not a strict theorem. Sometimes one desideratum can improve without another immediately falling. The disciplined version is therefore not "pick two forever." It is "know which dimension your current modeling move is spending."
 </Panel>

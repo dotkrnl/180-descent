@@ -1024,9 +1024,13 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
     if (kind) {
       const day10Width = kind === "weather-chart" || kind === "frontier-map" || kind === "extrapolation-cliff"
         ? "0.98\\linewidth"
+        : kind === "levins-triangle"
+          ? "0.92\\linewidth"
         : "0.86\\linewidth";
       const day10Height = kind === "frontier-map"
         ? "0.42\\textheight"
+        : kind === "levins-triangle"
+          ? "0.36\\textheight"
         : kind === "extrapolation-cliff"
           ? "0.34\\textheight"
         : kind === "weather-chart"

@@ -185,6 +185,7 @@ const ARTIFACT_COMPONENTS = new Set([
   "DataTableRow",
   "Day8StaticFigure",
   "Day9StaticFigure",
+  "Day10RealismTable",
   "Day10StaticFigure",
   "DefinitionBox",
   "DekGrid",
