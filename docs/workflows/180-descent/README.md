@@ -154,18 +154,27 @@ structural errors, not publication quality.
    `Metric` with `printLabel="established"` over `Metric · established`.
    Frontier claim blocks must use the established claim/status components so
    labels do not degrade to plain text.
-10. **Mobile typography:** inspect the main page on a narrow mobile viewport.
+10. **Edge-section structure:** frontier/edge sections should use `Claim` with a
+   compact `ClaimHeader` eyebrow (`Edge 01`, `前沿 01`, etc.) and the descriptive
+   title as the following heading. Do not pack the title into the eyebrow label,
+   and do not wrap ordinary edge prose in `Panel`/`PanelNote`; reserve boxes for
+   genuine callouts, static alternates, captions, and interactive notes.
+11. **No source-hygiene editor notes:** do not publish meta notes narrating
+   drafting/source-vetting process, such as discarded future-dated arXiv IDs or
+   claims that sources were checked. Put evidence status in the actual citation,
+   `Meta`, `SourceNote`, or claim prose instead.
+12. **Mobile typography:** inspect the main page on a narrow mobile viewport.
    SVG text, status chips, buttons, and long English titles must not overlap,
    shrink below legibility, or run into frames. The mobile rendered-type gate is
    a floor, not a substitute for visual review.
-11. **Artifact visual review:** after `rtk npm run build:site` and
+13. **Artifact visual review:** after `rtk npm run build:site` and
    `rtk npm run build:pdf`,
    render every affected day PDF page to PNG with Poppler: page 1, every page
    containing a new figure/table/interactive alternate, and the last page. Check
    both English and Chinese. Look for black rectangles, missing figures, wrong
    repeated diagrams, clipped text, label/frame overlap, stale English in
    Chinese artifacts, and orphaned headings.
-12. **Deployed verification:** after deployment, fetch the deployed day PDFs
+14. **Deployed verification:** after deployment, fetch the deployed day PDFs
     from the preview URL, render the same representative pages, and smoke-check
     English desktop plus Chinese mobile HTML with Playwright. Do not rely only
     on the local `_site` render.

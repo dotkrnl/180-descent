@@ -3,6 +3,8 @@ import copernicusTemperatureChart from "../../../assets/images/open-license/cope
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -14,7 +16,6 @@ import ImageFigure from "@app/components/lesson/ImageFigure.astro";
 import Label from "@app/components/lesson/Label.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Panel from "@app/components/lesson/Panel.astro";
-import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -173,18 +174,16 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 
 最美的是，在许多折叠式系统里，理论常会预言一个<Highlight>警示信号</Highlight>。当山谷朝着临界点变平，球从每次随机摇晃中恢复得越来越慢——这个现象叫<Term>临界慢化</Term><TipNote text="临界慢化指系统接近许多折叠式临界点时恢复变慢，常意味着韧性正在减弱。"/>。统计上，它表现为<Highlight>方差增大</Highlight>（球晃得更远）和<Highlight>自相关增大</Highlight>（每一刻都更像上一刻，因为系统弹不回来）。这些<Highlight>早期预警信号</Highlight>由舍费尔等人在 2009 年一篇里程碑式的《自然》论文中提出，可以在湖泊、电网、冰盖等非常不同的系统里反复出现。下面这个面板让你一次感受这三个想法。
 
-<Panel>
-<PanelTitle>边缘 01 · 警示信号</PanelTitle>
-
-<StatusChipRow>
+<Claim>
+<ClaimHeader label="边缘 01">
 <StatusChip status="ok" label="警示信号" printLabel="已确立" />
 <StatusChip status="bad" label="日期预测" printLabel="有争议" />
-</StatusChipRow>
+</ClaimHeader>
 
 ### 警示信号——及其限度
 
-<PanelNote>临界慢化在理论和受控全湖实验中都真实存在。但标题常常跳过的一个硬陷阱是：检测系统正在<Highlight>丧失韧性</Highlight>是一回事，外推到它将在哪一年<Highlight>翻过临界点</Highlight>是另一回事。2024 年本-亚米等人的一项冷静分析（《科学进展》）认为，不确定性「太大，无法从历史数据预测主要地球系统组成部分的临界时间」——记录短且残缺，答案严重依赖模型假设。所以：这个信号是一根真正的韧性温度计，但不是具体日期的水晶球。记住这个区别——它马上会变得极其重要。</PanelNote>
-</Panel>
+临界慢化在理论和受控全湖实验中都真实存在。但标题常常跳过的一个硬陷阱是：检测系统正在<Highlight>丧失韧性</Highlight>是一回事，外推到它将在哪一年<Highlight>翻过临界点</Highlight>是另一回事。2024 年本-亚米等人的一项冷静分析（《科学进展》）认为，不确定性「太大，无法从历史数据预测主要地球系统组成部分的临界时间」——记录短且残缺，答案严重依赖模型假设。所以：这个信号是一根真正的韧性温度计，但不是具体日期的水晶球。记住这个区别——它马上会变得极其重要。
+</Claim>
 </ContentSection>
 
 <Day9Interactive kind="tipping" locale="zh" />
@@ -199,41 +198,37 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 </FormatOnly>
 
 <ContentSection>
-<Panel>
-<PanelTitle>边缘 02 · 气候阈值</PanelTitle>
-
-<StatusChipRow>
+<Claim>
+<ClaimHeader label="边缘 02">
 <StatusChip status="ok" label="临界要素" printLabel="已确立" />
 <StatusChip status="hint" label="精确阈值" printLabel="高度不确定" />
-</StatusChipRow>
+</ClaimHeader>
 
 ### 地球哪些部分会翻转——以及何时
 
-<PanelNote>最谨慎的系统估算来自大卫·阿姆斯特朗·麦凯和蒂姆·伦顿领衔的 2022 年《科学》论文，它识别出大约<Highlight>九个「核心」全球临界要素</Highlight>，外加若干区域性子系统，每个都附有估算的升温阈值。它令人清醒的标题是：地球已经比工业化前高出约 1.3–1.4°C，我们已进入其中<Highlight>五个</Highlight>要素阈值不确定范围的下限；而在《巴黎协定》力图守住的 1.5–2°C 窗口内，还有几个会变为「可能」。下图给出了经核验的中心估计和它们（非常宽的）不确定范围。形状里蕴含着两个教训：范围<Highlight>巨大</Highlight>（这是真正的科学谦逊，不是含糊），而且有几根条已经跨过今天的升温线。</PanelNote>
+最谨慎的系统估算来自大卫·阿姆斯特朗·麦凯和蒂姆·伦顿领衔的 2022 年《科学》论文，它识别出大约<Highlight>九个「核心」全球临界要素</Highlight>，外加若干区域性子系统，每个都附有估算的升温阈值。它令人清醒的标题是：地球已经比工业化前高出约 1.3–1.4°C，我们已进入其中<Highlight>五个</Highlight>要素阈值不确定范围的下限；而在《巴黎协定》力图守住的 1.5–2°C 窗口内，还有几个会变为「可能」。下图给出了经核验的中心估计和它们（非常宽的）不确定范围。形状里蕴含着两个教训：范围<Highlight>巨大</Highlight>（这是真正的科学谦逊，不是含糊），而且有几根条已经跨过今天的升温线。
 
 <Day9StaticFigure kind="thresholds" locale="zh" />
 
-<PanelNote>两份评估如今为政策制定者锚定了这个领域：第一份<Highlight>《全球临界点报告》</Highlight>（伦顿等，2023 年 12 月在 COP28 发布），是同类中规模最大的综合评估；以及它的<Highlight>2025 年第二版</Highlight>（374 页，2025 年 10 月，超过 160 位作者）。2025 年报告的沉重核心结论是：暖水珊瑚礁现在被认为正在<Highlight>越过</Highlight>其临界点——其阈值中心估计接近 1.2°C，低于当前升温；即便守住 1.5°C，广泛损失也被评估为几乎确定。这不是抽象结论：美国国家海洋和大气管理局珊瑚礁观测站报告，2023–2025 年全球珊瑚白化事件如今很可能已经结束，影响了全球约<Highlight>84.4%</Highlight>的礁区，创历史纪录。报告也强调了一个充满希望的镜像——<Highlight>正向临界点</Highlight>，技术（太阳能、电池、电动车）中的增强回路正在驱动自我加速的<Highlight>好</Highlight>变化。同一套失控数学可以两边倒。</PanelNote>
-</Panel>
+两份评估如今为政策制定者锚定了这个领域：第一份<Highlight>《全球临界点报告》</Highlight>（伦顿等，2023 年 12 月在 COP28 发布），是同类中规模最大的综合评估；以及它的<Highlight>2025 年第二版</Highlight>（374 页，2025 年 10 月，超过 160 位作者）。2025 年报告的沉重核心结论是：暖水珊瑚礁现在被认为正在<Highlight>越过</Highlight>其临界点——其阈值中心估计接近 1.2°C，低于当前升温；即便守住 1.5°C，广泛损失也被评估为几乎确定。这不是抽象结论：美国国家海洋和大气管理局珊瑚礁观测站报告，2023–2025 年全球珊瑚白化事件如今很可能已经结束，影响了全球约<Highlight>84.4%</Highlight>的礁区，创历史纪录。报告也强调了一个充满希望的镜像——<Highlight>正向临界点</Highlight>，技术（太阳能、电池、电动车）中的增强回路正在驱动自我加速的<Highlight>好</Highlight>变化。同一套失控数学可以两边倒。
+</Claim>
 
-<Panel>
-<PanelTitle>边缘 03 · AMOC 谨慎阅读</PanelTitle>
-
-<StatusChipRow>
+<Claim>
+<ClaimHeader label="边缘 03">
 <StatusChip status="ok" label="AMOC 风险" printLabel="已确立" />
 <StatusChip status="bad" label="2057 崩溃" printLabel="有争议／炒作风险" />
-</StatusChipRow>
+</ClaimHeader>
 
 ### 大西洋的传送带——一次谨慎阅读的案例
 
-<PanelNote>没有哪个临界要素比<Term>大西洋经向翻转环流</Term><TipNote text="AMOC 是大西洋翻转环流：一条大型海洋传送带，把温暖表层水送往北方、把寒冷深层水送往南方。"/>（AMOC）更能说明<Term>防炒作滤镜</Term><TipNote text="防炒作滤镜指把前沿发现拆成已确立、仍有争议和容易被夸大的部分，避免把风险提示误读成确定预言。"/>为何重要——这条巨大的海洋传送带把暖水送往北方，让西北欧拥有难以想象地温和的气候。请分三层理清楚：</PanelNote>
+没有哪个临界要素比<Term>大西洋经向翻转环流</Term><TipNote text="AMOC 是大西洋翻转环流：一条大型海洋传送带，把温暖表层水送往北方、把寒冷深层水送往南方。"/>（AMOC）更能说明<Term>防炒作滤镜</Term><TipNote text="防炒作滤镜指把前沿发现拆成已确立、仍有争议和容易被夸大的部分，避免把风险提示误读成确定预言。"/>为何重要——这条巨大的海洋传送带把暖水送往北方，让西北欧拥有难以想象地温和的气候。请分三层理清楚：
 
-<PanelNote><Highlight>已确立的部分。</Highlight>AMOC 是一个真正的临界要素；本世纪它「很可能」进一步减弱。过去减弱的证据存在于若干观测指纹和重建之中，但 <Highlight>IPCC</Highlight>（政府间气候变化专门委员会）对重建和模拟得到的 20 世纪 AMOC 变化给出的是低信心。值得注意的是，IPCC 2021 年报告只对「2100 年前不会发生突然崩溃」给出「中等信心」——恰恰因为气候模型可能偏向过度稳定。风险真实存在，但历史变化的信心措辞必须谨慎。</PanelNote>
+<Highlight>已确立的部分。</Highlight>AMOC 是一个真正的临界要素；本世纪它「很可能」进一步减弱。过去减弱的证据存在于若干观测指纹和重建之中，但 <Highlight>IPCC</Highlight>（政府间气候变化专门委员会）对重建和模拟得到的 20 世纪 AMOC 变化给出的是低信心。值得注意的是，IPCC 2021 年报告只对「2100 年前不会发生突然崩溃」给出「中等信心」——恰恰因为气候模型可能偏向过度稳定。风险真实存在，但历史变化的信心措辞必须谨慎。
 
-<PanelNote><Highlight>有争议的部分。</Highlight>2023 年 7 月，彼得和苏珊娜·迪特勒夫森发表了一篇广为宣传的《自然·通讯》论文，把临界模型拟合到大西洋海面温度上，估计崩溃时间约在世纪中叶——中心年份<Highlight>2057</Highlight>，95% 范围为 2025–2095。（该论文 2025 年的一份更正修正了代码错误，把中心估计移到约<Highlight>2065</Highlight>，范围 2037–2109。）这些具体日期招致强烈批评——它们依赖短温度代理和强统计假设，正是边缘 01 里「太不确定，无法定日」的问题。<Highlight>警告值得认真对待；精确年份不值得被当作事实引用。</Highlight>请把这些日期视为炒作风险，而不是已定时间。</PanelNote>
+<Highlight>有争议的部分。</Highlight>2023 年 7 月，彼得和苏珊娜·迪特勒夫森发表了一篇广为宣传的《自然·通讯》论文，把临界模型拟合到大西洋海面温度上，估计崩溃时间约在世纪中叶——中心年份<Highlight>2057</Highlight>，95% 范围为 2025–2095。（该论文 2025 年的一份更正修正了代码错误，把中心估计移到约<Highlight>2065</Highlight>，范围 2037–2109。）这些具体日期招致强烈批评——它们依赖短温度代理和强统计假设，正是边缘 01 里「太不确定，无法定日」的问题。<Highlight>警告值得认真对待；精确年份不值得被当作事实引用。</Highlight>请把这些日期视为炒作风险，而不是已定时间。
 
-<PanelNote><Highlight>崭新且扎实的部分。</Highlight>2024 年 2 月，范·韦斯滕、克利菲伊斯和迪克斯特拉（《科学进展》）完成了一项真正重要的工作：首次在复杂全球气候模型中模拟出 AMOC 全面崩溃，得出一个基于物理的早期预警信号，并发现当今 AMOC 似乎正在「走向临界」。关键且令人钦佩的是，这篇论文<Highlight>没有给出日历日期</Highlight>。它告诉我们行进方向令人担忧，却不假装知道到达时间。同年晚些时候，44 位科学家签署公开信，敦促政府认真对待被低估的风险。诚实的 2026 年总结是：<Highlight>AMOC 本世纪很可能进一步减弱，跨过临界点的风险真实存在，且可能被低估——但任何给你报出具体崩溃年份的人，都是在把科学买不起的确定性卖给你。</Highlight></PanelNote>
-</Panel>
+<Highlight>崭新且扎实的部分。</Highlight>2024 年 2 月，范·韦斯滕、克利菲伊斯和迪克斯特拉（《科学进展》）完成了一项真正重要的工作：首次在复杂全球气候模型中模拟出 AMOC 全面崩溃，得出一个基于物理的早期预警信号，并发现当今 AMOC 似乎正在「走向临界」。关键且令人钦佩的是，这篇论文<Highlight>没有给出日历日期</Highlight>。它告诉我们行进方向令人担忧，却不假装知道到达时间。同年晚些时候，44 位科学家签署公开信，敦促政府认真对待被低估的风险。诚实的 2026 年总结是：<Highlight>AMOC 本世纪很可能进一步减弱，跨过临界点的风险真实存在，且可能被低估——但任何给你报出具体崩溃年份的人，都是在把科学买不起的确定性卖给你。</Highlight>
+</Claim>
 
 <Aside>
 <BlockTitle>一年不是阈值</BlockTitle>

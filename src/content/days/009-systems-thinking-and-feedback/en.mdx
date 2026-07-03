@@ -3,6 +3,8 @@ import copernicusTemperatureChart from "../../../assets/images/open-license/cope
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
@@ -14,7 +16,6 @@ import ImageFigure from "@app/components/lesson/ImageFigure.astro";
 import Label from "@app/components/lesson/Label.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Panel from "@app/components/lesson/Panel.astro";
-import PanelNote from "@app/components/lesson/PanelNote.astro";
 import PanelTitle from "@app/components/lesson/PanelTitle.astro";
 import Recap from "@app/components/lesson/Recap.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -172,18 +173,16 @@ The mathematics is the theory of *critical transitions*, charted most influentia
 
 Most beautifully, the theory often predicts a **warning sign** in fold-like systems. As a valley flattens toward its tipping point, the ball recovers ever more sluggishly from each random jostle — a phenomenon called <Term as="em">critical slowing down</Term><TipNote text={"Critical slowing down is the sluggish recovery that often appears near fold-like tipping points as resilience weakens."} />. Statistically, this shows up as *rising variance* (the ball wanders further) and *rising autocorrelation* (each moment looks more like the last, because the system can't spring back). These *early-warning signals*, introduced in a landmark 2009 *Nature* paper by Scheffer and colleagues, can recur across very different systems: lakes, power grids, ice sheets. The panel below lets you feel all three ideas at once.
 
-<Panel>
-<PanelTitle>Edge 01 · warning signal</PanelTitle>
-
-<StatusChipRow>
+<Claim>
+<ClaimHeader label="Edge 01">
 <StatusChip status="ok" label="Warning signal" printLabel="established" />
 <StatusChip status="bad" label="Date prediction" printLabel="contested" />
-</StatusChipRow>
+</ClaimHeader>
 
 ### The warning sign — and its limits
 
-<PanelNote>Critical slowing down is real and demonstrated, both in theory and in controlled whole-lake experiments. But there's a hard catch the headlines tend to skip. Detecting that a system is *losing resilience* is one thing; extrapolating to the *year* it will tip is quite another. A sober 2024 analysis (Ben-Yami and colleagues, *Science Advances*) argued that the uncertainties are simply "too large to predict tipping times of major Earth system components from historical data" — the records are short and patchy, and the answer depends heavily on modelling assumptions. So: the signal is a genuine resilience thermometer, but not a crystal ball for specific dates. Hold that distinction — it is about to matter enormously.</PanelNote>
-</Panel>
+Critical slowing down is real and demonstrated, both in theory and in controlled whole-lake experiments. But there's a hard catch the headlines tend to skip. Detecting that a system is *losing resilience* is one thing; extrapolating to the *year* it will tip is quite another. A sober 2024 analysis (Ben-Yami and colleagues, *Science Advances*) argued that the uncertainties are simply "too large to predict tipping times of major Earth system components from historical data" — the records are short and patchy, and the answer depends heavily on modelling assumptions. So: the signal is a genuine resilience thermometer, but not a crystal ball for specific dates. Hold that distinction — it is about to matter enormously.
+</Claim>
 </ContentSection>
 
 <Day9Interactive kind="tipping" locale="en" />
@@ -198,41 +197,37 @@ Most beautifully, the theory often predicts a **warning sign** in fold-like syst
 </FormatOnly>
 
 <ContentSection>
-<Panel>
-<PanelTitle>Edge 02 · climate thresholds</PanelTitle>
-
-<StatusChipRow>
+<Claim>
+<ClaimHeader label="Edge 02">
 <StatusChip status="ok" label="Tipping elements" printLabel="established" />
 <StatusChip status="hint" label="Exact thresholds" printLabel="large uncertainty" />
-</StatusChipRow>
+</ClaimHeader>
 
 ### Which parts of the Earth can tip — and when
 
-<PanelNote>The most careful systematic estimate is a 2022 *Science* paper led by David Armstrong McKay and Tim Lenton, which identified roughly **nine "core" global tipping elements** plus several regional ones, each with an estimated warming threshold. Its sobering headline: with the planet already around 1.3–1.4°C above pre-industrial, we have entered the lower uncertainty range of *five* of them — and several more become "likely" within the 1.5–2°C window the Paris Agreement was built to stay inside. The chart below shows the verified central estimates and their (very wide) uncertainty ranges. Two lessons are baked into its shape: the ranges are *enormous* (this is genuine scientific humility, not vagueness), and several bars already cross today's warming line.</PanelNote>
+The most careful systematic estimate is a 2022 *Science* paper led by David Armstrong McKay and Tim Lenton, which identified roughly **nine "core" global tipping elements** plus several regional ones, each with an estimated warming threshold. Its sobering headline: with the planet already around 1.3–1.4°C above pre-industrial, we have entered the lower uncertainty range of *five* of them — and several more become "likely" within the 1.5–2°C window the Paris Agreement was built to stay inside. The chart below shows the verified central estimates and their (very wide) uncertainty ranges. Two lessons are baked into its shape: the ranges are *enormous* (this is genuine scientific humility, not vagueness), and several bars already cross today's warming line.
 
 <Day9StaticFigure kind="thresholds" locale="en" />
 
-<PanelNote>Two assessments now anchor this field for policymakers: the first **Global Tipping Points Report** (Lenton et al., launched at COP28 in December 2023), the largest synthesis of its kind, and its **2025 second edition** (374 pages, October 2025, more than 160 authors). The 2025 report's grim centerpiece: warm-water coral reefs are now judged to be *passing* their tipping point — their threshold (central estimate near 1.2°C) sits below today's warming, and even holding at 1.5°C, widespread loss is assessed as virtually certain. This isn't abstract: NOAA's Coral Reef Watch reports that the 2023–2025 global bleaching event, now likely ended, affected about **84.4% of the world's reef area**, the largest on record. The reports also stress a hopeful mirror image — *positive* tipping points, where reinforcing loops in technology (solar, batteries, EVs) drive self-accelerating *good* change. The same runaway math can cut both ways.</PanelNote>
-</Panel>
+Two assessments now anchor this field for policymakers: the first **Global Tipping Points Report** (Lenton et al., launched at COP28 in December 2023), the largest synthesis of its kind, and its **2025 second edition** (374 pages, October 2025, more than 160 authors). The 2025 report's grim centerpiece: warm-water coral reefs are now judged to be *passing* their tipping point — their threshold (central estimate near 1.2°C) sits below today's warming, and even holding at 1.5°C, widespread loss is assessed as virtually certain. This isn't abstract: NOAA's Coral Reef Watch reports that the 2023–2025 global bleaching event, now likely ended, affected about **84.4% of the world's reef area**, the largest on record. The reports also stress a hopeful mirror image — *positive* tipping points, where reinforcing loops in technology (solar, batteries, EVs) drive self-accelerating *good* change. The same runaway math can cut both ways.
+</Claim>
 
-<Panel>
-<PanelTitle>Edge 03 · AMOC caution</PanelTitle>
-
-<StatusChipRow>
+<Claim>
+<ClaimHeader label="Edge 03">
 <StatusChip status="ok" label="AMOC risk" printLabel="established" />
 <StatusChip status="bad" label="2057 collapse" printLabel="contested/hype" />
-</StatusChipRow>
+</ClaimHeader>
 
 ### The Atlantic's conveyor belt — a case study in careful reading
 
-<PanelNote>No tipping element better shows why the hype filter matters than the <Term as="strong">Atlantic Meridional Overturning Circulation</Term><TipNote text={"The AMOC is the Atlantic overturning circulation: a large ocean conveyor that moves warm surface water north and cold deep water south."} /> (AMOC) — the vast ocean conveyor that carries warm water north and gives northwest Europe its improbably mild climate. Disentangle three layers:</PanelNote>
+No tipping element better shows why the hype filter matters than the <Term as="strong">Atlantic Meridional Overturning Circulation</Term><TipNote text={"The AMOC is the Atlantic overturning circulation: a large ocean conveyor that moves warm surface water north and cold deep water south."} /> (AMOC) — the vast ocean conveyor that carries warm water north and gives northwest Europe its improbably mild climate. Disentangle three layers:
 
-<PanelNote>**What's established.** The AMOC is a genuine tipping element and is "very likely" to weaken further this century. Evidence for past weakening exists in several observational fingerprints and reconstructions, but the **IPCC** assigns low confidence to reconstructed and modelled 20th-century AMOC changes. Notably, the IPCC's 2021 report gives only "medium confidence" that an abrupt collapse will *not* occur before 2100 — precisely because climate models may be biased toward over-stability. The risk is real, but the historical-confidence language has to stay careful.</PanelNote>
+**What's established.** The AMOC is a genuine tipping element and is "very likely" to weaken further this century. Evidence for past weakening exists in several observational fingerprints and reconstructions, but the **IPCC** assigns low confidence to reconstructed and modelled 20th-century AMOC changes. Notably, the IPCC's 2021 report gives only "medium confidence" that an abrupt collapse will *not* occur before 2100 — precisely because climate models may be biased toward over-stability. The risk is real, but the historical-confidence language has to stay careful.
 
-<PanelNote>**What's contested.** In July 2023, Peter and Susanne Ditlevsen published a much-publicized *Nature Communications* paper fitting a tipping model to Atlantic sea-surface temperatures and estimating collapse around mid-century — a central year of **2057**, with a 95% range of 2025–2095. (A 2025 correction to that paper, fixing code errors, shifted the central estimate to roughly **2065**, range 2037–2109.) These specific dates drew intense criticism — they lean on a short temperature proxy and strong statistical assumptions, exactly the "too uncertain to date" problem from Edge 01. **The warning deserves to be taken seriously; the precise year does not deserve to be quoted as fact.** Treat the dating claim as hype risk, not settled timing.</PanelNote>
+**What's contested.** In July 2023, Peter and Susanne Ditlevsen published a much-publicized *Nature Communications* paper fitting a tipping model to Atlantic sea-surface temperatures and estimating collapse around mid-century — a central year of **2057**, with a 95% range of 2025–2095. (A 2025 correction to that paper, fixing code errors, shifted the central estimate to roughly **2065**, range 2037–2109.) These specific dates drew intense criticism — they lean on a short temperature proxy and strong statistical assumptions, exactly the "too uncertain to date" problem from Edge 01. **The warning deserves to be taken seriously; the precise year does not deserve to be quoted as fact.** Treat the dating claim as hype risk, not settled timing.
 
-<PanelNote>**What's new and solid.** In February 2024, van Westen, Kliphuis and Dijkstra (*Science Advances*) achieved something genuinely important: the first simulation of a full AMOC collapse in a complex global climate model, yielding a physics-based early-warning signal — and finding that the present-day AMOC appears to be "on route to tipping." Crucially and admirably, that paper gives *no calendar date.* It tells us the direction of travel is worrying without pretending to know the arrival time. Later that year, 44 scientists signed an open letter urging governments to take the underestimated risk seriously. The honest 2026 summary: *the AMOC is very likely to weaken this century, and the risk of crossing a tipping point is real and possibly underestimated — but anyone quoting you a specific collapse year is selling more certainty than the science can buy.*</PanelNote>
-</Panel>
+**What's new and solid.** In February 2024, van Westen, Kliphuis and Dijkstra (*Science Advances*) achieved something genuinely important: the first simulation of a full AMOC collapse in a complex global climate model, yielding a physics-based early-warning signal — and finding that the present-day AMOC appears to be "on route to tipping." Crucially and admirably, that paper gives *no calendar date.* It tells us the direction of travel is worrying without pretending to know the arrival time. Later that year, 44 scientists signed an open letter urging governments to take the underestimated risk seriously. The honest 2026 summary: *the AMOC is very likely to weaken this century, and the risk of crossing a tipping point is real and possibly underestimated — but anyone quoting you a specific collapse year is selling more certainty than the science can buy.*
+</Claim>
 
 <Aside>
 <BlockTitle>One year is not the threshold</BlockTitle>
