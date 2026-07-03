@@ -187,6 +187,8 @@ Simulation is not quite theory and not quite experiment. It inherits equations, 
 <Term as="em">Digital twin</Term><TipNote text={"A strict digital twin has a virtual representation, live data from a physical counterpart, predictive use, and a bidirectional virtual-physical loop."} /> has become marketing language, so use the strict source: the 2024 U.S. National Academies report *Foundational Research Gaps and Future Directions for Digital Twins*. Under that bar, a twin is not merely a simulation. It is a virtual construct tied to a physical counterpart, updated by data from that counterpart, capable of prediction, and used to shape decisions about the system it represents. The feedback loop is the bar.
 
 The hard problem is trust. The report emphasizes <Term as="em">VVUQ</Term><TipNote text={"VVUQ: verify code, validate model-world fit, and quantify uncertainty."} /> as a continual process, not a one-time stamp. The physical system changes, data change, decisions change, and the twin must be re-validated as it moves. That is also the report's anti-hype filter: separate a true bidirectional twin from an ordinary simulation, and separate an aspirational twin from one that actually exists.
+
+This is where the name becomes expensive. A high-resolution CAD model is not enough. A dashboard fed by sensors is not enough. A simulation you rerun after manually uploading yesterday's data may be useful, but it has not yet earned the full name. The strong case is a loop: the physical system updates the virtual one; the virtual system forecasts and tests options; a decision changes the physical system; the next data stream checks whether the model is drifting. Without that loop, "twin" is mostly metaphor.
 </Claim>
 
 <Claim>
@@ -201,6 +203,8 @@ The hard problem is trust. The report emphasizes <Term as="em">VVUQ</Term><TipNo
 The most ambitious version is Europe's **Destination Earth** program, built with ECMWF, ESA, and EUMETSAT. On 10 June 2024, its first system release brought two high-priority twins online from the LUMI Supercomputer Center in Kajaani, Finland: Weather-Induced Extremes and Climate Change Adaptation. That matters because the phrase moved from policy vision to running infrastructure. The current Weather-Induced Extremes twin describes a 4.4 km global component, with 500-750 m regional European capability; earlier demonstrations and release materials used other km-scale configurations.
 
 That is an established launch milestone, not a magic planet-copy. It is not yet the science-fiction object implied by the phrase "digital twin of Earth." Higher resolution can expose new structure, but it also raises hard questions about parameterization, data assimilation, verification, cost, and whether the extra detail improves the decision at hand. The European goal of a full Earth-system twin by 2030 remains a roadmap.
+
+So the honest verdict has two halves. DestinE is real infrastructure: observations, high-performance computing, Earth-system models, and decision-facing services brought into one program. But "whole Earth twin" remains a future-tense label. The epistemic question is not whether the picture looks more detailed. It is whether the extra detail improves the relevant decision, under quantified uncertainty, for the task the twin is being asked to serve.
 </Claim>
 
 <Claim>
@@ -214,6 +218,8 @@ That is an established launch milestone, not a magic planet-copy. It is not yet 
 Medicine loves the idea of a digital twin of **you**: a running model of your body on which doctors could test interventions. The sober literature is far thinner. The National Academies report treats biomedical twins as a frontier with large research gaps, not a finished clinical platform. A 2025 scoping review in *npj Digital Medicine* found that only 18 of 149 healthcare studies using the label fully met the National Academies definition, and only two mentioned VVUQ.
 
 The narrow cousin proves the rule. HeartFlow's FFR-CT takes a coronary CT scan and builds a patient-specific computational-fluid-dynamics model of blood flow to assess whether a blockage is starving the heart. It received FDA De Novo clearance in 2014. The scope is narrow, physical, and decision-specific: one organ system, one imaging moment, one clinical question. That is why it works. But it is not a clean full digital twin under the strict National Academies definition: the CT-derived model represents a patient at the time of imaging; it is not a dynamically updating, bidirectional virtual-physical loop. Its success shows how powerful a constrained patient-specific model can be, and why the full-body twin is a much larger claim. The broader FDA credibility framework points the same way: its 2023 guidance is for physics-based, mechanistic, or first-principles computational models in device submissions, not standalone machine-learning or AI models.
+
+The epistemic bargain is narrow but strong. Trust comes from anatomy, CT acquisition, fluid mechanics, validation against clinical endpoints, and a regulatory question small enough to audit. Stretch the same language from "this artery, this scan, this flow calculation" to "this whole patient, all future interventions," and the confidence does not scale with the metaphor. The more a medical twin claims to include, the more VVUQ has to do.
 </Claim>
 
 <Claim>
@@ -225,6 +231,8 @@ The narrow cousin proves the rule. HeartFlow's FFR-CT takes a coronary CT scan a
 ### Forecasting weather without hand-coding the forecast equations
 
 For decades, weather forecasting meant solving atmospheric physics on enormous computers. Then machine-learning models trained on <Term as="em">reanalysis</Term><TipNote text={"Reanalysis reconstructs past weather by blending observations with a weather model into a physically consistent historical dataset."} /> and past weather caught up with, and on several benchmark hindcasts surpassed, leading physics-based systems. GraphCast, Pangu-Weather, and GenCast are not press-release curiosities; their headline results were published in *Science* and *Nature*. The qualifier matters: these are benchmark hindcasts and target metrics, not proof of universal operational superiority.
+
+They also do not begin from pure ignorance. Reanalysis data already carries instruments, data assimilation, and earlier physical modeling inside it. So the provocative phrase "without hand-coding the forecast equations" means something precise: the learned forecaster is not advancing the atmosphere by explicitly solving the usual forecast equations step by step. It has inherited physical structure through the data pipeline, then learned a powerful map from past states to future states.
 </Claim>
 
 <Day10StaticFigure kind="weather-chart" locale="en" />
