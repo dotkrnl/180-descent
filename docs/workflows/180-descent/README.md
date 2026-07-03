@@ -70,7 +70,13 @@ with a static `FormatOnly media="print-epub" variant="alternate"` equivalent.
 8. Keep static artifact equivalents purposeful. EPUB/PDF may drift from the live
    web component when the static form is clearer, but HTML should stay visually
    consistent with the intended web design.
-9. Run `rtk npm run build:social-cards` when titles or summaries change.
+9. For any original-source integration, including edits to existing days or
+   appendices, apply the Original-source completeness review gate below after
+   English MDX integration and again after Chinese translation/localization. Do
+   not treat either stage as complete until content-completeness and
+   visual-completeness subagent findings are resolved or explicitly rejected
+   with a reason.
+10. Run `rtk npm run build:social-cards` when titles or summaries change.
 
 For a new published day, the minimum source set is:
 
@@ -97,46 +103,66 @@ structural errors, not publication quality.
    abridged target. Run Kimi, then Gemini, then GLM unless the user explicitly
    waives a step; manually review terminology, quote style, status labels,
    figure labels, alt text, and static artifact prose after the model passes.
-3. **Image options offered:** show the user relevant open-license,
+3. **Original-source completeness review:** when integrating from an original
+   HTML/static file, design mock, external draft, or user-provided source,
+   preserve the original source path in the working notes and run subagent
+   review before treating the MDX integration as complete. Use at least two
+   independent read-only subagents: one focused on content completeness and one
+   focused on visual completeness. The content reviewer must compare the
+   original source against the integrated English MDX, rendered HTML, and
+   affected artifact pages, looking for missing sections, edge-case
+   elaboration, tables, captions, citations, source links, caveats, alt text,
+   static alternates, appendix content, and connective prose. The visual
+   reviewer must compare the original visual intent against the integrated web
+   and PDF/EPUB output, looking for lost diagrams, weak table treatment,
+   missing padding, collapsed cards, changed hierarchy, label overlap, mobile
+   regressions, orphaned print pages, and degraded figure/table density. After
+   Chinese translation and localization, repeat both subagent reviews against
+   the translated Chinese MDX/rendered output, using the finalized English MDX
+   and original source as references for meaning, structure, visual completeness,
+   localized labels, and artifact parity. Integrate actionable findings before
+   final checks; do not mark the day complete merely because automated checks
+   pass.
+4. **Image options offered:** show the user relevant open-license,
    public-domain, Creative Commons, or official-source image options with title,
    creator, source, license, and proposed placement. Add selected images as
    optimized local assets with credits, alt text, and bilingual captions, or
    record that the options were declined or unsuitable.
-4. **Interactives inventory:** make a list of every imported web-only
+5. **Interactives inventory:** make a list of every imported web-only
    interactive in the main lesson and appendices. For each one, verify it
    renders on the web, is registered in `WEB_ONLY_COMPONENTS`, has a localized
    `FormatOnly media="print-epub" variant="alternate"` block, and initializes
    only when visible on screen.
-5. **Static artifact equivalence:** a print/EPUB alternate for an interactive
+6. **Static artifact equivalence:** a print/EPUB alternate for an interactive
    must be a real static explanation, not a placeholder. If the live widget's
    teaching value is visual, include a static SVG/table/diagram that shows the
    relevant state, curve, grid, or comparison. The text-only summary may
    accompany the figure but must not be the only substitute.
-6. **Figure renderer contract:** every reusable SVG figure used in MDX must be
+7. **Figure renderer contract:** every reusable SVG figure used in MDX must be
    PDF-safe. Avoid relying only on external SCSS for fill, stroke, font size, or
    text positioning; include self-contained SVG styling or literal attributes
    for anything that must survive `rsvg-convert`. Register complex Astro figure
    components in `SVG_COMPONENTS` when the PDF renderer needs to extract them
    from rendered HTML.
-7. **Tooltip discipline:** check prior published days before adding `Term` /
+8. **Tooltip discipline:** check prior published days before adding `Term` /
    `TipNote`. Tooltip only the first visible use of an unexplained technical
    concept. Do not tooltip a term immediately followed by its own plain
    definition in prose.
-8. **Hype-filter discipline:** status tags must use `StatusChip`, stay short,
+9. **Hype-filter discipline:** status tags must use `StatusChip`, stay short,
    and push caveats into prose. Frontier claim blocks must use the established
    claim/status components so labels do not degrade to plain text.
-9. **Mobile typography:** inspect the main page on a narrow mobile viewport.
+10. **Mobile typography:** inspect the main page on a narrow mobile viewport.
    SVG text, status chips, buttons, and long English titles must not overlap,
    shrink below legibility, or run into frames. The mobile rendered-type gate is
    a floor, not a substitute for visual review.
-10. **Artifact visual review:** after `rtk npm run build:site` and
+11. **Artifact visual review:** after `rtk npm run build:site` and
    `rtk npm run build:pdf`,
    render every affected day PDF page to PNG with Poppler: page 1, every page
    containing a new figure/table/interactive alternate, and the last page. Check
    both English and Chinese. Look for black rectangles, missing figures, wrong
    repeated diagrams, clipped text, label/frame overlap, stale English in
    Chinese artifacts, and orphaned headings.
-11. **Deployed verification:** after deployment, fetch the deployed day PDFs
+12. **Deployed verification:** after deployment, fetch the deployed day PDFs
     from the preview URL, render the same representative pages, and smoke-check
     English desktop plus Chinese mobile HTML with Playwright. Do not rely only
     on the local `_site` render.
