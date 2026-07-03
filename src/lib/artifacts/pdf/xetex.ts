@@ -918,11 +918,12 @@ function statusChipLatex(label: string, status: string): string {
 function renderSimpleTable(attrs: Map<string, string | null>, state: MdxRenderState): string {
   const headers = parseStringArray(resolveExpression(attrs.get("headers"), state), "SimpleTable headers").map(latexEscape);
   const rows = parseStringMatrix(resolveExpression(attrs.get("rows"), state), "SimpleTable rows").map((row) => row.map(latexEscape));
+  const roomy = /\brealism-table\b/.test(attrs.get("class") ?? "");
   if (!headers.length) throw new Error(`SimpleTable headers must not be empty in ${sourceLabel(state)}`);
   if (!rows.length) throw new Error(`SimpleTable rows must not be empty in ${sourceLabel(state)}`);
   if (rows.some((row) => !row.length)) throw new Error(`SimpleTable rows must not contain empty rows in ${sourceLabel(state)}`);
   if (rows.some((row) => row.length !== headers.length)) throw new Error(`SimpleTable row widths must match headers in ${sourceLabel(state)}`);
-  return latexTable({ rows: [headers, ...rows], headerRows: new Set([0]) });
+  return latexTable({ rows: [headers, ...rows], headerRows: new Set([0]) }, { roomy });
 }
 
 function renderBayesSieve(node: MdxNode, attrs: Map<string, string | null>, state: MdxRenderState): string {
@@ -1206,9 +1207,11 @@ function isTableHeaderComponent(name: string): boolean {
   return TABLE_HEADER_COMPONENTS.has(name);
 }
 
-function latexTable(table: LatexTable): string {
+function latexTable(table: LatexTable, options: { roomy?: boolean } = {}): string {
   const columnCount = Math.max(1, ...table.rows.map((row) => row.length));
-  const usableWidth = columnCount >= 5 ? 0.9 : columnCount === 4 ? 0.92 : 0.94;
+  const usableWidth = options.roomy
+    ? columnCount >= 4 ? 0.86 : 0.9
+    : columnCount >= 5 ? 0.9 : columnCount === 4 ? 0.92 : 0.94;
   const width = Math.min(0.94, usableWidth / columnCount).toFixed(3);
   const size = columnCount >= 5 ? "\\scriptsize" : "\\footnotesize";
   const columns = Array.from({ length: columnCount }, () => `>{\\raggedright\\arraybackslash}p{${width}\\linewidth}`).join("");
@@ -1216,8 +1219,8 @@ function latexTable(table: LatexTable): string {
     "\\Needspace{12\\baselineskip}",
     "\\begingroup",
     size,
-    "\\setlength{\\tabcolsep}{3pt}",
-    "\\renewcommand{\\arraystretch}{1.22}",
+    `\\setlength{\\tabcolsep}{${options.roomy ? "4pt" : "3pt"}}`,
+    `\\renewcommand{\\arraystretch}{${options.roomy ? "1.34" : "1.22"}}`,
     "\\arrayrulecolor{descentLine}",
     "\\sloppy",
     `\\begin{longtable}{@{}${columns}@{}}`,
