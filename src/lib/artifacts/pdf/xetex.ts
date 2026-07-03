@@ -782,7 +782,10 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const needspace = nodeContainsLargeBlock(node) ? "0.72\\textheight" : "0.38\\textheight";
     return `\\Needspace{${needspace}}\n\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
-  if (["Aside", "Recap", "WhereBlock", "Formula"].includes(name)) {
+  if (name === "WhereBlock") {
+    return `\\Needspace{0.30\\textheight}\n\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
+  }
+  if (["Aside", "Recap", "Formula"].includes(name)) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
   if (name === "Sources") {
@@ -833,6 +836,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     const text = renderInlineChildren(node, state, { ...context, heading: true }).trim();
     return text ? `\\begin{notepara}${text}\\end{notepara}` : "";
   }
+  if (name === "Strong") return `\\textbf{${renderInlineChildren(node, state, context)}}`;
   if (["Term", "Highlight"].includes(name)) return `\\emph{${renderInlineChildren(node, state, context)}}`;
 
   if (isContainerComponent(name) || isHtmlContainer(name)) {

@@ -44,14 +44,14 @@ import Day10IdealizationDial from "@app/components/lesson/interactives/Day10Idea
 
 <Lead drop="I">n a single paragraph published in 1946, Jorge Luis Borges describes an empire whose cartographers grew so skilled, and so obsessed with exactitude, that they drew a map the size of the empire itself. It coincided with the territory point for point, lay over the country like a second skin, and became the most accurate map ever made. It was also worthless. Carroll supplied the even neater joke, a map on the scale of **one mile to the mile**; Borges supplied the ruin.</Lead>
 
-The joke has teeth. A map is useful precisely because it is not the territory: it shrinks, flattens, selects, and throws nearly everything away. What survives is the thing you came for: structure you can use. Every scientific model performs the same trick. And once you see that, a harder question opens: when our best theories talk about things we can never see, are they describing reality, or only drawing very good maps?
+The joke has teeth. A map is useful precisely because it is not the territory: it shrinks, flattens, selects, and throws nearly everything away. What survives is the thing you came for: structure you can use. Every scientific <Term as="em">model</Term><TipNote text={"A model is a purpose-built representation of a target system, simplified for a particular question or job."} /> performs the same trick. And once you see that, a harder question opens: when our best theories talk about things we can never see, are they describing reality, or only drawing very good maps?
 </Hero>
 
 <Wrap>
 
 <StatusChipRow>
 <StatusChip status="ok" label="Core model" />
-<StatusChip status="hint" label="Frontier active" printLabel="simulation frontier active" />
+<StatusChip status="hint" label="Simulation frontier" printLabel="simulation frontier" />
 </StatusChipRow>
 
 <WhereBlock>
@@ -59,12 +59,6 @@ The joke has teeth. A map is useful precisely because it is not the territory: i
 
 Yesterday (**[Day 9](/days/009-systems-thinking-and-feedback/)**) we drew loops, bathtubs, and stability valleys. Every one of those diagrams was a model: a tool we trusted because it was simpler than the world. Today we turn the lens onto the tools themselves. We cash out **[Day 7](/days/007-information-theory/)** on compression, reuse **[Day 8](/days/008-complexity-and-emergence/)** on descriptions that sit between order and randomness, and meet **[Day 1](/days/001-what-is-knowledge/)** again in a new disguise: a model that predicts correctly for the wrong reason.
 </WhereBlock>
-
-<Aside>
-<BlockTitle>New here? Pocket glossary</BlockTitle>
-
-A <Term as="em">model</Term> is a purpose-built representation; an <Term as="em">idealization</Term> is a disciplined distortion; <Term as="em">empirical adequacy</Term> means getting the observable predictions right without claiming the hidden machinery is real; <Term as="em">underdetermination</Term> means more than one theory can fit the same evidence; <Term as="em">VVUQ</Term> means verification, validation, and uncertainty quantification; a strict <Term as="em">digital twin</Term> has live data and a bidirectional loop; a <Term as="em">hindcast</Term> tests a model against past events; <Term as="em">reanalysis</Term> reconstructs past weather by blending observations with a model; and <Term as="em">epistemic opacity</Term> means no human can inspect every step of the computation.
-</Aside>
 
 <ContentSection>
 <SectionEyebrow>The model</SectionEyebrow>
@@ -106,7 +100,7 @@ Borges was not first to the one-to-one map. In Lewis Carroll's *Sylvie and Bruno
 
 There is an old joke. A dairy farmer hires physicists to improve milk yield. Months later they return with a solution, but it works only for a **spherical cow in a vacuum**.
 
-The joke is funny because it is true. Deliberately false assumptions are not a bug in science; they are one of its sharpest tools. Galileo's law of falling bodies is clean only for bodies in a vacuum, with no air resistance, no spin, and an ideal gravitational field. None of that is exactly true. Ernan McMullin called this <Term as="em">Galilean idealization</Term><TipNote text={"Galilean idealization deliberately distorts a problem, often by removing complicating factors, so the core relation becomes mathematically tractable."} />: distort the problem to make the mechanism visible, then add detail back if the purpose demands it.
+The joke is funny because it is true. Deliberately false assumptions, or <Term as="em">idealizations</Term><TipNote text={"An idealization is a disciplined distortion: a knowingly false simplification used to reveal, calculate, or explain something."} />, are not a bug in science; they are one of its sharpest tools. Galileo's law of falling bodies is clean only for bodies in a vacuum, with no air resistance, no spin, and an ideal gravitational field. None of that is exactly true. Ernan McMullin called this <Term as="em">Galilean idealization</Term><TipNote text={"Galilean idealization deliberately distorts a problem, often by removing complicating factors, so the core relation becomes mathematically tractable."} />: distort the problem to make the mechanism visible, then add detail back if the purpose demands it.
 
 Sometimes the simplification is even deeper. A frictionless plane does not merely make the arithmetic easy; it reveals inertia by removing the thing that hides it. This <Term as="em">minimalist idealization</Term> is not an approximation of the world so much as an argument about what matters. The spherical cow, the ideal gas, the point mass, the infinite population in genetics, and the frictionless pulley all say: ignore this noise and watch the structure that remains.
 
@@ -133,7 +127,7 @@ Sometimes the simplification is even deeper. A frictionless plane does not merel
 
 ## Do our maps describe a real world, or just work?
 
-Here the practical question becomes one of philosophy's deepest fights. Physics speaks of electrons, quarks, fields, and spacetime curvature: entities and structures not observed in the ordinary direct way, but known through instruments, intervention, and inference. The theories work spectacularly. Does that success mean the unseen furniture is really there, more or less as described? Or are electrons entries in a powerful bookkeeping system, useful for predicting observations without telling us what reality is like underneath?
+Here the practical question becomes one of philosophy's deepest fights. Physics speaks of electrons, quarks, fields, and spacetime curvature: entities and structures not observed in the ordinary direct way, but known through instruments, intervention, and inference. The theories work spectacularly. Does that success mean the unseen furniture is really there, more or less as described? Or are electrons entries in a powerful bookkeeping system, <Term as="em">empirically adequate</Term><TipNote text={"Empirical adequacy means getting the observable predictions right without committing to the hidden machinery as real."} /> without telling us what reality is like underneath?
 
 The <Term as="em">scientific realist</Term> says success would be miraculous if our best theories were not latching onto reality. This is the no-miracles argument associated with Hilary Putnam and J. J. C. Smart: truth is the best explanation for sustained predictive success.
 
@@ -166,7 +160,7 @@ Hold onto this table. Computers are about to force every row of it into the open
 
 ## The old fight, reborn in silicon
 
-For most of history, science had two ways to learn: think about the world and poke the world. In the last few decades, a third has muscled in: **simulation**. A climate model runs a century in code. A jet engine's digital counterpart predicts a crack before it forms. On benchmark hindcasts, learned forecasters now beat leading physics-based baselines on some headline metrics. What kind of knowledge is that?
+For most of history, science had two ways to learn: think about the world and poke the world. In the last few decades, a third has muscled in: **simulation**. A climate model runs a century in code. A jet engine's digital counterpart predicts a crack before it forms. On benchmark <Term as="em">hindcasts</Term><TipNote text={"A hindcast tests a forecast model by asking it to predict past events from earlier data, then comparing the forecast with what actually happened."} />, learned forecasters now beat leading physics-based baselines on some headline metrics. What kind of knowledge is that?
 
 Eric Winsberg argues that simulations have their own epistemology: they can produce genuine knowledge, justified by practices that are not reducible to either pencil-and-paper theory or laboratory experiment. Paul Humphreys named the unease <Term as="em">epistemic opacity</Term><TipNote text={"Epistemic opacity is a situation where no human can survey all the relevant steps by which a computational result was produced."} />. A process may be formally specified and still too large for any human to inspect step by step.
 
@@ -176,9 +170,9 @@ Eric Winsberg argues that simulations have their own epistemology: they can prod
 <StatusChip status="bad" label="Twin hype" printLabel="hype contested" />
 </ClaimHeader>
 
-### The digital twin: when does a model earn the name?
+### When does a model earn the name?
 
-"Digital twin" is heavily marketed, so use the strict source: the 2024 U.S. National Academies report *Foundational Research Gaps and Future Directions for Digital Twins*. A real digital twin is not merely a simulation. It has a virtual representation, dynamic data updates from a physical counterpart, predictive capability, decision value, and a bidirectional virtual-physical loop. That feedback loop is the bar.
+<Term as="em">Digital twin</Term><TipNote text={"A strict digital twin has a virtual representation, live data from a physical counterpart, predictive use, and a bidirectional virtual-physical loop."} /> has become marketing language, so use the strict source: the 2024 U.S. National Academies report *Foundational Research Gaps and Future Directions for Digital Twins*. Under that bar, a twin is not merely a simulation. The feedback loop is the bar.
 
 The hard problem is trust. The report emphasizes <Term as="em">VVUQ</Term><TipNote text={"VVUQ: verify code, validate model-world fit, and quantify uncertainty."} /> as a continual process, not a one-time stamp. The physical system changes, data change, decisions change, and the twin must be re-validated as it moves.
 </Claim>
@@ -218,7 +212,7 @@ The narrow cousin proves the rule. HeartFlow's FFR-CT takes a coronary CT scan a
 
 ### Forecasting weather without hand-coding the forecast equations
 
-For decades, weather forecasting meant solving atmospheric physics on enormous computers. Then machine-learning models trained on reanalysis and past weather caught up with, and on several <Term as="em">benchmark hindcasts</Term><TipNote text={"A hindcast tests a forecast model by asking it to predict past events from earlier data, then comparing the forecast with what actually happened."} /> surpassed, leading physics-based systems. GraphCast, Pangu-Weather, and GenCast are not press-release curiosities; their headline results were published in *Science* and *Nature*.
+For decades, weather forecasting meant solving atmospheric physics on enormous computers. Then machine-learning models trained on <Term as="em">reanalysis</Term><TipNote text={"Reanalysis reconstructs past weather by blending observations with a weather model into a physically consistent historical dataset."} /> and past weather caught up with, and on several benchmark hindcasts surpassed, leading physics-based systems. GraphCast, Pangu-Weather, and GenCast are not press-release curiosities; their headline results were published in *Science* and *Nature*.
 </Claim>
 
 <Day10StaticFigure kind="weather-chart" locale="en" />

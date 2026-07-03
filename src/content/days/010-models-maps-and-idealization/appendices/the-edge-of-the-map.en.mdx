@@ -13,6 +13,7 @@ import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Strong from "@app/components/lesson/Strong.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
@@ -35,11 +36,11 @@ The deepest post-2020 change is not any single result. It is a change in what a 
 
 These systems are <Term as="em">foundation models</Term><TipNote text={"A foundation model is a large pretrained model that can be adapted to many downstream tasks, rather than being trained from scratch for one narrow use."} />, and importing them into science is one of the decade's major stories. Wang and 41 co-authors' 2023 *Nature* review, "Scientific discovery in the age of artificial intelligence," reads like a flag planted on new territory. <StatusChip status="ok" label="review" printLabel="influential review" />
 
-The flagship Earth-system instance arrived in May 2025: **Aurora**, a 1.3-billion-parameter model from Microsoft Research and collaborators, pretrained on more than a million hours of geophysical data. It is not tuned for one job; it is a general pretrained atmosphere that can be fine-tuned for air quality, ocean waves, tropical-cyclone tracks, and high-resolution weather. The paper reports that Aurora matches or beats numerical air-pollution simulations on 74% of targets, wave models on 86% of variables, and official five-day tropical-cyclone track forecasts across several agencies, including the U.S. National Hurricane Center basins. Its authors frame this as the first time a machine-learning model surpassed full operational tropical-cyclone forecasts up to five days. <StatusChip status="ok" label="established" printLabel="peer-reviewed result" />
+The flagship Earth-system instance arrived in May 2025: <Strong>Aurora</Strong>, a 1.3-billion-parameter model from Microsoft Research and collaborators, pretrained on more than a million hours of geophysical data. It is not tuned for one job; it is a general pretrained atmosphere that can be fine-tuned for air quality, ocean waves, tropical-cyclone tracks, and high-resolution weather. The paper reports that Aurora matches or beats numerical air-pollution simulations on 74% of targets, wave models on 86% of variables, and official five-day tropical-cyclone track forecasts across several agencies, including the U.S. National Hurricane Center basins. Its authors frame this as the first time a machine-learning model surpassed full operational tropical-cyclone forecasts up to five days. <StatusChip status="ok" label="established" printLabel="peer-reviewed result" />
 
 Notice what this does to the main page's realism debate. Aurora is constructive empiricism industrialized: a model with no human-readable meteorology inside can still be empirically adequate for important forecasting tasks. The realist's discomfort — *a model that predicts without representing in a surveyable way* — is now an active research program, not a classroom puzzle.
 
-The same pattern is spreading. NASA and IBM's **Prithvi WxC**, released in 2024 as open weights plus preprint, is a 2.3-billion-parameter weather-climate foundation model trained on MERRA-2 variables and tested across forecasting, <Term as="em">downscaling</Term><TipNote text={"Downscaling turns coarse climate or weather information into finer local or regional detail."} />, gravity-wave flux parameterization, and extremes. The gap between released and validated is the reason the hype filter exists. <StatusChip status="hint" label="preprint" printLabel="promising preprint" />
+The same pattern is spreading. NASA and IBM's <Strong>Prithvi WxC</Strong>, released in 2024 as open weights plus preprint, is a 2.3-billion-parameter weather-climate foundation model trained on MERRA-2 variables and tested across forecasting, <Term as="em">downscaling</Term><TipNote text={"Downscaling turns coarse climate or weather information into finer local or regional detail."} />, gravity-wave flux parameterization, and extremes. The gap between released and validated is the reason the hype filter exists. <StatusChip status="hint" label="preprint" printLabel="promising preprint" />
 </ContentSection>
 
 <ContentSection>
@@ -47,7 +48,7 @@ The same pattern is spreading. NASA and IBM's **Prithvi WxC**, released in 2024 
 
 ## Thirteen dragons, sorted
 
-The useful question is not "is this impressive?" The useful question has two axes: **how established is it**, and **how much would it matter if it held up?** The upper-right is the real revolution: big and solid. The upper-left is where the dragons live: enormous claims resting on thin ice.
+The useful question is not "is this impressive?" The useful question has two axes: <Strong>how established is it</Strong>, and <Strong>how much would it matter if it held up?</Strong> The upper-right is the real revolution: big and solid. The upper-left is where the dragons live: enormous claims resting on thin ice.
 </ContentSection>
 
 <Panel>
@@ -87,7 +88,7 @@ The useful question is not "is this impressive?" The useful question has two axe
 
 ## The machine now runs the machine
 
-Some frontier models are already load-bearing in the most literal sense: trusted with expensive hardware and unstable plasma. In 2022, DeepMind and EPFL published a reinforcement-learning controller that shaped the magnetic field of a real **tokamak fusion reactor**, holding plasma in target configurations on the TCV machine. In 2024, a follow-up used deep reinforcement learning to reduce the risk of tearing instabilities on the DIII-D tokamak. When a learned model is allowed to steer fusion plasma in real time, "just a model" is no longer a useful dismissal. <StatusChip status="ok" label="hardware" printLabel="hardware-validated" />
+Some frontier models are already load-bearing in the most literal sense: trusted with expensive hardware and unstable plasma. In 2022, DeepMind and EPFL published a reinforcement-learning controller that shaped the magnetic field of a real <Strong>tokamak fusion reactor</Strong>, holding plasma in target configurations on the TCV machine. In 2024, a follow-up used deep reinforcement learning to reduce the risk of tearing instabilities on the DIII-D tokamak. When a learned model is allowed to steer fusion plasma in real time, "just a model" is no longer a useful dismissal. <StatusChip status="ok" label="hardware" printLabel="hardware-validated" />
 
 The same dispatch also carries a warning. <Term as="em">Physics-informed neural networks</Term><TipNote text={"Physics-informed neural networks train a neural model while penalizing violations of known equations or boundary conditions."} /> were pitched as a bridge between explicit equations and learned models: bake the differential equation into the loss function, then let the network learn a solution. The failure-mode literature shows the catch. A PINN can drive its residual loss down while the actual solution remains badly wrong. The model can satisfy every constraint you wrote down and still miss the world, because you did not write down all the constraints that matter. <StatusChip status="ok" label="failure modes" printLabel="failure modes established" /> <StatusChip status="hint" label="fixes early" printLabel="fixes promising" />
 </ContentSection>
@@ -99,7 +100,7 @@ The same dispatch also carries a warning. <Term as="em">Physics-informed neural 
 
 If the black-box emulator is instrumentalism's triumph, a quieter counter-movement fights for the realist. Its demand is simple: do not settle for a model that predicts; make the machine hand you a law you can read. This is <Term as="em">symbolic regression</Term><TipNote text={"Symbolic regression searches for compact mathematical expressions that fit data, ideally yielding an interpretable law rather than an opaque predictor."} /> and theory-guided discovery.
 
-Three specimens matter. **AI-Descartes** combines symbolic regression with logical reasoning over background axioms and rederived laws such as Kepler's third law from data plus theory. **AI-Hilbert** pushes the idea through polynomial optimization and formal certificates. **FunSearch** pairs a language model with an automated evaluator and evolutionary search; in *Nature*, it found new constructions for the cap-set problem and new bin-packing heuristics. That last case matters philosophically because the output is not a weight vector. It is an object humans can inspect, test, and prove against. <StatusChip status="ok" label="FunSearch" printLabel="FunSearch established" />
+Three specimens matter. <Strong>AI-Descartes</Strong> combines symbolic regression with logical reasoning over background axioms and rederived laws such as Kepler's third law from data plus theory. <Strong>AI-Hilbert</Strong> pushes the idea through polynomial optimization and formal certificates. <Strong>FunSearch</Strong> pairs a language model with an automated evaluator and evolutionary search; in *Nature*, it found new constructions for the cap-set problem and new bin-packing heuristics. That last case matters philosophically because the output is not a weight vector. It is an object humans can inspect, test, and prove against. <StatusChip status="ok" label="FunSearch" printLabel="FunSearch established" />
 
 The caveat keeps this from becoming a realist victory lap. Many systems still mostly rediscover laws we already had, which is powerful validation but thin discovery. The KAN line is similarly promising but unsettled: the 2024 Kolmogorov-Arnold Networks preprint proposed learnable functions on network edges as a more interpretable alternative to MLPs, and a 2025 *Physical Review X* follow-up argues for scientific-discovery uses. That is real momentum. It is still not proof that KANs generally beat well-tuned ordinary networks. <StatusChip status="hint" label="promising" /> <StatusChip status="hint" label="KAN debated" printLabel="KAN role debated" />
 </ContentSection>
@@ -155,16 +156,16 @@ Others divide the terrain differently. Florian Boge separates opacity of trainin
 
 Now the upper-left of the map: claims so large that, if they land, they redraw everything, and which today rest on thinner ice.
 
-**The AI Virtual Cell.** In 2024, a large team spanning Stanford, the Chan Zuckerberg Initiative, Genentech, Google, and others published a *Cell* roadmap for building multi-scale AI models of living cells. The ambition is serious: a virtual cell that can support interpretable *in silico* experiments across biological scales. But the paper is a priorities-and-opportunities roadmap, not a built cell twin. <StatusChip status="bad" label="roadmap" printLabel="vision and roadmap" />
+<Strong>The AI Virtual Cell.</Strong> In 2024, a large team spanning Stanford, the Chan Zuckerberg Initiative, Genentech, Google, and others published a *Cell* roadmap for building multi-scale AI models of living cells. The ambition is serious: a virtual cell that can support interpretable *in silico* experiments across biological scales. But the paper is a priorities-and-opportunities roadmap, not a built cell twin. <StatusChip status="bad" label="roadmap" printLabel="vision and roadmap" />
 
-**The planet twin.** NVIDIA's **cBottle** is a generative model for kilometer-scale global-atmosphere fields: a coarse global generator plus local super-resolution, trained over simulation and <Term as="em">reanalysis data</Term><TipNote text={"Reanalysis combines historical observations with a weather model to produce a consistent reconstruction of past atmospheric states."} />. The preprint is credible and useful. The "digital twin of the planet" aura around Earth-2 is marketing language doing work that the evidence has not earned. <StatusChip status="hint" label="preprint" /> <StatusChip status="bad" label="twin hype" printLabel="planet-twin framing is hype" />
+<Strong>The planet twin.</Strong> NVIDIA's <Strong>cBottle</Strong> is a generative model for kilometer-scale global-atmosphere fields: a coarse global generator plus local super-resolution, trained over simulation and <Term as="em">reanalysis data</Term><TipNote text={"Reanalysis combines historical observations with a weather model to produce a consistent reconstruction of past atmospheric states."} />. The preprint is credible and useful. The "digital twin of the planet" aura around Earth-2 is marketing language doing work that the evidence has not earned. <StatusChip status="hint" label="preprint" /> <StatusChip status="bad" label="twin hype" printLabel="planet-twin framing is hype" />
 
-**The autonomous scientist.** Sakana AI's 2024 "AI Scientist" preprint pitched an end-to-end automated researcher: idea, experiment, paper, and review. Independent evaluation in 2025 found a harsher reality: five of twelve proposed experiments failed because of coding errors, novelty judgments were poor, and some results were hallucinated or misleading. The result is not useless; the autonomous-scientist framing is exactly what the contested tag is for. <StatusChip status="bad" label="deflated" printLabel="independently deflated" />
+<Strong>The autonomous scientist.</Strong> Sakana AI's 2024 "AI Scientist" preprint pitched an end-to-end automated researcher: idea, experiment, paper, and review. Independent evaluation in 2025 found a harsher reality: five of twelve proposed experiments failed because of coding errors, novelty judgments were poor, and some results were hallucinated or misleading. The result is not useless; the autonomous-scientist framing is exactly what the contested tag is for. <StatusChip status="bad" label="deflated" printLabel="independently deflated" />
 
 <Aside>
 <BlockTitle>The materials-discovery cautionary tale</BlockTitle>
 
-One story compresses the whole appendix. In 2023, Google DeepMind's **GNoME** announced 2.2 million crystal structures, including hundreds of thousands predicted stable. The result was real and impressive; a peer-reviewed ACS perspective soon asked how many were genuinely new, useful, or synthesizable. In 2025, Microsoft's **MatterGen** shifted the goalposts productively from listing candidates to generating materials under target constraints, with a reported synthesis proof point. The arc is the frontier in one breath: real result, inflated headline, sober correction, progress underneath. Believe the papers; audit the press; wait for synthesis. <StatusChip status="ok" label="real results" /> <StatusChip status="bad" label="scope contested" />
+One story compresses the whole appendix. In 2023, Google DeepMind's <Strong>GNoME</Strong> announced 2.2 million crystal structures, including hundreds of thousands predicted stable. The result was real and impressive; a peer-reviewed ACS perspective soon asked how many were genuinely new, useful, or synthesizable. In 2025, Microsoft's <Strong>MatterGen</Strong> shifted the goalposts productively from listing candidates to generating materials under target constraints, with a reported synthesis proof point. The arc is the frontier in one breath: real result, inflated headline, sober correction, progress underneath. Believe the papers; audit the press; wait for synthesis. <StatusChip status="ok" label="real results" /> <StatusChip status="bad" label="scope contested" />
 </Aside>
 </ContentSection>
 
@@ -175,20 +176,20 @@ One story compresses the whole appendix. In 2023, Google DeepMind's **GNoME** an
 
 The right posture is not belief or dismissal. It is knowing which result would change your mind.
 
-- **Validated warming extrapolation.** If an ML climate emulator reproduces a genuine warming response against held-out high-emission simulation or paleoclimate, the instrumentalist case strengthens. Right now, +4 K drift says caution.
-- **Leakage-audited replication.** Independent, leakage-checked reproduction of a flagship foundation-model science claim would tell us how much of Kapoor and Narayanan's warning applies at the top of the field.
-- **A genuinely novel discovered law.** A symbolic-regression system that finds a new, subsequently confirmed law of nature would be a landscape shift. FunSearch's cap-set result is the closest analogue in pure math.
-- **A validated clinical digital twin.** A peer-reviewed, independently validated patient or organ twin that clears the National Academies bar would move medicine's dragons out of the upper-left.
+- <Strong>Validated warming extrapolation.</Strong> If an ML climate emulator reproduces a genuine warming response against held-out high-emission simulation or paleoclimate, the instrumentalist case strengthens. Right now, +4 K drift says caution.
+- <Strong>Leakage-audited replication.</Strong> Independent, leakage-checked reproduction of a flagship foundation-model science claim would tell us how much of Kapoor and Narayanan's warning applies at the top of the field.
+- <Strong>A genuinely novel discovered law.</Strong> A symbolic-regression system that finds a new, subsequently confirmed law of nature would be a landscape shift. FunSearch's cap-set result is the closest analogue in pure math.
+- <Strong>A validated clinical digital twin.</Strong> A peer-reviewed, independently validated patient or organ twin that clears the National Academies bar would move medicine's dragons out of the upper-left.
 </ContentSection>
 
 <Recap>
 <PanelTitle>◆ The appendix in three sentences</PanelTitle>
 
-**Big idea:** since 2020, modeling has been reorganized around foundation models and learned surrogates that can predict well without human-readable representation, while symbolic discovery tries to make machines produce inspectable laws.
+<Strong>Big idea:</Strong> since 2020, modeling has been reorganized around foundation models and learned surrogates that can predict well without human-readable representation, while symbolic discovery tries to make machines produce inspectable laws.
 
-**Sharpest caution:** data leakage has already inflated published ML-for-science results, and even strong climate emulators can drift when pushed beyond their training regime; predictive skill is not mechanism.
+<Strong>Sharpest caution:</Strong> data leakage has already inflated published ML-for-science results, and even strong climate emulators can drift when pushed beyond their training regime; predictive skill is not mechanism.
 
-**Live controversy:** whether deep-learning models can explain rather than merely predict, with the AI Virtual Cell, planet-twin claims, and autonomous-scientist systems as spectacular but still under-evidenced bets.
+<Strong>Live controversy:</Strong> whether deep-learning models can explain rather than merely predict, with the AI Virtual Cell, planet-twin claims, and autonomous-scientist systems as spectacular but still under-evidenced bets.
 
 <Threads label="Threads gathered">computation as a modeling substrate · information as compression, leakage, and evidence links · emergence in multi-scale cell and climate models · Day 10's realism/instrumentalism divide stress-tested on 2020s hardware.</Threads>
 </Recap>

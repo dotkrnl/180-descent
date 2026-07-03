@@ -2,6 +2,7 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
 import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Panel from "@app/components/lesson/Panel.astro";
 import PanelNote from "@app/components/lesson/PanelNote.astro";
@@ -12,6 +13,7 @@ import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Strong from "@app/components/lesson/Strong.astro";
 import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
@@ -20,6 +22,8 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 <Lead drop="古">代地图绘制者有个诚实的习惯：在测绘终止、传闻开始之处，他们画上怪兽，写下「hic sunt dracones」——此处有龙。正文与附录 I 描绘的是相对成熟的疆域：博尔赫斯、贝拉尔米内、验证、可靠主义，以及那场古老的实在论之争。本附录则驶向地图边缘。下文大部分内容来自 2020 年或更晚，许多出自最近几年，而其中相当一部分日后会被证明是错的。这正是重点所在。前沿地带，才是校准最关键的地方。</Lead>
 
 <ContinueNote label="◆ 请先读这段">
+本附录可以跳过；它只是为正文补充前沿案例与来源校准细节。
+
 下面的每条论断都带有一个标签。<StatusChip status="ok" label="已确立" /> 表示经过同行评议、重复验证或硬件验证。<StatusChip status="hint" label="有前景" /> 表示可信但尚处早期、范围狭窄，或仍只是预印本形态。<StatusChip status="bad" label="有争议" printLabel="有争议／炒作风险" /> 表示证据薄弱、论述夸大，或独立评议已经戳破了主张。第 10 日的技能——对模型在多大程度上、因何而错的校准判断——正是阅读这片前沿所需要的技能。
 </ContinueNote>
 
@@ -32,11 +36,11 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 
 这些系统就是<Term as="em">基础模型</Term><TipNote text={"基础模型是一种大型预训练模型，可被适配到许多下游任务，而不是从头为某个狭窄用途训练。"} />，把它们引入科学是这十年的重大事件之一。Wang 等 41 位合著者 2023 年发表于 *Nature* 的综述 *Scientific discovery in the age of artificial intelligence*，宛如在新领土上插下的一面旗帜。<StatusChip status="ok" label="综述" printLabel="有影响力的综述" />
 
-旗舰级的地球系统实例出现在 2025 年 5 月：**Aurora**，一个来自微软研究院及合作者的 13 亿参数模型，在一百多万小时地球物理数据上预训练。它并非为单一任务调优，而是一个通用的预训练大气模型，可被微调到空气质量、海浪、热带气旋路径和高分辨率天气。论文报告，Aurora 在 74% 的目标上持平或优于数值空气污染模拟，在 86% 的变量上优于海浪模型，并在多个机构的五天热带气旋业务路径预报上表现更好，其中包括美国国家飓风中心负责的海区。作者将其表述为机器学习模型首次在最长五天的完整业务热带气旋预报上实现超越。<StatusChip status="ok" label="已确立" printLabel="同行评议结果" />
+旗舰级的地球系统实例出现在 2025 年 5 月：<Strong>Aurora</Strong>，一个来自微软研究院及合作者的 13 亿参数模型，在一百多万小时地球物理数据上预训练。它并非为单一任务调优，而是一个通用的预训练大气模型，可被微调到空气质量、海浪、热带气旋路径和高分辨率天气。论文报告，Aurora 在 74% 的目标上持平或优于数值空气污染模拟，在 86% 的变量上优于海浪模型，并在多个机构的五天热带气旋业务路径预报上表现更好，其中包括美国国家飓风中心负责的海区。作者将其表述为机器学习模型首次在最长五天的完整业务热带气旋预报上实现超越。<StatusChip status="ok" label="已确立" printLabel="同行评议结果" />
 
-注意这对正文主页上的实在论之争做了什么。Aurora 是工业化了的建构经验论：一个内部不含人类可读气象学的模型，仍能在重要预报任务上做到经验充分。实在论者的不适——一个预测却不以可审视方式表征世界的模型——如今是一项活跃研究计划，而不再是课堂上的谜题。
+注意这对正文主页上的实在论之争做了什么。Aurora 是工业化了的建构经验主义：一个内部不含人类可读气象学的模型，仍能在重要预报任务上做到经验充分。实在论者的不适——一个预测却不以可审视方式表征世界的模型——如今是一项活跃研究计划，而不再是课堂上的谜题。
 
-同样的模式正在扩散。NASA 与 IBM 的 **Prithvi WxC** 于 2024 年以开放权重加预印本的形式发布，是一个在 MERRA-2 变量上训练的 23 亿参数天气-气候基础模型，并在预报、<Term>降尺度</Term><TipNote text={"降尺度指把粗分辨率的气候或天气信息转换为更精细的局地或区域细节。"} />、重力波通量参数化和极端事件上接受测试。已发布与已验证之间的差距，正是防炒作滤镜存在的原因。<StatusChip status="hint" label="预印本" printLabel="有前景的预印本" />
+同样的模式正在扩散。NASA 与 IBM 的 <Strong>Prithvi WxC</Strong> 于 2024 年以开放权重加预印本的形式发布，是一个在 MERRA-2 变量上训练的 23 亿参数天气-气候基础模型，并在预报、<Term>降尺度</Term><TipNote text={"降尺度指把粗分辨率的气候或天气信息转换为更精细的局地或区域细节。"} />、重力波通量参数化和极端事件上接受测试。已发布与已验证之间的差距，正是防炒作校准存在的原因。<StatusChip status="hint" label="预印本" printLabel="有前景的预印本" />
 </ContentSection>
 
 <ContentSection>
@@ -44,14 +48,21 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 
 ## 十三条龙，已排序
 
-有用的问题不是「这有多令人印象深刻？」。有用的问题有两个轴：**证据有多扎实**，以及**万一成立，它有多重要？**右上角是真正的革命：重大且扎实。左上角是龙出没的地方：庞大主张立于薄冰之上。
+有用的问题不是「这有多令人印象深刻？」。有用的问题有两个轴：<Strong>证据有多扎实</Strong>，以及<Strong>万一成立，它有多重要？</Strong>右上角是真正的革命：重大且扎实。左上角是龙出没的地方：庞大主张立于薄冰之上。
 </ContentSection>
 
 <Panel>
 <PanelTitle>前沿地图 · 若成立的影响 × 证据</PanelTitle>
-<PanelNote>位置取决于判断，而非测量。表格让网络、EPUB 和 PDF 读者都能看到原始交互凭据。</PanelNote>
+<PanelNote>位置取决于判断，而非测量。编号点会在下方凭据表中展开。</PanelNote>
 
 <Day10StaticFigure kind="frontier-map" locale="zh" />
+</Panel>
+
+<FormatOnly as="div" media="print" class="pdf-page-break" />
+
+<Panel>
+<PanelTitle>前沿凭据</PanelTitle>
+<PanelNote>下表把原始交互中的编号、状态与判断依据展开，方便网页、EPUB 和 PDF 阅读。</PanelNote>
 
 <SimpleTable
   headers={["研究","状态","定位理由"]}
@@ -77,7 +88,7 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 
 ## 机器现在操控机器
 
-有些前沿模型已经在最字面的意义上承受负荷：被委以昂贵的硬件和不稳定的等离子体。2022 年，DeepMind 与 EPFL 发表了一个强化学习控制器，它塑造了一台真实**托卡马克聚变反应堆**的磁场，在 TCV 装置上将等离子体维持在目标构型。2024 年，后续研究用深度强化学习降低 DIII-D 托卡马克上撕裂不稳定性的风险。当一个学习模型被允许实时引导聚变等离子体时，「只是个模型」就不再是有用的搪塞。<StatusChip status="ok" label="硬件" printLabel="硬件验证" />
+有些前沿模型已经在最字面的意义上承受负荷：被委以昂贵的硬件和不稳定的等离子体。2022 年，DeepMind 与 EPFL 发表了一个强化学习控制器，它塑造了一台真实<Strong>托卡马克聚变反应堆</Strong>的磁场，在 TCV 装置上将等离子体维持在目标构型。2024 年，后续研究用深度强化学习降低 DIII-D 托卡马克上撕裂不稳定性的风险。当一个学习模型被允许实时引导聚变等离子体时，「只是个模型」就不再是有用的搪塞。<StatusChip status="ok" label="硬件" printLabel="硬件验证" />
 
 同一急件也带来一个警告。<Term as="em">物理信息神经网络</Term><TipNote text={"物理信息神经网络在训练神经模型时，会对已知方程或边界条件的违反施加惩罚。"} />曾被宣传为显式方程与学习模型之间的桥梁：把微分方程写进损失函数，再让网络学习一个解。失效模式文献揭示了陷阱。PINN 可以一边把残差损失压得很低，一边让真实解严重偏离。模型可以满足你写下的每一条约束，却仍错过世界，因为你并没有写下所有重要的约束。<StatusChip status="ok" label="失效模式" printLabel="失效模式已确立" /> <StatusChip status="hint" label="修复早期" printLabel="修复方案有前景" />
 </ContentSection>
@@ -89,13 +100,13 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 
 如果说黑箱代理模型是工具主义的胜利，那么一场更安静的反运动正在为实在论而战。它的要求很简单：不要满足于一个只会预测的模型；要让机器交给你一条能读得懂的定律。这就是<Term as="em">符号回归</Term><TipNote text={"符号回归搜索能拟合数据的简洁数学表达式，理想情况下给出一个可解释的规律，而非不透明的预测器。"} />与理论引导的发现。
 
-三个标本值得关注。**AI-Descartes** 将符号回归与对背景公理的逻辑推理相结合，从数据加理论中重新推导出诸如开普勒第三定律这样的定律。**AI-Hilbert** 通过多项式优化与形式化证书推进这一思想。**FunSearch** 将语言模型与自动评估器及进化搜索配对；在 *Nature* 上，它发现了 cap-set 问题的新构造以及新的装箱启发式。最后一个案例在哲学上重要，因为它的输出不是权重向量，而是人类可以检查、检验并证明的对象。<StatusChip status="ok" label="FunSearch" printLabel="FunSearch 已确立" />
+三个标本值得关注。<Strong>AI-Descartes</Strong> 将符号回归与对背景公理的逻辑推理相结合，从数据加理论中重新推导出诸如开普勒第三定律这样的定律。<Strong>AI-Hilbert</Strong> 通过多项式优化与形式化证书推进这一思想。<Strong>FunSearch</Strong> 将语言模型与自动评估器及进化搜索配对；在 *Nature* 上，它发现了 cap-set 问题的新构造以及新的装箱启发式。最后一个案例在哲学上重要，因为它的输出不是权重向量，而是人类可以检查、检验并证明的对象。<StatusChip status="ok" label="FunSearch" printLabel="FunSearch 已确立" />
 
 这个保留意见让它无法变成实在论的庆功巡游。许多系统仍然主要是在重新发现我们已经知道的定律，这是有力的验证，却是单薄的发现。KAN 系列同样前景可期但尚未定论：2024 年的 Kolmogorov-Arnold Networks 预印本提出将可学习函数放在网络边上，作为多层感知器更具可解释性的替代方案；2025 年 *Physical Review X* 的后续研究则论证其在科学发现中的应用。这是真正的势头。但它仍不能证明 KAN 通常能胜过调优良好的普通网络。<StatusChip status="hint" label="有前景" /> <StatusChip status="hint" label="KAN 存疑" printLabel="KAN 角色仍在争论" />
 </ContentSection>
 
 <Panel>
-<PanelTitle>注意落差 · 论文测得的 vs 媒体报道的</PanelTitle>
+<PanelTitle>注意落差 · 论文结果与媒体暗示</PanelTitle>
 <PanelNote>前沿最大的扭曲，藏在谨慎结果与它的发布之间。</PanelNote>
 
 <SimpleTable
@@ -145,16 +156,16 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 
 现在来到地图的左上角：主张如此宏大，若落地则会重绘一切，而它们今天仍立足于更薄的冰面上。
 
-**AI 虚拟细胞。**2024 年，一个横跨斯坦福、陈-扎克伯格倡议、基因泰克、谷歌等机构的大型团队在 *Cell* 上发表路线图，旨在构建活细胞的多尺度 AI 模型。这一雄心是认真的：一个虚拟细胞，能够支持跨生物学尺度的可解释 *in silico* 实验。但论文是一份关于优先级与机遇的路线图，而非已建成的细胞孪生。<StatusChip status="bad" label="路线图" printLabel="愿景与路线图" />
+<Strong>AI 虚拟细胞。</Strong>2024 年，一个横跨斯坦福、陈-扎克伯格倡议、基因泰克、谷歌等机构的大型团队在 *Cell* 上发表路线图，旨在构建活细胞的多尺度 AI 模型。这一雄心是认真的：一个虚拟细胞，能够支持跨生物学尺度的可解释 *in silico* 实验。但论文是一份关于优先级与机遇的路线图，而非已建成的细胞孪生。<StatusChip status="bad" label="路线图" printLabel="愿景与路线图" />
 
-**行星孪生。**NVIDIA 的 **cBottle** 是一个用于公里尺度全球大气场的生成模型：一个粗分辨率全球生成器加上局部超分辨率，在模拟和<Term>再分析数据</Term><TipNote text={"再分析数据把历史观测与天气模型结合起来，生成一致的过去大气状态重建。"} />上训练。这份预印本可信且有用。围绕 Earth-2 的「行星数字孪生」光环，是营销语言在替尚未赢得的证据干活。<StatusChip status="hint" label="预印本" /> <StatusChip status="bad" label="孪生炒作" printLabel="行星孪生框架是炒作" />
+<Strong>行星孪生。</Strong>NVIDIA 的 <Strong>cBottle</Strong> 是一个用于公里尺度全球大气场的生成模型：一个粗分辨率全球生成器加上局部超分辨率，在模拟和<Term>再分析数据</Term><TipNote text={"再分析数据把历史观测与天气模型结合起来，生成一致的过去大气状态重建。"} />上训练。这份预印本可信且有用。围绕 Earth-2 的「行星数字孪生」光环，是营销语言在替尚未赢得的证据干活。<StatusChip status="hint" label="预印本" /> <StatusChip status="bad" label="孪生炒作" printLabel="行星孪生框架是炒作" />
 
-**自主科学家。**Sakana AI 2024 年的「AI Scientist」预印本推销了一位端到端自动化研究者：选题、实验、论文、评审。2025 年的独立评估发现了更严峻的现实：十二个提议实验中有五个因编码错误而失败，新颖性判断很差，部分结果是幻觉或误导。结果并非毫无用处；自主科学家的框架正是「有争议」标签的用武之地。<StatusChip status="bad" label="被戳破" printLabel="已被独立戳破" />
+<Strong>自主科学家。</Strong>Sakana AI 2024 年的「AI Scientist」预印本推销了一位端到端自动化研究者：选题、实验、论文、评审。2025 年的独立评估发现了更严峻的现实：十二个提议实验中有五个因编码错误而失败，新颖性判断很差，部分结果是幻觉或误导。结果并非毫无用处；自主科学家的框架正是「有争议」标签的用武之地。<StatusChip status="bad" label="被戳破" printLabel="已被独立戳破" />
 
 <Aside>
 <BlockTitle>材料发现的警示故事</BlockTitle>
 
-一个故事就能浓缩整篇附录。2023 年，Google DeepMind 的 **GNoME** 宣布了 220 万种晶体结构，其中数十万种被预测为稳定。结果真实且令人印象深刻；一篇经同行评议的 ACS 观点文章很快追问，其中有多少是真正新颖、有用或可合成的。2025 年，微软的 **MatterGen** 有成效地改变了问题，从列出候选材料转向在目标约束下生成材料，并报告了一个合成验证点。整个弧线就是前沿的缩影：真实结果、夸大标题、清醒修正、底层进步。相信论文；审计媒体；等待合成。<StatusChip status="ok" label="真实结果" /> <StatusChip status="bad" label="范围受争议" />
+一个故事就能浓缩整篇附录。2023 年，Google DeepMind 的 <Strong>GNoME</Strong> 宣布了 220 万种晶体结构，其中数十万种被预测为稳定。结果真实且令人印象深刻；一篇经同行评议的 ACS 观点文章很快追问，其中有多少是真正新颖、有用或可合成的。2025 年，微软的 <Strong>MatterGen</Strong> 有成效地改变了问题，从列出候选材料转向在目标约束下生成材料，并报告了一个合成验证点。整个弧线就是前沿的缩影：真实结果、夸大标题、清醒修正、底层进步。相信论文；审计媒体；等待合成。<StatusChip status="ok" label="真实结果" /> <StatusChip status="bad" label="范围受争议" />
 </Aside>
 </ContentSection>
 
@@ -165,20 +176,20 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 
 正确的姿态不是相信，也不是否定。而是知道哪一个结果会改变你的想法。
 
-- **经过验证的增暖外推。**如果某个 ML 气候代理模型能在留出验证的高排放模拟或古气候上复现真实的增暖响应，工具主义的论据就会增强。现在，+4 K 的漂移在说：谨慎。
-- **经泄漏审计的重复验证。**对一项旗舰基础模型科学主张进行独立的、检查过泄漏的重复验证，会告诉我们 Kapoor 与 Narayanan 的警告在领域顶端适用到什么程度。
-- **真正新颖的定律发现。**一个符号回归系统发现了一条后来被确认的自然定律，将是领域格局的转变。FunSearch 的 cap-set 结果是纯数学中最接近的类比。
-- **经过验证的临床数字孪生。**一份通过同行评议、独立验证并达到美国国家科学院标准的患者或器官孪生，将把医学界的龙移出左上角。
+- <Strong>经过验证的增暖外推。</Strong>如果某个 ML 气候代理模型能在留出验证的高排放模拟或古气候上复现真实的增暖响应，工具主义的论据就会增强。现在，+4 K 的漂移在说：谨慎。
+- <Strong>经泄漏审计的重复验证。</Strong>对一项旗舰基础模型科学主张进行独立的、检查过泄漏的重复验证，会告诉我们 Kapoor 与 Narayanan 的警告在领域顶端适用到什么程度。
+- <Strong>真正新颖的定律发现。</Strong>一个符号回归系统发现了一条后来被确认的自然定律，将是领域格局的转变。FunSearch 的 cap-set 结果是纯数学中最接近的类比。
+- <Strong>经过验证的临床数字孪生。</Strong>一份通过同行评议、独立验证并达到美国国家科学院标准的患者或器官孪生，将把医学界的龙移出左上角。
 </ContentSection>
 
 <Recap>
 <PanelTitle>◆ 三句话概括本附录</PanelTitle>
 
-**核心观点：**2020 年以来，建模已被重新组织在基础模型与学习型代理模型周围——它们无需人类可读的表征就能很好地预测——而符号发现则试图让机器产出可检查的定律。
+<Strong>核心观点：</Strong>2020 年以来，建模已被重新组织在基础模型与学习型代理模型周围——它们无需人类可读的表征就能很好地预测——而符号发现则试图让机器产出可检查的定律。
 
-**最尖锐的警示：**数据泄漏已经抬升了已发表的科学 ML 结果，即使强大的气候代理模型在被推出训练范围时也会漂移；预测技能不等于机制。
+<Strong>最尖锐的警示：</Strong>数据泄漏已经抬升了已发表的科学 ML 结果，即使强大的气候代理模型在被推出训练范围时也会漂移；预测技能不等于机制。
 
-**仍在争论：**深度学习模型是只能预测，还是能解释；AI 虚拟细胞、行星孪生主张与自主科学家系统是壮观但证据仍不足的赌注。
+<Strong>仍在争论：</Strong>深度学习模型是只能预测，还是能解释；AI 虚拟细胞、行星孪生主张与自主科学家系统是壮观但证据仍不足的赌注。
 
 <Threads label="线索汇聚">计算作为建模基质 · 信息作为压缩、泄漏与证据关联 · 多尺度细胞与气候模型中的涌现 · 第 10 日的实在论/工具主义分野在 2020 年代硬件上经受压力测试。</Threads>
 </Recap>
