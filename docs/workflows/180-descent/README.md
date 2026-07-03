@@ -149,8 +149,11 @@ structural errors, not publication quality.
    concept. Do not tooltip a term immediately followed by its own plain
    definition in prose.
 9. **Hype-filter discipline:** status tags must use `StatusChip`, stay short,
-   and push caveats into prose. Frontier claim blocks must use the established
-   claim/status components so labels do not degrade to plain text.
+   and push caveats into prose. Use the visible chip label for the short subject
+   only, then encode the verdict through `status` color and `printLabel`; prefer
+   `Metric` with `printLabel="established"` over `Metric · established`.
+   Frontier claim blocks must use the established claim/status components so
+   labels do not degrade to plain text.
 10. **Mobile typography:** inspect the main page on a narrow mobile viewport.
    SVG text, status chips, buttons, and long English titles must not overlap,
    shrink below legibility, or run into frames. The mobile rendered-type gate is

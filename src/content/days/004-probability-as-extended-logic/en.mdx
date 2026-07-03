@@ -262,7 +262,7 @@ The physicist **E. T. Jaynes** built his great posthumous book *Probability Theo
 <Aside>
 <BlockTitle>The honest footnote</BlockTitle>
 
-Cox's original proof was a touch too quick. In 1999 the computer scientist **Joseph Halpern** showed it needs an extra technical assumption to be airtight (it can fail on certain finite domains), and later authors patched it properly. So the right thing to say is not "probability is the *only conceivable* logic of uncertainty" — that overstates it — but "under reasonable conditions, consistent graded belief is forced into the probability axioms." The theorem stands; it just wears a slightly smaller crown than Jaynes's prose sometimes suggests. <StatusChip status={"ok"} label={"Established w/ caveat"} printLabel={"established"} />
+Cox's original proof was a touch too quick. In 1999 the computer scientist **Joseph Halpern** showed it needs an extra technical assumption to be airtight (it can fail on certain finite domains), and later authors patched it properly. So the right thing to say is not "probability is the *only conceivable* logic of uncertainty" — that overstates it — but "under reasonable conditions, consistent graded belief is forced into the probability axioms." The theorem stands; it just wears a slightly smaller crown than Jaynes's prose sometimes suggests. <StatusChip status={"ok"} label={"Cox theorem"} printLabel={"established with caveat"} />
 
 </Aside>
 
@@ -316,7 +316,7 @@ For a century, the frequentist p-value has been science's gatekeeper: get below 
 
 <Claim>
 <ClaimHeader label="Edge 01">
-<StatusChip status={"ok"} label={"The mathematics · established"} printLabel={"established"} />
+<StatusChip status={"ok"} label={"E-value math"} printLabel={"established"} />
 </ClaimHeader>
 ### The e-value: test a hypothesis by betting against it
 
@@ -329,8 +329,8 @@ This isn't loose metaphor; it's a rigorous program — "game-theoretic statistic
 
 <Claim>
 <ClaimHeader label="Edge 02">
-<StatusChip status={"ok"} label={"Optional stopping · established"} printLabel={"established"} />
-<StatusChip status={"hint"} label={"\"Replaces the p-value\" · contested"} printLabel={"contested"} />
+<StatusChip status={"ok"} label={"Peeking"} printLabel={"established"} />
+<StatusChip status={"hint"} label={"P-value replacement"} printLabel={"contested"} />
 </ClaimHeader>
 ### Why a bet beats a p-value: you can peek all you want
 Bets compound. If you make a fair bet against the null, then another, then another, your running wealth forms what mathematicians call a <Term as="em">martingale</Term><TipNote text={"A martingale is a mathematical model of a fair game: given the past, the next expected value is the current value."} />, and a classical result (Ville's inequality<TipNote text={"Ville’s inequality bounds the chance that a fair-game wealth process ever becomes very large just by luck."} />) guarantees it almost never balloons to huge values *if the null is true.* This gives e-values an almost magical property the p-value lacks: <Term as="em">anytime validity.</Term> You may watch the experiment unfold, stop whenever you like, collect more data if it looks promising — **peek as often as you want** — and your error guarantee still holds. Grünwald, de Heide & Koolen call this *"safe testing"* (published in the RSS *Journal*, Series B, 2024); the broader machinery, including confidence intervals that are valid at every moment, is *"safe anytime-valid inference"* (Ramdas, Grünwald, Vovk & Shafer, *Statistical Science*, 2023). E-values also combine trivially: **multiply** independent ones, or even **average** dependent ones, and you still have a valid e-value — which makes pooling studies clean where p-values turn into a multiple-comparisons minefield.
@@ -370,15 +370,15 @@ The tradeoff is conservatism: an anytime-valid ledger can need stronger or more 
 <ContentSection class="frontier">
 <Claim>
 <ClaimHeader label="Edge 03">
-<StatusChip status={"ok"} label={"Industry adoption · established (narrow)"} printLabel={"established"} />
-<StatusChip status={"bad"} label={"Sweeping science-wide replacement · hype"} printLabel={"review"} />
+<StatusChip status={"ok"} label={"Adoption"} printLabel={"established, narrow"} />
+<StatusChip status={"bad"} label={"Replacement hype"} printLabel={"contested/hype"} />
 </ClaimHeader>
 ### How far has the mutiny actually spread?
-Here's where the hype filter earns its keep. The <Term as="em">mathematics</Term> of e-values is settled and elegant — peer-reviewed in the field's very best journals (*Annals of Statistics*, both RSS *Journals*, *Statistical Science*), and gathered into a 390-page Foundations and Trends monograph by Ramdas & Wang after its 2024 preprint. That part is <StatusChip status={"ok"} label={"established"} /> beyond dispute.
+Here's where the hype filter earns its keep. The <Term as="em">mathematics</Term> of e-values is settled and elegant — peer-reviewed in the field's very best journals (*Annals of Statistics*, both RSS *Journals*, *Statistical Science*), and gathered into a 390-page Foundations and Trends monograph by Ramdas & Wang after its 2024 preprint. That part is beyond dispute. <StatusChip status={"ok"} label={"E-value math"} printLabel={"established"} />
 
 Real-world <Term as="em">adoption</Term> is a narrower and more honest story. The clearest uptake is in **<Term as="em">tech-company A/B testing</Term>**<TipNote text={"A/B testing compares two product versions by randomly showing users variant A or B and measuring which performs better."} />, where "peeking" is the entire business model: **Optimizely** rebuilt its platform around "always-valid inference" (Johari, Koomen, Pekelis & Walsh), and **Netflix** and **Adobe** publicly run anytime-valid <Term as="em">confidence sequences</Term><TipNote text={"A confidence sequence is a confidence interval that remains valid at every time point as data accumulate."} /> so product teams can monitor experiments continuously without cheating the statistics. That's genuine production use — but it's a long way from the world's biostatistics, psychology, and physics communities, where the p-value remains entrenched.
 
-And the new tool is no free lunch. In fixed-horizon comparisons, e-values can need **more extreme data** than p-values to reach the same rejection threshold; Shafer's reply is that this is the cost of making the evidential scale honest rather than a simple defect. The efficiency of your bet depends on choosing a good betting strategy — arguably the same modeling judgment a Bayesian makes in choosing a prior, reappearing in new clothes. Critics including Samuel Pawel and Leonhard Held warn that branding tests as "safe" or "always valid" can mislead, since the guarantees still rest on assumptions (a correctly specified model, no publication bias) that can fail like any other. The honest verdict: a <StatusChip status={"hint"} label={"promising"} />, rigorous, genuinely useful complement to the p-value — emphatically *not* its science-wide replacement, at least not yet.
+And the new tool is no free lunch. In fixed-horizon comparisons, e-values can need **more extreme data** than p-values to reach the same rejection threshold; Shafer's reply is that this is the cost of making the evidential scale honest rather than a simple defect. The efficiency of your bet depends on choosing a good betting strategy — arguably the same modeling judgment a Bayesian makes in choosing a prior, reappearing in new clothes. Critics including Samuel Pawel and Leonhard Held warn that branding tests as "safe" or "always valid" can mislead, since the guarantees still rest on assumptions (a correctly specified model, no publication bias) that can fail like any other. The honest verdict: a rigorous, genuinely useful complement to the p-value with real promise <StatusChip status={"hint"} label={"Complement"} printLabel={"promising"} /> — emphatically *not* its science-wide replacement, at least not yet.
 <LessonNote variant="frontier-watch">What would move the needle? If a drug regulator like the FDA or EMA blessed e-value designs for confirmatory clinical trials, or a top general-science journal wrote them into its author guidelines, the "replacement" claim could graduate from hype to hint to reality. Watch those two signals.</LessonNote>
 </Claim>
 </ContentSection>
