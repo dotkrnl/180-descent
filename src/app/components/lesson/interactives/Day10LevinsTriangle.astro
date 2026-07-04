@@ -1,0 +1,117 @@
+---
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+
+const copy = zh
+  ? {
+      aria: "列文斯三角：三个顶点分别是一般性、逼真性和精确性。点击一个顶点表示牺牲它，对边表示保留的两项。",
+      hint: "点击一个顶点，选择要牺牲的一项",
+      center: "对边就是保留项",
+      generality: "一般性",
+      realism: "逼真性",
+      precision: "精确性",
+      caveat: "Orzack 与 Sober（1993）认为，这个三角不是严格定理；有时一项可以改善，而不必立刻牺牲另一项。",
+      labels: {
+        G: "牺牲一般性",
+        R: "牺牲逼真性",
+        P: "牺牲精确性"
+      },
+      strategies: {
+        P: {
+          name: "稳健的定性模型",
+          keep: "保留：一般性 + 逼真性；牺牲：精确性",
+          body: "这类模型通常灵活、简洁，重在说明变化方向，例如捕食者增加时猎物减少。它们可以跨许多系统成立，但不承诺给出精确数值。",
+          example: "例：理论生态学中的定性模型，以及用于隔离机制的玩具经济或物理模型。"
+        },
+        R: {
+          name: "一般且精确，但不够逼真",
+          keep: "保留：一般性 + 精确性；牺牲：逼真性",
+          body: "这类模型干净、可求解，建立在明确失真的设定上。它们带来清晰的数学牵引力和精确答案，却不忠实于任何具体情境的全部复杂性。",
+          example: "例：无摩擦平面、完全理性主体、无限种群等理想化模型。"
+        },
+        G: {
+          name: "细致且准确，但适用范围窄",
+          keep: "保留：逼真性 + 精确性；牺牲：一般性",
+          body: "这类模型面向一个具体目标，细节丰富、数值准确，但结论很难迁移到别处。它说清的是这个系统，而不是一整类系统。",
+          example: "例：这片流域、这座湖、这架飞机，或这位患者的数字孪生。"
+        }
+      }
+    }
+  : {
+      aria: "Levins's triangle: the three vertices are generality, realism, and precision. Selecting a vertex sacrifices it; the opposite edge marks the two desiderata kept.",
+      hint: "tap a corner to choose the sacrifice",
+      center: "opposite edge = kept pair",
+      generality: "Generality",
+      realism: "Realism",
+      precision: "Precision",
+      caveat: "Orzack and Sober (1993) argue that this triangle is not a strict theorem; sometimes one desideratum can improve without an immediate loss in another.",
+      labels: {
+        G: "Sacrifice generality",
+        R: "Sacrifice realism",
+        P: "Sacrifice precision"
+      },
+      strategies: {
+        P: {
+          name: "Robust and qualitative",
+          keep: "Keeping: generality + realism; sacrificing: precision",
+          body: "Flexible, often simple models that tell you the direction of change, such as more predators leading to fewer prey. They travel across systems without promising exact numbers.",
+          example: "Example: theoretical ecology and toy economic or physical models that isolate a mechanism without decimal-point claims."
+        },
+        R: {
+          name: "General and precise, but unrealistic",
+          keep: "Keeping: generality + precision; sacrificing: realism",
+          body: "Clean, exactly solvable models built on deliberately distorted assumptions. They offer mathematical traction and sharp answers at the cost of fidelity to any one real case.",
+          example: "Example: frictionless planes, perfectly rational agents, infinite populations, and other idealized models."
+        },
+        G: {
+          name: "Detailed and accurate, but narrow",
+          keep: "Keeping: realism + precision; sacrificing: generality",
+          body: "A high-resolution model of one specific target. It can be realistic and precise, but its conclusions do not travel far beyond that target.",
+          example: "Example: a digital twin of this watershed, this lake, this aircraft, or this patient."
+        }
+      }
+    };
+
+const initial = copy.strategies.P;
+---
+<div class="day10-levins" data-day10-levins data-active="P">
+  <script type="application/json" data-day10-levins-copy set:html={JSON.stringify(copy.strategies)}></script>
+  <div class="day10-levins-grid">
+    <div class="day10-levins-svg">
+      <svg viewBox="0 0 360 320" role="img" aria-label={copy.aria} data-pagefind-ignore="all">
+        <line data-edge="GR" x1="180" y1="48" x2="52" y2="272"></line>
+        <line data-edge="GP" x1="180" y1="48" x2="308" y2="272"></line>
+        <line data-edge="RP" x1="52" y1="272" x2="308" y2="272"></line>
+        <g data-sacrifice="G" role="button" tabindex="0" aria-label={copy.labels.G} aria-pressed="false">
+          <circle cx="180" cy="48" r="15"></circle>
+          <text x="180" y="26" text-anchor="middle">{copy.generality}</text>
+        </g>
+        <g data-sacrifice="R" role="button" tabindex="0" aria-label={copy.labels.R} aria-pressed="false">
+          <circle cx="52" cy="272" r="15"></circle>
+          <text x="52" y="300" text-anchor="middle">{copy.realism}</text>
+        </g>
+        <g data-sacrifice="P" role="button" tabindex="0" aria-label={copy.labels.P} aria-pressed="true">
+          <circle cx="308" cy="272" r="15"></circle>
+          <text x="308" y="300" text-anchor="middle">{copy.precision}</text>
+        </g>
+        <text class="day10-levins-center" x="180" y="180" text-anchor="middle">{copy.center}</text>
+      </svg>
+      <p class="day10-levins-hint">{copy.hint}</p>
+    </div>
+    <div class="day10-levins-readout">
+      <p class="day10-levins-name" data-out="name">{initial.name}</p>
+      <p class="day10-levins-keep" data-out="keep">{initial.keep}</p>
+      <p class="day10-levins-body" data-out="body">{initial.body}</p>
+      <p class="day10-levins-example" data-out="example">{initial.example}</p>
+      <p class="day10-levins-caveat">
+        <StatusChip status="bad" label={zh ? "有争议" : "contested"} printLabel={zh ? "仍有争议" : "contested"} />
+        <span>{copy.caveat}</span>
+      </p>
+    </div>
+  </div>
+</div>

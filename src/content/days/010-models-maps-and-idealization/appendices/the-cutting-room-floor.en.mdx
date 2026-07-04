@@ -19,6 +19,7 @@ import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.astro";
+import Day10LevinsTriangle from "@app/components/lesson/interactives/Day10LevinsTriangle.astro";
 
 <Lead drop="T">he main descent ran a straight line: from Borges's empire-sized map, through the spherical cow, into the realism debate, and out the far end at a neural network that forecasts the weather without human-readable physical equations written inside it. It was a clean arc, and it left an enormous amount on the cutting-room floor. The realism fight is four centuries older than van Fraassen. The craft of "lying usefully" has a precise grammar nobody mentioned. And the strangest question of all, **how do you trust a model whose innards no human can survey?**, loops all the way back to Day 1.</Lead>
 
@@ -99,11 +100,18 @@ Levins is also the source of modeling's most famous impossibility claim: you can
 
 <Panel>
 <PanelTitle>Modeling tradeoff · Levins's triangle</PanelTitle>
-<PanelNote>No model maxes all three desiderata. The source version made this a click-through triangle; the static appendix keeps all three states visible for web, EPUB, and PDF readers.</PanelNote>
+
+<FormatOnly as="div" media="web">
+<PanelNote>No model can maximize all three desiderata. Tap the vertex you are willing to sacrifice; the opposite edge marks the two you keep, and the readout names the strategy and an example. Levins's own preference was to sacrifice precision for generality and realism.</PanelNote>
+
+<Day10LevinsTriangle locale="en" />
+</FormatOnly>
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelNote>No model can maximize all three desiderata. The static version below expands all three tradeoffs for EPUB and PDF readers.</PanelNote>
 
 <Day10StaticFigure kind="levins-triangle" locale="en" />
 
-<FormatOnly as="div" media="web">
 <SimpleTable
   class="alt-table tradeoff-table"
   headers={["Sacrifice","Keep","Strategy","Example"]}

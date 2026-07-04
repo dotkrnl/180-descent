@@ -101,6 +101,7 @@ const WEB_ONLY_COMPONENTS = new Set([
   "CredenceDial",
   "Day9Interactive",
   "Day10IdealizationDial",
+  "Day10LevinsTriangle",
   "Day10FrontierMap",
   "Day11LindaMachine",
   "Day11NaturalFrequencyGrid",

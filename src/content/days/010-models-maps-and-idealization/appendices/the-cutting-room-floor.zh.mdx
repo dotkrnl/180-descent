@@ -21,6 +21,7 @@ import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.astro";
+import Day10LevinsTriangle from "@app/components/lesson/interactives/Day10LevinsTriangle.astro";
 
 <Lead drop="正">文走了一条笔直的下降线：从博尔赫斯那幅帝国尺寸的地图，穿过球形牛，一头扎进实在论之争，最后落在一个内部没有人类可读物理方程、却能预报天气的神经网络。弧线干净利落，却也把大量素材留在了剪辑室的地板上。实在论与工具主义之争比范·弗拉森老了四个世纪；「有用地说谎」这门手艺有一套精确的语法，正文里只字未提；而最奇怪的那个问题——如何信任一个内部无人能一览无余的模型？——一路绕回[第 1 日](/zh/days/001-what-is-knowledge/)。</Lead>
 
@@ -85,7 +86,7 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 
 ## 理想化有规则，还有一个著名的取舍
 
-正文为了推进主线，把几种有意失真的建模策略先合在一起处理。但研究文献分得更细，而这个区分很重要。首先，把两个常被混为一谈的动作分开。<Term>抽象</Term>是省略：模拟行星轨道时不提它的颜色。该说的没说，但没说错。<Term>理想化</Term>则是主动歪曲：明知平面有摩擦，却宣称它无摩擦。无摩擦平面不是描述中的缺口，而是一个善意的谎言。两者感觉相似，行为却很不一样。
+正文为了推进主线，把几种有意失真的建模策略先合在一起处理。但研究文献分得更细，而这个区分很重要。首先，把两个常被混为一谈的动作分开。<Term>抽象</Term>是省略：模拟行星轨道时不提它的颜色。这样的描述不完整，但仍为真。<Term>理想化</Term>则是主动歪曲：明知平面有摩擦，却宣称它无摩擦。无摩擦平面不是描述中的缺口，而是一个善意的谎言。两者表面相近，认识论地位却不同。
 
 理想化还有种类，而正文跳过的是第三种。有<Term>伽利略式理想化</Term>：为了可处理性而歪曲，并承诺日后补回细节；有<Term>极简理想化</Term>，也就是球形牛策略，只保留被认为关键的因果因素。但还有<Term>多模型理想化</Term><TipNote text={"多模型理想化指故意为同一目标构建多个互不相容的模型，每个模型以不同方式简化，以观察哪些结果能在它们之间存活。"} />：为同一件事造好几个相互矛盾的模型，每个朝不同方向犯错，然后在它们之间三角定位。没有单张地图被信任；被信任的是不同错误地图之间的重合。
 
@@ -94,18 +95,25 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 <Meta>理查德·列文斯，《种群生物学中的模型构建策略》，1966 年。</Meta>
 </BlockQuote>
 
-列文斯的这个观点，现在被称为<Term>稳健性分析</Term><TipNote text={"稳健性分析寻找在不同简化假设的模型之间仍然保持的结果。"} />：如果你用几个建立在不同简化谎言之上的模型去攻击同一个问题，而它们都吐出同样的定性结果，那么这个结果很可能依赖问题真实的共享结构，而不是某个模型特有的谎言。谎言彼此独立，它们的交集正是真理最可能藏身的地方。
+列文斯的这个观点，现在被称为<Term>稳健性分析</Term><TipNote text={"稳健性分析寻找在不同简化假设的模型之间仍然保持的结果。"} />：如果你用几个基于不同简化设定的模型处理同一个问题，而它们都得到同样的定性结果，那么这个结果很可能依赖问题真实的共享结构，而不是某个模型特有的设定。不同误差彼此独立，它们的重合处也就更可能指向真相。
 
 列文斯还提出了建模史上最著名的不可能论断：你无法同时最大化<Highlight>一般性</Highlight>、<Highlight>逼真性</Highlight>和<Highlight>精确性</Highlight>。把任意两个推到极限，第三个就必须让步。正文主页上的刻度盘衡量逼真度与实际用处，列文斯的三角则是同一个智慧的三维版：选择你的牺牲。
 </ContentSection>
 
 <Panel>
 <PanelTitle>建模取舍 · 列文斯三角</PanelTitle>
-<PanelNote>没有任何模型能同时拉满三项。原始版本是可点击的三角；静态附录把三种状态都展开，方便网页、EPUB 和 PDF 阅读。</PanelNote>
+
+<FormatOnly as="div" media="web">
+<PanelNote>没有任何模型能同时最大化三项。点击一个你愿意牺牲的顶点；对边代表保留的两项，右侧会显示对应策略和例子。列文斯自己的偏好，是牺牲精确性，换取一般性与逼真性。</PanelNote>
+
+<Day10LevinsTriangle locale="zh" />
+</FormatOnly>
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelNote>没有任何模型能同时最大化三项。静态版本把三种取舍全部展开，方便 EPUB 和 PDF 阅读。</PanelNote>
 
 <Day10StaticFigure kind="levins-triangle" locale="zh" />
 
-<FormatOnly as="div" media="web">
 <SimpleTable
   class="alt-table tradeoff-table"
   headers={["牺牲","保留","策略","例子"]}

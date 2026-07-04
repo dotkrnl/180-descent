@@ -216,7 +216,53 @@
     return {};
   }
 
+  function initLevinsTriangle(root){
+    var copyNode = root.querySelector("[data-day10-levins-copy]");
+    var content = {};
+    try {
+      content = JSON.parse(copyNode ? copyNode.textContent || "{}" : "{}");
+    } catch (_) {
+      content = {};
+    }
+    var nameOut = root.querySelector("[data-out='name']");
+    var keepOut = root.querySelector("[data-out='keep']");
+    var bodyOut = root.querySelector("[data-out='body']");
+    var exampleOut = root.querySelector("[data-out='example']");
+
+    function render(sacrifice){
+      var selected = content[sacrifice];
+      if (!selected) return;
+      root.setAttribute("data-active", sacrifice);
+      if (nameOut) nameOut.textContent = selected.name;
+      if (keepOut) keepOut.textContent = selected.keep;
+      if (bodyOut) bodyOut.textContent = selected.body;
+      if (exampleOut) exampleOut.textContent = selected.example;
+      root.querySelectorAll("[data-sacrifice]").forEach(function(vertex){
+        vertex.setAttribute("aria-pressed", String(vertex.getAttribute("data-sacrifice") === sacrifice));
+      });
+    }
+
+    root.querySelectorAll("[data-sacrifice]").forEach(function(vertex){
+      var sacrifice = vertex.getAttribute("data-sacrifice");
+      vertex.addEventListener("click", function(){
+        render(sacrifice);
+      });
+      vertex.addEventListener("keydown", function(event){
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          render(sacrifice);
+        }
+      });
+    });
+
+    render(root.getAttribute("data-active") || "P");
+  }
+
   document.querySelectorAll("[data-day10-dial]").forEach(function(root){
     mountWhenVisible(root, function(){ return initDial(root); });
+  });
+
+  document.querySelectorAll("[data-day10-levins]").forEach(function(root){
+    initLevinsTriangle(root);
   });
 })();
