@@ -78,7 +78,7 @@
           [0.12, "极简示意：一个点和一条线"],
           [0.32, "地铁图式示意"],
           [0.55, "可工作的道路图"],
-          [0.80, "详细测绘图"],
+          [0.80, "未标注卫星影像"],
           [0.97, "近乎照片"],
           [1.01, "疆域本身（一比一）"]
         ],
@@ -96,7 +96,7 @@
         [0.12, "bare schematic - a point and a line"],
         [0.32, "subway-style schematic"],
         [0.55, "a working road map"],
-        [0.80, "a detailed survey map"],
+        [0.80, "an unlabeled satellite image"],
         [0.97, "near-photographic"],
         [1.01, "the territory itself (1:1)"]
       ],
