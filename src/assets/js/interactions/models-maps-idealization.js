@@ -127,6 +127,7 @@
     var mapLabel = root.querySelector("[data-out='map-label']");
     var verdictTitle = root.querySelector("[data-out='verdict-title']");
     var verdictBody = root.querySelector("[data-out='verdict-body']");
+    var secondaryRoute = root.querySelector("[data-role='secondary-route']");
     var detailLayer = root.querySelector("[data-role='detail']");
     var clutterLayer = root.querySelector("[data-role='clutter']");
     var city = root.querySelector("[data-role='city']");
@@ -176,6 +177,7 @@
       if (verdictTitle) verdictTitle.textContent = verdict[1];
       if (verdictBody) verdictBody.textContent = verdict[2];
 
+      if (secondaryRoute) secondaryRoute.style.display = d >= 0.12 ? "" : "none";
       detailLayer.setAttribute("opacity", String(clamp(d * 1.5, 0, 1).toFixed(2)));
       Array.prototype.forEach.call(detailLayer.children, function(line){
         line.style.display = d >= Number(line.getAttribute("data-threshold")) ? "" : "none";

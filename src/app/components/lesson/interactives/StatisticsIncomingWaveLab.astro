@@ -78,7 +78,7 @@ const panels = {
   ppi: {
     id: "ppiPanel",
     title: zh ? "交互式 · PPI 权衡" : "Interactive · the PPI bargain",
-    heading: zh ? "低成本预测仅在金标准校正后才能换取精确度" : "Cheap predictions buy precision only after gold-standard correction",
+    heading: zh ? "低成本预测只有经过金标准校正后才会提高精确度" : "Cheap predictions buy precision only after gold-standard correction",
     controls: zh
       ? [
           { id: "ppiN", label: "金标准标注", valueId: "ppiNVal", value: "200", min: "40", max: "2000" },
@@ -210,7 +210,7 @@ const panel = panels[kind];
           <div class="bigstat"><span id={`${prefix}pathK`}>240</span> <small>{zh ? "条分析路径" : "analysis paths"}</small></div>
           <div class="metric"><span class="lab">{zh ? "假阳性风险" : "false-positive risk"}</span><progress class="meter red" id={`${prefix}pathRiskBar`} max="100" value="100"></progress><span id={`${prefix}pathRiskPct`}>≈100%</span></div>
           <div class="metric"><span class="lab">{zh ? "研究预登记" : "preregistered"}</span><progress class="meter green" max="100" value="5"></progress><span>5%</span></div>
-          <p class="note">{zh ? <>一个报告完整多重宇宙的 AI 分析师可以提高透明度。一个悄悄选择最有利路径的 AI 分析师，则是 <span class="term">p 值操纵</span> 的加速器。</> : "An AI analyst that reports the full multiverse can be an honesty machine. An AI analyst that silently selects the prettiest path is a p-hacking accelerator."}</p>
+          <p class="note">{zh ? <>一个报告完整多重宇宙的 AI 分析师可以提高透明度。一个悄悄选择最有利路径的 AI 分析师，则是 <span class="term">p 值操纵</span> 的加速器。</> : "An AI analyst that reports the full multiverse can be a transparency machine. An AI analyst that silently selects the prettiest path is a p-hacking accelerator."}</p>
         </>
       ) : (
         <>

@@ -15,9 +15,15 @@ Kimi, Gemini, GLM, and any human/editorial pass must:
 When two English terms represent different concepts, do not collapse them into
 one Chinese word. This matters especially in physics and frontier appendices.
 
+Style guardrail: do not mechanically translate or overuse English `honest`,
+`honestly`, `honesty`, `sober`, or `sobering` in running prose. Avoid defaulting
+to `诚实` or `冷静`; choose the precise local meaning instead, such as `准确`,
+`完整`, `稳妥`, `清醒`, `克制`, `校准`, `审慎`, `相关`, or a natural paraphrase.
+Preserve proper names, source titles, and exact quotations.
+
 | English/source term | Standard Chinese | Scope and notes | Avoid |
 | --- | --- | --- | --- |
-| hype filter / frontier calibrator | 前沿校准器；防炒作滤镜 | Use `前沿校准器` for the course-wide rubric/tool name. Use `防炒作滤镜` when the local prose foregrounds filtering hype rather than naming the general rubric, as in Day 9's AMOC/frontier caution. | 防炒作过滤器, 炒作过滤器, 过滤炒作 |
+| hype filter / frontier calibrator | 前沿校准器 | Course-wide rubric/tool name for calibrating frontier claims. If local prose foregrounds overclaiming, paraphrase as `避免夸大解读`, `防止标题先行`, or similar instead of naming a separate filter. | 防炒作滤镜, 防炒作过滤器, 炒作过滤器, 过滤炒作 |
 | established | 已确立 | Frontier/status label. Keep chip labels short. | 可靠成熟, 扎实且可重复 |
 | promising | 有前景 | Frontier/status label for evidence that is real but still early. | 线索, 初露曙光 |
 | contested / hype risk | 有争议／炒作风险 | Frontier/status label for disputed scope, framing, or evidence. | 争议/炒作, 炒作 |
@@ -73,6 +79,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | effect size | 效应量 | Statistics. | 效果量 when inconsistent |
 | statistical power | 检验功效 | Statistics. | 统计功效 when inconsistent |
 | base rate | 基础率 | Statistics/replication crisis. | 基率 when inconsistent |
+| base-rate neglect | 基础率忽视 | Failing to use the base rate in probability judgments; common sampling-framework bias. | 忽略基础率 |
 | prior odds | 先验比值 | Ioannidis/PPV framing. | 先验赔率 |
 | false positive | 假阳性 | Error outcome. | 伪阳性 when inconsistent |
 | false positive risk | 误报风险 | Replication/Bayesian critique context. | 假阳性风险 when not describing the event itself |
@@ -205,6 +212,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | normal form | 标准型 | Universal mathematical template near a bifurcation (fold, Hopf, etc.). | 范式 when conflated with Kuhn's paradigm |
 | reservoir computing | 储备池计算 | Recurrent neural-network approach for learning chaotic dynamics. | 水库计算 |
 | digital twin | 数字孪生 | Data-driven computational stand-in of a real system. | 数字双胞胎 |
+| hindcast / hindcast experiment | 回报 / 回报试验 | Weather/climate-model evaluation against past events from earlier initial conditions. Use `回报试验` for benchmark tests; `后报` is acceptable in Hong Kong/Taiwan sources but not the course default. | 回测 when the weather/climate domain is meant |
 | Turing patterns | 图灵斑图 | Self-organized spatial patterns predicted by Alan Turing. | 图灵图案 |
 | positive tipping points | 正向临界点 | Reinforcing feedback deliberately seeded to flip toward good outcomes. | 积极临界点 |
 | social tipping elements | 社会临界要素 | Leverage-rich subsystems where small pushes may trigger rapid social change. | 社会翻转要素 |
@@ -245,6 +253,23 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | ecological rationality | 生态理性 | Rationality judged by fit between mind and environment. | 环境理性 |
 | resource-rational analysis / resource rationality | 资源理性分析 / 资源理性 | Cognition as optimal use of limited computational resources. | 资源合理性 |
 | bounded optimality | 有限最优性 | Optimal behavior under bounded computational resources. | 有界最优 |
+| unified theory of cognition | 统一认知理论 | Psychology ambition: one model spanning many cognitive tasks; keep caveats about prediction versus explanation. | 统一心智理论 when source says cognition |
+| unpacking effect | 解包效应 | Judging a more finely described event as more probable; explained by sampling accounts. | 拆分效应 when inconsistent |
+| Psych-101 | Psych-101 | Centaur training dataset name; preserve as proper noun. | 翻译成心理学 101 unless explanatory prose requires it |
+| Centaur | Centaur | Binz/Schulz cognitive foundation model; keep English proper noun. | 半人马模型 unless source explicitly glosses |
+| Bayesian brains without probabilities | 没有概率表征的贝叶斯大脑 | Sanborn-Chater slogan; may keep English title in source list. | 无概率贝叶斯大脑 |
+| Bayesian Sampler | 贝叶斯取样器 | Zhu-Sanborn-Chater model; keep as named model. | 贝叶斯采样器 when inconsistent |
+| Autocorrelated Bayesian Sampler | 自相关贝叶斯取样器 | 2023 extension with autocorrelated mental samples. | 自相关贝叶斯采样器 |
+| value-guided construal / value-guided construals | 价值引导的建构 | Goal-sensitive simplified mental representations in Ho/Griffiths work. | 价值导向表征 when naming the theory term |
+| cognitive prosthesis / cognitive prostheses | 认知假体 | Tools/training designed to improve cognitive strategy use. | 认知义肢 when inconsistent |
+| inoculation theory | 接种理论 | Psychological inoculation against persuasion/manipulation. | 免疫理论 when metaphorical |
+| prebunking | 预驳 | Teaching manipulation techniques before exposure to misinformation. | 预先辟谣 when naming the technique |
+| algorithmic fidelity | 算法保真度 | Argyle-style claim that LLM personas reproduce aggregate sample patterns. | 算法忠实性 |
+| silicon sampling | 硅基取样 | Synthetic respondents or AI stand-ins for human samples. | 硅采样 |
+| response bias | 反应偏向 | Signal-detection shift toward yes/no or believe/disbelieve independent of accuracy. | 反应偏差 when ambiguity with cognitive bias matters |
+| sensitivity | 敏感性 | Signal-detection ability to distinguish signal from noise; e.g. true from false content. | 敏感度 when inconsistent |
+| signal detection | 信号检测 | Framework for separating sensitivity from response bias. | 信号侦测 when inconsistent |
+| rationality bias | 理性偏向 | LLMs modeling humans as more rational than people are; avoid conflating with rationality itself. | 理性偏差 when it sounds like human reasoning error |
 | large language model / LLM | 大型语言模型 / LLM | Transformer-based pretrained text model; keep the LLM acronym. | 大语言模型 when inconsistent |
 | nudge / nudging | 助推 | Behavioral-economics intervention that alters choice architecture without banning options. | 轻推 when inconsistent |
 | choice architecture | 选择架构 | Design of how choices are presented to decision-makers. | 选择结构 when inconsistent |
@@ -252,6 +277,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | framing effect / framing effects | 框架效应 | Preference reversal due to logically equivalent description. | — |
 | prospect theory | 前景理论 | Kahneman-Tversky theory of risky choice under reference-dependent gains/losses and probability weighting. | 展望理论 |
 | expected utility theory | 期望效用理论 | Normative/economic theory of probability-weighted utility maximization. | 预期效用理论 when inconsistent |
+| expected-utility agent | 期望效用主体 | The tidy, idealized decision-maker of expected utility theory. | 期望效用智能体 when conflated with AI agents |
 | reference point | 参照点 | Prospect-theory baseline for coding gains and losses. | 参考点 when inconsistent |
 | reference dependence | 参照依赖 | Evaluating outcomes relative to a reference point rather than final wealth/state. | 参考依赖 |
 | diminishing sensitivity | 敏感性递减 | Prospect-theory curvature: marginal value changes less farther from the reference point. | 灵敏度递减 when inconsistent |
@@ -261,6 +287,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | endowment effect | 禀赋效应 | Valuing something more after owning it. | 赋予效应 |
 | status quo bias | 现状偏差 | Preference for the current option partly because leaving it is coded as loss. | 维持现状偏差 |
 | disposition effect | 处置效应 | Selling winners too soon and holding losers too long. | 处理效应 |
+| discernment | 辨别力 | Ability to distinguish true from false or signal from noise, especially in prebunking/signal-detection contexts. | 识别力 when inconsistent |
 | overconfidence | 过度自信 | Broad family; distinguish overestimation, overplacement, and overprecision. | 过分自信 |
 | overestimation | 高估 | Absolute overestimate of one's performance, speed, or success probability. | 过高估计 when inconsistent |
 | overplacement | 过高定位 | Believing one's relative position exceeds others, e.g. better-than-average effects. | 高估定位 |

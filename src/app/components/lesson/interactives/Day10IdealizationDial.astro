@@ -12,8 +12,8 @@ const zh = Astro.props.locale === "zh";
 const copy = zh
   ? {
       eyebrow: "交互 · 保真度与有用性的权衡",
-      title: "理想化旋钮",
-      note: "把旋钮从干净示意图拖向近乎一比一的复刻。保真度会一路上升；有用性先上升、到达峰值，然后在模型膨胀回疆域本身时坍塌。最佳点不在两端。",
+      title: "理想化刻度盘",
+      note: "把滑块从干净示意图拖向近乎一比一的复刻。保真度会一路上升；有用性先上升、到达峰值，然后在模型膨胀回疆域本身时坍塌。最佳点不在两端。",
       detail: "细节 / 保真度",
       fidelity: "对现实的保真度",
       usefulness: "有用性",
@@ -24,7 +24,7 @@ const copy = zh
         ["6", "质点"],
         ["22", "地铁图"],
         ["48", "天气模型"],
-        ["82", "飞行模拟器"],
+        ["82", "详细测绘图"],
         ["100", "博尔赫斯一比一地图"]
       ]
     }
@@ -42,7 +42,7 @@ const copy = zh
         ["6", "Point mass"],
         ["22", "Subway map"],
         ["48", "Weather model"],
-        ["82", "Flight simulator"],
+        ["82", "Detailed survey map"],
         ["100", "Borges's 1:1 map"]
       ]
     };
@@ -59,7 +59,7 @@ const copy = zh
         <rect x="0" y="0" width="220" height="220" rx="12" fill="var(--paper)"></rect>
         <g stroke="var(--accent)" fill="none" stroke-width="2.2" stroke-linecap="round">
           <path d="M24,164 C62,132 78,98 130,88 C164,82 180,60 204,54"></path>
-          <path d="M42,45 L108,122 L166,176"></path>
+          <path data-role="secondary-route" d="M42,45 L108,122 L166,176" style="display:none"></path>
         </g>
         <circle data-role="city" cx="108" cy="122" r="5" fill="var(--contested)"></circle>
         <g data-role="detail" stroke="var(--ink-faint)" stroke-width=".7" opacity="0"></g>

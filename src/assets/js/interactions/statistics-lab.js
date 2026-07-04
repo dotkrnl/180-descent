@@ -65,7 +65,7 @@
         return;
       }
       var label = p100 < 15
-        ? (isZh ? "仍接近诚实" : "still close to honest")
+        ? (isZh ? "仍接近名义值" : "still close to nominal")
         : p100 < 30
           ? (isZh ? "已经膨胀" : "already inflated")
           : p100 < 48
@@ -608,10 +608,10 @@
             : '"We find a significant association between X and Y, r = ' + best.r.toFixed(2) + ', p = ' + best.p.toFixed(3) + '." True, for one of ' + n + ' equally defensible specifications. The other ' + (n - 1) + ' never make the paper.' + (pressed(buttons.cov) && !best.choices.cov ? ' Notice that the selected path does not control for W.' : ''))
           : (isZh ? '即使挑选最有利的点也救不了：没有任何单一规范达到 p < .05。' : 'Not even cherry-picking saves it: no single specification reaches p < .05.');
       } else {
-        heading.textContent = isZh ? "诚实读法" : "The honest reading";
+        heading.textContent = isZh ? "完整读法" : "The full reading";
         body.innerHTML = n === 1
           ? (isZh ? '只有基线规范：r = ' + rows[0].r.toFixed(3) + '，p = ' + rows[0].p.toFixed(3) + '。打开上方选择，看看多元宇宙如何展开。' : 'With no analytic choices enabled there is just the baseline specification: r = ' + rows[0].r.toFixed(3) + ', p = ' + rows[0].p.toFixed(3) + '. Switch on some choices above to grow the multiverse.')
-          : (isZh ? '在全部 <strong>' + n + '</strong> 套合理分析设定中，中位 r = <strong>' + med.toFixed(3) + '</strong>，' + sig + ' / ' + n + ' 跨过 p < .05。' + (pressed(buttons.cov) ? '控制 W 的设定中有 ' + covSig + ' / ' + covRows.length + ' 个显著。' : '') + '诚实摘要是整条曲线，不是最有利的点。' : 'Across all <strong>' + n + '</strong> defensible specifications, median r = <strong>' + med.toFixed(3) + '</strong>, with ' + sig + ' of ' + n + ' crossing p < .05. ' + (pressed(buttons.cov) ? covSig + ' of ' + covRows.length + ' W-controlled specifications cross p < .05. ' : '') + 'The honest summary is the whole curve, not its prettiest point.');
+          : (isZh ? '在全部 <strong>' + n + '</strong> 套合理分析设定中，中位 r = <strong>' + med.toFixed(3) + '</strong>，' + sig + ' / ' + n + ' 跨过 p < .05。' + (pressed(buttons.cov) ? '控制 W 的设定中有 ' + covSig + ' / ' + covRows.length + ' 个显著。' : '') + '完整摘要是整条曲线，不是最有利的点。' : 'Across all <strong>' + n + '</strong> defensible specifications, median r = <strong>' + med.toFixed(3) + '</strong>, with ' + sig + ' of ' + n + ' crossing p < .05. ' + (pressed(buttons.cov) ? covSig + ' of ' + covRows.length + ' W-controlled specifications cross p < .05. ' : '') + 'The full summary is the whole curve, not its prettiest point.');
       }
     }
 

@@ -104,7 +104,7 @@ A common simplification treats conformal prediction as “intervals for any mode
 
 That matters for AI systems because the output is often not a scalar. A chatbot answer, segmentation mask, medical image region, or structured extraction is not a single yes/no label. Risk control lets you build a calibrated **ship / abstain / escalate / ask for review** wrapper around a black-box model. In the safest version, the model remains a prediction engine; the conformal wrapper becomes the trust policy.
 
-The hype filter: marginal coverage is real; conditional coverage is hard. Under distribution shift, the classical exchangeability guarantee weakens. Recent work handles weighted and non-exchangeable settings, conditional-style guarantees, and e-value variants, but the practitioner still has to ask whether the calibration data resemble deployment. Conformal methods make uncertainty honest. They do not make a bad deployment context safe.
+The hype filter: marginal coverage is real; conditional coverage is hard. Under distribution shift, the classical exchangeability guarantee weakens. Recent work handles weighted and non-exchangeable settings, conditional-style guarantees, and e-value variants, but the practitioner still has to ask whether the calibration data resemble deployment. Conformal methods make uncertainty explicit. They do not make a bad deployment context safe.
 
 </ContentSection>
 
@@ -186,7 +186,7 @@ DML helps estimate <MathInline latex={String.raw`P(Y\mid\operatorname{do}(X))`} 
 </Claim>
 The garden of forking paths is not going away. Modern analysis often begins with discovery: cluster the cells, find the subgroup, select the variables, learn the causal graph, choose the image region, tune the transformation, ask the AI analyst to “find what matters.” The fatal mistake is to use the same data to discover a target and then pretend the target was specified in advance.
 
-<Term as="em">Post-selection inference</Term> is the statistical attempt to pay that bill honestly. The classical approaches condition on the selection event, split the data into discovery and confirmation sets, or build simultaneous intervals wide enough to survive selection. The post-2020 frontier adds three especially relevant ideas.
+<Term as="em">Post-selection inference</Term> is the statistical attempt to account for that bill directly. The classical approaches condition on the selection event, split the data into discovery and confirmation sets, or build simultaneous intervals wide enough to survive selection. The post-2020 frontier adds three especially relevant ideas.
 
 <MiniList>
 <MiniListItem marker="A">
@@ -264,7 +264,7 @@ Appendix I’s forensic toolkit was artisanal: GRIM checks, statcheck, p-curve, 
 
 The Francesca Gino / Data Colada case showed both the power and the danger. Data Colada published detailed anomaly analyses in 2023. Harvard’s investigation concluded research misconduct; Gino denied wrongdoing and sued. In September 2024, a federal judge dismissed all claims against the Data Colada defendants; in May 2025 Harvard revoked Gino’s tenure and terminated her employment, while some legal disputes involving Harvard continued. The scientific lesson is not “bloggers should run universities.” It is that transparent forensic arguments can become part of the formal error-correction system.
 
-The next layer is triage. We cannot replicate every claim. Decision markets have shown that scientists’ aggregated forecasts can identify high- and low-replicability findings: in one Nature Human Behaviour study, top-market studies replicated far more often than bottom-market studies. The Center for Open Science’s Predicting Replicability Challenge adds machine-learning models trained on thousands of prior replication outcomes. The early results are sobering: Round 1 was weak by some metrics; Round 2 improved. That nuance matters. Replicability prediction is a promising smoke alarm, not a truth machine.
+The next layer is triage. We cannot replicate every claim. Decision markets have shown that scientists’ aggregated forecasts can identify high- and low-replicability findings: in one Nature Human Behaviour study, top-market studies replicated far more often than bottom-market studies. The Center for Open Science’s Predicting Replicability Challenge adds machine-learning models trained on thousands of prior replication outcomes. The early results are mixed: Round 1 was weak by some metrics; Round 2 improved. That nuance matters. Replicability prediction is a promising smoke alarm, not a truth machine.
 
 The hype filter: forensic tools can be misused as accusation engines. A weird dataset is not automatically fraud; a low replicability forecast is not a verdict. The frontier needs transparent code, calibrated false-alarm rates, and institutional protections for both whistleblowers and accused researchers.
 
@@ -312,7 +312,7 @@ Silicon sampling asks an irresistible question: if a language model has absorbed
 
 The second wave is the caution. LLMs can distort correlations even when margins look right. They often compress distributions toward modal answers. They may amplify effect sizes. They can perform worse on socially sensitive topics. Their “population” is a residue of training data, alignment tuning, prompt wording, and model version. That is not a sample frame. It is a machine-shaped mirror.
 
-The honest use case is therefore narrow but real: pilot instruments, debug ambiguous survey wording, estimate rough sample-size needs, test whether a manipulation is even legible, and generate hypotheses before spending human-subjects budgets. The reckless use case is confirmatory evidence without human validation.
+The defensible use case is therefore narrow but real: pilot instruments, debug ambiguous survey wording, estimate rough sample-size needs, test whether a manipulation is even legible, and generate hypotheses before spending human-subjects budgets. The reckless use case is confirmatory evidence without human validation.
 
 Reporting standards should become severe: model name and version, date, system prompt, persona construction, temperature, sampling scheme, repeated-run variability, validation against human data, and a preregistered rule for when the simulation is allowed to count. Otherwise silicon samples become the garden of forking paths wearing a human mask.
 
