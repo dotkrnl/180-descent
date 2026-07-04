@@ -18,6 +18,7 @@ import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.astro";
+import Day10FrontierMap from "@app/components/lesson/interactives/Day10FrontierMap.astro";
 
 <Lead drop="古">代地图绘制者有个诚实的习惯：在测绘终止、传闻开始之处，他们画上怪兽，写下「hic sunt dracones」——此处有龙。正文与附录 I 描绘的是相对成熟的疆域：博尔赫斯、贝拉尔米内、验证、可靠主义，以及那场古老的实在论之争。本附录则驶向地图边缘。下文大部分内容来自 2020 年或更晚，许多出自最近几年，而其中相当一部分日后会被证明是错的。这正是重点所在。前沿地带，才是校准最关键的地方。</Lead>
 
@@ -53,37 +54,43 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 深入之前，先把整片前沿放在一张图上。有用的问题不是「这有多令人印象深刻？」而是一个二维问题：<Strong>证据有多扎实</Strong>，以及<Strong>万一成立，它有多重要？</Strong>这两条轴把领域切出了意义。右上角是真正的革命：重大且扎实。左上角是龙出没的地方：庞大主张立于薄冰之上。右下角没那么炫目，却常常更有用：范围窄，但已经能承重的结果。
 </ContentSection>
 
+<Day10FrontierMap locale="zh" />
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
 <Panel>
 <PanelTitle>前沿地图 · 若成立的影响 × 证据</PanelTitle>
 <PanelNote>位置取决于判断，而非测量。编号点会在下方凭据表中展开。</PanelNote>
 
 <Day10StaticFigure kind="frontier-map" locale="zh" />
 </Panel>
+</FormatOnly>
 
 <FormatOnly as="div" media="print" class="pdf-page-break" />
 
+<FormatOnly as="div" media="print-epub" variant="alternate">
 <Panel>
 <PanelTitle>前沿凭据</PanelTitle>
-<PanelNote>下表把原始交互中的编号、状态与判断依据展开，方便网页、EPUB 和 PDF 阅读。</PanelNote>
+<PanelNote>下表把网页交互中的编号、状态与判断依据展开，方便 EPUB 和 PDF 阅读。</PanelNote>
 
 <SimpleTable
-  headers={["研究","状态","定位理由"]}
+  headers={["#","研究","状态","定位理由"]}
   rows={[
-    ["托卡马克等离子体控制", "已确立", "深度强化学习在 TCV 上塑造等离子体，并在 DIII-D 上降低撕裂不稳定性风险：真实硬件，高影响。"],
-    ["Aurora 地球系统模型", "已确立", "同行评议的多任务预报技能，包括五天业务气旋路径；但将其称为完整地球模型的说辞仍应保持克制。"],
-    ["FunSearch", "已确立", "LLM 加评估器发现了新的可验证数学构造，使输出可被检查而非不透明。"],
-    ["泄漏危机", "已确立", "Kapoor 与 Narayanan 在 17 个领域、294 篇论文中发现泄漏失效；它会削弱许多夸大结果，也正在重塑领域。"],
-    ["外推漂移", "已确立", "NeuralGCM 与 ACE2 展示了硬边界：训练气候内的技能不能保证训练气候外也有。"],
-    ["GNoME 材料发现", "有前景", "Nature 的结果真实；但标题宣称数量的实际新颖性、有用性和可合成性仍有争议。"],
-    ["MatterGen", "有前景", "经同行评议的生成式材料工作，有一个合成验证点，但广泛材料设计的回报仍处早期。"],
-    ["AI-Descartes / AI-Hilbert", "有前景", "强实在论方向：从数据加背景理论中恢复定律。大多数例子仍是重新发现已知定律。"],
-    ["Prithvi WxC", "有前景", "开放的 23 亿参数天气-气候模型；下游任务的证据仍处预印本时代。"],
-    ["KANs", "有前景", "2024 年预印本与 2025 年 PRX 后续研究主张可解释的科学发现；但相比普通网络的广泛优势仍未解决。"],
-    ["AI 虚拟细胞", "有争议", "一篇严肃的 Cell 路线图，而非功能正常的细胞孪生。野心巨大；建成品尚未出现。"],
-    ["cBottle / Earth-2", "有争议", "一个可信的生成式气候代理预印本，被包裹在数字星球与压缩营销中。"],
-    ["The AI Scientist", "有争议", "自主科学家的框架被独立评估大幅戳破：实验失败、新颖性错误、幻觉结果。"]
+    ["1", "托卡马克等离子体控制", "已确立", "深度强化学习在 TCV 上塑造等离子体，并在 DIII-D 上降低撕裂不稳定性风险：真实硬件，高影响。"],
+    ["2", "Aurora 地球系统模型", "已确立", "同行评议的多任务预报技能，包括五天业务气旋路径；但将其称为完整地球模型的说辞仍应保持克制。"],
+    ["3", "FunSearch", "已确立", "LLM 加评估器发现了新的可验证数学构造，使输出可被检查而非不透明。"],
+    ["4", "泄漏危机", "已确立", "Kapoor 与 Narayanan 在 17 个领域、294 篇论文中发现泄漏失效；它会削弱许多夸大结果，也正在重塑领域。"],
+    ["5", "外推漂移", "已确立", "NeuralGCM 与 ACE2 展示了硬边界：训练气候内的技能不能保证训练气候外也有。"],
+    ["6", "GNoME 材料发现", "有前景", "Nature 的结果真实；但标题宣称数量的实际新颖性、有用性和可合成性仍有争议。"],
+    ["7", "MatterGen", "有前景", "经同行评议的生成式材料工作，有一个合成验证点，但广泛材料设计的回报仍处早期。"],
+    ["8", "AI-Descartes / AI-Hilbert", "有前景", "强实在论方向：从数据加背景理论中恢复定律。大多数例子仍是重新发现已知定律。"],
+    ["9", "Prithvi WxC", "有前景", "开放的 23 亿参数天气-气候模型；下游任务的证据仍处预印本时代。"],
+    ["10", "KANs", "有前景", "2024 年预印本与 2025 年 PRX 后续研究主张可解释的科学发现；但相比普通网络的广泛优势仍未解决。"],
+    ["11", "AI 虚拟细胞", "有争议", "一篇严肃的 Cell 路线图，而非功能正常的细胞孪生。野心巨大；建成品尚未出现。"],
+    ["12", "cBottle / Earth-2", "有争议", "一个可信的生成式气候代理预印本，被包裹在数字星球与压缩营销中。"],
+    ["13", "The AI Scientist", "有争议", "自主科学家的框架被独立评估大幅戳破：实验失败、新颖性错误、幻觉结果。"]
   ]}/>
 </Panel>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>急件 1 · 代理模型接管操控</SectionEyebrow>

@@ -193,15 +193,27 @@ type FrontierCallout = {
   anchor: "start" | "middle" | "end";
 };
 const frontierCallouts: FrontierCallout[] = [
-  { index: 0, dx: -4, dy: 26, anchor: "start" },
+  { index: 0, dx: -84, dy: 34, anchor: "end" },
   { index: 1, dx: -20, dy: -18, anchor: "end" },
-  { index: 2, dx: -18, dy: 28, anchor: "end" },
-  { index: 10, dx: 18, dy: 30, anchor: "start" },
-  { index: 12, dx: 18, dy: -12, anchor: "start" }
+  { index: 2, dx: -18, dy: 34, anchor: "end" },
+  { index: 10, dx: 18, dy: 34, anchor: "start" },
+  { index: 12, dx: 22, dy: -18, anchor: "start" }
 ];
 const frontierColor = (status: string) => status === "ok" ? ok : status === "hint" ? brass : contested;
-const sx = (x: number) => 88 + 470 * x;
-const sy = (y: number) => 282 - 220 * y;
+const frontierPlot = {
+  left: 92,
+  top: 76,
+  width: 466,
+  height: 260,
+  xMin: 0.12,
+  xMax: 0.92,
+  yMin: 0.52,
+  yMax: 0.94
+};
+const sx = (x: number) => frontierPlot.left + ((x - frontierPlot.xMin) / (frontierPlot.xMax - frontierPlot.xMin)) * frontierPlot.width;
+const sy = (y: number) => frontierPlot.top + ((frontierPlot.yMax - y) / (frontierPlot.yMax - frontierPlot.yMin)) * frontierPlot.height;
+const frontierMidX = sx(0.52);
+const frontierMidY = sy(0.72);
 const figureAria = kind === "hero-map"
   ? copy.hero.aria
   : kind === "dial-curve"
@@ -364,20 +376,20 @@ const figureAria = kind === "hero-map"
 
   {kind === "frontier-map" && (
     <>
-      <svg viewBox="0 0 690 430" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
-        <rect x="18" y="18" width="654" height="382" rx="14" fill={raised} stroke={line}></rect>
+      <svg viewBox="0 0 690 410" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
+        <rect x="18" y="18" width="654" height="370" rx="14" fill={raised} stroke={line}></rect>
         <text x="345" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.frontier.title}</text>
-        <rect x="88" y="62" width="235" height="110" fill={contested} opacity=".08"></rect>
-        <rect x="323" y="62" width="235" height="110" fill={ok} opacity=".08"></rect>
-        <line x1="88" y1="282" x2="558" y2="282" stroke={lineStrong} stroke-width="1.4"></line>
-        <line x1="88" y1="62" x2="88" y2="282" stroke={lineStrong} stroke-width="1.4"></line>
-        <line x1="323" y1="62" x2="323" y2="282" stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
-        <line x1="88" y1="172" x2="558" y2="172" stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
-        <text x="102" y="101" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={contested}>{copy.frontier.thin}</text>
-        <text x="544" y="82" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={ok}>{copy.frontier.solid}</text>
-        <text x="544" y="264" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.frontier.low}</text>
-        <text x="323" y="318" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.frontier.x}</text>
-        <text x="48" y="172" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform="rotate(-90 48 172)">{copy.frontier.y}</text>
+        <rect x={frontierPlot.left} y={frontierPlot.top} width={frontierMidX - frontierPlot.left} height={frontierMidY - frontierPlot.top} fill={contested} opacity=".08"></rect>
+        <rect x={frontierMidX} y={frontierPlot.top} width={frontierPlot.left + frontierPlot.width - frontierMidX} height={frontierMidY - frontierPlot.top} fill={ok} opacity=".08"></rect>
+        <line x1={frontierPlot.left} y1={frontierPlot.top + frontierPlot.height} x2={frontierPlot.left + frontierPlot.width} y2={frontierPlot.top + frontierPlot.height} stroke={lineStrong} stroke-width="1.4"></line>
+        <line x1={frontierPlot.left} y1={frontierPlot.top} x2={frontierPlot.left} y2={frontierPlot.top + frontierPlot.height} stroke={lineStrong} stroke-width="1.4"></line>
+        <line x1={frontierMidX} y1={frontierPlot.top} x2={frontierMidX} y2={frontierPlot.top + frontierPlot.height} stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
+        <line x1={frontierPlot.left} y1={frontierMidY} x2={frontierPlot.left + frontierPlot.width} y2={frontierMidY} stroke={line} stroke-width="1" stroke-dasharray="5 5"></line>
+        <text x={frontierPlot.left + 14} y={frontierPlot.top + 22} font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={contested}>{copy.frontier.thin}</text>
+        <text x={frontierPlot.left + frontierPlot.width - 14} y={frontierPlot.top + 22} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={ok}>{copy.frontier.solid}</text>
+        <text x={frontierPlot.left + frontierPlot.width - 14} y={frontierPlot.top + frontierPlot.height - 18} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.frontier.low}</text>
+        <text x={frontierPlot.left + frontierPlot.width / 2} y={frontierPlot.top + frontierPlot.height + 30} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.frontier.x}</text>
+        <text x="48" y={frontierPlot.top + frontierPlot.height / 2} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform={`rotate(-90 48 ${frontierPlot.top + frontierPlot.height / 2})`}>{copy.frontier.y}</text>
         {frontierItems.map((item) => (
           <g>
             <circle cx={sx(item.x)} cy={sy(item.y)} r="12" fill={frontierColor(item.t)} stroke={raised} stroke-width="2"></circle>
@@ -391,16 +403,19 @@ const figureAria = kind === "hero-map"
             const y = sy(item.y);
             const label = `${item.n}. ${copy.frontier.labels[callout.index]}`;
             return (
-              <text x={x + callout.dx} y={y + callout.dy} text-anchor={callout.anchor}>{label}</text>
+              <>
+                <line x1={x} y1={y} x2={x + callout.dx * 0.75} y2={y + callout.dy * 0.75} stroke={lineStrong} stroke-width=".8" opacity=".65"></line>
+                <text x={x + callout.dx} y={y + callout.dy} text-anchor={callout.anchor}>{label}</text>
+              </>
             );
           })}
         </g>
         <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>
-          <rect x="568" y="96" width="94" height="72" rx="8" fill={paper} stroke={lineStrong}></rect>
+          <rect x="372" y="352" width="236" height="26" rx="8" fill={paper} stroke={lineStrong}></rect>
           {[ok, brass, contested].map((color, index) => (
             <g>
-              <circle cx="582" cy={116 + index * 20} r="5.5" fill={color}></circle>
-              <text x="594" y={120 + index * 20}>{copy.frontier.legend[index]}</text>
+              <circle cx={388 + index * 78} cy="365" r="5.5" fill={color}></circle>
+              <text x={399 + index * 78} y="369">{copy.frontier.legend[index]}</text>
             </g>
           ))}
         </g>

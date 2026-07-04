@@ -445,6 +445,42 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 4px color-mix
 .day10-static-figure-weather-chart svg,.day10-static-figure-frontier-map svg,.day10-static-figure-extrapolation-cliff svg{max-width:44rem;}
 .day10-static-figure-levins-triangle svg{max-width:40rem;}
 .figbox figcaption{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--ink-faint);margin-top:.5rem;letter-spacing:.03em;line-height:1.4;}
+.day10-frontier-map .fm-filters{display:flex;flex-wrap:wrap;gap:.45rem;margin:0 0 1rem;}
+.day10-frontier-map.wide{width:min(50rem,calc(100vw - 2.5rem));max-width:none;margin-left:50%;transform:translateX(-50%);}
+.day10-frontier-map .fbtn{cursor:pointer;display:inline-flex;align-items:center;gap:.42rem;border:1px solid var(--line-strong);border-radius:999px;background:var(--paper);color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.04em;line-height:1.15;padding:.36rem .72rem;transition:border-color .18s,background .18s,color .18s;}
+.day10-frontier-map .fbtn i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ink-faint);}
+.day10-frontier-map .fbtn.a-ok i{background:var(--ok);}
+.day10-frontier-map .fbtn.a-hint i{background:var(--hint);}
+.day10-frontier-map .fbtn.a-bad i{background:var(--contested);}
+.day10-frontier-map .fbtn:hover,.day10-frontier-map .fbtn:focus-visible,.day10-frontier-map .fbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent);outline:0;}
+.day10-frontier-map .fm-grid{display:grid;grid-template-columns:1fr;gap:1.05rem;align-items:start;}
+@media(min-width:760px){.day10-frontier-map .fm-grid{grid-template-columns:minmax(0,1.55fr) minmax(13rem,.55fr);}}
+.day10-frontier-map .fm-chart svg{display:block;width:100%;height:auto;overflow:visible;}
+.day10-frontier-map .fm-dot{cursor:pointer;transition:opacity .18s;}
+.day10-frontier-map .fm-dot-circle{transition:r .18s,stroke .18s,stroke-width .18s;}
+.day10-frontier-map .fm-dot:hover .fm-dot-circle,.day10-frontier-map .fm-dot:focus .fm-dot-circle,.day10-frontier-map .fm-dot.is-selected .fm-dot-circle{r:14;stroke:var(--ink);stroke-width:2.5;}
+.day10-frontier-map .fm-dot:focus{outline:0;}
+.day10-frontier-map .fm-dotnum{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;fill:#fff;pointer-events:none;}
+.day10-frontier-map .fm-axhint{margin:.35rem 0 0;text-align:center;font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.04em;color:var(--ink-faint);line-height:1.35;}
+.day10-frontier-map .fm-legend{border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:.55rem;max-height:23rem;overflow:auto;}
+.day10-frontier-map .lg-item{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.55rem;align-items:start;width:100%;text-align:left;border:0;border-radius:7px;background:transparent;color:var(--ink);font:inherit;cursor:pointer;padding:.42rem .46rem;transition:background .18s;}
+.day10-frontier-map .lg-item:hover,.day10-frontier-map .lg-item:focus-visible,.day10-frontier-map .lg-item[aria-current="true"]{background:color-mix(in srgb,var(--accent) 10%,transparent);outline:0;}
+.day10-frontier-map .lg-num{display:flex;align-items:center;justify-content:center;width:1.2rem;height:1.2rem;margin-top:.08rem;border-radius:50%;font-family:"IBM Plex Mono",monospace;font-size:.7rem;font-weight:600;color:#fff;line-height:1;}
+.day10-frontier-map .lg-num.ok{background:var(--ok);}
+.day10-frontier-map .lg-num.hint{background:var(--hint);}
+.day10-frontier-map .lg-num.bad{background:var(--contested);}
+.day10-frontier-map .lg-name{font-size:.84em;line-height:1.32;}
+.day10-frontier-map .lg-name b{font-family:"Fraunces",serif;font-weight:600;color:var(--ink);}
+.day10-frontier-map .lg-name span{display:block;margin-top:.08rem;font-family:"IBM Plex Mono",monospace;font-size:.76em;letter-spacing:.03em;color:var(--ink-faint);}
+.day10-frontier-map .fm-detail{margin-top:1.05rem;border-top:1px dashed var(--line);padding-top:1rem;}
+.day10-frontier-map .fm-detail .dh{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.45rem;}
+.day10-frontier-map .fm-detail .dname{font-family:"Fraunces",serif;font-weight:600;font-size:1.14rem;line-height:1.2;color:var(--ink);}
+.day10-frontier-map .fm-detail .dmeta{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.04em;color:var(--ink-faint);}
+.day10-frontier-map .fm-detail .dbody{margin:.2rem 0 0;font-size:.93em;line-height:1.55;color:var(--ink-soft);}
+html[lang^="zh"] .day10-frontier-map .fbtn,
+html[lang^="zh"] .day10-frontier-map .fm-axhint,
+html[lang^="zh"] .day10-frontier-map .lg-name span,
+html[lang^="zh"] .day10-frontier-map .fm-detail .dmeta{letter-spacing:0;text-transform:none;}
 .grue-stage{margin:.4rem 0 0;}
 .grue-stage svg{width:100%;height:auto;}
 .grue-controls{margin-top:1rem;}

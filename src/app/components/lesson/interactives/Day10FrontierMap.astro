@@ -1,0 +1,258 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+type FrontierItem = {
+  n: number;
+  name: string;
+  meta: string;
+  t: "ok" | "hint" | "bad";
+  x: number;
+  y: number;
+  detail: string;
+};
+
+const zh = Astro.props.locale === "zh";
+
+const copy = zh
+  ? {
+      eyebrow: "交互 · 前沿的二维地图",
+      title: "若成立的影响 x 证据",
+      note: "位置是刻意判断，不是测量。按证据标签筛选，再点一个编号或名称查看凭据。",
+      filterLabel: "按证据状态筛选",
+      all: "全部",
+      ok: "已确立",
+      hint: "有前景",
+      bad: "有争议／炒作",
+      aria: "按证据强度和潜在影响排列 AI 建模前沿工作的交互散点图。",
+      x: "证据更扎实 ->",
+      y: "若成立的影响 ->",
+      left: "薄冰",
+      right: "扎实",
+      thin: "大主张，薄冰",
+      solid: "真正革命",
+      axhint: "越高 = 越可能重塑领域；越靠右 = 证据越扎实"
+    }
+  : {
+      eyebrow: "Interactive · the frontier on two axes",
+      title: "Impact if true x evidence",
+      note: "Positions are deliberate judgment calls, not measurements. Filter by tag, then tap a numbered point or name for the receipt.",
+      filterLabel: "Filter by evidential status",
+      all: "All",
+      ok: "Established",
+      hint: "Promising",
+      bad: "Contested / hype",
+      aria: "Interactive scatter plot of AI modeling frontier developments by evidential strength and potential impact.",
+      x: "stronger evidence ->",
+      y: "impact if it holds ->",
+      left: "thin ice",
+      right: "solid",
+      thin: "big claim, thin ice",
+      solid: "the real revolution",
+      axhint: "higher = would reshape the field; righter = better evidenced"
+    };
+
+const statusText = (t: FrontierItem["t"]) => t === "ok" ? copy.ok : t === "hint" ? copy.hint : copy.bad;
+
+const items: FrontierItem[] = zh
+  ? [
+      { n: 1, name: "托卡马克等离子体控制", meta: "Nature 2022 与 2024", t: "ok", x: 0.90, y: 0.76, detail: "深度强化学习控制器在 TCV 与 DIII-D 托卡马克上塑造并稳定真实等离子体。真实硬件验证，让它成为最扎实的前沿 AI 案例之一。" },
+      { n: 2, name: "Aurora 地球系统模型", meta: "Nature，2025 年 5 月", t: "ok", x: 0.72, y: 0.84, detail: "13 亿参数的预训练大气模型，在空气质量、海浪、气旋路径和天气等任务上报告强表现。结果扎实；「整个地球模型」的说法仍应克制。" },
+      { n: 3, name: "FunSearch", meta: "Nature，2023 年 12 月", t: "ok", x: 0.83, y: 0.62, detail: "LLM 加自动评估器发现新的可验证数学构造。输出不是黑箱权重，而是可检查、可证明的对象。" },
+      { n: 4, name: "泄漏与可重复性危机", meta: "Patterns，2023 年 9 月", t: "ok", x: 0.88, y: 0.86, detail: "Kapoor 与 Narayanan 在 17 个领域、294 篇论文中发现泄漏错误。它影响巨大，正是因为它会削弱许多看似耀眼的结果。" },
+      { n: 5, name: "外推漂移", meta: "Nature 2024 / npj 2025", t: "ok", x: 0.84, y: 0.80, detail: "NeuralGCM 与 ACE2 暴露了核心边界：训练气候内的技能不能保证训练气候外也有机制性理解。" },
+      { n: 6, name: "GNoME 材料发现", meta: "Nature，2023 年 11 月", t: "hint", x: 0.60, y: 0.70, detail: "大规模预测稳定晶体结构是真结果；但实际新颖性、有用性与可合成性需要更严格审计。" },
+      { n: 7, name: "MatterGen", meta: "Nature，2025 年 1 月", t: "hint", x: 0.66, y: 0.66, detail: "在目标约束下生成材料，并有一个合成验证点。同行评议进展真实，广泛材料设计回报仍处早期。" },
+      { n: 8, name: "AI-Descartes / AI-Hilbert", meta: "Nature Communications 2023-2024", t: "hint", x: 0.58, y: 0.72, detail: "从数据加背景理论中恢复定律，是对黑箱代理模型的实在论式反击。多数案例仍在重新发现已知定律。" },
+      { n: 9, name: "Prithvi WxC", meta: "预印本，2024 年 9 月", t: "hint", x: 0.45, y: 0.60, detail: "开放的 23 亿参数天气-气候基础模型。野心和开放性都重要，但任务级证据仍处预印本阶段。" },
+      { n: 10, name: "KANs", meta: "预印本 2024 / PRX 2025", t: "hint", x: 0.35, y: 0.58, detail: "把可学习函数放在网络边上的可解释网络路线很有吸引力；相对普通网络的广泛优势仍未定。" },
+      { n: 11, name: "AI 虚拟细胞", meta: "Cell，2024 年 12 月", t: "bad", x: 0.20, y: 0.92, detail: "这是严肃路线图，不是已工作的细胞数字孪生。野心巨大；建成品尚未出现。" },
+      { n: 12, name: "cBottle / Earth-2", meta: "预印本，2025 年 6 月", t: "bad", x: 0.30, y: 0.74, detail: "可信的公里尺度气候代理模型，被包裹在「行星数字孪生」和压缩营销中。科学有前景，包装有炒作。" },
+      { n: 13, name: "The AI Scientist", meta: "预印本 2024 / 独立评估 2025", t: "bad", x: 0.16, y: 0.55, detail: "端到端自主科学家的框架被独立评估显著降温：编码失败、新颖性误判和幻觉结果。" }
+    ]
+  : [
+      { n: 1, name: "Tokamak plasma control", meta: "Nature 2022 & 2024", t: "ok", x: 0.90, y: 0.76, detail: "Deep-RL controllers shaped and stabilized real plasma on the TCV and DIII-D tokamaks. Live hardware validation makes this one of the most established frontier AI cases." },
+      { n: 2, name: "Aurora Earth-system model", meta: "Nature, May 2025", t: "ok", x: 0.72, y: 0.84, detail: "A 1.3B-parameter pretrained atmosphere reports strong skill across air quality, waves, cyclone tracks, and weather. The result is solid; the whole-Earth framing still needs restraint." },
+      { n: 3, name: "FunSearch", meta: "Nature, Dec 2023", t: "ok", x: 0.83, y: 0.62, detail: "An LLM plus evaluator found new verifiable mathematical constructions. The output is not an opaque weight vector; it is inspectable and provable." },
+      { n: 4, name: "Leakage crisis", meta: "Patterns, Sept 2023", t: "ok", x: 0.88, y: 0.86, detail: "Kapoor and Narayanan identified leakage errors across 17 fields and 294 papers. Its impact is high precisely because it deflates so many shiny results." },
+      { n: 5, name: "Extrapolation drift", meta: "Nature 2024 / npj 2025", t: "ok", x: 0.84, y: 0.80, detail: "NeuralGCM and ACE2 expose the hard limit: skill inside the training climate is not a guarantee of mechanism outside it." },
+      { n: 6, name: "GNoME materials discovery", meta: "Nature, Nov 2023", t: "hint", x: 0.60, y: 0.70, detail: "The large-scale predicted-stable crystal result is real; the practical novelty, usefulness, and synthesizability of headline counts need harder auditing." },
+      { n: 7, name: "MatterGen", meta: "Nature, Jan 2025", t: "hint", x: 0.66, y: 0.66, detail: "Generative materials work with a synthesis proof point. The peer-reviewed advance is real; broad materials-design payoff is still early." },
+      { n: 8, name: "AI-Descartes / AI-Hilbert", meta: "Nat. Commun. 2023-2024", t: "hint", x: 0.58, y: 0.72, detail: "Recovering laws from data plus background theory is the realist counter-move to black-box emulation. Most examples still rediscover known laws." },
+      { n: 9, name: "Prithvi WxC", meta: "preprint, Sept 2024", t: "hint", x: 0.45, y: 0.60, detail: "An open 2.3B-parameter weather-climate foundation model. The ambition and openness matter; task-level evidence is still preprint-stage." },
+      { n: 10, name: "KANs", meta: "preprint 2024 / PRX 2025", t: "hint", x: 0.35, y: 0.58, detail: "Interpretable networks with learnable functions on edges are intriguing; broad superiority over well-tuned ordinary networks remains unsettled." },
+      { n: 11, name: "AI Virtual Cell", meta: "Cell, Dec 2024", t: "bad", x: 0.20, y: 0.92, detail: "A serious roadmap, not a working cell digital twin. The ambition is huge; the built artifact is not here." },
+      { n: 12, name: "cBottle / Earth-2", meta: "preprint, June 2025", t: "bad", x: 0.30, y: 0.74, detail: "A credible kilometer-scale climate emulator wrapped in planet-twin and compression marketing. The science is promising; the framing is hype." },
+      { n: 13, name: "The AI Scientist", meta: "preprint 2024 / evaluation 2025", t: "bad", x: 0.16, y: 0.55, detail: "The autonomous-scientist framing was sharply cooled by independent evaluation: coding failures, novelty errors, and hallucinated results." }
+    ];
+
+const plot = { left: 60, top: 40, width: 470, height: 320, xMin: 0.12, xMax: 0.92, yMin: 0.52, yMax: 0.94 };
+const sx = (x: number) => plot.left + ((x - plot.xMin) / (plot.xMax - plot.xMin)) * plot.width;
+const sy = (y: number) => plot.top + ((plot.yMax - y) / (plot.yMax - plot.yMin)) * plot.height;
+const midX = sx(0.52);
+const midY = sy(0.72);
+const initial = items[0]!;
+---
+<Panel class="web-only day10-frontier-map wide" data-day10-frontier-map>
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="fm-filters" role="group" aria-label={copy.filterLabel}>
+    <button class="fbtn" type="button" data-fm-filter="all" aria-pressed="true"><i class="is-all"></i>{copy.all}</button>
+    <button class="fbtn a-ok" type="button" data-fm-filter="ok" aria-pressed="false"><i></i>{copy.ok}</button>
+    <button class="fbtn a-hint" type="button" data-fm-filter="hint" aria-pressed="false"><i></i>{copy.hint}</button>
+    <button class="fbtn a-bad" type="button" data-fm-filter="bad" aria-pressed="false"><i></i>{copy.bad}</button>
+  </div>
+
+  <div class="fm-grid">
+    <div class="fm-chart">
+      <svg viewBox="0 0 560 410" role="img" aria-label={copy.aria} data-pagefind-ignore="all">
+        <rect x={plot.left} y={plot.top} width={midX - plot.left} height={midY - plot.top} fill="var(--contested)" opacity=".06"></rect>
+        <rect x={midX} y={plot.top} width={plot.left + plot.width - midX} height={midY - plot.top} fill="var(--ok)" opacity=".06"></rect>
+        <line x1={plot.left} y1={plot.top + plot.height} x2={plot.left + plot.width} y2={plot.top + plot.height} stroke="var(--line-strong)" stroke-width="1.2"></line>
+        <line x1={plot.left} y1={plot.top} x2={plot.left} y2={plot.top + plot.height} stroke="var(--line-strong)" stroke-width="1.2"></line>
+        <line x1={midX} y1={plot.top} x2={midX} y2={plot.top + plot.height} stroke="var(--line)" stroke-width="1" stroke-dasharray="3 4"></line>
+        <line x1={plot.left} y1={midY} x2={plot.left + plot.width} y2={midY} stroke="var(--line)" stroke-width="1" stroke-dasharray="3 4"></line>
+        <text x={plot.left + plot.width / 2} y="392" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)">{copy.x}</text>
+        <text x="20" y={plot.top + plot.height / 2} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)" transform={`rotate(-90 20 ${plot.top + plot.height / 2})`}>{copy.y}</text>
+        <text x={plot.left + 10} y="374" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)">{copy.left}</text>
+        <text x={plot.left + plot.width} y="374" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)">{copy.right}</text>
+        <text x={plot.left + 12} y={plot.top + 18} font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--contested)" opacity=".9">{copy.thin}</text>
+        <text x={plot.left + plot.width - 12} y={plot.top + 18} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ok)" opacity=".9">{copy.solid}</text>
+        {items.map((item) => (
+          <g
+            class={`fm-dot${item.n === initial.n ? " is-selected" : ""}`}
+            role="button"
+            tabindex="0"
+            aria-label={`${item.n}. ${item.name}`}
+            data-fm-dot
+            data-fm-item
+            data-n={String(item.n)}
+            data-status={item.t}
+            data-status-label={statusText(item.t)}
+            data-name={item.name}
+            data-meta={item.meta}
+            data-detail={item.detail}
+          >
+            <circle class="fm-dot-circle" cx={sx(item.x)} cy={sy(item.y)} r="11" fill={`var(--${item.t === "ok" ? "ok" : item.t === "hint" ? "hint" : "contested"})`} stroke="var(--raised)" stroke-width="2"></circle>
+            <text class="fm-dotnum" x={sx(item.x)} y={sy(item.y) + 3.2} text-anchor="middle">{item.n}</text>
+          </g>
+        ))}
+      </svg>
+      <p class="fm-axhint">{copy.axhint}</p>
+    </div>
+
+    <div class="fm-legend" aria-label={zh ? "前沿工作列表" : "List of frontier developments"}>
+      {items.map((item) => (
+        <button
+          class="lg-item"
+          type="button"
+          aria-current={item.n === initial.n ? "true" : "false"}
+          data-fm-item
+          data-n={String(item.n)}
+          data-status={item.t}
+          data-status-label={statusText(item.t)}
+          data-name={item.name}
+          data-meta={item.meta}
+          data-detail={item.detail}
+        >
+          <span class={`lg-num ${item.t}`}>{item.n}</span>
+          <span class="lg-name"><b>{item.name}</b> <span>{item.meta}</span></span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="fm-detail" aria-live="polite">
+    <div class="dh">
+      <span class="dname" data-fm-detail-name>{initial.n}. {initial.name}</span>
+      <span class={`chip ${initial.t}`} data-fm-detail-chip><i></i><span data-fm-detail-status>{statusText(initial.t)}</span></span>
+      <span class="dmeta" data-fm-detail-meta>{initial.meta}</span>
+    </div>
+    <p class="dbody" data-fm-detail-body>{initial.detail}</p>
+  </div>
+</Panel>
+
+<script is:inline>
+(() => {
+  document.querySelectorAll("[data-day10-frontier-map]").forEach((root) => {
+    const filters = Array.from(root.querySelectorAll("[data-fm-filter]"));
+    const dots = Array.from(root.querySelectorAll("[data-fm-dot]"));
+    const items = Array.from(root.querySelectorAll("[data-fm-item]"));
+    const legendItems = items.filter((item) => item.classList.contains("lg-item"));
+    const detailName = root.querySelector("[data-fm-detail-name]");
+    const detailChip = root.querySelector("[data-fm-detail-chip]");
+    const detailStatus = root.querySelector("[data-fm-detail-status]");
+    const detailMeta = root.querySelector("[data-fm-detail-meta]");
+    const detailBody = root.querySelector("[data-fm-detail-body]");
+    let currentFilter = "all";
+
+    const itemData = (node) => ({
+      n: node.dataset.n,
+      name: node.dataset.name,
+      meta: node.dataset.meta,
+      status: node.dataset.status,
+      statusLabel: node.dataset.statusLabel,
+      detail: node.dataset.detail
+    });
+
+    const matches = (node) => currentFilter === "all" || node.dataset.status === currentFilter;
+
+    const select = (n) => {
+      const source = items.find((item) => item.dataset.n === String(n));
+      if (!source) return;
+      const data = itemData(source);
+      dots.forEach((dot) => dot.classList.toggle("is-selected", dot.dataset.n === data.n));
+      legendItems.forEach((item) => item.setAttribute("aria-current", item.dataset.n === data.n ? "true" : "false"));
+      detailName.textContent = `${data.n}. ${data.name}`;
+      detailChip.className = `chip ${data.status}`;
+      detailStatus.textContent = data.statusLabel;
+      detailMeta.textContent = data.meta;
+      detailBody.textContent = data.detail;
+    };
+
+    const applyFilter = () => {
+      dots.forEach((dot) => {
+        const on = matches(dot);
+        dot.style.opacity = on ? "1" : "0.14";
+        dot.style.pointerEvents = on ? "auto" : "none";
+      });
+      legendItems.forEach((item) => {
+        item.hidden = !matches(item);
+      });
+      const selected = dots.find((dot) => dot.classList.contains("is-selected"));
+      if (selected && !matches(selected)) {
+        const next = dots.find(matches);
+        if (next) select(next.dataset.n);
+      }
+    };
+
+    root.addEventListener("click", (event) => {
+      const filter = event.target.closest("[data-fm-filter]");
+      if (filter && root.contains(filter)) {
+        currentFilter = filter.dataset.fmFilter;
+        filters.forEach((button) => button.setAttribute("aria-pressed", button === filter ? "true" : "false"));
+        applyFilter();
+        return;
+      }
+      const item = event.target.closest("[data-fm-item]");
+      if (item && root.contains(item)) select(item.dataset.n);
+    });
+
+    root.addEventListener("keydown", (event) => {
+      const dot = event.target.closest("[data-fm-dot]");
+      if (!dot || !root.contains(dot)) return;
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        select(dot.dataset.n);
+      }
+    });
+  });
+})();
+</script>

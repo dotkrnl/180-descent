@@ -18,6 +18,7 @@ import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.astro";
+import Day10FrontierMap from "@app/components/lesson/interactives/Day10FrontierMap.astro";
 
 <Lead drop="O">ld mapmakers had an honest habit: where surveys stopped and rumor began, they drew monsters and wrote *hic sunt dracones* — here be dragons. The main day and Appendix I mapped relatively settled country: Borges, Bellarmine, verification, reliabilism, and the old realism fight. This appendix sails off the edge. Most of what follows is from 2020 or later, much of it from the last few years, and a good share of it will turn out to be wrong. That is the point. The frontier is where calibration matters most.</Lead>
 
@@ -53,37 +54,43 @@ The same pattern is spreading. NASA and IBM's <Strong>Prithvi WxC</Strong>, rele
 Before we go deeper, put the whole frontier on one chart. The useful question is not "is this impressive?" It is the two-dimensional question: <Strong>how established is it</Strong>, and <Strong>how much would it matter if it held up?</Strong> Those axes carve the field into meaning. The upper-right is the real revolution: big and solid. The upper-left is where the dragons live: enormous claims resting on thin ice. The lower-right is less glamorous but often more useful: narrow claims that already carry weight.
 </ContentSection>
 
+<Day10FrontierMap locale="en" />
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
 <Panel>
 <PanelTitle>Frontier map · impact if true x evidence</PanelTitle>
 <PanelNote>Positions are judgment calls, not measurements. Numbered points are unpacked in the receipts table below.</PanelNote>
 
 <Day10StaticFigure kind="frontier-map" locale="en" />
 </Panel>
+</FormatOnly>
 
 <FormatOnly as="div" media="print" class="pdf-page-break" />
 
+<FormatOnly as="div" media="print-epub" variant="alternate">
 <Panel>
 <PanelTitle>Frontier receipts</PanelTitle>
-<PanelNote>The table keeps the source interactive's receipts visible for web, EPUB, and PDF readers.</PanelNote>
+<PanelNote>The static table keeps the interactive receipts visible for EPUB and PDF readers.</PanelNote>
 
 <SimpleTable
-  headers={["Work","Status","Why it sits there"]}
+  headers={["#","Work","Status","Why it sits there"]}
   rows={[
-    ["Tokamak plasma control", "established", "Deep RL shaped plasma on TCV and reduced tearing-instability risk on DIII-D: real hardware, high impact."],
-    ["Aurora Earth-system model", "established", "Peer-reviewed multi-task forecasting skill, including five-day operational cyclone tracks; whole-Earth-model rhetoric still needs restraint."],
-    ["FunSearch", "established", "LLM plus evaluator found new verifiable mathematical constructions, making the output inspectable rather than opaque."],
-    ["Leakage crisis", "established", "Kapoor and Narayanan found leakage failures across 17 fields and 294 papers; its impact is deflationary but field-shaping."],
-    ["Extrapolation drift", "established", "NeuralGCM and ACE2 show the hard limit: skill inside the training climate is not guaranteed beyond it."],
-    ["GNoME materials discovery", "promising", "The Nature result is real; the practical novelty, usefulness, and synthesizability of headline counts remain contested."],
-    ["MatterGen", "promising", "Peer-reviewed generative materials work with a synthesis proof point, but broad materials-design payoff is early."],
-    ["AI-Descartes / AI-Hilbert", "promising", "Strong realist direction: recover laws from data plus background theory. Most examples still rediscover known laws."],
-    ["Prithvi WxC", "promising", "Open 2.3B-parameter weather-climate model; still preprint-era evidence across downstream tasks."],
-    ["KANs", "promising", "A 2024 preprint and 2025 PRX follow-up argue for interpretable scientific discovery; broad superiority over ordinary networks remains unsettled."],
-    ["AI Virtual Cell", "contested", "A serious Cell roadmap, not a functioning cell twin. The ambition is huge; the built artifact is not here."],
-    ["cBottle / Earth-2", "contested", "A credible generative climate-emulator preprint wrapped in digital-planet and compression marketing."],
-    ["The AI Scientist", "contested", "The autonomous-scientist framing was sharply deflated by independent evaluation: failed experiments, novelty errors, hallucinated results."]
+    ["1", "Tokamak plasma control", "established", "Deep RL shaped plasma on TCV and reduced tearing-instability risk on DIII-D: real hardware, high impact."],
+    ["2", "Aurora Earth-system model", "established", "Peer-reviewed multi-task forecasting skill, including five-day operational cyclone tracks; whole-Earth-model rhetoric still needs restraint."],
+    ["3", "FunSearch", "established", "LLM plus evaluator found new verifiable mathematical constructions, making the output inspectable rather than opaque."],
+    ["4", "Leakage crisis", "established", "Kapoor and Narayanan found leakage failures across 17 fields and 294 papers; its impact is deflationary but field-shaping."],
+    ["5", "Extrapolation drift", "established", "NeuralGCM and ACE2 show the hard limit: skill inside the training climate is not guaranteed beyond it."],
+    ["6", "GNoME materials discovery", "promising", "The Nature result is real; the practical novelty, usefulness, and synthesizability of headline counts remain contested."],
+    ["7", "MatterGen", "promising", "Peer-reviewed generative materials work with a synthesis proof point, but broad materials-design payoff is early."],
+    ["8", "AI-Descartes / AI-Hilbert", "promising", "Strong realist direction: recover laws from data plus background theory. Most examples still rediscover known laws."],
+    ["9", "Prithvi WxC", "promising", "Open 2.3B-parameter weather-climate model; still preprint-era evidence across downstream tasks."],
+    ["10", "KANs", "promising", "A 2024 preprint and 2025 PRX follow-up argue for interpretable scientific discovery; broad superiority over ordinary networks remains unsettled."],
+    ["11", "AI Virtual Cell", "contested", "A serious Cell roadmap, not a functioning cell twin. The ambition is huge; the built artifact is not here."],
+    ["12", "cBottle / Earth-2", "contested", "A credible generative climate-emulator preprint wrapped in digital-planet and compression marketing."],
+    ["13", "The AI Scientist", "contested", "The autonomous-scientist framing was sharply deflated by independent evaluation: failed experiments, novelty errors, hallucinated results."]
   ]}/>
 </Panel>
+</FormatOnly>
 
 <ContentSection>
 <SectionEyebrow>Dispatch 1 · surrogates at the controls</SectionEyebrow>
