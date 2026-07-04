@@ -1,0 +1,96 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      eyebrow: "交互 · 看见错觉如何运作",
+      title: "琳达机器",
+      note: "先作选择，再在同一道题的两副镜片之间切换：一副是感觉正确的相似性，另一副是真正正确的集合逻辑。观察它们怎样彼此冲突。",
+      card: "琳达 31 岁，单身，坦率，非常聪明；学过哲学；曾热心社会正义与反核运动。哪个更可能？",
+      choiceLabel: "选择一个答案",
+      optionAKey: "选项 A",
+      optionA: "琳达是银行出纳员。",
+      optionBKey: "选项 B",
+      optionB: "琳达是银行出纳员，并且积极参与女权运动。",
+      lensLabel: "镜片",
+      feel: "感觉如何 · 相似性",
+      logic: "实际为真 · 逻辑",
+      aria: "一个大的银行出纳员集合，里面包含一个较小的女权银行出纳员子集。"
+    }
+  : {
+      eyebrow: "Interactive · watch the illusion work",
+      title: "The Linda Machine",
+      note: "First, make your choice. Then flip between the two lenses your mind can use on the same question: the one that feels right, resemblance, and the one that is right, nested sets.",
+      card: "Linda is 31, single, outspoken, very bright; philosophy major; once devoted to social justice and anti-nuclear causes. Which is more probable?",
+      choiceLabel: "Choose an answer",
+      optionAKey: "Option A",
+      optionA: "Linda is a bank teller.",
+      optionBKey: "Option B",
+      optionB: "Linda is a bank teller and a feminist activist.",
+      lensLabel: "Lens",
+      feel: "How it feels · resemblance",
+      logic: "What's true · logic",
+      aria: "A large set of bank tellers with a small subset of feminist bank tellers inside it."
+    };
+---
+<Panel class="web-only day11-linda" data-day11-linda data-locale={zh ? "zh" : "en"}>
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="day11-linda-card"><b>{zh ? "琳达" : "Linda"}</b> {copy.card.replace(zh ? "琳达 " : "Linda ", "")}</div>
+
+  <div class="day11-button-row" role="group" aria-label={copy.choiceLabel}>
+    <button class="day11-optbtn" type="button" data-choice="A" aria-pressed="false">
+      <span class="day11-k">{copy.optionAKey}</span>
+      {copy.optionA}
+    </button>
+    <button class="day11-optbtn" type="button" data-choice="B" aria-pressed="false">
+      <span class="day11-k">{copy.optionBKey}</span>
+      {copy.optionB}
+    </button>
+  </div>
+
+  <div class="day11-control-row">
+    <span class="day11-control-label">{copy.lensLabel}</span>
+    <div class="day11-segment" role="group" aria-label={copy.lensLabel}>
+      <button type="button" data-lens="feel" aria-pressed="true">{copy.feel}</button>
+      <button type="button" data-lens="logic" aria-pressed="false">{copy.logic}</button>
+    </div>
+  </div>
+
+  <div class="day11-linda-viz">
+    <svg viewBox="0 0 400 250" role="img" aria-label={copy.aria} data-pagefind-ignore="all">
+      <rect x="40" y="35" width="320" height="180" rx="14" fill="color-mix(in srgb,var(--accent) 12%,transparent)" stroke="var(--accent)" stroke-width="2"></rect>
+      <text x="52" y="58" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-soft)">{zh ? "A · 银行出纳员" : "A · bank tellers"}</text>
+      <circle data-role="subset" cx="255" cy="140" r="58" fill="color-mix(in srgb,var(--brass) 22%,transparent)" stroke="var(--brass)" stroke-width="2"></circle>
+      <text data-role="small-label" x="255" y="137" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink)">{zh ? "B · 且女权" : "B · & feminist"}</text>
+      <text data-role="small-label-2" x="255" y="153" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink)">{zh ? "一个子集" : "(a subset)"}</text>
+      <g data-role="linda-dot">
+        <circle cx="255" cy="140" r="6" fill="var(--contested)"></circle>
+        <text x="255" y="120" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--contested)">{zh ? "琳达感觉适合这里" : "Linda fits here"}</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="day11-meter-row">
+    <div class="day11-meter-label"><span data-out="label-a"></span><span data-out="value-a"></span></div>
+    <div class="day11-meter"><span data-out="fill-a"></span></div>
+  </div>
+  <div class="day11-meter-row">
+    <div class="day11-meter-label"><span data-out="label-b"></span><span data-out="value-b"></span></div>
+    <div class="day11-meter"><span class="is-brass" data-out="fill-b"></span></div>
+  </div>
+
+  <div class="day11-verdict">
+    <strong data-out="verdict-title"></strong>
+    <span data-out="verdict-body"></span>
+  </div>
+</Panel>

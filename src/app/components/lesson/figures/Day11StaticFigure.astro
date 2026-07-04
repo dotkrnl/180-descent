@@ -1,0 +1,220 @@
+---
+interface Props {
+  kind: "linda-sets" | "frequency-grid" | "scissors" | "resource-curve";
+  locale?: "en" | "zh";
+}
+
+const kind = Astro.props.kind;
+const zh = Astro.props.locale === "zh";
+
+const ink = "var(--ink, #172530)";
+const soft = "var(--ink-soft, #41545d)";
+const faint = "var(--ink-faint, #64747b)";
+const line = "var(--line, #ddd7c8)";
+const lineStrong = "var(--line-strong, #cabfa8)";
+const paper = "var(--paper, #f5f3ec)";
+const raised = "var(--raised, #fbfaf5)";
+const accent = "var(--accent, #1d6f78)";
+const brass = "var(--brass, #93651f)";
+const ok = "var(--ok, #2a704a)";
+const contested = "var(--contested, #a23c34)";
+
+const copy = {
+  linda: zh
+    ? {
+        aria: "一个较大的银行出纳员集合包住较小的女权银行出纳员子集，琳达的相似性提示指向较小子集。",
+        title: "合取不能大于它的一部分",
+        a: "A · 银行出纳员",
+        b: "B · 银行出纳员且女权",
+        fit: "相似性在喊：选 B",
+        rule: "逻辑在说：B 是 A 的子集",
+        caption: "琳达描述让 B 更有故事感，但集合关系没有改变：P(A 且 B) 永远不能超过 P(A)。"
+      }
+    : {
+        aria: "A larger bank teller set contains a smaller feminist bank teller subset, with Linda's resemblance cue pointing to the smaller subset.",
+        title: "A conjunction cannot exceed one of its parts",
+        a: "A · bank tellers",
+        b: "B · bank tellers + feminist",
+        fit: "resemblance shouts: choose B",
+        rule: "logic says: B is a subset of A",
+        caption: "The Linda description makes B feel more story-shaped, but the set relation does not change: P(A and B) can never exceed P(A)."
+      },
+  frequency: zh
+    ? {
+        aria: "一张检测结果图显示一千人中九个真阳性和八十九个假阳性，阳性结果大多来自健康人。",
+        title: "1% 基础率，90% 灵敏度，9% 假阳性率",
+        base: "1,000 人",
+        sick: "10 人患病",
+        healthy: "990 人健康",
+        truePos: "9 真阳性",
+        falsePos: "89 假阳性",
+        positives: "阳性共 98 人",
+        result: "9 / 98 ≈ 9%",
+        caption: "自然频率把贝叶斯答案变成计数题：在阳性检测者中，真正患病者只是所有阳性中的一小部分。"
+      }
+    : {
+        aria: "A testing diagram shows nine true positives and eighty-nine false positives among one thousand people, so most positive tests come from healthy people.",
+        title: "1% base rate, 90% sensitivity, 9% false positive rate",
+        base: "1,000 people",
+        sick: "10 sick",
+        healthy: "990 healthy",
+        truePos: "9 true +",
+        falsePos: "89 false +",
+        positives: "98 positive tests",
+        result: "9 / 98 ≈ 9%",
+        caption: "Natural frequencies turn the Bayesian answer into a counting problem: among positive tests, the true cases are only a small part of all positives."
+      },
+  scissors: zh
+    ? {
+        aria: "西蒙剪刀图显示心智能力与任务环境两片刀刃在行为处相交。",
+        title: "西蒙的剪刀",
+        mind: "心智能力",
+        world: "任务环境结构",
+        output: "行为",
+        one: "只看一片刀刃：规则显得粗糙",
+        both: "看两片刀刃：规则可能正好适配环境",
+        caption: "有限理性不是只研究心智缺陷；它研究有限心智和结构化环境如何一起产生可用行为。"
+      }
+    : {
+        aria: "Simon's scissors diagram shows cognitive capabilities and task environment meeting at behavior.",
+        title: "Simon's scissors",
+        mind: "cognitive capabilities",
+        world: "task environment structure",
+        output: "behavior",
+        one: "one blade alone: the rule looks crude",
+        both: "both blades together: the rule may fit the world",
+        caption: "Bounded rationality is not just the study of mental defects; it studies how limited minds and structured environments produce workable behavior together."
+      },
+  resource: zh
+    ? {
+        aria: "一张曲线图显示准确性随计算量上升但趋于饱和，思考成本上升，净价值在有限计算处达到峰值。",
+        title: "当思考不是免费时，最佳点会提前出现",
+        x: "投入的计算量（样本 · 时间 · 努力）",
+        y: "价值",
+        accuracy: "准确性（趋于饱和）",
+        cost: "思考成本",
+        net: "净价值",
+        stop: "在这里停止",
+        gap1: "「在这里停止」",
+        gap2: "与「完美」之间的距离就是偏差",
+        caption: "资源理性分析把偏差解释为有限计算下的折中：多想一点会更准确，但不一定更值得。"
+      }
+    : {
+        aria: "A curve chart shows accuracy rising and saturating, thinking cost rising, and net value peaking at a finite amount of computation.",
+        title: "When thinking is not free, the optimum arrives early",
+        x: "computation spent (samples · time · effort)",
+        y: "value",
+        accuracy: "accuracy (saturates)",
+        cost: "cost of thinking",
+        net: "net value",
+        stop: "stop here",
+        gap1: "the gap between stop here",
+        gap2: "and perfect is the bias",
+        caption: "Resource-rational analysis treats bias as a tradeoff under finite computation: thinking longer may be more accurate, but not always more valuable."
+      }
+};
+
+const freqSegments = [
+  { label: copy.frequency.truePos, x: 74, y: 126, w: 56, fill: accent },
+  { label: copy.frequency.falsePos, x: 130, y: 126, w: 248, fill: brass },
+  { label: zh ? "其余为阴性" : "the rest test negative", x: 74, y: 178, w: 360, fill: "color-mix(in srgb,var(--ink-faint) 26%,transparent)" }
+];
+---
+<figure class={`figbox day11-static-figure day11-static-figure-${kind}`} aria-label={
+  kind === "linda-sets"
+    ? copy.linda.aria
+    : kind === "frequency-grid"
+      ? copy.frequency.aria
+      : kind === "scissors"
+        ? copy.scissors.aria
+        : copy.resource.aria
+}>
+  {kind === "linda-sets" && (
+    <>
+      <svg viewBox="0 0 520 300" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
+        <rect x="24" y="20" width="472" height="238" rx="14" fill={raised} stroke={line}></rect>
+        <text x="260" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-weight="600" fill={ink}>{copy.linda.title}</text>
+        <rect x="80" y="82" width="340" height="132" rx="16" fill="color-mix(in srgb,var(--accent) 12%,transparent)" stroke={accent} stroke-width="2.2"></rect>
+        <rect x="88" y="91" width={zh ? "142" : "120"} height="22" rx="5" fill={raised} opacity="0.96"></rect>
+        <text x="96" y="106" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={ink}>{copy.linda.a}</text>
+        <circle cx="314" cy="154" r="52" fill="color-mix(in srgb,var(--brass) 24%,transparent)" stroke={brass} stroke-width="2.2"></circle>
+        <text x="314" y="150" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{copy.linda.b}</text>
+        <text x="314" y="166" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{copy.linda.rule}</text>
+        <path d="M124 238 C168 214 220 176 265 154" fill="none" stroke={contested} stroke-width="2" stroke-linecap="round" stroke-dasharray="5 5"></path>
+        <circle cx="266" cy="154" r="6" fill={contested}></circle>
+        <text x="124" y="252" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.linda.fit}</text>
+      </svg>
+      <figcaption>{copy.linda.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "frequency-grid" && (
+    <>
+      <svg viewBox="0 0 540 310" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
+        <rect x="24" y="18" width="492" height="248" rx="14" fill={raised} stroke={line}></rect>
+        <text x="270" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-weight="600" fill={ink}>{copy.frequency.title}</text>
+        <text x="74" y="92" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{copy.frequency.base}</text>
+        <text x="74" y="112" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{copy.frequency.sick}</text>
+        <text x="228" y="112" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.frequency.healthy}</text>
+        <rect x="74" y="126" width="360" height="24" rx="6" fill={paper} stroke={lineStrong}></rect>
+        {freqSegments.slice(0, 2).map((segment) => (
+          <rect x={segment.x} y={segment.y} width={segment.w} height={24} rx="6" fill={segment.fill}></rect>
+        ))}
+        <text x="102" y="143" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill="#fff">{copy.frequency.truePos}</text>
+        <text x="254" y="143" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill="#1b2024">{copy.frequency.falsePos}</text>
+        <rect x="74" y="178" width="360" height="22" rx="6" fill={freqSegments[2].fill} stroke={lineStrong}></rect>
+        <text x="254" y="194" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={raised}>{freqSegments[2].label}</text>
+        <g>
+          <rect x="330" y="214" width="128" height="34" rx="9" fill={paper} stroke={lineStrong}></rect>
+          <text x="394" y="228" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.frequency.positives}</text>
+          <text x="394" y="244" text-anchor="middle" font-family="Fraunces, serif" font-size="17" font-weight="600" fill={accent}>{copy.frequency.result}</text>
+        </g>
+      </svg>
+      <figcaption>{copy.frequency.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "scissors" && (
+    <>
+      <svg viewBox="0 0 560 330" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
+        <rect x="22" y="18" width="516" height="260" rx="14" fill={raised} stroke={line}></rect>
+        <text x="280" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill={ink}>{copy.scissors.title}</text>
+        <line x1="104" y1="112" x2="410" y2="170" stroke={accent} stroke-width="18" stroke-linecap="round" opacity=".94"></line>
+        <line x1="104" y1="226" x2="410" y2="170" stroke={brass} stroke-width="18" stroke-linecap="round" opacity=".94"></line>
+        <circle cx="410" cy="170" r="12" fill={ink}></circle>
+        <circle cx="410" cy="170" r="5" fill={paper}></circle>
+        <text x="84" y="96" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{copy.scissors.mind}</text>
+        <text x="84" y="254" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.scissors.world}</text>
+        <text x="430" y="166" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{copy.scissors.output}</text>
+        <text x="76" y="296" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.scissors.one}</text>
+        <text x="76" y="314" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ok}>{copy.scissors.both}</text>
+      </svg>
+      <figcaption>{copy.scissors.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "resource-curve" && (
+    <>
+      <svg viewBox="0 0 620 350" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
+        <rect x="22" y="18" width="576" height="282" rx="14" fill={raised} stroke={line}></rect>
+        <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.resource.title}</text>
+        <line x1="84" y1="244" x2="550" y2="244" stroke={lineStrong} stroke-width="1.5"></line>
+        <line x1="84" y1="244" x2="84" y2="78" stroke={lineStrong} stroke-width="1.5"></line>
+        <text x="318" y="278" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.resource.x}</text>
+        <text x="48" y="164" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform="rotate(-90 48 164)">{copy.resource.y}</text>
+        <path d="M84,232 C184,150 284,104 550,86" fill="none" stroke={accent} stroke-width="3" stroke-linecap="round"></path>
+        <path d="M84,244 L550,132" fill="none" stroke={contested} stroke-width="2.4" stroke-dasharray="6 5"></path>
+        <path d="M84,232 C156,176 194,164 230,164 C324,162 426,204 550,254" fill="none" stroke={brass} stroke-width="4" stroke-linecap="round"></path>
+        <line x1="230" y1="164" x2="230" y2="244" stroke={ink} stroke-width="1.3" stroke-dasharray="4 5" opacity=".55"></line>
+        <circle cx="230" cy="164" r="7" fill={brass} stroke={paper} stroke-width="2"></circle>
+        <text x="230" y="151" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{copy.resource.stop}</text>
+        <text x="430" y="82" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{copy.resource.accuracy}</text>
+        <text x="430" y="128" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.resource.cost}</text>
+        <text x="342" y="221" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.resource.net}</text>
+        <text x="392" y="164" font-family="Fraunces, serif" font-size="13" font-style="italic" fill={soft}>{copy.resource.gap1}</text>
+        <text x="392" y="181" font-family="Fraunces, serif" font-size="13" font-style="italic" fill={soft}>{copy.resource.gap2}</text>
+      </svg>
+      <figcaption>{copy.resource.caption}</figcaption>
+    </>
+  )}
+</figure>

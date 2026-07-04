@@ -1,0 +1,72 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      eyebrow: "图解 · 同一工具，两种判决",
+      title: "你在用哪一片刀刃评判？",
+      note: "同一个快速节俭启发式，例如凝视启发式，会因为你拿哪片刀刃作标尺而得到相反成绩。",
+      aria: "两片剪刀刀刃，分别代表心智和环境，在标为行为的枢轴处相遇。",
+      mind: "心智",
+      mindSmall: "有限时间 · 记忆 · 注意力",
+      environment: "环境",
+      environmentSmall: "它的统计结构",
+      behavior: "行为",
+      cut: "等于两者剪切处",
+      one: "只用心智刀刃评判",
+      both: "同时用两片刀刃评判"
+    }
+  : {
+      eyebrow: "Diagram · one tool, two verdicts",
+      title: "Which blade are you judging with?",
+      note: "The same fast-and-frugal heuristic, say the gaze heuristic, gets opposite grades depending on which blade you hold it against.",
+      aria: "Two scissor blades, the mind and the environment, meeting at a pivot labeled behavior.",
+      mind: "The mind",
+      mindSmall: "limited time · memory · attention",
+      environment: "The environment",
+      environmentSmall: "its statistical structure",
+      behavior: "behavior",
+      cut: "where they cut",
+      one: "Judge with the mind blade only",
+      both: "Judge with both blades"
+    };
+---
+<Panel class="web-only day11-scissors" data-day11-scissors data-locale={zh ? "zh" : "en"}>
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="day11-scissor-wrap">
+    <svg viewBox="0 0 540 300" role="img" aria-label={copy.aria} data-pagefind-ignore="all">
+      <line data-role="mind" x1="70" y1="95" x2="360" y2="150" stroke="var(--accent)" stroke-width="16" stroke-linecap="round" opacity="0.95"></line>
+      <line data-role="environment" x1="70" y1="205" x2="360" y2="150" stroke="var(--brass)" stroke-width="16" stroke-linecap="round" opacity="0.16"></line>
+      <circle cx="360" cy="150" r="10" fill="var(--ink)"></circle>
+      <circle cx="360" cy="150" r="4" fill="var(--paper)"></circle>
+      <text x="64" y="80" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--accent)" text-transform="uppercase">{copy.mind}</text>
+      <text x="64" y="64" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)">{copy.mindSmall}</text>
+      <text x="64" y="238" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--brass)" text-transform="uppercase">{copy.environment}</text>
+      <text x="64" y="254" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)">{copy.environmentSmall}</text>
+      <text x="378" y="146" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-soft)">{copy.behavior}</text>
+      <text x="378" y="160" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)">= {copy.cut}</text>
+    </svg>
+  </div>
+
+  <div class="day11-scissor-controls">
+    <div class="day11-segment" role="group" aria-label={copy.title}>
+      <button type="button" data-blade="one" aria-pressed="true">{copy.one}</button>
+      <button type="button" data-blade="both" aria-pressed="false">{copy.both}</button>
+    </div>
+  </div>
+
+  <div class="day11-verdict is-centered">
+    <strong data-out="verdict-title"></strong>
+    <span data-out="verdict-body"></span>
+  </div>
+</Panel>

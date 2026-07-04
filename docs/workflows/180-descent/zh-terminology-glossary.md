@@ -21,6 +21,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | established | 已确立 | Frontier/status label. Keep chip labels short. | 可靠成熟, 扎实且可重复 |
 | promising | 有前景 | Frontier/status label for evidence that is real but still early. | 线索, 初露曙光 |
 | contested / hype risk | 有争议／炒作风险 | Frontier/status label for disputed scope, framing, or evidence. | 争议/炒作, 炒作 |
+| collapsed | 已崩溃 | Frontier/status label for an effect that failed rigorous replication. | 已崩塌 when inconsistent |
 | peer review | 同行评议 | Process before publication; not a guarantee of truth. | 同行审查 when used inconsistently |
 | preprint | 预印本 | Label clearly when the evidential status matters. | 预发表稿 |
 | evidence status | 证据状态 | Use for status labeling and frontier judgment. | 证据等级 when no hierarchy is intended |
@@ -117,6 +118,7 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | qubit | 量子比特 | Quantum information. | 量子位 when inconsistent |
 | thermodynamic uncertainty relation | 热力学不确定关系 | Stochastic thermodynamics. | 热力学不确定性关系 when inconsistent |
 | weak emergence | 弱涌现 | Bedau-style derivability through simulation. | 弱出现 |
+| light emergence | 轻涌现 | Course thread label for mild, non-mysterious emergence (e.g., rationality from mind–world interaction); deliberately distinct from technical 弱涌现. | 弱涌现 when the Bedau sense is meant |
 | strong emergence | 强涌现 | Ontological or causal non-deducibility. | 强出现 |
 | downward causation | 下行因果 | Often only a possibility in strong-emergence debates. | 向下因果 when inconsistent |
 | physical causal closure | 物理因果闭合性 | Philosophy of mind / strong emergence context. | 物理因果闭合 |
@@ -224,6 +226,31 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | data leakage | 数据泄漏 | ML evaluation problem where target/test/future information leaks into training or preprocessing. | 数据泄露 when inconsistent |
 | link uncertainty | 关联不确定性 | Sullivan's ML-understanding term: uncertainty about whether the model is empirically linked to the target in the right way. | 链接不确定性 |
 | epistemic technology | 认识技术 | Alvarado-style term for AI as a technology operating on knowledge itself. | 认知技术 if used inconsistently |
+| heuristic / heuristics | 启发式 | Cognitive shortcut or rule of thumb in judgment and decision-making. | 启发法 when used inconsistently |
+| cognitive bias / bias | 认知偏差 / 偏差 | Use `认知偏差` for the general psychology category; `偏差` when the context is already cognitive/statistical. | 偏见 when the technical error pattern is meant |
+| conjunction fallacy | 合取谬误 | Judging a combined claim more probable than one of its parts. | 联合谬误 when inconsistent |
+| representativeness heuristic | 代表性启发式 | Kahneman-Tversky heuristic based on resemblance to a prototype. | 代表性偏差 when naming the heuristic itself |
+| availability heuristic | 易得性启发式 | Judging frequency by ease of recall. | 可得性启发式 when inconsistent |
+| anchoring and adjustment | 锚定与调整 | Estimation from an initial anchor with insufficient adjustment. | 锚定调整 without conjunction |
+| System 1 / System 2 | 系统 1 / 系统 2 | Kahneman's teaching labels; preserve spacing around numerals. | 系统一, 系统二 |
+| dual-process theory | 双过程理论 | Higher-cognition processing typology; avoid overcommitting to two brain systems. | 双系统理论 when the prose is warning against literal systems |
+| ego depletion | 自我耗竭 | Failed/contested willpower-resource effect. | 自我损耗 when inconsistent |
+| natural frequency / natural frequencies | 自然频率 | Probability information expressed as counts in a reference class. | 自然频次 when inconsistent |
+| fast-and-frugal heuristics | 快速节俭启发式 | Gigerenzer-style simple rules that ignore most information. | 快又省启发式 |
+| gaze heuristic | 凝视启发式 | Catching/ interception rule based on keeping gaze angle constant. | 注视启发式 when inconsistent |
+| recognition heuristic | 识别启发式 | If one item is recognized and the other is not, infer the recognized item scores higher on a criterion. | 认可启发式 |
+| bias-variance tradeoff | 偏差-方差权衡 | ML/statistical learning tradeoff; keep `方差`, not `变异`. | 偏差-变异权衡 |
+| bounded rationality | 有限理性 | Simon's rationality under limits of time, information, attention, and computation. | 有界理性 when inconsistent |
+| satisficing | 满意化 | Simon's search-until-good-enough strategy. | 满足化 when inconsistent |
+| ecological rationality | 生态理性 | Rationality judged by fit between mind and environment. | 环境理性 |
+| resource-rational analysis / resource rationality | 资源理性分析 / 资源理性 | Cognition as optimal use of limited computational resources. | 资源合理性 |
+| bounded optimality | 有限最优性 | Optimal behavior under bounded computational resources. | 有界最优 |
+| large language model / LLM | 大型语言模型 / LLM | Transformer-based pretrained text model; keep the LLM acronym. | 大语言模型 when inconsistent |
+| nudge / nudging | 助推 | Behavioral-economics intervention that alters choice architecture without banning options. | 轻推 when inconsistent |
+| choice architecture | 选择架构 | Design of how choices are presented to decision-makers. | 选择结构 when inconsistent |
+| social priming | 社会启动 | Priming of social concepts or behavior; often contested in replication. | 社会性启动 when inconsistent |
+| framing effect / framing effects | 框架效应 | Preference reversal due to logically equivalent description. | — |
+| willpower fuel model | 意志力燃料模型 | Collapsed idea that self-control draws on a limited energy reserve. | 意志力能源模型 when inconsistent |
 | no-miracles argument | 无奇迹论证 | Predictive success is best explained by approximate truth. | 无奇迹论 |
 | pessimistic meta-induction | 悲观元归纳 | Past successful theories turned out false, so current ones may too. | 悲观归纳 |
 | structural realism | 结构实在论 | Keep mathematical structure; hold entities loosely. | 结构现实主义 |

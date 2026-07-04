@@ -984,7 +984,8 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["ComplexityHump", { selector: ".complexity-hump", width: "0.82\\linewidth", height: "0.26\\textheight" }],
   ["Day8StaticFigure", { selector: ".day8-static-figure", width: "0.86\\linewidth", height: "0.24\\textheight" }],
   ["Day9StaticFigure", { selector: ".day9-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }],
-  ["Day10StaticFigure", { selector: ".day10-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }]
+  ["Day10StaticFigure", { selector: ".day10-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }],
+  ["Day11StaticFigure", { selector: ".day11-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }]
 ]);
 
 function renderRenderedSvgComponent(name: string, attrs: Map<string, string | null>, state: MdxRenderState): string {
@@ -1040,6 +1041,24 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
         selector: `.day10-static-figure-${kind}`,
         width: day10Width,
         height: day10Height
+      };
+    }
+  }
+  if (name === "Day11StaticFigure") {
+    const kind = resolveExpression(attrs.get("kind"), state).trim();
+    if (kind) {
+      const day11Width = kind === "frequency-grid" || kind === "resource-curve" ? "0.98\\linewidth" : "0.86\\linewidth";
+      const day11Height = kind === "resource-curve"
+        ? "0.34\\textheight"
+        : kind === "frequency-grid"
+          ? "0.32\\textheight"
+          : kind === "scissors"
+            ? "0.30\\textheight"
+            : "0.26\\textheight";
+      spec = {
+        selector: `.day11-static-figure-${kind}`,
+        width: day11Width,
+        height: day11Height
       };
     }
   }

@@ -1,0 +1,71 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      eyebrow: "交互 · 同一事实，两种格式",
+      title: "自然频率网格",
+      note: "1,000 名女性，一项不完美的检测。在容易混淆的概率格式和可以数出来的自然频率格式之间切换；再拖动基础率，观察真实患病概率怎样摆动。",
+      format: "格式",
+      probability: "概率",
+      frequency: "自然频率",
+      baseRate: "基础率 · 疾病有多常见",
+      ppvLead: "在所有阳性检测者中，真正患病者的比例是",
+      slider: "每千人患病基础率",
+      aria: "一个代表一千名女性的网格，按真实患病和检测阳性状态着色。",
+      legend: ["患病且检测阳性（真阳性）", "健康但检测阳性（假阳性）", "患病但检测漏掉（假阴性）", "健康且检测阴性"]
+    }
+  : {
+      eyebrow: "Interactive · same facts, two formats",
+      title: "The Natural-Frequency Grid",
+      note: "1,000 women, one imperfect test. Flip between the format that confuses, probabilities, and the format the mind can see, counted people. Then drag the base rate and watch the real chance of being sick swing.",
+      format: "Format",
+      probability: "Probabilities",
+      frequency: "Natural frequencies",
+      baseRate: "Base rate — how common the disease is",
+      ppvLead: "Of everyone who tests positive, the share who are actually sick is",
+      slider: "Disease base rate per thousand",
+      aria: "A grid of 1000 small squares representing 1000 women, colored by whether they are truly sick and whether they test positive.",
+      legend: ["sick and tests positive (true +)", "healthy but tests positive (false +)", "sick, test misses (false -)", "healthy, tests negative"]
+    };
+---
+<Panel class="web-only day11-frequency" data-day11-frequency data-locale={zh ? "zh" : "en"}>
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="day11-control-row">
+    <span class="day11-control-label">{copy.format}</span>
+    <div class="day11-segment" role="group" aria-label={copy.format}>
+      <button type="button" data-format="prob" aria-pressed="true">{copy.probability}</button>
+      <button type="button" data-format="freq" aria-pressed="false">{copy.frequency}</button>
+    </div>
+  </div>
+
+  <div class="day11-framing" data-out="frame"></div>
+
+  <div class="day11-freq-grid" data-role="grid-wrap" hidden>
+    <svg data-role="grid" viewBox="0 0 400 260" role="img" aria-label={copy.aria} data-pagefind-ignore="all"></svg>
+    <div class="day11-legend">
+      <span><i class="is-tp"></i>{copy.legend[0]}</span>
+      <span><i class="is-fp"></i>{copy.legend[1]}</span>
+      <span><i class="is-fn"></i>{copy.legend[2]}</span>
+      <span><i class="is-tn"></i>{copy.legend[3]}</span>
+    </div>
+  </div>
+
+  <label class="day11-slider-label">
+    <span>{copy.baseRate}</span>
+    <strong data-out="base-rate">1.0%</strong>
+    <input type="range" min="1" max="200" value="10" aria-label={copy.slider} data-role="base-rate" />
+  </label>
+
+  <p class="day11-ppv">{copy.ppvLead} <strong data-out="ppv">≈ 9%</strong>. <span data-out="ppv-note"></span></p>
+</Panel>

@@ -548,6 +548,7 @@ describe("target content registry", () => {
     const day008 = daysByPath.get("008-complexity-and-emergence");
     const day009 = daysByPath.get("009-systems-thinking-and-feedback");
     const day010 = daysByPath.get("010-models-maps-and-idealization");
+    const day011 = daysByPath.get("011-heuristics-biases-and-rationality");
 
     expect([...daysByPath.keys()]).toEqual([
       "001-what-is-knowledge",
@@ -559,7 +560,8 @@ describe("target content registry", () => {
       "007-information-theory",
       "008-complexity-and-emergence",
       "009-systems-thinking-and-feedback",
-      "010-models-maps-and-idealization"
+      "010-models-maps-and-idealization",
+      "011-heuristics-biases-and-rationality"
     ]);
 
     for (const day of registry.days) {
@@ -693,6 +695,15 @@ describe("target content registry", () => {
     const day010EnglishAppendix = day010?.appendixBodies.find((body) => body.locale === "en");
     expect(day010EnglishAppendix?.source).toContain("Levins");
     expect(day010EnglishAppendix?.source).toContain("SimpleTable");
+
+    expect(day011?.appendixBodies).toEqual([]);
+    expect(day011?.manifest.interactionScripts).toEqual([
+      "heuristics-biases-rationality"
+    ]);
+    expect(day011?.bodies.en.source).toContain("Day11LindaMachine");
+    expect(day011?.bodies.en.source).toContain("Day11NaturalFrequencyGrid");
+    expect(day011?.bodies.en.source).toContain("Day11ScissorsToggle");
+    expect(day011?.bodies.en.source).toContain("Day11StaticFigure");
   });
 });
 
