@@ -1,6 +1,14 @@
 ---
 interface Props {
-  kind: "linda-sets" | "frequency-grid" | "scissors" | "resource-curve" | "prospect-value" | "bias-noise-darts";
+  kind:
+    | "linda-sets"
+    | "frequency-grid"
+    | "scissors"
+    | "resource-curve"
+    | "prospect-value"
+    | "bias-noise-darts"
+    | "clockwork"
+    | "sampling-curve";
   locale?: "en" | "zh";
 }
 
@@ -159,6 +167,52 @@ const copy = {
         both: "Both",
         target: "target",
         caption: "Bias is a systematic offset in the average direction; noise is unwanted scatter among similar judgments. You can be unbiased but loud, or steadily wrong."
+      },
+  clockwork: zh
+    ? {
+        aria: "一只指针钟和一只数字钟显示同一时间，但内部机制不同，并共同指向同一行为输出。",
+        title: "同一时间，不同钟表",
+        mind: "心智",
+        model: "模型",
+        output: "相同行为输出",
+        analog: "取样、记忆、情绪",
+        digital: "token、权重、注意力",
+        same: "同样行为",
+        question: "就等于同样心智吗？",
+        caption: "Centaur 争论的核心不是预测能否成功，而是相同行为输出能否说明内部机制也被解释了。两只钟可以报出同一时间，却靠完全不同的机芯运行。"
+      }
+    : {
+        aria: "An analog clock and a digital clock show the same time by different mechanisms, then point to one behavioral output.",
+        title: "Same time, different clockwork",
+        mind: "the mind",
+        model: "the model",
+        output: "identical behavioral output",
+        analog: "sampling, memory, emotion",
+        digital: "tokens, weights, attention",
+        same: "same behavior",
+        question: "same mind?",
+        caption: "The Centaur debate is not about whether prediction can succeed. It is about whether matching behavior explains the mechanism that produced it. Two clocks can show the same time while running on different machinery."
+      },
+  sampling: zh
+    ? {
+        aria: "一条曲线显示，心智样本数增加时，由有限样本噪声导致的合取谬误率下降。",
+        title: "有限样本制造不连贯",
+        x: "每次判断的样本数",
+        y: "谬误比例",
+        low: "2 个：噪声大",
+        mid: "8 个：回落",
+        high: "24 个：近消失",
+        caption: "这个固定图保留网页滑杆的核心含义：如果判断只靠少量心智样本，噪声本身就能让 P(A 且 B) 看起来超过 P(A)；样本增多后，不连贯会迅速收缩。参数是教学示意，不是实测错误率。"
+      }
+    : {
+        aria: "A curve shows conjunction-fallacy errors from finite-sample noise falling as the number of mental samples increases.",
+        title: "Finite samples manufacture incoherence",
+        x: "mental samples per judgment",
+        y: "% minds with fallacy",
+        low: "2 samples: noisy",
+        mid: "8 samples: falling",
+        high: "24 samples: near gone",
+        caption: "This fixed figure preserves the web slider's central lesson: with only a few mental samples, noise alone can make P(A and B) appear to exceed P(A); with more samples, the incoherence rapidly shrinks. The parameters are illustrative, not measured error rates."
       }
 };
 
@@ -205,13 +259,59 @@ const dartBoards = [
   { label: copy.darts.both, x: 560, points: [[5, -51], [61, -9], [28, 37], [74, 21], [41, -35]], fill: accent }
 ];
 
+const samplingNMax = 40;
+const samplingX0 = 76;
+const samplingX1 = 566;
+const samplingY0 = 246;
+const samplingY1 = 76;
+const samplingYMax = 28;
+
+function erf(x: number): number {
+  const sign = x < 0 ? -1 : 1;
+  const ax = Math.abs(x);
+  const t = 1 / (1 + 0.3275911 * ax);
+  const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-ax * ax);
+  return sign * y;
+}
+
+function phi(z: number): number {
+  return 0.5 * (1 + erf(z / Math.SQRT2));
+}
+
+function samplingRateAt(n: number): number {
+  const gap = 0.25 - 0.18;
+  const sd = Math.SQRT2 * 0.165 / Math.sqrt(n);
+  return 100 * phi(-gap / sd);
+}
+
+function samplingX(n: number): number {
+  return samplingX0 + ((n - 1) / (samplingNMax - 1)) * (samplingX1 - samplingX0);
+}
+
+function samplingY(rate: number): number {
+  return samplingY0 - (rate / samplingYMax) * (samplingY0 - samplingY1);
+}
+
+const samplingRates = Array.from({ length: samplingNMax }, (_, index) => samplingRateAt(index + 1));
+const samplingPath = samplingRates.map((rate, index) => {
+  const n = index + 1;
+  return `${index ? "L" : "M"}${samplingX(n).toFixed(1)},${samplingY(rate).toFixed(1)}`;
+}).join(" ");
+
+const samplingMarks = [2, 8, 24].map((n) => {
+  const rate = samplingRateAt(n);
+  return { n, rate, x: samplingX(n), y: samplingY(rate) };
+});
+
 const ariaByKind: Record<Props["kind"], string> = {
   "linda-sets": copy.linda.aria,
   "frequency-grid": copy.frequency.aria,
   scissors: copy.scissors.aria,
   "resource-curve": copy.resource.aria,
   "prospect-value": copy.prospect.aria,
-  "bias-noise-darts": copy.darts.aria
+  "bias-noise-darts": copy.darts.aria,
+  clockwork: copy.clockwork.aria,
+  "sampling-curve": copy.sampling.aria
 };
 ---
 <figure class={`figbox day11-static-figure day11-static-figure-${kind}`} aria-label={ariaByKind[kind]}>
@@ -353,6 +453,82 @@ const ariaByKind: Record<Props["kind"], string> = {
         <text x="340" y="258" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.darts.target}</text>
       </svg>
       <figcaption>{copy.darts.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "clockwork" && (
+    <>
+      <svg viewBox="0 0 680 340" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
+        <rect x="22" y="18" width="636" height="276" rx="14" fill={raised} stroke={line}></rect>
+        <text x="340" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.clockwork.title}</text>
+
+        <g transform="translate(138 142)">
+          <circle cx="0" cy="0" r="58" fill={paper} stroke={accent} stroke-width="2.6"></circle>
+          <circle cx="0" cy="0" r="4.5" fill={ink}></circle>
+          <line x1="0" y1="0" x2="0" y2="-40" stroke={ink} stroke-width="3.4" stroke-linecap="round"></line>
+          <line x1="0" y1="0" x2="32" y2="0" stroke={ink} stroke-width="2.6" stroke-linecap="round"></line>
+          <g stroke={faint} stroke-width="1.5">
+            <line x1="0" y1="-51" x2="0" y2="-45"></line>
+            <line x1="51" y1="0" x2="45" y2="0"></line>
+            <line x1="0" y1="51" x2="0" y2="45"></line>
+            <line x1="-51" y1="0" x2="-45" y2="0"></line>
+          </g>
+          <text x="0" y="88" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill={accent}>{copy.clockwork.mind}</text>
+          <text x="0" y="106" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.clockwork.analog}</text>
+        </g>
+
+        <g transform="translate(542 142)">
+          <rect x="-66" y="-36" width="132" height="72" rx="9" fill={paper} stroke={brass} stroke-width="2.6"></rect>
+          <text x="0" y="10" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="30" font-weight="600" fill={ink}>3:00</text>
+          <text x="0" y="88" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill={brass}>{copy.clockwork.model}</text>
+          <text x="0" y="106" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.clockwork.digital}</text>
+        </g>
+
+        <path d="M206 124 C260 94 304 88 340 100 C376 88 420 94 474 124" fill="none" stroke={faint} stroke-width="1.4" stroke-dasharray="5 5"></path>
+        <path d="M206 172 C260 230 304 246 340 234 C376 246 420 230 474 172" fill="none" stroke={faint} stroke-width="1.4" stroke-dasharray="5 5"></path>
+        <text x="340" y="118" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-style="italic" fill={soft}>{copy.clockwork.output}</text>
+        <text x="340" y="166" text-anchor="middle" font-family="Fraunces, serif" font-size="34" font-weight="600" fill={contested}>≟</text>
+        <rect x="244" y="203" width="192" height="52" rx="10" fill={paper} stroke={line}></rect>
+        <text x="340" y="224" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={soft}>{copy.clockwork.same}</text>
+        <text x="340" y="242" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={soft}>{copy.clockwork.question}</text>
+      </svg>
+      <figcaption>{copy.clockwork.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "sampling-curve" && (
+    <>
+      <svg viewBox="0 0 680 360" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
+        <rect x="22" y="18" width="636" height="286" rx="14" fill={raised} stroke={line}></rect>
+        <text x="340" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.sampling.title}</text>
+        <line x1={samplingX0} y1={samplingY0} x2={samplingX1} y2={samplingY0} stroke={lineStrong} stroke-width="1.5"></line>
+        <line x1={samplingX0} y1={samplingY0} x2={samplingX0} y2={samplingY1} stroke={lineStrong} stroke-width="1.5"></line>
+        {[0, 14, 28].map((tick) => {
+          const y = samplingY(tick);
+          return (
+            <g>
+              <line x1={samplingX0} y1={y.toFixed(1)} x2={samplingX1} y2={y.toFixed(1)} stroke={line} stroke-width=".8"></line>
+              <text x={samplingX0 - 8} y={(y + 4).toFixed(1)} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" fill={faint}>{tick}%</text>
+            </g>
+          );
+        })}
+        <text x="340" y="288" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={faint}>{copy.sampling.x}</text>
+        <text x={samplingX0} y="68" text-anchor="start" font-family="IBM Plex Mono, monospace" font-size="12" fill={faint}>{copy.sampling.y}</text>
+        <path d={samplingPath} fill="none" stroke={accent} stroke-width="4" stroke-linecap="round"></path>
+        {samplingMarks.map((mark, index) => {
+          const label = index === 0 ? copy.sampling.low : index === 1 ? copy.sampling.mid : copy.sampling.high;
+          const labelY = index === 0 ? mark.y + 28 : mark.y - 18;
+          return (
+            <g>
+              <line x1={mark.x.toFixed(1)} y1={mark.y.toFixed(1)} x2={mark.x.toFixed(1)} y2={samplingY0} stroke={brass} stroke-width="1.2" stroke-dasharray="4 4"></line>
+              <circle cx={mark.x.toFixed(1)} cy={mark.y.toFixed(1)} r="6" fill={brass} stroke={paper} stroke-width="2"></circle>
+              <text x={(mark.x + 10).toFixed(1)} y={labelY.toFixed(1)} font-family="IBM Plex Mono, monospace" font-size="12" fill={ink}>{label}</text>
+              <text x={(mark.x + 10).toFixed(1)} y={(labelY + 16).toFixed(1)} font-family="IBM Plex Mono, monospace" font-size="12" fill={faint}>{mark.rate.toFixed(0)}%</text>
+            </g>
+          );
+        })}
+      </svg>
+      <figcaption>{copy.sampling.caption}</figcaption>
     </>
   )}
 </figure>

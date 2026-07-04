@@ -105,6 +105,7 @@ const WEB_ONLY_COMPONENTS = new Set([
   "Day11LindaMachine",
   "Day11NaturalFrequencyGrid",
   "Day11ProspectValue",
+  "Day11SamplingEngine",
   "Day11ScissorsToggle",
   "DemarcationLab",
   "DiscoveryPurityEngine",

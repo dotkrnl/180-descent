@@ -1,0 +1,193 @@
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day11StaticFigure from "@app/components/lesson/figures/Day11StaticFigure.astro";
+import Day11SamplingEngine from "@app/components/lesson/interactives/Day11SamplingEngine.astro";
+
+<Lead drop="A">ppendix I was the settled cabinet: prospect theory, overconfidence, confirmation bias, and other findings that have weathered decades and, mostly, replication. This is a different kind of room. Here the paint is still wet, some claims sit in preprint form, and the question is not "what did we learn?" but "what might we be about to learn, or about to get badly wrong?" Read it as a dispatch from the workbench, not the museum.</Lead>
+
+<ContinueNote label="◆ Where this sits">
+The main descent ended on the resource-rational synthesis, and Appendix I filled in the older evidence. This appendix follows both threads to the 2020s frontier: trained networks as cognitive models, finite-sampling theories of bias, resource-rational representations, population-scale prebunking, and the strange attempt to use AI systems as stand-ins for human minds. The recurring threads are computation, information, and the AI arc that later dominates Block IX.
+</ContinueNote>
+
+<ContinueNote label="◆ Hype-filter labels">
+Because so much here is new, the labels do extra work. <StatusChip status="ok" label="established" /> means peer-reviewed and independently supported. <StatusChip status="hint" label="promising" /> means real but early, narrow, contested, or preprint-shaped. <StatusChip status="bad" label="hype" printLabel="headline outruns evidence" /> means the headline outruns the evidence. Keep Day 2's warning close: theories that recast every bias as secretly rational are exciting because they explain so much, which is also what can make them hard to falsify.
+</ContinueNote>
+
+<Claim>
+<ClaimHeader label="Edge 01">
+<StatusChip status="ok" label="predicts behavior" printLabel="predicts human behavior at scale" />
+<StatusChip status="bad" label="captures cognition?" printLabel="cognitive explanation contested" />
+</ClaimHeader>
+
+### Centaur, and the black box that predicts you
+
+A century-old dream in psychology is a unified theory of cognition: one model that captures the whole mind rather than a thousand bespoke models, one per task. In 2025, Marcel Binz, Eric Schulz, and collaborators made the most audacious bid yet. They fine-tuned a large language model on **Psych-101**, a dataset of trial-by-trial choices from 160 psychology experiments, 60,092 participants, and 10,681,650 decisions, all rewritten into plain English. The result, named <Term as="em">Centaur</Term><TipNote text={"Centaur is a behavior-prediction model fine-tuned on many psychology experiments; the contested question is whether it explains cognition or only predicts choices."} />, can be dropped into experiments described in words: gambles, memory tasks, bandit problems, moral dilemmas.
+
+The predictive result is unnerving. Centaur predicts held-out participants better than many specialized cognitive models built for each task, and it generalizes across cover stories and task variants. The most surprising claim is that fine-tuning on behavior alone made its representations better at predicting human brain activity, even though it was never trained on brain scans.
+
+The pushback is the Day 10 lesson in a sharper form: prediction is not explanation. Jeffrey Bowers and other critics argue that Centaur can behave in non-human ways under probing. The analogy is simple: an analog clock and a digital clock can show precisely the same time while working by different mechanisms. A model can be a powerful predictor and still fail as an explanation of the mind. A later critical preprint argued that a lightly adapted baseline nearly matched Centaur's predictive edge, which would make the theoretical lesson less decisive than the headline suggests. The restrained reading is not "an LLM is a mind." It is "a behavioral black box has become a serious instrument, and whether that instrument can become an explanation is the live question."
+</Claim>
+
+<Panel>
+<PanelTitle>Diagram · the crux of the Centaur debate</PanelTitle>
+
+### Same time, different clockwork
+
+<PanelNote>Two mechanisms, one output. If a model reproduces human behavior but runs on machinery unlike a mind, has it explained cognition, or only mimicked it?</PanelNote>
+
+<Day11StaticFigure kind="clockwork" locale="en" />
+
+<PanelNote>Binz and Schulz frame Centaur cautiously: a large black box that predicts behavior well, and whose internals may become informative if opened. The overclaim to resist is that a predictive black box is already a theory of mind.</PanelNote>
+</Panel>
+
+<Claim>
+<ClaimHeader label="Edge 02">
+<StatusChip status="hint" label="one mechanism" printLabel="one mechanism for many biases remains promising" />
+</ClaimHeader>
+
+### The sampling hypothesis
+
+Here is the paradox the main page circled but did not resolve. Research in perception and motor control often treats the brain as a superb probabilistic engine. Yet the same brain flunks simple explicit probability questions. How can one organ be a probabilistic genius and a probabilistic dunce at once?
+
+Adam Sanborn and Nick Chater proposed a reconciliation: the brain is Bayesian, but it does not calculate probabilities. It samples them. Their slogan is <Term as="em">Bayesian brains without probabilities</Term><TipNote text={"The phrase names a theory in which the mind approximates Bayesian inference by drawing small samples instead of explicitly representing probabilities."} />. A sampler with infinite draws obeys probability theory exactly. A bounded mind can afford only a few draws, and small samples are noisy, extreme, and sometimes autocorrelated. Run that same machinery on explicit probability questions and it can produce the conjunction fallacy, base-rate neglect, unpacking effects, and anchoring-like drift.
+
+Jian-Qiao Zhu, Sanborn, and Chater turned the slogan into the <Term as="em">Bayesian Sampler</Term><TipNote text={"The Bayesian Sampler models probability judgment as approximate Bayesian inference from finite mental samples."} /> and then the <Term as="em">Autocorrelated Bayesian Sampler</Term><TipNote text={"The Autocorrelated Bayesian Sampler adds dependence between successive samples, making the model fit anchoring, confidence, and response-time patterns more broadly."} />. The attraction is unification: probability judgments, estimates, confidence intervals, choices, confidence ratings, and response times can be fit from one family of mechanisms. If it holds, many biases stop looking like separate glitches and start looking like the shared signature of approximate inference with too few samples.
+</Claim>
+
+<Day11SamplingEngine locale="en" />
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<Panel>
+<PanelTitle>Fixed figure · Sampling engine</PanelTitle>
+<PanelNote>The web panel changes the number of samples. The fixed figure shows representative points on the same illustrative curve.</PanelNote>
+
+<Day11StaticFigure kind="sampling-curve" locale="en" />
+
+<PanelNote>Read the curve as three fixed checkpoints: at two samples, noise alone can make a large minority of simulated minds rank the conjunction higher; by eight samples the error has dropped sharply; by twenty-four it is close to gone in the toy model.</PanelNote>
+</Panel>
+</FormatOnly>
+
+<ContentSection>
+How much weight can the sampling story bear? Real, but not decisive. The models are peer-reviewed and broad, but many fits are qualitative, rival models such as Costello and Watts's PT+N account explain overlapping data, and "this can be modeled as sampling" is not the same as "the brain is sampling." The idea becomes more intriguing because large language models also produce incoherent probability judgments, and the Bayesian Sampler framework can model some machine errors too. If one mechanism captures quirks in both brains and transformers, that is a landscape-level idea. It is still a hypothesis, not a finished law.
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="Edge 03">
+<StatusChip status="ok" label="simplification" printLabel="people simplify optimally in preregistered tasks" />
+<StatusChip status="hint" label="grand theory" printLabel="unified normative theory remains open" />
+</ClaimHeader>
+
+### Resource-rationality goes up a level
+
+The main page framed resource-rationality as choosing the right heuristic for a limited mind. The 2022 frontier moved the idea somewhere more radical: the mind also chooses what to represent, which features of a problem to keep, and which to discard before reasoning begins.
+
+Mark Ho, Tom Griffiths, and colleagues made the case in *Nature* with a paper that opens on the exact Day 10 image: Borges's empire-sized 1:1 map, perfectly accurate and perfectly useless. Their claim is that the brain builds the opposite: deliberately lossy cognitive maps, or <Term as="em">value-guided construals</Term><TipNote text={"Value-guided construals are simplified mental representations that preserve features useful for the current goal while discarding less useful detail."} />, that keep only what matters for the goal. Across preregistered maze experiments, people built simplified representations close to what the theory predicted, trading representational complexity against usefulness for planning.
+
+A companion line of work reverse-engineers how people plan and asks whether better strategies can be discovered and taught. That is already feeding into <Term as="em">cognitive prostheses</Term><TipNote text={"Cognitive prostheses are tools or training systems designed to improve thinking by steering people toward better cognitive strategies."} />: tools and training that nudge people toward strategies a resource-rational planner would use. This is Simon's scissors turned inward. The environment has structure, but the mind also reshapes the problem to fit its limited blade.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge 04">
+<StatusChip status="ok" label="prebunking" printLabel="reduces susceptibility at scale" />
+<StatusChip status="bad" label="durable discernment?" printLabel="durable discernment contested" />
+</ClaimHeader>
+
+### Prebunking at planetary scale
+
+Everything so far has been about understanding biased thinking. This edge is about fixing it at scale. The engine is William McGuire's <Term as="em">inoculation theory</Term><TipNote text={"Inoculation theory says a weakened dose of a persuasive attack, plus a warning and refutation, can build resistance to later persuasion."} />: just as a weakened virus trains the immune system, a weakened dose of a manipulation technique can build mental resistance. The modern version, <Term as="em">prebunking</Term><TipNote text={"Prebunking teaches people to recognize manipulation techniques before they encounter a specific false claim."} />, teaches the trick before the false content arrives.
+
+Roozenbeek, van der Linden, Lewandowsky, and colleagues brought the idea to platform scale with Google's Jigsaw. In *Science Advances* (2022), five 90-second videos taught manipulation techniques such as fearmongering, false dichotomies, scapegoating, incoherence, and ad hominem attacks. Lab studies and a YouTube field experiment reaching roughly 5.4 million users found that viewers became better at spotting manipulation techniques afterward, at a reported cost of about five cents per person.
+
+The critique is sharp. Does inoculation improve discernment, or does it merely make people skeptical of everything? In signal-detection terms, does it improve <Term as="em">sensitivity</Term><TipNote text={"Sensitivity is the ability to distinguish signal from noise, such as true from false content, rather than merely shifting one's willingness to accept claims."} />, or shift <Term as="em">response bias</Term><TipNote text={"Response bias is a general tendency to say yes or no, believe or disbelieve, independent of actual accuracy."} /> toward "do not believe it"? Modirrousta-Galian and Higham argued that some inoculation-game effects look more like blanket skepticism than sharpened judgment. Add decay without booster doses and smaller effects in the wild, and the warranted verdict is: prebunking works, but what it changes and how long it lasts remain unsettled.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge 05">
+<StatusChip status="hint" label="aggregate mimicry" printLabel="LLMs can mimic some aggregate human data" />
+<StatusChip status="bad" label="replace people?" printLabel="synthetic participants remain contested" />
+</ClaimHeader>
+
+### Using the machines to stand in for us
+
+The final frontier folds the whole day back on itself. If a language model can imitate human responses, why not use it to replace human participants, running surveys and experiments on synthetic people instantly and cheaply? Lisa Argyle and colleagues named the tantalizing version <Term as="em">algorithmic fidelity</Term><TipNote text={"Algorithmic fidelity is the claim that a language model conditioned on demographic backstories can reproduce aggregate patterns from real human samples."} />: condition an LLM on demographic backstories and it reproduces some aggregate patterns of real samples. The broader practice is often called <Term as="em">silicon sampling</Term><TipNote text={"Silicon sampling uses AI-generated synthetic respondents as a proxy, supplement, or stress test for human survey or experiment participants."} />.
+
+The critiques rhyme with everything Day 11 taught. Synthetic samples can be too smooth, collapsing the variance and missing the tails of real opinion. They can shift unpredictably across model versions. They can mirror the educated, wealthy, liberal overrepresentation of the training data. A model trained to produce the average next word can flatten humanity into an averaged respondent.
+
+The closing twist is perfect for this day. A 2024 preprint by Liu, Geng, Peterson, Sucholutsky, and Griffiths argues that when LLMs simulate or predict human choices, they often model people as more rational than we are, closer to the tidy expected-utility agent Day 11 dismantled. The machines we might use to understand ourselves carry a rationality bias about us. The instrument mistakes us for the ideal reasoner we are not.
+</Claim>
+
+<ContentSection>
+<SectionEyebrow>The frontier scoreboard</SectionEyebrow>
+
+## Five bets on the 2020s, graded
+
+<SimpleTable
+  class="day11-status-table"
+  headers={["Bet","Status","Cautious reading"]}
+  rows={[["Centaur as a unified model of cognition (Nature 2025)","predicts behavior / explanation contested","Psych-101 prediction and neural-alignment claims make it a magnificent behavioral instrument of uncertain theoretical status."],["The sampling hypothesis (Psychological Review 2020-2023)","promising unification","Finite Bayesian sampling may connect many biases and LLM probability errors, but rival accounts and falsifiability questions remain."],["Resource-rational representation (Nature / NHB 2022)","solid results / grand theory open","People simplify representations in goal-sensitive ways; one normative theory of cognition is still a dream."],["Prebunking at scale (Science Advances 2022)","works / discernment contested","Cheap videos reached 5.4M YouTube users and can improve manipulation-spotting; durability and blanket skepticism remain live."],["Silicon sampling (Political Analysis 2023-2024)","aggregate mimicry / replacement hype","Useful as a research aid or stress test, but variance loss, demographics, version drift, and rationality bias block replacement claims."]]}/>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>Open questions</SectionEyebrow>
+
+## What would have to happen next
+
+- **Is behavioral prediction ever explanation?** Centaur forces cognitive science to say when a model that predicts us teaches us something about the mind, rather than merely mirroring it.
+- **Can one mechanism own all the biases?** Sampling and resource-rational theories are beautiful because they explain so much. That is also what makes the Day 2 demarcation blade necessary.
+- **If the mind is optimal all the way down, is bias still the right word?** The more constraints matter, the less useful the pure-logic benchmark becomes.
+- **Can population-scale debiasing produce discernment, not just doubt?** A citizenry that disbelieves everything is not clearly better off than one that is occasionally fooled.
+- **What happens when AI becomes the mirror?** As we use AI to model, predict, and stand in for human minds, we may study a flattering machine caricature of humanity instead of humanity itself.
+</ContentSection>
+
+<Recap>
+<RecapList>
+<RecapItem term="Big idea">The 2020s frontier of rationality research is a race between unifying dreams: one trained network, one sampling mechanism, or one resource-rational principle for the whole mind, shadowed by applied attempts to inoculate populations and replace human participants.</RecapItem>
+<RecapItem term="Best analogy">Two clocks, analog and digital, show the same time by different mechanisms. The question is whether a machine that reproduces behavior has explained the mind or only imitated its outputs.</RecapItem>
+<RecapItem term="Live controversy">Nearly all of it: prediction versus explanation, unification versus unfalsifiability, discernment versus skepticism, and whether LLMs that assume we are more rational than we are can stand in for us at all.</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads>**Threads here ›** computation (bounded inference as both bias engine and possible cure) · information (sampling, representation, and inoculation all decide which information a mind keeps, draws, or resists) · AI (machines as models of, cures for, and stand-ins for the reasoning mind).</Threads>
+
+<ContinueNote label="↩ Back to the main path">
+That closes the Day 11 wing: main descent, settled cabinet, and bleeding edge. Day 12 turns from individual shortcuts to networks: connections between minds, contagion, hubs, power laws, and the structure of social reasoning.
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+Post-2020 work cited here. Peer-reviewed unless marked as preprint.
+
+1. Binz, M., Akata, E., Bethge, M., Griffiths, T. L. &amp; Schulz, E. et al. (2025). "A Foundation Model to Predict and Capture Human Cognition." *Nature*, 644(8078), 1002-1009. <Meta>doi:10.1038/s41586-025-09215-4; Centaur and Psych-101.</Meta> [doi.org/10.1038/s41586-025-09215-4](https://doi.org/10.1038/s41586-025-09215-4)
+2. O'Grady, C. (2025). "Researchers Claim Their AI Model Simulates the Human Mind. Others Are Skeptical." *Science* news, July 2, 2025. <Meta>Critiques from Bowers, Richards, Adolfi, and Poldrack.</Meta> [science.org](https://www.science.org/content/article/researchers-claim-their-ai-model-simulates-human-mind-others-are-skeptical)
+3. Orr, M. et al. (2025). "Not Even Wrong: On the Limits of Prediction as Explanation in Cognitive Science." <Meta>Preprint; arXiv:2510.03311; critique of Centaur-style explanatory claims.</Meta> [arxiv.org/abs/2510.03311](https://arxiv.org/abs/2510.03311)
+4. Sanborn, A. N. &amp; Chater, N. (2016). "Bayesian Brains without Probabilities." *Trends in Cognitive Sciences*, 20(12), 883-893.
+5. Zhu, J.-Q., Sanborn, A. N. &amp; Chater, N. (2020). "The Bayesian Sampler: Generic Bayesian Inference Causes Incoherence in Human Probability Judgments." *Psychological Review*, 127(5), 719-748. <Meta>doi:10.1037/rev0000190.</Meta> [doi.org/10.1037/rev0000190](https://doi.org/10.1037/rev0000190)
+6. Zhu, J.-Q., Sundh, J., Spicer, J., Chater, N. &amp; Sanborn, A. N. (2023). "The Autocorrelated Bayesian Sampler." *Psychological Review*. <Meta>doi:10.1037/rev0000427.</Meta>
+7. Ho, M. K., Abel, D., Correa, C. G., Littman, M. L., Cohen, J. D. &amp; Griffiths, T. L. (2022). "People Construct Simplified Mental Representations to Plan." *Nature*, 606(7912), 129-136. <Meta>doi:10.1038/s41586-022-04743-9.</Meta> [doi.org/10.1038/s41586-022-04743-9](https://doi.org/10.1038/s41586-022-04743-9)
+8. Callaway, F., van Opheusden, B., Gul, S., Das, P., Krueger, P. M., Griffiths, T. L. &amp; Lieder, F. (2022). "Rational Use of Cognitive Resources in Human Planning." *Nature Human Behaviour*, 6(8), 1112-1125. See also Lieder et al. (2019), "Cognitive Prostheses for Goal Achievement," *Nature Human Behaviour*, 3, 1096-1106; and Binz et al. (2024), "Meta-Learned Models of Cognition," *Behavioral and Brain Sciences*, 47, e147.
+9. Roozenbeek, J., van der Linden, S., Goldberg, B., Rathje, S. &amp; Lewandowsky, S. (2022). "Psychological Inoculation Improves Resilience against Misinformation on Social Media." *Science Advances*, 8(34), eabo6254. <Meta>doi:10.1126/sciadv.abo6254; includes the YouTube field experiment.</Meta> [doi.org/10.1126/sciadv.abo6254](https://doi.org/10.1126/sciadv.abo6254)
+10. Modirrousta-Galian, A. &amp; Higham, P. A. (2023). "Gamified Inoculation Interventions Do Not Improve Discrimination between True and Fake News: Reanalyzing Existing Research with Signal Detection Theory." *Journal of Experimental Psychology: General*, 152(9), 2411-2437.
+11. Argyle, L. P., Busby, E. C., Fulda, N., Gubler, J. R., Rytting, C. &amp; Wingate, D. (2023). "Out of One, Many: Using Language Models to Simulate Human Samples." *Political Analysis*, 31(3), 337-351. <Meta>doi:10.1017/pan.2023.2.</Meta>
+12. Bisbee, J., Clinton, J. D., Dorff, C., Kenkel, B. &amp; Larson, J. M. (2024). "Synthetic Replacements for Human Survey Data? The Perils of Large Language Models." *Political Analysis*, 32(4), 401-416. See also Santurkar, S. et al. (2023), "Whose Opinions Do Language Models Reflect?" *ICML*; and Dillion, D. et al. (2023), "Can AI Language Models Replace Human Participants?" *Trends in Cognitive Sciences*, 27(7), 597-600.
+13. Liu, R., Geng, J., Peterson, J. C., Sucholutsky, I. &amp; Griffiths, T. L. (2024). "Large Language Models Assume People Are More Rational Than We Really Are." <Meta>Preprint; arXiv:2406.17055; LLMs modeling humans as closer to expected-utility ideals.</Meta> [arxiv.org/abs/2406.17055](https://arxiv.org/abs/2406.17055)
+</Sources>

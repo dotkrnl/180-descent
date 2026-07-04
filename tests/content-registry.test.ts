@@ -697,6 +697,8 @@ describe("target content registry", () => {
     expect(day010EnglishAppendix?.source).toContain("SimpleTable");
 
     expect(day011?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "the-bleeding-edge:en",
+      "the-bleeding-edge:zh",
       "the-deep-cabinet:en",
       "the-deep-cabinet:zh"
     ]);
@@ -707,9 +709,13 @@ describe("target content registry", () => {
     expect(day011?.bodies.en.source).toContain("Day11NaturalFrequencyGrid");
     expect(day011?.bodies.en.source).toContain("Day11ScissorsToggle");
     expect(day011?.bodies.en.source).toContain("Day11StaticFigure");
-    const day011EnglishAppendix = day011?.appendixBodies.find((body) => body.locale === "en");
-    expect(day011EnglishAppendix?.source).toContain("Day11ProspectValue");
-    expect(day011EnglishAppendix?.source).toContain("bias-noise-darts");
+    const day011CabinetAppendix = day011?.appendixBodies.find((body) => body.appendixId === "the-deep-cabinet" && body.locale === "en");
+    expect(day011CabinetAppendix?.source).toContain("Day11ProspectValue");
+    expect(day011CabinetAppendix?.source).toContain("bias-noise-darts");
+    const day011EdgeAppendix = day011?.appendixBodies.find((body) => body.appendixId === "the-bleeding-edge" && body.locale === "en");
+    expect(day011EdgeAppendix?.source).toContain("Day11SamplingEngine");
+    expect(day011EdgeAppendix?.source).toContain("clockwork");
+    expect(day011EdgeAppendix?.source).toContain("sampling-curve");
   });
 });
 

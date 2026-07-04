@@ -1,0 +1,59 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      eyebrow: "交互 · 有限样本的偏差",
+      title: "取样引擎",
+      note: "模拟心智分别估计「A 有多可能？」和「A 且 B 有多可能？」。逻辑要求 P(A 且 B) 不超过 P(A)，但少量有噪样本会把顺序翻转。拖动样本数，看看错误如何收缩。",
+      aria: "一条曲线显示心智样本数增加时，由有限样本噪声导致的合取谬误率下降。",
+	      x: "心智样本数（思考更久）",
+	      y: "谬误比例",
+      samples: "每次判断的样本数",
+      caveat: "这说明噪声本身如何制造不连贯。经典题目中的真实合取谬误率可接近 85%，因为代表性也会抬高合取项的直觉可信度；这里的曲线是 Zhu、Sanborn 与 Chater 取样模型精神下的教学示意。"
+    }
+  : {
+      eyebrow: "Interactive · biases from finite samples",
+      title: "The sampling engine",
+      note: "A simulated mind judges two things: how likely A is, and how likely A and B are, by drawing a handful of mental samples for each. Logic demands P(A and B) ≤ P(A). With few noisy samples, the order can flip. Drag the sample count and watch the error shrink.",
+      aria: "A curve showing conjunction-fallacy errors from finite-sample noise falling as the number of mental samples increases.",
+      x: "mental samples drawn (how long the mind thinks)",
+	      y: "% minds with fallacy",
+      samples: "Samples per judgment",
+      caveat: "This shows how noise alone can manufacture incoherence. Real conjunction-fallacy rates in classic cases can approach 85% because representativeness also inflates how likely the conjunction feels; the curve is an illustrative model in the spirit of Zhu, Sanborn, and Chater."
+    };
+---
+<Panel class="web-only day11-sampling" data-day11-sampling data-locale={zh ? "zh" : "en"}>
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="day11-sampling-viz">
+    <svg viewBox="0 0 620 330" role="img" aria-label={copy.aria} data-pagefind-ignore="all">
+      <line x1="72" y1="250" x2="586" y2="250" stroke="var(--line-strong)" stroke-width="1.4"></line>
+      <line x1="72" y1="250" x2="72" y2="54" stroke="var(--line-strong)" stroke-width="1.4"></line>
+      <g data-role="sampling-grid"></g>
+	      <text x="330" y="292" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-faint)">{copy.x}</text>
+	      <text x="72" y="42" text-anchor="start" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-faint)">{copy.y}</text>
+      <path data-role="sampling-path" d="" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"></path>
+      <line data-role="sampling-marker" x1="0" y1="54" x2="0" y2="250" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="4 4"></line>
+      <circle data-role="sampling-dot" cx="0" cy="0" r="6" fill="var(--brass)" stroke="var(--paper)" stroke-width="2"></circle>
+    </svg>
+  </div>
+
+  <label class="day11-slider-label">
+    <span>{copy.samples}</span>
+    <strong data-out="sampling-n">2</strong>
+    <input type="range" min="1" max="40" value="2" step="1" aria-label={copy.samples} data-role="sampling-n" />
+  </label>
+
+  <p class="day11-ppv"><span data-out="sampling-readout"></span></p>
+  <p class="day11-micro-note">{copy.caveat}</p>
+</Panel>

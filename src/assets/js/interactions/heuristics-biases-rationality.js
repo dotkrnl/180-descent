@@ -77,6 +77,13 @@
           readout: function(lambda){
             return "同样的 50 美元损失，在心理上约等于 " + lambda.toFixed(2) + " 个同等收益。";
           }
+        },
+        sampling: {
+          readout: function(n, rate){
+            if (n <= 2) return "只用 " + n + " 个样本时，约 " + rate.toFixed(0) + "% 的模拟心智会把合取项排得更高。噪声已经足以制造谬误。";
+            if (n < 12) return n + " 个样本时，错误率降到约 " + rate.toFixed(0) + "%。多抽几次，表面的不理性已经开始后退。";
+            return n + " 个样本时，谬误基本消失，约 " + rate.toFixed(0) + "%。足够多的样本会把有限心智推回连贯答案。";
+          }
         }
       };
     }
@@ -122,6 +129,13 @@
       prospect: {
         readout: function(lambda){
           return "A $50 loss feels about " + lambda.toFixed(2) + " times as large as a matching gain.";
+        }
+      },
+      sampling: {
+        readout: function(n, rate){
+          if (n <= 2) return "With just " + n + " sample" + (n > 1 ? "s" : "") + " per judgment, about " + rate.toFixed(0) + "% of simulated minds rank the conjunction as more likely. Noise alone can conjure the fallacy.";
+          if (n < 12) return "At " + n + " samples the error rate has fallen to about " + rate.toFixed(0) + "%. A few more draws and the incoherence is already receding.";
+          return "By " + n + " samples the fallacy is essentially gone, at about " + rate.toFixed(0) + "%. Given enough samples, the bounded mind converges on the coherent answer.";
         }
       }
     };
@@ -386,6 +400,94 @@
     render();
   }
 
+  function initSampling(root){
+    var locale = root.getAttribute("data-locale") || "en";
+    var text = copyFor(locale).sampling;
+    var x0 = 72;
+    var x1 = 586;
+    var y0 = 250;
+    var y1 = 54;
+    var nMax = 40;
+    var yMax = 28;
+    var slider = root.querySelector("[data-role='sampling-n']");
+    var nOut = root.querySelector("[data-out='sampling-n']");
+    var readout = root.querySelector("[data-out='sampling-readout']");
+    var path = root.querySelector("[data-role='sampling-path']");
+    var marker = root.querySelector("[data-role='sampling-marker']");
+    var dot = root.querySelector("[data-role='sampling-dot']");
+    var grid = root.querySelector("[data-role='sampling-grid']");
+
+    function erf(x){
+      var s = x < 0 ? -1 : 1;
+      x = Math.abs(x);
+      var t = 1 / (1 + 0.3275911 * x);
+      var y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+      return s * y;
+    }
+    function phi(z){ return 0.5 * (1 + erf(z / Math.SQRT2)); }
+    function rateAt(n){
+      var gap = 0.25 - 0.18;
+      var sd = Math.SQRT2 * 0.165 / Math.sqrt(n);
+      return 100 * phi(-gap / sd);
+    }
+    function xPix(n){ return x0 + (n - 1) / (nMax - 1) * (x1 - x0); }
+    function yPix(rate){ return y0 - rate / yMax * (y0 - y1); }
+
+    if (grid && !grid.childNodes.length) {
+      [0, 14, 28].forEach(function(tick){
+        var y = yPix(tick);
+        var line = document.createElementNS(NS, "line");
+        line.setAttribute("x1", String(x0));
+        line.setAttribute("x2", String(x1));
+        line.setAttribute("y1", y.toFixed(1));
+        line.setAttribute("y2", y.toFixed(1));
+        line.setAttribute("stroke", "var(--line)");
+        line.setAttribute("stroke-width", "0.8");
+        grid.appendChild(line);
+        var label = document.createElementNS(NS, "text");
+        label.setAttribute("x", String(x0 - 8));
+        label.setAttribute("y", (y + 3).toFixed(1));
+        label.setAttribute("text-anchor", "end");
+        label.setAttribute("font-family", "IBM Plex Mono, monospace");
+        label.setAttribute("font-size", "12");
+        label.setAttribute("fill", "var(--ink-faint)");
+        label.textContent = tick + "%";
+        grid.appendChild(label);
+      });
+    }
+
+    if (path) {
+      var parts = [];
+      for (var n = 1; n <= nMax; n += 1) {
+        var rate = rateAt(n);
+        parts.push((n === 1 ? "M" : "L") + xPix(n).toFixed(1) + "," + yPix(rate).toFixed(1));
+      }
+      path.setAttribute("d", parts.join(" "));
+    }
+
+    function render(){
+      var n = Number(slider ? slider.value : 2);
+      var rate = rateAt(n);
+      var x = xPix(n);
+      var y = yPix(rate);
+      if (nOut) nOut.textContent = String(n);
+      if (readout) readout.textContent = text.readout(n, rate);
+      if (marker) {
+        marker.setAttribute("x1", x.toFixed(1));
+        marker.setAttribute("x2", x.toFixed(1));
+        marker.setAttribute("y1", y.toFixed(1));
+        marker.setAttribute("y2", String(y0));
+      }
+      if (dot) {
+        dot.setAttribute("cx", x.toFixed(1));
+        dot.setAttribute("cy", y.toFixed(1));
+      }
+    }
+
+    if (slider) slider.addEventListener("input", render);
+    render();
+  }
+
   document.querySelectorAll("[data-day11-linda]").forEach(function(root){
     mountWhenVisible(root, initLinda);
   });
@@ -397,5 +499,8 @@
   });
   document.querySelectorAll("[data-day11-prospect]").forEach(function(root){
     mountWhenVisible(root, initProspect);
+  });
+  document.querySelectorAll("[data-day11-sampling]").forEach(function(root){
+    mountWhenVisible(root, initSampling);
   });
 })();

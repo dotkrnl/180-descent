@@ -462,7 +462,14 @@ function renderHeading(node: MdxNode, state: MdxRenderState): string {
     || text.includes("Six years, an accelerating field")
     || text.includes("稳定地貌的预警信号")
     || text.includes("Warning signals in the stability landscape");
-  const prefix = needsFigureSpace ? "\\Needspace{0.55\\textheight}\n" : "";
+  const needsScoreboardSpace =
+    text.includes("Five bets on the 2020s")
+    || text.includes("2020 年代的五场赌局");
+  const prefix = needsFigureSpace
+    ? "\\Needspace{0.55\\textheight}\n"
+    : needsScoreboardSpace
+      ? "\\Needspace{0.52\\textheight}\n"
+      : "";
   if (eyebrow && node.depth === 2) return `${prefix}\\sectionwithlabel{${eyebrow}}{${text}}`;
   if (eyebrow && node.depth === 3) return `${prefix}\\subsectionwithlabel{${eyebrow}}{${text}}`;
   if (node.depth === 1) return `\\pdfdaytitle{${text}}`;
@@ -785,7 +792,10 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   if (name === "WhereBlock") {
     return `\\Needspace{0.30\\textheight}\n\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
-  if (["Aside", "Recap", "Formula"].includes(name)) {
+  if (name === "Recap") {
+    return `\\Needspace{0.36\\textheight}\n\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
+  }
+  if (["Aside", "Formula"].includes(name)) {
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
   if (name === "Sources") {
@@ -1047,7 +1057,7 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
   if (name === "Day11StaticFigure") {
     const kind = resolveExpression(attrs.get("kind"), state).trim();
     if (kind) {
-      const day11Width = kind === "frequency-grid" || kind === "resource-curve" || kind === "prospect-value" || kind === "bias-noise-darts" ? "0.98\\linewidth" : "0.86\\linewidth";
+      const day11Width = kind === "frequency-grid" || kind === "resource-curve" || kind === "prospect-value" || kind === "bias-noise-darts" || kind === "clockwork" || kind === "sampling-curve" ? "0.98\\linewidth" : "0.86\\linewidth";
       const day11Height = kind === "resource-curve"
         ? "0.34\\textheight"
         : kind === "frequency-grid"
@@ -1056,6 +1066,10 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
             ? "0.34\\textheight"
             : kind === "bias-noise-darts"
               ? "0.32\\textheight"
+              : kind === "clockwork"
+                ? "0.32\\textheight"
+              : kind === "sampling-curve"
+                ? "0.34\\textheight"
           : kind === "scissors"
             ? "0.30\\textheight"
             : "0.26\\textheight";
