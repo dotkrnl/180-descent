@@ -250,6 +250,36 @@ one Chinese word. This matters especially in physics and frontier appendices.
 | choice architecture | 选择架构 | Design of how choices are presented to decision-makers. | 选择结构 when inconsistent |
 | social priming | 社会启动 | Priming of social concepts or behavior; often contested in replication. | 社会性启动 when inconsistent |
 | framing effect / framing effects | 框架效应 | Preference reversal due to logically equivalent description. | — |
+| prospect theory | 前景理论 | Kahneman-Tversky theory of risky choice under reference-dependent gains/losses and probability weighting. | 展望理论 |
+| expected utility theory | 期望效用理论 | Normative/economic theory of probability-weighted utility maximization. | 预期效用理论 when inconsistent |
+| reference point | 参照点 | Prospect-theory baseline for coding gains and losses. | 参考点 when inconsistent |
+| reference dependence | 参照依赖 | Evaluating outcomes relative to a reference point rather than final wealth/state. | 参考依赖 |
+| diminishing sensitivity | 敏感性递减 | Prospect-theory curvature: marginal value changes less farther from the reference point. | 灵敏度递减 when inconsistent |
+| loss aversion | 损失厌恶 | Losses loom larger than equivalent gains; preserve caveats about context and coefficient. | 损失规避 when inconsistent |
+| probability weighting | 概率加权 | Decision weights differ from objective probabilities, especially small-probability overweighting. | 概率权重化 |
+| fourfold pattern | 四重模式 | Prospect-theory pattern across likely/unlikely gains/losses. | 四象限模式 |
+| endowment effect | 禀赋效应 | Valuing something more after owning it. | 赋予效应 |
+| status quo bias | 现状偏差 | Preference for the current option partly because leaving it is coded as loss. | 维持现状偏差 |
+| disposition effect | 处置效应 | Selling winners too soon and holding losers too long. | 处理效应 |
+| overconfidence | 过度自信 | Broad family; distinguish overestimation, overplacement, and overprecision. | 过分自信 |
+| overestimation | 高估 | Absolute overestimate of one's performance, speed, or success probability. | 过高估计 when inconsistent |
+| overplacement | 过高定位 | Believing one's relative position exceeds others, e.g. better-than-average effects. | 高估定位 |
+| overprecision | 过度精确 | Excessively narrow uncertainty or confidence intervals. | 过度精准 |
+| planning fallacy | 计划谬误 | Underestimating task duration/cost despite prior comparable delays. | 规划谬误 |
+| reference-class forecasting | 参考类预测 | Forecasting by starting from outcomes of similar completed projects. | 参照类预测 when inconsistent |
+| calibration | 校准 | Confidence levels matching long-run frequencies of correctness. | 校验 when confidence calibration is meant |
+| confirmation bias | 确认偏差 | Seeking or overweighting evidence that confirms a current hypothesis. | 证实偏差 when inconsistent |
+| Wason selection task | 沃森选择任务 | Abstract conditional-rule card task; preserve A/7 logic when described. | 瓦森选择任务 |
+| myside bias | 我方偏差 | Evaluating evidence in favor of one's own view or group. | 己方偏差 when inconsistent |
+| motivated numeracy | 动机性数理 | Kahan-style politicized interpretation of numerical evidence; flag replication caveats. | 动机化数理, 动机性算术 |
+| Cognitive Reflection Test / CRT | 认知反思测试 / CRT | Frederick's test of overriding a fluent intuitive answer. | 认知反射测试 |
+| conflict detection | 冲突检测 | Detecting tension between an intuitive answer and logical/probabilistic constraints. | 冲突侦测 |
+| logical intuition / logical intuitions | 逻辑直觉 | Fast sensitivity to logical or numerical structure; keep evidential caveats. | 逻辑性直觉 |
+| noise | 噪声 | Unwanted variability among judgments that should be similar; distinguish from bias. | 杂讯 when technical |
+| decision hygiene | 决策卫生 | Procedures that reduce avoidable judgment variability before knowing bias direction. | 决策清洁 |
+| 1/N rule | 1/N 规则 | Equal allocation across N options/assets. | 等权规则 when the source names 1/N |
+| error management theory | 错误管理理论 | Selection may favor biased judgments when one error type is much costlier. | 误差管理理论 |
+| debiasing | 去偏 | Interventions that reduce cognitive biases; preserve scope limits. | 消偏 when inconsistent |
 | willpower fuel model | 意志力燃料模型 | Collapsed idea that self-control draws on a limited energy reserve. | 意志力能源模型 when inconsistent |
 | no-miracles argument | 无奇迹论证 | Predictive success is best explained by approximate truth. | 无奇迹论 |
 | pessimistic meta-induction | 悲观元归纳 | Past successful theories turned out false, so current ones may too. | 悲观归纳 |

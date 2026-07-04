@@ -1,0 +1,235 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day11StaticFigure from "@app/components/lesson/figures/Day11StaticFigure.astro";
+import Day11ProspectValue from "@app/components/lesson/interactives/Day11ProspectValue.astro";
+
+<Lead drop="T">he main descent traced one clean corridor: heuristics, the rationality war, Simon's scissors, and the resource-rational peace treaty. That was the right route for the day. But the cabinet behind it is deeper: choice under risk, overconfidence, confirmation, reflection tests, noise, and the strange cases where less information wins with real money on the table.</Lead>
+
+<ContinueNote label="◆ What's down here">
+The main page asked whether shortcuts are bugs, adaptive tools, or the shape of a resource-limited mind. This appendix adds the evidence and texture we walked past: prospect theory, the three faces of overconfidence, Wason's laboratory traps, the bat-and-ball test, dual-process revisions, the bias/noise split, and the profit-and-loss version of "less is more."
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow number="Room I">choice under risk</SectionEyebrow>
+
+## Prospect theory: a different value function
+
+The 1974 heuristics paper was about judgment. Kahneman and Tversky's second revolution was about choice. In 1979 they attacked <Term as="em">expected utility theory</Term><TipNote text={"Expected utility theory models risky choice as maximizing the probability-weighted utility of possible outcomes."} />, the elegant framework that had dominated economics since von Neumann and Morgenstern. Under that framework, people should evaluate final states of wealth and weight outcomes by their actual probabilities. In the lab, they did not.
+
+<Term as="em">Prospect theory</Term><TipNote text={"Prospect theory explains risky choice by evaluating gains and losses relative to a reference point, with losses usually weighted more heavily."} /> changed the coordinate system. People evaluate outcomes relative to a <Term as="em">reference point</Term><TipNote text={"A reference point is the current state, expectation, or comparison level from which gains and losses are judged."} />, not as final wealth. The value curve is concave for gains, convex for losses, and steeper on the loss side. Small probabilities are often overweighted and moderate-to-high probabilities are often underweighted. This yields the famous fourfold pattern: risk aversion for likely gains, risk seeking for likely losses, risk seeking for tiny-probability gains such as lotteries, and risk aversion for tiny-probability losses such as insurance.
+
+<StatusChipRow>
+<StatusChip status="ok" label="prospect theory" printLabel="prospect theory broadly replicated" />
+<StatusChip status="bad" label="universal 2x loss" printLabel="universal two-times loss aversion contested" />
+</StatusChipRow>
+
+<Day11ProspectValue locale="en" />
+
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Fixed figure · Prospect Value</PanelTitle>
+
+<PanelNote>The web panel changes lambda, the loss-aversion coefficient. The fixed figure uses the classic illustrative value lambda = 2.25 from cumulative prospect theory.</PanelNote>
+
+<Day11StaticFigure kind="prospect-value" locale="en" />
+
+<SimpleTable
+  headers={["Feature","What it says","Why it matters"]}
+  rows={[["Reference dependence","A result is coded as gain or loss relative to a baseline.","The same outcome can feel good or bad depending on what was expected."],["Diminishing sensitivity","Moving from $0 to $100 matters more than moving from $10,000 to $10,100.","The curve flattens as outcomes move away from the reference point."],["Loss aversion","Losses are often steeper than gains of equal size.","Giving something up can loom larger than acquiring it."]]}/>
+</FormatOnly>
+
+The cautious version matters. Ruggeri and colleagues ran a large, coordinated direct replication across nineteen countries and 4,098 participants. They reproduced about 94% of the original prospect-theory choices and found similar patterns across samples. But the slogan "losses hurt twice as much as gains feel good" has been overexported. Gal and Rucker argued that evidence for a universal two-times coefficient is weaker than popular summaries suggest; Mrkva and colleagues replied that loss aversion is real but moderated by attention and context. The right landing is not "loss aversion everywhere." It is "reference-dependent choice is sturdy, while the exact loss-aversion multiplier is not a law of nature."
+
+Prospect theory also gave the heuristics-and-biases program a bridge into markets. The <Term as="em">endowment effect</Term><TipNote text={"The endowment effect is valuing something more once you own it than before you owned it."} /> makes a mug worth more after it becomes *my* mug. <Term as="em">status quo bias</Term><TipNote text={"Status quo bias is a preference for the current option partly because leaving it is coded as a loss."} /> makes switching feel like giving something up. The <Term as="em">disposition effect</Term><TipNote text={"The disposition effect is investors' tendency to sell winners too soon and hold losers too long."} /> makes investors reluctant to realize losses. The value function moved the theory from puzzle cards into institutions.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Room II">confidence</SectionEyebrow>
+
+## The three faces of overconfidence
+
+Overconfidence sounds like one thing. Moore and Healy's 2008 review split it into three, and the split prevents confusion.
+
+<SimpleTable
+  class="alt-table"
+  headers={["Face","Question it answers","Classic pattern"]}
+  rows={[["Overestimation","How good am I in absolute terms?","I think I will finish the paper by Friday."],["Overplacement","How good am I compared with others?","I think I am above-average at driving."],["Overprecision","How narrow is my uncertainty?","I give a tight interval and reality lands outside it."]]}/>
+
+<StatusChipRow>
+<StatusChip status="ok" label="overconfidence" printLabel="overconfidence has separable forms" />
+</StatusChipRow>
+
+These faces do not always point in the same direction. Moore and Healy's twist is that people often overplace themselves on easy tasks and underplace themselves on hard or rare ones: "better than average" is not a universal direction. That is why one clean definition of "overconfidence" keeps breaking in your hands.
+
+The funniest demonstration is Ola Svenson's 1981 driving study. About 93% of American drivers rated themselves above the median for driving skill. The impossible arithmetic is the point: people are not merely reporting "I am safe enough." They are placing themselves above the comparison group.
+
+The most expensive face is the <Term as="em">planning fallacy</Term><TipNote text={"The planning fallacy is underestimating how long tasks will take, even when one knows similar tasks have run late before."} />. Buehler, Griffin, and Ross showed that people routinely predict best-case timelines while ignoring their own past delays. The same pattern scales up. The Sydney Opera House was expected to cost about \$7 million and open in 1963; it opened in 1973 at more than \$100 million. Bent Flyvbjerg's answer is <Term as="em">reference-class forecasting</Term><TipNote text={"Reference-class forecasting estimates a project by comparing it with a class of similar completed projects before adjusting for the case at hand."} />: do not begin with your inside story. Begin with how similar projects actually went.
+
+<Aside>
+<BlockTitle>Why calibration is so hard</BlockTitle>
+
+Calibration is not confidence in general. It asks whether statements made with 70% confidence come true about 70% of the time, 90% statements about 90% of the time, and so on. That requires a feedback loop with many comparable judgments. Everyday life gives us blurry, delayed, excuse-friendly feedback instead. Without records, confidence can feel like a personality trait rather than a measurable error rate.
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Room III">confirmation</SectionEyebrow>
+
+## Confirmation bias and Popper in the lab
+
+Karl Popper told scientists to seek refutations. Peter Wason asked whether ordinary reasoners do that naturally. His 2-4-6 task looked simple. Participants saw the sequence 2, 4, 6 and had to discover the rule by proposing other triples. Most guessed something like "ascending by twos" and tested confirming cases: 8-10-12, 20-22-24. The actual rule was broader: any ascending numbers. A test they expected to fail, such as 1-2-3, would have helped far more, but people tended to hunt for yeses.
+
+The Wason selection task repeated the blow in a different form. Given cards showing letters and numbers, people were asked which cards must be turned over to test a rule like "If a card has a vowel on one side, it has an even number on the other." The required cards are the vowel, which could confirm or violate the rule, and the odd number, which could expose the violation. Many people choose the vowel and the even number instead. But the plot thickened when Leda Cosmides recast the same logic as a social contract, such as checking whether anyone drinking beer is underage. Performance improved sharply. Humans may be bad at abstract falsification and much better at detecting cheaters in a social rule.
+
+<StatusChipRow>
+<StatusChip status="ok" label="myside bias" printLabel="myside bias can survive intelligence" />
+<StatusChip status="bad" label="motivated numeracy" printLabel="motivated numeracy replication mixed" />
+</StatusChipRow>
+
+The unsettling part is that intelligence does not rescue you. Keith Stanovich and Richard West distinguished general intelligence from <Term as="em">myside bias</Term><TipNote text={"Myside bias is evaluating evidence in ways that favor one's existing position or group."} />: smart people can be just as likely to protect their own side, and sometimes better equipped to do it. Kahan and colleagues pushed the point with a numeracy task. The same 2-by-2 table was framed as evidence about a skin cream or gun control. Highly numerate participants did well when the data were neutral; when the data crossed their politics, numeracy sometimes helped them polarize.
+
+That last finding needs a warning label. Later work has questioned how general and replicable motivated numeracy is. Pennycook and Rand argue that much misinformation susceptibility looks less like people reasoning too hard for their tribe and more like people failing to reason enough. The frontier is no longer "are people biased?" It is when the failure mode is motivated reasoning, when it is laziness, and when the format of the problem is doing the damage.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Room IV">reflection</SectionEyebrow>
+
+## The bat and the ball
+
+Shane Frederick's Cognitive Reflection Test is small enough to fit on a napkin and sharp enough to draw blood.
+
+<BlockQuote>
+A bat and a ball cost \$1.10 in total. The bat costs \$1.00 more than the ball. How much does the ball cost?
+<Meta>Frederick, 2005.</Meta>
+</BlockQuote>
+
+The intuitive answer is 10 cents. It is also wrong. If the ball cost 10 cents, the bat would cost \$1.10, and the total would be \$1.20. The ball costs 5 cents, the bat \$1.05, total \$1.10.
+
+The CRT does not merely test arithmetic. It tests whether a fluent answer can be interrupted. Frederick found that CRT performance predicted patience, risk preferences, and susceptibility to several judgment biases. More recent work connects reflection to misinformation: people who stop to check the first answer are less likely to accept fake headlines. The little bat-and-ball problem is System 2 as an audit button, though we should keep the "System 1/System 2" model loose, as the main page warned.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Room V">dual process revised</SectionEyebrow>
+
+## Dual-process 2.0: intuition is smarter than we thought
+
+The popular story says intuition blurts the wrong answer and deliberation corrects it. Wim De Neys and colleagues complicated that story. In two-response experiments, participants first answer under time pressure, then answer again after deliberation. They also report confidence or show signs of conflict. Many people who give the biased answer still show <Term as="em">conflict detection</Term><TipNote text={"Conflict detection is the mind registering that an intuitive answer clashes with a logical or probabilistic constraint, even before full correction."} />: slower responses, lower confidence, or physiological signs that something is off.
+
+<StatusChipRow>
+<StatusChip status="hint" label="logical intuitions" printLabel="logical intuitions are promising but debated" />
+</StatusChipRow>
+
+Bago and De Neys went further. In some two-response designs, many correct answers appear already in the first, intuitive response. The implication is not that intuition is always wise. It is that intuition may contain more than stereotype and impulse. There may be "logical intuitions" too: fast sensitivity to conflict, number, and structure.
+
+That keeps the field honest. Dual-process theory is still useful as a teaching map, but the map cannot be "dumb System 1 versus smart System 2." Sometimes the first response is wrong and the second repairs it. Sometimes the first response already contains the repair. Sometimes a single-process model may explain the data just as well. The neat drama survives only as shorthand.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Room VI">error geometry</SectionEyebrow>
+
+## Bias versus noise
+
+In 2021, Kahneman returned with Olivier Sibony and Cass Sunstein to argue that organizations obsess over bias while undermeasuring <Term as="em">noise</Term><TipNote text={"Noise is unwanted variability among judgments that should be identical or very similar."} />. Bias is being wrong in a consistent direction. Noise is scatter: two underwriters, doctors, judges, or managers facing similar cases and giving very different answers.
+
+<StatusChipRow>
+<StatusChip status="ok" label="noise" printLabel="noise is a distinct error source" />
+</StatusChipRow>
+
+<Day11StaticFigure kind="bias-noise-darts" locale="en" />
+
+Their insurance example is deliberately uncomfortable. Executives expected underwriters pricing the same risk to differ by perhaps 10-25%. In one audit, the median difference was about 55%. That is not a philosophical bias about categories. It is costly variability inside a system that believed itself professional.
+
+The arithmetic is simple: `MSE = bias^2 + noise^2`. To reduce error, you can move the average answer toward the target, or you can reduce scatter. Kahneman, Sibony, and Sunstein divide noise into level noise, pattern noise, and occasion noise: some judges are generally harsher, some are harsher only in particular kinds of cases, and some change depending on mood, sequence, or day.
+
+The practical remedy is <Term as="em">decision hygiene</Term><TipNote text={"Decision hygiene is a set of procedures that reduce avoidable judgment variability before knowing which direction a particular bias will take."} />: independent judgments before discussion, structured criteria, separating evidence from evaluation, using algorithms where they beat humans, and running noise audits. It is less glamorous than debiasing. It is often easier to measure.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Room VII">less with stakes</SectionEyebrow>
+
+## Less-is-more, with a profit-and-loss statement
+
+The main page used the gaze heuristic and recognition heuristic to show why ignoring information can help. Finance makes the point with money attached.
+
+Harry Markowitz invented modern portfolio theory, yet reportedly split his own retirement savings roughly 50/50 between stocks and bonds because he did not want to regret either extreme. That anecdote is not a proof. But DeMiguel, Garlappi, and Uppal gave the deeper result in 2009: compare optimized portfolio strategies with the naive <Term as="em">1/N rule</Term><TipNote text={"The 1/N rule allocates money equally across N available assets instead of estimating an optimized portfolio."} />, which divides wealth equally across available assets. Across many datasets, 1/N was extremely hard to beat out of sample. Some optimized strategies would need around 3,000 months of data before their estimation advantage overcame their estimation error.
+
+<StatusChipRow>
+<StatusChip status="ok" label="1/N benchmark" printLabel="1/N is a strong benchmark in noisy allocation" />
+</StatusChipRow>
+
+The reason is Day 10 wearing a trading jacket. Optimization is a model. Models need estimates. Estimates are noisy. When the environment is noisy and data are limited, a beautiful optimizer can fit ghosts. The crude rule has bias, but it has very little variance. In the bias-variance tradeoff, that can win.
+
+Fast-and-frugal trees show the same lesson in classification. A decision tree that asks a few yes/no questions and exits early can match or beat more complex medical or legal models, especially when the target environment has stable cues and limited data. The win is not magic. It is the scissors again: a simple rule plus an environment where the cue structure makes that rule powerful.
+
+### So why do the shortcuts exist at all?
+
+One evolutionary answer is <Term as="em">error management theory</Term><TipNote text={"Error management theory says selection can favor biased judgments when one kind of mistake is much costlier than the other."} />. If two errors have unequal costs, the best system may be biased. A smoke detector is biased toward false alarms because missing a real fire is worse than waking you unnecessarily. In ancestral environments, mistaking a shadow for a predator and mistaking a predator for a shadow did not have equal payoffs.
+
+That does not mean every bias is adaptive. Gigerenzer calls the opposite mistake the "bias bias": treating every gap from logic as a defect before asking what task and environment produced it. The sober version is three-way. Some biases are real errors against good norms. Some are artifacts of bad problem formats. Some are adaptive bets under constraints.
+
+<StatusChipRow>
+<StatusChip status="hint" label="bias bias" printLabel="the bias-bias warning remains useful" />
+<StatusChip status="ok" label="debiasing works" printLabel="some debiasing training has durable effects" />
+</StatusChipRow>
+
+Debiasing sits in that same mixed zone. Morewedge and colleagues found that targeted training games reduced several biases months later. Checklists, reference-class forecasting, natural frequencies, base-rate prompts, and structured decision hygiene can help. But the goal is not to erase intuition. It is to know when to trust the shortcut, when to change the representation, and when to force the slower audit.
+</ContentSection>
+
+<Recap>
+<RecapList>
+<RecapItem term="Core addition">Day 11's main corridor was judgment under limits. The appendix adds choice under risk, confidence errors, confirmation traps, reflection tests, noise, and less-is-more cases with real stakes.</RecapItem>
+<RecapItem term="Best compression">Bias is not one thing. It can be a logical violation, an adaptive asymmetry, a format artifact, a noisy estimate, or a cheap approximation under computation costs.</RecapItem>
+<RecapItem term="Practical rule">Before calling a shortcut irrational, ask three questions: what norm is being used, what environment the mind is in, and what the computation would have cost.</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads>**Threads today ›** computation (limits, approximation, and resource-rational choice) · evolution (asymmetric error costs and adaptive heuristics) · information (problem format, natural frequencies, and noisy judgment systems).</Threads>
+
+<ContinueNote label="↩ Back to the main path">
+Day 12 will turn from individual shortcuts to social reasoning: how minds coordinate, disagree, signal, defer, and sometimes trap each other in shared mistakes.
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. Kahneman, D. &amp; Tversky, A. (1979). "Prospect Theory: An Analysis of Decision under Risk." *Econometrica*, 47(2), 263-291.
+2. Tversky, A. &amp; Kahneman, D. (1992). "Advances in Prospect Theory: Cumulative Representation of Uncertainty." *Journal of Risk and Uncertainty*, 5, 297-323.
+3. Kahneman, D., Knetsch, J. L. &amp; Thaler, R. H. (1990). "Experimental Tests of the Endowment Effect and the Coase Theorem." *Journal of Political Economy*, 98(6), 1325-1348.
+4. Ruggeri, K. et al. (2020). "Replicating patterns of prospect theory for decision under risk." *Nature Human Behaviour*, 4, 622-633. doi:10.1038/s41562-020-0886-x.
+5. Gal, D. &amp; Rucker, D. D. (2018). "The Loss of Loss Aversion: Will It Loom Larger Than Its Gain?" *Journal of Consumer Psychology*, 28(3), 497-516; with the reply by Mrkva et al. (2020), *Journal of Consumer Psychology*, 30(3), 407-428.
+6. Moore, D. A. &amp; Healy, P. J. (2008). "The trouble with overconfidence." *Psychological Review*, 115(2), 502-517.
+7. Svenson, O. (1981). "Are we all less risky and more skillful than our fellow drivers?" *Acta Psychologica*, 47(2), 143-148.
+8. Buehler, R., Griffin, D. &amp; Ross, M. (1994). "Exploring the planning fallacy." *Journal of Personality and Social Psychology*, 67(3), 366-381.
+9. Flyvbjerg, B. (2008). "Curbing Optimism Bias and Strategic Misrepresentation in Planning." *European Planning Studies*, 16(1), 3-21.
+10. Wason, P. C. (1960). "On the failure to eliminate hypotheses in a conceptual task." *Quarterly Journal of Experimental Psychology*, 12(3), 129-140.
+11. Wason, P. C. (1968). "Reasoning about a rule." *Quarterly Journal of Experimental Psychology*, 20(3), 273-281; Cosmides, L. (1989). "The logic of social exchange." *Cognition*, 31(3), 187-276.
+12. Stanovich, K. E. &amp; West, R. F. (2008). "On the Failure of Cognitive Ability to Predict Myside and One-Sided Thinking Biases." *Thinking &amp; Reasoning*, 14(2), 129-167; Stanovich, K. E. (2021). *The Bias That Divides Us*. MIT Press.
+13. Kahan, D. M., Peters, E., Dawson, E. C. &amp; Slovic, P. (2017). "Motivated Numeracy and Enlightened Self-Government." *Behavioural Public Policy*, 1(1), 54-86. doi:10.1017/bpp.2016.2; replication contested, including Ballarini &amp; Sloman (2017) and Kahan &amp; Peters (2017).
+14. Pennycook, G. &amp; Rand, D. G. (2019). "Lazy, not biased: Susceptibility to partisan fake news is better explained by lack of reasoning than by motivated reasoning." *Cognition*, 188, 39-50.
+15. Frederick, S. (2005). "Cognitive Reflection and Decision Making." *Journal of Economic Perspectives*, 19(4), 25-42.
+16. Bago, B. &amp; De Neys, W. (2019). "The Smart System 1: Evidence for the Intuitive Nature of Correct Responding on the Bat-and-Ball Problem." *Thinking &amp; Reasoning*, 25(3), 257-299; see also De Neys &amp; Glumicic (2008), *Cognition*, 106, 1248-1299; Raoelison, Thompson &amp; De Neys (2020), *Cognition*, 204, 104381; De Neys (2021), *Perspectives on Psychological Science*, 16(6), 1412-1427.
+17. Kahneman, D., Sibony, O. &amp; Sunstein, C. R. (2021). *Noise: A Flaw in Human Judgment*. Little, Brown Spark.
+18. DeMiguel, V., Garlappi, L. &amp; Uppal, R. (2009). "Optimal Versus Naive Diversification: How Inefficient is the 1/N Portfolio Strategy?" *Review of Financial Studies*, 22(5), 1915-1953. doi:10.1093/rfs/hhm075.
+19. Haselton, M. G. &amp; Nettle, D. (2006). "The paranoid optimist: An integrative evolutionary model of cognitive biases." *Personality and Social Psychology Review*, 10(1), 47-66.
+20. Gigerenzer, G. (2018). "The Bias Bias in Behavioral Economics." *Review of Behavioral Economics*, 5(3-4), 303-336.
+21. Morewedge, C. K. et al. (2015). "Debiasing Decisions: Improved Decision Making With a Single Training Intervention." *Policy Insights from the Behavioral and Brain Sciences*, 2(1), 129-140.
+</Sources>

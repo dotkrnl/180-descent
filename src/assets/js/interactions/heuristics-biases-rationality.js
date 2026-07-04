@@ -72,6 +72,11 @@
           oneBody: "只用概率论这把尺子审视心智刀刃时，一个扔掉几乎全部数据的规则看起来像坏掉了。这就是经典实验给出偏差判决的方式。",
           bothTitle: "聪明：它利用了世界的结构。",
           bothBody: "两片刀刃一起合上。凝视启发式忽略速度和轨迹，是因为在飞球的真实环境中，保持凝视角不变就能把你带到落点，廉价、可靠、及时。"
+        },
+        prospect: {
+          readout: function(lambda){
+            return "同样的 50 美元损失，在心理上约等于 " + lambda.toFixed(2) + " 个同等收益。";
+          }
         }
       };
     }
@@ -113,6 +118,11 @@
         oneBody: "Against logic alone, a rule that throws away nearly all the data looks broken. Judging only the mind blade against probability theory is how the classic experiments reach their verdict of bias.",
         bothTitle: "Smart: it exploits the structure of the world.",
         bothBody: "Now both blades engage. The gaze heuristic ignores velocity and trajectory because, in the actual environment of flying balls, holding the gaze angle constant delivers you to the landing spot reliably, cheaply, and in real time."
+      },
+      prospect: {
+        readout: function(lambda){
+          return "A $50 loss feels about " + lambda.toFixed(2) + " times as large as a matching gain.";
+        }
       }
     };
   }
@@ -309,6 +319,73 @@
     render("one", null);
   }
 
+  function initProspect(root){
+    var locale = root.getAttribute("data-locale") || "en";
+    var text = copyFor(locale).prospect;
+    var alpha = 0.88;
+    var xMid = 312;
+    var yMid = 182;
+    var xScale = 2.4;
+    var yScale = 1.25;
+    var slider = root.querySelector("[data-role='lambda']");
+    var lambdaOut = root.querySelector("[data-out='lambda']");
+    var readout = root.querySelector("[data-out='prospect-readout']");
+    var gainPath = root.querySelector("[data-role='prospect-path']");
+    var lossPath = root.querySelector("[data-role='prospect-loss-path']");
+    var gainDot = root.querySelector("[data-role='gain-dot']");
+    var lossDot = root.querySelector("[data-role='loss-dot']");
+    var gainGuide = root.querySelector("[data-role='gain-guide']");
+    var lossGuide = root.querySelector("[data-role='loss-guide']");
+    var gainLabel = root.querySelector("[data-role='gain-label']");
+    var lossLabel = root.querySelector("[data-role='loss-label']");
+
+    function value(x, lambda){
+      return x >= 0 ? Math.pow(x, alpha) : -lambda * Math.pow(-x, alpha);
+    }
+
+    function point(x, lambda){
+      return {
+        x: xMid + x * xScale,
+        y: yMid - value(x, lambda) * yScale
+      };
+    }
+
+    function buildPath(from, to, lambda){
+      var out = [];
+      for (var x = from; x <= to; x += 4) {
+        var p = point(x, lambda);
+        out.push((out.length ? "L" : "M") + p.x.toFixed(1) + "," + p.y.toFixed(1));
+      }
+      return out.join(" ");
+    }
+
+    function place(el, attrs){
+      if (!el) return;
+      Object.keys(attrs).forEach(function(key){
+        el.setAttribute(key, String(attrs[key]));
+      });
+    }
+
+    function render(){
+      var lambda = Number(slider ? slider.value : 225) / 100;
+      var gain = point(50, lambda);
+      var loss = point(-50, lambda);
+      if (lambdaOut) lambdaOut.textContent = lambda.toFixed(2);
+      if (readout) readout.textContent = text.readout(lambda);
+      if (gainPath) gainPath.setAttribute("d", buildPath(0, 100, lambda));
+      if (lossPath) lossPath.setAttribute("d", buildPath(-60, 0, lambda));
+      place(gainDot, { cx: gain.x.toFixed(1), cy: gain.y.toFixed(1) });
+      place(lossDot, { cx: loss.x.toFixed(1), cy: loss.y.toFixed(1) });
+      place(gainGuide, { x1: gain.x.toFixed(1), y1: gain.y.toFixed(1), x2: gain.x.toFixed(1), y2: yMid });
+      place(lossGuide, { x1: loss.x.toFixed(1), y1: loss.y.toFixed(1), x2: loss.x.toFixed(1), y2: yMid });
+      place(gainLabel, { x: (gain.x + 10).toFixed(1), y: (gain.y - 8).toFixed(1) });
+      place(lossLabel, { x: (loss.x - 78).toFixed(1), y: (loss.y + 18).toFixed(1) });
+    }
+
+    if (slider) slider.addEventListener("input", render);
+    render();
+  }
+
   document.querySelectorAll("[data-day11-linda]").forEach(function(root){
     mountWhenVisible(root, initLinda);
   });
@@ -317,5 +394,8 @@
   });
   document.querySelectorAll("[data-day11-scissors]").forEach(function(root){
     mountWhenVisible(root, initScissors);
+  });
+  document.querySelectorAll("[data-day11-prospect]").forEach(function(root){
+    mountWhenVisible(root, initProspect);
   });
 })();

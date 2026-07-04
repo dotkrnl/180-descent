@@ -1,6 +1,6 @@
 ---
 interface Props {
-  kind: "linda-sets" | "frequency-grid" | "scissors" | "resource-curve";
+  kind: "linda-sets" | "frequency-grid" | "scissors" | "resource-curve" | "prospect-value" | "bias-noise-darts";
   locale?: "en" | "zh";
 }
 
@@ -111,6 +111,54 @@ const copy = {
         gap1: "the gap between stop here",
         gap2: "and perfect is the bias",
         caption: "Resource-rational analysis treats bias as a tradeoff under finite computation: thinking longer may be more accurate, but not always more valuable."
+      },
+  prospect: zh
+    ? {
+        aria: "前景理论价值函数图显示参照点、收益侧变平，以及更陡的损失侧。",
+        title: "前景理论的价值函数",
+        x: "相对参照点的结果",
+        y: "主观价值",
+        reference: "参照点",
+        gain: "50 美元收益",
+        loss: "50 美元损失",
+        gains: "收益",
+        losses: "损失",
+        lambda: "lambda = 2.25",
+        caption: "典型参数把同等规模的损失画得比收益更陡：价值按参照点计量，且边际敏感性递减。"
+      }
+    : {
+        aria: "Prospect theory value function chart showing a reference point, flattening gains, and a steeper loss side.",
+        title: "Prospect theory's value function",
+        x: "outcome relative to reference point",
+        y: "subjective value",
+        reference: "reference point",
+        gain: "$50 gain",
+        loss: "$50 loss",
+        gains: "gains",
+        losses: "losses",
+        lambda: "lambda = 2.25",
+        caption: "The standard illustrative parameters make matched losses steeper than gains: value is reference-dependent and marginal sensitivity diminishes."
+      },
+  darts: zh
+    ? {
+        aria: "四个靶盘分别展示准确、系统偏差、噪声和二者兼有的判断错误模式。",
+        title: "偏差和噪声不是同一种错",
+        accurate: "准确",
+        biased: "有偏",
+        noisy: "有噪",
+        both: "二者皆有",
+        target: "目标",
+        caption: "偏差是平均方向上的系统偏移；噪声是同类判断之间不必要的散布。你可以没有偏差却很吵，也可以很稳定地偏。"
+      }
+    : {
+        aria: "Four target boards showing accurate judgments, systematic bias, noise, and both error patterns at once.",
+        title: "Bias and noise are not the same error",
+        accurate: "Accurate",
+        biased: "Biased",
+        noisy: "Noisy",
+        both: "Both",
+        target: "target",
+        caption: "Bias is a systematic offset in the average direction; noise is unwanted scatter among similar judgments. You can be unbiased but loud, or steadily wrong."
       }
 };
 
@@ -119,16 +167,54 @@ const freqSegments = [
   { label: copy.frequency.falsePos, x: 130, y: 126, w: 248, fill: brass },
   { label: zh ? "其余为阴性" : "the rest test negative", x: 74, y: 178, w: 360, fill: "color-mix(in srgb,var(--ink-faint) 26%,transparent)" }
 ];
+
+const prospectAlpha = 0.88;
+const prospectLambda = 2.25;
+const prospectXMid = 310;
+const prospectYMid = 182;
+const prospectXScale = 2.45;
+const prospectYScale = 1.25;
+
+function prospectValue(x: number): number {
+  return x >= 0 ? x ** prospectAlpha : -prospectLambda * ((-x) ** prospectAlpha);
+}
+
+function prospectPoint(x: number): { x: number; y: number } {
+  return {
+    x: prospectXMid + x * prospectXScale,
+    y: prospectYMid - prospectValue(x) * prospectYScale
+  };
+}
+
+function prospectPath(from: number, to: number): string {
+  const out: string[] = [];
+  for (let x = from; x <= to; x += 4) {
+    const p = prospectPoint(x);
+    out.push(`${out.length ? "L" : "M"}${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+  }
+  return out.join(" ");
+}
+
+const prospectGain = prospectPoint(50);
+const prospectLoss = prospectPoint(-50);
+
+const dartBoards = [
+  { label: copy.darts.accurate, x: 104, points: [[0, 1], [4, -3], [-3, 4], [2, 5], [-4, -2]], fill: ok },
+  { label: copy.darts.biased, x: 256, points: [[26, -19], [31, -22], [23, -15], [28, -12], [21, -23]], fill: contested },
+  { label: copy.darts.noisy, x: 408, points: [[-41, -8], [28, 31], [7, -39], [-19, 28], [34, -20]], fill: brass },
+  { label: copy.darts.both, x: 560, points: [[5, -51], [61, -9], [28, 37], [74, 21], [41, -35]], fill: accent }
+];
+
+const ariaByKind: Record<Props["kind"], string> = {
+  "linda-sets": copy.linda.aria,
+  "frequency-grid": copy.frequency.aria,
+  scissors: copy.scissors.aria,
+  "resource-curve": copy.resource.aria,
+  "prospect-value": copy.prospect.aria,
+  "bias-noise-darts": copy.darts.aria
+};
 ---
-<figure class={`figbox day11-static-figure day11-static-figure-${kind}`} aria-label={
-  kind === "linda-sets"
-    ? copy.linda.aria
-    : kind === "frequency-grid"
-      ? copy.frequency.aria
-      : kind === "scissors"
-        ? copy.scissors.aria
-        : copy.resource.aria
-}>
+<figure class={`figbox day11-static-figure day11-static-figure-${kind}`} aria-label={ariaByKind[kind]}>
   {kind === "linda-sets" && (
     <>
       <svg viewBox="0 0 520 300" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
@@ -215,6 +301,58 @@ const freqSegments = [
         <text x="392" y="181" font-family="Fraunces, serif" font-size="13" font-style="italic" fill={soft}>{copy.resource.gap2}</text>
       </svg>
       <figcaption>{copy.resource.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "prospect-value" && (
+    <>
+      <svg viewBox="0 0 620 360" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
+        <rect x="22" y="18" width="576" height="286" rx="14" fill={raised} stroke={line}></rect>
+        <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.prospect.title}</text>
+        <line x1="70" y1={prospectYMid} x2="556" y2={prospectYMid} stroke={lineStrong} stroke-width="1.5"></line>
+        <line x1={prospectXMid} y1="74" x2={prospectXMid} y2="282" stroke={lineStrong} stroke-width="1.5"></line>
+        <text x="310" y="328" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.prospect.x}</text>
+        <text x="48" y="174" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform="rotate(-90 48 174)">{copy.prospect.y}</text>
+        <text x={prospectXMid + 8} y={prospectYMid + 18} font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.prospect.reference}</text>
+        <path d={prospectPath(-60, 0)} fill="none" stroke={contested} stroke-width="4" stroke-linecap="round"></path>
+        <path d={prospectPath(0, 100)} fill="none" stroke={accent} stroke-width="4" stroke-linecap="round"></path>
+        <line x1={prospectGain.x.toFixed(1)} y1={prospectGain.y.toFixed(1)} x2={prospectGain.x.toFixed(1)} y2={prospectYMid} stroke={accent} stroke-width="1.2" stroke-dasharray="5 5"></line>
+        <line x1={prospectLoss.x.toFixed(1)} y1={prospectLoss.y.toFixed(1)} x2={prospectLoss.x.toFixed(1)} y2={prospectYMid} stroke={contested} stroke-width="1.2" stroke-dasharray="5 5"></line>
+        <circle cx={prospectGain.x.toFixed(1)} cy={prospectGain.y.toFixed(1)} r="6" fill={accent} stroke={paper} stroke-width="2"></circle>
+        <circle cx={prospectLoss.x.toFixed(1)} cy={prospectLoss.y.toFixed(1)} r="6" fill={contested} stroke={paper} stroke-width="2"></circle>
+        <text x={(prospectGain.x + 10).toFixed(1)} y={(prospectGain.y - 8).toFixed(1)} font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{copy.prospect.gain}</text>
+        <text x={(prospectLoss.x - (zh ? 78 : 70)).toFixed(1)} y={(prospectLoss.y + 18).toFixed(1)} font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.prospect.loss}</text>
+        <text x="505" y="207" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{copy.prospect.gains}</text>
+        <text x="76" y="166" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.prospect.losses}</text>
+        <rect x="430" y="84" width="112" height="28" rx="8" fill={paper} stroke={lineStrong}></rect>
+        <text x="486" y="103" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={ink}>{copy.prospect.lambda}</text>
+      </svg>
+      <figcaption>{copy.prospect.caption}</figcaption>
+    </>
+  )}
+
+  {kind === "bias-noise-darts" && (
+    <>
+      <svg viewBox="0 0 680 340" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
+        <rect x="20" y="18" width="640" height="268" rx="14" fill={raised} stroke={line}></rect>
+        <text x="340" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.darts.title}</text>
+        {dartBoards.map((board) => (
+          <g transform={`translate(${board.x} 158)`}>
+            <circle cx="0" cy="0" r="58" fill={paper} stroke={lineStrong} stroke-width="1.4"></circle>
+            <circle cx="0" cy="0" r="38" fill="none" stroke={lineStrong} stroke-width="1.2"></circle>
+            <circle cx="0" cy="0" r="18" fill="none" stroke={lineStrong} stroke-width="1.2"></circle>
+            <line x1="-66" y1="0" x2="66" y2="0" stroke={line} stroke-width="1"></line>
+            <line x1="0" y1="-66" x2="0" y2="66" stroke={line} stroke-width="1"></line>
+            <circle cx="0" cy="0" r="4" fill={ink}></circle>
+            {board.points.map((point) => (
+              <circle cx={point[0]} cy={point[1]} r="5.5" fill={board.fill} stroke={raised} stroke-width="1.6"></circle>
+            ))}
+            <text x="0" y="92" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill={ink}>{board.label}</text>
+          </g>
+        ))}
+        <text x="340" y="258" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.darts.target}</text>
+      </svg>
+      <figcaption>{copy.darts.caption}</figcaption>
     </>
   )}
 </figure>

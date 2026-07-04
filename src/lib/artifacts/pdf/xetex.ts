@@ -1047,11 +1047,15 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
   if (name === "Day11StaticFigure") {
     const kind = resolveExpression(attrs.get("kind"), state).trim();
     if (kind) {
-      const day11Width = kind === "frequency-grid" || kind === "resource-curve" ? "0.98\\linewidth" : "0.86\\linewidth";
+      const day11Width = kind === "frequency-grid" || kind === "resource-curve" || kind === "prospect-value" || kind === "bias-noise-darts" ? "0.98\\linewidth" : "0.86\\linewidth";
       const day11Height = kind === "resource-curve"
         ? "0.34\\textheight"
         : kind === "frequency-grid"
           ? "0.32\\textheight"
+          : kind === "prospect-value"
+            ? "0.34\\textheight"
+            : kind === "bias-noise-darts"
+              ? "0.32\\textheight"
           : kind === "scissors"
             ? "0.30\\textheight"
             : "0.26\\textheight";

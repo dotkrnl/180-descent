@@ -696,7 +696,10 @@ describe("target content registry", () => {
     expect(day010EnglishAppendix?.source).toContain("Levins");
     expect(day010EnglishAppendix?.source).toContain("SimpleTable");
 
-    expect(day011?.appendixBodies).toEqual([]);
+    expect(day011?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "the-deep-cabinet:en",
+      "the-deep-cabinet:zh"
+    ]);
     expect(day011?.manifest.interactionScripts).toEqual([
       "heuristics-biases-rationality"
     ]);
@@ -704,6 +707,9 @@ describe("target content registry", () => {
     expect(day011?.bodies.en.source).toContain("Day11NaturalFrequencyGrid");
     expect(day011?.bodies.en.source).toContain("Day11ScissorsToggle");
     expect(day011?.bodies.en.source).toContain("Day11StaticFigure");
+    const day011EnglishAppendix = day011?.appendixBodies.find((body) => body.locale === "en");
+    expect(day011EnglishAppendix?.source).toContain("Day11ProspectValue");
+    expect(day011EnglishAppendix?.source).toContain("bias-noise-darts");
   });
 });
 

@@ -1,0 +1,72 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+const zh = Astro.props.locale === "zh";
+const copy = zh
+  ? {
+      eyebrow: "交互 · 前景理论的形状",
+      title: "损失那一侧更陡",
+      note: "拖动损失厌恶系数 lambda。收益与损失都按参照点来计量；曲线在两边都会变平，但损失侧更陡。",
+      aria: "前景理论价值函数图，显示收益侧凹入、损失侧凸出且损失侧更陡。",
+      lambda: "损失厌恶系数 lambda",
+      reference: "参照点",
+      gains: "收益",
+      losses: "损失",
+      value: "主观价值",
+      gain: "$50 收益",
+      loss: "$50 损失",
+      readout: "同样的 50 美元损失，在心理上约等于 2.25 个同等收益。"
+    }
+  : {
+      eyebrow: "Interactive · prospect theory's shape",
+      title: "The loss side is steeper",
+      note: "Drag the loss-aversion coefficient, lambda. Gains and losses are measured from a reference point; both sides flatten, but the loss side falls harder.",
+      aria: "A prospect theory value function, with concave gains, convex losses, and a steeper loss side.",
+      lambda: "Loss-aversion coefficient lambda",
+      reference: "reference point",
+      gains: "gains",
+      losses: "losses",
+      value: "subjective value",
+      gain: "$50 gain",
+      loss: "$50 loss",
+      readout: "A $50 loss feels about 2.25 times as large as a matching gain."
+    };
+---
+<Panel class="web-only day11-prospect" data-day11-prospect data-locale={zh ? "zh" : "en"}>
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="day11-prospect-viz">
+    <svg viewBox="0 0 620 360" role="img" aria-label={copy.aria} data-pagefind-ignore="all">
+      <line x1="72" y1="182" x2="552" y2="182" stroke="var(--line-strong)" stroke-width="1.4"></line>
+      <line x1="312" y1="48" x2="312" y2="300" stroke="var(--line-strong)" stroke-width="1.4"></line>
+      <text x="312" y="326" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)">{copy.reference}</text>
+      <text x="510" y="205" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--accent)">{copy.gains}</text>
+      <text x="78" y="168" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--contested)">{copy.losses}</text>
+      <text x="38" y="172" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)" transform="rotate(-90 38 172)">{copy.value}</text>
+      <path data-role="prospect-path" d="" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"></path>
+      <path data-role="prospect-loss-path" d="" fill="none" stroke="var(--contested)" stroke-width="4" stroke-linecap="round"></path>
+      <line data-role="gain-guide" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 5"></line>
+      <line data-role="loss-guide" x1="0" y1="0" x2="0" y2="0" stroke="var(--contested)" stroke-width="1.2" stroke-dasharray="5 5"></line>
+      <circle data-role="gain-dot" cx="0" cy="0" r="6" fill="var(--accent)" stroke="var(--paper)" stroke-width="2"></circle>
+      <circle data-role="loss-dot" cx="0" cy="0" r="6" fill="var(--contested)" stroke="var(--paper)" stroke-width="2"></circle>
+      <text data-role="gain-label" x="0" y="0" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--accent)">{copy.gain}</text>
+      <text data-role="loss-label" x="0" y="0" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--contested)">{copy.loss}</text>
+    </svg>
+  </div>
+
+  <label class="day11-slider-label">
+    <span>{copy.lambda}</span>
+    <strong data-out="lambda">2.25</strong>
+    <input type="range" min="100" max="250" value="225" step="1" aria-label={copy.lambda} data-role="lambda" />
+  </label>
+
+  <p class="day11-ppv"><span data-out="prospect-readout">{copy.readout}</span></p>
+</Panel>
