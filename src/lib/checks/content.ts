@@ -29,6 +29,11 @@ type JsonPropValue =
 const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
 const CHINESE_TRANSLATION_CONTENT_DIRS = ["src/content", "src/app/content"] as const;
 const CHINESE_CURLY_DOUBLE_QUOTE_PATTERN = /[“”]/;
+const CHINESE_FORBIDDEN_STYLE_TERMS = [
+  { term: "挑衅", suggestion: "use a more precise phrase such as 激进、反常识、示威意味, or another context-specific wording" },
+  { term: "挑釁", suggestion: "use simplified Chinese and avoid 挑衅-style wording" },
+  { term: "清醒", suggestion: "replace with a specific function such as 可行、严格、限制结论、同行校正, or another context-specific wording" }
+] as const;
 const STATUS_VALUES = new Set(["ok", "hint", "bad"]);
 const STATUS_COMPONENT_PATTERN = /<(StatusChip|StatusText|MaturityTimelineItem)\b[^>]*>/g;
 const SIMPLE_TABLE_PATTERN = /<SimpleTable\b[\s\S]*?(?:\/>|<\/SimpleTable>)/g;
@@ -343,6 +348,7 @@ export async function checkContent(options: ContentCheckOptions): Promise<Conten
   await checkImageCredits(options.root, failures);
   await checkCssFonts(options.root, failures);
   await checkChineseQuoteStyle(options.root, failures);
+  await checkChineseForbiddenStyleTerms(options.root, failures);
   await checkParentMarkdownReferences(options.root, failures);
 
   return failures;
@@ -812,6 +818,26 @@ async function checkChineseQuoteStyle(root: string, failures: ContentCheckFailur
       failures.push({
         message: `${toPosixRelative(root, file)} contains curly double quotes; use 「」 in Chinese translation content`
       });
+    }
+  }
+}
+
+async function checkChineseForbiddenStyleTerms(root: string, failures: ContentCheckFailure[]): Promise<void> {
+  for (const relativeDir of CHINESE_TRANSLATION_CONTENT_DIRS) {
+    const directory = path.join(root, relativeDir);
+    if (!await pathExists(directory)) continue;
+
+    for (const file of await walkFiles(directory, { exts: ".mdx", ignoredDirNames: [] })) {
+      if (!isChineseTranslationMdx(file)) continue;
+
+      const source = stripFencedCodeBlocks(await readFile(file, "utf8"));
+      for (const { term, suggestion } of CHINESE_FORBIDDEN_STYLE_TERMS) {
+        if (!source.includes(term)) continue;
+
+        failures.push({
+          message: `${toPosixRelative(root, file)} contains forbidden Chinese style term "${term}"; ${suggestion}`
+        });
+      }
     }
   }
 }
