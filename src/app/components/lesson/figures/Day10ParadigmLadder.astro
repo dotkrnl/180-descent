@@ -1,0 +1,68 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+type Paradigm = {
+  n: string;
+  title: string;
+  verb: string;
+  body: string;
+  when: string;
+};
+
+const zh = Astro.props.locale === "zh";
+
+const copy = zh
+  ? {
+      eyebrow: "弧线 · 科学如何学会认知",
+      title: "科学四范式",
+      note: "每一个范式都没有取代前一个，而是叠加上去。今天的 AI 代理模型是第四层，实在论与工具主义的问题也随它们一起爬上了阶梯。",
+      youAreHere: "你在这里",
+      footer: "按吉姆·格雷《第四范式》（Microsoft Research，2009）的框架改写。第四层正是工具主义者感到自在、而实在论者感到不安的地方；这就是为什么这个千年老问题，突然对一个天气应用变得重要起来。",
+      paradigms: [
+        { n: "1", title: "经验", verb: "描述", body: "观察并记录世界。", when: "星表、笔记、仪器。" },
+        { n: "2", title: "理论", verb: "解释", body: "把观察压缩成定律与方程。", when: "牛顿、麦克斯韦，以及实在论之争的诞生。" },
+        { n: "3", title: "计算", verb: "模拟", body: "方程手算无解时，用机器跑起来。", when: "第三种模式，自有其认识论。" },
+        { n: "4", title: "数据驱动", verb: "学习", body: "让模型直接从海量数据中学习模式，常常内部不含显式理论。", when: "GraphCast、GenCast、NeuralGCM。" }
+      ] satisfies Paradigm[]
+    }
+  : {
+      eyebrow: "The arc · how science has learned to know",
+      title: "The four paradigms",
+      note: "Each paradigm did not replace the last. It stacked on top. Today's AI emulators are the fourth, and the realism-versus-instrumentalism question rides up the staircase with them.",
+      youAreHere: "you are here",
+      footer: "Framed after Jim Gray, The Fourth Paradigm (Microsoft Research, 2009). The fourth rung is precisely where an instrumentalist feels at home and a realist feels uneasy, which is why this thousand-year-old argument suddenly matters for a weather app.",
+      paradigms: [
+        { n: "1", title: "Empirical", verb: "describe", body: "Observe and record the world.", when: "From star charts to Tycho Brahe's notebooks." },
+        { n: "2", title: "Theoretical", verb: "explain", body: "Compress observations into laws and equations.", when: "Newton, Maxwell, and the birth of the realism debate." },
+        { n: "3", title: "Computational", verb: "simulate", body: "When equations are unsolvable by hand, run them on a machine.", when: "The third mode, with its own epistemology." },
+        { n: "4", title: "Data-driven", verb: "learn", body: "Let models learn patterns directly from oceans of data, often with no explicit theory inside.", when: "GraphCast, GenCast, and NeuralGCM." }
+      ] satisfies Paradigm[]
+    };
+---
+<Panel class="day10-paradigm-ladder">
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="paradigm-ladder">
+    {copy.paradigms.map((item, index) => (
+      <div class={`rung${index === copy.paradigms.length - 1 ? " now" : ""}`}>
+        <div class="nm">{item.n}</div>
+        <div>
+          <p class="rt">
+            {item.title} <span>· {item.verb}</span>
+            {index === copy.paradigms.length - 1 && <em>{copy.youAreHere}</em>}
+          </p>
+          <p class="rb">{item.body} <span>{item.when}</span></p>
+        </div>
+      </div>
+    ))}
+  </div>
+  <p class="paradigm-caption">{copy.footer}</p>
+</Panel>

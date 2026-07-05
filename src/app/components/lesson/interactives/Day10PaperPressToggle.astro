@@ -1,0 +1,172 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+type GapRow = {
+  who: string;
+  tag: string;
+  paper: string;
+  press: string;
+};
+
+const zh = Astro.props.locale === "zh";
+
+const copy = zh
+  ? {
+      eyebrow: "交互 · 注意落差",
+      title: "论文实际测得 vs. 媒体报道暗示",
+      note: "前沿最大的扭曲，藏在谨慎结果与它的发布之间。切换按钮，查看五个旗舰案例的两种表述。",
+      switchLabel: "选择显示论文结果还是媒体暗示",
+      paperButton: "论文实际测得",
+      pressButton: "媒体报道暗示",
+      paperLabel: "论文实际测得",
+      pressLabel: "媒体报道暗示",
+      rows: [
+        {
+          who: "Aurora",
+          tag: "Nature 2025",
+          paper: "在空气质量、海浪、气旋路径和天气上，相对业务系统的多任务预报提升。",
+          press: "一个整个地球的基础模型。更准确的描述是，它是一个强大的预报与代理模型。"
+        },
+        {
+          who: "GNoME",
+          tag: "Nature 2023",
+          paper: "基于图网络筛选的大规模预测稳定晶体结构。",
+          press: "可用已知材料数量级的扩展。新颖性与可合成性需要更严格的审计。"
+        },
+        {
+          who: "cBottle / Earth-2",
+          tag: "预印本 2025",
+          paper: "一个用于公里尺度全球大气场的生成式扩散代理模型，目前处于预印本阶段。",
+          press: "一个行星的数字孪生；厂商包装的压缩主张承担了额外的修辞工作。"
+        },
+        {
+          who: "AI 虚拟细胞",
+          tag: "Cell 2024",
+          paper: "一份关于构建 AI 虚拟细胞所需优先级、数据、评估与合作的路线图。",
+          press: "一个功能正常的活细胞数字孪生已经存在。"
+        },
+        {
+          who: "The AI Scientist",
+          tag: "预印本 2024",
+          paper: "一份自主研究的预印本；独立测试发现编码失败、新颖性判断差以及幻觉结果。",
+          press: "廉价、完全自主的科学发现新时代。"
+        }
+      ] satisfies GapRow[]
+    }
+  : {
+      eyebrow: "Interactive · mind the gap",
+      title: "What the paper measured vs. what the press implied",
+      note: "The frontier's biggest distortions live in the space between a careful result and its announcement. Flip the switch to see both halves of five flagship stories.",
+      switchLabel: "Choose whether to show paper results or press implications",
+      paperButton: "The paper measured",
+      pressButton: "The press implied",
+      paperLabel: "The paper measured",
+      pressLabel: "The press implied",
+      rows: [
+        {
+          who: "Aurora",
+          tag: "Nature 2025",
+          paper: "Multi-task forecast gains against operational systems on air quality, waves, cyclone tracks, and weather.",
+          press: "A foundation model of the whole Earth. It is better described as a powerful forecasting and emulation model."
+        },
+        {
+          who: "GNoME",
+          tag: "Nature 2023",
+          paper: "Large-scale predicted-stable crystal structures from graph-network screening.",
+          press: "An order-of-magnitude expansion of useful known materials. Novelty and synthesizability need harder auditing."
+        },
+        {
+          who: "cBottle / Earth-2",
+          tag: "preprint 2025",
+          paper: "A generative diffusion emulator for kilometer-scale global atmosphere fields, currently preprint-stage.",
+          press: "A digital twin of the planet, with vendor-framed compression claims doing extra rhetorical work."
+        },
+        {
+          who: "AI Virtual Cell",
+          tag: "Cell 2024",
+          paper: "A roadmap for priorities, data, evaluation, and collaboration needed to build AI virtual cells.",
+          press: "A functioning digital twin of a living cell already exists."
+        },
+        {
+          who: "The AI Scientist",
+          tag: "preprint 2024",
+          paper: "An autonomous-research preprint whose independent test found coding failures, poor novelty judgments, and hallucinated results.",
+          press: "A new era of cheap fully autonomous scientific discovery."
+        }
+      ] satisfies GapRow[]
+    };
+---
+<Panel class="web-only day10-paper-press" data-day10-paper-press>
+  <script type="application/json" data-pp-copy set:html={JSON.stringify(copy)}></script>
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="pp-switch" role="group" aria-label={copy.switchLabel}>
+    <button type="button" data-pp-mode="paper" aria-pressed="true">{copy.paperButton}</button>
+    <button type="button" data-pp-mode="press" aria-pressed="false">{copy.pressButton}</button>
+  </div>
+
+  <div class="pp-list" data-pp-list>
+    {copy.rows.map((row) => (
+      <div class="pp-row">
+        <p class="who">{row.who}<span>{row.tag}</span></p>
+        <p class="said paper-said"><span class="lbl">{copy.paperLabel}</span>{row.paper}</p>
+      </div>
+    ))}
+  </div>
+</Panel>
+
+<script is:inline>
+(() => {
+  document.querySelectorAll("[data-day10-paper-press]").forEach((root) => {
+    const dataNode = root.querySelector("[data-pp-copy]");
+    const list = root.querySelector("[data-pp-list]");
+    const buttons = Array.from(root.querySelectorAll("[data-pp-mode]"));
+    if (!dataNode || !list || buttons.length === 0) return;
+
+    const copy = JSON.parse(dataNode.textContent || "{}");
+
+    const render = (mode) => {
+      list.textContent = "";
+      copy.rows.forEach((row) => {
+        const card = document.createElement("div");
+        card.className = "pp-row";
+
+        const who = document.createElement("p");
+        who.className = "who";
+        who.append(document.createTextNode(row.who));
+        const tag = document.createElement("span");
+        tag.textContent = row.tag;
+        who.append(tag);
+
+        const said = document.createElement("p");
+        said.className = `said ${mode === "paper" ? "paper-said" : "press-said"}`;
+        const label = document.createElement("span");
+        label.className = "lbl";
+        label.textContent = mode === "paper" ? copy.paperLabel : copy.pressLabel;
+        said.append(label, document.createTextNode(mode === "paper" ? row.paper : row.press));
+
+        card.append(who, said);
+        list.append(card);
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const mode = button.dataset.ppMode;
+        buttons.forEach((candidate) => {
+          candidate.setAttribute("aria-pressed", candidate === button ? "true" : "false");
+        });
+        render(mode);
+      });
+    });
+  });
+})();
+</script>

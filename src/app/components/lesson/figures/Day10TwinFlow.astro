@@ -1,0 +1,140 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  locale?: "en" | "zh";
+}
+
+type TwinItem = {
+  key: "model" | "shadow" | "twin";
+  name: string;
+  sub: string;
+  desc: string;
+  aria: string;
+};
+
+const zh = Astro.props.locale === "zh";
+const prefix = `day10-twin-${zh ? "zh" : "en"}`;
+
+const copy = zh
+  ? {
+      eyebrow: "图解 · 什么才配得上这个名字",
+      title: "数字模型 -> 数字影子 -> 数字孪生",
+      note: "三者之间唯一变化的是物理对象与其虚拟副本之间的数据链接。虚线表示手动或缺失，实线表示自动。",
+      physical: "P",
+      virtual: "V",
+      cards: [
+        {
+          key: "model",
+          name: "数字模型",
+          sub: "无自动链接",
+          desc: "CAD 图纸或独立模拟。你手动更新它，如果还会更新的话。许多营销中的「孪生」其实只是这个。",
+          aria: "物理对象与虚拟副本之间只有手动或缺失的数据链接。"
+        },
+        {
+          key: "shadow",
+          name: "数字影子",
+          sub: "单向自动",
+          desc: "实时传感器数据自动从物理对象流入模型，但模型不能反向作用。想象实时仪表板。",
+          aria: "物理对象自动向虚拟副本传输数据，反向链接是手动或缺失的。"
+        },
+        {
+          key: "twin",
+          name: "数字孪生",
+          sub: "双向自动",
+          desc: "数据自动双向流动：模型既镜像对象，也驱动对象。只有这一层才配得上严格的名字。",
+          aria: "物理对象与虚拟副本之间有双向自动数据链接。"
+        }
+      ] satisfies TwinItem[]
+    }
+  : {
+      eyebrow: "Diagram · what earns the name",
+      title: "Digital model -> digital shadow -> digital twin",
+      note: "The only thing that changes across the three is the data link between the physical object and its virtual copy. Dashed means manual or absent; solid means automatic.",
+      physical: "P",
+      virtual: "V",
+      cards: [
+        {
+          key: "model",
+          name: "Digital model",
+          sub: "no automatic link",
+          desc: "A CAD drawing or stand-alone simulation. You update it by hand, if at all. Many marketed twins are really just this.",
+          aria: "Physical and virtual boxes with manual or absent links both ways."
+        },
+        {
+          key: "shadow",
+          name: "Digital shadow",
+          sub: "one-way automatic",
+          desc: "Live sensor data flows automatically from the physical object into the model, but the model cannot act back. Think live dashboard.",
+          aria: "Physical object sends an automatic data link to the virtual copy; the reverse link is manual or absent."
+        },
+        {
+          key: "twin",
+          name: "Digital twin",
+          sub: "bidirectional automatic",
+          desc: "Data flows automatically both ways: the model mirrors the object and steers it. Only this rung earns the strict name.",
+          aria: "Physical and virtual boxes with automatic data links both ways."
+        }
+      ] satisfies TwinItem[]
+    };
+---
+<Panel class="day10-twin-flow">
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  <div class="twinflow">
+    {copy.cards.map((card) => {
+      const forwardMarker = `${prefix}-${card.key}-forward`;
+      const reverseMarker = `${prefix}-${card.key}-reverse`;
+      const isShadow = card.key === "shadow";
+      const isTwin = card.key === "twin";
+
+      return (
+        <div class={`twincard${isTwin ? " is-twin" : ""}`}>
+          <p class="tname">{card.name}</p>
+          <p class="tsub">{card.sub}</p>
+          <svg viewBox="0 0 150 80" role="img" aria-label={card.aria} data-pagefind-ignore="all">
+            {(isShadow || isTwin) && (
+              <defs>
+                <marker id={forwardMarker} markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"></path>
+                </marker>
+                {isTwin && (
+                  <marker id={reverseMarker} markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"></path>
+                  </marker>
+                )}
+              </defs>
+            )}
+            <rect class="tbox physical" x="8" y="28" width="44" height="26" rx="6"></rect>
+            <text x="30" y="45" text-anchor="middle">{copy.physical}</text>
+            <rect class="tbox virtual" x="98" y="28" width="44" height="26" rx="6"></rect>
+            <text x="120" y="45" text-anchor="middle">{copy.virtual}</text>
+            {card.key === "model" && (
+              <>
+                <line class="manual" x1="54" y1="35" x2="96" y2="35"></line>
+                <line class="manual" x1="96" y1="47" x2="54" y2="47"></line>
+              </>
+            )}
+            {isShadow && (
+              <>
+                <line class="auto" x1="54" y1="35" x2="92" y2="35" marker-end={`url(#${forwardMarker})`}></line>
+                <line class="manual" x1="96" y1="47" x2="54" y2="47"></line>
+              </>
+            )}
+            {isTwin && (
+              <>
+                <line class="auto" x1="54" y1="35" x2="92" y2="35" marker-end={`url(#${forwardMarker})`}></line>
+                <line class="auto" x1="96" y1="47" x2="58" y2="47" marker-end={`url(#${reverseMarker})`}></line>
+              </>
+            )}
+          </svg>
+          <p class="tdesc">{card.desc}</p>
+        </div>
+      );
+    })}
+  </div>
+</Panel>
