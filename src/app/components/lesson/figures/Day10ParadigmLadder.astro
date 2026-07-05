@@ -13,6 +13,7 @@ type Paradigm = {
   verb: string;
   body: string;
   when: string;
+  pdfLines: string[];
 };
 
 const zh = Astro.props.locale === "zh";
@@ -22,26 +23,28 @@ const copy = zh
       eyebrow: "弧线 · 科学如何学会认知",
       title: "科学四范式",
       note: "每一个范式都没有取代前一个，而是叠加上去。今天的 AI 代理模型是第四层，实在论与工具主义的问题也随它们一起爬上了阶梯。",
+      pdfNoteLines: ["每个范式都叠加在前一个之上。", "AI 代理模型是第四层。"],
       youAreHere: "你在这里",
       footer: "按吉姆·格雷《第四范式》（Microsoft Research，2009）的框架改写。第四层正是工具主义者感到自在、而实在论者感到不安的地方；这就是为什么这个千年老问题，突然对一个天气应用变得重要起来。",
       paradigms: [
-        { n: "1", title: "经验", verb: "描述", body: "观察并记录世界。", when: "星表、笔记、仪器。" },
-        { n: "2", title: "理论", verb: "解释", body: "把观察压缩成定律与方程。", when: "牛顿、麦克斯韦，以及实在论之争的诞生。" },
-        { n: "3", title: "计算", verb: "模拟", body: "方程手算无解时，用机器跑起来。", when: "第三种模式，自有其认识论。" },
-        { n: "4", title: "数据驱动", verb: "学习", body: "让模型直接从海量数据中学习模式，常常内部不含显式理论。", when: "GraphCast、GenCast、NeuralGCM。" }
+        { n: "1", title: "经验", verb: "描述", body: "观察并记录世界。", when: "星表、笔记、仪器。", pdfLines: ["观察并记录世界。", "星表、笔记、仪器。"] },
+        { n: "2", title: "理论", verb: "解释", body: "把观察压缩成定律与方程。", when: "牛顿、麦克斯韦，以及实在论之争的诞生。", pdfLines: ["把观察压缩成定律与方程。", "牛顿、麦克斯韦。"] },
+        { n: "3", title: "计算", verb: "模拟", body: "方程手算无解时，用机器跑起来。", when: "第三种模式，自有其认识论。", pdfLines: ["方程手算无解时，用机器跑。", "第三种模式，自有其认识论。"] },
+        { n: "4", title: "数据驱动", verb: "学习", body: "让模型直接从海量数据中学习模式，常常内部不含显式理论。", when: "GraphCast、GenCast、NeuralGCM。", pdfLines: ["从海量数据中学习模式。", "GraphCast、GenCast、NeuralGCM。"] }
       ] satisfies Paradigm[]
     }
   : {
       eyebrow: "The arc · how science has learned to know",
       title: "The four paradigms",
       note: "Each paradigm did not replace the last. It stacked on top. Today's AI emulators are the fourth, and the realism-versus-instrumentalism question rides up the staircase with them.",
+      pdfNoteLines: ["Each paradigm stacks on the last.", "AI emulators are the fourth rung."],
       youAreHere: "you are here",
       footer: "Framed after Jim Gray, The Fourth Paradigm (Microsoft Research, 2009). The fourth rung is precisely where an instrumentalist feels at home and a realist feels uneasy, which is why this thousand-year-old argument suddenly matters for a weather app.",
       paradigms: [
-        { n: "1", title: "Empirical", verb: "describe", body: "Observe and record the world.", when: "From star charts to Tycho Brahe's notebooks." },
-        { n: "2", title: "Theoretical", verb: "explain", body: "Compress observations into laws and equations.", when: "Newton, Maxwell, and the birth of the realism debate." },
-        { n: "3", title: "Computational", verb: "simulate", body: "When equations are unsolvable by hand, run them on a machine.", when: "The third mode, with its own epistemology." },
-        { n: "4", title: "Data-driven", verb: "learn", body: "Let models learn patterns directly from oceans of data, often with no explicit theory inside.", when: "GraphCast, GenCast, and NeuralGCM." }
+        { n: "1", title: "Empirical", verb: "describe", body: "Observe and record the world.", when: "From star charts to Tycho Brahe's notebooks.", pdfLines: ["Observe and record the world.", "Star charts, notebooks, instruments."] },
+        { n: "2", title: "Theoretical", verb: "explain", body: "Compress observations into laws and equations.", when: "Newton, Maxwell, and the birth of the realism debate.", pdfLines: ["Compress observations into laws.", "Newton, Maxwell, realism debate."] },
+        { n: "3", title: "Computational", verb: "simulate", body: "When equations are unsolvable by hand, run them on a machine.", when: "The third mode, with its own epistemology.", pdfLines: ["Run equations on machines.", "Simulation gets its own epistemology."] },
+        { n: "4", title: "Data-driven", verb: "learn", body: "Let models learn patterns directly from oceans of data, often with no explicit theory inside.", when: "GraphCast, GenCast, and NeuralGCM.", pdfLines: ["Learn patterns from oceans of data.", "GraphCast, GenCast, NeuralGCM."] }
       ] satisfies Paradigm[]
     };
 ---
@@ -66,3 +69,32 @@ const copy = zh
   </div>
   <p class="paradigm-caption">{copy.footer}</p>
 </Panel>
+<div class="day10-paradigm-ladder-pdf pdf-only" aria-hidden="true">
+  <svg viewBox="0 0 660 350" focusable="false" data-pagefind-ignore="all">
+    <rect x="18" y="18" width="624" height="304" rx="14" fill="var(--raised)" stroke="var(--line)"></rect>
+    <text x="330" y="50" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill="var(--ink)">{copy.title}</text>
+    {copy.pdfNoteLines.map((line, index) => (
+      <text x="330" y={72 + index * 14} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-faint)">{line}</text>
+    ))}
+    {copy.paradigms.map((item, index) => {
+      const y = 96 + index * 52;
+      const isNow = index === copy.paradigms.length - 1;
+      return (
+        <g>
+          <rect x="58" y={y} width="544" height="45" rx="8" fill={isNow ? "var(--paper)" : "var(--raised)"} stroke={isNow ? "var(--accent)" : "var(--line-strong)"} stroke-width={isNow ? "2" : "1"}></rect>
+          <circle cx="82" cy={y + 20} r="13" fill={isNow ? "var(--accent)" : "var(--ink)"}></circle>
+          <text x="82" y={y + 24} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill="var(--raised)">{item.n}</text>
+          <text x="112" y={y + 17} font-family="Fraunces, serif" font-size="15" font-weight="600" fill="var(--ink)">{item.title}</text>
+          <text x={zh ? "176" : "222"} y={y + 17} font-family="Newsreader, Georgia, serif" font-size="13" font-style="italic" fill="var(--accent-deep)">· {item.verb}</text>
+          {item.pdfLines.map((line, lineIndex) => (
+            <text x="112" y={y + 29 + lineIndex * 12} font-family={zh ? "Noto Serif SC, serif" : "Fraunces, serif"} font-size="10" fill="var(--ink-soft)">{line}</text>
+          ))}
+          {isNow && (
+            <text x="568" y={y + 24} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600" fill="var(--brass)">{copy.youAreHere}</text>
+          )}
+        </g>
+      );
+    })}
+    <line x1="74" y1="140" x2="74" y2="252" stroke="var(--line-strong)" stroke-width="1.2" stroke-dasharray="4 5"></line>
+  </svg>
+</div>

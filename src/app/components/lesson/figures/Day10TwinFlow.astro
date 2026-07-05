@@ -13,6 +13,7 @@ type TwinItem = {
   sub: string;
   desc: string;
   aria: string;
+  pdfLines: string[];
 };
 
 const zh = Astro.props.locale === "zh";
@@ -23,6 +24,7 @@ const copy = zh
       eyebrow: "图解 · 什么才配得上这个名字",
       title: "数字模型 -> 数字影子 -> 数字孪生",
       note: "三者之间唯一变化的是物理对象与其虚拟副本之间的数据链接。虚线表示手动或缺失，实线表示自动。",
+      pdfNoteLines: ["唯一变化是物理对象与虚拟副本之间的数据链接。", "虚线表示手动或缺失；实线表示自动。"],
       physical: "P",
       virtual: "V",
       cards: [
@@ -31,21 +33,24 @@ const copy = zh
           name: "数字模型",
           sub: "无自动链接",
           desc: "CAD 图纸或独立模拟。你手动更新它，如果还会更新的话。许多营销中的「孪生」其实只是这个。",
-          aria: "物理对象与虚拟副本之间只有手动或缺失的数据链接。"
+          aria: "物理对象与虚拟副本之间只有手动或缺失的数据链接。",
+          pdfLines: ["CAD 图纸或独立模拟。", "手动更新，如果还会更新。", "许多「孪生」其实只是这个。"]
         },
         {
           key: "shadow",
           name: "数字影子",
           sub: "单向自动",
           desc: "实时传感器数据自动从物理对象流入模型，但模型不能反向作用。想象实时仪表板。",
-          aria: "物理对象自动向虚拟副本传输数据，反向链接是手动或缺失的。"
+          aria: "物理对象自动向虚拟副本传输数据，反向链接是手动或缺失的。",
+          pdfLines: ["传感器数据自动流入模型。", "模型不能反向作用。", "想象实时仪表板。"]
         },
         {
           key: "twin",
           name: "数字孪生",
           sub: "双向自动",
           desc: "数据自动双向流动：模型既镜像对象，也驱动对象。只有这一层才配得上严格的名字。",
-          aria: "物理对象与虚拟副本之间有双向自动数据链接。"
+          aria: "物理对象与虚拟副本之间有双向自动数据链接。",
+          pdfLines: ["数据自动双向流动。", "模型既镜像对象，也驱动对象。", "只有这一层配得上严格名称。"]
         }
       ] satisfies TwinItem[]
     }
@@ -53,6 +58,7 @@ const copy = zh
       eyebrow: "Diagram · what earns the name",
       title: "Digital model -> digital shadow -> digital twin",
       note: "The only thing that changes across the three is the data link between the physical object and its virtual copy. Dashed means manual or absent; solid means automatic.",
+      pdfNoteLines: ["Only the physical-virtual data link changes.", "Dashed = manual or absent; solid = automatic."],
       physical: "P",
       virtual: "V",
       cards: [
@@ -61,21 +67,24 @@ const copy = zh
           name: "Digital model",
           sub: "no automatic link",
           desc: "A CAD drawing or stand-alone simulation. You update it by hand, if at all. Many marketed twins are really just this.",
-          aria: "Physical and virtual boxes with manual or absent links both ways."
+          aria: "Physical and virtual boxes with manual or absent links both ways.",
+          pdfLines: ["CAD drawing or stand-alone", "simulation. Updated by hand,", "if at all."]
         },
         {
           key: "shadow",
           name: "Digital shadow",
           sub: "one-way automatic",
           desc: "Live sensor data flows automatically from the physical object into the model, but the model cannot act back. Think live dashboard.",
-          aria: "Physical object sends an automatic data link to the virtual copy; the reverse link is manual or absent."
+          aria: "Physical object sends an automatic data link to the virtual copy; the reverse link is manual or absent.",
+          pdfLines: ["Live sensor data flows", "into the model. The model", "cannot act back."]
         },
         {
           key: "twin",
           name: "Digital twin",
           sub: "bidirectional automatic",
           desc: "Data flows automatically both ways: the model mirrors the object and steers it. Only this rung earns the strict name.",
-          aria: "Physical and virtual boxes with automatic data links both ways."
+          aria: "Physical and virtual boxes with automatic data links both ways.",
+          pdfLines: ["Automatic links both ways:", "the model mirrors the object", "and steers it."]
         }
       ] satisfies TwinItem[]
     };
@@ -136,5 +145,57 @@ const copy = zh
         </div>
       );
     })}
+  </div>
+
+  <div class="day10-twin-flow-pdf pdf-only" aria-hidden="true">
+    <svg viewBox="0 0 660 330" focusable="false" data-pagefind-ignore="all">
+      <defs>
+        <marker id={`${prefix}-pdf-arrow`} markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"></path>
+        </marker>
+      </defs>
+      <rect x="18" y="18" width="624" height="292" rx="14" fill="var(--raised)" stroke="var(--line)"></rect>
+      <text x="330" y="50" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill="var(--ink)">{copy.title}</text>
+      {copy.pdfNoteLines.map((line, index) => (
+        <text x="330" y={72 + index * 14} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-faint)">{line}</text>
+      ))}
+      {copy.cards.map((card, index) => {
+        const x = 44 + index * 204;
+        const isShadow = card.key === "shadow";
+        const isTwin = card.key === "twin";
+        return (
+          <g>
+            <rect x={x} y="98" width="176" height="184" rx="10" fill={isTwin ? "var(--paper)" : "var(--raised)"} stroke={isTwin ? "var(--accent)" : "var(--line-strong)"} stroke-width={isTwin ? "2" : "1.2"}></rect>
+            <text x={x + 88} y="126" text-anchor="middle" font-family="Fraunces, serif" font-size="17" font-weight="600" fill="var(--ink)">{card.name}</text>
+            <text x={x + 88} y="146" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--brass)">{card.sub}</text>
+            <rect x={x + 28} y="168" width="38" height="24" rx="5" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+            <text x={x + 47} y="184" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-soft)">{copy.physical}</text>
+            <rect x={x + 110} y="168" width="38" height="24" rx="5" fill="var(--paper)" stroke="var(--line-strong)"></rect>
+            <text x={x + 129} y="184" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-soft)">{copy.virtual}</text>
+            {card.key === "model" && (
+              <>
+                <line x1={x + 68} y1="175" x2={x + 108} y2="175" stroke="var(--ink-faint)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+                <line x1={x + 108} y1="187" x2={x + 68} y2="187" stroke="var(--ink-faint)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+              </>
+            )}
+            {isShadow && (
+              <>
+                <line x1={x + 68} y1="175" x2={x + 104} y2="175" stroke="var(--accent)" stroke-width="2" marker-end={`url(#${prefix}-pdf-arrow)`}></line>
+                <line x1={x + 108} y1="187" x2={x + 68} y2="187" stroke="var(--ink-faint)" stroke-width="1.4" stroke-dasharray="3 3"></line>
+              </>
+            )}
+            {isTwin && (
+              <>
+                <line x1={x + 68} y1="175" x2={x + 104} y2="175" stroke="var(--accent)" stroke-width="2" marker-end={`url(#${prefix}-pdf-arrow)`}></line>
+                <line x1={x + 108} y1="187" x2={x + 72} y2="187" stroke="var(--accent)" stroke-width="2" marker-end={`url(#${prefix}-pdf-arrow)`}></line>
+              </>
+            )}
+            {card.pdfLines.map((line, lineIndex) => (
+              <text x={x + 22} y={222 + lineIndex * 17} font-family={zh ? "Noto Serif SC, serif" : "Fraunces, serif"} font-size="12" fill="var(--ink-soft)">{line}</text>
+            ))}
+          </g>
+        );
+      })}
+    </svg>
   </div>
 </Panel>
