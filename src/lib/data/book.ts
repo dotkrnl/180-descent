@@ -35,6 +35,7 @@ export interface BookData {
 
 export interface HumanEditorData {
   name: string;
+  shortName: string;
   url: string;
 }
 
@@ -49,8 +50,17 @@ const siteUrlSchema = urlSchema.refine((value) => value === new URL(value).origi
 
 const humanEditorSchema = z.object({
   name: nonBlankString,
+  short_name: nonBlankString.optional(),
   url: urlSchema
 }).strict();
+
+function humanEditorData(raw: z.infer<typeof humanEditorSchema>): HumanEditorData {
+  return {
+    name: raw.name,
+    shortName: raw.short_name ?? raw.name,
+    url: raw.url
+  };
+}
 
 const localizedBookSchema = z.object({
   language: nonBlankString,
@@ -88,7 +98,7 @@ export async function readBookData(root: string): Promise<BookData> {
     subtitle: raw.subtitle,
     deepDiveSubtitle: raw.deep_dive_subtitle,
     authors: raw.authors,
-    humanEditor: raw.human_editor,
+    humanEditor: humanEditorData(raw.human_editor),
     description: raw.description,
     siteUrl: raw.site_url,
     repo: raw.repo,
@@ -105,7 +115,7 @@ export async function readBookData(root: string): Promise<BookData> {
       deepDiveSubtitle: raw.zh.deep_dive_subtitle,
       authors: raw.zh.authors,
       translators: raw.zh.translators,
-      humanEditor: raw.zh.human_editor,
+      humanEditor: humanEditorData(raw.zh.human_editor),
       description: raw.zh.description,
       epubIdentifier: raw.zh.epub_identifier,
       downloads: bookDownloadUrls("zh")

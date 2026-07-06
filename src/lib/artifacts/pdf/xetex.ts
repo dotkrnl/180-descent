@@ -116,6 +116,7 @@ interface SvgComponentSpec extends SvgAssetSpec {
 const TABLE_COMPONENTS = new Set(["table", "DataTable"]);
 const TABLE_CELL_COMPONENTS = new Set(["td", "th", "DataTableCell", "DataTableHeader"]);
 const TABLE_HEADER_COMPONENTS = new Set(["th", "DataTableHeader"]);
+const LATEXMK_TIMEOUT_MS = Number(process.env.PDF_LATEXMK_TIMEOUT_MS ?? "300000");
 
 export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> {
   const root = options.root;
@@ -1999,7 +2000,7 @@ async function runXeLaTeX(texPath: string, workDir: string): Promise<void> {
     "-halt-on-error",
     "-file-line-error",
     path.basename(texPath)
-  ], { cwd: workDir, maxBuffer: 1024 * 1024 * 12, timeout: 120000 });
+  ], { cwd: workDir, maxBuffer: 1024 * 1024 * 12, timeout: LATEXMK_TIMEOUT_MS });
 }
 
 function execFileSyncish(command: string, args: string[]): void {

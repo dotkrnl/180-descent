@@ -74,7 +74,7 @@ const copy = zh
     <rect x="18" y="18" width="624" height="304" rx="14" fill="var(--raised)" stroke="var(--line)"></rect>
     <text x="330" y="50" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill="var(--ink)">{copy.title}</text>
     {copy.pdfNoteLines.map((line, index) => (
-      <text x="330" y={72 + index * 14} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-faint)">{line}</text>
+      <text x="330" y={72 + index * 14} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)">{line}</text>
     ))}
     {copy.paradigms.map((item, index) => {
       const y = 96 + index * 52;
@@ -87,10 +87,10 @@ const copy = zh
           <text x="112" y={y + 17} font-family="Fraunces, serif" font-size="15" font-weight="600" fill="var(--ink)">{item.title}</text>
           <text x={zh ? "176" : "222"} y={y + 17} font-family="Newsreader, Georgia, serif" font-size="13" font-style="italic" fill="var(--accent-deep)">· {item.verb}</text>
           {item.pdfLines.map((line, lineIndex) => (
-            <text x="112" y={y + 29 + lineIndex * 12} font-family={zh ? "Noto Serif SC, serif" : "Fraunces, serif"} font-size="10" fill="var(--ink-soft)">{line}</text>
+            <text x="112" y={y + 29 + lineIndex * 12} font-family={zh ? "Noto Serif SC, serif" : "Fraunces, serif"} font-size="10.5" fill="var(--ink-soft)">{line}</text>
           ))}
           {isNow && (
-            <text x="568" y={y + 24} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600" fill="var(--brass)">{copy.youAreHere}</text>
+            <text x="568" y={y + 24} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill="var(--brass)">{copy.youAreHere}</text>
           )}
         </g>
       );

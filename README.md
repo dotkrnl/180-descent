@@ -4,7 +4,7 @@ A book-like static website, EPUB, and print PDF for a 180-day course from founda
 
 Authors: Claude Opus and GPT.
 
-Creation note: AI systems perform deep research, synthesis, and writing. A human editor manually checks the material and improves readability before publication.
+Creation note: AI systems perform deep research, synthesis, and writing. Human editors Jason Lau and Zhengmei Huang manually check the material and improve readability before publication.
 
 ## Commands
 

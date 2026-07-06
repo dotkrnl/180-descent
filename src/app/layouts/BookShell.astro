@@ -38,6 +38,7 @@ const uiTitle = isZh ? book.zh.title : book.title;
 const uiSubtitle = isZh ? book.zh.subtitle : book.subtitle;
 const uiDescription = isZh ? book.zh.description : book.description;
 const humanEditor = isZh ? book.zh.humanEditor : book.humanEditor;
+const [linkedHumanEditor, ...plainHumanEditors] = humanEditor.shortName.split(/\s+and\s+|\s+与\s+/u);
 const pageTitle = title ? `${title} · ${uiTitle}` : uiTitle;
 const metaDescription = description ?? uiDescription;
 const canonicalUrl = new URL(canonicalPath, book.siteUrl).href;
@@ -180,7 +181,7 @@ const structuredData = {
           {isZh ? <><br />{`翻译：${book.zh.translators}`}</> : null}
           <br />
           {isZh ? "人工编辑" : "Human editor"}<br />
-          <a href={humanEditor.url}>{humanEditor.name}</a>
+          <a href={humanEditor.url}>{linkedHumanEditor}</a>{plainHumanEditors.length > 0 ? ` ${isZh ? "与" : "and"} ${plainHumanEditors.join(isZh ? "与" : " and ")}` : null}
         </p>
         <p><a href={book.repo}>GitHub</a><br /><a href={downloadsUrl}>{isZh ? "EPUB 与 PDF 下载" : "EPUB and PDF downloads"}</a><br /><a href={creditsUrl}>{isZh ? "鸣谢" : "Credits"}</a></p>
       </div>
