@@ -25,7 +25,6 @@ interface EpubMeta {
   title: string;
   subtitle?: string;
   authors: string;
-  translators?: string;
   humanEditor: HumanEditorData;
   language: string;
   publisher: string;
@@ -138,7 +137,6 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       title: book.zh.title,
       subtitle: book.zh.subtitle,
       authors: book.zh.authors,
-      translators: book.zh.translators,
       humanEditor: book.zh.humanEditor,
       language: book.zh.language,
       publisher: book.publisher,
@@ -162,7 +160,6 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       title: `${book.zh.title}：专题深入版`,
       subtitle: book.zh.deepDiveSubtitle,
       authors: book.zh.authors,
-      translators: book.zh.translators,
       humanEditor: book.zh.humanEditor,
       language: book.zh.language,
       publisher: book.publisher,
@@ -205,7 +202,6 @@ export async function buildAllEpubs(options: BuildAllEpubsOptions): Promise<void
       title: book.zh.title,
       subtitle: book.zh.subtitle,
       authors: book.zh.authors,
-      translators: book.zh.translators,
       humanEditor: book.zh.humanEditor,
       language: book.zh.language,
       publisher: book.publisher,
@@ -580,8 +576,6 @@ function contentOpf(meta: EpubMeta, manifestItems: string[], spine: string[]): s
     <dc:identifier id="bookid">${escapeXml(identifier)}</dc:identifier>
     <dc:title>${escapeXml(meta.title)}</dc:title>
     <dc:creator>${escapeXml(meta.authors)}</dc:creator>
-    ${meta.translators ? `<dc:contributor id="translator">${escapeXml(meta.translators)}</dc:contributor>
-    <meta refines="#translator" property="role" scheme="marc:relators">trl</meta>` : ""}
     <dc:language>${escapeXml(meta.language)}</dc:language>
     <dc:publisher>${escapeXml(meta.publisher)}</dc:publisher>
     <meta property="dcterms:modified">${EPUB_MODIFIED_TIMESTAMP}</meta>
@@ -663,9 +657,6 @@ function epubImageHref(pathOnly: string): string | null {
 function titlePageDocument(config: Pick<EpubConfig, "meta">): string {
   const isZh = config.meta.language.startsWith("zh");
   const authorLine = isZh ? `作者：${config.meta.authors}` : `By ${config.meta.authors}`;
-  const translatorLine = config.meta.translators
-    ? `<span class="credit-line">${escapeXml(isZh ? `翻译：${config.meta.translators}` : `Translated by ${config.meta.translators}`)}</span>`
-    : "";
   const editorLabel = isZh ? "人工编辑" : "Human editor";
   const editorSeparator = isZh ? "：" : ": ";
   const editorLine = `<span class="credit-line">${escapeXml(`${editorLabel}${editorSeparator}${config.meta.humanEditor.name}`)}</span>`;
@@ -682,7 +673,7 @@ function titlePageDocument(config: Pick<EpubConfig, "meta">): string {
     <section class="epub-title-page page-hero wrap wide">
       ${subtitle}
       <h1>${escapeXml(config.meta.title)}</h1>
-      <p class="sub book-credit"><span class="credit-line">${escapeXml(authorLine)}</span>${translatorLine}${editorLine}</p>
+      <p class="sub book-credit"><span class="credit-line">${escapeXml(authorLine)}</span>${editorLine}</p>
     </section>
   </body>
 </html>`;

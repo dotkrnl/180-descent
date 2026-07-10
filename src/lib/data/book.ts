@@ -25,7 +25,6 @@ export interface BookData {
     subtitle: string;
     deepDiveSubtitle: string;
     authors: string;
-    translators: string;
     humanEditor: HumanEditorData;
     description: string;
     epubIdentifier: string;
@@ -68,7 +67,6 @@ const localizedBookSchema = z.object({
   subtitle: nonBlankString,
   deep_dive_subtitle: nonBlankString,
   authors: nonBlankString,
-  translators: nonBlankString,
   human_editor: humanEditorSchema,
   description: nonBlankString,
   epub_identifier: epubIdentifierSeedSchema
@@ -114,7 +112,6 @@ export async function readBookData(root: string): Promise<BookData> {
       subtitle: raw.zh.subtitle,
       deepDiveSubtitle: raw.zh.deep_dive_subtitle,
       authors: raw.zh.authors,
-      translators: raw.zh.translators,
       humanEditor: humanEditorData(raw.zh.human_editor),
       description: raw.zh.description,
       epubIdentifier: raw.zh.epub_identifier,

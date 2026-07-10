@@ -21,7 +21,6 @@ export function validBookYaml(): string {
     "  subtitle: Fixture subtitle",
     "  deep_dive_subtitle: Fixture deep dive",
     "  authors: Fixture Author",
-    "  translators: Fixture Translator",
     "  human_editor:",
     "    name: Editor",
     "    url: https://example.com/editor",

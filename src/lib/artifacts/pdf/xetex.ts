@@ -31,7 +31,6 @@ interface PdfEdition {
   title: string;
   subtitle: string;
   authors: string;
-  translators?: string;
   humanEditor: HumanEditorData;
   description: string;
   siteUrl: string;
@@ -161,7 +160,6 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     title: book.zh.title,
     subtitle: book.zh.subtitle,
     authors: book.zh.authors,
-    translators: book.zh.translators,
     humanEditor: book.zh.humanEditor,
     description: book.zh.description,
     siteUrl: book.siteUrl,
@@ -176,7 +174,6 @@ export async function buildAllPdfs(options: BuildAllPdfsOptions): Promise<void> 
     title: `${book.zh.title}：专题深入版`,
     subtitle: book.zh.subtitle,
     authors: book.zh.authors,
-    translators: book.zh.translators,
     humanEditor: book.zh.humanEditor,
     description: book.zh.description,
     siteUrl: book.siteUrl,
@@ -201,7 +198,6 @@ async function buildDayPdfs(root: string, locale: Locale, book: BookData): Promi
       title: zh ? `${book.zh.title}：${dayLabel}` : `${book.title}: ${dayLabel}`,
       subtitle: day.title,
       authors: zh ? book.zh.authors : book.authors,
-      translators: zh ? book.zh.translators : undefined,
       humanEditor: zh ? book.zh.humanEditor : book.humanEditor,
       description: zh ? book.zh.description : book.description,
       siteUrl: book.siteUrl,
@@ -1665,7 +1661,6 @@ function titlePageLatex(config: PdfEdition & { root: string }): string {
   const isZh = config.locale === "zh";
   const eyebrow = config.subtitle;
   const byline = isZh ? `作者：${config.authors}` : `By ${config.authors}`;
-  const translator = isZh && config.translators ? `翻译：${config.translators}` : "";
   const editor = isZh ? `人工编辑：${config.humanEditor.name}` : `Human editor: ${config.humanEditor.name}`;
   return String.raw`\clearpage
 \thispagestyle{empty}
@@ -1685,7 +1680,6 @@ function titlePageLatex(config: PdfEdition & { root: string }): string {
 {\displayfont\bfseries\fontsize{29}{31}\selectfont ${latexEscape(config.title)}\par}
 \vspace{0.20in}
 {\displayfont\itshape\fontsize{13.8}{17}\selectfont ${latexEscape(byline)}\par}
-${translator ? `{\\displayfont\\itshape\\fontsize{13.8}{17}\\selectfont ${latexEscape(translator)}\\par}` : ""}
 {\displayfont\itshape\fontsize{13.8}{17}\selectfont ${latexEscape(editor)}\par}
 \end{minipage}
 \restoregeometry

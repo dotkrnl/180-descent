@@ -3,7 +3,7 @@
 This is the authoritative Simplified Chinese terminology glossary for
 180 Descent translation work.
 
-Kimi, Gemini, GLM, and any human/editorial pass must:
+Every translation, blind-review, and human/editorial pass must:
 
 - read this file before editing Chinese content;
 - apply the standard Chinese term unless a local exception is explicitly

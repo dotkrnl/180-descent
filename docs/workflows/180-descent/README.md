@@ -229,11 +229,12 @@ structural errors, not publication quality.
    exposes each appendix in the intended order.
 2. **Chinese flow completed:** clear stale Chinese target prose before
    translation, then initialize each target Chinese file from a direct,
-   untranslated copy of its paired English source before running Kimi. Do not
-   give Kimi a Codex-authored or human-authored draft translation, summary, or
-   abridged target. Run Kimi, then Gemini, then GLM unless the user explicitly
-   waives a step; manually review terminology, quote style, status labels,
-   figure labels, alt text, and static artifact prose after the model passes.
+   untranslated copy of its paired English source. Have GPT-5.6-Terra medium
+   subagents translate the assigned files, then have fresh GPT-5.6-Terra medium
+   subagents blind-review the completed Chinese against English. Do not treat
+   either pass as complete until terminology, quote style, status labels,
+   figure labels, alt text, static-artifact prose, and all actionable review
+   findings have been resolved.
 3. **Original-source completeness review:** when integrating from an original
    HTML/static file, design mock, external draft, or user-provided source,
    preserve the original source path in the working notes and run subagent
@@ -458,24 +459,24 @@ SVG/HTML/SCSS diagrams.
 
 ## Chinese Edition
 
-Chinese content should be idiomatic Simplified Chinese, not literal
-line-by-line English.
+Chinese content must be idiomatic Simplified Chinese, not line-by-line English.
+The full-repository translation workflow uses GPT-5.6-Terra medium subagents;
+model names must never appear as translator credit or reader-facing attribution.
 
-- Use model-assisted translation in this order unless the user explicitly says
-  otherwise:
-  1. Kimi first, through `opencode` with `kimi-for-coding/k2p7`, for the initial
-     Simplified Chinese translation pass from the direct English copy.
-  2. Gemini second, through Antigravity CLI `agy` with
-     `Gemini 3.5 Flash (High)`, for review, accuracy, terminology, and idiomatic
-     refinement.
-  3. GLM third, through `opencode` with `zhipuai-coding-plan/glm-5.1`, for a
-     final consistency and language refinement pass.
-- Kimi drafting, Gemini review, and GLM refinement can be slow for full lesson
-  bodies, appendices, and introduction updates. Use long-running commands and
-  poll patiently. Once a Kimi or GLM pass starts, do not interrupt it for
-  silence, duration, repeated reads, apparent stalls, or lack of visible edits;
-  keep polling until the process exits on its own. Do not send Ctrl-C to Kimi or
-  GLM as a workflow shortcut.
+- Inventory every paired English/Chinese MDX file, including the introduction
+  and appendices, and divide non-overlapping files among GPT-5.6-Terra medium
+  translation subagents. For new or fully refreshed targets, initialize the
+  Chinese file from its paired English source before translation; this is input,
+  not finished Chinese.
+- Give every translation subagent the canonical prompt below, the paired English
+  sources, and the terminology glossary. It may edit only its assigned Chinese
+  files and necessary localized data or glossary entries.
+- Assign fresh GPT-5.6-Terra medium blind-review subagents that did not translate
+  the files. Reviewers receive the English source, final Chinese target, and
+  glossary—but not draft history, translator output, or prior review comments.
+  They must independently identify omissions, additions, mistranslations,
+  terminology drift, untranslated UI text, and unidiomatic or overly literal
+  Chinese. Resolve all actionable findings before final source-parity review.
 - Preserve manifest structure, day numbers, path, citations, URLs, DOI metadata,
   component imports, image alt meaning, and interaction behavior.
 - Localize block titles and print labels through existing data/components; do not
@@ -520,48 +521,45 @@ line-by-line English.
   object being shown, and enough rules or captions for PDF/EPUB readers to
   understand the artifact without the live widget.
 
-For a normal day, create or update any Chinese locale fields in `day.yaml`, then
+For a normal day, create or update Chinese locale fields in `day.yaml`, then
 replace `src/content/days/###-slug/zh.mdx` with a direct, untranslated copy of
-`src/content/days/###-slug/en.mdx` before running Kimi on the paired files. This
-copy is the translation input, not a finished Chinese file; it may temporarily
-fail title or locale checks until Kimi completes. Do not seed Kimi with a
-Codex-authored or human-authored Chinese draft, summary, or abridged version.
+`src/content/days/###-slug/en.mdx`. This is translation input, not a finished
+Chinese file; it may temporarily fail locale checks. Assign its translation and
+blind review to different GPT-5.6-Terra medium subagents.
 
-```sh
-opencode run --dangerously-skip-permissions -m kimi-for-coding/k2p7 "请以 yolo 模式直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。不要把英文 honest / sober 机械译成「诚实」或「冷静」，也不要在中文里反复使用这两个词；请按语境改成「准确」「完整」「稳妥」「清醒」「克制」「校准」「审慎」「相关」或自然改写，除非是人名、来源标题或直接引文。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法，并保留和翻译所有说明性注释。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
+```text
+请逐篇审校全部中文译文，并与对应英文原文逐项对照，找出并修正任何信息遗漏、误译、无依据增补、术语不一致和未本地化的界面文字。译文应当信、达、雅，符合现代书面汉语习惯：行文自然、清晰、凝练，不带翻译腔，不使用只有英文才成立的比喻。必要时可以摆脱英文句法和修辞、按中文逻辑彻底重写；但若原文可以自然译出，必须完整保留其信息、限定与证据强度。使用优雅的书面语，避免口语化。
+
+开始前必须完整阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格遵循其中的术语；如需新增或统一反复出现的术语，须在同一次修改中更新词表并修正受影响内容。不要把 honest、sober 等词机械译为「诚实」或「冷静」；应按语境采用准确、完整、稳妥、清醒、克制、校准、审慎、相关或自然的改写。中文强调应节制使用术语字重、颜色与「」；不得使用 <em>、<i>、<strong>、<b>、<u>。命题、口号和作为语言对象的短语优先用「」。
+
+保留并正确本地化所有 front matter/manifest 键、imports、component props、URLs、DOI、引文元数据、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG、JavaScript hook、MDX 语法及说明性注释。不得编辑英文源文件或构建脚本。完成后用中文简要列出已修改文件、已解决的实质问题，以及仍需主代理决定的事项。
 ```
 
-After manually reviewing Kimi edits, run Gemini as the second pass:
+For blind review, launch a fresh GPT-5.6-Terra medium subagent with the source,
+target, and glossary only:
 
-```sh
-agy --dangerously-skip-permissions --model "Gemini 3.5 Flash (High)" --print-timeout 20m -p "请以 yolo 模式直接在本仓库中审核并润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。重点检查 Kimi 初稿的翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。重点清理 honest / sober 的机械翻译和过度使用：正文不要反复出现「诚实」「冷静」，应按语境改成「准确」「完整」「稳妥」「清醒」「克制」「校准」「审慎」「相关」或自然改写；人名、来源标题和直接引文除外。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+```text
+盲审时不得查看译者的推理、草稿历史或既有评语。请独立比对英文原文与最终中文，逐项报告信息遗漏、误译、无依据增补、术语偏移、未翻译文字、英文句法痕迹及不合中文书面语习惯的表达；只在证据充分时提出修改，并列出相应的英文依据。
 ```
 
-After manually reviewing Gemini edits, run GLM as the final consistency pass:
+将盲审中可执行的问题修正后，再由另一名未参与翻译的 GPT-5.6-Terra
+medium 子代理进行最终一致性检查：
 
-```sh
-opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.1 "请以 yolo 模式直接在本仓库中润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。重点清理 honest / sober 的机械翻译和过度使用：正文不要反复出现「诚实」「冷静」，应按语境改成「准确」「完整」「稳妥」「清醒」「克制」「校准」「审慎」「相关」或自然改写；人名、来源标题和直接引文除外。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留 imports、component props、manifest/front matter、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+```text
+确认译文已经完整保留英文原文的信息、限定条件与证据强度；术语、状态标签、引用、图表文字、替代文本和静态制品文案均与词表及英文对应；中文自然、正式、无翻译腔，且不含仅适用于英文的比喻。
 ```
 
 For large appendices, use temporary files instead of asking an agent to
 overwrite its input: `/tmp/day-###-appendix-N-en.mdx` and
 `/tmp/day-###-appendix-N-zh.mdx`. Start by replacing the temporary Chinese
 target with a direct, untranslated copy of the paired English appendix source so
-stale Chinese prose cannot be mistaken for reviewed output. Run Kimi first on
-the temporary pair. If Kimi stalls on a large appendix, split the English source
-at section boundaries into
-`/tmp/day-###-appendix-N-part-M-en.mdx` chunks, have Kimi write matching
-`part-M-zh.mdx` files, then concatenate the translated chunks back into the
-single appendix target before downstream review.
-
-After Kimi, run Gemini review and then GLM refinement on the combined temporary
-appendix. If `agy` requires interactive OAuth or another tool setup step, fix
-that setup before continuing the Chinese gate. If GLM hangs without writing,
-retry a narrower per-appendix pass once; if it still hangs, stop the session,
-record the blocker, and do not leave the process running.
-
-Only after the model-assisted passes and manual structure comparison should the
-temporary result replace
+stale Chinese prose cannot be mistaken for reviewed output. Split large English
+sources at section boundaries into `/tmp/day-###-appendix-N-part-M-en.mdx`
+chunks, assign matching `part-M-zh.mdx` files to GPT-5.6-Terra medium
+translation subagents, then reassemble the result for blind review. Reviewers
+must not see translator reasoning, draft history, or earlier review comments.
+Only after blind review, manual structure comparison, and artifact validation
+should the temporary result replace
 `src/content/days/###-slug/appendices/*.zh.mdx`.
 
 ## Human Refinement Gate
