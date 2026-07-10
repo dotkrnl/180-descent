@@ -5,8 +5,25 @@ description: Migration plan for the approved wide-screen, book-like, editorial r
 
 # Visual Redesign Migration Plan
 
-Status: implementation in progress; the approved redesign is in a final visual
-validation pass.
+Status: implementation complete; final visual and artifact validation passed.
+
+## Final implementation audit
+
+The final review covered the homepage, syllabus, support pages, Day 001, a
+prose-heavy lesson region, complex interactive lessons, English and Chinese
+routes, light and dark themes, and 390px, 768px, 1366px, 1440px, and 1920px
+rendering. The final pass specifically corrected the desktop expedition rail,
+mobile folio navigation, jump-position reveal opacity, mobile syllabus map
+composition, compact map labels, and desktop map hover previews.
+
+Validation evidence:
+
+- `npm run check:visual -- --base http://localhost:4321` passed for all 32
+  routes at the project mobile and desktop checkpoints.
+- A 128-case Playwright metrics pass across all 32 routes at 1366px and 1920px
+  in both themes found no HTTP or horizontal-overflow errors.
+- `npm run check` and the final `npm run check:built` passed, including EPUB,
+  PDF, accessibility, and rendered typography checks.
 
 The redesign is web-primary. It changes the Astro/SCSS presentation system while
 preserving the MDX source model, bilingual content, existing brand mark,
