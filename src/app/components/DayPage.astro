@@ -6,7 +6,7 @@ import type { DayAppendixRenderEntry, RegistryDayRouteProps } from "@app/day-rou
 import { getBookData, getSyllabus } from "@app/site-data";
 import { dayArtifactDownloadUrl } from "@lib/artifacts/downloads";
 import { daySocialImagePath } from "@lib/assets/social-images";
-import { alternateLocale, dayUrl } from "@lib/static-site/routes";
+import { alternateLocale, dayUrl, staticPageUrl } from "@lib/static-site/routes";
 
 interface Props extends RegistryDayRouteProps {
   Body: AstroComponentFactory;
@@ -59,6 +59,7 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
     data-day={entry.day.manifest.day}
     data-block-hue={blockHue}
     data-running-day={dayLabel}
+    data-running-block={syllabus.blocks[blockIndex]?.title ?? ""}
     data-total-days={book.totalDays}
     data-reading-progress
     data-reading-locale={entry.locale}
@@ -96,30 +97,47 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
         <ol data-rail-toc></ol>
       </nav>
     </aside>
-    <button class="toc-fab" type="button" data-rail-fab aria-controls="lessonRail" aria-expanded="false" hidden>
-      <span class="fab-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
-      {isZh ? "目录" : "Contents"}
-    </button>
     <button class="rail-backdrop" type="button" data-rail-backdrop tabindex="-1" aria-label={isZh ? "关闭目录" : "Close contents"} hidden></button>
-    <Body />
-    <div class="wrap">
-      {appendices.map(({ id, title, Body: AppendixBody }) => (
-        <details class="deep-dive" id={id}>
-          <summary>
-            <span class="ptitle">{isZh ? "专题深入附录" : "Deep dive appendix"}</span>
-            <span class="deep-dive-title">{title}</span>
-            <span class="deep-dive-sub">{isZh ? "可选延伸阅读。" : "Optional extension."}</span>
-          </summary>
-          <div class="deep-dive-body">
-            <AppendixBody />
-          </div>
-        </details>
-      ))}
-      <p class="endcap">
-        {isZh ? `第 ${paddedDay} 日终 · ` : `End of Day ${paddedDay} · `}
-        <span class="gleam">{isZh ? `还有 ${remainingDays} 日等待深入` : `${remainingDays} descents remain`}</span>
-      </p>
+    <div class="lesson-stage">
+      <div class="lesson-reading">
+        <Body />
+        <div class="wrap lesson-appendices">
+          {appendices.map(({ id, title, Body: AppendixBody }) => (
+            <details class="deep-dive" id={id}>
+              <summary>
+                <span class="ptitle">{isZh ? "专题深入附录" : "Deep dive appendix"}</span>
+                <span class="deep-dive-title">{title}</span>
+                <span class="deep-dive-sub">{isZh ? "可选延伸阅读。" : "Optional extension."}</span>
+              </summary>
+              <div class="deep-dive-body">
+                <AppendixBody />
+              </div>
+            </details>
+          ))}
+          <p class="endcap">
+            {isZh ? `第 ${paddedDay} 日终 · ` : `End of Day ${paddedDay} · `}
+            <span class="gleam">{isZh ? `还有 ${remainingDays} 日等待深入` : `${remainingDays} descents remain`}</span>
+          </p>
+        </div>
+      </div>
     </div>
+    <nav class="reading-dock" aria-label={isZh ? "阅读控制" : "Reading controls"}>
+      {previous ? (
+        <a class="dock-step" href={dayUrl(entry.locale, previous.path)} aria-label={isZh ? `上一篇：${previous.title}` : `Previous: ${previous.title}`}>
+          <span aria-hidden="true">←</span>
+        </a>
+      ) : <span class="dock-step is-disabled" aria-hidden="true">←</span>}
+      <button class="toc-fab" type="button" data-rail-fab aria-controls="lessonRail" aria-expanded="false" hidden>
+        <span class="fab-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+        {isZh ? "目录" : "Contents"}
+      </button>
+      <a class="dock-progress" href={staticPageUrl(entry.locale, "syllabus")} data-dock-progress aria-label={isZh ? "在课程表中查看阅读进度" : "View reading progress in the syllabus"}>0%</a>
+      {next ? (
+        <a class="dock-step" href={dayUrl(entry.locale, next.path)} aria-label={isZh ? `下一篇：${next.title}` : `Next: ${next.title}`}>
+          <span aria-hidden="true">→</span>
+        </a>
+      ) : <span class="dock-step is-disabled" aria-hidden="true">→</span>}
+    </nav>
     <DayNav locale={entry.locale} previous={previous} next={next} position="bottom" />
   </article>
 </BookShell>

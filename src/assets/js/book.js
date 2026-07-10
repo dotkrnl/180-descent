@@ -344,9 +344,13 @@
     }
 
     var daySlot = topbar.querySelector("[data-running-day]");
+    var blockSlot = topbar.querySelector("[data-running-block]");
     var titleSlot = topbar.querySelector("[data-running-title]");
     if(daySlot){
       daySlot.textContent = lesson.getAttribute("data-running-day") || "";
+    }
+    if(blockSlot){
+      blockSlot.textContent = lesson.getAttribute("data-running-block") || "";
     }
     if(titleSlot){
       titleSlot.textContent = lesson.getAttribute("data-reading-title") || "";
@@ -359,6 +363,22 @@
     if(!("IntersectionObserver" in window)){
       return;
     }
+    var sectionHeadings = lesson.querySelectorAll("section h2");
+    var updateSection = function(){
+      var active = "";
+      var threshold = window.innerHeight * 0.3;
+      for(var i = 0; i < sectionHeadings.length; i++){
+        if(sectionHeadings[i].getBoundingClientRect().top <= threshold){
+          active = (sectionHeadings[i].textContent || "").trim();
+        }
+      }
+      if(titleSlot && active){
+        titleSlot.textContent = active;
+      }
+    };
+    window.addEventListener("scroll", updateSection, { passive: true });
+    window.addEventListener("resize", updateSection);
+    updateSection();
     var observer = new IntersectionObserver(function(entries){
       for(var i = 0; i < entries.length; i++){
         var pastHero = !entries[i].isIntersecting && entries[i].boundingClientRect.bottom < 0;
@@ -455,6 +475,14 @@
       rail.style.setProperty("--gauge", progress.toFixed(4));
       if(readout){
         readout.textContent = Math.round(progress * 100) + "%";
+      }
+      var dockProgress = lesson.querySelector("[data-dock-progress]");
+      if(dockProgress){
+        dockProgress.textContent = Math.round(progress * 100) + "%";
+      }
+      var runningProgress = document.querySelector("[data-running-progress]");
+      if(runningProgress){
+        runningProgress.textContent = Math.round(progress * 100) + "%";
       }
       syncActiveTocLink(rail, headings);
     }
