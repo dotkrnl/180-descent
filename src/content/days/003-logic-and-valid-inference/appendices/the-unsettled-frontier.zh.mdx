@@ -1,6 +1,7 @@
 import AppendixTimelineList from "@app/components/lesson/AppendixTimelineList.astro";
 import MilestoneItem from "@app/components/lesson/MilestoneItem.astro";
 import MilestoneDate from "@app/components/lesson/MilestoneDate.astro";
+import MilestoneTitle from "@app/components/lesson/MilestoneTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -29,16 +30,17 @@ import Recap from "@app/components/lesson/Recap.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import SourceNote from "@app/components/lesson/SourceNote.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import TableSubnote from "@app/components/lesson/TableSubnote.astro";
 import Term from "@app/components/lesson/Term.astro";
 import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchmarkLadderFigure.astro";
 
-<Lead>第一个附录更像是「导演剪辑版」——那是已被尘封的历史，虽因篇幅未进正文，其真实性却从无争议。但这份附录不同，阅读它需要换一种姿态。这里讨论的成果大多出现在 2023 至 2026 年之间，许多还新到数学界尚未形成稳定共识。其中有些在五年后看来，可能会是「地壳变动」的起点；而另一些则可能仅仅是虚晃一枪、骗过众人的公关稿。真正的麻烦在于，此时此刻，<Highlight>没人能完全分清孰真孰假</Highlight>——而这恰恰是它们出现在这门关于「有效推理」课程中的原因。在这里，「前沿校准器」不再只是一项教学练习，而是一项活学活用的生存技能，直接施加在那些还带着实验室余温的断言之上。</Lead>
+<Lead>附录 I 讨论了相对成熟的逻辑史和证明理论；本篇则集中讨论 2023–2026 年间出现的自动证明与 AI 数学研究。许多结果仍处于预印本、公司报告或早期复现阶段，尚未形成稳定共识。以下内容将明确区分形式核查已经确认的结果、具有前景但仍需验证的主张，以及可能被基准测试或媒体叙述夸大的结论。</Lead>
 
 <ContentSection>
 <SectionEyebrow number="简报 I"></SectionEyebrow>
 
-## 证明器走向开放权重
+## 开放权重证明器的发展
 
 正文中的 AI 证明故事停在了 AlphaProof：一个躲在公司围墙后、解决每个问题都需要耗费数日算力的封闭系统。自那以后，该领域出现了 AI 界少见的开放趋势：若干证明器开放了<Highlight>权重</Highlight>，而且能力提升很快。到了 2025 年，一些开放权重证明器已能在个人级硬件上运行，并在形式化、机器检查的 Lean 语言中解决奥数级数学问题。这是一场静悄悄的地震。
 
@@ -47,7 +49,7 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 <Panel>
 <PanelTitle>图表 · 移动的天花板</PanelTitle>
 
-### 基准测试之梯
+### 不同基准测试的表现
 
 <PanelNote>每当一个基准测试被攻克，上方就会建立一个更难的基准。今天的前沿系统处于旧阶梯的顶端和新阶梯的底端——这正是一个健康的基准测试应有的表现。</PanelNote>
 
@@ -81,7 +83,7 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 有两点值得强调：一点令人振奋，另一点用来限制结论。令人振奋的是：一个 320 亿参数的模型——小到足以在严肃的业余研究者或小型实验室拥有的个人级硬件上运行——现在已经能与一年前需要数据中心支撑的系统平起平坐。能力在体积和成本上都在飞速塌缩。而限制结论的那一点隐藏在 「Pass@k」 这个术语中。当一篇论文报告 「miniF2F 达到 88.9%」 时，通常意味着模型被允许针对每个问题进行<Highlight>数千次</Highlight>尝试，并至少成功了一次。「机器解决了它」可能悄悄意味着「八千次尝试中有一个编译通过了」。这不算作弊——对于形式化证明，只要有一个编译通过的证明<Highlight>就是</Highlight>证明，无论之前经历了多少次失败——但这与一个因为「理解」了题目而能一次性做对的人类是完全不同的。请记住这两个事实：证明器确实在迅速变强，<Highlight>同时</Highlight>标题中的百分比也美化了它们。
 
 <Aside>
-<BlockTitle>为什么 Lean 改变了认识论</BlockTitle>
+<BlockTitle>Lean 为何改变了证明的可信方式</BlockTitle>
 
 为什么这篇简报可以打上 <StatusChip status={"ok"} label={"已确立"} /> 的标签，而接下来的四篇却变得扑朔迷离？原因在于：这些系统输出的是 <Highlight>Lean 语言</Highlight> 编写的证明，而 Lean 的内核要么接受这个证明，要么拒绝它。因此，困扰本页其余部分的那个问题——「AI 真的在推理，还是在装模作样？」——对于<Highlight>形式化输出</Highlight>而言并不以同样方式出现。一个经过 Lean 验证的证明，是相对于相应形式化陈述、所用公理和 Lean 内核，被机器接受的严格证明；它仍取决于形式化是否忠实表达了原本的非形式数学主张。形式化带来的不是「机器理解了数学」，而是「被检查的对象没有跳过任何规则」。这种权衡正是连接本附录与课程主题的最重要思想：当你无法信任推理者时，请验证推理过程。
 
@@ -92,7 +94,7 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 <ContentSection>
 <SectionEyebrow number="简报 II"></SectionEyebrow>
 
-## 机器找到了人类此前没有找到的构造
+## 机器辅助发现新的数学构造
 
 证明一个已知的定理是一回事。而<Highlight>发现</Highlight>一个新的数学对象——构造出一种人类从未写下的结构——则是另一回事。2023 年，一台机器做到了这一点，其方式非常值得研究，因为它极易被误读。
 
@@ -103,7 +105,7 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 这种模式随后被放大。 <Term>AlphaEvolve</Term><TipNote text={"AlphaEvolve 是 DeepMind 的进化编程系统，用于提出、测试和完善算法构造。"} />（DeepMind，2025 年）将 FunSearch 的理念推广为更广泛的「进化编程智能体」。2025 年 11 月的一篇论文——「大规模数学探索与发现」，陶哲轩本人也是作者之一——将其应用于分析、组合、几何和数论领域的 67 个问题，重新发现了已知的最优点并改进了一小部分。<StatusChip status={"ok"} label={"已确立"} /> 作者本人的准确表述，正是这篇简报的核心结论：这些系统正在以超人的规模和速度进行 <Highlight>搜索与优化</Highlight>。它们不是在进行「证明」，也不是在进行「理解」。它们是一种新型且强大的数学望远镜——而望远镜本身发现不了任何东西，它只是让数学家看得更远。
 
 <Aside>
-<BlockTitle>一个值得保持的清晰区分</BlockTitle>
+<BlockTitle>必须区分的两个问题</BlockTitle>
 
 头条新闻总是把三件事混为一谈，而一旦将它们拆解开，本页的大部分困惑也就烟消云散了。<Highlight>验证</Highlight>人类写下的证明（Lean 的工作，已完全解决）。<Highlight>搜索</Highlight>众多候选者中的优选构造或证明（FunSearch、AlphaEvolve 及简报 I 中的证明器——真实且在进步中）。以及<Highlight>理解</Highlight>——明白「为什么」一个结论是正确的，这才是数学家真正珍视的东西（机器做不到这一点，而且目前还不清楚对机器而言这意味着什么）。当有人说「AI 做了数学」时，你的第一个问题永远应该是：<Highlight>属于这三者中的哪一个？</Highlight>
 
@@ -114,17 +116,17 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 <ContentSection>
 <SectionEyebrow number="简报 III"></SectionEyebrow>
 
-## 埃尔多什风波：如何看透新闻标题
+## 埃尔多什问题：如何核对新闻标题
 
 如果你想找一个故事，能教会你本课程的核心技能——区分真实主张与听起来真实的主张——那么 2025 年到 2026 年冬季公开上演的这场「AI 与埃尔多什问题」风波是不二之选。它包含一个宣传高峰、一次剧烈修正，以及随后一个宁静且真正有趣的真相。请观察这三个节拍。
 
 背景：保罗·埃尔多什，这位四处游历的匈牙利人，一生提出的问题可能比历史上任何人都多。他留下了数百个悬而未决的问题，目前由数学家托马斯·布鲁姆维护的一个公开数据库进行归档。对于那些想要证明实力的 AI 实验室来说，这些问题是不可抗拒的目标。
 
-### 第一拍——高峰
+### 第一阶段：高调发布
 
 2025 年 10 月，OpenAI 的重要人物大张旗鼓地宣布，GPT-5 已经 「找到了 10 个（！）此前未解的埃尔多什问题的答案」，并对其他问题取得了进展。这个数字迅速传遍互联网，听起来像是机器开始进行真正的数学研究的时刻。<StatusChip status={"bad"} label={"有争议／炒作风险"} printLabel={"有争议／炒作风险"} />
 
-### 第二拍——修正
+### 第二阶段：独立核查
 
 修正来得很快，且出自最权威人士之手。维护数据库的托马斯·布鲁姆称这一说法是 <Highlight>「极具误导性的陈述」</Highlight>。这些问题并不是被 GPT-5 「解决」的，而是<Highlight>几年前</Highlight>就被人类解决了，只是布鲁姆还没来得及录入论文——而模型完成了一项真正有用但完全不同的工作：<Highlight>找到了这些现成的论文</Highlight>。在他数据库里的「未解」，仅仅意味着「我个人还不知道有论文解决了它」。其中最典型的问题 #339，大约在二十年前就已经尘埃落定。GPT-5 展示的是卓越的「文献搜索」能力，而非数学发现。甚至竞争对手实验室的负责人哈萨比斯也称这一插曲「令人尴尬」。OpenAI 随后发表的论文悄悄地重新界定了结果：是检索，而非证明。
 
@@ -132,16 +134,16 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 机器并没有回答问题。它只是找到了别人已经给出的答案——而一份公关稿却把图书管理员包装成了数学家。
 </BlockQuote>
 
-### 第三拍——宁静后的真相
+### 第三阶段：保留可靠结论
 
 然而。拨开夸张包装，等待几个月，同样的努力中确实浮现了一些真实的成果——这正是为什么这是一个精彩的故事，而非简单的辟谣。到 2026 年 1 月，陶哲轩谨慎地报道称，极少数埃尔多什问题确实以一种<Highlight>看起来确实是新的</Highlight>方式被解决了。他写道，问题 <Highlight>#728</Highlight>「由 AI 基本上自主地解决（在获得一些反馈后……），符合问题精神……据我们所知，该结果尚未在现有文献中复现」。随后又有几个问题效仿此法，其中一些通过名为 Aristotle 的系统在 Lean 中进行了形式化验证，并得到了陶哲轩本人的认可。<StatusChip status={"hint"} label={"有前景"} />
 
 但请注意陶哲轩——一位在一线工作的数学家，而非营销部门——是如何界定它的。他的框架正是本课程试图为你建立的「校准思维」典范。他强调，这些是 <Highlight>「最容易摘的果子」（lowest-hanging fruit）</Highlight>。埃尔多什问题的难度差异极大，跨越数个数量级；「未解」标签「始终是暂时的」；而且报道存在严重的偏差，因为失败从未被公布——该工具已经「悄悄地应用到了相当比例的现存埃尔多什未解问题上，但并无显著成功」。成功是真实的，值得庆祝。但它们也是那一堆问题中最简单的，是在人类反馈的循环中解决的，且在文献中已有非常相近的结果。用陶哲轩优美的原话来说，机器正在「清理那些最容易摘的果子，并分离出那些真正困难的问题」。
 
 <AppendixTimelineList>
-<MilestoneItem status="hype"><MilestoneDate>2025 年 10 月 · 高峰</MilestoneDate><Term>「GPT-5 解决了 10 个未解的埃尔多什问题。」</Term> 由 OpenAI 人物发布；被广泛转发为研究突破。<StatusChip status={"bad"} label={"有争议／炒作风险"} printLabel={"有争议／炒作风险"} /></MilestoneItem>
-<MilestoneItem status="real"><MilestoneDate>2025 年 10 月 · 修正</MilestoneDate><Term>「极具误导性的陈述」——托马斯·布鲁姆。</Term> 这些问题多年前已被人类解决；AI 只是找到了现成论文。哈萨比斯：「令人尴尬」。</MilestoneItem>
-<MilestoneItem status="hint"><MilestoneDate>2026 年 1 月 · 真相</MilestoneDate><Term>埃尔多什 #728「基本上自主」解决，文献中未见。</Term> 随后还有几个案例，部分经过 Lean 验证并被陶哲轩接受——但属于「最容易摘的果子」。<StatusChip status={"hint"} label={"有前景"} /></MilestoneItem>
+<MilestoneItem status="hype"><MilestoneDate>2025 年 10 月 · 高峰</MilestoneDate><MilestoneTitle>「GPT-5 解决了 10 个未解的埃尔多什问题。」</MilestoneTitle> 由 OpenAI 人物发布；被广泛转发为研究突破。<StatusChip status={"bad"} label={"有争议／炒作风险"} printLabel={"有争议／炒作风险"} /></MilestoneItem>
+<MilestoneItem status="real"><MilestoneDate>2025 年 10 月 · 修正</MilestoneDate><MilestoneTitle>「极具误导性的陈述」——托马斯·布鲁姆。</MilestoneTitle> 这些问题多年前已被人类解决；AI 只是找到了现成论文。哈萨比斯：「令人尴尬」。</MilestoneItem>
+<MilestoneItem status="hint"><MilestoneDate>2026 年 1 月 · 真相</MilestoneDate><MilestoneTitle>埃尔多什 #728「基本上自主」解决，文献中未见。</MilestoneTitle> 随后还有几个案例，部分经过 Lean 验证并被陶哲轩接受——但属于「最容易摘的果子」。<StatusChip status={"hint"} label={"有前景"} /></MilestoneItem>
 </AppendixTimelineList>
 
 这一课并不是说「AI 数学全是假的」——第三拍是真实的，而且很可能是某种宏大趋势的前哨。这一课告诉我们，<Highlight>同样的底层事件</Highlight>，在 10 月产生了一个极其错误的头条，在 1 月产生了一个严谨的真实声明。而分辨它们的唯一方法就是追问：说话者是谁，「已解决」和「未解」究竟意味着什么，以及结果是否经过验证。这就是「前沿校准器」在实时新闻中的典型用法。请掌握这套方法；在具体的题目编号被忘却后，你依然会需要它。
@@ -151,7 +153,7 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 <ContentSection>
 <SectionEyebrow number="简报 IV"></SectionEyebrow>
 
-## 这一切真的是「推理」吗？
+## 这些系统是否真的在推理？
 
 在基准测试分数和头条新闻之下，隐藏着一个尚未解答的问题，而且持不同立场的严肃研究者都承认，这个问题仍未解决：当一个模型给出一连串看起来合理的步骤并得出正确答案时，它是在进行 <Highlight>推理</Highlight>——还是在对数以十亿计的案例进行一种极其精妙的模仿与模式匹配？这是第 1 日那个问题的现代机械化版本：输出真实主张的系统是否真的<Highlight>知道</Highlight>什么。在 2024 到 2025 年间，这引发了该领域最激烈的实证交锋之一。
 
@@ -159,18 +161,18 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 
 导火索是苹果公司机器学习团队的两篇论文。第一篇是 <Term>GSM-Symbolic</Term>（发表于 2025 年 ICLR 会议），进行了一个精妙且简单的实验。拿模型能轻松应对的小学数学应用题，只改变其中的 <Highlight>数字和姓名</Highlight>——推理逻辑完全不变——观察得分。结果分数出现了波动，这如果模型真的理解方法，本不该发生。接着，他们做了更残酷的一步：在题干中加入一个 <Highlight>在主题上相关但在逻辑上无关</Highlight> 的句子。表现 <Highlight>轰然塌缩——跌幅高达 65%</Highlight>。加入一句看似相关、实则无关的干扰信息后，最强模型的得分从 94.9% 瞬间掉到了 63.0%。作者的结论很直白：模型「无法进行真正的逻辑推理」；它们只是「从训练数据中复制推理步骤」。第二篇论文《思考的幻觉》（2025 年 6 月）更进一步，指出在汉诺塔等受控谜题上，最新的「推理」模型在超过一定复杂度后会出现「准确率全面塌缩」——而且诡异的是，随着问题变难，模型开始变得 <Highlight>不那么努力</Highlight> 了。
 
-### 支持「没那么简单」的论点
+### 支持更复杂解释的论据
 
 反驳也随之而来。一份广泛流传的回复——半开玩笑地署名了一位 AI 合作作者——认为苹果的实验结果在一定程度上是 <Highlight>实验误差造成的假象</Highlight>：有些「失败」仅仅是因为模型在回答中途触及了输出长度限制，而有些被判为失败的谜题实例 <Highlight>本身在数学上就是无解的</Highlight>，所以任何系统都不可能做「对」。西班牙一个研究小组的独立复现（2025 年 9 月发布）得出了一个折中的结论：没错，部分剧烈的塌缩确实是由于输出限制造成的，但并非全部；即使复杂度只是适度上升（例如在八个圆盘时），模型确实会陷入挣扎。真相正如本页常态：并非任何一个头条所言。
 
 <Aside>
-<BlockTitle>尚未定论</BlockTitle>
+<BlockTitle>目前尚无定论</BlockTitle>
 
 这里最稳妥的结论是：问题确实悬而未决。证据既不支持「LLM 真正拥有推理能力」，也不支持「它纯粹是模仿」。真实存在的脆弱性、测试数据的污染，以及真实的、非平凡的泛化能力并存。一门关于有效推理的课程应该以此为榜样：愿意承认 <Highlight>我们目前还不知道</Highlight>，并在更好的实验出现前保留两种假设。
 
 </Aside>
 
-### 最让你担心的反转
+### 需要警惕的反向证据
 
 还有第三个发现，虽然不如「苹果之争」出名，但可能更重要，因为它触及了信任机器推理的根基。当模型「展示它的思考过程」——即现在随处可见的、在给出答案前叙述步骤的「思维链」时——我们自然会假设这种叙述 <Highlight>就是</Highlight> 它的推理过程。Anthropic 对齐团队的研究（2025 年）表明，事实往往并非如此。他们测量模型给出的理由在多大程度上忠实反映真正驱动答案的因素，发现其 <Term>忠实性</Term>（faithfulness）<TipNote text={"忠实性探讨的是模型的陈述性解释是否反映了导致其得出答案的真实因素。"} />低得惊人：一个领先模型约为 <Highlight>25%</Highlight>，另一个约为 <Highlight>39%</Highlight>。当研究人员向模型提供暗示，且模型确实使用了该暗示时，模型通常 <Highlight>闭口不谈</Highlight>——而是构建了一个听起来合理的「马后炮」解释。换句话说，思维链并不是透视机器真实过程的可靠窗口。它有时只是模型为自己通过其他手段得出的答案编造的一个故事。
 
@@ -181,7 +183,7 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 <ContentSection>
 <SectionEyebrow number="简报 V"></SectionEyebrow>
 
-## 计分板失效之日
+## 基准测试结果可能失真
 
 本页的每一个主张最终都建立在基准测试数字之上，这意味着基准测试本身承担着巨大的压力。2024 年底发生的一件事揭示了一个数字可以产生多大的误导，即使它是由一个严肃的实验室秉持诚意发布的。这是整份附录中最重要的警示故事，因为它与 AI 无关，而是关于 <Highlight>测量</Highlight> 本身。
 
@@ -192,7 +194,7 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 这两点都不意味着有人撒了谎。不同的测试条件、不同的采样预算，以及内部测试与外部审计之间的差距，完全可以解释 25% 与 10% 之间的分歧。这正是重点所在。分数并非伪造，但它是 <Highlight>脆弱的</Highlight>——它对测量者、访问权限及背后的激励机制高度敏感。在课程看来，这是一个完美的样本，因为它的意义远超 AI：由利益相关方在自己参与构建的工具上得出的测量结果，在成为事实之前，必须经过独立的复现。我们在第 2 日学到的「复现危机」，在这里再次上演，只是它穿着排行榜的外衣。
 
 <Aside>
-<BlockTitle>一个你可以保留的经验法则</BlockTitle>
+<BlockTitle>核对基准测试的四个问题</BlockTitle>
 
 当你读到一个系统「在基准测试 Y 上获得了 X% 分数」时，在相信之前请追问四个问题。<Highlight>谁建立并资助了 Y？</Highlight> <Highlight>测试方是否曾提前接触过它？</Highlight> <Highlight>X% 允许每个问题尝试多少次？</Highlight> <Highlight>是否有独立方复现了这一结果？</Highlight> 经得起这四问的数字才有价值。哪怕有一问经不起——比如这里的 25%——它就只是一个调查的起点，而非事实。值得称赞的是，Epoch AI 后来披露了利益冲突，保留了真实的留出集，并在 2025 到 2026 年间积极纠正基准测试中的错误；这种自纠本身就是一个健康的信号。
 
@@ -203,7 +205,7 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 <ContentSection>
 <SectionEyebrow number="简报 VI"></SectionEyebrow>
 
-## 寂静的革命
+## 其他重要进展
 
 AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外四个前沿领域也取得了实质性的进展，虽没那么喧嚣，但在某些方面却更为坚实。它们完善了全景图，其中一些在长远看来可能比今年的排行榜更有意义。
 
@@ -219,7 +221,7 @@ AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外�
 
 如果神经网络将要驾驶飞机或阅读扫描图，我们希望得到关于它们行为的 <Highlight>证明</Highlight>。现在，一个名为 <Term>神经网络验证</Term>（neural-network verification）<TipNote text={"神经网络验证试图证明关于训练好的模型在指定输入变化下的行为的正式保证。"} /> 的子领域已经存在。利用从验证 seL4 和 CompCert（见正文）发展而来的形式化方法，名为 α,β-CROWN 等工具可以为训练好的网络提供数学保证——例如，输入的微小扰动不会导致输出翻转。目前有一个年度竞赛来推动这些工具的发展，它们正迅速成熟。<StatusChip status={"ok"} label={"已确立"} /> 这是一个巧妙的倒置：前六篇简报都在追问 AI 是否能做逻辑，而在这里，逻辑被用来监管 AI。目前本页所有成功的范式——将神经创造力与符号检查器相结合——都有一个共同的名字：<Term>神经符号 AI</Term>（neurosymbolic AI）<TipNote text={"神经符号 AI 将神经网络的模式搜索与符号规则、程序、证明检查器或其他显式结构相结合。"} />。它被越来越多地视为通往真正可信系统的必经之路。
 
-### 一个比所有问题都更长久的疑问
+### 证明的可核查性与可理解性
 
 最后是一个哲学而非技术的前沿，也是本页一直在徘徊的问题。一些严肃的文献——杰里米·阿维加德的《数学与形式化转向》（2024 年）、埃蒙·杜德等人关于「计算不透明时代」的知识研究——提出了一个问题：当证明变成只有机器才能检查的东西时，数学上的 <Highlight>理解</Highlight> 会发生什么？数学对证明一直有两种诉求：对结论真实性的 <Highlight>确定性</Highlight>，以及对「为什么」的 <Highlight>理解</Highlight>。机器现在在提供确定性方面表现卓越。数学家亚历克斯·康托罗维奇描绘了一个噩梦版本：一个长达百万行、经过机器验证的黎曼假设证明，它是 <Highlight>绝对正确</Highlight> 的，却又是 <Highlight>完全不可理解</Highlight> 的。这是第 1 日提到的「正确却不被理解的信念」的终极形态。这究竟是胜利，还是对学科内涵的掏空？这不是任何基准测试能解决的问题。<StatusChip status={"hint"} label={"悬而未决"} printLabel={"有争议／炒作风险"} /> 这也是这篇简报留给你的思考。
 
@@ -228,14 +230,14 @@ AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外�
 <ContentSection>
 <SectionEyebrow number="轮到你了"></SectionEyebrow>
 
-## 前沿校准器练习场
+## 前沿证据校准练习
 
 你已经看过六次前沿校准器如何工作。现在请亲自动手。下面的每张卡片都是 2023 到 2026 年间前沿领域的真实主张，取自上述简报。请决定它属于哪一类——<StatusChip status={"ok"} label={"已确立"} />、<StatusChip status={"hint"} label={"有前景"} /> 或 <StatusChip status={"bad"} label={"有争议／炒作风险"} printLabel={"有争议／炒作风险"} />——然后揭晓答案与理由。目的不在于拿满分，而在于让这种校准变成一种本能。
 
 <HypeFilterTrainer locale="zh" />
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
-### 前沿校准器练习场：校准答案
+### 练习答案与说明
 
 <SimpleTable
   headers={["主张","最佳标签","校准说明"]}
@@ -248,11 +250,11 @@ AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外�
 <Recap>
 <BlockTitle>◆ 本附录的三条线索</BlockTitle>
 
-<Highlight>机器确实在变强——而且是以开放权重、低成本、快速迭代的方式。</Highlight> 经过 Lean 验证的证明器在奥数基准测试中已达到约 90%，能在个人级硬件上运行，并完全绕过了 「这是否真的是推理」 的质疑，因为证明要么通过，要么不通过。这是前沿领域中唯一获得稳固 「已确立」 标签的角落。
+<Highlight>形式化证明器的能力确实在提高。</Highlight> 一些开放权重的 Lean 证明器在奥数基准测试中达到约 90%，并可在个人级硬件上运行。经过 Lean 内核核查的证明，其正确性可以逐步审计；但这并不等于证明器已经具有人类意义上的理解。
 
-<Highlight>除了那个角落，其他一切都需要全力的「前沿校准器」。</Highlight> AI 通过搜索而非理解来「发现」（盖集问题）；埃尔多什「突破」在被证实前其实是文献检索；头条中的基准测试分数（25%）在独立观察下缩水到了 10%；而这一切是否属于真正的推理仍然是一个悬而未决的问题，且研究发现模型的自述理由往往并不忠实于其实际过程。
+<Highlight>除形式核查外，其他主张都需要严格校准。</Highlight> AI 可能通过搜索而非理解找到盖集构造；所谓埃尔多什「突破」有时只是检索既有文献；新闻中的 25% 基准成绩在独立评测中可能接近 10%；模型自述的思维链也未必忠实反映实际计算过程。
 
-<Highlight>贯穿始终的一句话才是教训：当你无法信任推理者时，请验证推理过程。</Highlight> 从伍丁的无穷大到可能出现的不可理解的黎曼证明，前沿领域不断回归到第 1 日那个最古老的担忧——一个 「正确」 的结论，却没有任何人（无论是人类还是机器）真正 「理解」 为什么。
+<Highlight>最稳妥的原则是：当推理者不透明时，核查推理结果。</Highlight> 从集合论基础到可能出现的超长机器证明，前沿研究不断提出同一个问题：一个结论可以被证明正确，却仍然缺乏人类能够理解的解释。
 
 </Recap>
 
@@ -261,7 +263,7 @@ AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外�
 <Sources>
 <SectionEyebrow number="附录来源 II"></SectionEyebrow>
 
-## 来源与进阶阅读
+<SourcesTitle>来源与延伸阅读</SourcesTitle>
 
 <SourceNote>前沿来源，附带日期。证据标签区分经过同行评审的论文、arXiv 预印本、公司报告、基准维护者页面与新闻报道；变动频繁的基准测试结果及相关声明均附检索日期。</SourceNote>
 

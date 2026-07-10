@@ -52,7 +52,7 @@ const publishedPercent = Math.round((publishedDays.length / book.totalDays) * 10
 ---
 <BookShell
   title={isZh ? "首页" : "Home"}
-  description={isZh ? "浏览并下载《深入一百八十日》。" : "Browse and download The 180-Day Descent."}
+  description={isZh ? "在线阅读并下载《深入一百八十日》。" : "Browse and download The 180-Day Descent."}
   locale={locale}
   canonicalPath={homePath}
   alternatePath={alternatePath}
@@ -60,7 +60,7 @@ const publishedPercent = Math.round((publishedDays.length / book.totalDays) * 10
   <div class="atlas-home">
     <section class="cover" aria-labelledby="atlas-home-title">
       <div class="cover-inner">
-        <div class="cover-text" data-reading-card data-reading-locale={locale} data-reading-continue-kicker={isZh ? "继续上次阅读" : "Continue where you left off"}>
+        <div class="cover-text" data-reading-card data-reading-locale={locale} data-reading-continue-kicker={isZh ? "继续阅读" : "Continue where you left off"}>
           <p class="eyebrow">{isZh ? book.zh.subtitle : book.subtitle}</p>
           <h1 id="atlas-home-title">{isZh ? book.zh.title : book.title}</h1>
           {isZh ? (
@@ -81,18 +81,18 @@ const publishedPercent = Math.round((publishedDays.length / book.totalDays) * 10
               <dd>{currentFrontier ? (isZh ? `第 ${padDay(currentFrontier.day)} 日` : `Day ${padDay(currentFrontier.day)}`) : (isZh ? "等待首次下潜" : "Awaiting first descent")}</dd>
             </div>
           </dl>
-          <p class="cover-kicker" data-reading-kicker>{isZh ? "在线阅读" : "Read online"}</p>
+          <p class="cover-kicker" data-reading-kicker>{isZh ? "开始阅读" : "Read online"}</p>
           <div class="cover-actions">
             <a class="cover-cta" href={readingStartUrl} data-reading-link>{readingStartLabel}</a>
             <a class="cover-map-link" href={syllabusUrl}>{isZh ? "查看完整路线" : "Open the full route"}</a>
           </div>
         </div>
-        <a class="cover-chart" href={syllabusUrl} data-map-label={isZh ? "下潜地图 / 001—180" : "Descent route / 001—180"}>
-          <span class="sr-only">{isZh ? "十三个模块的下潜地图，进入课程表" : "The thirteen-block descent map; opens the syllabus"}</span>
+        <a class="cover-chart" href={syllabusUrl} data-map-label={isZh ? "课程总览 / 001—180" : "Descent route / 001—180"}>
+          <span class="sr-only">{isZh ? "十三个模块的课程总览，进入课程表" : "The thirteen-block descent map; opens the syllabus"}</span>
           <span class="atlas-map-head" aria-hidden="true">
             <span>
-              <small>{isZh ? "研究路线" : "Research route"}</small>
-              <strong>{isZh ? "从根基到前沿" : "Foundations to frontier"}</strong>
+              <small>{isZh ? "课程路线" : "Research route"}</small>
+              <strong>{isZh ? "从基础到前沿" : "Foundations to frontier"}</strong>
             </span>
             <b>{publishedPercent}%</b>
           </span>

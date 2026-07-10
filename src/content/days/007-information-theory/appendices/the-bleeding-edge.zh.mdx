@@ -32,12 +32,12 @@ import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import InformationPhysicsFrontierMap from "@app/components/lesson/figures/InformationPhysicsFrontierMap.astro";
 
-<Lead drop="主">页和第一篇附录已经为你奠定了坚实的基础：香农的信息比特、兰道尔的物理能耗，以及整个理论大厦。所有这一切，都建立在数十年前便已尘埃落定的研究之上。而本篇附录则截然不同：它关注约 2019–2026 年的近期前沿工作，其中许多来自最近两年，有的甚至还带着墨香。这些是亲手拓荒该领域的学者们认为最关键的成果：最有可能颠覆和重塑我们既有知识的实验、理论框架以及工程豪赌。有些能立得住，有些则会被证伪。在今天，我们的「前沿校准器」比以往任何时候都更需要开足马力。</Lead>
+<Lead>主线和第一篇附录介绍了香农信息、兰道尔原理及其理论基础。本篇聚焦约 2019–2026 年的近期研究，涵盖活细胞中的熵产生测量、速度与耗散的权衡、热力学计算、量子协同擦除、黑洞信息和信息热力学。部分结果来自同行评议论文，部分仍是预印本或公司报告；以下将明确区分证据等级和尚未验证的工程主张。</Lead>
 
 <Panel class="landscape">
-<PanelTitle>示意图 · 前沿图景</PanelTitle>
+<PanelTitle>示意图 · 近期研究方向</PanelTitle>
 
-### 七条前沿线索，同一套问题
+### 七个研究方向及其共同问题
 
 <PanelNote>信息物理的近期前沿延伸出七条活跃线索。颜色只表示证据状态：青色代表已确立，琥珀色代表有前景；虚线边框表示目前主要停留在理论模型中，尚无实验检验。</PanelNote>
 
@@ -47,7 +47,7 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 <ContentSection>
 <SectionEyebrow number="01"> · 焦点成果</SectionEyebrow>
 
-## 在活细胞内部测量不可逆性
+## 测量活细胞中的不可逆过程
 
 如果要在近期成果中，选出一项在二十年后仍被人们铭记的突破，那很可能是它：2024 年，由巴塞罗那大学费利克斯·里托尔特（Felix Ritort）领衔的团队发表了一项研究，他们利用显微成像、力的校准和模型假设，推断出了活细胞产生熵的速率——这也是单个红细胞内时间之箭的定量表现。
 
@@ -62,7 +62,7 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 他们将这一工具对准人类红细胞，绘制出了横跨细胞膜的熵产生率分布图。其发现令人震惊：<MathInline latex={String.raw`\sigma`} /> 呈现出明显的「空间非均匀性」，在细胞的不同位置均有不同，其关联长度约为 0.6 微米。其平均值与独立的热量计测量结果高度吻合。作者将其描述为活系统熵产生的第一张热图——这是从定性的「远离平衡」语言迈向空间分辨热力学测量的重要一步。<StatusChip status={"ok"} label={"在模型假设下已确立"} printLabel={"已确立"} />
 
 <Aside>
-<BlockTitle>本课程为何关注这一突破</BlockTitle>
+<BlockTitle>这一结果为何重要</BlockTitle>
 
 在第 83–85 日，我们会提问：生命看起来如此井然有序，究竟是如何与热力学第二定律达成妥协的？标准的回答——「有机体是输出熵的开放系统」——在定性上虽然没错，但在定量上却过于模糊。方差求和规则为这个模糊的答案提供了一把精密的量尺。如果能在光学显微镜的分辨率下映射出细胞内部的熵产生，我们就可以开始追问：究竟是哪些代谢途径制造了最多的不可逆性？耗散又集中在何处？这项技术将随机热力学从一个单纯的理论框架，升华为了一种全新的「显微成像手段」。
 
@@ -75,7 +75,7 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 <ContentSection>
 <SectionEyebrow number="02"> · 新法则</SectionEyebrow>
 
-## 通用权衡律：不确定性、速度与耗散
+## 不确定性、速度与耗散之间的权衡
 
 自 2020 年以来，随机热力学最深刻的概念进展，是一系列揭示了「在特定动力学假设下，高精度常伴随更多熵产生」的理论成果。如果分子马达运行时噪声极低、如果时钟走时节律稳定可靠、如果传感器测量浓度精准无误——背后往往有相应的耗散。这些<Term>热力学不确定关系</Term>（TUR）是适用于广泛非平衡系统类别的强约束，但并不是无条件的自然铁律。
 
@@ -104,9 +104,9 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="03"> · 滴答声背后的耗散</SectionEyebrow>
+<SectionEyebrow number="03"> · 时钟与耗散</SectionEyebrow>
 
-## 时钟运转依赖于熵
+## 时钟运行中的熵产生
 
 这听起来像是一个显而易见的常识：在许多重要时钟模型和实验中，走时越精准，耗散越高。
 
@@ -118,14 +118,14 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 
 </Formula>
 
-后续的研究进一步深化了这一结论。迈尔、施瓦茨汉斯、埃尔克与胡伯（Meier, Schwarzhans, Erker &amp; Huber，PRL 131, 220201, 2023）表明，在他们的框架中，计时的热力学限制可以拆分为「准确度」（规律性）和「分辨率」（滴答频率），这两者都需要更多熵产生，但作用方式不同。而 2025 年发表在 PRL 上的一篇关于从量子时钟中提取经典滴答信号的论文则指出，主要耗散可能不在于时钟本身的齿轮运转，而在于「测量」本身——即把微观的量子振荡放大为经典信号的过程。这又是麦克斯韦妖的影子：能耗问题并不在于「知道」，而在于「让其被经典地知晓」。
+后续的研究进一步深化了这一结论。迈尔、施瓦茨汉斯、埃尔克与胡伯（Meier, Schwarzhans, Erker &amp; Huber，PRL 131, 220201, 2023）表明，在他们的框架中，计时的热力学限制可以拆分为「准确度」（规律性）和「分辨率」（滴答频率），这两者都需要更多熵产生，但作用方式不同。而 2025 年发表在 PRL 上的一篇关于从量子时钟中提取经典滴答信号的论文则指出，主要耗散可能不在于时钟内部维持振荡的过程，而在于「测量」本身——即把微观量子振荡放大为经典信号的过程。由此可见，能耗问题不仅涉及系统是否包含信息，也涉及如何把微观信息转换为可观测的经典信号。
 
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="04"> · 变数最大的豪赌</SectionEyebrow>
+<SectionEyebrow number="04"> · 热力学计算</SectionEyebrow>
 
-## 热力学计算：变噪声为特性
+## 热力学计算：利用热噪声进行计算
 
 七十年来，工程界应对热噪声的唯一办法就是：压制它。每一个晶体管的设计初衷，都是为了用大出许多倍的清晰电压摆幅来盖过原子的随机抖动。而这部分的摆幅，正是绝大多数能量消耗和热量产生的源头。热力学计算计划则反其道而行之：如果我们不再与噪声为敌，而是直接利用它来进行计算呢？
 
@@ -135,7 +135,7 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 <ClaimHeader label="硬件 01">
 <StatusChip status={"hint"} label={"同行评审概念验证"} printLabel={"有前景"} />
 </ClaimHeader>
-### Normal Computing 的随机处理单元
+### Normal Computing 的随机计算单元
 
 梅兰森、阿布·哈特尔、艾弗、多纳泰拉、戈登（Melanson, Abu Khater, Aifer, Donatella, Gordon）及其同事在《自然·通讯》（Nature Communications，16: 3757，2025 年 4 月）上发表了《用于人工智能应用的热力学计算系统》。它描述了一个随机处理单元（SPU）的原型：一块印制电路板上集成了八个完全耦合的模拟 RLC 振荡器节点，通过让该耦合系统达到热平衡，来进行高斯采样和矩阵求逆。一篇配套的理论论文（npj Unconventional Computing，2024 年）将线性代数原语映射到了热力学平衡采样上，并声称渐进加速比与矩阵维度呈线性比例关系。
 
@@ -150,7 +150,7 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 由纪尧姆·维尔东（Guillaume Verdon）创立的 Extropic 公司正在制造能够以物理速度对基于能量的模型进行原生采样的芯片。其 2025 年 10 月的公开材料展示了 XTR-0 硬件，并给出公司单方报告的模拟或小型基准结果，声称相对于 GPU/VAE 基线可节省约 10,000 倍能耗；但它并未独立证明硬件在生产级工作负载上实现了 GPU 同等性能。据报道，一款更大规模的后续芯片正在规划中。这些数据纯属公司单方报告，基于其内部基准测试，并且「没有经过独立的同行评审」。若被证实，这确实将是颠覆性的突破。但在那之前，该项目依然处于与所有创业公司宣传口号相同的认识论范畴中——有趣、未经证实，且承载着风投行业的巨大变数。请应用第 2 日的教训：超乎寻常的断言，需要超乎寻常的复现。
 </Claim>
 <Aside>
-<BlockTitle>何时才能改变评级标签</BlockTitle>
+<BlockTitle>何时应当提高证据评级</BlockTitle>
 
 要将热力学计算的标签从 <StatusChip status={"hint"} label={"有前景"} /> 升级为 <StatusChip status={"ok"} label={"已确立"} />，必须有「独立的、经同行评审的基准测试」，证明其在实际机器学习工作负载上——而非仅在孤立的计算原语中——相对于现代 GPU 具有端到端的优势（无论是实际运行时间还是能耗）。一份预印本论文（arXiv:2503.09980，2025 年）指出，模拟拟静态推理在原理上可以可逆地进行（不存在兰道尔能耗下限），而模型训练则依然存在基础的能耗下限。其物理学逻辑是自洽的，但工程实现仍处于极早期阶段。
 
@@ -159,9 +159,9 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="05"> · 麦克斯韦妖的升级版</SectionEyebrow>
+<SectionEyebrow number="05"> · 麦克斯韦妖的现代研究</SectionEyebrow>
 
-## 信息引擎迈向多体、量子与自主运行
+## 多体、量子与自主信息引擎
 
 2010 至 2021 年间的单粒子引擎是令人惊叹的概念验证。近期研发工作主要指向三个方向：规模化、量子化，以及把更多感知与反馈机制内嵌到器件之中。
 
@@ -184,9 +184,9 @@ Chor 等人（2023）将西拉德引擎从单粒子系统扩展到多体胶体�
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="06"> · 擦除走向量子化</SectionEyebrow>
+<SectionEyebrow number="06"> · 量子协同擦除</SectionEyebrow>
 
-## 协同擦除与降低局部热耗散的方案
+## 协同擦除与局部热耗散降低
 
 Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自发对称性破缺，在 D-Wave Advantage 量子退火器上同时擦除了 256 个量子比特。这一集体翻转实现了接近 <MathInline latex={String.raw`k_B T \ln 2`} /> 的单比特擦除耗散，成功率达 ~99.9%，而单比特作用量（能量 × 时间）低至 <MathInline latex={String.raw`10^{-22}`} /> erg·s——其速度和能效都极其惊人。其关键在于：协同效应使系统能够集体越过势垒，而不是逐个比特地跨越。<StatusChip status={"ok"} label={"已确立"} />
 
@@ -195,7 +195,7 @@ Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自�
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="07"> · 时空边缘的信息</SectionEyebrow>
+<SectionEyebrow number="07"> · 黑洞信息与时空</SectionEyebrow>
 
 ## 孤岛公式与佩奇曲线
 
@@ -214,30 +214,30 @@ Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自�
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="08"> · 宏观图景</SectionEyebrow>
+<SectionEyebrow number="08"> · 统一物理图景</SectionEyebrow>
 
-## 计算的统一物理学？
+## 是否存在统一的计算物理学？
 
 对此最宏伟的整合尝试，见于沃尔珀特、科贝尔、林、塔斯尼姆、格罗肖、卡尔代什（Wolpert, Korbel, Lynn, Tasnim, Grochow, Kardeş）以及其他 17 位共同作者于 2024 年发表的 PNAS 展望论文：《随机热力学是理解计算能耗的关键吗？》（"Is stochastic thermodynamics the key to understanding the energy costs of computation?"）。他们的论点是：计算热力学不仅仅关于兰道尔极限——那仅仅是一个最低底线。在其之上，还包含着由失配开销、通信耗散和非平衡约束所组成的丰富体系，它们共同构成了如同香农通信理论一样严密的「计算物理学完整框架」。
 
 这篇展望文章给出的一项比较足以令人震撼：按照某些「每次操作」的定义，生物分子机器的能效可能比部分人造计算系统高约 <Highlight>10⁵ 倍</Highlight>。请把它当作依赖定义的示意性差距，而不是普适常数。主页的兰道尔阶梯图显示，芯片的运行功耗远高于热力学极限底线；更深层的要点是，生物系统经常更靠近物理噪声和耗散边界，而探究其背后的实现机制，正是当前一个根本性的未解问题。<StatusChip status={"ok"} label={"框架已确立，比例为示意"} printLabel={"已确立"} />
 
 <Aside>
-<BlockTitle>通往第 83–85 日的桥梁</BlockTitle>
+<BlockTitle>与第 83–85 日的联系</BlockTitle>
 
-这直接为我们接下来对生命物理学的深度探索做好了铺垫。当我们重新审视薛定谔提出的「生命是什么？」这一经典问题时，我们将拥有两个五年前尚不存在的利器：用于测量细胞内部熵产生率的方差求和规则，以及用于划定任何计算能耗界限的沃尔珀特框架。两者合力，开始缩窄「生命以负熵为生」（这只是一个口号）与「这条生化途径会产生多少热力学耗散」（这能给出一个具体的数字）之间的鸿沟。
+这为接下来对生命物理学的讨论提供了直接基础。当我们重新审视薛定谔提出的「生命是什么？」这一经典问题时，将拥有两个近年才出现的理论工具：用于测量细胞内部熵产生率的方差求和规则，以及用于确定计算能耗界限的沃尔珀特框架。二者有助于把「生命以负熵为生」这一概括性表述，与「某条生化途径会产生多少热力学耗散」这一可计算问题区分开来。
 
 </Aside>
 
 </ContentSection>
 
 <Recap>
-<BlockTitle>◆ 三句话概括前沿地带</BlockTitle>
+<BlockTitle>◆ 三句话概括近期前沿</BlockTitle>
 
 <RecapList>
-<RecapItem term="哪些被改变了">大约自 2019 年以来，信息热力学以及与量子引力相邻的信息理论已从验证既有原理转向建立新法则：包括有适用范围的权衡律（TUR、速度极限、计时与通信耗散）、活细胞内部新的熵产生测量、接近兰道尔极限的量子协同擦除，以及孤岛公式在受控模型中对黑洞信息悖论的推进。</RecapItem>
-<RecapItem term="哪些是宏大赌注">热力学计算——即将热噪声从敌人转变为计算基底——是该领域最受瞩目的豪赌：物理学逻辑优雅，硬件尚处早期，那些引人注目的能效声明依然有待独立基准测试的验证。</RecapItem>
-<RecapItem term="坦诚的评级标签">这个前沿混合了同行评审实验、同行评审理论、综述/展望、预印本和公司单方报告。是成为颠覆性的突破还是沦为历史的脚注，取决于独立复现、规模化和时间——而这，也正是前沿之所以被称为前沿的原因。</RecapItem>
+<RecapItem term="研究进展">约自 2019 年以来，信息热力学和量子引力相关信息理论开始提出新的权衡关系、活细胞熵产生测量、接近兰道尔极限的量子协同擦除，以及受控模型中的黑洞信息结果。</RecapItem>
+<RecapItem term="工程主张">热力学计算试图利用热噪声作为计算资源，理论上具有吸引力，但硬件仍处于早期阶段，能效主张需要独立基准测试。</RecapItem>
+<RecapItem term="证据边界">本篇同时涉及同行评议实验、理论论文、综述、预印本和公司报告。哪些结果能够独立复现、扩展到实际规模并长期稳定，仍有待时间检验。</RecapItem>
 </RecapList>
 <Threads>后续探索 › 热力学速度极限 → 第 33 日（热力学） · 细胞内的熵产生 → 第 83–85 日（生命物理学） · 热力学计算与沃尔珀特的 10⁵ 倍能效差 → 第 178–179 日（能源与 AI 经济） · 孤岛公式 → 第 40 日（黑洞） · TUR → 第 13 日（测量） · 量子擦除 → 第 47 日（量子计算）。</Threads>
 

@@ -24,13 +24,13 @@ const className = `lesson-nav lesson-nav-${position} wrap wide`;
 <nav class={className} aria-label={ariaLabel}>
   {previous ? (
     <a class="lesson-nav-card lesson-nav-previous" href={navHref(previous)}>
-      <span class="lesson-nav-kicker">{isZh ? "上一篇" : "Previous"}</span>
+      <span class="lesson-nav-kicker">{isZh ? "上一课" : "Previous"}</span>
       <strong class="lesson-nav-title"><span class="lesson-nav-day">{navDayLabel(previous.day)}</span><span class="lesson-nav-separator"> · </span><span class="lesson-nav-name">{previous.title}</span></strong>
     </a>
   ) : (
     <span class="lesson-nav-card lesson-nav-previous is-disabled">
-      <span class="lesson-nav-kicker">{isZh ? "上一篇" : "Previous"}</span>
-      <strong class="lesson-nav-title">{isZh ? "全书起点" : "Start of the book"}</strong>
+      <span class="lesson-nav-kicker">{isZh ? "上一课" : "Previous"}</span>
+      <strong class="lesson-nav-title">{isZh ? "课程开端" : "Start of the book"}</strong>
     </span>
   )}
   <a class="lesson-nav-card is-syllabus lesson-nav-syllabus" href={staticPageUrl(locale, "syllabus")}>
@@ -45,12 +45,12 @@ const className = `lesson-nav lesson-nav-${position} wrap wide`;
   )}
   {next ? (
     <a class="lesson-nav-card lesson-nav-next" href={navHref(next)}>
-      <span class="lesson-nav-kicker">{isZh ? "下一篇" : "Next"}</span>
+      <span class="lesson-nav-kicker">{isZh ? "下一课" : "Next"}</span>
       <strong class="lesson-nav-title"><span class="lesson-nav-day">{navDayLabel(next.day)}</span><span class="lesson-nav-separator"> · </span><span class="lesson-nav-name">{next.title}</span></strong>
     </a>
   ) : (
     <span class="lesson-nav-card lesson-nav-next is-disabled">
-      <span class="lesson-nav-kicker">{isZh ? "下一篇" : "Next"}</span>
+      <span class="lesson-nav-kicker">{isZh ? "下一课" : "Next"}</span>
       <strong class="lesson-nav-title">{isZh ? "尚未发布" : "Not published yet"}</strong>
     </span>
   )}

@@ -14,13 +14,13 @@ const zh = Astro.props.locale === "zh";
 
 const text = {
   feedback: zh
-    ? { eyebrow: "交互 · 搭建它，再打破它", title: "反馈引擎", note: "房间起初很冷，控制器想要 21°C。调高增益（修正有多猛）和延迟（读数有多陈旧），看一只平静的恒温器变成麦克斯韦的噩梦：追逐、振荡，最后把自己撕裂。再把接线翻成正反馈，看目标追踪者变成失控者。", gain: "增益 — 修正强度", delay: "延迟 — 读数滞后", wiring: "接线", neg: "负反馈 · 稳定", pos: "正反馈 · 失控", calm: "平静控制", hunt: "振荡", tear: "撕裂", squeal: "尖啸" }
+    ? { eyebrow: "交互 · 调节反馈回路", title: "反馈引擎", note: "房间初始温度较低，控制器目标为 21°C。调节增益（修正强度）和延迟（读数滞后），观察恒温器如何从稳定控制转为振荡甚至失稳；切换为正反馈后，偏差会被持续放大。", gain: "增益 — 修正强度", delay: "延迟 — 读数滞后", wiring: "反馈方向", neg: "负反馈 · 稳定", pos: "正反馈 · 放大", calm: "稳定控制", hunt: "振荡", tear: "失稳", squeal: "高频振荡" }
     : { eyebrow: "Interactive · build it and break it", title: "The Feedback Engine", note: "A room starts cold; the controller wants 21°C. Turn up the gain (how aggressively it corrects) and the delay (how stale its readings are), and watch a calm thermostat turn into Maxwell's nightmare: hunting, oscillating, and finally tearing itself apart. Then flip the wire to positive feedback and see a goal-seeker become a runaway.", gain: "Gain — correction strength", delay: "Delay — lag in the reading", wiring: "Wiring", neg: "Negative · stabilizing", pos: "Positive · runaway", calm: "Calm control", hunt: "The hunt", tear: "Tear it apart", squeal: "The squeal" },
   bathtub: zh
-    ? { eyebrow: "交互 · 反直觉的浴缸", title: "水位为何持续上升", note: "水龙头（上图）先升高、再降低，形成一个峰。排水口由你设定。下图是水位。关键是：只要水龙头仍大于排水口，水位就持续上升；它只会在水龙头降到排水口以下之后才到峰值。存量滞后于流量。", inflow: "水龙头 — 峰值流入", outflow: "排水口 — 恒定流出", co2: "CO₂ 浴缸", balance: "保持平衡", empty: "排水获胜" }
+    ? { eyebrow: "交互 · 存量与流量", title: "水位为何持续上升", note: "上图表示流入量先增加后减少，下图表示水位。只要流入量仍高于流出量，水位就会继续上升；只有流入量低于流出量后，水位才达到峰值并开始下降。", inflow: "流入量 — 峰值", outflow: "流出量 — 恒定", co2: "CO₂ 存量", balance: "保持稳定", empty: "流出量占优" }
     : { eyebrow: "Interactive · the counterintuitive tub", title: "Why the Water Keeps Rising", note: "The faucet (top) ramps up, then ramps back down: a hump. The drain is whatever you set it to. The bottom chart is the water level. The thing to notice: the level keeps rising the whole time the faucet beats the drain, and only peaks after the faucet has already started shutting off. Stock lags flow.", inflow: "Faucet — peak inflow", outflow: "Drain — constant outflow", co2: "The CO₂ tub", balance: "Hold it steady", empty: "Drain wins" },
   tipping: zh
-    ? { eyebrow: "交互 · 感受临界点", title: "稳定地貌", note: "拖动驱动因素，让山谷变形。球坐在自己的盆地里，并会微微抖动。越接近临界点，盆地越平，球的游走范围（方差）和恢复迟缓（自相关）越高；推过折叠点后，再往回拖也不会马上回来。那段回不去的距离，就是迟滞。", driver: "驱动因素（如升温）", res: "韧性", variance: "方差", ac: "自相关", safe: "安全稳定", edge: "在边缘", reset: "重置球" }
+    ? { eyebrow: "交互 · 观察临界转变", title: "稳定状态与恢复力", note: "拖动驱动因素，使系统的稳定状态发生变化。接近临界点时，恢复力下降，方差和自相关上升；越过折叠点后，撤回驱动因素也不会立即恢复原状态，这就是迟滞。", driver: "驱动因素（如升温）", res: "恢复力", variance: "方差", ac: "自相关", safe: "稳定状态", edge: "接近临界点", reset: "重置系统" }
     : { eyebrow: "Interactive · feel the tipping point", title: "The Stability Landscape", note: "Drag the driver to deform the valleys. The ball sits in its basin, and jitters. Watch two things as you push toward a tipping point: the basin flattens, and the ball's wandering (variance) and sluggishness (autocorrelation) climb. Push past the fold, then drag the driver back: the gap before return is hysteresis.", driver: "Driver (e.g. warming)", res: "Resilience", variance: "Variance", ac: "Autocorr.", safe: "Safe & stable", edge: "On the edge", reset: "Reset ball" },
   leverage: zh
     ? { eyebrow: "交互 · 梅多斯的杠杆点", title: "系统中的干预位置", note: "按唐娜拉·梅多斯从 12（最弱）到 1（最强）排序。点击任意横档，查看为什么越高越有力，也越难触及。", top: "↑ 更强杠杆 · 更难触及", bottom: "↓ 更弱杠杆 · 争论最密集" }
@@ -29,10 +29,10 @@ const text = {
     ? { eyebrow: "交互 · 雏菊世界的寓言", title: "一个自己守住温度的世界", note: "拖动太阳亮度。虚线是没有生命的裸岩；蓝线是黑白雏菊反馈后的行星温度。太暗或太亮时雏菊无法维持，世界跟随裸岩；中间范围内，黑雏菊增温、白雏菊降温，把温度压成更平的平台。", lum: "太阳亮度", life: "有生命温度", dead: "裸岩温度", cold: "太暗", dim: "昏暗年轻星", hot: "更热恒星", edge: "接近断点", collapse: "越过崩溃", black: "黑", white: "白", bare: "裸地" }
     : { eyebrow: "Interactive · the parable of Daisyworld", title: "A World That Holds Its Own Temperature", note: "Drag solar luminosity. The dashed line is a lifeless rock; the blue line is planetary temperature after black-white daisy feedback. Too dim or too bright and daisies cannot hold; in the middle, black daisies warm and white daisies cool, flattening the temperature into a regulating plateau.", lum: "Solar luminosity", life: "Temp · with life", dead: "Temp · dead rock", cold: "Too dim", dim: "Young, dim star", hot: "Hotter star", edge: "Near the breaking point", collapse: "Past collapse", black: "black", white: "white", bare: "bare" },
   classifier: zh
-    ? { eyebrow: "交互 · 同样的震颤，三道不同的悬崖", title: "分类器听到了你听不到的什么", note: "选择一条崩溃路径。方差和自相关都可能升高，所以单靠警报强度不够；分类器读取接近悬崖的形状，区分跳跃、振荡和稳定性交换。", route: "崩溃路径", fold: "折叠 · 跳跃", hopf: "霍普夫 · 振荡", trans: "跨临界 · 滑移", variance: "方差", ac: "一阶自相关" }
+    ? { eyebrow: "交互 · 三种临界转变", title: "分类器如何区分转变类型", note: "选择一种临界转变路径。三种路径的方差和自相关都可能上升，因此仅凭预警信号强度不足以判断类型；分类器还需要读取接近临界点时的动态形状。", route: "转变路径", fold: "折叠 · 跳跃", hopf: "霍普夫 · 振荡", trans: "跨临界 · 滑移", variance: "方差", ac: "一阶自相关" }
     : { eyebrow: "Interactive · the same tremor, three different cliffs", title: "What a Classifier Hears That You Can't", note: "Pick a route to collapse. Variance and autocorrelation can rise in all three, so alarm strength is not enough; the classifier reads the approach shape and separates a jump, an oscillation, and a stability exchange.", route: "Route to collapse", fold: "Fold · jump", hopf: "Hopf · oscillate", trans: "Transcritical · slide", variance: "Variance", ac: "Lag-1 autocorr." },
   evasion: zh
-    ? { eyebrow: "交互 · 规避还是崩溃", title: "空间斑图的逃生舱口", note: "提高环境压力。关闭自组织，系统到临界点会整体崩溃；打开它，系统会裂成图灵式斑图并撑过更高压力。", stress: "环境压力", mode: "空间自组织", off: "关闭 · 均匀", on: "开启 · 允许斑图" }
+    ? { eyebrow: "交互 · 空间自组织", title: "空间斑图如何改变临界行为", note: "提高环境压力。关闭自组织时，系统越过临界点后整体崩溃；开启后，系统形成图灵式斑图，并可能在更高压力下维持一段时间。", stress: "环境压力", mode: "空间自组织", off: "关闭 · 均匀状态", on: "开启 · 允许形成斑图" }
     : { eyebrow: "Interactive · evade or collapse", title: "The Escape Hatch of Spatial Patterns", note: "Raise environmental stress. With self-organization off, the system collapses at its tipping point; turn it on and patterns let it persist far longer.", stress: "Environmental stress", mode: "Spatial self-organization", off: "Off · uniform", on: "On · patterns allowed" }
 }[kind];
 
@@ -40,12 +40,12 @@ const print = {
   feedback: zh
     ? {
         title: "静态替代 · 反馈引擎",
-        caption: "增益和延迟共同决定控制回路是收敛、振荡，还是失控；符号一旦翻成正反馈，误差会喂养误差。",
+        caption: "增益和延迟共同决定控制回路是收敛、振荡还是失稳；正反馈会使误差进一步扩大。",
         columns: ["设置", "系统行为", "要点"],
         rows: [
-          ["低增益、短延迟、负反馈", "平稳靠近 21°C", "修正足够温和，也来得足够早。"],
-          ["高增益、长延迟、负反馈", "围绕目标来回振荡", "修正抵达时状态已经变了，系统开始追着自己的影子跑。"],
-          ["正反馈", "偏差越修越大", "回路符号翻转后，目标追踪者变成失控放大器。"]
+          ["低增益、短延迟、负反馈", "平稳靠近 21°C", "修正适度且来得及时。"],
+          ["高增益、长延迟、负反馈", "围绕目标振荡", "修正生效时状态已经改变，因而容易反复越过目标。"],
+          ["正反馈", "偏差持续扩大", "反馈方向使变化进一步放大。"]
         ]
       }
     : {
@@ -82,12 +82,12 @@ const print = {
   tipping: zh
     ? {
         title: "静态替代 · 稳定地貌",
-        caption: "驱动因素把山谷压平时，韧性下降，方差和自相关上升；越过折叠点后，系统进入另一个盆地，回程出现迟滞。",
+        caption: "接近临界点时，恢复力下降，方差和自相关上升；越过折叠点后，系统进入另一稳定状态，撤回驱动因素也不会立即恢复原状。",
         columns: ["位置", "预警信号", "结果"],
         rows: [
           ["深盆地", "韧性高，方差低", "扰动后会回到原状态"],
-          ["临界边缘", "韧性低，方差和自相关高", "小扰动也可能触发翻转"],
-          ["越过折叠点", "旧盆地消失", "回撤驱动因素也不会立刻回来"]
+          ["接近临界点", "恢复力低，方差和自相关高", "较小扰动也可能触发转变"],
+          ["越过折叠点", "原稳定状态消失", "撤回驱动因素也不会立即恢复"]
         ]
       }
     : {
@@ -376,9 +376,9 @@ const print = {
       evHold:"Uniform vegetation still holds.", evCrash:"Uniform vegetation collapses abruptly.", evPattern:"Patterns trade uniform cover for persistence.", evSparse:"Patterned cover is sparse but alive."
     },
     zh: {
-      stable:"平静控制——会收敛", overshoot:"先超调，再稳定", hunt:"追逐——开始振荡", runaway:"失控——偏差爆炸", unstable:"不稳定——撕裂自身", calm:"负反馈在安静工作：房间升到 21°C 并守住。感知、比较、修正。", overshootExpl:"它抵达目标，却先冲过头，然后慢慢回落。一点延迟会带来一点超调。", oscillate:"回路仍稳定，但阻尼不足：滞后让它追着自己的尾巴，在 21°C 两侧摆动。", break:"增益 × 延迟太高。控制器对陈旧读数反应，超调，然后继续过度修正。", positive:"正反馈会放大目标偏差，而不是修正偏差。最小的偏离都会喂养自身。",
-      rising:"水龙头仍大于排水口，所以水位继续上升。峰值只会在流入低于流出之后出现。", peak:"水位峰值出现在水龙头已经开始关小之后。存量滞后于流量。", falling:"排水口始终占优；存量下降。", co2Case:"净流入获胜：即使水龙头开始关小，存量最后仍高于起点。", balanceCase:"总量保持平衡：存量从非零起点出发，中途涨落，最后回到接近起点。", emptyCase:"排水获胜：排水口相同，但较小的水龙头补不上流出的总量，存量下降。",
-      high:"高", medium:"中", low:"低", fallingRes:"下降", critical:"临界", tipped:"已翻转——新盆地", edge:"临界边缘——折叠将至", safe:"稳定——深盆地", resilience:"韧性下降", hysteresis:"旧山谷消失，球滚入另一个盆地。往回拖也不会马上回来，必须把驱动因素推到很远的另一边。", resGood:"山谷很陡：球被碰一下也会弹回。早期预警信号很安静。", resWarn:"盆地正在变平。球恢复更慢、晃得更远：临界慢化开始。", resEdge:"山谷几乎平了。恢复极慢，方差高，自相关接近 1。",
+      stable:"稳定控制——逐渐收敛", overshoot:"先超调，再稳定", hunt:"振荡——开始周期变化", runaway:"失稳——偏差扩大", unstable:"不稳定——持续发散", calm:"负反馈正常工作：房间升至 21°C 并维持。过程是感知、比较和修正。", overshootExpl:"系统达到目标前先越过目标，随后逐渐回落。适度延迟会造成超调。", oscillate:"回路仍可能稳定，但阻尼不足：延迟使系统在 21°C 两侧反复振荡。", break:"增益与延迟同时过高。控制器依据滞后读数调整，连续超调并过度修正。", positive:"正反馈放大目标偏差，而不是抵消偏差；很小的偏离也可能持续扩大。",
+      rising:"流入量仍高于流出量，因此水位继续上升；只有流入量低于流出量后，水位才达到峰值。", peak:"水位在流入量开始下降之后才达到峰值，说明存量变化滞后于流量。", falling:"流出量持续高于流入量，存量下降。", co2Case:"净流入仍为正：即使排放增长速度下降，存量最终仍高于初始水平。", balanceCase:"总量基本稳定：存量经历变化后回到接近初始水平。", emptyCase:"流出量占优：较小的流入量无法补偿流出量，存量下降。",
+      high:"高", medium:"中", low:"低", fallingRes:"下降", critical:"临界", tipped:"已转入另一稳定状态", edge:"接近临界点", safe:"稳定状态", resilience:"恢复力下降", hysteresis:"原稳定状态已经消失，系统进入另一状态；撤回驱动因素也不会立即恢复。", resGood:"恢复力较强：扰动后能够较快回到原状态，预警信号不明显。", resWarn:"恢复力正在下降：系统恢复更慢，方差开始增大，临界慢化出现。", resEdge:"接近临界点：恢复极慢，方差较高，自相关接近 1。",
       ladder:[
         ["12","参数","税率、补贴、常数。容易争吵，通常很弱。"],
         ["11","缓冲大小","稳定性存量相对于流量的大小。"],

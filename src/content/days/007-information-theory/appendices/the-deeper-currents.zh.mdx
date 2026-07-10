@@ -34,12 +34,12 @@ import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/ComputationalCapacityLadderFigure.astro";
 
-<Lead drop="我">们在主线页面中完成了两件非同寻常的事：我们用比特度量了事实的分量，也看见了遗忘一个比特会释放多少热量——以 zJ 计。这是这门学科的脊梁。然而，仅有脊梁并不能构成完整的躯体。在香农对比特的定义与兰道尔擦除比特的物理含义之间，横跨了我们此前飞速掠过的一个世纪的思想：第二个与熵同样基础的物理量，用于度量一件事物能透露多少关于另一件事物的信息；你的手机能将照片压缩 95% 且在有静电干扰的信道中无瑕传输的深层原因；一只会走迷宫的机械小鼠；以及一连串最终直达宇宙计算极限的物理限制链条。本附录是一场从容的旅程。</Lead>
+<Lead>主线介绍了香农信息、比特、熵以及兰道尔原理。本附录补充这些概念之间的联系：互信息如何衡量变量之间的统计依赖，相对熵如何描述错误模型带来的额外编码代价，压缩与纠错为何能够协同工作，计算为何受到物理极限约束，以及可逆计算和量子信息如何改变这些问题的边界。</Lead>
 
 <ContentSection>
-<SectionEyebrow number="01"> · 缺失的物理量</SectionEyebrow>
+<SectionEyebrow number="01"> · 互信息与相对熵</SectionEyebrow>
 
-## 互信息，以及错误模型会多占多少码长
+## 互信息与模型失配的编码代价
 
 熵衡量单个信源的不确定性。互信息则衡量两个变量之间的统计依赖：知道 X 后，对 Y 的不确定性减少了多少。雷声透露了闪电的信息；检测结果透露了疾病的信息；第 4 日开启的那扇羊门透露了跑车的信息。捕获这种统计依赖的量，就是<Term>互信息 (mutual information)</Term>。
 
@@ -63,7 +63,7 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 #### 互信息随取值相同概率变化的对比
 
 <DataTable>
-<DataTableHead><DataTableRow><DataTableHeader>取值相同的概率 <MathInline latex={String.raw`P(X=Y)`} /></DataTableHeader><DataTableHeader><MathInline latex={String.raw`H(Y\mid X)`} /></DataTableHeader><DataTableHeader><MathInline latex={String.raw`I(X;Y)`} /></DataTableHeader><DataTableHeader>物理阐释</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableHead><DataTableRow><DataTableHeader>取值相同的概率 <MathInline latex={String.raw`P(X=Y)`} /></DataTableHeader><DataTableHeader><MathInline latex={String.raw`H(Y\mid X)`} /></DataTableHeader><DataTableHeader><MathInline latex={String.raw`I(X;Y)`} /></DataTableHeader><DataTableHeader>解释</DataTableHeader></DataTableRow></DataTableHead>
 <DataTableBody>
 <DataTableRow><DataTableCell>0.50</DataTableCell><DataTableCell>1.00 比特</DataTableCell><DataTableCell>0.00 比特</DataTableCell><DataTableCell>独立硬币；X 无法告诉你任何关于 Y 的信息。</DataTableCell></DataTableRow>
 <DataTableRow><DataTableCell>0.75</DataTableCell><DataTableCell>0.81 比特</DataTableCell><DataTableCell>0.19 比特</DataTableCell><DataTableCell>有噪信道；X 消除了少许关于 Y 的不确定性。</DataTableCell></DataTableRow>
@@ -74,9 +74,9 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 </FormatOnly>
 
 <ContentSection>
-### 惊奇税：相对熵
+### 相对熵：模型失配的代价
 
-熵有一个关系密切的「亲戚」，也是科学中极有用的量。它回答的问题很尖锐：相信一个错误模型，会多消耗多少比特？假设现实从分布 p 中产生结果，而你把世界建模为 q。你每次都按 q 来预估惊奇度，但真实结果服从的是 p。由此增加的平均码长，就是<Term>相对熵 (relative entropy)</Term>，或称<Term>KL 散度 (Kullback–Leibler divergence)</Term>：
+熵有一个关系密切的「亲戚」，也是科学中极有用的量。它回答的问题很尖锐：相信一个错误模型，会多消耗多少比特？假设现实从分布 <MathInline latex={String.raw`p`} /> 中产生结果，而你把世界建模为 <MathInline latex={String.raw`q`} />。你每次都按 <MathInline latex={String.raw`q`} /> 来估计惊奇度，为此预留 <MathInline latex={String.raw`-\log_2 q`} /> 比特；但真实结果服从 <MathInline latex={String.raw`p`} />。由此增加的平均码长，就是<Term>相对熵 (relative entropy)</Term>，或称<Term>KL 散度 (Kullback–Leibler divergence)</Term>：
 
 <Formula>
 <MathBlock latex={String.raw`D(p \| q) = \sum_i p_i \log_2 \frac{p_i}{q_i} \geq 0`} />
@@ -89,18 +89,18 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="02"> · 压缩</SectionEyebrow>
+<SectionEyebrow number="02"> · 压缩与冗余</SectionEyebrow>
 
-## 压掉冗余
+## 消除冗余
 
-熵不仅是一个抽象概念，更是一个可以渐近逼近的底线。香农的<Term>无失真信源编码定理 (source coding theorem)</Term>——有噪信道定理相对低调的孪生兄弟——指出，对指定信源产生的长区块进行编码时，平均速率可以任意逼近 H 比特/符号；若不丢失信息，也不利用模型之外的额外结构，就不能低于 H。熵是相对于该模型不可再压缩的核心：去掉可预测部分之后仍然必须保留的信息。超出这一底限的所有部分都是<Term>冗余 (redundancy)</Term>，而冗余正是压缩技术所猎捕的对象。
+熵不仅是一个抽象概念，更是一个可以渐近逼近的底线。香农的<Term>无失真信源编码定理 (source coding theorem)</Term>——有噪信道定理相对低调的孪生兄弟——指出，对指定信源产生的长区块进行编码时，平均速率可以任意逼近 H 比特/符号；若不丢失信息，也不利用模型之外的额外结构，就不能低于 H。熵是相对于该模型不可再压缩的核心：去掉可预测部分之后仍然必须保留的信息。超出这一底限的所有部分都是<Term>冗余 (redundancy)</Term>，而冗余正是压缩技术试图消除的部分。
 
 普通文本中有多少冗余？非常之多。如果使用 27 个符号（26 个字母加一个空格），一个完全随机的字符流每字母会携带 <MathInline latex={String.raw`\log_2 27 \approx 4.7`} /> 比特的信息。但英语是非常可预测的——q 后面常常跟着 u，th 和 he 反复出现，元音也受到上下文约束。在 1951 年一个著名的实验中，香农让人们猜测隐藏文本的下一个字母，并测量他们猜对的概率，最终得出英语的熵大约为每字母 1 比特（他的估值范围约为 0.6 到 1.3 比特）。这个启示是惊人的：英语有大约四分之三的冗余。Yu cn prbbly rd ths sntnc wth th vwls rmvd（你大概仍能读懂这句去掉元音的话）——因为上下文已经提供了恢复元音所需的大量信息。填字游戏、自动联想输入，以及在嘈杂的派对中听清别人说话的能力，全部依赖于这一冗余盈余。
 
 <Aside>
-<BlockTitle>压缩阶梯</BlockTitle>
+<BlockTitle>压缩方法的层次</BlockTitle>
 
-霍夫曼编码 (Huffman coding)（1952 年）——为常见符号分配短码字——在每次只对单个符号编码时是最优的，但它无法捕获跨符号的模式。算术编码 (Arithmetic coding)（20 世纪 70 年代）表现得更好，它将整条消息编码为 [0, 1) 区间内的一个单一实数，直接紧贴着熵的底限。而 Lempel–Ziv 算法（1977–1978 年）则是自适应的：它动态构建重复子串的字典，使得某种模式第二次出现时只需极短的表示。它们运行在 ZIP、gzip、PNG 和许多日常无损格式中；而音频、视频和现代图像编码还会使用变换、预测和熵编码等机制。它们谁也无法击败给定模型下的香农底限；优秀方案会在其假设下逼近它。
+霍夫曼编码 (Huffman coding)（1952 年）——为常见符号分配短码字——在每次只对单个符号编码时是最优的，但它无法捕获跨符号的模式。算术编码 (Arithmetic coding)（20 世纪 70 年代）表现得更好，它将整条消息编码为 [0, 1) 区间内的一个单一实数，使编码效率逼近熵的下限。而 Lempel–Ziv 算法（1977–1978 年）则是自适应的：它动态构建重复子串的字典，使得某种模式第二次出现时只需极短的表示。它们运行在 ZIP、gzip、PNG 和许多日常无损格式中；而音频、视频和现代图像编码还会使用变换、预测和熵编码等机制。它们谁也无法击败给定模型下的香农底限；优秀方案会在其假设下逼近它。
 
 </Aside>
 
@@ -109,9 +109,9 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="03"> · 终极压缩</SectionEyebrow>
+<SectionEyebrow number="03"> · 算法复杂度</SectionEyebrow>
 
-## 柯尔莫哥洛夫复杂度：信息与计算的交汇
+## 柯尔莫哥洛夫复杂度：信息与计算的联系
 
 香农熵是信源（一个概率分布）的属性。但这里有一个它无法触及的谜题。考虑两个长度为一百万位的数字字符串：一个是投掷硬币产生的一百万个随机比特，另一个是 <MathInline latex={String.raw`\pi`} /> 的前一百万位数字。在香农看来，如果它们是从「均匀分布的数字信源」中抽样出来的，它们看起来承载着同样密度的信息。然而，<MathInline latex={String.raw`\pi`} /> 可以由一段相对很短的程序重新生成，而典型随机字符串几乎无法压缩。那个看似随机的字符串具有更高的描述复杂度。
 
@@ -122,15 +122,15 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="04"> · 对抗黑暗的编码</SectionEyebrow>
+<SectionEyebrow number="04"> · 纠错编码</SectionEyebrow>
 
-## 信息如何在敌意重重的世界中幸存
+## 信息如何在噪声信道中可靠传输
 
 主线页面曾承诺过，在指定信道容量之下，足够长的编码可以渐近实现错误率趋零——只要你能找到那组编码。这场寻宝之旅值得专门讲述，而它始于一个周五晚上在贝尔实验室里备受挫折的男人。
 
 1947 年，理查德·汉明 (Richard Hamming) 在周末可以使用一台继电器计算机，但它总是让他失望：每当它检测到输入中存在错误时，就会直接停机，静静等待周一才来上班的人类操作员。「如果机器能检测到错误，」汉明愤怒地质问，「为什么它不能定位并纠正它呢？」汉明码 (Hamming code)（发表于 1950 年）便诞生自这股怒火中，它是第一个真正的纠错码，并带来了一种从几何角度审视整个领域的全新方式。
 
-其核心思想是<Term>汉明距离 (Hamming distance)</Term>：分隔两个码字所需的比特翻转次数。如果你的有效消息只有 `000` 和 `111`，它们在空间中的距离为 3。单比特错误会把 `000` 变成诸如 `010` 的字符串——但 `010` 仍然比 `111` 更接近 `000`，因此接收端可以通过多数表决来静默纠正它。在比特字符串的这一几何空间中，让你的有效码字拉开足够远的距离，你就能在每个码字周围划分出一个可以纠正错误的保护性「球体」。冗余，在这里被施以了几何学的诡计。
+其核心思想是<Term>汉明距离 (Hamming distance)</Term>：分隔两个码字所需的比特翻转次数。如果你的有效消息只有 `000` 和 `111`，它们在空间中的距离为 3。单比特错误会把 `000` 变成诸如 `010` 的字符串——但 `010` 仍然比 `111` 更接近 `000`，因此接收端可以通过多数表决来静默纠正它。在比特字符串构成的几何空间中，只要让有效码字彼此保持足够距离，就能为每个码字划定可纠正错误的范围。冗余在这里获得了清晰的几何解释。
 
 </ContentSection>
 
@@ -153,18 +153,18 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 </FormatOnly>
 
 <ContentSection>
-### 从火星到你的口袋
+### 从深空通信到日常设备
 
 汉明的几何学扩展成为了一项你时时刻刻依赖却浑然不觉的工程奇迹。里德-所罗门码 (Reed–Solomon codes)（1960 年）将数据视为多项式上的点，并且能够修复整段的突发损毁——这正是划伤的 CD 仍然可以播放、撕裂的二维码仍然可以扫描，以及旅行者号探测器能够在使用比冰箱灯泡还要微弱的发射机的情况下，横跨数十亿公里将外行星的图像低声传回地球的原因。深空任务将编码进行层层嵌套（级联），以从几近纯粹的噪声中剥离出它们的信号。
 
-在数十年的时间里，香农所承诺的与工程师所能建造的之间一直存在着一道鸿沟。后来，这道鸿沟被突然跨过了。Turbo 码通过两个迭代译码器反复交换软信息，使性能逼近信道容量，差距仅为零点几分贝，从而震惊了该领域。低密度奇偶校验码 (LDPC)——由罗伯特·加拉格尔于 1960 年发明，因在当时对硬件计算要求过于苛刻而尘封了三十年，直到 20 世纪 90 年代末被重新发现——如今正为 Wi-Fi、5G 数据信道和存储设备保驾护航。而在 2009 年，埃尔达尔·阿里坎发明的极化码 (polar codes) 成为了第一个明确构造、并被证明可渐近达到二元输入无记忆信道对称容量且具有高效编解码的码族。<StatusChip status={"ok"} label={"已确立"} />。2016 年，全球 5G 标准将极化码用于控制相关信道，而 LDPC 承担了大量数据信道编码。在香农于地图上画下 X 的 68 年后，工程师终于找到了通往它的实际道路。
+数十年来，香农理论给出的性能上限与工程师能够实现的性能之间一直存在明显差距。Turbo 码通过两个迭代译码器反复交换软信息，使性能逼近信道容量，差距仅为零点几分贝，从而改变了该领域。低密度奇偶校验码 (LDPC)——由罗伯特·加拉格尔于 1960 年发明，因在当时对硬件计算要求过于苛刻而尘封了三十年，直到 20 世纪 90 年代末被重新发现——如今正用于 Wi-Fi、5G 数据信道和存储设备。而在 2009 年，埃尔达尔·阿里坎发明的极化码 (polar codes) 成为了第一个明确构造、并被证明可渐近达到二元输入无记忆信道对称容量且具有高效编解码的码族。<StatusChip status={"ok"} label={"已确立"} />。2016 年，全球 5G 标准将极化码用于控制相关信道，而 LDPC 承担了大量数据信道编码。香农提出信道容量理论 68 年后，工程技术终于实现了接近这一极限的编码方案。
 
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="05"> · 巨人的肩膀与科学顽童</SectionEyebrow>
+<SectionEyebrow number="05"> · 信息论的先驱</SectionEyebrow>
 
-## 页面背后的先驱
+## 信息论发展的关键人物
 
 香农并非凭空降临。两位贝尔实验室的前辈曾围绕这一思想做过探索。哈里·奈奎斯特 (Harry Nyquist)（1924 年）推算出了电报线传输信号的速度极限；拉尔夫·哈特利 (Ralph Hartley)（1928 年）在其实际名为《信息传输》的论文中，提出将信息量度量为可能消息数的对数——这正是比特的萌芽，唯独缺少了香农引入概率并抛弃意义的关键一步。香农也承认这条来路：在一些记法中，信息的度量单位至今仍叫「哈特利」。
 
@@ -173,9 +173,9 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="06"> · 当信息走向量子化</SectionEyebrow>
+<SectionEyebrow number="06"> · 量子信息</SectionEyebrow>
 
-## 比特更奇特的同胞
+## 量子比特及其性质
 
 到目前为止，所有内容都假设比特是确定的 0 或 1。量子力学提供了一种更丰富的载体——<Term>量子比特 (qubit)</Term>，而建立在其上的信息论是如此不同，以至于值得专门为其留出一个单元（第 47 日）。此处只介绍足以让你感受到其奇妙的知识。
 
@@ -186,9 +186,9 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="07"> · 规避过路费</SectionEyebrow>
+<SectionEyebrow number="07"> · 可逆计算</SectionEyebrow>
 
-## 可逆计算：如何避免不必要的擦除
+## 可逆计算：减少不必要的擦除
 
 主线页面给出了兰道尔的标准结论：在等温循环中重置一个初始未知的公平比特至少需要 <MathInline latex={String.raw`k_B T \ln 2`} />，因为该操作将两种可能的过去压缩为一个。根本限制只出现在逻辑不可逆的步骤上——即那些无法从输出唯一恢复输入的步骤。如果计算过程尽量避免这类擦除，会发生什么？
 
@@ -199,16 +199,16 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="08"> · 最后一堵墙</SectionEyebrow>
+<SectionEyebrow number="08"> · 计算的物理上限</SectionEyebrow>
 
-## 计算的终极物理极限
+## 计算能力的物理极限
 
 兰道尔原理限制了遗忘的能量。但还有其他阻碍——在速度上、在密度上，以及一块物质所能进行的计算总量的极限上——而追溯它们会将你引向真正令人目眩神迷的方向。2000 年，麻省理工学院的塞斯·劳埃德 (Seth Lloyd) 估算了一台「终极笔记本」：一公斤物质、一升体积，并以物理定律所允许的最高效率被组织起来（《自然》，2000 年 8 月 31 日）。这些是依赖模型的上界估计，不是可制造设备的规格。
 
 速度的上限源自量子力学本身。马戈勒斯-列维京定理 (Margolus–Levitin theorem)（1998 年）用高于基态的能量来约束系统穿过可区分状态的速度，而「操作」的精确定义也取决于具体计数约定。将一公斤静止质量的全部能量（<MathInline latex={String.raw`E=mc^2`} />，约为 <MathInline latex={String.raw`10^{17}`} /> 焦耳）注入劳埃德的理想化计算，你将得到一个约为每秒 <MathInline latex={String.raw`10^{51}`} /> 次操作的物理天花板。而内存的上限则来自对该系统所能占据的状态数的统计：约为 <MathInline latex={String.raw`10^{31}`} /> 比特。这些数字并非工程制造的目标；它们由基本常数 <MathInline latex={String.raw`c`} />、<MathInline latex={String.raw`\hbar`} /> 和 <MathInline latex={String.raw`k_B`} /> 决定。劳埃德也指出了显而易见的障碍：在这一极限下运行的设备会把一公斤物质变成约十亿度的等离子体；他说，这会是一个「封装上的难题」。
 
 <Aside>
-<BlockTitle>信息存在于表面</BlockTitle>
+<BlockTitle>信息与边界面积</BlockTitle>
 
 重力提供了一个最深奥的线索，暗示信息在最底层与物理学交织在一起。贝肯斯坦界限 (Bekenstein bound)（1981 年）本质上是能量—半径熵界：<MathInline latex={String.raw`S \le 2\pi k_B E R/(\hbar c)`} />。当引入引力坍缩和黑洞熵时，面积标度才进入故事：黑洞使相关界限达到饱和，其熵与事件视界面积成正比。这种怪异性——引力区域的最大信息量可以受边界控制——成为了全息原理（由 't Hooft、Susskind 在 20 世纪 90 年代提出） <StatusChip status={"hint"} label={"前沿理论猜想，尚未证实"} printLabel={"有前景"} /> 的温床。在全息对偶适用的理论中，一个引力体可以拥有较低维的边界描述；这比「我们的宇宙编码在遥远二维表面上」要微妙得多。它也引发了黑洞信息悖论，我们将在第 40 日正面对抗它。
 
@@ -221,7 +221,7 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 <Panel class="ladder">
 <PanelTitle>图表 · 速率与总量</PanelTitle>
 
-### 计算能力天梯
+### 计算能力的数量级
 
 <PanelNote>两条分开的对数尺度：设备速率以每秒操作次数表示，宇宙则采用劳埃德对累计操作总数的估计。它们相邻出现，是因为二者都约束计算，但维度并不相同。</PanelNote>
 
@@ -230,9 +230,9 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 </Panel>
 
 <ContentSection>
-<SectionEyebrow number="09"> · 无处不在的线索</SectionEyebrow>
+<SectionEyebrow number="09"> · 跨学科应用</SectionEyebrow>
 
-## 一旦拥有了单位，你就会在万物中看见它
+## 信息单位在不同学科中的应用
 
 香农思想的隐秘力量在于，信息一旦化为一个数字，它便不再专属电信通信领域，而开始出现在处理不确定性、多样性或惊奇度的每一个学科之中。以下是对该线索延伸范围的快速巡览，每一项都是通往后文课题的入口：
 
@@ -242,7 +242,7 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 - 在物理学中，我们今天所定义的信息熵与热机中的热力学熵被发现——或许——是同一种东西，这也是主线页面所标注的问题，且第 33 日将作为「时间之矢」重新讨论它。
 - 在生命本身中，薛定谔关于有机体通过摄入「负熵」（Brillouin 后来称之为 negentropy）来维持生存的思想是信息热力学的雏形——这正是第 83–85 日所围绕的核心谜题，届时今天所学的 <MathInline latex={String.raw`k_B T \ln 2`} /> 将以细胞内部热力学耗散的形式再次出现。
 
-这正是该主题为何在课程中处于目前位置的真实原因，即在 180 天中仅排第七。信息正是因为一旦被度量，便拒绝被禁锢在自身的领域，才与能量、演化、涌现和计算一同，成为了这门课程的五条核心线索之一。它是整张知识地图的结缔组织。
+这正是该主题为何在课程中处于目前位置的真实原因，即在 180 天中仅排第七。信息一旦被度量，便会进入能量、演化、涌现和计算等多个领域，因此成为这门课程的五条核心线索之一，也是连接这些主题的重要概念。
 
 </ContentSection>
 
@@ -250,9 +250,9 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 <BlockTitle>◆ 三句话总结本附录</BlockTitle>
 
 <RecapList>
-<RecapItem term="内容增补">在比特之下蕴含着更完整的代数——互信息（统计依赖，也是指定模型下信道容量的核心）和相对熵（错误模型造成的额外码长，与交叉熵和变分自由能相关但并非同义）——此外还包括渐近压缩极限、实用纠错码，以及通过避免不必要擦除来减少耗散的可逆计算。</RecapItem>
-<RecapItem term="宏观视野">信息的物理性并不仅仅局限于擦除比特时的温热：它还向上延伸到计算速度与密度的硬性极限、黑洞熵、在适用理论中的全息边界描述，以及对宇宙累计操作次数的有限且可数的估计。</RecapItem>
-<RecapItem term="其重要性">在香农将信息转化为数字的瞬间，它便超越了工程学的范畴——如今，同一个 H 同样出现在生物多样性、神经网络训练、DNA、时间之矢以及生命热力学中，这正是它成为本课程核心追踪的五条线索之一的原因。</RecapItem>
+<RecapItem term="内容增补">信息论的基本代数还包括互信息、相对熵、渐近压缩极限、纠错码和可逆计算。它们分别描述统计依赖、模型失配、压缩效率、抗噪传输和耗散减少。</RecapItem>
+<RecapItem term="物理范围">信息的物理意义不仅体现在擦除比特的热耗散，也体现在计算速度、计算密度、黑洞熵以及宇宙可执行操作次数等上限。</RecapItem>
+<RecapItem term="跨学科意义">同一套信息量可以用于生物多样性、神经网络训练、DNA、时间方向和生命热力学，因此信息论同时连接了工程、物理、生命科学和认知科学。</RecapItem>
 </RecapList>
 <Threads>深入线索 › 信息（互信息、KL 散度、柯尔莫哥洛夫复杂度）· 能量（可逆计算、Margolus–Levitin、终极笔记本）· 计算（编码、量子信息、全部计算的极限）· 涌现（复杂度作为不可压缩的结构 → 第 8 日）· 演化与生命（作为比特的 DNA、负熵 → 第 77、83–85 日）。</Threads>
 

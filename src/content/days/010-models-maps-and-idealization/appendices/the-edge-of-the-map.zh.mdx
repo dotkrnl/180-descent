@@ -21,7 +21,7 @@ import Day10StaticFigure from "@app/components/lesson/figures/Day10StaticFigure.
 import Day10FrontierMap from "@app/components/lesson/interactives/Day10FrontierMap.astro";
 import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10PaperPressToggle.astro";
 
-<Lead drop="古">代地图绘制者有个谨慎的习惯：在测绘终止、传闻开始之处，他们画上怪兽，写下「hic sunt dracones」——此处有龙。正文与附录 I 描绘的是相对成熟的疆域：博尔赫斯、贝拉尔米内、验证、可靠主义，以及那场古老的实在论之争。本附录则驶向地图边缘。下文大部分内容来自 2020 年或更晚，许多出自最近几年，而其中相当一部分日后会被证明是错的。这正是重点所在。前沿地带，才是校准最关键的地方。</Lead>
+<Lead>古代制图者有时会在未知区域标注「此处有龙」。本篇并不讨论未知地理，而是讨论 2020 年以来模型科学和 AI 科学中的新问题：机器是否能够操控机器、模型能否发现机制、数据泄漏如何影响可重复性，以及不可解释模型能够提供何种理解。许多结果仍处于早期阶段，必须严格区分已验证结果、合理推测和宣传性主张。</Lead>
 
 <ContinueNote label="◆ 请先读这段">
 本附录可以跳过；它只是为正文补充前沿案例与来源校准细节。
@@ -32,7 +32,7 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 <ContentSection>
 <SectionEyebrow>转向</SectionEyebrow>
 
-## 从构建模型到召唤模型
+## 从人工构建模型到机器生成模型
 
 2020 年后最深刻的变化不是某一项单独结果，而是科学模型由什么构成发生了变化。四个世纪以来，常规配方是明确的：选择理想化、写下方程、求解。大约从 2022 年起，另一种配方开始蔓延。在一个庞大神经网络上用海量领域数据训练，直到它吸收整个领域的统计形态，再把这个模型微调到许多具体任务上。
 
@@ -48,9 +48,9 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 <FormatOnly as="div" media="print" class="pdf-page-break" />
 
 <ContentSection>
-<SectionEyebrow>前沿地图</SectionEyebrow>
+<SectionEyebrow>前沿概览</SectionEyebrow>
 
-## 十三条龙，已排序
+## 十三个研究主张及其证据
 
 深入之前，先把整片前沿放在一张图上。有用的问题不是「这有多令人印象深刻？」而是一个二维问题：<Strong>证据有多扎实</Strong>，以及<Strong>万一成立，它有多重要？</Strong>这两条轴把领域切出了意义。右上角是真正的革命：重大且扎实。左上角是龙出没的地方：庞大主张立于薄冰之上。右下角没那么炫目，却常常更有用：范围窄，但已经能承重的结果。
 </ContentSection>
@@ -59,7 +59,7 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
 <Panel>
-<PanelTitle>前沿地图 · 若成立的影响 × 证据</PanelTitle>
+<PanelTitle>研究主张 · 潜在影响与证据强度</PanelTitle>
 <PanelNote>位置取决于判断，而非测量。编号点会在下方凭据表中展开。</PanelNote>
 
 <Day10StaticFigure kind="frontier-map" locale="zh" />
@@ -70,7 +70,7 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
 <Panel>
-<PanelTitle>前沿凭据</PanelTitle>
+<PanelTitle>证据类型</PanelTitle>
 <PanelNote>下表把网页交互中的编号、状态与判断依据展开，方便 EPUB 和 PDF 阅读。</PanelNote>
 
 <SimpleTable
@@ -94,9 +94,9 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 </FormatOnly>
 
 <ContentSection>
-<SectionEyebrow>急件 1 · 代理模型接管操控</SectionEyebrow>
+<SectionEyebrow>研究方向 1 · 代理模型控制系统</SectionEyebrow>
 
-## 机器现在操控机器
+## 机器学习模型控制机器系统
 
 有些前沿模型已经在最字面的意义上承受负荷：被委以昂贵的硬件和不稳定的等离子体。2022 年，DeepMind 与 EPFL 发表了一个强化学习控制器，它塑造了一台真实<Strong>托卡马克聚变反应堆</Strong>的磁场，在 TCV 装置上将等离子体维持在目标构型。2024 年，后续研究用深度强化学习降低 DIII-D 托卡马克上撕裂不稳定性的风险。当一个学习模型被允许实时引导聚变等离子体时，「只是个模型」就不再是有用的搪塞。<StatusChip status="ok" label="硬件" printLabel="硬件验证" />
 
@@ -104,9 +104,9 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow>急件 2 · 实在论的反击</SectionEyebrow>
+<SectionEyebrow>研究方向 2 · 机制发现</SectionEyebrow>
 
-## 发现定律，而非仅仅拟合
+## 发现机制，而不只是拟合数据
 
 如果说黑箱代理模型是工具主义的胜利，那么一场更安静的反运动正在为实在论而战。它的要求很简单：不要满足于一个只会预测的模型；要让机器交给你一条能读得懂的定律。这就是<Term as="em">符号回归</Term><TipNote text={"符号回归搜索能拟合数据的简洁数学表达式，理想情况下给出一个可解释的规律，而非不透明的预测器。"} />与理论引导的发现。
 
@@ -119,7 +119,7 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
 <Panel>
-<PanelTitle>注意落差 · 论文结果与媒体暗示</PanelTitle>
+<PanelTitle>注意区分 · 论文结果与媒体叙述</PanelTitle>
 <PanelNote>前沿最大的扭曲，藏在谨慎结果与它的发布之间。</PanelNote>
 
 <SimpleTable
@@ -135,9 +135,9 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 </FormatOnly>
 
 <ContentSection>
-<SectionEyebrow>急件 3 · 应让你警惕的结果</SectionEyebrow>
+<SectionEyebrow>研究方向 3 · 数据与可重复性</SectionEyebrow>
 
-## 数据泄漏与 AI 科学中的可重复性危机
+## 数据泄漏与 AI 科学的可重复性
 
 本附录中最重要的结果是一个警告。2023 年，Sayash Kapoor 与 Arvind Narayanan 在 *Patterns* 上发表 *Leakage and the reproducibility crisis in machine-learning-based science*。他们的调查发现，泄漏错误横跨 17 个领域，共影响 294 篇论文。<Term as="em">数据泄漏</Term><TipNote text={"数据泄漏指来自测试目标或未来数据的信息潜入训练、验证、预处理或特征选择。"} />会让模型在论文上看起来很出色，因为评测数据已经部分进入训练流程。
 
@@ -147,16 +147,16 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 </ContentSection>
 
 <Panel>
-<PanelTitle>图示 · 预测技能不等于机制</PanelTitle>
+<PanelTitle>图示 · 预测能力不等于机制解释</PanelTitle>
 <PanelNote>失效模式示意图：在训练范围内表现出色，当模型被推往未曾见过的地方时，却向熟悉处漂移。</PanelNote>
 
 <Day10StaticFigure kind="extrapolation-cliff" locale="zh" />
 </Panel>
 
 <ContentSection>
-<SectionEyebrow>急件 4 · 新哲学</SectionEyebrow>
+<SectionEyebrow>研究方向 4 · 新的认识论问题</SectionEyebrow>
 
-## 一个不可读的模型能让你理解什么？
+## 不可解释模型能够提供何种理解？
 
 哲学家们并未袖手旁观。Emily Sullivan 2022 年的 *Understanding from Machine Learning Models* 给出了最干净的重新框架：阻碍理解的并非黑箱复杂性本身，而是<Term as="em">关联不确定性</Term><TipNote text={"关联不确定性是指：模型是否在经验上以正确的方式与目标系统相连接，这一点存在不确定性。"} />——即模型与其声称所指向的目标系统之间联系薄弱的证据。一个关于错误目标的透明模型什么都给不了你；一个与经验联系紧密的不透明模型仍可能支持理解。不透明性不是核心问题，证据才是。
 
@@ -164,9 +164,9 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow>急件 5 · 大胆的龙</SectionEyebrow>
+<SectionEyebrow>研究方向 5 · 大规模科学模型</SectionEyebrow>
 
-## 虚拟细胞、行星孪生与做科学的 AI
+## 虚拟细胞、地球系统模型与 AI 科学家
 
 现在来到地图的左上角：主张如此宏大，若落地则会重绘一切，而它们今天仍立足于更薄的冰面上。
 
@@ -177,7 +177,7 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 <Strong>自主科学家。</Strong>Sakana AI 2024 年的「AI Scientist」预印本推销了一位端到端自动化研究者：选题、实验、论文、评审。2025 年的独立评估发现了更严峻的现实：十二个提议实验中有五个因编码错误而失败，新颖性判断很差，部分结果是幻觉或误导。结果并非毫无用处；自主科学家的框架正是「有争议」标签的用武之地。<StatusChip status="bad" label="被戳破" printLabel="已被独立戳破" />
 
 <Aside>
-<BlockTitle>材料发现的警示故事</BlockTitle>
+<BlockTitle>材料发现中的警示案例</BlockTitle>
 
 一个故事就能浓缩整篇附录。2023 年，Google DeepMind 的 <Strong>GNoME</Strong> 宣布了 220 万种晶体结构，其中数十万种被预测为稳定。结果真实且令人印象深刻；一篇经同行评议的 ACS 观点文章很快追问，其中有多少是真正新颖、有用或可合成的。2025 年，微软的 <Strong>MatterGen</Strong> 有成效地改变了问题，从列出候选材料转向在目标约束下生成材料，并报告了一个合成验证点。整个弧线就是前沿的缩影：真实结果、夸大标题、同行校正、底层进步。相信论文；审计媒体；等待合成。<StatusChip status="ok" label="真实结果" /> <StatusChip status="bad" label="范围受争议" />
 </Aside>
@@ -186,7 +186,7 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 <ContentSection>
 <SectionEyebrow>未决问题</SectionEyebrow>
 
-## 能下定论的实验
+## 哪些实验能够提供定论？
 
 正确的姿态不是相信，也不是否定。而是知道哪一个结果会改变你的想法。
 
@@ -197,7 +197,7 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 </ContentSection>
 
 <Recap>
-<PanelTitle>◆ 三句话概括本附录</PanelTitle>
+<PanelTitle>◆ 三句话概括本篇</PanelTitle>
 
 <Strong>核心观点：</Strong>2020 年以来，建模已被重新组织在基础模型与学习型代理模型周围——它们无需人类可读的表征就能很好地预测——而符号发现则试图让机器产出可检查的定律。
 

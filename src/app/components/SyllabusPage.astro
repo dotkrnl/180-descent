@@ -31,17 +31,17 @@ const compactBlockTitle = (title: string) => title
 <PageShell
   locale={locale}
   title={isZh ? "课程表" : "Syllabus"}
-  subtitle={isZh ? "一张按依赖关系排序、从根基到前沿的地图。" : "A dependency-ordered map from foundations to the frontier."}
-  eyebrow={isZh ? "地图" : "The map"}
-  description={isZh ? "完整的 180 天课程地图，已发布的课程将在上线时链接。" : "The complete 180-day course map, with published lessons linked as they arrive."}
+  subtitle={isZh ? "一部按知识依赖关系排列、从基础走向前沿的课程。" : "A dependency-ordered map from foundations to the frontier."}
+  eyebrow={isZh ? "课程总览" : "The map"}
+  description={isZh ? "完整的 180 天课程总览，已发布的课程提供在线阅读链接。" : "The complete 180-day course map, with published lessons linked as they arrive."}
   canonicalPath={staticPageUrl(locale, "syllabus")}
   alternatePath={staticPageUrl(alternateLocale(locale), "syllabus")}
 >
   <section class="syllabus-brief" aria-label={isZh ? "课程路线简介" : "Route introduction"}>
     <div class="syllabus-brief-copy">
-      <p class="lede">{isZh ? "课程表是本书穿越世界的路线：它不是一堆互不相关的主题陈列，而是一连串逐级深入的台阶，每一天都为下一天铺就更坚实的地基。它始于追问信念如何赢得信任，继而横跨数学、物理、化学、生命科学、医学、神经科学、人工智能、经济学、社会制度、伦理以及正在塑造未来的种种力量。" : "The syllabus is the book's route through the world: not a shelf of unrelated topics, but a sequence of descents where each day gives the next one firmer ground. It begins by asking how belief earns trust, then moves through mathematics, physics, chemistry, life, medicine, mind, artificial intelligence, economics, societies, ethics, and the future."}</p>
+      <p class="lede">{isZh ? "课程表是全书的结构，而不是彼此无关的主题清单。每一天都建立在前一天之上：从信念如何获得信任开始，逐步进入数学、物理、化学、生命、医学、心智、人工智能、经济、社会制度、伦理，以及正在塑造未来的力量。" : "The syllabus is the book's route through the world: not a shelf of unrelated topics, but a sequence of descents where each day gives the next one firmer ground. It begins by asking how belief earns trust, then moves through mathematics, physics, chemistry, life, medicine, mind, artificial intelligence, economics, societies, ethics, and the future."}</p>
 
-      <p>{isZh ? "每一课都保持着严整的叙事结构：一个通俗易懂的切入点、一个核心模型、一场仍在进行的辩论，以及一段走向新近研究的旅程。前沿观点将被标注为「已确立」、「有前景」或「有争议／炒作风险」。我们审慎对待尚未定论的研究：目的不在于兜售新奇，而在于呈现证据的演变，并赋予其应有的认知权重。" : "Every lesson keeps the same internal shape: an accessible entry point, a core model, a live debate, and a walk toward recent research. The frontier is treated with discipline. Claims are marked as established, promising hints, or contested hype; the goal is not to make novelty feel certain, but to show how evidence changes its weight."}</p>
+      <p>{isZh ? "每一课都遵循同一结构：从易于进入的问题开始，建立核心模型，说明仍在进行的争论，再介绍较新的研究。前沿主张标为「已确立」、「有前景」或「有争议／炒作风险」，以便区分新颖性与证据强度。" : "Every lesson keeps the same internal shape: an accessible entry point, a core model, a live debate, and a walk toward recent research. The frontier is treated with discipline. Claims are marked as established, promising hints, or contested hype; the goal is not to make novelty feel certain, but to show how evidence changes its weight."}</p>
     </div>
 
     <div class="syllabus-progress" aria-label={isZh ? "课程进度" : "Syllabus progress"}>
@@ -51,7 +51,7 @@ const compactBlockTitle = (title: string) => title
       </div>
       {nextDay && (
         <div>
-          <p class="progress-label">{isZh ? "下一日" : "Next descent"}</p>
+          <p class="progress-label">{isZh ? "下一课" : "Next descent"}</p>
           <p class="progress-next">{isZh ? `第 ${padDay(nextDay.day)} 日 · ${nextDay.title}` : `Day ${padDay(nextDay.day)} · ${nextDay.title}`}</p>
         </div>
       )}
@@ -61,8 +61,8 @@ const compactBlockTitle = (title: string) => title
   <section class="syllabus-map" data-syllabus-map aria-labelledby="syllabus-map-title">
     <div class="syllabus-map-head">
       <div>
-        <p class="progress-label">{isZh ? "深度路线" : "Depth route"}</p>
-        <h2 id="syllabus-map-title">{isZh ? "从表面到前沿" : "From surface to frontier"}</h2>
+        <p class="progress-label">{isZh ? "总览" : "Overview"}</p>
+        <h2 id="syllabus-map-title">{isZh ? "从基础到前沿" : "From surface to frontier"}</h2>
         <p>{isZh ? "十三个模块依赖相接；每一段的高度对应其课程日数。" : "Thirteen dependent research blocks; each segment is weighted by its number of days."}</p>
       </div>
       <button class="map-reset" type="button" data-map-reset>{isZh ? "查看全部" : "View all"}</button>
@@ -94,7 +94,7 @@ const compactBlockTitle = (title: string) => title
         );
       })}
     </div>
-    <p class="syllabus-map-status" data-map-status aria-live="polite">{isZh ? "选择一个模块以深入课程表。" : "Select a block to descend into the syllabus."}</p>
+    <p class="syllabus-map-status" data-map-status aria-live="polite">{isZh ? "选择一个模块查看其中的课程。" : "Select a block to descend into the syllabus."}</p>
   </section>
 
   <section class="syllabus-index" aria-labelledby="syllabus-index-title">
@@ -133,7 +133,7 @@ const compactBlockTitle = (title: string) => title
                   <div class="depth-body">
                     <h3 class="depth-title">{contentDay ? <a href={contentDay.url}>{contentDay.title}</a> : day.title}</h3>
                     {contentDay && <p class="depth-summary">{contentDay.summary}</p>}
-                    {!contentDay && <p class="depth-status">{isHere ? (isZh ? "下一次下潜" : "Next descent") : (isZh ? "计划中" : "Planned")}</p>}
+                    {!contentDay && <p class="depth-status">{isHere ? (isZh ? "下一课" : "Next descent") : (isZh ? "计划中" : "Planned")}</p>}
                   </div>
                 </li>
               );
@@ -145,7 +145,7 @@ const compactBlockTitle = (title: string) => title
   </section>
 
   <section class="next-summary" aria-labelledby="what-comes-next">
-    <p class="sec-eyebrow">{isZh ? "续篇" : "Continuation"}</p>
+    <p class="sec-eyebrow">{isZh ? "后续课程" : "Continuation"}</p>
     <h2 id="what-comes-next">{isZh ? "接下来是什么" : "What Comes Next"}</h2>
     {nextDay ? (
       <>

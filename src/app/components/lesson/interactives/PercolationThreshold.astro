@@ -12,7 +12,7 @@ const zh = Astro.props.locale === "zh";
 <Panel class="web-only emergence-percolation">
   <PanelTitle>{zh ? "交互 · 渗流阈值" : "Interactive · the percolation threshold"}</PanelTitle>
   <h3>{zh ? "一片森林何时连成火路？" : "When does a forest become one connected path?"}</h3>
-  <PanelNote>{zh ? "拖动密度滑块。每个格点都会以概率 p 独立填充。青色表示已经从顶部连到底部的贯穿簇；接近 p ≈ 0.59 时，有限网格中的概率曲线会陡然变陡，但不会成为真正无限系统里的数学悬崖。" : "Drag the density slider. Each site is independently filled with probability p. Teal marks a cluster that spans from top to bottom; near p ≈ 0.59 the finite grid's probability curve steepens, but it is not the exact cliff of the infinite ideal."}</PanelNote>
+  <PanelNote>{zh ? "拖动密度滑块。每个格点以概率 p 独立填充。青色表示已经从顶部连到底部的贯穿簇；接近 p ≈ 0.59 时，有限网格中的贯穿概率会迅速上升，但这不等同于无限系统中的精确临界值。" : "Drag the density slider. Each site is independently filled with probability p. Teal marks a cluster that spans from top to bottom; near p ≈ 0.59 the finite grid's probability curve steepens, but it is not the exact cliff of the infinite ideal."}</PanelNote>
 
   <div class="perc-grid">
     <div class="perc-stage">

@@ -71,7 +71,7 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
   >
     <div class="download-strip">
       <div class="wrap wide">
-        <span>{isZh ? "下载本日：" : "Download this day:"}</span>
+          <span>{isZh ? "下载本日课程：" : "Download this day:"}</span>
         <a href={dayEpubUrl}>EPUB</a>
         <a href={dayPdfUrl}>PDF</a>
       </div>
@@ -80,7 +80,7 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
       <aside class="latest-day-banner" aria-label={isZh ? "最新日课" : "Latest day"}>
         <div class="wrap wide">
           <strong>{isZh ? "最新日课" : "Latest day"}</strong>
-          <span>{isZh ? "这是当前最新发布的日课，可能仍有人工编辑尚未完成审阅的粗糙之处。较早日课通常已经经过更多手动质量检查。" : "This is the latest released day, so it may still have sharp edges that the human editor has not finished reviewing yet. Earlier days have usually had more manual quality checks."}</span>
+          <span>{isZh ? "这是目前最新发布的课程，人工编辑可能尚未完成全部审阅；较早的课程通常已经过更多轮手工检查。" : "This is the latest released day, so it may still have sharp edges that the human editor has not finished reviewing yet. Earlier days have usually had more manual quality checks."}</span>
         </div>
       </aside>
     )}
@@ -107,7 +107,7 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
               <summary>
                 <span class="ptitle">{isZh ? "专题深入附录" : "Deep dive appendix"}</span>
                 <span class="deep-dive-title">{title}</span>
-                <span class="deep-dive-sub">{isZh ? "可选延伸阅读。" : "Optional extension."}</span>
+                <span class="deep-dive-sub">{isZh ? "选读内容。" : "Optional extension."}</span>
               </summary>
               <div class="deep-dive-body">
                 <AppendixBody />
@@ -116,7 +116,7 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
           ))}
           <p class="endcap">
             {isZh ? `第 ${paddedDay} 日终 · ` : `End of Day ${paddedDay} · `}
-            <span class="gleam">{isZh ? `还有 ${remainingDays} 日等待深入` : `${remainingDays} descents remain`}</span>
+            <span class="gleam">{isZh ? `尚有 ${remainingDays} 日课程` : `${remainingDays} descents remain`}</span>
           </p>
         </div>
       </div>

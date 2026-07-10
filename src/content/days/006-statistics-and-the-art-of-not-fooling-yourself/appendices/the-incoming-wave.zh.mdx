@@ -38,7 +38,7 @@ import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import TableWrap from "@app/components/lesson/TableWrap.astro";
 import Term from "@app/components/lesson/Term.astro";
 
-<Lead drop="正">文讨论的危险是：<Term>p 值</Term>加上人类的灵活性，可以将噪声转化为文献。本附录则展望未来。2020 年后最值得关注的研究进展并非仅仅是「谨慎使用 AI」或「报告置信区间」。更深层的变化，是把统计保证落实到具体的工作流环节：停止规则、校准集、金标准标注、选择程序、隐私机制和审计日志。新方法可以在持续查看数据时维持错误率控制，用少量可靠标注校正大规模模型预测，或者把隐私机制产生的额外噪声计入不确定性。但每种方法都只在特定条件下有效，不能把它们当成万能保险。</Lead>
+<Lead>正文讨论了 p 值与分析灵活性如何把噪声转化为发表结果。本附录转向 2020 年以来的统计方法，考察研究者如何把错误率控制落实到具体工作流程：停止规则、校准集、金标准标注、选择程序、隐私机制和审计日志。新方法可以在持续查看数据时保持统计保证，也可以用少量可靠标注校正大规模模型预测，或把隐私机制产生的额外噪声纳入不确定性。但每种方法都有明确适用条件，不能被视为普遍有效的保障。</Lead>
 
 <DekGrid>
 <ContinueNote label="◆ 范围与基本规则">
@@ -49,15 +49,15 @@ import Term from "@app/components/lesson/Term.astro";
 <ContentSection>
 <SectionEyebrow>领域地图</SectionEyebrow>
 
-## 十类新方法：按所针对的失效问题分类
+## 十类新方法：按所解决的统计问题分类
 
 <IncomingWaveAtlas id="appendix-d006-the-incoming-wave-atlas" locale="zh" />
 </ContentSection>
 
 <ContentSection id="appendix-d006-the-incoming-wave-anytime">
-<SectionEyebrow number="§1"> 经得起反复查看的统计推断</SectionEyebrow>
+<SectionEyebrow number="§1"> 允许持续查看数据的推断</SectionEyebrow>
 
-## 任意时点有效推断：让重复查看不再破坏错误率控制
+## 任意时点有效推断：在持续查看下保持错误率控制
 
 <Claim>
 <ClaimHeader label="方法 01"><StatusChip status={"ok"} label={"理论已确立"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"普及尚不均衡"} printLabel={"有前景"} /></ClaimHeader>
@@ -71,7 +71,7 @@ import Term from "@app/components/lesson/Term.astro";
 前沿校准器：相关理论已经相当成熟。实际风险在于文化层面：困难往往不在理论，而在团队仍沿用普通的固定样本 <Term>p 值</Term>。如果一个团队运行着持续监测的实验，却仍在报告普通的固定样本 <Term>p 值</Term>，那么其 UI 可能看起来很现代，但推断程序仍停留在 1930 年代的纸笔时代。
 
 <Aside>
-<BlockTitle>第 6 日回溯</BlockTitle>
+<BlockTitle>回顾第 6 日</BlockTitle>
 
 可选停止是假阳性工厂的开关之一。任意时点有效推断并不是说「永远不要查看中间结果」。它说的是：如果中途查看数据本来就是流程的一部分，就要把这种查看纳入统计程序，而非假装它没有发生。
 </Aside>
@@ -81,7 +81,7 @@ import Term from "@app/components/lesson/Term.astro";
 <StatisticsIncomingWaveLab kind="peek" locale="zh" />
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
-### 可选停止参考
+### 可选停止示例
 
 <PanelNote>除非检验是为序贯监测而设计，否则重复查看会提高至少产生一次假警报的几率。</PanelNote>
 
@@ -96,9 +96,9 @@ import Term from "@app/components/lesson/Term.astro";
 </FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-conformal">
-<SectionEyebrow number="§2"> 为黑盒模型加上一层统计保证</SectionEyebrow>
+<SectionEyebrow number="§2"> 为黑盒模型提供统计保证</SectionEyebrow>
 
-## 从共形预测到共形风险控制
+## 共形预测与共形风险控制
 
 <Claim>
 <ClaimHeader label="方法 02"><StatusChip status={"ok"} label={"核心方法已确立"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"风险控制前沿"} printLabel={"有前景"} /></ClaimHeader>
@@ -131,9 +131,9 @@ import Term from "@app/components/lesson/Term.astro";
 </FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-ppi">
-<SectionEyebrow number="§3"> 利用 AI 预测而不全盘接受其错误</SectionEyebrow>
+<SectionEyebrow number="§3"> 使用 AI 预测并校正偏差</SectionEyebrow>
 
-## 预测辅助推断：关键在于偏差校正
+## 预测辅助推断：偏差校正是关键
 
 <Claim>
 <ClaimHeader label="方法 03"><StatusChip status={"ok"} label={"Science 2023"} printLabel={"已确立"} /><StatusChip status={"ok"} label={"PNAS 2024 扩展"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"普及中"} printLabel={"有前景"} /></ClaimHeader>
@@ -162,14 +162,14 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 </FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-dml">
-<SectionEyebrow number="§4"> 机器拟合辅助模型，人类负责因果假设</SectionEyebrow>
+<SectionEyebrow number="§4"> 机器学习辅助因果推断</SectionEyebrow>
 
-## 用于因果效应的双重 / 去偏机器学习
+## 因果效应的双重／去偏机器学习
 
 <Claim>
 <ClaimHeader label="方法 04"><StatusChip status={"ok"} label={"理论已确立"} printLabel={"已确立"} /><StatusChip status={"ok"} label={"工具链成熟"} printLabel={"已确立"} /></ClaimHeader>
 </Claim>
-第 5 日的警告直截了当：相关性不等于干预。要从观测数据中估计因果效应，你必须调整混杂因素，同时又不能把复杂的非线性关系硬塞进线性模型。
+第 5 日的警告直截了当：相关性不等于干预。要从观测数据中估计因果效应，你必须调整混杂因素，同时又不能把复杂的非线性结构强行纳入线性模型。
 
 双重 / 去偏机器学习 (DML) 让机器学习负责拟合高维<Term>辅助函数</Term>（统计文献中也称滋扰函数，nuisance functions），也就是为估计目标参数而引入的辅助模型，例如结果模型和倾向得分模型；再以正交得分和交叉拟合保护目标参数估计，降低辅助模型中的小误差对最终结果的一阶影响。
 
@@ -178,17 +178,17 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 前沿校准器必不可少：DML 降低了对辅助模型具体参数形式的依赖，但并不放宽因果识别所需的假设。如果用于后门调整的变量集选错、存在未测量混杂，或处理分配受隐藏变量影响，即使正交得分计算得很精确，估计得再精确，也可能不是目标因果效应。DML 解决的是<Highlight>灵活建模混杂关系</Highlight>，不能替代因果识别。
 
 <Aside>
-<BlockTitle>第 5 日回溯</BlockTitle>
+<BlockTitle>回顾第 5 日</BlockTitle>
 
-只有在设计和识别论证表明目标可达时，DML 才能帮助估计 <MathInline latex={String.raw`P(Y\mid\operatorname{do}(X))`} />。算法不能把相关关系硬说成因果关系。
+只有在设计和识别论证表明目标可达时，DML 才能帮助估计 <MathInline latex={String.raw`P(Y\mid\operatorname{do}(X))`} />。算法不能把 <MathInline latex={String.raw`P(Y\mid X)`} /> 硬说成因果关系。
 </Aside>
 
 </ContentSection>
 
 <ContentSection id="appendix-d006-the-incoming-wave-selection">
-<SectionEyebrow number="§5"> 先探索，再推断：把选择代价计入分析</SectionEyebrow>
+<SectionEyebrow number="§5"> 探索后推断：校正选择过程</SectionEyebrow>
 
-## 发现后的推断：选择后、因果发现与数据裂变
+## 发现后的推断：选择后分析、因果发现与数据拆分
 
 <Claim>
 <ClaimHeader label="方法 05"><StatusChip status={"hint"} label={"快速变动的前沿"} printLabel={"有前景"} /><StatusChip status={"ok"} label={"核心理论较成熟"} printLabel={"已确立"} /></ClaimHeader>
@@ -226,9 +226,9 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 </FormatOnly>
 
 <ContentSection id="appendix-d006-the-incoming-wave-privacy">
-<SectionEyebrow number="§6"> 当发布的数据并非原始数据</SectionEyebrow>
+<SectionEyebrow number="§6"> 发布数据并非原始数据时</SectionEyebrow>
 
-## 差分隐私：让隐私噪声成为数据发布设计的一部分
+## 差分隐私：将隐私噪声纳入数据发布设计
 
 <Claim>
 <ClaimHeader label="方法 06"><StatusChip status={"hint"} label={"高风险前沿"} printLabel={"有前景"} /><StatusChip status={"hint"} label={"政策相关"} printLabel={"有前景"} /></ClaimHeader>
@@ -244,9 +244,9 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 </ContentSection>
 
 <ContentSection id="appendix-d006-the-incoming-wave-bayes">
-<SectionEyebrow number="§7"> 建模与推断是一套工作流，而不只是一条公式</SectionEyebrow>
+<SectionEyebrow number="§7"> 建模与推断是一套工作流程</SectionEyebrow>
 
-## 贝叶斯工作流与基于模拟的校准
+## 贝叶斯工作流程与基于模拟的校准
 
 <Claim>
 <ClaimHeader label="方法 07"><StatusChip status={"ok"} label={"实践转型"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"计算敏感"} printLabel={"有前景"} /></ClaimHeader>
@@ -262,9 +262,9 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 </ContentSection>
 
 <ContentSection id="appendix-d006-the-incoming-wave-forensics">
-<SectionEyebrow number="§8"> 纠错系统长出了利齿</SectionEyebrow>
+<SectionEyebrow number="§8"> 统计取证工具的发展</SectionEyebrow>
 
-## 大规模统计取证与复现性筛查
+## 大规模统计取证与复现筛查
 
 <Claim>
 <ClaimHeader label="方法 08"><StatusChip status={"ok"} label={"取证方法已验证"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"规模化仍处于早期"} printLabel={"有前景"} /></ClaimHeader>
@@ -281,7 +281,7 @@ Francesca Gino / Data Colada 案例展示了这种力量与危险。Data Colada 
 
 <ContentSection>
 <Panel class="widepanel">
-<PanelTitle>时间轴 · 成熟度与谨慎</PanelTitle>
+<PanelTitle>时间线 · 方法成熟度与适用边界</PanelTitle>
 
 ### 成熟度一瞥
 
@@ -312,7 +312,7 @@ DP 合成数据和差分隐私置信区间迫使分析师将隐私噪声包含�
 <ContentSection id="appendix-d006-the-incoming-wave-silicon">
 <SectionEyebrow number="§9"> 模拟受试者不等于真实受试者</SectionEyebrow>
 
-## LLM 社交模拟与模拟受试者
+## LLM 社会模拟与模拟受试者
 
 <Claim>
 <ClaimHeader label="方法 09"><StatusChip status={"hint"} label={"对初步研究有用"} printLabel={"有前景"} /><StatusChip status={"bad"} label={"作为证据存在争议"} printLabel={"有争议／炒作风险"} /></ClaimHeader>
@@ -328,7 +328,7 @@ LLM 社交模拟提出了一个很有吸引力的问题：如果一个语言模�
 </ContentSection>
 
 <ContentSection id="appendix-d006-the-incoming-wave-ai">
-<SectionEyebrow number="§10"> 当分析师也由 AI 担任</SectionEyebrow>
+<SectionEyebrow number="§10"> 当 AI 承担分析工作</SectionEyebrow>
 
 ## AI 分析师、自动化科学与基准测试污染
 
@@ -346,7 +346,7 @@ LLM 社交模拟提出了一个很有吸引力的问题：如果一个语言模�
 更负责任的做法包括：提示词日志、容器化代码、重复的独立智能体运行、多重宇宙报告、隐藏测试集评估、污染审计、研究预登记的分析指令，以及对系统决策的人类审查。梦想是让 AI 分析师暴露每一个分岔路径。噩梦则是 AI 分析师悄悄选择那个能发表的路径。
 
 <Aside>
-<BlockTitle>第 1 日回溯</BlockTitle>
+<BlockTitle>回顾第 1 日</BlockTitle>
 
 AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更自信，但与支撑结论的可靠证据之间的联系却更少。不要把语言流畅、分析完整或排行榜分数漂亮，误当成结论已经得到可靠证据支持。解药不是少做计算，而是加强审计。
 </Aside>
@@ -367,9 +367,9 @@ AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更�
 </FormatOnly>
 
 <ContentSection>
-<SectionEyebrow>贯穿其中的主线</SectionEyebrow>
+<SectionEyebrow>共同原则</SectionEyebrow>
 
-## 这些新方法并非「信任 AI」，而是「给分析自由度加上可审计的约束」
+## 核心不是信任 AI，而是约束并审计分析自由度
 
 2020 年后最强大的方法共享一个模式。它们接受模型可能是黑盒、分析师可能去探索、实验可能被持续监测、数据可能被隐私保护机制处理、且科研系统可能庞大到无法人工检查。然后它们追问：<Highlight>在哪个环节仍能建立统计保证？</Highlight>
 
@@ -394,9 +394,9 @@ AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更�
 <BlockTitle>◆ 附录要点总结</BlockTitle>
 
 <RecapList>
-<RecapItem term="新工具箱">统计学正在为黑盒、流式、隐私过滤且 AI 辅助的科学进行重建：共形校准层、PPI 偏差校正项、正交因果得分、任意时点有效证据、选择后修正以及工作流级的审计。</RecapItem>
-<RecapItem term="深刻的教训">统计保证必须移至工作流中真正能承载它的部分：停止规则、校准集、金标准标注、选择程序、隐私机制或审计日志。</RecapItem>
-<RecapItem term="即时的危险">模拟受试者、AI 分析师和公开基准测试可以以机器速度重现 p 值操纵，除非提示词、模型版本、重复运行、隐藏测试和完整的分析多重宇宙成为常规的科学记录。</RecapItem>
+<RecapItem term="新工具箱">面对黑盒模型、流式数据、隐私限制和 AI 辅助分析，统计学发展出共形校准、预测辅助推断、正交因果得分、任意时点有效证据、选择后修正和工作流程审计等方法。</RecapItem>
+<RecapItem term="核心教训">统计保证必须落实在工作流程中真正影响结果的环节：停止规则、校准集、金标准标注、选择程序、隐私机制和审计日志。</RecapItem>
+<RecapItem term="现实风险">模拟受试者、AI 分析师和公开基准测试都可能以机器速度重复分析偏差。提示词、模型版本、重复运行、隐藏测试和完整分析记录应成为常规科学记录的一部分。</RecapItem>
 </RecapList>
 </Recap>
 
