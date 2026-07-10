@@ -55,9 +55,10 @@ $layout-tokens: (
   block-signal: var(--signal)
 );
 
-// Research-atlas palette. Bone is the reading surface, abyssal navy is the
-// navigational field, deep teal carries orientation, and signal coral marks
-// action/current position. Both themes expose the same semantic contract.
+// Research-atlas palette. Bone is the light reading and navigation surface,
+// deep teal carries orientation, and signal coral marks action/current
+// position. Abyssal navy is reserved for deliberate highlights in light mode.
+// Both themes expose the same semantic contract.
 $light-theme-tokens: (
   bone: #f3ecdf,
   bone-raised: #fffaf0,
@@ -87,11 +88,11 @@ $light-theme-tokens: (
   abyss: var(--navy),
   abyss-raised: var(--navy-raised),
   abyss-fg: #f7efdf,
-  chrome-bg: var(--navy),
-  chrome-raised: var(--navy-raised),
-  chrome-fg: #f7efdf,
-  chrome-muted: #a9b9b7,
-  chrome-line: #2c4850,
+  chrome-bg: var(--bone-raised),
+  chrome-raised: var(--bone),
+  chrome-fg: var(--navy),
+  chrome-muted: var(--ink-soft),
+  chrome-line: var(--line),
   atlas-grid: 'color-mix(in srgb, var(--teal) 10%, transparent)',
   atlas-grid-strong: 'color-mix(in srgb, var(--teal) 24%, transparent)',
   focus-ring: #b84331,
@@ -99,19 +100,30 @@ $light-theme-tokens: (
   selection-bg: #0b6664,
   selection-fg: #fffaf0,
   shadow: '0 1px 2px rgba(7,29,39,.06), 0 16px 36px -28px rgba(7,29,39,.34)',
-  recap-bg: var(--abyss),
-  recap-fg: var(--abyss-fg),
-  recap-accent: #7ad2c7,
-  recap-gold: #f08a70,
-  recap-muted: color-mix(in srgb, var(--abyss-fg) 62%, transparent),
-  recap-line: color-mix(in srgb, var(--abyss-fg) 18%, transparent),
-  recap-background: 'linear-gradient(145deg, color-mix(in srgb, var(--abyss) 88%, var(--teal) 12%), var(--abyss))',
+  recap-bg: var(--raised),
+  recap-fg: var(--ink),
+  recap-accent: var(--teal),
+  recap-gold: var(--signal-ink),
+  recap-muted: var(--ink-soft),
+  recap-line: var(--line),
+  recap-background: 'linear-gradient(145deg, color-mix(in srgb, var(--raised) 86%, var(--paper)), var(--raised))',
   recap-box-shadow: none,
-  recap-border-width: 0,
+  recap-border-width: 1px,
   tomorrow-bg: transparent,
   tomorrow-border: var(--line-strong),
-  brand-light-opacity: 0,
-  brand-dark-opacity: 1,
+  brand-light-opacity: 1,
+  brand-dark-opacity: 0,
+  lesson-hero-accent-share: 100%,
+  lesson-hero-accent-blend: transparent,
+  lesson-hero-glow-share: 8%,
+  lesson-hero-background: 'linear-gradient(150deg, color-mix(in srgb, var(--raised) 82%, var(--paper)), var(--paper) 72%)',
+  lesson-hero-fg: var(--ink),
+  lesson-hero-muted: var(--ink-soft),
+  lesson-hero-body: var(--ink),
+  lesson-hero-line: var(--line),
+  lesson-hero-figure-bg: var(--raised),
+  lesson-hero-figure-line: var(--line-strong),
+  footer-glow-share: 7%,
   pvalue-bg: var(--raised),
   pvalue-img-bg: var(--paper),
   pvalue-shadow: var(--shadow)
@@ -171,6 +183,17 @@ $dark-theme-tokens: (
   tomorrow-border: color-mix(in srgb, var(--signal) 38%, var(--line-strong)),
   brand-light-opacity: 0,
   brand-dark-opacity: 1,
+  lesson-hero-accent-share: 48%,
+  lesson-hero-accent-blend: var(--abyss-fg),
+  lesson-hero-glow-share: 22%,
+  lesson-hero-background: 'linear-gradient(150deg, color-mix(in srgb, var(--abyss) 88%, var(--accent) 12%), var(--abyss) 72%)',
+  lesson-hero-fg: var(--abyss-fg),
+  lesson-hero-muted: color-mix(in srgb, var(--abyss-fg) 76%, transparent),
+  lesson-hero-body: color-mix(in srgb, var(--abyss-fg) 90%, transparent),
+  lesson-hero-line: color-mix(in srgb, var(--abyss-fg) 22%, transparent),
+  lesson-hero-figure-bg: color-mix(in srgb, var(--raised) 96%, transparent),
+  lesson-hero-figure-line: color-mix(in srgb, var(--abyss-fg) 22%, transparent),
+  footer-glow-share: 24%,
   pvalue-bg: color-mix(in srgb, var(--raised) 78%, var(--navy)),
   pvalue-img-bg: #0b2029,
   pvalue-shadow: '0 1px 2px rgba(0,0,0,.5), 0 16px 36px -24px rgba(0,0,0,.9)'
@@ -203,7 +226,7 @@ $dark-theme-tokens: (
   @include custom-properties($light-theme-tokens);
   @include custom-properties($layout-tokens);
   color-scheme: light;
-  background: var(--chrome-bg);
+  background: var(--paper);
 }
 
 :root[data-theme="dark"] {

@@ -81,3 +81,14 @@
 .statistics-spec-curve .mv-cherry .lh{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;margin:0 0 .35rem;}
 .statistics-spec-curve .mv-cherry.honest .lh{color:var(--ok);}
 .statistics-spec-curve .mv-cherry.cherry .lh{color:var(--contested);}
+
+// Statistics labs share the same legible control scale as the other field
+// instruments; keep dense coordinates in the plots, not in the UI around them.
+.statistics-factory :is(.fp-biglab,.fp-scale,.fp-tests),
+.statistics-effect-lab :is(.se-controls label,.se-metrics span),
+.statistics-ci-coverage :is(.ci-controls label,.ci-metrics span),
+.statistics-spec-curve :is(.mvchip,.mv-read,.mv-cherry .lh){font-size:.8rem;letter-spacing:.07em;}
+.statistics-factory .fp-read,
+.statistics-effect-lab .se-read,
+.statistics-ci-coverage .ci-read,
+.statistics-spec-curve .mv-cherry{font-size:.94rem;line-height:1.5;}

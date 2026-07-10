@@ -28,6 +28,7 @@ article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section{
 article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
 article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
 article.lesson .lesson-appendices > .appendix-figure-wide{
+  min-width:0;
   width:var(--lesson-exhibit);
   max-width:none;
   margin-right:0;
@@ -43,10 +44,21 @@ article.lesson .lesson-appendices > .appendix-figure-wide{
   article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
   article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
   article.lesson .lesson-appendices > .appendix-figure-wide{
-    width:min(62rem,var(--col-wide));
+    // At the rail breakpoint, cap breakouts to the viewport space that
+    // remains after the rail, its gap, and the outer page gutters.
+    width:min(62rem,var(--col-wide),calc(100vw - var(--rail-w) - var(--rail-gap) - var(--page-pad,1.35rem) - var(--page-pad,1.35rem)));
     margin-left:50%;
     transform:translateX(-50%);
   }
+}
+
+article.lesson :is(.panel.web-only,.statistics-appendix-lab,.widepanel){min-width:0;}
+article.lesson :is(.panel.web-only,.statistics-appendix-lab,.widepanel) > *{min-width:0;max-width:100%;}
+article.lesson :is(.panel.web-only,.statistics-appendix-lab,.widepanel) :is(img,svg,canvas,video){max-width:100%;}
+article.lesson :is(.panel.web-only,.statistics-appendix-lab,.widepanel) input[type="range"]{
+  min-width:0;
+  max-width:100%;
+  margin-inline:0;
 }
 
 // ---------------------------------------------------------------------------
@@ -61,8 +73,8 @@ article.lesson > .lesson-nav{
 article.lesson > .lesson-nav .lesson-nav-kicker{
   color:var(--block-accent,var(--accent));
   font-family:var(--font-mono);
-  font-size:.59rem;
-  letter-spacing:.12em;
+  font-size:.74rem;
+  letter-spacing:.09em;
   text-transform:uppercase;
 }
 article.lesson > .lesson-nav .lesson-nav-title{
@@ -84,6 +96,13 @@ article.lesson > .lesson-nav-top{
   margin-bottom:0;
   border-bottom:1px solid var(--line);
 }
+article.lesson > .lesson-nav-top .lesson-nav-contents{
+  appearance:none;
+  display:none;
+  color:inherit;
+  font:inherit;
+  cursor:pointer;
+}
 article.lesson > .lesson-nav-top .lesson-nav-card{
   display:flex;
   min-width:0;
@@ -104,7 +123,7 @@ article.lesson > .lesson-nav-top .lesson-nav-title{
   min-width:0;
   align-items:baseline;
   font-family:var(--font-mono);
-  font-size:.67rem;
+  font-size:.78rem;
   letter-spacing:.015em;
 }
 article.lesson > .lesson-nav-top .lesson-nav-previous{justify-content:flex-start;}
@@ -123,6 +142,28 @@ article.lesson > .lesson-nav-top .lesson-nav-card:focus-visible{
   background:color-mix(in srgb,var(--block-accent,var(--accent)) 7%,transparent);
 }
 article.lesson > .lesson-nav-top .lesson-nav-card.is-disabled{cursor:default;}
+
+@media screen and (max-width:74.99rem){
+  article.lesson > .lesson-nav-top .lesson-nav-syllabus{display:none;}
+  article.lesson > .lesson-nav-top .lesson-nav-contents:not([hidden]){
+    display:flex;
+    flex-direction:row;
+    gap:.45rem;
+  }
+  article.lesson > .lesson-nav-top .lesson-nav-contents .fab-glyph{
+    display:inline-flex;
+    width:.85rem;
+    flex:0 0 .85rem;
+    flex-direction:column;
+    gap:3px;
+  }
+  article.lesson > .lesson-nav-top .lesson-nav-contents .fab-glyph i{
+    display:block;
+    height:1px;
+    background:currentColor;
+  }
+  article.lesson > .lesson-nav-top .lesson-nav-contents .fab-glyph i:nth-child(2){width:72%;}
+}
 
 article.lesson > .lesson-nav-bottom{
   grid-template-columns:minmax(0,1fr) minmax(7rem,.48fr) minmax(0,1fr);
@@ -143,7 +184,7 @@ article.lesson > .lesson-nav-bottom .lesson-nav-title{line-height:1.22;}
   article.lesson .lesson-reading > .wrap{padding-inline:1.35rem;}
   article.lesson > .lesson-nav{padding-inline:.65rem;}
   article.lesson > .lesson-nav-top .lesson-nav-card{gap:.35rem;padding-inline:.45rem;}
-  article.lesson > .lesson-nav-top .lesson-nav-title{font-size:.62rem;}
+  article.lesson > .lesson-nav-top .lesson-nav-title{font-size:.74rem;}
   article.lesson > .lesson-nav-top .lesson-nav-name,
   article.lesson > .lesson-nav-top .lesson-nav-separator{display:none;}
   article.lesson > .lesson-nav-bottom{
@@ -210,11 +251,28 @@ article.lesson .sources{
   padding-top:1.5rem;
   border-top:1px solid var(--line-strong);
 }
-article.lesson :is(.formula,.katex-display,.mathline){
+article.lesson .sources a{overflow-wrap:anywhere;}
+article.lesson :is(.formula,.mathline){
   max-width:100%;
   overflow-x:auto;
   overflow-y:hidden;
   scrollbar-width:thin;
+}
+article.lesson .katex-display{max-width:100%;}
+
+@media screen and (max-width:40rem){
+  article.lesson .chiprow .chip{
+    max-width:100%;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  // A flex:1 shorthand gave neighbor sliders a zero basis beside simulation
+  // buttons, collapsing the range and drawing its label over adjacent tools.
+  article.lesson .panel.web-only .emergence-controls > .nbr-row{
+    width:100%;
+    flex:1 0 100%;
+  }
+  article.lesson .panel.web-only .emergence-controls > .nbr-row input[type="range"]{flex:1 1 auto;}
 }
 
 .mtl li.prog::before{border-color:var(--hint);background:var(--raised);}

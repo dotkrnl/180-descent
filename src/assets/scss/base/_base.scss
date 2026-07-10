@@ -28,8 +28,8 @@ body {
     var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: clamp(1.04rem, .94rem + .24vw, 1.18rem);
-  line-height: 1.72;
+  font-size: clamp(1.1rem, 1.02rem + .22vw, 1.22rem);
+  line-height: 1.7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -199,8 +199,8 @@ a:hover {
   }
 }
 
-// The colophon is deliberately always abyssal: it closes every route at the
-// same visual depth, independent of the reader's light/dark preference.
+// The colophon follows the active theme: paper-like in light mode and abyssal
+// in dark mode. The signal rule keeps the route ending visually distinct.
 .atlas-shell .site-footer {
   position: relative;
   isolation: isolate;
@@ -209,7 +209,7 @@ a:hover {
   padding: clamp(2.75rem, 6vw, 5.5rem) 0 clamp(3rem, 6vw, 5rem);
   border-top: 3px solid var(--signal);
   background:
-    radial-gradient(circle at 12% -30%, color-mix(in srgb, var(--teal) 24%, transparent), transparent 28rem),
+    radial-gradient(circle at 12% -30%, color-mix(in srgb, var(--teal) var(--footer-glow-share), transparent), transparent 28rem),
     linear-gradient(145deg, var(--chrome-raised), var(--chrome-bg) 58%);
   color: var(--chrome-muted);
 }

@@ -6,7 +6,7 @@ import type { DayAppendixRenderEntry, RegistryDayRouteProps } from "@app/day-rou
 import { getBookData, getSyllabus } from "@app/site-data";
 import { dayArtifactDownloadUrl } from "@lib/artifacts/downloads";
 import { daySocialImagePath } from "@lib/assets/social-images";
-import { alternateLocale, dayUrl, staticPageUrl } from "@lib/static-site/routes";
+import { alternateLocale, dayUrl } from "@lib/static-site/routes";
 
 interface Props extends RegistryDayRouteProps {
   Body: AstroComponentFactory;
@@ -121,23 +121,6 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
         </div>
       </div>
     </div>
-    <nav class="reading-dock" aria-label={isZh ? "阅读控制" : "Reading controls"}>
-      {previous ? (
-        <a class="dock-step" href={dayUrl(entry.locale, previous.path)} aria-label={isZh ? `上一篇：${previous.title}` : `Previous: ${previous.title}`}>
-          <span aria-hidden="true">←</span>
-        </a>
-      ) : <span class="dock-step is-disabled" aria-hidden="true">←</span>}
-      <button class="toc-fab" type="button" data-rail-fab aria-controls="lessonRail" aria-expanded="false" hidden>
-        <span class="fab-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
-        {isZh ? "目录" : "Contents"}
-      </button>
-      <a class="dock-progress" href={staticPageUrl(entry.locale, "syllabus")} data-dock-progress data-dock-label={isZh ? "，在课程表中查看阅读进度" : ", view reading progress in the syllabus"} aria-label={isZh ? "0%，在课程表中查看阅读进度" : "0%, view reading progress in the syllabus"}>0%</a>
-      {next ? (
-        <a class="dock-step" href={dayUrl(entry.locale, next.path)} aria-label={isZh ? `下一篇：${next.title}` : `Next: ${next.title}`}>
-          <span aria-hidden="true">→</span>
-        </a>
-      ) : <span class="dock-step is-disabled" aria-hidden="true">→</span>}
-    </nav>
     <DayNav locale={entry.locale} previous={previous} next={next} position="bottom" />
   </article>
 </BookShell>

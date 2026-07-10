@@ -4,6 +4,7 @@
   var root = document.documentElement;
   var themeBtn = document.getElementById("themeBtn");
   var themeFavicon = document.getElementById("themeFavicon");
+  var themeColor = document.getElementById("themeColor");
   var colorSchemeQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
   var themeStorageKey = "180-descent-theme";
   var readingStorageKey = "180-descent-reading-progress";
@@ -58,7 +59,14 @@
   function syncTheme(){
     syncThemeButton();
     syncThemeFavicon();
+    syncThemeColor();
     syncThemeImages();
+  }
+
+  function syncThemeColor(){
+    if(themeColor){
+      themeColor.setAttribute("content", effectiveTheme() === "dark" ? "#071820" : "#fffaf0");
+    }
   }
 
   function syncThemeButton(){

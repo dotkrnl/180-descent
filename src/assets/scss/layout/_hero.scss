@@ -1,27 +1,27 @@
 
 header.hero,.page-hero{padding-top:3.2rem;padding-bottom:1.2rem;}
-// The lesson opens as a field note lowered into the abyss: the title owns the
-// composition, while the block color acts as a navigational signal rather
-// than a decorative wash. The higher-specificity selectors keep this module
-// authoritative when optional visual layers are loaded later.
+// The lesson opens as a compact field note. Light mode stays on paper while
+// dark mode inherits the original abyssal palette through semantic tokens.
+// Block color remains an orientation signal rather than a decorative wash.
 article.lesson .lesson-reading > header.hero{
-  --hero-accent:color-mix(in srgb,var(--block-accent,var(--accent)) 48%,var(--abyss-fg));
+  --hero-accent:color-mix(in srgb,var(--block-accent,var(--accent)) var(--lesson-hero-accent-share),var(--lesson-hero-accent-blend));
   position:relative;
   isolation:isolate;
   display:block;
   width:min(72rem,calc(100% - 2rem));
   max-width:72rem;
-  min-height:clamp(31rem,64vh,48rem);
-  margin:1rem auto clamp(3.25rem,7vw,6.5rem);
-  padding:clamp(3rem,7vw,6.5rem) clamp(1.35rem,5vw,5rem) clamp(2.75rem,6vw,5rem);
+  min-height:clamp(24rem,48vh,34rem);
+  margin:.75rem auto clamp(2.5rem,5vw,4.5rem);
+  padding:clamp(2rem,4vw,3.75rem) clamp(1.35rem,4vw,4rem) clamp(2rem,4vw,3.5rem);
   overflow:hidden;
   border-top:3px solid var(--hero-accent);
-  border-bottom:1px solid color-mix(in srgb,var(--abyss-fg) 22%,transparent);
+  border-bottom:1px solid var(--lesson-hero-line);
   background:
-    radial-gradient(circle at 88% 16%,color-mix(in srgb,var(--block-accent,var(--accent)) 22%,transparent),transparent 31%),
-    linear-gradient(150deg,color-mix(in srgb,var(--abyss) 88%,var(--accent) 12%),var(--abyss) 72%);
-  color:var(--abyss-fg);
+    radial-gradient(circle at 88% 16%,color-mix(in srgb,var(--block-accent,var(--accent)) var(--lesson-hero-glow-share),transparent),transparent 31%),
+    var(--lesson-hero-background);
+  color:var(--lesson-hero-fg);
 }
+article.lesson .lesson-reading > header.hero > *{min-width:0;}
 article.lesson .lesson-reading > header.hero::before{
   position:absolute;
   z-index:-1;
@@ -49,7 +49,7 @@ article.lesson .lesson-reading > header.hero::after{
   background:linear-gradient(90deg,var(--hero-accent),transparent 72%);
   content:"";
 }
-.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 .9rem;}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.77rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 .9rem;}
 .block-scope .eyebrow{color:var(--block-accent,var(--accent));}
 .daymark{color:var(--brass);}
 h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(2.2rem,1.05rem + 4.8vw,4.3rem);line-height:1.03;letter-spacing:-.01em;margin:.2rem 0 .1rem;text-wrap:balance;}
@@ -61,25 +61,25 @@ h1 u{color:var(--accent-deep);text-decoration:none;}
 article.lesson .lesson-reading > header.hero > .eyebrow{
   position:relative;
   color:var(--hero-accent);
-  font-size:.68rem;
-  letter-spacing:.17em;
+  font-size:.77rem;
+  letter-spacing:.13em;
 }
 article.lesson .lesson-reading > header.hero > h1{
   position:relative;
-  max-width:13ch;
+  max-width:min(11ch,100%);
   margin:.2rem 0 .75rem;
-  color:var(--abyss-fg);
-  font-size:clamp(3rem,1.75rem + 5vw,6.35rem);
+  color:var(--lesson-hero-fg);
+  font-size:clamp(2.85rem,1.65rem + 3.5vw,5.25rem);
   font-weight:500;
-  line-height:.96;
-  letter-spacing:-.035em;
+  line-height:.98;
+  letter-spacing:-.03em;
 }
 article.lesson .lesson-reading > header.hero > h1 :is(em,u){color:var(--hero-accent);}
 article.lesson .lesson-reading > header.hero > .sub{
   position:relative;
   max-width:35rem;
   margin:.8rem 0 0;
-  color:color-mix(in srgb,var(--abyss-fg) 76%,transparent);
+  color:var(--lesson-hero-muted);
   font-size:clamp(1.15rem,.95rem + .75vw,1.55rem);
   line-height:1.42;
 }
@@ -88,10 +88,10 @@ article.lesson .lesson-reading > header.hero > :is(.lede,p:not(.eyebrow,.sub)){
   max-width:68ch;
   margin-right:0;
   margin-left:0;
-  color:color-mix(in srgb,var(--abyss-fg) 90%,transparent);
+  color:var(--lesson-hero-body);
 }
-article.lesson .lesson-reading > header.hero > .lede{margin-top:clamp(2.5rem,6vw,5rem);}
-article.lesson .lesson-reading > header.hero :is(strong){color:var(--abyss-fg);}
+article.lesson .lesson-reading > header.hero > .lede{margin-top:clamp(1.75rem,3vw,2.75rem);}
+article.lesson .lesson-reading > header.hero :is(strong){color:var(--lesson-hero-fg);}
 article.lesson .lesson-reading > header.hero :is(.term,.hl,a){color:var(--hero-accent);}
 article.lesson .lesson-reading > header.hero a{border-bottom-color:color-mix(in srgb,var(--hero-accent) 48%,transparent);}
 article.lesson .lesson-reading > header.hero > .lede.dropcap::first-letter,
@@ -103,11 +103,11 @@ article.lesson .lesson-reading > header.hero > .lede .drop{color:var(--hero-acce
 article.lesson .lesson-reading > header.hero > figure{
   position:relative;
   width:100%;
-  max-width:26rem;
-  margin:2.25rem auto 1rem;
+  max-width:23rem;
+  margin:1.5rem auto .5rem;
   padding:clamp(.75rem,2vw,1.25rem);
-  border:1px solid color-mix(in srgb,var(--abyss-fg) 22%,transparent);
-  background:color-mix(in srgb,var(--raised) 96%,transparent);
+  border:1px solid var(--lesson-hero-figure-line);
+  background:var(--lesson-hero-figure-bg);
   color:var(--ink);
 }
 article.lesson .lesson-reading > header.hero > figure :is(svg,img){display:block;width:100%;height:auto;}
@@ -115,16 +115,16 @@ article.lesson .lesson-reading > header.hero > figure figcaption{
   margin:.7rem 0 0;
   color:var(--ink-soft);
   font-family:var(--font-mono);
-  font-size:.68rem;
+  font-size:.82rem;
   line-height:1.45;
 }
 
 @media screen and (min-width:60rem){
   article.lesson .lesson-reading > header.hero:has(> figure){
     display:grid;
-    grid-template-columns:minmax(0,1.25fr) minmax(15rem,.75fr);
+    grid-template-columns:minmax(0,1.3fr) minmax(14rem,.7fr);
     align-items:center;
-    gap:1rem clamp(2.5rem,6vw,6rem);
+    gap:1rem clamp(2rem,4vw,4rem);
   }
   article.lesson .lesson-reading > header.hero:has(> figure) > :is(.eyebrow,h1,.sub){grid-column:1;}
   article.lesson .lesson-reading > header.hero:has(> figure) > figure{
@@ -164,13 +164,13 @@ article.lesson .lesson-reading > header.hero > figure figcaption{
 .flock-band{fill:url(#emergence-wave);opacity:.22;}
 .flock-wave{fill:none;stroke:var(--accent-deep);stroke-width:2.1;stroke-linecap:round;}
 .flock-wave.lower{stroke:var(--brass);stroke-width:1.5;opacity:.72;}
-.stopped-tag,.sun-tag{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--brass);margin-top:.6rem;display:block;}
+.stopped-tag,.sun-tag{font-family:"IBM Plex Mono",monospace;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);margin-top:.6rem;display:block;}
 .stopped-tag{color:var(--contested);}
-.hero-art figcaption{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--ink-faint);margin-top:.55rem;letter-spacing:.04em;line-height:1.5;}
+.hero-art figcaption{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-faint);margin-top:.55rem;letter-spacing:.03em;line-height:1.5;}
 .lesson-figure{margin:1.8rem auto;max-width:42rem;}
 .lesson-figure.is-portrait{max-width:28rem;}
 .lesson-figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:var(--raised);box-shadow:var(--shadow);}
-.lesson-figure figcaption{font-family:"IBM Plex Mono",monospace;font-size:.72rem;line-height:1.55;letter-spacing:.04em;color:var(--ink-faint);margin-top:.6rem;}
+.lesson-figure figcaption{font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.55;letter-spacing:.03em;color:var(--ink-faint);margin-top:.6rem;}
 .lesson-figure.pvalue-figure{background:var(--pvalue-bg);border:1px solid var(--line);border-radius:8px;padding:.65rem;box-shadow:var(--pvalue-shadow);}
 .lesson-figure.pvalue-figure img{border:0;border-radius:6px;background:var(--pvalue-img-bg);box-shadow:none;}
 .lesson-figure.pvalue-figure figcaption{margin:.65rem 0 0;padding-top:.6rem;border-top:1px solid var(--line);background:transparent;}
@@ -184,11 +184,11 @@ article.lesson .lesson-reading > header.hero > figure figcaption{
     width:100%;
     min-height:0;
     margin-top:0;
-    margin-bottom:3rem;
-    padding:2.6rem 1.35rem 3rem;
+    margin-bottom:2.5rem;
+    padding:2.1rem 1.35rem 2.4rem;
   }
-  article.lesson .lesson-reading > header.hero > h1{font-size:clamp(2.8rem,14vw,4.7rem);}
-  article.lesson .lesson-reading > header.hero > figure{max-width:22rem;margin-top:1.8rem;}
+  article.lesson .lesson-reading > header.hero > h1{font-size:clamp(2.6rem,12vw,4rem);}
+  article.lesson .lesson-reading > header.hero > figure{max-width:18.5rem;margin-top:1.4rem;}
 }
 
 @media print{
@@ -218,10 +218,10 @@ article.lesson .lesson-reading > header.hero > figure figcaption{
 }
 
 .whereblock{border-left:3px solid var(--brass);background:linear-gradient(to right,color-mix(in srgb,var(--brass) 7%,transparent),transparent 70%);padding:1rem 1.2rem;margin:2.2rem 0;border-radius:0 8px 8px 0;}
-.whereblock .label{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin:0 0 .4rem;}
+.whereblock .label{font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin:0 0 .4rem;}
 .whereblock p{margin:.3rem 0;font-size:.97em;color:var(--ink-soft);}
-section{margin:3rem 0;}
-.sec-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:.7rem;margin:0 0 .55rem;}
+article.lesson .lesson-reading section{margin:3rem 0;}
+.sec-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:.7rem;margin:0 0 .55rem;}
 .sec-eyebrow::before{content:"";width:1.7rem;height:1px;background:var(--block-accent,var(--accent));}
 h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.55rem,1rem + 2.1vw,2.2rem);line-height:1.1;margin:.1rem 0 1rem;text-wrap:balance;}
 h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.28rem;margin:2rem 0 .5rem;}
@@ -238,7 +238,7 @@ blockquote .src{display:block;font-family:"IBM Plex Mono",monospace;font-style:n
 .aside,.panel,.format-alt{background:var(--raised);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.25rem;margin:1.8rem 0;box-shadow:var(--shadow);font-size:.95em;}
 .aside.evidence-status-note{margin-top:1.4rem;}
 .panel{border-radius:14px;padding:1.5rem 1.4rem 1.6rem;margin:2rem 0;}
-.aside .h,.recap .h,.tomorrow .h,.panel .ptitle,.format-alt .ptitle{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem;}
+.aside .h,.recap .h,.tomorrow .h,.panel .ptitle,.format-alt .ptitle{font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem;}
 .panel .ptitle,.format-alt .ptitle{font-size:.84rem;letter-spacing:.11em;line-height:1.35;}
 .panel h3,.panel h4,.format-alt h3,.format-alt h4{font-family:"Fraunces",serif;font-weight:600;font-size:1.3rem;margin:.1rem 0 .3rem;}
 .panel .pnote,.format-alt .pnote{font-size:.9em;color:var(--ink-soft);margin:0 0 1.1rem;}

@@ -994,3 +994,40 @@ html[lang^="zh"] .day11-slider-label{letter-spacing:0;text-transform:none;}
 .mtl li{position:relative;padding:0 0 1.15rem 2rem;}
 .mtl li::before{content:"";position:absolute;left:1px;top:.45em;width:14px;height:14px;border-radius:50%;background:var(--raised);border:2px solid var(--accent);}
 .mtl li.done::before{background:var(--accent);}
+
+// Readability floor for operational text. Individual labs may keep their
+// bespoke hierarchy, but controls and explanatory labels should never fall
+// back to the 8–11px microtype used by the previous dense atlas treatment.
+.panel.web-only :is(
+  button,.btn,.pbtn,.simbtn,.iibtn,.exbtn,.cm-btn,.mr-btn,.fsbtn,.hfbtn,
+  .lm-btn,.mvchip,.frontier-seg button,.ca-rulepick button,
+  .day10-presets button,.day11-optbtn
+){font-size:.82rem;line-height:1.25;}
+
+.panel.web-only :is(
+  label,.nbr-row,.slider-row label,.sum-readout,.preset-row button,
+  .legend,.day10-control-label,.day11-control-label,.day11-meter-label,
+  .day11-slider-label,.frontier-readout,.ca-read,.rbn-regime,.rbn-rate
+){font-size:.82rem;}
+
+.panel.web-only :is(
+  figcaption,.pnote,.readout,.lm-caption,.frontier-readout,.fp-read,.se-read,
+  .ci-read,.ii-vexpl,.cm-out,.mr-expl,.day10-verdict,.day11-verdict,
+  .ev-caption,.ch-note,.day11-micro-note
+){font-size:.9rem;line-height:1.5;}
+
+.panel.web-only :is(
+  .card-kicker,.frontier-minihead,.presets .h,.ii-examples .h,
+  .day10-presets p,.fp-biglab,.school .tag,.ch-eyebrow
+){font-size:.76rem;letter-spacing:.08em;}
+
+.panel.web-only :is(canvas,svg,img){max-width:100%;}
+.panel.web-only :is(
+  .gm-grid,.lab-grid,.grid2,.frontier-grid,.rbn-grid,.gol-wrap,.perc-grid,
+  .ii-grid,.day10-dial-grid,.day10-levins-grid,.day11-button-row
+) > *{min-width:0;}
+
+@media(max-width:40rem){
+  .panel.web-only{padding:1rem;}
+  .panel.web-only :is(button,.btn,.pbtn,.simbtn,.iibtn,.exbtn,.cm-btn,.mr-btn,.fsbtn,.hfbtn){white-space:normal;}
+}
