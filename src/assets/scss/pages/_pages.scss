@@ -88,7 +88,7 @@
 .mini{display:flex;gap:.7rem;align-items:flex-start;background:color-mix(in srgb,var(--raised) 72%,transparent);border:1px solid var(--line);border-radius:8px;padding:.8rem;}
 .mini .num{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--brass);min-width:2.4rem;}
 .mini p{font-size:.92em;line-height:1.46;margin:0;color:var(--ink-soft);}
-.widepanel{max-width:58rem;margin-left:auto;margin-right:auto;}
+.widepanel{margin-left:auto;margin-right:auto;}
 .timeline{margin:1.5rem 0;}
 .tl-item{display:flex;gap:.95rem;margin-bottom:1.35rem;position:relative;}
 .tl-item::before{content:"";position:absolute;left:7px;top:22px;bottom:-13px;width:2px;background:var(--line);}
@@ -194,7 +194,7 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
 
 // ---- Home cover -------------------------------------------------------
 .cover{border-bottom:1px solid var(--line);background:linear-gradient(to bottom,color-mix(in srgb,var(--accent) 5%,var(--paper)) 0%,var(--paper) 78%);}
-.cover-inner{max-width:76rem;margin:0 auto;padding:clamp(2.8rem,7vh,5rem) 1.35rem clamp(2.4rem,6vh,3.6rem);display:grid;grid-template-columns:minmax(0,1.55fr) minmax(16rem,.75fr);gap:clamp(2rem,5vw,4.5rem);align-items:center;}
+.cover-inner{max-width:var(--shell);margin:0 auto;padding:clamp(2.8rem,7vh,5rem) 1.35rem clamp(2.4rem,6vh,3.6rem);display:grid;grid-template-columns:minmax(0,1.55fr) minmax(16rem,.75fr);gap:clamp(2rem,5vw,4.5rem);align-items:center;}
 .cover-text h1{font-size:clamp(2.7rem,1.2rem + 6vw,5rem);}
 .cover-kicker{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:1.9rem 0 .55rem;}
 .cover-actions{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;}
@@ -214,6 +214,11 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   .cover-inner{grid-template-columns:1fr;align-items:start;}
   .cover-chart{min-height:0;}
   .stratum{flex-basis:1.5rem;}
+}
+@media(min-width:75rem){
+  // The cover text shares the reading column's left edge so one vertical
+  // line runs through every page; the chart finishes flush with the shell.
+  .cover-inner{padding-left:calc(1.35rem + var(--rail-w) + var(--rail-gap));}
 }
 
 .home-offline{margin-top:2.4rem;}

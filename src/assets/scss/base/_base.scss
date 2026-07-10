@@ -32,17 +32,24 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .wrap{max-width:var(--measure);margin:0 auto;padding:0 1.35rem;}
 .wide{max-width:54rem;}
 
+// One shell grid for wide screens. The topbar, cover, and footer align to
+// a single centered shell; every reading column starts at the same left
+// edge (shell edge + rail zone) on every page; breakouts extend right to
+// finish flush with the shell. One system, five fewer left edges.
 @media screen and (min-width:75rem){
-  // Wide-screen breakouts: prose holds the book measure while figures,
-  // tables, and interactive panels spread. Capped so nothing crosses the
-  // reading rail, and never narrower than the natural column width.
-  .lesson-figure:not(.is-portrait),.table-wrap,.panel,.compare,.widepanel,.appendix-figure-wide{
-    --bk-w:max(100%,min(56rem,100vw - 2*(var(--rail-w) + 5rem)));
-    width:var(--bk-w);
-    margin-left:calc((100% - var(--bk-w))/2);
-    margin-right:calc((100% - var(--bk-w))/2);
+  :root{
+    --shell-left:max(1.35rem,calc(50vw - var(--shell)/2));
+    --col-left:calc(var(--shell-left) + var(--rail-w) + var(--rail-gap));
+    --col-wide:calc(var(--shell) - var(--rail-w) - var(--rail-gap));
   }
-  .widepanel{--bk-w:max(100%,min(var(--breakout),100vw - 2*(var(--rail-w) + 5rem)));}
+  main .wrap,.release-banner .wrap,.site-footer .wrap{margin-left:var(--col-left);margin-right:auto;}
+  .wide{max-width:var(--col-wide);}
+  main .lesson-figure:not(.is-portrait),main .table-wrap,main .panel,main .compare,main .widepanel,main .appendix-figure-wide,main .depth-chart,main .syllabus-progress,main .download-grid{
+    width:calc(var(--col-wide) - 2.7rem);
+    max-width:none;
+    margin-left:0;
+    margin-right:0;
+  }
 }
 
 @media screen and (prefers-reduced-motion: no-preference){
