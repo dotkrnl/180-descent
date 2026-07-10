@@ -38,8 +38,13 @@ article.lesson .lesson-appendices > .appendix-figure-wide{
 
 @media screen and (min-width:75rem){
   article.lesson .lesson-stage{
-    padding-right:var(--page-pad,1.35rem);
-    padding-left:calc(var(--rail-w) + var(--rail-gap));
+    display:grid;
+    grid-template-columns:var(--rail-w) minmax(1.5rem,var(--rail-gap)) minmax(0,1fr);
+    align-items:start;
+  }
+  article.lesson .lesson-reading{
+    grid-column:3;
+    min-width:0;
   }
   article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
   article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),

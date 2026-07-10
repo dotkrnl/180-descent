@@ -76,19 +76,15 @@
 }
 
 @media screen and (min-width:75rem){
-  article.lesson > .lesson-rail{
-    position:fixed;
+  article.lesson .lesson-stage > .lesson-rail{
+    position:sticky;
     z-index:15;
-    // Clear the sticky chrome and the release/download notices above the
-    // lesson, including the latest-day notice.
-    top:10rem;
-    // Match the left edge of the centered reading field. This preserves the
-    // intended rail gap at the 75rem breakpoint instead of sliding the rail
-    // underneath breakout exhibits on narrower desktop windows.
-    left:max(0px,calc(50vw - var(--reading-field,var(--shell)) / 2));
+    top:calc(3.35rem + .7rem);
+    grid-column:1;
+    align-self:start;
     display:block;
-    width:var(--rail-w);
-    max-height:calc(100dvh - 12rem);
+    width:auto;
+    max-height:calc(100dvh - 4.75rem);
     overflow:hidden auto;
     padding:1rem .85rem 1.1rem;
     border-top:2px solid var(--block-accent,var(--accent));
@@ -99,22 +95,22 @@
   }
   // Keep the entire spine discoverable. Later visual layers must not collapse
   // it behind hover, which excludes touch and keyboard-first exploration.
-  article.lesson > .lesson-rail .rail-depth{display:grid;}
-  article.lesson > .lesson-rail .rail-gauge{margin-inline:0;}
-  article.lesson > .lesson-rail .rail-day{
+  article.lesson .lesson-stage > .lesson-rail .rail-depth{display:grid;}
+  article.lesson .lesson-stage > .lesson-rail .rail-gauge{margin-inline:0;}
+  article.lesson .lesson-stage > .lesson-rail .rail-day{
     display:block;
     margin-top:0;
     writing-mode:horizontal-tb;
     transform:none;
   }
-  article.lesson > .lesson-rail :is(.rail-of,.rail-depth-read){
+  article.lesson .lesson-stage > .lesson-rail :is(.rail-of,.rail-depth-read){
     display:block;
     max-width:none;
     max-height:none;
     overflow:visible;
     opacity:1;
   }
-  article.lesson > .lesson-rail .rail-toc{
+  article.lesson .lesson-stage > .lesson-rail .rail-toc{
     pointer-events:auto;
     opacity:1;
     transform:none;
@@ -133,8 +129,8 @@
     background:color-mix(in srgb,var(--ink) 32%,transparent);
     cursor:default;
   }
-  article.lesson > .lesson-rail[data-open="true"] ~ .rail-backdrop{display:block;}
-  article.lesson > .lesson-rail[data-open="true"]{
+  article.lesson:has(.lesson-stage > .lesson-rail[data-open="true"]) > .rail-backdrop{display:block;}
+  article.lesson .lesson-stage > .lesson-rail[data-open="true"]{
     position:fixed;
     z-index:40;
     inset:auto max(0px,calc(50vw - 17rem)) 0;
@@ -147,11 +143,11 @@
     background:var(--raised);
     box-shadow:0 -20px 48px -30px color-mix(in srgb,var(--ink) 72%,transparent);
   }
-  article.lesson > .lesson-rail[data-open="true"] .rail-depth{
+  article.lesson .lesson-stage > .lesson-rail[data-open="true"] .rail-depth{
     grid-template-columns:auto minmax(0,1fr) auto;
     margin-bottom:1rem;
   }
-  article.lesson > .lesson-rail[data-open="true"] .rail-gauge{height:3.6rem;}
+  article.lesson .lesson-stage > .lesson-rail[data-open="true"] .rail-gauge{height:3.6rem;}
   article.lesson > .lesson-nav-bottom{margin-bottom:1.5rem;}
 }
 
