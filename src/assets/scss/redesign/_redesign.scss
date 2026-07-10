@@ -11,7 +11,7 @@
   --raised: #fbfaf4;
   --ink: #171a20;
   --ink-soft: #4f5662;
-  --ink-faint: #4f5763;
+  --ink-faint: #68717b;
   --line: #d8d8d1;
   --line-strong: #b7b9b3;
   --accent: #3e46b7;
@@ -106,6 +106,17 @@
 
 html {
   scroll-behavior: auto;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    color-scheme: dark;
+  }
 }
 
 body {
@@ -114,15 +125,19 @@ body {
   font-family: var(--font-body);
   font-size: clamp(1.04rem, .92rem + .22vw, 1.19rem);
   line-height: 1.72;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-body::selection {
+::selection {
   background: color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
 a {
   color: var(--accent-deep);
   border-bottom-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: color .18s ease, border-color .18s ease;
 }
 
 a:hover {
@@ -135,6 +150,7 @@ h3,
 .deep-dive-title,
 .lesson-nav-card strong {
   font-family: var(--font-display);
+  text-wrap: balance;
 }
 
 h1 {
@@ -196,6 +212,10 @@ h3 {
   text-transform: none;
 }
 
+.course:hover {
+  color: var(--accent);
+}
+
 .brand-mark-shell {
   width: 1.55rem;
   height: 1.55rem;
@@ -222,12 +242,32 @@ h3 {
 }
 
 .topnav a {
+  position: relative;
+  padding-block: .35rem;
   color: var(--ink-faint);
+}
+
+.topnav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--accent);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .18s ease;
 }
 
 .topnav a:hover,
 .topnav a[aria-current="page"] {
   color: var(--ink);
+}
+
+.topnav a:hover::after,
+.topnav a[aria-current="page"]::after {
+  transform: scaleX(1);
 }
 
 .top-actions {
@@ -301,6 +341,9 @@ h3 {
 
 .release-banner .wide,
 .latest-day-banner .wide {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
   padding-top: .45rem;
   padding-bottom: .45rem;
   font-family: var(--font-mono);
@@ -319,6 +362,9 @@ h3 {
 }
 
 .download-strip .wide {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
   padding-top: .45rem;
   padding-bottom: .45rem;
   font-family: var(--font-mono);
@@ -916,24 +962,83 @@ blockquote {
 
 @media (max-width: 44.99rem) {
   .topbar-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "course actions"
+      "nav nav";
+    align-items: center;
     min-height: 3.35rem;
     padding-block: .45rem;
+    gap: .75rem;
   }
 
   .course {
+    grid-area: course;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: .9rem;
   }
 
+  .top-actions {
+    grid-area: actions;
+    flex: 0 0 auto;
+    gap: .55rem;
+  }
+
   .topnav {
+    grid-area: nav;
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    margin: .15rem 0 0;
+    padding-top: .4rem;
+    overflow-x: auto;
+    border-top: 1px solid var(--line);
+    scrollbar-width: none;
+  }
+
+  .topnav::-webkit-scrollbar {
     display: none;
   }
 
+  .topnav a {
+    flex: 0 0 auto;
+    padding-block: .25rem;
+  }
+
   .running-head {
+    grid-area: running;
     justify-content: flex-end;
   }
 
   .running-block {
     display: none;
+  }
+
+  .site-topbar.is-running .topbar-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto;
+    grid-template-areas: "course running actions";
+  }
+
+  .site-topbar.is-running .topnav {
+    display: none;
+  }
+
+  .site-topbar.is-running .running-head {
+    display: flex;
+  }
+
+  .release-banner .wide,
+  .latest-day-banner .wide {
+    display: block;
+  }
+
+  .release-banner strong,
+  .latest-day-banner strong {
+    display: block;
+    margin-bottom: .15rem;
   }
 
   .lesson header.hero {
@@ -1007,8 +1112,21 @@ blockquote {
 // --- Homepage and supporting pages --------------------------------------
 
 .cover {
+  position: relative;
+  overflow: clip;
   background: var(--paper);
   border-bottom: 1px solid var(--line-strong);
+}
+
+.cover::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: max(var(--page-pad), calc(50vw - var(--reading-field) / 2));
+  width: 1px;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  content: "";
+  pointer-events: none;
 }
 
 .cover-inner {
@@ -1024,6 +1142,19 @@ blockquote {
   font-size: clamp(3.4rem, 1.8rem + 5.4vw, 6.6rem);
 }
 
+.cover-text .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+}
+
+.cover-text .eyebrow::before {
+  width: 2.2rem;
+  height: 1px;
+  background: var(--accent);
+  content: "";
+}
+
 .cover-text .sub {
   max-width: 34rem;
 }
@@ -1034,6 +1165,7 @@ blockquote {
 }
 
 .cover-cta {
+  position: relative;
   border: 1px solid var(--ink);
   border-radius: 0;
   background: var(--ink);
@@ -1041,9 +1173,23 @@ blockquote {
   padding: .7rem .9rem;
 }
 
+.cover-cta::after {
+  display: inline-block;
+  margin-left: .65rem;
+  content: "↗";
+  font-size: 1.05em;
+  line-height: 0;
+  transition: transform .18s ease;
+}
+
 .cover-cta:hover {
   border-color: var(--accent);
   background: var(--accent);
+}
+
+.cover-cta:hover::after,
+.cover-cta:focus-visible::after {
+  transform: translate(2px, -2px);
 }
 
 .cover-chart {
@@ -1058,7 +1204,7 @@ blockquote {
 }
 
 .cover-chart::before {
-  content: "DESCENT MAP / 01—180";
+  content: attr(data-map-label);
   position: absolute;
   top: -.05rem;
   left: 0;
@@ -1079,6 +1225,7 @@ blockquote {
   padding-inline: .1rem;
   border-top-color: var(--line);
   background: transparent;
+  transition: background .18s ease;
 }
 
 .stratum-fill {
@@ -1107,6 +1254,16 @@ blockquote {
 .cover-chart-caption {
   padding-inline: .1rem;
   border-top-color: var(--line);
+}
+
+.cover-chart:hover .stratum,
+.cover-chart:focus-visible .stratum {
+  background: color-mix(in srgb, var(--block-accent, var(--accent)) 3%, transparent);
+}
+
+.cover-chart:hover .stratum-fill,
+.cover-chart:focus-visible .stratum-fill {
+  background: color-mix(in srgb, var(--block-accent, var(--accent)) 19%, transparent);
 }
 
 @media (max-width: 59.99rem) {
@@ -1198,6 +1355,22 @@ blockquote {
   font-size: 1.45rem;
 }
 
+@media (max-width: 44.99rem) {
+  .day-card {
+    grid-template-columns: 1fr;
+  }
+
+  .day-card .card-kicker {
+    grid-row: auto;
+  }
+
+  .day-card h2,
+  .day-card h3,
+  .day-card p:not(.card-kicker) {
+    grid-column: 1;
+  }
+}
+
 .all-days-link a {
   border-radius: 0;
   background: transparent;
@@ -1228,9 +1401,23 @@ blockquote {
 }
 
 .page-hero {
+  position: relative;
   padding-top: clamp(3.5rem, 10vh, 8rem);
   padding-bottom: clamp(2rem, 5vh, 4rem);
   border-bottom: 1px solid var(--line-strong);
+}
+
+.page-hero .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}
+
+.page-hero .eyebrow::before {
+  width: 2.2rem;
+  height: 1px;
+  background: var(--accent);
+  content: "";
 }
 
 .page-hero h1 {
@@ -1239,16 +1426,65 @@ blockquote {
 
 .download-grid {
   gap: 0;
+  border-top: 2px solid var(--ink);
 }
 
 .download-card {
-  border-top: 1px solid var(--line-strong);
-  padding: 1.5rem 0;
+  display: grid;
+  grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr);
+  column-gap: clamp(1.25rem, 4vw, 4rem);
+  align-items: baseline;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  padding: 1.35rem .1rem 1.45rem;
+}
+
+.download-card .card-kicker {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  margin: .15rem 0 0;
+}
+
+.download-card h2 {
+  grid-column: 2;
+}
+
+.download-card p:not(.card-kicker) {
+  grid-column: 2;
+}
+
+.download-card h2 a {
+  border-bottom-color: transparent;
+}
+
+.download-card:hover h2 a,
+.download-card:focus-within h2 a {
+  border-bottom-color: currentColor;
 }
 
 .syllabus-block-nav a {
+  border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-left: 0;
   border-radius: 0;
   background: transparent;
+}
+
+.syllabus-block-nav {
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.syllabus-block-nav a:first-child {
+  border-left: 1px solid var(--line);
+}
+
+.syllabus-block-nav a:hover,
+.syllabus-block-nav a:focus-visible {
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
 }
 
 .syllabus-map {
@@ -1309,12 +1545,17 @@ blockquote {
   overflow: hidden;
   border: 0;
   border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
   border-radius: 0;
   background: color-mix(in srgb, var(--block-accent, var(--accent)) 4%, transparent);
   color: var(--ink);
   padding: .7rem .55rem .6rem;
   text-align: left;
   transition: background .22s ease, opacity .22s ease, transform .22s ease;
+}
+
+.syllabus-map-blocks {
+  border-bottom: 0;
 }
 
 .map-block:last-child {
@@ -1456,6 +1697,39 @@ blockquote {
     font-size: .82rem;
     line-height: 1.1;
   }
+
+  .download-card {
+    display: block;
+    padding-block: 1.1rem 1.25rem;
+  }
+
+  .download-card .card-kicker {
+    margin-bottom: .45rem;
+  }
+}
+
+@media (min-width: 45rem) and (max-width: 59.99rem) {
+  .syllabus-map-blocks {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .map-block:nth-child(4n) {
+    border-right: 0;
+  }
+
+  .map-block {
+    min-height: 7.75rem;
+  }
+}
+
+@media (min-width: 60rem) and (max-width: 74.99rem) {
+  .syllabus-map-blocks {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .map-block:nth-child(7n) {
+    border-right: 0;
+  }
 }
 
 .stratum-head {
@@ -1482,6 +1756,244 @@ blockquote {
   margin-top: 6rem;
   border-top: 2px solid var(--ink);
   background: var(--paper);
+}
+
+// --- Detail pass: lists, exhibits, and the colophon ----------------------
+
+.home-offline {
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.home-offline-lead {
+  padding-block: .85rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.day-card {
+  position: relative;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.day-card:hover,
+.day-card:focus-within {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 6%, transparent), transparent 62%);
+  border-top-color: var(--accent);
+}
+
+.day-card h2 a,
+.day-card h3 a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .38rem;
+}
+
+.day-card h2 a::after,
+.day-card h3 a::after {
+  color: var(--brass);
+  content: "↗";
+  font-family: var(--font-mono);
+  font-size: .62em;
+  font-weight: 500;
+  opacity: 0;
+  transform: translate(-.2rem, .15rem);
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.day-card:hover h2 a::after,
+.day-card:hover h3 a::after,
+.day-card:focus-within h2 a::after,
+.day-card:focus-within h3 a::after {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.card-kicker {
+  font-variant-numeric: tabular-nums;
+  line-height: 1.45;
+}
+
+.syllabus-progress {
+  gap: 0;
+  padding-block: 1.15rem;
+}
+
+.syllabus-progress > div {
+  min-width: 0;
+}
+
+@media (min-width: 40rem) {
+  .syllabus-progress > div + div {
+    border-left: 1px solid var(--line);
+    padding-left: clamp(1.5rem, 5vw, 5rem);
+  }
+}
+
+.progress-number,
+.progress-next {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, .95rem + .35vw, 1.3rem);
+  line-height: 1.2;
+}
+
+.syllabus-block:not(:first-child) .stratum-head {
+  border-top: 1px solid var(--line-strong);
+}
+
+.depth-day {
+  transition: background .18s ease;
+}
+
+.depth-day:hover,
+.depth-day:focus-within {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--block-accent, var(--accent)) 7%, transparent), transparent 72%);
+}
+
+.depth-day.is-here {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--brass) 9%, transparent), transparent 72%);
+}
+
+.depth-title a {
+  border-bottom-color: transparent;
+}
+
+.depth-title a:hover,
+.depth-title a:focus-visible {
+  border-bottom-color: currentColor;
+}
+
+.lesson-figure img,
+.lesson-figure.pvalue-figure,
+.table-wrap,
+.formula,
+.visbox,
+.ccard,
+.box,
+.check li,
+.jumpgrid a {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.lesson-figure figcaption,
+.figcap {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.lesson-figure figcaption::before,
+.figcap::before {
+  position: absolute;
+  top: .55em;
+  left: 0;
+  width: .55rem;
+  height: 1px;
+  background: var(--brass);
+  content: "";
+}
+
+.claim .ctop {
+  padding-left: .85rem;
+  border-left: 2px solid var(--block-accent, var(--accent));
+}
+
+.tomorrow {
+  border: 0;
+  border-top: 1px dashed var(--tomorrow-border);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  padding: 1.2rem 0;
+}
+
+.sources {
+  border-top: 1px solid var(--line-strong);
+  padding-top: 1.7rem;
+}
+
+.endcap {
+  border-bottom: 1px solid var(--line);
+}
+
+.site-footer {
+  margin-top: clamp(5rem, 10vw, 9rem);
+  padding: clamp(2.5rem, 6vw, 5.5rem) 0 clamp(2.8rem, 5vw, 4rem);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+}
+
+.footer-grid p {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.footer-grid p:first-child strong {
+  display: inline-block;
+  margin-bottom: .35rem;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+}
+
+.footer-grid p:last-child {
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .06em;
+  line-height: 1.9;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.footer-grid p:last-child a {
+  border-bottom-color: transparent;
+}
+
+.footer-grid p:last-child a:hover,
+.footer-grid p:last-child a:focus-visible {
+  border-bottom-color: currentColor;
+}
+
+@media (max-width: 44.99rem) {
+  .cover::before {
+    display: none;
+  }
+
+  .cover-text .eyebrow::before,
+  .page-hero .eyebrow::before {
+    width: 1.6rem;
+  }
+
+  .day-card h2 a::after,
+  .day-card h3 a::after {
+    display: none;
+  }
+
+  .syllabus-progress > div + div {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .syllabus-block-nav {
+    gap: .3rem;
+    border: 0;
+  }
+
+  .syllabus-block-nav a,
+  .syllabus-block-nav a:first-child {
+    border: 1px solid var(--line);
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-grid p:last-child {
+    text-align: left;
+  }
 }
 
 .formula,

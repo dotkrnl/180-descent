@@ -72,7 +72,7 @@ const strata = syllabus.blocks.map((block, index) => {
           <a class="cover-cta" href={readingStartUrl} data-reading-link>{readingStartLabel}</a>
         </div>
       </div>
-      <a class="cover-chart" href={syllabusUrl}>
+      <a class="cover-chart" href={syllabusUrl} data-map-label={isZh ? "下潜地图 / 01—180" : "Descent map / 01—180"}>
         <span class="sr-only">{isZh ? "十三个模块的下潜地图，进入课程表" : "The thirteen-block descent map; opens the syllabus"}</span>
         {strata.map((stratum) => (
           <span class="stratum block-scope" style={`--block-hue:${stratum.hue};--stratum-size:${stratum.total};--stratum-fill:${stratum.fill.toFixed(3)}`} aria-hidden="true">
