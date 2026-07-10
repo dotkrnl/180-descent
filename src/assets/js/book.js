@@ -368,7 +368,10 @@
       }
       if(status){
         var label = button.querySelector(".map-block-title");
-        status.textContent = label ? label.textContent : defaultStatus;
+        var summary = button.querySelector(".map-block-summary");
+        status.textContent = label
+          ? label.textContent + (summary && summary.textContent ? " — " + summary.textContent : "")
+          : defaultStatus;
       }
       if(target){
         var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;

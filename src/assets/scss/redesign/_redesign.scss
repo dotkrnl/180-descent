@@ -688,8 +688,78 @@ blockquote {
 
 @media screen and (min-width: 75rem) {
   .lesson-rail {
+    width: 2.75rem;
     top: 7rem;
     left: max(var(--page-pad), calc(50vw - var(--reading-field) / 2));
+  }
+
+  .lesson-rail .rail-depth {
+    display: block;
+  }
+
+  .lesson-rail .rail-gauge {
+    margin-inline: .7rem;
+  }
+
+  .lesson-rail .rail-day {
+    display: block;
+    margin-top: .75rem;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+  }
+
+  .lesson-rail .rail-of,
+  .lesson-rail .rail-depth-read {
+    display: block;
+    max-width: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  .lesson-rail .rail-toc {
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-.5rem);
+  }
+
+  .lesson-rail:hover,
+  .lesson-rail:focus-within {
+    width: var(--rail-w);
+  }
+
+  .lesson-rail:hover .rail-depth,
+  .lesson-rail:focus-within .rail-depth {
+    display: grid;
+  }
+
+  .lesson-rail:hover .rail-gauge,
+  .lesson-rail:focus-within .rail-gauge {
+    margin-inline: 0;
+  }
+
+  .lesson-rail:hover .rail-day,
+  .lesson-rail:focus-within .rail-day {
+    margin-top: 0;
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .lesson-rail:hover .rail-of,
+  .lesson-rail:hover .rail-depth-read,
+  .lesson-rail:focus-within .rail-of,
+  .lesson-rail:focus-within .rail-depth-read {
+    max-width: 8rem;
+    max-height: 2rem;
+    opacity: 1;
+  }
+
+  .lesson-rail:hover .rail-toc,
+  .lesson-rail:focus-within .rail-toc {
+    pointer-events: auto;
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -879,6 +949,33 @@ blockquote {
 
   .lesson header.hero > .lede {
     margin-top: 2rem;
+  }
+
+  .lesson-nav {
+    grid-template-columns: minmax(0, 1fr) minmax(5.5rem, .72fr) minmax(0, 1fr);
+    margin-top: .75rem;
+    margin-bottom: 1rem;
+  }
+
+  .lesson-nav-card {
+    min-height: 5rem;
+    min-width: 0;
+    overflow: hidden;
+    padding: .65rem .55rem;
+  }
+
+  .lesson-nav-card span {
+    font-size: .52rem;
+    letter-spacing: .08em;
+  }
+
+  .lesson-nav-card strong {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: .84rem;
+    line-height: 1.12;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .lesson-reading > .panel.web-only {
@@ -1263,7 +1360,12 @@ blockquote {
   font-family: var(--font-display);
   font-size: .9rem;
   line-height: 1.05;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.map-block-summary {
+  display: none;
 }
 
 .map-block-fill {
@@ -1282,6 +1384,78 @@ blockquote {
   font-family: var(--font-mono);
   font-size: .63rem;
   letter-spacing: .04em;
+}
+
+@media (min-width: 60rem) {
+  .map-block-title {
+    font-size: .78rem;
+    line-height: 1.1;
+  }
+
+  .map-block {
+    overflow: visible;
+  }
+
+  .map-block-summary {
+    position: absolute;
+    z-index: 4;
+    bottom: calc(100% + .55rem);
+    left: .55rem;
+    display: block;
+    width: min(19rem, 24vw);
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 .75rem;
+    border: 1px solid var(--line-strong);
+    background: var(--raised);
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-size: .82rem;
+    line-height: 1.4;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-.35rem);
+    transition: opacity .18s ease, transform .18s ease, max-height .18s ease, padding .18s ease;
+  }
+
+  .map-block:last-child .map-block-summary {
+    right: .55rem;
+    left: auto;
+  }
+
+  .map-block:hover .map-block-summary,
+  .map-block:focus-visible .map-block-summary,
+  .map-block[aria-pressed="true"] .map-block-summary {
+    max-height: 9rem;
+    padding-block: .7rem;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+}
+
+@media (max-width: 44.99rem) {
+  .syllabus-map-blocks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .map-block {
+    min-height: 8.5rem;
+    padding: .7rem .6rem .6rem;
+  }
+
+  .map-block:nth-child(3n) {
+    border-right: 1px solid var(--line);
+  }
+
+  .map-block:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .map-block-title {
+    font-size: .82rem;
+    line-height: 1.1;
+  }
 }
 
 .stratum-head {
@@ -1321,6 +1495,22 @@ blockquote {
 // --- Motion --------------------------------------------------------------
 
 @media screen and (prefers-reduced-motion: no-preference) {
+  .lesson-rail {
+    transition: width .25s ease;
+  }
+
+  .lesson-rail .rail-toc,
+  .lesson-rail .rail-of,
+  .lesson-rail .rail-depth-read {
+    transition: opacity .2s ease, transform .2s ease, max-width .2s ease;
+  }
+
+  .rv {
+    // Keep jump-linked and restored reading positions legible. The reveal is
+    // a gentle vertical arrival, never an opacity gate on the prose.
+    opacity: 1;
+  }
+
   .lesson-reading > section,
   .cover-chart,
   .day-card,

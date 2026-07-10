@@ -24,6 +24,9 @@ const contentDays = new Map(days.map((day) => [day.day, day]));
 const upcoming = upcomingSyllabusDays(syllabus, days, 6);
 const nextDay = upcoming[0];
 const latestContentDay = days.at(-1)?.day ?? 0;
+const compactBlockTitle = (title: string) => title
+  .replace(/\s+\+\s+DEEP DIVE \d+:.*$/i, "")
+  .replace(/\s+\+\s+Capstone$/i, "");
 ---
 <PageShell
   locale={locale}
@@ -73,7 +76,8 @@ const latestContentDay = days.at(-1)?.day ?? 0;
             aria-pressed="false"
           >
             <span class="map-block-id">{block.id}</span>
-            <span class="map-block-title">{block.title}</span>
+            <span class="map-block-title">{compactBlockTitle(block.title)}</span>
+            <span class="map-block-summary">{block.summary}</span>
             <span class="map-block-range">{block.startDay}–{block.endDay}</span>
             <span class="map-block-fill" aria-hidden="true"></span>
           </button>
