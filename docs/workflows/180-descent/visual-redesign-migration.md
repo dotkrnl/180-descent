@@ -5,7 +5,8 @@ description: Migration plan for the approved wide-screen, book-like, editorial r
 
 # Visual Redesign Migration Plan
 
-Status: approved discovery brief; implementation pending.
+Status: implementation in progress; the approved redesign is in a final visual
+validation pass.
 
 The redesign is web-primary. It changes the Astro/SCSS presentation system while
 preserving the MDX source model, bilingual content, existing brand mark,
