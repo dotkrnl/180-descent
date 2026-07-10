@@ -51,6 +51,38 @@ const latestContentDay = days.at(-1)?.day ?? 0;
     )}
   </div>
 
+  <section class="syllabus-map" data-syllabus-map aria-labelledby="syllabus-map-title">
+    <div class="syllabus-map-head">
+      <div>
+        <p class="progress-label">{isZh ? "总览" : "Overview"}</p>
+        <h2 id="syllabus-map-title">{isZh ? "从表面到前沿" : "From surface to frontier"}</h2>
+      </div>
+      <button class="map-reset" type="button" data-map-reset>{isZh ? "查看全部" : "View all"}</button>
+    </div>
+    <div class="syllabus-map-blocks" role="group" aria-label={isZh ? "按模块浏览课程表" : "Browse the syllabus by block"}>
+      {syllabus.blocks.map((block, blockIndex) => {
+        const published = block.days.filter((day) => contentDays.has(day.day)).length;
+        return (
+          <button
+            class="map-block block-scope"
+            type="button"
+            data-map-block={block.id.toLowerCase()}
+            data-published={published}
+            style={`--block-hue:${Math.round(200 + (blockIndex * 100) / Math.max(1, syllabus.blocks.length - 1))};--map-fill:${published / Math.max(1, block.days.length)}`}
+            aria-controls={`block-${block.id.toLowerCase()}`}
+            aria-pressed="false"
+          >
+            <span class="map-block-id">{block.id}</span>
+            <span class="map-block-title">{block.title}</span>
+            <span class="map-block-range">{block.startDay}–{block.endDay}</span>
+            <span class="map-block-fill" aria-hidden="true"></span>
+          </button>
+        );
+      })}
+    </div>
+    <p class="syllabus-map-status" data-map-status aria-live="polite">{isZh ? "选择一个模块以深入课程表。" : "Select a block to descend into the syllabus."}</p>
+  </section>
+
   <nav class="syllabus-block-nav" aria-label={isZh ? "课程模块" : "Syllabus blocks"}>
     {syllabus.blocks.map((block) => (
       <a href={`#block-${block.id.toLowerCase()}`}>{isZh ? `模块 ${block.id}` : `Block ${block.id}`}</a>

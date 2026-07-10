@@ -105,7 +105,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -852,6 +852,27 @@ blockquote {
   .lesson-reading > .panel.web-only {
     padding: 1rem;
   }
+
+  .syllabus-map-head {
+    align-items: start;
+  }
+
+  .syllabus-map-blocks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .map-block {
+    min-height: 6.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .map-block:nth-child(3n) {
+    border-right: 0;
+  }
+
+  .map-block-title {
+    font-size: .82rem;
+  }
 }
 
 // --- Homepage and supporting pages --------------------------------------
@@ -1002,6 +1023,136 @@ blockquote {
 .syllabus-block-nav a {
   border-radius: 0;
   background: transparent;
+}
+
+.syllabus-map {
+  margin: clamp(3rem, 7vw, 7rem) 0 2rem;
+  padding: 1.4rem 0 1.2rem;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.syllabus-map-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.4rem;
+}
+
+.syllabus-map-head h2 {
+  margin: .1rem 0 0;
+  font-size: clamp(1.4rem, 1rem + 1.6vw, 2.2rem);
+}
+
+.map-reset {
+  flex: 0 0 auto;
+  cursor: pointer;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .1em;
+  padding: .25rem 0;
+  text-transform: uppercase;
+}
+
+.map-reset:hover {
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+}
+
+.syllabus-map-blocks {
+  display: grid;
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.map-block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 8.5rem;
+  cursor: pointer;
+  overflow: hidden;
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--block-accent, var(--accent)) 4%, transparent);
+  color: var(--ink);
+  padding: .7rem .55rem .6rem;
+  text-align: left;
+  transition: background .22s ease, opacity .22s ease, transform .22s ease;
+}
+
+.map-block:last-child {
+  border-right: 0;
+}
+
+.map-block:hover,
+.map-block:focus-visible,
+.map-block[aria-pressed="true"] {
+  z-index: 1;
+  background: color-mix(in srgb, var(--block-accent, var(--accent)) 14%, var(--raised));
+  transform: translateY(-3px);
+}
+
+.syllabus-map[data-focused] .map-block:not([aria-pressed="true"]) {
+  opacity: .35;
+}
+
+.map-block-id,
+.map-block-range {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .08em;
+}
+
+.map-block-id {
+  color: var(--block-accent, var(--accent));
+  font-weight: 600;
+}
+
+.map-block-range {
+  margin-top: auto;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.map-block-title {
+  position: relative;
+  z-index: 1;
+  margin-top: .65rem;
+  font-family: var(--font-display);
+  font-size: .9rem;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.map-block-fill {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: calc(var(--map-fill, 0) * 100%);
+  background: color-mix(in srgb, var(--block-accent, var(--accent)) 13%, transparent);
+  transform-origin: bottom;
+}
+
+.syllabus-map-status {
+  margin: .8rem 0 0;
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: .63rem;
+  letter-spacing: .04em;
 }
 
 .stratum-head {
