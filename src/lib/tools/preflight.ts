@@ -46,7 +46,7 @@ const TOOLS = {
   node: {
     label: "Node.js",
     usedBy: "all build/check scripts",
-    installHint: "Install the project Node version, then run rtk npm install.",
+    installHint: "Install the project Node version, then run npm install.",
     check() {
       return process.version;
     }
@@ -110,7 +110,7 @@ const TOOLS = {
   playwright: {
     label: "Playwright Chromium browser",
     usedBy: "check-a11y, web screenshot QA",
-    installHint: "rtk npx playwright install chromium",
+    installHint: "npx playwright install chromium",
     check() {
       const executable = chromium.executablePath();
       if (!existsSync(executable)) {

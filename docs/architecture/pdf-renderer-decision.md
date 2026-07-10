@@ -36,11 +36,11 @@ The PDF output should match the website's visual vocabulary: serif body text, re
 - `rsvg-convert` for SVG image conversion
 - Poppler `pdftotext` for PDF text extraction during checks
 
-`rtk npm run preflight` checks these tools.
+`npm run preflight` checks these tools.
 
 ## Checks
 
-`rtk npm run check:pdf` validates the generated PDFs as XeTeX book artifacts:
+`npm run check:pdf` validates the generated PDFs as XeTeX book artifacts:
 
 - every expected book and day PDF exists and has a valid PDF header;
 - PDFs have pages and extractable text;

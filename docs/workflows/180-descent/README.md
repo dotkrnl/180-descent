@@ -40,7 +40,7 @@ HTML as a formatting shortcut; use Markdown, existing lesson components, or a
 small reusable component when inline JSX must wrap another component. MDX must
 not own raw interactive controls, canvas, behavior ARIA roles, inline event
 handlers, or action/state data hooks. Put those contracts inside
-`lesson/interactives` components and let `rtk npm run check:content` enforce
+`lesson/interactives` components and let `npm run check:content` enforce
 the boundary. Every uppercase MDX component tag must also have an explicit artifact
 contract in `check:content`: rendered directly, transparent wrapper, or web-only
 with a static `FormatOnly media="print-epub" variant="alternate"` equivalent.
@@ -76,7 +76,7 @@ with a static `FormatOnly media="print-epub" variant="alternate"` equivalent.
    not treat either stage as complete until content-completeness and
    visual-completeness subagent findings are resolved or explicitly rejected
    with a reason.
-10. Run `rtk npm run build:social-cards` when titles or summaries change.
+10. Run `npm run build:social-cards` when titles or summaries change.
 
 For a new published day, the minimum source set is:
 
@@ -89,7 +89,7 @@ For a new published day, the minimum source set is:
 ### New Day Acceptance Gate
 
 Do not treat a newly added day as done until all of these are true. This gate is
-mandatory even when `rtk npm run check` passes; automated checks catch
+mandatory even when `npm run check` passes; automated checks catch
 structural errors, not publication quality.
 
 1. **Source parity:** compare `day.yaml`, English MDX, Chinese MDX, and every
@@ -175,8 +175,8 @@ structural errors, not publication quality.
    SVG text, status chips, buttons, and long English titles must not overlap,
    shrink below legibility, or run into frames. The mobile rendered-type gate is
    a floor, not a substitute for visual review.
-14. **Artifact visual review:** after `rtk npm run build:site` and
-   `rtk npm run build:pdf`,
+14. **Artifact visual review:** after `npm run build:site` and
+   `npm run build:pdf`,
    render every affected day PDF page to PNG with Poppler: page 1, every page
    containing a new figure/table/interactive alternate, and the last page. Check
    both English and Chinese. Look for black rectangles, missing figures, wrong
@@ -219,8 +219,8 @@ Appendices are declared in `day.yaml` under `appendices`.
   component-local `.css`, duplicate `book.css`, browser-print PDF styles, or
   one-off generated CSS.
 - Do not add parallel adapter layers, blind importers, or alternate source
-  trees. `rtk npm run check:clean` blocks committed
-  generated output and any tracked file that matches `.gitignore`; `rtk npm run
+  trees. `npm run check:clean` blocks committed
+  generated output and any tracked file that matches `.gitignore`; `npm run
   check:workflows` enforces the single project workflow.
 - PDF output is generated from semantic MDX through XeTeX. When a live web
   component is not suitable for print, provide a semantic `FormatOnly` print
@@ -270,7 +270,7 @@ SVG/HTML/SCSS diagrams.
 - Use `/assets/images/...` only as the local source-path convention in
   `src/_data/credits.yaml` and artifact code that resolves back to
   `src/assets/images/...`.
-- `rtk npm run build:epub` must resolve local source image paths into
+- `npm run build:epub` must resolve local source image paths into
   `OEBPS/images/...` and add image manifest entries to `content.opf`.
 - EPUB generation rewrites packaged day links to local `day-###.xhtml`
   documents and the syllabus map link to `nav.xhtml`. Single-day EPUBs preserve
@@ -281,10 +281,10 @@ SVG/HTML/SCSS diagrams.
   converted with `rsvg-convert`.
 - If a PDF caption appears but the picture does not, check the MDX image import,
   the resolved asset path, and the XeTeX build log before changing lesson markup.
-- Keep `rtk npm run check:epub` guarding against absolute, parent-directory, or
+- Keep `npm run check:epub` guarding against absolute, parent-directory, or
   missing EPUB image paths, non-local internal links, missing link targets, and
   missing link anchors.
-- Keep `rtk npm run check:pdf` focused on artifact correctness: valid
+- Keep `npm run check:pdf` focused on artifact correctness: valid
   non-interactive PDFs, Poppler-extractable text, appendix inclusion rules, no
   local links, and no live interactive control leakage.
 
@@ -303,7 +303,7 @@ SVG/HTML/SCSS diagrams.
   paragraphs.
 - Use `SimpleTable` only with non-empty literal string-array `headers` and
   non-empty literal string-matrix `rows`; each row must contain at least one
-  cell and match the header column count. `rtk npm run check:content` rejects
+  cell and match the header column count. `npm run check:content` rejects
   dynamic, empty, malformed, or uneven props because PDF output must not
   silently drop table content.
 - Use `MathInline` and `MathBlock` for math so HTML gets KaTeX and PDF gets
@@ -312,12 +312,12 @@ SVG/HTML/SCSS diagrams.
 - For web interactives, keep behavior in the interactive component and provide a
   clear static PDF/EPUB representation with `FormatOnly`. Static artifact output
   may drift from the live web component when it improves readability.
-- For PDF-affecting edits, run `rtk npm run build:pdf` and
-  `rtk npm run check:pdf`. When changing PDF renderer, figure, table, code, or
-  source-block behavior, set `PDF_KEEP_TEMP=1` for `rtk npm run build:pdf` when
+- For PDF-affecting edits, run `npm run build:pdf` and
+  `npm run check:pdf`. When changing PDF renderer, figure, table, code, or
+  source-block behavior, set `PDF_KEEP_TEMP=1` for `npm run build:pdf` when
   deeper diagnosis is needed. The PDF build fails on `Overfull` boxes and
   `Missing character` glyph loss. Set `PDF_STRICT_FONT_WARNINGS=1` for
-  `rtk npm run build:pdf` when tightening font-shape substitutions.
+  `npm run build:pdf` when tightening font-shape substitutions.
 - Visual review scope: for global renderer/style changes, sample at least 20
   pages from each full PDF (`180-descent`, `180-descent-deep-dive`,
   `180-descent-zh`, `180-descent-zh-deep-dive`). For individual day PDFs, first
@@ -397,19 +397,19 @@ fail title or locale checks until Kimi completes. Do not seed Kimi with a
 Codex-authored or human-authored Chinese draft, summary, or abridged version.
 
 ```sh
-rtk opencode run --dangerously-skip-permissions -m kimi-for-coding/k2p7 "请以 yolo 模式直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。所有仓库 shell 命令都必须使用 rtk 前缀。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。不要把英文 honest / sober 机械译成「诚实」或「冷静」，也不要在中文里反复使用这两个词；请按语境改成「准确」「完整」「稳妥」「清醒」「克制」「校准」「审慎」「相关」或自然改写，除非是人名、来源标题或直接引文。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法，并保留和翻译所有说明性注释。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
+opencode run --dangerously-skip-permissions -m kimi-for-coding/k2p7 "请以 yolo 模式直接在本仓库中翻译第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。译文必须是简体中文，技术含义准确，但不要逐字直译；请按面向中文读者的自然中文科普读物来改写，语言要流畅、有节奏、有趣、耐读，读起来像优秀中文作者写出的科普文章。不要把英文 honest / sober 机械译成「诚实」或「冷静」，也不要在中文里反复使用这两个词；请按语境改成「准确」「完整」「稳妥」「清醒」「克制」「校准」「审慎」「相关」或自然改写，除非是人名、来源标题或直接引文。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法，并保留和翻译所有说明性注释。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件。"
 ```
 
 After manually reviewing Kimi edits, run Gemini as the second pass:
 
 ```sh
-rtk agy --dangerously-skip-permissions --model "Gemini 3.5 Flash (High)" --print-timeout 20m -p "请以 yolo 模式直接在本仓库中审核并润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。重点检查 Kimi 初稿的翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。重点清理 honest / sober 的机械翻译和过度使用：正文不要反复出现「诚实」「冷静」，应按语境改成「准确」「完整」「稳妥」「清醒」「克制」「校准」「审慎」「相关」或自然改写；人名、来源标题和直接引文除外。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+agy --dangerously-skip-permissions --model "Gemini 3.5 Flash (High)" --print-timeout 20m -p "请以 yolo 模式直接在本仓库中审核并润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。重点检查 Kimi 初稿的翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。重点清理 honest / sober 的机械翻译和过度使用：正文不要反复出现「诚实」「冷静」，应按语境改成「准确」「完整」「稳妥」「清醒」「克制」「校准」「审慎」「相关」或自然改写；人名、来源标题和直接引文除外。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留所有 front matter 或 manifest 键、imports、component props、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。请输出简短进度说明，并在结束时用中文概括修改过的文件，以及需要 Codex 决定的遗留问题。"
 ```
 
 After manually reviewing Gemini edits, run GLM as the final consistency pass:
 
 ```sh
-rtk opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.1 "请以 yolo 模式直接在本仓库中润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。所有仓库 shell 命令都必须使用 rtk 前缀。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。重点清理 honest / sober 的机械翻译和过度使用：正文不要反复出现「诚实」「冷静」，应按语境改成「准确」「完整」「稳妥」「清醒」「克制」「校准」「审慎」「相关」或自然改写；人名、来源标题和直接引文除外。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留 imports、component props、manifest/front matter、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
+opencode run --dangerously-skip-permissions -m zhipuai-coding-plan/glm-5.1 "请以 yolo 模式直接在本仓库中润色第 ### 日的中文版本文件，并原地编辑 src/content/days/###-slug/zh.mdx 和必要的 day.yaml 中文 locale 字段。开始前必须阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格按词表统一术语；如果遇到词表缺失、术语新标准或既有翻译不一致，必须在同一次修改中更新该词表并修正文中对应用法。重点检查翻译准确性、术语一致性、仍需中文化的英文残留，以及中文表达是否自然、优雅、技术准确。不要做逐字直译式润色；请把文字调整成面向中文读者的自然中文科普读物风格，让内容有趣、耐读、清楚。重点清理 honest / sober 的机械翻译和过度使用：正文不要反复出现「诚实」「冷静」，应按语境改成「准确」「完整」「稳妥」「清醒」「克制」「校准」「审慎」「相关」或自然改写；人名、来源标题和直接引文除外。中文正文必须遵守中文排版约定：中文强调只允许颜色、术语字重、中文引号「」或这些方式的克制组合；不要使用 <em>/<i>/<strong>/<b>/<u>；术语少量用 span.term，必要强调少量用 span.hl；命题、想法、口号、短语作为语言对象时优先使用「」。保留 imports、component props、manifest/front matter、URLs、DOI 链接、citation metadata、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG 结构、JavaScript hook 与 MDX 语法。不要编辑英文源文件或构建脚本。最后用中文简洁概括修改过的文件，以及需要 Codex 决定的遗留问题。"
 ```
 
 For large appendices, use temporary files instead of asking an agent to
@@ -442,7 +442,7 @@ asks to publish immediately.
 1. Start the local dev server if it is not already running:
 
 ```sh
-rtk npm run dev -- --port 8080
+npm run dev -- --port 8080
 ```
 
 If port 8080 is unavailable, use another local port and tell the user the URL.
@@ -453,7 +453,7 @@ If port 8080 is unavailable, use another local port and tell the user the URL.
    edits.
 3. If selected text cannot be found uniquely in source, patch manually or adjust
    the selected range, refresh, and verify.
-4. After the user says the refinement pass is done, check `rtk git status -sb` and
+4. After the user says the refinement pass is done, check `git status -sb` and
    inspect the source diff. Confirm refinements are in tracked source files under
    `src/` or workflow files, never only `_site/`.
 5. Rebuild and rerun checks after accepted refinements.
@@ -463,18 +463,18 @@ If port 8080 is unavailable, use another local port and tell the user the URL.
 1. Inspect current branch and diff:
 
 ```sh
-rtk git branch --show-current
-rtk git status --short
-rtk git diff --stat
+git branch --show-current
+git status --short
+git diff --stat
 ```
 
 2. Run:
 
 ```sh
-rtk npm run check
+npm run check
 ```
 
-`rtk npm run check` rebuilds all generated assets and download artifacts, then
+`npm run check` rebuilds all generated assets and download artifacts, then
 runs all validators, including SEO, accessibility, EPUB, PDF, and repository
 cleanliness.
 
@@ -484,7 +484,7 @@ cleanliness.
 5. Push the current branch:
 
 ```sh
-rtk git push origin HEAD
+git push origin HEAD
 ```
 
 6. Deploy only when the user asks for deployment.
@@ -492,13 +492,13 @@ rtk git push origin HEAD
 For production:
 
 ```sh
-rtk npm run deploy
+npm run deploy
 ```
 
 For staging:
 
 ```sh
-rtk npm run deploy:staging
+npm run deploy:staging
 ```
 
 7. When asked to visually compare, compare
@@ -511,8 +511,8 @@ rtk npm run deploy:staging
    structural comparison report:
 
 ```sh
-rtk npm run build:site
-rtk npm run check:visual -- --base https://staging.180-descent.pages.dev --compare https://180d.io --out tmp/visual-qa
+npm run build:site
+npm run check:visual -- --base https://staging.180-descent.pages.dev --compare https://180d.io --out tmp/visual-qa
 ```
 
 8. Treat structural mismatches, language/title/H1 mismatches, horizontal
@@ -530,29 +530,29 @@ Do not edit generated files in `_site/`; they are build outputs.
 For focused edits, run the narrow checks first:
 
 ```sh
-rtk npm run typecheck
-rtk npm test
-rtk npm run check:content
-rtk npm run check:math:source
-rtk npm run check:appendix-style
-rtk npm run check:imports
-rtk npm run check:dead
-rtk npm run check:svg-text
-rtk npm run check:clean
-rtk npm run check:workflows
+npm run typecheck
+npm test
+npm run check:content
+npm run check:math:source
+npm run check:appendix-style
+npm run check:imports
+npm run check:dead
+npm run check:svg-text
+npm run check:clean
+npm run check:workflows
 ```
 
 For changes that touch built pages, metadata, accessibility, rendered
 typography, or download artifacts, add the focused built-output validators:
 
 ```sh
-rtk npm run check:math
-rtk npm run check:links
-rtk npm run check:seo
-rtk npm run check:a11y
-rtk npm run check:rendered-type
-rtk npm run check:epub
-rtk npm run check:pdf
+npm run check:math
+npm run check:links
+npm run check:seo
+npm run check:a11y
+npm run check:rendered-type
+npm run check:epub
+npm run check:pdf
 ```
 
 `check:math` validates rendered KaTeX in built HTML, and `check:links`
@@ -562,7 +562,7 @@ after `_site` and the linked download artifacts are current.
 For asset, artifact, global renderer, or release-bound changes, run:
 
 ```sh
-rtk npm run check
+npm run check
 ```
 
 For every affected PDF page, render the page to PNG with Poppler and visually
@@ -571,6 +571,6 @@ confirm the expected output. Do not trust caption text alone.
 For EPUB image changes, inspect the zip:
 
 ```sh
-rtk unzip -l _site/downloads/<file>.epub | rtk rg 'OEBPS/images|image-name'
-rtk unzip -p _site/downloads/<file>.epub OEBPS/content.opf | rtk rg 'image-name|image/jpeg|image/png|image/webp'
+unzip -l _site/downloads/<file>.epub | rg 'OEBPS/images|image-name'
+unzip -p _site/downloads/<file>.epub OEBPS/content.opf | rg 'image-name|image/jpeg|image/png|image/webp'
 ```

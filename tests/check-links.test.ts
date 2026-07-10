@@ -11,7 +11,7 @@ describe("link checks", () => {
   it("reports missing built sites with build guidance", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "180-check-links-"));
 
-    await expect(checkLinks({ root })).rejects.toThrow("_site does not exist; run rtk npm run build:site first");
+    await expect(checkLinks({ root })).rejects.toThrow("_site does not exist; run npm run build:site first");
   });
 
   it("reports empty built sites instead of passing zero pages", async () => {

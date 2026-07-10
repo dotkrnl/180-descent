@@ -56,21 +56,20 @@ describe("typed preflight", () => {
       name: "node",
       label: "Node.js",
       usedBy: "all build/check scripts",
-      installHint: "Install the project Node version, then run rtk npm install.",
+      installHint: "Install the project Node version, then run npm install.",
       error: new Error("missing")
     }]);
 
-    expect(message).toContain("install:   Install the project Node version, then run rtk npm install.");
+    expect(message).toContain("install:   Install the project Node version, then run npm install.");
   });
 
-  it("lists RTK-wrapped Playwright installation guidance", () => {
+  it("lists standard Playwright installation guidance", () => {
     const executablePath = vi.spyOn(chromium, "executablePath").mockReturnValue("/missing/chromium");
     try {
       const result = checkTools(["playwright"], { throwOnMissing: false });
       const message = formatPreflightFailure(result.missing);
 
-      expect(message).not.toContain("install:   npx playwright install chromium");
-      expect(message).toContain("rtk npx playwright install chromium");
+      expect(message).toContain("npx playwright install chromium");
     } finally {
       executablePath.mockRestore();
     }

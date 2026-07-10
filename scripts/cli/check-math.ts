@@ -4,7 +4,7 @@ import { exitOnErrors } from "./support";
 const args = process.argv.slice(2);
 const unknown = args.filter((arg) => arg !== "--source-only");
 if (unknown.length) {
-  console.error("Usage: rtk npm run check:math -- [--source-only]");
+  console.error("Usage: npm run check:math -- [--source-only]");
   console.error(unknown.map((arg) => `- Unknown option: ${arg}`).join("\n"));
   process.exit(1);
 }

@@ -10,7 +10,7 @@ import {
 const { toolNames, optional, list, errors } = parsePreflightArgs(process.argv.slice(2));
 
 if (errors.length) {
-  console.error("Usage: rtk npm run preflight -- [--optional] [--list] [--group=<name>] [tool ...]");
+  console.error("Usage: npm run preflight -- [--optional] [--list] [--group=<name>] [tool ...]");
   console.error(errors.map((error) => `- ${error}`).join("\n"));
   process.exit(1);
 } else if (list) {
