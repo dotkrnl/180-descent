@@ -575,8 +575,9 @@
   }
 
   .atlas-shell .site-topbar.is-running .topbar-row {
-    grid-template-columns: minmax(7rem, .8fr) minmax(0, 1.2fr) auto;
-    grid-template-areas: "course running actions";
+    position:relative;
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"course actions";
     padding-block: .42rem;
   }
 
@@ -585,9 +586,14 @@
   }
 
   .atlas-shell .site-topbar.is-running .running-head {
-    grid-area: running;
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:min(44vw,12rem);
     display: flex;
-    justify-content: flex-end;
+    justify-content:center;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
   }
 
   .atlas-shell .running-head .running-title {

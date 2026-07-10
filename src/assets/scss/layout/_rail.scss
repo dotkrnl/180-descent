@@ -41,6 +41,7 @@
   line-height:1.35;
   text-transform:uppercase;
 }
+.rail-of:empty{visibility:hidden;}
 .rail-depth-read{align-self:end;font-variant-numeric:tabular-nums;}
 
 .rail-toc-title{
@@ -78,14 +79,16 @@
   article.lesson > .lesson-rail{
     position:fixed;
     z-index:15;
-    top:7rem;
+    // Clear the sticky chrome and the release/download notices above the
+    // lesson, including the latest-day notice.
+    top:10rem;
     // Match the left edge of the centered reading field. This preserves the
     // intended rail gap at the 75rem breakpoint instead of sliding the rail
     // underneath breakout exhibits on narrower desktop windows.
     left:max(0px,calc(50vw - var(--reading-field,var(--shell)) / 2));
     display:block;
     width:var(--rail-w);
-    max-height:calc(100dvh - 9rem);
+    max-height:calc(100dvh - 12rem);
     overflow:hidden auto;
     padding:1rem .85rem 1.1rem;
     border-top:2px solid var(--block-accent,var(--accent));

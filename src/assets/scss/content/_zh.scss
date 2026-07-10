@@ -9,6 +9,7 @@ html[lang^="zh"] {
 }
 
 html[lang^="zh"] body {
+  font-family:"LXGW WenKai",serif;
   font-feature-settings:"palt";
   line-break:strict;
   line-height:1.88;
@@ -17,12 +18,24 @@ html[lang^="zh"] body {
   word-break:normal;
 }
 
+// Apply the bundled CJK face directly to reading prose. Several shared
+// components name Latin display faces explicitly, which otherwise makes the
+// browser fall back to a system CJK font for Chinese glyphs.
+html[lang^="zh"] .atlas-shell :is(p,li,dd,dt,blockquote,figcaption,td,th,summary) {
+  font-family:var(--font-body);
+}
+
 html[lang^="zh"] :is(h1,h2,h3,.deep-dive-title,.lesson-nav-card strong) {
   font-family:var(--font-display);
   font-weight:700;
   letter-spacing:.015em;
   line-height:1.18;
   text-wrap:pretty;
+}
+
+html[lang^="zh"] :is(.lede .drop,.lede.dropcap::first-letter) {
+  font-family:"LXGW WenKai",serif;
+  font-size:2.75em;
 }
 
 html[lang^="zh"] :is(.sub,blockquote) {
