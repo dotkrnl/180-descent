@@ -916,7 +916,7 @@ blockquote {
 
 .cover-inner {
   max-width: var(--reading-field);
-  grid-template-columns: minmax(0, 1.1fr) minmax(19rem, .9fr);
+  grid-template-columns: minmax(0, 1fr) minmax(22rem, 1fr);
   gap: clamp(2rem, 7vw, 8rem);
   align-items: center;
   padding: clamp(2rem, 6vh, 4.5rem) var(--page-pad) clamp(1.8rem, 4vh, 3rem);
@@ -924,7 +924,7 @@ blockquote {
 
 .cover-text h1 {
   max-width: 8ch;
-  font-size: clamp(3.4rem, 1.8rem + 6vw, 7.2rem);
+  font-size: clamp(3.4rem, 1.8rem + 5.4vw, 6.6rem);
 }
 
 .cover-text .sub {
@@ -950,6 +950,7 @@ blockquote {
 }
 
 .cover-chart {
+  position: relative;
   min-height: 18rem;
   border: 0;
   border-top: 2px solid var(--ink);
@@ -959,7 +960,25 @@ blockquote {
   box-shadow: none;
 }
 
+.cover-chart::before {
+  content: "DESCENT MAP / 01—180";
+  position: absolute;
+  top: -.05rem;
+  left: 0;
+  transform: translateY(-100%);
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
 .stratum {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .65rem;
+  min-height: 1.55rem;
   padding-inline: .1rem;
   border-top-color: var(--line);
   background: transparent;
@@ -973,9 +992,87 @@ blockquote {
   font-size: .66rem;
 }
 
+.stratum-title {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink-soft);
+  font-size: .68rem;
+  letter-spacing: .015em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stratum-days {
+  font-size: .58rem;
+}
+
 .cover-chart-caption {
   padding-inline: .1rem;
   border-top-color: var(--line);
+}
+
+@media (max-width: 59.99rem) {
+  .cover-inner {
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+    align-items: start;
+  }
+
+  .cover-text {
+    min-width: 0;
+  }
+
+  .cover-text h1 {
+    max-width: 8ch;
+    font-size: clamp(3.3rem, 15vw, 5.4rem);
+  }
+
+  .cover-text .sub {
+    max-width: 28rem;
+  }
+
+  .cover-chart {
+    width: 100%;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 44.99rem) {
+  .cover-inner {
+    padding-top: 1.7rem;
+  }
+
+  .cover-text h1 {
+    font-size: clamp(3.1rem, 15vw, 4.6rem);
+  }
+
+  .cover-chart {
+    margin-top: .25rem;
+  }
+
+  .stratum {
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: .45rem;
+  }
+
+  .stratum-title {
+    font-size: .64rem;
+  }
+
+  .home-offline-lead {
+    display: block;
+    line-height: 1.55;
+  }
+
+  .home-offline-sep {
+    display: none;
+  }
+
+  .home-offline-lead a {
+    display: inline-block;
+    margin-right: .7rem;
+  }
 }
 
 .home-offline-lead {
