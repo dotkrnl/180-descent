@@ -22,26 +22,45 @@ const downloads = isZh ? book.zh.downloads : book.downloads;
   canonicalPath={staticPageUrl(locale, "downloads")}
   alternatePath={staticPageUrl(alternateLocale(locale), "downloads")}
 >
-  <div class="download-grid downloads-list">
-    <article class="download-card">
-      <p class="card-kicker">{isZh ? "EPUB" : "Standard EPUB"}</p>
-      <h2><a href={downloads.epub}>{isZh ? "标准电子书版" : "Standard ebook edition"}</a></h2>
-      <p>{isZh ? "适合各类电子阅读器与阅读应用，收录 180 天主线课程内容，不包含专题附录。" : "For ebook readers and reading apps. Contains the core 180-day lesson sequence without the optional research appendices."}</p>
-    </article>
-    <article class="download-card">
-      <p class="card-kicker">{isZh ? "PDF" : "Standard PDF"}</p>
-      <h2><a href={downloads.pdf}>{isZh ? "标准 PDF 版" : "Standard print edition"}</a></h2>
-      <p>{isZh ? "便于打印、离线阅读与逐页批注；内容与标准电子书版一致，未收录专题附录。" : "A fixed-layout, print-friendly copy of the core lessons, tuned for paging, citations, and offline reading."}</p>
-    </article>
-    <article class="download-card">
-      <p class="card-kicker">{isZh ? "EPUB · 专题深入版" : "Deep Dive EPUB"}</p>
-      <h2><a href={downloads.deepEpub}>{isZh ? "专题深入电子书版" : "Deep-dive ebook edition"}</a></h2>
-      <p>{isZh ? "在标准内容基础上增设每日专题附录，提供更丰富的背景知识与实例解析。" : "The ebook reader version with each day's optional appendix included for fuller context, extra examples, and source notes."}</p>
-    </article>
-    <article class="download-card">
-      <p class="card-kicker">{isZh ? "PDF · 专题深入版" : "Deep Dive PDF"}</p>
-      <h2><a href={downloads.deepPdf}>{isZh ? "专题深入 PDF 版" : "Deep-dive print edition"}</a></h2>
-      <p>{isZh ? "完整收录全部专题附录，适合系统学习、打印存档与长期查阅。" : "The complete print-ready edition with deep-dive appendices included, best for offline study, annotation, or reference."}</p>
-    </article>
+  <div class="download-editions">
+    <section class="download-edition" aria-labelledby="standard-edition-title">
+      <header class="download-edition-head">
+        <p class="progress-label">{isZh ? "主线版本 / 01" : "Core sequence / 01"}</p>
+        <h2 id="standard-edition-title">{isZh ? "标准版" : "Standard edition"}</h2>
+        <p>{isZh ? "180 天主线课程，适合连续阅读与日常携带。" : "The core 180-day route for continuous reading and everyday reference."}</p>
+      </header>
+      <div class="download-grid downloads-list">
+        <article class="download-card">
+          <p class="card-kicker">EPUB</p>
+          <h3><a href={downloads.epub}>{isZh ? "标准电子书版" : "Standard ebook edition"}</a></h3>
+          <p>{isZh ? "适合各类电子阅读器与阅读应用，收录 180 天主线课程内容，不包含专题附录。" : "For ebook readers and reading apps. Contains the core 180-day lesson sequence without the optional research appendices."}</p>
+        </article>
+        <article class="download-card">
+          <p class="card-kicker">PDF</p>
+          <h3><a href={downloads.pdf}>{isZh ? "标准 PDF 版" : "Standard print edition"}</a></h3>
+          <p>{isZh ? "便于打印、离线阅读与逐页批注；内容与标准电子书版一致，未收录专题附录。" : "A fixed-layout, print-friendly copy of the core lessons, tuned for paging, citations, and offline reading."}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="download-edition download-edition--deep" aria-labelledby="deep-edition-title">
+      <header class="download-edition-head">
+        <p class="progress-label">{isZh ? "研究附录 / 02" : "Research appendices / 02"}</p>
+        <h2 id="deep-edition-title">{isZh ? "专题深入版" : "Deep-dive edition"}</h2>
+        <p>{isZh ? "在主线课程之外收录可选专题附录，适合系统学习与长期查阅。" : "The complete route plus optional research appendices for sustained study and reference."}</p>
+      </header>
+      <div class="download-grid downloads-list">
+        <article class="download-card">
+          <p class="card-kicker">EPUB</p>
+          <h3><a href={downloads.deepEpub}>{isZh ? "专题深入电子书版" : "Deep-dive ebook edition"}</a></h3>
+          <p>{isZh ? "在标准内容基础上增设每日专题附录，提供更丰富的背景知识与实例解析。" : "The ebook reader version with each day's optional appendix included for fuller context, extra examples, and source notes."}</p>
+        </article>
+        <article class="download-card">
+          <p class="card-kicker">PDF</p>
+          <h3><a href={downloads.deepPdf}>{isZh ? "专题深入 PDF 版" : "Deep-dive print edition"}</a></h3>
+          <p>{isZh ? "完整收录全部专题附录，适合系统学习、打印存档与长期查阅。" : "The complete print-ready edition with deep-dive appendices included, best for offline study, annotation, or reference."}</p>
+        </article>
+      </div>
+    </section>
   </div>
 </PageShell>

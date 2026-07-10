@@ -37,28 +37,33 @@ const compactBlockTitle = (title: string) => title
   canonicalPath={staticPageUrl(locale, "syllabus")}
   alternatePath={staticPageUrl(alternateLocale(locale), "syllabus")}
 >
-  <p class="lede">{isZh ? "课程表是本书穿越世界的路线：它不是一堆互不相关的主题陈列，而是一连串逐级深入的台阶，每一天都为下一天铺就更坚实的地基。它始于追问信念如何赢得信任，继而横跨数学、物理、化学、生命科学、医学、神经科学、人工智能、经济学、社会制度、伦理以及正在塑造未来的种种力量。" : "The syllabus is the book's route through the world: not a shelf of unrelated topics, but a sequence of descents where each day gives the next one firmer ground. It begins by asking how belief earns trust, then moves through mathematics, physics, chemistry, life, medicine, mind, artificial intelligence, economics, societies, ethics, and the future."}</p>
+  <section class="syllabus-brief" aria-label={isZh ? "课程路线简介" : "Route introduction"}>
+    <div class="syllabus-brief-copy">
+      <p class="lede">{isZh ? "课程表是本书穿越世界的路线：它不是一堆互不相关的主题陈列，而是一连串逐级深入的台阶，每一天都为下一天铺就更坚实的地基。它始于追问信念如何赢得信任，继而横跨数学、物理、化学、生命科学、医学、神经科学、人工智能、经济学、社会制度、伦理以及正在塑造未来的种种力量。" : "The syllabus is the book's route through the world: not a shelf of unrelated topics, but a sequence of descents where each day gives the next one firmer ground. It begins by asking how belief earns trust, then moves through mathematics, physics, chemistry, life, medicine, mind, artificial intelligence, economics, societies, ethics, and the future."}</p>
 
-  <p>{isZh ? "每一课都保持着严整的叙事结构：一个通俗易懂的切入点、一个核心模型、一场仍在进行的辩论，以及一段走向新近研究的旅程。前沿观点将被标注为「已确立」、「有前景」或「有争议／炒作风险」。我们审慎对待尚未定论的研究：目的不在于兜售新奇，而在于呈现证据的演变，并赋予其应有的认知权重。" : "Every lesson keeps the same internal shape: an accessible entry point, a core model, a live debate, and a walk toward recent research. The frontier is treated with discipline. Claims are marked as established, promising hints, or contested hype; the goal is not to make novelty feel certain, but to show how evidence changes its weight."}</p>
-
-  <div class="syllabus-progress" aria-label={isZh ? "课程进度" : "Syllabus progress"}>
-    <div>
-      <p class="progress-label">{isZh ? "已发布" : "Published now"}</p>
-      <p class="progress-number">{isZh ? `${days.length} / ${totalDays} 天` : `${days.length} of ${totalDays} days`}</p>
+      <p>{isZh ? "每一课都保持着严整的叙事结构：一个通俗易懂的切入点、一个核心模型、一场仍在进行的辩论，以及一段走向新近研究的旅程。前沿观点将被标注为「已确立」、「有前景」或「有争议／炒作风险」。我们审慎对待尚未定论的研究：目的不在于兜售新奇，而在于呈现证据的演变，并赋予其应有的认知权重。" : "Every lesson keeps the same internal shape: an accessible entry point, a core model, a live debate, and a walk toward recent research. The frontier is treated with discipline. Claims are marked as established, promising hints, or contested hype; the goal is not to make novelty feel certain, but to show how evidence changes its weight."}</p>
     </div>
-    {nextDay && (
+
+    <div class="syllabus-progress" aria-label={isZh ? "课程进度" : "Syllabus progress"}>
       <div>
-        <p class="progress-label">{isZh ? "下一日" : "Next descent"}</p>
-        <p class="progress-next">{isZh ? `第 ${padDay(nextDay.day)} 日 · ${nextDay.title}` : `Day ${padDay(nextDay.day)} · ${nextDay.title}`}</p>
+        <p class="progress-label">{isZh ? "已发布" : "Published now"}</p>
+        <p class="progress-number">{isZh ? `${days.length} / ${totalDays} 天` : `${days.length} of ${totalDays} days`}</p>
       </div>
-    )}
-  </div>
+      {nextDay && (
+        <div>
+          <p class="progress-label">{isZh ? "下一日" : "Next descent"}</p>
+          <p class="progress-next">{isZh ? `第 ${padDay(nextDay.day)} 日 · ${nextDay.title}` : `Day ${padDay(nextDay.day)} · ${nextDay.title}`}</p>
+        </div>
+      )}
+    </div>
+  </section>
 
   <section class="syllabus-map" data-syllabus-map aria-labelledby="syllabus-map-title">
     <div class="syllabus-map-head">
       <div>
-        <p class="progress-label">{isZh ? "总览" : "Overview"}</p>
+        <p class="progress-label">{isZh ? "深度路线" : "Depth route"}</p>
         <h2 id="syllabus-map-title">{isZh ? "从表面到前沿" : "From surface to frontier"}</h2>
+        <p>{isZh ? "十三个模块依赖相接；每一段的高度对应其课程日数。" : "Thirteen dependent research blocks; each segment is weighted by its number of days."}</p>
       </div>
       <button class="map-reset" type="button" data-map-reset>{isZh ? "查看全部" : "View all"}</button>
     </div>
@@ -71,14 +76,19 @@ const compactBlockTitle = (title: string) => title
             type="button"
             data-map-block={block.id.toLowerCase()}
             data-published={published}
-            style={`--block-hue:${Math.round(200 + (blockIndex * 100) / Math.max(1, syllabus.blocks.length - 1))};--map-fill:${published / Math.max(1, block.days.length)}`}
+            style={`--block-hue:${Math.round(200 + (blockIndex * 100) / Math.max(1, syllabus.blocks.length - 1))};--map-fill:${published / Math.max(1, block.days.length)};--route-days:${block.days.length}`}
             aria-controls={`block-${block.id.toLowerCase()}`}
             aria-pressed="false"
           >
-            <span class="map-block-id">{block.id}</span>
-            <span class="map-block-title">{compactBlockTitle(block.title)}</span>
-            <span class="map-block-summary">{block.summary}</span>
-            <span class="map-block-range">{block.startDay}–{block.endDay}</span>
+            <span class="map-block-id"><i aria-hidden="true"></i>{block.id}</span>
+            <span class="map-block-copy">
+              <span class="map-block-title">{compactBlockTitle(block.title)}</span>
+              <span class="map-block-summary">{block.summary}</span>
+            </span>
+            <span class="map-block-meta">
+              <span class="map-block-range">{padDay(block.startDay)}–{padDay(block.endDay)}</span>
+              <span class="map-block-progress">{isZh ? `${published}/${block.days.length} 已发布` : `${published}/${block.days.length} published`}</span>
+            </span>
             <span class="map-block-fill" aria-hidden="true"></span>
           </button>
         );
@@ -87,42 +97,52 @@ const compactBlockTitle = (title: string) => title
     <p class="syllabus-map-status" data-map-status aria-live="polite">{isZh ? "选择一个模块以深入课程表。" : "Select a block to descend into the syllabus."}</p>
   </section>
 
-  <nav class="syllabus-block-nav" aria-label={isZh ? "课程模块" : "Syllabus blocks"}>
-    {syllabus.blocks.map((block) => (
-      <a href={`#block-${block.id.toLowerCase()}`}>{isZh ? `模块 ${block.id}` : `Block ${block.id}`}</a>
-    ))}
-  </nav>
+  <section class="syllabus-index" aria-labelledby="syllabus-index-title">
+    <header class="syllabus-index-head">
+      <div>
+        <p class="progress-label">{isZh ? "完整索引" : "Accessible index"}</p>
+        <h2 id="syllabus-index-title">{isZh ? "逐日研究图册" : "The day-by-day atlas"}</h2>
+      </div>
+      <p>{isZh ? "所有 180 日均按路线顺序列出；已发布课程可直接进入。" : "All 180 days remain in route order; published lessons link directly to the text."}</p>
+    </header>
 
-  <div class="depth-chart">
-    {syllabus.blocks.map((block, blockIndex) => (
-      <section class="syllabus-block block-scope" id={`block-${block.id.toLowerCase()}`} style={`--block-hue:${Math.round(200 + (blockIndex * 100) / Math.max(1, syllabus.blocks.length - 1))}`}>
-        <header class="stratum-head">
-          <span class="stratum-mark" aria-hidden="true">{block.id}</span>
-          <div class="stratum-head-body">
-            <p class="stratum-range">{isZh ? `模块 ${block.id} · 第 ${block.startDay}-${block.endDay} 日` : `Block ${block.id} · Days ${block.startDay}-${block.endDay}`}</p>
-            <h2>{block.title}</h2>
-            <p class="stratum-summary">{block.summary}</p>
-          </div>
-        </header>
-        <ol class="depth-list">
-          {block.days.map((day) => {
-            const contentDay = contentDays.get(day.day);
-            const isHere = nextDay ? day.day === nextDay.day : false;
-            return (
-              <li class:list={["depth-day", { "is-published": Boolean(contentDay), "is-here": isHere }]}>
-                <span class="depth-num">{padDay(day.day)}</span>
-                <div class="depth-body">
-                  <h3 class="depth-title">{contentDay ? <a href={contentDay.url}>{contentDay.title}</a> : day.title}</h3>
-                  {contentDay && <p class="depth-summary">{contentDay.summary}</p>}
-                  {!contentDay && <p class="depth-status">{isHere ? (isZh ? "下一次下潜" : "Next descent") : (isZh ? "计划中" : "Planned")}</p>}
-                </div>
-              </li>
-            );
-          })}
-        </ol>
-      </section>
-    ))}
-  </div>
+    <nav class="syllabus-block-nav" aria-label={isZh ? "课程模块" : "Syllabus blocks"}>
+      {syllabus.blocks.map((block) => (
+        <a href={`#block-${block.id.toLowerCase()}`}>{isZh ? `模块 ${block.id}` : `Block ${block.id}`}</a>
+      ))}
+    </nav>
+
+    <div class="depth-chart">
+      {syllabus.blocks.map((block, blockIndex) => (
+        <section class="syllabus-block block-scope" id={`block-${block.id.toLowerCase()}`} style={`--block-hue:${Math.round(200 + (blockIndex * 100) / Math.max(1, syllabus.blocks.length - 1))}`}>
+          <header class="stratum-head">
+            <span class="stratum-mark" aria-hidden="true">{block.id}</span>
+            <div class="stratum-head-body">
+              <p class="stratum-range">{isZh ? `模块 ${block.id} · 第 ${block.startDay}-${block.endDay} 日` : `Block ${block.id} · Days ${block.startDay}-${block.endDay}`}</p>
+              <h2>{block.title}</h2>
+              <p class="stratum-summary">{block.summary}</p>
+            </div>
+          </header>
+          <ol class="depth-list">
+            {block.days.map((day) => {
+              const contentDay = contentDays.get(day.day);
+              const isHere = nextDay ? day.day === nextDay.day : false;
+              return (
+                <li class:list={["depth-day", { "is-published": Boolean(contentDay), "is-here": isHere }]}>
+                  <span class="depth-num">{padDay(day.day)}</span>
+                  <div class="depth-body">
+                    <h3 class="depth-title">{contentDay ? <a href={contentDay.url}>{contentDay.title}</a> : day.title}</h3>
+                    {contentDay && <p class="depth-summary">{contentDay.summary}</p>}
+                    {!contentDay && <p class="depth-status">{isHere ? (isZh ? "下一次下潜" : "Next descent") : (isZh ? "计划中" : "Planned")}</p>}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ))}
+    </div>
+  </section>
 
   <section class="next-summary" aria-labelledby="what-comes-next">
     <p class="sec-eyebrow">{isZh ? "续篇" : "Continuation"}</p>

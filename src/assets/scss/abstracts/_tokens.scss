@@ -13,11 +13,16 @@ $font-faces: (
 );
 
 $layout-tokens: (
-  measure: 48rem,
+  measure: 46rem,
   measure-cjk: 40rem,
-  shell: 70rem,
-  rail-w: 13.5rem,
-  rail-gap: 3rem,
+  shell: 92rem,
+  reading-field: 78rem,
+  prose-max: 46rem,
+  rail-w: 11rem,
+  rail-gap: 2.5rem,
+  companion-min: 13rem,
+  companion-max: 24rem,
+  page-pad: 'clamp(1rem, 2.8vw, 2.75rem)',
   space-1: .25rem,
   space-2: .5rem,
   space-3: .75rem,
@@ -33,89 +38,142 @@ $layout-tokens: (
   step-2: 1.5rem,
   step-3: 2rem,
   step-4: 2.5rem,
+  radius-1: .2rem,
+  radius-2: .45rem,
+  duration-fast: 160ms,
+  duration-base: 280ms,
+  ease-atlas: 'cubic-bezier(.2,.8,.2,1)',
   bp-read: 45rem,
   bp-aside: 60rem,
   bp-wide: 75rem,
-  font-body: '"Newsreader",Georgia,serif',
-  font-display: '"Fraunces",serif',
-  font-mono: '"IBM Plex Mono",monospace',
+  font-body: '"Newsreader", Georgia, serif',
+  font-display: '"Fraunces", Georgia, serif',
+  font-mono: '"IBM Plex Mono", ui-monospace, monospace',
   block-hue: 200,
   block-accent: var(--accent),
-  block-accent-soft: 'color-mix(in srgb, var(--accent) 14%, transparent)'
+  block-accent-soft: 'color-mix(in srgb, var(--accent) 14%, transparent)',
+  block-signal: var(--signal)
 );
 
-// Deep-water descent: cool abyssal blues over sea-washed paper. Light theme
-// reads as the sunlit surface; dark theme as bioluminescence at depth.
+// Research-atlas palette. Bone is the reading surface, abyssal navy is the
+// navigational field, deep teal carries orientation, and signal coral marks
+// action/current position. Both themes expose the same semantic contract.
 $light-theme-tokens: (
-  paper: #f1f2ec,
-  raised: #fafaf4,
-  ink: #14212b,
-  ink-soft: #3d5260,
-  ink-faint: #556873,
-  line: #d7dcd2,
-  line-strong: #b7c3bd,
-  accent: #0f6a83,
-  accent-deep: #0a4f63,
-  brass: #8a6520,
-  ok: #256849,
-  hint: #7c5a19,
-  contested: #9e3a3a,
-  heat: #a8452d,
-  abyss: #0e2230,
-  abyss-fg: #e4ebe9,
-  shadow: '0 1px 2px rgba(14,34,48,.05),0 8px 30px -16px rgba(14,34,48,.22)',
+  bone: #f3ecdf,
+  bone-raised: #fffaf0,
+  "navy": #071d27,
+  navy-raised: #0c2a35,
+  "teal": #086b68,
+  teal-deep: #064f51,
+  teal-bright: #1a8982,
+  "coral": #d75b43,
+  coral-ink: #a63a2b,
+  paper: var(--bone),
+  raised: var(--bone-raised),
+  ink: var(--navy),
+  ink-soft: #3e5359,
+  ink-faint: #59696d,
+  line: #d9cfbf,
+  line-strong: #b8aa96,
+  accent: var(--teal),
+  accent-deep: var(--teal-deep),
+  signal: var(--coral),
+  signal-ink: var(--coral-ink),
+  brass: var(--coral-ink),
+  ok: #216b58,
+  hint: #825716,
+  contested: #a33c48,
+  heat: var(--coral-ink),
+  abyss: var(--navy),
+  abyss-raised: var(--navy-raised),
+  abyss-fg: #f7efdf,
+  chrome-bg: var(--navy),
+  chrome-raised: var(--navy-raised),
+  chrome-fg: #f7efdf,
+  chrome-muted: #a9b9b7,
+  chrome-line: #2c4850,
+  atlas-grid: 'color-mix(in srgb, var(--teal) 10%, transparent)',
+  atlas-grid-strong: 'color-mix(in srgb, var(--teal) 24%, transparent)',
+  focus-ring: #b84331,
+  focus-halo: 'color-mix(in srgb, #b84331 28%, transparent)',
+  selection-bg: #0b6664,
+  selection-fg: #fffaf0,
+  shadow: '0 1px 2px rgba(7,29,39,.06), 0 16px 36px -28px rgba(7,29,39,.34)',
   recap-bg: var(--abyss),
   recap-fg: var(--abyss-fg),
-  recap-accent: #6fc6da,
-  recap-gold: #d5aa55,
+  recap-accent: #7ad2c7,
+  recap-gold: #f08a70,
   recap-muted: color-mix(in srgb, var(--abyss-fg) 62%, transparent),
   recap-line: color-mix(in srgb, var(--abyss-fg) 18%, transparent),
-  recap-background: 'linear-gradient(180deg,color-mix(in srgb,var(--abyss) 90%,var(--accent) 10%),var(--abyss))',
+  recap-background: 'linear-gradient(145deg, color-mix(in srgb, var(--abyss) 88%, var(--teal) 12%), var(--abyss))',
   recap-box-shadow: none,
   recap-border-width: 0,
   tomorrow-bg: transparent,
   tomorrow-border: var(--line-strong),
-  brand-light-opacity: 1,
-  brand-dark-opacity: 0,
+  brand-light-opacity: 0,
+  brand-dark-opacity: 1,
   pvalue-bg: var(--raised),
   pvalue-img-bg: var(--paper),
   pvalue-shadow: var(--shadow)
 );
 
 $dark-theme-tokens: (
-  paper: #0a131b,
-  raised: #101c26,
-  ink: #dfe7e4,
-  ink-soft: #a0b3b9,
-  ink-faint: #7b8f99,
-  line: #1d2f3a,
-  line-strong: #2e4552,
-  accent: #4cc0da,
-  accent-deep: #66c4d8,
-  brass: #d3a54a,
-  ok: #5ac088,
-  hint: #dfb54a,
-  contested: #e0705f,
-  heat: #e58a63,
-  abyss: #0c1a26,
-  abyss-fg: #dfe7e4,
-  shadow: '0 1px 2px rgba(0,0,0,.4),0 14px 40px -20px rgba(0,0,0,.7)',
-  recap-bg: #0d1d2a,
-  recap-fg: #e0e8e6,
-  recap-accent: #6fc6da,
-  recap-gold: #d5aa55,
-  recap-muted: #a7b7b3,
-  recap-line: #274052,
-  recap-background: 'linear-gradient(180deg,color-mix(in srgb,#0d1d2a 88%,var(--accent) 12%),#0d1d2a)',
-  recap-box-shadow: '0 1px 2px rgba(0,0,0,.45),0 18px 42px -28px rgba(0,0,0,.85)',
+  bone: #f3ead9,
+  bone-raised: #fff7e8,
+  "navy": #040f15,
+  navy-raised: #0b242d,
+  "teal": #65c9bd,
+  teal-deep: #8adbd0,
+  teal-bright: #9de5db,
+  "coral": #f07b60,
+  coral-ink: #ff9b82,
+  paper: #071820,
+  raised: #0d252e,
+  ink: var(--bone),
+  ink-soft: #c6beb1,
+  ink-faint: #9ba5a1,
+  line: #233b44,
+  line-strong: #49616a,
+  accent: var(--teal),
+  accent-deep: var(--teal-deep),
+  signal: var(--coral),
+  signal-ink: var(--coral-ink),
+  brass: var(--coral),
+  ok: #79c9a5,
+  hint: #e5b665,
+  contested: #f08791,
+  heat: var(--coral),
+  abyss: var(--navy),
+  abyss-raised: var(--navy-raised),
+  abyss-fg: var(--bone),
+  chrome-bg: var(--navy),
+  chrome-raised: var(--navy-raised),
+  chrome-fg: var(--bone),
+  chrome-muted: #a7b7b5,
+  chrome-line: #294750,
+  atlas-grid: 'color-mix(in srgb, var(--teal) 9%, transparent)',
+  atlas-grid-strong: 'color-mix(in srgb, var(--teal) 22%, transparent)',
+  focus-ring: #ff8b70,
+  focus-halo: 'color-mix(in srgb, #ff8b70 30%, transparent)',
+  selection-bg: #77d0c5,
+  selection-fg: #031117,
+  shadow: '0 1px 2px rgba(0,0,0,.45), 0 18px 44px -28px rgba(0,0,0,.82)',
+  recap-bg: var(--navy),
+  recap-fg: var(--bone),
+  recap-accent: #91ddd3,
+  recap-gold: #ff9a80,
+  recap-muted: #b7b7ad,
+  recap-line: #304b53,
+  recap-background: 'linear-gradient(145deg, color-mix(in srgb, var(--navy) 82%, var(--teal) 18%), var(--navy))',
+  recap-box-shadow: '0 1px 2px rgba(0,0,0,.45), 0 18px 42px -28px rgba(0,0,0,.85)',
   recap-border-width: 1px,
   tomorrow-bg: color-mix(in srgb, var(--raised) 66%, transparent),
-  tomorrow-border: color-mix(in srgb, var(--brass) 38%, var(--line-strong)),
+  tomorrow-border: color-mix(in srgb, var(--signal) 38%, var(--line-strong)),
   brand-light-opacity: 0,
   brand-dark-opacity: 1,
-  pvalue-bg: color-mix(in srgb, var(--raised) 78%, #04080c),
-  pvalue-img-bg: #0f1c27,
-  pvalue-shadow: '0 1px 2px rgba(0,0,0,.5),0 16px 36px -24px rgba(0,0,0,.9)'
+  pvalue-bg: color-mix(in srgb, var(--raised) 78%, var(--navy)),
+  pvalue-img-bg: #0b2029,
+  pvalue-shadow: '0 1px 2px rgba(0,0,0,.5), 0 16px 36px -24px rgba(0,0,0,.9)'
 );
 
 @mixin custom-properties($tokens) {
@@ -139,13 +197,32 @@ $dark-theme-tokens: (
   @include custom-properties($layout-tokens);
 }
 
+// The class is emitted by BookShell. Its extra specificity keeps the
+// canonical theme tokens authoritative across every route family.
+:root.atlas-root {
+  @include custom-properties($light-theme-tokens);
+  @include custom-properties($layout-tokens);
+  color-scheme: light;
+  background: var(--chrome-bg);
+}
+
 :root[data-theme="dark"] {
   @include custom-properties($dark-theme-tokens);
+}
+
+:root.atlas-root[data-theme="dark"] {
+  @include custom-properties($dark-theme-tokens);
+  color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root[data-theme="auto"] {
     @include custom-properties($dark-theme-tokens);
+  }
+
+  :root.atlas-root[data-theme="auto"] {
+    @include custom-properties($dark-theme-tokens);
+    color-scheme: dark;
   }
 }
 

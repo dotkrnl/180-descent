@@ -1,60 +1,334 @@
-*{box-sizing:border-box;}
-html{-webkit-text-size-adjust:100%;}
-html[lang^="zh"]{
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html[lang^="zh"] {
   text-autospace: normal;
 }
-body{
-  margin:0;
-  background:var(--paper);
-  color:var(--ink);
-  font-family:var(--font-body);
-  font-size:clamp(1.06rem,.55rem + 1.05vw,1.2rem);
-  line-height:1.78;
-  transition:background .3s ease,color .3s ease;
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: clamp(1.06rem, .55rem + 1.05vw, 1.2rem);
+  line-height: 1.78;
 }
-body .katex{font-size:1em;}
-body .katex:not(.katex-display>.katex){font-family:inherit;}
-body .katex:not(.katex-display>.katex) :is(.mathnormal,.mathrm,.textstyle,.mord,.mop,.mbin,.mrel,.mopen,.mclose,.mpunct,.minner){font-family:inherit;}
-@media screen{
+
+.atlas-root body.atlas-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 100% 0, color-mix(in srgb, var(--accent) 4%, transparent), transparent 30rem),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: clamp(1.04rem, .94rem + .24vw, 1.18rem);
+  line-height: 1.72;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  accent-color: var(--accent);
+  scrollbar-color: var(--line-strong) var(--paper);
+}
+
+.atlas-shell > main {
+  min-height: 45vh;
+  background: var(--paper);
+}
+
+body .katex {
+  font-size: 1em;
+}
+
+body .katex:not(.katex-display > .katex) {
+  font-family: inherit;
+}
+
+body .katex:not(.katex-display > .katex) :is(.mathnormal, .mathrm, .textstyle, .mord, .mop, .mbin, .mrel, .mopen, .mclose, .mpunct, .minner) {
+  font-family: inherit;
+}
+
+@media screen {
   // Only the root clips horizontal overflow: overflow-x on body turns it
   // into a scroll container and silently kills the sticky topbar.
-  html{overflow-x:hidden;}
-}
-::selection{background:color-mix(in srgb,var(--accent) 24%,transparent);}
-a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent);}
-a:hover{border-bottom-color:var(--accent);}
-a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 68%,#fff);outline-offset:3px;box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 16%,transparent);}
-.topnav a:focus-visible,.course:focus-visible,.toggle:focus-visible,.lesson-nav-card:focus-visible,.day-card a:focus-visible,.download-card a:focus-visible,.all-days-link a:focus-visible{border-radius:8px;}
-.topnav a[aria-current="page"]{color:var(--ink);border-bottom-color:currentColor;}
-.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
-.skip-link{position:absolute;left:-999px;top:.5rem;background:var(--raised);padding:.45rem .7rem;z-index:50;}
-.skip-link:focus{left:.5rem;}
-.wrap{max-width:var(--measure);margin:0 auto;padding:0 1.35rem;}
-.wide{max-width:54rem;}
-
-// One shell grid for wide screens. The topbar, cover, and footer align to
-// a single centered shell; every reading column starts at the same left
-// edge (shell edge + rail zone) on every page; breakouts extend right to
-// finish flush with the shell. One system, five fewer left edges.
-@media screen and (min-width:75rem){
-  :root{
-    --shell-left:max(1.35rem,calc(50vw - var(--shell)/2));
-    --col-left:calc(var(--shell-left) + var(--rail-w) + var(--rail-gap));
-    --col-wide:calc(var(--shell) - var(--rail-w) - var(--rail-gap));
-  }
-  main .wrap,.release-banner .wrap,.site-footer .wrap{margin-left:var(--col-left);margin-right:auto;}
-  .wide{max-width:var(--col-wide);}
-  main .lesson-figure:not(.is-portrait),main .table-wrap,main .panel,main .compare,main .widepanel,main .appendix-figure-wide,main .depth-chart,main .syllabus-progress,main .download-grid{
-    width:calc(var(--col-wide) - 2.7rem);
-    max-width:none;
-    margin-left:0;
-    margin-right:0;
+  html {
+    overflow-x: hidden;
   }
 }
 
-@media screen and (prefers-reduced-motion: no-preference){
-  // Calm scroll reveals. Classes are added by JS only, so no-JS readers,
-  // EPUB, and print see everything immediately.
-  .rv{opacity:0;transform:translateY(16px);}
-  .rv.rv-in{opacity:1;transform:none;transition:opacity .65s ease,transform .65s cubic-bezier(.16,1,.3,1);}
+::selection {
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+.atlas-shell ::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+  text-shadow: none;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+a:hover {
+  border-bottom-color: var(--accent);
+}
+
+.atlas-shell a {
+  color: var(--accent-deep);
+  border-bottom-color: color-mix(in srgb, var(--accent) 42%, transparent);
+  transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+}
+
+.atlas-shell a:hover {
+  color: var(--accent);
+  border-bottom-color: currentColor;
+}
+
+.atlas-shell :is(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 7px var(--focus-halo);
+}
+
+.atlas-shell :is(.topnav a, .course, .toggle, .lesson-nav-card, .day-card a, .download-card a, .all-days-link a):focus-visible {
+  border-radius: var(--radius-1);
+}
+
+.topnav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: currentColor;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: .5rem;
+  z-index: 50;
+  padding: .45rem .7rem;
+  background: var(--raised);
+}
+
+.skip-link:focus {
+  left: .5rem;
+}
+
+.atlas-shell .skip-link {
+  position: fixed;
+  top: .7rem;
+  left: .7rem;
+  z-index: 100;
+  padding: .55rem .72rem;
+  border: 1px solid var(--focus-ring);
+  border-radius: var(--radius-1);
+  background: var(--chrome-fg);
+  color: var(--chrome-bg);
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transform: translateY(calc(-100% - 1rem));
+}
+
+.atlas-shell .skip-link:focus {
+  left: .7rem;
+  transform: translateY(0);
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.35rem;
+}
+
+.wide {
+  max-width: 54rem;
+}
+
+// Shared shell coordinates remain available to legacy layouts while the
+// atlas page families migrate to their own explicit grids.
+@media screen and (min-width: 75rem) {
+  :root {
+    --shell-left: max(1.35rem, calc(50vw - var(--shell) / 2));
+    --col-left: calc(var(--shell-left) + var(--rail-w) + var(--rail-gap));
+    --col-wide: calc(var(--shell) - var(--rail-w) - var(--rail-gap));
+  }
+
+  :root.atlas-root {
+    --shell-left: max(var(--page-pad), calc(50vw - var(--shell) / 2));
+    --col-left: calc(var(--shell-left) + var(--rail-w) + var(--rail-gap));
+    --col-wide: calc(var(--shell) - var(--rail-w) - var(--rail-gap));
+  }
+
+  body:not(.atlas-shell) main .wrap,
+  body:not(.atlas-shell) .release-banner .wrap,
+  body:not(.atlas-shell) .site-footer .wrap {
+    margin-left: var(--col-left);
+    margin-right: auto;
+  }
+
+  body:not(.atlas-shell) .wide {
+    max-width: var(--col-wide);
+  }
+
+  body:not(.atlas-shell) main :is(.lesson-figure:not(.is-portrait), .table-wrap, .panel, .compare, .widepanel, .appendix-figure-wide, .depth-chart, .syllabus-progress, .download-grid) {
+    width: calc(var(--col-wide) - 2.7rem);
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+// The colophon is deliberately always abyssal: it closes every route at the
+// same visual depth, independent of the reader's light/dark preference.
+.atlas-shell .site-footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: clamp(5rem, 10vw, 9rem);
+  padding: clamp(2.75rem, 6vw, 5.5rem) 0 clamp(3rem, 6vw, 5rem);
+  border-top: 3px solid var(--signal);
+  background:
+    radial-gradient(circle at 12% -30%, color-mix(in srgb, var(--teal) 24%, transparent), transparent 28rem),
+    linear-gradient(145deg, var(--chrome-raised), var(--chrome-bg) 58%);
+  color: var(--chrome-muted);
+}
+
+.atlas-shell .site-footer::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--atlas-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--atlas-grid) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  content: "";
+  opacity: .42;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 82%);
+  mask-image: linear-gradient(to bottom, #000, transparent 82%);
+}
+
+.atlas-shell .site-footer .wrap {
+  width: min(100%, var(--reading-field));
+  max-width: var(--reading-field);
+  margin-inline: auto;
+  padding-inline: var(--page-pad);
+}
+
+.atlas-shell .footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(12rem, .5fr);
+  align-items: end;
+  gap: clamp(2rem, 8vw, 8rem);
+}
+
+.atlas-shell .footer-grid p {
+  margin: 0;
+  color: var(--chrome-muted);
+  line-height: 1.6;
+}
+
+.atlas-shell .footer-coordinate {
+  display: block;
+  margin-bottom: 1.2rem;
+  color: var(--signal);
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.atlas-shell .footer-grid .footer-colophon strong {
+  display: inline-block;
+  margin-bottom: .45rem;
+  color: var(--chrome-fg);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1rem + .6vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -.015em;
+}
+
+.atlas-shell .footer-grid p.footer-links {
+  padding-left: 1.2rem;
+  border-left: 1px solid var(--chrome-line);
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  letter-spacing: .08em;
+  line-height: 2;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.atlas-shell .site-footer :is(.footer-colophon, .footer-links) a {
+  color: var(--chrome-fg);
+  border-bottom-color: color-mix(in srgb, var(--teal-bright) 48%, transparent);
+}
+
+.atlas-shell .site-footer :is(.footer-colophon, .footer-links) a:hover {
+  color: var(--teal-bright);
+  border-bottom-color: currentColor;
+}
+
+@media (max-width: 44.99rem) {
+  .atlas-shell .footer-grid {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 2rem;
+  }
+
+  .atlas-shell .footer-grid p.footer-links {
+    padding-top: 1.2rem;
+    padding-left: 0;
+    border-top: 1px solid var(--chrome-line);
+    border-left: 0;
+  }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .atlas-root body.atlas-shell {
+    transition: background-color var(--duration-base) ease, color var(--duration-base) ease;
+  }
+
+  .atlas-shell .skip-link {
+    transition: transform var(--duration-fast) var(--ease-atlas);
+  }
+
+  // Calm scroll arrivals never gate opacity: restored positions and hash
+  // targets remain immediately legible even before their observer fires.
+  .rv {
+    opacity: 1;
+    transform: none;
+  }
+
+  .rv.rv-in {
+    animation: atlas-section-arrival .55s cubic-bezier(.16, 1, .3, 1);
+  }
+
+  @keyframes atlas-section-arrival {
+    from {
+      opacity: .82;
+      transform: translateY(10px);
+    }
+  }
 }

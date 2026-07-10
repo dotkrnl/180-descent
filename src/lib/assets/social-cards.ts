@@ -147,27 +147,39 @@ function renderSocialCardSvg(card: SocialCard, brandMarkBase64: string): string 
     : (isZh ? "从根基到 2026 年研究前沿" : "Foundations to the 2026 research frontier");
   const summary = clampSocialText(card.summary, isZh ? 132 : 150);
   const titleLines = wrapSocialTextForCard(card.title, { maxLines: isZh ? 2 : 3, maxChars: isZh ? 15 : 22 });
-  const summaryLines = summary ? wrapSocialTextForCard(summary, { maxLines: 3, maxChars: isZh ? 28 : 48 }) : [];
+  const summaryMaxLines = titleLines.length >= 3 ? 1 : titleLines.length === 2 ? 2 : 3;
+  const summaryLines = summary ? wrapSocialTextForCard(summary, { maxLines: summaryMaxLines, maxChars: isZh ? 28 : 48 }) : [];
   const titleSize = isZh ? 70 : 78;
   const summarySize = isZh ? 34 : 32;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${CARD_WIDTH}" height="${CARD_HEIGHT}" viewBox="0 0 ${CARD_WIDTH} ${CARD_HEIGHT}">
-  <rect width="${CARD_WIDTH}" height="${CARD_HEIGHT}" fill="#f7f3ea"/>
-  <rect width="18" height="${CARD_HEIGHT}" fill="#1e4942"/>
-  <linearGradient id="warmFade" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#c54840" stop-opacity=".18"/>
-    <stop offset=".38" stop-color="#c54840" stop-opacity="0"/>
-  </linearGradient>
-  <rect width="${CARD_WIDTH}" height="${CARD_HEIGHT}" fill="url(#warmFade)"/>
-  <rect x="84" y="72" width="289" height="2" fill="#bd8a38"/>
-  <rect x="373" y="72" width="166" height="2" fill="#c54840"/>
-  <rect x="539" y="72" width="577" height="2" fill="#1e4942"/>
-  <text x="84" y="145" fill="#6d4d18" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing=".5">${escapeXml(card.kicker.toUpperCase())}</text>
-  ${svgMultilineText(titleLines, { x: 84, y: 224, size: titleSize, lineHeight: titleSize * 1.04, color: "#191815", weight: 760, family: socialTitleFont(isZh) })}
-  ${svgMultilineText(summaryLines, { x: 84, y: 224 + titleLines.length * titleSize * 1.04 + 40, size: summarySize, lineHeight: summarySize * 1.32, color: "#34312b", weight: 400, family: socialBodyFont(isZh) })}
-  <text x="84" y="584" fill="#5b574e" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">${escapeXml(label)}</text>
+  <defs>
+    <pattern id="atlasGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#65c9bd" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="depthFade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c2a35" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#086b68" stop-opacity=".22"/>
+    </linearGradient>
+  </defs>
+  <rect width="${CARD_WIDTH}" height="${CARD_HEIGHT}" fill="#071d27"/>
+  <rect width="${CARD_WIDTH}" height="${CARD_HEIGHT}" fill="url(#atlasGrid)"/>
+  <rect width="20" height="${CARD_HEIGHT}" fill="#d75b43"/>
+  <circle cx="1090" cy="92" r="246" fill="none" stroke="#65c9bd" stroke-opacity=".13" stroke-width="2"/>
+  <circle cx="1090" cy="92" r="184" fill="none" stroke="#65c9bd" stroke-opacity=".09" stroke-width="1"/>
+  <path d="M865 630C915 450 1015 374 1200 348V630Z" fill="url(#depthFade)"/>
+  <text x="830" y="392" fill="#65c9bd" fill-opacity=".055" font-family="Georgia, Times New Roman, serif" font-size="330" font-weight="700">180</text>
+  <rect x="84" y="70" width="220" height="3" fill="#65c9bd"/>
+  <rect x="304" y="70" width="94" height="3" fill="#d75b43"/>
+  <rect x="398" y="70" width="718" height="1" fill="#2c4850"/>
+  <text x="84" y="142" fill="#7ad2c7" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" letter-spacing="1.4">${escapeXml(card.kicker.toUpperCase())}</text>
+  ${svgMultilineText(titleLines, { x: 84, y: 224, size: titleSize, lineHeight: titleSize * 1.04, color: "#f7efdf", weight: 760, family: socialTitleFont(isZh) })}
+  ${svgMultilineText(summaryLines, { x: 84, y: 224 + titleLines.length * titleSize * 1.04 + 40, size: summarySize, lineHeight: summarySize * 1.32, color: "#c3cfca", weight: 400, family: socialBodyFont(isZh) })}
+  <circle cx="58" cy="574" r="5" fill="#d75b43"/>
+  <text x="84" y="584" fill="#a9b9b7" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">${escapeXml(label)}</text>
+  <circle cx="935" cy="553" r="44" fill="#f3ecdf"/>
   <image x="897" y="515" width="76" height="76" href="data:image/png;base64,${brandMarkBase64}"/>
-  <text x="990" y="564" fill="#5b574e" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">180d.io</text>
+  <text x="990" y="564" fill="#f7efdf" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">180d.io</text>
 </svg>`;
 }
 
@@ -217,8 +229,8 @@ function socialTitleFont(isZh: boolean): string {
 
 function socialBodyFont(isZh: boolean): string {
   return isZh
-    ? "LXGW WenKai, Noto Sans CJK SC, PingFang SC, Microsoft YaHei, sans-serif"
-    : "Arial, Helvetica, sans-serif";
+    ? "LXGW WenKai, Noto Serif CJK SC, Songti SC, SimSun, serif"
+    : "Georgia, Times New Roman, serif";
 }
 
 function svgMultilineText(lines: string[], options: {

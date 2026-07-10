@@ -1,77 +1,124 @@
-html[lang^="zh"]{
+// Simplified-Chinese reading rhythm. The CJK edition shares the same atlas
+// structure, but not the Latin edition's line breaks, tracking, or italics.
+
+html[lang^="zh"] {
   --measure:var(--measure-cjk);
+  --prose-max:42rem;
   --font-body:"LXGW WenKai","Newsreader",Georgia,serif;
   --font-display:"LXGW WenKai","Fraunces",serif;
 }
-html[lang^="zh"] body{
-  line-height:1.9;
-  word-break:break-word;
+
+html[lang^="zh"] body {
   font-feature-settings:"palt";
-}
-html[lang^="zh"] h1,html[lang^="zh"] h2,html[lang^="zh"] h3{
-  font-weight:700;
+  line-break:strict;
+  line-height:1.88;
+  overflow-wrap:anywhere;
+  text-autospace:normal;
+  word-break:normal;
 }
 
-html[lang^="zh"] .wrap>p,
-html[lang^="zh"] .wrap section>p,
-html[lang^="zh"] .wrap section li,
-html[lang^="zh"] .whereblock p,
-html[lang^="zh"] .aside p,
-html[lang^="zh"] .format-alt p,
-html[lang^="zh"] .tomorrow p,
-html[lang^="zh"] .sources li,
-html[lang^="zh"] .recap dd,
-html[lang^="zh"] blockquote{
-  text-align:justify;
-  text-justify:inter-ideograph;
+html[lang^="zh"] :is(h1,h2,h3,.deep-dive-title,.lesson-nav-card strong) {
+  font-family:var(--font-display);
+  font-weight:700;
+  letter-spacing:.015em;
+  line-height:1.18;
+  text-wrap:pretty;
 }
-html[lang^="zh"] .topbar-row,
-html[lang^="zh"] .release-banner,
-html[lang^="zh"] .latest-day-banner,
-html[lang^="zh"] .download-strip,
-html[lang^="zh"] .panel,
-html[lang^="zh"] .download-card p,
-html[lang^="zh"] .day-card p,
-html[lang^="zh"] .lesson-nav-card,
-html[lang^="zh"] .card-kicker,
-html[lang^="zh"] .ptitle,
-html[lang^="zh"] .pnote,
-html[lang^="zh"] .routcome p,
-html[lang^="zh"] .rnode,
-html[lang^="zh"] .tip-note-box{
-  text-align:initial;
+
+html[lang^="zh"] :is(.sub,blockquote) {
+  font-style:normal;
 }
-html[lang^="zh"] .deep-dive>summary .ptitle{
-  letter-spacing:0;
+
+html[lang^="zh"] :is(
+  .eyebrow,.sec-eyebrow,.card-kicker,.progress-label,.stratum-range,
+  .depth-num,.depth-status,.rail-toc-title,.download-strip,.release-banner,
+  .latest-day-banner,.lesson-nav-card>span,.map-block-id,.map-block-range,
+  .map-reset,.cover-chart-caption,.cover-kicker,.endcap
+) {
+  font-family:"IBM Plex Mono","LXGW WenKai",monospace;
+  letter-spacing:.06em;
   text-transform:none;
 }
 
-@media(max-width:720px){
-  .topbar-row{align-items:flex-start;flex-direction:column;gap:.5rem;}
-  .topnav{font-size:.68rem;}
-  .release-banner .wide,.latest-day-banner .wide{display:block;}
-  .release-banner strong,.latest-day-banner strong{display:block;margin-bottom:.18rem;}
-  .download-strip .wide{flex-wrap:wrap;}
-  .tip-note-box{width:min(17.5rem,calc(100vw - 1.5rem));}
-  .oscrow{align-items:flex-start;flex-direction:column;gap:.25rem;}
-  .oscrow .lab,.oscrow .pct{flex:auto;text-align:left;}
-  .bartrack{width:100%;}
-  .vc-row{display:block;}
-  .vc-row .who{display:block;margin-bottom:.2rem;}
-  .home-actions{grid-template-columns:1fr;}
-  .lesson-nav{grid-template-columns:1fr;gap:.55rem;}
-  .lesson-nav-card.is-syllabus{text-align:left;}
-  .day-card{grid-template-columns:1fr;gap:.2rem;}
-  .day-card .card-kicker,.day-card h2,.day-card h3,.day-card p:not(.card-kicker){grid-column:1;grid-row:auto;}
+html[lang^="zh"] :is(
+  .wrap>p,.wrap section>p,.wrap section li,.whereblock p,.aside p,
+  .format-alt p,.tomorrow p,.sources li,.recap dd,blockquote
+) {
+  text-align:start;
 }
 
-@media(max-width:520px){
-  .deep-dive .chip{max-width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.35;border-radius:8px;align-items:flex-start;}
-  .deep-dive .chip i,.deep-dive .chip-dot{flex:0 0 auto;margin-top:.25em;}
+@media(min-width:48rem) {
+  html[lang^="zh"] :is(
+    .lesson-reading>section>p,.lesson-reading>section>ul,
+    .lesson-reading>section>ol,.page>p,.deep-dive-body>p
+  ) {
+    text-align:justify;
+    text-justify:inter-ideograph;
+  }
 }
 
-@media(max-width:760px){
-  .regress-chain{grid-template-columns:1fr;}
-  .rstep{font-size:1.2rem;min-height:1.1rem;transform:rotate(90deg);}
-  .regress-outcomes{grid-template-columns:1fr;}
+html[lang^="zh"] :is(
+  .topbar-row,.panel,.download-card,.day-card,.lesson-nav-card,.ptitle,
+  .pnote,.routcome,.tip-note-box,.map-block,.syllabus-progress
+) {
+  text-align:initial;
+}
+
+html[lang^="zh"] .deep-dive>summary .ptitle {
+  letter-spacing:.04em;
+  text-transform:none;
+}
+
+html[lang^="zh"] .latin {
+  font-family:"Newsreader",Georgia,serif;
+  font-size:.9em;
+  font-style:italic;
+  letter-spacing:.01em;
+}
+
+@media(max-width:45rem) {
+  html[lang^="zh"] body {
+    font-size:1.03rem;
+    line-height:1.82;
+  }
+
+  html[lang^="zh"] .cover-text h1 {
+    max-width:8ch;
+  }
+
+  html[lang^="zh"] .lesson-nav-card strong {
+    font-size:.82rem;
+    line-height:1.25;
+  }
+
+  html[lang^="zh"] :is(.release-banner .wide,.latest-day-banner .wide) {
+    display:block;
+  }
+
+  html[lang^="zh"] :is(.release-banner strong,.latest-day-banner strong) {
+    display:block;
+    margin-bottom:.18rem;
+  }
+
+  html[lang^="zh"] .download-strip .wide {
+    flex-wrap:wrap;
+  }
+
+  html[lang^="zh"] :is(.tip-note-box) {
+    width:min(17.5rem,calc(100vw - 1.5rem));
+  }
+}
+
+@media(max-width:32.5rem) {
+  html[lang^="zh"] .deep-dive .chip {
+    max-width:100%;
+    align-items:flex-start;
+    overflow-wrap:anywhere;
+    white-space:normal;
+  }
+
+  html[lang^="zh"] .deep-dive :is(.chip i,.chip-dot) {
+    flex:0 0 auto;
+    margin-top:.25em;
+  }
 }

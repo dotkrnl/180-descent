@@ -17,6 +17,22 @@ interface Props {
 const book = await getBookData();
 const { locale, title, subtitle, eyebrow, description, canonicalPath, alternatePath, releaseBanner = false } = Astro.props;
 const isZh = locale === "zh";
+const pageKind = canonicalPath.includes("syllabus")
+  ? "syllabus"
+  : canonicalPath.includes("downloads")
+    ? "downloads"
+    : canonicalPath.includes("credits")
+      ? "credits"
+      : canonicalPath.includes("introduction")
+        ? "introduction"
+        : "chapter";
+const folioLabels = {
+  syllabus: isZh ? "路线 / 001—180" : "Route / 001—180",
+  downloads: isZh ? "便携版本 / 04" : "Field editions / 04",
+  credits: isZh ? "来源档案 / 开放许可" : "Source register / Open licenses",
+  introduction: isZh ? "起始坐标 / 000" : "Starting coordinates / 000",
+  chapter: isZh ? "研究图册" : "Research atlas"
+};
 ---
 <BookShell
   title={title}
@@ -26,11 +42,17 @@ const isZh = locale === "zh";
   alternatePath={alternatePath}
   releaseBanner={releaseBanner}
 >
-  <article class="page wrap">
-    <header class="page-hero">
-      <p class="eyebrow">{eyebrow ?? (isZh ? book.zh.subtitle : book.subtitle)}</p>
-      <h1>{title}</h1>
-      {subtitle && <p class="sub">{subtitle}</p>}
+  <article class:list={["page", "wrap", "atlas-page", `atlas-page--${pageKind}`]}>
+    <header class="page-hero atlas-page-hero">
+      <p class="atlas-folio" aria-hidden="true">
+        <span>{folioLabels[pageKind]}</span>
+        <i></i>
+      </p>
+      <div class="atlas-page-title">
+        <p class="eyebrow">{eyebrow ?? (isZh ? book.zh.subtitle : book.subtitle)}</p>
+        <h1>{title}</h1>
+        {subtitle && <p class="sub">{subtitle}</p>}
+      </div>
     </header>
     <slot />
   </article>

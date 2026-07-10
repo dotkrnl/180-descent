@@ -19,6 +19,9 @@ const downloads = isZh ? book.zh.downloads : book.downloads;
 const publishedDays = [...days].sort((a, b) => a.day - b.day);
 const firstPublishedDay = publishedDays[0];
 const latestPublishedDays = [...publishedDays].reverse().slice(0, 8);
+const featuredDay = latestPublishedDays[0];
+const recentDays = latestPublishedDays.slice(1);
+const currentFrontier = publishedDays.at(-1);
 const syllabusUrl = staticPageUrl(locale, "syllabus");
 const readingStartUrl = firstPublishedDay?.url ?? syllabusUrl;
 const readingStartLabel = firstPublishedDay
@@ -45,6 +48,7 @@ const strata = syllabus.blocks.map((block, index) => {
     fill: published / total
   };
 });
+const publishedPercent = Math.round((publishedDays.length / book.totalDays) * 100);
 ---
 <BookShell
   title={isZh ? "首页" : "Home"}
@@ -52,57 +56,99 @@ const strata = syllabus.blocks.map((block, index) => {
   locale={locale}
   canonicalPath={homePath}
   alternatePath={alternatePath}
-  releaseBanner
 >
-  <section class="cover">
-    <div class="cover-inner">
-      <div class="cover-text" data-reading-card data-reading-locale={locale} data-reading-continue-kicker={isZh ? "继续上次阅读" : "Continue where you left off"}>
-        <p class="eyebrow">{isZh ? book.zh.subtitle : book.subtitle}</p>
-        <h1>{isZh ? book.zh.title : book.title}</h1>
-        {isZh ? (
-          <p class="sub book-credit">
-            <span class="credit-line">作者：{book.zh.authors}</span>
-            <span class="credit-line">翻译：{book.zh.translators}</span>
-          </p>
-        ) : (
-          <p class="sub">A 180-day map of knowledge by {book.authors}.</p>
+  <div class="atlas-home">
+    <section class="cover" aria-labelledby="atlas-home-title">
+      <div class="cover-inner">
+        <div class="cover-text" data-reading-card data-reading-locale={locale} data-reading-continue-kicker={isZh ? "继续上次阅读" : "Continue where you left off"}>
+          <p class="eyebrow">{isZh ? book.zh.subtitle : book.subtitle}</p>
+          <h1 id="atlas-home-title">{isZh ? book.zh.title : book.title}</h1>
+          {isZh ? (
+            <p class="sub book-credit">
+              <span class="credit-line">作者：{book.zh.authors}</span>
+              <span class="credit-line">翻译：{book.zh.translators}</span>
+            </p>
+          ) : (
+            <p class="sub">A 180-day map of knowledge by {book.authors}.</p>
+          )}
+          <dl class="cover-metadata">
+            <div>
+              <dt>{isZh ? "路线" : "Route"}</dt>
+              <dd>{isZh ? `${syllabus.blocks.length} 个模块` : `${syllabus.blocks.length} research blocks`}</dd>
+            </div>
+            <div>
+              <dt>{isZh ? "当前前沿" : "Current frontier"}</dt>
+              <dd>{currentFrontier ? (isZh ? `第 ${padDay(currentFrontier.day)} 日` : `Day ${padDay(currentFrontier.day)}`) : (isZh ? "等待首次下潜" : "Awaiting first descent")}</dd>
+            </div>
+          </dl>
+          <p class="cover-kicker" data-reading-kicker>{isZh ? "在线阅读" : "Read online"}</p>
+          <div class="cover-actions">
+            <a class="cover-cta" href={readingStartUrl} data-reading-link>{readingStartLabel}</a>
+            <a class="cover-map-link" href={syllabusUrl}>{isZh ? "查看完整路线" : "Open the full route"}</a>
+          </div>
+        </div>
+        <a class="cover-chart" href={syllabusUrl} data-map-label={isZh ? "下潜地图 / 001—180" : "Descent route / 001—180"}>
+          <span class="sr-only">{isZh ? "十三个模块的下潜地图，进入课程表" : "The thirteen-block descent map; opens the syllabus"}</span>
+          <span class="atlas-map-head" aria-hidden="true">
+            <span>
+              <small>{isZh ? "研究路线" : "Research route"}</small>
+              <strong>{isZh ? "从根基到前沿" : "Foundations to frontier"}</strong>
+            </span>
+            <b>{publishedPercent}%</b>
+          </span>
+          <span class="atlas-map-body">
+            {strata.map((stratum) => (
+              <span class="stratum block-scope" style={`--block-hue:${stratum.hue};--stratum-size:${stratum.total};--stratum-fill:${stratum.fill.toFixed(3)}`} aria-hidden="true">
+                <i class="stratum-fill"></i>
+                <span class="stratum-id">{stratum.id}</span>
+                <span class="stratum-title">{stratum.title}</span>
+                <span class="stratum-days">{padDay(stratum.startDay)}—{padDay(stratum.endDay)}</span>
+              </span>
+            ))}
+          </span>
+          <span class="cover-chart-caption" aria-hidden="true">
+            <span>{isZh ? `已发布 ${publishedDays.length} / ${book.totalDays} 日` : `${publishedDays.length} of ${book.totalDays} days published`}</span>
+            <span>{currentFrontier ? (isZh ? `前沿 ${padDay(currentFrontier.day)}` : `Frontier ${padDay(currentFrontier.day)}`) : "000"}</span>
+          </span>
+        </a>
+      </div>
+    </section>
+    <script type="application/json" data-reading-days data-reading-locale={locale} set:html={JSON.stringify(readingDays)} />
+
+    <section class="wrap wide home-project-strip" aria-label={isZh ? "项目与下载信息" : "Project and download information"}>
+      <p class="home-release-note">
+        <strong>{isZh ? "发布说明" : "Field note"}</strong>
+        <span>{isZh ? "新内容不一定每天更新。人工编辑有时会暂停发布，以便手动检查内容质量；最新发布版本也可能仍有尚未完成审阅的粗糙之处。" : "New content may not arrive every day. The human editor sometimes pauses publishing to manually check quality, and the latest release may still have sharp edges that the human has not finished reviewing yet."}</span>
+      </p>
+      <p class="home-offline-lead">{isZh ? "整本书可离线携带：" : "Carry the complete atlas offline:"}
+        <a href={downloads.epub}>{isZh ? "下载 EPUB" : "EPUB"}</a>
+        <span class="home-offline-sep" aria-hidden="true"></span>
+        <a href={downloads.pdf}>{isZh ? "下载印刷版 PDF" : "Print PDF"}</a>
+      </p>
+    </section>
+
+    <section class="wrap wide home-latest" aria-labelledby="latest-descents-title">
+      <header class="home-section-head">
+        <div>
+          <p class="sec-eyebrow">{isZh ? "最新发布" : "Latest descents"}</p>
+          <h2 id="latest-descents-title">{isZh ? "前沿观测记录" : "Field notes from the frontier"}</h2>
+        </div>
+        <p>{isZh ? "从最新一日向后浏览，或回到完整路线选择任意已发布课程。" : "Start at the current edge, then trace the expedition backward or return to the complete route."}</p>
+      </header>
+      <div class="home-latest-grid">
+        {featuredDay && (
+          <div class="home-featured-day">
+            <p class="featured-signal"><span aria-hidden="true"></span>{isZh ? "当前前沿" : "Current frontier"}</p>
+            <DayCard day={featuredDay} locale={locale} totalDays={book.totalDays} headingLevel="h3" />
+          </div>
         )}
-        <p class="cover-kicker" data-reading-kicker>{isZh ? "在线阅读" : "Read online"}</p>
-        <div class="cover-actions">
-          <a class="cover-cta" href={readingStartUrl} data-reading-link>{readingStartLabel}</a>
+        <div class="toc-grid recent-descent-stream">
+          {recentDays.map((day) => (
+            <DayCard day={day} locale={locale} totalDays={book.totalDays} headingLevel="h3" />
+          ))}
         </div>
       </div>
-      <a class="cover-chart" href={syllabusUrl} data-map-label={isZh ? "下潜地图 / 01—180" : "Descent map / 01—180"}>
-        <span class="sr-only">{isZh ? "十三个模块的下潜地图，进入课程表" : "The thirteen-block descent map; opens the syllabus"}</span>
-        {strata.map((stratum) => (
-          <span class="stratum block-scope" style={`--block-hue:${stratum.hue};--stratum-size:${stratum.total};--stratum-fill:${stratum.fill.toFixed(3)}`} aria-hidden="true">
-            <i class="stratum-fill"></i>
-            <span class="stratum-id">{stratum.id}</span>
-            <span class="stratum-title">{stratum.title}</span>
-            <span class="stratum-days">{stratum.startDay}-{stratum.endDay}</span>
-          </span>
-        ))}
-        <span class="cover-chart-caption" aria-hidden="true">{isZh ? `已发布 ${publishedDays.length} / ${book.totalDays} 日` : `${publishedDays.length} of ${book.totalDays} days published`}</span>
-      </a>
-    </div>
-  </section>
-  <script type="application/json" data-reading-days data-reading-locale={locale} set:html={JSON.stringify(readingDays)} />
-
-  <section class="wrap wide home-offline">
-    <p class="home-offline-lead">{isZh ? "整本书可离线携带：" : "The whole book travels offline:"}
-      <a href={downloads.epub}>{isZh ? "下载 EPUB" : "Download the EPUB"}</a>
-      <span class="home-offline-sep" aria-hidden="true"></span>
-      <a href={downloads.pdf}>{isZh ? "下载印刷版 PDF" : "Download the print PDF"}</a>
-    </p>
-  </section>
-
-  <section class="wrap wide home-latest">
-    <p class="sec-eyebrow">{isZh ? "最新发布" : "Latest descents"}</p>
-    <div class="toc-grid">
-      {latestPublishedDays.map((day) => (
-        <DayCard day={day} locale={locale} totalDays={book.totalDays} />
-      ))}
-    </div>
-    <p class="all-days-link"><a href={syllabusUrl}>{isZh ? "查看完整课程表" : "See every day on the map"}</a></p>
-  </section>
+      <p class="all-days-link"><a href={syllabusUrl}>{isZh ? "查看完整课程表" : "See every day on the route"}</a></p>
+    </section>
+  </div>
 </BookShell>

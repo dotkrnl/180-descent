@@ -1,3 +1,222 @@
+// ---------------------------------------------------------------------------
+// Reading field
+// ---------------------------------------------------------------------------
+article.lesson .lesson-stage{
+  width:min(100%,var(--reading-field,var(--shell)));
+  margin-inline:auto;
+}
+article.lesson .lesson-reading{
+  --lesson-prose:70ch;
+  --lesson-exhibit:min(68rem,calc(100vw - var(--page-pad,1.35rem) - var(--page-pad,1.35rem)));
+  min-width:0;
+}
+article.lesson .lesson-reading > .wrap{
+  width:min(100%,var(--lesson-prose));
+  max-width:var(--lesson-prose);
+  margin-inline:auto;
+  padding-inline:var(--page-pad,1.35rem);
+}
+html[lang^="zh"] article.lesson .lesson-reading{--lesson-prose:42rem;}
+article.lesson .lesson-reading :is(h2,h3,[id]){scroll-margin-top:6rem;}
+article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section{
+  margin-block:clamp(3.5rem,7vw,6rem);
+}
+
+// Exhibits may leave the text measure without abandoning its alignment. The
+// selectors intentionally stop at one section boundary so figures nested in
+// panels do not recursively break out of their own exhibit.
+article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
+article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
+article.lesson .lesson-appendices > .appendix-figure-wide{
+  width:var(--lesson-exhibit);
+  max-width:none;
+  margin-right:0;
+  margin-left:50%;
+  transform:translateX(-50%);
+}
+
+@media screen and (min-width:75rem){
+  article.lesson .lesson-stage{
+    padding-right:var(--page-pad,1.35rem);
+    padding-left:calc(var(--rail-w) + var(--rail-gap));
+  }
+  article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
+  article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
+  article.lesson .lesson-appendices > .appendix-figure-wide{
+    width:min(62rem,var(--col-wide));
+    margin-left:50%;
+    transform:translateX(-50%);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Day navigation: a compact route breadcrumb above, generous wayfinding below
+// ---------------------------------------------------------------------------
+article.lesson > .lesson-nav{
+  width:min(100%,var(--reading-field,var(--shell)));
+  max-width:var(--reading-field,var(--shell));
+  margin-inline:auto;
+  padding-inline:var(--page-pad,1.35rem);
+}
+article.lesson > .lesson-nav .lesson-nav-kicker{
+  color:var(--block-accent,var(--accent));
+  font-family:var(--font-mono);
+  font-size:.59rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+article.lesson > .lesson-nav .lesson-nav-title{
+  min-width:0;
+  color:var(--ink);
+  font-family:var(--font-display);
+  font-weight:500;
+}
+article.lesson > .lesson-nav .lesson-nav-name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+article.lesson > .lesson-nav-top{
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  gap:0;
+  margin-top:0;
+  margin-bottom:0;
+  border-bottom:1px solid var(--line);
+}
+article.lesson > .lesson-nav-top .lesson-nav-card{
+  display:flex;
+  min-width:0;
+  min-height:2.9rem;
+  flex-direction:row;
+  align-items:center;
+  gap:.55rem;
+  overflow:hidden;
+  padding:.55rem .75rem;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  line-height:1.15;
+}
+article.lesson > .lesson-nav-top .lesson-nav-title{
+  display:flex;
+  min-width:0;
+  align-items:baseline;
+  font-family:var(--font-mono);
+  font-size:.67rem;
+  letter-spacing:.015em;
+}
+article.lesson > .lesson-nav-top .lesson-nav-previous{justify-content:flex-start;}
+article.lesson > .lesson-nav-top .lesson-nav-next{justify-content:flex-end;text-align:right;}
+article.lesson > .lesson-nav-top .is-syllabus{
+  justify-content:center;
+  padding-inline:1rem;
+  border-right:1px solid var(--line);
+  border-left:1px solid var(--line);
+  text-align:center;
+}
+article.lesson > .lesson-nav-top .is-syllabus .lesson-nav-title{display:none;}
+article.lesson > .lesson-nav-top .lesson-nav-card:hover,
+article.lesson > .lesson-nav-top .lesson-nav-card:focus-visible{
+  border-color:var(--line);
+  background:color-mix(in srgb,var(--block-accent,var(--accent)) 7%,transparent);
+}
+article.lesson > .lesson-nav-top .lesson-nav-card.is-disabled{cursor:default;}
+
+article.lesson > .lesson-nav-bottom{
+  grid-template-columns:minmax(0,1fr) minmax(7rem,.48fr) minmax(0,1fr);
+  gap:.65rem;
+  margin-top:clamp(3rem,7vw,6rem);
+  margin-bottom:3rem;
+}
+article.lesson > .lesson-nav-bottom .lesson-nav-card{
+  min-width:0;
+  border-radius:2px;
+  background:transparent;
+  box-shadow:none;
+}
+article.lesson > .lesson-nav-bottom .lesson-nav-next{text-align:right;}
+article.lesson > .lesson-nav-bottom .lesson-nav-title{line-height:1.22;}
+
+@media screen and (max-width:44.99rem){
+  article.lesson .lesson-reading > .wrap{padding-inline:1.35rem;}
+  article.lesson > .lesson-nav{padding-inline:.65rem;}
+  article.lesson > .lesson-nav-top .lesson-nav-card{gap:.35rem;padding-inline:.45rem;}
+  article.lesson > .lesson-nav-top .lesson-nav-title{font-size:.62rem;}
+  article.lesson > .lesson-nav-top .lesson-nav-name,
+  article.lesson > .lesson-nav-top .lesson-nav-separator{display:none;}
+  article.lesson > .lesson-nav-bottom{
+    grid-template-columns:minmax(0,1fr) 5.5rem minmax(0,1fr);
+    gap:.35rem;
+  }
+  article.lesson > .lesson-nav-bottom .lesson-nav-card{padding:.7rem .55rem;}
+  article.lesson > .lesson-nav-bottom .lesson-nav-name{
+    display:-webkit-box;
+    overflow:hidden;
+    white-space:normal;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Editorial roles: orientation, evidence, continuation, and recap
+// ---------------------------------------------------------------------------
+article.lesson :is(.whereblock,.continues){
+  padding:.45rem 0 .45rem 1.15rem;
+  border:0;
+  border-left:2px solid var(--brass);
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+article.lesson .continues{border-left-color:var(--block-accent,var(--accent));}
+article.lesson :is(.aside,.panel,.roadmap){
+  border:1px solid var(--line);
+  border-radius:2px;
+  background:color-mix(in srgb,var(--raised) 78%,transparent);
+  box-shadow:none;
+}
+article.lesson .panel.web-only{
+  padding:clamp(1.1rem,3vw,2rem);
+  border-top:3px solid var(--block-accent,var(--accent));
+}
+article.lesson .claim{
+  padding-top:1.35rem;
+  border-top:1px solid var(--line-strong);
+}
+article.lesson blockquote{
+  padding:.25rem 0 .25rem 1.25rem;
+  border-left:3px solid var(--block-accent,var(--accent));
+  color:var(--ink);
+}
+article.lesson .recap{
+  border-radius:0;
+  border-left:4px solid var(--recap-accent);
+  box-shadow:none;
+}
+article.lesson .tomorrow{
+  padding:1.15rem 0;
+  border:0;
+  border-top:1px dashed var(--tomorrow-border);
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+article.lesson .sources{
+  margin-top:clamp(3rem,6vw,5rem);
+  padding-top:1.5rem;
+  border-top:1px solid var(--line-strong);
+}
+article.lesson :is(.formula,.katex-display,.mathline){
+  max-width:100%;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:thin;
+}
+
 .mtl li.prog::before{border-color:var(--hint);background:var(--raised);}
 .mtl .yr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.06em;color:var(--brass);display:block;margin-bottom:.1rem;}
 .milestone-title{color:var(--ink);}

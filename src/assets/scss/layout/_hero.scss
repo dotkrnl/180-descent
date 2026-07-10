@@ -1,9 +1,54 @@
 
 header.hero,.page-hero{padding-top:3.2rem;padding-bottom:1.2rem;}
-// Chapter opener: day pages open like a title page, with extra air and a
-// short sounding-line ornament tinted by the block accent.
-.lesson header.hero{padding-top:clamp(3.4rem,9vh,5.6rem);padding-bottom:1.7rem;}
-.lesson header.hero::after{content:"";display:block;width:1px;height:2.6rem;margin:2.3rem auto 0;background:linear-gradient(to bottom,transparent,var(--block-accent,var(--accent)));}
+// The lesson opens as a field note lowered into the abyss: the title owns the
+// composition, while the block color acts as a navigational signal rather
+// than a decorative wash. The higher-specificity selectors keep this module
+// authoritative when optional visual layers are loaded later.
+article.lesson .lesson-reading > header.hero{
+  --hero-accent:color-mix(in srgb,var(--block-accent,var(--accent)) 48%,var(--abyss-fg));
+  position:relative;
+  isolation:isolate;
+  display:block;
+  width:min(72rem,calc(100% - 2rem));
+  max-width:72rem;
+  min-height:clamp(31rem,64vh,48rem);
+  margin:1rem auto clamp(3.25rem,7vw,6.5rem);
+  padding:clamp(3rem,7vw,6.5rem) clamp(1.35rem,5vw,5rem) clamp(2.75rem,6vw,5rem);
+  overflow:hidden;
+  border-top:3px solid var(--hero-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--abyss-fg) 22%,transparent);
+  background:
+    radial-gradient(circle at 88% 16%,color-mix(in srgb,var(--block-accent,var(--accent)) 22%,transparent),transparent 31%),
+    linear-gradient(150deg,color-mix(in srgb,var(--abyss) 88%,var(--accent) 12%),var(--abyss) 72%);
+  color:var(--abyss-fg);
+}
+article.lesson .lesson-reading > header.hero::before{
+  position:absolute;
+  z-index:-1;
+  inset:-14rem -10rem auto auto;
+  width:34rem;
+  height:34rem;
+  border:1px solid color-mix(in srgb,var(--hero-accent) 30%,transparent);
+  border-radius:50%;
+  box-shadow:
+    0 0 0 3.75rem color-mix(in srgb,var(--hero-accent) 8%,transparent),
+    0 0 0 7.5rem color-mix(in srgb,var(--hero-accent) 5%,transparent),
+    0 0 0 11.25rem color-mix(in srgb,var(--hero-accent) 3%,transparent);
+  content:"";
+  pointer-events:none;
+}
+article.lesson .lesson-reading > header.hero::after{
+  position:absolute;
+  z-index:-1;
+  right:clamp(1.35rem,5vw,5rem);
+  bottom:1.5rem;
+  left:clamp(1.35rem,5vw,5rem);
+  width:auto;
+  height:1px;
+  margin:0;
+  background:linear-gradient(90deg,var(--hero-accent),transparent 72%);
+  content:"";
+}
 .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 .9rem;}
 .block-scope .eyebrow{color:var(--block-accent,var(--accent));}
 .daymark{color:var(--brass);}
@@ -13,6 +58,86 @@ h1 u{color:var(--accent-deep);text-decoration:none;}
 .sub{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:clamp(1.15rem,.8rem + 1vw,1.5rem);color:var(--ink-soft);margin:.85rem 0 1.15rem;line-height:1.4;}
 .page-hero .sub{margin-bottom:1.4rem;}
 .book-credit .credit-line{display:block;}
+article.lesson .lesson-reading > header.hero > .eyebrow{
+  position:relative;
+  color:var(--hero-accent);
+  font-size:.68rem;
+  letter-spacing:.17em;
+}
+article.lesson .lesson-reading > header.hero > h1{
+  position:relative;
+  max-width:13ch;
+  margin:.2rem 0 .75rem;
+  color:var(--abyss-fg);
+  font-size:clamp(3rem,1.75rem + 5vw,6.35rem);
+  font-weight:500;
+  line-height:.96;
+  letter-spacing:-.035em;
+}
+article.lesson .lesson-reading > header.hero > h1 :is(em,u){color:var(--hero-accent);}
+article.lesson .lesson-reading > header.hero > .sub{
+  position:relative;
+  max-width:35rem;
+  margin:.8rem 0 0;
+  color:color-mix(in srgb,var(--abyss-fg) 76%,transparent);
+  font-size:clamp(1.15rem,.95rem + .75vw,1.55rem);
+  line-height:1.42;
+}
+article.lesson .lesson-reading > header.hero > :is(.lede,p:not(.eyebrow,.sub)){
+  position:relative;
+  max-width:68ch;
+  margin-right:0;
+  margin-left:0;
+  color:color-mix(in srgb,var(--abyss-fg) 90%,transparent);
+}
+article.lesson .lesson-reading > header.hero > .lede{margin-top:clamp(2.5rem,6vw,5rem);}
+article.lesson .lesson-reading > header.hero :is(strong){color:var(--abyss-fg);}
+article.lesson .lesson-reading > header.hero :is(.term,.hl,a){color:var(--hero-accent);}
+article.lesson .lesson-reading > header.hero a{border-bottom-color:color-mix(in srgb,var(--hero-accent) 48%,transparent);}
+article.lesson .lesson-reading > header.hero > .lede.dropcap::first-letter,
+article.lesson .lesson-reading > header.hero > .lede .drop{color:var(--hero-accent);}
+
+// Every current lesson illustration is a direct figure, though the figure
+// classes vary by day. Target the semantic element so the opener cannot break
+// when a new illustration family is introduced.
+article.lesson .lesson-reading > header.hero > figure{
+  position:relative;
+  width:100%;
+  max-width:26rem;
+  margin:2.25rem auto 1rem;
+  padding:clamp(.75rem,2vw,1.25rem);
+  border:1px solid color-mix(in srgb,var(--abyss-fg) 22%,transparent);
+  background:color-mix(in srgb,var(--raised) 96%,transparent);
+  color:var(--ink);
+}
+article.lesson .lesson-reading > header.hero > figure :is(svg,img){display:block;width:100%;height:auto;}
+article.lesson .lesson-reading > header.hero > figure figcaption{
+  margin:.7rem 0 0;
+  color:var(--ink-soft);
+  font-family:var(--font-mono);
+  font-size:.68rem;
+  line-height:1.45;
+}
+
+@media screen and (min-width:60rem){
+  article.lesson .lesson-reading > header.hero:has(> figure){
+    display:grid;
+    grid-template-columns:minmax(0,1.25fr) minmax(15rem,.75fr);
+    align-items:center;
+    gap:1rem clamp(2.5rem,6vw,6rem);
+  }
+  article.lesson .lesson-reading > header.hero:has(> figure) > :is(.eyebrow,h1,.sub){grid-column:1;}
+  article.lesson .lesson-reading > header.hero:has(> figure) > figure{
+    grid-column:2;
+    grid-row:1 / span 3;
+    width:100%;
+    max-width:none;
+    margin:0;
+  }
+  article.lesson .lesson-reading > header.hero:has(> figure) > :is(.lede,p:not(.eyebrow,.sub)){
+    grid-column:1 / -1;
+  }
+}
 .hero-clock,.hero-sun,.hero-art{margin:2.4rem auto 1.6rem;max-width:30rem;text-align:center;}
 .clockwrap,.sunwrap{position:relative;display:block;width:100%;}
 .hero-clock svg,.hero-sun svg,.hero-art svg{display:block;width:100%;height:auto;}
@@ -53,6 +178,44 @@ h1 u{color:var(--accent-deep);text-decoration:none;}
 .lede{font-size:1.28em;line-height:1.6;color:color-mix(in srgb,var(--accent-deep) 72%,var(--ink));margin-top:1.35rem;}
 .lede .drop{float:left;font-family:"Fraunces",serif;font-weight:600;font-size:3.5em;line-height:.74;padding:.06em .12em 0 0;color:var(--accent-deep);}
 .lede.dropcap::first-letter{float:left;font-family:"Fraunces",serif;font-weight:600;font-size:3.5em;line-height:.74;padding:.06em .12em 0 0;color:var(--accent-deep);}
+
+@media screen and (max-width:44.99rem){
+  article.lesson .lesson-reading > header.hero{
+    width:100%;
+    min-height:0;
+    margin-top:0;
+    margin-bottom:3rem;
+    padding:2.6rem 1.35rem 3rem;
+  }
+  article.lesson .lesson-reading > header.hero > h1{font-size:clamp(2.8rem,14vw,4.7rem);}
+  article.lesson .lesson-reading > header.hero > figure{max-width:22rem;margin-top:1.8rem;}
+}
+
+@media print{
+  article.lesson .lesson-reading > header.hero,
+  article.lesson .lesson-reading > header.hero:has(> figure){
+    display:block;
+    width:auto;
+    max-width:none;
+    min-height:0;
+    margin:0;
+    padding:0 0 .25in;
+    overflow:visible;
+    border:0;
+    background:transparent;
+    color:var(--ink);
+  }
+  article.lesson .lesson-reading > header.hero::before,
+  article.lesson .lesson-reading > header.hero::after{display:none;}
+  article.lesson .lesson-reading > header.hero > :is(.eyebrow,h1,.sub,.lede,p:not(.eyebrow,.sub)){color:var(--ink);}
+  article.lesson .lesson-reading > header.hero > figure{
+    max-width:4.8in;
+    margin:.26in auto;
+    padding:0;
+    border:0;
+    background:transparent;
+  }
+}
 
 .whereblock{border-left:3px solid var(--brass);background:linear-gradient(to right,color-mix(in srgb,var(--brass) 7%,transparent),transparent 70%);padding:1rem 1.2rem;margin:2.2rem 0;border-radius:0 8px 8px 0;}
 .whereblock .label{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin:0 0 .4rem;}

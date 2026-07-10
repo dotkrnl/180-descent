@@ -31,19 +31,41 @@ function isWebUrl(value: string): boolean {
   canonicalPath={staticPageUrl(locale, "credits")}
   alternatePath={staticPageUrl(alternateLocale(locale), "credits")}
 >
-  <h2>{isZh ? "字体" : "Fonts"}</h2>
-  <ul>
-    {credits.fonts.map((font) => (
-      <li><strong>{font.name}</strong>{isZh ? "：" : ": "}{font.license}, {isWebUrl(font.source) ? <a href={font.source}>{sourceLabel}</a> : font.source}</li>
-    ))}
-  </ul>
+  <div class="credits-register">
+    <section class="credit-section" aria-labelledby="font-credits-title">
+      <header class="credit-section-head">
+        <p class="progress-label">{isZh ? "字体档案" : "Type archive"}</p>
+        <h2 id="font-credits-title">{isZh ? "字体" : "Fonts"}</h2>
+        <span>{String(credits.fonts.length).padStart(2, "0")}</span>
+      </header>
+      <ol class="credit-list">
+        {credits.fonts.map((font, index) => (
+          <li>
+            <span class="credit-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+            <strong>{font.name}</strong>
+            <span class="credit-detail">{font.license}</span>
+            <span class="credit-source">{isWebUrl(font.source) ? <a href={font.source}>{sourceLabel}</a> : font.source}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
 
-  <h2>{isZh ? "图片" : "Images"}</h2>
-  <ul>
-    {credits.images.map((image) => (
-      <li>
-        <strong>{image.title}</strong>{isZh ? "，作者：" : " by "}{image.creator}{isZh ? "；" : ": "}{image.license}, {isWebUrl(image.source) ? <a href={image.source}>{sourceLabel}</a> : image.source}{isZh ? "。" : ". "}{image.notes}
-      </li>
-    ))}
-  </ul>
+    <section class="credit-section" aria-labelledby="image-credits-title">
+      <header class="credit-section-head">
+        <p class="progress-label">{isZh ? "图像档案" : "Image archive"}</p>
+        <h2 id="image-credits-title">{isZh ? "图片" : "Images"}</h2>
+        <span>{String(credits.images.length).padStart(2, "0")}</span>
+      </header>
+      <ol class="credit-list credit-list--images">
+        {credits.images.map((image, index) => (
+          <li>
+            <span class="credit-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+            <strong>{image.title}</strong>
+            <span class="credit-detail">{isZh ? "作者：" : "By "}{image.creator}{isZh ? "；" : " · "}{image.license}{isZh ? "。" : ". "}{image.notes}</span>
+            <span class="credit-source">{isWebUrl(image.source) ? <a href={image.source}>{sourceLabel}</a> : image.source}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
 </PageShell>

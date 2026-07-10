@@ -1,38 +1,610 @@
-
-.site-topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-.topbar-row{max-width:var(--shell);margin:0 auto;padding:.6rem 1.35rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
-.course{display:flex;align-items:center;gap:.6rem;color:var(--ink-soft);border-bottom:0;white-space:nowrap;}
-.brand-mark-shell{position:relative;width:1.75rem;height:1.75rem;display:block;flex:0 0 auto;}
-.brand-mark{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;border-radius:50%;transition:opacity .2s ease;}
-.brand-mark-light{background:#f7f6ef;padding:2px;box-shadow:0 0 0 1px color-mix(in srgb,var(--line-strong) 58%,transparent);opacity:var(--brand-light-opacity);}
-.brand-mark-dark{background:#0a131b;padding:2px;box-shadow:0 0 0 1px color-mix(in srgb,var(--line-strong) 72%,transparent);opacity:var(--brand-dark-opacity);}
-.topnav{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;}
-.topnav a{color:var(--ink-faint);border-bottom:0;}
-.topnav a:hover{color:var(--ink);}
-.top-actions{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
-.toggle{appearance:none;display:inline-flex;align-items:center;justify-content:center;min-height:1.8rem;line-height:1;white-space:nowrap;cursor:pointer;border:1px solid var(--line-strong);background:var(--raised);color:var(--ink-soft);font-family:inherit;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;padding:.34rem .6rem;border-radius:999px;}
-.toggle:hover{color:var(--ink);border-color:var(--accent);}
-.theme-toggle{gap:.18rem;min-width:2.7rem;padding:.34rem .45rem;}
-.theme-icon{width:.82rem;height:.82rem;display:block;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;flex:0 0 auto;}
-
-// Running header: once the reader scrolls past the chapter opener the bar
-// behaves like a printed running head, with the current day and lesson title
-// in the center. The swap is driven by an is-running class from book.js.
-.running-head{display:none;min-width:0;flex:1;align-items:baseline;justify-content:center;gap:.6rem;text-align:center;overflow:hidden;}
-.running-head .running-day{color:var(--block-accent,var(--brass));flex:0 0 auto;}
-.running-head .running-title{font-family:"Fraunces",serif;font-size:.95rem;font-weight:500;font-style:italic;letter-spacing:0;text-transform:none;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
-.site-topbar.is-running .topnav{display:none;}
-.site-topbar.is-running .running-head{display:flex;}
-@media(prefers-reduced-motion: no-preference){
-  .running-head{animation:running-head-in .35s ease;}
-  @keyframes running-head-in{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
-}
-@media(max-width:44.99rem){
-  .running-head .running-title{font-size:.88rem;}
+// Compact atlas chrome. It remains abyssal in both themes so navigation feels
+// like durable book furniture while the reading surface changes beneath it.
+.site-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(10px);
 }
 
-.release-banner,.latest-day-banner{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--hint) 10%,var(--paper));}
-.release-banner .wide,.latest-day-banner .wide{display:flex;gap:.7rem;align-items:flex-start;padding-top:.55rem;padding-bottom:.55rem;font-family:"IBM Plex Mono",monospace;font-size:.68rem;line-height:1.45;letter-spacing:.05em;color:var(--ink-soft);}
-.release-banner strong,.latest-day-banner strong{flex:0 0 auto;color:var(--hint);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;}
-.download-strip{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--brass) 6%,transparent);font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;}
-.download-strip .wide{display:flex;gap:.8rem;align-items:center;padding-top:.45rem;padding-bottom:.45rem;color:var(--ink-soft);}
+.atlas-shell .site-topbar {
+  border-top: 2px solid var(--signal);
+  border-bottom: 1px solid var(--chrome-line);
+  background: var(--chrome-bg);
+  background: color-mix(in srgb, var(--chrome-bg) 94%, transparent);
+  color: var(--chrome-fg);
+  box-shadow: 0 8px 24px -22px rgba(0, 0, 0, .9);
+  backdrop-filter: blur(16px) saturate(1.1);
+}
+
+.topbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: .6rem 1.35rem;
+  color: var(--ink-faint);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.atlas-shell .topbar-row {
+  min-height: 3.35rem;
+  max-width: var(--shell);
+  padding: .45rem var(--page-pad);
+  gap: clamp(.75rem, 2.2vw, 2rem);
+  color: var(--chrome-muted);
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  letter-spacing: .08em;
+}
+
+.course {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  color: var(--ink-soft);
+  border-bottom: 0;
+  white-space: nowrap;
+}
+
+.atlas-shell .course {
+  flex: 0 1 auto;
+  min-width: 0;
+  gap: .62rem;
+  color: var(--chrome-fg);
+  border: 0;
+  font-family: var(--font-display);
+  font-size: .94rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  text-transform: none;
+}
+
+.atlas-shell .course:hover {
+  color: var(--teal-bright);
+  border: 0;
+}
+
+.course-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.course-index {
+  flex: 0 0 auto;
+  padding-left: .65rem;
+  border-left: 1px solid var(--chrome-line);
+  color: var(--chrome-muted);
+  font-family: var(--font-mono);
+  font-size: .52rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+}
+
+.brand-mark-shell {
+  position: relative;
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+}
+
+.atlas-shell .brand-mark-shell {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.brand-mark {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: contain;
+  transition: opacity .2s ease;
+}
+
+.brand-mark-light {
+  padding: 2px;
+  background: #f7f6ef;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--line-strong) 58%, transparent);
+  opacity: var(--brand-light-opacity);
+}
+
+.brand-mark-dark {
+  padding: 2px;
+  background: #0a131b;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--line-strong) 72%, transparent);
+  opacity: var(--brand-dark-opacity);
+}
+
+.atlas-shell :is(.brand-mark-light, .brand-mark-dark) {
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--chrome-fg) 22%, transparent);
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+.atlas-shell .topnav {
+  gap: .2rem;
+  margin-inline: auto;
+  flex-wrap: nowrap;
+}
+
+.topnav a {
+  color: var(--ink-faint);
+  border-bottom: 0;
+}
+
+.topnav a:hover {
+  color: var(--ink);
+}
+
+.atlas-shell .topnav a {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: .42rem;
+  padding: .42rem .64rem;
+  color: var(--chrome-muted);
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.atlas-shell .topnav a::after {
+  position: absolute;
+  right: .64rem;
+  bottom: .2rem;
+  left: .64rem;
+  height: 1px;
+  background: var(--signal);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.atlas-shell .topnav a:hover,
+.atlas-shell .topnav a[aria-current="page"] {
+  color: var(--chrome-fg);
+}
+
+.atlas-shell .topnav a:hover::after,
+.atlas-shell .topnav a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.topnav-index {
+  color: var(--teal-bright);
+  font-size: .5rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .4rem;
+  flex-wrap: wrap;
+}
+
+.atlas-shell .top-actions {
+  gap: .38rem;
+  flex-wrap: nowrap;
+}
+
+.toggle {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.8rem;
+  padding: .34rem .6rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--raised);
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: .66rem;
+  letter-spacing: .14em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.toggle:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.atlas-shell .toggle {
+  min-width: 2rem;
+  min-height: 1.85rem;
+  padding: .28rem .45rem;
+  border: 1px solid var(--chrome-line);
+  border-radius: var(--radius-1);
+  background: color-mix(in srgb, var(--chrome-raised) 66%, transparent);
+  color: var(--chrome-muted);
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .08em;
+}
+
+.atlas-shell .toggle:hover {
+  border-color: var(--teal-bright);
+  background: var(--chrome-raised);
+  color: var(--chrome-fg);
+}
+
+.theme-toggle {
+  gap: .18rem;
+  min-width: 2.7rem;
+  padding: .34rem .45rem;
+}
+
+.atlas-shell .theme-toggle {
+  min-width: 2rem;
+  gap: 0;
+}
+
+.theme-icon {
+  display: block;
+  width: .82rem;
+  height: .82rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+// The icon describes the theme the control will switch to.
+.atlas-shell .theme-toggle .theme-icon:first-child {
+  display: none;
+}
+
+.atlas-shell .theme-toggle .theme-icon:last-child {
+  display: block;
+}
+
+:root[data-theme="dark"] .atlas-shell .theme-toggle .theme-icon:first-child {
+  display: block;
+}
+
+:root[data-theme="dark"] .atlas-shell .theme-toggle .theme-icon:last-child {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] .atlas-shell .theme-toggle .theme-icon:first-child {
+    display: block;
+  }
+
+  :root[data-theme="auto"] .atlas-shell .theme-toggle .theme-icon:last-child {
+    display: none;
+  }
+}
+
+// Once the reader clears the opener, the center becomes a compact running
+// coordinate: block, day, active section, and percent read. JS owns the data.
+.running-head {
+  display: none;
+  min-width: 0;
+  flex: 1;
+  align-items: baseline;
+  justify-content: center;
+  gap: .6rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+.atlas-shell .running-head {
+  gap: .45rem;
+  color: var(--chrome-muted);
+  font-family: var(--font-mono);
+  font-size: .56rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.atlas-shell .running-head > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.running-head .running-day {
+  flex: 0 0 auto;
+  color: var(--block-accent, var(--brass));
+}
+
+.atlas-shell .running-head .running-block {
+  max-width: 10rem;
+  color: var(--chrome-muted);
+}
+
+.atlas-shell .running-head .running-day {
+  flex: 0 0 auto;
+  color: var(--signal);
+}
+
+.running-head .running-title {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink-soft);
+  font-family: "Fraunces", serif;
+  font-size: .95rem;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.atlas-shell .running-head .running-title {
+  color: var(--chrome-fg);
+  font-family: var(--font-display);
+  font-size: .78rem;
+  font-style: normal;
+  letter-spacing: -.005em;
+  text-transform: none;
+}
+
+.atlas-shell .running-head .running-progress {
+  flex: 0 0 auto;
+  color: var(--teal-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+.site-topbar.is-running .topnav {
+  display: none;
+}
+
+.site-topbar.is-running .running-head {
+  display: flex;
+}
+
+.atlas-shell .site-topbar.is-running .course-index {
+  display: none;
+}
+
+// Editorial notices are annotations, not competing hero bands.
+.release-banner,
+.latest-day-banner {
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--hint) 10%, var(--paper));
+}
+
+.atlas-shell :is(.release-banner, .latest-day-banner) {
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--raised) 68%, var(--paper));
+}
+
+.release-banner .wide,
+.latest-day-banner .wide {
+  display: flex;
+  align-items: flex-start;
+  gap: .7rem;
+  padding-top: .55rem;
+  padding-bottom: .55rem;
+  color: var(--ink-soft);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .68rem;
+  line-height: 1.45;
+  letter-spacing: .05em;
+}
+
+.atlas-shell :is(.release-banner, .latest-day-banner) .wide {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: .8rem;
+  max-width: var(--reading-field);
+  margin-inline: auto;
+  padding: .42rem var(--page-pad);
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: .59rem;
+  line-height: 1.45;
+  letter-spacing: .025em;
+}
+
+.release-banner strong,
+.latest-day-banner strong {
+  flex: 0 0 auto;
+  color: var(--hint);
+  font-size: .64rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.atlas-shell :is(.release-banner, .latest-day-banner) strong {
+  color: var(--signal-ink);
+  font-size: .55rem;
+  letter-spacing: .14em;
+  white-space: nowrap;
+}
+
+.download-strip {
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--brass) 6%, transparent);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.atlas-shell .download-strip {
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--accent) 5%, var(--paper));
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .08em;
+}
+
+.download-strip .wide {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding-top: .45rem;
+  padding-bottom: .45rem;
+  color: var(--ink-soft);
+}
+
+.atlas-shell .download-strip .wide {
+  display: flex;
+  align-items: baseline;
+  gap: .72rem;
+  max-width: var(--reading-field);
+  margin-inline: auto;
+  padding: .36rem var(--page-pad);
+  color: var(--ink-faint);
+}
+
+.atlas-shell .download-strip a {
+  color: var(--accent-deep);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .atlas-shell .topnav a::after {
+    transition: transform var(--duration-fast) var(--ease-atlas);
+  }
+
+  .atlas-shell .site-topbar {
+    transition: background-color var(--duration-base) ease, border-color var(--duration-base) ease;
+  }
+
+  .running-head {
+    animation: running-head-in .35s ease;
+  }
+
+  @keyframes running-head-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (max-width: 59.99rem) {
+  .atlas-shell .course-index,
+  .atlas-shell .topnav-index {
+    display: none;
+  }
+}
+
+@media (max-width: 44.99rem) {
+  .atlas-shell .topbar-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "course actions"
+      "nav nav";
+    min-height: 3.2rem;
+    padding-top: .42rem;
+    padding-bottom: .36rem;
+    gap: .3rem .75rem;
+  }
+
+  .atlas-shell .course {
+    grid-area: course;
+    overflow: hidden;
+    font-size: .86rem;
+    text-overflow: ellipsis;
+  }
+
+  .atlas-shell .top-actions {
+    grid-area: actions;
+  }
+
+  .atlas-shell .topnav {
+    grid-area: nav;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    margin: .1rem 0 0;
+    padding-top: .28rem;
+    border-top: 1px solid var(--chrome-line);
+  }
+
+  .atlas-shell .topnav a {
+    justify-content: center;
+    min-width: 0;
+    padding: .32rem .25rem;
+    font-size: .56rem;
+  }
+
+  .atlas-shell .topnav a::after {
+    right: 25%;
+    bottom: .12rem;
+    left: 25%;
+  }
+
+  .atlas-shell .running-head .running-block,
+  .atlas-shell .running-head .running-progress {
+    display: none;
+  }
+
+  .atlas-shell .site-topbar.is-running .topbar-row {
+    grid-template-columns: minmax(7rem, .8fr) minmax(0, 1.2fr) auto;
+    grid-template-areas: "course running actions";
+    padding-block: .42rem;
+  }
+
+  .atlas-shell .site-topbar.is-running .topnav {
+    display: none;
+  }
+
+  .atlas-shell .site-topbar.is-running .running-head {
+    grid-area: running;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .atlas-shell .running-head .running-title {
+    font-size: .72rem;
+  }
+
+  .atlas-shell :is(.release-banner, .latest-day-banner) .wide {
+    display: block;
+    padding-block: .48rem;
+  }
+
+  .atlas-shell :is(.release-banner, .latest-day-banner) strong {
+    display: block;
+    margin-bottom: .14rem;
+  }
+
+  .atlas-shell .download-strip .wide {
+    flex-wrap: wrap;
+    padding-block: .42rem;
+  }
+}

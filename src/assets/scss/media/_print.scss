@@ -1,17 +1,19 @@
 @page{size:6in 9in;margin:.78in .55in .86in;background:#fff;}
 @media print{
-  // Book outputs keep the pre-redesign accent colors until the print/EPUB
-  // pass catches up with the web palette.
+  // Print keeps the atlas hierarchy while returning every surface to ink on
+  // paper. Decorative navigation and live controls never enter the artifact.
   :root{--paper:#fff;--raised:#fff;--ink:#111;--ink-soft:#333;--ink-faint:#666;--line:#ddd;--line-strong:#bbb;--shadow:none;--accent:#1d6f78;--accent-deep:#13525a;--brass:#93651f;--block-accent:#13525a;--block-accent-soft:transparent;}
   .block-scope{--block-accent:#13525a;--block-accent-soft:transparent;}
   html[lang^="zh"]{--font-body:serif;--font-display:serif;}
   body{font-size:10.2pt;line-height:1.46;background:transparent;color:#111;}
-  .site-topbar,.site-footer,.release-banner,.latest-day-banner,.download-strip,.web-only,.epub-only,.print-hide,.deep-dive,.lesson-rail,.toc-fab,.rail-backdrop{display:none!important;}
+  .site-topbar,.site-footer,.release-banner,.latest-day-banner,.download-strip,.web-only,.epub-only,.print-hide,.deep-dive,.lesson-rail,.toc-fab,.rail-backdrop,.reading-dock,.lesson-nav{display:none!important;}
   .print-only,.format-alt{display:block!important;}
   .deep-dive-edition-only.print-only{display:none!important;}
   .pdf-page-break{break-before:page;page-break-before:always;}
-  .wrap,.wide{max-width:none;padding:0;}
-  header.hero,.page-hero{padding:0 0 .25in;break-after:auto;}
+  .wrap,.wide,.lesson-stage,.lesson-reading>*{width:auto;max-width:none;padding:0;}
+  header.hero,.page-hero,.lesson header.hero{display:block;min-height:0;margin:0;padding:0 0 .25in;border:0;background:transparent;color:#111;box-shadow:none;break-after:auto;}
+  .lesson header.hero::before,.lesson header.hero::after,.page-hero::before,.page-hero::after{display:none!important;}
+  .lesson header.hero :is(h1,.sub,.eyebrow,.lede){max-width:none;color:#111;}
   .hero-clock,.hero-sun{max-width:2.45in;margin:.26in auto;}
   .lesson-figure{max-width:4.8in;margin:.24in auto;}
   .lesson-figure.is-portrait{max-width:2.6in;}
