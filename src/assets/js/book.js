@@ -536,7 +536,9 @@
       }
       var dockProgress = lesson.querySelector("[data-dock-progress]");
       if(dockProgress){
-        dockProgress.textContent = Math.round(progress * 100) + "%";
+        var dockPercent = Math.round(progress * 100) + "%";
+        dockProgress.textContent = dockPercent;
+        dockProgress.setAttribute("aria-label", dockPercent + (dockProgress.getAttribute("data-dock-label") || ""));
       }
       var runningProgress = document.querySelector("[data-running-progress]");
       if(runningProgress){
