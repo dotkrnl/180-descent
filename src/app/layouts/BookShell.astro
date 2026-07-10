@@ -76,7 +76,7 @@ const structuredData = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#f5f3ec" />
+    <meta name="theme-color" content="#f1f2ec" />
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
     <meta name="robots" content="index, follow" />
@@ -131,6 +131,10 @@ const structuredData = {
           </span>
           {uiTitle}
         </a>
+        <p class="running-head" id="runningHead" aria-hidden="true">
+          <span class="running-day" data-running-day></span>
+          <span class="running-title" data-running-title></span>
+        </p>
         <nav class="topnav" aria-label={isZh ? "主导航" : "Primary"}>
           <a href={introUrl} aria-current={currentPath === introUrl ? "page" : undefined}>{isZh ? "引言" : "Intro"}</a>
           <a href={syllabusUrl} aria-current={currentPath === syllabusUrl ? "page" : undefined}>{isZh ? "课程表" : "Syllabus"}</a>

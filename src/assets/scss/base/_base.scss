@@ -16,9 +16,11 @@ body .katex{font-size:1em;}
 body .katex:not(.katex-display>.katex){font-family:inherit;}
 body .katex:not(.katex-display>.katex) :is(.mathnormal,.mathrm,.textstyle,.mord,.mop,.mbin,.mrel,.mopen,.mclose,.mpunct,.minner){font-family:inherit;}
 @media screen{
-  html,body{overflow-x:hidden;}
+  // Only the root clips horizontal overflow: overflow-x on body turns it
+  // into a scroll container and silently kills the sticky topbar.
+  html{overflow-x:hidden;}
 }
-::selection{background:rgba(29,111,120,.22);}
+::selection{background:color-mix(in srgb,var(--accent) 24%,transparent);}
 a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent);}
 a:hover{border-bottom-color:var(--accent);}
 a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 68%,#fff);outline-offset:3px;box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 16%,transparent);}
@@ -28,4 +30,24 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .skip-link{position:absolute;left:-999px;top:.5rem;background:var(--raised);padding:.45rem .7rem;z-index:50;}
 .skip-link:focus{left:.5rem;}
 .wrap{max-width:var(--measure);margin:0 auto;padding:0 1.35rem;}
-.wide{max-width:50rem;}
+.wide{max-width:54rem;}
+
+@media screen and (min-width:75rem){
+  // Wide-screen breakouts: prose holds the book measure while figures,
+  // tables, and interactive panels spread. Capped so nothing crosses the
+  // reading rail, and never narrower than the natural column width.
+  .lesson-figure:not(.is-portrait),.table-wrap,.panel,.compare,.widepanel,.appendix-figure-wide{
+    --bk-w:max(100%,min(56rem,100vw - 2*(var(--rail-w) + 5rem)));
+    width:var(--bk-w);
+    margin-left:calc((100% - var(--bk-w))/2);
+    margin-right:calc((100% - var(--bk-w))/2);
+  }
+  .widepanel{--bk-w:max(100%,min(var(--breakout),100vw - 2*(var(--rail-w) + 5rem)));}
+}
+
+@media screen and (prefers-reduced-motion: no-preference){
+  // Calm scroll reveals. Classes are added by JS only, so no-JS readers,
+  // EPUB, and print see everything immediately.
+  .rv{opacity:0;transform:translateY(16px);}
+  .rv.rv-in{opacity:1;transform:none;transition:opacity .65s ease,transform .65s cubic-bezier(.16,1,.3,1);}
+}

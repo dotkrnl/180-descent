@@ -1,11 +1,11 @@
 
 .site-topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-.topbar-row{max-width:58rem;margin:0 auto;padding:.6rem 1.35rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
-.course{display:flex;align-items:center;gap:.6rem;color:var(--ink-soft);border-bottom:0;}
+.topbar-row{max-width:76rem;margin:0 auto;padding:.6rem 1.35rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+.course{display:flex;align-items:center;gap:.6rem;color:var(--ink-soft);border-bottom:0;white-space:nowrap;}
 .brand-mark-shell{position:relative;width:1.75rem;height:1.75rem;display:block;flex:0 0 auto;}
 .brand-mark{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;border-radius:50%;transition:opacity .2s ease;}
-.brand-mark-light{background:#f7f3ea;padding:2px;box-shadow:0 0 0 1px color-mix(in srgb,var(--line-strong) 58%,transparent);opacity:var(--brand-light-opacity);}
-.brand-mark-dark{background:#0d1115;padding:2px;box-shadow:0 0 0 1px color-mix(in srgb,var(--line-strong) 72%,transparent);opacity:var(--brand-dark-opacity);}
+.brand-mark-light{background:#f7f6ef;padding:2px;box-shadow:0 0 0 1px color-mix(in srgb,var(--line-strong) 58%,transparent);opacity:var(--brand-light-opacity);}
+.brand-mark-dark{background:#0a131b;padding:2px;box-shadow:0 0 0 1px color-mix(in srgb,var(--line-strong) 72%,transparent);opacity:var(--brand-dark-opacity);}
 .topnav{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;}
 .topnav a{color:var(--ink-faint);border-bottom:0;}
 .topnav a:hover{color:var(--ink);}
@@ -14,8 +14,25 @@
 .toggle:hover{color:var(--ink);border-color:var(--accent);}
 .theme-toggle{gap:.18rem;min-width:2.7rem;padding:.34rem .45rem;}
 .theme-icon{width:.82rem;height:.82rem;display:block;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;flex:0 0 auto;}
+
+// Running header: once the reader scrolls past the chapter opener the bar
+// behaves like a printed running head, with the current day and lesson title
+// in the center. The swap is driven by an is-running class from book.js.
+.running-head{display:none;min-width:0;flex:1;align-items:baseline;justify-content:center;gap:.6rem;text-align:center;overflow:hidden;}
+.running-head .running-day{color:var(--block-accent,var(--brass));flex:0 0 auto;}
+.running-head .running-title{font-family:"Fraunces",serif;font-size:.95rem;font-weight:500;font-style:italic;letter-spacing:0;text-transform:none;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+.site-topbar.is-running .topnav{display:none;}
+.site-topbar.is-running .running-head{display:flex;}
+@media(prefers-reduced-motion: no-preference){
+  .running-head{animation:running-head-in .35s ease;}
+  @keyframes running-head-in{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+}
+@media(max-width:44.99rem){
+  .running-head .running-title{font-size:.88rem;}
+}
+
 .release-banner,.latest-day-banner{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--hint) 10%,var(--paper));}
 .release-banner .wide,.latest-day-banner .wide{display:flex;gap:.7rem;align-items:flex-start;padding-top:.55rem;padding-bottom:.55rem;font-family:"IBM Plex Mono",monospace;font-size:.68rem;line-height:1.45;letter-spacing:.05em;color:var(--ink-soft);}
 .release-banner strong,.latest-day-banner strong{flex:0 0 auto;color:var(--hint);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;}
 .download-strip{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--brass) 6%,transparent);font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;}
-.download-strip .wide{display:flex;gap:.8rem;align-items:center;padding-top:.45rem;padding-bottom:.45rem;color:var(--ink-faint);}
+.download-strip .wide{display:flex;gap:.8rem;align-items:center;padding-top:.45rem;padding-bottom:.45rem;color:var(--ink-soft);}

@@ -3,7 +3,7 @@ import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import BookShell from "@app/layouts/BookShell.astro";
 import DayNav from "@app/components/DayNav.astro";
 import type { DayAppendixRenderEntry, RegistryDayRouteProps } from "@app/day-route";
-import { getBookData } from "@app/site-data";
+import { getBookData, getSyllabus } from "@app/site-data";
 import { dayArtifactDownloadUrl } from "@lib/artifacts/downloads";
 import { daySocialImagePath } from "@lib/assets/social-images";
 import { alternateLocale, dayUrl } from "@lib/static-site/routes";
@@ -27,7 +27,14 @@ const interactionScriptModules = Object.fromEntries(
 
 const { entry, previous, next, Body, appendices } = Astro.props;
 const book = await getBookData();
+const syllabus = await getSyllabus(entry.locale);
 const isZh = entry.locale === "zh";
+const blockIndex = Math.max(0, syllabus.blocks.findIndex(
+  (block) => entry.day.manifest.day >= block.startDay && entry.day.manifest.day <= block.endDay
+));
+// The descent hue: Block I sits at surface teal (200), the final block at
+// abyssal violet (300). Resolved to a color by the block-scope tokens.
+const blockHue = Math.round(200 + (blockIndex * 100) / Math.max(1, syllabus.blocks.length - 1));
 const dayPath = entry.day.manifest.path;
 const canonicalPath = dayUrl(entry.locale, dayPath);
 const alternatePath = dayUrl(alternateLocale(entry.locale), dayPath);
@@ -47,8 +54,12 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
 ---
 <BookShell title={entry.title} description={entry.summary} locale={entry.locale} canonicalPath={canonicalPath} alternatePath={alternatePath} socialImagePath={socialImagePath} scripts={scripts}>
   <article
-    class="lesson"
+    class="lesson block-scope"
+    style={`--block-hue:${blockHue}`}
     data-day={entry.day.manifest.day}
+    data-block-hue={blockHue}
+    data-running-day={dayLabel}
+    data-total-days={book.totalDays}
     data-reading-progress
     data-reading-locale={entry.locale}
     data-reading-day={entry.day.manifest.day}
@@ -73,6 +84,23 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
       </aside>
     )}
     <DayNav locale={entry.locale} previous={previous} next={next} position="top" />
+    <aside class="lesson-rail" id="lessonRail" data-lesson-rail aria-label={isZh ? "阅读进度与本页目录" : "Reading progress and page contents"}>
+      <div class="rail-depth" aria-hidden="true">
+        <div class="rail-gauge"><div class="rail-gauge-fill" data-rail-gauge></div></div>
+        <span class="rail-day">{dayLabel}</span>
+        <span class="rail-of">{isZh ? `共 ${book.totalDays} 日` : `of ${book.totalDays}`}</span>
+        <span class="rail-depth-read" data-rail-read></span>
+      </div>
+      <nav class="rail-toc" data-rail-toc-nav aria-label={isZh ? "本页目录" : "On this page"} hidden>
+        <p class="rail-toc-title">{isZh ? "本页目录" : "On this page"}</p>
+        <ol data-rail-toc></ol>
+      </nav>
+    </aside>
+    <button class="toc-fab" type="button" data-rail-fab aria-controls="lessonRail" aria-expanded="false" hidden>
+      <span class="fab-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+      {isZh ? "目录" : "Contents"}
+    </button>
+    <button class="rail-backdrop" type="button" data-rail-backdrop tabindex="-1" aria-label={isZh ? "关闭目录" : "Close contents"} hidden></button>
     <Body />
     <div class="wrap">
       {appendices.map(({ id, title, Body: AppendixBody }) => (

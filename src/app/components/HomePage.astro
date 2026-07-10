@@ -1,7 +1,7 @@
 ---
 import BookShell from "@app/layouts/BookShell.astro";
 import DayCard from "@app/components/DayCard.astro";
-import { getBookData, getContentDays, padDay } from "@app/site-data";
+import { getBookData, getContentDays, getSyllabus, padDay } from "@app/site-data";
 import type { Locale } from "@lib/schemas/day";
 import { alternateLocale, homeUrl, staticPageUrl } from "@lib/static-site/routes";
 
@@ -11,18 +11,19 @@ interface Props {
 
 const { locale } = Astro.props;
 const book = await getBookData();
-const days = await getContentDays(locale);
+const [days, syllabus] = await Promise.all([getContentDays(locale), getSyllabus(locale)]);
 const isZh = locale === "zh";
 const homePath = homeUrl(locale);
 const alternatePath = homeUrl(alternateLocale(locale));
 const downloads = isZh ? book.zh.downloads : book.downloads;
 const publishedDays = [...days].sort((a, b) => a.day - b.day);
 const firstPublishedDay = publishedDays[0];
-const latestPublishedDays = [...publishedDays].reverse().slice(0, 10);
-const readingStartUrl = firstPublishedDay?.url ?? staticPageUrl(locale, "syllabus");
+const latestPublishedDays = [...publishedDays].reverse().slice(0, 8);
+const syllabusUrl = staticPageUrl(locale, "syllabus");
+const readingStartUrl = firstPublishedDay?.url ?? syllabusUrl;
 const readingStartLabel = firstPublishedDay
   ? (isZh ? `从第 ${firstPublishedDay.day} 日开始` : `Start Day ${firstPublishedDay.day}`)
-  : (isZh ? "查看课程表" : "View syllabus");
+  : (isZh ? "查看课程表" : "View the syllabus");
 const readingDays = days.map((day) => ({
   day: day.day,
   url: day.url,
@@ -30,6 +31,20 @@ const readingDays = days.map((day) => ({
   title: day.title,
   summary: day.summary
 }));
+const blockCount = syllabus.blocks.length;
+const strata = syllabus.blocks.map((block, index) => {
+  const total = block.endDay - block.startDay + 1;
+  const published = publishedDays.filter((day) => day.day >= block.startDay && day.day <= block.endDay).length;
+  return {
+    id: block.id,
+    title: block.title,
+    hue: Math.round(200 + (index * 100) / Math.max(1, blockCount - 1)),
+    startDay: block.startDay,
+    endDay: block.endDay,
+    total,
+    fill: published / total
+  };
+});
 ---
 <BookShell
   title={isZh ? "首页" : "Home"}
@@ -39,47 +54,54 @@ const readingDays = days.map((day) => ({
   alternatePath={alternatePath}
   releaseBanner
 >
-  <section class="page-hero wrap wide">
-    <p class="eyebrow">{isZh ? book.zh.subtitle : book.subtitle}</p>
-    <h1>{isZh ? book.zh.title : book.title}</h1>
-    {isZh ? (
-      <p class="sub book-credit">
-        <span class="credit-line">作者：{book.zh.authors}</span>
-        <span class="credit-line">翻译：{book.zh.translators}</span>
-      </p>
-    ) : (
-      <p class="sub">A 180-day map of knowledge by {book.authors}.</p>
-    )}
-  </section>
-
-  <section class="wrap wide">
-    <div class="download-grid home-actions">
-      <article class="download-card" data-reading-card data-reading-locale={locale} data-reading-continue-kicker={isZh ? "继续上次阅读" : "Continue where you left off"}>
-        <p class="card-kicker" data-reading-kicker>{isZh ? "在线阅读" : "Read online"}</p>
-        <h2><a href={readingStartUrl} data-reading-link>{readingStartLabel}</a></h2>
-        <p data-reading-summary>{isZh ? "从原点出发，横跨数学、物理、生命、心智、智能与文明，直抵研究前沿。" : "A descent from first reasons through mathematics, physics, life, mind, intelligence, civilization, and the research frontier."}</p>
-      </article>
-      <script type="application/json" data-reading-days data-reading-locale={locale} set:html={JSON.stringify(readingDays)} />
-      <div class="download-stack">
-        <article class="download-card">
-          <p class="card-kicker">{isZh ? "离线版" : "Offline"}</p>
-          <h2><a href={downloads.epub}>{isZh ? "下载 EPUB" : "Download EPUB"}</a></h2>
-        </article>
-        <article class="download-card">
-          <p class="card-kicker">{isZh ? "印刷版" : "Print"}</p>
-          <h2><a href={downloads.pdf}>{isZh ? "下载 PDF" : "Download PDF"}</a></h2>
-        </article>
+  <section class="cover">
+    <div class="cover-inner">
+      <div class="cover-text" data-reading-card data-reading-locale={locale} data-reading-continue-kicker={isZh ? "继续上次阅读" : "Continue where you left off"}>
+        <p class="eyebrow">{isZh ? book.zh.subtitle : book.subtitle}</p>
+        <h1>{isZh ? book.zh.title : book.title}</h1>
+        {isZh ? (
+          <p class="sub book-credit">
+            <span class="credit-line">作者：{book.zh.authors}</span>
+            <span class="credit-line">翻译：{book.zh.translators}</span>
+          </p>
+        ) : (
+          <p class="sub">A 180-day map of knowledge by {book.authors}.</p>
+        )}
+        <p class="cover-kicker" data-reading-kicker>{isZh ? "在线阅读" : "Read online"}</p>
+        <div class="cover-actions">
+          <a class="cover-cta" href={readingStartUrl} data-reading-link>{readingStartLabel}</a>
+        </div>
       </div>
+      <a class="cover-chart" href={syllabusUrl}>
+        <span class="sr-only">{isZh ? "十三个模块的下潜地图，进入课程表" : "The thirteen-block descent map; opens the syllabus"}</span>
+        {strata.map((stratum) => (
+          <span class="stratum block-scope" style={`--block-hue:${stratum.hue};--stratum-size:${stratum.total};--stratum-fill:${stratum.fill.toFixed(3)}`} aria-hidden="true">
+            <i class="stratum-fill"></i>
+            <span class="stratum-id">{stratum.id}</span>
+            <span class="stratum-days">{stratum.startDay}-{stratum.endDay}</span>
+          </span>
+        ))}
+        <span class="cover-chart-caption" aria-hidden="true">{isZh ? `已发布 ${publishedDays.length} / ${book.totalDays} 日` : `${publishedDays.length} of ${book.totalDays} days published`}</span>
+      </a>
     </div>
   </section>
+  <script type="application/json" data-reading-days data-reading-locale={locale} set:html={JSON.stringify(readingDays)} />
 
-  <section class="wrap wide">
+  <section class="wrap wide home-offline">
+    <p class="home-offline-lead">{isZh ? "整本书可离线携带：" : "The whole book travels offline:"}
+      <a href={downloads.epub}>{isZh ? "下载 EPUB" : "Download the EPUB"}</a>
+      <span class="home-offline-sep" aria-hidden="true"></span>
+      <a href={downloads.pdf}>{isZh ? "下载印刷版 PDF" : "Download the print PDF"}</a>
+    </p>
+  </section>
+
+  <section class="wrap wide home-latest">
     <p class="sec-eyebrow">{isZh ? "最新发布" : "Latest descents"}</p>
     <div class="toc-grid">
       {latestPublishedDays.map((day) => (
         <DayCard day={day} locale={locale} totalDays={book.totalDays} />
       ))}
     </div>
-    <p class="all-days-link"><a href={staticPageUrl(locale, "syllabus")}>{isZh ? "查看完整课程表" : "View the full syllabus"}</a></p>
+    <p class="all-days-link"><a href={syllabusUrl}>{isZh ? "查看完整课程表" : "See every day on the map"}</a></p>
   </section>
 </BookShell>

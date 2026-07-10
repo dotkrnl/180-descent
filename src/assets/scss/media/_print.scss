@@ -1,9 +1,12 @@
 @page{size:6in 9in;margin:.78in .55in .86in;background:#fff;}
 @media print{
-  :root{--paper:#fff;--raised:#fff;--ink:#111;--ink-soft:#333;--ink-faint:#666;--line:#ddd;--line-strong:#bbb;--shadow:none;}
+  // Book outputs keep the pre-redesign accent colors until the print/EPUB
+  // pass catches up with the web palette.
+  :root{--paper:#fff;--raised:#fff;--ink:#111;--ink-soft:#333;--ink-faint:#666;--line:#ddd;--line-strong:#bbb;--shadow:none;--accent:#1d6f78;--accent-deep:#13525a;--brass:#93651f;--block-accent:#13525a;--block-accent-soft:transparent;}
+  .block-scope{--block-accent:#13525a;--block-accent-soft:transparent;}
   html[lang^="zh"]{--font-body:serif;--font-display:serif;}
   body{font-size:10.2pt;line-height:1.46;background:transparent;color:#111;}
-  .site-topbar,.site-footer,.release-banner,.latest-day-banner,.download-strip,.web-only,.epub-only,.print-hide,.deep-dive{display:none!important;}
+  .site-topbar,.site-footer,.release-banner,.latest-day-banner,.download-strip,.web-only,.epub-only,.print-hide,.deep-dive,.lesson-rail,.toc-fab,.rail-backdrop{display:none!important;}
   .print-only,.format-alt{display:block!important;}
   .deep-dive-edition-only.print-only{display:none!important;}
   .pdf-page-break{break-before:page;page-break-before:always;}

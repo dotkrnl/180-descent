@@ -1,8 +1,13 @@
 
 header.hero,.page-hero{padding-top:3.2rem;padding-bottom:1.2rem;}
+// Chapter opener: day pages open like a title page, with extra air and a
+// short sounding-line ornament tinted by the block accent.
+.lesson header.hero{padding-top:clamp(3.4rem,9vh,5.6rem);padding-bottom:1.7rem;}
+.lesson header.hero::after{content:"";display:block;width:1px;height:2.6rem;margin:2.3rem auto 0;background:linear-gradient(to bottom,transparent,var(--block-accent,var(--accent)));}
 .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 .9rem;}
+.block-scope .eyebrow{color:var(--block-accent,var(--accent));}
 .daymark{color:var(--brass);}
-h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(2.15rem,1.1rem + 4.6vw,3.7rem);line-height:1.04;margin:.2rem 0 .1rem;}
+h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(2.2rem,1.05rem + 4.8vw,4.3rem);line-height:1.03;letter-spacing:-.01em;margin:.2rem 0 .1rem;text-wrap:balance;}
 h1 em{font-style:italic;color:var(--accent-deep);}
 h1 u{color:var(--accent-deep);text-decoration:none;}
 .sub{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:clamp(1.15rem,.8rem + 1vw,1.5rem);color:var(--ink-soft);margin:.85rem 0 1.15rem;line-height:1.4;}
@@ -45,7 +50,7 @@ h1 u{color:var(--accent-deep);text-decoration:none;}
 .lesson-figure.pvalue-figure img{border:0;border-radius:6px;background:var(--pvalue-img-bg);box-shadow:none;}
 .lesson-figure.pvalue-figure figcaption{margin:.65rem 0 0;padding-top:.6rem;border-top:1px solid var(--line);background:transparent;}
 .aside .lesson-figure{margin:1rem auto .15rem;}
-.lede{font-size:1.26em;line-height:1.62;color:var(--accent-deep);margin-top:1.35rem;}
+.lede{font-size:1.28em;line-height:1.6;color:color-mix(in srgb,var(--accent-deep) 72%,var(--ink));margin-top:1.35rem;}
 .lede .drop{float:left;font-family:"Fraunces",serif;font-weight:600;font-size:3.5em;line-height:.74;padding:.06em .12em 0 0;color:var(--accent-deep);}
 .lede.dropcap::first-letter{float:left;font-family:"Fraunces",serif;font-weight:600;font-size:3.5em;line-height:.74;padding:.06em .12em 0 0;color:var(--accent-deep);}
 
@@ -54,8 +59,8 @@ h1 u{color:var(--accent-deep);text-decoration:none;}
 .whereblock p{margin:.3rem 0;font-size:.97em;color:var(--ink-soft);}
 section{margin:3rem 0;}
 .sec-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:.7rem;margin:0 0 .55rem;}
-.sec-eyebrow::before{content:"";width:1.7rem;height:1px;background:var(--accent);}
-h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.5rem,1rem + 2vw,2.05rem);line-height:1.1;margin:.1rem 0 1rem;}
+.sec-eyebrow::before{content:"";width:1.7rem;height:1px;background:var(--block-accent,var(--accent));}
+h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.55rem,1rem + 2.1vw,2.2rem);line-height:1.1;margin:.1rem 0 1rem;text-wrap:balance;}
 h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.28rem;margin:2rem 0 .5rem;}
 p{margin:0 0 1.15rem;}
 ul,ol{padding-left:1.35rem;}
