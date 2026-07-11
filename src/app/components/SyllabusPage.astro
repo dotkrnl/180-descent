@@ -104,8 +104,8 @@ const compactBlockTitle = (title: string) => title
     </header>
 
     <nav class="syllabus-block-nav" aria-label={isZh ? "课程模块" : "Syllabus blocks"}>
-      {syllabus.blocks.map((block) => (
-        <a href={`#block-${block.id.toLowerCase()}`}>{isZh ? `模块 ${block.id}` : `Block ${block.id}`}</a>
+      {syllabus.blocks.map((block, blockIndex) => (
+        <a class="block-scope" style={`--block-hue:${Math.round(200 + (blockIndex * 100) / Math.max(1, syllabus.blocks.length - 1))}`} href={`#block-${block.id.toLowerCase()}`}>{isZh ? `模块 ${block.id}` : `Block ${block.id}`}</a>
       ))}
     </nav>
 

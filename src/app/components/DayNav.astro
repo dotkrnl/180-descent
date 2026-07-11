@@ -28,7 +28,10 @@ const className = `lesson-nav lesson-nav-${position} wrap wide`;
       <strong class="lesson-nav-title"><span class="lesson-nav-day">{navDayLabel(previous.day)}</span><span class="lesson-nav-separator"> · </span><span class="lesson-nav-name">{previous.title}</span></strong>
     </a>
   ) : (
-    <span class="lesson-nav-card lesson-nav-previous is-disabled" aria-hidden="true"></span>
+    <span class="lesson-nav-card lesson-nav-previous is-disabled" aria-hidden="true">
+      <span class="lesson-nav-kicker">‹</span>
+      <strong class="lesson-nav-title">{isZh ? "起点" : "Start"}</strong>
+    </span>
   )}
   <a class="lesson-nav-card is-syllabus lesson-nav-syllabus" href={staticPageUrl(locale, "syllabus")}>
     <span class="lesson-nav-kicker">{isZh ? "课程表" : "Map"}</span>
@@ -46,6 +49,9 @@ const className = `lesson-nav lesson-nav-${position} wrap wide`;
       <strong class="lesson-nav-title"><span class="lesson-nav-day">{navDayLabel(next.day)}</span><span class="lesson-nav-separator"> · </span><span class="lesson-nav-name">{next.title}</span></strong>
     </a>
   ) : (
-    <span class="lesson-nav-card lesson-nav-next is-disabled" aria-hidden="true"></span>
+    <span class="lesson-nav-card lesson-nav-next is-disabled" aria-hidden="true">
+      <span class="lesson-nav-kicker">›</span>
+      <strong class="lesson-nav-title">{isZh ? "前沿" : "Frontier"}</strong>
+    </span>
   )}
 </nav>

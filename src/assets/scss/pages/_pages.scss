@@ -207,7 +207,7 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
 .cover-chart:hover{border-color:var(--accent);}
 .stratum{position:relative;flex:var(--stratum-size,1) 0 1.35rem;display:flex;align-items:center;gap:.6rem;padding:0 .85rem;border-top:1px solid color-mix(in srgb,var(--block-accent,var(--accent)) 26%,transparent);background:linear-gradient(to bottom,var(--block-accent-soft),transparent 85%);}
 .stratum:first-child{border-top:0;}
-.stratum-fill{position:absolute;left:0;top:0;bottom:0;width:calc(var(--stratum-fill,0)*100%);background:linear-gradient(to right,color-mix(in srgb,var(--block-accent,var(--accent)) 24%,transparent),color-mix(in srgb,var(--block-accent,var(--accent)) 10%,transparent));}
+.stratum-fill{position:absolute;left:0;top:0;bottom:0;width:calc(var(--stratum-fill,0)*100%);background:color-mix(in srgb,var(--block-accent,var(--accent)) 14%,transparent);border-right:1px solid color-mix(in srgb,var(--block-accent,var(--accent)) 55%,transparent);}
 .stratum-id{position:relative;font-family:"IBM Plex Mono",monospace;font-size:.62rem;font-weight:600;letter-spacing:.1em;color:var(--block-accent,var(--accent));}
 .stratum-days{position:relative;margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.06em;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
 .cover-chart-caption{padding:.6rem .85rem;font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);border-top:1px solid var(--line);}
@@ -261,7 +261,7 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
 .lesson-nav-card span{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--block-accent,var(--brass));}
 .lesson-nav-card strong{font-family:"Fraunces",serif;font-size:1rem;font-weight:600;color:var(--ink);}
 .lesson-nav-card.is-syllabus{text-align:center;}
-.lesson-nav-card.is-disabled{background:transparent;color:var(--ink-faint);}
+.lesson-nav-card.is-disabled{background:transparent;color:var(--ink-faint);opacity:.55;}
 .lesson-nav-card.is-disabled:hover{border-color:var(--line);}
 .lesson-nav-card.is-disabled strong{color:var(--ink-faint);}
 .lesson-nav-card.is-disabled span{color:var(--ink-faint);}
@@ -336,8 +336,8 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   bottom:-1px;
   width:clamp(4.5rem,13vw,12rem);
   height:3px;
-  background:linear-gradient(to right,var(--accent),color-mix(in srgb,var(--accent) 40%,transparent));
-  border-radius:2px;
+  background:var(--accent);
+  border-radius:0;
   content:"";
 }
 .atlas-page .atlas-folio{
@@ -450,13 +450,16 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   content:"";
 }
 .atlas-home .cover-text h1{
-  max-width:9ch;
+  max-width:12ch;
   margin:0;
   color:var(--ink);
   font-weight:500;
-  font-size:clamp(4.1rem,2.6rem + 4.25vw,6.4rem);
-  line-height:.9;
+  font-size:clamp(3.4rem,2.2rem + 3.5vw,5.5rem);
+  line-height:.92;
   letter-spacing:-.035em;
+}
+.atlas-home .cover-text h1 .title-compound{
+  white-space:nowrap;
 }
 .atlas-home .cover-text .sub{
   max-width:34rem;
@@ -532,7 +535,7 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   font-family:var(--font-mono);
   font-size:.78rem;
   font-weight:600;
-  letter-spacing:.06em;
+  letter-spacing:.09em;
   transition:background var(--duration-fast) var(--ease-out-atlas),border-color var(--duration-fast) var(--ease-out-atlas),color var(--duration-fast) var(--ease-out-atlas);
 }
 .atlas-home .cover-cta::after{
@@ -544,7 +547,6 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   border-color:var(--accent-deep);
   background:var(--accent);
   color:var(--paper);
-  box-shadow:4px 4px 0 color-mix(in srgb,var(--signal) 38%,transparent);
 }
 .atlas-home .cover-map-link{
   color:var(--accent-deep);
@@ -655,7 +657,8 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   position:absolute;
   inset:0 auto 0 0;
   width:calc(var(--stratum-fill,0)*100%);
-  background:linear-gradient(90deg,color-mix(in srgb,var(--block-accent,var(--recap-accent)) 38%,transparent),color-mix(in srgb,var(--block-accent,var(--recap-accent)) 10%,transparent));
+  background:color-mix(in srgb,var(--block-accent,var(--recap-accent)) 20%,transparent);
+  border-right:1px solid color-mix(in srgb,var(--block-accent,var(--recap-accent)) 60%,transparent);
 }
 .atlas-home .cover-chart .stratum-id,
 .atlas-home .cover-chart .stratum-title,
@@ -727,9 +730,8 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   box-shadow:none;
 }
 :root[data-theme="light"] .atlas-home .cover-chart .stratum-fill{
-  background:linear-gradient(90deg,
-    color-mix(in srgb,var(--block-accent,var(--recap-accent)) 55%,transparent),
-    color-mix(in srgb,var(--block-accent,var(--recap-accent)) 16%,transparent));
+  background:color-mix(in srgb,var(--block-accent,var(--recap-accent)) 26%,transparent);
+  border-right:1px solid color-mix(in srgb,var(--block-accent,var(--recap-accent)) 65%,transparent);
 }
 @media (prefers-color-scheme:light){
   :root[data-theme="auto"] .atlas-home .cover-chart{
@@ -742,9 +744,8 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
     box-shadow:none;
   }
   :root[data-theme="auto"] .atlas-home .cover-chart .stratum-fill{
-    background:linear-gradient(90deg,
-      color-mix(in srgb,var(--block-accent,var(--recap-accent)) 55%,transparent),
-      color-mix(in srgb,var(--block-accent,var(--recap-accent)) 16%,transparent));
+    background:color-mix(in srgb,var(--block-accent,var(--recap-accent)) 26%,transparent);
+    border-right:1px solid color-mix(in srgb,var(--block-accent,var(--recap-accent)) 65%,transparent);
   }
 }
 .atlas-home .home-project-strip{
@@ -803,12 +804,23 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   padding-inline:var(--page-pad);
 }
 .atlas-home .home-section-head{
+  position:relative;
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(18rem,.7fr);
   gap:clamp(2rem,6vw,6rem);
   align-items:end;
   padding-bottom:1.5rem;
   border-bottom:2px solid var(--ink);
+}
+// Editorial thick-thin rule under major section heads.
+.atlas-home .home-section-head::after{
+  position:absolute;
+  right:0;
+  bottom:-6px;
+  left:0;
+  height:1px;
+  background:var(--line-strong);
+  content:"";
 }
 .atlas-home .home-section-head .sec-eyebrow{
   margin:0 0 .65rem;
@@ -909,8 +921,12 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   margin:0;
 }
 .atlas-home .recent-descent-stream .day-card{
-  grid-template-columns:5.5rem minmax(0,1fr);
+  grid-template-columns:6.6rem minmax(0,1fr);
   padding:1rem 0 1.1rem;
+}
+.atlas-home .recent-descent-stream .day-card .card-kicker{
+  font-size:.7rem;
+  white-space:nowrap;
 }
 .atlas-home .recent-descent-stream .day-card h2{
   font-size:1.3rem;
@@ -1152,12 +1168,22 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   margin:0;
 }
 .atlas-page--syllabus .syllabus-index-head{
+  position:relative;
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(17rem,.7fr);
   gap:clamp(2rem,5vw,5rem);
   align-items:end;
   padding-bottom:1.25rem;
   border-bottom:2px solid var(--ink);
+}
+.atlas-page--syllabus .syllabus-index-head::after{
+  position:absolute;
+  right:0;
+  bottom:-6px;
+  left:0;
+  height:1px;
+  background:var(--line-strong);
+  content:"";
 }
 .atlas-page--syllabus .syllabus-index-head h2{
   margin:.25rem 0 0;
@@ -1170,42 +1196,48 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   font-size:1rem;
   line-height:1.45;
 }
+// De-boxed block strip: plain mono labels resting on a single hairline, each
+// underlined in its own block hue on hover. Sticky offset matches the topbar
+// height exactly so no content peeks through the seam while scrolling.
 .atlas-page--syllabus .syllabus-block-nav{
   position:sticky;
   z-index:8;
-  top:3.8rem;
+  top:3.35rem;
   display:flex;
   flex-wrap:nowrap;
-  gap:0;
+  gap:clamp(1rem,2.4vw,1.9rem);
   width:100%;
   margin:0 0 1rem;
   overflow-x:auto;
   border-top:0;
   border-bottom:1px solid var(--line-strong);
-  background:color-mix(in srgb,var(--paper) 94%,transparent);
+  background:color-mix(in srgb,var(--paper) 96%,transparent);
   font-family:var(--font-mono);
   scrollbar-width:thin;
   backdrop-filter:blur(12px);
 }
 .atlas-page--syllabus .syllabus-block-nav a,
 .atlas-page--syllabus .syllabus-block-nav a:first-child{
-  flex:1 0 auto;
-  min-width:4.1rem;
+  flex:0 0 auto;
+  min-width:0;
   min-height:2.8rem;
-  padding:.7rem .65rem;
+  padding:.85rem 0 .7rem;
   border:0;
-  border-right:1px solid var(--line);
+  border-bottom:2px solid transparent;
   border-radius:0;
+  margin-bottom:-1px;
   background:transparent;
   color:var(--ink-faint);
   font-size:.68rem;
-  letter-spacing:.06em;
+  letter-spacing:.08em;
   text-align:center;
-  transition:background var(--duration-fast) var(--ease-out-atlas),color var(--duration-fast) var(--ease-out-atlas);
+  white-space:nowrap;
+  transition:border-color var(--duration-fast) var(--ease-out-atlas),color var(--duration-fast) var(--ease-out-atlas);
 }
 .atlas-page--syllabus .syllabus-block-nav a:hover,
 .atlas-page--syllabus .syllabus-block-nav a:focus-visible{
-  background:color-mix(in srgb,var(--accent) 10%,var(--paper));
+  border-bottom-color:var(--block-accent,var(--accent));
+  background:transparent;
   color:var(--ink);
 }
 .atlas-page--syllabus .depth-chart{

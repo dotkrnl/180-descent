@@ -49,6 +49,8 @@ const strata = syllabus.blocks.map((block, index) => {
   };
 });
 const publishedPercent = Math.round((publishedDays.length / book.totalDays) * 100);
+// Hyphenated compounds ("180-Day") must never break mid-word on the cover.
+const coverTitleParts = book.title.split(" ");
 ---
 <BookShell
   title={isZh ? "首页" : "Home"}
@@ -62,7 +64,9 @@ const publishedPercent = Math.round((publishedDays.length / book.totalDays) * 10
       <div class="cover-inner">
         <div class="cover-text" data-reading-card data-reading-locale={locale} data-reading-continue-kicker={isZh ? "继续阅读" : "Continue where you left off"}>
           <p class="eyebrow">{isZh ? book.zh.subtitle : book.subtitle}</p>
-          <h1 id="atlas-home-title">{isZh ? book.zh.title : book.title}</h1>
+          <h1 id="atlas-home-title">{isZh ? book.zh.title : coverTitleParts.map((part, index) => (
+            <Fragment>{index > 0 ? " " : ""}{part.includes("-") ? <span class="title-compound">{part}</span> : part}</Fragment>
+          ))}</h1>
           {isZh ? (
             <p class="sub book-credit">
               <span class="credit-line">作者：{book.zh.authors}</span>

@@ -18,6 +18,19 @@ article.lesson .lesson-reading > .wrap{
 }
 html[lang^="zh"] article.lesson .lesson-reading{--lesson-prose:42rem;}
 article.lesson .lesson-reading :is(h2,h3,[id]){scroll-margin-top:6rem;}
+
+// Screen-only typographic finish: oldstyle figures settle inline numbers into
+// running prose, and quotes hang their opening punctuation where the engine
+// supports it. Scoped to screen so print/EPUB output stays byte-stable, and
+// to Latin locales so CJK digits keep their lining forms.
+@media screen{
+  html:not([lang^="zh"]) article.lesson .lesson-reading :is(p,li){
+    font-variant-numeric:oldstyle-nums;
+  }
+  html:not([lang^="zh"]) article.lesson .lesson-reading blockquote{
+    hanging-punctuation:first;
+  }
+}
 article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section{
   margin-block:clamp(3.5rem,7vw,6rem);
 }

@@ -211,11 +211,45 @@ a:hover {
 // The colophon follows the active theme without adding another atmospheric
 // layer beneath the editorial content.
 .atlas-shell .site-footer {
+  position: relative;
   margin-top: clamp(5rem, 10vw, 9rem);
   padding: clamp(3rem, 6vw, 5.75rem) 0 clamp(3.5rem, 6vw, 5.5rem);
-  border-top: 1px solid var(--chrome-line);
+  border-top: 2px solid var(--chrome-line);
   background: var(--chrome-bg);
   color: var(--chrome-muted);
+}
+
+// Thick-thin editorial rule closing the page.
+.atlas-shell .site-footer::before {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--chrome-line);
+  content: "";
+}
+
+// Book-style colophon device: the brand roundel set between short hairlines.
+.atlas-shell .footer-device {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  margin-bottom: clamp(2.2rem, 4vw, 3.4rem);
+}
+
+.atlas-shell .footer-device-rule {
+  width: clamp(2.5rem, 8vw, 5.5rem);
+  height: 1px;
+  background: var(--chrome-line);
+}
+
+.atlas-shell .footer-device .footer-device-mark {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  opacity: .85;
 }
 
 .atlas-shell .site-footer .wrap {
