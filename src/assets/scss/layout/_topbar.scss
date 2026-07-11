@@ -575,35 +575,14 @@
     left: 25%;
   }
 
-  .atlas-shell .running-head .running-block,
-  .atlas-shell .running-head .running-progress {
-    display: none;
-  }
-
-  .atlas-shell .site-topbar.is-running .topbar-row {
-    position:relative;
-    grid-template-columns:minmax(0,1fr) auto;
-    grid-template-areas:"course actions";
-    padding-block: .42rem;
-  }
-
+  // Keep the two-row mobile header stable while scrolling. The running-head
+  // collapse remains useful on wider screens, where it has room to breathe.
   .atlas-shell .site-topbar.is-running .topnav {
-    display: none;
+    display: grid;
   }
 
   .atlas-shell .site-topbar.is-running .running-head {
-    position:absolute;
-    top:50%;
-    left:50%;
-    width:min(44vw,12rem);
-    display: flex;
-    justify-content:center;
-    transform:translate(-50%,-50%);
-    pointer-events:none;
-  }
-
-  .atlas-shell .running-head .running-title {
-    font-size: .8rem;
+    display: none;
   }
 
   .atlas-shell :is(.release-banner, .latest-day-banner) .wide {
