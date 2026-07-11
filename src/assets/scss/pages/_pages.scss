@@ -407,7 +407,14 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   pointer-events:none;
 }
 .atlas-home .cover::after{
-  display:none;
+  position:absolute;
+  inset:0;
+  display:block;
+  background:
+    radial-gradient(circle at 82% 18%,color-mix(in srgb,var(--signal) 9%,transparent),transparent 24rem),
+    linear-gradient(135deg,transparent 0 58%,color-mix(in srgb,var(--accent) 4%,transparent) 100%);
+  content:"";
+  pointer-events:none;
 }
 .atlas-home .cover-inner{
   position:relative;
@@ -516,12 +523,12 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
 .atlas-home .cover-cta{
   display:inline-flex;
   align-items:center;
-  min-height:2.85rem;
-  padding:.7rem 1rem;
-  border:1px solid var(--accent);
+  min-height:2.75rem;
+  padding:.65rem 1rem;
+  border:1px solid var(--ink);
   border-radius:var(--radius-1);
-  background:transparent;
-  color:var(--accent-deep);
+  background:var(--ink);
+  color:var(--paper);
   font-family:var(--font-mono);
   font-size:.78rem;
   font-weight:600;
@@ -535,8 +542,9 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
 .atlas-home .cover-cta:hover,
 .atlas-home .cover-cta:focus-visible{
   border-color:var(--accent-deep);
-  background:color-mix(in srgb,var(--accent) 9%,transparent);
-  color:var(--accent-deep);
+  background:var(--accent);
+  color:var(--paper);
+  box-shadow:4px 4px 0 color-mix(in srgb,var(--signal) 38%,transparent);
 }
 .atlas-home .cover-map-link{
   color:var(--accent-deep);
@@ -559,24 +567,30 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   min-height:28.5rem;
   overflow:hidden;
   border:1px solid color-mix(in srgb,var(--abyss-fg) 24%,transparent);
-  border-inline-color:transparent;
-  border-top-color:var(--recap-accent);
-  border-radius:0;
+  border-top:3px solid var(--ink);
+  border-radius:var(--radius-2);
   background:color-mix(in srgb,var(--abyss) 86%,var(--paper));
-  box-shadow:none;
+  box-shadow:var(--shadow);
   color:var(--abyss-fg);
   transition:border-color var(--duration-fast) var(--ease-out-atlas);
 }
 .atlas-home .cover-chart::before{
-  display:none;
+  position:absolute;
+  top:-3px;
+  right:1rem;
+  display:block;
+  width:3.5rem;
+  height:3px;
+  background:var(--signal);
+  content:"";
+  pointer-events:none;
 }
 .atlas-home .cover-chart:hover,
 .atlas-home .cover-chart:focus-visible{
   border-color:color-mix(in srgb,var(--recap-accent) 62%,var(--abyss-fg));
-  border-inline-color:transparent;
-  box-shadow:none;
+  box-shadow:0 12px 30px -24px color-mix(in srgb,var(--ink) 70%,transparent);
   color:var(--abyss-fg);
-  transform:none;
+  transform:translateY(-2px);
 }
 .atlas-home .atlas-map-head{
   display:flex;
@@ -696,9 +710,9 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   --abyss:var(--raised);
   --abyss-fg:var(--ink);
   --abyss-raised:var(--paper);
-  border-block-color:var(--line-strong);
-  border-inline-color:transparent;
-  box-shadow:none;
+  border-color:var(--line-strong);
+  border-top-color:var(--ink);
+  box-shadow:var(--shadow);
   backdrop-filter:none;
   -webkit-backdrop-filter:none;
   background:color-mix(in srgb,var(--raised) 70%,var(--paper));
@@ -822,11 +836,12 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
 .atlas-home .home-featured-day{
   position:relative;
   min-width:0;
-  padding:1.2rem 0 1.5rem;
-  border-top:2px solid var(--accent);
-  border-bottom:1px solid var(--line-strong);
-  background:transparent;
-  border-radius:0;
+  padding:1.45rem 1.5rem 1.65rem;
+  border:1px solid var(--line);
+  border-top:3px solid var(--accent);
+  border-radius:0 var(--radius-2) var(--radius-2) 0;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--raised) 86%,var(--accent) 14%),var(--raised));
+  box-shadow:var(--shadow);
 }
 .atlas-home .home-featured-day::after{
   position:absolute;
@@ -1697,7 +1712,7 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
     font-size:clamp(2.2rem,11vw,3.2rem);
   }
   .atlas-home .home-featured-day{
-    padding:1rem 0 1.25rem;
+    padding:1.1rem 1rem 1.35rem;
   }
   .atlas-home .home-featured-day::after{
     display:none;
