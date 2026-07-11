@@ -6,7 +6,7 @@ article.lesson .lesson-stage{
   margin-inline:auto;
 }
 article.lesson .lesson-reading{
-  --lesson-prose:70ch;
+  --lesson-prose:66ch;
   --lesson-exhibit:min(68rem,calc(100vw - var(--page-pad,1.35rem) - var(--page-pad,1.35rem)));
   min-width:0;
 }
@@ -191,9 +191,16 @@ article.lesson > .lesson-nav-bottom .lesson-nav-next{text-align:right;}
 article.lesson > .lesson-nav-bottom .lesson-nav-title{line-height:1.22;}
 
 @media screen and (max-width:44.99rem){
+  // Day-specific files remain available from the footer and global downloads
+  // page; removing this repeated strip lets the chapter begin sooner.
+  article.lesson > .download-strip{display:none;}
   article.lesson .lesson-reading > .wrap{padding-inline:1.35rem;}
-  article.lesson > .lesson-nav{padding-inline:.65rem;}
-  article.lesson > .lesson-nav-top .lesson-nav-card{gap:.35rem;padding-inline:.45rem;}
+  article.lesson > .lesson-nav{padding-inline:.55rem;}
+  article.lesson > .lesson-nav-top .lesson-nav-card{
+    min-height:2.75rem;
+    gap:.3rem;
+    padding:.4rem .35rem;
+  }
   article.lesson > .lesson-nav-top .lesson-nav-title{font-size:.74rem;}
   article.lesson > .lesson-nav-top .lesson-nav-name,
   article.lesson > .lesson-nav-top .lesson-nav-separator{display:none;}
@@ -223,16 +230,22 @@ article.lesson :is(.whereblock,.continues){
   box-shadow:none;
 }
 article.lesson .continues{border-left-color:var(--block-accent,var(--accent));}
-article.lesson :is(.aside,.panel,.roadmap){
-  border:1px solid var(--line);
-  border-radius:var(--radius-2);
-  background:color-mix(in srgb,var(--raised) 78%,transparent);
-  box-shadow:var(--shadow);
+article.lesson :is(.aside,.roadmap,.panel:not(.web-only)){
+  padding:1.15rem 0;
+  border:0;
+  border-top:1px solid var(--line-strong);
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
 }
 article.lesson .panel.web-only{
   padding:clamp(1.1rem,3vw,2rem);
-  border-top:3px solid var(--block-accent,var(--accent));
-  border-radius:var(--radius-2);
+  border:1px solid var(--line);
+  border-top:2px solid var(--block-accent,var(--accent));
+  border-radius:var(--radius-1);
+  background:color-mix(in srgb,var(--raised) 78%,transparent);
+  box-shadow:none;
 }
 article.lesson .claim{
   padding-top:1.35rem;
@@ -244,9 +257,9 @@ article.lesson blockquote{
   color:var(--ink);
 }
 article.lesson .recap{
-  border-radius:var(--radius-2);
-  border-left:4px solid var(--recap-accent);
-  box-shadow:var(--shadow);
+  border-radius:var(--radius-1);
+  border-left:3px solid var(--recap-accent);
+  box-shadow:none;
 }
 article.lesson .tomorrow{
   padding:1.15rem 0;

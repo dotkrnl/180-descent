@@ -14,42 +14,13 @@ article.lesson .lesson-reading > header.hero{
   margin:.75rem auto clamp(2.5rem,5vw,4.5rem);
   padding:clamp(2.25rem,4vw,4rem) clamp(1.35rem,4vw,4rem) clamp(2rem,4vw,3.5rem);
   overflow:hidden;
-  border-top:3px solid var(--hero-accent);
-  border-bottom:1px solid var(--lesson-hero-line);
-  border-radius:0 0 var(--radius-3) var(--radius-3);
-  background:
-    radial-gradient(circle at 88% 16%,color-mix(in srgb,var(--block-accent,var(--accent)) var(--lesson-hero-glow-share),transparent),transparent 31%),
-    var(--lesson-hero-background);
+  border:0;
+  border-top:2px solid var(--hero-accent);
+  border-radius:0;
+  background:var(--lesson-hero-background);
   color:var(--lesson-hero-fg);
 }
 article.lesson .lesson-reading > header.hero > *{min-width:0;}
-article.lesson .lesson-reading > header.hero::before{
-  position:absolute;
-  z-index:-1;
-  inset:-14rem -10rem auto auto;
-  width:34rem;
-  height:34rem;
-  border:1px solid color-mix(in srgb,var(--hero-accent) 22%,transparent);
-  border-radius:50%;
-  box-shadow:
-    0 0 0 3.75rem color-mix(in srgb,var(--hero-accent) 6%,transparent),
-    0 0 0 7.5rem color-mix(in srgb,var(--hero-accent) 4%,transparent),
-    0 0 0 11.25rem color-mix(in srgb,var(--hero-accent) 2%,transparent);
-  content:"";
-  pointer-events:none;
-}
-article.lesson .lesson-reading > header.hero::after{
-  position:absolute;
-  z-index:-1;
-  right:clamp(1.35rem,5vw,5rem);
-  bottom:1.5rem;
-  left:clamp(1.35rem,5vw,5rem);
-  width:auto;
-  height:1px;
-  margin:0;
-  background:linear-gradient(90deg,var(--hero-accent),transparent 72%);
-  content:"";
-}
 .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.77rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 .9rem;}
 .block-scope .eyebrow{color:var(--block-accent,var(--accent));}
 .daymark{color:var(--brass);}
@@ -106,8 +77,8 @@ article.lesson .lesson-reading > header.hero > figure{
   width:100%;
   max-width:23rem;
   margin:1.5rem auto .5rem;
-  padding:clamp(.75rem,2vw,1.25rem);
-  border:1px solid var(--lesson-hero-figure-line);
+  padding:clamp(.65rem,1.75vw,1rem);
+  border:0;
   background:var(--lesson-hero-figure-bg);
   color:var(--ink);
 }
@@ -143,7 +114,7 @@ article.lesson .lesson-reading > header.hero > figure figcaption{
 .clockwrap,.sunwrap{position:relative;display:block;width:100%;}
 .hero-clock svg,.hero-sun svg,.hero-art svg{display:block;width:100%;height:auto;}
 .hero-art.emergence-hero{max-width:45rem;margin-top:1.7rem;margin-bottom:1.9rem;}
-.emergence-hero svg{filter:drop-shadow(0 20px 38px color-mix(in srgb,var(--ink) 10%,transparent));}
+.emergence-hero svg{filter:none;}
 .emergence-hero-bg{fill:color-mix(in srgb,var(--raised) 78%,var(--paper));stroke:var(--line-strong);stroke-width:1;}
 .emergence-label,.emergence-caption,.emergence-annotation{font-family:"IBM Plex Mono",monospace;fill:var(--ink-faint);letter-spacing:.08em;}
 .emergence-label{font-size:11px;text-transform:uppercase;}
