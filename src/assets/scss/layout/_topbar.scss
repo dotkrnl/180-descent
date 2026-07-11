@@ -44,6 +44,39 @@
   letter-spacing: .06em;
 }
 
+// Three explicit chrome zones: brand, center coordinate, actions. Equal
+// flexible side columns keep the center truly centered no matter how wide
+// the brand or actions run; the center swaps between topnav and running head.
+@media (min-width: 45rem) {
+  .atlas-shell .topbar-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .atlas-shell .course {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .atlas-shell .topnav,
+  .atlas-shell .running-head {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .atlas-shell .running-head {
+    max-width: min(46rem, 56vw);
+  }
+
+  .atlas-shell .top-actions {
+    grid-row: 1;
+    grid-column: 3;
+    justify-self: end;
+  }
+}
+
 .course {
   display: flex;
   align-items: center;
@@ -343,8 +376,16 @@
 }
 
 .atlas-shell .running-head .running-block {
-  max-width: 10rem;
+  max-width: 13rem;
   color: var(--chrome-muted);
+}
+
+// Below the full shell the block name is the least load-bearing coordinate:
+// drop it whole rather than truncating every element a little.
+@media (max-width: 74.99rem) {
+  .atlas-shell .running-head .running-block {
+    display: none;
+  }
 }
 
 .atlas-shell .running-head .running-day {
@@ -526,10 +567,10 @@
 @media (max-width: 44.99rem) {
   .atlas-shell .topbar-row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
     grid-template-areas:
-      "course actions"
-      "nav nav";
+      "course run actions"
+      "nav nav nav";
     min-height: 3.2rem;
     padding-top: .42rem;
     padding-bottom: .36rem;
@@ -541,10 +582,6 @@
     overflow: hidden;
     font-size: .92rem;
     text-overflow: ellipsis;
-  }
-
-  .atlas-shell .course-title {
-    display: none;
   }
 
   .atlas-shell .top-actions {
@@ -575,13 +612,27 @@
     left: 25%;
   }
 
-  // Keep the two-row mobile header stable while scrolling. The running-head
-  // collapse remains useful on wider screens, where it has room to breathe.
+  // Keep the two-row mobile header stable while scrolling: the nav row stays,
+  // and the reading coordinate (day + progress) takes the spare middle of the
+  // brand row instead of disappearing. The title yields to the coordinate.
   .atlas-shell .site-topbar.is-running .topnav {
     display: grid;
   }
 
+  .atlas-shell .running-head {
+    grid-area: run;
+  }
+
   .atlas-shell .site-topbar.is-running .running-head {
+    display: flex;
+    justify-content: center;
+  }
+
+  .atlas-shell .site-topbar.is-running .running-head :is(.running-block, .running-title) {
+    display: none;
+  }
+
+  .atlas-shell .site-topbar.is-running .course-title {
     display: none;
   }
 
