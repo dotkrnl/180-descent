@@ -4,7 +4,9 @@
   var root = document.documentElement;
   var themeBtn = document.getElementById("themeBtn");
   var themeFavicon = document.getElementById("themeFavicon");
-  var themeColor = document.getElementById("themeColor");
+  var colorScheme = document.getElementById("colorScheme");
+  var themeColorLight = document.getElementById("themeColorLight");
+  var themeColorDark = document.getElementById("themeColorDark");
   var colorSchemeQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
   var themeStorageKey = "180-descent-theme";
   var readingStorageKey = "180-descent-reading-progress";
@@ -64,8 +66,38 @@
   }
 
   function syncThemeColor(){
-    if(themeColor){
-      themeColor.setAttribute("content", effectiveTheme() === "dark" ? "#071820" : "#fffaf0");
+    if(!themeColorLight && !themeColorDark){
+      return;
+    }
+    var lightColor = themeColorLight && themeColorLight.getAttribute("data-theme-color");
+    var darkColor = themeColorDark && themeColorDark.getAttribute("data-theme-color");
+    if(!lightColor || !darkColor){
+      return;
+    }
+    var selectedTheme = root.getAttribute("data-theme") || "auto";
+    if(selectedTheme === "auto"){
+      if(colorScheme) colorScheme.setAttribute("content", "light dark");
+      if(themeColorLight){
+        themeColorLight.setAttribute("content", lightColor);
+        themeColorLight.setAttribute("media", "(prefers-color-scheme: light)");
+      }
+      if(themeColorDark){
+        themeColorDark.setAttribute("content", darkColor);
+        themeColorDark.setAttribute("media", "(prefers-color-scheme: dark)");
+      }
+      return;
+    }
+    var selectedMeta = selectedTheme === "dark" ? themeColorDark : themeColorLight;
+    var unselectedMeta = selectedTheme === "dark" ? themeColorLight : themeColorDark;
+    var selectedColor = selectedTheme === "dark" ? darkColor : lightColor;
+    if(colorScheme) colorScheme.setAttribute("content", selectedTheme);
+    if(selectedMeta){
+      selectedMeta.setAttribute("content", selectedColor);
+      selectedMeta.setAttribute("media", "all");
+    }
+    if(unselectedMeta){
+      unselectedMeta.setAttribute("content", selectedColor);
+      unselectedMeta.setAttribute("media", "not all");
     }
   }
 

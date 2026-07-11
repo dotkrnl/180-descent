@@ -1,5 +1,6 @@
 import icon192 from "../../assets/images/brand/icon-192.png?url";
 import icon512 from "../../assets/images/brand/icon-512.png?url";
+import { SITE_THEME_COLORS } from "@app/theme-colors";
 
 export function GET() {
   return new Response(JSON.stringify({
@@ -9,8 +10,12 @@ export function GET() {
     start_url: "/",
     scope: "/",
     display: "standalone",
-    background_color: "#f7f3ea",
-    theme_color: "#f7f3ea",
+    background_color: SITE_THEME_COLORS.light,
+    theme_color: SITE_THEME_COLORS.light,
+    color_scheme_dark: {
+      background_color: SITE_THEME_COLORS.dark,
+      theme_color: SITE_THEME_COLORS.dark
+    },
     icons: [
       {
         src: icon192,

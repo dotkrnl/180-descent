@@ -67,6 +67,7 @@ async function checkHtml(
   if (!ogDescription) errors.push(`${url}: missing og:description`);
   if (!ogImage) errors.push(`${url}: missing og:image`);
   if (!twitterCard) errors.push(`${url}: missing twitter card metadata`);
+  checkAdaptiveThemeMetadata(url, $, errors);
   checkStructuredData(url, $, errors);
   if (!favicon) errors.push(`${url}: missing favicon link`);
   if (!appleTouchIcon) errors.push(`${url}: missing apple-touch-icon link`);
@@ -99,6 +100,21 @@ async function checkHtml(
     if (enHref && enHref !== expectedEnHref) errors.push(`${url}: hreflang en should be ${expectedEnHref}, got ${enHref}`);
     if (zhHref && zhHref !== expectedZhHref) errors.push(`${url}: hreflang zh-Hans should be ${expectedZhHref}, got ${zhHref}`);
     if (defaultHref && defaultHref !== expectedEnHref) errors.push(`${url}: hreflang x-default should be ${expectedEnHref}, got ${defaultHref}`);
+  }
+}
+
+function checkAdaptiveThemeMetadata(url: string, $: ReturnType<typeof load>, errors: string[]): void {
+  const colorScheme = firstAttr($, 'meta[name="color-scheme"]', "content");
+  const lightThemeColor = firstAttr($, 'meta[name="theme-color"][media="(prefers-color-scheme: light)"]', "content");
+  const darkThemeColor = firstAttr($, 'meta[name="theme-color"][media="(prefers-color-scheme: dark)"]', "content");
+
+  if (!colorScheme.includes("light") || !colorScheme.includes("dark")) {
+    errors.push(`${url}: color-scheme metadata must support light and dark`);
+  }
+  if (!lightThemeColor) errors.push(`${url}: missing light theme-color metadata`);
+  if (!darkThemeColor) errors.push(`${url}: missing dark theme-color metadata`);
+  if (lightThemeColor && darkThemeColor && lightThemeColor === darkThemeColor) {
+    errors.push(`${url}: light and dark theme-color metadata must differ`);
   }
 }
 

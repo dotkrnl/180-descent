@@ -26,6 +26,19 @@ describe("seo check", () => {
     });
   });
 
+  it("requires adaptive light and dark browser theme colors", async () => {
+    const root = await createSiteRoot();
+    await writeFile(path.join(root, "_site/index.html"), indexHtml({ themeColors: false }));
+
+    const result = await checkSeo({ root });
+
+    expect(result.errors).toEqual([
+      "/: color-scheme metadata must support light and dark",
+      "/: missing light theme-color metadata",
+      "/: missing dark theme-color metadata"
+    ]);
+  });
+
   it("rejects whitespace-only text metadata", async () => {
     const root = await createSiteRoot();
     await writeFile(path.join(root, "_site/index.html"), indexHtml({
@@ -279,6 +292,10 @@ function indexHtml(options: {
   ogTitle?: string;
   ogDescription?: string;
   twitterCard?: string;
+  themeColors?: false | {
+    light: string;
+    dark: string;
+  };
   alternates?: {
     en: string;
     zh: string;
@@ -293,12 +310,20 @@ function indexHtml(options: {
       `<link rel="alternate" hreflang="x-default" href="${options.alternates.xDefault}">`
     ]
     : [];
+  const themeColors = options.themeColors === false
+    ? []
+    : [
+      '<meta name="color-scheme" content="light dark">',
+      `<meta name="theme-color" content="${options.themeColors?.light ?? "#f5f1e9"}" media="(prefers-color-scheme: light)">`,
+      `<meta name="theme-color" content="${options.themeColors?.dark ?? "#061519"}" media="(prefers-color-scheme: dark)">`
+    ];
   return [
     "<!doctype html>",
     "<html>",
     "<head>",
     "<title>Fixture</title>",
     `<meta name="description" content="${options.description ?? "Fixture description"}">`,
+    ...themeColors,
     `<link rel="canonical" href="https://180d.io${canonicalPath}">`,
     ...alternates,
     `<meta property="og:title" content="${options.ogTitle ?? "Fixture"}">`,

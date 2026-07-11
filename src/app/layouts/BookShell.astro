@@ -9,6 +9,7 @@ import faviconDark from "../../assets/images/brand/favicon-32-dark.png";
 import appleTouchIcon from "../../assets/images/brand/apple-touch-icon.png";
 import { bookSocialImagePath } from "@lib/assets/social-images";
 import { homeUrl, staticPageUrl } from "@lib/static-site/routes";
+import { SITE_THEME_COLORS } from "@app/theme-colors";
 
 interface Props {
   title?: string;
@@ -70,6 +71,7 @@ const pageKind = currentPath === homePath
           : currentPath.includes("/introduction")
             ? "introduction"
             : "page";
+const { light: lightThemeColor, dark: darkThemeColor } = SITE_THEME_COLORS;
 const structuredData = {
   "@context": "https://schema.org",
   "@type": title ? "WebPage" : "WebSite",
@@ -88,8 +90,35 @@ const structuredData = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
-    <meta id="themeColor" name="theme-color" content="#fffaf0" />
+    <meta id="colorScheme" name="color-scheme" content="light dark" />
+    <meta id="themeColorLight" name="theme-color" content={lightThemeColor} media="(prefers-color-scheme: light)" data-theme-color={lightThemeColor} />
+    <meta id="themeColorDark" name="theme-color" content={darkThemeColor} media="(prefers-color-scheme: dark)" data-theme-color={darkThemeColor} />
+    <script is:inline>
+      (function(){
+        try{
+          var stored = window.localStorage && window.localStorage.getItem("180-descent-theme");
+          var selection = stored === "light" || stored === "dark" ? stored : "auto";
+          document.documentElement.setAttribute("data-theme", selection);
+          if(selection !== "auto"){
+            var colorScheme = document.getElementById("colorScheme");
+            var lightMeta = document.getElementById("themeColorLight");
+            var darkMeta = document.getElementById("themeColorDark");
+            var selectedMeta = selection === "dark" ? darkMeta : lightMeta;
+            var unselectedMeta = selection === "dark" ? lightMeta : darkMeta;
+            var color = selectedMeta && selectedMeta.getAttribute("data-theme-color");
+            if(colorScheme) colorScheme.setAttribute("content", selection);
+            if(selectedMeta){
+              selectedMeta.setAttribute("content", color || "");
+              selectedMeta.setAttribute("media", "all");
+            }
+            if(unselectedMeta){
+              unselectedMeta.setAttribute("content", color || "");
+              unselectedMeta.setAttribute("media", "not all");
+            }
+          }
+        }catch{}
+      })();
+    </script>
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
     <meta name="robots" content="index, follow" />
@@ -119,16 +148,6 @@ const structuredData = {
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={socialImageUrl} />
-    <script is:inline>
-      (function(){
-        try{
-          var theme = window.localStorage && window.localStorage.getItem("180-descent-theme");
-          if(theme === "light" || theme === "dark"){
-            document.documentElement.setAttribute("data-theme", theme);
-          }
-        }catch{}
-      })();
-    </script>
     <script src={bookScriptUrl} defer></script>
     {scripts.map((script) => <script src={script} defer></script>)}
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
