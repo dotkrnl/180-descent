@@ -244,7 +244,7 @@ async function buildPdf(config: PdfEdition & { root: string }): Promise<void> {
 
 async function buildLatexDocument(config: PdfEdition & { root: string }, workDir: string): Promise<string> {
   const days = config.days ?? await loadArtifactBookDays(config.root, config.locale);
-  const blockTitles = config.singleDay ? new Map<string, string>() : await localizedBlockTitles(config.root, config.locale);
+  const blockTitles = await localizedBlockTitles(config.root, config.locale);
   const chunks: string[] = [];
 
   if (!config.singleDay) {
@@ -263,7 +263,7 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
       blockNumber++;
       chunks.push(blockDividerLatex(blockTitles.get(currentBlock) ?? currentBlock, blockNumber, config.locale));
     }
-    chunks.push(dayLatex(day, config));
+    chunks.push(dayLatex(day, blockTitles.get(day.block) ?? day.block, config));
     chunks.push(await mdxToLatex(day.bodySource, {
       root: config.root,
       locale: config.locale,
@@ -274,14 +274,9 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
     }));
 
     if (config.includeDeepDive) {
-      for (const appendix of day.appendices) {
-        const label = config.locale === "zh" ? "可选附录" : "Optional appendix";
-        const appendixTitle = `${label}: ${appendix.title}`;
-        chunks.push([
-          "\\clearpage",
-          pdfBookmarkLatex(1, appendixTitle, `appendix-${day.path}-${appendix.bodyPath}`),
-          `\\section*{${latexEscape(appendixTitle)}}`
-        ].join("\n"));
+      for (const [appendixIndex, appendix] of day.appendices.entries()) {
+        chunks.push(appendixDividerLatex(day, appendix.title, appendixIndex + 1, day.appendices.length, config));
+        chunks.push("\\begin{appendixbody}");
         chunks.push(await mdxToLatex(appendix.bodySource, {
           root: config.root,
           locale: config.locale,
@@ -290,6 +285,8 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
           workDir,
           siteUrl: config.siteUrl
         }));
+        chunks.push("\\end{appendixbody}\n\\clearpage");
+        chunks.push("\\pagecolor{descentPaper}\n\\color{descentInk}\n\\fancyhead[L]{\\ttfamily\\scriptsize\\color{descentMuted}" + latexEscape(config.title) + "}");
       }
     }
   }
@@ -324,15 +321,50 @@ async function introductionLatex(config: PdfEdition & { root: string }, workDir:
   ].join("\n\n");
 }
 
-function dayLatex(day: ArtifactBookDay, config: PdfEdition): string {
+function dayLatex(day: ArtifactBookDay, blockTitle: string, config: PdfEdition): string {
   const prefix = pdfDayLabel(day.day, config.locale);
   const title = `${prefix}: ${day.title}`;
   return [
     "\\clearpage",
-    pdfBookmarkLatex(0, title, `day-${String(day.day).padStart(3, "0")}-${config.locale}`),
+    dayDividerLatex(day, blockTitle, config),
     `\\chaptermark{${latexEscape(title)}}`,
     `\\addcontentsline{toc}{chapter}{${latexEscape(title)}}`
   ].filter(Boolean).join("\n\n");
+}
+
+function dayDividerLatex(day: ArtifactBookDay, blockTitle: string, config: PdfEdition): string {
+  const label = config.locale === "zh"
+    ? `模块 · ${blockTitle} · ${pdfDayLabel(day.day, config.locale)}`
+    : `${blockTitle} · ${pdfDayLabel(day.day, config.locale)}`;
+  const title = day.title;
+  const summary = day.summary;
+  const anchor = `day-${String(day.day).padStart(3, "0")}-${config.locale}`;
+  return String.raw`\thispagestyle{empty}
+${pdfBookmarkLatex(0, `${pdfDayLabel(day.day, config.locale)}: ${title}`, anchor)}
+\pagecolor{descentAbyss}
+\color{descentBone}
+\begingroup
+\newgeometry{margin=0in}
+\vspace*{1.15in}
+\hspace*{0.68in}
+\begin{minipage}[t][5.85in][t]{4.55in}
+{\ttfamily\fontsize{7.8}{10}\selectfont\addfontfeatures{LetterSpace=16}\color{descentAqua}\MakeUppercase{${latexEscape(label)}}\par}
+\vspace{0.22in}
+{\displayfont\fontsize{72}{72}\selectfont\color{descentAqua}${String(day.day).padStart(3, "0")}\par}
+\vspace{-0.05in}
+{\displayfont\bfseries\fontsize{28}{31}\selectfont\color{descentBone}${latexEscape(title)}\par}
+\vspace{0.24in}
+{\color{descentSignal}\rule{0.72in}{1.2pt}\par}
+\vspace{0.20in}
+{\displayfont\itshape\fontsize{12.5}{16}\selectfont\color{descentBoneMuted}${latexEscape(summary)}\par}
+\vfill
+{\ttfamily\fontsize{7.4}{9}\selectfont\addfontfeatures{LetterSpace=12}\color{descentBoneMuted}${config.locale === "zh" ? "研究路线 · 轻装版" : "RESEARCH ROUTE · READING EDITION"}\par}
+\end{minipage}
+\restoregeometry
+\endgroup
+\clearpage
+\pagecolor{descentPaper}
+\color{descentInk}`;
 }
 
 function pdfBookmarkLatex(level: number, title: string, anchor: string): string {
@@ -355,7 +387,7 @@ function blockDividerLatex(title: string, blockNumber: number, locale: Locale): 
 \addcontentsline{toc}{part}{${latexEscape(tocLabel)}}
 \thispagestyle{empty}
 \pagecolor{descentTeal}
-\color{white}
+\color{descentBone}
 \begingroup
 \newgeometry{margin=0in}
 \vspace*{3.72in}
@@ -368,8 +400,46 @@ function blockDividerLatex(title: string, blockNumber: number, locale: Locale): 
 \restoregeometry
 \endgroup
 \clearpage
-\nopagecolor
+\pagecolor{descentPaper}
 \color{descentInk}`;
+}
+
+function appendixDividerLatex(
+  day: ArtifactBookDay,
+  title: string,
+  appendixIndex: number,
+  appendixCount: number,
+  config: PdfEdition
+): string {
+  const label = config.locale === "zh" ? "可选附录" : "Optional appendix";
+  const folio = config.locale === "zh"
+    ? `${pdfDayLabel(day.day, config.locale)} · ${appendixIndex}/${appendixCount}`
+    : `${pdfDayLabel(day.day, config.locale)} · ${appendixIndex}/${appendixCount}`;
+  const appendixTitle = `${label}: ${title}`;
+  return String.raw`\clearpage
+\thispagestyle{empty}
+${pdfBookmarkLatex(1, appendixTitle, `appendix-${day.path}-${title}`)}
+\pagecolor{descentTeal}
+\color{descentBone}
+\begingroup
+\newgeometry{margin=0in}
+\vspace*{2.65in}
+\hspace*{0.68in}
+\begin{minipage}{4.55in}
+{\ttfamily\fontsize{7.8}{10}\selectfont\addfontfeatures{LetterSpace=16}\color{descentSignal}\MakeUppercase{${latexEscape(label)} · ${latexEscape(folio)}}\par}
+\vspace{0.20in}
+{\displayfont\bfseries\fontsize{27}{30}\selectfont\color{descentBone}${latexEscape(title)}\par}
+\vspace{0.22in}
+{\color{descentSignal}\rule{0.72in}{1.2pt}\par}
+\vspace{0.18in}
+{\ttfamily\fontsize{7.4}{9}\selectfont\addfontfeatures{LetterSpace=12}\color{descentBoneMuted}${config.locale === "zh" ? "正文之外 · 可选阅读" : "BEYOND THE MAIN TEXT · OPTIONAL READING"}\par}
+\end{minipage}
+\restoregeometry
+\endgroup
+\clearpage
+\pagecolor{descentCream}
+\color{descentInk}
+\fancyhead[L]{\ttfamily\scriptsize\color{descentTeal}${latexEscape(label)}}`;
 }
 
 async function localizedBlockTitles(root: string, locale: Locale): Promise<Map<string, string>> {
@@ -1575,12 +1645,18 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
   pdfsubject={${latexEscape(config.description || config.subtitle)}},
   pdfkeywords={${latexEscape(keywords)}}
 }
-\definecolor{descentTeal}{HTML}{13525A}
-\definecolor{descentInk}{HTML}{1D2424}
-\definecolor{descentMuted}{HTML}{667579}
-\definecolor{descentPaper}{HTML}{FBF8F0}
-\definecolor{descentCream}{HTML}{F7F3EA}
-\definecolor{descentLine}{HTML}{D7CCC0}
+\definecolor{descentTeal}{HTML}{2B6763}
+\definecolor{descentInk}{HTML}{10252B}
+\definecolor{descentMuted}{HTML}{58676A}
+\definecolor{descentPaper}{HTML}{F5F1E9}
+\definecolor{descentRaised}{HTML}{FCFAF5}
+\definecolor{descentCream}{HTML}{ECE8DF}
+\definecolor{descentLine}{HTML}{DDD6CA}
+\definecolor{descentAbyss}{HTML}{061519}
+\definecolor{descentBone}{HTML}{F3EAD9}
+\definecolor{descentBoneMuted}{HTML}{B7C5C1}
+\definecolor{descentAqua}{HTML}{65C9BD}
+\definecolor{descentSignal}{HTML}{F07B60}
 \definecolor{descentOk}{HTML}{2A704A}
 \definecolor{descentHint}{HTML}{845A1B}
 \definecolor{descentBad}{HTML}{A23C34}
@@ -1590,6 +1666,7 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \definecolor{descentOkLine}{HTML}{B8D0C1}
 \definecolor{descentHintLine}{HTML}{DAC3A3}
 \definecolor{descentBadLine}{HTML}{DAB3AE}
+\pagecolor{descentPaper}
 \color{descentInk}
 \raggedbottom
 \setlength{\parindent}{0pt}
@@ -1634,7 +1711,7 @@ ${config.locale === "zh" ? "" : "\\RaggedRight"}
 \newcommand{\claimtop}[2]{\Needspace{5\baselineskip}\par\smallskip{\ttfamily\small\color{descentTeal}\MakeUppercase{#1}}\if\relax\detokenize{#2}\relax\else\enspace #2\fi\par\nopagebreak\smallskip}
 \newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=3em\lettrine[lines=2,loversize=0.08,lhang=0.02,nindent=0pt,findent=0.08em]{#1}{#2}\par\endgroup\medskip}
 \newcommand{\leadparanodrop}[1]{\Needspace{6\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=3em#1\par\endgroup\medskip}
-\newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
+\newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=descentRaised,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
 \newenvironment{codebox}{\Needspace{5\baselineskip}\par\vspace{0.08in}\begin{tcolorbox}[enhanced,breakable,colback=descentCream,colframe=descentLine,boxrule=0.35pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]\ttfamily\footnotesize\color{descentInk}\RaggedRight\setlength{\parskip}{0pt}\setlength{\baselineskip}{1.22\baselineskip}}{\end{tcolorbox}\vspace{0.08in}}
 \newenvironment{comparebox}{\Needspace{12\baselineskip}\par\vspace{0.08in}\begin{tcolorbox}[enhanced,breakable,colback=descentCream,colframe=descentLine,boxrule=0.35pt,arc=1mm,left=8pt,right=8pt,top=8pt,bottom=8pt]\footnotesize\color{descentInk}\setlength{\parskip}{0pt}}{\end{tcolorbox}\vspace{0.06in}}
 \newcommand{\tablehead}[1]{{\ttfamily\fontsize{6.4}{7.4}\selectfont\color{descentMuted}\MakeUppercase{#1}}}
@@ -1642,6 +1719,14 @@ ${config.locale === "zh" ? "" : "\\RaggedRight"}
 \newenvironment{quotebox}{\Needspace{4\baselineskip}\par\vspace{0.12in}\begin{tcolorbox}[enhanced,breakable,blanker,borderline west={1.2pt}{0pt}{descentLine},left=10pt,right=0pt,top=2pt,bottom=2pt]\displayfont\itshape\large\color{descentInk}}{\end{tcolorbox}\vspace{0.08in}}
 \newenvironment{notepara}{\par\small\color{descentMuted}\RaggedRight\emergencystretch=1em}{\par}
 \newenvironment{pdfintro}{\begingroup\sloppy\emergencystretch=1.8em\exhyphenpenalty=50\relax}{\par\endgroup}
+\newenvironment{appendixbody}{%
+  \begingroup
+  \pagecolor{descentCream}%
+  \color{descentInk}%
+  \colorlet{descentPaper}{descentCream}%
+}{%
+  \endgroup
+}
 \captionsetup{font=small,labelformat=empty,textfont={color=descentMuted}}
 \XeTeXlinebreaklocale "zh"
 \XeTeXlinebreakskip = 0pt plus 1pt`;
@@ -1664,15 +1749,15 @@ function titlePageLatex(config: PdfEdition & { root: string }): string {
   const editor = isZh ? `人工编辑：${config.humanEditor.name}` : `Human editor: ${config.humanEditor.name}`;
   return String.raw`\clearpage
 \thispagestyle{empty}
-\pagecolor{descentTeal}
-\color{white}
+\pagecolor{descentAbyss}
+\color{descentBone}
 \begingroup
 \newgeometry{margin=0in}
 \vspace*{2.52in}
 \hspace*{0.68in}
 \begin{minipage}{4.55in}
 \begin{tikzpicture}
-\node[circle,fill=descentCream,inner sep=0pt,minimum size=1.18in] {\includegraphics[width=0.84in]{${logo}}};
+\node[circle,fill=descentBone,inner sep=0pt,minimum size=1.18in] {\includegraphics[width=0.84in]{${logo}}};
 \end{tikzpicture}\par
 \vspace{0.32in}
 {\ttfamily\fontsize{7.8}{10}\selectfont\addfontfeatures{LetterSpace=18}\MakeUppercase{${latexEscape(eyebrow)}}\par}
@@ -1685,7 +1770,7 @@ function titlePageLatex(config: PdfEdition & { root: string }): string {
 \restoregeometry
 \endgroup
 \clearpage
-\nopagecolor
+\pagecolor{descentPaper}
 \color{descentInk}`;
 }
 
@@ -1764,8 +1849,7 @@ function normalizePdfGlyphs(value: string): string {
     .replace(/[Σ]/g, "Sigma")
     .replace(/[ℤ]/g, "Z")
     .replace(/[□]/g, "box")
-    .replace(/[◇]/g, "diamond")
-    .replace(/[◈]/g, "diamond")
+    .replace(/[◇◈]/g, "")
     .replace(/[≈]/g, " approximately ")
     .replace(/[≅]/g, " approximately equal ")
     .replace(/[↑]/g, " up ")
