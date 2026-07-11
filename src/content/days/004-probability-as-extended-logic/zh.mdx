@@ -4,6 +4,7 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import HeroDoorsFigure from "@app/components/lesson/figures/HeroDoorsFigure.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
@@ -22,6 +23,7 @@ import BayesValue from "@app/components/lesson/BayesValue.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import DataTable from "@app/components/lesson/DataTable.astro";
 import DataTableBody from "@app/components/lesson/DataTableBody.astro";
 import DataTableCell from "@app/components/lesson/DataTableCell.astro";
@@ -79,6 +81,12 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </Hero>
 
 <Wrap>
+
+<StatusChipRow>
+<StatusChip status="ok" label="e 值数学" />
+<StatusChip status="ok" label="中途查看" />
+<StatusChip status="bad" label="取代口号" />
+</StatusChipRow>
 
 <WhereBlock>
 <Label>当前位置</Label>
@@ -389,7 +397,7 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 <ContentSection>
 <SectionEyebrow>尚未解决的问题</SectionEyebrow>
 
-## 仍待回答的问题
+## 仍无定论
 
 - <Highlight>概率到底是什么？</Highlight>是世界中的频率、心智中的置信度，还是一个公平的赔率？三个世纪过去了，诠释之争有过停火（德·菲内蒂），但从没有投降。
 - <Highlight>先验从何而来？</Highlight>是否存在一种有原则、客观的方式来设定你的「事前」信念，还是一切推理终究立足于一个数学无法替你辩护的选择？
@@ -400,7 +408,7 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 </ContentSection>
 
 <Recap>
-<BlockTitle>三句总结</BlockTitle>
+<BlockTitle>一日三句</BlockTitle>
 
 <RecapList>
 <RecapItem term="核心观点">概率把逻辑推广到不确定情形。贝叶斯定理规定，看到证据后，应提高能够预测该证据的假设的概率。</RecapItem>
@@ -410,6 +418,12 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 <Threads label="今日线索 ›">信息（主持人的揭示和 e 值都是更新信念的证据） · 计算（心智与实验室作为推理引擎） · 能量（对「贝叶斯大脑」的一次轻回调）——而校准这条暗线，从[第 1 日](/zh/days/001-what-is-knowledge/)和[第 2 日](/zh/days/002-scientific-method-and-demarcation/)一路延续至此；干预问题则通向[因果性](/zh/days/005-causation/)。</Threads>
 
 </Recap>
+
+<ContinueNote label="明日 → 第 5 日">
+### 因果性
+
+概率告诉我们信念应如何随证据变化，但规律本身并不回答「为什么」。明天讨论干预与观测的区别、因果图，以及一条相关性要经过怎样的检验，才配得上「因为」二字。
+</ContinueNote>
 
 <Sources>
 <SectionEyebrow>来源</SectionEyebrow>

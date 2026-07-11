@@ -5,6 +5,7 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
@@ -19,6 +20,7 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import DataTable from "@app/components/lesson/DataTable.astro";
 import DataTableBody from "@app/components/lesson/DataTableBody.astro";
 import DataTableCell from "@app/components/lesson/DataTableCell.astro";
@@ -26,7 +28,6 @@ import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import DefinitionBox from "@app/components/lesson/DefinitionBox.astro";
-import Divider from "@app/components/lesson/Divider.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -69,8 +70,14 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <Wrap>
 
+<StatusChipRow>
+<StatusChip status="ok" label="分析分歧" />
+<StatusChip status="hint" label="新方法" />
+<StatusChip status="bad" label="自动消除主观性" />
+</StatusChipRow>
+
 <WhereBlock>
-<Label>课程衔接</Label>
+<Label>当前位置</Label>
 
 在 [第 2 日](/zh/days/002-scientific-method-and-demarcation/)中，我们看到复现危机的数字：原始心理学研究中 97% 报告了统计显著效应，复现研究中只有 36% 得到同方向的显著结果。我们提到过<Term>p 值操纵</Term>（p-hacking）<TipNote text={String.raw`p 值操纵意味着尝试足够多的分析方式、剔除标准、结果指标或停止规则，直到随机噪声看起来具有统计显著性。`} />，今天进一步说明它如何产生。
 
@@ -326,18 +333,18 @@ p 值由效应量、噪声、样本量和模型假设共同决定。样本量足
 <ContentSection>
 <SectionEyebrow>尚未解决的问题</SectionEyebrow>
 
-## 仍待回答的问题
+## 仍无定论
 
 - 「统计显著性」是否应该彻底消失？ 改革者在规范阈值使用与彻底弃用阈值之间存在分歧。但决策总要在某个地方做出——一种药物要么获批要么不获批——主张弃用阈值者仍需说明，实际决策应如何作出。
 - 多元宇宙是否真能产生一个可信的总体结论？ 还是说，对「合理设定」的选择本身就是一种无法消除的主观行为，只是把主观选择上移了一层？PIMA 等工具是早期的尝试，目前尚无定论。
 - 分析结论的差异，是否意味着真实效应也同样不同？ 2023 年的一项细致重分析指出，在一些「同一份数据，众多分析师」研究中，引人注目的分歧其实是关于「显著性」判定的，而底层的效应量其实相当一致且微小。对结论的分歧可能会超过对数字本身的分歧。不应据此断言所有分析都不可靠。
 - 未来更可能以 p 值还是 e 值为主？ 基于投注的工具优雅地解决了「可选停止」问题，但可能需要更多数据，并引入了新的建模负担（该怎么下注？）。两者共存似乎比一方取代另一方更有可能。
-- 以及 AI 单元中等待着的问题： 当一个在数百万篇论文上训练出来的模型报告一个「稳健」的结果时，它是在根据证据进行推理，还是在模仿那些让我们陷入现状的「分岔路径」习惯？（见第 138–145 日）。
+- 还有一个留给 AI 单元的问题：当一个在数百万篇论文上训练出来的模型报告某个「稳健」的结果时，它是在依据证据推理，还是在复述那些把我们带到今天这般处境的「分岔路径」习惯？（见第 138–145 日。）
 
 </ContentSection>
 
 <Recap>
-<BlockTitle>三句总结</BlockTitle>
+<BlockTitle>一日三句</BlockTitle>
 
 <RecapList>
 <RecapItem term="核心理念">统计工具不能自动防止自欺。分析选择越灵活，越可能让随机噪声看起来像发现；更可靠的做法是预登记验证性分析，报告效应量和不确定性，并检验结论在多种合理方案下是否稳定。</RecapItem>
@@ -348,10 +355,14 @@ p 值由效应量、噪声、样本量和模型假设共同决定。样本量足
 
 </Recap>
 
-<Divider />
+<ContinueNote label="明日 → 第 7 日">
+### 信息论
+
+统计学把信号从噪声中分离出来；明天要问的是：信号本身是什么？香农的比特、作为「预期意外」的熵、信道容量、麦克斯韦妖，以及兰道尔的发现——擦除信息，是要付出物理代价的。
+</ContinueNote>
 
 <Sources>
-<SectionEyebrow>参考文献</SectionEyebrow>
+<SectionEyebrow>来源</SectionEyebrow>
 
 <SourcesTitle>来源与延伸阅读</SourcesTitle>
 

@@ -2,6 +2,7 @@ import blackSwan from "../../../assets/images/open-license/black-swan-cygnus-atr
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import StatusText from "@app/components/lesson/StatusText.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
@@ -14,6 +15,7 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import DataTable from "@app/components/lesson/DataTable.astro";
 import DataTableBody from "@app/components/lesson/DataTableBody.astro";
 import DataTableCell from "@app/components/lesson/DataTableCell.astro";
@@ -57,6 +59,12 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </Hero>
 
 <Wrap>
+
+<StatusChipRow>
+<StatusChip status="ok" label="核心数字" />
+<StatusChip status="hint" label="解读" />
+<StatusChip status="ok" label="自我修正" />
+</StatusChipRow>
 
 <WhereBlock>
 <Label>当前位置</Label>
@@ -133,7 +141,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 库恩的核心判断是：科学家在日常工作中几乎从不主动证伪宏大理论。他们从事的是<Term>常规科学</Term>，也就是在一个已被接受的框架——一个范式——内解决具体问题。化学家不会每天醒来都试图反驳元素周期表，而是用它分析反应。范式不是等待审判的理论，而是决定哪些问题有意义、怎样算作解答的框架。
 
-实验出现异常时，科学家通常也不会按照波普尔的理想立即放弃理论。他们会把异常看作<Term>反常</Term>，暂时当作有待解决的问题，或者怀疑实验和测量出了差错。一个有用且富有成果的理论，不会因为一个难以解释的数据点就被抛弃。这种做法事实上与朴素的证伪主义不同，也正是弗洛伊德主义者和马克思主义者会采取的做法。
+实验出现异常时，科学家通常也不会按照波普尔的理想立即放弃理论。他们会把异常看作<Term>反常</Term>，暂时当作有待解决的问题，或者怀疑实验和测量出了差错。一个有用且富有成果的理论，不会因为一个难以解释的数据点就被抛弃。耐人寻味的是，这种做法偏离了朴素的证伪主义，却恰恰是波普尔曾批评弗洛伊德主义者和马克思主义者的那种做法。
 
 只有当反常不断积累，变得过于多、过于核心而无法忽视，学科才会进入<Term>危机</Term>。危机的解决也不只是一次干净的反驳，而往往是向新范式的整体转变：托勒密的本轮和均轮让位于开普勒的椭圆，牛顿的绝对空间让位于爱因斯坦的时空。库恩认为，这类变化可能彻底到两个范式<Term>不可通约</Term>，即没有共同尺度：双方甚至不能完全同意关键词的含义以及哪些问题最重要。范式转变因此不仅是论证输赢，也涉及观察世界和提出问题的方式发生改变。
 
@@ -309,13 +317,13 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 ## 仍无定论
 
-两千五百年过去，「何为科学？」这一问题的审慎回答仍有几条线没有系紧：
+两千五百年过去，对「何为科学？」的审慎回答仍有几个问题悬而未决：
 
-- 是否存在任何单一的划界标准——还是劳丹赢了，留下的只有维特根斯坦式的、重叠的诸美德家族，而无总纲？
-- 杜恒–奎因问题能在多大程度上被驯服？若一次失败的检验从不在逻辑上归罪于某个假说，那么高检验功效、研究预登记的复现实验如何真正缩减腾挪空间——它们能否将之彻底关闭？
-- 那些根本无法进行实验的科学又该如何——宇宙学、进化生物学、弦理论？若一种理论在整整一代人的时间里无法作出可检验的预言（第 48 日的量子引力难题隐约浮现），它是科学、原科学，还是数学？
-- 复现的底线在哪里？社会科学中 62% 的复现率——面对复杂的人类行为，这算失败、合理水平，还是在「复现」定义本身达成一致之前无从判断？
-- 而那个将萦绕整门课程的问题：若即便经同行评议、备受赞誉的发现也被夸大了半数之多，那么你——在阅读任何一项自信的断言时，包括本页上的——该如何设定你的信念刻度？（带上刻度盘。[第 4 日](/zh/days/004-probability-as-extended-logic/)、[第 6 日](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)。）
+- 是否存在任何单一的划界标准？还是说劳丹是对的：只剩下维特根斯坦式相互重叠的特征家族，而没有统一的总纲？
+- 杜恒–奎因问题能在多大程度上被约束？如果一次失败的检验在逻辑上从不指向某个特定假说，那么预登记、高统计功效的复现实验能把辩解的余地压缩到什么程度——又能否彻底堵死？
+- 那些根本无法做实验的科学怎么办——宇宙学、进化生物学、弦理论？如果一种理论在整整一代人的时间里都无法作出可检验的预言（这正是第 48 日量子引力要面对的难题），它是科学、前科学，还是数学？
+- 复现的底线在哪里？社会科学 62% 的复现率，面对复杂的人类行为，究竟算失败、算合理水平，还是在「复现」的定义达成一致之前根本无从判断？
+- 还有一个会伴随整门课程的问题：如果连经过同行评议、备受赞誉的发现，效应量都常常缩水一半，那么面对任何言之凿凿的断言——包括本页上的——你应当把信念调到几分？（请带着第 1 日的置信度刻度盘，继续读[第 4 日](/zh/days/004-probability-as-extended-logic/)与[第 6 日](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)。）
 
 </ContentSection>
 
@@ -327,9 +335,15 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <RecapItem term="关键例子">无数只白天鹅不能证明「所有天鹅都是白的」，一只黑天鹅却足以推翻它。科学确认和科学反驳并不对称。</RecapItem>
 <RecapItem term="仍在争论">科学与伪科学之间是否存在单一界线，以及复现率究竟表示什么：科学成果的脆弱性，还是科学公开纠错能力的体现。</RecapItem>
 </RecapList>
-<Threads>今日线索 › 信息（复现实验作为检验一项主张承载真实信号抑或噪音的试金石） · 演化（在波普尔那里，知识像选择过程一样增长——经反驳而幸存的猜想，预告第 74 日） · 计算与涌现（轻触——科学作为一个分布式的、自我修正的寻错系统，能完成任何单个心智无法完成之事）。</Threads>
+<Threads label="今日线索 ›">信息（复现实验检验一项主张承载的是真实信号还是噪声） · 演化（在波普尔那里，知识像自然选择一样增长——猜想在反驳中存续；预告第 74 日） · 计算与涌现（略作提示——科学是一个分布式的自我纠错系统，能够完成任何单个心智无法完成的事）。</Threads>
 
 </Recap>
+
+<ContinueNote label="明日 → 第 3 日">
+### 逻辑与有效推理
+
+复现危机展示了推理大规模失灵的后果。明天回到推理机器本身：演绎、归纳与溯因各自提供什么保证；一个形式上完全有效的论证，又为何会因一个假前提而得出荒谬结论。
+</ContinueNote>
 
 <Sources>
 <SectionEyebrow>来源</SectionEyebrow>

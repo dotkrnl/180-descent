@@ -1,4 +1,5 @@
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import AgrippaTrilemmaMap from "@app/components/lesson/figures/AgrippaTrilemmaMap.astro";
@@ -12,7 +13,7 @@ import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
-import Divider from "@app/components/lesson/Divider.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -52,6 +53,12 @@ Your belief was **true**. It rested on a perfectly sensible **reason** — clock
 </Hero>
 
 <Wrap>
+
+<StatusChipRow>
+<StatusChip status="ok" label="Credence rules" />
+<StatusChip status="hint" label="Predictive coding" />
+<StatusChip status="bad" label="Free-energy hype" />
+</StatusChipRow>
 
 <WhereBlock>
 <Label>Where we are</Label>
@@ -270,11 +277,15 @@ Sixty years on, the answer to "what is knowledge?" includes a healthy list of th
 <RecapItem term="Best analogy">The stopped clock that's right twice a day — and the archer whose arrow is blown off target, then blown back onto the bullseye: accurate, but not *apt*.</RecapItem>
 <RecapItem term="Live controversy">Whether the fix is a fourth condition (and which), whether knowledge is unanalyzable bedrock, and whether "belief" should give way to graded, Bayesian credence — with a real scientific frontier in the claim that the brain is a prediction machine.</RecapItem>
 </RecapList>
-<Threads>**Threads today ›** information (credence &amp; the Bayesian brain) · energy (Friston's free energy) · computation (mind as inference engine) — with light first touches of emergence and evolution.</Threads>
+<Threads label="Threads today ›">information (credence &amp; the Bayesian brain) · energy (Friston's free energy) · computation (mind as inference engine) — with light first touches of emergence and evolution.</Threads>
 
 </Recap>
 
-<Divider />
+<ContinueNote label="Tomorrow → Day 2">
+### The Scientific Method &amp; Demarcation
+
+Today we asked what it takes for a single belief to count as knowledge. Tomorrow the question scales up to whole institutions: what makes a method of inquiry *scientific*? Hume's problem of induction, Popper's falsifiability, Kuhn's paradigms — and the replication crisis that turned the philosophy into breaking news.
+</ContinueNote>
 
 <Sources>
 <SectionEyebrow>Sources</SectionEyebrow>

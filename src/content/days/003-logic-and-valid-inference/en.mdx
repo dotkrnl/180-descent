@@ -6,6 +6,7 @@ import MilestoneTitle from "@app/components/lesson/MilestoneTitle.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
@@ -17,6 +18,7 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -55,6 +57,12 @@ That mislabeling is the perfect way in, because the whole of today turns on a di
 </Hero>
 
 <Wrap>
+
+<StatusChipRow>
+<StatusChip status="ok" label="Proof assistants" />
+<StatusChip status="ok" label="Medal AI" />
+<StatusChip status="bad" label="Solved math?" />
+</StatusChipRow>
 
 <WhereBlock>
 <Label>Where we are</Label>
@@ -282,9 +290,15 @@ Twenty-three centuries in, the study of valid inference still leaves real questi
 <RecapItem term="Best analogy">Sherlock Holmes's "deductions" are really abductions — the best explanation of the clues, not a guaranteed conclusion — and a valid-but-unsound argument is a beautifully built pipe carrying sewage.</RecapItem>
 <RecapItem term="Live controversy">Whether logic is discovered or invented (and whether there's one true logic or a toolkit of them), now sharpened by a real frontier where proof assistants like Lean verify cutting-edge mathematics at zero tolerance, AI has reached medal-level, and one AI-generated counterexample has become a genuine research milestone — but emphatically has *not* "solved mathematics."</RecapItem>
 </RecapList>
-<Threads>**Threads today ›** computation (Curry–Howard: proofs correspond to programs; Boolean algebra in silicon; proof assistants) · information (formalization makes a proof's content machine-checkable) · emergence (massively collaborative proof settling about 22 million implication relations) — with deduction and induction tying back to [Day 1](/days/001-what-is-knowledge/) and [Day 2](/days/002-scientific-method-and-demarcation/), then handing the next question to [Probability as Extended Logic](/days/004-probability-as-extended-logic/).</Threads>
+<Threads label="Threads today ›">computation (Curry–Howard: proofs correspond to programs; Boolean algebra in silicon; proof assistants) · information (formalization makes a proof's content machine-checkable) · emergence (massively collaborative proof settling about 22 million implication relations) — with deduction and induction tying back to [Day 1](/days/001-what-is-knowledge/) and [Day 2](/days/002-scientific-method-and-demarcation/), then handing the next question to [Probability as Extended Logic](/days/004-probability-as-extended-logic/).</Threads>
 
 </Recap>
+
+<ContinueNote label="Tomorrow → Day 4">
+### Probability as Extended Logic
+
+Deduction hands out certainty, but almost nothing in life qualifies for it. Tomorrow probability takes over as logic's extension into the uncertain: Bayes' theorem as belief revision, Monty Hall as a trap for trained intuitions, and e-values recasting statistical tests as bets.
+</ContinueNote>
 
 <Sources>
 <SectionEyebrow>Sources</SectionEyebrow>

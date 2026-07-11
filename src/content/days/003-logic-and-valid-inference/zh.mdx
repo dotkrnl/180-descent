@@ -5,6 +5,7 @@ import MilestoneList from "@app/components/lesson/MilestoneList.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
@@ -16,6 +17,7 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -53,6 +55,12 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </Hero>
 
 <Wrap>
+
+<StatusChipRow>
+<StatusChip status="ok" label="证明助手" />
+<StatusChip status="ok" label="奖牌级 AI" />
+<StatusChip status="bad" label="解决数学？" />
+</StatusChipRow>
 
 <WhereBlock>
 <Label>当前位置</Label>
@@ -200,9 +208,9 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 ### 有意修改经典规则的逻辑
 经典逻辑并不是唯一自洽的选择，而是众多逻辑体系中的一种。许多替代逻辑会限制、修改或拒绝某些经典原则。
 
-<Term>直觉主义逻辑</Term>拒绝无条件使用排中律。它由 L. E. J. 布劳威尔开创，1920–30 年代由阿伦德·海廷形式化，坚持一条陈述只有在你能构造出其证明时才算为真。它并不是说「A 或非-A」永远错误，而是要求你在适当意义上给出构造、证明或判定方法。一个例子能尖锐地说明动机：排中律会让你轻松断言，对任何计算机程序，「它停机或不停机」——然而（我们将在第 27 日看到）不存在判定停机的通用方法，因此没有构造支撑这一断言。直觉主义说：没有构造性根据，就不能这样断言。这听起来像是哲学洁癖，直到你发现经由一种美得值得专设一框的对应关系，它竟通向计算机科学的心脏。
+<Term>直觉主义逻辑</Term>拒绝无条件使用排中律。它由 L. E. J. 布劳威尔开创，1920–30 年代由阿伦德·海廷形式化，坚持一条陈述只有在你能构造出其证明时才算为真。它并不是说「A 或非-A」永远错误，而是要求你在适当意义上给出构造、证明或判定方法。一个例子能尖锐地说明动机：排中律会让你轻松断言，对任何计算机程序，「它停机或不停机」——然而（我们将在第 27 日看到）不存在判定停机的通用方法，因此没有构造支撑这一断言。直觉主义说：没有构造性根据，就不能这样断言。这听起来近乎哲学上的洁癖——但正是它，经由一条精妙的对应关系（下框将专门介绍），通向了计算机科学的核心。
 
-<Term>次协调 / 相容逻辑</Term>放弃了爆炸原则。在经典逻辑中，单个矛盾是灾难性的：从「P 且非-P」你可以推出任何东西（原则 ex contradictione quodlibet，「由矛盾可得任意结论」）——在经典逻辑中，一处矛盾就足以让系统推出任意结论。次协调逻辑拒绝这一点，让你即便某些矛盾潜入，仍能合理推理——这对大型数据库、法典，以及任何局部不一致却仍有整体价值的信息集都很有用。更强硬的哲学表亲，<Term>真矛盾论</Term>（dialetheism，也译「双真论」）——格雷厄姆·普里斯特认为有些矛盾实际为真，如说谎者语句「这句话是假的」——则争议大得多。务必区分二者：你可以采纳次协调逻辑（关于爆炸原则的技术选择）而不成为真矛盾论者（关于真实矛盾的本体论主张）。前者是工具；后者是世界观。
+<Term>次协调 / 相容逻辑</Term>放弃了爆炸原则。在经典逻辑中，单个矛盾是灾难性的：从「P 且非-P」你可以推出任何东西（原则 ex contradictione quodlibet，「由矛盾可得任意结论」）——在经典逻辑中，一处矛盾就足以让系统推出任意结论。次协调逻辑拒绝这一点：即便个别矛盾混入，推理仍可照常进行——这对大型数据库、法律条文，以及任何局部不一致却整体有用的信息集都很有价值。与它相邻但激进得多的哲学立场是<Term>真矛盾论</Term>（dialetheism，也译「双真论」）：格雷厄姆·普里斯特认为有些矛盾实际为真，例如说谎者语句「这句话是假的」。这一立场的争议要大得多。务必区分二者：你可以采纳次协调逻辑（关于爆炸原则的技术选择）而不成为真矛盾论者（关于真实矛盾的本体论主张）。前者是工具；后者是世界观。
 
 <Term>模糊逻辑</Term>完全放弃了二值限制。1965 年，洛特菲·扎德让真值在 0 到 1 的连续区间滑动，以刻画模糊性——「水是温的」为 0.7 真——建立在 1920 年代扬·卢卡谢维奇的多值逻辑之上。它运行在控制系统与家电中。而<Term>模态逻辑</Term>——关于必然与可能（□ 与 ◇）的逻辑——以及经过精心选择的时态逻辑，支撑着硬件与软件的<Term>形式验证</Term>：某些具体片段既能表达有用性质，又足够克制，可以保留<Term>模型检查</Term><TipNote text={"模型检查会自动遍历系统可能状态，验证某个形式性质是否始终成立。"} />所需的<Term>可判定性</Term><TipNote text={"可判定性指存在一个算法，总能在有限时间内判断某个陈述是否由规则推出。"} />。这些不是博物馆中的藏品，而是现代技术世界实际运转的逻辑。
 
@@ -225,7 +233,7 @@ Lean 的社区共建数学库<Term>mathlib</Term>，是世界上最大的统一�
 <MilestoneItem status="prog"><MilestoneDate>2024–2029 · 进行中</MilestoneDate>费马大定理。凯文·巴扎德由 EPSRC 资助的项目（2024 年 4 月启动，伦敦帝国理工学院）旨在形式化 FLT——并非怀尔斯的原始证明，而是一条现代路线。巴扎德「谨慎乐观」地认为自己能把它归约到 1980 年代已知的结果，但坦率承认整个项目「至少需要 5 年」。尚未完成——最准确的说法是：它仍在进行中，也是那 100 个挑战问题中尚未闭合的最后一项。</MilestoneItem>
 </MilestoneList>
 
-这种确定性已经进入安全关键型工程系统。Rocq 中被证明正确的 C <Term>编译器</Term><TipNote text={"编译器把程序员写的源代码转换成计算机可以执行的较低层机器代码。"} /> CompCert；一项著名的编译器查错研究耗费约六个 CPU 年，试图诱使它生成错误代码，却一无所获——「我们测试过的唯一一个 Csmith 无法找到错误代码的编译器」——同时在 GCC 与 LLVM 中找出了大量 bug。seL4 是第一个在 Isabelle/HOL 中拥有完整机器检查<Term>功能正确性</Term><TipNote text={"功能正确性指在给定假设下，程序实现已被证明符合其形式规格。"} />证明的操作系统<Term>微内核</Term><TipNote text={"微内核是操作系统最小的核心，只处理必要功能，把许多服务留在内核之外运行。"} />：在其明确列出的假设下，C 实现细化了形式规格，因此整类崩溃与不安全行为不是靠希望避免，而是被定理排除。这些不是普通承诺，而是带有明确前提的软件定理。这就是逻辑的程序化证明所能做的事——而且它已确立。
+这种确定性已经进入安全关键的工程系统。CompCert 是在 Rocq 中被证明正确的 C <Term>编译器</Term><TipNote text={"编译器把程序员写的源代码转换成计算机可以执行的较低层机器代码。"} />。一项著名的编译器查错研究花费约六个 CPU 年，试图诱使各家编译器生成错误代码：它在 GCC 与 LLVM 中找出了大量缺陷，而对 CompCert 的已验证部分一无所获——用作者的话说，这是「我们测试过的编译器中，唯一让 Csmith 找不出错误代码的一个」。seL4 是第一个在 Isabelle/HOL 中拥有完整机器检查<Term>功能正确性</Term><TipNote text={"功能正确性指在给定假设下，程序实现已被证明符合其形式规格。"} />证明的操作系统<Term>微内核</Term><TipNote text={"微内核是操作系统最小的核心，只处理必要功能，把许多服务留在内核之外运行。"} />：在其明确列出的假设下，C 实现细化了形式规格，因此整类崩溃与不安全行为不是靠希望避免，而是被定理排除。这些不是普通承诺，而是带有明确前提的软件定理。这就是逻辑的程序化证明所能做的事——而且它已确立。
 </Claim>
 
 <Claim>
@@ -240,9 +248,9 @@ Lean 的社区共建数学库<Term>mathlib</Term>，是世界上最大的统一�
 
 2025 年 7 月，结果变得更为惊人：DeepMind（Gemini 「Deep Think」模型）与 OpenAI 都报告了金牌分数——6 题中解出 5 题，35 分——而且引人注目的是，它们在时限内以端到端自然语言完成，而非在 Lean 内部完成。DeepMind 的结果由 IMO 官方认证；OpenAI 的结果是内部评分。确实令人印象深刻。但也正是在这里，第 1 日练出的校准直觉该派上用场：
 
-- 「金牌」是一个分数，不是加冕。这些是竞赛题——数学中狭窄、限时、已知存在简短答案的一角。它们不是未解的研究谜题，而且据官方 2025 年结果，仍有 26 名人类参赛者得分超过两个 AI 系统。
+- 所谓「金牌」只是一个分数段，说明不了更多。这些是竞赛题——数学中狭窄、限时、已知存在简短解答的一角，而不是悬而未决的研究问题；据官方 2025 年结果，仍有 26 名人类参赛者的得分超过这两个 AI 系统。
 - 离开 Lean 是一种取舍，不是无代价的升级。2024 年的银牌是形式验证的——由机器保证正确。2025 年的自然语言金牌是人工评分的，意味着我们重新依赖可能藏有细微漏洞的散文。更通用，却更不确定。别让「金牌胜过银牌」的叙事掩盖了认识论根基的转移。
-- 它昂贵且狭窄。每道困难的 2024 年题需要两到三天的计算，而且题目还需先被人工形式化为 Lean 陈述。这还称不上通用数学智能。
+- 代价高昂，适用面也窄。2024 年的每道难题都需要两到三天的计算，而且题目还须先由人工形式化为 Lean 陈述。这还称不上通用的数学智能。
 
 应当明确：AI 尚未「解决数学」，也没有使数学家变得多余。<StatusChip status={"bad"} label={"取代数学家？"} printLabel={"有争议／炒作风险"} />直到最近，AI 已能解竞赛题并辅助形式证明，却还没有独立产出被数学界接受为里程碑的结果。2026 年 5 月，OpenAI 表示其一个内部模型为埃尔多什单位距离猜想生成了反例；据 OpenAI 称，该结果已由外部数学家核查，Alon、Bloom、Gowers、Litt、Sawin、Shankar、Tsimerman、Wang 与 Matchett Wood 随后在 arXiv 发布了经人类整理和说明的版本。这是重要进展，但不等于 AI 已经「解决数学」：结果仍需要人类验证、精炼和解释，而一般性的自主数学发现能力仍不稳定。更持久的变化是，延续两千三百年的证明标准正逐渐交给能够搜索、构造和核查证明的机器。（第 138–145 日将继续讨论这一主题。）
 <Aside class="evidence-status-note">
@@ -257,29 +265,35 @@ Lean 的社区共建数学库<Term>mathlib</Term>，是世界上最大的统一�
 <ContentSection>
 <SectionEyebrow>尚未解决的问题</SectionEyebrow>
 
-## 仍待回答的问题
+## 仍无定论
 
 二十三个世纪之后，有效推理的研究依然留有真正未决的问题：
 
-- 是否只有一种真逻辑，还是有许多种？当直觉主义逻辑、次协调逻辑与模糊逻辑都能切实派上用场，「正确逻辑」便渐渐显得更像工具选择，而非宇宙事实——但多元论者与一元论者仍真正地各执一词。
-- 发现还是发明？逻辑定律是从实在中读出、嵌入任何可能心智，还是由约定采纳？经验物理学能否如普特南所想迫使我们修正？
+- 真正的逻辑只有一种，还是有许多种？当直觉主义逻辑、次协调逻辑与模糊逻辑都能切实派上用场，「哪种逻辑正确」便渐渐更像工具选择，而非宇宙事实——但多元论者与一元论者至今各执一词。
+- 发现还是发明？逻辑定律是从实在中读出、内在于任何可能的心智，还是仅仅出于约定？经验物理学能否如普特南所设想的那样，迫使我们修改逻辑本身？
 - 溯因究竟是什么？「最佳解释推理」是真正第三种模式，还是换了外衣的归纳？甚至皮尔士本人是否将其理解为最佳解释推理（而非仅仅生成假设），学者之间亦有争议。
 - 程序化证明能否改变数学本身？若一个结果为真，却只有计算机核查过证明，有没有人真正理解它？一个已验证却不透明的证明，与一个能带来洞见的人类证明，价值是否相同？
-- 以及将萦绕 AI 单元的问题：当一台机器输出一个真实且得到充分支持的定理时，它是否知道任何东西——还是它只是第 1 日那个终极盖梯尔案例的翻版——因与理解毫无关系的理由而恰巧正确？（第 138–145 日。）
+- 还有那个将贯穿 AI 单元的问题：当一台机器输出一条真实且论证充分的定理时，它算不算知道了什么？还是说，它只是第 1 日那个终极盖梯尔案例的翻版——出于与理解无关的原因而恰巧正确？（第 138–145 日。）
 
 </ContentSection>
 
 <Recap>
-<BlockTitle>三句总结</BlockTitle>
+<BlockTitle>一日三句</BlockTitle>
 
 <RecapList>
 <RecapItem term="核心观点">演绎保留真值，却不增加前提之外的信息；归纳把案例推广到未知情形，却可能被反例推翻；溯因寻找最佳解释。在演绎中，有效性是形式保证，健全性则还要求所有前提为真。</RecapItem>
 <RecapItem term="关键例子">福尔摩斯所谓的「演绎」其实是溯因：从线索寻找最佳解释，而不是从前提得到必然结论。一个有效但不健全的论证，形式正确，却不能保证结论为真。</RecapItem>
 <RecapItem term="仍在争论">逻辑是被发现还是被发明，是否存在唯一正确的逻辑；证明助手已经能够严格核查数学，AI 也达到竞赛级别，但这仍不等于 AI 已经解决数学。</RecapItem>
 </RecapList>
-<Threads>今日线索 › 计算（柯里–霍华德：证明对应程序；硅芯片中的布尔代数；证明助手） · 信息（形式化使证明内容可被机器核查） · 涌现（大规模协作证明判定约 2200 万个蕴涵关系）——也将演绎与归纳衔接到[第 1 日](/zh/days/001-what-is-knowledge/)与[第 2 日](/zh/days/002-scientific-method-and-demarcation/)，并把下一个问题交给[概率成为逻辑的扩展](/zh/days/004-probability-as-extended-logic/)。</Threads>
+<Threads label="今日线索 ›">计算（柯里–霍华德：证明对应程序；硅芯片中的布尔代数；证明助手） · 信息（形式化使证明内容可被机器核查） · 涌现（大规模协作证明判定约 2200 万个蕴涵关系）——也将演绎与归纳衔接到[第 1 日](/zh/days/001-what-is-knowledge/)与[第 2 日](/zh/days/002-scientific-method-and-demarcation/)，并把下一个问题交给[概率成为逻辑的扩展](/zh/days/004-probability-as-extended-logic/)。</Threads>
 
 </Recap>
+
+<ContinueNote label="明日 → 第 4 日">
+### 概率：逻辑的延伸
+
+演绎能给出确定性，但生活中够得上确定的事寥寥无几。明天，概率将作为逻辑在不确定世界中的延伸登场：贝叶斯定理如何更新信念，蒙提霍尔问题如何让训练有素的直觉落入陷阱，e 值又如何把统计检验表述为一场赌局。
+</ContinueNote>
 
 <Sources>
 <SectionEyebrow>来源</SectionEyebrow>

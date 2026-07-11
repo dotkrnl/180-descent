@@ -5,6 +5,7 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
@@ -19,6 +20,7 @@ import Aside from "@app/components/lesson/Aside.astro";
 import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import DataTable from "@app/components/lesson/DataTable.astro";
 import DataTableBody from "@app/components/lesson/DataTableBody.astro";
 import DataTableCell from "@app/components/lesson/DataTableCell.astro";
@@ -26,7 +28,6 @@ import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
 import DefinitionBox from "@app/components/lesson/DefinitionBox.astro";
-import Divider from "@app/components/lesson/Divider.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
@@ -68,6 +69,12 @@ This is, of course, impossible. A song cannot reach back and edit the year you w
 </Hero>
 
 <Wrap>
+
+<StatusChipRow>
+<StatusChip status="ok" label="Analyst spread" />
+<StatusChip status="hint" label="New methods" />
+<StatusChip status="bad" label="Objectivity machine" />
+</StatusChipRow>
 
 <WhereBlock>
 <Label>Where we are</Label>
@@ -336,11 +343,15 @@ The full report is the distribution across reasonable specifications; the select
 <RecapItem term="Best analogy">The False-Positive Factory: hand yourself enough innocent freedoms and a coin-flip's worth of nothing becomes a 61% chance of "success" — and the garden of forking paths, where the analyses you *would have* run in nearby worlds inflate your error even if you only ran one.</RecapItem>
 <RecapItem term="Live controversy">Whether to lower the threshold (<MathInline latex={String.raw`p < .005`} />), justify it case by case, or retire "statistical significance" altogether — with multiverse and many-analyst studies revealing how alarmingly a single dataset's verdict depends on who analyzes it.</RecapItem>
 </RecapList>
-<Threads>**Threads today ›** information (separating signal from noise; the <MathInline latex={String.raw`p`} />-value as a misread evidence measure) · computation (the lab as a fallible inference engine; the multiverse as brute enumeration) · emergence (science as an error-correcting system larger than any analyst — preregistration, many-analyst crowds, meta-analysis), leading directly into [Information Theory](/days/007-information-theory/).</Threads>
+<Threads label="Threads today ›">information (separating signal from noise; the <MathInline latex={String.raw`p`} />-value as a misread evidence measure) · computation (the lab as a fallible inference engine; the multiverse as brute enumeration) · emergence (science as an error-correcting system larger than any analyst — preregistration, many-analyst crowds, meta-analysis), leading directly into [Information Theory](/days/007-information-theory/).</Threads>
 
 </Recap>
 
-<Divider />
+<ContinueNote label="Tomorrow → Day 7">
+### Information Theory
+
+Statistics separates signal from noise. Tomorrow we ask what signal *is*: Shannon's bit, entropy as expected surprise, channel capacity, Maxwell's demon — and Landauer's discovery that forgetting has a physical price.
+</ContinueNote>
 
 <Sources>
 <SectionEyebrow>Sources</SectionEyebrow>

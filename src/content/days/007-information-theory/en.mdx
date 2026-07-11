@@ -5,6 +5,7 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
@@ -18,13 +19,13 @@ import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import DataTable from "@app/components/lesson/DataTable.astro";
 import DataTableBody from "@app/components/lesson/DataTableBody.astro";
 import DataTableCell from "@app/components/lesson/DataTableCell.astro";
 import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
-import Divider from "@app/components/lesson/Divider.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Hero from "@app/components/lesson/Hero.astro";
@@ -62,6 +63,12 @@ Shannon's 1948 synthesis built on earlier work by Nyquist and Hartley, then adde
 </Hero>
 
 <Wrap>
+
+<StatusChipRow>
+<StatusChip status="ok" label="Landauer" />
+<StatusChip status="hint" label="Landauer wall" />
+<StatusChip status="bad" label="Bit metaphysics" />
+</StatusChipRow>
 
 <WhereBlock>
 <Label>Where we are</Label>
@@ -283,14 +290,18 @@ Further out lies genuine fringe. Melvin Vopson's "mass–energy–information eq
 <RecapItem term="Best analogy">A fact's size is the number of yes/no questions it's worth; and a memory is a ball in a double well, so resetting it to a standard state — crushing two possible pasts into one present — is the act that leaks heat into the room.</RecapItem>
 <RecapItem term="Live controversy">Whether Shannon's entropy and thermodynamic entropy are one thing or two; whether the demon is truly beaten; and how far the grand claim "information is fundamental" (Wheeler's "it from bit") overreaches into hype.</RecapItem>
 </RecapList>
-<Threads>**Threads today ›** information (gets its hard unit at last — the bit, surprise, entropy) · energy (Landauer's <MathInline latex={String.raw`k_B T \ln 2`} /> ties bits to heat) · computation (the thermodynamic cost of erasing, the demon as a memory device) — with first hints of emergence (a law that holds across glass, electrons, magnets, atoms) and a setup for evolution &amp; life on Days 83–85.</Threads>
+<Threads label="Threads today ›">information (gets its hard unit at last — the bit, surprise, entropy) · energy (Landauer's <MathInline latex={String.raw`k_B T \ln 2`} /> ties bits to heat) · computation (the thermodynamic cost of erasing, the demon as a memory device) — with first hints of emergence (a law that holds across glass, electrons, magnets, atoms) and a setup for evolution &amp; life on Days 83–85.</Threads>
 
 </Recap>
 
-<Divider />
+<ContinueNote label="Tomorrow → Day 8">
+### Complexity &amp; Emergence
+
+Information theory measured order one bit at a time. Tomorrow order starts assembling itself: starling murmurations, slime molds that redraw railway maps, cellular automata — simple local rules generating global structure, and the unsettled fight over weak versus strong emergence.
+</ContinueNote>
 
 <Sources>
-<SectionEyebrow>Evidence</SectionEyebrow>
+<SectionEyebrow>Sources</SectionEyebrow>
 
 <SourcesTitle>Sources &amp; further reading</SourcesTitle>
 

@@ -3,6 +3,7 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import CausalDagExamples from "@app/components/lesson/figures/CausalDagExamples.astro";
@@ -14,6 +15,7 @@ import SimpsonReversalMachine from "@app/components/lesson/interactives/SimpsonR
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import DataTable from "@app/components/lesson/DataTable.astro";
 import DataTableBody from "@app/components/lesson/DataTableBody.astro";
 import DataTableCell from "@app/components/lesson/DataTableCell.astro";
@@ -63,6 +65,12 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </Hero>
 
 <Wrap>
+
+<StatusChipRow>
+<StatusChip status="ok" label="do-演算" />
+<StatusChip status="ok" label="RCT 基准" />
+<StatusChip status="hint" label="因果表征" />
+</StatusChipRow>
 
 <WhereBlock>
 <Label>当前位置</Label>
@@ -312,31 +320,37 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <ContentSection>
 <SectionEyebrow>尚未解决的问题</SectionEyebrow>
 
-## 仍待回答的问题
+## 仍无定论
 
 <LessonList variant="clean">
 <LessonListItem>是否存在一种「正确」的因果理论？或者反事实、概率性、INUS、机制性和干预主义解释路径各抓住了不同的侧面，且都无法完全还原为其他论述？没有任何单一理论被普遍认为能解决所有主要类型的反例，包括早期和晚期预截、过度决定、遗漏和预防。</LessonListItem>
 <LessonListItem>我们在多大程度上可以信任忠实性假设？即假设现实系统永远不会产生因果路径之间精确抵消的现象。这种假设很方便，一些推论可以对照数据检验，但忠实性无法完全从有限的观测样本中确立——反馈、调节与内稳态会让它在某些生物系统中变得可疑。</LessonListItem>
-<LessonListItem>因果变量能否从原始数据（像素、语言）中自动学习，而不是手动交由算法？这甚至是一个定义良好的问题吗？因为将世界划分为变量的「正确」方式本身可能就取决于具体视角。</LessonListItem>
+<LessonListItem>因果变量能否从原始数据（像素、语言）中自动学习，而不必由人工事先指定？这本身是不是一个定义良好的问题？毕竟，把世界划分成变量的「正确」方式，可能就取决于观察的视角。</LessonListItem>
 <LessonListItem>大型模型是否构建了内部因果世界模型，还是仅仅建立了因果言论的统计模型？这一问题的答案直接关系到第 138–145 日，以及「预测是否等同于理解」的问题。</LessonListItem>
-<LessonListItem>箭头从何而来？这里的每种方法都需要「某种」因果输入——一张因果图、一个假设或一个实验。休谟的幽灵依然在发问：这些输入究竟是从世界中读取出来的，还是我们强加给世界的？</LessonListItem>
+<LessonListItem>箭头从何而来？这里的每种方法都需要「某种」因果输入——一张因果图、一个假设或一个实验。休谟之问依然悬而未决：这些输入究竟是从世界中读出的，还是我们强加给世界的？</LessonListItem>
 </LessonList>
 </ContentSection>
 
 <Recap>
-<BlockTitle>三句总结</BlockTitle>
+<BlockTitle>一日三句</BlockTitle>
 
 <RecapList>
 <RecapItem term="核心观点">因果效应是特定干预下结果的差异。观测数量与干预数量有时相等，但不能仅凭观测数据假定二者相等；必须依赖随机分配、因果图、潜在结果模型或其他可辩护的识别设计。</RecapItem>
 <RecapItem term="关键例子">冰淇淋与溺水人数共同受夏季影响，因此相关性不等于因果性。do-算子通过直接设定处理变量，区分观察与干预。</RecapItem>
 <RecapItem term="仍在争论">仅凭观测数据能否确定因果方向；标准假设通常只能得到马尔可夫等价类，更强假设有时可以恢复方向。大模型究竟在进行通用因果推理，还是主要检索因果表述，也尚无定论。</RecapItem>
 </RecapList>
-<Threads>**今日线索 ›** 信息（因果图是数据本身所缺乏的额外信息；do-算子区分了证据与干预）· 计算（可识别性作为一个算法问题；因果发现作为一种在假设下的搜索）· 涌现（因果结构是原始相关性之上的更高层级）——并回溯至 [第 1 日](/zh/days/001-what-is-knowledge/)（凭运气正确）、[第 2 日](/zh/days/002-scientific-method-and-demarcation/)（休谟）、[第 3 日](/zh/days/003-logic-and-valid-inference/)（溯因）以及 [第 4 日](/zh/days/004-probability-as-extended-logic/)（<MathInline latex={String.raw`P(y\mid x)`} />），随后进入[统计学与避免自欺的艺术](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)。</Threads>
+<Threads label="今日线索 ›">信息（因果图是数据本身所缺乏的额外信息；do-算子区分了证据与干预）· 计算（可识别性作为一个算法问题；因果发现作为一种在假设下的搜索）· 涌现（因果结构是原始相关性之上的更高层级）——并回溯至 [第 1 日](/zh/days/001-what-is-knowledge/)（凭运气正确）、[第 2 日](/zh/days/002-scientific-method-and-demarcation/)（休谟）、[第 3 日](/zh/days/003-logic-and-valid-inference/)（溯因）以及 [第 4 日](/zh/days/004-probability-as-extended-logic/)（<MathInline latex={String.raw`P(y\mid x)`} />），随后进入[统计学与避免自欺的艺术](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)。</Threads>
 
 </Recap>
 
+<ContinueNote label="明日 → 第 6 日">
+### 统计学与避免自欺的艺术
+
+因果推断告诉我们哪些比较值得信任。明天把显微镜对准数字本身：p 值究竟说明什么、又不说明什么；置信区间与效应量如何解读；以及每一篇论文背后，都藏着怎样一个「分析的多元宇宙」。
+</ContinueNote>
+
 <Sources>
-<SectionEyebrow>证据</SectionEyebrow>
+<SectionEyebrow>来源</SectionEyebrow>
 
 <SourcesTitle>来源与延伸阅读</SourcesTitle>
 

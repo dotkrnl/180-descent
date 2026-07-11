@@ -3,6 +3,7 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import CausalDagExamples from "@app/components/lesson/figures/CausalDagExamples.astro";
@@ -14,6 +15,7 @@ import SimpsonReversalMachine from "@app/components/lesson/interactives/SimpsonR
 import Aside from "@app/components/lesson/Aside.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import DataTable from "@app/components/lesson/DataTable.astro";
 import DataTableBody from "@app/components/lesson/DataTableBody.astro";
 import DataTableCell from "@app/components/lesson/DataTableCell.astro";
@@ -63,6 +65,12 @@ What you know in your bones is one of the hardest things to write down in scienc
 </Hero>
 
 <Wrap>
+
+<StatusChipRow>
+<StatusChip status="ok" label="do-calculus" />
+<StatusChip status="ok" label="RCT benchmark" />
+<StatusChip status="hint" label="Causal reps" />
+</StatusChipRow>
 
 <WhereBlock>
 <Label>Where we are</Label>
@@ -328,9 +336,15 @@ Then the lightning rod: **can large language models reason about cause and effec
 <RecapItem term="Best analogy">Ice cream and drowning marching upward together while summer, off-stage, pulls both strings — and the do-operator as a pair of scissors that cuts the strings into a variable so you can see what it really drives.</RecapItem>
 <RecapItem term="Live controversy">Whether causal structure can be inferred from observation alone — often only up to a Markov-equivalence class under standard assumptions, partly recoverable with stronger assumptions (LiNGAM, additive noise) — and the current dispute over whether LLMs do general causal reasoning or mostly retrieve causal talk.</RecapItem>
 </RecapList>
-<Threads>**Threads today ›** information (a graph is the extra information data lacks; the do-operator distinguishes evidence from intervention) · computation (identification as an algorithmic problem; causal discovery as search under assumptions) · emergence (causal structure as a higher-level layer over raw correlation) — with callbacks to [Day 1](/days/001-what-is-knowledge/) (true-by-luck), [Day 2](/days/002-scientific-method-and-demarcation/) (Hume), [Day 3](/days/003-logic-and-valid-inference/) (abduction), and [Day 4](/days/004-probability-as-extended-logic/) (<MathInline latex={String.raw`P(y\mid x)`} />), before the statistical machinery continues in [Statistics &amp; the Art of Not Fooling Yourself](/days/006-statistics-and-the-art-of-not-fooling-yourself/).</Threads>
+<Threads label="Threads today ›">information (a graph is the extra information data lacks; the do-operator distinguishes evidence from intervention) · computation (identification as an algorithmic problem; causal discovery as search under assumptions) · emergence (causal structure as a higher-level layer over raw correlation) — with callbacks to [Day 1](/days/001-what-is-knowledge/) (true-by-luck), [Day 2](/days/002-scientific-method-and-demarcation/) (Hume), [Day 3](/days/003-logic-and-valid-inference/) (abduction), and [Day 4](/days/004-probability-as-extended-logic/) (<MathInline latex={String.raw`P(y\mid x)`} />), before the statistical machinery continues in [Statistics &amp; the Art of Not Fooling Yourself](/days/006-statistics-and-the-art-of-not-fooling-yourself/).</Threads>
 
 </Recap>
+
+<ContinueNote label="Tomorrow → Day 6">
+### Statistics &amp; the Art of Not Fooling Yourself
+
+Causal inference told us which comparisons deserve trust. Tomorrow the microscope turns on the numbers themselves: what a p-value does and does not say, confidence intervals, effect sizes, p-hacking — and the multiverse of analyses hiding behind every published result.
+</ContinueNote>
 
 <Sources>
 <SectionEyebrow>Sources</SectionEyebrow>

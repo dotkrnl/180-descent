@@ -5,6 +5,7 @@ import MathInline from "@app/components/lesson/MathInline.astro";
 import Claim from "@app/components/lesson/Claim.astro";
 import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
+import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
 import TipNote from "@app/components/lesson/TipNote.astro";
 import SimpleTable from "@app/components/lesson/SimpleTable.astro";
 import ImageFigure from "@app/components/lesson/ImageFigure.astro";
@@ -18,13 +19,13 @@ import BlockQuote from "@app/components/lesson/BlockQuote.astro";
 import BlockTitle from "@app/components/lesson/BlockTitle.astro";
 import Caption from "@app/components/lesson/Caption.astro";
 import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
 import DataTable from "@app/components/lesson/DataTable.astro";
 import DataTableBody from "@app/components/lesson/DataTableBody.astro";
 import DataTableCell from "@app/components/lesson/DataTableCell.astro";
 import DataTableHead from "@app/components/lesson/DataTableHead.astro";
 import DataTableHeader from "@app/components/lesson/DataTableHeader.astro";
 import DataTableRow from "@app/components/lesson/DataTableRow.astro";
-import Divider from "@app/components/lesson/Divider.astro";
 import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Formula from "@app/components/lesson/Formula.astro";
 import Hero from "@app/components/lesson/Hero.astro";
@@ -64,6 +65,12 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <Wrap>
 
+<StatusChipRow>
+<StatusChip status="ok" label="兰道尔" />
+<StatusChip status="hint" label="兰道尔壁垒" />
+<StatusChip status="bad" label="比特形而上学" />
+</StatusChipRow>
+
 <WhereBlock>
 <Label>当前位置</Label>
 
@@ -92,7 +99,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 ### 熵：平均惊奇度
 
-现在，让我们从单一结果放大到整个信源——一种语言、一枚骰子或一串连续不断的符号。它的「平均」惊奇度是多少？这个平均值就是信息论的核心量：<Term>香农熵</Term><TipNote text={"香农熵是信源的期望惊奇度：即每个符号的平均信息量。"} />。
+现在把视线从单一结果移向整个信源——一种语言、一枚骰子或一串连续不断的符号。它的「平均」惊奇度是多少？这个平均值就是信息论的核心量：<Term>香农熵</Term><TipNote text={"香农熵是信源的期望惊奇度：即每个符号的平均信息量。"} />。
 
 <Formula>
 <MathBlock latex={String.raw`H = -\sum_i p_i \log_2 p_i \quad \text{比特/符号}`} />
@@ -271,31 +278,35 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 <ContentSection>
 <SectionEyebrow>尚未解决的问题</SectionEyebrow>
 
-## 仍待回答的问题
+## 仍无定论
 
 - 「香农熵与热力学熵是同一个东西，还只是外表相似？」两者的公式完全相同；这究竟是一种深刻的物理同一性（如杰恩斯的最大熵学说），还是一种精妙的类比，目前仍争论不休。这个问题将在第 33 日和第 83 至 85 日重新开启，到那时它将直接关系到「生命是什么？」。
 - 「那个妖真的能被彻底驱逐吗？」少数物理学家（如 Earman 和 Norton）指出，标准的驱魔论证存在微妙的循环论证——利用第二定律推导擦除下限，再用这个下限来捍卫第二定律。2016 年一项备受争议的研究甚至声称实现了一个运行开销低于 <MathInline latex={String.raw`k_B T \ln 2`} /> 的逻辑不可逆门。在实验支持下的主流学界虽然持否定态度，但这背后的物理解释仍未完全定案。
-- 「现实中的计算究竟能降到多低？」可逆计算承诺能几乎完全避开擦除耗散。但至今还没有人建造出真正实用的可逆计算机。兰道尔下限究竟是一个可以触及的工程目标，还是永远只是一件科学珍玩？
-- 「在人工智能模块中等待我们的问题：」当一个模型「知道」某些事物时，这种知识最终是否只是为了降低损失函数而排列的比特？而这些比特背后的能耗约束，是否暗示了「思考」到底需要什么？（第 138 至 145 日。）
+- 「现实中的计算究竟能降到多低？」可逆计算承诺能几乎完全避开擦除耗散。但至今还没有人建造出真正实用的可逆计算机。兰道尔下限究竟是一个终将触及的工程目标，还是永远停留在原理演示的层面？
+- 还有一个留给 AI 单元的问题：当一个模型「知道」某些事物时，这种知识归根结底是否只是为压低损失函数而排列的比特？而这些比特背后的能耗约束，是否透露了「思考」究竟需要什么？（第 138 至 145 日。）
 
 </ContentSection>
 
 <Recap>
-<BlockTitle>三句总结</BlockTitle>
+<BlockTitle>一日三句</BlockTitle>
 
 <RecapList>
 <RecapItem term="核心观点">信息可以度量：比特是对数单位，惊奇度为 <MathInline latex={String.raw`i(x)=-\log_2 p(x)`} />，熵 <MathInline latex={String.raw`H=-\sum p\log_2 p`} /> 是平均惊奇度。当信息由物理系统表示时，重置未知且等概率的比特至少需要 <MathInline latex={String.raw`k_B T \ln 2`} /> 的功。</RecapItem>
 <RecapItem term="关键例子">麦克斯韦妖不能通过测量永久违反第二定律；完整循环必须擦除有限记忆，而擦除会把相应熵释放到环境。</RecapItem>
 <RecapItem term="仍在争论">香农熵与热力学熵是否具有更深的物理同一性，信息是否是现实的基本成分，以及可逆计算能否在工程上接近兰道尔下限。</RecapItem>
 </RecapList>
-<Threads>今日线索 › 信息（终于迎来了它坚实的单位——比特、惊奇度、熵） · 能量（兰道尔的 <MathInline latex={String.raw`k_B T \ln 2`} /> 把比特与热量焊在一起） · 计算（擦除信息的物理下限——妖不过是一只内存有限的存储装置）——以及涌现的初显（一条在玻璃、电子、磁体、原子间普适的物理规律），并为第 83 至 85 日关于进化与生命的探讨埋下伏笔。</Threads>
+<Threads label="今日线索 ›">信息（终于迎来了它坚实的单位——比特、惊奇度、熵） · 能量（兰道尔的 <MathInline latex={String.raw`k_B T \ln 2`} /> 把比特与热量焊在一起） · 计算（擦除信息的物理下限——妖不过是一只内存有限的存储装置）——以及涌现的初显（一条在玻璃、电子、磁体、原子间普适的物理规律），并为第 83 至 85 日关于进化与生命的探讨埋下伏笔。</Threads>
 
 </Recap>
 
-<Divider />
+<ContinueNote label="明日 → 第 8 日">
+### 复杂性与涌现
+
+信息论逐个比特地度量秩序；明天，秩序将开始自我组织：椋鸟群、重画铁路网的黏菌、细胞自动机——简单的局部规则如何生成整体结构，弱涌现与强涌现之争又为何至今没有定论。
+</ContinueNote>
 
 <Sources>
-<SectionEyebrow>参考文献</SectionEyebrow>
+<SectionEyebrow>来源</SectionEyebrow>
 
 <SourcesTitle>来源与延伸阅读</SourcesTitle>
 
