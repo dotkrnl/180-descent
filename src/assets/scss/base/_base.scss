@@ -17,20 +17,17 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: clamp(1.06rem, .55rem + 1.05vw, 1.2rem);
-  line-height: 1.78;
+  font-size: clamp(1.06rem, 1rem + .2vw, 1.18rem);
+  line-height: 1.66;
 }
 
 .atlas-root body.atlas-shell {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 100% 0, color-mix(in srgb, var(--accent) 5%, transparent), transparent 32rem),
-    radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--accent) 3%, transparent), transparent 40rem),
-    var(--paper);
+  background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: clamp(1.1rem, 1.02rem + .22vw, 1.24rem);
-  line-height: 1.72;
+  font-size: clamp(1.08rem, 1.02rem + .18vw, 1.18rem);
+  line-height: 1.66;
   letter-spacing: -.003em;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -38,6 +35,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
   accent-color: var(--accent);
   scrollbar-color: var(--line-strong) var(--paper);
+}
+
+// CJK body copy keeps a little more vertical air than the Latin measure.
+html[lang^="zh"] body {
+  line-height: 1.72;
+}
+
+html[lang^="zh"] body.atlas-shell {
+  letter-spacing: 0;
 }
 
 .atlas-shell > main {
@@ -147,7 +153,7 @@ a:hover {
   background: var(--chrome-fg);
   color: var(--chrome-bg);
   font-family: var(--font-mono);
-  font-size: .68rem;
+  font-size: .7rem;
   letter-spacing: .08em;
   text-transform: uppercase;
   transform: translateY(calc(-100% - 1rem));
@@ -202,35 +208,14 @@ a:hover {
   }
 }
 
-// The colophon follows the active theme: paper-like in light mode and abyssal
-// in dark mode. The signal rule keeps the route ending visually distinct.
+// The colophon follows the active theme without adding another atmospheric
+// layer beneath the editorial content.
 .atlas-shell .site-footer {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
   margin-top: clamp(5rem, 10vw, 9rem);
   padding: clamp(3rem, 6vw, 5.75rem) 0 clamp(3.5rem, 6vw, 5.5rem);
-  border-top: 2px solid var(--signal);
-  background:
-    radial-gradient(circle at 12% -30%, color-mix(in srgb, var(--teal) var(--footer-glow-share), transparent), transparent 32rem),
-    radial-gradient(circle at 88% 120%, color-mix(in srgb, var(--signal) 4%, transparent), transparent 28rem),
-    linear-gradient(155deg, var(--chrome-raised), var(--chrome-bg) 58%);
+  border-top: 1px solid var(--chrome-line);
+  background: var(--chrome-bg);
   color: var(--chrome-muted);
-}
-
-.atlas-shell .site-footer::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--atlas-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--atlas-grid) 1px, transparent 1px);
-  background-size: 4.5rem 4.5rem;
-  content: "";
-  opacity: .38;
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
-  mask-image: linear-gradient(to bottom, #000, transparent 85%);
 }
 
 .atlas-shell .site-footer .wrap {
@@ -258,7 +243,7 @@ a:hover {
   margin-bottom: 1.4rem;
   color: var(--signal);
   font-family: var(--font-mono);
-  font-size: .62rem;
+  font-size: .7rem;
   letter-spacing: .18em;
   text-transform: uppercase;
 }
@@ -277,7 +262,7 @@ a:hover {
   padding-left: 1.4rem;
   border-left: 1px solid var(--chrome-line);
   font-family: var(--font-mono);
-  font-size: .65rem;
+  font-size: .7rem;
   letter-spacing: .1em;
   line-height: 2.1;
   text-align: left;

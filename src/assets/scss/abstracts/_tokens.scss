@@ -38,9 +38,9 @@ $layout-tokens: (
   step-2: 1.5rem,
   step-3: 2rem,
   step-4: 2.5rem,
-  radius-1: .25rem,
-  radius-2: .5rem,
-  radius-3: .85rem,
+  radius-1: .2rem,
+  radius-2: .375rem,
+  radius-3: .5rem,
   duration-fast: 180ms,
   duration-base: 320ms,
   ease-atlas: 'cubic-bezier(.16,1,.3,1)',
@@ -53,7 +53,7 @@ $layout-tokens: (
   font-mono: '"IBM Plex Mono", ui-monospace, monospace',
   block-hue: 200,
   block-accent: var(--accent),
-  block-accent-soft: 'color-mix(in srgb, var(--accent) 14%, transparent)',
+  block-accent-soft: 'color-mix(in srgb, var(--accent) 10%, transparent)',
   block-signal: var(--signal)
 );
 
@@ -62,34 +62,34 @@ $layout-tokens: (
 // position. Abyssal navy is reserved for deliberate highlights in light mode.
 // Both themes expose the same semantic contract.
 $light-theme-tokens: (
-  bone: #f3ecdf,
-  bone-raised: #fffaf0,
-  "navy": #071d27,
-  navy-raised: #0c2a35,
-  "teal": #086b68,
-  teal-deep: #064f51,
-  teal-bright: #1a8982,
-  "coral": #d75b43,
-  coral-ink: #a63a2b,
+  bone: #f5f1e9,
+  bone-raised: #fcfaf5,
+  "navy": #10252b,
+  navy-raised: #183139,
+  "teal": #2b6763,
+  teal-deep: #235752,
+  teal-bright: #43827c,
+  "coral": #b65a46,
+  coral-ink: #934332,
   paper: var(--bone),
   raised: var(--bone-raised),
   ink: var(--navy),
-  ink-soft: #3e5359,
-  ink-faint: #59696d,
-  line: #d9cfbf,
-  line-strong: #b8aa96,
+  ink-soft: #465a5d,
+  ink-faint: #627073,
+  line: #ddd6ca,
+  line-strong: #bdb4a6,
   accent: var(--teal),
   accent-deep: var(--teal-deep),
   signal: var(--coral),
   signal-ink: var(--coral-ink),
   brass: var(--coral-ink),
-  ok: #216b58,
-  hint: #825716,
-  contested: #a33c48,
+  ok: #3d6d5d,
+  hint: #785a27,
+  contested: #914c54,
   heat: var(--coral-ink),
   abyss: var(--navy),
   abyss-raised: var(--navy-raised),
-  abyss-fg: #f7efdf,
+  abyss-fg: #f7f3eb,
   chrome-bg: var(--bone-raised),
   chrome-raised: var(--bone),
   chrome-fg: var(--navy),
@@ -97,11 +97,11 @@ $light-theme-tokens: (
   chrome-line: var(--line),
   atlas-grid: 'color-mix(in srgb, var(--teal) 10%, transparent)',
   atlas-grid-strong: 'color-mix(in srgb, var(--teal) 24%, transparent)',
-  focus-ring: #b84331,
-  focus-halo: 'color-mix(in srgb, #b84331 28%, transparent)',
-  selection-bg: #0b6664,
-  selection-fg: #fffaf0,
-  shadow: '0 1px 2px rgba(7,29,39,.05), 0 4px 12px -6px rgba(7,29,39,.08), 0 16px 40px -24px rgba(7,29,39,.22)',
+  focus-ring: #9d4032,
+  focus-halo: 'color-mix(in srgb, #9d4032 26%, transparent)',
+  selection-bg: #2b6763,
+  selection-fg: #fcfaf5,
+  shadow: '0 1px 2px rgba(16,37,43,.045), 0 10px 28px -24px rgba(16,37,43,.2)',
   recap-bg: var(--raised),
   recap-fg: var(--ink),
   recap-accent: var(--teal),
@@ -115,17 +115,17 @@ $light-theme-tokens: (
   tomorrow-border: var(--line-strong),
   brand-light-opacity: 1,
   brand-dark-opacity: 0,
-  lesson-hero-accent-share: 100%,
-  lesson-hero-accent-blend: transparent,
-  lesson-hero-glow-share: 8%,
-  lesson-hero-background: 'linear-gradient(150deg, color-mix(in srgb, var(--raised) 82%, var(--paper)), var(--paper) 72%)',
-  lesson-hero-fg: var(--ink),
-  lesson-hero-muted: var(--ink-soft),
-  lesson-hero-body: var(--ink),
-  lesson-hero-line: var(--line),
+  lesson-hero-accent-share: 54%,
+  lesson-hero-accent-blend: var(--abyss-fg),
+  lesson-hero-glow-share: 0%,
+  lesson-hero-background: 'linear-gradient(150deg, color-mix(in srgb, var(--abyss) 96%, var(--accent) 4%), var(--abyss))',
+  lesson-hero-fg: var(--abyss-fg),
+  lesson-hero-muted: color-mix(in srgb, var(--abyss-fg) 76%, transparent),
+  lesson-hero-body: color-mix(in srgb, var(--abyss-fg) 90%, transparent),
+  lesson-hero-line: color-mix(in srgb, var(--abyss-fg) 22%, transparent),
   lesson-hero-figure-bg: var(--raised),
   lesson-hero-figure-line: var(--line-strong),
-  footer-glow-share: 7%,
+  footer-glow-share: 0%,
   pvalue-bg: var(--raised),
   pvalue-img-bg: var(--paper),
   pvalue-shadow: var(--shadow)
@@ -171,7 +171,7 @@ $dark-theme-tokens: (
   focus-halo: 'color-mix(in srgb, #ff8b70 30%, transparent)',
   selection-bg: #77d0c5,
   selection-fg: #031117,
-  shadow: '0 1px 2px rgba(0,0,0,.4), 0 4px 14px -6px rgba(0,0,0,.5), 0 20px 48px -24px rgba(0,0,0,.75)',
+  shadow: '0 1px 2px rgba(0,0,0,.36), 0 12px 32px -26px rgba(0,0,0,.72)',
   recap-bg: var(--navy),
   recap-fg: var(--bone),
   recap-accent: #91ddd3,
@@ -195,7 +195,7 @@ $dark-theme-tokens: (
   lesson-hero-line: color-mix(in srgb, var(--abyss-fg) 22%, transparent),
   lesson-hero-figure-bg: color-mix(in srgb, var(--raised) 96%, transparent),
   lesson-hero-figure-line: color-mix(in srgb, var(--abyss-fg) 22%, transparent),
-  footer-glow-share: 24%,
+  footer-glow-share: 0%,
   pvalue-bg: color-mix(in srgb, var(--raised) 78%, var(--navy)),
   pvalue-img-bg: #0b2029,
   pvalue-shadow: '0 1px 2px rgba(0,0,0,.45), 0 4px 14px -6px rgba(0,0,0,.5), 0 16px 40px -22px rgba(0,0,0,.85)'
@@ -259,17 +259,17 @@ $dark-theme-tokens: (
 // on the element that sets the hue, not be frozen at the root value.
 @supports (color: oklch(50% 0.1 200deg)) {
   .block-scope {
-    --block-accent: oklch(44% 0.085 calc(var(--block-hue) * 1deg));
-    --block-accent-soft: oklch(44% 0.085 calc(var(--block-hue) * 1deg) / .13);
+    --block-accent: oklch(44% 0.065 calc(var(--block-hue) * 1deg));
+    --block-accent-soft: oklch(44% 0.065 calc(var(--block-hue) * 1deg) / .1);
   }
   :root[data-theme="dark"] .block-scope {
-    --block-accent: oklch(76% 0.09 calc(var(--block-hue) * 1deg));
-    --block-accent-soft: oklch(76% 0.09 calc(var(--block-hue) * 1deg) / .16);
+    --block-accent: oklch(76% 0.075 calc(var(--block-hue) * 1deg));
+    --block-accent-soft: oklch(76% 0.075 calc(var(--block-hue) * 1deg) / .13);
   }
   @media (prefers-color-scheme: dark) {
     :root[data-theme="auto"] .block-scope {
-      --block-accent: oklch(76% 0.09 calc(var(--block-hue) * 1deg));
-      --block-accent-soft: oklch(76% 0.09 calc(var(--block-hue) * 1deg) / .16);
+      --block-accent: oklch(76% 0.075 calc(var(--block-hue) * 1deg));
+      --block-accent-soft: oklch(76% 0.075 calc(var(--block-hue) * 1deg) / .13);
     }
   }
 }
