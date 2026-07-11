@@ -641,7 +641,6 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   display:flex;
   flex-direction:column;
   min-height:27rem;
-  padding-inline:1.05rem;
 }
 .atlas-home .cover-chart .stratum{
   position:relative;
@@ -651,7 +650,7 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   gap:.65rem;
   align-items:center;
   min-height:1.55rem;
-  padding:0 .1rem;
+  padding:0 1.05rem;
   overflow:hidden;
   border-top:1px solid color-mix(in srgb,var(--abyss-fg) 13%,transparent);
   background:transparent;
@@ -718,6 +717,57 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
 }
 .atlas-home .cover-chart-caption span:last-child{
   color:var(--recap-gold);
+}
+
+// ---- Light theme: bright descent chart --------------------------------
+@mixin chart-light-theme {
+  --abyss:var(--raised);
+  --abyss-fg:var(--ink);
+  --abyss-raised:var(--paper);
+  border-color:var(--line);
+  box-shadow:var(--shadow);
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+:root[data-theme="light"] .atlas-home .cover-chart{
+  @include chart-light-theme;
+}
+:root[data-theme="light"] .atlas-home .cover-chart:hover,
+:root[data-theme="light"] .atlas-home .cover-chart:focus-visible{
+  border-color:color-mix(in srgb,var(--recap-accent) 60%,var(--line-strong));
+  box-shadow:var(--shadow);
+}
+:root[data-theme="light"] .atlas-home .cover-chart .stratum-fill{
+  background:linear-gradient(90deg,
+    color-mix(in srgb,var(--block-accent,var(--recap-accent)) 55%,transparent),
+    color-mix(in srgb,var(--block-accent,var(--recap-accent)) 16%,transparent));
+}
+:root[data-theme="light"] .atlas-home .cover-chart:hover .stratum-fill,
+:root[data-theme="light"] .atlas-home .cover-chart:focus-visible .stratum-fill{
+  background:linear-gradient(90deg,
+    color-mix(in srgb,var(--block-accent,var(--recap-accent)) 68%,transparent),
+    color-mix(in srgb,var(--block-accent,var(--recap-accent)) 22%,transparent));
+}
+@media (prefers-color-scheme:light){
+  :root[data-theme="auto"] .atlas-home .cover-chart{
+    @include chart-light-theme;
+  }
+  :root[data-theme="auto"] .atlas-home .cover-chart:hover,
+  :root[data-theme="auto"] .atlas-home .cover-chart:focus-visible{
+    border-color:color-mix(in srgb,var(--recap-accent) 60%,var(--line-strong));
+    box-shadow:var(--shadow);
+  }
+  :root[data-theme="auto"] .atlas-home .cover-chart .stratum-fill{
+    background:linear-gradient(90deg,
+      color-mix(in srgb,var(--block-accent,var(--recap-accent)) 55%,transparent),
+      color-mix(in srgb,var(--block-accent,var(--recap-accent)) 16%,transparent));
+  }
+  :root[data-theme="auto"] .atlas-home .cover-chart:hover .stratum-fill,
+  :root[data-theme="auto"] .atlas-home .cover-chart:focus-visible .stratum-fill{
+    background:linear-gradient(90deg,
+      color-mix(in srgb,var(--block-accent,var(--recap-accent)) 68%,transparent),
+      color-mix(in srgb,var(--block-accent,var(--recap-accent)) 22%,transparent));
+  }
 }
 .atlas-home .home-project-strip{
   display:grid;
@@ -1628,12 +1678,12 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   }
   .atlas-home .atlas-map-body{
     min-height:24rem;
-    padding-inline:.85rem;
   }
   .atlas-home .cover-chart .stratum{
     grid-template-columns:1.8rem minmax(0,1fr) auto;
     gap:.4rem;
     min-height:1.45rem;
+    padding-inline:.85rem;
   }
   .atlas-home .cover-chart .stratum-title{
     font-size:.72rem;
