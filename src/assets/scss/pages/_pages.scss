@@ -446,6 +446,7 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   max-width:9ch;
   margin:0;
   color:var(--ink);
+  font-weight:500;
   font-size:clamp(4.1rem,2.6rem + 4.25vw,6.4rem);
   line-height:.9;
   letter-spacing:-.035em;
@@ -519,13 +520,13 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   padding:.7rem 1rem;
   border:1px solid var(--accent);
   border-radius:var(--radius-1);
-  background:var(--accent);
-  color:var(--paper);
+  background:transparent;
+  color:var(--accent-deep);
   font-family:var(--font-mono);
   font-size:.78rem;
   font-weight:600;
   letter-spacing:.06em;
-  transition:background var(--duration-fast) var(--ease-out-atlas),border-color var(--duration-fast) var(--ease-out-atlas);
+  transition:background var(--duration-fast) var(--ease-out-atlas),border-color var(--duration-fast) var(--ease-out-atlas),color var(--duration-fast) var(--ease-out-atlas);
 }
 .atlas-home .cover-cta::after{
   margin-left:.9rem;
@@ -534,8 +535,8 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
 .atlas-home .cover-cta:hover,
 .atlas-home .cover-cta:focus-visible{
   border-color:var(--accent-deep);
-  background:var(--accent-deep);
-  color:var(--paper);
+  background:color-mix(in srgb,var(--accent) 9%,transparent);
+  color:var(--accent-deep);
 }
 .atlas-home .cover-map-link{
   color:var(--accent-deep);
@@ -558,9 +559,10 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   min-height:28.5rem;
   overflow:hidden;
   border:1px solid color-mix(in srgb,var(--abyss-fg) 24%,transparent);
+  border-inline-color:transparent;
   border-top-color:var(--recap-accent);
-  border-radius:2px;
-  background:var(--abyss);
+  border-radius:0;
+  background:color-mix(in srgb,var(--abyss) 86%,var(--paper));
   box-shadow:none;
   color:var(--abyss-fg);
   transition:border-color var(--duration-fast) var(--ease-out-atlas);
@@ -571,6 +573,7 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
 .atlas-home .cover-chart:hover,
 .atlas-home .cover-chart:focus-visible{
   border-color:color-mix(in srgb,var(--recap-accent) 62%,var(--abyss-fg));
+  border-inline-color:transparent;
   box-shadow:none;
   color:var(--abyss-fg);
   transform:none;
@@ -693,10 +696,12 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   --abyss:var(--raised);
   --abyss-fg:var(--ink);
   --abyss-raised:var(--paper);
-  border-color:var(--line);
+  border-block-color:var(--line-strong);
+  border-inline-color:transparent;
   box-shadow:none;
   backdrop-filter:none;
   -webkit-backdrop-filter:none;
+  background:color-mix(in srgb,var(--raised) 70%,var(--paper));
 }
 :root[data-theme="light"] .atlas-home .cover-chart{
   @include chart-light-theme;
@@ -704,6 +709,7 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
 :root[data-theme="light"] .atlas-home .cover-chart:hover,
 :root[data-theme="light"] .atlas-home .cover-chart:focus-visible{
   border-color:color-mix(in srgb,var(--recap-accent) 60%,var(--line-strong));
+  border-inline-color:transparent;
   box-shadow:none;
 }
 :root[data-theme="light"] .atlas-home .cover-chart .stratum-fill{
@@ -718,6 +724,7 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   :root[data-theme="auto"] .atlas-home .cover-chart:hover,
   :root[data-theme="auto"] .atlas-home .cover-chart:focus-visible{
     border-color:color-mix(in srgb,var(--recap-accent) 60%,var(--line-strong));
+    border-inline-color:transparent;
     box-shadow:none;
   }
   :root[data-theme="auto"] .atlas-home .cover-chart .stratum-fill{
@@ -820,6 +827,24 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   border-bottom:1px solid var(--line-strong);
   background:transparent;
   border-radius:0;
+}
+.atlas-home .home-featured-day::after{
+  position:absolute;
+  right:.1rem;
+  bottom:.3rem;
+  color:color-mix(in srgb,var(--accent) 10%,transparent);
+  content:attr(data-folio);
+  font-family:var(--font-display);
+  font-size:clamp(5.5rem,10vw,8.5rem);
+  font-weight:500;
+  letter-spacing:-.08em;
+  line-height:.72;
+  pointer-events:none;
+  user-select:none;
+}
+.atlas-home .home-featured-day>*{
+  position:relative;
+  z-index:1;
 }
 .atlas-home .featured-signal{
   display:flex;
@@ -1673,6 +1698,9 @@ input[type=range].stakes-range{background:linear-gradient(to right,var(--ok),var
   }
   .atlas-home .home-featured-day{
     padding:1rem 0 1.25rem;
+  }
+  .atlas-home .home-featured-day::after{
+    display:none;
   }
   .atlas-home .recent-descent-stream .day-card{
     display:block;

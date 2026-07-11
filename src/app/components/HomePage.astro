@@ -136,7 +136,7 @@ const publishedPercent = Math.round((publishedDays.length / book.totalDays) * 10
       </header>
       <div class="home-latest-grid">
         {featuredDay && (
-          <div class="home-featured-day">
+          <div class="home-featured-day" data-folio={padDay(featuredDay.day)}>
             <p class="featured-signal"><span aria-hidden="true"></span>{isZh ? "当前前沿" : "Current frontier"}</p>
             <DayCard day={featuredDay} locale={locale} totalDays={book.totalDays} headingLevel="h3" />
           </div>
