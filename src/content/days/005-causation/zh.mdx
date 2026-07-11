@@ -127,7 +127,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 在 Charig 等人 1986 年的肾结石数据中，开放手术 A 与经皮肾镜取石术（PCNL）B 的比较是历史性的、非随机的。接受 B 的病例中，小结石患者占比高得多，因此 B 的总体成功率更高；但在小结石和大结石两个分层中，A 的观测成功率都更高。这些数据显示了病例构成和比例反转，却不能单独证明开放手术对同一批患者的因果效果更好。
 
-下方的交互图会把这一过程可视化。每个方块代表一名患者，位置保持不变；颜色表示治疗，行表示结石大小，填充表示治疗是否成功。汇总视图比较两种治疗的总体结果，分层视图则先在每个结石大小组内比较。在这个例子中，结石大小是合理的基线严重程度变量，分层比较因此有参考价值；在其他因果结构中，相同的分层操作可能回答不同问题，甚至造成偏差。
+下方表格把这一反转具体化：汇总数据偏向疗法 B，但在每个结石大小分层内都偏向疗法 A。在这个例子中，结石大小是合理的基线严重程度变量，因此分层比较有参考价值；在其他因果结构中，相同的调整可能回答不同问题，甚至造成偏差。
 
 </ContentSection>
 
@@ -192,7 +192,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 或者你可以进行干预——在珀尔的记号中写为 <MathInline latex={String.raw`P(Y \mid \operatorname{do}(X = x))`} />。这意味着：考虑一种在目标人群中把 X 设为 x 的制度，将 X 与其通常的原因切断，然后观察 Y。这就是「干预」（Doing）。在理想随机试验中，随机化处理分配被设计用来近似这种切断操作。
 
-二者在数值上可能重合，但相等需要特定的实验设计或因果假设；仅凭数据上的接近不能推出二者等价。<MathInline latex={String.raw`P(Y \mid X=x)`} /> 描述的是在观测到 X 等于 x 的情况下结果 Y 的分布；<MathInline latex={String.raw`P(Y \mid \operatorname{do}(X=x))`} /> 则描述了一个假想制度下将 X 设为 x 时 Y 的分布。下方的交互机器通过一个显式的结构模型来计算这两个量，使它们的区别清晰可见。
+二者在数值上可能重合，但相等需要特定的实验设计或因果假设；仅凭数据上的接近不能推出二者等价。<MathInline latex={String.raw`P(Y \mid X=x)`} /> 描述的是在观测到 X 等于 x 的情况下结果 Y 的分布；<MathInline latex={String.raw`P(Y \mid \operatorname{do}(X=x))`} /> 则描述了一个假想制度下将 X 设为 x 时 Y 的分布。下方案例通过一个显式的结构模型计算这两个量，使它们的区别清晰可见。
 
 </ContentSection>
 
@@ -351,7 +351,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 1. Simpson, E. H. (1951). "The Interpretation of Interaction in Contingency Tables." *JRSS B* 13: 238–241. <Meta>doi:10.1111/j.2517-6161.1951.tb00088.x.</Meta> [doi.org/10.1111/j.2517-6161.1951.tb00088.x](https://doi.org/10.1111/j.2517-6161.1951.tb00088.x) Blyth, C. R. (1972), *JASA* 67: 364–366, <Meta>doi:10.1080/01621459.1972.10482387</Meta>（提出 "Simpson's paradox" 一词）。[doi.org/10.1080/01621459.1972.10482387](https://doi.org/10.1080/01621459.1972.10482387) Yule, G. U. (1903) 关于虚假相关，<Meta>doi:10.1093/biomet/2.2.121.</Meta> [doi.org/10.1093/biomet/2.2.121](https://doi.org/10.1093/biomet/2.2.121)
 1. Pearl, J. (2009). *Causality: Models, Reasoning, and Inference*, 2nd ed. Cambridge University Press. <Meta>doi:10.1017/CBO9780511803161.</Meta> [doi.org/10.1017/CBO9780511803161](https://doi.org/10.1017/CBO9780511803161) 以及 Pearl, J. &amp; Mackenzie, D. (2018). *The Book of Why.* Basic Books. <Meta>— 因果之梯；do-演算；后门/前门。</Meta>
 1. Holland, P. W. (1986). "Statistics and Causal Inference." *JASA* 81(396): 945–960. <Meta>doi:10.1080/01621459.1986.10478354; 潜在结果与因果推断的基本问题。</Meta> [doi.org/10.1080/01621459.1986.10478354](https://doi.org/10.1080/01621459.1986.10478354) Rubin, D. B. (1974). "Estimating causal effects of treatments in randomized and nonrandomized studies." *Journal of Educational Psychology* 66(5): 688–701. <Meta>doi:10.1037/h0037350.</Meta> [doi.org/10.1037/h0037350](https://doi.org/10.1037/h0037350)
-1. Imbens, G. W. &amp; Rubin, D. B. (2015). *Causal Inference for Statistics, Social, and Biomedical Sciences.* Cambridge University Press. <Meta>doi:10.1017/CBO9781139025751.</Meta> [doi.org/10.1017/CBO9781139025751](https://doi.org/10.1017/CBO9781139025751) Hernán, M. A. &amp; Robins, J. M. (2020). *Causal Inference: What If.* Chapman &amp; Hall/CRC. [书籍网站](https://miguelhernan.org/whatifbook) <Meta>— 在线版持续更新，2026 年 6 月查阅；估计目标、一致性、可交换性、正值性、干扰、前门/后门。</Meta>
+1. Imbens, G. W. &amp; Rubin, D. B. (2015). *Causal Inference for Statistics, Social, and Biomedical Sciences.* Cambridge University Press. <Meta>doi:10.1017/CBO9781139025751.</Meta> [doi.org/10.1017/CBO9781139025751](https://doi.org/10.1017/CBO9781139025751) Hernán, M. A. &amp; Robins, J. M. (2020). *Causal Inference: What If.* Chapman &amp; Hall/CRC. [维护版](https://miguelhernan.org/whatifbook) <Meta>— 维护版于 2026 年 6 月查阅；估计目标、一致性、可交换性、正值性、干扰、前门/后门。</Meta>
 1. Shpitser, I. &amp; Pearl, J. (2006). "Identification of Joint Interventional Distributions in Recursive Semi-Markovian Causal Models." *AAAI.* [AAAI PDF](https://cdn.aaai.org/AAAI/2006/AAAI06-191.pdf) &amp; Huang, Y. &amp; Valtorta, M. (2006). "Pearl's Calculus of Intervention Is Complete." *UAI.* [arXiv](https://arxiv.org/abs/1206.6831) <Meta>— 在所陈述的识别问题内 do-演算的完备性。</Meta>
 1. ACM (2012). 2011 A.M. Turing Award — Judea Pearl. [amturing.acm.org/award_winners/pearl](https://amturing.acm.org/award_winners/pearl_2658896.cfm)
 1. Spirtes, P., Glymour, C. &amp; Scheines, R. (2000). *Causation, Prediction, and Search*, 2nd ed. MIT Press. <Meta>doi:10.7551/mitpress/1754.001.0001.</Meta> [doi.org/10.7551/mitpress/1754.001.0001](https://doi.org/10.7551/mitpress/1754.001.0001) <Meta>— PC 与 FCI 算法；马尔可夫等价。</Meta>

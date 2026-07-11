@@ -75,6 +75,7 @@ interface RenderContext {
   tableCell?: boolean;
   listItem?: boolean;
   heading?: boolean;
+  sources?: boolean;
 }
 
 type MdxNode = {
@@ -492,7 +493,7 @@ function renderNode(node: MdxNode, state: MdxRenderState, context: RenderContext
     case "blockquote":
       return `\\begin{quotebox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{quotebox}`;
     case "list":
-      return renderList(node, state);
+      return renderList(node, state, context);
     case "listItem":
       return renderChildren(node.children ?? [], state, { block: true, listItem: true }).trim();
     case "thematicBreak":
@@ -545,10 +546,13 @@ function renderHeading(node: MdxNode, state: MdxRenderState): string {
   return `${prefix}\\blockheading{${text}}`;
 }
 
-function renderList(node: MdxNode, state: MdxRenderState): string {
+function renderList(node: MdxNode, state: MdxRenderState, context: RenderContext = {}): string {
   const env = node.ordered ? "enumerate" : "itemize";
   const items = (node.children ?? [])
-    .map((child) => `\\item ${renderNode(child, state, { block: true, listItem: true }).trim()}`)
+    .map((child) => {
+      const item = `\\item ${renderNode(child, state, { block: true, listItem: true }).trim()}`;
+      return context.sources ? `\\Needspace{5\\baselineskip}\n${item}` : item;
+    })
     .join("\n");
   return `\\begin{${env}}\n${items}\n\\end{${env}}`;
 }
@@ -624,6 +628,9 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
 
   if (!shouldRenderElement(name, attrs, state)) return "";
   if (name === "FormatOnly" && isPdfPageBreak(attrs)) return "\\clearpage";
+  if (name === "FormatOnly" && attrs.get("variant") === "alternate" && nodeContainsLargeBlock(node)) {
+    return `\\Needspace{0.44\\textheight}\n${renderChildren(node.children ?? [], state, { block: true })}`;
+  }
 
   if (name === "MathInline") return inlineMath(resolveExpression(attrs.get("latex"), state));
   if (name === "MathBlock") return blockMath(resolveExpression(attrs.get("latex"), state));
@@ -866,7 +873,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
     return `\\begin{lessonbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{lessonbox}`;
   }
   if (name === "Sources") {
-    return `\\begin{sourcesbox}\n${renderChildren(node.children ?? [], state, { block: true })}\n\\end{sourcesbox}`;
+    return `\\begin{sourcesbox}\n${renderChildren(node.children ?? [], state, { block: true, sources: true })}\n\\end{sourcesbox}`;
   }
   if (name === "SourcesTitle") {
     const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }));

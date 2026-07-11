@@ -34,7 +34,7 @@ import Term from "@app/components/lesson/Term.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/ComputationalCapacityLadderFigure.astro";
 
-<Lead drop="W">e left the main page having done two remarkable things: we weighed a fact in bits, and we paid — in heat, in zeptojoules — to forget one. That is the spine of the subject. But a spine is not a body. Between Shannon's definition of the bit and Landauer's price for erasing it lies a century of ideas we sprinted past: a second quantity, just as fundamental as entropy, that measures how much one thing tells you about another; the deep reason your phone can shrink a photo by 95% and stream it through static without a flaw; a maze-solving mechanical mouse; and a chain of physical limits that ends, quite literally, at the computational capacity of the universe. This appendix is the unhurried tour.</Lead>
+<Lead drop="W">e left the main lesson having done two remarkable things: we weighed a fact in bits, and we paid — in heat, in zeptojoules — to forget one. That is the spine of the subject. But a spine is not a body. Between Shannon's definition of the bit and Landauer's price for erasing it lies a century of ideas we sprinted past: a second quantity, just as fundamental as entropy, that measures how much one thing tells you about another; the deep reason your phone can shrink a photo by 95% and stream it through static without a flaw; a maze-solving mechanical mouse; and a chain of physical limits that ends, quite literally, at the computational capacity of the universe. This appendix is the unhurried tour.</Lead>
 
 <ContentSection>
 <SectionEyebrow number="01"> · the missing quantity</SectionEyebrow>
@@ -126,7 +126,7 @@ And here the subject grows a sharp, beautiful tooth. Kolmogorov complexity is **
 
 ## How information survives a hostile world
 
-The main page promised that, below a specified channel's capacity, vanishing error is asymptotically possible *if you can find sufficiently long codes*. That treasure hunt deserves its own telling, and it starts with a frustrated man at Bell Labs on a Friday night.
+The main lesson promised that, below a specified channel's capacity, vanishing error is asymptotically possible *if you can find sufficiently long codes*. That treasure hunt deserves its own telling, and it starts with a frustrated man at Bell Labs on a Friday night.
 
 In 1947, **Richard Hamming** had weekend access to a relay computer, and it kept letting him down: whenever it detected an error in his input, it simply halted and waited for a human who wouldn't arrive until Monday. "If the machine can *detect* an error," Hamming fumed, "why can't it *locate* and *correct* it?" Out of that irritation came the **Hamming code** (published 1950), the first true error-*correcting* code, and with it a geometric way of seeing the whole field.
 
@@ -190,7 +190,7 @@ Two more jewels, both forward-pointers. The **no-cloning theorem** (Wootters &am
 
 ## Beating Landauer with reversible computing
 
-The main page delivered Landauer's standard verdict: resetting an initially unknown fair bit in an isothermal cycle costs at least <MathInline latex={String.raw`k_B T \ln 2`} /> because the operation crushes two possible pasts into one. But read the fine print and a loophole gleams. The fundamental cost is charged on *logically irreversible* steps — the ones you can't run backward. What if you simply *never erased anything?*
+The main lesson delivered Landauer's standard verdict: resetting an initially unknown fair bit in an isothermal cycle costs at least <MathInline latex={String.raw`k_B T \ln 2`} /> because the operation crushes two possible pasts into one. But read the fine print and a loophole gleams. The fundamental cost is charged on *logically irreversible* steps — the ones you can't run backward. What if you simply *never erased anything?*
 
 This is <Term as="em">reversible computing</Term>, and it is theoretically sound <StatusChip status={"ok"} label={"established in principle"} printLabel={"established"} />. Charles Bennett showed in 1973 that any computation can be rebuilt as a sequence of reversible steps that never destroy information — instead of overwriting intermediate results, you keep them, run your computation, copy out the answer, then run the whole thing *backwards* to cleanly "uncompute" the garbage, returning every bit to its start with no net erasure. Special reversible logic gates make this concrete: the **Toffoli gate** (a controlled-controlled-NOT) and the **Fredkin gate** (a controlled swap) are universal — you can build any circuit from them — yet each is perfectly invertible, with the same number of outputs as inputs and nothing thrown away.
 
@@ -214,7 +214,7 @@ The deepest hint that information is woven into physics at the ground floor come
 
 </Aside>
 
-Push the same accounting to the largest scale and you can ask: how much has the *entire universe* computed since the Big Bang? Lloyd's 2002 estimate is about **<MathInline latex={String.raw`10^{120}`} /> elementary operations on <MathInline latex={String.raw`10^{90}`} /> ordinary-matter bits**, with a much larger information budget if gravitational degrees of freedom are included. Enormous, yes. But finite. There is a hard, countable ceiling on how much computation reality itself has performed. Whether that means the universe quite literally *is* a computer is a live and contested interpretation <StatusChip status={"bad"} label={"contested — interpretation, not result"} printLabel={"contested"} />, a close relative of the "it from bit" overreach the main page flagged. The numerical bounds are physics; the metaphysics is optional.
+Push the same accounting to the largest scale and you can ask: how much has the *entire universe* computed since the Big Bang? Lloyd's 2002 estimate is about **<MathInline latex={String.raw`10^{120}`} /> elementary operations on <MathInline latex={String.raw`10^{90}`} /> ordinary-matter bits**, with a much larger information budget if gravitational degrees of freedom are included. Enormous, yes. But finite. There is a hard, countable ceiling on how much computation reality itself has performed. Whether that means the universe quite literally *is* a computer is a live and contested interpretation <StatusChip status={"bad"} label={"contested — interpretation, not result"} printLabel={"contested"} />, a close relative of the "it from bit" overreach the main lesson flagged. The numerical bounds are physics; the metaphysics is optional.
 
 </ContentSection>
 
@@ -239,7 +239,7 @@ The quiet power of Shannon's idea is that the moment information became a number
 - **In ecology**, the <Term as="em">Shannon diversity index</Term> — the very same H = −Σ p log p — measures biodiversity: a rainforest has high entropy (many species, evenly spread), a monoculture field has almost none. Surprise, applied to "which species is this?"
 - **In machine learning**, autoregressive language-model pretraining commonly minimizes empirical token-level cross-entropy. <Term as="em">Perplexity</Term> is the exponential of that average loss and measures predictive fit on a specified dataset, but it is not a complete measure of model quality. Instruction tuning, preference optimization, reinforcement learning, distillation, and multimodal training can use other objectives.
 - **In biology**, DNA is a four-letter code carrying ~2 bits per base — heredity as literal digital information storage, a framing that runs straight into the central dogma on **Day 77** and the origin of life on **Days 87–90**.
-- **In physics**, the entropy we defined today and the thermodynamic entropy of heat engines turn out to be — perhaps — the same thing, the question the main page flagged and that **Day 33** will reopen as the *arrow of time*.
+- **In physics**, the entropy we defined today and the thermodynamic entropy of heat engines turn out to be — perhaps — the same thing, the questiin the main lesson flagged and that **Day 33** will reopen as the *arrow of time*.
 - **In life itself**, Schrödinger's idea that organisms survive by feeding on "negative entropy" (Brillouin later called it *negentropy*) is information thermodynamics in embryo — the puzzle that **Days 83–85** are built around, where today's <MathInline latex={String.raw`k_B T \ln 2`} /> returns to govern the living cell.
 
 That is the real reason this day sits where it does in the course, only seventh of a hundred and eighty. Information is one of the five threads — alongside energy, evolution, emergence, and computation — precisely because, once weighed, it refuses to stay in its lane. It is the connective tissue of the whole map.
