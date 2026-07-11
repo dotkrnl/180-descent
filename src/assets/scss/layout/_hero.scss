@@ -12,10 +12,11 @@ article.lesson .lesson-reading > header.hero{
   max-width:72rem;
   min-height:clamp(24rem,48vh,34rem);
   margin:.75rem auto clamp(2.5rem,5vw,4.5rem);
-  padding:clamp(2rem,4vw,3.75rem) clamp(1.35rem,4vw,4rem) clamp(2rem,4vw,3.5rem);
+  padding:clamp(2.25rem,4vw,4rem) clamp(1.35rem,4vw,4rem) clamp(2rem,4vw,3.5rem);
   overflow:hidden;
   border-top:3px solid var(--hero-accent);
   border-bottom:1px solid var(--lesson-hero-line);
+  border-radius:0 0 var(--radius-3) var(--radius-3);
   background:
     radial-gradient(circle at 88% 16%,color-mix(in srgb,var(--block-accent,var(--accent)) var(--lesson-hero-glow-share),transparent),transparent 31%),
     var(--lesson-hero-background);
@@ -28,12 +29,12 @@ article.lesson .lesson-reading > header.hero::before{
   inset:-14rem -10rem auto auto;
   width:34rem;
   height:34rem;
-  border:1px solid color-mix(in srgb,var(--hero-accent) 30%,transparent);
+  border:1px solid color-mix(in srgb,var(--hero-accent) 22%,transparent);
   border-radius:50%;
   box-shadow:
-    0 0 0 3.75rem color-mix(in srgb,var(--hero-accent) 8%,transparent),
-    0 0 0 7.5rem color-mix(in srgb,var(--hero-accent) 5%,transparent),
-    0 0 0 11.25rem color-mix(in srgb,var(--hero-accent) 3%,transparent);
+    0 0 0 3.75rem color-mix(in srgb,var(--hero-accent) 6%,transparent),
+    0 0 0 7.5rem color-mix(in srgb,var(--hero-accent) 4%,transparent),
+    0 0 0 11.25rem color-mix(in srgb,var(--hero-accent) 2%,transparent);
   content:"";
   pointer-events:none;
 }
@@ -52,10 +53,10 @@ article.lesson .lesson-reading > header.hero::after{
 .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.77rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 .9rem;}
 .block-scope .eyebrow{color:var(--block-accent,var(--accent));}
 .daymark{color:var(--brass);}
-h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(2.2rem,1.05rem + 4.8vw,4.3rem);line-height:1.03;letter-spacing:-.01em;margin:.2rem 0 .1rem;text-wrap:balance;}
+h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(2.2rem,1.05rem + 4.8vw,4.3rem);line-height:1.02;letter-spacing:-.015em;margin:.2rem 0 .1rem;text-wrap:balance;}
 h1 em{font-style:italic;color:var(--accent-deep);}
 h1 u{color:var(--accent-deep);text-decoration:none;}
-.sub{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:clamp(1.15rem,.8rem + 1vw,1.5rem);color:var(--ink-soft);margin:.85rem 0 1.15rem;line-height:1.4;}
+.sub{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:clamp(1.15rem,.8rem + 1vw,1.5rem);color:var(--ink-soft);margin:.85rem 0 1.15rem;line-height:1.42;letter-spacing:-.005em;}
 .page-hero .sub{margin-bottom:1.4rem;}
 .book-credit .credit-line{display:block;}
 article.lesson .lesson-reading > header.hero > .eyebrow{
@@ -169,15 +170,15 @@ article.lesson .lesson-reading > header.hero > figure figcaption{
 .hero-art figcaption{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-faint);margin-top:.55rem;letter-spacing:.03em;line-height:1.5;}
 .lesson-figure{margin:1.8rem auto;max-width:42rem;}
 .lesson-figure.is-portrait{max-width:28rem;}
-.lesson-figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:var(--raised);box-shadow:var(--shadow);}
+.lesson-figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:var(--radius-2);background:var(--raised);box-shadow:var(--shadow);}
 .lesson-figure figcaption{font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.55;letter-spacing:.03em;color:var(--ink-faint);margin-top:.6rem;}
-.lesson-figure.pvalue-figure{background:var(--pvalue-bg);border:1px solid var(--line);border-radius:8px;padding:.65rem;box-shadow:var(--pvalue-shadow);}
-.lesson-figure.pvalue-figure img{border:0;border-radius:6px;background:var(--pvalue-img-bg);box-shadow:none;}
+.lesson-figure.pvalue-figure{background:var(--pvalue-bg);border:1px solid var(--line);border-radius:var(--radius-2);padding:.65rem;box-shadow:var(--pvalue-shadow);}
+.lesson-figure.pvalue-figure img{border:0;border-radius:var(--radius-1);background:var(--pvalue-img-bg);box-shadow:none;}
 .lesson-figure.pvalue-figure figcaption{margin:.65rem 0 0;padding-top:.6rem;border-top:1px solid var(--line);background:transparent;}
 .aside .lesson-figure{margin:1rem auto .15rem;}
-.lede{font-size:1.28em;line-height:1.6;color:color-mix(in srgb,var(--accent-deep) 72%,var(--ink));margin-top:1.35rem;}
-.lede .drop{float:left;font-family:"Fraunces",serif;font-weight:600;font-size:3.5em;line-height:.74;padding:.06em .12em 0 0;color:var(--accent-deep);}
-.lede.dropcap::first-letter{float:left;font-family:"Fraunces",serif;font-weight:600;font-size:3.5em;line-height:.74;padding:.06em .12em 0 0;color:var(--accent-deep);}
+.lede{font-size:1.28em;line-height:1.58;color:color-mix(in srgb,var(--accent-deep) 72%,var(--ink));margin-top:1.35rem;letter-spacing:-.005em;}
+.lede .drop{float:left;font-family:"Fraunces",serif;font-weight:600;font-size:3.6em;line-height:.74;padding:.06em .12em 0 0;color:var(--accent-deep);}
+.lede.dropcap::first-letter{float:left;font-family:"Fraunces",serif;font-weight:600;font-size:3.6em;line-height:.74;padding:.06em .12em 0 0;color:var(--accent-deep);}
 
 @media screen and (max-width:44.99rem){
   article.lesson .lesson-reading > header.hero{
@@ -217,16 +218,16 @@ article.lesson .lesson-reading > header.hero > figure figcaption{
   }
 }
 
-.whereblock{border-left:3px solid var(--brass);background:linear-gradient(to right,color-mix(in srgb,var(--brass) 7%,transparent),transparent 70%);padding:1rem 1.2rem;margin:2.2rem 0;border-radius:0 8px 8px 0;}
+.whereblock{border-left:3px solid var(--brass);background:linear-gradient(to right,color-mix(in srgb,var(--brass) 7%,transparent),transparent 70%);padding:1.1rem 1.25rem;margin:2.2rem 0;border-radius:0 var(--radius-2) var(--radius-2) 0;}
 .whereblock .label{font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin:0 0 .4rem;}
 .whereblock .label::before{content:"◆\00a0";font-weight:700;color:var(--block-accent,var(--accent));}
 .whereblock p{margin:.3rem 0;font-size:.97em;color:var(--ink-soft);}
-article.lesson .lesson-reading section{margin:3rem 0;}
-.sec-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:.7rem;margin:0 0 .55rem;}
+article.lesson .lesson-reading section{margin:3.25rem 0;}
+.sec-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:.7rem;margin:0 0 .6rem;}
 .sec-eyebrow::before{content:"";width:1.7rem;height:1px;background:var(--block-accent,var(--accent));}
-h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.55rem,1rem + 2.1vw,2.2rem);line-height:1.1;margin:.1rem 0 1rem;text-wrap:balance;}
-h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.28rem;margin:2rem 0 .5rem;}
-p{margin:0 0 1.15rem;}
+h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.6rem,1rem + 2.2vw,2.3rem);line-height:1.08;letter-spacing:-.012em;margin:.1rem 0 1.1rem;text-wrap:balance;}
+h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.3rem;letter-spacing:-.005em;margin:2.2rem 0 .55rem;line-height:1.2;}
+p{margin:0 0 1.2rem;}
 ul,ol{padding-left:1.35rem;}
 li{margin:.35rem 0;}
 strong{font-weight:600;color:var(--ink);}
@@ -234,11 +235,11 @@ strong{font-weight:600;color:var(--ink);}
 html[lang^="zh"] .term{font-weight:600;}
 em.term{font-style:italic;}
 u.term{font-style:normal;text-decoration:none;}
-blockquote{margin:1.8rem 0;padding:.2rem 0 .2rem 1.3rem;border-left:2px solid var(--line-strong);font-family:"Fraunces",serif;font-style:italic;font-size:1.22em;line-height:1.5;color:var(--ink);}
+blockquote{margin:1.8rem 0;padding:.3rem 0 .3rem 1.4rem;border-left:2px solid var(--block-accent,var(--line-strong));font-family:"Fraunces",serif;font-style:italic;font-size:1.22em;line-height:1.5;color:var(--ink);letter-spacing:-.005em;}
 blockquote .src{display:block;font-family:"IBM Plex Mono",monospace;font-style:normal;font-size:.62em;letter-spacing:.05em;color:var(--ink-faint);margin-top:.6rem;}
-.aside,.panel,.format-alt{background:var(--raised);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.25rem;margin:1.8rem 0;box-shadow:var(--shadow);font-size:.95em;}
+.aside,.panel,.format-alt{background:var(--raised);border:1px solid var(--line);border-radius:var(--radius-2);padding:1.1rem 1.25rem;margin:1.8rem 0;box-shadow:var(--shadow);font-size:.95em;}
 .aside.evidence-status-note{margin-top:1.4rem;}
-.panel{border-radius:14px;padding:1.5rem 1.4rem 1.6rem;margin:2rem 0;}
+.panel{border-radius:var(--radius-3);padding:1.5rem 1.4rem 1.6rem;margin:2rem 0;}
 .aside .h,.recap .h,.tomorrow .h,.panel .ptitle,.format-alt .ptitle{font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem;}
 .aside .h::before,.recap .h::before,.tomorrow .h::before,.panel .ptitle::before,.format-alt .ptitle::before{content:"◆\00a0";font-weight:700;color:var(--block-accent,var(--accent));}
 .panel .ptitle,.format-alt .ptitle{font-size:.84rem;letter-spacing:.11em;line-height:1.35;}

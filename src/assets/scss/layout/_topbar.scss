@@ -13,10 +13,11 @@
   border-top: 2px solid var(--signal);
   border-bottom: 1px solid var(--chrome-line);
   background: var(--chrome-bg);
-  background: color-mix(in srgb, var(--chrome-bg) 94%, transparent);
+  background: color-mix(in srgb, var(--chrome-bg) 92%, transparent);
   color: var(--chrome-fg);
-  box-shadow: 0 8px 24px -22px rgba(0, 0, 0, .9);
-  backdrop-filter: blur(16px) saturate(1.1);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--signal) 12%, transparent), 0 10px 30px -24px rgba(0, 0, 0, .9);
+  backdrop-filter: blur(20px) saturate(1.15);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
 }
 
 .topbar-row {
@@ -35,9 +36,9 @@
 }
 
 .atlas-shell .topbar-row {
-  min-height: 3.35rem;
+  min-height: 3.5rem;
   max-width: var(--shell);
-  padding: .45rem var(--page-pad);
+  padding: .5rem var(--page-pad);
   gap: clamp(.75rem, 2.2vw, 2rem);
   color: var(--chrome-muted);
   font-family: var(--font-mono);
@@ -57,14 +58,15 @@
 .atlas-shell .course {
   flex: 0 1 auto;
   min-width: 0;
-  gap: .62rem;
+  gap: .65rem;
   color: var(--chrome-fg);
   border: 0;
   font-family: var(--font-display);
-  font-size: .98rem;
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: -.01em;
+  letter-spacing: -.012em;
   text-transform: none;
+  transition: color var(--duration-fast) var(--ease-out-atlas);
 }
 
 .atlas-shell .course:hover {
@@ -98,8 +100,8 @@
 }
 
 .atlas-shell .brand-mark-shell {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.625rem;
+  height: 1.625rem;
 }
 
 .brand-mark {
@@ -161,22 +163,24 @@
   display: inline-flex;
   align-items: baseline;
   gap: .42rem;
-  padding: .42rem .64rem;
+  padding: .45rem .68rem;
   color: var(--chrome-muted);
   border: 0;
   font-family: var(--font-mono);
   font-size: .74rem;
   letter-spacing: .07em;
   text-transform: uppercase;
+  transition: color var(--duration-fast) var(--ease-out-atlas);
 }
 
 .atlas-shell .topnav a::after {
   position: absolute;
-  right: .64rem;
-  bottom: .2rem;
-  left: .64rem;
-  height: 1px;
+  right: .68rem;
+  bottom: .22rem;
+  left: .68rem;
+  height: 1.5px;
   background: var(--signal);
+  border-radius: 1px;
   content: "";
   transform: scaleX(0);
   transform-origin: left;
@@ -239,15 +243,16 @@
 
 .atlas-shell .toggle {
   min-width: 2rem;
-  min-height: 1.85rem;
-  padding: .28rem .45rem;
+  min-height: 1.9rem;
+  padding: .3rem .48rem;
   border: 1px solid var(--chrome-line);
   border-radius: var(--radius-1);
-  background: color-mix(in srgb, var(--chrome-raised) 66%, transparent);
+  background: color-mix(in srgb, var(--chrome-raised) 60%, transparent);
   color: var(--chrome-muted);
   font-family: var(--font-mono);
   font-size: .72rem;
   letter-spacing: .06em;
+  transition: border-color var(--duration-fast) var(--ease-out-atlas), background var(--duration-fast) var(--ease-out-atlas), color var(--duration-fast) var(--ease-out-atlas);
 }
 
 .atlas-shell .toggle:hover {
@@ -494,7 +499,7 @@
   }
 
   .atlas-shell .site-topbar {
-    transition: background-color var(--duration-base) ease, border-color var(--duration-base) ease;
+    transition: background-color var(--duration-base) var(--ease-out-atlas), border-color var(--duration-base) var(--ease-out-atlas), box-shadow var(--duration-base) var(--ease-out-atlas);
   }
 
   .running-head {
