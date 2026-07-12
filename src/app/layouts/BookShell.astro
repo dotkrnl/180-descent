@@ -19,7 +19,6 @@ interface Props {
   alternatePath?: string;
   scripts?: string[];
   socialImagePath?: string;
-  releaseBanner?: boolean;
 }
 
 const book = await getBookData();
@@ -33,7 +32,7 @@ const socialImageAssets = Object.fromEntries(
     imagePath
   ])
 );
-const { title, description, locale, canonicalPath, alternatePath, scripts = [], socialImagePath, releaseBanner = false } = Astro.props;
+const { title, description, locale, canonicalPath, alternatePath, scripts = [], socialImagePath } = Astro.props;
 const isZh = locale === "zh";
 const uiTitle = isZh ? book.zh.title : book.title;
 const uiSubtitle = isZh ? book.zh.subtitle : book.subtitle;
@@ -201,14 +200,6 @@ const structuredData = {
         </div>
       </div>
     </header>
-    {releaseBanner && (
-      <aside class="release-banner" aria-label={isZh ? "发布说明" : "Release note"}>
-        <div class="wrap wide">
-          <strong>{isZh ? "发布说明" : "Release note"}</strong>
-          <span>{isZh ? "新内容不一定每天更新。人工编辑有时会暂停发布，以便手动检查内容质量；最新发布版本也可能仍有尚未完成审阅的粗糙之处。" : "New content may not arrive every day. The human editor sometimes pauses publishing to manually check quality, and the latest release may still have sharp edges that the human has not finished reviewing yet."}</span>
-        </div>
-      </aside>
-    )}
     <main id="content">
       <slot />
     </main>

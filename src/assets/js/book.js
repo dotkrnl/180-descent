@@ -384,7 +384,6 @@
     }
 
     var buttons = map.querySelectorAll("[data-map-block]");
-    var reset = map.querySelector("[data-map-reset]");
     var status = map.querySelector("[data-map-status]");
     var defaultStatus = status ? status.textContent : "";
 
@@ -422,12 +421,6 @@
     for(var i = 0; i < buttons.length; i++){
       buttons[i].addEventListener("click", function(){
         focusBlock(this);
-      });
-    }
-    if(reset){
-      reset.addEventListener("click", function(){
-        clearFocus();
-        map.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
     map.addEventListener("keydown", function(event){
@@ -576,12 +569,6 @@
       rail.style.setProperty("--gauge", progress.toFixed(4));
       if(readout){
         readout.textContent = Math.round(progress * 100) + "%";
-      }
-      var dockProgress = lesson.querySelector("[data-dock-progress]");
-      if(dockProgress){
-        var dockPercent = Math.round(progress * 100) + "%";
-        dockProgress.textContent = dockPercent;
-        dockProgress.setAttribute("aria-label", dockPercent + (dockProgress.getAttribute("data-dock-label") || ""));
       }
       var runningProgress = document.querySelector("[data-running-progress]");
       if(runningProgress){

@@ -11,11 +11,10 @@ interface Props {
   description: string;
   canonicalPath: string;
   alternatePath?: string;
-  releaseBanner?: boolean;
 }
 
 const book = await getBookData();
-const { locale, title, subtitle, eyebrow, description, canonicalPath, alternatePath, releaseBanner = false } = Astro.props;
+const { locale, title, subtitle, eyebrow, description, canonicalPath, alternatePath } = Astro.props;
 const isZh = locale === "zh";
 const pageKind = canonicalPath.includes("syllabus")
   ? "syllabus"
@@ -40,7 +39,6 @@ const folioLabels = {
   locale={locale}
   canonicalPath={canonicalPath}
   alternatePath={alternatePath}
-  releaseBanner={releaseBanner}
 >
   <article class:list={["page", "wrap", "atlas-page", `atlas-page--${pageKind}`]}>
     <header class="page-hero atlas-page-hero">

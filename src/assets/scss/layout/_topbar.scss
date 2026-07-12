@@ -435,18 +435,16 @@
 }
 
 // Editorial notices are annotations, not competing hero bands.
-.release-banner,
 .latest-day-banner {
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--hint) 10%, var(--paper));
 }
 
-.atlas-shell :is(.release-banner, .latest-day-banner) {
+.atlas-shell .latest-day-banner {
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--raised) 48%, var(--paper));
 }
 
-.release-banner .wide,
 .latest-day-banner .wide {
   display: flex;
   align-items: flex-start;
@@ -460,7 +458,7 @@
   letter-spacing: .05em;
 }
 
-.atlas-shell :is(.release-banner, .latest-day-banner) .wide {
+.atlas-shell .latest-day-banner .wide {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: baseline;
@@ -475,7 +473,6 @@
   letter-spacing: .025em;
 }
 
-.release-banner strong,
 .latest-day-banner strong {
   flex: 0 0 auto;
   color: var(--hint);
@@ -484,7 +481,7 @@
   text-transform: uppercase;
 }
 
-.atlas-shell :is(.release-banner, .latest-day-banner) strong {
+.atlas-shell .latest-day-banner strong {
   color: var(--signal-ink);
   font-size: .72rem;
   letter-spacing: .1em;
@@ -636,12 +633,12 @@
     display: none;
   }
 
-  .atlas-shell :is(.release-banner, .latest-day-banner) .wide {
+  .atlas-shell .latest-day-banner .wide {
     display: block;
     padding-block: .48rem;
   }
 
-  .atlas-shell :is(.release-banner, .latest-day-banner) strong {
+  .atlas-shell .latest-day-banner strong {
     display: block;
     margin-bottom: .14rem;
   }
