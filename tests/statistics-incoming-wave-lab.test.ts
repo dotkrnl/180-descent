@@ -5,7 +5,7 @@ import { getViteConfig } from "astro/config";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import { createServer, type ViteDevServer } from "vite";
 
-type Kind = "conformal" | "ppi";
+type Kind = "peek" | "conformal" | "ppi" | "paths" | "benchmark";
 type Locale = "en" | "zh";
 
 let component: AstroComponentFactory;
@@ -48,5 +48,19 @@ describe("StatisticsIncomingWaveLab", () => {
     const ppi = load(await render("ppi", locale));
     expect(ppi("#appendix-d006-the-incoming-wave-ppiR").attr("value")).toBe("70");
     expect(ppi("#appendix-d006-the-incoming-wave-ppiBias").attr("value")).toBe("20");
+  });
+
+  it.each(["en", "zh"] as const)("associates every range label for %s", async (locale) => {
+    const kinds: Kind[] = ["peek", "conformal", "ppi", "paths", "benchmark"];
+    const html = (await Promise.all(kinds.map((kind) => render(kind, locale)))).join("\n");
+    const $ = load(html);
+    const inputs = $('input[type="range"]');
+
+    expect(inputs).toHaveLength(16);
+    inputs.each((_, input) => {
+      const id = $(input).attr("id");
+      expect(id).toBeTruthy();
+      expect($(`label[for="${id}"]`)).toHaveLength(1);
+    });
   });
 });

@@ -183,7 +183,7 @@ const panel = panels[kind];
     <div class="ctrl">
           {panel.controls.map((control) => (
         <div class="slider-row">
-          <label>
+          <label for={`${prefix}${control.id}`}>
             {control.math && !control.mathAfter && <MathInline latex={control.math} />}{control.math && !control.mathAfter && (control.label.startsWith(",") || control.label.startsWith("（") ? "" : " ")}
             {control.label}{control.mathAfter && " "}{control.math && control.mathAfter && <MathInline latex={control.math} />}
             <span class="val" id={`${prefix}${control.valueId}`}>{control.value}</span>
