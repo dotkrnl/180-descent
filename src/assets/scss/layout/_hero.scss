@@ -114,6 +114,37 @@ article.lesson .lesson-reading > header.hero > figure :is(.term,.hl,a){
     grid-column:1 / -1;
   }
 }
+
+// The forking-paths illustration is a wide systems diagram, not a portrait
+// ornament. Give it a full row so its labels do not collapse in the hero's
+// companion column at tablet and desktop widths.
+@media screen and (min-width:60rem){
+  article.lesson .lesson-reading > header.hero:has(> figure.forking-paths){
+    grid-template-columns:minmax(0,1fr);
+  }
+  article.lesson .lesson-reading > header.hero:has(> figure.forking-paths) > figure.forking-paths{
+    grid-column:1 / -1;
+    grid-row:auto;
+    width:100%;
+    max-width:42rem;
+    margin:1.25rem auto 0;
+  }
+}
+
+@media screen and (max-width:59.99rem){
+  article.lesson .lesson-reading > header.hero > figure.forking-paths{
+    max-width:none;
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+  }
+  article.lesson .lesson-reading > header.hero > figure.forking-paths svg{
+    width:36rem;
+    max-width:none;
+    margin-left:0;
+    margin-right:0;
+  }
+}
+
 .hero-clock,.hero-sun,.hero-art{margin:2.4rem auto 1.6rem;max-width:30rem;text-align:center;}
 .clockwrap,.sunwrap{position:relative;display:block;width:100%;}
 .hero-clock svg,.hero-sun svg,.hero-art svg{display:block;width:100%;height:auto;}

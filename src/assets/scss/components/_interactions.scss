@@ -19,7 +19,7 @@
 .pbtn{cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:.7rem;background:transparent;border:1px dashed var(--line-strong);color:var(--ink-soft);border-radius:8px;padding:.35rem .55rem;}
 .information-entropy .ent-grid{display:grid;grid-template-columns:1fr;gap:1.4rem;align-items:start;}
 @media(min-width:640px){.information-entropy .ent-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);}}
-.information-entropy .ent-curve svg{display:block;width:100%;height:auto;}
+.information-entropy .ent-curve svg{display:block;width:100%;max-width:26rem;height:auto;margin-inline:auto;}
 .information-entropy .ent-readouts{display:flex;flex-direction:column;gap:.7rem;}
 .information-entropy .bigH{font-family:"Fraunces",serif;font-weight:600;font-size:2.1rem;color:var(--accent-deep);line-height:1;}
 .information-entropy .bigH small{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-faint);font-weight:400;letter-spacing:.04em;margin-left:.3rem;}
@@ -35,7 +35,8 @@
 .information-entropy .ent-verdict{font-size:.9em;color:var(--ink-soft);border-top:1px dashed var(--line);padding-top:.7rem;margin-top:.2rem;min-height:5.4em;}
 .information-entropy .entropy-slider-row{margin-top:1.1rem;}
 .landauer-machine .lm-stage{background:var(--paper);border:1px solid var(--line-strong);border-radius:10px;padding:.7rem;margin:.8rem 0 1rem;}
-.landauer-machine .lm-stage svg{display:block;width:100%;height:auto;}
+.landauer-machine .lm-stage{overflow-x:auto;}
+.landauer-machine .lm-stage svg{display:block;width:100%;max-width:42rem;height:auto;margin-inline:auto;}
 .landauer-machine .lm-controls{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0 1rem;}
 .landauer-machine .lm-btn{cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.05em;background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:8px;padding:.5rem .75rem;transition:background .2s,border-color .2s,color .2s,opacity .2s;}
 .landauer-machine .lm-btn:hover{background:var(--accent-deep);}
@@ -161,7 +162,7 @@ html[lang^="zh"] .frontier-minihead,
 html[lang^="zh"] .frontier-readout,
 html[lang^="zh"] .frontier-seg button{letter-spacing:0;text-transform:none;}
 .venn-box{text-align:center;}
-.venn-box svg,.tri svg{width:100%;height:auto;}
+.venn-box svg,.tri svg{display:block;width:100%;max-width:28rem;height:auto;margin-inline:auto;}
 .verdict{margin-top:.6rem;border-top:1px dashed var(--line);padding-top:.85rem;text-align:left;}
 .vstate{font-family:"Fraunces",serif;font-weight:600;font-size:1.18rem;display:flex;align-items:center;gap:.5rem;line-height:1.2;}
 .vstate.know{color:var(--ok);}
@@ -182,6 +183,11 @@ html[lang^="zh"] .frontier-seg button{letter-spacing:0;text-transform:none;}
 .routcome p{margin:0;font-size:.88em;color:var(--ink-soft);line-height:1.45;}
 .tri-key{display:grid;grid-template-columns:1fr;gap:.6rem;margin-top:1.1rem;}
 @media(min-width:560px){.tri-key{grid-template-columns:1fr 1fr;}}
+@media(max-width:40rem){
+  .regress-chain{grid-template-columns:1fr;gap:.35rem;}
+  .rstep{min-height:1rem;transform:rotate(90deg);}
+  .regress-outcomes{grid-template-columns:1fr;}
+}
 .tri-key .k{font-size:.9em;border-left:2px solid var(--accent);padding-left:.7rem;}
 .tri-key .k p{margin:0;}
 .hero-fig{margin:2.4rem auto 1.6rem;max-width:30rem;text-align:center;}
@@ -207,7 +213,7 @@ html[lang^="zh"] .frontier-seg button{letter-spacing:0;text-transform:none;}
 .simp-toggle button[aria-pressed="true"]{background:var(--accent);color:#fff;}
 .simp-machine{display:grid;grid-template-columns:1fr;gap:1.1rem;align-items:start;}
 @media(min-width:680px){.simp-machine{grid-template-columns:minmax(0,1.15fr) minmax(14rem,.85fr);}}
-.simp-grid{display:block;width:100%;height:auto;border:1px solid var(--line-strong);border-radius:10px;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 5%,var(--raised)),var(--paper));padding:.55rem;box-sizing:border-box;}
+.simp-grid{display:block;width:100%;max-width:30rem;height:auto;margin-inline:auto;border:1px solid var(--line-strong);border-radius:10px;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 5%,var(--raised)),var(--paper));padding:.55rem;box-sizing:border-box;}
 .simp-cell-bg{fill:color-mix(in srgb,var(--paper) 90%,transparent);stroke:var(--line);stroke-width:.7;}
 .simp-axis-label,.simp-overlay-label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.02em;fill:var(--ink-soft);text-transform:uppercase;}
 .simp-axis-label.row{font-size:10.5px;}
@@ -299,7 +305,7 @@ html[lang^="zh"] .frontier-seg button{letter-spacing:0;text-transform:none;}
 .dovs-card.see .cap{color:var(--brass);}
 .dovs-card.do .cap{color:var(--accent);}
 .dovs-card .expr{font-family:"Newsreader",Georgia,"Times New Roman",serif;font-size:1.08rem;color:var(--ink-soft);margin:0 0 .6rem;letter-spacing:0;}
-.dovs-card svg{width:100%;height:auto;}
+.dovs-card svg{display:block;width:100%;max-width:22rem;height:auto;margin-inline:auto;}
 .dovs-num{font-family:"Fraunces",serif;font-weight:600;font-size:1.55rem;margin:.5rem 0 0;line-height:1;}
 .dovs-card.see .dovs-num{color:var(--brass);}
 .dovs-card.do .dovs-num{color:var(--accent);}
@@ -526,7 +532,7 @@ html[lang^="zh"] .day10-paper-press .pp-switch button,
 html[lang^="zh"] .day10-paper-press .who span,
 html[lang^="zh"] .day10-paper-press .lbl{letter-spacing:0;text-transform:none;}
 @media(max-width:430px){.day10-paper-press .pp-switch{display:grid;border-radius:9px;width:100%;}.day10-paper-press .pp-switch button{text-align:center;}}
-.grue-stage{margin:.4rem 0 0;}
+.grue-stage{margin:.4rem 0 0;overflow-x:auto;}
 .grue-stage svg{width:100%;height:auto;}
 .grue-controls{margin-top:1rem;}
 .grue-readout{margin-top:1rem;border-radius:10px;padding:.85rem 1rem;font-size:.92em;border:1px solid;}
@@ -711,7 +717,8 @@ html[lang^="zh"] .mh-step,html[lang^="zh"] .mh-mode{letter-spacing:0;text-transf
 .ev-controls .val{color:var(--accent);font-weight:600;}
 .ev-controls .note{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--ink-faint);}
 .ev-chart{background:var(--paper);border:1px solid var(--line-strong);border-radius:10px;padding:.6rem;}
-.ev-chart svg{width:100%;height:auto;display:block;}
+.ev-chart{overflow-x:auto;}
+.ev-chart svg{width:100%;max-width:42rem;height:auto;display:block;margin-inline:auto;}
 .ev-readout{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;margin-top:1rem;}
 @media(max-width:520px){.ev-readout{grid-template-columns:1fr;}.mh-machine{padding:.75rem .65rem;}.mh-odds{grid-template-columns:1fr;gap:.45rem;}.mh-odd{min-height:auto;padding:.55rem .6rem;}.mh-odd b,.mh-odd-value{font-size:1.7rem;}.mh-tally{grid-template-columns:1fr;}.mh-stage{gap:.42rem;}.mh-door{min-height:11.8rem;padding:.5rem .32rem .55rem;gap:.3rem;}.mh-door-face{max-width:5.7rem;}.mh-door-number{top:.26rem;font-size:.6rem;letter-spacing:.08em;}.mh-door-knob{width:.38rem;height:.38rem;}.prizeholder{top:37%;min-height:2.55rem;font-size:1.45rem;border-radius:6px;}.mh-door .dlab{font-size:.58rem;letter-spacing:.05em;}.mh-door .daction{font-size:.54rem;min-height:1.55rem;padding:.2rem .22rem;}.mh-status{grid-template-columns:1fr;padding:.65rem .7rem;}.mh-say{min-height:3.7em;}html[lang^="zh"] .mh-door .daction{font-size:.6rem;}}
 .evcard{border:1px solid var(--line-strong);border-radius:10px;padding:.7rem .8rem;background:var(--raised);}
@@ -849,6 +856,68 @@ html[lang^="zh"] .day11-slider-label{letter-spacing:0;text-transform:none;}
   .day11-segment button{flex:1 1 100%;text-align:center;}
   .day11-meter-label{display:grid;}
   .day11-verdict span{min-height:0;}
+}
+
+// Wide diagrams retain their coordinate scale on narrow screens. These are
+// intentionally scrollable inside their own frame: shrinking a 600–700 unit
+// diagram to a phone-width strip makes axis labels and annotations unusable.
+@media screen and (max-width:40rem){
+  .grue-stage svg,
+  .statistics-appendix-lab :is(canvas,.canvas),
+  .appendix-figure:not(.appendix-figure-narrow) svg,
+  .emergence-sim-stage canvas,
+  .frontier-stage.frontier-wide canvas{
+    width:36rem;
+    max-width:none;
+    margin-left:0;
+    margin-right:0;
+  }
+
+  .statistics-appendix-lab,
+  .appendix-figure:not(.appendix-figure-narrow),
+  .emergence-sim-stage,
+  .frontier-stage.frontier-wide{
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+  }
+
+  .probability-evalue .ev-chart svg,
+  .landauer-machine .lm-stage svg,
+  .day10-frontier-map .fm-chart svg,
+  .day11-prospect-viz svg,
+  .day11-sampling-viz svg,
+  .panel.landauer-ladder svg,
+  .panel.ladder svg,
+  .panel.landscape svg,
+  .figbox.day10-static-figure-weather-chart svg,
+  .figbox.day10-static-figure-extrapolation-cliff svg,
+  .figbox.day11-static-figure-resource-curve svg,
+  .figbox.day11-static-figure-bias-noise-darts svg,
+  .figbox.day11-static-figure-clockwork svg,
+  .figbox.day11-static-figure-sampling-curve svg{
+    width:36rem;
+    max-width:none;
+    margin-left:0;
+    margin-right:0;
+  }
+
+  .probability-evalue .ev-chart,
+  .landauer-machine .lm-stage,
+  .day10-frontier-map .fm-chart,
+  .day11-prospect-viz,
+  .day11-sampling-viz,
+  .panel.landauer-ladder,
+  .panel.ladder,
+  .panel.landscape,
+  .figbox.day10-static-figure-weather-chart,
+  .figbox.day10-static-figure-extrapolation-cliff,
+  .figbox.day11-static-figure-resource-curve,
+  .figbox.day11-static-figure-bias-noise-darts,
+  .figbox.day11-static-figure-clockwork,
+  .figbox.day11-static-figure-sampling-curve{
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+  }
 }
 
 // -------------------------------------------------------------------------
@@ -1021,7 +1090,7 @@ html[lang^="zh"] .day11-slider-label{letter-spacing:0;text-transform:none;}
   .day10-presets p,.fp-biglab,.school .tag,.ch-eyebrow
 ){font-size:.76rem;letter-spacing:.08em;}
 
-.panel.web-only :is(canvas,svg,img){max-width:100%;}
+:where(.panel.web-only) :where(canvas,svg,img){max-width:100%;}
 .panel.web-only :is(
   .gm-grid,.lab-grid,.grid2,.frontier-grid,.rbn-grid,.gol-wrap,.perc-grid,
   .ii-grid,.day10-dial-grid,.day10-levins-grid,.day11-button-row

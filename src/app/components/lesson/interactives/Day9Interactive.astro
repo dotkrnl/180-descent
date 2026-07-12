@@ -938,6 +938,10 @@ const print = {
     margin-top: .35rem;
   }
 
+  .day9-interactive {
+    container-type: inline-size;
+  }
+
   .day9-grid {
     display: grid;
     grid-template-columns: minmax(13rem, .9fr) minmax(0, 1.6fr);
@@ -1019,6 +1023,14 @@ const print = {
     width: 100%;
     height: auto;
     margin-bottom: .55rem;
+  }
+
+  /* Appendix panels can be narrower than the viewport even on desktop. Give
+     the plot the full panel width instead of squeezing it beside the controls. */
+  @container (max-width: 48rem) {
+    .day9-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .day9-verdict,
@@ -1166,6 +1178,20 @@ const print = {
   @media (max-width: 760px) {
     .day9-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .day9-plot {
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+    }
+
+    .day9-plot svg {
+      width: 34rem;
+      max-width: none;
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 </style>

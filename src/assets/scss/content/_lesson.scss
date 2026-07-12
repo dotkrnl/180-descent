@@ -38,12 +38,23 @@ article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section{
 // Exhibits may leave the text measure without abandoning its alignment. The
 // selectors intentionally stop at one section boundary so figures nested in
 // panels do not recursively break out of their own exhibit.
-article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
-article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
+article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > :is(.panel.web-only,.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
+article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section > :is(.panel.web-only,.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
 article.lesson .lesson-appendices > .appendix-figure-wide{
   min-width:0;
   width:var(--lesson-exhibit);
   max-width:none;
+  margin-right:0;
+  margin-left:50%;
+  transform:translateX(-50%);
+}
+
+// Image figures have their own editorial cap. They may align with an exhibit,
+// but should not inherit the full breakout width used by large labs and tables.
+article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > .lesson-figure:not(.is-portrait),
+article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section > .lesson-figure:not(.is-portrait){
+  width:min(var(--lesson-exhibit),42rem);
+  max-width:42rem;
   margin-right:0;
   margin-left:50%;
   transform:translateX(-50%);
@@ -59,8 +70,8 @@ article.lesson .lesson-appendices > .appendix-figure-wide{
     grid-column:3;
     min-width:0;
   }
-  article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
-  article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section > :is(.panel.web-only,.lesson-figure:not(.is-portrait),.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
+  article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > :is(.panel.web-only,.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
+  article.lesson .lesson-reading > .wrap:not(.lesson-appendices) > section > :is(.panel.web-only,.compare,.widepanel,.table-wrap,.statistics-appendix-lab),
   article.lesson .lesson-appendices > .appendix-figure-wide{
     // At the rail breakpoint, cap breakouts to the viewport space that
     // remains after the rail, its gap, and the outer page gutters.
@@ -71,8 +82,8 @@ article.lesson .lesson-appendices > .appendix-figure-wide{
 }
 
 article.lesson :is(.panel.web-only,.statistics-appendix-lab,.widepanel){min-width:0;}
-article.lesson :is(.panel.web-only,.statistics-appendix-lab,.widepanel) > *{min-width:0;max-width:100%;}
-article.lesson :is(.panel.web-only,.statistics-appendix-lab,.widepanel) :is(img,svg,canvas,video){max-width:100%;}
+:where(article.lesson :is(.panel.web-only,.statistics-appendix-lab,.widepanel)) > *{min-width:0;}
+:where(article.lesson :is(.panel.web-only,.statistics-appendix-lab,.widepanel)) :where(img,svg,canvas,video){max-width:100%;}
 article.lesson :is(.panel.web-only,.statistics-appendix-lab,.widepanel) input[type="range"]{
   min-width:0;
   max-width:100%;
@@ -302,11 +313,15 @@ article.lesson :is(.formula,.mathline){
 article.lesson .katex-display{max-width:100%;}
 
 @media screen and (max-width:40rem){
-  article.lesson .chiprow .chip{
+  article.lesson .chip{
     max-width:100%;
     white-space:normal;
     overflow-wrap:anywhere;
+    flex-wrap:wrap;
+    line-height:1.35;
   }
+  article.lesson .sources .meta{overflow-wrap:anywhere;word-break:break-word;}
+  article.lesson .claim:has(.reptable){overflow-x:auto;overscroll-behavior-inline:contain;}
   // A flex:1 shorthand gave neighbor sliders a zero basis beside simulation
   // buttons, collapsing the range and drawing its label over adjacent tools.
   article.lesson .panel.web-only .emergence-controls > .nbr-row{

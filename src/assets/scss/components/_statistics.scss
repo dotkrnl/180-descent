@@ -35,7 +35,7 @@
 .statistics-effect-lab .se-controls label{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--ink-soft);}
 .statistics-effect-lab .se-controls output{color:var(--accent);font-weight:700;}
 .statistics-effect-lab input[type="range"]{width:100%;accent-color:var(--accent);}
-.statistics-effect-lab .se-plot{display:block;width:100%;height:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px;}
+.statistics-effect-lab .se-plot{display:block;width:100%;max-width:34rem;height:auto;margin-inline:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px;}
 .statistics-effect-lab .se-read{min-height:3.1em;margin-top:.7rem;color:var(--ink-soft);font-size:.9em;border-left:2px solid var(--accent);padding-left:.75rem;}
 .statistics-effect-lab .se-read strong{color:var(--ink);}
 .statistics-effect-lab .se-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;margin-top:1rem;}
@@ -49,7 +49,8 @@
 .statistics-ci-coverage .ci-controls label{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--ink-soft);}
 .statistics-ci-coverage .ci-controls output{color:var(--accent);font-weight:700;}
 .statistics-ci-coverage input[type="range"]{width:100%;accent-color:var(--accent);}
-.statistics-ci-coverage .ci-plot{display:block;width:100%;height:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px;}
+.statistics-ci-coverage .ci-grid > :last-child{min-width:0;}
+.statistics-ci-coverage .ci-plot{display:block;width:100%;max-width:44rem;height:auto;margin-inline:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px;}
 .statistics-ci-coverage .ci-read{min-height:3.1em;margin-top:.7rem;color:var(--ink-soft);font-size:.9em;border-left:2px solid var(--accent);padding-left:.75rem;}
 .statistics-ci-coverage .ci-read strong{color:var(--ink);}
 .statistics-ci-coverage .ci-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;margin-top:1rem;}
@@ -61,8 +62,8 @@
 @media(max-width:520px){.statistics-ci-coverage .ci-metrics{grid-template-columns:1fr;}}
 .statistics-spectrum svg,.statistics-spec-curve .mv-canvas{width:100%;height:auto;}
 .statistics-spectrum .spectrum-end-label{font-family:"Fraunces",serif;font-style:italic;font-size:12.5px;fill:var(--ink-soft);}
-.statistics-spec-curve .mv-scroll{overflow:visible;padding-bottom:0;}
-.statistics-spec-curve .mv-scroll .mv-canvas{min-width:0;}
+.statistics-spec-curve .mv-scroll{overflow-x:auto;padding-bottom:0;}
+.statistics-spec-curve .mv-scroll .mv-canvas{display:block;width:100%;max-width:42rem;min-width:0;margin-inline:auto;}
 .statistics-spectrum .spec-key{display:grid;grid-template-columns:1fr;gap:.55rem;margin-top:1.1rem;}
 @media(min-width:560px){.statistics-spectrum .spec-key{grid-template-columns:1fr 1fr;}}
 .statistics-spectrum .spec-key .k{font-size:.9em;border-left:2px solid var(--accent);padding-left:.7rem;}
@@ -92,3 +93,16 @@
 .statistics-effect-lab .se-read,
 .statistics-ci-coverage .ci-read,
 .statistics-spec-curve .mv-cherry{font-size:.94rem;line-height:1.5;}
+
+// Dense plots keep enough physical width for axes and labels on a phone. The
+// wrapper scrolls inside the panel, so the page itself remains overflow-free.
+@media screen and (max-width:40rem){
+  .statistics-effect-lab .se-grid > :last-child,
+  .statistics-ci-coverage .ci-grid > :last-child,
+  .statistics-spec-curve .mv-scroll{overflow-x:auto;}
+  .statistics-effect-lab .se-plot{width:30rem;max-width:none;margin-inline:0;}
+  .statistics-ci-coverage .ci-plot{width:34rem;max-width:none;margin-inline:0;}
+  .statistics-spec-curve .mv-scroll .mv-canvas{width:32rem;max-width:none;margin-inline:0;}
+  .statistics-spectrum{overflow-x:auto;}
+  .statistics-spectrum svg{width:36rem;max-width:none;}
+}

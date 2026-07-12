@@ -566,6 +566,11 @@ const years = [
   }
 
   .day9-static-figure-bathtub-errors,
+  .day9-static-figure-ashby,
+  .day9-static-figure-tipping-types {
+    max-width: min(100%, 30rem);
+  }
+
   .day9-static-figure-bullwhip,
   .day9-static-figure-loops,
   .day9-static-figure-thresholds {
@@ -666,5 +671,31 @@ const years = [
     font-size: .75rem;
     line-height: 1.5;
     letter-spacing: .02em;
+  }
+
+  /* Wide, label-dense figures keep a readable coordinate system on phones.
+     The figure remains in flow while its SVG becomes an internal scroll area. */
+  @media (max-width: 40rem) {
+    .day9-static-figure-loops,
+    .day9-static-figure-bullwhip,
+    .day9-static-figure-thresholds,
+    .day9-static-figure-cybersyn,
+    .day9-static-figure-resilience,
+    .day9-static-figure-timeline {
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+    }
+
+    .day9-static-figure-loops svg,
+    .day9-static-figure-bullwhip svg,
+    .day9-static-figure-thresholds svg,
+    .day9-static-figure-cybersyn svg,
+    .day9-static-figure-resilience svg,
+    .day9-static-figure-timeline svg {
+      width: 36rem;
+      max-width: none;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 </style>
