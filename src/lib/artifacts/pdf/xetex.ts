@@ -940,12 +940,15 @@ function nodeContainsLargeBlock(node: MdxNode): boolean {
   return (node.children ?? []).some(nodeContainsLargeBlock);
 }
 
+export function shouldRenderPdfFormatOnly(media: string, includeDeepDive: boolean): boolean {
+  if (media === "deep-dive-print") return includeDeepDive;
+  if (media === "deep-dive-epub") return false;
+  return ["print", "pdf", "print-epub", "epub-print"].includes(media);
+}
+
 function shouldRenderElement(name: string, attrs: Map<string, string | null>, state: MdxRenderState): boolean {
   if (name === "FormatOnly") {
-    const media = attrs.get("media") ?? "";
-    if (media === "web") return false;
-    if (media === "deep-dive-print" || media === "deep-dive-epub") return state.includeDeepDive;
-    return ["print", "pdf", "print-epub", "epub-print"].includes(media);
+    return shouldRenderPdfFormatOnly(attrs.get("media") ?? "", state.includeDeepDive);
   }
   return true;
 }
