@@ -537,7 +537,11 @@
     list.addEventListener("click", function(event){
       var link = event.target.closest ? event.target.closest("a") : null;
       if(link){
+        var drawerWasOpen = document.querySelector("[data-lesson-rail][data-open='true']");
         closeRailDrawer();
+        if(drawerWasOpen){
+          focusRailTarget(link);
+        }
       }
     });
 
@@ -627,6 +631,25 @@
     }
   }
 
+  function focusRailTarget(link){
+    var id = link && link.getAttribute("data-rail-link");
+    var target = id ? document.getElementById(id) : null;
+    if(!target){
+      return;
+    }
+
+    var addedTabIndex = !target.hasAttribute("tabindex");
+    if(addedTabIndex){
+      target.setAttribute("tabindex", "-1");
+      target.addEventListener("blur", function(){
+        target.removeAttribute("tabindex");
+      }, { once: true });
+    }
+    window.setTimeout(function(){
+      target.focus({ preventScroll: true });
+    }, 0);
+  }
+
   function initRailDrawer(){
     var rail = document.querySelector("[data-lesson-rail]");
     var fab = document.querySelector("[data-rail-fab]");
@@ -661,6 +684,15 @@
         fab.focus();
       }
     });
+
+    var persistentRail = window.matchMedia && window.matchMedia("(min-width: 75rem)");
+    if(persistentRail && persistentRail.addEventListener){
+      persistentRail.addEventListener("change", function(event){
+        if(event.matches){
+          closeRailDrawer();
+        }
+      });
+    }
   }
 
   function initSectionReveals(lesson){
