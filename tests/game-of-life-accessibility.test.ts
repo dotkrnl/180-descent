@@ -55,7 +55,7 @@ beforeAll(async () => {
   server = await createServer({
     ...config,
     cacheDir: path.join(process.env.TMPDIR ?? os.tmpdir(), "game-of-life-vite"),
-    server: { middlewareMode: true, hmr: false }
+    server: { middlewareMode: true, hmr: false, ws: false }
   });
   const module = await server.ssrLoadModule(
     "/src/app/components/lesson/interactives/GameOfLifeGun.astro"

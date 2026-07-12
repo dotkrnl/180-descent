@@ -52,7 +52,7 @@ beforeAll(async () => {
   server = await createServer({
     ...config,
     cacheDir: path.join(process.env.TMPDIR ?? os.tmpdir(), "interactive-svg-vite"),
-    server: { middlewareMode: true, hmr: false }
+    server: { middlewareMode: true, hmr: false, ws: false }
   });
 
   for (const testCase of cases) {

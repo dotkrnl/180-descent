@@ -1,5 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { load } from "cheerio";
+import os from "node:os";
+import path from "node:path";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { getViteConfig } from "astro/config";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
@@ -23,7 +25,8 @@ beforeAll(async () => {
   });
   server = await createServer({
     ...config,
-    server: { middlewareMode: true }
+    cacheDir: path.join(process.env.TMPDIR ?? os.tmpdir(), "statistics-incoming-wave-vite"),
+    server: { middlewareMode: true, hmr: false, ws: false }
   });
   const module = await server.ssrLoadModule(
     "/src/app/components/lesson/interactives/StatisticsIncomingWaveLab.astro"
