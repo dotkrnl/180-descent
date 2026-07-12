@@ -3,7 +3,8 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     globals: true,
-    globalSetup: ["./tests/global-setup.ts"],
+    setupFiles: ["./tests/setup.ts"],
+    sequence: { hooks: "stack" },
     include: ["tests/**/*.test.ts", "src/**/*.test.ts"]
   },
   resolve: {

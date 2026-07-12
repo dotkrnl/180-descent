@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { load } from "cheerio";
+import { rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
@@ -13,6 +14,7 @@ type Locale = "en" | "zh";
 let component: AstroComponentFactory;
 let container: AstroContainer;
 let server: ViteDevServer;
+const viteCacheDir = path.join(process.env.TMPDIR ?? os.tmpdir(), "statistics-incoming-wave-vite");
 
 beforeAll(async () => {
   const root = process.cwd();
@@ -25,7 +27,8 @@ beforeAll(async () => {
   });
   server = await createServer({
     ...config,
-    cacheDir: path.join(process.env.TMPDIR ?? os.tmpdir(), "statistics-incoming-wave-vite"),
+    cacheDir: viteCacheDir,
+    optimizeDeps: { noDiscovery: true },
     server: { middlewareMode: true, hmr: false, ws: false }
   });
   const module = await server.ssrLoadModule(
@@ -37,6 +40,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await server.close();
+  await rm(viteCacheDir, { recursive: true, force: true });
 });
 
 async function render(kind: Kind, locale: Locale): Promise<string> {
