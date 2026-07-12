@@ -16,7 +16,16 @@ const zh = Astro.props.locale === "zh";
 
   <div class="gol-wrap">
     <div class="gol-stage">
-      <canvas id="gol" width="380" height="220" aria-label={zh ? "正在运行滑翔机枪的康威生命游戏。" : "Conway's Game of Life running a glider gun."}></canvas>
+      <canvas
+        id="gol"
+        width="380"
+        height="220"
+        role="application"
+        tabindex="0"
+        aria-label={zh ? "可编辑的康威生命游戏网格，初始显示滑翔机枪。" : "Editable Conway's Game of Life grid, initially showing a glider gun."}
+        aria-describedby="gol-keyboard-help gol-cell-status"
+        aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight Space Enter"
+      ></canvas>
     </div>
     <div class="gol-side">
       <p class="glabel">{zh ? "完整规则" : "The entire rulebook"}</p>
@@ -26,15 +35,16 @@ const zh = Astro.props.locale === "zh";
         <li>{zh ? "其他情况全部死亡或保持死亡。" : "Everything else dies or stays dead."}</li>
       </ul>
       <div class="emergence-controls no-margin" role="group" aria-label={zh ? "生命游戏控制" : "Game of Life controls"}>
-        <button class="simbtn primary" id="gol-play" aria-label={zh ? "暂停或继续生命游戏" : "Pause or resume the Game of Life"}>{zh ? "暂停" : "Pause"}</button>
+        <button class="simbtn primary" id="gol-play" type="button" aria-label={zh ? "暂停生命游戏" : "Pause the Game of Life"}>{zh ? "暂停" : "Pause"}</button>
         {" "}
-        <button class="simbtn" id="gol-gun" aria-label={zh ? "载入滑翔机枪图样" : "Load the glider gun pattern"}>{zh ? "滑翔机枪" : "Glider gun"}</button>
+        <button class="simbtn" id="gol-gun" type="button" aria-label={zh ? "载入滑翔机枪图样" : "Load the glider gun pattern"}>{zh ? "滑翔机枪" : "Glider gun"}</button>
         {" "}
-        <button class="simbtn" id="gol-rand" aria-label={zh ? "生成随机汤图样" : "Generate a random soup pattern"}>{zh ? "随机汤" : "Random soup"}</button>
+        <button class="simbtn" id="gol-rand" type="button" aria-label={zh ? "生成随机汤图样" : "Generate a random soup pattern"}>{zh ? "随机汤" : "Random soup"}</button>
         {" "}
-        <button class="simbtn" id="gol-clear" aria-label={zh ? "清空生命游戏网格" : "Clear the Game of Life grid"}>{zh ? "清空" : "Clear"}</button>
+        <button class="simbtn" id="gol-clear" type="button" aria-label={zh ? "清空生命游戏网格" : "Clear the Game of Life grid"}>{zh ? "清空" : "Clear"}</button>
       </div>
-      <p class="gol-note">{zh ? "点击网格可切换细胞。第 " : "Tap the grid to toggle cells. Generation "}<b id="gol-gen">0</b>{zh ? " 代。" : "."}</p>
+      <p class="gol-note" id="gol-keyboard-help">{zh ? "点击细胞；或聚焦网格，用方向键选择细胞，再按空格键或回车键切换。第 " : "Click a cell, or focus the grid and use the arrow keys to choose one; press Space or Enter to toggle it. Generation "}<b id="gol-gen">0</b>{zh ? " 代。" : "."}</p>
+      <p class="sr-only" id="gol-cell-status" aria-live="polite" aria-atomic="true"></p>
     </div>
   </div>
 </Panel>

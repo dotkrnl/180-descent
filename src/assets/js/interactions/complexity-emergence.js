@@ -276,8 +276,11 @@
     var playing = true;
     var tick = 0;
     var generationEl = document.getElementById("gol-gen");
+    var cellStatus = document.getElementById("gol-cell-status");
     var playButton = document.getElementById("gol-play");
     if (!generationEl || !playButton) return;
+    var cursorX = Math.floor(cols / 2);
+    var cursorY = Math.floor(rows / 2);
 
     function make(){ return new Array(cols * rows).fill(0); }
     function idx(x, y){ return y * cols + x; }
@@ -331,7 +334,30 @@
           if (grid[idx(x, y)]) ctx.fillRect(x * cell + 0.5, y * cell + 0.5, cell - 1, cell - 1);
         }
       }
+      if (document.activeElement === canvas) {
+        ctx.save();
+        ctx.strokeStyle = cssVar("--brass") || cssVar("--ink");
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(cursorX * cell + 0.75, cursorY * cell + 0.75, cell - 1.5, cell - 1.5);
+        ctx.restore();
+      }
       generationEl.textContent = String(generation);
+    }
+
+    function announceCell(){
+      if (!cellStatus) return;
+      var alive = !!grid[idx(cursorX, cursorY)];
+      cellStatus.textContent = text(
+        "Row " + (cursorY + 1) + ", column " + (cursorX + 1) + ": " + (alive ? "alive" : "dead") + " cell.",
+        "第 " + (cursorY + 1) + " 行，第 " + (cursorX + 1) + " 列：" + (alive ? "活" : "死") + "细胞。"
+      );
+    }
+
+    function toggleCell(x, y){
+      if (x < 0 || x >= cols || y < 0 || y >= rows) return false;
+      grid[idx(x, y)] ^= 1;
+      draw();
+      return true;
     }
 
     gun();
@@ -360,7 +386,11 @@
     function setPlay(on){
       playing = on;
       playButton.textContent = on ? text("Pause", "暂停") : text("Play", "播放");
+      playButton.setAttribute("aria-label", on
+        ? text("Pause the Game of Life", "暂停生命游戏")
+        : text("Resume the Game of Life", "继续生命游戏"));
     }
+    setPlay(playing);
     playButton.addEventListener("click", function(){
       setPlay(!playing);
       if (playing && reduceMotion) {
@@ -389,11 +419,29 @@
       var x = Math.floor((clientX - rect.left) * sx / cell);
       var y = Math.floor((clientY - rect.top) * sy / cell);
       if (x >= 0 && x < cols && y >= 0 && y < rows) {
-        grid[idx(x, y)] ^= 1;
-        draw();
+        cursorX = x;
+        cursorY = y;
+        toggleCell(x, y);
+        announceCell();
       }
     }
     canvas.addEventListener("click", function(event){ toggleAt(event.clientX, event.clientY); });
+    canvas.addEventListener("focus", function(){ draw(); announceCell(); });
+    canvas.addEventListener("blur", draw);
+    canvas.addEventListener("keydown", function(event){
+      var handled = true;
+      if (event.key === "ArrowLeft") cursorX = Math.max(0, cursorX - 1);
+      else if (event.key === "ArrowRight") cursorX = Math.min(cols - 1, cursorX + 1);
+      else if (event.key === "ArrowUp") cursorY = Math.max(0, cursorY - 1);
+      else if (event.key === "ArrowDown") cursorY = Math.min(rows - 1, cursorY + 1);
+      else if (event.key === " " || event.key === "Enter" || event.key === "Spacebar") toggleCell(cursorX, cursorY);
+      else handled = false;
+
+      if (!handled) return;
+      event.preventDefault();
+      draw();
+      announceCell();
+    });
     return { start: start, stop: stop };
   });
 
