@@ -92,6 +92,12 @@ class PdfChecker {
     const zhDayOneText = zhDayOnePdf ? await this.extractPdfText(zhDayOnePdf) : null;
 
     this.checkBookText(standardText, zhText);
+    this.errors.push(
+      ...pdfBookLessonCompletenessErrors(standardPdf, standardText, enDays),
+      ...pdfBookLessonCompletenessErrors(deepDivePdf, deepDiveText, enDays),
+      ...pdfBookLessonCompletenessErrors(zhPdf, zhText, zhDays),
+      ...pdfBookLessonCompletenessErrors(zhDeepDivePdf, zhDeepDiveText, zhDays)
+    );
     this.checkAppendixLabels(deepDiveText, dayOneText, zhDeepDiveText, zhDayOneText);
     this.checkAppendixContent(standardText, deepDiveText, dayOneText, zhText, zhDeepDiveText, zhDayOneText);
 
@@ -327,6 +333,35 @@ export function forbiddenPdfAnnotationUriErrors(
       ? [`${file} contains forbidden PDF annotation URI on page ${page}: ${JSON.stringify(uri)}`]
       : [];
   });
+}
+
+export function pdfBookLessonCompletenessErrors(
+  file: string,
+  text: string | null,
+  days: readonly Pick<ArtifactBookDay, "day" | "title">[]
+): string[] {
+  if (text === null) return [];
+  const searchable = normalizePdfLessonMarker(text);
+
+  return days.flatMap((day) => {
+    const dayNumber = String(day.day).padStart(3, "0");
+    const marker = normalizePdfLessonMarker(`${dayNumber} ${day.title}`);
+    return searchable.includes(marker)
+      ? []
+      : [`${file} is missing published lesson marker for day ${dayNumber}: ${day.title}`];
+  });
+}
+
+function normalizePdfLessonMarker(value: string): string {
+  return value
+    .normalize("NFKC")
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .replace(/[‐‑‒–—−]+/g, "-")
+    .replace(/-{2,}/g, "-")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
 }
 
 function hasPdfOutlines({ pdf }: PdfInfo): boolean {

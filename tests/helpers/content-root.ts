@@ -10,6 +10,7 @@ export async function createEmptyContentRoot(prefix: string): Promise<string> {
 }
 
 interface ContentDayOptions {
+  day?: number;
   block?: string;
   enTitle?: string;
   enSummary?: string;
@@ -32,16 +33,17 @@ interface ContentDayAppendixOptions {
 }
 
 export async function writeContentDay(root: string, options: ContentDayOptions = {}): Promise<void> {
+  const day = options.day ?? 1;
   const enTitle = options.enTitle ?? "Fixture";
   const enSummary = options.enSummary ?? "English summary.";
   const enBody = options.enBody ?? "";
   const zhTitle = options.zhTitle ?? "夹具";
   const zhSummary = options.zhSummary ?? "中文简介。";
   const zhBody = options.zhBody ?? "";
-  const dayDir = path.join(contentDaysDir(root), "001-fixture");
+  const dayDir = path.join(contentDaysDir(root), `${String(day).padStart(3, "0")}-fixture`);
   await mkdir(dayDir, { recursive: true });
   const manifest = [
-    "day: 1",
+    `day: ${day}`,
     `block: ${options.block ?? "Fixture"}`,
     "locales:",
     "  en:",

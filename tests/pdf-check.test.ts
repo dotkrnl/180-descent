@@ -5,7 +5,8 @@ import { describe, expect, it } from "vitest";
 import {
   checkPdf,
   forbiddenPdfAnnotationUriErrors,
-  inspectPdfAnnotations
+  inspectPdfAnnotations,
+  pdfBookLessonCompletenessErrors
 } from "@lib/checks/pdf";
 import { bookArtifactPaths, dayArtifactPaths } from "@lib/artifacts/downloads";
 import { createEmptyContentRoot, writeContentDay } from "./helpers/content-root";
@@ -70,6 +71,34 @@ describe("pdf check helpers", () => {
         `fixture.pdf contains forbidden PDF annotation URI on page 1: ${JSON.stringify(uri)}`
       ))
     );
+  });
+
+  it("reports a missing later lesson when early lesson markers remain", () => {
+    const englishDays = [
+      { day: 1, title: "What Is Knowledge?" },
+      { day: 2, title: "The Scientific Method & Demarcation" },
+      { day: 3, title: "Logic & Valid Inference" }
+    ];
+    const chineseDays = [
+      { day: 1, title: "知识是什么？" },
+      { day: 2, title: "科学方法与划界问题" },
+      { day: 3, title: "逻辑与有效推理" }
+    ];
+
+    expect(pdfBookLessonCompletenessErrors(
+      "english.pdf",
+      "001\nWhat Is Knowledge?\n002\nThe Scientific Method & Demarcation",
+      englishDays
+    )).toEqual([
+      "english.pdf is missing published lesson marker for day 003: Logic & Valid Inference"
+    ]);
+    expect(pdfBookLessonCompletenessErrors(
+      "chinese.pdf",
+      "001\n知识是什么?\n002\n科学方法与划界问题",
+      chineseDays
+    )).toEqual([
+      "chinese.pdf is missing published lesson marker for day 003: 逻辑与有效推理"
+    ]);
   });
 });
 

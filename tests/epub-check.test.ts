@@ -37,6 +37,23 @@ describe("epub check helpers", () => {
     expect(errors.some((error) => error.startsWith(`${artifact} cannot be parsed as EPUB ZIP (`))).toBe(true);
   });
 
+  it("requires later published days in every full-book edition", async () => {
+    const root = await createEmptyContentRoot("180-epub-book-completeness-");
+    await writeContentDay(root, { day: 1, enTitle: "First Lesson", zhTitle: "第一课" });
+    await writeContentDay(root, { day: 2, enTitle: "Second Lesson", zhTitle: "第二课" });
+    await writeContentDay(root, { day: 3, enTitle: "Later Lesson", zhTitle: "后续课程" });
+    const editions = bookArtifactPaths("epub");
+    for (const edition of editions) {
+      await writeEpubFixture(root, edition, '<p><a href="day-002.xhtml#present-anchor">Next</a></p>');
+    }
+
+    const errors = await checkEpub({ root });
+
+    for (const edition of editions) {
+      expect(errors).toContain(`${edition} missing OEBPS/day-003.xhtml`);
+    }
+  });
+
   it("reports missing local EPUB link anchors", async () => {
     const root = await createEmptyContentRoot("180-epub-anchor-missing-");
     const edition = bookArtifactPaths("epub")[0];

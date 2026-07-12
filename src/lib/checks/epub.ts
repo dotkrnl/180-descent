@@ -31,14 +31,12 @@ type EpubEdition = BaseEpubEdition & (
   }
 );
 
-const BOOK_REQUIRED = [
+const BOOK_BASE_REQUIRED = [
   "mimetype",
   "META-INF/container.xml",
   "OEBPS/content.opf",
   "OEBPS/nav.xhtml",
-  "OEBPS/introduction.xhtml",
-  "OEBPS/day-001.xhtml",
-  "OEBPS/day-002.xhtml"
+  "OEBPS/introduction.xhtml"
 ];
 
 export async function checkEpub(options: EpubCheckOptions): Promise<string[]> {
@@ -77,41 +75,48 @@ function isInsideSvg(text: string, index: number): boolean {
 }
 
 async function collectEpubEditions(root: string): Promise<EpubEdition[]> {
+  const enDays = await loadArtifactBookDays(root, "en");
+  const zhDays = await loadArtifactBookDays(root, "zh");
   const [enStandard, enDeepDive, zhStandard, zhDeepDive] = bookArtifactPaths("epub");
   const editions: EpubEdition[] = [
     {
       file: enStandard,
       deepDive: false,
       appendixPatterns: ENGLISH_DAY_ONE_APPENDIX_PATTERNS,
-      required: BOOK_REQUIRED
+      required: bookRequiredFiles(enDays)
     },
     {
       file: enDeepDive,
       deepDive: true,
       appendixPatterns: ENGLISH_DAY_ONE_APPENDIX_PATTERNS,
       optionalAppendixLabel: /Optional appendix/,
-      required: BOOK_REQUIRED
+      required: bookRequiredFiles(enDays)
     },
     {
       file: zhStandard,
       deepDive: false,
       appendixPatterns: CHINESE_DAY_ONE_APPENDIX_PATTERNS,
-      required: BOOK_REQUIRED
+      required: bookRequiredFiles(zhDays)
     },
     {
       file: zhDeepDive,
       deepDive: true,
       appendixPatterns: CHINESE_DAY_ONE_APPENDIX_PATTERNS,
       optionalAppendixLabel: /可选附录/,
-      required: BOOK_REQUIRED
+      required: bookRequiredFiles(zhDays)
     }
   ];
 
-  const enDays = await loadArtifactBookDays(root, "en");
-  const zhDays = await loadArtifactBookDays(root, "zh");
   addPerDayEditions(editions, enDays, "en");
   addPerDayEditions(editions, zhDays, "zh");
   return editions;
+}
+
+function bookRequiredFiles(days: readonly ArtifactBookDay[]): string[] {
+  return [
+    ...BOOK_BASE_REQUIRED,
+    ...days.map((day) => `OEBPS/${day.xhtml}`)
+  ];
 }
 
 function addPerDayEditions(editions: EpubEdition[], days: ArtifactBookDay[], locale: Locale): void {
