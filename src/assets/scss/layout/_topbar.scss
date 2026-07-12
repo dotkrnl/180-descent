@@ -574,6 +574,16 @@
     gap: .3rem .75rem;
   }
 
+  // Lesson reading keeps the compact running head, but does not need the
+  // full site navigation as a second header row. Static pages retain it.
+  .atlas-shell.page-lesson .topbar-row {
+    grid-template-areas: "course run actions";
+  }
+
+  .atlas-shell.page-lesson .topnav {
+    display: none;
+  }
+
   .atlas-shell .course {
     grid-area: course;
     overflow: hidden;
