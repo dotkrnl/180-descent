@@ -4,7 +4,12 @@ const redirectHosts = new Set([
   "www.180d.io"
 ]);
 
-export function onRequest(context) {
+export interface MiddlewareContext {
+  request: Request;
+  next(): Promise<Response>;
+}
+
+export function onRequest(context: MiddlewareContext): Response | Promise<Response> {
   const url = new URL(context.request.url);
 
   if (redirectHosts.has(url.hostname)) {

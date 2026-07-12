@@ -72,7 +72,7 @@ Primary inspection points:
 - `src/assets/scss/layout/_topbar.scss`
 - `src/assets/scss/layout/_rail.scss`
 - `src/assets/scss/layout/_hero.scss`
-- `src/assets/scss/pages/_pages.scss`
+- `src/assets/scss/pages/` feature partials (`_pages.scss` only controls order)
 - `src/assets/scss/content/_lesson.scss`
 
 ### 1. Establish the new visual foundation

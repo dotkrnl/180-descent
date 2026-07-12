@@ -1,0 +1,38 @@
+// ---- Syllabus depth chart ---------------------------------------------
+.syllabus-progress{display:grid;grid-template-columns:1fr;gap:1rem;margin:2rem 0 1.4rem;padding:1rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+@media(min-width:640px){.syllabus-progress{grid-template-columns:1fr 1.35fr;}}
+.progress-label{font-family:"IBM Plex Mono",monospace;font-size:.75rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 .25rem;}
+.progress-number,.progress-next{font-family:"Fraunces",serif;font-size:1.22rem;line-height:1.28;margin:0;color:var(--ink);}
+.syllabus-block-nav{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.3rem 0 1.6rem;font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;}
+.syllabus-block-nav a{border:1px solid var(--line-strong);border-radius:999px;padding:.28rem .55rem;color:var(--ink-soft);background:var(--raised);}
+.syllabus-block-nav a:hover{border-color:var(--accent);color:var(--ink);}
+.depth-chart{margin:2.2rem 0 0;}
+.syllabus-block{margin:0;padding:0;}
+.stratum-head{display:grid;grid-template-columns:3.5rem minmax(0,1fr);gap:1.1rem;align-items:start;padding-top:2.6rem;}
+.stratum-mark{font-family:"Fraunces",serif;font-weight:600;font-size:1.3rem;line-height:1;color:var(--block-accent,var(--accent));background:var(--block-accent-soft,transparent);border:1px solid color-mix(in srgb,var(--block-accent,var(--accent)) 40%,transparent);border-radius:999px;padding:.42rem .75rem;min-width:0;text-align:center;}
+.stratum-range{font-family:"IBM Plex Mono",monospace;font-size:.73rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint);margin:.15rem 0 .25rem;}
+.stratum-head h2{margin:.05rem 0 .45rem;}
+.stratum-summary{color:var(--ink-soft);margin:0;max-width:40rem;}
+.depth-list{list-style:none;margin:1.5rem 0 0;padding:.2rem 0 2.2rem 1.9rem;border-left:2px solid color-mix(in srgb,var(--block-accent,var(--accent)) 36%,var(--line));margin-left:1.75rem;}
+.depth-day{position:relative;display:grid;grid-template-columns:3.1rem minmax(0,1fr);gap:.9rem;align-items:baseline;margin:0;padding:.6rem 0;}
+.depth-day::before{content:"";position:absolute;left:calc(-1.9rem - 6px);top:1.12rem;width:8px;height:8px;border-radius:50%;background:var(--paper);border:2px solid var(--line-strong);}
+.depth-day.is-published::before{background:var(--block-accent,var(--accent));border-color:var(--block-accent,var(--accent));}
+.depth-day.is-here::before{border-color:var(--brass);box-shadow:0 0 0 4px color-mix(in srgb,var(--brass) 24%,transparent);}
+.depth-num{font-family:"IBM Plex Mono",monospace;font-size:.77rem;letter-spacing:.08em;color:var(--block-accent,var(--accent));font-variant-numeric:tabular-nums;}
+.depth-day:not(.is-published) .depth-num{color:var(--ink-faint);}
+.depth-title{font-family:"Fraunces",serif;font-weight:600;font-size:1.12rem;line-height:1.25;margin:0;}
+.depth-day:not(.is-published) .depth-title{color:var(--ink-faint);font-weight:500;}
+.depth-summary{color:var(--ink-soft);font-size:.94em;line-height:1.5;margin:.25rem 0 0;}
+.depth-status{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:.2rem 0 0;}
+.depth-day.is-here .depth-status{color:var(--brass);}
+@media(max-width:44.99rem){
+  .stratum-head{grid-template-columns:3.2rem minmax(0,1fr);}
+  .depth-list{padding-left:1.2rem;margin-left:1.6rem;}
+  .depth-day{grid-template-columns:1fr;gap:.1rem;}
+  .depth-day::before{left:calc(-1.2rem - 6px);}
+}
+.next-summary{border-top:2px solid var(--brass);padding-top:1.8rem;margin-top:3.5rem;}
+.upcoming-list{list-style:none;padding:0;margin:1.2rem 0;}
+.upcoming-list li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.75rem;align-items:baseline;border-top:1px solid var(--line);padding:.6rem 0;margin:0;}
+.upcoming-list li:last-child{border-bottom:1px solid var(--line);}
+.upcoming-day{color:var(--brass);white-space:nowrap;}

@@ -1,0 +1,98 @@
+// ---- Download field editions -----------------------------------------
+
+.atlas-page--downloads .download-editions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(1.5rem,4vw,4rem);
+  width:100%;
+  margin:0;
+}
+.atlas-page--downloads .download-edition{
+  position:relative;
+  min-width:0;
+  border:1px solid var(--line-strong);
+  border-top:3px solid var(--accent);
+  background:
+    linear-gradient(160deg,color-mix(in srgb,var(--raised) 72%,var(--paper)),var(--raised));
+  border-radius:0 0 var(--radius-1) var(--radius-1);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.atlas-page--downloads .download-edition--deep{
+  border-top-color:var(--brass);
+}
+.atlas-page--downloads .download-edition-head{
+  min-height:13rem;
+  padding:clamp(1.35rem,3vw,2.4rem);
+  border-bottom:1px solid var(--line-strong);
+}
+.atlas-page--downloads .download-edition-head h2{
+  margin:.4rem 0 0;
+  font-size:clamp(2rem,1.45rem + 1.4vw,3.1rem);
+  line-height:.96;
+  letter-spacing:-.02em;
+}
+.atlas-page--downloads .download-edition-head>p:last-child{
+  max-width:29rem;
+  margin:1rem 0 0;
+  color:var(--ink-soft);
+  font-size:1rem;
+  line-height:1.45;
+}
+.atlas-page--downloads .download-edition .download-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+  width:100%;
+  margin:0;
+  border:0;
+}
+.atlas-page--downloads .download-edition .download-card{
+  display:grid;
+  grid-template-columns:4.5rem minmax(0,1fr);
+  gap:.35rem 1rem;
+  align-items:start;
+  padding:1.2rem clamp(1.25rem,3vw,2.2rem) 1.3rem;
+  border:0;
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  transition:background var(--duration-fast) var(--ease-out-atlas);
+}
+.atlas-page--downloads .download-edition .download-card:hover{
+  background:color-mix(in srgb,var(--accent) 4%,transparent);
+}
+.atlas-page--downloads .download-edition .download-card:last-child{
+  border-bottom:0;
+}
+.atlas-page--downloads .download-card .card-kicker{
+  grid-column:1;
+  grid-row:1 / span 2;
+  margin:.2rem 0 0;
+  color:var(--accent);
+}
+.atlas-page--downloads .download-edition--deep .download-card .card-kicker{
+  color:var(--brass);
+}
+.atlas-page--downloads .download-card h3{
+  grid-column:2;
+  margin:0;
+  font-family:var(--font-display);
+  font-size:1.3rem;
+  line-height:1.15;
+}
+.atlas-page--downloads .download-card h3 a{
+  border-bottom-color:transparent;
+}
+.atlas-page--downloads .download-card:hover h3 a,
+.atlas-page--downloads .download-card:focus-within h3 a{
+  border-bottom-color:currentColor;
+}
+.atlas-page--downloads .download-card p:not(.card-kicker){
+  grid-column:2;
+  margin:.45rem 0 0;
+  color:var(--ink-soft);
+  font-size:.98rem;
+  line-height:1.43;
+}

@@ -7,6 +7,37 @@ import Term from "@app/components/lesson/Term.astro";
 
 type Kind = "peek" | "conformal" | "ppi" | "paths" | "benchmark";
 
+interface Control {
+  id: string;
+  label: string;
+  valueId: string;
+  value: string;
+  min: string;
+  max: string;
+  step?: string;
+  inputValue?: string;
+  math?: string;
+  mathAfter?: boolean;
+}
+
+interface Metric {
+  label: string;
+  meter: string;
+  bar: string;
+  valueId: string;
+  value: string;
+}
+
+interface PanelCopy {
+  id: string;
+  title: string;
+  heading: string;
+  controls: Control[];
+  metrics?: Metric[];
+  metricNote?: string;
+  readout: string;
+}
+
 interface Props {
   kind: Kind;
   locale?: "en" | "zh";
@@ -16,7 +47,7 @@ const zh = Astro.props.locale === "zh";
 const kind = Astro.props.kind;
 const prefix = "appendix-d006-the-incoming-wave-";
 
-const panels = {
+const panels: Record<Kind, PanelCopy> = {
   peek: {
     id: "peekPanel",
     title: zh ? "交互式 · 可选停止" : "Interactive · optional stopping",
@@ -144,7 +175,7 @@ const panels = {
       : "Healthy evaluation rotates or hides tests, audits contamination, limits leaderboard overfitting, and reports uncertainty around rank differences.",
     readout: "benchRead"
   }
-} as const;
+};
 
 const panel = panels[kind];
 ---
@@ -214,7 +245,7 @@ const panel = panels[kind];
         </>
       ) : (
         <>
-          {panel.metrics.map((metric) => (
+          {(panel.metrics ?? []).map((metric) => (
             <div class="metric"><span class="lab">{metric.label}</span><progress class={`meter ${metric.meter}`.trim()} id={`${prefix}${metric.bar}`} max="100" value="0"></progress><span id={`${prefix}${metric.valueId}`}>{metric.value}</span></div>
           ))}
           <p class="note">{panel.metricNote}</p>

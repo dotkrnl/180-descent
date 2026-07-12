@@ -677,7 +677,9 @@ describe("target content registry", () => {
       "deeper-waters:en",
       "deeper-waters:zh"
     ]);
-    expect(day009?.manifest.interactionScripts).toEqual([]);
+    expect(day009?.manifest.interactionScripts).toEqual([
+      "systems-thinking-feedback"
+    ]);
     expect(day009?.bodies.en.source).toContain("Day9Interactive");
     expect(day009?.bodies.en.source).toContain("Day9StaticFigure");
 

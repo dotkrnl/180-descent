@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
+import { bookScriptTags, readBookScripts } from "./helpers/book-scripts";
 
 const storageKey = "180-descent-reading-progress";
 const origin = "http://reading-progress.test";
@@ -19,11 +18,11 @@ type ReadingRecord = {
 
 type Lesson = Pick<ReadingRecord, "day" | "url" | "label" | "title" | "summary">;
 
-let bookScript = "";
+let bookScripts: Record<string, string> = {};
 let browser: Browser;
 
 beforeAll(async () => {
-  bookScript = await readFile(path.join(process.cwd(), "src/assets/js/book.js"), "utf8");
+  bookScripts = await readBookScripts();
   browser = await chromium.launch({ headless: true });
 }, 30_000);
 
@@ -37,7 +36,7 @@ function lessonPage(lesson: Lesson): string {
       <head>
         <meta charset="utf-8">
         <style>body { margin: 0; } .spacer { height: 5000px; }</style>
-        <script src="/book.js" defer></script>
+        ${bookScriptTags()}
       </head>
       <body>
         <main
@@ -69,10 +68,11 @@ async function openLesson(
   const page = await context.newPage();
   await page.route(`${origin}/**`, async (route) => {
     const pathname = new URL(route.request().url()).pathname;
+    const script = bookScripts[pathname];
     await route.fulfill({
       status: 200,
-      contentType: pathname === "/book.js" ? "application/javascript" : "text/html",
-      body: pathname === "/book.js" ? bookScript : lessonPage(lesson)
+      contentType: script === undefined ? "text/html" : "application/javascript",
+      body: script ?? lessonPage(lesson)
     });
   });
   await page.goto(`${origin}${lesson.url}`);

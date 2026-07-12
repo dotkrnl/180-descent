@@ -1,10 +1,12 @@
 ---
 import BookShell from "@app/layouts/BookShell.astro";
+import type { PageKind } from "@app/page-kind";
 import { getBookData } from "@app/site-data";
 import type { Locale } from "@lib/schemas/day";
 
 interface Props {
   locale: Locale;
+  pageKind: Exclude<PageKind, "home" | "lesson">;
   title: string;
   subtitle?: string;
   eyebrow?: string;
@@ -14,29 +16,21 @@ interface Props {
 }
 
 const book = await getBookData();
-const { locale, title, subtitle, eyebrow, description, canonicalPath, alternatePath } = Astro.props;
+const { locale, pageKind, title, subtitle, eyebrow, description, canonicalPath, alternatePath } = Astro.props;
 const isZh = locale === "zh";
-const pageKind = canonicalPath.includes("syllabus")
-  ? "syllabus"
-  : canonicalPath.includes("downloads")
-    ? "downloads"
-    : canonicalPath.includes("credits")
-      ? "credits"
-      : canonicalPath.includes("introduction")
-        ? "introduction"
-        : "chapter";
 const folioLabels = {
   syllabus: isZh ? "路线 / 001—180" : "Route / 001—180",
   downloads: isZh ? "便携版本 / 04" : "Field editions / 04",
   credits: isZh ? "来源档案 / 开放许可" : "Source register / Open licenses",
   introduction: isZh ? "起始坐标 / 000" : "Starting coordinates / 000",
-  chapter: isZh ? "研究图册" : "Research atlas"
+  page: isZh ? "研究图册" : "Research atlas"
 };
 ---
 <BookShell
   title={title}
   description={description}
   locale={locale}
+  pageKind={pageKind}
   canonicalPath={canonicalPath}
   alternatePath={alternatePath}
 >

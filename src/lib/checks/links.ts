@@ -11,6 +11,7 @@ import { siteFileForUrlPath, urlForSiteFile } from "@lib/static-site/url";
 
 interface LinkCheckOptions {
   root: string;
+  requireArtifactTargets?: boolean;
 }
 
 interface LinkCheckFailure {
@@ -46,6 +47,7 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
       const target = siteFileForUrlPath(builtSiteDir, pathname);
 
       if (!target || !await pathExists(target)) {
+        if (options.requireArtifactTargets === false && isArtifactPath(pathname)) continue;
         failures.push({
           message: `Broken internal link ${href} in ${toPosixRelative(options.root, file)}`
         });
@@ -65,6 +67,10 @@ export async function checkLinks(options: LinkCheckOptions): Promise<LinkCheckFa
 
   failures.push(...await checkFutureLinks(options.root, daysDir, book.totalDays));
   return failures;
+}
+
+function isArtifactPath(pathname: string): boolean {
+  return pathname.startsWith("/downloads/") && /\.(?:epub|pdf)$/.test(pathname);
 }
 
 async function loadHtmlDocument(file: string): Promise<HtmlDocument> {

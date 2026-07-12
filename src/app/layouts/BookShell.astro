@@ -1,7 +1,11 @@
 ---
 import { getBookData } from "@app/site-data";
 import "../../assets/scss/book.scss";
-import bookScriptUrl from "../../assets/js/book.js?url";
+import accessibilityScriptUrl from "../../assets/js/book/accessibility.js?url&no-inline";
+import lessonChromeScriptUrl from "../../assets/js/book/lesson-chrome.js?url&no-inline";
+import readingProgressScriptUrl from "../../assets/js/book/reading-progress.js?url&no-inline";
+import syllabusMapScriptUrl from "../../assets/js/book/syllabus-map.js?url&no-inline";
+import themeScriptUrl from "../../assets/js/book/theme.js?url&no-inline";
 import brandLight from "../../assets/images/brand/180-descent-icon-96.png";
 import brandDark from "../../assets/images/brand/180-descent-icon-dark-96.png";
 import faviconLight from "../../assets/images/brand/favicon-32.png";
@@ -10,11 +14,13 @@ import appleTouchIcon from "../../assets/images/brand/apple-touch-icon.png";
 import { bookSocialImagePath } from "@lib/assets/social-images";
 import { homeUrl, staticPageUrl } from "@lib/static-site/routes";
 import { SITE_THEME_COLORS } from "@app/theme-colors";
+import type { PageKind } from "@app/page-kind";
 
 interface Props {
   title?: string;
   description?: string;
   locale: "en" | "zh";
+  pageKind: PageKind;
   canonicalPath: string;
   alternatePath?: string;
   scripts?: string[];
@@ -32,7 +38,7 @@ const socialImageAssets = Object.fromEntries(
     imagePath
   ])
 );
-const { title, description, locale, canonicalPath, alternatePath, scripts = [], socialImagePath } = Astro.props;
+const { title, description, locale, pageKind, canonicalPath, alternatePath, scripts = [], socialImagePath } = Astro.props;
 const isZh = locale === "zh";
 const uiTitle = isZh ? book.zh.title : book.title;
 const uiSubtitle = isZh ? book.zh.subtitle : book.subtitle;
@@ -57,19 +63,6 @@ const syllabusUrl = staticPageUrl(locale, "syllabus");
 const downloadsUrl = staticPageUrl(locale, "downloads");
 const creditsUrl = staticPageUrl(locale, "credits");
 const currentPath = Astro.url.pathname;
-const pageKind = currentPath === homePath
-  ? "home"
-  : currentPath.includes("/days/")
-    ? "lesson"
-    : currentPath.includes("/syllabus")
-      ? "syllabus"
-      : currentPath.includes("/downloads")
-        ? "downloads"
-        : currentPath.includes("/credits")
-          ? "credits"
-          : currentPath.includes("/introduction")
-            ? "introduction"
-            : "page";
 const isLesson = pageKind === "lesson";
 const { light: lightThemeColor, dark: darkThemeColor } = SITE_THEME_COLORS;
 const structuredData = {
@@ -148,7 +141,11 @@ const structuredData = {
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={socialImageUrl} />
-    <script src={bookScriptUrl} defer></script>
+    <script src={themeScriptUrl} defer></script>
+    <script src={accessibilityScriptUrl} defer></script>
+    <script src={readingProgressScriptUrl} defer></script>
+    <script src={lessonChromeScriptUrl} defer></script>
+    <script src={syllabusMapScriptUrl} defer></script>
     {scripts.map((script) => <script src={script} defer></script>)}
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>

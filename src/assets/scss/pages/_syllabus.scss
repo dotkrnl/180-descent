@@ -1,0 +1,436 @@
+// ---- Syllabus: route overview and dependable index -------------------
+
+.atlas-page--syllabus .syllabus-brief{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(18rem,.65fr);
+  gap:clamp(2rem,6vw,6rem);
+  width:100%;
+  margin:0 0 clamp(3.5rem,7vw,7rem);
+  padding-bottom:clamp(2rem,4vw,3.5rem);
+  border-bottom:1px solid var(--line);
+}
+.atlas-page--syllabus .syllabus-brief-copy{
+  max-width:var(--prose-max);
+}
+.atlas-page--syllabus .syllabus-brief-copy>p{
+  margin-top:0;
+}
+.atlas-page--syllabus .syllabus-brief-copy>p+p{
+  margin-top:1.25rem;
+}
+.atlas-page--syllabus .syllabus-progress{
+  display:block;
+  width:100%;
+  margin:0;
+  padding:0;
+  border:0;
+  border-top:2px solid var(--ink);
+}
+.atlas-page--syllabus .syllabus-progress>div{
+  padding:1rem 0 1.1rem;
+  border-bottom:1px solid var(--line);
+}
+.atlas-page--syllabus .syllabus-progress>div+div{
+  padding-left:0;
+  border-left:0;
+}
+.atlas-page--syllabus .syllabus-map{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(17rem,.62fr) minmax(0,1fr);
+  grid-template-areas:
+    "head route"
+    "status route";
+  gap:1rem clamp(2rem,5vw,5rem);
+  width:100%;
+  margin:0 0 clamp(4rem,8vw,8rem);
+  padding:clamp(1.5rem,3vw,2.5rem);
+  border:1px solid var(--line-strong);
+  border-top:3px solid var(--ink);
+  background:color-mix(in srgb,var(--raised) 70%,var(--paper));
+}
+.atlas-page--syllabus .syllabus-map-head{
+  grid-area:head;
+  display:block;
+  align-self:stretch;
+  margin:0;
+}
+// The overview brief follows the reader down the tall block list instead of
+// leaving the left column empty.
+@media (min-width:60rem){
+  .atlas-page--syllabus .syllabus-map{
+    grid-template-rows:1fr auto;
+  }
+  .atlas-page--syllabus .syllabus-map-head>div{
+    position:sticky;
+    top:4.6rem;
+  }
+}
+.atlas-page--syllabus .syllabus-map-head h2{
+  margin:.3rem 0 0;
+  font-size:clamp(2rem,1.4rem + 1.8vw,3.6rem);
+  line-height:.98;
+}
+.atlas-page--syllabus .syllabus-map-head>div>p:last-child{
+  max-width:26rem;
+  margin:1rem 0 0;
+  color:var(--ink-soft);
+  font-size:1rem;
+  line-height:1.5;
+}
+.atlas-page--syllabus .syllabus-map-blocks{
+  position:relative;
+  grid-area:route;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+  border:0;
+  border-top:1px solid var(--line-strong);
+  border-bottom:1px solid var(--line-strong);
+}
+.atlas-page--syllabus .syllabus-map-blocks::before{
+  position:absolute;
+  z-index:2;
+  top:0;
+  bottom:0;
+  left:3.69rem;
+  width:1px;
+  background:var(--line-strong);
+  content:"";
+  pointer-events:none;
+}
+.atlas-page--syllabus .syllabus-map .map-block{
+  position:relative;
+  display:grid;
+  grid-template-columns:4rem minmax(0,1fr) minmax(7rem,auto);
+  gap:1rem;
+  align-items:center;
+  justify-content:flex-end;
+  min-height:clamp(4.5rem,calc(3.15rem + var(--route-days,10)*.14rem),6.8rem);
+  overflow:hidden;
+  padding:.75rem .75rem .78rem 0;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:transparent;
+  color:var(--ink);
+  text-align:left;
+  transform:none;
+}
+.atlas-page--syllabus .syllabus-map .map-block:last-child{
+  border-bottom:0;
+}
+.atlas-page--syllabus .syllabus-map .map-block:hover,
+.atlas-page--syllabus .syllabus-map .map-block:focus-visible,
+.atlas-page--syllabus .syllabus-map .map-block[aria-pressed="true"]{
+  background:color-mix(in srgb,var(--block-accent,var(--accent)) 10%,var(--raised));
+  transform:none;
+}
+.atlas-page--syllabus .syllabus-map[data-focused] .map-block:not([aria-pressed="true"]){
+  opacity:.52;
+}
+.atlas-page--syllabus .syllabus-map .map-block-id{
+  position:relative;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  color:var(--block-accent,var(--accent));
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.08em;
+}
+.atlas-page--syllabus .syllabus-map .map-block-id i{
+  order:2;
+  display:block;
+  flex:0 0 auto;
+  width:.62rem;
+  height:.62rem;
+  border:2px solid var(--paper);
+  border-radius:50%;
+  background:var(--block-accent,var(--accent));
+  box-shadow:0 0 0 1px var(--block-accent,var(--accent));
+}
+.atlas-page--syllabus .map-block-copy{
+  min-width:0;
+}
+.atlas-page--syllabus .syllabus-map .map-block-title{
+  display:block;
+  margin:0;
+  color:var(--ink);
+  font-family:var(--font-display);
+  font-size:clamp(1rem,.94rem + .25vw,1.23rem);
+  line-height:1.12;
+  overflow-wrap:anywhere;
+}
+.atlas-page--syllabus .syllabus-map .map-block-summary{
+  position:static;
+  display:block;
+  width:auto;
+  max-height:none;
+  margin:.28rem 0 0;
+  padding:0;
+  overflow:visible;
+  border:0;
+  background:transparent;
+  color:var(--ink-soft);
+  font-family:var(--font-body);
+  font-size:.92rem;
+  line-height:1.35;
+  opacity:1;
+  pointer-events:none;
+  transform:none;
+}
+.atlas-page--syllabus .map-block-meta{
+  position:relative;
+  z-index:1;
+  min-width:0;
+  text-align:right;
+}
+.atlas-page--syllabus .syllabus-map .map-block-range,
+.atlas-page--syllabus .map-block-progress{
+  display:block;
+  margin:0;
+  font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.atlas-page--syllabus .syllabus-map .map-block-range{
+  color:var(--ink);
+  font-size:.7rem;
+  letter-spacing:.05em;
+}
+.atlas-page--syllabus .map-block-progress{
+  margin-top:.25rem;
+  color:var(--ink-faint);
+  font-size:.65rem;
+  letter-spacing:.04em;
+}
+.atlas-page--syllabus .syllabus-map .map-block-fill{
+  position:absolute;
+  z-index:0;
+  right:auto;
+  bottom:0;
+  left:0;
+  width:calc(var(--map-fill,0)*100%);
+  height:3px;
+  background:var(--block-accent,var(--accent));
+}
+.atlas-page--syllabus .syllabus-map-status{
+  grid-area:status;
+  align-self:end;
+  margin:0;
+  padding-top:1rem;
+  border-top:1px solid var(--line);
+  color:var(--ink-faint);
+  font-family:var(--font-mono);
+  font-size:.7rem;
+  line-height:1.5;
+}
+.atlas-page--syllabus .syllabus-index{
+  width:100%;
+  margin:0;
+}
+.atlas-page--syllabus .syllabus-index-head{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(17rem,.7fr);
+  gap:clamp(2rem,5vw,5rem);
+  align-items:end;
+  padding-bottom:1.25rem;
+  border-bottom:2px solid var(--ink);
+}
+.atlas-page--syllabus .syllabus-index-head::after{
+  position:absolute;
+  right:0;
+  bottom:-6px;
+  left:0;
+  height:1px;
+  background:var(--line-strong);
+  content:"";
+}
+.atlas-page--syllabus .syllabus-index-head h2{
+  margin:.25rem 0 0;
+  font-size:clamp(2rem,1.45rem + 2vw,3.6rem);
+  line-height:1;
+}
+.atlas-page--syllabus .syllabus-index-head>p{
+  margin:0;
+  color:var(--ink-soft);
+  font-size:1rem;
+  line-height:1.45;
+}
+// De-boxed block strip: plain mono labels resting on a single hairline, each
+// underlined in its own block hue on hover. Sticky offset matches the topbar
+// height exactly so no content peeks through the seam while scrolling.
+.atlas-page--syllabus .syllabus-block-nav{
+  position:sticky;
+  z-index:8;
+  top:3.35rem;
+  display:flex;
+  flex-wrap:nowrap;
+  gap:clamp(1rem,2.4vw,1.9rem);
+  width:100%;
+  margin:0 0 1rem;
+  overflow-x:auto;
+  border-top:0;
+  border-bottom:1px solid var(--line-strong);
+  background:color-mix(in srgb,var(--paper) 96%,transparent);
+  font-family:var(--font-mono);
+  scrollbar-width:thin;
+  backdrop-filter:blur(12px);
+}
+.atlas-page--syllabus .syllabus-block-nav a,
+.atlas-page--syllabus .syllabus-block-nav a:first-child{
+  flex:0 0 auto;
+  min-width:0;
+  min-height:2.8rem;
+  padding:.85rem 0 .7rem;
+  border:0;
+  border-bottom:2px solid transparent;
+  border-radius:0;
+  margin-bottom:-1px;
+  background:transparent;
+  color:var(--ink-faint);
+  font-size:.68rem;
+  letter-spacing:.08em;
+  text-align:center;
+  white-space:nowrap;
+  transition:border-color var(--duration-fast) var(--ease-out-atlas),color var(--duration-fast) var(--ease-out-atlas);
+}
+.atlas-page--syllabus .syllabus-block-nav a:hover,
+.atlas-page--syllabus .syllabus-block-nav a:focus-visible{
+  border-bottom-color:var(--block-accent,var(--accent));
+  background:transparent;
+  color:var(--ink);
+}
+.atlas-page--syllabus .depth-chart{
+  width:100%;
+  margin:0;
+}
+.atlas-page--syllabus .syllabus-block{
+  display:grid;
+  grid-template-columns:minmax(15rem,.62fr) minmax(0,1.38fr);
+  gap:clamp(2rem,5vw,5rem);
+  margin:0;
+  padding:clamp(2.5rem,5vw,5rem) 0;
+  border-top:1px solid var(--line-strong);
+  scroll-margin-top:7.2rem;
+}
+.atlas-page--syllabus .syllabus-block:first-child{
+  border-top:0;
+}
+.atlas-page--syllabus .stratum-head,
+.atlas-page--syllabus .syllabus-block:not(:first-child) .stratum-head{
+  display:grid;
+  grid-template-columns:6.5rem minmax(0,1fr);
+  gap:1rem;
+  align-content:start;
+  padding:0;
+  border-top:0;
+}
+.atlas-page--syllabus .stratum-mark{
+  min-width:0;
+  padding:0;
+  border:0;
+  border-top:3px solid var(--block-accent,var(--accent));
+  border-radius:0;
+  background:transparent;
+  color:var(--block-accent,var(--accent));
+  font-family:var(--font-display);
+  font-size:clamp(2.6rem,2rem + 1.5vw,4rem);
+  font-weight:500;
+  line-height:1.1;
+  text-align:left;
+  letter-spacing:-.02em;
+}
+.atlas-page--syllabus .stratum-range{
+  margin:0 0 .4rem;
+  color:var(--ink-faint);
+}
+.atlas-page--syllabus .stratum-head h2{
+  margin:0;
+  font-size:clamp(1.55rem,1.25rem + 1vw,2.35rem);
+  line-height:1;
+  letter-spacing:-.015em;
+}
+.atlas-page--syllabus .stratum-summary{
+  margin:.75rem 0 0;
+  color:var(--ink-soft);
+  font-size:1rem;
+  line-height:1.45;
+}
+.atlas-page--syllabus .depth-list{
+  align-self:start;
+  margin:0;
+  padding:0 0 0 1.55rem;
+  border-left:1px solid color-mix(in srgb,var(--block-accent,var(--accent)) 46%,var(--line));
+}
+.atlas-page--syllabus .depth-day{
+  position:relative;
+  display:grid;
+  grid-template-columns:3.5rem minmax(0,1fr);
+  gap:.75rem;
+  align-items:start;
+  margin:0;
+  padding:.65rem 0 .72rem;
+  border-top:1px solid var(--line);
+  transition:background var(--duration-fast) var(--ease-out-atlas);
+}
+.atlas-page--syllabus .depth-day:hover{
+  background:color-mix(in srgb,var(--block-accent,var(--accent)) 4%,transparent);
+}
+.atlas-page--syllabus .depth-day:first-child{
+  border-top:0;
+}
+.atlas-page--syllabus .depth-day::before{
+  left:calc(-1.55rem - 4px);
+  top:1rem;
+  width:7px;
+  height:7px;
+  border:1px solid var(--line-strong);
+  background:var(--paper);
+}
+.atlas-page--syllabus .depth-day.is-published::before{
+  border-color:var(--block-accent,var(--accent));
+  background:var(--block-accent,var(--accent));
+}
+.atlas-page--syllabus .depth-day.is-here::before{
+  border-color:var(--brass);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--brass) 18%,transparent);
+}
+.atlas-page--syllabus .depth-num{
+  padding-top:.06rem;
+  font-size:.74rem;
+}
+.atlas-page--syllabus .depth-title{
+  font-size:1.05rem;
+  line-height:1.22;
+}
+.atlas-page--syllabus .depth-summary{
+  margin:.26rem 0 0;
+  font-size:.94rem;
+  line-height:1.4;
+}
+.atlas-page--syllabus .depth-status{
+  margin:.2rem 0 0;
+  font-size:.66rem;
+}
+// On wide rows the planned/next tag sits quietly on the title line instead of
+// stacking under every unpublished day.
+@media (min-width:45rem){
+  .atlas-page--syllabus .depth-status{
+    position:absolute;
+    top:.92rem;
+    right:0;
+    margin:0;
+  }
+  .atlas-page--syllabus .depth-day:not(.is-published) .depth-title{
+    padding-right:7.5rem;
+  }
+}
+.atlas-page--syllabus .next-summary{
+  max-width:var(--prose-max);
+  margin:clamp(4rem,8vw,8rem) auto 0;
+  padding-top:2rem;
+}

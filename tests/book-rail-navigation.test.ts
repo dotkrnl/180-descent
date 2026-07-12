@@ -1,14 +1,13 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
+import { bookScriptTags, readBookScripts } from "./helpers/book-scripts";
 
 const origin = "http://rail-navigation.test";
-let bookScript = "";
+let bookScripts: Record<string, string> = {};
 let browser: Browser;
 
 beforeAll(async () => {
-  bookScript = await readFile(path.join(process.cwd(), "src/assets/js/book.js"), "utf8");
+  bookScripts = await readBookScripts();
   browser = await chromium.launch({ headless: true });
 }, 30_000);
 
@@ -21,10 +20,11 @@ async function openLesson(): Promise<{ context: BrowserContext; page: Page }> {
   const page = await context.newPage();
   await page.route(`${origin}/**`, async (route) => {
     const pathname = new URL(route.request().url()).pathname;
+    const script = bookScripts[pathname];
     await route.fulfill({
       status: 200,
-      contentType: pathname === "/book.js" ? "application/javascript" : "text/html",
-      body: pathname === "/book.js" ? bookScript : lessonPage()
+      contentType: script === undefined ? "text/html" : "application/javascript",
+      body: script ?? lessonPage()
     });
   });
   await page.goto(`${origin}/days/008-complexity-and-emergence/`);
@@ -34,7 +34,10 @@ async function openLesson(): Promise<{ context: BrowserContext; page: Page }> {
 function lessonPage(): string {
   return `<!doctype html>
     <html lang="en">
-      <head><meta charset="utf-8"><script src="/book.js" defer></script></head>
+      <head>
+        <meta charset="utf-8">
+        ${bookScriptTags()}
+      </head>
       <body>
         <header class="site-topbar"><span data-running-day></span><span data-running-block></span><span data-running-title></span><span data-running-progress></span></header>
         <article class="lesson" data-reading-title="Complexity &amp; Emergence">

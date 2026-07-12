@@ -1,4 +1,4 @@
-import { lstat, readlink, stat } from "node:fs/promises";
+import { lstat, readFile, readlink, stat } from "node:fs/promises";
 import path from "node:path";
 import { toError } from "@lib/errors";
 
@@ -30,6 +30,7 @@ export async function checkProjectWorkflow(root: string): Promise<WorkflowCheckF
       } else {
         try {
           await stat(path.join(root, WORKFLOW_SKILL_PATH));
+          failures.push(...await checkWorkflowReferences(root));
         } catch (error) {
           failures.push({
             path: WORKFLOW_TARGET,
@@ -43,6 +44,52 @@ export async function checkProjectWorkflow(root: string): Promise<WorkflowCheckF
       path: WORKFLOW_SKILL_PATH,
       reason: toError(error).message
     });
+  }
+
+  return failures;
+}
+
+async function checkWorkflowReferences(root: string): Promise<WorkflowCheckFailure[]> {
+  const source = await readFile(path.join(root, WORKFLOW_SKILL_PATH), "utf8");
+  const targets = new Set(
+    [...source.matchAll(/\[[^\]]+\]\(([^)#]+\.md)(?:#[^)]*)?\)/g)]
+      .map((match) => match[1])
+      .filter((target) => !/^(?:[a-z]+:|\/)/i.test(target))
+  );
+  const failures: WorkflowCheckFailure[] = [];
+
+  for (const target of targets) {
+    const referencePath = path.posix.normalize(
+      path.posix.join(path.posix.dirname(WORKFLOW_SKILL_PATH), target)
+    );
+    const expectedTarget = path.posix.join(
+      "../../../docs/workflows/180-descent",
+      path.posix.basename(target)
+    );
+    try {
+      const stats = await lstat(path.join(root, referencePath));
+      if (!stats.isSymbolicLink()) {
+        failures.push({
+          path: referencePath,
+          reason: `Expected symlink to ${expectedTarget}`
+        });
+        continue;
+      }
+      const linkedTarget = await readlink(path.join(root, referencePath));
+      if (linkedTarget !== expectedTarget) {
+        failures.push({
+          path: referencePath,
+          reason: `Expected symlink target ${expectedTarget}, got ${linkedTarget}`
+        });
+        continue;
+      }
+      await stat(path.join(root, referencePath));
+    } catch (error) {
+      failures.push({
+        path: referencePath,
+        reason: toError(error).message
+      });
+    }
   }
 
   return failures;

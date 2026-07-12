@@ -31,6 +31,19 @@ describe("project workflow", () => {
     const failures = await checkProjectWorkflow(root);
     expect(failures[0]?.path).toBe("../../../docs/workflows/180-descent/README.md");
   });
+
+  it("rejects missing files routed by the workflow dispatcher", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "180-workflow-links-"));
+    await createWorkflowTree(root, { linked: true });
+    await writeFile(
+      path.join(root, "docs/workflows/180-descent/README.md"),
+      "[Authoring](authoring.md)\n"
+    );
+
+    const failures = await checkProjectWorkflow(root);
+
+    expect(failures[0]?.path).toBe(".codex/skills/180-descent/authoring.md");
+  });
 });
 
 async function createWorkflowTree(

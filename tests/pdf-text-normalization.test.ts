@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { normalizePdfGlyphs } from "@lib/artifacts/pdf/xetex";
+import { normalizePdfGlyphs } from "@lib/artifacts/pdf/latex";
 
 describe("PDF text normalization", () => {
   it("preserves diacritics in names", () => {

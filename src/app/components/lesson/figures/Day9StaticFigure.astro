@@ -91,6 +91,7 @@ const marks = [
 ];
 
 const thresholdScale = 34;
+const reachesParisRange = (lowerBound: number) => lowerBound <= 1.35;
 
 const years = [
   { y: 2020, label: zh ? "社会临界" : "social tipping", color: ok, x: 76, row: 72 },
@@ -345,7 +346,7 @@ const years = [
         <text x={1.5 * thresholdScale + 8} y="391" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.paris}</text>
         {marks.map((m, i) => {
           const y = 20 + i * 32;
-          const within = m.lo <= 1.35;
+          const within = reachesParisRange(m.lo);
           return <g>
             <text x="-10" y={y + 4} text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{m.label}</text>
             <line x1={m.lo * thresholdScale} y1={y} x2={m.hi * thresholdScale} y2={y} stroke={within ? danger : accent} stroke-width="9" stroke-linecap="round" opacity=".24"></line>

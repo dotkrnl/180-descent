@@ -102,6 +102,23 @@ describe("link checks", () => {
     ]);
   });
 
+  it("can validate a site-only build before artifacts are generated", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(path.join(root, "_site/index.html"), [
+      '<a href="/downloads/180-descent.epub">future epub</a>',
+      '<a href="/downloads/180-descent.pdf">future pdf</a>',
+      '<a href="/documents/missing-guide.pdf">missing standalone pdf</a>',
+      '<a href="/missing/">missing page</a>'
+    ].join("\n"));
+
+    const failures = await checkLinks({ root, requireArtifactTargets: false });
+
+    expect(failures.map((failure) => failure.message)).toEqual([
+      "Broken internal link /documents/missing-guide.pdf in _site/index.html",
+      "Broken internal link /missing/ in _site/index.html"
+    ]);
+  });
+
   it("resolves relative internal links against the current page", async () => {
     const root = await createFixtureRoot();
     await writeFile(path.join(root, "_site/index.html"), [

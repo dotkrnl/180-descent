@@ -28,7 +28,7 @@ const copy = zh ? {
   metrics: [["covered truth", "ci-covered", "95 / 100"], ["missed truth", "ci-missed", "5 / 100"], ["highlighted interval", "ci-observed", "covers"], ["typical width", "ci-width", "0.74"]]
 };
 
-const inputAttrs = {
+const inputAttrs: Record<string, { min: string; max: string; step: string; value: string }> = {
   "ci-n": { min: "8", max: "100", step: "2", value: "30" },
   "ci-noise": { min: "0.4", max: "2.5", step: "0.05", value: "1" },
   "ci-level": { min: "80", max: "99", step: "1", value: "95" }

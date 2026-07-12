@@ -4,7 +4,8 @@ interface Props {
   as?: "span" | "em" | "u";
 }
 
-const Tag = Astro.props.as ?? "span";
-const className = ["term", Astro.props.class].filter(Boolean).join(" ");
+const { as = "span", class: customClass }: Props = Astro.props;
+const Tag = as;
+const className = ["term", customClass].filter(Boolean).join(" ");
 ---
 <Tag class={className}><slot /></Tag>

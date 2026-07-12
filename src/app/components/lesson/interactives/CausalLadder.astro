@@ -33,6 +33,11 @@ const copy = zh ? {
   labels: ["imagine", "do", "see"],
   rungAria: ["Select rung 3, counterfactuals", "Select rung 2, interventions", "Select rung 1, association"]
 };
+const visualRungs: Array<[string, string, number, number, number, string, string]> = [
+  ["lr3", "3", 30, 56, 40, copy.labels[0], copy.rungAria[0]],
+  ["lr2", "2", 102, 128, 112, copy.labels[1], copy.rungAria[1]],
+  ["lr1", "1", 174, 200, 184, copy.labels[2], copy.rungAria[2]]
+];
 ---
 <Panel class="web-only causation-ladder">
   <PanelTitle>{copy.panelTitle}</PanelTitle>
@@ -53,7 +58,7 @@ const copy = zh ? {
       <svg viewBox="0 0 300 240" role="group" aria-label={copy.aria}>
         <line x1="70" y1="20" x2="70" y2="226" stroke="var(--line-strong)" stroke-width="4" stroke-linecap="round"></line>
         <line x1="230" y1="20" x2="230" y2="226" stroke="var(--line-strong)" stroke-width="4" stroke-linecap="round"></line>
-        {[["lr3", "3", 30, 56, 40, copy.labels[0], copy.rungAria[0]], ["lr2", "2", 102, 128, 112, copy.labels[1], copy.rungAria[1]], ["lr1", "1", 174, 200, 184, copy.labels[2], copy.rungAria[2]]].map(([id, rung, rectY, lineY, textY, label, aria]) => (
+        {visualRungs.map(([id, rung, rectY, lineY, textY, label, aria]) => (
           <g id={id} class="ladder-rung-hotspot" data-rung={rung} role="button" tabindex="0" aria-label={aria}>
             <rect x="50" y={rectY} width="200" height="42" fill="transparent" pointer-events="all"></rect>
             <line x1="70" y1={lineY} x2="230" y2={lineY} stroke="var(--ink-faint)" stroke-width="6" stroke-linecap="round"></line>

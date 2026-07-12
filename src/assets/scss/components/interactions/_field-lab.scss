@@ -1,0 +1,105 @@
+// -------------------------------------------------------------------------
+// Shared field-lab grammar
+//
+// The individual experiments keep their bespoke diagrams and behavior, but
+// their controls, stages, readouts, and focus states now belong to one visual
+// instrument family. Keeping this here lets every existing interactive adopt
+// the atlas system without coupling content components to presentation.
+// -------------------------------------------------------------------------
+
+.panel.web-only,
+.statistics-appendix-lab {
+  --lab-surface: color-mix(in srgb,var(--raised) 86%,var(--paper));
+  --lab-stage: color-mix(in srgb,var(--paper) 88%,var(--raised));
+}
+
+.panel.web-only :where(
+  .gm-grid,.lab-grid,.grid2,.frontier-grid,.rbn-grid,.gol-wrap,.perc-grid,
+  .ii-grid,.day10-dial-grid,.day10-levins-grid,.day11-button-row
+) {
+  gap:clamp(.85rem,2vw,1.35rem);
+}
+
+.panel.web-only :where(
+  .venn-box,.visbox,.frontier-stage,.frontier-side canvas,.rbn-stage,
+  .rbn-side canvas,.gol-stage,.perc-stage,.ca-stage,.ev-chart,.ch-box,
+  .ii-arg,.cm-line,.cm-out,.fs-card,.hf-card,.sd-case,.day10-mapview svg,
+  .day10-levins-readout,.day11-linda-card,.day11-framing,
+  .day11-freq-grid svg,.statistics-effect-lab .se-plot,
+  .statistics-ci-coverage .ci-plot
+) {
+  border-color:var(--line-strong);
+  border-radius:2px;
+  background:var(--lab-stage);
+  box-shadow:none;
+}
+
+.panel.web-only :where(
+  button,.btn,.pbtn,.simbtn,.iibtn,.exbtn,.cm-btn,.mr-btn,.fsbtn,.hfbtn,
+  .lm-btn,.mvchip,.frontier-seg button,.ca-rulepick button,
+  .day10-presets button,.day11-optbtn
+) {
+  border-radius:2px;
+  box-shadow:none;
+}
+
+.panel.web-only :where(
+  button,.btn,.pbtn,.simbtn,.iibtn,.exbtn,.cm-btn,.mr-btn,.fsbtn,.hfbtn,
+  .lm-btn,.mvchip,.frontier-seg button,.ca-rulepick button,
+  .day10-presets button,.day11-optbtn
+):focus-visible {
+  outline:2px solid var(--focus-ring);
+  outline-offset:3px;
+  box-shadow:none;
+}
+
+.panel.web-only :where(input[type="range"]) {
+  accent-color:var(--block-accent,var(--accent));
+}
+
+.panel.web-only :where(
+  .readout,.frontier-readout,.fp-read,.se-read,.ci-read,.ii-vexpl,
+  .cm-out,.mr-expl,.day10-verdict,.day11-verdict,.ev-caption
+) {
+  border-top:1px solid var(--line);
+  border-left:0;
+  padding-top:.85rem;
+  color:var(--ink-soft);
+}
+
+.panel.web-only :where(
+  .bigstat,.bigH,.ppv-big,.sval-big,.fp-big,.perc-value,.day11-ppv strong,
+  .day10-meter strong,.evcard .big
+) {
+  font-family:var(--font-display);
+  font-variant-numeric:tabular-nums;
+}
+
+.panel.web-only :where(
+  .card-kicker,.frontier-minihead,.presets .h,.ii-examples .h,
+  .day10-presets p,.day11-control-label,.fp-biglab
+) {
+  color:var(--block-accent,var(--accent));
+}
+
+.causation-do-see :where(.expr,.pnote,.dovs-eq code) {
+  display:block;
+  max-width:100%;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:thin;
+}
+
+@media(max-width:40rem){
+  .panel.web-only :where(
+    .frontier-grid,.rbn-grid,.gol-wrap,.perc-grid,.ii-grid,
+    .day10-dial-grid,.day10-levins-grid
+  ) {
+    grid-template-columns:minmax(0,1fr);
+  }
+
+  .panel.web-only :where(.nbr-row,.frontier-controls,.emergence-controls) {
+    min-width:0;
+    width:100%;
+  }
+}

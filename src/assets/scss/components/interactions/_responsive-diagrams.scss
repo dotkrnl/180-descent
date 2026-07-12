@@ -1,0 +1,61 @@
+// Wide diagrams retain their coordinate scale on narrow screens. These are
+// intentionally scrollable inside their own frame: shrinking a 600–700 unit
+// diagram to a phone-width strip makes axis labels and annotations unusable.
+@media screen and (max-width:40rem){
+  .grue-stage svg,
+  .statistics-appendix-lab :is(canvas,.canvas),
+  .appendix-figure:not(.appendix-figure-narrow) svg,
+  .emergence-sim-stage canvas,
+  .frontier-stage.frontier-wide canvas{
+    width:36rem;
+    max-width:none;
+    margin-left:0;
+    margin-right:0;
+  }
+
+  .statistics-appendix-lab,
+  .appendix-figure:not(.appendix-figure-narrow),
+  .emergence-sim-stage,
+  .frontier-stage.frontier-wide{
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+  }
+
+  .probability-evalue .ev-chart svg,
+  .landauer-machine .lm-stage svg,
+  .day10-frontier-map .fm-chart svg,
+  .day11-prospect-viz svg,
+  .day11-sampling-viz svg,
+  .panel.landauer-ladder svg,
+  .panel.ladder svg,
+  .panel.landscape svg,
+  .figbox.day10-static-figure-weather-chart svg,
+  .figbox.day10-static-figure-extrapolation-cliff svg,
+  .figbox.day11-static-figure-resource-curve svg,
+  .figbox.day11-static-figure-bias-noise-darts svg,
+  .figbox.day11-static-figure-clockwork svg,
+  .figbox.day11-static-figure-sampling-curve svg{
+    width:36rem;
+    max-width:none;
+    margin-left:0;
+    margin-right:0;
+  }
+
+  .probability-evalue .ev-chart,
+  .landauer-machine .lm-stage,
+  .day10-frontier-map .fm-chart,
+  .day11-prospect-viz,
+  .day11-sampling-viz,
+  .panel.landauer-ladder,
+  .panel.ladder,
+  .panel.landscape,
+  .figbox.day10-static-figure-weather-chart,
+  .figbox.day10-static-figure-extrapolation-cliff,
+  .figbox.day11-static-figure-resource-curve,
+  .figbox.day11-static-figure-bias-noise-darts,
+  .figbox.day11-static-figure-clockwork,
+  .figbox.day11-static-figure-sampling-curve{
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+  }
+}

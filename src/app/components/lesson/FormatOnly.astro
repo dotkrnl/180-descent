@@ -6,7 +6,8 @@ interface Props {
   variant?: "alternate";
 }
 
-const Tag = Astro.props.as ?? "p";
+const { as = "p", class: customClass, media, variant } = Astro.props as Props;
+const Tag = as;
 const mediaClasses: Record<Props["media"], string> = {
   web: "web-only",
   print: "print-only",
@@ -15,7 +16,7 @@ const mediaClasses: Record<Props["media"], string> = {
   "deep-dive-epub": "epub-only deep-dive-edition-only",
   "deep-dive-print": "print-only deep-dive-edition-only"
 };
-const variantClass = Astro.props.variant === "alternate" ? "format-alt" : undefined;
-const className = [mediaClasses[Astro.props.media], variantClass, Astro.props.class].filter(Boolean).join(" ");
+const variantClass = variant === "alternate" ? "format-alt" : undefined;
+const className = [mediaClasses[media], variantClass, customClass].filter(Boolean).join(" ");
 ---
 <Tag class={className}><slot /></Tag>

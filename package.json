@@ -13,7 +13,8 @@
     "preflight": "tsx scripts/cli/preflight.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && npm run typecheck:astro",
+    "typecheck:astro": "astro check --tsconfig tsconfig.astro.json --minimumSeverity error",
     "dev": "tsx scripts/cli/prepare-assets.ts && npm run build:social-cards && astro dev",
     "build:social-cards": "tsx scripts/cli/generate-social-cards.ts",
     "build:site": "tsx scripts/cli/prepare-assets.ts && npm run build:social-cards && astro build",
@@ -37,6 +38,7 @@
     "check:visual": "tsx scripts/cli/check-visual.ts",
     "check:epub": "tsx scripts/cli/check-epub.ts",
     "check:pdf": "tsx scripts/cli/check-pdf.ts",
+    "check:site": "npm run check:links -- --site-only && npm run check:math && npm run check:seo && npm run check:a11y && npm run check:rendered-type",
     "check:built": "npm run check:links && npm run check:content && npm run check:javascript && npm run check:imports && npm run check:dead && npm run check:svg-text && npm run check:math && npm run check:appendix-style && npm run check:clean && npm run check:workflows && npm run check:seo && npm run check:a11y && npm run check:rendered-type && npm run check:epub && npm run check:pdf",
     "check": "npm run build && npm run typecheck && npm test && npm run check:built",
     "deploy": "npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent",
@@ -66,6 +68,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "@axe-core/playwright": "^4.12.1",
     "@types/node": "^24.13.3",
     "domhandler": "^5.0.3",
