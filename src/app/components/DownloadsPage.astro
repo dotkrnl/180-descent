@@ -1,6 +1,6 @@
 ---
 import PageShell from "@app/layouts/PageShell.astro";
-import { getBookData } from "@app/site-data";
+import { getBookData, getContentDays } from "@app/site-data";
 import type { Locale } from "@lib/schemas/day";
 import { alternateLocale, staticPageUrl } from "@lib/static-site/routes";
 
@@ -9,9 +9,10 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const book = await getBookData();
+const [book, publishedDays] = await Promise.all([getBookData(), getContentDays(locale)]);
 const isZh = locale === "zh";
 const downloads = isZh ? book.zh.downloads : book.downloads;
+const publishedDayCount = publishedDays.length;
 ---
 <PageShell
   locale={locale}
@@ -27,18 +28,18 @@ const downloads = isZh ? book.zh.downloads : book.downloads;
       <header class="download-edition-head">
         <p class="progress-label">{isZh ? "主线课程 / 01" : "Core sequence / 01"}</p>
         <h2 id="standard-edition-title">{isZh ? "标准版" : "Standard edition"}</h2>
-        <p>{isZh ? "180 天主线课程，适合连续阅读与日常携带。" : "The core 180-day route for continuous reading and everyday reference."}</p>
+        <p>{isZh ? `${publishedDayCount} 篇已发布主线课程，适合连续阅读与日常查阅。` : `The ${publishedDayCount}-lesson published route for continuous reading and everyday reference.`}</p>
       </header>
       <div class="download-grid downloads-list">
         <article class="download-card">
           <p class="card-kicker">EPUB</p>
           <h3><a href={downloads.epub}>{isZh ? "标准电子书" : "Standard ebook edition"}</a></h3>
-          <p>{isZh ? "适用于电子阅读器和阅读应用，收录 180 天主课程，不含专题附录。" : "For ebook readers and reading apps. Contains the core 180-day lesson sequence without the optional research appendices."}</p>
+          <p>{isZh ? "适用于电子阅读器和阅读应用，收录目前已发布的主线课程，不含专题附录。" : "For ebook readers and reading apps. Contains the currently published core sequence without the optional research appendices."}</p>
         </article>
         <article class="download-card">
           <p class="card-kicker">PDF</p>
           <h3><a href={downloads.pdf}>{isZh ? "标准 PDF" : "Standard print edition"}</a></h3>
-          <p>{isZh ? "适合打印、离线阅读和逐页批注；内容与标准电子书相同，不含专题附录。" : "A fixed-layout, print-friendly copy of the core lessons, tuned for paging, citations, and offline reading."}</p>
+          <p>{isZh ? "适合打印、离线阅读和逐页批注；内容与当前标准电子书相同，不含专题附录。" : "A fixed-layout, print-friendly copy of the published core sequence, tuned for paging, citations, and offline reading."}</p>
         </article>
       </div>
     </section>
@@ -47,18 +48,18 @@ const downloads = isZh ? book.zh.downloads : book.downloads;
       <header class="download-edition-head">
         <p class="progress-label">{isZh ? "研究附录 / 02" : "Research appendices / 02"}</p>
         <h2 id="deep-edition-title">{isZh ? "专题深入版" : "Deep-dive edition"}</h2>
-        <p>{isZh ? "在主线课程之外收录可选专题附录，适合系统学习与长期查阅。" : "The complete route plus optional research appendices for sustained study and reference."}</p>
+        <p>{isZh ? "收录目前已发布的主线课程及全部可选专题附录，适合系统学习与长期查阅。" : "The published route plus all current optional research appendices for sustained study and reference."}</p>
       </header>
       <div class="download-grid downloads-list">
         <article class="download-card">
           <p class="card-kicker">EPUB</p>
           <h3><a href={downloads.deepEpub}>{isZh ? "专题深入电子书" : "Deep-dive ebook edition"}</a></h3>
-          <p>{isZh ? "在主课程之外收录每日专题附录，补充背景、例证和来源说明。" : "The ebook reader version with each day's optional appendix included for fuller context, extra examples, and source notes."}</p>
+          <p>{isZh ? "在已发布的主课程之外收录每日专题附录，补充背景、例证和来源说明。" : "The ebook reader version with every published day's optional appendix included for fuller context, extra examples, and source notes."}</p>
         </article>
         <article class="download-card">
           <p class="card-kicker">PDF</p>
           <h3><a href={downloads.deepPdf}>{isZh ? "专题深入 PDF" : "Deep-dive print edition"}</a></h3>
-          <p>{isZh ? "完整收录全部专题附录，适合系统阅读、打印保存和长期查阅。" : "The complete print-ready edition with deep-dive appendices included, best for offline study, annotation, or reference."}</p>
+          <p>{isZh ? "收录目前已发布的全部专题附录，适合系统阅读、打印保存和长期查阅。" : "The print-ready edition with every currently published deep-dive appendix, best for offline study, annotation, or reference."}</p>
         </article>
       </div>
     </section>
