@@ -21,13 +21,16 @@ jobs:
 
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
+
+      - name: Install XML validator
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libxml2-utils
 
       - name: Install dependencies
         run: npm ci
