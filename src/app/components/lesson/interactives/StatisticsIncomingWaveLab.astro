@@ -51,12 +51,12 @@ const panels = {
     controls: zh
       ? [
           { id: "confAlpha", label: "（允许的未覆盖率）", math: String.raw`\alpha`, valueId: "confAlphaVal", value: "0.10", inputValue: "10", min: "1", max: "30" },
-          { id: "confSkill", label: "模型预测性能", valueId: "confSkillVal", value: "0.70", min: "10", max: "95" },
+          { id: "confSkill", label: "模型预测性能", valueId: "confSkillVal", value: "0.70", inputValue: "70", min: "10", max: "95" },
           { id: "confShift", label: "部署分布偏移", valueId: "confShiftVal", value: "0.00", min: "0", max: "80" }
         ]
       : [
           { id: "confAlpha", label: ", tolerated miss-rate", math: String.raw`\alpha`, valueId: "confAlphaVal", value: "0.10", inputValue: "10", min: "1", max: "30" },
-          { id: "confSkill", label: "Model skill", valueId: "confSkillVal", value: "0.70", min: "10", max: "95" },
+          { id: "confSkill", label: "Model skill", valueId: "confSkillVal", value: "0.70", inputValue: "70", min: "10", max: "95" },
           { id: "confShift", label: "Deployment shift", valueId: "confShiftVal", value: "0.00", min: "0", max: "80" }
         ],
     metrics: zh
@@ -83,14 +83,14 @@ const panels = {
       ? [
           { id: "ppiN", label: "金标准标注", valueId: "ppiNVal", value: "200", min: "40", max: "2000" },
           { id: "ppiU", label: "未标注预测", valueId: "ppiUVal", value: "20,000", min: "1000", max: "100000", step: "1000" },
-          { id: "ppiR", label: "模型预测与真实标签的相关性", valueId: "ppiRVal", value: "0.70", min: "0", max: "95" },
-          { id: "ppiBias", label: "未经校正的模型偏差", valueId: "ppiBiasVal", value: "0.20", min: "0", max: "60" }
+          { id: "ppiR", label: "模型预测与真实标签的相关性", valueId: "ppiRVal", value: "0.70", inputValue: "70", min: "0", max: "95" },
+          { id: "ppiBias", label: "未经校正的模型偏差", valueId: "ppiBiasVal", value: "0.20", inputValue: "20", min: "0", max: "60" }
         ]
       : [
           { id: "ppiN", label: "Gold labels", valueId: "ppiNVal", value: "200", min: "40", max: "2000" },
           { id: "ppiU", label: "Unlabeled predictions", valueId: "ppiUVal", value: "20,000", min: "1000", max: "100000", step: "1000" },
-          { id: "ppiR", label: "Model correlation with truth", valueId: "ppiRVal", value: "0.70", min: "0", max: "95" },
-          { id: "ppiBias", label: "Naive model bias", valueId: "ppiBiasVal", value: "0.20", min: "0", max: "60" }
+          { id: "ppiR", label: "Model correlation with truth", valueId: "ppiRVal", value: "0.70", inputValue: "70", min: "0", max: "95" },
+          { id: "ppiBias", label: "Naive model bias", valueId: "ppiBiasVal", value: "0.20", inputValue: "20", min: "0", max: "60" }
         ],
     readout: "ppiRead"
   },
