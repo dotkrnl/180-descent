@@ -221,7 +221,7 @@ the gate.
    appendices, apply the Original-source completeness review gate below after
    English MDX integration and again after Chinese translation/localization. Do
    not treat either stage as complete until content-completeness and
-   visual-completeness subagent findings are resolved or explicitly rejected
+   visual-completeness review findings are resolved or explicitly rejected
    with a reason.
 10. Run `npm run build:social-cards` when titles or summaries change.
 
@@ -245,18 +245,17 @@ structural errors, not publication quality.
    exposes each appendix in the intended order.
 2. **Chinese flow completed:** clear stale Chinese target prose before
    translation, then initialize each target Chinese file from a direct,
-   untranslated copy of its paired English source. Have GPT-5.6-Terra medium
-   subagents translate the assigned files, then have fresh GPT-5.6-Terra medium
-   subagents blind-review the completed Chinese against English. Do not treat
-   either pass as complete until terminology, quote style, status labels,
-   figure labels, alt text, static-artifact prose, and all actionable review
-   findings have been resolved.
+   untranslated copy of its paired English source. Keep translation and blind
+   review as separate passes, with a reviewer who did not produce the translation.
+   Do not treat either pass as complete until terminology, quote style, status
+   labels, figure labels, alt text, static-artifact prose, and all actionable
+   review findings have been resolved.
 3. **Original-source completeness review:** when integrating from an original
    HTML/static file, design mock, external draft, or user-provided source,
-   preserve the original source path in the working notes and run subagent
+   preserve the original source path in the working notes and run independent
    review before treating the MDX integration as complete. Use at least two
-   independent read-only subagents: one focused on content completeness and one
-   focused on visual completeness. The content reviewer must compare the
+   read-only review passes: one focused on content completeness and one focused
+   on visual completeness. The content reviewer must compare the
    original source against the integrated English MDX, rendered HTML, and
    affected artifact pages, looking for missing sections, edge-case
    elaboration, tables, captions, citations, source links, caveats, alt text,
@@ -265,7 +264,7 @@ structural errors, not publication quality.
    and PDF/EPUB output, looking for lost diagrams, weak table treatment,
    missing padding, collapsed cards, changed hierarchy, label overlap, mobile
    regressions, orphaned print pages, and degraded figure/table density. After
-   Chinese translation and localization, repeat both subagent reviews against
+   Chinese translation and localization, repeat both reviews against
    the translated Chinese MDX/rendered output, using the finalized English MDX
    and original source as references for meaning, structure, visual completeness,
    localized labels, and artifact parity. Integrate actionable findings before
@@ -308,7 +307,7 @@ structural errors, not publication quality.
    `complete`, `calibrated`, `careful`, `warranted`, `strict`, `restrained`,
    `unsettling`, `relevant`, or another precise word. In Chinese, do not default
    to `诚实` or `冷静`; prefer context-specific choices such as `准确`, `完整`,
-   `稳妥`, `清醒`, `克制`, `校准`, `审慎`, or `相关`. Preserve proper names,
+   `稳妥`, `严格`, `克制`, `校准`, `审慎`, or `相关`. Preserve proper names,
    source titles, and exact quotations.
 11. **Edge-section structure:** frontier/edge sections should use `Claim` with a
    compact `ClaimHeader` eyebrow (`Edge 01`, `前沿 01`, etc.) and the descriptive
@@ -500,20 +499,21 @@ review, not a translation reset or a reason to flatten the established voice.
 ## Chinese Edition
 
 Chinese content must be idiomatic Simplified Chinese, not line-by-line English.
-The full-repository translation workflow uses GPT-5.6-Terra medium subagents;
-model names must never appear as translator credit or reader-facing attribution.
+Keep translation, blind review, and final consistency review as independent
+passes. Internal tool or model names must never appear as translator credit or
+reader-facing attribution.
 
 - Inventory every paired English/Chinese MDX file, including the introduction
-  and appendices, and divide non-overlapping files among GPT-5.6-Terra medium
-  translation subagents. For new or fully refreshed targets, initialize the
-  Chinese file from its paired English source before translation; this is input,
-  not finished Chinese.
-- Give every translation subagent the canonical prompt below, the paired English
-  sources, and the terminology glossary. It may edit only its assigned Chinese
-  files and necessary localized data or glossary entries.
-- Assign fresh GPT-5.6-Terra medium blind-review subagents that did not translate
-  the files. Reviewers receive the English source, final Chinese target, and
-  glossary—but not draft history, translator output, or prior review comments.
+  and appendices. When work is parallelized, assign non-overlapping files to each
+  translation pass. For new or fully refreshed targets, initialize the Chinese
+  file from its paired English source before translation; this is input, not
+  finished Chinese.
+- Give each translator the canonical prompt below, the paired English sources,
+  and the terminology glossary. A translation pass may edit only its assigned
+  Chinese files and necessary localized data or glossary entries.
+- Assign independent blind reviewers who did not translate the files. Reviewers
+  receive the English source, final Chinese target, and
+  glossary—but not draft history, translator commentary, or prior review comments.
   They must independently identify omissions, additions, mistranslations,
   terminology drift, untranslated UI text, and unidiomatic or overly literal
   Chinese. Resolve all actionable findings before final source-parity review.
@@ -544,7 +544,7 @@ model names must never appear as translator credit or reader-facing attribution.
   propositions and titles where appropriate.
 - Avoid `诚实` and `冷静` as routine translations for English `honest` and
   `sober`. Translate the actual function in context: `准确`, `完整`, `稳妥`,
-  `清醒`, `克制`, `校准`, `审慎`, `相关`, or a local paraphrase. Keep `Sober` as
+  `严格`, `克制`, `校准`, `审慎`, `相关`, or a local paraphrase. Keep `Sober` as
   an author name and preserve source titles or exact quotations.
 - Avoid dense emphasis in Chinese prose. Use terminology styling and sparse
   color emphasis only when it clarifies structure.
@@ -571,42 +571,42 @@ model names must never appear as translator credit or reader-facing attribution.
   object being shown, and enough rules or captions for PDF/EPUB readers to
   understand the artifact without the live widget.
 
-For a normal day, create or update Chinese locale fields in `day.yaml`, then
-replace `src/content/days/###-slug/zh.mdx` with a direct, untranslated copy of
-`src/content/days/###-slug/en.mdx`. This is translation input, not a finished
-Chinese file; it may temporarily fail locale checks. Assign its translation and
-blind review to different GPT-5.6-Terra medium subagents.
+For a new day or an explicitly approved full retranslation, create or update
+Chinese locale fields in `day.yaml`, then initialize
+`src/content/days/###-slug/zh.mdx` from a direct, untranslated copy of
+`src/content/days/###-slug/en.mdx`. This is translation input, not finished
+Chinese, and it may temporarily fail locale checks. Never use this reset during
+an existing-day editorial pass. Assign translation and blind review to different
+people or independent review passes.
 
 ```text
 请逐篇审校全部中文译文，并与对应英文原文逐项对照，找出并修正任何信息遗漏、误译、无依据增补、术语不一致和未本地化的界面文字。译文应当信、达、雅，符合现代书面汉语习惯：行文自然、清晰、凝练，不带翻译腔，不使用只有英文才成立的比喻。必要时可以摆脱英文句法和修辞、按中文逻辑彻底重写；但若原文可以自然译出，必须完整保留其信息、限定与证据强度。使用优雅的书面语，避免口语化。
 
-开始前必须完整阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格遵循其中的术语；如需新增或统一反复出现的术语，须在同一次修改中更新词表并修正受影响内容。不要把 honest、sober 等词机械译为「诚实」或「冷静」；应按语境采用准确、完整、稳妥、清醒、克制、校准、审慎、相关或自然的改写。中文强调应节制使用术语字重、颜色与「」；运行正文不得使用 Markdown 粗体或 <Term as="em">，也不得使用 <em>、<i>、<strong>、<b>、<u>；英文原始论文标题可按词表规则保留斜体。命题、口号和作为语言对象的短语优先用「」。
+开始前必须完整阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格遵循其中的术语；如需新增或统一反复出现的术语，须在同一次修改中更新词表并修正受影响内容。不要把 honest、sober 等词机械译为「诚实」或「冷静」；应按语境采用准确、完整、稳妥、严格、克制、校准、审慎、相关或自然的改写。中文强调应节制使用术语字重、颜色与「」；运行正文不得使用 Markdown 粗体或 <Term as="em">，也不得使用 <em>、<i>、<strong>、<b>、<u>；英文原始论文标题可按词表规则保留斜体。命题、口号和作为语言对象的短语优先用「」。
 
-保留并正确本地化所有 front matter/manifest 键、imports、component props、URLs、DOI、引文元数据、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG、JavaScript hook、MDX 语法及说明性注释。不得编辑英文源文件或构建脚本。完成后用中文简要列出已修改文件、已解决的实质问题，以及仍需主代理决定的事项。
+保留并正确本地化所有 front matter/manifest 键、imports、component props、URLs、DOI、引文元数据、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG、JavaScript hook、MDX 语法及说明性注释。不得编辑英文源文件或构建脚本。完成后用中文简要列出已修改文件、已解决的实质问题，以及仍需负责人决定的事项。
 ```
 
-For blind review, launch a fresh GPT-5.6-Terra medium subagent with the source,
-target, and glossary only:
+For blind review, give a reviewer the source, target, and glossary only:
 
 ```text
 盲审时不得查看译者的推理、草稿历史或既有评语。请独立比对英文原文与最终中文，逐项报告信息遗漏、误译、无依据增补、术语偏移、未翻译文字、英文句法痕迹及不合中文书面语习惯的表达；只在证据充分时提出修改，并列出相应的英文依据。
 ```
 
-将盲审中可执行的问题修正后，再由另一名未参与翻译的 GPT-5.6-Terra
-medium 子代理进行最终一致性检查：
+将盲审中可执行的问题修正后，再由另一名未参与翻译的审校者进行最终一致性检查：
 
 ```text
 确认译文已经完整保留英文原文的信息、限定条件与证据强度；术语、状态标签、引用、图表文字、替代文本和静态制品文案均与词表及英文对应；中文自然、正式、无翻译腔，且不含仅适用于英文的比喻。
 ```
 
-For large appendices, use temporary files instead of asking an agent to
-overwrite its input: `/tmp/day-###-appendix-N-en.mdx` and
+For large appendices, use temporary files instead of overwriting translation
+input: `/tmp/day-###-appendix-N-en.mdx` and
 `/tmp/day-###-appendix-N-zh.mdx`. Start by replacing the temporary Chinese
 target with a direct, untranslated copy of the paired English appendix source so
 stale Chinese prose cannot be mistaken for reviewed output. Split large English
 sources at section boundaries into `/tmp/day-###-appendix-N-part-M-en.mdx`
-chunks, assign matching `part-M-zh.mdx` files to GPT-5.6-Terra medium
-translation subagents, then reassemble the result for blind review. Reviewers
+chunks, translate matching `part-M-zh.mdx` files in separate non-overlapping
+passes, then reassemble the result for blind review. Reviewers
 must not see translator reasoning, draft history, or earlier review comments.
 Only after blind review, manual structure comparison, and artifact validation
 should the temporary result replace
@@ -626,12 +626,10 @@ npm run dev -- --port 8080
 
 If port 8080 is unavailable, use another local port and tell the user the URL.
 
-2. Ask the user to review relevant English/Chinese pages in the local browser.
-   The localhost-only Codex refiner appears when they select page text. Accepted
-   refinements must write back through the local dev server, not remain DOM-only
-   edits.
-3. If selected text cannot be found uniquely in source, patch manually or adjust
-   the selected range, refresh, and verify.
+2. Ask the user to review relevant English/Chinese pages in the local browser
+   and provide concrete corrections or selected passages.
+3. Apply accepted refinements to tracked source files, then refresh and verify
+   the rendered result. Do not leave changes as browser-only DOM edits.
 4. After the user says the refinement pass is done, check `git status -sb` and
    inspect the source diff. Confirm refinements are in tracked source files under
    `src/` or workflow files, never only `_site/`.
