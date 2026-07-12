@@ -19,6 +19,7 @@
     "build": "tsx scripts/cli/preflight.ts && npm run build:site && npm run build:epub && npm run build:pdf",
     "check:links": "tsx scripts/cli/check-links.ts",
     "check:content": "tsx scripts/cli/check-content.ts",
+    "check:javascript": "tsx scripts/cli/check-javascript.ts",
     "check:imports": "tsx scripts/cli/check-imports.ts",
     "check:dead": "knip --exports --dependencies",
     "check:svg-text": "tsx scripts/cli/check-svg-text-size.ts",
@@ -33,7 +34,7 @@
     "check:visual": "tsx scripts/cli/check-visual.ts",
     "check:epub": "tsx scripts/cli/check-epub.ts",
     "check:pdf": "tsx scripts/cli/check-pdf.ts",
-    "check:built": "npm run check:links && npm run check:content && npm run check:imports && npm run check:dead && npm run check:svg-text && npm run check:math && npm run check:appendix-style && npm run check:clean && npm run check:workflows && npm run check:seo && npm run check:a11y && npm run check:rendered-type && npm run check:epub && npm run check:pdf",
+    "check:built": "npm run check:links && npm run check:content && npm run check:javascript && npm run check:imports && npm run check:dead && npm run check:svg-text && npm run check:math && npm run check:appendix-style && npm run check:clean && npm run check:workflows && npm run check:seo && npm run check:a11y && npm run check:rendered-type && npm run check:epub && npm run check:pdf",
     "check": "npm run build && npm run typecheck && npm test && npm run check:built",
     "deploy": "npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent",
     "deploy:staging": "npm run check && CLOUDFLARE_ACCOUNT_ID=2d1c3c8a1cc008cbb7faa7ea85d69b87 wrangler pages deploy _site --project-name=180-descent --branch=staging"
