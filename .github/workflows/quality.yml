@@ -41,6 +41,18 @@ jobs:
       - name: Check content contracts
         run: npm run check:content
 
+      - name: Check imports and dead code
+        run: npm run check:imports && npm run check:dead
+
+      - name: Check source math and SVG text
+        run: npm run check:math:source && npm run check:svg-text
+
+      - name: Check appendix styles
+        run: npm run check:appendix-style
+
+      - name: Check repository contracts
+        run: npm run check:clean && npm run check:workflows
+
       - name: Typecheck
         run: npm run typecheck
 
