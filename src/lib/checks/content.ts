@@ -27,6 +27,30 @@ type JsonPropValue =
   | null;
 
 const ARTIFACT_UNFRIENDLY_PHRASES = ["Static version", "live website lets", "as a table", "Receipts"] as const;
+const FORMAT_ONLY_BLOCK_PATTERN = /<FormatOnly\b[^>]*>([\s\S]*?)<\/FormatOnly>/g;
+const STATIC_FORMAT_MEDIA = new Set(["print", "pdf", "print-epub", "epub-print", "deep-dive-print", "deep-dive-epub"]);
+const WEB_FORMAT_COPY_RULES = [
+  { label: "static or fallback language", pattern: /\b(?:static|fallback)\b|静态|(?:后备|回退)/i },
+  { label: "print or download-format language", pattern: /\b(?:print|epub|pdf)\b|印刷版|(?:电子书|下载版)/i }
+] as const;
+const STATIC_FORMAT_COPY_RULES = [
+  {
+    label: "static or fallback framing",
+    pattern: /\bfallback\b|\bstatic[ -](?:version|alternative|alternate|copy|text|content|artifact)\b|(?:静态)(?:版|版本|替代|备选|内容|文案)|(?:回退|后备)/i
+  },
+  {
+    label: "presentation-only figure labeling",
+    pattern: /\b(?:fixed|static)[ -](?:figure|example|sketch|grid|summary|comparison)\b|(?:固定|静态)(?:图|示例|草图|网格|总结|比较)/i
+  },
+  {
+    label: "reference to another format",
+    pattern: /\b(?:web|online|interactive|live)\s+(?:version|edition|alternative|alternate|counterpart|copy|content|artifact|component|widget|panel|control|demo)\b|(?:网页|网站|在线|互动|交互|实时)(?:版|版本|替代|备选|内容|文案|组件|小部件|面板|控件|演示)/i
+  },
+  {
+    label: "web-directed instruction",
+    pattern: /\b(?:for|on|in) the (?:web|website|live site)\b|\b(?:click|drag|toggle|use the interactive|run the live)\b|(?:在|于|供)(?:网页|网站|互动面板|交互面板)/i
+  }
+] as const;
 const CHINESE_TRANSLATION_CONTENT_DIRS = ["src/content", "src/app/content"] as const;
 const CHINESE_CURLY_DOUBLE_QUOTE_PATTERN = /[“”]/;
 const CHINESE_FORBIDDEN_STYLE_TERMS = [
@@ -480,6 +504,8 @@ function checkContentFile(file: RegistryContentFile, failures: ContentCheckFailu
     }
   }
 
+  checkFormatOnlyCopy(checkedFile, failures);
+
   if (checkedFile.requiresTitle) {
     checkMainTitle(checkedFile, failures);
   }
@@ -756,6 +782,33 @@ function checkRawInteractiveMarkup(file: RegistryContentFile, failures: ContentC
       });
       return;
     }
+  }
+}
+
+function checkFormatOnlyCopy(file: RegistryContentFile, failures: ContentCheckFailure[]): void {
+  for (const match of file.source.matchAll(FORMAT_ONLY_BLOCK_PATTERN)) {
+    const tagEnd = match[0].indexOf(">");
+    if (tagEnd === -1) continue;
+
+    const tag = match[0].slice(0, tagEnd + 1);
+    const media = literalStringPropValue(tag, "media");
+    const rules = media === "web"
+      ? WEB_FORMAT_COPY_RULES
+      : media && STATIC_FORMAT_MEDIA.has(media)
+        ? STATIC_FORMAT_COPY_RULES
+        : null;
+    if (!rules) continue;
+
+    const visibleText = normalizeVisibleText(match[1]);
+    const issue = rules
+      .map((rule) => ({ rule, match: visibleText.match(rule.pattern) }))
+      .find((candidate) => candidate.match);
+    if (!issue?.match) continue;
+
+    const formatName = media === "web" ? "web" : "static";
+    failures.push({
+      message: `${file.relativePath} ${media} FormatOnly copy contains ${issue.rule.label} ("${issue.match[0]}"); keep the ${formatName} passage self-contained`
+    });
   }
 }
 

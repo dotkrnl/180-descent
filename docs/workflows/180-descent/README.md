@@ -176,6 +176,22 @@ the boundary. Every uppercase MDX component tag must also have an explicit artif
 contract in `check:content`: rendered directly, transparent wrapper, or web-only
 with a static `FormatOnly media="print-epub" variant="alternate"` equivalent.
 
+### Format-specific copy contract
+
+Treat every `FormatOnly` passage as finished reader-facing prose, not as an
+implementation note. The web passage must stand on its own and may describe the
+interaction it contains, but must not mention static output, fallbacks, print,
+EPUB, or PDF. The print/EPUB passage must likewise stand on its own: do not call
+it static, a fallback, a fixed figure/example, or a web/interactive version.
+Replace those labels with the subject and its lesson—for example, `Figure ·
+Idealization` and a sentence explaining what the figure reveals.
+
+`npm run check:content` enforces this boundary in both English and Chinese,
+including common translations of static, fallback, web-version, and fixed
+figure labels. Keep the rules narrow enough to allow technical phrases such as
+“fixed-horizon test” or “static clusters”; only format-meta language belongs in
+the gate.
+
 ## Day Changes
 
 1. Pick the canonical `###-slug` path from the syllabus and create or edit
@@ -704,6 +720,11 @@ npm run check:svg-text
 npm run check:clean
 npm run check:workflows
 ```
+
+The pull-request quality workflow runs the content gate, TypeScript, and the
+unit suite on every pull request and on pushes to `main`. A content change is
+not ready to publish until those gates pass; release-bound work still requires
+the full `npm run check` artifact build below.
 
 For changes that touch built pages, metadata, accessibility, rendered
 typography, or download artifacts, add the focused built-output validators:

@@ -121,7 +121,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 在零假设模型成立且其假设满足时，如果你对连续数据运行一个精确检验，得到的 <Term>p 值</Term> 就是一个 <Term>0 到 1 之间的均匀随机数</Term>。对于离散、复合或保守的检验，有效的 <Term>p 值</Term> 往往是<Term>超均匀</Term>的：<MathInline latex={String.raw`P(p \le \alpha) \le \alpha`} />，而不一定正好相等。这个限定并不会改变实际警告。在连续且校准良好的理想情形中，区间 [0, 1] 中正好有 5% 位于 .05 以下；在保守情形中，这个比例不会更大。但换个角度看，威胁就出现了：没有真实效应的规范实验也会纯靠运气交给你一个「显著」结果。以二十种方式运行实验——二十个结果变量、二十个协变量、二十个亚组——你实际上就是买了许多张小概率彩票。在一批不存在真实效应的检验中，预期能得到的「发现」数量，会被你查看的次数推动。
 
-<FormatOnly media="web">下方的实时面板展示的是连续精确检验的理想化情形。当真实效应设定为零时，<Term>p 值</Term> 的直方图是平坦的，并且约有 5% 会落到 .05 以下。现在调高「真实效应」看看 p 值分布如何向较小数值移动：真实信号会让极小的显著 <Term>p 值</Term> 多于勉强显著的 <Term>p 值</Term>。真实效应通常会使极小 <Term>p 值</Term> 更常见；如果这种富集完全不存在，就应怀疑文献中究竟有多少真实信号。</FormatOnly>
+<FormatOnly media="web">用实时面板观察连续精确检验的理想化情形。真实效应为零时，<Term>p 值</Term> 近似平坦分布，约有 5% 落在 .05 以下。调高「真实效应」，分布会向较小数值倾斜：真实信号会让极小的显著 <Term>p 值</Term> 多于勉强显著的 <Term>p 值</Term>。这种富集是文献中的脉搏；完全看不到它，就是一个警讯。</FormatOnly>
 
 </ContentSection>
 
@@ -192,7 +192,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 <Term>p 值</Term> 回答的是 <MathInline latex={String.raw`\mathrm{P}(\text{数据}\mid\text{零假设})`} />，而研究者真正关心的往往是 <MathInline latex={String.raw`\mathrm{P}(\text{零假设}\mid\text{显著结果})`} /> —— 也就是看似亮眼的发现其实是假阳性的概率。架起这两者之间的桥梁需要一个「先验」：在看到数据之前，你的假设有多大的可信度？一旦你提供了一个现实的先验，误报风险往往会明显高于 5%。其逻辑与约安尼迪斯在其著名的<Highlight>第 2 日</Highlight>文章《为什么大多数发表的研究发现都是错误的》中所使用的一致：在给定先验概率、功效和 <Term><MathInline latex={String.raw`\alpha`} /></Term> 的模型下，<Term>误报风险</Term> (false positive risk) 表示显著结果为误报的条件概率。
 
-<FormatOnly media="web">使用下方的实时计算器。你会发现，即便先验概率为 50% 且具备不错的功效，仍有相当一部分显著发现是错误的——而对于那些能够登上头条的惊人假设，误报比例可能很高。</FormatOnly>
+<FormatOnly media="web">用计算器看看显著发现有多大比例可能出错：即使先验概率为 50% 且检验功效不错，长得惊人的假设仍可能带来很高的误报比例。</FormatOnly>
 
 </ContentSection>
 
@@ -278,9 +278,9 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低检验�
 
 这种转化非常具体。问：同一枚公平硬币要连续出现多少次正面，才能达到这种罕见程度？那个次数就是 <Term>S 值</Term>。一个 <Term><MathInline latex={String.raw`p = .05`} /></Term> 的结果带有约 <Highlight>4.3 比特</Highlight>，这一惊异度大致相当于公平硬币连续出现四至五次正面的罕见程度。一旦这样表达，魔力就消失了。连续四次正面朝上有点意思，但它算不上发现。
 
-<FormatOnly media="web">下方的滑块让你感受任何 <Term>p 值</Term> 对应多少比特的惊异度。</FormatOnly>
+<FormatOnly media="web">移动滑块，把任意 <Term>p 值</Term> 换算成第 7 日的信息单位。</FormatOnly>
 
-<FormatOnly media="print-epub">下方换算会把常见的 <Term>p 值</Term> 转换为比特惊异度。</FormatOnly>
+<FormatOnly media="print-epub">换算表把常见的 <Term>p 值</Term> 转换成第 7 日介绍的比特惊异度。</FormatOnly>
 
 </ContentSection>
 

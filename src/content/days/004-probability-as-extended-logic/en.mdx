@@ -227,9 +227,9 @@ In Monty Hall, <MathInline latex={String.raw`H`} /> = "the car is behind Door 2"
 
 Bayes' theorem doesn't only rescue game-show contestants. It catches a mistake that, in one famous study, most *physicians* got wrong.
 
-<FormatOnly media="web">Play with it below — it's worth feeling this one in your bones, because it governs every medical test, spam filter, and airport screening you'll ever encounter.</FormatOnly>
+<FormatOnly media="web">Try the medical-test case and watch the base rate overturn intuition; the same arithmetic governs spam filters and airport screening.</FormatOnly>
 
-<FormatOnly media="print-epub">The table below walks through the default medical-test case, which is worth keeping in your bones because it governs every medical test, spam filter, and airport screening you'll ever encounter.</FormatOnly>
+<FormatOnly media="print-epub">The table walks through the medical-test case, where prevalence matters as much as test accuracy. The same arithmetic governs spam filters and airport screening.</FormatOnly>
 
 </ContentSection>
 
@@ -336,8 +336,8 @@ This isn't loose metaphor; it's a rigorous program — "game-theoretic statistic
 ### Why a bet beats a p-value: you can peek all you want
 Bets compound. If you make a fair bet against the null, then another, then another, your running wealth forms what mathematicians call a <Term as="em">martingale</Term><TipNote text={"A martingale is a mathematical model of a fair game: given the past, the next expected value is the current value."} />, and a classical result (Ville's inequality<TipNote text={"Ville’s inequality bounds the chance that a fair-game wealth process ever becomes very large just by luck."} />) guarantees it almost never balloons to huge values *if the null is true.* This gives e-values an almost magical property the p-value lacks: <Term as="em">anytime validity.</Term> You may watch the experiment unfold, stop whenever you like, collect more data if it looks promising — **peek as often as you want** — and your error guarantee still holds. Grünwald, de Heide & Koolen call this *"safe testing"* (published in the RSS *Journal*, Series B, 2024); the broader machinery, including confidence intervals that are valid at every moment, is *"safe anytime-valid inference"* (Ramdas, Grünwald, Vovk & Shafer, *Statistical Science*, 2023). E-values also combine trivially: **multiply** independent ones, or even **average** dependent ones, and you still have a valid e-value — which makes pooling studies clean where p-values turn into a multiple-comparisons minefield.
 
-<FormatOnly media="web">Try it below: the same data stream, judged by a fragile peeking p-value versus an anytime-valid e-value.</FormatOnly>
-<FormatOnly media="print-epub">The table below summarizes the same contrast: a fragile peeking p-value versus an anytime-valid e-value.</FormatOnly>
+<FormatOnly media="web">Run the same data stream through a peeking p-value and an anytime-valid e-value.</FormatOnly>
+<FormatOnly media="print-epub">The table contrasts a peeking p-value with an anytime-valid e-value and shows why their guarantees differ.</FormatOnly>
 
 The toy task is intentionally narrow: it is trying to reject one claim, *"this coin is fair,"* not estimate the exact bias or prove unfairness with certainty.
 

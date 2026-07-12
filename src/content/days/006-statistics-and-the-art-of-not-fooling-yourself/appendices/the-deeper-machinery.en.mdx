@@ -114,7 +114,7 @@ The False-Positive Factory wasn't a trick of clever programming. It rests on two
 
 Run an exact test with continuous data where nothing is happening, under the assumptions of the null model, and the <MathInline latex={String.raw`p`} />-value you get is a **uniform random number between 0 and 1**. For discrete, composite, or conservative tests, valid <MathInline latex={String.raw`p`} />-values are often *super-uniform*: <MathInline latex={String.raw`P(p \le \alpha) \le \alpha`} />, not necessarily exactly equal. The practical warning survives that qualification. In the calibrated continuous case, exactly 5% of the interval [0, 1] lies below .05; in conservative cases the rate is no larger than that. But flip it around and the menace appears: even by-the-book, effect-free experiments sometimes hand you a "significant" result by raw luck. Run the experiment twenty ways — twenty outcomes, twenty covariates, twenty subgroups — and you've effectively bought many tickets on a small-probability prize. The expected number of "discoveries" in a drawer full of nothing is driven by how many times you looked.
 
-<FormatOnly media="web">The live panel below lets you watch the continuous exact-test idealization. With the true effect set to zero, the histogram of <MathInline latex={String.raw`p`} />-values is flat, with a stubborn 5% poking below the line. Now turn up a *real* effect and watch the pile move toward smaller values: genuine signal makes very small significant <MathInline latex={String.raw`p`} />-values more common than barely significant ones. That surplus of very small <MathInline latex={String.raw`p`} />-values is a literature's pulse. Its absence is a death certificate.</FormatOnly>
+<FormatOnly media="web">Use the live panel to watch an idealized continuous exact test. With the true effect at zero, <MathInline latex={String.raw`p`} />-values lie flat, with 5% falling below the line. Turn up a *real* effect and the distribution leans toward smaller values: genuine signal makes very small significant <MathInline latex={String.raw`p`} />-values more common than barely significant ones. That surplus is a literature's pulse; its absence is a warning sign.</FormatOnly>
 
 </ContentSection>
 
@@ -185,7 +185,7 @@ Now for the number that should be printed on the first page of every statistics 
 
 A <MathInline latex={String.raw`p`} />-value lives in the world of <MathInline latex={String.raw`\mathrm{P}(\text{data}\mid\text{null})`} />. What you actually care about is <MathInline latex={String.raw`\mathrm{P}(\text{null}\mid\text{significant result})`} /> — the chance your shiny finding is bogus. Bridging the two requires a *prior*: how plausible was your hypothesis before the data? And the moment you supply a realistic prior, the picture darkens. The engine is the same one Ioannidis used in his famous **Day 2** essay "Why Most Published Research Findings Are False": combine the prior odds, the study's power, and <MathInline latex={String.raw`\alpha`} />, and read off the <Term as="em">false positive risk</Term> — the share of your "significant" results that are false alarms.
 
-<FormatOnly media="web">Use the live calculator below. You'll find that even with a coin-flip prior and decent power, a meaningful chunk of your significant findings are wrong — and with the long-shot hypotheses that make for exciting headlines, most of them are.</FormatOnly>
+<FormatOnly media="web">Use the calculator to see how often significant findings are wrong—even with a coin-flip prior and decent power, and especially when the hypothesis is a long shot.</FormatOnly>
 
 </ContentSection>
 
@@ -267,9 +267,9 @@ One last idea, and it's a beauty — because it quietly turns the page to Day 7.
 
 The translation is wonderfully concrete. Ask: how many fair coins would I have to flip and get *all heads* to be this surprised? That count *is* the S-value. A result at <MathInline latex={String.raw`p = .05`} /> carries about **4.3 bits** — roughly the surprise of calling four or five coin tosses in a row. Stated that way, the spell breaks. Four heads in a row is mildly interesting; it is not a discovery, and you would never bet your reputation on it.
 
-<FormatOnly media="web">The slider below lets you feel any <MathInline latex={String.raw`p`} />-value's true evidential weight, in the information units of Day 7.</FormatOnly>
+<FormatOnly media="web">Move the slider to translate any <MathInline latex={String.raw`p`} />-value into Day 7's information units.</FormatOnly>
 
-<FormatOnly media="print-epub">The conversion below translates common <MathInline latex={String.raw`p`} />-values into the information units of Day 7.</FormatOnly>
+<FormatOnly media="print-epub">The conversion translates common <MathInline latex={String.raw`p`} />-values into Day 7's information units.</FormatOnly>
 
 </ContentSection>
 

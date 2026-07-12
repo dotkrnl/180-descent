@@ -128,6 +128,61 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports cross-format framing inside web and static passages", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<FormatOnly media="web">This static fallback version is only a placeholder.</FormatOnly>',
+        '<FormatOnly media="print-epub">The web version is the real one; this is only a fallback.</FormatOnly>'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: 'src/content/days/001-fixture/en.mdx web FormatOnly copy contains static or fallback language ("static"); keep the web passage self-contained'
+      },
+      {
+        message: 'src/content/days/001-fixture/en.mdx print-epub FormatOnly copy contains static or fallback framing ("fallback"); keep the static passage self-contained'
+      }
+    ]);
+  });
+
+  it("reports presentation labels that expose the static artifact", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<FormatOnly media="print-epub"><PanelTitle>Fixed figure · Example</PanelTitle></FormatOnly>'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: 'src/content/days/001-fixture/en.mdx print-epub FormatOnly copy contains presentation-only figure labeling ("Fixed figure"); keep the static passage self-contained'
+      }
+    ]);
+  });
+
+  it("allows substantive technical language in static passages", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: [
+        body("Fixture Day"),
+        '<FormatOnly media="print-epub">The fixed-horizon test compares static clusters with a dynamic network.</FormatOnly>'
+      ].join("\n"),
+      zh: body("夹具日", "zh")
+    });
+
+    await expect(checkContent({ root })).resolves.toEqual([]);
+  });
+
   it("reports curly double quotes in Chinese translation content", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {
@@ -725,7 +780,7 @@ describe("content check", () => {
         '<StatusChip status={"ok"} label={"ok"} />',
         '<Sources></Sources>',
         '<Panel class="web-only">Interactive only</Panel>',
-        '<FormatOnly media="print-epub" variant="alternate">Static alternate</FormatOnly>'
+        '<FormatOnly media="print-epub" variant="alternate">A substantive alternate passage</FormatOnly>'
       ].join("\n"),
       zhAppendix: [
         '<StatusChip status={"ok"} label={"已确立"} />',
@@ -743,7 +798,7 @@ describe("content check", () => {
         '<StatusChip status={"ok"} label={"ok"} />',
         '<Sources></Sources>',
         '<Panel class="web-only">Interactive only</Panel>',
-        '<FormatOnly data-media="print-epub" data-variant="alternate">Static alternate</FormatOnly>'
+        '<FormatOnly data-media="print-epub" data-variant="alternate">A substantive alternate passage</FormatOnly>'
       ].join("\n"),
       zhAppendix: [
         '<StatusChip status={"ok"} label={"已确立"} />',
@@ -767,7 +822,7 @@ describe("content check", () => {
         '<StatusChip status={"ok"} label={"ok"} />',
         '<Sources></Sources>',
         '<Panel class={"web-only"}>Interactive only</Panel>',
-        '<FormatOnly media={"print-epub"} variant={"alternate"}>Static alternate</FormatOnly>'
+        '<FormatOnly media={"print-epub"} variant={"alternate"}>A substantive alternate passage</FormatOnly>'
       ].join("\n"),
       zhAppendix: [
         '<StatusChip status={"ok"} label={"已确立"} />',
@@ -785,7 +840,7 @@ describe("content check", () => {
         '<StatusChip status={"ok"} label={"ok"} />',
         '<Sources></Sources>',
         "<Panel class='web-only'>Interactive only</Panel>",
-        "<FormatOnly media='print-epub' variant='alternate'>Static alternate</FormatOnly>"
+        "<FormatOnly media='print-epub' variant='alternate'>A substantive alternate passage</FormatOnly>"
       ].join("\n"),
       zhAppendix: [
         '<StatusChip status={"ok"} label={"已确立"} />',
