@@ -620,6 +620,29 @@ describe("content check", () => {
     ]);
   });
 
+  it("reports localized manifest titles that do not match the syllabus", async () => {
+    const root = await createFixtureRoot();
+    await writeContentDay(root, {
+      enTitle: "Wrong English Title",
+      enSummary: "Fixture summary.",
+      enBody: body("Wrong English Title"),
+      zhTitle: "错误的中文标题",
+      zhSummary: "中文夹具摘要。",
+      zhBody: body("错误的中文标题", "zh")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: '001-fixture EN title "Wrong English Title" does not match syllabus title "Fixture Day"'
+      },
+      {
+        message: '001-fixture ZH title "错误的中文标题" does not match syllabus title "夹具日"'
+      }
+    ]);
+  });
+
   it("reports book totals that do not match the syllabus day count", async () => {
     const root = await createFixtureRoot();
     await writeFile(path.join(root, "src/_data/book.yaml"), fixtureBookYaml(2));

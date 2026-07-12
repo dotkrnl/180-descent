@@ -386,9 +386,12 @@ async function checkDayBlocks(
   days: Awaited<ReturnType<typeof loadContentRegistry>>["days"],
   failures: ContentCheckFailure[]
 ): Promise<void> {
-  const book = await readBookData(root);
-  const syllabus = await readSyllabusData(root, "en");
-  const syllabusDayCount = syllabus.blocks.reduce((total, block) => total + block.days.length, 0);
+  const [book, enSyllabus, zhSyllabus] = await Promise.all([
+    readBookData(root),
+    readSyllabusData(root, "en"),
+    readSyllabusData(root, "zh")
+  ]);
+  const syllabusDayCount = enSyllabus.blocks.reduce((total, block) => total + block.days.length, 0);
   if (book.totalDays !== syllabusDayCount) {
     failures.push({
       message: `book.yaml total_days ${book.totalDays} does not match syllabus day count ${syllabusDayCount}`
@@ -396,11 +399,15 @@ async function checkDayBlocks(
   }
 
   const syllabusBlocks = new Map<number, string>();
-  for (const block of syllabus.blocks) {
+  for (const block of enSyllabus.blocks) {
     for (const day of block.days) {
       syllabusBlocks.set(day.day, block.title);
     }
   }
+  const syllabusTitles: Record<Locale, Map<number, string>> = {
+    en: syllabusDayTitleMap(enSyllabus),
+    zh: syllabusDayTitleMap(zhSyllabus)
+  };
 
   for (const day of days) {
     const expectedBlock = syllabusBlocks.get(day.manifest.day);
@@ -413,7 +420,21 @@ async function checkDayBlocks(
         message: `${day.manifest.path} block "${day.manifest.block}" does not match syllabus block "${expectedBlock}"`
       });
     }
+
+    for (const locale of ["en", "zh"] as const) {
+      const manifestTitle = day.manifest.locales[locale].title;
+      const syllabusTitle = syllabusTitles[locale].get(day.manifest.day);
+      if (syllabusTitle && manifestTitle !== syllabusTitle) {
+        failures.push({
+          message: `${day.manifest.path} ${locale.toUpperCase()} title "${manifestTitle}" does not match syllabus title "${syllabusTitle}"`
+        });
+      }
+    }
   }
+}
+
+function syllabusDayTitleMap(syllabus: Awaited<ReturnType<typeof readSyllabusData>>): Map<number, string> {
+  return new Map(syllabus.blocks.flatMap((block) => block.days.map((day) => [day.day, day.title])));
 }
 
 async function checkInteractionScripts(
