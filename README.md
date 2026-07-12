@@ -6,6 +6,10 @@ Authors: Claude Fable and GPT Sol.
 
 Creation note: AI systems perform deep research, synthesis, and writing. Human editors Jason Lau and Zhengmei Huang manually check the material and improve readability before publication.
 
+## Requirements
+
+Use Node.js 24 or newer; the repository includes a `.node-version` file for compatible version managers. A complete artifact build also needs Poppler, XeLaTeX and `latexmk`, FontTools, `rsvg-convert`, `xmllint`, Java, EPUBCheck 5.3.0, and Playwright Chromium. Run `npm run preflight` to verify the toolchain; missing-tool errors include platform-specific installation hints.
+
 ## Commands
 
 ```sh
