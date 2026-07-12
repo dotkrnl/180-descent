@@ -102,6 +102,20 @@ describe("math check", () => {
     ]);
   });
 
+  it("skips stale built HTML when built checks are disabled", async () => {
+    const root = await createFixtureRoot();
+    await writeFile(contentDayFile(root, "001-fixture", "en.mdx"), "Plain source.");
+    await writeFile(path.join(root, "_site/index.html"), String.raw`<p>\(stale\)</p>`);
+
+    const result = await checkMath({ root, requireBuiltHtml: false });
+
+    expect(result).toEqual({
+      checkedSourceFiles: 1,
+      checkedBuiltFiles: 0,
+      failures: []
+    });
+  });
+
   it("can require built HTML files", async () => {
     const root = await createFixtureRoot();
 

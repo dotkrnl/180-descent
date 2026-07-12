@@ -43,8 +43,10 @@ export async function checkMath(options: MathCheckOptions): Promise<MathCheckRes
     failures.push(...scanPatterns(options.root, file, content, RAW_SOURCE_PATTERNS));
   }
 
-  const { htmlFiles: builtFiles } = await builtHtmlFiles(options.root, { required: options.requireBuiltHtml });
-  if (options.requireBuiltHtml && !builtFiles.length) {
+  const builtFiles = options.requireBuiltHtml === false
+    ? []
+    : (await builtHtmlFiles(options.root, { required: options.requireBuiltHtml })).htmlFiles;
+  if (options.requireBuiltHtml === true && !builtFiles.length) {
     failures.push({
       file: "_site",
       label: "contains no HTML files"
