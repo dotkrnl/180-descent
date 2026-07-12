@@ -33,7 +33,7 @@ Preserve proper names, source titles, and exact quotations.
 | established | 已确立 | Frontier/status label. Keep chip labels short. | 可靠成熟, 扎实且可重复 |
 | promising | 有前景 | Frontier/status label for evidence that is real but still early. | 线索, 初露曙光 |
 | contested / hype risk | 有争议／炒作风险 | Frontier/status label for disputed scope, framing, or evidence. | 争议/炒作, 炒作 |
-| collapsed | 已崩溃 | Frontier/status label for an effect that failed rigorous replication. | 已崩塌 when inconsistent |
+| collapsed | 未能复现 | Frontier/status label for an effect that failed rigorous replication; use a precise, non-metaphorical status label. | 已崩溃, 已崩塌 |
 | peer review | 同行评议 | Process before publication; not a guarantee of truth. | 同行审查 when used inconsistently |
 | preprint | 预印本 | Label clearly when the evidential status matters. | 预发表稿 |
 | evidence status | 证据状态 | Use for status labeling and frontier judgment. | 证据等级 when no hierarchy is intended |
@@ -49,8 +49,8 @@ Preserve proper names, source titles, and exact quotations.
 | factive theory of mind | 事实性心智理论 | Day 1 epistemology/cognitive science. | 事实心智理论 |
 | epistemic bubble | 认知气泡 | Social epistemology. | 信息泡泡 when technical |
 | echo chamber | 回声室 | Social epistemology. | 回音室 when inconsistent |
-| bullshit | 扯淡 | Frankfurt sense; keep register deliberate. | 狗屁 unless deliberately colloquial |
-| token | 标记 | LLM/information context. | 令牌 when inconsistent |
+| bullshit | 胡扯 | Frankfurt sense; on first mention, explain it as speech that disregards truth in pursuit of an aim. | 扯淡, 狗屁 |
+| token | 词元（LLM）；标记／记号（编译或词法语境）；令牌（访问或安全语境） | Choose by domain. In LLM prose, `词元` is the default. | 把所有 token 都译作标记 |
 | abduction | 溯因 | Inference to the best explanation. | 逆推 when technical |
 | deduction | 演绎 | Logic/inference. | 推演 when inconsistent |
 | induction | 归纳 | Logic/science. | 归纳法 if term label needs noun |
@@ -64,16 +64,16 @@ Preserve proper names, source titles, and exact quotations.
 | falsifiability | 可证伪性 | Popper/demarcation context. | 可反驳性 when inconsistent |
 | demarcation problem | 划界问题 | Philosophy of science. | 分界问题 when inconsistent |
 | paradigm | 范式 | Kuhn context. | 模式 when technical |
-| underdetermination | 欠决定 | Philosophy of science. | 决定不足 |
+| underdetermination | 欠定性 | Philosophy of science: multiple theories can fit the same evidence, which may not uniquely determine one theory. | 欠决定, 决定不足 |
 | p-value | p 值 | Statistics; lowercase Latin p. | p值 |
 | e-value | e 值 | Game-theoretic statistics. | e值 |
 | e-process | e 过程 | Sequential/e-value context. | e过程 |
-| anytime-valid inference | 任意时点有效推断 | Sequential/statistical inference. | 任意时刻有效推断 when inconsistent |
-| anytime validity | 任意时点有效性 | Sequential/statistical inference property. | 任意时刻有效性 |
-| safe anytime-valid inference | 安全任意时点有效推断 | Game-theoretic statistics. | 安全任意时刻有效推断 |
+| anytime-valid inference | 随时有效推断 | Sequential/statistical inference; the guarantee remains valid at any stopping time. | 任意时点有效推断, 任意时刻有效推断 |
+| anytime validity | 随时有效性 | Sequential/statistical inference property. | 任意时点有效性, 任意时刻有效性 |
+| safe anytime-valid inference | 安全的随时有效推断 | Game-theoretic statistics. | 安全任意时点有效推断, 安全任意时刻有效推断 |
 | always-valid inference | 始终有效推断 | Use when translating the Optimizely/Johari title or platform term. | 任意有效推断 |
 | optional stopping | 可选停止 | Repeated looks at data before a planned endpoint. | 选择性停止 |
-| S-value / surprisal value | S-值 | Information/surprisal framing of p values. | S 值 when inconsistent |
+| S-value / surprisal value | S 值 | Information/surprisal framing of p values; keep a space between the Latin letter and 值. | S-值 |
 | null hypothesis | 零假设 | Statistics. | 原假设 when inconsistent |
 | alternative hypothesis | 备择假设 | Statistics. | 对立假设 when inconsistent |
 | confidence interval | 置信区间 | Statistics. | 信赖区间 |
@@ -86,7 +86,8 @@ Preserve proper names, source titles, and exact quotations.
 | statistical power | 检验功效 | Statistics; use for the probability of detecting a specified effect under a specified procedure. | 统计功效 when used as the technical term |
 | base rate | 基础率 | Statistics/replication crisis. | 基率 when inconsistent |
 | base-rate neglect | 基础率忽视 | Failing to use the base rate in probability judgments; common sampling-framework bias. | 忽略基础率 |
-| prior odds | 先验比值 | Ioannidis/PPV framing. | 先验赔率 |
+| base-rate fallacy | 基础率谬误 | Named error of ignoring how common an event was before new evidence and overreading a test or signal. | 将基础率谬误与基础率忽视混作同一条术语 |
+| prior odds | 先验赔率 | Ioannidis/PPV framing; odds means p/(1-p), not an odds ratio. | 先验比值 |
 | false positive | 假阳性 | Error outcome. | 伪阳性 when inconsistent |
 | false positive risk | 误报风险 | Replication/Bayesian critique context. | 假阳性风险 when not describing the event itself |
 | positive predictive value | 阳性预测值 | Diagnostic/statistical context. | 正预测值 |
@@ -95,9 +96,9 @@ Preserve proper names, source titles, and exact quotations.
 | researcher degrees of freedom | 研究者自由度 | QRPs/replication crisis. | 研究者自由 |
 | file drawer problem | 文件抽屉问题 | Publication bias. | 抽屉问题 |
 | HARKing | HARKing | Keep acronym; explain as hypothesizing after results are known. | 结果后假设 unless explanatory prose |
-| registered report | 注册式报告 | Reform practice. | 注册报告 when inconsistent |
-| preregistration | 研究预登记 | Reform practice. | 预注册 when inconsistent |
-| garden of forking paths | 分岔路径花园 | Gelman/Loken concept; 分岔花园 is acceptable as a short local label. | 分叉花园 |
+| registered report | 注册报告 | Reform practice: a study report whose design is reviewed before results are known. | 注册式报告 |
+| preregistration | 预注册 | Reform practice; first mention may say `预注册研究` or explain that the plan is recorded before data are seen. | 研究预登记 |
+| garden of forking paths | 小径分岔的花园 | Gelman/Loken concept; the wording also preserves the allusion to Borges. | 分岔路径花园, 分叉花园 |
 | equivalence testing | 等效性检验 | Statistics. | 等价性检验 when inconsistent |
 | p-hacking | p 值操纵 | QRPs. | p-hacking without explanation in Chinese prose |
 | causal inference | 因果推断 | Causation/statistics. | 因果推理 when the statistical field is meant |
@@ -129,11 +130,11 @@ Preserve proper names, source titles, and exact quotations.
 | Maxwell's demon | 麦克斯韦妖 | Information thermodynamics. | 麦克斯韦恶魔 when inconsistent |
 | reversible computing | 可逆计算 | Computing/thermodynamics. | 可逆运算 |
 | qubit | 量子比特 | Quantum information. | 量子位 when inconsistent |
-| thermodynamic uncertainty relation | 热力学不确定关系 | Stochastic thermodynamics. | 热力学不确定性关系 when inconsistent |
+| thermodynamic uncertainty relation | 热力学不确定性关系 | Stochastic thermodynamics. | 热力学不确定关系 |
 | weak emergence | 弱涌现 | Bedau-style derivability through simulation. | 弱出现 |
 | light emergence | 轻涌现 | Course thread label for mild, non-mysterious emergence (e.g., rationality from mind–world interaction); deliberately distinct from technical 弱涌现. | 弱涌现 when the Bedau sense is meant |
 | strong emergence | 强涌现 | Ontological or causal non-deducibility. | 强出现 |
-| downward causation | 下行因果 | Often only a possibility in strong-emergence debates. | 向下因果 when inconsistent |
+| downward causation | 向下因果 | Often only a possibility in strong-emergence debates. | 下行因果, 下向因果 |
 | physical causal closure | 物理因果闭合性 | Philosophy of mind / strong emergence context. | 物理因果闭合 |
 | causal exclusion problem | 因果排除问题 | Jaegwon Kim's argument. | 排除论证 when ambiguous |
 | self-organization | 自组织 | Process by which order forms without central control. | 自我组织 |
@@ -144,7 +145,7 @@ Preserve proper names, source titles, and exact quotations.
 | order parameter | 序参量 | Physics context. | 秩序参数 |
 | universality | 普适性 | Shared critical behavior after suitable rescaling. | 普遍性 when used as technical term |
 | universality class | 普适类 | Systems sharing critical exponents/scaling behavior. | 普适性类别 |
-| renormalization group | 重正化群 | Coarse-graining framework in physics. | 再正规化群 unless quoting a source |
+| renormalization group | 重整化群 | Coarse-graining framework in physics. | 重正化群, 再正规化群 |
 | percolation threshold | 渗流阈值 | Percolation context. | 渗透阈值 |
 | edge of chaos | 混沌边缘 | Model-dependent region between order and chaos. | 混乱边缘 |
 | self-organized criticality | 自组织临界性 | Sandpile/avalanche class of ideas. | 自组织临界 |
@@ -164,7 +165,7 @@ Preserve proper names, source titles, and exact quotations.
 | assembly theory | 组装理论 | Origin-of-life / biosignature framework. | 装配理论 |
 | stigmergy | 痕迹协同 | Coordination through environmental traces. | 痕迹协调 |
 | Physarum polycephalum | 多头绒泡菌 | Slime-mold organism; keep Latin name where useful. | 黏菌 as the sole first mention |
-| topological interaction | 拓扑式互动 | STARFLAG/starling context. | 拓扑互动 if inconsistent |
+| topological interaction | 拓扑相互作用 | STARFLAG/starling context; interactions selected by neighbor rank rather than metric distance. | 拓扑式互动, 拓扑互动 |
 | nonreciprocal / nonreciprocity | 非互易 / 非互易性 | Active/open matter and effective interactions. | 非对称 as the technical term |
 | odd elasticity | 奇弹性 | Odd-matter mechanics. | 奇异弹性 |
 | odd matter | 奇物质 | Explain on first mention if needed. | 奇异物 |
@@ -206,15 +207,15 @@ Preserve proper names, source titles, and exact quotations.
 | resilience | 韧性 | Capacity to absorb shocks and/or recover; first mention may gloss as `韧性（resilience，也可译作恢复力）`. Use `恢复力` only when deliberately emphasizing speed of return or in legacy/source phrasing. | 恢复力 as the default climate/systems term |
 | engineering resilience | 工程韧性 | Speed of return after a small perturbation; explain as emphasizing `恢复速度` when useful. | 工程恢复力 |
 | ecological resilience | 生态韧性 | Size of shock a system can absorb before flipping. | 生态恢复力 |
-| bifurcation tipping (B-tipping) | 分岔临界（B-临界） | Tipping by crossing a threshold where a stable state vanishes. | 分岔翻转 |
-| noise-induced tipping (N-tipping) | 噪声诱导临界（N-临界） | Tipping caused by a large random fluctuation below the threshold. | 噪声驱动翻转 |
-| rate-induced tipping (R-tipping) | 速率诱导临界（R-临界） | Tipping caused by the speed, not just magnitude, of change. | 速率驱动翻转 |
-| tipping cascades | 临界连锁 | One tipping element pushing another toward its threshold. | 临界级联 when inconsistent |
+| bifurcation tipping (B-tipping) | 分岔诱导临界转变（B 型临界转变） | Tipping by crossing a threshold where a stable state vanishes. | 分岔临界, 分岔翻转 |
+| noise-induced tipping (N-tipping) | 噪声诱导临界转变（N 型临界转变） | Tipping caused by a large random fluctuation below the threshold. | 噪声诱导临界, 噪声驱动翻转 |
+| rate-induced tipping (R-tipping) | 速率诱导临界转变（R 型临界转变） | Tipping caused by the speed, not just magnitude, of change. | 速率诱导临界, 速率驱动翻转 |
+| tipping cascades | 临界转变级联 | One tipping element pushing another toward its threshold. | 临界连锁, 临界级联 |
 | homeostasis | 稳态 | Maintenance of stable internal conditions by negative feedback. | 体内平衡 |
-| allostasis | 变稳态 | Stability through predictive, anticipatory change. | 异稳态 when inconsistent |
+| allostasis | 异稳态 | Stability through predictive, anticipatory change; this course uses `异稳态` consistently. | 变稳态 |
 | feedforward | 前馈 | Anticipatory adjustment before an error occurs. | 前馈控制 |
 | variety | 多样性 | Number of distinct disturbances a regulator may face. | 变异度 |
-| Law of Requisite Variety | 必需多样性定律 | Regulator must command at least as much variety as disturbances. | 必要多样性定律 when inconsistent |
+| Law of Requisite Variety | 必要多样性定律 | Regulator must command at least as much variety as disturbances. | 必需多样性定律 |
 | normal form | 标准型 | Universal mathematical template near a bifurcation (fold, Hopf, etc.). | 范式 when conflated with Kuhn's paradigm |
 | reservoir computing | 储备池计算 | Recurrent neural-network approach for learning chaotic dynamics. | 水库计算 |
 | digital twin | 数字孪生 | Data-driven computational stand-in of a real system. | 数字双胞胎 |
@@ -225,10 +226,10 @@ Preserve proper names, source titles, and exact quotations.
 | AMOC | 大西洋经向翻转环流 | Atlantic Meridional Overturning Circulation; a climate tipping element. | AMOC 环流 |
 | Gaia hypothesis | 盖亚假说 | Lovelock's idea of life-planet self-regulation. | 盖亚理论 when overstated |
 | Daisyworld | 雏菊世界 | Lovelock-Watson toy model of feedback-driven planetary temperature regulation. | 黛西世界 |
-| panarchy | 泛层循环 | Holling's nested adaptive cycles across scales. | 泛archy |
+| panarchy | 泛层级循环 | Holling's nested adaptive cycles across scales. | 泛层循环, 泛archy |
 | model | 模型 | A deliberate useful distortion of a target system for a purpose. | 模式 when conflated with pattern |
 | map (as representation) | 地图 | Useful distortion preserving structure for a purpose; in the map–territory relation. | 映射 when mathematical/technical |
-| territory | 领土 | The target system or reality in the map–territory relation. | 疆域 when archaic/literal |
+| territory | 疆域 | The target system or reality in the map–territory relation; use `地图不是疆域` for the core metaphor. | 领土 in the map–territory metaphor |
 | idealization | 理想化 | Deliberately false assumptions used to reveal structure. | 理想化模型 unless specifying a model |
 | Galilean idealization | 伽利略式理想化 | Remove complicating factors to make the core relation tractable. | 伽利略理想化 |
 | minimalist idealization | 极简理想化 | Include only causal factors thought to be essential. | 最小主义理想化 |
@@ -249,7 +250,7 @@ Preserve proper names, source titles, and exact quotations.
 | System 1 / System 2 | 系统 1 / 系统 2 | Kahneman's teaching labels; preserve spacing around numerals. | 系统一, 系统二 |
 | dual-process theory | 双过程理论 | Higher-cognition processing typology; avoid overcommitting to two brain systems. | 双系统理论 when the prose is warning against literal systems |
 | ego depletion | 自我耗竭 | Failed/contested willpower-resource effect. | 自我损耗 when inconsistent |
-| natural frequency / natural frequencies | 自然频率 | Probability information expressed as counts in a reference class. | 自然频次 when inconsistent |
+| natural frequency / natural frequencies | 自然频数 | Probability information expressed as counts in a reference class. | 自然频率, 自然频次 |
 | fast-and-frugal heuristics | 快速节俭启发式 | Gigerenzer-style simple rules that ignore most information. | 快又省启发式 |
 | gaze heuristic | 凝视启发式 | Catching/ interception rule based on keeping gaze angle constant. | 注视启发式 when inconsistent |
 | recognition heuristic | 识别启发式 | If one item is recognized and the other is not, infer the recognized item scores higher on a criterion. | 认可启发式 |
@@ -269,7 +270,7 @@ Preserve proper names, source titles, and exact quotations.
 | value-guided construal / value-guided construals | 价值引导的建构 | Goal-sensitive simplified mental representations in Ho/Griffiths work. | 价值导向表征 when naming the theory term |
 | cognitive prosthesis / cognitive prostheses | 认知假体 | Tools/training designed to improve cognitive strategy use. | 认知义肢 when inconsistent |
 | inoculation theory | 接种理论 | Psychological inoculation against persuasion/manipulation. | 免疫理论 when metaphorical |
-| prebunking | 预驳 | Teaching manipulation techniques before exposure to misinformation. | 预先辟谣 when naming the technique |
+| prebunking | 预先揭穿 | Teaching manipulation techniques before exposure to misinformation; distinguish it from debunking a specific false claim afterward. | 预驳, 预先辟谣 when the technique is meant |
 | algorithmic fidelity | 算法保真度 | Argyle-style claim that LLM personas reproduce aggregate sample patterns. | 算法忠实性 |
 | silicon sampling | 硅基取样 | Synthetic respondents or AI stand-ins for human samples. | 硅采样 |
 | response bias | 反应偏向 | Signal-detection shift toward yes/no or believe/disbelieve independent of accuracy. | 反应偏差 when ambiguity with cognitive bias matters |
@@ -304,7 +305,7 @@ Preserve proper names, source titles, and exact quotations.
 | confirmation bias | 确认偏差 | Seeking or overweighting evidence that confirms a current hypothesis. | 证实偏差 when inconsistent |
 | Wason selection task | 沃森选择任务 | Abstract conditional-rule card task; preserve A/7 logic when described. | 瓦森选择任务 |
 | myside bias | 我方偏差 | Evaluating evidence in favor of one's own view or group. | 己方偏差 when inconsistent |
-| motivated numeracy | 动机性数理 | Kahan-style politicized interpretation of numerical evidence; flag replication caveats. | 动机化数理, 动机性算术 |
+| motivated numeracy | 动机性数理推理 | Kahan-style politicized interpretation of numerical evidence; flag replication caveats. | 动机性数理, 动机化数理, 动机性算术 |
 | Cognitive Reflection Test / CRT | 认知反思测试 / CRT | Frederick's test of overriding a fluent intuitive answer. | 认知反射测试 |
 | conflict detection | 冲突检测 | Detecting tension between an intuitive answer and logical/probabilistic constraints. | 冲突侦测 |
 | logical intuition / logical intuitions | 逻辑直觉 | Fast sensitivity to logical or numerical structure; keep evidential caveats. | 逻辑性直觉 |

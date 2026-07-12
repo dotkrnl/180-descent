@@ -57,23 +57,23 @@ import Term from "@app/components/lesson/Term.astro";
 <ContentSection id="appendix-d006-the-incoming-wave-anytime">
 <SectionEyebrow number="§1"> 允许持续查看数据的推断</SectionEyebrow>
 
-## 任意时点有效推断：在持续查看下保持错误率控制
+## 随时有效推断：在持续查看下保持错误率控制
 
 <Claim>
 <ClaimHeader label="方法 01"><StatusChip status={"ok"} label={"理论已确立"} printLabel={"已确立"} /><StatusChip status={"hint"} label={"普及尚不均衡"} printLabel={"有前景"} /></ClaimHeader>
 </Claim>
 传统的固定样本检验非常脆弱，因为它假设你在看到数据前就确定了样本量。但现代科学并非如此。A/B 测试的数据持续流入。平台团队不断刷新仪表盘。临床试验有中期查看。实验室在第一批数据「几乎显著」时会增加受试者。传统固定样本 <Term>p 值</Term> 并不适用于这种持续监测环境。
 
-<Term>任意时点有效推断</Term> (anytime-valid inference) 改写了统计保证的适用条件。它不再使用仅在预设停止时点有效的 <Term>p 值</Term>，而是使用 <Term>e 值</Term> (e-values)、<Term>e 过程</Term> (e-processes)、任意时点有效的 <Term>p 值</Term> 以及<Term>置信序列</Term>：这些证据衡量标准和区间旨在对<Highlight>任意停止时点</Highlight>保持有效。在程序正确构造且假设成立时，研究者可以根据当前数据决定是否继续采样，同时保持规定的错误率或证据保证。
+<Term>随时有效推断</Term> (anytime-valid inference) 改写了统计保证的适用条件。它不再使用仅在预设停止时点有效的 <Term>p 值</Term>，而是使用 <Term>e 值</Term> (e-values)、<Term>e 过程</Term> (e-processes)、随时有效的 <Term>p 值</Term> 以及<Term>置信序列</Term>：这些证据衡量标准和区间旨在对<Highlight>任意停止时点</Highlight>保持有效。在程序正确构造且假设成立时，研究者可以根据当前数据决定是否继续采样，同时保持规定的错误率或证据保证。
 
-这并非装饰性的升级。它直接针对第 6 日提到的欺骗自己的核心机制之一：可选停止。2020 年后的前沿是「博弈论统计 / 安全任意时点有效推断」语言的整合。它将证据视为与自然进行序贯博弈时的资本过程。如果零假设为真，这个资本过程就无法系统性地无限制增长；Ville 式不等式将这一逻辑转化为序贯检验和置信序列。
+这并非装饰性的升级。它直接针对第 6 日提到的欺骗自己的核心机制之一：可选停止。2020 年后的前沿是「博弈论统计 / 安全的随时有效推断」语言的整合。它将证据视为与自然进行序贯博弈时的资本过程。如果零假设为真，这个资本过程就无法系统性地无限制增长；Ville 式不等式将这一逻辑转化为序贯检验和置信序列。
 
 前沿校准器：相关理论已经相当成熟。实际风险在于文化层面：困难往往不在理论，而在团队仍沿用普通的固定样本 <Term>p 值</Term>。如果一个团队运行着持续监测的实验，却仍在报告普通的固定样本 <Term>p 值</Term>，那么其 UI 可能看起来很现代，但推断程序仍停留在 1930 年代的纸笔时代。
 
 <Aside>
 <BlockTitle>回顾第 6 日</BlockTitle>
 
-可选停止是假阳性工厂的开关之一。任意时点有效推断并不是说「永远不要查看中间结果」。它说的是：如果中途查看数据本来就是流程的一部分，就要把这种查看纳入统计程序，而非假装它没有发生。
+可选停止是假阳性工厂的开关之一。随时有效推断并不是说「永远不要查看中间结果」。它说的是：如果中途查看数据本来就是流程的一部分，就要把这种查看纳入统计程序，而非假装它没有发生。
 </Aside>
 
 </ContentSection>
@@ -86,7 +86,7 @@ import Term from "@app/components/lesson/Term.astro";
 <PanelNote>除非检验是为序贯监测而设计，否则重复查看会提高至少产生一次假警报的几率。</PanelNote>
 
 <DataTable>
-<DataTableHead><DataTableRow><DataTableHeader>在 <MathInline latex={String.raw`\alpha=.05`} /> 下的查看次数</DataTableHeader><DataTableHeader>朴素假警报风险</DataTableHeader><DataTableHeader>任意时点有效目标</DataTableHeader></DataTableRow></DataTableHead>
+<DataTableHead><DataTableRow><DataTableHeader>在 <MathInline latex={String.raw`\alpha=.05`} /> 下的查看次数</DataTableHeader><DataTableHeader>朴素假警报风险</DataTableHeader><DataTableHeader>随时有效目标</DataTableHeader></DataTableRow></DataTableHead>
 <DataTableBody>
 <DataTableRow><DataTableCell>1</DataTableCell><DataTableCell>5%</DataTableCell><DataTableCell>5%</DataTableCell></DataTableRow>
 <DataTableRow><DataTableCell>12</DataTableCell><DataTableCell>约 46%</DataTableCell><DataTableCell>5%</DataTableCell></DataTableRow>
@@ -193,7 +193,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 <Claim>
 <ClaimHeader label="方法 05"><StatusChip status={"hint"} label={"快速变动的前沿"} printLabel={"有前景"} /><StatusChip status={"ok"} label={"核心理论较成熟"} printLabel={"已确立"} /></ClaimHeader>
 </Claim>
-分岔路径花园不会消失。现代分析往往始于发现：对细胞进行聚类、寻找亚组、选择变量、学习因果图、选择图像区域、选择变量变换方式、要求 AI 分析师「找出重要的东西」。关键错误在于使用同一份数据来发现目标，然后假装该目标是预先指定的。
+小径分岔的花园不会消失。现代分析往往始于发现：对细胞进行聚类、寻找亚组、选择变量、学习因果图、选择图像区域、选择变量变换方式、要求 AI 分析师「找出重要的东西」。关键错误在于使用同一份数据来发现目标，然后假装该目标是预先指定的。
 
 <Term>选择后推断</Term> (post-selection inference) 是统计学在正面计入选择代价方面的尝试。经典方法包括以选择事件为条件、将数据拆分为探索集和验证集、或构建考虑选择过程后仍保持覆盖率的同时置信区间。2020 年后的前沿增加了三个特别相关的想法：
 
@@ -208,7 +208,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 <Highlight>因果发现后的有效推断。</Highlight> 运行图发现算法然后在同一份数据上估计效应会破坏覆盖率。新工作对发现过程进行了随机化和修正，使后续因果区间恢复有效覆盖。
 </MiniListItem>
 </MiniList>
-前沿校准器：这并不容易，在研究预登记可行的情况下，它也不是研究预登记的替代品。但它是探索性科学值得继续发展的方向，因为科学不可能禁止探索；关键是后续推断必须计入选择过程。
+前沿校准器：这并不容易，在预注册可行的情况下，它也不是预注册的替代品。但它是探索性科学值得继续发展的方向，因为科学不可能禁止探索；关键是后续推断必须计入选择过程。
 
 </ContentSection>
 
@@ -221,7 +221,7 @@ PPI++ 通过适应预测质量提高了这一思想的效率。交叉预测辅�
 
 <SimpleTable
   headers={["提示词","模型","结果变量","清洗规则","路径数"]}
-  rows={[["4","3","5","4","240"],["10","5","10","5","2,500"],["单一研究预登记方案","1","1","1","1"]]}
+  rows={[["4","3","5","4","240"],["10","5","10","5","2,500"],["单一预注册方案","1","1","1","1"]]}
 />
 </FormatOnly>
 
@@ -286,8 +286,8 @@ Francesca Gino / Data Colada 案例展示了这种力量与危险。Data Colada 
 ### 成熟度一瞥
 
 <MaturityTimeline>
-<MaturityTimelineItem status="ok" year="2021–2024" title="任意时点有效推断整合">
-任意时点有效 A/B 测试、e-过程、置信序列和安全检验成为面向序贯研究的新推断框架。
+<MaturityTimelineItem status="ok" year="2021–2024" title="随时有效推断整合">
+随时有效 A/B 测试、e-过程、置信序列和安全检验成为面向序贯研究的新推断框架。
 </MaturityTimelineItem>
 <MaturityTimelineItem status="ok" year="2023–2025" title="共形预测开始走向实际应用">
 通俗教程、超越可交换性的理论、共形风险控制、条件式保证以及 NLP/LLM 应用拓宽了使用场景。
@@ -323,7 +323,7 @@ LLM 社交模拟提出了一个很有吸引力的问题：如果一个语言模�
 
 因此，较稳妥的用途虽然狭窄但确实存在：问卷试测、发现含糊表述、检查实验材料是否清楚，以及在正式开展真人研究之前生成初步假设。这类模拟至多可以帮助研究者形成关于效应方向和样本量的初步假设；正式的功效分析仍应以真实人类数据、可靠的既有研究或先导研究为依据。而不负责任的使用场景则是：在没有人类验证的情况下将其作为验证性证据。
 
-报告标准应当变得严苛：模型名称及版本、日期、系统提示词、角色设定、温度、采样方案、重复运行的变异性、针对人类数据的验证，以及一套研究预登记规则，用以规定何时可把模拟结果计入证据。否则，模拟受试者就会变成戴着人类面具的分岔路径花园。
+报告标准应当变得严苛：模型名称及版本、日期、系统提示词、角色设定、温度、采样方案、重复运行的变异性、针对人类数据的验证，以及一套预注册规则，用以规定何时可把模拟结果计入证据。否则，模拟受试者就会变成戴着人类面具的小径分岔的花园。
 
 </ContentSection>
 
@@ -343,7 +343,7 @@ LLM 社交模拟提出了一个很有吸引力的问题：如果一个语言模�
 
 同一种失效模式也出现在 AI 基准测试中。公开排行榜相当于对同一测试集反复试验。静态基准测试会泄露到训练数据中。开发者可以针对基准测试进行微调。分数上升可能是因为模型泛化能力更强，也可能是因为它们记住了更多，或者因为测试框架变了，亦或是因为基准测试已被过度优化、区分能力正在下降。统计对象不再是「在测试集上的准确率」；它是<Highlight>模型构建者、基准测试维护者与隐藏测试数据之间的一场动态博弈</Highlight>。
 
-更负责任的做法包括：提示词日志、容器化代码、重复的独立智能体运行、多重宇宙报告、隐藏测试集评估、污染审计、研究预登记的分析指令，以及对系统决策的人类审查。梦想是让 AI 分析师暴露每一个分岔路径。噩梦则是 AI 分析师悄悄选择那个能发表的路径。
+更负责任的做法包括：提示词日志、容器化代码、重复的独立智能体运行、多重宇宙报告、隐藏测试集评估、污染审计、预注册的分析指令，以及对系统决策的人类审查。梦想是让 AI 分析师暴露每一个分岔路径。噩梦则是 AI 分析师悄悄选择那个能发表的路径。
 
 <Aside>
 <BlockTitle>回顾第 1 日</BlockTitle>
@@ -377,7 +377,7 @@ AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更�
 <DataTable class="throughline-table">
 <DataTableHead><DataTableRow><DataTableHeader>失效模式</DataTableHeader><DataTableHeader>旧有的诱惑</DataTableHeader><DataTableHeader>新的保障机制</DataTableHeader><DataTableHeader>何处仍会失效</DataTableHeader></DataTableRow></DataTableHead>
 <DataTableBody>
-<DataTableRow><DataTableCell dataLabel="失效模式">可选停止</DataTableCell><DataTableCell dataLabel="旧有的诱惑">偷看到 p &lt; .05 为止</DataTableCell><DataTableCell dataLabel="新的保障机制">任意时点有效 p 值、e-过程、置信序列</DataTableCell><DataTableCell dataLabel="何处仍会失效">功效、实施细节、以及人们是否真正使用了正确的程序</DataTableCell></DataTableRow>
+<DataTableRow><DataTableCell dataLabel="失效模式">可选停止</DataTableCell><DataTableCell dataLabel="旧有的诱惑">偷看到 p &lt; .05 为止</DataTableCell><DataTableCell dataLabel="新的保障机制">随时有效 p 值、e-过程、置信序列</DataTableCell><DataTableCell dataLabel="何处仍会失效">功效、实施细节、以及人们是否真正使用了正确的程序</DataTableCell></DataTableRow>
 <DataTableRow><DataTableCell dataLabel="失效模式">黑盒预测</DataTableCell><DataTableCell dataLabel="旧有的诱惑">将 AI 输出视为真值</DataTableCell><DataTableCell dataLabel="新的保障机制">共形集合、共形风险控制、PPI 偏差校正项</DataTableCell><DataTableCell dataLabel="何处仍会失效">可交换性、校准覆盖率、有偏或低质量的金标准标注、部署分布偏移</DataTableCell></DataTableRow>
 <DataTableRow><DataTableCell dataLabel="失效模式">灵活因果调整</DataTableCell><DataTableCell dataLabel="旧有的诱惑">选择一个随手可用的回归模型</DataTableCell><DataTableCell dataLabel="新的保障机制">DML、正交得分、交叉拟合</DataTableCell><DataTableCell dataLabel="何处仍会失效">未测量的混杂因素和错误的识别论证</DataTableCell></DataTableRow>
 <DataTableRow><DataTableCell dataLabel="失效模式">探索性发现</DataTableCell><DataTableCell dataLabel="旧有的诱惑">筛选后假装是预先计划的推断</DataTableCell><DataTableCell dataLabel="新的保障机制">选择后推断、数据拆分 / 数据裂变 / 数据稀化、稳定性修正</DataTableCell><DataTableCell dataLabel="何处仍会失效">功效损失、适用范围窄、未报告的探索行为</DataTableCell></DataTableRow>
@@ -394,7 +394,7 @@ AI 会给人一种理解的幻觉：产出更多、呈现更精美、语气更�
 <BlockTitle>附录要点总结</BlockTitle>
 
 <RecapList>
-<RecapItem term="新工具箱">面对黑盒模型、流式数据、隐私限制和 AI 辅助分析，统计学发展出共形校准、预测辅助推断、正交因果得分、任意时点有效证据、选择后修正和工作流程审计等方法。</RecapItem>
+<RecapItem term="新工具箱">面对黑盒模型、流式数据、隐私限制和 AI 辅助分析，统计学发展出共形校准、预测辅助推断、正交因果得分、随时有效证据、选择后修正和工作流程审计等方法。</RecapItem>
 <RecapItem term="核心教训">统计保证必须落实在工作流程中真正影响结果的环节：停止规则、校准集、金标准标注、选择程序、隐私机制和审计日志。</RecapItem>
 <RecapItem term="现实风险">模拟受试者、AI 分析师和公开基准测试都可能以机器速度重复分析偏差。提示词、模型版本、重复运行、隐藏测试和完整分析记录应成为常规科学记录的一部分。</RecapItem>
 </RecapList>

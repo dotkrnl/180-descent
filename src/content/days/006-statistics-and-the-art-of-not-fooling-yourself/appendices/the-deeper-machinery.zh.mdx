@@ -52,7 +52,7 @@ import Term from "@app/components/lesson/Term.astro";
 <Lead>正文提到 p 值容易被误读，但还没有解释这种误读为何会发生。现代显著性检验混合了费舍尔式的证据衡量和内曼—皮尔逊式的长期错误率控制；这两套传统回答的问题并不相同。本附录说明这种混合如何导致概念混乱，反复查看数据为何会提高偶然显著的概率，如何从已发表数字中识别异常，以及哪些替代工具能够补充或改进 p 值。最后，我们将用硬币投掷的次数说明 p 值所代表的惊异程度。</Lead>
 
 <ContinueNote label="接续正文内容">
-你已经见识过假阳性工厂、分岔路径花园、改革光谱以及多团队分析研究。请特别关注这三条线索：<Highlight>第 4 日</Highlight>的贝叶斯（<Term>p 值</Term> 并不是 <MathInline latex={String.raw`\mathrm{P}(\text{假设}\mid\text{数据})`} />，在这里我们将最终算出忘掉这一点的代价）、<Highlight>第 2 日</Highlight>的波普尔与约安尼迪斯（检验严苛度与「大多数发现都是错误的」），以及<Highlight>第 1 日</Highlight>的校准直觉。下文将展开这些思想背后的统计结构。
+你已经见识过假阳性工厂、小径分岔的花园、改革光谱以及多团队分析研究。请特别关注这三条线索：<Highlight>第 4 日</Highlight>的贝叶斯（<Term>p 值</Term> 并不是 <MathInline latex={String.raw`\mathrm{P}(\text{假设}\mid\text{数据})`} />，在这里我们将最终算出忘掉这一点的代价）、<Highlight>第 2 日</Highlight>的波普尔与约安尼迪斯（检验严苛度与「大多数发现都是错误的」），以及<Highlight>第 1 日</Highlight>的校准直觉。下文将展开这些思想背后的统计结构。
 </ContinueNote>
 <ContentSection>
 <SectionEyebrow number="§1"> 两种统计传统</SectionEyebrow>
@@ -143,7 +143,7 @@ import Term from "@app/components/lesson/Term.astro";
 
 正文中「假阳性工厂」的「可选停止」开关隐藏了一个本该更加著名的结论。假设你在每增加一名受试者后就进行一次检验，并在 <Term><MathInline latex={String.raw`p`} /></Term> 跌破 .05 的那一刻立即停止。无论是否存在真实效应，未经校正的反复查看都会改变检验程序的长期性质；在零假设成立时，误报风险尤其清楚地暴露出来。更准确地说，在零假设成立、反复查看结果且不作校正的理想化条件下，随着查看次数增加，最终越过固定显著性阈值的概率可以趋近于 1，而不是保持在 5%。Anscombe 在 1954 年证明了这一点，Armitage 等人在 1969 年进一步强调了它：只要反复查看的次数足够多，随样本增加而不断波动的 <Term>p 值</Term> 即使在零假设成立时，也很可能仅仅由于运气而跌破任何固定界线。
 
-这就是为什么反复查看中间结果不仅是某种轻微的过失，而是一种结构性的漏洞——也是为什么<Highlight>第 4 日</Highlight>提到的 <Term>e 值</Term> 和任意时点有效检验是如此优雅的解决方案：经过正确构造的任意时点有效程序，在其模型和技术条件成立时，允许研究者根据已观察的数据决定是否继续采样，同时保持规定的错误率或证据保证。这也是为什么必须监测积累数据以确保安全的真实临床试验会使用<Term><MathInline latex={String.raw`\alpha`} /> 支出</Term> (alpha spending) 和成组序贯设计——它们会在每次中期查看时分配少量错误率预算，从而使总的第一类错误预算仍维持在 5%。未经校正的可选停止会破坏错误率控制；而通过支出规则进行的停止，则是 20 世纪统计学的重要成就之一。
+这就是为什么反复查看中间结果不仅是某种轻微的过失，而是一种结构性的漏洞——也是为什么<Highlight>第 4 日</Highlight>提到的 <Term>e 值</Term> 和随时有效检验是如此优雅的解决方案：经过正确构造的随时有效程序，在其模型和技术条件成立时，允许研究者根据已观察的数据决定是否继续采样，同时保持规定的错误率或证据保证。这也是为什么必须监测积累数据以确保安全的真实临床试验会使用<Term><MathInline latex={String.raw`\alpha`} /> 支出</Term> (alpha spending) 和成组序贯设计——它们会在每次中期查看时分配少量错误率预算，从而使总的第一类错误预算仍维持在 5%。未经校正的可选停止会破坏错误率控制；而通过支出规则进行的停止，则是 20 世纪统计学的重要成就之一。
 
 </ContentSection>
 
@@ -274,9 +274,9 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低检验�
 
 ## 用硬币投掷理解 p 值
 
-最后介绍一个简洁的转换，因为它悄悄地翻开了第 7 日的内容。Sander Greenland (2019) 建议我们不要只盯着单独报告的 <Term>p 值</Term>，而是取它的「惊异度」 (surprisal)，这直接借用了信息论的概念：<Term>S-值</Term>，定义为 <MathInline latex={String.raw`S=-\log_2 p`} />。S-值把 p 值转换为以比特表示的惊异度，用来描述数据与受检模型的不相容程度。
+最后介绍一个简洁的转换，因为它悄悄地翻开了第 7 日的内容。Sander Greenland (2019) 建议我们不要只盯着单独报告的 <Term>p 值</Term>，而是取它的「惊异度」 (surprisal)，这直接借用了信息论的概念：<Term>S 值</Term>，定义为 <MathInline latex={String.raw`S=-\log_2 p`} />。S 值把 p 值转换为以比特表示的惊异度，用来描述数据与受检模型的不相容程度。
 
-这种转化非常具体。问：同一枚公平硬币要连续出现多少次正面，才能达到这种罕见程度？那个次数就是 <Term>S-值</Term>。一个 <Term><MathInline latex={String.raw`p = .05`} /></Term> 的结果带有约 <Highlight>4.3 比特</Highlight>，这一惊异度大致相当于公平硬币连续出现四至五次正面的罕见程度。一旦这样表达，魔力就消失了。连续四次正面朝上有点意思，但它算不上发现。
+这种转化非常具体。问：同一枚公平硬币要连续出现多少次正面，才能达到这种罕见程度？那个次数就是 <Term>S 值</Term>。一个 <Term><MathInline latex={String.raw`p = .05`} /></Term> 的结果带有约 <Highlight>4.3 比特</Highlight>，这一惊异度大致相当于公平硬币连续出现四至五次正面的罕见程度。一旦这样表达，魔力就消失了。连续四次正面朝上有点意思，但它算不上发现。
 
 <FormatOnly media="web">下方的滑块让你感受任何 <Term>p 值</Term> 对应多少比特的惊异度。</FormatOnly>
 
@@ -287,12 +287,12 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低检验�
 <SValueBits locale="zh" />
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
-### S-值参考
+### S 值参考
 
-<PanelNote>S-值将 p 值转化为比特惊异度：S = -log2(p)。</PanelNote>
+<PanelNote>S 值将 p 值转化为比特惊异度：S = -log2(p)。</PanelNote>
 
 <SimpleTable
-  headers={["p 值","S-值","硬币投掷类比"]}
+  headers={["p 值","S 值","硬币投掷类比"]}
   rows={[[".05","4.3 比特","约连续 4 到 5 次正面。"],[".01","6.6 比特","约连续 7 次正面。"],[".005","7.6 比特","约连续 8 次正面。"]]}
 />
 </FormatOnly>
@@ -305,7 +305,7 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低检验�
 从上文及正文中提炼出的精髓 —— 将运气转化为知识的举措：
 
 <LessonList variant="check">
-<LessonListItem><Highlight>研究预登记验证性检验。</Highlight> 在看到数据前明确主要结果变量、模型、样本量和停止规则。偏离方案或新增的分析应标为探索性分析。</LessonListItem>
+<LessonListItem><Highlight>预注册验证性检验。</Highlight> 在看到数据前明确主要结果变量、模型、样本量和停止规则。偏离方案或新增的分析应标为探索性分析。</LessonListItem>
 <LessonListItem><Highlight>始终报告效应量及相容性区间。</Highlight> 效应量及其不确定性「才是」结果；<Term>p 值</Term> 只是个脚注。</LessonListItem>
 <LessonListItem><Highlight>围绕最小实质重要效应规划样本量。</Highlight> 先设定目标功效，再计算检测这一效应所需的样本量；样本量不足的研究得出的「显著」结果很可能是虚高的（M 类错误）。</LessonListItem>
 <LessonListItem><Highlight>将你的 p 值转化为比特。</Highlight> 如果它只有几次硬币投掷的惊异度，请如实说明，不要过度推销。</LessonListItem>
@@ -351,6 +351,6 @@ Andrew Gelman 和 John Carlin (2014) 认为，在我们实际身处的低检验�
 1. Lakens, D. (2017). "Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses." *Social Psychological and Personality Science* 8(4): 355–362. <Meta>doi:10.1177/1948550617697177 — TOST 程序。</Meta>
 1. Benjamini, Y. &amp; Hochberg, Y. (1995). "Controlling the False Discovery Rate." *Journal of the Royal Statistical Society B* 57(1): 289–300. <Meta>— FDR 与全族错误率。</Meta>
 1. Mayo, D. G. (2018). *Statistical Inference as Severe Testing: How to Get Beyond the Statistics Wars.* Cambridge University Press. <Meta>— 检验严苛性；误差统计学推理。</Meta>
-1. Greenland, S. (2019). "Valid P-Values Behave Exactly as They Should: Some Misleading Criticisms of P-Values and Their Resolution With S-Values." *The American Statistician* 73(sup1): 106–114. <Meta>doi:10.1080/00031305.2018.1529625 — S-值 / 惊异度，以比特为单位。</Meta>
+1. Greenland, S. (2019). "Valid P-Values Behave Exactly as They Should: Some Misleading Criticisms of P-Values and Their Resolution With S-Values." *The American Statistician* 73(sup1): 106–114. <Meta>doi:10.1080/00031305.2018.1529625 — S 值 / 惊异度，以比特为单位。</Meta>
 
 </Sources>

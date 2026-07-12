@@ -116,15 +116,15 @@ import Day11ScissorsToggle from "@app/components/lesson/interactives/Day11Scisso
 某种疾病影响 1% 的女性。一项检测在患者有病时 90% 能检出，但也会在 9% 的健康者身上出现假阳性。一位女性检测结果为阳性。她实际患病的可能性有多大？
 </BlockQuote>
 
-许多人的回答会落在 80%–90% 之间，医生也常出现相同错误；正确答案约为 9%。但若改用<Term>自然频率</Term><TipNote text="自然频率把概率信息表达为参考类别中的计数，例如 98 次阳性检测中有 9 次为真阳性。"/>：在 1,000 名女性中，10 人患病，其中 9 人检测阳性；990 名健康女性中，约 89 人出现假阳性。因此，约 98 名检测阳性者中只有 9 人真正患病，后验概率为 9/98，约 9%。2017 年的元分析发现，改用自然频率后，给出正确贝叶斯答案的比例从约 4% 提高到约 24%。这表明，基础率错误不完全是固定的认知缺陷，也可能由信息格式增加的推理负担造成。
+许多人的回答会落在 80%–90% 之间，医生也常出现相同错误；正确答案约为 9%。但若改用<Term>自然频数</Term><TipNote text="自然频数把概率信息表达为参考类别中的计数，例如 98 次阳性检测中有 9 次为真阳性。"/>：在 1,000 名女性中，10 人患病，其中 9 人检测阳性；990 名健康女性中，约 89 人出现假阳性。因此，约 98 名检测阳性者中只有 9 人真正患病，后验概率为 9/98，约 9%。2017 年的元分析发现，改用自然频数后，给出正确贝叶斯答案的比例从约 4% 提高到约 24%。这表明，基础率错误不完全是固定的认知缺陷，也可能由信息格式增加的推理负担造成。
 </ContentSection>
 
 <Day11NaturalFrequencyGrid locale="zh" />
 
 <FormatOnly as="div" media="print-epub" variant="alternate">
-<PanelTitle>固定示例 · 自然频率表</PanelTitle>
+<PanelTitle>固定示例 · 自然频数表</PanelTitle>
 
-<PanelNote>固定图采用经典的 1% 场景，以自然频率展示贝叶斯答案。</PanelNote>
+<PanelNote>固定图采用经典的 1% 场景，以自然频数展示贝叶斯答案。</PanelNote>
 
 <Day11StaticFigure kind="frequency-grid" locale="zh" />
 
@@ -187,7 +187,7 @@ import Day11ScissorsToggle from "@app/components/lesson/interactives/Day11Scisso
 <Claim>
 <ClaimHeader label="前沿 01">
 <StatusChip status="ok" label="稳健偏差" printLabel="稳健偏差已确立" />
-<StatusChip status="bad" label="燃料模型" printLabel="意志力燃料模型已崩溃" />
+<StatusChip status="bad" label="燃料模型" printLabel="意志力燃料模型未能复现" />
 </ClaimHeader>
 
 ### 哪些偏差经受住了复现检验？
@@ -197,7 +197,7 @@ import Day11ScissorsToggle from "@app/components/lesson/interactives/Day11Scisso
 <SimpleTable
   class="alt-table day11-status-table"
   headers={["发现","证据状态","留存了什么"]}
-  rows={[["合取谬误","已确立","琳达效应在数十年、不同文化和多种表述中稳定复现，大型语言模型也会中招。"],["锚定","已确立","心理学中较稳健效应之一；现已获得计算层面解释。"],["自我耗竭","已崩溃","23 实验室研究预登记复现发现 d 约 0.04，实际无效应。"],["许多社会启动效应","有争议","部分概念启动结果未能复现；卡尼曼曾公开警告该领域。"]]}/>
+  rows={[["合取谬误","已确立","琳达效应在数十年、不同文化和多种表述中稳定复现，大型语言模型也会中招。"],["锚定","已确立","心理学中较稳健效应之一；现已获得计算层面解释。"],["自我耗竭","未能复现","23 个实验室的预注册复现研究发现 d 约为 0.04，实际未见效应。"],["许多社会启动效应","有争议","部分概念启动结果未能复现；卡尼曼曾公开警告该领域。"]]}/>
 
 这并不意味着偏差不存在，而是说明较稳健的偏差通常具有较清楚的机制和适用条件。
 </Claim>
