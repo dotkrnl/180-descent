@@ -33,7 +33,7 @@ const panels = {
     metrics: zh
       ? [
           { label: "固定样本 p 值", meter: "red", bar: "peekFixedBar", valueId: "peekFixedPct", value: "46%" },
-          { label: "任意时点有效", meter: "green", bar: "peekAnyBar", valueId: "peekAnyPct", value: "5%" }
+          { label: "随时有效", meter: "green", bar: "peekAnyBar", valueId: "peekAnyPct", value: "5%" }
         ]
       : [
           { label: "fixed-sample p", meter: "red", bar: "peekFixedBar", valueId: "peekFixedPct", value: "46%" },
@@ -154,7 +154,7 @@ const panel = panels[kind];
   <PanelNote>
     {kind === "peek" && (
       zh
-        ? <>一个简易模型：将每次查看视为一次跨过 <Term><MathInline latex={String.raw`p < \alpha`} /></Term> 的新机会。真实的序贯依赖性更微妙，但趋势才是重点。固定样本 p 值在重复查看下非常脆弱；而任意时点有效程序则是专为停止规则设计的。</>
+        ? <>一个简易模型：将每次查看视为一次跨过 <Term><MathInline latex={String.raw`p < \alpha`} /></Term> 的新机会。真实的序贯依赖性更微妙，但趋势才是重点。固定样本 p 值在重复查看下非常脆弱；而随时有效程序则是专为停止规则设计的。</>
         : <>A toy approximation: treat each look as a fresh chance to cross <MathInline latex={String.raw`p < \alpha`} />. Real sequential dependence is subtler, but the direction is the point. Fixed-sample p-values are brittle under repeated looks; anytime-valid procedures are designed for the stopping rule.</>
     )}
     {kind === "conformal" && (
@@ -209,7 +209,7 @@ const panel = panels[kind];
         <>
           <div class="bigstat"><span id={`${prefix}pathK`}>240</span> <small>{zh ? "条分析路径" : "analysis paths"}</small></div>
           <div class="metric"><span class="lab">{zh ? "假阳性风险" : "false-positive risk"}</span><progress class="meter red" id={`${prefix}pathRiskBar`} max="100" value="100"></progress><span id={`${prefix}pathRiskPct`}>≈100%</span></div>
-          <div class="metric"><span class="lab">{zh ? "研究预登记" : "preregistered"}</span><progress class="meter green" max="100" value="5"></progress><span>5%</span></div>
+          <div class="metric"><span class="lab">{zh ? "预注册" : "preregistered"}</span><progress class="meter green" max="100" value="5"></progress><span>5%</span></div>
           <p class="note">{zh ? <>一个报告完整多重宇宙的 AI 分析师可以提高透明度。一个悄悄选择最有利路径的 AI 分析师，则是 <span class="term">p 值操纵</span> 的加速器。</> : "An AI analyst that reports the full multiverse can be a transparency machine. An AI analyst that silently selects the prettiest path is a p-hacking accelerator."}</p>
         </>
       ) : (

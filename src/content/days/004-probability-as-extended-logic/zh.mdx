@@ -333,7 +333,7 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 <StatusChip status={"hint"} label={"取代 p 值"} printLabel={"有争议／炒作风险"} />
 </ClaimHeader>
 ### e 值的优势：可以在任意时点检验
-连续进行公平赌局时，累计财富构成数学上的<Term>鞅</Term><TipNote text={"鞅是公平赌局的数学模型：在已知过去的条件下，下一步的期望值等于当前值。"} />（martingale）。维勒不等式<TipNote text={"维勒不等式限制了公平赌局的财富过程仅凭运气膨胀到很大数值的概率。"} />保证：若零假设为真，财富仅凭运气增长到极大值的概率很低。这使 e 值具有<Term>任意时点有效性</Term>：研究者可以持续查看数据，随时停止或继续收集，无论查看多少次，错误率控制仍然成立。更完整的安全推断框架还可以构造任意时点有效的置信区间。e 值也便于合并：独立 e 值可以相乘，相关 e 值可以取平均，结果仍保持有效；这比 p 值更不容易受到重复查看和多重比较的影响。
+连续进行公平赌局时，累计财富构成数学上的<Term>鞅</Term><TipNote text={"鞅是公平赌局的数学模型：在已知过去的条件下，下一步的期望值等于当前值。"} />（martingale）。维勒不等式<TipNote text={"维勒不等式限制了公平赌局的财富过程仅凭运气膨胀到很大数值的概率。"} />保证：若零假设为真，财富仅凭运气增长到极大值的概率很低。这使 e 值具有<Term>随时有效性</Term>：研究者可以持续查看数据，随时停止或继续收集，无论查看多少次，错误率控制仍然成立。更完整的安全推断框架还可以构造随时有效的置信区间。e 值也便于合并：独立 e 值可以相乘，相关 e 值可以取平均，结果仍保持有效；这比 p 值更不容易受到重复查看和多重比较的影响。
 
 <FormatOnly media="web">让同一串数据分别经过怕中途查看的 p 值与随时有效的 e 值，看看两种证据尺度如何给出不同保证。</FormatOnly>
 <FormatOnly media="print-epub">表格并列怕中途查看的 p 值与随时有效的 e 值，并说明两者的保证为何不同。</FormatOnly>
@@ -361,7 +361,7 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 <DataTableRow><DataTableCell>滚动财富</DataTableCell><DataTableCell>检验鞅或 e 过程</DataTableCell><DataTableCell>可持续监控，同时控制第一类错误</DataTableCell></DataTableRow>
 </DataTableBody>
 </DataTable>
-代价是偏保守：当所有建模假设完全正确时，任意时点有效的证据过程可能需要比<Term>固定样本量</Term><TipNote text={"固定样本量检验会预先决定样本数，并只在计划好的终点分析一次。"} />检验更强或更持久的证据。
+代价是偏保守：当所有建模假设完全正确时，随时有效的证据过程可能需要比<Term>固定样本量</Term><TipNote text={"固定样本量检验会预先决定样本数，并只在计划好的终点分析一次。"} />检验更强或更持久的证据。
 
 </FormatOnly>
 
@@ -379,7 +379,7 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 ### e 值已经应用到哪里？
 需要区分数学基础与现实采纳。e 值的<Term>数学</Term>已经确立，并经过《统计学年鉴》、RSS 两辑《期刊》和《统计科学》等期刊的同行评议；拉姆达斯与王若度还将相关成果汇集为 390 页的《Foundations and Trends》专著。这一部分证据充分。<StatusChip status={"ok"} label={"e 值数学"} printLabel={"已确立"} />
 
-现实中的<Term>采纳</Term>则有限得多。最清楚的应用是在科技公司的<Term>A/B 测试</Term><TipNote text={"A/B 测试会把用户随机分到产品版本 A 或 B，比较哪个版本表现更好。"} />中，因为持续查看数据本来就是产品实验的日常。Optimizely 围绕「始终有效推断」重建了平台，Netflix 和 Adobe 也公开使用任意时点有效的<Term>置信序列</Term><TipNote text={"置信序列是一组随着数据累积而更新、且在每个时点都保持有效的置信区间。"} />。这是真实的生产环境应用，但在生物统计、心理学和物理学等领域，p 值仍占主导地位。
+现实中的<Term>采纳</Term>则有限得多。最清楚的应用是在科技公司的<Term>A/B 测试</Term><TipNote text={"A/B 测试会把用户随机分到产品版本 A 或 B，比较哪个版本表现更好。"} />中，因为持续查看数据本来就是产品实验的日常。Optimizely 围绕「始终有效推断」重建了平台，Netflix 和 Adobe 也公开使用随时有效的<Term>置信序列</Term><TipNote text={"置信序列是一组随着数据累积而更新、且在每个时点都保持有效的置信区间。"} />。这是真实的生产环境应用，但在生物统计、心理学和物理学等领域，p 值仍占主导地位。
 
 新工具也有代价。在固定样本量比较中，e 值可能需要比 p 值更极端的数据才能达到相同的拒绝阈值；这可以被理解为更严格的证据要求，而不是简单缺陷。赌局的效率还取决于下注策略，类似于贝叶斯分析需要选择先验。帕维尔、赫尔德等批评者提醒，「安全」和「始终有效」的保证同样依赖模型正确、没有发表偏倚等假设，而这些假设也可能失效。稳妥的结论是：e 值是严格、有用且有前景的补充工具<StatusChip status={"hint"} label={"补充工具"} printLabel={"有前景"} />，但目前远不能全面取代 p 值。
 <LessonNote variant="frontier-watch">什么能真正推动局面？如果 FDA 或 EMA 这类药物监管机构批准 e 值用于确证性临床试验，或者某家顶级综合科学期刊把它写进投稿指南，「取代」的口号才有可能从宣传语变成实际制度。让我们拭目以待。</LessonNote>
@@ -439,8 +439,8 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 1. Grünwald, P., de Heide, R. &amp; Koolen, W. (2024). "Safe Testing." Journal of the Royal Statistical Society Series B 86(5): 1091–1128. <Meta>doi:10.1093/jrsssb/qkae011。</Meta> [doi.org/10.1093/jrsssb/qkae011](https://doi.org/10.1093/jrsssb/qkae011) (read paper, with discussion incl. Shafer, Pawel &amp; Held).
 1. Ramdas, A., Grünwald, P., Vovk, V. &amp; Shafer, G. (2023). "Game-Theoretic Statistics and Safe Anytime-Valid Inference." Statistical Science 38(4): 576–601. <Meta>doi:10.1214/23-STS894。</Meta> [doi.org/10.1214/23-STS894](https://doi.org/10.1214/23-STS894) [arXiv:2210.01948](https://arxiv.org/pdf/2210.01948)
 1. Ramdas, A. &amp; Wang, R. (2025; first posted 2024). "Hypothesis Testing with E-values." Foundations and Trends in Statistics 1(1–2): 1–390. <Meta>doi:10.1561/3600000002。</Meta> [doi.org/10.1561/3600000002](https://doi.org/10.1561/3600000002) <Meta>——综合专著。</Meta>
-1. ter Schure, J., Ly, A., Belin, L. et al. (2022). "Bacillus Calmette-Guérin vaccine to reduce COVID-19 infections and hospitalisations in healthcare workers." <Meta>Prospective ALL-IN meta-analysis preprint.</Meta> [Amsterdam UMC](https://pure.amsterdamumc.nl/en/publications/bacillus-calmette-gu%C3%A9rin-vaccine-to-reduce-covid-19-infections-an/) <Meta>——在持续更新的临床元分析中使用 exact e-value logrank tests 与任意时点有效置信区间。</Meta>
-1. Johari, R., Koomen, P., Pekelis, L. &amp; Walsh, D. (2022). "Always Valid Inference: Continuous Monitoring of A/B Tests." Operations Research 70(3): 1806–1821. <Meta>doi:10.1287/opre.2021.2135。</Meta> [doi.org/10.1287/opre.2021.2135](https://doi.org/10.1287/opre.2021.2135) <Meta>——Optimizely 的部署；参见 Netflix Research 关于[任意时点有效推断](https://research.netflix.com/publication/anytime-valid-inference-for-multinomial-count-data)的研究，以及 Adobe [Experience Platform 置信序列](https://experienceleague.adobe.com/en/docs/journey-optimizer/using/content-management/content-experiment/technotes/experiment-calculations)。</Meta>
+1. ter Schure, J., Ly, A., Belin, L. et al. (2022). "Bacillus Calmette-Guérin vaccine to reduce COVID-19 infections and hospitalisations in healthcare workers." <Meta>Prospective ALL-IN meta-analysis preprint.</Meta> [Amsterdam UMC](https://pure.amsterdamumc.nl/en/publications/bacillus-calmette-gu%C3%A9rin-vaccine-to-reduce-covid-19-infections-an/) <Meta>——在持续更新的临床元分析中使用 exact e-value logrank tests 与随时有效置信区间。</Meta>
+1. Johari, R., Koomen, P., Pekelis, L. &amp; Walsh, D. (2022). "Always Valid Inference: Continuous Monitoring of A/B Tests." Operations Research 70(3): 1806–1821. <Meta>doi:10.1287/opre.2021.2135。</Meta> [doi.org/10.1287/opre.2021.2135](https://doi.org/10.1287/opre.2021.2135) <Meta>——Optimizely 的部署；参见 Netflix Research 关于[随时有效推断](https://research.netflix.com/publication/anytime-valid-inference-for-multinomial-count-data)的研究，以及 Adobe [Experience Platform 置信序列](https://experienceleague.adobe.com/en/docs/journey-optimizer/using/content-management/content-experiment/technotes/experiment-calculations)。</Meta>
 1. Wasserstein, R. L. &amp; Lazar, N. A. (2016). "The ASA Statement on p-Values." The American Statistician 70(2): 129–133. <Meta>doi:10.1080/00031305.2016.1154108。</Meta> [doi.org/10.1080/00031305.2016.1154108](https://doi.org/10.1080/00031305.2016.1154108) <Meta>——以及 Amrhein, Greenland &amp; McShane (2019), "Retire statistical significance," Nature 567: 305–307, doi:10.1038/d41586-019-00857-9。</Meta> [doi.org/10.1038/d41586-019-00857-9](https://doi.org/10.1038/d41586-019-00857-9)
 
 </Sources>
