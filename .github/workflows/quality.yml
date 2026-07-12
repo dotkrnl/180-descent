@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Prepare generated source assets
+        run: npx tsx scripts/cli/prepare-assets.ts
+
       - name: Check content contracts
         run: npm run check:content
 
