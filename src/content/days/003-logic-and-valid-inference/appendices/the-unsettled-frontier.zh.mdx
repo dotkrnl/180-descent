@@ -44,17 +44,17 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 
 正文中的 AI 证明故事停在了 AlphaProof：一个躲在公司围墙后、解决每个问题都需要耗费数日算力的封闭系统。自那以后，该领域出现了 AI 界少见的开放趋势：若干证明器开放了<Highlight>权重</Highlight>，而且能力提升很快。到了 2025 年，一些开放权重证明器已能在个人级硬件上运行，并在形式化、机器检查的 Lean 语言中解决奥数级数学问题。这是一场静悄悄的地震。
 
-要跟上它的节奏，你需要了解计分板。机器证明器是根据共享的<Term>基准测试</Term>（benchmarks）<TipNote text={"基准测试是在规定条件下用于比较系统的标准化测试集。"} />进行排名的——这是一组每个人都要面对的固定题目。其中有三个至关重要。<Term>miniF2F</Term>（2022 年推出）包含几百道奥数级别的题目，直到最近还是行业标准；现在它已趋于<Highlight>饱和</Highlight>，顶尖系统的得分已接近天花板。<Term>PutnamBench</Term>（2024 年）难度更高——题目选自臭名昭著的普特南（Putnam）本科生数学竞赛，人类得分的中位数通常是<Highlight>零</Highlight>。而 <Term>FrontierMath</Term>（2024 年）则更上一层楼：研究级的难题，人类专家往往需要数小时甚至数天才能解决，其设计初衷是让当今模型的得分仅维持在个位数或低两位数。随着一个基准测试达到饱和，领域内就会建立一个更高的基准。计分板就像一架梯子，横木不断在上方增加。
+要跟上它的节奏，你需要了解计分板。机器证明器是根据共享的<Term>基准测试</Term>（benchmarks）<TipNote text={"基准测试是在规定条件下用于比较系统的标准化测试集。"} />进行排名的——这是一组用来比较不同系统的固定题目。其中有三个至关重要。<Term>miniF2F</Term>（2022 年推出）包含几百道奥数级别的题目，直到最近还是行业标准；现在它已趋于<Highlight>饱和</Highlight>，顶尖系统的得分已接近天花板。<Term>PutnamBench</Term>（2024 年）难度更高——题目选自臭名昭著的普特南（Putnam）本科生数学竞赛，人类得分的中位数通常是<Highlight>零</Highlight>。<Term>FrontierMath</Term>（2024 年）按难度分层，范围从有挑战性的大学数学一直延伸到可能让专家耗费数日的研究级问题。它的分数取决于难度层级、数据集版本和评测规程，不能用一个百分比概括整个基准。随着一个基准测试达到饱和，领域内就会建立一个更高的基准。
 
 <Panel>
 <PanelTitle>图表 · 移动的天花板</PanelTitle>
 
 ### 不同基准测试的表现
 
-<PanelNote>每当一个基准测试被攻克，上方就会建立一个更难的基准。今天的前沿系统处于旧阶梯的顶端和新阶梯的底端——这正是一个健康的基准测试应有的表现。</PanelNote>
+<PanelNote>当旧基准趋于饱和，研究者会建立更难的新基准。这种排序仅用于说明大致难度；只有同时标明版本和测试条件，分数才能对应一次明确的评测。</PanelNote>
 
 <MathBenchmarkLadderFigure locale="zh" />
-<Caption class="appendix-caption micro">得分取自公开报道的最佳水平，随采样预算波动，且逐月变化。这些数据仅供参考，而非教条——请将本页所有数字视为「截至 2026 年初的约数」。</Caption>
+<Caption class="appendix-caption micro">miniF2F 与 PutnamBench 的数字只是公开最佳成绩的粗略参考。图中有意不给 FrontierMath 标注单一分数：版本、难度层级、模型快照、工具和推理预算都会影响结果。</Caption>
 </Panel>
 
 现在来看看那些不断攀登的系统。在 2025 年，两款开放权重证明器重塑了人们的预期，而第三款则冲入了奥数金牌水平。
@@ -183,20 +183,20 @@ import MathBenchmarkLadderFigure from "@app/components/lesson/figures/MathBenchm
 <ContentSection>
 <SectionEyebrow number="简报 V"></SectionEyebrow>
 
-## 基准测试结果可能失真
+## 基准分数必须标明版本
 
-本页的每一个主张最终都建立在基准测试数字之上，这意味着基准测试本身承担着巨大的压力。2024 年底发生的一件事揭示了一个数字可以产生多大的误导，即使它是由一个严肃的实验室秉持诚意发布的。这是整份附录中最重要的警示故事，因为它与 AI 无关，而是关于 <Highlight>测量</Highlight> 本身。
+本页的主张最终都依赖基准测试结果，但只给出基准名称，并不能确定一次具体、稳定的测试。可用的成绩应当同时标明数据集版本与难度层级、模型版本或快照、工具与脚手架、推理或尝试预算，以及计分规程。FrontierMath 正好说明了原因。
 
-回想一下，FrontierMath 是最难的基准测试——研究级难题。2024 年 12 月，在一次直播发布中，OpenAI 的研究主管宣布他们即将推出的 o3 模型在这一测试中达到了 <Highlight>超过 25%</Highlight> 的成绩，而此前所有系统的表现都低于 2%。在专家级数学题目上从 2% 飞跃到 25%，这种数字足以重塑整个领域一整年的谈话。它理所当然地登上了各大头条。
+2024 年 12 月，OpenAI 报告称，当时尚未发布的 o3 在包含 180 道题的 `FrontierMath_11-26-24` 上取得了 <Highlight>25.2%</Highlight>。Epoch 目前的模型页面则列出：正式发布版 o3 在 FrontierMath Tiers 1–3（v1，旧版）上为 <Highlight>18.7% ± 2.3%</Highlight>，在 Tier 4（v1，旧版）上为 <Highlight>2.1% ± 2.1%</Highlight>。这些并不是同一次实验的重复：模型版本和题目集合不同，现有报告也不能证明脚手架、推理设置、尝试预算或计分规程完全一致。因此，后两个数字既没有复现，也没有否定 25.2% 的公告。<StatusChip status={"hint"} label={"依赖评测规程"} printLabel={"依赖评测规程"} />
 
-随后背景被揭露出来，令人尴尬。首先：<Highlight>OpenAI 资助了这个基准测试</Highlight>，并拥有大部分题目和答案的访问权限——这一事实在发布时并未明确披露，而且几位题目编写者表示他们此前并不知情。该公司指出一项不利用这些题目进行训练的口头协议，并使用了留出集（held-out set）；但基准测试的主要负责数学家承认，该组织无法 <Highlight>独立地</Highlight> 验证 OpenAI 的分数。评论家加里·马库斯称这次演示「具有误导性且不体面」。其次，对这个数字本身更致命的是：当后来进行独立评估时，o3 的得分 <Highlight>更接近 10%</Highlight>——而非 25%。<StatusChip status={"bad"} label={"有争议／炒作风险"} printLabel={"有争议／炒作风险"} />
+数据治理方面另有一个合理的疑问。OpenAI 委托 Epoch 制作了 300 道核心题和 50 道 Tier 4 题。Epoch 表示，OpenAI 拥有这些委托制作的题目，并可访问截至 `FrontierMath_12-04-24` 的全部题目和答案。后续版本才加入明确的留出集：`FrontierMath_02-28-25` 留出了 53 道核心题的答案，Tier 4 则留出了 50 道题中的 20 道。Epoch 在 o3 公告前已经公开双方的合作关系，但后来承认，当时没有明确说明所有权和数据访问条款，许多出题者也不了解这些细节。这种信息不对称足以要求更醒目的披露和独立留出评测，但它本身并不能证明所报告的成绩是捏造的。
 
-这两点都不意味着有人撒了谎。不同的测试条件、不同的采样预算，以及内部测试与外部审计之间的差距，完全可以解释 25% 与 10% 之间的分歧。这正是重点所在。分数并非伪造，但它是 <Highlight>脆弱的</Highlight>——它对测量者、访问权限及背后的激励机制高度敏感。在课程看来，这是一个完美的样本，因为它的意义远超 AI：由利益相关方在自己参与构建的工具上得出的测量结果，在成为事实之前，必须经过独立的复现。我们在第 2 日学到的「复现危机」，在这里再次上演，只是它穿着排行榜的外衣。
+版本变化也会影响比较。2026 年 6 月 12 日，Epoch 发布 FrontierMath v2，修正了 42% 题目中的问题。修订基准是正常且有益的维护工作，但 v1 与 v2 的成绩因此不能在不加说明的情况下直接比较。稳妥的结论应当更窄：25.2% 是一个模型快照在某个具名版本和一套评测条件下的报告结果。若要概括 o3 更广泛或当前的能力，需要在版本匹配、条件公开的评测中重新测量。
 
 <Aside>
 <BlockTitle>核对基准测试的四个问题</BlockTitle>
 
-当你读到一个系统「在基准测试 Y 上获得了 X% 分数」时，在相信之前请追问四个问题。<Highlight>谁建立并资助了 Y？</Highlight> <Highlight>测试方是否曾提前接触过它？</Highlight> <Highlight>X% 允许每个问题尝试多少次？</Highlight> <Highlight>是否有独立方复现了这一结果？</Highlight> 经得起这四问的数字才有价值。哪怕有一问经不起——比如这里的 25%——它就只是一个调查的起点，而非事实。值得称赞的是，Epoch AI 后来披露了利益冲突，保留了真实的留出集，并在 2025 到 2026 年间积极纠正基准测试中的错误；这种自纠本身就是一个健康的信号。
+当你读到一个系统「在基准测试 Y 上获得了 X%」时，请追问四个问题。<Highlight>哪个版本、哪个难度层级？</Highlight> <Highlight>哪个模型版本或快照？</Highlight> <Highlight>使用了哪些工具、脚手架以及推理或尝试预算？</Highlight> <Highlight>谁能访问答案，是否设有独立留出集？</Highlight> 缺少这些信息的分数是不完整的，但不等于虚假。Epoch 现在公开利益冲突说明、版本历史、留出集细节和带版本标签的模型成绩。v2 的修正改善了基准，也清楚说明了为什么新旧成绩必须分别标注。
 
 </Aside>
 
@@ -241,7 +241,7 @@ AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外�
 
 <SimpleTable
   headers={["主张","最佳标签","校准说明"]}
-  rows={[["一个开放权重的 32B Lean 证明器在 miniF2F 上达到约 90%。","已确立","Lean 的检查功能使正确性可审计；采样预算依然重要。"],["GPT-5 解决了 10 个此前未解的埃尔多什问题。","有争议／炒作风险","引起争议的公开说法实则是文献检索，而非 10 个新成果。"],["FunSearch 改进了 8 维盖集的构造。","已确立","该构造已发表且可直接验证，尽管它属于搜索而非洞察。"],["o3 在 FrontierMath 上得分超过 25%。","有争议／炒作风险","考虑到基准测试的访问权限及后续较低的独立测试得分，该数字是脆弱的。"],["埃尔多什问题 #728 基本上由 AI 自主推进并经过 Lean 验证。","有前景","真实且有趣，但仍处于早期阶段，且有部分人类反馈参与。"],["变体应用题的失败证明了 LLM 无法推理。","有前景","脆弱性结果是真实的，但其普适性结论仍存争议。"],["思维链转录忠实地报告了模型的实际推理过程。","有争议／炒作风险","证据表明，这些解释可能只是事后合理化的产物。"]]}
+  rows={[["一个开放权重的 32B Lean 证明器在 miniF2F 上达到约 90%。","已确立","Lean 的检查功能使正确性可审计；采样预算依然重要。"],["GPT-5 解决了 10 个此前未解的埃尔多什问题。","有争议／炒作风险","引起争议的公开说法实则是文献检索，而非 10 个新成果。"],["FunSearch 改进了 8 维盖集的构造。","已确立","该构造已发表且可直接验证，尽管它属于搜索而非洞察。"],["OpenAI 报告 o3 在 FrontierMath_11-26-24 上取得 25.2%。","已确立（限于原主张）","这是关于 180 道题版本的一项有日期记录的报告；它不能与正式发布版模型在其他版本、难度层级或评测规程下的后续成绩互换。"],["埃尔多什问题 #728 基本上由 AI 自主推进并经过 Lean 验证。","有前景","真实且有趣，但仍处于早期阶段，且有部分人类反馈参与。"],["变体应用题的失败证明了 LLM 无法推理。","有前景","脆弱性结果是真实的，但其普适性结论仍存争议。"],["思维链转录忠实地报告了模型的实际推理过程。","有争议／炒作风险","证据表明，这些解释可能只是事后合理化的产物。"]]}
 />
 </FormatOnly>
 
@@ -252,7 +252,7 @@ AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外�
 
 <Highlight>形式化证明器的能力确实在提高。</Highlight> 一些开放权重的 Lean 证明器在奥数基准测试中达到约 90%，并可在个人级硬件上运行。经过 Lean 内核核查的证明，其正确性可以逐步审计；但这并不等于证明器已经具有人类意义上的理解。
 
-<Highlight>除形式核查外，其他主张都需要严格校准。</Highlight> AI 可能通过搜索而非理解找到盖集构造；所谓埃尔多什「突破」有时只是检索既有文献；新闻中的 25% 基准成绩在独立评测中可能接近 10%；模型自述的思维链也未必忠实反映实际计算过程。
+<Highlight>除形式核查外，其他主张都需要严格校准。</Highlight> AI 可能通过搜索而非理解找到盖集构造；所谓埃尔多什「突破」有时只是检索既有文献；FrontierMath 成绩取决于模型版本、基准版本与难度层级，以及具体评测规程；模型自述的思维链也未必忠实反映实际计算过程。
 
 <Highlight>最稳妥的原则是：当推理者不透明时，核查推理结果。</Highlight> 从集合论基础到可能出现的超长机器证明，前沿研究不断提出同一个问题：一个结论可以被证明正确，却仍然缺乏人类能够理解的解释。
 
@@ -284,7 +284,7 @@ AI 证明的故事占据了大部分注意力，但自 2020 年以来，另外�
 1. Mirzadeh, I., Farajtabar, M. 等. (Apple). "GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in LLMs." arXiv:2410.05229; *ICLR 2025.* [machinelearning.apple.com](https://machinelearning.apple.com/research/gsm-symbolic) <Meta>— 逻辑无关从句导致得分跌幅高达 65%；GPT-4o 94.9%→63.0%。经过同行评审的论文；基准测试声明检索于 2026 年 6 月 14 日。</Meta>
 1. Shojaee, P. 等. (Apple). (2025 年 6 月). "The Illusion of Thinking。" 附带反驳意见 "The Illusion of the Illusion of Thinking" (Lawsen, 2025) 以及中立复现 Dellibarda Varela 等. (CSIC), "Rethinking the Illusion of Thinking," arXiv:2507.01231。 <Meta>— 准确率塌缩 vs 实验误差之争；真相介于两者之间。arXiv 预印本 / 公司报告。</Meta>
 1. Chen, Y. 等. (Anthropic). (2025 年). "Reasoning Models Don't Always Say What They Think." arXiv:2505.05410. <Meta>— 思维链忠实度约为 25%/39%；模型隐藏了对暗示的使用。arXiv 预印本 / 公司报告；基准测试声明检索于 2026 年 6 月 14 日。</Meta>
-1. Glazer, E. 等. (Epoch AI). "FrontierMath" (arXiv:2411.04872). TechCrunch (2025 年 1 月) 与 TechRepublic (2025 年 4 月 18 日) 关于 OpenAI 资助/访问权披露及独立 10% 复测的报道。 <Meta>— 基准测试完整性；25% 演示分 vs ~10% 独立分。arXiv 预印本 + 基准维护者页面 + 新闻报道；基准测试声明检索于 2026 年 6 月 14 日。</Meta>
+1. Glazer, E. 等. (Epoch AI). "FrontierMath" (arXiv:2411.04872)；Epoch AI, "About FrontierMath," "o3," "Clarifying the creation and use of the FrontierMath benchmark," 以及 "FrontierMath Tiers 1–4"。[技术报告](https://arxiv.org/abs/2411.04872) · [基准与版本历史](https://epoch.ai/frontiermath/tiers-1-4/about) · [o3 模型页面](https://epoch.ai/models/o3) · [合作关系披露](https://epoch.ai/latest/openai-and-frontiermath) · [当前基准页面](https://epoch.ai/frontiermath/tiers-1-4) <Meta>— 关于 2024 年 12 月 180 道题版本与 25.2% 公告、当前带版本标签的 o3 成绩、OpenAI 委托与数据访问、留出集，以及 2026 年 6 月 v2 修正的第一手来源；检索于 2026 年 7 月 12 日。</Meta>
 1. Woodin, W. H.; Saarinen, J., Väänänen, J. &amp; Woodin (2024 年) 关于 Ultimate L 和 CH；Hamkins, J. D. (2024 年) 关于集合论多重宇宙，*Journal for the Philosophy of Mathematics*。<Meta>— 可能逆转为 CH 为真；多元主义反方立场。</Meta>
 1. Ljungström, A. &amp; Mörtberg, A. (2023 年). "Formalizing π₄(S³) ≅ ℤ/2ℤ and Computing a Brunerie Number in Cubical Agda." *LICS 2023.* <Meta>— 立方同伦类型论计算出了此前难以处理的数字。经过同行评审的会议论文。</Meta>
 1. VNN-COMP (神经网络验证竞赛), 2024 (蒙特利尔) &amp; 2025 (萨格勒布)；α,β-CROWN (Zhang 等)。 [sites.google.com/view/vnn2025](https://sites.google.com/view/vnn2025) <Meta>— 关于受训网络的正式保证；逻辑监管 AI。基准维护者页面；检索于 2026 年 6 月 14 日。</Meta>

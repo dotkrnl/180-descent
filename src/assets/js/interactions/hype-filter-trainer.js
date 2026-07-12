@@ -23,9 +23,9 @@
       why: "已确立。这一结果发表于 Nature，构造本身可直接核查。但要保留细节：它是搜索，不是理解；模型甚至没有被告知问题本身，而且成功率并不高。"
     },
     {
-      text: "“o3 在研究级 FrontierMath 基准上超过 25%。”（2024 年 12 月演示）",
-      answer: "bad",
-      why: "争议/炒作。OpenAI 资助过该基准并曾接触题目，演示成绩没有独立验证；后续保持距离的测试更接近 10%。数字脆弱，不等于完全虚构。"
+      text: "“OpenAI 报告 o3 在 180 道题的 FrontierMath_11-26-24 上取得 25.2%。”（2024 年 12 月）",
+      answer: "ok",
+      why: "就这项有版本和日期的历史主张而言，它已确立。它并不等同于 o3 在所有 FrontierMath 版本上的能力；正式发布版模型、其他难度层级或不同推理预算下的成绩不能直接与它比较。"
     },
     {
       text: "“Erdős 问题 #728 由 AI 大体自主解决，结果未见于既有文献，并已用 Lean 核查。”（Tao，2026 年 1 月）",
@@ -59,9 +59,9 @@
       why: "Established. Published in Nature, and the construction is directly verifiable. Keep the nuance: it was search, not understanding, and it succeeded in only a small fraction of runs."
     },
     {
-      text: "\"o3 scored over 25% on the research-level FrontierMath benchmark.\" (as demoed, December 2024)",
-      answer: "bad",
-      why: "Contested/hype. Benchmark access, funding context, and later lower independent testing make the headline number fragile. Fragile is not fabricated, which is the whole lesson."
+      text: "\"OpenAI reported 25.2% for o3 on the 180-question FrontierMath_11-26-24.\" (December 2024)",
+      answer: "ok",
+      why: "Established as a versioned, dated historical claim. It is not a versionless estimate of o3's ability: results for the released model, other tiers, or different inference budgets are not directly comparable."
     },
     {
       text: "\"Erdos problem #728 was solved more or less autonomously by AI, with the result not found in existing literature, and formally checked in Lean.\" (Tao, January 2026)",
