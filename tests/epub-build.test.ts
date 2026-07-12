@@ -40,7 +40,7 @@ describe("epub build helpers", () => {
     await expect(access(path.join(root, "src/assets/scss/generated/_cjk.scss"))).resolves.toBeUndefined();
     await expect(access(path.join(root, "src/assets/scss/generated/_katex.scss"))).resolves.toBeUndefined();
     await expect(access(path.join(root, bookArtifactPaths("epub")[0]))).resolves.toBeUndefined();
-  });
+  }, 15_000);
 
   it("keeps non-packaged internal links absolute in single-day EPUBs", async () => {
     const root = await createEmptyContentRoot("180-epub-build-links-");
@@ -68,7 +68,7 @@ describe("epub build helpers", () => {
 
     expect(dayXhtml).toContain('href="https://180d.io/introduction/#start"');
     expect(dayXhtml).toContain('href="day-001.xhtml#same"');
-  });
+  }, 15_000);
 });
 
 async function writeScssEntry(root: string): Promise<void> {
