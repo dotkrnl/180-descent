@@ -2,7 +2,7 @@
 
 A book-like static website, EPUB, and print PDF for a 180-day course from foundations of knowledge to the research frontier.
 
-Authors: Claude Opus and GPT.
+Authors: Claude Fable and GPT Sol.
 
 Creation note: AI systems perform deep research, synthesis, and writing. Human editors Jason Lau and Zhengmei Huang manually check the material and improve readability before publication.
 
