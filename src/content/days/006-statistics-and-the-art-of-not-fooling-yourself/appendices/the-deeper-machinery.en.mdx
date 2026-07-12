@@ -42,7 +42,7 @@ import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import Term from "@app/components/lesson/Term.astro";
 
-<Lead drop="T">he main lesson left a debt unpaid. We said, almost in passing, that a <MathInline latex={String.raw`p`} />-value is one of the most misunderstood numbers in science — and then we hurried on to the famous misreadings, as if the confusion were everyone's fault but the number's. It isn't. The deeper truth is that the tool itself is a chimera: stitched together from two rival philosophies whose founders despised each other, taught as if it were one coherent idea, and quietly incapable of meaning what almost everyone takes it to mean. This appendix is the autopsy. We'll find out why p-hacking isn't just *possible* but mathematically *guaranteed*; how wrong a "significant" result really is once you do the full arithmetic; how a small army of statistical detectives now hunts for the fingerprints; and what the people who actually know this stuff reach for instead. We close on a single, lovely idea that turns a <MathInline latex={String.raw`p`} />-value into a number of coin flips — and hands us straight to tomorrow.</Lead>
+<Lead drop="T">he main lesson left a debt unpaid. We said, almost in passing, that a <MathInline latex={String.raw`p`} />-value is one of the most misunderstood numbers in science — and then we hurried on to the famous misreadings, as if the confusion were everyone's fault but the number's. It isn't. The deeper truth is that the tool itself is a chimera: stitched together from two rival philosophies whose founders despised each other, taught as if it were one coherent idea, and quietly incapable of meaning what almost everyone takes it to mean. This appendix is the autopsy. We'll find out why repeated uncorrected testing makes false positives increasingly likely — approaching certainty in the idealized case of indefinite optional stopping; how wrong a "significant" result really is once you do the full arithmetic; how a small army of statistical detectives now hunts for the fingerprints; and what the people who actually know this stuff reach for instead. We close on a single, lovely idea that turns a <MathInline latex={String.raw`p`} />-value into a number of coin flips — and hands us straight to tomorrow.</Lead>
 
 <ContinueNote label="Continuing from the main lesson">
 You've met the False-Positive Factory, the garden of forking paths, the reform spectrum, and the many-analysts duels. Hold onto three threads in particular: **Day 4**'s Bayes (a <MathInline latex={String.raw`p`} />-value is not P(hypothesis | data), and here we'll finally compute what it costs to forget that), **Day 2**'s Popper and Ioannidis (severity and "most findings false"), and **Day 1**'s calibration instinct. Everything below is the substructure those ideas were standing on.
@@ -104,11 +104,11 @@ Once you see the seam, the whole replication crisis reads differently. We took a
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow number="§2"> Why the factory always wins</SectionEyebrow>
+<SectionEyebrow number="§2"> Why repeated testing raises false alarms</SectionEyebrow>
 
-## The two facts that make p-hacking inevitable
+## The two facts that let repeated analysis manufacture false positives
 
-The False-Positive Factory wasn't a trick of clever programming. It rests on two mathematical facts so simple they're almost insulting — and once you hold both, you understand why noise can *always* be tortured into a confession.
+The False-Positive Factory wasn't a trick of clever programming. It rests on two mathematical facts so simple they're almost insulting — and once you hold both, you understand why enough uncorrected looks can turn noise into apparently significant evidence.
 
 ### Fact one: under the null, small p-values still arrive by chance
 
@@ -132,7 +132,7 @@ Run an exact test with continuous data where nothing is happening, under the ass
 </FormatOnly>
 
 <ContentSection>
-### Fact two: keep looking, and you're *certain* to win
+### Fact two: keep looking without correction, and the false-alarm risk grows
 
 The optional-stopping toggle in the main factory hid a result that ought to be more famous than it is. Suppose you test after every new subject and stop the instant <MathInline latex={String.raw`p`} /> dips below .05. If there's a real effect, fine. But if there *isn't* — if the null is exactly true — and you're allowed to keep sampling indefinitely, then the probability that you *eventually* cross .05 is not 5%; in the mathematical idealization, it approaches **100%**. This is "sampling to a foregone conclusion," proved by Anscombe in 1954 and hammered home by Armitage and colleagues in 1969: the wandering <MathInline latex={String.raw`p`} />-value, given enough patience, is liable to stumble below any fixed line at some point, purely by chance, even when nothing is there.
 
@@ -263,7 +263,7 @@ That is <Term as="em">severity</Term>, and notice it is **Day 2**'s Popper rende
 
 ## A p-value, measured in coin flips
 
-One last idea, and it's a beauty — because it quietly turns the page to Day 7. Sander Greenland (2019) suggests we stop staring at the bare <MathInline latex={String.raw`p`} />-value and instead take its *surprisal*, borrowed straight from information theory: the <Term as="em">S-value</Term>, defined as <MathInline latex={String.raw`S=-\log_2 p`} />. This converts a probability into **bits of information against your model** — and bits, as we'll see tomorrow, are the universal currency of surprise.
+One last idea, and it's a beauty — because it quietly turns the page to Day 7. Sander Greenland (2019) suggests we stop staring at the bare <MathInline latex={String.raw`p`} />-value and instead take its *surprisal*, borrowed straight from information theory: the <Term as="em">S-value</Term>, defined as <MathInline latex={String.raw`S=-\log_2 p`} />. This converts the p-value into **bits of surprisal**, expressing how incompatible the data are with the tested model under its assumptions — and bits, as we'll see tomorrow, are the universal currency of surprise.
 
 The translation is wonderfully concrete. Ask: how many fair coins would I have to flip and get *all heads* to be this surprised? That count *is* the S-value. A result at <MathInline latex={String.raw`p = .05`} /> carries about **4.3 bits** — roughly the surprise of calling four or five coin tosses in a row. Stated that way, the spell breaks. Four heads in a row is mildly interesting; it is not a discovery, and you would never bet your reputation on it.
 
@@ -308,8 +308,8 @@ Distilled from everything above and in the main lesson — the moves that conver
 <BlockTitle>The appendix in three sentences</BlockTitle>
 
 <RecapList>
-<RecapItem term="Deepest idea">The "<MathInline latex={String.raw`p < .05`} /> test" is an incoherent weld of Fisher's evidence-measure and Neyman–Pearson's decision-rule, and the misreadings everyone makes are symptoms of that original sin — while two simple facts (the <MathInline latex={String.raw`p`} />-value is uniform under the null; peeking eventually crosses any line with certainty) make p-hacking not merely possible but guaranteed.</RecapItem>
-<RecapItem term="Best new analogy">A <MathInline latex={String.raw`p`} />-value translated into coin flips: <MathInline latex={String.raw`p = .05`} /> is the surprise of ~4–5 heads in a row — mildly interesting, never a discovery — which is why the calibrated false-positive risk of a fresh "significant" result is around 26%, not 5%.</RecapItem>
+<RecapItem term="Deepest idea">The "<MathInline latex={String.raw`p < .05`} /> test" is an incoherent weld of Fisher's evidence-measure and Neyman–Pearson's decision-rule, and the misreadings everyone makes are symptoms of that original sin. In the continuous exact-test idealization, null p-values are uniform; under indefinite, uncorrected optional stopping, the chance of eventually crossing a fixed threshold can approach one. Those conditions explain how repeated analytic flexibility inflates false positives without making every analysis a guaranteed false discovery.</RecapItem>
+<RecapItem term="Best new analogy">A <MathInline latex={String.raw`p`} />-value translated into coin flips: <MathInline latex={String.raw`p = .05`} /> is the surprise of ~4–5 heads in a row — mildly interesting, never a discovery. Under Colquhoun's specific even-odds prior, power, and model setup, an observed <MathInline latex={String.raw`p \approx .05`} /> can correspond to a false-positive risk around 26%; that posterior risk is not a fixed meaning of p.</RecapItem>
 <RecapItem term="The constructive turn">The fix is a toolkit, not a ban: severity (Mayo), effect sizes with compatibility intervals, Type S/M thinking, equivalence tests, false-discovery-rate control, and Bayes factors — plus the forensic methods (p-curve, the dead salmon, statcheck) that audit a literature from its own numbers.</RecapItem>
 </RecapList>
 </Recap>
