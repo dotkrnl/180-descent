@@ -30,6 +30,16 @@ three-digit directory prefix.
 - Styling is SCSS-only. Astro layouts import `src/assets/scss/book.scss`; edit
   SCSS modules under `src/assets/scss/`, not hand-written `.css` files.
 
+Treat prose-bearing values in `src/_data/*.yaml` as published product copy, not
+as an authoring scratchpad. Use natural reader-facing language and sentence
+case. Do not leak bracketed status markers, drafting commands such as `keep as`
+or `flag`, callback notes, uppercase directives, TODOs, or review state into
+titles and descriptions. Represent machine state through typed schema fields or
+components; keep temporary editorial notes outside published source data.
+Localized syllabus titles must agree with their day manifests, and availability
+or edition-count claims must be derived from the published registry rather than
+assuming that all 180 planned lessons already exist.
+
 Do not bulk-copy source HTML into project content. Convert material manually,
 case by case, into MDX plus reusable Astro components. Preserve meaning,
 citations, accessibility labels, static artifact equivalents, and bilingual parity
@@ -191,6 +201,11 @@ including common translations of static, fallback, web-version, and fixed
 figure labels. Keep the rules narrow enough to allow technical phrases such as
 “fixed-horizon test” or “static clusters”; only format-meta language belongs in
 the gate.
+
+When a passage names an artifact or depends on its navigation model, keep its
+media channel artifact-specific—for example, `deep-dive-print` versus
+`deep-dive-epub`. The PDF renderer must not consume EPUB-only copy, or vice
+versa.
 
 ## Day Changes
 
@@ -362,6 +377,19 @@ Appendices are declared in `day.yaml` under `appendices`.
 - Mount web interactives lazily when their root enters the viewport, and stop
   animation loops when they leave it. Hidden appendices, collapsed sections, and
   below-the-fold canvases must not initialize expensive simulations on page open.
+- Give every interaction a keyboard path and a programmatic name. Canvas-only
+  interactions need a focusable control surface, equivalent keyboard commands,
+  visible focus, concise instructions, and a live text status; range controls
+  need real labels and must expose correct initial and current values on the
+  scale the reader perceives when it differs from the native numeric scale.
+- Use `role="group"` for an SVG that contains interactive descendants; reserve
+  `role="img"` for a non-interactive figure. Preserve accessible names on both
+  the group and its controls, and test behavior rather than source strings alone.
+- When a rail, drawer, or bottom sheet opens, move focus to a useful control;
+  when it closes, restore focus to its trigger. Reset visibility, focus, and ARIA
+  state when a responsive breakpoint changes which navigation surface is active.
+- Persist reading progress monotonically per locale: revisiting an earlier
+  section must not erase the furthest position reached in that language.
 - Add or adjust styles in SCSS modules imported by `book.scss`. Do not add
   component-local `.css`, duplicate `book.css`, browser-print PDF styles, or
   one-off generated CSS.
@@ -434,6 +462,9 @@ SVG/HTML/SCSS diagrams.
 - Keep `npm run check:pdf` focused on artifact correctness: valid
   non-interactive PDFs, Poppler-extractable text, appendix inclusion rules, no
   local links, and no live interactive control leakage.
+- Derive artifact completeness expectations from the current published-day
+  registry and every supported locale. Never hard-code one or two sample days in
+  a validator that claims to cover the complete books or download set.
 
 ## PDF Notes
 
@@ -465,12 +496,44 @@ SVG/HTML/SCSS diagrams.
   deeper diagnosis is needed. The PDF build fails on `Overfull` boxes and
   `Missing character` glyph loss. Set `PDF_STRICT_FONT_WARNINGS=1` for
   `npm run build:pdf` when tightening font-shape substitutions.
+- Validate external PDF links through parsed annotation action dictionaries and
+  decoded URI values. Searching raw PDF bytes is not sufficient because object
+  streams and string encodings may hide or transform a link.
+- Preserve proper-name spelling and diacritics in extracted PDF text. Resolve
+  missing glyphs with a targeted font fallback or renderer fix; do not apply
+  blanket transliteration to make a check pass.
 - Visual review scope: for global renderer/style changes, sample at least 20
   pages from each full PDF (`180-descent`, `180-descent-deep-dive`,
   `180-descent-zh`, `180-descent-zh-deep-dive`). For individual day PDFs, first
   and last page are sufficient unless the changed day contains a new figure,
   table, code block, or interactive print alternative; then inspect the affected
   interior page too.
+
+## Claim And Evidence Calibration
+
+Apply this gate to new lessons and existing-day edits in both locales.
+
+- Prefer primary sources for factual, historical, scientific, and benchmark
+  claims. Record enough version, release, access, and event-date context to
+  identify what the source actually supports; do not confuse a publication date
+  with the date of the event or result.
+- State a theorem's assumptions and scope near the conclusion drawn from it.
+  Keep formal consequences inside the formal model, and do not turn a proof,
+  idealization, or modeling objective into an empirical, metaphysical, or
+  truth-tracking guarantee it does not establish.
+- Compare systems or results only when the benchmark version, model release,
+  evaluation protocol, tools, sampling budget, and other material conditions are
+  compatible. When they are not, describe the results separately instead of
+  implying a ranking or trend.
+- Distinguish an institution's or vendor's characterization from independent
+  evidence. Put uncertainty, limitations, and evidence status in reader-facing
+  claim or source prose—not in editorial notes claiming that sources were
+  checked.
+- Keep English and Chinese aligned on factual scope, numbers, dates, rankings,
+  evidence status, and uncertainty. A correction to any of those requires a
+  paired-locale review. Do not mechanically rewrite already-natural Chinese for
+  an English-only rhetorical tightening when both versions still make the same
+  calibrated claim.
 
 ## Existing-Day Editorial Pass
 
@@ -489,10 +552,18 @@ review, not a translation reset or a reason to flatten the established voice.
    same frontier numbering, open-question eyebrow, three-part recap shape, and
    thread treatment in both locales; appendix labels may remain local when they
    describe appendix-specific material.
-4. Preserve claims, citations, caveats, and evidence strength. Any wording change
-   that alters a number, timeframe, status label, or uncertainty claim requires a
-   paired-source check and an update to the relevant glossary or source note.
-5. Run the Chinese Edition rules below as a separate review of the Chinese files,
+4. Preserve claims, citations, caveats, and evidence strength. Run the Claim And
+   Evidence Calibration gate above. Any wording change that alters a number,
+   timeframe, status label, or uncertainty claim requires a paired-source check
+   and an update to the relevant glossary or source note.
+5. Remove model-shaped editorial residue where it is actually present: repeated
+   abstract triads, automatic `not X but Y` contrasts, generic claims of rigor,
+   manufactured superlatives, fake suspense, clusters of rhetorical questions,
+   stock `rewrite the landscape` metaphors, self-conscious source-vetting
+   narration, inflated certainty, and authoring instructions in reader copy.
+   Replace each with the concrete claim, evidence, or transition the passage
+   needs; do not flatten deliberate voice or rhythm.
+6. Run the Chinese Edition rules below as a separate review of the Chinese files,
    then run content, type, math, import, appendix-style, and artifact checks after
    the entire sweep.
 
@@ -519,6 +590,10 @@ reader-facing attribution.
   Chinese. Resolve all actionable findings before final source-parity review.
 - Preserve manifest structure, day numbers, path, citations, URLs, DOI metadata,
   component imports, image alt meaning, and interaction behavior.
+- Preserve claim parity, not English syntax. Numbers, dates, named entities,
+  rankings, qualifications, evidence status, and uncertainty must agree across
+  locales; a rhetorical edit may remain locale-specific when the underlying
+  calibrated meaning already agrees.
 - Localize block titles and print labels through existing data/components; do not
   hard-code English labels into Chinese print surfaces.
 - Translate image `alt`, SVG `aria-label`, captions, panel titles, status-chip
@@ -697,7 +772,12 @@ npm run check:visual -- --base https://staging.180-descent.pages.dev --compare h
    Chinese print labels as regressions. Distinguish expected content drift from
    visual degradation when staging intentionally includes newer content than
    production.
-9. Report commit hash, branch, push result, deploy URL or deployment status,
+9. After a Pages deployment, verify the reported environment, branch, source
+   commit, and unique deployment URL. Follow the stable Pages endpoint and
+   custom-domain redirect, then compare a representative deployed file or hash
+   with the freshly built `_site` output. A successful CLI exit alone does not
+   prove that the intended release is live.
+10. Report commit hash, branch, push result, deploy URL or deployment status,
    visual comparison scope, and any residual risks.
 
 Do not edit generated files in `_site/`; they are build outputs.
@@ -710,6 +790,7 @@ For focused edits, run the narrow checks first:
 npm run typecheck
 npm test
 npm run check:content
+npm run check:javascript
 npm run check:math:source
 npm run check:appendix-style
 npm run check:imports
@@ -719,10 +800,21 @@ npm run check:clean
 npm run check:workflows
 ```
 
-The pull-request quality workflow runs the content gate, TypeScript, and the
-unit suite on every pull request and on pushes to `main`. A content change is
-not ready to publish until those gates pass; release-bound work still requires
-the full `npm run check` artifact build below.
+The pull-request quality workflow runs every source-only contract, TypeScript,
+and the unit suite on every pull request and on pushes to `main`. Keep the CI
+Node major, `.node-version`, `package.json` engine, and `@types/node` on the same
+supported runtime line. A content change is not ready to publish until those
+gates pass; release-bound work still requires the full `npm run check` artifact
+build below.
+
+Keep source-only validators independent of `_site`; stale build output must not
+change their result. Conversely, built-output validators must run after a fresh
+build and fail clearly when required artifacts are absent. For test fixtures and
+render-only Vite instances, use the worker-local `TMPDIR`, disable WebSockets and
+dependency discovery, close the owning server before deleting its explicit
+cache directory, and remove every fixture in teardown. Favor behavior-level
+regression tests for focus, keyboard input, persisted reading state, and ARIA
+semantics over source-regex assertions alone.
 
 For changes that touch built pages, metadata, accessibility, rendered
 typography, or download artifacts, add the focused built-output validators:
