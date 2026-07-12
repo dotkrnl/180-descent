@@ -16,7 +16,7 @@ const prefix = "appendix-d007-the-deeper-currents-";
   <PanelNote>{zh ? "每个 3 比特词对应立方体的一个顶点，每条边代表一次比特翻转。编码只使用 000 和 111 两个有效词，它们之间的汉明距离为 3。点击任意顶点模拟噪声信道收到的词；解码器按多数规则将其判定为最近的有效词，因此一次比特错误总能被纠正。" : "Every 3-bit word is a corner of a cube; an edge is one bit-flip. Our code uses just two valid words — 000 and 111, the far corners (teal). Click any corner to receive it through a noisy channel: the decoder snaps it to the nearest valid word by majority vote. One error is always corrected; the cube shows you why."}</PanelNote>
 
   <div class="ham-stage">
-    <svg viewBox="0 0 390 285" role="img" aria-label={zh ? "一个立方体，其八个角是 3 比特字符串，其中 000 与 111 为编码词。" : "A cube whose eight corners are the 3-bit strings, with 000 and 111 as codewords."}>
+    <svg viewBox="0 0 390 285" role="group" aria-label={zh ? "一个立方体，其八个角是 3 比特字符串，其中 000 与 111 为编码词。" : "A cube whose eight corners are the 3-bit strings, with 000 and 111 as codewords."}>
       <g id={`${prefix}hamEdges`} stroke="var(--line-strong)" stroke-width="1.5"></g>
       <g id={`${prefix}hamVerts`}></g>
     </svg>
