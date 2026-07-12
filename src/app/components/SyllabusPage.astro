@@ -25,8 +25,8 @@ const upcoming = upcomingSyllabusDays(syllabus, days, 6);
 const nextDay = upcoming[0];
 const latestContentDay = days.at(-1)?.day ?? 0;
 const compactBlockTitle = (title: string) => title
-  .replace(/\s+\+\s+DEEP DIVE \d+:.*$/i, "")
-  .replace(/\s+\+\s+Capstone$/i, "");
+  .replace(/\s+\+\s+(?:DEEP DIVE|专题深入)\s+\d+[:：].*$/i, "")
+  .replace(/\s+\+\s+(?:Capstone|顶点)$/i, "");
 ---
 <PageShell
   locale={locale}
