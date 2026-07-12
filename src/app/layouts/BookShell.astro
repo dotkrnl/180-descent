@@ -71,10 +71,11 @@ const pageKind = currentPath === homePath
           : currentPath.includes("/introduction")
             ? "introduction"
             : "page";
+const isLesson = pageKind === "lesson";
 const { light: lightThemeColor, dark: darkThemeColor } = SITE_THEME_COLORS;
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": title ? "WebPage" : "WebSite",
+  "@type": pageKind === "home" ? "WebSite" : isLesson ? "Article" : "WebPage",
   "name": pageTitle,
   "url": canonicalUrl,
   "description": metaDescription,
@@ -134,7 +135,7 @@ const structuredData = {
         <link rel="alternate" hreflang="x-default" href={enUrl} />
       </>
     )}
-    <meta property="og:type" content={title ? "article" : "website"} />
+    <meta property="og:type" content={isLesson ? "article" : "website"} />
     <meta property="og:site_name" content={uiTitle} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={metaDescription} />
