@@ -493,9 +493,11 @@ SVG/HTML/SCSS diagrams.
 - For PDF-affecting edits, run `npm run build:pdf` and
   `npm run check:pdf`. When changing PDF renderer, figure, table, code, or
   source-block behavior, set `PDF_KEEP_TEMP=1` for `npm run build:pdf` when
-  deeper diagnosis is needed. The PDF build fails on `Overfull` boxes and
-  `Missing character` glyph loss. Set `PDF_STRICT_FONT_WARNINGS=1` for
-  `npm run build:pdf` when tightening font-shape substitutions.
+  deeper diagnosis is needed. The PDF build fails on any remaining `Overfull`
+  or `Underfull` box, missing glyph, or LaTeX/package/font warning. The
+  renderer suppresses only the harmless short-line noise produced by
+  intentionally ragged table cells; actual overflow and fallback warnings
+  remain fatal.
 - Validate external PDF links through parsed annotation action dictionaries and
   decoded URI values. Searching raw PDF bytes is not sufficient because object
   streams and string encodings may hide or transform a link.

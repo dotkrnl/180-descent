@@ -287,7 +287,7 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
           siteUrl: config.siteUrl
         }));
         chunks.push("\\end{appendixbody}\n\\clearpage");
-        chunks.push("\\pagecolor{descentPaper}\n\\color{descentInk}\n\\fancyhead[L]{\\ttfamily\\scriptsize\\color{descentMuted}" + latexEscape(config.title) + "}");
+        chunks.push("\\pagecolor{descentWhite}\n\\color{descentInk}\n\\fancyhead[L]{\\ttfamily\\scriptsize\\color{descentMuted}" + latexEscape(config.title) + "}");
       }
     }
   }
@@ -347,7 +347,7 @@ ${pdfBookmarkLatex(0, `${pdfDayLabel(day.day, config.locale)}: ${title}`, anchor
 \begingroup
 \newgeometry{margin=0in}
 \vspace*{1.15in}
-\hspace*{0.68in}
+\noindent\makebox[0pt][l]{\hspace*{0.68in}
 \begin{minipage}[t][5.85in][t]{4.55in}
 {\ttfamily\fontsize{7.8}{10}\selectfont\addfontfeatures{LetterSpace=16}\color{descentAqua}\MakeUppercase{${latexEscape(label)}}\par}
 \vspace{0.22in}
@@ -360,11 +360,11 @@ ${pdfBookmarkLatex(0, `${pdfDayLabel(day.day, config.locale)}: ${title}`, anchor
 {\displayfont\itshape\fontsize{12.5}{16}\selectfont\color{descentBoneMuted}${latexEscape(summary)}\par}
 \vfill
 {\ttfamily\fontsize{7.4}{9}\selectfont\addfontfeatures{LetterSpace=12}\color{descentBoneMuted}${config.locale === "zh" ? "研究路线 · 轻装版" : "RESEARCH ROUTE · READING EDITION"}\par}
-\end{minipage}
-\restoregeometry
+\end{minipage}}
 \endgroup
+\restoregeometry
 \clearpage
-\pagecolor{descentPaper}
+\pagecolor{descentWhite}
 \color{descentInk}`;
 }
 
@@ -392,16 +392,16 @@ function blockDividerLatex(title: string, blockNumber: number, locale: Locale): 
 \begingroup
 \newgeometry{margin=0in}
 \vspace*{3.72in}
-\hspace*{0.68in}
+\noindent\makebox[0pt][l]{\hspace*{0.68in}
 \begin{minipage}{4.55in}
 {\ttfamily\fontsize{8.8}{11}\selectfont\addfontfeatures{LetterSpace=18}\MakeUppercase{${latexEscape(label)}}\par}
 \vspace{0.18in}
 {\displayfont\bfseries\fontsize{29}{31}\selectfont ${latexEscape(title)}\par}
-\end{minipage}
-\restoregeometry
+\end{minipage}}
 \endgroup
+\restoregeometry
 \clearpage
-\pagecolor{descentPaper}
+\pagecolor{descentWhite}
 \color{descentInk}`;
 }
 
@@ -425,7 +425,7 @@ ${pdfBookmarkLatex(1, appendixTitle, `appendix-${day.path}-${title}`)}
 \begingroup
 \newgeometry{margin=0in}
 \vspace*{2.65in}
-\hspace*{0.68in}
+\noindent\makebox[0pt][l]{\hspace*{0.68in}
 \begin{minipage}{4.55in}
 {\ttfamily\fontsize{7.8}{10}\selectfont\addfontfeatures{LetterSpace=16}\color{descentSignal}\MakeUppercase{${latexEscape(label)} · ${latexEscape(folio)}}\par}
 \vspace{0.20in}
@@ -434,9 +434,9 @@ ${pdfBookmarkLatex(1, appendixTitle, `appendix-${day.path}-${title}`)}
 {\color{descentSignal}\rule{0.72in}{1.2pt}\par}
 \vspace{0.18in}
 {\ttfamily\fontsize{7.4}{9}\selectfont\addfontfeatures{LetterSpace=12}\color{descentBoneMuted}${config.locale === "zh" ? "正文之外 · 可选阅读" : "BEYOND THE MAIN TEXT · OPTIONAL READING"}\par}
-\end{minipage}
-\restoregeometry
+\end{minipage}}
 \endgroup
+\restoregeometry
 \clearpage
 \pagecolor{descentCream}
 \color{descentInk}
@@ -877,7 +877,7 @@ function renderMdxElement(node: MdxNode, state: MdxRenderState, context: RenderC
   }
   if (name === "SourcesTitle") {
     const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }));
-    return text ? `${pdfBookmarkEscapedLatex(2, text, `sources-${sourceLabel(state)}-${++state.bookmarkIndex}`)}\n\\subsection*{${text}}` : "";
+    return text ? `${pdfBookmarkEscapedLatex(1, text, `sources-${sourceLabel(state)}-${++state.bookmarkIndex}`)}\n\\subsection*{${text}}` : "";
   }
   if (["BlockTitle", "PanelTitle"].includes(name)) {
     const text = cleanDecorativePrefix(renderInlineChildren(node, state, { ...context, heading: true }));
@@ -1582,6 +1582,7 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
   return String.raw`\documentclass[10pt,openany,oneside]{book}
 \let\cleardoublepage\clearpage
 \usepackage[paperwidth=6in,paperheight=9in,top=0.72in,bottom=0.78in,inner=0.55in,outer=0.55in,headheight=14pt,headsep=11pt,footskip=26pt]{geometry}
+\usepackage{fix-cm}
 \usepackage{fontspec}
 \usepackage{xeCJK}
 \usepackage{newunicodechar}
@@ -1604,9 +1605,14 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
   Path=${fontPath},
   UprightFont=ibm-plex-mono-latin-400-normal.otf,
   BoldFont=ibm-plex-mono-latin-600-normal.otf,
-  Scale=0.82
+  Scale=0.82,
+  AutoFakeSlant=0.2
 ]{IBM Plex Mono}
-\newfontfamily\symbolfallback{STIX Two Text}
+\newfontfamily\symbolfallback[
+  ItalicFont=STIX Two Text,
+  BoldFont=STIX Two Text,
+  BoldItalicFont=STIX Two Text
+]{STIX Two Text}
 % The bundled Latin subsets omit these letters, but transliterating them
 % corrupts names such as Erdős, Łukasiewicz, and Gaṅgeśa.
 \newunicodechar{ć}{{\symbolfallback ć}}
@@ -1637,9 +1643,9 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \newunicodechar{←}{{\symbolfallback ←}}
 \newunicodechar{↔}{{\symbolfallback ↔}}
 \setsansfont{Hiragino Sans GB}
-\IfFontExistsTF{${cjkMain}}{\setCJKmainfont{${cjkMain}}}{\setCJKmainfont{Songti SC}}
+\IfFontExistsTF{${cjkMain}}{\setCJKmainfont[AutoFakeSlant=true,SlantFactor=0.2]{${cjkMain}}}{\setCJKmainfont[AutoFakeSlant=true,SlantFactor=0.2]{Songti SC}}
 \setCJKsansfont{Hiragino Sans GB}
-\IfFontExistsTF{${cjkMain}}{\setCJKmonofont{${cjkMain}}}{\setCJKmonofont{Songti SC}}
+\IfFontExistsTF{${cjkMain}}{\setCJKmonofont[AutoFakeSlant=true,SlantFactor=0.2]{${cjkMain}}}{\setCJKmonofont[AutoFakeSlant=true,SlantFactor=0.2]{Songti SC}}
 \usepackage{xcolor}
 \usepackage{colortbl}
 \usepackage{graphicx}
@@ -1662,7 +1668,7 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
   unicode=true,
   hidelinks,
   bookmarksopen=true,
-  bookmarksdepth=2,
+  bookmarksdepth=1,
   pdftitle={${latexEscape(config.title)}},
   pdfauthor={${latexEscape(config.authors)}},
   pdfsubject={${latexEscape(config.description || config.subtitle)}},
@@ -1671,6 +1677,7 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \definecolor{descentTeal}{HTML}{2B6763}
 \definecolor{descentInk}{HTML}{10252B}
 \definecolor{descentMuted}{HTML}{58676A}
+\definecolor{descentWhite}{HTML}{FFFFFF}
 \definecolor{descentPaper}{HTML}{F5F1E9}
 \definecolor{descentRaised}{HTML}{FCFAF5}
 \definecolor{descentCream}{HTML}{ECE8DF}
@@ -1689,11 +1696,14 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
 \definecolor{descentOkLine}{HTML}{B8D0C1}
 \definecolor{descentHintLine}{HTML}{DAC3A3}
 \definecolor{descentBadLine}{HTML}{DAB3AE}
-\pagecolor{descentPaper}
+\pagecolor{descentWhite}
 \color{descentInk}
 \raggedbottom
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5em}
+% Ragged table cells intentionally end short; keep that harmless hbox noise
+% out of the log while leaving overfull and vertical boxes fatal below.
+\hbadness=10000
 \tolerance=1800
 \pretolerance=10000
 \hyphenpenalty=10000
@@ -1722,6 +1732,7 @@ ${config.locale === "zh" ? "" : "\\RaggedRight"}
 \titleformat{\section}{\displayfont\Large\bfseries\color{descentTeal}}{\thesection}{0.55em}{}
 \titleformat{\subsection}{\displayfont\large\bfseries\color{descentInk}}{\thesubsection}{0.5em}{}
 \newcommand{\pdfdaytitle}[1]{{\displayfont\bfseries\fontsize{23}{25}\selectfont #1\par}\vspace{0.04in}}
+\renewcommand*{\LettrineTextFont}{\normalfont}
 \newcommand{\eyebrow}[1]{\Needspace{4\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\smallskip}
 \newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\vspace{3.5ex plus 1ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\endgroup\nobreak\vspace{0.02in}}
 \newcommand{\sectionwithlabel}[2]{\Needspace{10\baselineskip}\par\vspace{3.5ex plus 1ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.015in}{\displayfont\Large\bfseries\color{descentTeal}#2\par}\endgroup\nobreak\vspace{0.08in}}
@@ -1777,7 +1788,7 @@ function titlePageLatex(config: PdfEdition & { root: string }): string {
 \begingroup
 \newgeometry{margin=0in}
 \vspace*{2.52in}
-\hspace*{0.68in}
+\noindent\makebox[0pt][l]{\hspace*{0.68in}
 \begin{minipage}{4.55in}
 \begin{tikzpicture}
 \node[circle,fill=descentBone,inner sep=0pt,minimum size=1.18in] {\includegraphics[width=0.84in]{${logo}}};
@@ -1789,11 +1800,11 @@ function titlePageLatex(config: PdfEdition & { root: string }): string {
 \vspace{0.20in}
 {\displayfont\itshape\fontsize{13.8}{17}\selectfont ${latexEscape(byline)}\par}
 {\displayfont\itshape\fontsize{13.8}{17}\selectfont ${latexEscape(editor)}\par}
-\end{minipage}
-\restoregeometry
+\end{minipage}}
 \endgroup
+\restoregeometry
 \clearpage
-\pagecolor{descentPaper}
+\pagecolor{descentWhite}
 \color{descentInk}`;
 }
 
@@ -2107,16 +2118,13 @@ function lastLatexLogLines(log: string): string {
   return log.split("\n").slice(-80).join("\n");
 }
 
-function latexLogIssues(log: string): string[] {
-  const strictFontWarnings = process.env.PDF_STRICT_FONT_WARNINGS === "1";
+export function latexLogIssues(log: string): string[] {
   const issues: string[] = [];
   const patterns = [
     /Overfull \\[hv]box .*$/gm,
+    /Underfull \\[hv]box .*$/gm,
     /Missing character: .*$/gm,
-    ...(strictFontWarnings ? [
-      /LaTeX Font Warning: .*$/gm,
-      /Package (?:fontspec|xeCJK) Warning: .*$/gm
-    ] : [])
+    /^.*Warning: .*$/gm
   ];
 
   for (const pattern of patterns) {

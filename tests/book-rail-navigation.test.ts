@@ -80,4 +80,19 @@ describe("lesson rail navigation", () => {
       await context.close();
     }
   });
+
+  it("keeps the mobile topbar stable while scrolling past the lesson hero", async () => {
+    const { context, page } = await openLesson();
+    try {
+      await page.evaluate(() => {
+        document.body.style.minHeight = "2400px";
+        window.scrollTo(0, 1800);
+      });
+      await page.waitForTimeout(50);
+
+      await expect(page.evaluate(() => document.querySelector(".site-topbar")?.classList.contains("is-running"))).resolves.toBe(false);
+    } finally {
+      await context.close();
+    }
+  });
 });
