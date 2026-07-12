@@ -63,6 +63,29 @@ describe("syllabus data", () => {
     await expect(readSyllabusData(root, "en")).rejects.toThrow("must not be blank");
   });
 
+  it.each([
+    ["bracketed English status notes", "en", "Bayesian epistemology [ESTABLISHED]"],
+    ["bracketed Chinese status notes", "zh", "贝叶斯认识论。[有争议／炒作风险。]"],
+    ["flag instructions", "en", "flag Assembly Theory as contested"],
+    ["retention instructions", "en", "Keep as a cautionary lesson"],
+    ["uppercase NOT emphasis", "en", "This is NOT evidence"],
+    ["thread labels", "en", "KEY THREAD: information"],
+    ["callback labels", "en", "Callback to Day 1"],
+    ["Chinese callback labels", "zh", "回调第 1 日"],
+    ["verification instructions", "en", "VERIFY specifics against primary analysis"],
+    ["Chinese verification instructions", "zh", "需根据主线分析核实具体细节"]
+  ] as const)("rejects %s", async (_label, locale, directive) => {
+    const original = locale === "en" ? "Bayesian epistemology" : "贝叶斯认识论";
+    const root = await createFixtureRoot(validSyllabusYaml().replace(
+      `          ${locale}: ${original}`,
+      `          ${locale}: ${JSON.stringify(directive)}`
+    ));
+
+    await expect(readSyllabusData(root, "en")).rejects.toThrow(
+      "syllabus copy must be reader-facing"
+    );
+  });
+
   it("rejects empty syllabus block lists", async () => {
     const root = await createFixtureRoot([
       "title:",

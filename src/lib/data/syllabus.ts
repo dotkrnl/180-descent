@@ -31,9 +31,22 @@ export interface SyllabusDay {
   note?: string;
 }
 
+const bracketedStatusNote = /\[(?:[^\]]*(?:ESTABLISHED|CONTESTED|PROMISING|HYPE|DEBUNKED|Mix:|Handle with|已确立|有争议|炒作风险|有前景|有望|已证伪|混合|需谨慎)[^\]]*)\]/iu;
+const englishAuthoringDirective = /(?:\bflag\b.{0,80}\bas\b|\(flag\)|\bkeep as\b|\b(?:key\s+)?thread\s*:|\bnote\s*:|\bcallbacks?\b|\bverify\s+specifics\b|\bstate carefully\b|\brepresent both sides fairly\b)/iu;
+const uppercaseNot = /\bNOT\b/u;
+const chineseAuthoringDirective = /(?:注意将[^。]{0,100}标为|将 Assembly Theory 标为|明确标记为|（标记）|保留为警示课程|(?:关键)?线索：|回调|需根据[^；。]*核实|注意：|公平代表双方)/u;
+
+const syllabusReaderText = nonBlankString.refine(
+  (value) => !bracketedStatusNote.test(value)
+    && !englishAuthoringDirective.test(value)
+    && !uppercaseNot.test(value)
+    && !chineseAuthoringDirective.test(value),
+  "syllabus copy must be reader-facing and must not contain authoring directive markers"
+);
+
 const localizedTextSchema = z.object({
-  en: nonBlankString,
-  zh: nonBlankString
+  en: syllabusReaderText,
+  zh: syllabusReaderText
 }).strict();
 
 const rawSyllabusDaySchema = z.object({
