@@ -457,6 +457,30 @@ SVG/HTML/SCSS diagrams.
   table, code block, or interactive print alternative; then inspect the affected
   interior page too.
 
+## Existing-Day Editorial Pass
+
+Use this pass when reviewing a run of already-published days. It is an editorial
+review, not a translation reset or a reason to flatten the established voice.
+
+1. Inventory each paired main body and every declared appendix; compare headings,
+   imports, interactive/static alternates, sources, recap blocks, thread labels,
+   and next-day handoffs section by section.
+2. Preserve the narrative engine of each day: a concrete opening hook, a clear
+   conceptual model, an example or experiment, the live evidence boundary, and a
+   forward-looking handoff. Prefer vivid examples and varied sentence rhythm;
+   remove repetition, translationese, and UI-label drift without sanding away
+   the intellectual tension.
+3. Normalize shared course furniture across the sweep. Main days should use the
+   same frontier numbering, open-question eyebrow, three-part recap shape, and
+   thread treatment in both locales; appendix labels may remain local when they
+   describe appendix-specific material.
+4. Preserve claims, citations, caveats, and evidence strength. Any wording change
+   that alters a number, timeframe, status label, or uncertainty claim requires a
+   paired-source check and an update to the relevant glossary or source note.
+5. Run the Chinese Edition rules below as a separate review of the Chinese files,
+   then run content, type, math, import, appendix-style, and artifact checks after
+   the entire sweep.
+
 ## Chinese Edition
 
 Chinese content must be idiomatic Simplified Chinese, not line-by-line English.
@@ -494,6 +518,12 @@ model names must never appear as translator credit or reader-facing attribution.
 - When adding or standardizing a recurring term, scan prior Chinese days for
   existing translations before choosing the Chinese form, then update the
   glossary and normalize affected content in the same change where practical.
+- For an existing-day consistency pass, preserve the approved Chinese source and
+  compare the paired English and Chinese files section by section before editing;
+  do not blindly replace an existing translation with English input. Normalize
+  shared UI language across the sweep: `模块一` for Block I, `前沿 01` (and so
+  on) for frontier claim eyebrows, `未决问题` for the open-question eyebrow,
+  and `核心观点` / `最佳类比` / `仍在争论` for the three main recap labels.
 - Prefer natural Chinese rhythm and punctuation. Use Chinese quotes for quoted
   propositions and titles where appropriate.
 - Avoid `诚实` and `冷静` as routine translations for English `honest` and
@@ -502,6 +532,10 @@ model names must never appear as translator credit or reader-facing attribution.
   an author name and preserve source titles or exact quotations.
 - Avoid dense emphasis in Chinese prose. Use terminology styling and sparse
   color emphasis only when it clarifies structure.
+- In running Chinese prose, do not use Markdown bold or `<Term as="em">` as a
+  translation of English emphasis. Prefer a plain sentence, the default
+  `Term` span for a technical term, or a deliberately sparse `Highlight`; keep
+  italics only where they identify an original Latin/English title or term.
 - Review AI edits manually before accepting: factual accuracy, terminology,
   formatting, component parity, and artifact behavior.
 - If a repeated course term is missing, newly standardized, or found
@@ -530,7 +564,7 @@ blind review to different GPT-5.6-Terra medium subagents.
 ```text
 请逐篇审校全部中文译文，并与对应英文原文逐项对照，找出并修正任何信息遗漏、误译、无依据增补、术语不一致和未本地化的界面文字。译文应当信、达、雅，符合现代书面汉语习惯：行文自然、清晰、凝练，不带翻译腔，不使用只有英文才成立的比喻。必要时可以摆脱英文句法和修辞、按中文逻辑彻底重写；但若原文可以自然译出，必须完整保留其信息、限定与证据强度。使用优雅的书面语，避免口语化。
 
-开始前必须完整阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格遵循其中的术语；如需新增或统一反复出现的术语，须在同一次修改中更新词表并修正受影响内容。不要把 honest、sober 等词机械译为「诚实」或「冷静」；应按语境采用准确、完整、稳妥、清醒、克制、校准、审慎、相关或自然的改写。中文强调应节制使用术语字重、颜色与「」；不得使用 <em>、<i>、<strong>、<b>、<u>。命题、口号和作为语言对象的短语优先用「」。
+开始前必须完整阅读 docs/workflows/180-descent/zh-terminology-glossary.md，并严格遵循其中的术语；如需新增或统一反复出现的术语，须在同一次修改中更新词表并修正受影响内容。不要把 honest、sober 等词机械译为「诚实」或「冷静」；应按语境采用准确、完整、稳妥、清醒、克制、校准、审慎、相关或自然的改写。中文强调应节制使用术语字重、颜色与「」；运行正文不得使用 Markdown 粗体或 <Term as="em">，也不得使用 <em>、<i>、<strong>、<b>、<u>；英文原始论文标题可按词表规则保留斜体。命题、口号和作为语言对象的短语优先用「」。
 
 保留并正确本地化所有 front matter/manifest 键、imports、component props、URLs、DOI、引文元数据、class、id、data attribute、ARIA 结构、图片 alt 文本、表格、SVG、JavaScript hook、MDX 语法及说明性注释。不得编辑英文源文件或构建脚本。完成后用中文简要列出已修改文件、已解决的实质问题，以及仍需主代理决定的事项。
 ```

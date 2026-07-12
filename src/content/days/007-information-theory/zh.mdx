@@ -31,7 +31,6 @@ import Formula from "@app/components/lesson/Formula.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
 import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
-import Highlight from "@app/components/lesson/Highlight.astro";
 import Label from "@app/components/lesson/Label.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import Meta from "@app/components/lesson/Meta.astro";
@@ -160,7 +159,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 ## 信息是否具有物理性？
 
-到这里，信息似乎只是概率和对数构成的抽象数学量。比特本身没有固定的质量、大小或温度；但被存储和处理的比特必须由物理状态表示。一项长期存在的物理难题迫使人们面对这一事实：<Highlight>在物质系统中擦除信息，可能使环境升温。</Highlight>
+到这里，信息似乎只是概率和对数构成的抽象数学量。比特本身没有固定的质量、大小或温度；但被存储和处理的比特必须由物理状态表示。一项长期存在的物理难题迫使人们面对这一事实：在物质系统中擦除信息，可能使环境升温。
 
 ### 麦克斯韦妖
 
@@ -173,7 +172,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 ### 关键在于擦除，而不是测量
 
-这个问题的解决来自计算机理论。1961 年，IBM 的<Term>罗尔夫·兰道尔</Term>（Rolf Landauer）问：计算操作是否必然耗散能量？他的答案是否定的：<Highlight>不是所有计算步骤都必然耗散</Highlight>。逻辑可逆的操作原则上可以在足够缓慢的条件下以任意接近零的耗散完成；不可避免的下限属于逻辑不可逆操作，尤其是「擦除」。
+这个问题的解决来自计算机理论。1961 年，IBM 的<Term>罗尔夫·兰道尔</Term>（Rolf Landauer）问：计算操作是否必然耗散能量？他的答案是否定的：不是所有计算步骤都必然耗散。逻辑可逆的操作原则上可以在足够缓慢的条件下以任意接近零的耗散完成；不可避免的下限属于逻辑不可逆操作，尤其是「擦除」。
 
 <Formula>
 <MathBlock latex={String.raw`\begin{aligned}
@@ -187,7 +186,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 为什么是擦除？因为擦除不可逆。如果一个比特现在为 0，仅凭现在的状态无法知道它此前是 0 还是 1；两个可能的过去被映射到一个现在。<Term>逻辑不可逆操作</Term><TipNote text={"逻辑不可逆操作是指将多个可能的输入映射为同一个输出，使得无法仅凭输出重建输入。"} />消除了物理状态之间的区分，因此需要向环境转移相应的熵。对于有偏比特、相关存储器或存在边信息的情形，下限取决于实际丢弃的熵和自由能；只有未知且等概率的比特才对应 <MathInline latex={String.raw`k_B T \ln 2`} />。这就是信息具有物理代价的含义。
 
-1982 年，IBM 同事<Term>查尔斯·贝内特</Term>（Charles Bennett）利用这一点解释了麦克斯韦妖。问题不在测量本身：如果用适当准备的存储器可逆地完成，测量没有兰道尔下限。问题在于妖拥有有限的记忆。它若要不断运行，就必须反复重置记忆；每次不可逆重置都会把暂时从气体中移出的熵以热量形式释放到环境。因此完整循环并不违反第二定律，关键过程是<Highlight>擦除记忆</Highlight>。
+1982 年，IBM 同事<Term>查尔斯·贝内特</Term>（Charles Bennett）利用这一点解释了麦克斯韦妖。问题不在测量本身：如果用适当准备的存储器可逆地完成，测量没有兰道尔下限。问题在于妖拥有有限的记忆。它若要不断运行，就必须反复重置记忆；每次不可逆重置都会把暂时从气体中移出的熵以热量形式释放到环境。因此完整循环并不违反第二定律，关键过程是擦除记忆。
 
 </ContentSection>
 
@@ -218,14 +217,14 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </FormatOnly>
 
 <ContentSection class="frontier">
-<SectionEyebrow>前沿 · 2026 年</SectionEyebrow>
+<SectionEyebrow>前沿 · 2026</SectionEyebrow>
 
 ## 从思想实验到 zJ 级实验
 
 五十年来，兰道尔原理都很难直接测量。它涉及的能量只有几个 zJ，容易被实际设备的电子热噪声淹没。自 2012 年起，一系列实验在不同物理系统中测量并验证了这一原理，使它不再只是理论推论。这里需要区分：实验支持的是明确限定条件下的物理下限，而不是所有关于「信息」的宏大主张。
 
 <Claim>
-<ClaimHeader label="Edge 01">
+<ClaimHeader label="前沿 01">
 <StatusChip status={"ok"} label={"兰道尔"} printLabel={"已确立"} />
 </ClaimHeader>
 ### 不同系统得到同一物理下限
@@ -236,7 +235,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </Claim>
 
 <Claim>
-<ClaimHeader label="Edge 02">
+<ClaimHeader label="前沿 02">
 <StatusChip status={"ok"} label={"信息引擎"} printLabel={"已确立"} />
 <StatusChip status={"hint"} label={"最快说法"} printLabel={"话术包装"} />
 </ClaimHeader>
@@ -246,7 +245,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </Claim>
 
 <Claim>
-<ClaimHeader label="Edge 03">
+<ClaimHeader label="前沿 03">
 <StatusChip status={"ok"} label={"物理下限"} printLabel={"已确立"} />
 <StatusChip status={"hint"} label={"兰道尔壁垒"} printLabel={"尚未构成"} />
 </ClaimHeader>
@@ -254,7 +253,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 这些结果如今纳入<Term>随机热力学</Term>框架，用于描述涨落主导的微观系统。核心工具包括<Term>杰辛斯基等式</Term>和<Term>克鲁克斯涨落定理</Term>；反馈控制的推广还会出现互信息。信息热力学要求在同一物理描述中处理信息、功、热、测量、反馈、控制器记忆和重置。2024 年的工作进一步量化了有限时间随机计算中的额外成本。
 
-这引出数据中心的现实问题：现代机器距离兰道尔下限还有多远？答案是<Highlight>非常远</Highlight>。单个晶体管翻转时的耗散约为 <MathInline latex={String.raw`10^{-18}`} /> 焦耳，比兰道尔下限高数百至数千倍；计入内存、散热和电源转换后还要更高。2024 年数据中心约消耗全球 1.5% 的电力，AI 是增长较快的工作负载，预计会推动 2030 年需求增长（国际能源署《能源与 AI》，2025 年 4 月）。目前这是<Highlight>工程和经济</Highlight>问题，而不是基础物理极限。声称 AI 即将撞上兰道尔极限属于<StatusChip status={"bad"} label={"极限头条"} printLabel={"有争议／炒作风险"} />；但该下限真实存在，也解释了可逆计算、热力学计算和神经形态计算为何值得研究。
+这引出数据中心的现实问题：现代机器距离兰道尔下限还有多远？答案是非常远。单个晶体管翻转时的耗散约为 <MathInline latex={String.raw`10^{-18}`} /> 焦耳，比兰道尔下限高数百至数千倍；计入内存、散热和电源转换后还要更高。2024 年数据中心约消耗全球 1.5% 的电力，AI 是增长较快的工作负载，预计会推动 2030 年需求增长（国际能源署《能源与 AI》，2025 年 4 月）。目前这是工程和经济问题，而不是基础物理极限。声称 AI 即将撞上兰道尔极限属于<StatusChip status={"bad"} label={"极限头条"} printLabel={"有争议／炒作风险"} />；但该下限真实存在，也解释了可逆计算、热力学计算和神经形态计算为何值得研究。
 </Claim>
 </ContentSection>
 
@@ -262,7 +261,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <ContentSection class="frontier">
 <Claim>
-<ClaimHeader label="Edge 04">
+<ClaimHeader label="前沿 04">
 <StatusChip status={"bad"} label={"比特形而上学"} printLabel={"有争议／炒作风险"} />
 </ClaimHeader>
 ### 概念的过度延伸
@@ -276,7 +275,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow>尚未解决的问题</SectionEyebrow>
+<SectionEyebrow>未决问题</SectionEyebrow>
 
 ## 仍无定论
 
@@ -292,7 +291,7 @@ import Wrap from "@app/components/lesson/Wrap.astro";
 
 <RecapList>
 <RecapItem term="核心观点">信息可以度量：比特是对数单位，惊奇度为 <MathInline latex={String.raw`i(x)=-\log_2 p(x)`} />，熵 <MathInline latex={String.raw`H=-\sum p\log_2 p`} /> 是平均惊奇度。当信息由物理系统表示时，重置未知且等概率的比特至少需要 <MathInline latex={String.raw`k_B T \ln 2`} /> 的功。</RecapItem>
-<RecapItem term="关键例子">麦克斯韦妖不能通过测量永久违反第二定律；完整循环必须擦除有限记忆，而擦除会把相应熵释放到环境。</RecapItem>
+<RecapItem term="最佳类比">麦克斯韦妖不能通过测量永久违反第二定律；完整循环必须擦除有限记忆，而擦除会把相应熵释放到环境。</RecapItem>
 <RecapItem term="仍在争论">香农熵与热力学熵是否具有更深的物理同一性，信息是否是现实的基本成分，以及可逆计算能否在工程上接近兰道尔下限。</RecapItem>
 </RecapList>
 <Threads label="今日线索 ›">信息（终于迎来了它坚实的单位——比特、惊奇度、熵） · 能量（兰道尔的 <MathInline latex={String.raw`k_B T \ln 2`} /> 把比特与热量焊在一起） · 计算（擦除信息的物理下限——妖不过是一只内存有限的存储装置）——以及涌现的初显（一条在玻璃、电子、磁体、原子间普适的物理规律），并为第 83 至 85 日关于进化与生命的探讨埋下伏笔。</Threads>

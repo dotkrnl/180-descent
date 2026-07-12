@@ -23,6 +23,12 @@ Preserve proper names, source titles, and exact quotations.
 
 | English/source term | Standard Chinese | Scope and notes | Avoid |
 | --- | --- | --- | --- |
+| block / Block I | 模块 / 模块一 | Course structure and running heads. Use `模块一` consistently for the first block. | 第一单元, 第一模块 when inconsistent |
+| frontier section / claim edge label | 前沿 / 前沿 01 | Main-day frontier section and `ClaimHeader` eyebrow. Keep the descriptive title in the following heading; technical phrases such as `edge of chaos` keep their own glossary entry. | 边缘 01, Edge 01, 结果 01 |
+| open questions | 未决问题 | Eyebrow for unresolved questions; the following heading may use `仍无定论` as a literary title. | 开放问题 |
+| Big idea | 核心观点 | Main recap label. | 核心洞见, 核心理念, 大观念 |
+| Best analogy | 最佳类比 | Main recap label for the image or comparison that carries the lesson. | 关键例子, 关键框架 |
+| Live controversy | 仍在争论 | Main recap label for the live disagreement or evidence boundary. | 当下争议, 现实争议 |
 | hype filter / frontier calibrator | 前沿校准器 | Course-wide rubric/tool name for calibrating frontier claims. If local prose foregrounds overclaiming, paraphrase as `避免夸大解读`, `防止标题先行`, or similar instead of naming a separate filter. | 防炒作滤镜, 防炒作过滤器, 炒作过滤器, 过滤炒作 |
 | established | 已确立 | Frontier/status label. Keep chip labels short. | 可靠成熟, 扎实且可重复 |
 | promising | 有前景 | Frontier/status label for evidence that is real but still early. | 线索, 初露曙光 |
@@ -77,7 +83,7 @@ Preserve proper names, source titles, and exact quotations.
 | martingale | 鞅 | Probability/game-theoretic statistics. | 马丁格尔 |
 | compatibility interval | 相容性区间 | Statistics interpretation of intervals. | 兼容区间 when inconsistent |
 | effect size | 效应量 | Statistics. | 效果量 when inconsistent |
-| statistical power | 检验功效 | Statistics. | 统计功效 when inconsistent |
+| statistical power | 检验功效 | Statistics; use for the probability of detecting a specified effect under a specified procedure. | 统计功效 when used as the technical term |
 | base rate | 基础率 | Statistics/replication crisis. | 基率 when inconsistent |
 | base-rate neglect | 基础率忽视 | Failing to use the base rate in probability judgments; common sampling-framework bias. | 忽略基础率 |
 | prior odds | 先验比值 | Ioannidis/PPV framing. | 先验赔率 |

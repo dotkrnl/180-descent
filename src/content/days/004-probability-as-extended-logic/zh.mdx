@@ -34,7 +34,6 @@ import FormatOnly from "@app/components/lesson/FormatOnly.astro";
 import Hero from "@app/components/lesson/Hero.astro";
 import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
 import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
-import Highlight from "@app/components/lesson/Highlight.astro";
 import Label from "@app/components/lesson/Label.astro";
 import Lead from "@app/components/lesson/Lead.astro";
 import LessonNote from "@app/components/lesson/LessonNote.astro";
@@ -76,7 +75,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 <Lead drop="你">选定了 1 号门。三扇门后有一辆跑车，另外两扇门后各有一只山羊。主持人知道奖品的位置，走到 3 号门前打开门，露出山羊，然后问：「要不要换到 2 号门？」现在只剩两扇关着的门和一辆汽车。直觉似乎告诉你，概率已经变成一半对一半，换不换只看运气。</Lead>
 
-事实并非如此，而且差别很大。坚持最初选择，获胜概率只有三分之一；改选另一扇门，概率则为<Highlight>三分之二</Highlight>。只需改变选择，获胜机会就增加一倍。这就是著名的蒙提霍尔问题（Monty Hall problem）。1990 年，它在杂志专栏中引发了广泛讨论和大量误判。今天我们将说明这个答案为何成立，以及它揭示的原则如何成为不确定条件下推理的基础。
+事实并非如此，而且差别很大。坚持最初选择，获胜概率只有三分之一；改选另一扇门，概率则为三分之二。只需改变选择，获胜机会就增加一倍。这就是著名的蒙提霍尔问题（Monty Hall problem）。1990 年，它在杂志专栏中引发了广泛讨论和大量误判。今天我们将说明这个答案为何成立，以及它揭示的原则如何成为不确定条件下推理的基础。
 
 </Hero>
 
@@ -112,7 +111,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 蒙提·霍尔的节目现场说明，这个谜题并非文字游戏：主持人知道奖品位置，并不是随机开门；他的行动本身就是信息。
 </ImageFigure>
 
-据她统计，来信将近<Highlight>一万封</Highlight>，大多认为她错了，其中约<Highlight>一千封</Highlight>来自博士。数学家也写信批评她，一位教授留下了后来广为流传的评价：
+据她统计，来信将近一万封，大多认为她错了，其中约一千封来自博士。数学家也写信批评她，一位教授留下了后来广为流传的评价：
 
 <BlockQuote>
 「你搞砸了，而且搞砸得一塌糊涂！……这个国家的数学文盲已经够多了，不需要全世界 IQ 最高的人再来添乱。丢人！」
@@ -155,11 +154,11 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 
 ## 主持人的行动带来了信息
 
-先记住一点：<Highlight>第一次选中汽车的概率只有三分之一，而且不会因主持人随后开门而改变。</Highlight>你选择 1 号门时，汽车在该门后的概率是 1/3，在另外两扇门后的总概率是 2/3。主持人随后打开一扇有山羊的门；关键在于，他知道汽车在哪里，并且必须打开有山羊的门。因此，原本分布在两扇门上的 2/3 概率，集中到他没有打开的那一扇门上。
+先记住一点：第一次选中汽车的概率只有三分之一，而且不会因主持人随后开门而改变。你选择 1 号门时，汽车在该门后的概率是 1/3，在另外两扇门后的总概率是 2/3。主持人随后打开一扇有山羊的门；关键在于，他知道汽车在哪里，并且必须打开有山羊的门。因此，原本分布在两扇门上的 2/3 概率，集中到他没有打开的那一扇门上。
 
 主持人的行动不是噪声，而是<Term>信息</Term>，也是本书五条线索之一首次以数量形式出现。[第 1 日](/zh/days/001-what-is-knowledge/)的停摆之钟说明，偶然说对不等于知道；在这里，知情主持人在规则约束下的选择构成证据，并改变置信度。换门等于选择 2/3，坚持则只保留最初的 1/3。
 
-如果直觉仍不接受，可以把问题扩大到<Highlight>一千扇门</Highlight>。你随便选一扇，选中汽车的概率只有千分之一。知情的主持人打开另外 998 扇有山羊的门，只留下你的门和另一扇门。此时你还会认为两扇门各有一半机会吗？汽车几乎肯定在主持人没有打开的门后。三扇门只是同一逻辑的较小版本。
+如果直觉仍不接受，可以把问题扩大到一千扇门。你随便选一扇，选中汽车的概率只有千分之一。知情的主持人打开另外 998 扇有山羊的门，只留下你的门和另一扇门。此时你还会认为两扇门各有一半机会吗？汽车几乎肯定在主持人没有打开的门后。三扇门只是同一逻辑的较小版本。
 
 <Aside>
 <BlockTitle>问题早于电视节目</BlockTitle>
@@ -218,7 +217,7 @@ export const bayesFormula = String.raw`P(H \mid E) = \frac{P(H)\,P(E \mid H)}{P(
 </DataTableRow>
 </DataTableBody>
 </DataTable>
-<Fragment slot="total"><BayesSymbol><MathInline latex={String.raw`P(E)`} /></BayesSymbol> 是所有假设产生该证据的总概率：<Highlight><MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} /></Highlight>。将各假设的联合概率除以 <MathInline latex={String.raw`1/2`} /> 后，未打开的 2 号门得到 <Highlight><MathInline latex={String.raw`2/3`} /></Highlight> 的后验概率。</Fragment>
+<Fragment slot="total"><BayesSymbol><MathInline latex={String.raw`P(E)`} /></BayesSymbol> 是所有假设产生该证据的总概率：<MathInline latex={String.raw`1/6 + 1/3 + 0 = 1/2`} />。将各假设的联合概率除以 <MathInline latex={String.raw`1/2`} /> 后，未打开的 2 号门得到 <MathInline latex={String.raw`2/3`} /> 的后验概率。</Fragment>
 </BayesSieve>
 
 <MathLine>
@@ -288,7 +287,7 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 
 - 概率是事件在无限次重复中出现的频率。「硬币公平」意味着抛掷无穷多次，正面比例趋近一半。
 - 参数是固定但未知的常数；数据才是随机的。你关心的是：你的方法有多大可能误导你。
-- 工具：<Highlight>p 值、置信区间、第一/第二类错误</Highlight>（费希尔；奈曼与皮尔逊，1920–30 年代）。
+- 工具：p 值、置信区间、第一/第二类错误（费希尔；奈曼与皮尔逊，1920–30 年代）。
 - 说不出「火星上曾有生命的概率是 70%」——火星要么有过生命，要么没有，不存在可重复的样本可供计数。
 
 </ProbabilityCamp>
@@ -296,7 +295,7 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 
 - 概率是一种置信度——你在已知条件下理性地有多确信（直接来自[第 1 日](/zh/days/001-what-is-knowledge/)的那只旋钮）。
 - 参数自身也获得概率分布；你随数据不断用贝叶斯定理更新它们。
-- 工具：<Highlight>先验、后验、贝叶斯因子</Highlight>。谱系：拉普拉斯 → 杰弗里斯 → 拉姆齐 → 德·菲内蒂 → 萨维奇。
+- 工具：先验、后验、贝叶斯因子。谱系：拉普拉斯 → 杰弗里斯 → 拉姆齐 → 德·菲内蒂 → 萨维奇。
 - 可以理直气壮地说「火星上曾有生命的概率是 70%」——一次性事件无法重复，但置信度恰好为此而生。
 
 </ProbabilityCamp>
@@ -320,7 +319,7 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 
 ## p 值之外的统计方法
 
-一个世纪以来，频率派的 p 值一直是科学研究中最常用的检验指标：低于 <MathInline latex={String.raw`0.05`} /> 时，结果常被称为「显著」。但[第 2 日](/zh/days/002-scientific-method-and-demarcation/)的复现危机已经说明，「显著」并不是稳固结论。p 值的一个结构性弱点是：<Highlight>如果研究者在实验中途查看数据，发现 <MathInline latex={String.raw`p<0.05`} /> 就停止收集，假阳性率会被抬高。</Highlight>这种做法称为「可选停止」（optional stopping）。新的统计框架试图从检验规则本身解决这个问题，核心不是重新解释概率，而是引入一套受约束的赌局。
+一个世纪以来，频率派的 p 值一直是科学研究中最常用的检验指标：低于 <MathInline latex={String.raw`0.05`} /> 时，结果常被称为「显著」。但[第 2 日](/zh/days/002-scientific-method-and-demarcation/)的复现危机已经说明，「显著」并不是稳固结论。p 值的一个结构性弱点是：如果研究者在实验中途查看数据，发现 <MathInline latex={String.raw`p<0.05`} /> 就停止收集，假阳性率会被抬高。这种做法称为「可选停止」（optional stopping）。新的统计框架试图从检验规则本身解决这个问题，核心不是重新解释概率，而是引入一套受约束的赌局。
 
 <Claim>
 <ClaimHeader label="前沿 01">
@@ -341,7 +340,7 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 <StatusChip status={"hint"} label={"取代 p 值"} printLabel={"有争议／炒作风险"} />
 </ClaimHeader>
 ### e 值的优势：可以在任意时点检验
-连续进行公平赌局时，累计财富构成数学上的<Term>鞅</Term><TipNote text={"鞅是公平赌局的数学模型：在已知过去的条件下，下一步的期望值等于当前值。"} />（martingale）。维勒不等式<TipNote text={"维勒不等式限制了公平赌局的财富过程仅凭运气膨胀到很大数值的概率。"} />保证：若零假设为真，财富仅凭运气增长到极大值的概率很低。这使 e 值具有<Term>任意时点有效性</Term>：研究者可以持续查看数据，随时停止或继续收集，<Highlight>无论查看多少次，错误率控制仍然成立</Highlight>。更完整的安全推断框架还可以构造任意时点有效的置信区间。e 值也便于合并：独立 e 值可以<Highlight>相乘</Highlight>，相关 e 值可以取<Highlight>平均</Highlight>，结果仍保持有效；这比 p 值更不容易受到重复查看和多重比较的影响。
+连续进行公平赌局时，累计财富构成数学上的<Term>鞅</Term><TipNote text={"鞅是公平赌局的数学模型：在已知过去的条件下，下一步的期望值等于当前值。"} />（martingale）。维勒不等式<TipNote text={"维勒不等式限制了公平赌局的财富过程仅凭运气膨胀到很大数值的概率。"} />保证：若零假设为真，财富仅凭运气增长到极大值的概率很低。这使 e 值具有<Term>任意时点有效性</Term>：研究者可以持续查看数据，随时停止或继续收集，无论查看多少次，错误率控制仍然成立。更完整的安全推断框架还可以构造任意时点有效的置信区间。e 值也便于合并：独立 e 值可以相乘，相关 e 值可以取平均，结果仍保持有效；这比 p 值更不容易受到重复查看和多重比较的影响。
 
 <FormatOnly media="web">下面亲手试试：同一串数据，分别交给脆弱、怕中途查看的 p 值，和任意时点有效的 e 值来评判。</FormatOnly>
 <FormatOnly media="print-epub">下方表格概括同一个对比：脆弱、怕中途查看的 p 值，与任意时点有效的 e 值。</FormatOnly>
@@ -395,15 +394,15 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 </ContentSection>
 
 <ContentSection>
-<SectionEyebrow>尚未解决的问题</SectionEyebrow>
+<SectionEyebrow>未决问题</SectionEyebrow>
 
 ## 仍无定论
 
-- <Highlight>概率到底是什么？</Highlight>是世界中的频率、心智中的置信度，还是一个公平的赔率？三个世纪过去了，诠释之争有过停火（德·菲内蒂），但从没有投降。
-- <Highlight>先验从何而来？</Highlight>是否存在一种有原则、客观的方式来设定你的「事前」信念，还是一切推理终究立足于一个数学无法替你辩护的选择？
-- <Highlight>基于下注的统计学真能接管吗？</Highlight>还是只会沦为序贯实验的专用工具，而 p 值继续统治其余领域——而且，「选你的赌注」真的比「选你的先验」更不主观吗？
-- <Highlight>大脑真的在运行贝叶斯吗？</Highlight>[第 1 日](/zh/days/001-what-is-knowledge/)的预测加工线索说，感知就是神经组织中的贝叶斯推断。今天为这个主张提供了规范性骨架——但「大脑近似贝叶斯」和「大脑就是贝叶斯」是两笔截然不同的赌注，我们将在第 119 日重返这个话题。
-- <Highlight>考克斯定理真的对任何理性主体都有效吗</Highlight>——包括人工主体——还是只对那些已经接受了它的一致性公理的主体有效？（这个问题对 AI 板块格外要紧，第 138–145 日。）
+- 概率到底是什么？是世界中的频率、心智中的置信度，还是一个公平的赔率？三个世纪过去了，诠释之争有过停火（德·菲内蒂），但从没有投降。
+- 先验从何而来？是否存在一种有原则、客观的方式来设定你的「事前」信念，还是一切推理终究立足于一个数学无法替你辩护的选择？
+- 基于下注的统计学真能接管吗？还是只会沦为序贯实验的专用工具，而 p 值继续统治其余领域——而且，「选你的赌注」真的比「选你的先验」更不主观吗？
+- 大脑真的在运行贝叶斯吗？[第 1 日](/zh/days/001-what-is-knowledge/)的预测加工线索说，感知就是神经组织中的贝叶斯推断。今天为这个主张提供了规范性骨架——但「大脑近似贝叶斯」和「大脑就是贝叶斯」是两笔截然不同的赌注，我们将在第 119 日重返这个话题。
+- 考克斯定理真的对任何理性主体都有效吗——包括人工主体——还是只对那些已经接受了它的一致性公理的主体有效？（这个问题对 AI 板块格外要紧，第 138–145 日。）
 
 </ContentSection>
 
@@ -412,7 +411,7 @@ E. T. 杰恩斯的《概率论：科学的逻辑》（2003）建立在这一思�
 
 <RecapList>
 <RecapItem term="核心观点">概率把逻辑推广到不确定情形。贝叶斯定理规定，看到证据后，应提高能够预测该证据的假设的概率。</RecapItem>
-<RecapItem term="关键例子">蒙提霍尔主持人的选择不是随机信息；因为他知道奖品位置，打开山羊门后，未打开的另一扇门获得了 2/3 的概率。</RecapItem>
+<RecapItem term="最佳类比">蒙提霍尔主持人的选择不是随机信息；因为他知道奖品位置，打开山羊门后，未打开的另一扇门获得了 2/3 的概率。</RecapItem>
 <RecapItem term="仍在争论">频率派和贝叶斯派对概率含义的分歧仍未消失。e 值的数学基础已经确立，也已在部分科技公司的 A/B 测试中应用，但尚未成为 p 值的全面替代方案。</RecapItem>
 </RecapList>
 <Threads label="今日线索 ›">信息（主持人的揭示和 e 值都是更新信念的证据） · 计算（心智与实验室作为推理引擎） · 能量（对「贝叶斯大脑」的一次轻回调）——而校准这条暗线，从[第 1 日](/zh/days/001-what-is-knowledge/)和[第 2 日](/zh/days/002-scientific-method-and-demarcation/)一路延续至此；干预问题则通向[因果性](/zh/days/005-causation/)。</Threads>
