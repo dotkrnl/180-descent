@@ -777,6 +777,16 @@
     }
 
     var progress = readReadingProgress();
+    var saved = progress[locale];
+    if(isValidReadingRecord(saved)){
+      var savedDay = Number(saved.day) || 0;
+      if(savedDay > record.day){
+        return;
+      }
+      if(savedDay === record.day){
+        record.progress = Math.max(normalizedProgress(saved.progress), record.progress);
+      }
+    }
     progress[locale] = record;
     storeReadingProgress(progress);
   }
