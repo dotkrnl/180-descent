@@ -1607,6 +1607,19 @@ function latexPreamble(config: PdfEdition & { root: string }): string {
   Scale=0.82
 ]{IBM Plex Mono}
 \newfontfamily\symbolfallback{STIX Two Text}
+% The bundled Latin subsets omit these letters, but transliterating them
+% corrupts names such as Erdős, Łukasiewicz, and Gaṅgeśa.
+\newunicodechar{ć}{{\symbolfallback ć}}
+\newunicodechar{č}{{\symbolfallback č}}
+\newunicodechar{ē}{{\symbolfallback ē}}
+\newunicodechar{Ł}{{\symbolfallback Ł}}
+\newunicodechar{ł}{{\symbolfallback ł}}
+\newunicodechar{ń}{{\symbolfallback ń}}
+\newunicodechar{ō}{{\symbolfallback ō}}
+\newunicodechar{ő}{{\symbolfallback ő}}
+\newunicodechar{ś}{{\symbolfallback ś}}
+\newunicodechar{ş}{{\symbolfallback ş}}
+\newunicodechar{ṅ}{{\symbolfallback ṅ}}
 \newunicodechar{ε}{{\symbolfallback ε}}
 \newunicodechar{μ}{{\symbolfallback μ}}
 \newunicodechar{Ω}{{\symbolfallback Ω}}
@@ -1839,14 +1852,9 @@ function normalizeText(value: string): string {
     .replace(/\s+–\s*/g, " -- ");
 }
 
-function normalizePdfGlyphs(value: string): string {
-  const hasCjk = /[\u3400-\u9fff]/.test(value);
-  return (hasCjk ? value : value
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, ""))
-    .replace(/[\u00c0-\u024f\u1e00-\u1eff]/g, (char) => char.normalize("NFKD").replace(/[\u0300-\u036f]/g, ""))
-    .replace(/[Łł]/g, (char) => char === "Ł" ? "L" : "l")
-    .replace(/[ı]/g, "i")
+export function normalizePdfGlyphs(value: string): string {
+  return value
+    .normalize("NFC")
     .replace(/[⇒]/g, "→")
     .replace(/[⇐]/g, "←")
     .replace(/[⇔]/g, "↔")
