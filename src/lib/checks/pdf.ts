@@ -3,22 +3,37 @@ import { readFile } from "node:fs/promises";
 import { execFile } from "node:child_process";
 import path from "node:path";
 import { promisify } from "node:util";
-import { PDFDocument, PDFName } from "pdf-lib";
+import { PDFArray, PDFDict, PDFDocument, PDFHexString, PDFName, PDFString } from "pdf-lib";
 import { loadArtifactBookDays, type ArtifactBookDay } from "@lib/artifacts/book";
 import { bookArtifactPaths, dayArtifactName, dayArtifactPaths, downloadArtifactPath } from "@lib/artifacts/downloads";
 import { CHINESE_DAY_ONE_APPENDIX_PATTERNS, ENGLISH_DAY_ONE_APPENDIX_PATTERNS } from "@lib/checks/day-one-appendix-patterns";
 import { toError } from "@lib/errors";
 
 const execFileAsync = promisify(execFile);
+const FORBIDDEN_PDF_URI_PATTERNS = [
+  /127\.0\.0\.1/,
+  /localhost/i,
+  /https:\/\/180-descent\.pages\.dev\/(?:zh\/)?days\//,
+  /https:\/\/180-descent\.pages\.dev\/(?:zh\/)?introduction\//
+];
 
 interface PdfCheckOptions {
   root: string;
 }
 
 interface PdfInfo {
-  data: Buffer;
   pdf: PDFDocument;
   text: string;
+}
+
+interface PdfAnnotationUri {
+  page: number;
+  uri: string;
+}
+
+export interface PdfAnnotationInspection {
+  count: number;
+  uris: PdfAnnotationUri[];
 }
 
 type TextPatternCheck = [label: string, text: string | null, pattern: RegExp];
@@ -100,8 +115,7 @@ class PdfChecker {
 
     const info = await this.pdfInfo(file);
     if (!info) return;
-    const raw = info.data.toString("latin1");
-    const annotationCount = countPdfAnnotations(info);
+    const annotations = inspectPdfAnnotations(info.pdf);
 
     if (info.pdf.getPageCount() < 1) {
       this.errors.push(`${file} has no pages`);
@@ -111,7 +125,7 @@ class PdfChecker {
       this.errors.push(`${file} has no extractable text`);
     }
 
-    if (annotationCount === 0) {
+    if (annotations.count === 0) {
       this.errors.push(`${file} has no clickable PDF link annotations`);
     }
 
@@ -121,16 +135,7 @@ class PdfChecker {
 
     this.checkPdfMetadata(file, info);
 
-    for (const pattern of [
-      /127\.0\.0\.1/,
-      /localhost/i,
-      /https:\/\/180-descent\.pages\.dev\/(?:zh\/)?days\//,
-      /https:\/\/180-descent\.pages\.dev\/(?:zh\/)?introduction\//
-    ]) {
-      if (pattern.test(raw)) {
-        this.errors.push(`${file} contains forbidden PDF link matching ${pattern}`);
-      }
-    }
+    this.errors.push(...forbiddenPdfAnnotationUriErrors(file, annotations.uris));
   }
 
   private checkPdfMetadata(file: string, info: PdfInfo): void {
@@ -251,7 +256,7 @@ class PdfChecker {
     }
 
     const text = await popplerText(absolute);
-    const info = { data, pdf, text };
+    const info = { pdf, text };
     this.pdfCache.set(absolute, info);
     return info;
   }
@@ -288,13 +293,40 @@ async function popplerText(pdfPath: string): Promise<string> {
   return String(stdout);
 }
 
-function countPdfAnnotations({ pdf }: PdfInfo): number {
+export function inspectPdfAnnotations(pdf: PDFDocument): PdfAnnotationInspection {
   let count = 0;
-  for (const page of pdf.getPages()) {
-    const annotations = page.node.lookup(PDFName.of("Annots")) as { size?: () => number } | undefined;
-    count += annotations?.size?.() ?? 0;
+  const uris: PdfAnnotationUri[] = [];
+
+  for (const [pageIndex, page] of pdf.getPages().entries()) {
+    const annotations = page.node.lookup(PDFName.Annots);
+    if (!(annotations instanceof PDFArray)) continue;
+    count += annotations.size();
+
+    for (let index = 0; index < annotations.size(); index += 1) {
+      const annotation = annotations.lookup(index);
+      if (!(annotation instanceof PDFDict)) continue;
+      const action = annotation.lookup(PDFName.of("A"));
+      if (!(action instanceof PDFDict)) continue;
+      const actionType = action.lookup(PDFName.of("S"));
+      if (!(actionType instanceof PDFName) || actionType.decodeText() !== "URI") continue;
+      const uri = action.lookup(PDFName.of("URI"));
+      if (!(uri instanceof PDFString || uri instanceof PDFHexString)) continue;
+      uris.push({ page: pageIndex + 1, uri: uri.decodeText() });
+    }
   }
-  return count;
+
+  return { count, uris };
+}
+
+export function forbiddenPdfAnnotationUriErrors(
+  file: string,
+  uris: readonly PdfAnnotationUri[]
+): string[] {
+  return uris.flatMap(({ page, uri }) => {
+    return FORBIDDEN_PDF_URI_PATTERNS.some((pattern) => pattern.test(uri))
+      ? [`${file} contains forbidden PDF annotation URI on page ${page}: ${JSON.stringify(uri)}`]
+      : [];
+  });
 }
 
 function hasPdfOutlines({ pdf }: PdfInfo): boolean {
