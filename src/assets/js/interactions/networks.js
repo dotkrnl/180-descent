@@ -232,7 +232,7 @@
     var clusteringOut = root.querySelector("[data-out='clustering']");
     var verdict = root.querySelector("[data-out='verdict']");
     var reshuffle = root.querySelector("[data-action='reshuffle']");
-    var count = 24;
+    var count = 48;
     var positions = ringPositions(count, 310, 178, 132);
     var seed = 1201;
 

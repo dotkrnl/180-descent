@@ -384,14 +384,19 @@ describe("Day 12 interaction runtime", () => {
         lines.map((line) => ["x1", "y1", "x2", "y2"].map((name) => line.getAttribute(name)).join(":"))
       );
 
-      expect(await root.locator("svg line").count()).toBe(48);
+      expect(await root.locator("svg line").count()).toBe(96);
       expect(await shortcuts()).toEqual([]);
+      const initialPath = Number(await root.locator('[data-out="path"]').textContent());
+      expect(initialPath).toBeGreaterThan(5);
+      await setProbability(100);
+      const rewiredPath = Number(await root.locator('[data-out="path"]').textContent());
+      expect(rewiredPath).toBeLessThan(initialPath - 2);
       await setProbability(20);
       const earlier = await shortcuts();
       expect(earlier.length).toBeGreaterThan(0);
       await setProbability(40);
       const later = await shortcuts();
-      expect(await root.locator("svg line").count()).toBe(48);
+      expect(await root.locator("svg line").count()).toBe(96);
       for (const edge of earlier) expect(later).toContain(edge);
     } finally {
       await context.close();

@@ -223,6 +223,68 @@ describe("content check", () => {
     ]);
   });
 
+  it("forbids 主课 and 主文 in Chinese translation content", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: [
+        body("夹具日", "zh"),
+        "正文可以使用，但主课和主文必须改成正文。"
+      ].join("\n")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: 'src/content/days/001-fixture/zh.mdx contains forbidden Chinese style term "主课"; use 正文'
+      },
+      {
+        message: 'src/content/days/001-fixture/zh.mdx contains forbidden Chinese style term "主文"; use 正文'
+      }
+    ]);
+  });
+
+  it("forbids the terms in Chinese Astro UI copy", async () => {
+    const root = await createFixtureRoot();
+    await mkdir(path.join(root, "src/app/components"), { recursive: true });
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: body("夹具日", "zh")
+    });
+    await writeFile(
+      path.join(root, "src/app/components/fixture.astro"),
+      '{isZh ? "主课程应改为课程正文" : "The main course"}'
+    );
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: 'src/app/components/fixture.astro contains forbidden Chinese style term "主课"; use 正文'
+      }
+    ]);
+  });
+
+  it("forbids first-character Lead drops in Chinese content", async () => {
+    const root = await createFixtureRoot();
+    await writeRegistryDay(root, {
+      en: body("Fixture Day"),
+      zh: [
+        body("夹具日", "zh"),
+        '<Lead drop="甲">乙是测试文字。</Lead>'
+      ].join("\n")
+    });
+
+    const failures = await checkContent({ root });
+
+    expect(failures).toEqual([
+      {
+        message: "src/content/days/001-fixture/zh.mdx uses <Lead drop> in Chinese content; omit the drop prop in zh versions"
+      }
+    ]);
+  });
+
   it("reports invalid status component values", async () => {
     const root = await createFixtureRoot();
     await writeRegistryDay(root, {

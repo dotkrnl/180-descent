@@ -25,10 +25,10 @@ import TipNote from "@app/components/lesson/TipNote.astro";
 import Day12StaticFigure from "@app/components/lesson/figures/Day12StaticFigure.astro";
 import Day12Interactive from "@app/components/lesson/interactives/Day12Interactive.astro";
 
-<Lead drop="主">课铺出了网络科学的骨架：短路径、不均等的度、尚有争议的幂律、传染过程与连接组。页边仍留下七个问题：为什么你的朋友看起来比你更受欢迎？一个人看不见整张图，怎样找到短路径？哪些社会桥梁传递新信息？为什么枢纽节点能抵御一种损伤，却会放大另一种？当网络彼此依赖时会发生什么？谁算得上居于中心？检测到的社区究竟何时属于现实世界，而非算法的产物？</Lead>
+<Lead>正文搭出了网络科学的骨架：短路径、不均等的度、尚有争议的幂律、传染过程与连接组。页边仍留下七个问题：为什么你的朋友看起来比你更受欢迎？一个人看不见整张图，怎样找到短路径？哪些社会桥梁传递新信息？为什么枢纽节点能抵御一种损伤，却会放大另一种？当网络彼此依赖时会发生什么？谁算得上居于中心？检测到的社区究竟何时属于现实世界，而非算法的产物？</Lead>
 
 <ContinueNote label="接续主路径">
-本附录扩展[第 12 日主课](/zh/days/012-networks/)，而非取代它。阅读时不妨随时调用[第 5 日的因果区分](/zh/days/005-causation/)、[第 6 日的方差](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)、[第 8 日的涌现](/zh/days/008-complexity-and-emergence/)、[第 9 日的级联](/zh/days/009-systems-thinking-and-feedback/)与[第 11 日的抽样偏差](/zh/days/011-heuristics-biases-and-rationality/)。
+本附录扩展[第 12 日正文](/zh/days/012-networks/)，而非取代它。阅读时不妨随时调用[第 5 日的因果区分](/zh/days/005-causation/)、[第 6 日的方差](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)、[第 8 日的涌现](/zh/days/008-complexity-and-emergence/)、[第 9 日的级联](/zh/days/009-systems-thinking-and-feedback/)与[第 11 日的抽样偏差](/zh/days/011-heuristics-biases-and-rationality/)。
 </ContinueNote>
 
 <ContentSection>
@@ -66,7 +66,7 @@ Scott Feld 于 1991 年提出的<Term>友谊悖论</Term>描述的是平均量�
 <Aside>
 <BlockTitle>不画出整张图，也能找到枢纽</BlockTitle>
 
-同一种沿边抽样偏差还启发了<Term>熟人免疫</Term><TipNote text={"熟人免疫先随机抽取一些人，请每人报出一名联系人，再为被报出的联系人实施免疫；这样，度较高的节点被抽中的概率更高。"} />。在 Cohen、Havlin 与 ben-Avraham 的网络模型中，随机选人并为其报出的一名联系人实施免疫，比均匀随机免疫更高效地触及枢纽节点。这个结果回答了主课枢纽定向干预展项引出的一项实际质疑：并非总要先掌握完整的网络地图。现实项目仍须面对提名不全、联系人变化、对接触对象或服务的可及性限制，以及度只是决定传播的众多因素之一等问题。
+同一种沿边抽样偏差还启发了<Term>熟人免疫</Term><TipNote text={"熟人免疫先随机抽取一些人，请每人报出一名联系人，再为被报出的联系人实施免疫；这样，度较高的节点被抽中的概率更高。"} />。在 Cohen、Havlin 与 ben-Avraham 的网络模型中，随机选人并为其报出的一名联系人实施免疫，比均匀随机免疫更高效地触及枢纽节点。这个结果回答了正文中的枢纽定向干预展项引出的一项实际质疑：并非总要先掌握完整的网络地图。现实项目仍须面对提名不全、联系人变化、对接触对象或服务的可及性限制，以及度只是决定传播的众多因素之一等问题。
 </Aside>
 </ContentSection>
 
@@ -75,7 +75,7 @@ Scott Feld 于 1991 年提出的<Term>友谊悖论</Term>描述的是平均量�
 
 ## Milgram 实验隐藏的另一个难题
 
-主课强调，短的熟人链确实存在。这个结果里还藏着第二个问题：参与者只知道自己的联系人，看不见全局图，他们怎样找到一条短链，并让其中一些链逐步接近遥远的目标？
+正文强调，短的熟人链确实存在。这个结果里还藏着第二个问题：参与者只知道自己的联系人，看不见全局图，他们怎样找到一条短链，并让其中一些链逐步接近遥远的目标？
 
 Jon Kleinberg 在一个理想化格点模型中区分了<Term>短路径性</Term><TipNote text={"只要图中存在短路径，网络就是「小」的；至于任何人能否凭局部信息找到这些路径，则是另一回事。"} />与<Term>可导航性</Term><TipNote text={"可导航网络允许去中心化规则仅凭局部连接和关于目标的有限信息找到短路线。"} />。每个节点既有局部格点邻居，也有长程联系人。在 <MathInline latex={String.raw`d`} /> 维格点中，连接到距离 <MathInline latex={String.raw`r`} /> 处节点的长程联系人概率满足
 
