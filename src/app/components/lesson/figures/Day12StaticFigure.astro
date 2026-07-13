@@ -1,0 +1,401 @@
+---
+interface Props {
+  kind:
+    | "hero-small-world"
+    | "small-world"
+    | "degree-distribution"
+    | "contagion"
+    | "friendship-paradox"
+    | "navigability"
+    | "weak-ties"
+    | "robustness"
+    | "centrality"
+    | "simplex"
+    | "synchronization"
+    | "hyperbolic"
+    | "message-passing"
+    | "driver-nodes"
+    | "tipping-cascade";
+  locale?: "en" | "zh";
+}
+
+const kind = Astro.props.kind;
+const zh = Astro.props.locale === "zh";
+const ink = "var(--ink, #172530)";
+const soft = "var(--ink-soft, #41545d)";
+const faint = "var(--ink-faint, #5d6c72)";
+const line = "var(--line-strong, #cabfa8)";
+const paper = "var(--paper, #f5f3ec)";
+const raised = "var(--raised, #fbfaf5)";
+const accent = "var(--accent, #1d6f78)";
+const brass = "var(--brass, #93651f)";
+const ok = "var(--ok, #2a704a)";
+const contested = "var(--contested, #a23c34)";
+const tippingEdges = [
+  { x1: 105, y1: 95, x2: 270, y2: 150, color: contested, offset: 7 },
+  { x1: 105, y1: 95, x2: 100, y2: 270, color: contested },
+  { x1: 100, y1: 270, x2: 270, y2: 150, color: contested },
+  { x1: 270, y1: 150, x2: 410, y2: 85, color: contested },
+  { x1: 270, y1: 150, x2: 105, y2: 95, color: ok, dashed: true, offset: 7 },
+  { x1: 410, y1: 85, x2: 505, y2: 185, color: contested },
+  { x1: 505, y1: 185, x2: 410, y2: 290, color: contested },
+  { x1: 505, y1: 185, x2: 555, y2: 295, color: contested },
+  { x1: 505, y1: 185, x2: 105, y2: 95, color: contested, control: { x: 315, y: 285 } },
+];
+
+function shortenEdge(x1: number, y1: number, x2: number, y2: number, startInset: number, endInset: number) {
+  const length = Math.hypot(x2 - x1, y2 - y1) || 1;
+  const ux = (x2 - x1) / length;
+  const uy = (y2 - y1) / length;
+  return { x1: x1 + ux * startInset, y1: y1 + uy * startInset, x2: x2 - ux * endInset, y2: y2 - uy * endInset };
+}
+
+function offsetStaticEdge(edge: ReturnType<typeof shortenEdge>, offset: number) {
+  const length = Math.hypot(edge.x2 - edge.x1, edge.y2 - edge.y1) || 1;
+  const px = -(edge.y2 - edge.y1) / length;
+  const py = (edge.x2 - edge.x1) / length;
+  return { x1: edge.x1 + px * offset, y1: edge.y1 + py * offset, x2: edge.x2 + px * offset, y2: edge.y2 + py * offset };
+}
+
+const tippingFigureNodes = zh
+  ? [
+      { x: 105, y: 95, lines: ["格陵兰"] }, { x: 100, y: 270, lines: ["西南极"] },
+      { x: 270, y: 150, lines: ["AMOC"] }, { x: 410, y: 85, lines: ["亚马孙"] },
+      { x: 505, y: 185, lines: ["冻土"] }, { x: 410, y: 290, lines: ["珊瑚"] },
+      { x: 555, y: 295, lines: ["北方林"] }
+    ]
+  : [
+      { x: 105, y: 95, lines: ["Green", "land"] }, { x: 100, y: 270, lines: ["W.", "Antarc."] },
+      { x: 270, y: 150, lines: ["AMOC"] }, { x: 410, y: 85, lines: ["Amazon"] },
+      { x: 505, y: 185, lines: ["Perma", "frost"] }, { x: 410, y: 290, lines: ["Coral", "reefs"] },
+      { x: 555, y: 295, lines: ["Boreal", "forest"] }
+    ];
+
+const info = {
+  "hero-small-world": zh
+    ? ["小世界", "节点环保留密集本地连接，并由少数长程捷径跨越远距离。", "密集本地联系加上少数长程捷径，足以把遥远节点拉到几个跳步之内。"]
+    : ["A small world", "A ring of nodes keeps dense local ties while a few long-range shortcuts cross the circle.", "Dense local ties plus a few long-range shortcuts can pull distant nodes within a handful of hops."],
+  "small-world": zh
+    ? ["少量捷径先压缩路径", "两张网络比较纯本地环与加入少数捷径的小世界。", "从规则环到小世界，平均路径长度会先快速下降，而聚类系数下降得更慢。"]
+    : ["A few shortcuts collapse distance first", "Two networks compare a purely local ring with a small world containing a few shortcuts.", "Moving from a regular ring into the small-world window sharply lowers mean path length before clustering falls as far."],
+  "degree-distribution": zh
+    ? ["重尾不自动等于幂律", "双对数图比较随机网络、幂律与对数正态度分布。", "双对数坐标能把幂律拉成直线，但有限范围内的对数正态尾部也可能十分相似；模型比较仍不可少。"]
+    : ["Heavy-tailed is not automatically power-law", "A log-log plot compares random-network, power-law, and log-normal degree distributions.", "Log-log axes straighten a power law, but a log-normal tail can look similar over a finite range; model comparison is still required."],
+  contagion: zh
+    ? ["同样覆盖率，不同传播结果", "两张相同枢纽网络比较随机免疫与优先保护枢纽。", "在这张教学网络里，随机免疫常会错过稀少枢纽；优先保护枢纽能切断更多潜在传播路径。结果依赖网络和传播参数。"]
+    : ["Same coverage, different outbreak", "Two copies of the same hub-rich network compare random protection with protecting hubs first.", "In this teaching graph, random protection often misses rare hubs; protecting hubs first removes more potential transmission routes. Results depend on the graph and contagion parameters."],
+  "friendship-paradox": zh
+    ? ["沿友谊边会更常遇到枢纽", "一个友谊网络显示沿边抽样会过度抽中高连接节点。", "连接多的人出现在更多朋友名单中，因此朋友的期望度数为 E[k^2]/E[k]，通常高于普通人的 E[k]。"]
+    : ["Follow an edge and meet hubs more often", "A friendship network shows that sampling along edges overrepresents high-degree nodes.", "Well-connected people appear on more friendship lists, so a friend's expected degree is E[k^2]/E[k], usually above the ordinary mean E[k]."],
+  navigability: zh
+    ? ["每个尺度都留一条有用的跳跃", "源节点拥有跨越多种距离尺度的长程连线，贪心路径逐步接近目标。", "可导航的小世界还要求局部行动者能找到短路径；跨尺度的长程联系让贪心搜索不断缩短剩余距离。"]
+    : ["A useful jump at every scale", "A source has long-range links across several scales, and a greedy route closes on a target.", "A navigable small world also requires local actors to find short paths; long ties across scales let greedy search keep shrinking the gap."],
+  "weak-ties": zh
+    ? ["以共同联系人衡量时，峰值出现在中等偏弱处", "倒 U 形曲线显示：以共同联系人衡量关系强度时，就业流动在中等偏弱关系处达到峰值。", "LinkedIn 随机实验中的共同联系人指标呈倒 U 形；互动强度指标却呈现不同模式。关系强度的操作化方式不可省略。"]
+    : ["By mutual connections, the peak is moderately weak", "An inverted-U curve shows job mobility peaking at moderately weak ties when tie strength is measured by mutual connections.", "The mutual-connections measure in the randomized LinkedIn study formed an inverted U; interaction intensity produced a different pattern. The operationalization of tie strength matters."],
+  robustness: zh
+    ? ["面对事故稳健，面对攻击脆弱", "同一张枢纽网络在随机失效后仍连通，在枢纽攻击后分裂。", "在这张重尾教学网络中，随机移除多半击中小节点；枢纽优先移除则迅速切断最大连通部分。临界比例并非普适常数。"]
+    : ["Robust to accident, fragile to targeting", "The same hub-rich network remains connected after random failures and fragments after hub attacks.", "In this heavy-tailed teaching graph, random removal mostly hits small nodes, while hub-first removal quickly cuts the largest component. Critical fractions are not universal constants."],
+  centrality: zh
+    ? ["重要性取决于问题", "三张相同网络分别突出度数中心、介数桥梁与特征向量中心。", "度中心性衡量直接连接，介数中心性寻找最短路径桥梁，特征向量中心性奖励与重要节点相连；不存在脱离过程的唯一重要节点。"]
+    : ["Importance depends on the question", "Three copies of one graph highlight the degree hub, betweenness bridge, and eigenvector center.", "Degree counts direct ties, betweenness finds shortest-path bridges, and eigenvector centrality rewards links to important nodes; no process-free measure names one important node."],
+  simplex: zh
+    ? ["同样三个节点，两种相互作用", "左侧为空心三角形的三条成对边，右侧为代表三方作用的填充单纯形。", "空心三角形只记录三组成对联系；填充三角形把三方共同作用作为一个不可约单元。"]
+    : ["Same nodes, two interaction models", "A hollow triangle of pairwise edges sits beside a filled simplex for one three-way interaction.", "The hollow triangle records three pairwise links; the filled simplex treats the three-way act as one irreducible unit."],
+  synchronization: zh
+    ? ["从平滑上升到带记忆的断崖", "同步曲线比较连续转变与带迟滞的爆发式转变。", "高阶耦合可以把连续同步转变改造成不连续跃迁，并让增强与减弱耦合走过不同路径。曲线为机制示意。"]
+    : ["From a smooth onset to a cliff with memory", "Synchronization curves compare a continuous transition with an explosive transition and hysteresis.", "Higher-order coupling can turn a continuous synchronization transition into a jump whose forward and return paths differ. The curves are schematic."],
+  hyperbolic: zh
+    ? ["网络的推断几何", "庞加莱圆盘中的枢纽靠近中心，外围节点靠近边界。", "双曲嵌入用隐藏距离解释连接概率；它是有用模型，不是直接观察到的物理空间。"]
+    : ["An inferred geometry for a network", "In a Poincaré disk, hubs sit near the center and leaves near the rim.", "A hyperbolic embedding uses hidden distance to explain connection probability. It is a useful model, not directly observed physical space."],
+  "message-passing": zh
+    ? ["树上的独立信息，回路里的回声", "树上的消息独立汇入根节点，三角回路中的消息则绕回原点。", "经典置信传播在满足相应条件的树上可精确工作；短回路会让证据绕回并被重复计算，需要显式修正。"]
+    : ["Independent news on a tree, echoes in a loop", "Independent messages flow inward on a tree while messages echo around a triangle.", "Classical belief propagation is exact on trees under its model assumptions; short loops can return evidence and cause double-counting unless corrected."],
+  "driver-nodes": zh
+    ? ["控制入口不一定是枢纽", "外部控制箭头指向外围的低度驱动节点，而非中央枢纽。", "在线性结构可控性模型中，所需输入常落在低度、未匹配节点上；可控并不等于现实中低能耗、稳健地可操作。"]
+    : ["Control inputs need not be hubs", "External control arrows enter low-degree peripheral driver nodes rather than the central hub.", "In linear structural-controllability models, required inputs often fall on low-degree unmatched nodes. Controllable in principle does not mean low-energy or practical to steer."],
+  "tipping-cascade": zh
+    ? ["级联取决于带符号的耦合网络", "七个气候临界要素由增强与稳定作用相连。", "一个要素越过阈值后，增强作用可能把其他要素推近临界点，稳定作用则可能抵消部分压力。连线不预测具体阈值、时间或未来路径。"]
+    : ["Cascades depend on a signed network", "Seven climate tipping elements are joined by destabilizing and stabilizing couplings.", "After one element crosses a threshold, destabilizing links can push others closer while stabilizing links offset some pressure. The wiring does not predict thresholds, dates, or a future path."]
+}[kind];
+
+function ring(count: number, cx: number, cy: number, radius: number) {
+  return Array.from({ length: count }, (_, index) => {
+    const angle = -Math.PI / 2 + index * Math.PI * 2 / count;
+    return { x: cx + Math.cos(angle) * radius, y: cy + Math.sin(angle) * radius };
+  });
+}
+
+function points(fn: (x: number) => number) {
+  return Array.from({ length: 61 }, (_, index) => {
+    const x = index / 60;
+    return { x: 70 + x * 500, y: 300 - fn(x) * 240 };
+  });
+}
+
+function svgPath(values: Array<{x: number; y: number}>) {
+  return values.map((point, index) => (index ? "L" : "M") + point.x.toFixed(1) + "," + point.y.toFixed(1)).join(" ");
+}
+
+const heroNodes = ring(22, 310, 168, 120);
+const leftRing = ring(12, 165, 170, 88);
+const rightRing = ring(12, 455, 170, 88);
+const rightEdges = [
+  ...Array.from({ length: 12 }, (_, from) => ({ from, to: (from + 1) % 12, shortcut: false })),
+  ...Array.from({ length: 12 }, (_, from) => ({ from, to: (from + 2) % 12, shortcut: false }))
+    .filter((edge) => ![0, 4, 8].includes(edge.from)),
+  { from: 0, to: 6, shortcut: true },
+  { from: 4, to: 10, shortcut: true },
+  { from: 8, to: 2, shortcut: true }
+];
+const weakCurve = points((x) => Math.max(.08, 1 - Math.pow((x - .58) / .58, 2)));
+const smoothCurve = points((x) => 1 / (1 + Math.exp(-7 * (x - .45))));
+---
+<figure class={"day12-static-figure day12-static-figure-" + kind}>
+  <svg viewBox="0 0 620 360" role="img" aria-label={info[1]}>
+    <defs>
+      <marker id={`day12-${kind}-arrow-accent`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill={accent} /></marker>
+      <marker id={`day12-${kind}-arrow-brass`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill={brass} /></marker>
+      <marker id={`day12-${kind}-arrow-line`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill={line} /></marker>
+      <marker id={`day12-${kind}-arrow-red`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill={contested} /></marker>
+      <marker id={`day12-${kind}-bar-green`} viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M7 1 L7 9" fill="none" stroke={ok} stroke-width="2.5" /></marker>
+    </defs>
+    <rect x="1" y="1" width="618" height="358" rx="14" fill={paper} stroke={line} stroke-width="2" />
+    <text x="310" y="30" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill={ink}>{info[0]}</text>
+    {kind === "hero-small-world" && (
+      <g>
+        {heroNodes.map((node, index) => {
+          const next = heroNodes[(index + 1) % heroNodes.length];
+          const next2 = heroNodes[(index + 2) % heroNodes.length];
+          return <g>
+            <line x1={node.x} y1={node.y} x2={next.x} y2={next.y} stroke={accent} stroke-width="1.6" opacity=".52" />
+            <line x1={node.x} y1={node.y} x2={next2.x} y2={next2.y} stroke={accent} stroke-width="1.1" opacity=".28" />
+          </g>;
+        })}
+        <path d="M198 72 Q310 205 437 89 M157 205 Q315 55 485 230 M271 48 Q390 165 301 287" fill="none" stroke={brass} stroke-width="3" opacity=".9" />
+        {heroNodes.map((node, index) => <circle cx={node.x} cy={node.y} r={index % 7 === 0 ? 8 : 5.5} fill={index % 7 === 0 ? brass : accent} stroke={raised} stroke-width="1.8" />)}
+        <text x="310" y="330" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "本地联系 + 少数长程捷径" : "local ties + a few long-range shortcuts"}</text>
+      </g>
+    )}
+
+    {kind === "small-world" && (
+      <g>
+        <text x="165" y="58" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "规则环" : "regular ring"}</text>
+        <text x="455" y="58" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "小世界区间" : "small-world window"}</text>
+        {leftRing.map((node, index) => {
+          const next = leftRing[(index + 1) % leftRing.length];
+          const next2 = leftRing[(index + 2) % leftRing.length];
+          return <g>
+            <line x1={node.x} y1={node.y} x2={next.x} y2={next.y} stroke={accent} stroke-width="1.5" />
+            <line x1={node.x} y1={node.y} x2={next2.x} y2={next2.y} stroke={accent} stroke-width="1" opacity=".45" />
+          </g>;
+        })}
+        {rightEdges.map((edge) => {
+          const from = rightRing[edge.from];
+          const to = rightRing[edge.to];
+          return <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke={edge.shortcut ? brass : accent} stroke-width={edge.shortcut ? 3 : edge.to === (edge.from + 1) % 12 ? 1.5 : 1} opacity={edge.shortcut ? ".95" : edge.to === (edge.from + 1) % 12 ? ".72" : ".42"} />;
+        })}
+        {leftRing.map((node) => <circle cx={node.x} cy={node.y} r="5.5" fill={accent} />)}
+        {rightRing.map((node) => <circle cx={node.x} cy={node.y} r="5.5" fill={accent} />)}
+        <text x="165" y="294" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "路径较长 · 聚类很高" : "longer paths · high clustering"}</text>
+        <text x="455" y="294" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "路径较短 · 仍有聚类" : "shorter paths · clustering remains"}</text>
+      </g>
+    )}
+
+    {kind === "degree-distribution" && (
+      <g>
+        <line x1="72" y1="300" x2="574" y2="300" stroke={line} stroke-width="2" />
+        <line x1="72" y1="52" x2="72" y2="300" stroke={line} stroke-width="2" />
+        <text x="320" y="332" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>log k</text>
+        <text x="36" y="178" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>log P(k)</text>
+        <path d="M85 74 L560 280" fill="none" stroke={accent} stroke-width="3.5" />
+        <path d="M85 78 C210 115 325 190 560 292" fill="none" stroke={brass} stroke-width="3" stroke-dasharray="10 7" />
+        <path d="M85 242 C150 95 250 65 330 160 C410 250 500 286 560 299" fill="none" stroke={faint} stroke-width="2.5" />
+        <text x="430" y="218" font-family="IBM Plex Mono, monospace" font-size="11" fill={accent}>{zh ? "幂律" : "power law"}</text>
+        <text x="407" y="258" font-family="IBM Plex Mono, monospace" font-size="11" fill={brass}>{zh ? "对数正态" : "log-normal"}</text>
+        <text x="135" y="216" font-family="IBM Plex Mono, monospace" font-size="11" fill={faint}>{zh ? "随机图" : "random graph"}</text>
+      </g>
+    )}
+
+    {kind === "contagion" && (
+      <g>
+        <text x="165" y="62" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "随机免疫" : "random protection"}</text>
+        <text x="455" y="62" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "枢纽优先" : "hubs first"}</text>
+        {[165,455].map((cx, panel) => (
+          <g>
+            {[[-78,-42],[-20,-72],[50,-52],[88,12],[38,70],[-42,70],[-92,18],[0,0]].map((offset, index) => (
+              <g>
+                {index < 7 && <line x1={cx} y1="174" x2={cx + offset[0]} y2={174 + offset[1]} stroke={line} stroke-width="1.5" />}
+                <circle cx={cx + offset[0]} cy={174 + offset[1]} r={index === 7 ? 18 : 9} fill={panel === 0 ? (index === 1 || index === 4 ? accent : contested) : (index === 7 || index === 3 ? accent : index % 3 === 0 ? contested : faint)} stroke={raised} stroke-width="2" />
+              </g>
+            ))}
+          </g>
+        ))}
+        <text x="165" y="294" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={contested}>{zh ? "传播路径仍穿过枢纽" : "routes still cross the hub"}</text>
+        <text x="455" y="294" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={ok}>{zh ? "关键路径被切断" : "key routes removed"}</text>
+      </g>
+    )}
+
+    {kind === "friendship-paradox" && (
+      <g>
+        {[[0,1],[0,3],[0,4],[1,2],[1,4],[2,4],[2,5],[3,4],[4,5],[5,6],[5,8],[6,7],[6,8],[7,9],[8,9],[8,10],[9,10]].map((edge) => {
+          const nodes = [[92,92],[172,65],[245,120],[116,190],[212,210],[308,160],[390,95],[474,75],[420,205],[520,170],[500,285]];
+          return <line x1={nodes[edge[0]][0]} y1={nodes[edge[0]][1]} x2={nodes[edge[1]][0]} y2={nodes[edge[1]][1]} stroke={line} stroke-width="1.7" />;
+        })}
+        {[[92,92],[172,65],[245,120],[116,190],[212,210],[308,160],[390,95],[474,75],[420,205],[520,170],[500,285]].map((node, index) => <circle cx={node[0]} cy={node[1]} r={index === 4 || index === 5 || index === 8 ? 15 : 8} fill={index === 4 || index === 5 || index === 8 ? brass : accent} stroke={raised} stroke-width="2" />)}
+        <rect x="338" y="246" width="246" height="78" rx="10" fill={raised} stroke={line} />
+        <text x="461" y="275" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill={ink}>E[k_friend] = E[k^2] / E[k]</text>
+        <text x="461" y="303" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "度数方差越大，差距通常越大" : "degree variance usually widens the gap"}</text>
+      </g>
+    )}
+
+    {kind === "navigability" && (
+      <g>
+        {[55,105,155].map((radius) => <circle cx="176" cy="185" r={radius} fill="none" stroke={line} stroke-width="1.3" stroke-dasharray="5 6" />)}
+        <circle cx="176" cy="185" r="10" fill={accent} />
+        <circle cx="505" cy="84" r="12" fill={paper} stroke={contested} stroke-width="3" />
+        <circle cx="505" cy="84" r="3" fill={contested} />
+        <path d="M176 185 L248 150 L335 119 L417 100 L505 84" fill="none" stroke={accent} stroke-width="4" />
+        <path d="M176 185 Q225 156 248 150 M176 185 Q285 101 335 119 M176 185 Q350 68 505 84" fill="none" stroke={brass} stroke-width="2.5" />
+        <text x="176" y="348" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "跨街区 · 跨城市 · 跨区域" : "street · city · region"}</text>
+      </g>
+    )}
+
+    {kind === "weak-ties" && (
+      <g>
+        <line x1="70" y1="300" x2="574" y2="300" stroke={line} stroke-width="2" />
+        <line x1="70" y1="50" x2="70" y2="300" stroke={line} stroke-width="2" />
+        <path d={svgPath(weakCurve)} fill="none" stroke={accent} stroke-width="4" />
+        <line x1="360" y1="68" x2="360" y2="300" stroke={brass} stroke-width="2" stroke-dasharray="7 6" />
+        <circle cx="360" cy="58" r="7" fill={brass} />
+        <text x="360" y="92" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={brass}>{zh ? "中等偏弱" : "moderately weak"}</text>
+        <text x="92" y="326" text-anchor="start" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "强关系" : "strong ties"}</text>
+        <text x="555" y="326" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "极弱关系" : "very weak ties"}</text>
+        <text x="24" y="182" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "就业流动" : "job mobility"}</text>
+        <text x="323" y="347" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "关系强度按共同联系人衡量" : "tie strength measured by mutual connections"}</text>
+      </g>
+    )}
+
+    {kind === "robustness" && (
+      <g>
+        <text x="165" y="62" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "随机失效" : "random failure"}</text>
+        <text x="455" y="62" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "枢纽攻击" : "hub attack"}</text>
+        {[165,455].map((cx, panel) => (
+          <g>
+            {[[-75,-60],[-10,-80],[70,-55],[90,5],[55,75],[-30,82],[-90,28],[0,0]].map((offset, index) => (
+              <g>
+                {index < 7 && <line x1={cx} y1="178" x2={cx + offset[0]} y2={178 + offset[1]} stroke={panel === 0 ? accent : line} stroke-width={panel === 0 ? "2" : "1.3"} opacity={panel === 1 && index > 3 ? ".2" : ".75"} />}
+                <circle cx={cx + offset[0]} cy={178 + offset[1]} r={index === 7 ? 17 : 8} fill={panel === 0 ? (index === 2 || index === 5 ? line : accent) : (index === 7 ? line : index % 2 ? faint : accent)} opacity={panel === 1 && index === 7 ? ".28" : "1"} />
+              </g>
+            ))}
+          </g>
+        ))}
+        <text x="165" y="302" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={ok}>{zh ? "最大部分仍连通" : "giant piece survives"}</text>
+        <text x="455" y="302" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={contested}>{zh ? "网络分裂成孤岛" : "network fragments"}</text>
+      </g>
+    )}
+
+    {kind === "centrality" && (
+      <g>
+        {[0,1,2].map((panel) => {
+          const shift = panel * 195 - 2;
+          const winner = panel === 0 ? 4 : panel === 1 ? 6 : 7;
+          const nodes = [{x:55,y:80},{x:115,y:55},{x:170,y:95},{x:70,y:155},{x:145,y:165},{x:210,y:130},{x:265,y:130},{x:330,y:70},{x:395,y:55},{x:455,y:95},{x:345,y:165},{x:425,y:165}];
+          const edges = [[0,1],[0,3],[0,4],[1,2],[1,4],[2,4],[2,5],[3,4],[4,5],[5,6],[6,7],[6,10],[7,8],[7,10],[8,9],[8,11],[9,11],[10,11]];
+          return <g transform={"translate(" + shift + " 76) scale(.31)"}>
+            {edges.map((edge) => <line x1={nodes[edge[0]].x} y1={nodes[edge[0]].y} x2={nodes[edge[1]].x} y2={nodes[edge[1]].y} stroke={line} stroke-width="5" />)}
+            {nodes.map((node, index) => <circle cx={node.x} cy={node.y} r={index === winner ? 24 : 13} fill={index === winner ? brass : accent} stroke={raised} stroke-width="5" />)}
+          </g>;
+        })}
+        <text x="102" y="259" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "度数" : "degree"}</text>
+        <text x="310" y="259" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "介数" : "betweenness"}</text>
+        <text x="515" y="259" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "特征向量" : "eigenvector"}</text>
+      </g>
+    )}
+
+    {kind === "simplex" && (
+      <g>
+        <text x="165" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "三组成对边" : "three pairwise edges"}</text>
+        <text x="455" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "一个三方单纯形" : "one three-way simplex"}</text>
+        <path d="M95 245 L165 105 L235 245 Z" fill="none" stroke={accent} stroke-width="5" />
+        <path d="M385 245 L455 105 L525 245 Z" fill={brass} fill-opacity=".28" stroke={brass} stroke-width="5" />
+        {[[95,245],[165,105],[235,245],[385,245],[455,105],[525,245]].map((point) => <circle cx={point[0]} cy={point[1]} r="11" fill={accent} stroke={raised} stroke-width="3" />)}
+        <text x="310" y="190" text-anchor="middle" font-family="Fraunces, serif" font-size="28" fill={faint}>≠</text>
+      </g>
+    )}
+
+    {kind === "synchronization" && (
+      <g>
+        <line x1="70" y1="300" x2="574" y2="300" stroke={line} stroke-width="2" />
+        <line x1="70" y1="48" x2="70" y2="300" stroke={line} stroke-width="2" />
+        <rect x="250" y="48" width="110" height="252" fill={brass} opacity=".08" />
+        <text x="305" y="52" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{zh ? "双稳态区" : "bistable range"}</text>
+        <path d={svgPath(smoothCurve)} fill="none" stroke={faint} stroke-width="2.5" />
+        <path d="M70 291 C180 286 285 274 360 254 L360 118 C414 83 486 66 570 62" fill="none" stroke={accent} stroke-width="4" />
+        <path d="M70 288 C135 281 190 266 250 242 L250 105 C345 72 455 63 570 60" fill="none" stroke={brass} stroke-width="4" />
+        <line x1="360" y1="238" x2="360" y2="133" stroke={accent} stroke-width="2.6" marker-end={`url(#day12-${kind}-arrow-accent)`} />
+        <line x1="250" y1="121" x2="250" y2="226" stroke={brass} stroke-width="2.6" marker-end={`url(#day12-${kind}-arrow-brass)`} />
+        <text x="310" y="330" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "耦合强度" : "coupling strength"}</text>
+        <text x="25" y="180" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "同步度" : "synchrony"}</text>
+        <text x="405" y="103" font-family="IBM Plex Mono, monospace" font-size="11" fill={accent}>{zh ? "增强" : "forward"}</text>
+        <text x="205" y="120" font-family="IBM Plex Mono, monospace" font-size="11" fill={brass}>{zh ? "减弱" : "return"}</text>
+      </g>
+    )}
+
+    {kind === "hyperbolic" && (
+      <g>
+        <circle cx="310" cy="190" r="137" fill={raised} stroke={line} stroke-width="3" />
+        <circle cx="310" cy="190" r="87" fill="none" stroke={line} stroke-width="1.5" stroke-dasharray="6 6" />
+        <circle cx="310" cy="190" r="42" fill="none" stroke={line} stroke-width="1.5" stroke-dasharray="6 6" />
+        <path d="M306 182 Q220 108 187 132 M306 182 Q410 84 468 142 M306 182 Q380 278 448 295 M306 182 Q235 275 184 278" fill="none" stroke={brass} stroke-width="2.5" />
+        {[[306,182,14],[276,164,10],[348,210,9],[187,132,6],[468,142,6],[448,295,6],[184,278,6],[235,76,6],[506,230,6],[120,205,6]].map((point) => <circle cx={point[0]} cy={point[1]} r={point[2]} fill={point[2] > 10 ? brass : accent} stroke={raised} stroke-width="2" />)}
+        <text x="310" y="344" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "中心：高连接 · 边缘：低连接" : "center: high degree · rim: low degree"}</text>
+      </g>
+    )}
+
+    {kind === "message-passing" && (
+      <g>
+        <text x="165" y="64" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "树：独立信息" : "tree: independent news"}</text>
+        <text x="455" y="64" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={soft}>{zh ? "回路：信息回声" : "loop: returning echo"}</text>
+        {[[90,245,157,183],[135,105,160,164],[200,105,170,164],[240,245,173,183]].map((edge) => <line x1={edge[0]} y1={edge[1]} x2={edge[2]} y2={edge[3]} stroke={accent} stroke-width="3" marker-end={`url(#day12-${kind}-arrow-accent)`} />)}
+        {[[90,245],[240,245],[165,175],[135,105],[200,105]].map((point) => <circle cx={point[0]} cy={point[1]} r="10" fill={accent} stroke={raised} stroke-width="2" />)}
+        {[[392,232,449,118],[461,118,518,232],[511,245,399,245]].map((edge) => <line x1={edge[0]} y1={edge[1]} x2={edge[2]} y2={edge[3]} stroke={brass} stroke-width="4" marker-end={`url(#day12-${kind}-arrow-brass)`} />)}
+        <path d="M405 223 Q455 205 486 169" fill="none" stroke={contested} stroke-width="3" stroke-dasharray="7 5" marker-end={`url(#day12-${kind}-arrow-red)`} />
+        {[[385,245],[455,105],[525,245]].map((point) => <circle cx={point[0]} cy={point[1]} r="11" fill={brass} stroke={raised} stroke-width="2" />)}
+        <text x="455" y="290" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={contested}>{zh ? "旧消息绕回原点" : "old news returns"}</text>
+      </g>
+    )}
+
+    {kind === "driver-nodes" && (
+      <g>
+        {[[310,180,185,95],[310,180,445,95],[310,180,475,235],[310,180,180,270],[185,95,85,150],[445,95,545,155],[180,270,80,285]].map((edge) => {
+          const shortened = shortenEdge(edge[0], edge[1], edge[2], edge[3], 20, 14);
+          return <line x1={shortened.x1} y1={shortened.y1} x2={shortened.x2} y2={shortened.y2} stroke={line} stroke-width="2.4" marker-end={`url(#day12-${kind}-arrow-line)`} />;
+        })}
+        {[[310,180,19],[185,95,10],[445,95,10],[475,235,10],[180,270,10],[85,150,10],[545,155,10],[80,285,10]].map((point, index) => <circle cx={point[0]} cy={point[1]} r={point[2]} fill={index === 5 || index === 6 || index === 7 ? brass : index === 0 ? accent : faint} stroke={raised} stroke-width="2" />)}
+        <path d="M36 150 L72 150 M580 155 L558 155 M35 285 L68 285" fill="none" stroke={brass} stroke-width="5" marker-end={`url(#day12-${kind}-arrow-brass)`} />
+        <text x="310" y="215" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={accent}>{zh ? "枢纽" : "hub"}</text>
+        <text x="310" y="326" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "外部输入 → 低度驱动节点" : "external inputs → low-degree driver nodes"}</text>
+      </g>
+    )}
+
+    {kind === "tipping-cascade" && (
+      <g>
+        {tippingEdges.map((edge) => {
+          const shortened = shortenEdge(edge.x1, edge.y1, edge.x2, edge.y2, 27, 31);
+          const routed = edge.offset ? offsetStaticEdge(shortened, edge.offset) : shortened;
+          const marker = edge.dashed ? `url(#day12-${kind}-bar-green)` : `url(#day12-${kind}-arrow-red)`;
+          return edge.control
+            ? <path d={`M ${routed.x1} ${routed.y1} Q ${edge.control.x} ${edge.control.y} ${routed.x2} ${routed.y2}`} fill="none" stroke={edge.color} stroke-width="3" marker-end={marker} />
+            : <line x1={routed.x1} y1={routed.y1} x2={routed.x2} y2={routed.y2} stroke={edge.color} stroke-width="3" stroke-dasharray={edge.dashed ? "8 6" : undefined} marker-end={marker} />;
+        })}
+        {tippingFigureNodes.map((node, index) => <g>
+          <circle cx={node.x} cy={node.y} r="25" fill={index === 0 ? contested : paper} stroke={index === 0 ? contested : line} stroke-width="3" />
+          <text x={node.x} y={node.y - (node.lines.length - 1) * 5 + 4} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={index === 0 ? raised : ink}>{node.lines.map((text, lineIndex) => <tspan x={node.x} dy={lineIndex ? 11 : 0}>{text}</tspan>)}</text>
+        </g>)}
+        <text x="310" y="337" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "红：增强作用 · 绿虚线：稳定作用" : "red: destabilizing · green dash: stabilizing"}</text>
+      </g>
+    )}
+  </svg>
+  <figcaption>{info[2]}</figcaption>
+</figure>

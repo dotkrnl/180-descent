@@ -1,0 +1,285 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day12StaticFigure from "@app/components/lesson/figures/Day12StaticFigure.astro";
+import Day12Interactive from "@app/components/lesson/interactives/Day12Interactive.astro";
+
+<Lead drop="T">he main descent supplied network science's skeleton: short paths, unequal degree, contested power laws, contagion, and connectomes. Seven questions remained in the margins. Why do your friends appear more popular than you? How can a person find a short path without seeing the graph? Which social bridges carry new information? Why do hubs resist one kind of damage and amplify another? What changes when networks depend on each other? Who counts as central? And when does a detected community belong to the world rather than the algorithm?</Lead>
+
+<ContinueNote label="Continued from the main path">
+This appendix extends [Day 12's main lesson](/days/012-networks/) rather than replacing it. Keep [Day 5's causal distinction](/days/005-causation/), [Day 6's variance](/days/006-statistics-and-the-art-of-not-fooling-yourself/), [Day 8's emergence](/days/008-complexity-and-emergence/), [Day 9's cascades](/days/009-systems-thinking-and-feedback/), and [Day 11's sampling biases](/days/011-heuristics-biases-and-rationality/) within reach.
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow number="Cut I">sampling through edges</SectionEyebrow>
+
+## Why your friends look more popular than you
+
+Scott Feld's 1991 <Term as="em">friendship paradox</Term> is an average, not a personal insult: **the average friend has at least as many friends as the average person**. A node of degree 100 appears at the end of 100 friendship edges; a node of degree two appears at only two. Sampling through edges therefore overrepresents high-degree nodes.
+
+Let <MathInline latex={String.raw`k`} /> be degree. A uniformly sampled node has expected degree <MathInline latex={String.raw`\langle k\rangle`} />. A node reached by following a uniformly sampled edge has expected degree
+
+<MathInline latex={String.raw`\frac{\langle k^2\rangle}{\langle k\rangle}=\langle k\rangle+\frac{\operatorname{Var}(k)}{\langle k\rangle}`} />.
+
+The gap is nonnegative whenever the mean degree is positive, and it grows with degree variance. That is the theorem. It does **not** say that every person's own friends outrank them, nor that most people must experience the paradox in every graph. Local comparisons depend on where a person sits; hubs are obvious exceptions.
+</ContentSection>
+
+<Day12Interactive kind="friendship-paradox" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · Sampling people and sampling friends</PanelTitle>
+
+<PanelNote>Following a uniformly selected friendship edge weights each person by degree. The fixed graph makes the two sampling frames visible without implying that every selected person has more-popular friends.</PanelNote>
+
+<Day12StaticFigure kind="friendship-paradox" locale="en" />
+
+<SimpleTable
+  headers={["Sampling frame","Expected degree","What receives extra weight"]}
+  rows={[["Choose a person uniformly","Mean degree: E[k]","Every node receives one chance to be selected."],["Follow a friendship edge","Second moment divided by mean: E[k^2]/E[k]","A degree-k node receives k chances to be reached."],["Difference","Degree variance divided by mean","Greater degree inequality produces a larger average gap."]]}/>
+</FormatOnly>
+
+<ContentSection>
+The bias can be useful because people reached through friendship nominations tend to be more central. Nicholas Christakis and James Fowler followed a random group of Harvard undergraduates and a second group nominated as friends by the first during the 2009 H1N1 outbreak. Using clinically diagnosed flu, the fitted epidemic curve for the friend group led the random group by **13.9 days**; self-reported symptoms produced a smaller 3.2-day shift. Those estimates came from one bounded campus network, and the available warning depends on the pathogen, network, sampling, and diagnostic rule. The study demonstrates a sensor strategy, not a guaranteed two-week lead for every outbreak.
+
+<FormatOnly as="div" media="print" class="pdf-page-break" />
+
+<Aside>
+<BlockTitle>Finding hubs without drawing the graph</BlockTitle>
+
+The same edge-sampling bias motivates <Term as="em">acquaintance immunization</Term><TipNote text={"Acquaintance immunization samples people at random, asks each for a contact, and immunizes the named contact so that high-degree nodes are sampled more often."} />. In Cohen, Havlin, and ben-Avraham's network models, choosing random people and immunizing one contact they name reaches hubs more efficiently than uniform random immunization. The result answers a practical objection raised by the main lesson's hub-targeting exhibit: a full network map is not always required. Real programs still face incomplete nominations, changing contacts, access constraints, and the fact that degree is only one determinant of transmission.
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Cut II">decentralized search</SectionEyebrow>
+
+## Milgram's other puzzle
+
+The main lesson emphasized that short acquaintance chains existed. A second question hides inside that result: how did participants find one using only local knowledge? Each holder saw their own contacts, not the global graph, yet some chains moved toward a distant target.
+
+Jon Kleinberg separated <Term as="em">smallness</Term><TipNote text={"A small network has short paths in the graph, whether or not anyone can discover those paths locally."} /> from <Term as="em">navigability</Term><TipNote text={"A navigable network lets a decentralized rule find short routes using only local links and limited information about the target."} /> in a stylized lattice model. Every node had local grid neighbours plus long-range contacts. In a <MathInline latex={String.raw`d`} />-dimensional lattice, the probability of a long-range contact at distance <MathInline latex={String.raw`r`} /> followed
+
+<MathInline latex={String.raw`\Pr(u\to v)\propto r(u,v)^{-d}`} />.
+
+At the exponent matching the lattice dimension, greedy routing can deliver a message in expected <MathInline latex={String.raw`O((\log n)^2)`} /> steps in Kleinberg's two-dimensional setup, where <MathInline latex={String.raw`n`} /> is the lattice's side length. For other exponents in that model, decentralized delivery requires polynomially many steps in the worst asymptotic sense. The point is precise but bounded: this is a theorem about a particular geometry, information rule, and random-link distribution, not proof that every human society sits at one exact exponent.
+
+The intuition survives the formal details. If long-range ties cover many distance scales, then whatever distance remains, a messenger has some chance of finding a tie that closes a substantial part of it. Uniformly random shortcuts can make paths short while giving a local searcher little guidance about which shortcut helps.
+
+<Panel>
+<PanelTitle>Figure · Links at several scales</PanelTitle>
+
+<PanelNote>The highlighted node has local contacts and longer ties at several distance scales. A greedy route can repeatedly reduce its distance to the target; the picture illustrates Kleinberg's mechanism rather than estimating a social-network exponent.</PanelNote>
+
+<Day12StaticFigure kind="navigability" locale="en" />
+</Panel>
+
+<Aside>
+<BlockTitle>From social search to vector search</BlockTitle>
+
+Hierarchical Navigable Small World, or **HNSW**, is a graph-based method for approximate nearest-neighbour search. Its hierarchy supplies long moves at upper layers and finer moves near the query, echoing the multiscale logic of navigable networks. It is not a literal implementation of Kleinberg's inverse-distance lattice law. The social-search experiment by Dodds, Muhamad, and Watts likewise deserves its attrition caveat: more than 60,000 email users attempted routes to 18 targets in 13 countries, but success depended strongly on participation. After modelling attrition, the authors estimated median routes of five to seven steps and concluded that incentives help determine whether a theoretically searchable network is searchable in practice.
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Cut III">social bridges</SectionEyebrow>
+
+## The strength of weak ties
+
+Long-range social shortcuts have a texture. They are often <Term as="em">weak ties</Term><TipNote text={"Weak ties are lower-intensity social relationships, such as acquaintances or former colleagues; strength can be operationalized in several different ways."} />: acquaintances, former colleagues, and people encountered only occasionally. Mark Granovetter's 1973 argument was structural. Strong ties often sit inside a dense cluster where information is redundant. A weak tie can bridge to another cluster and carry information that close contacts do not have.
+
+The original job-search evidence was observational, so it could not rule out a confound: people inclined to change jobs might also build more weak ties. Rajkumar and colleagues gained leverage from five years of randomized changes to LinkedIn's People You May Know recommendations. Across more than **20 million** platform users, the experiments produced about **2 billion new connections** and were linked in the analysis to roughly **600,000 new jobs** recorded on LinkedIn.
+
+<Claim>
+<ClaimHeader label="Edge 01">
+<StatusChip status="ok" label="causal platform test" />
+<StatusChip status="hint" label="optimum varies" />
+</ClaimHeader>
+
+### Granovetter's bridge, made more precise
+
+The experiments supported the causal core: creating weaker ties can increase job mobility. They also replaced “the weakest tie is best” with a conditional result. The relationship was nonlinear; moderately weak ties measured by mutual connections performed best, while the weakest ties measured by interaction intensity performed best. Effects also differed by industry: weaker ties helped more in digital sectors, while stronger ties could help more in less digital sectors. The result concerns recommendation-induced ties and job transitions visible on one professional platform during the study period. It should not be promoted into a fixed optimum for every labour market or relationship.
+</Claim>
+
+<Panel>
+<PanelTitle>Figure · Weak ties do not form one universal ladder</PanelTitle>
+
+<PanelNote>The schematic inverted U captures one operationalization from the LinkedIn study: mobility rose as ties weakened, then flattened or fell at the extreme. Interaction intensity, mutual connections, and industry produced different patterns.</PanelNote>
+
+<Day12StaticFigure kind="weak-ties" locale="en" />
+</Panel>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Cut IV">failure geometry</SectionEyebrow>
+
+## Robust, yet fragile
+
+Hubs change the geometry of failure. Albert, Jeong, and Barabási compared random removal with deliberate removal of highly connected nodes in idealized and empirical network representations. In hub-rich graphs, a uniformly random failure is likely to strike one of the many low-degree nodes. Removing hubs first deletes many edges at once. The same degree heterogeneity can therefore preserve a large connected component under one removal rule and accelerate fragmentation under the other.
+
+The phrase <Term as="em">robust yet fragile</Term><TipNote text={"Robust-yet-fragile describes a system that tolerates a broad class of disturbances but fails sharply under a disturbance aligned with its structure."} /> names that contrast, not a universal threshold. No removal fraction in the exhibit transfers automatically to a real system. Thresholds depend on degree correlations, clustering, direction, capacity, repair, network size, what counts as functional, and whether the observed graph is even well described by the model.
+</ContentSection>
+
+<Day12Interactive kind="robustness" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · Random failure and hub-first removal</PanelTitle>
+
+<PanelNote>The fixed toy network compares two node-removal orders. Its percentages describe this graph only; the transferable result is the divergence between sampling low-degree nodes often and removing high-degree nodes deliberately.</PanelNote>
+
+<Day12StaticFigure kind="robustness" locale="en" />
+
+<SimpleTable
+  headers={["Removal rule","Nodes hit early","Typical structural effect","What the toy cannot establish"]}
+  rows={[["Uniform random failure","Mostly low-degree nodes, because they are numerous","The largest connected piece often shrinks gradually in a hub-rich model.","A resilience threshold for the Internet, a cell, or another real system."],["Hub-first removal","High-degree nodes by construction","Many incident edges disappear together, so fragmentation can accelerate.","That degree is the correct operational target or the only source of function."],["Function-aware failure","Nodes selected by load, dependency, geography, or role","Outcomes may differ from either topological ordering.","That connectivity alone measures service continuity."]]}/>
+</FormatOnly>
+
+<ContentSection>
+A biological result shows why topology and function must remain separate. Jeong and colleagues reported that highly connected proteins in an early yeast protein-interaction map were more likely to be essential. That is evidence for an association between centrality and lethality in that dataset, not a license to equate degree with biological importance everywhere. Measurement bias, interaction type, redundancy, and cellular context all matter. Likewise, an Internet graph is engineered, capacitated, routed, and repaired; connectivity loss is not identical to service failure.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Cut V">coupled failure</SectionEyebrow>
+
+## When networks lean on each other
+
+Real infrastructure is layered. Power supports communication equipment; communication supports monitoring and restoration; both may depend on transport, fuel, positioning, and cloud services. A failure can cross layers and return through a different dependency, creating the reinforcing loop from [Day 9](/days/009-systems-thinking-and-feedback/).
+
+Buldyrev and colleagues formalized one version in 2010. Their model paired nodes across two networks with hard dependencies and counted only nodes belonging to mutually connected giant components as functional. Under those assumptions, failure in one layer can disable its partner, fragment the other layer, and feed back. The model admits an abrupt percolation transition, and in the configurations they studied, broader degree distributions could increase vulnerability to random failure—the reverse of the single-network pattern above.
+
+The 2003 Italian blackout is often used as the motivating story, but it is not a clean empirical replay of that model. The cascade began after a tree flashover tripped a Swiss transmission line and subsequent grid events spread the outage. Communication failures impeded restoration; later infrastructure studies distinguish that recovery coupling from evidence that telecommunications failure enlarged the original geographic cascade. Detailed models can even find benefits from coupling when communication enables effective control. Interdependence adds failure paths, but its effect depends on what the coupling does.
+
+<Claim>
+<ClaimHeader label="Edge 02">
+<StatusChip status="ok" label="abrupt model collapse" />
+<StatusChip status="bad" label="universal fragility" />
+</ClaimHeader>
+
+### Resilience belongs to the coupling, too
+
+The theory changes the unit of analysis. Testing the power layer and communication layer separately can miss a feedback path created by their dependency. But the safe conclusion is conditional: some coupling architectures amplify failure, some delay recovery, and some provide control that reduces risk. Resilience belongs to the components, the links between layers, and the operational rules that govern those links. That is [Day 8's](/days/008-complexity-and-emergence/) “more is different” in engineering form.
+</Claim>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Cut VI">centrality</SectionEyebrow>
+
+## The eigenvector behind PageRank
+
+“Hub” often means high degree, but <Term as="em">centrality</Term> is not one property. Degree rewards many direct links. <Term as="em">Betweenness centrality</Term><TipNote text={"Betweenness centrality measures the share of shortest paths between other nodes that pass through a node."} /> rewards brokerage: a low-degree bridge can sit on many shortest paths between communities. <Term as="em">Eigenvector centrality</Term><TipNote text={"Eigenvector centrality gives a node more weight when its neighbours also have high scores."} /> rewards links to nodes that themselves score highly.
+
+For an adjacency matrix <MathInline latex={String.raw`A`} />, the last idea can be written
+
+<MathInline latex={String.raw`x_i=\frac{1}{\lambda}\sum_j A_{ij}x_j`} />.
+
+The apparent circularity—important nodes are linked to important nodes—resolves as an eigenvector problem. Different definitions answer different process questions, so a ranking is incomplete until its purpose is named.
+
+Larry Page and Sergey Brin adapted recursive link importance to web search. **PageRank** models a random surfer following directed links, with a damping or teleportation term that prevents sinks and makes the stationary ranking well behaved. It is related to eigenvector centrality but not identical to applying bare eigenvector centrality to an undirected graph. The link-analysis idea was one ingredient in Google's early search engine; search quality, infrastructure, data, and many later ranking systems cannot be collapsed into one vector.
+</ContentSection>
+
+<Day12Interactive kind="centrality" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · Three answers to “important”</PanelTitle>
+
+<PanelNote>The same two-community graph crowns different nodes when importance means direct reach, brokerage across shortest paths, or connection to already central neighbours.</PanelNote>
+
+<Day12StaticFigure kind="centrality" locale="en" />
+
+<SimpleTable
+  headers={["Measure","Rewards","A suitable question","Primary limitation"]}
+  rows={[["Degree","Many direct links","Who can contact many neighbours immediately?","Ignores where those neighbours sit."],["Betweenness","Position on shortest paths","Who brokers traffic between groups under shortest-path routing?","Changes with the path model and can be expensive to compute."],["Eigenvector","Links to high-scoring neighbours","Who is embedded among already prominent nodes?","Can concentrate on one dense region and needs spectral conditions."],["PageRank","Stationary visits in a directed random-surfer model","Which pages receive recursively weighted links?","Depends on damping, direction, and the chosen transition model."]]}/>
+</FormatOnly>
+
+<ContentSection>
+The interactive is deliberately a single graph with three lenses. A disease-control problem, a communication bottleneck, and a search-ranking problem need not select the same node. “Most central” without a process is like “best measurement” without a unit.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Cut VII">community structure</SectionEyebrow>
+
+## Finding the groups—and checking the seams
+
+Many graphs are denser within some sets of nodes than between them: friend circles, research specialties, protein complexes, or political blocs. A <Term as="em">community-detection</Term><TipNote text={"Community detection searches for groups whose within-group connection pattern differs from an explicit null model or flow model."} /> method tries to infer such sets without receiving the labels in advance.
+
+Girvan and Newman proposed removing edges with high edge betweenness: bridges between dense groups carry a large share of shortest paths, so repeated removal can expose seams. Newman and Girvan then formalized <Term as="em">modularity</Term><TipNote text={"Modularity compares the observed number of within-group edges with the expectation under a chosen randomized null model that preserves node degrees."} />, which scores a partition against a degree-preserving null model. Louvain is a fast heuristic for optimizing modularity. Infomap approaches the problem differently, looking for a partition that compresses the path of a random walk. These methods can disagree because they operationalize “group” differently.
+
+<Claim>
+<ClaimHeader label="Edge 03">
+<StatusChip status="hint" label="useful partitions" />
+<StatusChip status="bad" label="one true partition" />
+</ClaimHeader>
+
+### The detector can manufacture certainty
+
+Modularity has a <Term as="em">resolution limit</Term><TipNote text={"The resolution limit can make modularity optimization merge small, well-defined communities when they sit inside a sufficiently large graph."} />: small real groups can be merged because the global score cannot resolve them. Its optimization landscape is also degenerate; structurally different partitions can have nearly equal scores. Louvain may even return badly connected or disconnected communities. Leiden repairs that connectivity defect and improves the local optimization guarantees. When it is used to optimize modularity, however, it does not abolish modularity's resolution limit or turn a multiscale graph into one uniquely correct partition. A community claim should report the objective, resolution, stability across runs and methods, and whether external evidence supports the grouping.
+</Claim>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>Open questions</SectionEyebrow>
+
+## Still unsettled at the edges
+
+- **How navigable are observed social networks?** Kleinberg identifies a sharp condition in a model; estimating the relevant geometry and search rule in real, changing societies is a different task.
+- **Can cascade risk be forecast before a coupled system fails?** A vulnerability model can identify mechanisms and thresholds without naming which initiating event will cross them or when.
+- **Is there a right community scale?** Nested and overlapping groups may make several resolutions informative at once.
+- **Which centrality predicts which process?** Degree, betweenness, eigenvector measures, flow measures, and control measures rank different structures. Matching a metric to spreading, routing, intervention, or influence remains part of the scientific problem.
+- **What survives when edges have time and groups?** Static pairwise graphs omit ordering, duration, simultaneous group interaction, adaptive rewiring, and feedback between behaviour and topology.
+</ContentSection>
+
+<Recap>
+<RecapList>
+<RecapItem term="Big idea">Sampling, searching, damaging, and ranking a network are different operations. Each reveals a different consequence of the same wiring, and each needs its own assumptions.</RecapItem>
+<RecapItem term="Best analogy">Kleinberg's messenger reads an address one scale at a time: local knowledge can build a short global route only when the network offers useful jumps at the distances still left to cross.</RecapItem>
+<RecapItem term="Live controversy">Observed groups and rankings depend partly on the lens. A centrality or community partition becomes a scientific claim only after the process, null model, resolution, and stability are specified.</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads>**Threads here ›** emergence (global reach, fragmentation, and groups from local wiring) · information (weak ties carry nonredundant signals; PageRank and Infomap turn paths into rankings or codes) · computation (decentralized search and community optimization) · evolution (possible origins of navigable and robust structures) · energy (infrastructure layers exchange both power and control).</Threads>
+
+<ContinueNote label="Next appendix · Live Wires">
+The structural deep cuts stop here, but Day 12 still has a frontier wing. Continue to [Live Wires](/days/012-networks/#live-wires) for higher-order interactions, changing networks, and coupled tipping processes.
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. Feld, S. L. (1991). “Why Your Friends Have More Friends Than You Do.” *American Journal of Sociology*, 96(6), 1464–1477. <Meta>Friendship paradox and edge-weighted sampling.</Meta> [doi:10.1086/229693](https://doi.org/10.1086/229693)
+2. Christakis, N. A. &amp; Fowler, J. H. (2010). “Social Network Sensors for Early Detection of Contagious Outbreaks.” *PLoS ONE*, 5(9), e12948. <Meta>Clinical diagnoses led by 13.9 days; self-reports by 3.2 days in the Harvard H1N1 study.</Meta> [doi:10.1371/journal.pone.0012948](https://doi.org/10.1371/journal.pone.0012948)
+3. Cohen, R., Havlin, S. &amp; ben-Avraham, D. (2003). “Efficient Immunization Strategies for Computer Networks and Populations.” *Physical Review Letters*, 91, 247901. <Meta>Acquaintance immunization in network models.</Meta> [doi:10.1103/PhysRevLett.91.247901](https://doi.org/10.1103/PhysRevLett.91.247901)
+4. Kleinberg, J. M. (2000). “The Small-World Phenomenon: An Algorithmic Perspective.” *Proceedings of STOC 2000*, 163–170; and “Navigation in a Small World.” *Nature*, 406, 845. <Meta>Decentralized routing and the dimension-matched long-range exponent.</Meta> [doi:10.1145/335305.335325](https://doi.org/10.1145/335305.335325) · [doi:10.1038/35022643](https://doi.org/10.1038/35022643)
+5. Dodds, P. S., Muhamad, R. &amp; Watts, D. J. (2003). “An Experimental Study of Search in Global Social Networks.” *Science*, 301(5634), 827–829. <Meta>More than 60,000 email users; estimated five-to-seven-step median after accounting for attrition.</Meta> [doi:10.1126/science.1081058](https://doi.org/10.1126/science.1081058)
+6. Malkov, Y. A. &amp; Yashunin, D. A. (2020). “Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs.” *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 42(4), 824–836. <Meta>HNSW; published online in 2018.</Meta> [doi:10.1109/TPAMI.2018.2889473](https://doi.org/10.1109/TPAMI.2018.2889473)
+7. Granovetter, M. S. (1973). “The Strength of Weak Ties.” *American Journal of Sociology*, 78(6), 1360–1380. <Meta>Weak ties as bridges between social clusters.</Meta> [doi:10.1086/225469](https://doi.org/10.1086/225469)
+8. Rajkumar, K., Saint-Jacques, G., Bojinov, I., Brynjolfsson, E. &amp; Aral, S. (2022). “A Causal Test of the Strength of Weak Ties.” *Science*, 377(6612), 1304–1310. <Meta>Randomized LinkedIn recommendation experiments; nonlinear and industry-dependent effects.</Meta> [doi:10.1126/science.abl4476](https://doi.org/10.1126/science.abl4476)
+9. Albert, R., Jeong, H. &amp; Barabási, A.-L. (2000). “Error and Attack Tolerance of Complex Networks.” *Nature*, 406, 378–382. <Meta>Random failure versus targeted removal; corrected in *Nature* 409, 542 (2001).</Meta> [doi:10.1038/35019019](https://doi.org/10.1038/35019019)
+10. Jeong, H., Mason, S. P., Barabási, A.-L. &amp; Oltvai, Z. N. (2001). “Lethality and Centrality in Protein Networks.” *Nature*, 411, 41–42. <Meta>Degree and essentiality in an early yeast protein-interaction network.</Meta> [doi:10.1038/35075138](https://doi.org/10.1038/35075138)
+11. Buldyrev, S. V., Parshani, R., Paul, G., Stanley, H. E. &amp; Havlin, S. (2010). “Catastrophic Cascade of Failures in Interdependent Networks.” *Nature*, 464, 1025–1028. <Meta>Hard-dependency percolation model and abrupt mutual fragmentation.</Meta> [doi:10.1038/nature08932](https://doi.org/10.1038/nature08932)
+12. Korkali, M., Veneman, J. G., Tivnan, B. F., Bagrow, J. P. &amp; Hines, P. D. H. (2017). “Reducing Cascading Failure Risk by Increasing Infrastructure Network Interdependence.” *Scientific Reports*, 7, 44499. <Meta>Detailed infrastructure models can reverse conclusions from simple dependency-percolation models; distinguishes Italian blackout propagation from restoration effects.</Meta> [doi:10.1038/srep44499](https://doi.org/10.1038/srep44499)
+13. Brin, S. &amp; Page, L. (1998). “The Anatomy of a Large-Scale Hypertextual Web Search Engine.” *Computer Networks and ISDN Systems*, 30(1–7), 107–117; Page, L., Brin, S., Motwani, R. &amp; Winograd, T. (1999). “The PageRank Citation Ranking: Bringing Order to the Web.” Stanford technical report. <Meta>Directed recursive link ranking with a random-surfer interpretation.</Meta> [doi:10.1016/S0169-7552(98)00110-X](https://doi.org/10.1016/S0169-7552(98)00110-X)
+14. Bonacich, P. (1972). “Factoring and Weighting Approaches to Status Scores and Clique Identification.” *Journal of Mathematical Sociology*, 2(1), 113–120. <Meta>Eigenvector-based status scores.</Meta> [doi:10.1080/0022250X.1972.9989806](https://doi.org/10.1080/0022250X.1972.9989806)
+15. Freeman, L. C. (1977). “A Set of Measures of Centrality Based on Betweenness.” *Sociometry*, 40(1), 35–41; Brandes, U. (2001). “A Faster Algorithm for Betweenness Centrality.” *Journal of Mathematical Sociology*, 25(2), 163–177. <Meta>Definition and efficient computation of betweenness.</Meta> [Freeman DOI](https://doi.org/10.2307/3033543) · [Brandes DOI](https://doi.org/10.1080/0022250X.2001.9990249)
+16. Girvan, M. &amp; Newman, M. E. J. (2002). “Community Structure in Social and Biological Networks.” *Proceedings of the National Academy of Sciences*, 99(12), 7821–7826; Newman, M. E. J. &amp; Girvan, M. (2004). “Finding and Evaluating Community Structure in Networks.” *Physical Review E*, 69, 026113. <Meta>Edge-betweenness detection and modularity.</Meta> [doi:10.1073/pnas.122653799](https://doi.org/10.1073/pnas.122653799) · [doi:10.1103/PhysRevE.69.026113](https://doi.org/10.1103/PhysRevE.69.026113)
+17. Blondel, V. D., Guillaume, J.-L., Lambiotte, R. &amp; Lefebvre, E. (2008). “Fast Unfolding of Communities in Large Networks.” *Journal of Statistical Mechanics*, P10008; Rosvall, M. &amp; Bergstrom, C. T. (2008). “Maps of Random Walks on Complex Networks Reveal Community Structure.” *Proceedings of the National Academy of Sciences*, 105(4), 1118–1123. <Meta>Louvain modularity optimization and Infomap's flow-compression alternative.</Meta> [Louvain DOI](https://doi.org/10.1088/1742-5468/2008/10/P10008) · [Infomap DOI](https://doi.org/10.1073/pnas.0706851105)
+18. Fortunato, S. &amp; Barthélemy, M. (2007). “Resolution Limit in Community Detection.” *Proceedings of the National Academy of Sciences*, 104(1), 36–41. <Meta>Modularity can merge small communities.</Meta> [doi:10.1073/pnas.0605965104](https://doi.org/10.1073/pnas.0605965104)
+19. Good, B. H., de Montjoye, Y.-A. &amp; Clauset, A. (2010). “Performance of Modularity Maximization in Practical Contexts.” *Physical Review E*, 81, 046106. <Meta>Degenerate high-modularity partitions.</Meta> [doi:10.1103/PhysRevE.81.046106](https://doi.org/10.1103/PhysRevE.81.046106)
+20. Traag, V. A., Waltman, L. &amp; van Eck, N. J. (2019). “From Louvain to Leiden: Guaranteeing Well-Connected Communities.” *Scientific Reports*, 9, 5233. <Meta>Connectivity defect in Louvain and the Leiden remedy.</Meta> [doi:10.1038/s41598-019-41695-z](https://doi.org/10.1038/s41598-019-41695-z)
+</Sources>

@@ -1,0 +1,317 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+import Day12StaticFigure from "@app/components/lesson/figures/Day12StaticFigure.astro";
+import Day12Interactive from "@app/components/lesson/interactives/Day12Interactive.astro";
+
+<Hero>
+<HeroEyebrow dayMark="Day 012 / 180">Block I · Foundations of Knowledge &amp; Reasoning ·</HeroEyebrow>
+
+# Networks
+
+<HeroSubhead>A stranger on the other side of the planet is closer than you think. The question is *why*.</HeroSubhead>
+
+<Day12StaticFigure kind="hero-small-world" locale="en" />
+
+<Lead drop="I">n the winter of 1967, a few hundred people in Omaha, Nebraska, opened their mailboxes to find an odd invitation. Inside each envelope was a small booklet and the name of one man: a stockbroker who lived in Sharon, Massachusetts, some 1,800 kilometres away. The instructions were strange but simple: *get this booklet to that man.* You may not mail it to him directly. You may pass it only to one person you know on a first-name basis, someone you think stands a better chance of knowing him or of knowing someone who does.</Lead>
+
+Most people, staring at the name of a stranger with whom they had no earthly connection, must have felt the task was hopeless. Nebraska to Boston, through friends? Yet booklets began arriving at the stockbroker's office. One had passed through only two intermediaries. The completed chains used about five intermediaries on average. Social psychologist Stanley Milgram had run one of the century's most famous experiments and helped lodge a phrase in public culture: **six degrees of separation**. Why that number can be so small, why the famous estimate needs a large caveat, and what related mathematics reveals about brains and epidemics are today's questions.
+</Hero>
+
+<Wrap>
+
+<WhereBlock>
+<Label>Where we are</Label>
+
+We close Block I's toolkit with the shape that connects everything else. On **[Day 8](/days/008-complexity-and-emergence/)** we met self-organized criticality and systems whose behavior spans scales; on **[Day 9](/days/009-systems-thinking-and-feedback/)** we watched feedback loops turn small nudges into runaway change. Networks give those ideas a wiring diagram: scaling claims describe how connections are distributed, while contagion is a reinforcing process running over those connections. Bring **[Day 5](/days/005-causation/)**'s caution about correlation, **[Day 7](/days/007-information-theory/)**'s bit, and yesterday's warning on **[Day 11](/days/011-heuristics-biases-and-rationality/)** that a tidy pattern can be a mind matching too eagerly. We will need all four.
+</WhereBlock>
+
+<ContentSection>
+<SectionEyebrow>The hook, examined</SectionEyebrow>
+
+## The number that got famous
+
+First, the arithmetic, because it matters for everything that follows. In the completed chains, Milgram's booklets passed through a mean of **5.2 intermediate people**. Note the wording: *intermediaries*, the people *between* starter and target, not the number of handoffs. Five people in the middle means about six links in the chain, hence "six degrees." The distinction between counting people in between and counting links will recur in every later study, so pin it now.
+
+Milgram published a popular account in *Psychology Today* in 1967; the full study followed in *Sociometry* in 1969. The famous 5.2 has a large qualification. The study recruited **296 starters**, but only **217 sent the booklet onward**, and only **64 chains reached the target**. That is about 29% of the chains actually begun, or about 22% of everyone recruited. The reported mean describes the minority that finished. Chains that died when someone declined to forward the booklet may have been longer or more awkward. Psychologist Judith Kleinfeld's 2002 reanalysis also stressed selection: many starters were recruited because they described themselves as well connected, and some were stockholders, unusually likely to have a route toward a stockbroker. A more accurate headline would be: *among the selected participants whose chains finished, the world looked small.* Less catchy, still remarkable.
+
+<Aside>
+<BlockTitle>Whose idea was it, really?</BlockTitle>
+
+Milgram did not coin the phrase, and he was not first to the idea. In **1929**, Hungarian writer **Frigyes Karinthy**, in a short story called *"Láncszemek"* ("Chains"), had a character wager that any person on Earth could be connected to any other through at most five acquaintances. The phrase "six degrees of separation" arrived much later as the title of **John Guare's 1990 play**, through which it entered wider culture. A writer's wager and a playwright's title, with a psychology experiment between them: the number was famous before anyone could test it at scale.
+</Aside>
+
+<FormatOnly as="div" media="print" class="pdf-page-break" />
+
+So was it true? Large digital graphs later found short paths, although they measured membership and communication on particular services rather than a random sample of all human relationships. In 2008, Jure Leskovec and Eric Horvitz analyzed the Microsoft Messenger graph: **180 million** people, 1.3 billion links, and a month containing 30 billion conversations. The mean distance between connected pairs was **6.6** hops, with mode 6 and median 7. In 2012, a Facebook–University of Milan team analyzed **721 million** users and 69 billion friendship links. The mean distance on that service was **4.74** links, or about **3.74** intermediaries. They titled the paper *"Four Degrees of Separation."* These enormous observational graphs support the small-world pattern. They do not, by themselves, establish one timeless number for all people or show that a platform made humanity itself smaller.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>The model</SectionEyebrow>
+
+## Two things at once: clustered *and* short
+
+Here is the puzzle that makes the small world genuinely strange rather than merely charming. Your friends are not scattered randomly across humanity. They cluster: your friends tend to know *each other*. The people you would actually pass a booklet to mostly live near you, work with you, or share your world. Call this <Term as="em">clustering</Term><TipNote text={"Clustering measures how often a node's neighbors are also connected to one another."} />. High clustering ought to trap you in a tight local pocket, a village. Why is the world not a patchwork of isolated villages, each a hundred handoffs from the next?
+
+The answer, worked out by Duncan Watts and Steven Strogatz in a landmark 1998 *Nature* paper, is beautiful and almost unfairly simple. Start with a village world: a ring where everyone is tied only to nearby neighbours. It has high clustering but enormous path lengths; to cross it, you crawl link by link around the ring. Now randomly rewire a *tiny* fraction of those local ties into long-range shortcuts that leap across the structure. You barely dent the clustering because almost everyone's friends still know one another. But the shortcuts act like wormholes, and the mean distance across the network *collapses*. A handful of long ties, such as the college roommate who moved abroad or the cousin three time zones away, can stitch billions of villagers into one small world. Watts and Strogatz called these **small-world networks**: they combine the cliquishness of a village with the reach of a random graph.
+
+The exhibit below is the Watts–Strogatz model. Move the dial and watch average path length fall faster than clustering erodes.
+</ContentSection>
+
+<Day12Interactive kind="small-world" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · Rewiring a small world</PanelTitle>
+
+<PanelNote>A few long-range shortcuts sharply reduce the number of hops needed to cross a ring while most local triangles remain. Short paths arrive before local clustering disappears.</PanelNote>
+
+<Day12StaticFigure kind="small-world" locale="en" />
+
+<SimpleTable
+  headers={["Network state","Average path length","Clustering","Interpretation"]}
+  rows={[["Local ring","High","High","Village ties preserve local triangles, but crossing the network takes many hops."],["A few rewired links","Falls sharply","Still high","The small-world region combines local cohesion with global reach."],["Mostly random links","Low","Low","Paths stay short, but the village structure has largely dissolved."]]}/>
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow>The model, deeper</SectionEyebrow>
+
+## Democracies and aristocracies of connection
+
+Short paths are only half of what makes real networks tick. The other half concerns the unequal distribution of connections. Ask how many links each node has, its **degree**, and lay the answers out as a distribution. Two radically different political systems appear.
+
+The first is the **random graph**, studied by Paul Erdős and Alfréd Rényi around 1960: throw links between nodes at random, like a drunk stringing fairy lights. Here degree is democratic. In the <MathInline latex={String.raw`G(n,p)`} /> model, each node's degree has a binomial distribution; in the large, sparse limit with mean degree held fixed, that distribution approaches a <Term as="em">Poisson distribution</Term><TipNote text={"A Poisson distribution describes counts produced by independent events at a fixed mean rate. It approximates degrees in a large, sparse Erdős–Rényi graph, where most degrees lie near the mean and extreme hubs are very unlikely."} />. Most nodes therefore sit near the mean, extreme hubs are extraordinarily unlikely, and the distribution has a firm **characteristic scale**, a typical node one can point to. If human society were such an Erdős–Rényi graph, almost everyone would have roughly the same number of friends, give or take, and there would be no celebrities.
+
+The second system is an **aristocracy**, and it is the one that made network science famous. In 1999, Albert-László Barabási and Réka Albert noted that many real networks, including the early web, citation graphs, and airline routes, looked nothing like fairy lights. A few nodes, the **hubs**, held an outsized share of the links, while most had very few. Their degree distribution appeared to fall as a <Term as="em">power law</Term><TipNote text={"In a power-law distribution, the probability of a value k falls as a fixed power of k, producing many small values and a long tail of rare large ones."} />, <MathInline latex={String.raw`P(k)\propto k^{-\gamma}`} />, the scaling shape that also appeared in Day 8. There is no single typical node or characteristic scale, hence the name **scale-free**.
+
+Barabási and Albert also proposed a mechanism for forming this aristocracy: **preferential attachment**. Grow the network one node at a time and let each newcomer prefer nodes that are already well connected. The rich get richer; early hubs snowball. It is the Matthew effect, "to those who have, more will be given," rendered as a graph. Derek de Solla Price had identified a related "cumulative advantage" process in citation networks in the 1960s; the mechanism keeps reappearing because the pattern does.
+
+The exhibit puts the two systems side by side. The distinction can look modest on ordinary axes and becomes stark on a log–log plot. It also overlays a <Term as="em">log-normal distribution</Term><TipNote text={"A log-normal distribution arises when the logarithm of a quantity is normally distributed; over a limited range, its long tail can resemble a power law."} />, an important look-alike that can bend only slightly over the limited range of real data.
+</ContentSection>
+
+<Day12Interactive kind="degree-distribution" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · Degree distributions</PanelTitle>
+
+<PanelNote>Linear and log–log views expose different parts of the same data. A power law draws a straight line on ideal log–log axes, but a log-normal tail can look similar over a limited observed range.</PanelNote>
+
+<Day12StaticFigure kind="degree-distribution" locale="en" />
+
+<SimpleTable
+  headers={["Candidate","Degree pattern","Log–log view","Inference limit"]}
+  rows={[["Poisson random graph","Most nodes sit near one characteristic degree.","The tail bends away quickly.","Large hubs are exceedingly rare."],["Power law","Many low-degree nodes coexist with a very long tail.","An ideal power law is linear.","A straight-looking segment is necessary, not sufficient, evidence."],["Log-normal","Most values are modest, with a heavy-looking tail.","It can mimic a line over a limited range.","Model comparison is required before naming a power law."]]}/>
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow>The debate</SectionEyebrow>
+
+## Are networks really scale-free? The great argument
+
+Through the 2000s, "scale-free" hardened from an interesting finding into something close to a law of nature. Textbooks, talks, and thousands of papers described the web, the cell, the brain, and society as though one power law and one preferential-attachment story governed them all. The unification was thrilling. It also rested too often on a weak habit: plot a degree distribution on log–log axes, see something roughly straight, and call it a power law. Straight-*ish* is not straight. A log-normal distribution, with a different mathematical form and possible origin story, can masquerade as a near-line over the range most datasets cover.
+
+In 2019, the argument came to a head in *Nature Communications*. Anna Broido and Aaron Clauset tested **928 networks** across social, biological, technological, and informational domains. They used the statistical procedure Clauset, Cosma Shalizi, and Mark Newman had laid out a decade earlier: fit candidate power laws by maximum likelihood, test whether the fit is plausible, then compare it with alternatives such as the log-normal. Only **4%** of the networks met their strongest category of scale-free evidence. For most, a log-normal fit as well as or better than a power law; social networks, the poster child, were at best weakly scale-free under their criteria.
+
+<BlockQuote>
+"Strongly scale-free structure is empirically rare."
+<Meta>Broido &amp; Clauset, *Nature Communications* 10:1017, March 2019.</Meta>
+</BlockQuote>
+
+The response was swift and did not concede. Ivan Voitalov, Dmitri Krioukov, and colleagues replied in *Physical Review Research* with *"Scale-free networks well done."* Their argument was that Broido and Clauset had demanded a pure textbook power law under criteria that were too strict for real networks. Scale-free behavior, they argued, need only appear asymptotically in the tail through the mathematical property of **regular variation**. Under that tail-based definition, they found scale-free structure to be common. Physicist Petter Holme titled his companion synthesis **"Rare and everywhere"**: the camps were applying different definitions and therefore answering different questions.
+
+The exchange did not stop in 2019. A 2021 *PNAS* analysis argued that finite-size effects can make genuinely scale-free networks fail standard classification tests. A 2024 *PNAS Nexus* paper supplied a different mechanism, showing mathematically how a power-law tail can emerge through rewiring in a network that is not growing, then comparing that model with several real networks. Neither paper establishes that *all* networks are scale-free; together they show why prevalence, mechanism, and statistical definition must be kept separate.
+
+As of **July 2026**, the warranted position is therefore not a single settled percentage. Many real degree distributions are **heavy-tailed**: hubs exist and degrees vary far more than an Erdős–Rényi graph predicts. What is not established is that one universal, pure power law with an exponent between 2 and 3 governs all such networks, or that preferential attachment generated every one. The stronger claim is contested, and its verdict depends partly on which tail behavior earns the name "scale-free." This is the pattern from Day 8 in another domain: a useful measurement stretched toward a universal story, then pulled back by stricter statistical comparison. It also rhymes with Day 11: once a scientific community expects a line, a suggestive line becomes easy to see.
+
+<Aside>
+<BlockTitle>Why the fight is worth having</BlockTitle>
+
+This is not merely a dispute over vocabulary. Whether a network is truly scale-free changes predictions about robustness to random failure, vulnerability to targeted attacks on hubs, and the location of epidemic thresholds. The label carries load-bearing assumptions, so it must be earned by an explicit definition and comparison against alternatives.
+</Aside>
+</ContentSection>
+
+<ContentSection class="frontier">
+<SectionEyebrow>The frontier · 2026</SectionEyebrow>
+
+## Contagion: why hubs set the world on fire
+
+Now the payoff, and the reason this topic is not a museum piece. Everything that spreads, including a virus, rumour, meme, bank panic, or blackout, follows a network. The network's shape governs the process alongside the biology, behavior, or engineering of whatever is moving.
+
+Classical epidemiology has a central quantity, <MathInline latex={String.raw`R_0`} />, the expected number of secondary cases caused by a typical infectious case in a wholly susceptible population under specified conditions. Below <MathInline latex={String.raw`R_0=1`} />, an outbreak tends to fade; above it, it can grow. Simple threshold arguments often assume relatively even mixing. Put a <Term as="em">susceptible–infected–susceptible model</Term><TipNote text={"An SIS model lets infected nodes recover to susceptibility rather than gaining lasting immunity, so infection can circulate indefinitely."} /> on an idealized, uncorrelated scale-free network whose size grows without bound and whose degree variance diverges, and something startling happens. In 2001, Romualdo Pastor-Satorras and Alessandro Vespignani showed that the epidemic threshold vanishes in that limit: no strictly positive transmission threshold protects the model network. Hubs act as reservoirs that can keep reseeding infection. The threshold is not literally zero in a finite real network, and later work tied finite-size behavior to the largest hubs and to model details. The durable lesson is narrower: contact heterogeneity can lower thresholds dramatically.
+
+<Claim>
+<ClaimHeader label="Edge 01">
+<StatusChip status="ok" label="Degree variance" printLabel="degree variance effect established" />
+</ClaimHeader>
+
+### Superspreading is a property of the network, not just the germ
+
+In the heterogeneous mean-field approximation for that SIS model, the threshold scales with <MathInline latex={String.raw`\langle k\rangle/\langle k^2\rangle`} />: mean degree divided by mean-square degree. Large hubs inflate <MathInline latex={String.raw`\langle k^2\rangle`} />, pushing the threshold downward. Translated: the mean number of contacts is not enough. The **variance**, especially the far tail of highly connected people or events, can dominate transmission.
+
+That structure helps explain superspreading, which was important during COVID-19: transmission was highly overdispersed, with a minority of cases and settings accounting for a large share of onward infections. Network position is not the only cause; infectiousness, timing, venue, behavior, and chance also matter. But two outbreaks with the same mean reproduction number can behave differently if one repeatedly reaches hubs while the other moves through a more uniform contact pattern. The spread of the distribution matters as much as its center, a direct callback to **[Day 6](/days/006-statistics-and-the-art-of-not-fooling-yourself/)**.
+</Claim>
+
+Turn that result around and it becomes an intervention. If hubs disproportionately sustain spread, protecting or removing them can be far more efficient than choosing the same number of nodes at random. In the stylized network below, immunizing 12% of nodes blindly leaves many high-degree routes open; immunizing the highest-degree 12% removes the network's main conduits. This is a model result, not a universal vaccination policy: real targeting raises measurement, fairness, privacy, and feasibility problems, and biological risk is not identical to degree.
+</ContentSection>
+
+<Day12Interactive kind="contagion" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · Contagion and hub targeting</PanelTitle>
+
+<PanelNote>The same number of protected nodes has different effects depending on where they sit. Removing high-degree hubs breaks many transmission paths at once; random protection often leaves those paths intact.</PanelNote>
+
+<Day12StaticFigure kind="contagion" locale="en" />
+
+<SimpleTable
+  headers={["Strategy","Nodes protected","Structural effect","Model outcome"]}
+  rows={[["None","0%","All hub routes remain open.","A modest transmission probability can reach much of the network."],["Random","12%","Some routes disappear, but major hubs often remain.","Spread shrinks inconsistently across random draws."],["Highest degree","12%","The busiest conduits are removed first.","Reach falls sharply in this hub-dominated model."]]}/>
+</FormatOnly>
+
+<ContentSection class="frontier">
+<SectionEyebrow>The frontier · continued</SectionEyebrow>
+
+## From viruses to behavior, and beyond pairs
+
+Not everything spreads like a virus, and one of the field's sharpest findings is why. A germ is a **simple contagion**: one sufficient exposure may transmit it, so long-range shortcuts can seed distant parts of a network. Many social changes, such as adopting a costly behavior, joining a risky protest, or changing a deep habit, act more like **complex contagions**: several reinforcing sources may be needed before a person moves.
+
+Damon Centola and Michael Macy argued in 2007 that, for complex contagions, the long shortcuts that speed a virus can hurt diffusion because one distant contact cannot supply enough social proof. Centola tested the prediction in a 2010 *Science* experiment, seeding a health behavior into artificial online networks whose structure he controlled. The behavior spread **farther and faster** in a clustered, redundant network than in a random one, the reverse of a simple-contagion expectation. The same wiring can accelerate a rumour yet obstruct a risky collective shift, depending on how much reinforcement adoption requires.
+
+<Claim>
+<ClaimHeader label="Edge 02">
+<StatusChip status="hint" label="Group contagion" printLabel="higher-order group contagion promising" />
+</ClaimHeader>
+
+### Maybe the link is not the right unit
+
+A conventional network's basic atom is the pairwise link between two nodes. Social influence often happens in groups: the pressure of a whole table agreeing, a three-person clique, or a committee. A growing research program uses **higher-order networks**, in which one relation can join more than two nodes, and <Term as="em">simplicial complexes</Term><TipNote text={"A simplicial complex represents group relations with points, edges, filled triangles, tetrahedra, and their higher-dimensional counterparts."} />, which encode group interactions with filled geometric units rather than only pairs.
+
+In 2019, Iacopo Iacopini and colleagues showed in *Nature Communications* that group effects in a contagion model can produce abrupt transitions and **bistability**, where low- and high-adoption states can both persist and a small change can tip the system between them. The result has real mathematical force. Its empirical scope remains open: much of the evidence is theoretical or simulated, and researchers are still testing when real social systems require higher-order machinery rather than pairwise networks with more elaborate dynamics. Promising, not established as a universal account.
+</Claim>
+</ContentSection>
+
+<ContentSection class="frontier">
+<SectionEyebrow>The frontier · continued</SectionEyebrow>
+
+## The wiring diagram of a mind
+
+If the first frontier treats a network as a stage for spreading, the second treats the network as the object itself: the physical wiring of a brain. In 2005, Olaf Sporns, Giulio Tononi, and Rolf Kötter proposed a word and a mission: map the complete set of neural connections in a brain and call it the <Term as="em">connectome</Term><TipNote text={"A connectome is a map of neural connections at a specified scale, from links among brain regions down to synapses among individual neurons."} />, by analogy with the genome. The bet was that network structure, including hubs, clusters, and shortcuts, would help explain computation. Ed Bullmore and Sporns's 2009 review helped establish "complex brain networks" as a field.
+
+Brain graphs show many features assembled today. They contain densely connected local systems and long-range links. They also show a **rich club**: high-degree hub regions that are densely connected to one another, forming an expensive backbone for integration. Martijn van den Heuvel and Sporns mapped rich-club organization in a human connectome in 2011. Long connections cost energy, space, and biological material; the architecture trades that wiring cost against efficient integration. But whether familiar graph labels such as "small-world" and "scale-free" fit depends on measurement scale, node definition, thresholding, and null model, qualifications we will return to below.
+
+The **2024 FlyWire** and **2025 MICrONS** releases crossed concrete milestones: complete synapse-level wiring for an adult fly brain, and an exceptionally dense structure-and-activity map for a cubic millimetre of mouse visual cortex.
+
+<Claim>
+<ClaimHeader label="Edge 03">
+<StatusChip status="ok" label="Connectome maps" printLabel="connectome mapping milestones established" />
+</ClaimHeader>
+
+### An entire fly brain, and a grain of mouse cortex
+
+In October 2024, the **FlyWire** consortium published in *Nature* a complete wiring diagram of an adult female fruit-fly brain: **139,255 neurons**, about **54.5 million synapses**, and annotations spanning more than 8,400 cell types across the paired papers by Dorkenwald, Schlegel, and colleagues.
+
+In April 2025, the **MICrONS** consortium published a map of one cubic millimetre of mouse visual cortex, roughly a grain of sand: more than **200,000 cells**, about **523 million synapses**, and roughly **4 kilometres** of axonal wiring. The project also connected structure to recordings from approximately **75,000 neurons** while the mouse viewed visual stimuli. These are established releases with public data, not complete explanations of brain function. Scope matters: a fly brain is not a mammalian brain, and a cubic millimetre is a small fraction of a mouse brain, which is itself far smaller than a human brain. A synapse-level human connectome remains far beyond current completed maps.
+</Claim>
+
+<Aside>
+<BlockTitle>Six degrees, in a fly</BlockTitle>
+
+The FlyWire network is tightly connected. In the giant strongly connected component, which contains 93.3% of the analyzed neurons, the mean shortest directed path is **4.42 hops**; every neuron in that component is reachable from every other within 13 hops. Milgram's booklets crossed a continent through about five intermediaries, while paths through most of a fly brain are comparably shallow on average. The shared small-world pattern is a structural comparison, not a claim that social acquaintances and synapses behave identically or that anatomical reach proves functional signal flow.
+</Aside>
+
+<Claim>
+<ClaimHeader label="Edge 04">
+<StatusChip status="bad" label="Brain labels" printLabel="scale-free and small-world brain labels contested" />
+</ClaimHeader>
+
+### Where the neuro-hype needs the filter
+
+Two popular slogans deserve caution. First, **"the brain is scale-free."** Brain degree distributions can be broad and hub-rich, but many are better fit by a power law with an <Term as="em">exponential cutoff</Term><TipNote text={"An exponential cutoff makes a heavy tail fall much faster beyond some scale, reflecting finite size or physical limits on how large a hub can become."} /> than by an unbounded pure power law. Biology and metabolism impose ceilings; no brain region can acquire infinitely many connections. Calling the brain simply "scale-free" can therefore import the overclaim that the 928-network debate exposed.
+
+Second, even **"the brain is a small-world network"** is sensitive to how a study constructs its graph. In a paper published online in 2015 and in print in 2016, *"Is the brain really a small-world network?"*, Claus Hilgetag and Alexandros Goulas argued that a large-world description may sometimes fit better. One author explicitly revisited his own earlier claim in the opposite direction. Neuroimaging graph metrics can shift with thresholding, normalization, spatial scale, and node definition. Change the recipe and the small-world coefficient can wobble. The connectome measurements are real; the tidy adjectives are conditional on modeling choices and remain debated.
+</Claim>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>Open questions</SectionEyebrow>
+
+## What's genuinely unsettled
+
+- **What actually generates hubs?** Preferential attachment is one mechanism, but not the only one: fitness, optimization, duplication, and physical constraint can also produce broad degree distributions. The distribution alone often cannot identify its cause.
+- **Is "scale-free" even the right question?** A fixation on one distribution may distract from communities, motifs, hierarchy, and geometry that matter more for behavior.
+- **Do we need higher-order models?** Or can pairwise networks with sufficiently rich dynamics explain apparent group contagion? The empirical test is still young.
+- **<Term as="em">Homophily</Term><TipNote text={"Homophily is the tendency of similar people to form ties with one another, which can make a trait look as if it spread even when it did not."} /> or influence?** When behavior appears to spread through a social network, is one person changing another, or are similar people clustering and adopting independently? Observational data notoriously struggle to distinguish them. Centola's controlled experiment was designed to break that confound, a direct callback to Day 5: correlation over a network is still not causation.
+- **How far does the connectome take us?** As wiring diagrams become more complete, will a structural map predict function and behavior, or is wiring only the stage, with essential information in dynamics, chemistry, and activity? The question returns in the AI and consciousness blocks, **Days 123–126** and **138–145**.
+</ContentSection>
+
+<Recap>
+<BlockTitle>The day in three sentences</BlockTitle>
+<RecapList>
+<RecapItem term="Big idea">A network can remain locally clustered yet become globally short when a few links jump far; unequal degree then gives hubs outsized control over robustness, contagion, and information flow.</RecapItem>
+<RecapItem term="Best analogy">A ring of villages is vast when every journey crawls locally. Add a few wormhole shortcuts and the same villages become one small world.</RecapItem>
+<RecapItem term="Live controversy">Many real networks are heavy-tailed, but whether they are truly scale-free depends on definitions, statistical comparisons, and physical cutoffs.</RecapItem>
+</RecapList>
+<Threads label="Threads today ›">emergence in small worlds and hubs · computation in brain wiring · information flowing over links · evolution through cumulative advantage · energy in the rich club's wiring cost.</Threads>
+</Recap>
+
+<ContinueNote label="Tomorrow → Day 13">
+### Measurement &amp; Units
+
+We have used numbers all day: 5.2 intermediaries, 54.5 million synapses, and a degree exponent often claimed to sit between 2 and 3. Tomorrow we ask the question underneath them: what *is* a measurement? How long is a metre, and why has it been defined since 2019 through a fixed constant of nature rather than a platinum bar in Paris? We leave the toolkit of reasoning and pick up the toolkit of *quantity*, the last foundation before the mathematics block.
+</ContinueNote>
+
+<Sources>
+<SectionEyebrow>Sources</SectionEyebrow>
+
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. Travers, J. & Milgram, S. (1969). "An Experimental Study of the Small World Problem." *Sociometry* 32(4): 425–443. <Meta>— 296 recruited starters, 217 forwarded chains, 64 completed chains, and a mean of 5.2 intermediaries among completed chains.</Meta> [doi.org/10.2307/2786545](https://doi.org/10.2307/2786545)
+2. Milgram, S. (1967). "The Small-World Problem." *Psychology Today* 1(1): 61–67. <Meta>— the original popular account.</Meta>
+3. Kleinfeld, J. S. (2002). "Could It Be a Big World After All? The 'Six Degrees of Separation' Myth." *Society* 39: 61–66. <Meta>— attrition, selection bias, and the case for skepticism.</Meta>
+4. Karinthy, F. (1929). "Láncszemek" ("Chains"), in *Minden másképpen van*. <Meta>— the early "five acquaintances" idea.</Meta> Guare, J. (1990). *Six Degrees of Separation*. <Meta>— the play that supplied the familiar phrase.</Meta>
+5. Watts, D. J. & Strogatz, S. H. (1998). "Collective dynamics of 'small-world' networks." *Nature* 393: 440–442. [doi.org/10.1038/30918](https://doi.org/10.1038/30918)
+6. Leskovec, J. & Horvitz, E. (2008). "Planetary-Scale Views on a Large Instant-Messaging Network." *Proceedings of WWW '08*: 915–924. <Meta>— Microsoft Messenger: about 180 million users; mean path 6.6, median 7, longest 29.</Meta> [doi.org/10.1145/1367497.1367620](https://doi.org/10.1145/1367497.1367620)
+7. Backstrom, L., Boldi, P., Rosa, M., Ugander, J. & Vigna, S. (2012). "Four Degrees of Separation." *Proceedings of ACM Web Science '12*: 33–42. <Meta>— Facebook: 721 million users, 69 billion links, mean distance 4.74.</Meta> [arXiv:1111.4570](https://arxiv.org/abs/1111.4570)
+8. Barabási, A.-L. & Albert, R. (1999). "Emergence of Scaling in Random Networks." *Science* 286(5439): 509–512. <Meta>— preferential attachment and <MathInline latex={String.raw`P(k)\propto k^{-\gamma}`} />.</Meta> [doi.org/10.1126/science.286.5439.509](https://doi.org/10.1126/science.286.5439.509)
+9. Clauset, A., Shalizi, C. R. & Newman, M. E. J. (2009). "Power-Law Distributions in Empirical Data." *SIAM Review* 51(4): 661–703. <Meta>— maximum-likelihood fitting and likelihood-ratio model comparison.</Meta> [doi.org/10.1137/070710111](https://doi.org/10.1137/070710111)
+10. Broido, A. D. & Clauset, A. (2019). "Scale-free networks are rare." *Nature Communications* 10: 1017. <Meta>— 928 networks; 4% met the strongest evidence category; log-normal alternatives often fit as well or better.</Meta> [doi.org/10.1038/s41467-019-08746-5](https://doi.org/10.1038/s41467-019-08746-5)
+11. Voitalov, I., van der Hoorn, P., van der Hofstad, R. & Krioukov, D. (2019). "Scale-free networks well done." *Physical Review Research* 1: 033034. <Meta>— the regular-variation rebuttal and a tail-based definition.</Meta> [doi.org/10.1103/PhysRevResearch.1.033034](https://doi.org/10.1103/PhysRevResearch.1.033034)
+12. Holme, P. (2019). "Rare and everywhere: Perspectives on scale-free networks." *Nature Communications* 10: 1016. <Meta>— a synthesis of the definitional dispute.</Meta> [doi.org/10.1038/s41467-019-09038-8](https://doi.org/10.1038/s41467-019-09038-8)
+13. Pastor-Satorras, R. & Vespignani, A. (2001). "Epidemic Spreading in Scale-Free Networks." *Physical Review Letters* 86(14): 3200–3203. [doi.org/10.1103/PhysRevLett.86.3200](https://doi.org/10.1103/PhysRevLett.86.3200) See also Pastor-Satorras, R., Castellano, C., Van Mieghem, P. & Vespignani, A. (2015). "Epidemic processes in complex networks." *Reviews of Modern Physics* 87: 925.
+14. Chinazzi, M. et al. (2020). "The effect of travel restrictions on the spread of the 2019 novel coronavirus (COVID-19) outbreak." *Science* 368(6489): 395–400. <Meta>— network-metapopulation modeling of COVID-19 spread.</Meta> [doi.org/10.1126/science.aba9757](https://doi.org/10.1126/science.aba9757)
+15. Centola, D. & Macy, M. (2007). "Complex Contagions and the Weakness of Long Ties." *American Journal of Sociology* 113(3): 702–734. Centola, D. (2010). "The Spread of Behavior in an Online Social Network Experiment." *Science* 329(5996): 1194–1197. [doi.org/10.1126/science.1185231](https://doi.org/10.1126/science.1185231)
+16. Iacopini, I., Petri, G., Barrat, A. & Latora, V. (2019). "Simplicial models of social contagion." *Nature Communications* 10: 2485. <Meta>— group contagion, discontinuous transitions, and bistability; a theoretical result with an empirical program still developing.</Meta> [doi.org/10.1038/s41467-019-10431-6](https://doi.org/10.1038/s41467-019-10431-6)
+17. Sporns, O., Tononi, G. & Kötter, R. (2005). "The Human Connectome: A Structural Description of the Human Brain." *PLoS Computational Biology* 1(4): e42. [doi.org/10.1371/journal.pcbi.0010042](https://doi.org/10.1371/journal.pcbi.0010042)
+18. Bullmore, E. & Sporns, O. (2009). "Complex brain networks: graph theoretical analysis of structural and functional systems." *Nature Reviews Neuroscience* 10: 186–198. van den Heuvel, M. P. & Sporns, O. (2011). "Rich-Club Organization of the Human Connectome." *Journal of Neuroscience* 31(44): 15775–15786.
+19. Dorkenwald, S. et al. (FlyWire Consortium) (2024). "Neuronal wiring diagram of an adult brain." *Nature* 634: 124–138. Schlegel, P. et al. (2024). "Whole-brain annotation and multi-connectome cell typing of *Drosophila*." *Nature* 634: 139–152. Lin, A. et al. (2024). "Network statistics of the whole-brain connectome of *Drosophila*." *Nature* 634: 153–165. <Meta>— 139,255 neurons and about 54.5 million synapses; the network analysis reports the connected-component and path-length statistics used above.</Meta> [connectome DOI](https://doi.org/10.1038/s41586-024-07558-y) · [network-statistics DOI](https://doi.org/10.1038/s41586-024-07968-y)
+20. MICrONS Consortium et al. (2025). "Functional connectomics spanning multiple areas of mouse visual cortex." *Nature* 640(8058): 435–447. <Meta>— one cubic millimetre; more than 200,000 cells; about 523 million synapses; about 4 kilometres of axons; approximately 75,000 neurons functionally imaged.</Meta> [doi.org/10.1038/s41586-025-08790-w](https://doi.org/10.1038/s41586-025-08790-w)
+21. Hilgetag, C. C. & Goulas, A. (2016). "Is the brain really a small-world network?" *Brain Structure and Function* 221(4): 2361–2366. <Meta>— the large-world challenge and sensitivity of graph metrics to modeling choices.</Meta> [doi.org/10.1007/s00429-015-1035-6](https://doi.org/10.1007/s00429-015-1035-6)
+22. Serafino, M., Cimini, G., Maritan, A., Rinaldo, A., Suweis, S., Banavar, J. R. & Caldarelli, G. (2021). "True scale-free networks hidden by finite size effects." *PNAS* 118(2): e2013825118. <Meta>— a finite-size scaling challenge to classifications based on direct distribution fitting.</Meta> [doi.org/10.1073/pnas.2013825118](https://doi.org/10.1073/pnas.2013825118)
+23. Lynn, C. W., Holmes, C. M. & Palmer, S. E. (2024). "Emergent scale-free networks." *PNAS Nexus* 3(7): pgae236. <Meta>— a model in which scale-free tails emerge through rewiring without net network growth.</Meta> [doi.org/10.1093/pnasnexus/pgae236](https://doi.org/10.1093/pnasnexus/pgae236)
+24. Endo, A., Centre for the Mathematical Modelling of Infectious Diseases COVID-19 Working Group, Abbott, S., Kucharski, A. J. & Funk, S. (2020). "Estimating the overdispersion in COVID-19 transmission using outbreak sizes outside China." *Wellcome Open Research* 5: 67, version 3. <Meta>— evidence for substantial individual-level variation and superspreading in SARS-CoV-2 transmission.</Meta> [doi.org/10.12688/wellcomeopenres.15842.3](https://doi.org/10.12688/wellcomeopenres.15842.3)
+</Sources>
+
+</Wrap>

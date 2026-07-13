@@ -1,0 +1,355 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  kind:
+    | "small-world"
+    | "degree-distribution"
+    | "contagion"
+    | "friendship-paradox"
+    | "robustness"
+    | "centrality"
+    | "synchronization"
+    | "tipping-cascade";
+  locale?: "en" | "zh";
+}
+
+const kind = Astro.props.kind;
+const zh = Astro.props.locale === "zh";
+
+const copy = {
+  "small-world": zh
+    ? {
+        eyebrow: "交互 · 重连世界",
+        title: "小世界旋钮",
+        note: "每个节点起初只连接近邻。提高重连概率，把少数本地边改成长程捷径；观察平均路径长度先急剧下降，而聚类仍保持较高水平。",
+        slider: "重连概率",
+        shuffle: "换一组随机连线",
+        path: "平均路径长度",
+        clustering: "聚类系数",
+        aria: "二十四个节点排成环；本地边与长程捷径随重连概率变化。"
+      }
+    : {
+        eyebrow: "Interactive · rewire the world",
+        title: "The small-world dial",
+        note: "Every node begins tied only to near neighbours. Raise the rewiring probability to turn a few local edges into long-range shortcuts; watch average path length collapse before clustering does.",
+        slider: "Rewiring probability",
+        shuffle: "New random rewiring",
+        path: "Average path length",
+        clustering: "Clustering coefficient",
+        aria: "Twenty-four nodes on a ring, with local edges and long-range shortcuts changing as the rewiring probability moves."
+      },
+  "degree-distribution": zh
+    ? {
+        eyebrow: "交互 · 两种连接制度",
+        title: "钟形曲线与幂律",
+        note: "在随机网络与枢纽主导的网络之间切换，再改用双对数坐标。叠加对数正态曲线，看看有限数据为何很容易把相似的重尾分布认成幂律。",
+        network: "网络",
+        random: "随机网络",
+        power: "重尾网络",
+        axes: "坐标",
+        linear: "线性",
+        log: "双对数",
+        overlay: "叠加对数正态近似",
+        aria: "可切换线性或双对数坐标的度分布图。"
+      }
+    : {
+        eyebrow: "Interactive · two connection regimes",
+        title: "Bell curve versus power law",
+        note: "Switch between a random network and a hub-dominated one, then change to log-log axes. Overlay a log-normal look-alike to see why finite data can make different heavy tails look deceptively similar.",
+        network: "Network",
+        random: "Random",
+        power: "Heavy-tailed",
+        axes: "Axes",
+        linear: "Linear",
+        log: "Log-log",
+        overlay: "Overlay log-normal look-alike",
+        aria: "A degree-distribution chart switchable between linear and logarithmic axes."
+      },
+  contagion: zh
+    ? {
+        eyebrow: "交互 · 点燃网络",
+        title: "流行病与枢纽防护",
+        note: "在同一张枢纽网络上调整传染性，然后分别比较随机免疫与优先免疫枢纽。两种策略保护同样数量的节点，却可能产生完全不同的结果。",
+        beta: "传染性",
+        play: "开始传播",
+        hubs: "优先免疫枢纽（12%）",
+        random: "随机免疫（12%）",
+        reset: "重置",
+        reached: "感染波及",
+        immunized: "已免疫",
+        strategy: "策略",
+        legend: "节点状态",
+        susceptible: "未感染",
+        infectious: "感染中",
+        past: "已波及",
+        aria: "一个包含少数高连接枢纽的网络；节点会随传播过程改变状态。"
+      }
+    : {
+        eyebrow: "Interactive · light the network",
+        title: "Epidemics and hub protection",
+        note: "Adjust infectiousness on the same hub-rich network, then compare random immunization with protecting the hubs first. Both strategies cover the same number of nodes and can produce very different outbreaks.",
+        beta: "Infectiousness",
+        play: "Start outbreak",
+        hubs: "Protect hubs (12%)",
+        random: "Protect at random (12%)",
+        reset: "Reset",
+        reached: "Reached",
+        immunized: "Immunized",
+        strategy: "Strategy",
+        legend: "Node states",
+        susceptible: "Susceptible",
+        infectious: "Infectious",
+        past: "Reached",
+        aria: "A network with a few high-degree hubs; nodes change state as an outbreak spreads."
+      },
+  "friendship-paradox": zh
+    ? {
+        eyebrow: "交互 · 一个由抽样产生的悖论",
+        title: "你的朋友比你更受欢迎吗？",
+        note: "在图中选择任意一人。他们的朋友会被突出显示；比较普通人的平均度数与沿一条友谊边抽到的人的平均度数。可用 Tab 键移动，按 Enter 或空格键选择。",
+        person: "普通人平均朋友数",
+        friend: "朋友平均朋友数",
+        aria: "可选择节点的友谊网络，用于展示友谊悖论。"
+      }
+    : {
+        eyebrow: "Interactive · a paradox made by sampling",
+        title: "Are your friends more popular than you?",
+        note: "Choose any person in the graph. Their friends light up; compare the average degree of a person with the average degree reached by following a friendship edge. Use Tab, then Enter or Space, to select a node.",
+        person: "Average person",
+        friend: "Average friend",
+        aria: "A selectable friendship network demonstrating the friendship paradox."
+      },
+  robustness: zh
+    ? {
+        eyebrow: "交互 · 事故与攻击",
+        title: "用两种方式拆毁网络",
+        note: "移除相同比例的节点：随机失效通常先击中小节点，定向攻击则从枢纽开始。观察最大连通部分与碎片数量如何变化。",
+        strategy: "移除策略",
+        random: "随机失效",
+        hubs: "优先攻击枢纽",
+        removed: "移除比例",
+        largest: "最大连通部分",
+        fragments: "碎片数",
+        legend: "节点状态",
+        mainPiece: "最大连通分量",
+        otherPiece: "其他碎片",
+        removedState: "已移除",
+        aria: "一个枢纽网络，移除节点后会分裂成若干连通部分。"
+      }
+    : {
+        eyebrow: "Interactive · accident versus attack",
+        title: "Break the network two ways",
+        note: "Remove the same fraction of nodes. Random failure usually hits small nodes first; targeted attack begins with hubs. Watch the largest connected piece and the fragment count diverge.",
+        strategy: "Removal strategy",
+        random: "Random failure",
+        hubs: "Target hubs",
+        removed: "Fraction removed",
+        largest: "Largest piece",
+        fragments: "Fragments",
+        legend: "Node states",
+        mainPiece: "Largest component",
+        otherPiece: "Other fragment",
+        removedState: "Removed",
+        aria: "A hub-rich network fragmenting as nodes are removed."
+      },
+  centrality: zh
+    ? {
+        eyebrow: "交互 · 三种重要性",
+        title: "哪个节点最重要？",
+        note: "同一张网络会因问题不同而选出不同中心：度数衡量连接多少，介数中心性寻找必经桥梁，特征向量中心性奖励与重要节点相连。",
+        lens: "中心性",
+        degree: "度数",
+        betweenness: "介数",
+        eigenvector: "特征向量",
+        aria: "两个社区由一座狭窄桥梁相连；节点大小会随中心性指标变化。"
+      }
+    : {
+        eyebrow: "Interactive · three ways to matter",
+        title: "Which node is most important?",
+        note: "The same graph crowns different nodes for different questions: degree counts ties, betweenness finds the bridge, and eigenvector centrality rewards links to already-important nodes.",
+        lens: "Centrality",
+        degree: "Degree",
+        betweenness: "Betweenness",
+        eigenvector: "Eigenvector",
+        aria: "Two communities joined by a narrow bridge; node sizes change with the selected centrality measure."
+      },
+  synchronization: zh
+    ? {
+        eyebrow: "交互 · 示意曲线",
+        title: "高阶耦合如何制造突变",
+        note: "提高高阶耦合强度，让同步从平滑、可逆的上升变成带迟滞的跃迁。曲线忠实表达机制，但数值仅用于教学示意，并非对某个具体系统的拟合。",
+        coupling: "高阶耦合强度",
+        transition: "转变类型",
+        width: "迟滞宽度",
+        aria: "同步序参量随耦合变化的曲线；高阶作用增强时出现跳跃与迟滞回路。"
+      }
+    : {
+        eyebrow: "Interactive · schematic curves",
+        title: "How higher-order coupling makes a jump",
+        note: "Raise higher-order coupling and turn a smooth, reversible onset of synchrony into a discontinuous transition with hysteresis. The mechanism is faithful; the values are illustrative rather than fitted to a particular system.",
+        coupling: "Higher-order coupling",
+        transition: "Transition",
+        width: "Hysteresis width",
+        aria: "Synchronization order parameter versus coupling, developing a jump and hysteresis loop as higher-order interaction grows."
+      },
+  "tipping-cascade": zh
+    ? {
+        eyebrow: "交互 · 耦合临界要素示意",
+        title: "推倒一个要素，看看后续",
+        note: "选择任意气候临界要素，观察增强与稳定耦合如何让级联扩散或熄灭。连线结构用于解释机制，并不是对阈值、时间或具体未来的预测。可用 Tab 键移动，按 Enter 或空格键触发。",
+        reset: "全部复位",
+        tipped: "已发生临界转变",
+        trigger: "由你触发",
+        aria: "七个可选择的气候临界要素由增强与稳定耦合相连。"
+      }
+    : {
+        eyebrow: "Interactive · coupled tipping elements",
+        title: "Tip one element and follow the cascade",
+        note: "Choose a climate tipping element and watch destabilizing and stabilizing couplings let a cascade spread or fizzle. The wiring explains a mechanism; it does not forecast thresholds, dates, or a particular future. Use Tab, then Enter or Space, to trigger a node.",
+        reset: "Reset all",
+        tipped: "Elements tipped",
+        trigger: "Triggered by you",
+        aria: "Seven selectable climate tipping elements joined by destabilizing and stabilizing couplings."
+      }
+}[kind];
+---
+<Panel class={`web-only day12-interactive day12-${kind}`} data-day12-kind={kind} data-locale={zh ? "zh" : "en"}>
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  {kind === "small-world" && (
+    <>
+      <div class="day12-stage"><svg data-role="network" viewBox="0 0 620 360" role="img" aria-label={copy.aria}></svg></div>
+      <label class="day12-range"><span>{copy.slider}</span><strong data-out="rewiring">0.00</strong><input data-role="rewiring" type="range" min="0" max="100" value="0" /></label>
+      <button class="day12-button" type="button" data-action="reshuffle">{copy.shuffle}</button>
+      <div class="day12-readouts">
+        <div><span>{copy.path}</span><strong data-out="path">-</strong></div>
+        <div><span>{copy.clustering}</span><strong data-out="clustering">-</strong></div>
+      </div>
+      <p class="day12-verdict" data-out="verdict" role="status" aria-live="polite"></p>
+    </>
+  )}
+
+  {kind === "degree-distribution" && (
+    <>
+      <div class="day12-toolbar">
+        <span>{copy.network}</span>
+        <div class="day12-segment" role="group" aria-label={copy.network}>
+          <button type="button" data-dist="random" aria-pressed="false">{copy.random}</button>
+          <button type="button" data-dist="power" aria-pressed="true">{copy.power}</button>
+        </div>
+        <span>{copy.axes}</span>
+        <div class="day12-segment" role="group" aria-label={copy.axes}>
+          <button type="button" data-axis="linear" aria-pressed="true">{copy.linear}</button>
+          <button type="button" data-axis="log" aria-pressed="false">{copy.log}</button>
+        </div>
+      </div>
+      <label class="day12-check"><input data-role="overlay" type="checkbox" /> {copy.overlay}</label>
+      <div class="day12-stage"><svg data-role="plot" viewBox="0 0 620 360" role="img" aria-label={copy.aria}></svg></div>
+      <p class="day12-verdict" data-out="verdict" role="status" aria-live="polite"></p>
+    </>
+  )}
+
+  {kind === "contagion" && (
+    <>
+      <div class="day12-stage"><svg data-role="network" viewBox="0 0 620 390" role="img" aria-label={copy.aria}></svg></div>
+      <ul class="day12-legend" aria-label={copy.legend}>
+        <li><i class="is-susceptible" aria-hidden="true"></i>{copy.susceptible}</li>
+        <li><i class="is-infectious" aria-hidden="true"></i>{copy.infectious}</li>
+        <li><i class="is-reached" aria-hidden="true"></i>{copy.past}</li>
+        <li><i class="is-immunized" aria-hidden="true"></i>{copy.immunized}</li>
+      </ul>
+      <label class="day12-range"><span>{copy.beta}</span><strong data-out="beta">0.25</strong><input data-role="beta" type="range" min="4" max="60" value="25" /></label>
+      <div class="day12-button-row">
+        <button class="day12-button is-primary" type="button" data-action="play">{copy.play}</button>
+        <button class="day12-button" type="button" data-strategy="hubs" aria-pressed="false">{copy.hubs}</button>
+        <button class="day12-button" type="button" data-strategy="random" aria-pressed="false">{copy.random}</button>
+        <button class="day12-button" type="button" data-action="reset">{copy.reset}</button>
+      </div>
+      <div class="day12-readouts three">
+        <div><span>{copy.reached}</span><strong data-out="reached">0%</strong></div>
+        <div><span>{copy.immunized}</span><strong data-out="immunized">0</strong></div>
+        <div><span>{copy.strategy}</span><strong data-out="strategy">-</strong></div>
+      </div>
+      <p class="day12-verdict" data-out="verdict" role="status" aria-live="polite"></p>
+    </>
+  )}
+
+  {kind === "friendship-paradox" && (
+    <>
+      <div class="day12-stage"><svg data-role="network" viewBox="0 0 620 360" role="group" aria-label={copy.aria}></svg></div>
+      <div class="day12-readouts">
+        <div><span>{copy.person}</span><strong data-out="person">-</strong></div>
+        <div><span>{copy.friend}</span><strong data-out="friend">-</strong></div>
+      </div>
+      <p class="day12-verdict" data-out="verdict" role="status" aria-live="polite"></p>
+    </>
+  )}
+
+  {kind === "robustness" && (
+    <>
+      <div class="day12-toolbar">
+        <span>{copy.strategy}</span>
+        <div class="day12-segment" role="group" aria-label={copy.strategy}>
+          <button type="button" data-strategy="random" aria-pressed="true">{copy.random}</button>
+          <button type="button" data-strategy="hubs" aria-pressed="false">{copy.hubs}</button>
+        </div>
+      </div>
+      <div class="day12-stage"><svg data-role="network" viewBox="0 0 620 390" role="img" aria-label={copy.aria}></svg></div>
+      <ul class="day12-legend" aria-label={copy.legend}>
+        <li><i class="is-main-piece" aria-hidden="true"></i>{copy.mainPiece}</li>
+        <li><i class="is-other-piece" aria-hidden="true"></i>{copy.otherPiece}</li>
+        <li><i class="is-removed" aria-hidden="true"></i>{copy.removedState}</li>
+      </ul>
+      <label class="day12-range"><span>{copy.removed}</span><strong data-out="removed">0%</strong><input data-role="removed" type="range" min="0" max="60" value="0" /></label>
+      <div class="day12-readouts">
+        <div><span>{copy.largest}</span><strong data-out="largest">100%</strong></div>
+        <div><span>{copy.fragments}</span><strong data-out="fragments">1</strong></div>
+      </div>
+      <p class="day12-verdict" data-out="verdict" role="status" aria-live="polite"></p>
+    </>
+  )}
+
+  {kind === "centrality" && (
+    <>
+      <div class="day12-toolbar">
+        <span>{copy.lens}</span>
+        <div class="day12-segment" role="group" aria-label={copy.lens}>
+          <button type="button" data-centrality="degree" aria-pressed="true">{copy.degree}</button>
+          <button type="button" data-centrality="betweenness" aria-pressed="false">{copy.betweenness}</button>
+          <button type="button" data-centrality="eigenvector" aria-pressed="false">{copy.eigenvector}</button>
+        </div>
+      </div>
+      <div class="day12-stage"><svg data-role="network" viewBox="0 0 620 360" role="img" aria-label={copy.aria}></svg></div>
+      <p class="day12-verdict" data-out="verdict" role="status" aria-live="polite"></p>
+    </>
+  )}
+
+  {kind === "synchronization" && (
+    <>
+      <div class="day12-stage"><svg data-role="plot" viewBox="0 0 620 360" role="img" aria-label={copy.aria}></svg></div>
+      <label class="day12-range"><span>{copy.coupling}</span><strong data-out="coupling">0%</strong><input data-role="coupling" type="range" min="0" max="100" value="0" /></label>
+      <div class="day12-readouts">
+        <div><span>{copy.transition}</span><strong data-out="transition">-</strong></div>
+        <div><span>{copy.width}</span><strong data-out="width">0.00</strong></div>
+      </div>
+      <p class="day12-verdict" data-out="verdict" role="status" aria-live="polite"></p>
+    </>
+  )}
+
+  {kind === "tipping-cascade" && (
+    <>
+      <div class="day12-stage"><svg data-role="network" viewBox="0 0 620 410" role="group" aria-label={copy.aria}></svg></div>
+      <button class="day12-button" type="button" data-action="reset">{copy.reset}</button>
+      <div class="day12-readouts">
+        <div><span>{copy.tipped}</span><strong data-out="tipped">0 / 7</strong></div>
+        <div><span>{copy.trigger}</span><strong data-out="trigger">-</strong></div>
+      </div>
+      <p class="day12-verdict" data-out="verdict" role="status" aria-live="polite"></p>
+    </>
+  )}
+</Panel>

@@ -549,6 +549,7 @@ describe("target content registry", () => {
     const day009 = daysByPath.get("009-systems-thinking-and-feedback");
     const day010 = daysByPath.get("010-models-maps-and-idealization");
     const day011 = daysByPath.get("011-heuristics-biases-and-rationality");
+    const day012 = daysByPath.get("012-networks");
 
     expect([...daysByPath.keys()]).toEqual([
       "001-what-is-knowledge",
@@ -561,7 +562,8 @@ describe("target content registry", () => {
       "008-complexity-and-emergence",
       "009-systems-thinking-and-feedback",
       "010-models-maps-and-idealization",
-      "011-heuristics-biases-and-rationality"
+      "011-heuristics-biases-and-rationality",
+      "012-networks"
     ]);
 
     for (const day of registry.days) {
@@ -718,6 +720,26 @@ describe("target content registry", () => {
     expect(day011EdgeAppendix?.source).toContain("Day11SamplingEngine");
     expect(day011EdgeAppendix?.source).toContain("clockwork");
     expect(day011EdgeAppendix?.source).toContain("sampling-curve");
+
+    expect(day012?.manifest.day).toBe(12);
+    expect(day012?.manifest.path).toBe("012-networks");
+    expect(day012?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "live-wires:en",
+      "live-wires:zh",
+      "the-deep-cuts:en",
+      "the-deep-cuts:zh"
+    ]);
+    expect(day012?.manifest.interactionScripts).toEqual([
+      "networks"
+    ]);
+    expect(day012?.bodies.en.source).toContain("Day12Interactive");
+    expect(day012?.bodies.en.source).toContain("Day12StaticFigure");
+    const day012DeepCuts = day012?.appendixBodies.find((body) => body.appendixId === "the-deep-cuts" && body.locale === "en");
+    expect(day012DeepCuts?.source).toContain('Day12Interactive kind="friendship-paradox"');
+    expect(day012DeepCuts?.source).toContain('Day12StaticFigure kind="centrality"');
+    const day012LiveWires = day012?.appendixBodies.find((body) => body.appendixId === "live-wires" && body.locale === "en");
+    expect(day012LiveWires?.source).toContain('Day12Interactive kind="synchronization"');
+    expect(day012LiveWires?.source).toContain('Day12Interactive kind="tipping-cascade"');
   });
 });
 

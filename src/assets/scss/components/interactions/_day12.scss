@@ -1,0 +1,334 @@
+.day12-static-figure {
+  margin: 1.35rem auto;
+}
+
+.day12-static-figure svg {
+  display: block;
+  width: 100%;
+  max-width: 44rem;
+  height: auto;
+  margin: 0 auto;
+}
+
+.day12-static-figure figcaption {
+  max-width: 42rem;
+  margin: .65rem auto 0;
+  color: var(--ink-faint);
+  font-size: .84em;
+  line-height: 1.45;
+}
+
+.day12-interactive .day12-stage {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.day12-interactive .day12-stage svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 31rem;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.day12-range {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .35rem .8rem;
+  align-items: baseline;
+  margin: 1rem 0;
+  color: var(--ink-faint);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .7rem;
+  letter-spacing: .05em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.day12-range strong {
+  color: var(--accent-deep);
+  font-size: .76rem;
+}
+
+.day12-range input {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.day12-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: .8rem 0 1rem;
+}
+
+.day12-button {
+  cursor: pointer;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .7rem;
+  letter-spacing: .025em;
+  line-height: 1.25;
+  padding: .48rem .7rem;
+  transition: border-color .18s ease, background .18s ease, color .18s ease, box-shadow .18s ease;
+}
+
+.day12-button:hover,
+.day12-button:focus-visible {
+  border-color: var(--accent);
+  color: var(--ink);
+  outline: 0;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.day12-button.is-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--raised);
+}
+
+.day12-button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--paper));
+  color: var(--ink);
+}
+
+.day12-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem .75rem;
+  align-items: center;
+  margin: 1rem 0 .65rem;
+}
+
+.day12-toolbar > span {
+  color: var(--ink-faint);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .64rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.day12-segment {
+  display: inline-flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--paper);
+}
+
+.day12-segment button {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .68rem;
+  letter-spacing: .025em;
+  line-height: 1.2;
+  padding: .46rem .72rem;
+  transition: background .18s ease, color .18s ease;
+}
+
+.day12-segment button:hover,
+.day12-segment button:focus-visible {
+  color: var(--ink);
+  outline: 0;
+}
+
+.day12-segment button:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--brass);
+}
+
+.day12-segment button[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--raised);
+}
+
+.day12-check {
+  display: inline-flex;
+  gap: .45rem;
+  align-items: center;
+  color: var(--ink-soft);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .7rem;
+  line-height: 1.35;
+}
+
+.day12-check:has(input:disabled) {
+  opacity: .48;
+}
+
+.day12-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem 1rem;
+  margin: -.35rem 0 .85rem;
+  padding: 0;
+  color: var(--ink-faint);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .64rem;
+  line-height: 1.35;
+  list-style: none;
+}
+
+.day12-legend li {
+  display: inline-flex;
+  gap: .38rem;
+  align-items: center;
+}
+
+.day12-legend i {
+  width: .72rem;
+  height: .72rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--ink-faint);
+}
+
+.day12-legend .is-infectious {
+  background: var(--contested);
+}
+
+.day12-legend .is-reached {
+  background: var(--brass);
+}
+
+.day12-legend .is-immunized,
+.day12-legend .is-main-piece {
+  background: var(--accent);
+}
+
+.day12-legend .is-other-piece {
+  background: var(--ink-faint);
+}
+
+.day12-legend .is-removed {
+  opacity: .3;
+  background: var(--line-strong);
+}
+
+.day12-readouts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .65rem;
+  margin: 1rem 0;
+}
+
+.day12-readouts.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.day12-readouts > div {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--raised) 76%, var(--paper));
+  padding: .65rem .72rem;
+}
+
+.day12-readouts span {
+  display: block;
+  margin-bottom: .28rem;
+  color: var(--ink-faint);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .62rem;
+  letter-spacing: .07em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.day12-readouts strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: var(--accent-deep);
+  font-family: "Fraunces", serif;
+  font-size: 1.18rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.day12-verdict {
+  min-height: 3.2em;
+  margin: 1rem 0 0;
+  border-top: 1px dashed var(--line);
+  padding-top: .8rem;
+  color: var(--ink-soft);
+  font-size: .88em;
+  line-height: 1.48;
+}
+
+.day12-svg-button {
+  cursor: pointer;
+  outline: 0;
+}
+
+.day12-svg-button circle {
+  transition: stroke .16s ease, stroke-width .16s ease, filter .16s ease;
+}
+
+.day12-svg-button:hover circle,
+.day12-svg-button:focus-visible circle {
+  stroke: var(--brass);
+  stroke-width: 5;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--brass) 45%, transparent));
+}
+
+@media (max-width: 560px) {
+  .day12-readouts.three {
+    grid-template-columns: 1fr;
+  }
+
+  .day12-toolbar {
+    align-items: flex-start;
+  }
+
+  .day12-toolbar > span {
+    width: 100%;
+    margin-top: .25rem;
+  }
+
+  .day12-segment {
+    width: 100%;
+    border-radius: 9px;
+  }
+
+  .day12-segment button {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-inline: .46rem;
+  }
+
+  .day12-button-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .day12-button-row .day12-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .day12-readouts {
+    grid-template-columns: 1fr;
+  }
+
+  .day12-interactive .day12-stage {
+    margin-inline: -.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .day12-button,
+  .day12-segment button,
+  .day12-svg-button circle {
+    transition: none;
+  }
+}

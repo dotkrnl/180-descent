@@ -1088,7 +1088,8 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["Day10TwinFlow", { selector: ".day10-twin-flow-pdf", width: "0.96\\linewidth", height: "0.32\\textheight" }],
   ["Day10ParadigmLadder", { selector: ".day10-paradigm-ladder-pdf", width: "0.96\\linewidth", height: "0.34\\textheight" }],
   ["Day10StaticFigure", { selector: ".day10-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }],
-  ["Day11StaticFigure", { selector: ".day11-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }]
+  ["Day11StaticFigure", { selector: ".day11-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }],
+  ["Day12StaticFigure", { selector: ".day12-static-figure", width: "0.92\\linewidth", height: "0.3\\textheight" }]
 ]);
 
 function renderRenderedSvgComponent(name: string, attrs: Map<string, string | null>, state: MdxRenderState): string {
@@ -1170,6 +1171,25 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
         selector: `.day11-static-figure-${kind}`,
         width: day11Width,
         height: day11Height
+      };
+    }
+  }
+  if (name === "Day12StaticFigure") {
+    const kind = resolveExpression(attrs.get("kind"), state).trim();
+    if (kind) {
+      const wideKinds = new Set([
+        "degree-distribution",
+        "contagion",
+        "robustness",
+        "centrality",
+        "synchronization",
+        "tipping-cascade"
+      ]);
+      const tallKinds = new Set(["hyperbolic", "tipping-cascade"]);
+      spec = {
+        selector: ".day12-static-figure-" + kind,
+        width: wideKinds.has(kind) ? "0.98\\linewidth" : "0.9\\linewidth",
+        height: tallKinds.has(kind) ? "0.38\\textheight" : "0.32\\textheight"
       };
     }
   }

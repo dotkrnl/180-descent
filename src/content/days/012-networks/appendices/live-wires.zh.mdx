@@ -1,0 +1,300 @@
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day12StaticFigure from "@app/components/lesson/figures/Day12StaticFigure.astro";
+import Day12Interactive from "@app/components/lesson/interactives/Day12Interactive.astro";
+
+<Lead>成对关系图是科学中最有成效的简化之一：把事物化为节点，把相关的节点两两相连，再研究由此形成的结构。本附录考察六项对这种简化本身提出挑战的研究纲领。它们追问：群体何时无法还原为节点对；连接关系能否用某种潜在几何表示；局部算法如何在图上计算和学习；网络控制究竟能保证什么；气候阈值可能如何相互作用；以及表面可见的模式何时根本无法从数据中恢复。</Lead>
+
+<ContinueNote label="本文位置">
+这里是在推进前文，而非重述旧课。[第 8 日](/zh/days/008-complexity-and-emergence/)已经介绍相变、重整化与高阶网络动力学；这里的问题是，与更简单的模型比较后，额外的相互作用阶数是否仍有解释力。[第 9 日](/zh/days/009-systems-thinking-and-feedback/)已经提供临界点、迟滞与杠杆作用；这里则把多个阈值放入一个带符号的耦合网络。[第 10 日](/zh/days/010-models-maps-and-idealization/)给出贯穿全文的提醒：推断出的结构可以很有用，却未必是藏在观测背后的某个字面实体。
+
+每项主张都按其实际适用范围标注。绿色表示结果在明确假设下已经确立；琥珀色表示证据可信，但仍处早期阶段或受模型约束；红色表示现有证据尚不支持该结论。
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow number="前沿 I">超越成对关系</SectionEyebrow>
+
+## 当二元关系不够用
+
+普通的边只记录两个节点之间的关系。这有时已经足够，但把事件投影为节点对，也可能抹去事件发生的方式。Alice、Ben 与 Chen 三人合写一篇论文，得到的三角形，与三篇分别由两人合写的论文完全相同。投影后的图保留了谁与谁合作，却丢失了这究竟是一次三人共同行动，还是三次两人行动。
+
+<Term>超图</Term><TipNote text={"超图推广了普通图，允许一条超边同时连接任意数量的节点。"} />把群体保留为一条超边。<Term>单纯复形</Term><TipNote text={"单纯复形由节点、边、实心三角形及更高维单纯形组成，并且每个单纯形的所有面都必须包含在内。"} />还施加了更严格的规则：若存在一个实心三角形，其三条边和三个节点也都必须存在。这条闭包规则允许变量定义在边、三角形和更高维胞腔上，并可用<Term>霍奇拉普拉斯算子</Term><TipNote text={"霍奇拉普拉斯算子把图拉普拉斯的思想从节点信号推广到边、三角形及更高维胞腔上的信号。"} />等算子描述这些信号如何相互作用。
+
+<Panel>
+<PanelTitle>图解 · 边集合与单纯形</PanelTitle>
+<PanelNote>空心三角形记录三组二元关系；实心三角形还记录一个不可约的三方关系及其各个面。两者的节点与边界可以完全相同，编码的事件却不一样。</PanelNote>
+
+<Day12StaticFigure kind="simplex" locale="zh" />
+</Panel>
+
+其动力学后果可能是性质上的改变。在某些 Kuramoto 型振子模型中，加入三体及更高阶耦合，会使同步的连续出现变成具有双稳态和迟滞的突然跃迁。这并不表示每一种实测群体相互作用都会产生爆炸式转变；它只说明，相互作用的阶数能够改变模型的相图。第 8 日介绍了相变，第 9 日介绍了有记忆的悬崖；这里的进展在于，这道悬崖可以来自相互作用的表示方式，而不只是相互作用强度的增加。
+</ContentSection>
+
+<Day12Interactive kind="synchronization" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<Panel>
+<PanelTitle>图 · 连续同步与爆炸式同步</PanelTitle>
+<PanelNote>这些曲线概括了高阶振子模型中出现的行为。它们是教学示意图，不是观测结果、拟合数据，也不是针对某个大脑、电网或动物群体的模拟输出。</PanelNote>
+
+<Day12StaticFigure kind="synchronization" locale="zh" />
+
+<SimpleTable
+  headers={["机制", "耦合增强时", "耦合减弱时", "示意图能够说明什么"]}
+  rows={[
+    ["成对耦合基线", "在图示的比较中，同步程度平滑上升。", "沿同一路径返回。", "该模型族中一条连续、可逆的参照曲线。"],
+    ["高阶机制", "系统可以一直不同步，随后突然跃迁至同步。", "同步状态可以维持到低于正向切换点的位置。", "在特定振子模型中，高阶项可以造成不连续转变与迟滞。"],
+    ["双稳态区间", "在同一耦合值下，系统可能处于低同步或高同步状态。", "观测到的状态取决于系统历史。", "路径依赖是模型结果；曲线并未估计任何经验阈值。"]
+  ]}/>
+</Panel>
+</FormatOnly>
+
+<Claim>
+<ClaimHeader label="前沿 01">
+<StatusChip status="hint" label="高阶效应" />
+<StatusChip status="bad" label="成对模型过时" />
+</ClaimHeader>
+
+### 群体关系究竟改变了多少？
+
+2020 年以来发表的综述记录了成对投影可能遗漏的动力学，包括同步、传染与稳定性的变化。不过，其适用范围仍因具体案例而异。Bian、Zhou 与 Bi 在 2025 年进行比较后发现：在十二个网络中，保留高阶信息对某些网络的超边预测帮助很大，对另一些则帮助很小。因此，正确的问题不是群体事件是否存在——许多事件显然存在——而是高阶表示能否充分改善特定的解释、预测或干预，从而抵偿其增加的参数与计算成本。
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="前沿 II">网络的形状</SectionEyebrow>
+
+## 经拟合而非直接观察的潜在几何
+
+许多网络模型从邻接关系出发，也止于邻接关系：两个节点要么相连，要么不相连。另一套研究纲领则为每个节点指定某个<Term>潜在空间</Term><TipNote text={"潜在空间是一套经推断得到的坐标系统，其距离被选定用来解释观测到的关系或数据。"} />中的位置，并让连接概率随距离增加而降低。在一种常见的双曲模型中，径向位置反映受欢迎程度或期望度，角向距离反映相似性。枢纽节点更靠近中心，专门化节点则更接近边缘。
+
+双曲空间之所以有用，是因为其中可用的体积随半径呈指数增长。于是，分支层级既有扩展空间，又能保持较短路径。在坐标与连接采用适当分布时，该模型能够同时生成度的异质性、聚集性、社区和可导航的短路径。这些性质都是模型的结果；观察到它们，并不能唯一证明生成这些性质的系统实际位于双曲空间。
+
+<Panel>
+<PanelTitle>图解 · 推断出的双曲地图</PanelTitle>
+<PanelNote>庞加莱圆盘视图把连接广泛的节点置于中心附近，把专门化节点置于圆周附近。这些坐标是在模型下根据连接关系估计出来的，不是实测的物理位置。</PanelNote>
+
+<Day12StaticFigure kind="hyperbolic" locale="zh" />
+</Panel>
+
+这种几何还提出了一种网络粗粒化方法：合并潜在空间中彼此接近的节点，再检验哪些性质能够保留下来。几何重整化在以五种分辨率重建的人脑结构连接组中揭示了近似自相似性。2023 年的另一项研究纲领——拉普拉斯重整化——不预先采用双曲嵌入，而是用扩散模态定义尺度。第 8 日把重整化介绍为反复进行的粗粒化；此处的前沿问题则是比较性的：哪一种粗粒化有充分依据，不同方案保留的结构是否相同？
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="前沿 02">
+<StatusChip status="hint" label="潜在几何" />
+<StatusChip status="hint" label="网络尺度" />
+</ClaimHeader>
+
+### 强大的坐标系仍然只是模型
+
+双曲嵌入可用于路由、连接预测、可视化与多尺度分析，这项研究纲领也已经用同一个框架重现了多种反复出现的网络特征。然而，坐标是根据观测到的图推断而来，可能取决于嵌入模型和分辨率，而且未必唯一。「双曲潜在空间模型能够很好地描述这个图」在许多案例中是有依据的判断；「这个系统确实生活在一个隐秘的双曲平面上」则是拟合结果无法支持的形而上升级。
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="前沿 III">在纠结的网络上计算</SectionEyebrow>
+
+## 局部消息、环路与图学习
+
+<Term>信念传播</Term><TipNote text={"信念传播是一种消息传递算法：相邻变量交换由模型规定的摘要，以近似计算或精确计算边缘概率。"} />把全局计算转化为反复进行的局部更新。每个节点接收邻居发来的摘要，按照概率模型加以合并，再把更新后的摘要传出去。在树结构上，相应消息不会经过短环回到原处，算法可以得到精确结果。在含环的图上，旧信息却可能绕回原点，被当作独立证据再次计算。
+
+Kirkley、Cantwell 与 Newman 在 2021 年对这个问题取得进展：他们在明确包含短环的邻域上传递更丰富的消息。对于聚集网络上的 Ising 模型等案例，该方法能显著改善计算结果。它的成本会随必须表示的邻域增大，因此，「可以用于树之外的结构」并不等于「能够轻松扩展到每个稠密的含环网络」。较新的张量网络混合方法也作出类似权衡：先更准确地收缩短环区域，再在较稀疏的其余部分使用普通消息传递。
+
+<Panel>
+<PanelTitle>图解 · 局部消息何时变成回声</PanelTitle>
+<PanelNote>在树上，传入消息概括的是相互分离的分支；在三角环路上，信息可能返回源头，伪装成新的证据。环路感知方法会表示更多这样的局部依赖。</PanelNote>
+
+<Day12StaticFigure kind="message-passing" locale="zh" />
+</Panel>
+
+它与 AI 确有联系，但联系并不等于二者相同。<Term>消息传递图神经网络</Term><TipNote text={"消息传递图神经网络会学习相应函数，在反复迭代的层中变换并聚合相邻节点的信息。"} />同样逐层聚合邻居信息，属于网络消息传递这一广义的邻域聚合家族，却不等同于信念传播：GNN 通常从数据中学习参数化变换，信念传播则在选定的图模型下传递具有明确概率语义的量。这种共同架构使思想可以在两类方法之间流动，却不能据此把它们归为同一种算法。
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="前沿 03">
+<StatusChip status="ok" label="邻域聚合" />
+<StatusChip status="hint" label="环路修正" />
+</ClaimHeader>
+
+### 同属一个家族，并非同一种算法
+
+经环路修正的信念传播是一项已经发表的技术进展，消息传递 GNN 也是图学习的一类主要架构。未决问题在于规模与迁移：在计算代价过高之前，究竟能够换取多少环路准确度？来自概率消息传递的见解在何时能真正改善学习型图模型，而不只是为其提供一种描述？Bronstein 等人对几何深度学习的综合仍是一篇有影响力的预印本；它适合作为研究纲领，而不是已经经过同行评议、足以统一全部图智能的定理。
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="前沿 IV">握住控制杆</SectionEyebrow>
+
+## 结构可控性能够承诺什么，又不能承诺什么
+
+网络控制研究的问题是：对选定节点施加输入，能否引导一个动力系统穿越其状态空间。Liu、Slotine 与 Barabási 在 2011 年研究了形如 <MathInline latex={String.raw`\dot{x}=Ax+Bu`} /> 的线性系统，其中有向矩阵 <MathInline latex={String.raw`A`} /> 的零元素与非零元素分布已知，而允许非零的权重按泛型处理。在这些假设下，最大匹配可以确定实现结构可控性所需<Term>驱动节点</Term><TipNote text={"驱动节点是在特定网络控制模型中接收独立外部控制输入的节点。"} />的最少数量。
+
+这个结果有条件限制，却依然重要，而且有悖直觉：所需的驱动节点未必是枢纽节点。未被匹配的低度节点可能需要直接输入，因为有向结构的其余部分无法独立到达它们。不同的最大匹配可以给出不同的有效驱动节点集合；后来的系综结果则把所需驱动节点的比例与低入度、低出度节点的密度联系起来。
+
+<Panel>
+<PanelTitle>图解 · 驱动节点不一定是枢纽</PanelTitle>
+<PanelNote>黄铜色输入指向这个示例有向网络中未匹配的外围节点。该图展示的是最大匹配的直觉，并不是一条普遍规律：不是每个低度节点都是驱动节点，也不是所有枢纽都无关紧要。</PanelNote>
+
+<Day12StaticFigure kind="driver-nodes" locale="zh" />
+</Panel>
+
+这使第 9 日的杠杆语言更加精确。结构可控性回答的是某类模型中的可达性问题，并不会自动指出一种容易、廉价、安全或具有社会正当性的干预。即使线性网络在原则上可控，也可能需要巨大的控制能量。细胞、大脑、生态系统和市场还有非线性动力学、不确定的边、部分可观测性、输入约束与不断变化的目标状态。
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="前沿 04">
+<StatusChip status="ok" label="结构控制" />
+<StatusChip status="bad" label="实际操控" />
+</ClaimHeader>
+
+### 模型中的可达性不等于实际控制
+
+最大匹配的结果在其结构线性框架内有坚实的数学基础，却不能证明真实的生物、生态、基础设施或社会网络可以被推至任意目标状态。控制能量、非线性响应、拓扑与权重误差、执行器约束和状态估计误差，都可能使「原则上可达」与「实践中可实现」之间的鸿沟难以跨越。因此，关于控制真实复杂网络的主张，应说明动力学、目标状态、输入约束、能量预算与不确定性，而不能只给出连接图。
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="前沿 V">作为网络的地球</SectionEyebrow>
+
+## 从单个临界要素到带符号的耦合关系
+
+第 9 日逐一讨论临界要素及其增强反馈。新增的网络问题是：跨过一个阈值，是否会改变另一个要素承受的压力。连接具有方向和正负符号：一种转变可能把相邻要素推向阈值，另一种则可能使它得到部分稳定。
+
+若干物理路径为这类连接提供了依据。格陵兰冰体损失产生的淡水可能削弱大西洋经向翻转环流。减弱的环流可能改变与亚马孙相关的降雨格局；同一环流变化引起的区域降温，又可能部分抵消格陵兰冰体损失。永久冻土释放碳会给整个系统增加变暖压力。但这些机制不足以给出一张完整的邻接矩阵。有些方向的证据强于另一些；连接的符号、强度、阈值和时间尺度仍然不确定，也取决于具体情景。
+
+下方的七节点展示有意采用示意性质。它使用有物理依据的耦合类型，却采用人为设定的教学权重和阈值。节点发生临界转变的顺序不是预报，其连接方式也不是 Wunderling 等人所分析的四要素概念模型。
+</ContentSection>
+
+<Day12Interactive kind="tipping-cascade" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<Panel>
+<PanelTitle>图 · 带符号的临界转变级联示意图</PanelTitle>
+<PanelNote>红色箭头把目标推向临界转变，绿色钝头连接则施加反向作用。节点阈值和边权重经过选择，以展示路径依赖；它们并不估计温度、日期、概率或某种特定的地球系统未来。</PanelNote>
+
+<Day12StaticFigure kind="tipping-cascade" locale="zh" />
+
+<SimpleTable
+  headers={["强制触发的节点", "玩具网络中的结果", "结构原因", "推断边界"]}
+  rows={[
+    ["格陵兰", "一条较长的级联可以依次经过 AMOC、亚马孙、永久冻土、珊瑚礁与北方针叶林。", "每一项下游去稳定化输入都达到了示意阈值。", "这是人为设计的教学序列，不是格陵兰将引发这一确切级联的预报。"],
+    ["AMOC", "下游分支可能发生临界转变，而格陵兰仍未转变。", "AMOC 使亚马孙分支失稳，并向格陵兰发送一项稳定化输入。", "真实 AMOC 耦合的符号与大小随路径、模型和情景而异。"],
+    ["西南极洲", "被强制触发的节点可能保持孤立。", "它唯一的向外影响不足以使下一个玩具阈值被跨越。", "展示中没有发生级联，不代表这个真实要素不存在风险。"],
+    ["珊瑚礁", "级联立即停止。", "示意图没有为这个节点设置向外的边。", "连接缺失是设计上的简化，不是物理独立的证据。"]
+  ]}/>
+</Panel>
+</FormatOnly>
+
+<Claim>
+<ClaimHeader label="前沿 05">
+<StatusChip status="hint" label="临界要素耦合" />
+<StatusChip status="bad" label="级联预报" />
+</ClaimHeader>
+
+### 网络有其合理性，级联却不是时间表
+
+Armstrong McKay 等人在 2022 年重新评估了十六个临界要素。以该评估采用的约 1.1–1.2°C 变暖基线计算，研究判断五个临界点已经可能发生，同时强调阈值范围很宽，响应时间可能从数十年延伸到数千年。Wunderling 等人在 2021 年的概念模型中，把四个要素、相互作用强度和若干可能的连接符号的不确定性纳入传播；在这组模型中，相互作用往往会增加多米诺效应的风险。两项研究都不能为精确的级联次序或日期背书。现有证据能够支持的结论是：相互作用可以改变风险，因而值得显式建模；带符号网络的具体细节仍具有高度不确定性。
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="前沿 VI">认识边界</SectionEyebrow>
+
+## 算法无法恢复模式的时候
+
+即使生成数据的过程不存在有意义的社区，网络分析也能给出一种划分。更强的结果则是，某些真实存在的结构同样可能无法恢复。在稀疏的植入社区模型中，有些参数区间内的组内连接率与组间连接率过于相似，任何算法都无法以优于随机猜测的表现推断标签。这种<Term>可检测性转变</Term>是在特定生成假设下的信息极限，并不是宣称现实世界中每个微弱的社区都不可知。
+
+应对方法是使网络分析具有推断性，而不只是装饰性的图形展示。需要明确生成模型，将其与备择模型和零模型比较，对不必要的结构施加惩罚，并报告后验不确定性或抽样不确定性。强制运行社区发现算法，几乎总能得到一些颜色不同的群组；真正的科学问题是，包含这些群组的模型是否比受到适当约束的备择模型更能预测观测到的网络。
+
+这正是相对于前几日内容的推进。第 2 日追问什么证据能够推翻一项主张；第 5 日区分关联与机制；第 10 日区分有用的表征与它所表征的对象。网络推断把三者合在一起：模式、生成模式的模型，以及把该模型与灵活的模式搜寻器区分开的证据。
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="前沿 06">
+<StatusChip status="ok" label="可检测性极限" />
+<StatusChip status="hint" label="经验结构" />
+</ClaimHeader>
+
+### 极限确实存在，其适用范围同样重要
+
+Decelle 等人在稀疏随机块模型的社区推断中识别出一种相变：低于某个信噪边界，在这些假设下便无法从信息论上恢复植入的标签。当假设、度修正、元数据或观测发生变化时，边界也会移动。这项结果应当提高经验社区的举证门槛，而不是终止探索。经过校准的主张是：有些模型具有不可消除的推断极限；与把某种算法的划分当作已经发现的真实情况相比，考虑不确定性的生成模型比较更为稳妥。
+</Claim>
+
+<ContentSection>
+<SectionEyebrow>前沿记分卡</SectionEyebrow>
+
+## 六项研究纲领，六项未决检验
+
+<SimpleTable
+  headers={["研究纲领", "在适用范围内得到支持", "未决检验"]}
+  rows={[
+    ["高阶网络", "考虑群体的模型会产生不同的动力学，并能改善部分预测。", "逐案判断：额外的相互作用阶数能否在样本外胜过更简单的成对关系解释。"],
+    ["潜在几何", "双曲嵌入能以紧凑方式重现并利用多种网络特征。", "确立唯一性，比较不同嵌入家族，并把有用坐标与字面上的物理几何区分开。"],
+    ["消息传递", "树结构方法、环路感知扩展和消息传递 GNN 共享一种富有成效的局部计算模式。", "扩展准确的环路处理，并证明源自物理学的更新何时能改善学习型图系统。"],
+    ["网络控制", "最大匹配可以求解一个定义明确、采用泛型权重的线性模型的结构可控性。", "在能量可行、执行器受约束的条件下，控制非线性、不确定且部分可观测的系统。"],
+    ["临界转变级联", "物理耦合为带符号网络提供依据，概念模型也表明相互作用可以改变风险。", "把阈值、符号、强度与时间尺度约束到足以评估具体级联的程度。"],
+    ["网络推断", "特定生成模型具有可检测性极限，并支持考虑不确定性的比较。", "区分稳健的经验结构与由方法、抽样或分辨率制造出来的划分。"]
+  ]}/>
+</ContentSection>
+
+<Recap>
+<PanelTitle>用三句话概括前沿</PanelTitle>
+<RecapList>
+<RecapItem term="核心观点">图并不会中性地原样转录一个系统。选择成对关系还是群体关系、坐标还是邻接关系、局部更新还是控制输入，会改变哪些内容可以被表示、计算和推断。</RecapItem>
+<RecapItem term="最佳类比">高阶同步可以把平滑斜坡变成一道有记忆的悬崖：系统可能突然跃迁，而返回路线未必与来路重合。</RecapItem>
+<RecapItem term="仍在争论">核心分歧不在于这些方法在数学上是否有趣，而在于：更丰富的结构何时真正捕捉到目标系统中某种会被更简单且经过充分检验的模型遗漏的东西。</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads>此处线索 › 涌现（相互作用阶数的相图与多尺度结构）· 信息（扩散、消息传递与可检测性）· 计算（图学习与控制）· 能量（结构可达性与可行操控之间的差距）· 把第 9 日的临界转变线索改写为带符号网络。</Threads>
+
+<ContinueNote label="→ 第 13 日">
+### 从网络走向测量与单位
+
+本附录以依赖模型的阈值、坐标、控制能量与信噪边界收尾。第 13 日将追问：什么使这些量真正成为测量？单位如何定义？操作怎样把数字连接到世界？现代国际单位制又为何把基本单位锚定在自然界的固定常数上？
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>来源与延伸阅读</SourcesTitle>
+
+除非明确标为预印本，以下文献均经过同行评议。若某项前沿研究依赖奠基性成果，则收入 2020 年以前的论文。
+
+1. Battiston, F., Cencetti, G., Iacopini, I., Latora, V., Lucas, M., Patania, A., Young, J.-G. &amp; Petri, G. (2020). "Networks beyond pairwise interactions: Structure and dynamics." *Physics Reports* 874: 1–92. [doi.org/10.1016/j.physrep.2020.05.004](https://doi.org/10.1016/j.physrep.2020.05.004)
+2. Battiston, F. et al. (2021). "The physics of higher-order interactions in complex systems." *Nature Physics* 17: 1093–1098. [doi.org/10.1038/s41567-021-01371-4](https://doi.org/10.1038/s41567-021-01371-4)
+3. Boccaletti, S., De Lellis, P., del Genio, C. I., Alfaro-Bittner, K., Criado, R., Jalan, S. &amp; Romance, M. (2023). "The structure and dynamics of networks with higher order interactions." *Physics Reports* 1018: 1–64. [doi.org/10.1016/j.physrep.2023.04.002](https://doi.org/10.1016/j.physrep.2023.04.002) Bianconi, G. (2021). *Higher-Order Networks*. Cambridge University Press. [doi.org/10.1017/9781108770996](https://doi.org/10.1017/9781108770996)
+4. Skardal, P. S. &amp; Arenas, A. (2020). "Higher order interactions in complex networks of phase oscillators promote abrupt synchronization switching." *Communications Physics* 3: 218. [doi.org/10.1038/s42005-020-00485-0](https://doi.org/10.1038/s42005-020-00485-0) Millán, A. P., Torres, J. J. &amp; Bianconi, G. (2020). "Explosive Higher-Order Kuramoto Dynamics on Simplicial Complexes." *Physical Review Letters* 124: 218301. [doi.org/10.1103/PhysRevLett.124.218301](https://doi.org/10.1103/PhysRevLett.124.218301) Gambuzza, L. V. et al. (2021). "Stability of synchronization in simplicial complexes." *Nature Communications* 12: 1255. [doi.org/10.1038/s41467-021-21486-9](https://doi.org/10.1038/s41467-021-21486-9)
+5. Millán, A. P. et al. (2025). "Topology shapes dynamics of higher-order networks." *Nature Physics* 21: 353–361. [doi.org/10.1038/s41567-024-02757-w](https://doi.org/10.1038/s41567-024-02757-w)
+6. Bian, J., Zhou, T. &amp; Bi, Y. (2025). "Unveiling the role of higher-order interactions via stepwise reduction." *Communications Physics* 8: 228. <Meta>在所研究的十二个网络与预测任务中，高阶信息带来的收益并不相同。</Meta> [doi.org/10.1038/s42005-025-02157-3](https://doi.org/10.1038/s42005-025-02157-3)
+7. Boguñá, M., Bonamassa, I., De Domenico, M., Havlin, S., Krioukov, D. &amp; Serrano, M. Á. (2021). "Network geometry." *Nature Reviews Physics* 3: 114–135. [doi.org/10.1038/s42254-020-00264-4](https://doi.org/10.1038/s42254-020-00264-4)
+8. Krioukov, D., Papadopoulos, F., Kitsak, M., Vahdat, A. &amp; Boguñá, M. (2010). "Hyperbolic geometry of complex networks." *Physical Review E* 82: 036106. [doi.org/10.1103/PhysRevE.82.036106](https://doi.org/10.1103/PhysRevE.82.036106)
+9. García-Pérez, G., Boguñá, M. &amp; Serrano, M. Á. (2018). "Multiscale unfolding of real networks by geometric renormalization." *Nature Physics* 14: 583–589. [doi.org/10.1038/s41567-018-0072-5](https://doi.org/10.1038/s41567-018-0072-5)
+10. Zheng, M., Allard, A., Hagmann, P., Alemán-Gómez, Y. &amp; Serrano, M. Á. (2020). "Geometric renormalization unravels self-similarity of the multiscale human connectome." *Proceedings of the National Academy of Sciences* 117: 20244–20253. [doi.org/10.1073/pnas.1922248117](https://doi.org/10.1073/pnas.1922248117) van der Kolk, J., Serrano, M. Á. &amp; Boguñá, M. (2024). "Random graphs and real networks with weak geometric coupling." *Physical Review Research* 6: 013337. [doi.org/10.1103/PhysRevResearch.6.013337](https://doi.org/10.1103/PhysRevResearch.6.013337)
+11. Villegas, P., Gili, T., Caldarelli, G. &amp; Gabrielli, A. (2023). "Laplacian renormalization group for heterogeneous networks." *Nature Physics* 19: 445–450. [doi.org/10.1038/s41567-022-01866-8](https://doi.org/10.1038/s41567-022-01866-8)
+12. Cantwell, G. T. &amp; Newman, M. E. J. (2019). "Message passing on networks with loops." *Proceedings of the National Academy of Sciences* 116: 23398–23403. [doi.org/10.1073/pnas.1914893116](https://doi.org/10.1073/pnas.1914893116) Kirkley, A., Cantwell, G. T. &amp; Newman, M. E. J. (2021). "Belief propagation for networks with loops." *Science Advances* 7: eabf1211. [doi.org/10.1126/sciadv.abf1211](https://doi.org/10.1126/sciadv.abf1211)
+13. Newman, M. E. J. (2023). "Message passing methods on complex networks." *Proceedings of the Royal Society A* 479: 20220774. [doi.org/10.1098/rspa.2022.0774](https://doi.org/10.1098/rspa.2022.0774)
+14. Wang, Y., Zhang, Y. E., Pan, F. &amp; Zhang, P. (2024). "Tensor Network Message Passing." *Physical Review Letters* 132: 117401. [doi.org/10.1103/PhysRevLett.132.117401](https://doi.org/10.1103/PhysRevLett.132.117401)
+15. Bronstein, M. M., Bruna, J., Cohen, T. &amp; Veličković, P. (2021). "Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges." <Meta>有影响力的预印本，arXiv:2104.13478；未经同行评议。</Meta> [arxiv.org/abs/2104.13478](https://arxiv.org/abs/2104.13478)
+16. Liu, Y.-Y., Slotine, J.-J. &amp; Barabási, A.-L. (2011). "Controllability of complex networks." *Nature* 473: 167–173. [doi.org/10.1038/nature10011](https://doi.org/10.1038/nature10011)
+17. Menichetti, G., Dall'Asta, L. &amp; Bianconi, G. (2014). "Network controllability is determined by the density of low in-degree and out-degree nodes." *Physical Review Letters* 113: 078701. [doi.org/10.1103/PhysRevLett.113.078701](https://doi.org/10.1103/PhysRevLett.113.078701)
+18. Yan, G., Ren, J., Lai, Y.-C., Lai, C.-H. &amp; Li, B. (2012). "Controlling complex networks: How much energy is needed?" *Physical Review Letters* 108: 218703. [doi.org/10.1103/PhysRevLett.108.218703](https://doi.org/10.1103/PhysRevLett.108.218703)
+19. D'Souza, R. M., di Bernardo, M. &amp; Liu, Y.-Y. (2023). "Controlling complex networks with complex nodes." *Nature Reviews Physics* 5: 250–262. [doi.org/10.1038/s42254-023-00566-3](https://doi.org/10.1038/s42254-023-00566-3)
+20. Armstrong McKay, D. I. et al. (2022). "Exceeding 1.5°C global warming could trigger multiple climate tipping points." *Science* 377: eabn7950. [doi.org/10.1126/science.abn7950](https://doi.org/10.1126/science.abn7950)
+21. Wunderling, N., Donges, J. F., Kurths, J. &amp; Winkelmann, R. (2021). "Interacting tipping elements increase risk of climate domino effects under global warming." *Earth System Dynamics* 12: 601–619. <Meta>这是一个包含四项要素的概念网络，阈值、相互作用强度与结构的不确定性均被纳入传播。</Meta> [doi.org/10.5194/esd-12-601-2021](https://doi.org/10.5194/esd-12-601-2021)
+22. Lenton, T. M. et al. (2008). "Tipping elements in the Earth's climate system." *Proceedings of the National Academy of Sciences* 105: 1786–1793. [doi.org/10.1073/pnas.0705414105](https://doi.org/10.1073/pnas.0705414105)
+23. Decelle, A., Krzakala, F., Moore, C. &amp; Zdeborová, L. (2011). "Inference and phase transitions in the detection of modules in sparse networks." *Physical Review Letters* 107: 065701. [doi.org/10.1103/PhysRevLett.107.065701](https://doi.org/10.1103/PhysRevLett.107.065701)
+24. Peixoto, T. P. (2019). "Bayesian stochastic blockmodeling." In Doreian, P., Batagelj, V. &amp; Ferligoj, A., eds., *Advances in Network Clustering and Blockmodeling*, pp. 289–332. Wiley. [arxiv.org/abs/1705.10225](https://arxiv.org/abs/1705.10225)
+</Sources>

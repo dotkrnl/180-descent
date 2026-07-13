@@ -1,0 +1,300 @@
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day12StaticFigure from "@app/components/lesson/figures/Day12StaticFigure.astro";
+import Day12Interactive from "@app/components/lesson/interactives/Day12Interactive.astro";
+
+<Lead drop="T">he pairwise graph is one of science's most productive simplifications: turn things into nodes, join related pairs, and study the resulting structure. This appendix follows six research programs that press on the simplification itself. They ask when a group cannot be reduced to pairs, whether connectivity can be represented in a latent geometry, how local algorithms compute and learn on graphs, what network control really guarantees, how climate thresholds can interact, and when an apparent pattern is not recoverable from the data at all.</Lead>
+
+<ContinueNote label="Where this sits">
+This advances earlier material rather than replaying it. **[Day 8](/days/008-complexity-and-emergence/)** already introduced phase transitions, renormalization, and higher-order network dynamics; the question here is when the extra interaction order survives comparison with a simpler model. **[Day 9](/days/009-systems-thinking-and-feedback/)** already supplied tipping points, hysteresis, and leverage; here multiple thresholds become a signed, coupled network. **[Day 10](/days/010-models-maps-and-idealization/)** supplies the governing caution: an inferred structure can be useful without being a literal object hidden behind the observations.
+
+Each claim is tagged at its actual scope. Green marks a result established within stated assumptions, amber marks a credible but early or model-bound extension, and red marks a conclusion that the evidence does not currently support.
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow number="Frontier I">beyond the pair</SectionEyebrow>
+
+## When two is not enough
+
+An ordinary edge records a relation between exactly two nodes. That is sometimes enough, but a projection into pairs can erase how an event happened. One paper written by Alice, Ben, and Chen becomes the same triangle as three separate two-author papers. The projected graph retains who has collaborated with whom and loses whether the collaboration was one three-person act.
+
+A <Term as="em">hypergraph</Term><TipNote text={"A hypergraph generalizes a graph by allowing one hyperedge to join any number of nodes at once."} /> keeps the group as one hyperedge. A <Term as="em">simplicial complex</Term><TipNote text={"A simplicial complex is a collection of nodes, edges, filled triangles, and higher-dimensional simplices that includes every face of each simplex."} /> adds a stricter rule: when a filled triangle is present, its three boundary edges and three nodes are present too. That closure rule permits variables to live on edges, triangles, and higher cells, with operators such as the <Term as="em">Hodge Laplacian</Term><TipNote text={"A Hodge Laplacian extends graph-Laplacian ideas from node signals to signals assigned to edges, triangles, and higher-dimensional cells."} /> describing how those signals interact.
+
+<Panel>
+<PanelTitle>Diagram · an edge set and a simplex</PanelTitle>
+<PanelNote>The hollow triangle records three dyadic relations. The filled triangle records one irreducible three-way relation as well as its faces. The nodes and boundary can match while the encoded event differs.</PanelNote>
+
+<Day12StaticFigure kind="simplex" locale="en" />
+</Panel>
+
+The dynamical consequence can be qualitative. In particular Kuramoto-type oscillator models, adding three-body and higher coupling can turn a continuous onset of synchrony into an abrupt jump with bistability and hysteresis. That does not mean every measured group interaction creates an explosive transition. It means interaction order can change the model's phase diagram. Day 8 supplied the phase transition and Day 9 supplied the cliff with memory; the advance here is that the cliff can be produced by how interactions are represented, not only by increasing their strength.
+</ContentSection>
+
+<Day12Interactive kind="synchronization" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<Panel>
+<PanelTitle>Figure · continuous and explosive synchronization</PanelTitle>
+<PanelNote>The curves summarize behaviors found in higher-order oscillator models. They are teaching schematics, not observations, fitted data, or output from a simulation of a particular brain, grid, or animal group.</PanelNote>
+
+<Day12StaticFigure kind="synchronization" locale="en" />
+
+<SimpleTable
+  headers={["Regime","As coupling rises","As coupling falls","What the schematic establishes"]}
+  rows={[
+    ["Pairwise baseline", "Synchrony rises smoothly in the illustrated comparison.", "The same path is retraced.", "A continuous, reversible reference curve for this model family."],
+    ["Higher-order regime", "The system can remain incoherent and then jump to synchrony.", "Synchrony can persist below the forward switching point.", "Higher-order terms can produce a discontinuity and hysteresis in specified oscillator models."],
+    ["Bistable interval", "Either low or high synchrony can occur at the same coupling value.", "The observed state depends on its history.", "Path dependence is a model result; the curve does not estimate any empirical threshold."]
+  ]}/>
+</Panel>
+</FormatOnly>
+
+<Claim>
+<ClaimHeader label="Edge 01">
+<StatusChip status="hint" label="higher-order effects" />
+<StatusChip status="bad" label="pairwise obsolescence" />
+</ClaimHeader>
+
+### How much does the group change the result?
+
+Reviews published from 2020 onward document dynamics that pairwise projections can miss, including altered synchronization, contagion, and stability. The scope remains case-specific. A 2025 comparison by Bian, Zhou, and Bi found that retaining higher-order information improved hyperedge prediction substantially in some of twelve networks and little in others. The right question is therefore not whether group events exist; many plainly do. It is whether a higher-order representation improves the particular explanation, prediction, or intervention enough to justify its added parameters and computational cost.
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="Frontier II">the shape of a network</SectionEyebrow>
+
+## A hidden geometry, fitted rather than seen
+
+Many network models begin with adjacency and stop there: two nodes are connected or they are not. A different program assigns each node a position in a <Term as="em">latent space</Term><TipNote text={"A latent space is an inferred coordinate system whose distances are chosen to explain observed relationships or data."} /> and lets connection probability decrease with distance. In a common hyperbolic model, radial position tracks popularity or expected degree, while angular separation tracks similarity. Hubs lie nearer the center and specialized nodes nearer the boundary.
+
+Hyperbolic space is useful because its available volume grows exponentially with radius. That gives a branching hierarchy room to expand while keeping paths short. With appropriate coordinate and connection distributions, the model can generate degree heterogeneity, clustering, communities, and navigable short paths together. These properties are consequences of the model; observing them does not uniquely prove that the generating system occupies a hyperbolic space.
+
+<Panel>
+<PanelTitle>Diagram · an inferred hyperbolic map</PanelTitle>
+<PanelNote>A Poincaré-disk view places broadly connected nodes toward the center and specialized nodes toward the rim. The coordinates are estimated from connectivity under a model; they are not measured physical locations.</PanelNote>
+
+<Day12StaticFigure kind="hyperbolic" locale="en" />
+</Panel>
+
+The geometry also proposes a way to coarse-grain a network: combine nodes that are nearby in latent space and inspect what survives. Geometric renormalization has exposed approximate self-similarity across five reconstructed resolutions of human structural connectomes. A different 2023 program, Laplacian renormalization, uses diffusion modes rather than a prior hyperbolic embedding to define scale. Day 8 introduced renormalization as repeated coarse-graining; the frontier question is now comparative: which coarse-graining is warranted, and do different schemes preserve the same structure?
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="Edge 02">
+<StatusChip status="hint" label="latent geometry" />
+<StatusChip status="hint" label="network scales" />
+</ClaimHeader>
+
+### A powerful coordinate system is still a model
+
+Hyperbolic embeddings are useful for routing, link prediction, visualization, and multiscale analysis, and the program has reproduced several recurring network features in one framework. But the coordinates are inferred from an observed graph, can depend on the embedding model and resolution, and need not be unique. “This graph is well described by a hyperbolic latent-space model” is a supported statement in many cases. “The system literally lives in a hidden hyperbolic plane” is a metaphysical upgrade the fit does not supply.
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="Frontier III">computing on the tangle</SectionEyebrow>
+
+## Local messages, loops, and graph learning
+
+<Term as="em">Belief propagation</Term><TipNote text={"Belief propagation is a message-passing algorithm in which neighboring variables exchange model-specific summaries to approximate or compute marginal probabilities."} /> turns a global calculation into repeated local updates. Each node receives summaries from its neighbors, combines them according to a probabilistic model, and sends revised summaries onward. On trees, the relevant messages do not return through a short cycle and the method can be exact. On a loopy graph, old information can circle back and be counted as though it were independent evidence.
+
+Kirkley, Cantwell, and Newman made progress on this problem in 2021 by passing richer messages over neighborhoods that explicitly include short loops. Their method markedly improves calculations for examples such as Ising models on clustered networks. Its cost grows with the neighborhoods that must be represented, so “works beyond trees” is not the same as “scales without difficulty to every dense, loopy network.” Newer tensor-network hybrids make a related trade: contract short-loop regions more accurately, then use ordinary message passing across the sparser remainder.
+
+<Panel>
+<PanelTitle>Diagram · when local news becomes an echo</PanelTitle>
+<PanelNote>On the tree, incoming messages summarize separate branches. Around the triangle, information can return to its source and masquerade as fresh evidence. Loop-aware methods represent more of that local dependence.</PanelNote>
+
+<Day12StaticFigure kind="message-passing" locale="en" />
+</Panel>
+
+The connection to AI is real but narrower than identity. A <Term as="em">message-passing graph neural network</Term><TipNote text={"A message-passing graph neural network learns functions that transform and aggregate information from neighboring nodes over repeated layers."} /> also aggregates neighbor information layer by layer. It belongs to the same broad neighbor-aggregation family as network message passing. It is not identical to belief propagation: a GNN usually learns parameterized transformations from data, whereas belief propagation passes quantities with specified probabilistic semantics under a chosen graphical model. The shared architecture allows ideas to travel in both directions without collapsing the two methods into one.
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="Edge 03">
+<StatusChip status="ok" label="neighbor aggregation" />
+<StatusChip status="hint" label="loop correction" />
+</ClaimHeader>
+
+### Shared family, different algorithms
+
+Loop-corrected belief propagation is a published technical advance, and message-passing GNNs are a major graph-learning architecture. The open questions concern scale and transfer: how much loop accuracy can be bought before computation becomes prohibitive, and when insights from probabilistic message passing improve learned graph models rather than merely describe them. Bronstein and colleagues' geometric-deep-learning synthesis remains an influential preprint, useful as a research program rather than a peer-reviewed theorem that unifies all graph intelligence.
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="Frontier IV">grabbing the controls</SectionEyebrow>
+
+## What structural controllability does—and does not—promise
+
+Network control asks whether inputs applied to selected nodes can steer a dynamical system through its state space. Liu, Slotine, and Barabási's 2011 result studied a linear system of the form <MathInline latex={String.raw`\dot{x}=Ax+Bu`} /> when the zero-versus-nonzero pattern of the directed matrix <MathInline latex={String.raw`A`} /> is known but its allowed nonzero weights are treated generically. Under those assumptions, a maximum matching identifies a minimum number of <Term as="em">driver nodes</Term><TipNote text={"Driver nodes are nodes that receive independent external control inputs in a specified network-control model."} /> sufficient for structural controllability.
+
+The counterintuitive result is conditional but important: the required drivers need not be the hubs. Unmatched, low-degree nodes can require direct inputs because the rest of the directed structure does not independently reach them. Different maximum matchings can yield different valid driver sets, and later ensemble results tied the required driver fraction to the density of low in-degree and out-degree nodes.
+
+<Panel>
+<PanelTitle>Diagram · drivers are not automatically hubs</PanelTitle>
+<PanelNote>The brass inputs point to unmatched peripheral nodes in one illustrative directed network. The diagram shows the maximum-matching intuition, not a universal rule that every low-degree node is a driver or every hub is irrelevant.</PanelNote>
+
+<Day12StaticFigure kind="driver-nodes" locale="en" />
+</Panel>
+
+This sharpens Day 9's language of leverage. Structural controllability answers a reachability question for a model class; it does not identify an easy, cheap, safe, or socially legitimate intervention. Even linear networks that are controllable in principle can require enormous control energy. Cells, brains, ecosystems, and markets also have nonlinear dynamics, uncertain edges, partial observability, constraints on inputs, and moving targets.
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="Edge 04">
+<StatusChip status="ok" label="structural control" />
+<StatusChip status="bad" label="practical steering" />
+</ClaimHeader>
+
+### Model reachability is not practical control
+
+The matching result is mathematically firm within its structural linear framework. It does not establish that a real biological, ecological, infrastructural, or social network can be moved to an arbitrary desired state. Control energy, nonlinear response, errors in topology and weights, actuator constraints, and state-estimation error can each close the gap between “reachable in principle” and “achievable in practice.” Claims about controlling a real complex network should therefore specify the dynamics, target state, input constraints, energy budget, and uncertainty—not only the wiring diagram.
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="Frontier V">the planet as a network</SectionEyebrow>
+
+## From one tipping element to signed couplings
+
+Day 9 treated tipping elements and their reinforcing feedbacks one at a time. The additional network question is whether crossing one threshold changes the pressure on another. The links are directed and signed: one transition can push a neighbor toward its threshold, while another can partially stabilize it.
+
+Several physical pathways motivate such links. Freshwater from Greenland ice loss can weaken Atlantic overturning. A weaker Atlantic Meridional Overturning Circulation can shift rainfall patterns relevant to the Amazon, while regional cooling from the same circulation change could partly oppose Greenland's loss. Permafrost carbon release can add warming pressure across the system. These mechanisms do not provide a complete adjacency matrix. Some directions are better supported than others; signs, strengths, thresholds, and timescales remain uncertain and scenario-dependent.
+
+The seven-node exhibit below is deliberately illustrative. It uses physically motivated kinds of coupling but invented teaching weights and thresholds. Its sequence of tipped nodes is not a forecast, and its wiring is not the four-element conceptual model analyzed by Wunderling and colleagues.
+</ContentSection>
+
+<Day12Interactive kind="tipping-cascade" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<Panel>
+<PanelTitle>Figure · a signed tipping-cascade schematic</PanelTitle>
+<PanelNote>Red arrows push a target toward tipping; the green bar-headed link pushes back. Node thresholds and edge weights are chosen to expose path dependence. They do not estimate temperatures, dates, probabilities, or a particular Earth-system future.</PanelNote>
+
+<Day12StaticFigure kind="tipping-cascade" locale="en" />
+
+<SimpleTable
+  headers={["Forced trigger","Outcome in the toy network","Structural reason","Inference limit"]}
+  rows={[
+    ["Greenland", "A long cascade can run through AMOC, Amazon, permafrost, coral reefs, and boreal forest.", "Each downstream destabilizing input reaches the schematic threshold.", "This is a designed teaching sequence, not a forecast that Greenland initiates this exact cascade."],
+    ["AMOC", "The downstream branch can tip while Greenland remains untipped.", "AMOC destabilizes the Amazon branch and sends one stabilizing input toward Greenland.", "The sign and magnitude of real AMOC couplings vary by pathway, model, and scenario."],
+    ["W. Antarctica", "The forced node can remain isolated.", "Its single outgoing influence is too weak to cross the next toy threshold.", "Failure to cascade in the exhibit says nothing about the real element's risk."],
+    ["Coral reefs", "The cascade stops immediately.", "The schematic gives this node no outgoing edges.", "Missing links are a design simplification, not evidence of physical independence."]
+  ]}/>
+</Panel>
+</FormatOnly>
+
+<Claim>
+<ClaimHeader label="Edge 05">
+<StatusChip status="hint" label="tipping couplings" />
+<StatusChip status="bad" label="cascade forecasts" />
+</ClaimHeader>
+
+### The network is plausible; the cascade is not a timetable
+
+Armstrong McKay and colleagues' 2022 assessment reappraised sixteen tipping elements. At the roughly 1.1–1.2°C warming baseline used in that assessment, it judged five tipping points already possible, while emphasizing wide threshold ranges and response times that can span decades to millennia. Wunderling and colleagues' 2021 conceptual model propagated uncertainty in four elements, interaction strengths, and several possible link signs; within that model ensemble, interactions tended to increase domino risk. Neither study licenses a precise cascade sequence or date. The warranted result is that interactions can alter risk and deserve explicit modeling; the detailed signed network remains high-uncertainty.
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="Frontier VI">the epistemic limit</SectionEyebrow>
+
+## When an algorithm cannot recover the pattern
+
+Network analysis can produce a partition even when no meaningful communities generated the data. The stronger result is that some genuine structure can also be unrecoverable. In sparse planted-community models, there are parameter regimes in which within-group and between-group connection rates are too similar for an algorithm to infer labels better than chance. This <Term as="em">detectability transition</Term> is an information limit under specified generative assumptions, not a universal declaration that every faint real-world community is unknowable.
+
+The response is to make network analysis inferential rather than merely decorative. Specify a generative model, compare it with alternatives and nulls, penalize unnecessary structure, and report posterior or sampling uncertainty. A forced community-detection run will nearly always return colored groups; the scientific question is whether a model with those groups predicts the observed network better than a suitably constrained alternative.
+
+This is the advance from earlier days. Day 2 asked what could disconfirm a claim; Day 5 separated association from mechanism; Day 10 separated a useful representation from its target. Network inference combines all three: the pattern, the model that generated it, and the evidence distinguishing that model from a flexible pattern-finder.
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="Edge 06">
+<StatusChip status="ok" label="detectability limits" />
+<StatusChip status="hint" label="empirical structure" />
+</ClaimHeader>
+
+### The limit is real, and its scope matters
+
+Decelle and colleagues identified a phase transition in community inference for the sparse stochastic block model: below a signal-to-noise boundary, the planted labels become information-theoretically unrecoverable under those assumptions. The boundary moves when assumptions, degree corrections, metadata, or observations change. It should raise the burden of proof for empirical communities, not end the search. The calibrated claim is that some models have irreducible inference limits and that uncertainty-aware generative comparison is safer than treating one algorithm's partition as discovered ground truth.
+</Claim>
+
+<ContentSection>
+<SectionEyebrow>The frontier scorecard</SectionEyebrow>
+
+## Six programs, six unresolved tests
+
+<SimpleTable
+  headers={["Program","Supported within scope","Unresolved test"]}
+  rows={[
+    ["Higher-order networks", "Group-aware models produce distinct dynamics and can improve selected predictions.", "Determine case by case whether added interaction order beats a simpler pairwise account out of sample."],
+    ["Latent geometry", "Hyperbolic embeddings compactly reproduce and exploit several network features.", "Establish uniqueness, compare embedding families, and separate useful coordinates from literal physical geometry."],
+    ["Message passing", "Tree methods, loop-aware extensions, and message-passing GNNs share a productive local-computation pattern.", "Scale accurate loop treatment and show when physics-derived updates improve learned graph systems."],
+    ["Network control", "Maximum matching solves structural controllability for a defined linear generic-weight model.", "Control nonlinear, uncertain, partially observed systems with feasible energy and constrained actuators."],
+    ["Tipping cascades", "Physical couplings motivate signed networks, and conceptual models show that interactions can change risk.", "Constrain thresholds, signs, strengths, and timescales well enough to assess particular cascades."],
+    ["Network inference", "Specified generative models have detectability limits and support uncertainty-aware comparison.", "Distinguish robust empirical structure from partitions manufactured by method, sampling, or resolution."]
+  ]}/>
+</ContentSection>
+
+<Recap>
+<PanelTitle>The frontier in three sentences</PanelTitle>
+<RecapList>
+<RecapItem term="Big idea">A graph is not a neutral transcription of a system. Choosing pairs or groups, coordinates or adjacency, local updates or control inputs changes what can be represented, computed, and inferred.</RecapItem>
+<RecapItem term="Best analogy">Higher-order synchronization can turn a smooth slope into a cliff with memory: the system can jump, and the route back need not retrace the route in.</RecapItem>
+<RecapItem term="Live controversy">The central dispute is not whether these methods are mathematically interesting. It is when a richer structure captures something in the target system that a simpler, well-tested model would miss.</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads>**Threads here ›** emergence in interaction-order phase diagrams and multiscale structure · information in diffusion, message passing, and detectability · computation in graph learning and control · energy as the gap between structural reachability and feasible steering · the Day 9 tipping thread recast as a signed network.</Threads>
+
+<ContinueNote label="→ Day 13">
+### From networks to measurement &amp; units
+
+This appendix ends with model-dependent thresholds, coordinates, control energy, and signal-to-noise boundaries. Day 13 asks what makes any such quantity a measurement in the first place: how units are defined, how operations connect numbers to the world, and why the modern SI anchors its base units to fixed constants of nature.
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+Peer-reviewed unless explicitly marked as a preprint. Foundational pre-2020 papers are included where a frontier program depends on them.
+
+1. Battiston, F., Cencetti, G., Iacopini, I., Latora, V., Lucas, M., Patania, A., Young, J.-G. &amp; Petri, G. (2020). "Networks beyond pairwise interactions: Structure and dynamics." *Physics Reports* 874: 1–92. [doi.org/10.1016/j.physrep.2020.05.004](https://doi.org/10.1016/j.physrep.2020.05.004)
+2. Battiston, F. et al. (2021). "The physics of higher-order interactions in complex systems." *Nature Physics* 17: 1093–1098. [doi.org/10.1038/s41567-021-01371-4](https://doi.org/10.1038/s41567-021-01371-4)
+3. Boccaletti, S., De Lellis, P., del Genio, C. I., Alfaro-Bittner, K., Criado, R., Jalan, S. &amp; Romance, M. (2023). "The structure and dynamics of networks with higher order interactions." *Physics Reports* 1018: 1–64. [doi.org/10.1016/j.physrep.2023.04.002](https://doi.org/10.1016/j.physrep.2023.04.002) Bianconi, G. (2021). *Higher-Order Networks*. Cambridge University Press. [doi.org/10.1017/9781108770996](https://doi.org/10.1017/9781108770996)
+4. Skardal, P. S. &amp; Arenas, A. (2020). "Higher order interactions in complex networks of phase oscillators promote abrupt synchronization switching." *Communications Physics* 3: 218. [doi.org/10.1038/s42005-020-00485-0](https://doi.org/10.1038/s42005-020-00485-0) Millán, A. P., Torres, J. J. &amp; Bianconi, G. (2020). "Explosive Higher-Order Kuramoto Dynamics on Simplicial Complexes." *Physical Review Letters* 124: 218301. [doi.org/10.1103/PhysRevLett.124.218301](https://doi.org/10.1103/PhysRevLett.124.218301) Gambuzza, L. V. et al. (2021). "Stability of synchronization in simplicial complexes." *Nature Communications* 12: 1255. [doi.org/10.1038/s41467-021-21486-9](https://doi.org/10.1038/s41467-021-21486-9)
+5. Millán, A. P. et al. (2025). "Topology shapes dynamics of higher-order networks." *Nature Physics* 21: 353–361. [doi.org/10.1038/s41567-024-02757-w](https://doi.org/10.1038/s41567-024-02757-w)
+6. Bian, J., Zhou, T. &amp; Bi, Y. (2025). "Unveiling the role of higher-order interactions via stepwise reduction." *Communications Physics* 8: 228. <Meta>Higher-order benefits varied across the twelve networks and prediction tasks studied.</Meta> [doi.org/10.1038/s42005-025-02157-3](https://doi.org/10.1038/s42005-025-02157-3)
+7. Boguñá, M., Bonamassa, I., De Domenico, M., Havlin, S., Krioukov, D. &amp; Serrano, M. Á. (2021). "Network geometry." *Nature Reviews Physics* 3: 114–135. [doi.org/10.1038/s42254-020-00264-4](https://doi.org/10.1038/s42254-020-00264-4)
+8. Krioukov, D., Papadopoulos, F., Kitsak, M., Vahdat, A. &amp; Boguñá, M. (2010). "Hyperbolic geometry of complex networks." *Physical Review E* 82: 036106. [doi.org/10.1103/PhysRevE.82.036106](https://doi.org/10.1103/PhysRevE.82.036106)
+9. García-Pérez, G., Boguñá, M. &amp; Serrano, M. Á. (2018). "Multiscale unfolding of real networks by geometric renormalization." *Nature Physics* 14: 583–589. [doi.org/10.1038/s41567-018-0072-5](https://doi.org/10.1038/s41567-018-0072-5)
+10. Zheng, M., Allard, A., Hagmann, P., Alemán-Gómez, Y. &amp; Serrano, M. Á. (2020). "Geometric renormalization unravels self-similarity of the multiscale human connectome." *Proceedings of the National Academy of Sciences* 117: 20244–20253. [doi.org/10.1073/pnas.1922248117](https://doi.org/10.1073/pnas.1922248117) van der Kolk, J., Serrano, M. Á. &amp; Boguñá, M. (2024). "Random graphs and real networks with weak geometric coupling." *Physical Review Research* 6: 013337. [doi.org/10.1103/PhysRevResearch.6.013337](https://doi.org/10.1103/PhysRevResearch.6.013337)
+11. Villegas, P., Gili, T., Caldarelli, G. &amp; Gabrielli, A. (2023). "Laplacian renormalization group for heterogeneous networks." *Nature Physics* 19: 445–450. [doi.org/10.1038/s41567-022-01866-8](https://doi.org/10.1038/s41567-022-01866-8)
+12. Cantwell, G. T. &amp; Newman, M. E. J. (2019). "Message passing on networks with loops." *Proceedings of the National Academy of Sciences* 116: 23398–23403. [doi.org/10.1073/pnas.1914893116](https://doi.org/10.1073/pnas.1914893116) Kirkley, A., Cantwell, G. T. &amp; Newman, M. E. J. (2021). "Belief propagation for networks with loops." *Science Advances* 7: eabf1211. [doi.org/10.1126/sciadv.abf1211](https://doi.org/10.1126/sciadv.abf1211)
+13. Newman, M. E. J. (2023). "Message passing methods on complex networks." *Proceedings of the Royal Society A* 479: 20220774. [doi.org/10.1098/rspa.2022.0774](https://doi.org/10.1098/rspa.2022.0774)
+14. Wang, Y., Zhang, Y. E., Pan, F. &amp; Zhang, P. (2024). "Tensor Network Message Passing." *Physical Review Letters* 132: 117401. [doi.org/10.1103/PhysRevLett.132.117401](https://doi.org/10.1103/PhysRevLett.132.117401)
+15. Bronstein, M. M., Bruna, J., Cohen, T. &amp; Veličković, P. (2021). "Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges." <Meta>Influential preprint, arXiv:2104.13478; not peer reviewed.</Meta> [arxiv.org/abs/2104.13478](https://arxiv.org/abs/2104.13478)
+16. Liu, Y.-Y., Slotine, J.-J. &amp; Barabási, A.-L. (2011). "Controllability of complex networks." *Nature* 473: 167–173. [doi.org/10.1038/nature10011](https://doi.org/10.1038/nature10011)
+17. Menichetti, G., Dall'Asta, L. &amp; Bianconi, G. (2014). "Network controllability is determined by the density of low in-degree and out-degree nodes." *Physical Review Letters* 113: 078701. [doi.org/10.1103/PhysRevLett.113.078701](https://doi.org/10.1103/PhysRevLett.113.078701)
+18. Yan, G., Ren, J., Lai, Y.-C., Lai, C.-H. &amp; Li, B. (2012). "Controlling complex networks: How much energy is needed?" *Physical Review Letters* 108: 218703. [doi.org/10.1103/PhysRevLett.108.218703](https://doi.org/10.1103/PhysRevLett.108.218703)
+19. D'Souza, R. M., di Bernardo, M. &amp; Liu, Y.-Y. (2023). "Controlling complex networks with complex nodes." *Nature Reviews Physics* 5: 250–262. [doi.org/10.1038/s42254-023-00566-3](https://doi.org/10.1038/s42254-023-00566-3)
+20. Armstrong McKay, D. I. et al. (2022). "Exceeding 1.5°C global warming could trigger multiple climate tipping points." *Science* 377: eabn7950. [doi.org/10.1126/science.abn7950](https://doi.org/10.1126/science.abn7950)
+21. Wunderling, N., Donges, J. F., Kurths, J. &amp; Winkelmann, R. (2021). "Interacting tipping elements increase risk of climate domino effects under global warming." *Earth System Dynamics* 12: 601–619. <Meta>A four-element conceptual network with uncertainty propagated over thresholds, interaction strengths, and structures.</Meta> [doi.org/10.5194/esd-12-601-2021](https://doi.org/10.5194/esd-12-601-2021)
+22. Lenton, T. M. et al. (2008). "Tipping elements in the Earth's climate system." *Proceedings of the National Academy of Sciences* 105: 1786–1793. [doi.org/10.1073/pnas.0705414105](https://doi.org/10.1073/pnas.0705414105)
+23. Decelle, A., Krzakala, F., Moore, C. &amp; Zdeborová, L. (2011). "Inference and phase transitions in the detection of modules in sparse networks." *Physical Review Letters* 107: 065701. [doi.org/10.1103/PhysRevLett.107.065701](https://doi.org/10.1103/PhysRevLett.107.065701)
+24. Peixoto, T. P. (2019). "Bayesian stochastic blockmodeling." In Doreian, P., Batagelj, V. &amp; Ferligoj, A., eds., *Advances in Network Clustering and Blockmodeling*, pp. 289–332. Wiley. [arxiv.org/abs/1705.10225](https://arxiv.org/abs/1705.10225)
+</Sources>

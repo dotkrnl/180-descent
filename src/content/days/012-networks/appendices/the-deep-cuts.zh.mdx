@@ -1,0 +1,285 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day12StaticFigure from "@app/components/lesson/figures/Day12StaticFigure.astro";
+import Day12Interactive from "@app/components/lesson/interactives/Day12Interactive.astro";
+
+<Lead drop="主">课铺出了网络科学的骨架：短路径、不均等的度、尚有争议的幂律、传染过程与连接组。页边仍留下七个问题：为什么你的朋友看起来比你更受欢迎？一个人看不见整张图，怎样找到短路径？哪些社会桥梁传递新信息？为什么枢纽节点能抵御一种损伤，却会放大另一种？当网络彼此依赖时会发生什么？谁算得上居于中心？检测到的社区究竟何时属于现实世界，而非算法的产物？</Lead>
+
+<ContinueNote label="接续主路径">
+本附录扩展[第 12 日主课](/zh/days/012-networks/)，而非取代它。阅读时不妨随时调用[第 5 日的因果区分](/zh/days/005-causation/)、[第 6 日的方差](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)、[第 8 日的涌现](/zh/days/008-complexity-and-emergence/)、[第 9 日的级联](/zh/days/009-systems-thinking-and-feedback/)与[第 11 日的抽样偏差](/zh/days/011-heuristics-biases-and-rationality/)。
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow number="深掘 I">沿边抽样</SectionEyebrow>
+
+## 为什么你的朋友看起来比你更受欢迎
+
+Scott Feld 于 1991 年提出的<Term>友谊悖论</Term>描述的是平均量，并非针对个人的冒犯：一个人的朋友平均拥有的朋友数，不少于全体人的平均朋友数。度为 100 的节点会出现在 100 条友谊边的端点；度为 2 的节点只会出现两次。因此，沿边抽样会使度较高的节点在样本中占比过高。
+
+令 <MathInline latex={String.raw`k`} /> 表示度。均匀抽取节点时，期望度为 <MathInline latex={String.raw`\langle k\rangle`} />。均匀抽取一条边并沿边到达节点时，期望度为
+
+<MathInline latex={String.raw`\frac{\langle k^2\rangle}{\langle k\rangle}=\langle k\rangle+\frac{\operatorname{Var}(k)}{\langle k\rangle}`} />。
+
+只要平均度为正，两者之差就不会为负；度的方差越大，差距越大。这才是定理所说的内容。它并不意味着每个人自己的朋友都比自己更受欢迎，也不意味着每张图中的大多数人必然都亲历这一悖论。局部比较取决于个人在网络中的位置，枢纽节点显然就是例外。
+</ContentSection>
+
+<Day12Interactive kind="friendship-paradox" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 抽取普通人与抽取朋友</PanelTitle>
+
+<PanelNote>沿均匀抽取的友谊边取样，会按节点的度为每个人加权。示例网络把两种抽样框架并列呈现，但并不暗示每位被选中的人都有更受欢迎的朋友。</PanelNote>
+
+<Day12StaticFigure kind="friendship-paradox" locale="zh" />
+
+<SimpleTable
+  headers={["抽样框架","期望度","谁会获得额外权重"]}
+  rows={[["均匀抽取一个人","平均度：E[k]","每个节点都只有一次入选机会。"],["沿一条友谊边取样","二阶矩除以均值：E[k^2]/E[k]","度为 k 的节点有 k 次被到达的机会。"],["两者之差","度的方差除以均值","度越不均等，平均差距越大。"]]}/>
+</FormatOnly>
+
+<ContentSection>
+这种偏差也能派上用场，因为通过朋友提名接触到的人往往更居于网络中心。2009 年 H1N1 暴发期间，Nicholas Christakis 与 James Fowler 跟踪了两组哈佛本科生：一组随机抽取，另一组由前一组提名为朋友。以临床确诊流感为准，拟合出的朋友组流行曲线比随机组提前 13.9 天；以自报症状为准，提前量较小，仅为 3.2 天。这些估计来自一个边界明确的校园网络，可获得多少预警时间取决于病原体、网络、抽样方式与诊断规则。该研究展示的是一种传感器策略，并不能保证每次疫情都能提前两周预警。
+
+<FormatOnly as="div" media="print" class="pdf-page-break" />
+
+<Aside>
+<BlockTitle>不画出整张图，也能找到枢纽</BlockTitle>
+
+同一种沿边抽样偏差还启发了<Term>熟人免疫</Term><TipNote text={"熟人免疫先随机抽取一些人，请每人报出一名联系人，再为被报出的联系人实施免疫；这样，度较高的节点被抽中的概率更高。"} />。在 Cohen、Havlin 与 ben-Avraham 的网络模型中，随机选人并为其报出的一名联系人实施免疫，比均匀随机免疫更高效地触及枢纽节点。这个结果回答了主课枢纽定向干预展项引出的一项实际质疑：并非总要先掌握完整的网络地图。现实项目仍须面对提名不全、联系人变化、对接触对象或服务的可及性限制，以及度只是决定传播的众多因素之一等问题。
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="深掘 II">去中心化搜索</SectionEyebrow>
+
+## Milgram 实验隐藏的另一个难题
+
+主课强调，短的熟人链确实存在。这个结果里还藏着第二个问题：参与者只知道自己的联系人，看不见全局图，他们怎样找到一条短链，并让其中一些链逐步接近遥远的目标？
+
+Jon Kleinberg 在一个理想化格点模型中区分了<Term>短路径性</Term><TipNote text={"只要图中存在短路径，网络就是「小」的；至于任何人能否凭局部信息找到这些路径，则是另一回事。"} />与<Term>可导航性</Term><TipNote text={"可导航网络允许去中心化规则仅凭局部连接和关于目标的有限信息找到短路线。"} />。每个节点既有局部格点邻居，也有长程联系人。在 <MathInline latex={String.raw`d`} /> 维格点中，连接到距离 <MathInline latex={String.raw`r`} /> 处节点的长程联系人概率满足
+
+<MathInline latex={String.raw`\Pr(u\to v)\propto r(u,v)^{-d}`} />。
+
+当指数与格点维数相等时，在 Kleinberg 的二维设定中，贪心路由能以期望 <MathInline latex={String.raw`O((\log n)^2)`} /> 步送达消息，其中 <MathInline latex={String.raw`n`} /> 是格点的边长。对该模型中的其他指数，在最坏的渐近意义下，去中心化送达需要多项式数量的步骤。这个结论精确，却有明确边界：它是关于特定几何、信息规则和随机连边分布的定理，并不能证明每个人类社会都恰好处在某个指数上。
+
+略去形式细节后，直觉依然成立。如果长程关系覆盖多个距离尺度，那么无论还剩多远，信使都有机会遇到一条能大幅缩短余下距离的关系。均匀随机的捷径或许能让图上的路径变短，却未必能告诉只掌握局部信息的搜索者哪条捷径真正有用。
+
+<Panel>
+<PanelTitle>图 · 跨越多个尺度的连接</PanelTitle>
+
+<PanelNote>高亮节点既有局部联系，也有跨越多个距离尺度的长程关系。贪心路线可以反复缩短到目标的距离；本图旨在说明 Kleinberg 的机制，并非估计社会网络的指数。</PanelNote>
+
+<Day12StaticFigure kind="navigability" locale="zh" />
+</Panel>
+
+<Aside>
+<BlockTitle>从社会搜索到向量搜索</BlockTitle>
+
+分层可导航小世界（Hierarchical Navigable Small World，HNSW）是一种基于图的近似最近邻搜索方法。其层级结构可在上层执行长距离跳转，再在靠近查询目标时作更精细的移动，与可导航网络的多尺度逻辑相呼应。它并不是对 Kleinberg 逆距离格点定律的字面实现。Dodds、Muhamad 与 Watts 的社会搜索实验同样必须附带样本流失这一限定：超过 60,000 名电子邮件用户尝试把消息传给分布在 13 个国家的 18 个目标，但成功率高度依赖参与者是否继续转发。对流失建模后，作者估计路线中位数为五至七步，并据此认为：激励会影响一个理论上可搜索的网络在实践中是否真能被搜索。
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="深掘 III">社会桥梁</SectionEyebrow>
+
+## 弱关系的力量
+
+长程的社会捷径也有自己的质地。它们往往是<Term>弱关系</Term><TipNote text={"弱关系是强度较低的社会关系，例如熟人或前同事；关系强度可以用多种不同方式操作化。"} />：熟人、前同事，或只是偶尔遇见的人。Mark Granovetter 1973 年的论证着眼于结构。强关系往往位于一个稠密集群内部，其中的信息多有冗余；弱关系却能桥接另一个集群，带来亲近联系人没有的信息。
+
+最初关于求职的证据来自观察研究，因此无法排除一种混杂解释：更想换工作的人，也可能更主动建立弱关系。Rajkumar 等人借助 LinkedIn 对「你可能认识的人」推荐长达五年的随机化调整，获得了更强的因果识别依据。在超过 2,000 万名平台用户中，这些实验产生了约 20 亿条新连接；分析随后把这些连接与 LinkedIn 记录的约 60 万次获得新工作联系起来。
+
+<Claim>
+<ClaimHeader label="前沿 01">
+<StatusChip status="ok" label="平台因果检验" />
+<StatusChip status="hint" label="最优点因情境而异" />
+</ClaimHeader>
+
+### 更精确的 Granovetter 桥梁
+
+实验支持了因果核心：建立较弱的关系能够增加职业流动。它也把「最弱的关系最好」改写成了有条件的结论。这种关系是非线性的：以共同联系人衡量时，中等偏弱的关系表现最佳；以互动强度衡量时，最弱的关系表现最佳。效果还因行业而异：弱关系在数字化行业更有帮助，而在数字化程度较低的行业，较强关系反而可能更有帮助。该结果只涉及研究期间内由推荐促成的关系，且职业变动必须能在这个职业平台上观察到；不能把它提升为适用于所有劳动力市场或人际关系的固定最优值。
+</Claim>
+
+<Panel>
+<PanelTitle>图 · 弱关系并非越弱越好</PanelTitle>
+
+<PanelNote>这条示意性的倒 U 形曲线呈现了 LinkedIn 研究中的一种操作化方式：关系变弱时，职业流动先上升，到了极弱处则趋平或下降。互动强度、共同联系人和行业分别呈现出不同模式。</PanelNote>
+
+<Day12StaticFigure kind="weak-ties" locale="zh" />
+</Panel>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="深掘 IV">失效的几何</SectionEyebrow>
+
+## 鲁棒，却又脆弱
+
+枢纽节点会改变失效的几何。Albert、Jeong 与 Barabási 比较了理想化和经验网络表征中的随机移除与刻意移除度较高的节点。在枢纽丰富的图中，均匀随机失效更可能击中数量众多的低度节点；若先移除枢纽，则会一次删去许多边。因此，同一种度的异质性，既能让网络在一种移除规则下保留大型连通分量，也会在另一种规则下加速碎裂。
+
+「<Term>鲁棒而脆弱</Term>」<TipNote text={"「鲁棒而脆弱」指系统能够承受广泛的一类扰动，却会在与其结构相契合的扰动下迅速失效。"} />概括的是这种反差，并非一个普适阈值。展项中的任何移除比例都不能自动套用于真实系统。阈值取决于度相关性、聚集性、方向、容量、修复、网络规模、功能的判定方式，以及观测到的图是否真能由该模型恰当描述。
+</ContentSection>
+
+<Day12Interactive kind="robustness" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 随机失效与枢纽优先移除</PanelTitle>
+
+<PanelNote>示例玩具网络比较了两种节点移除顺序。表中百分比只描述这个网络；真正可迁移的结论，是经常抽中低度节点的随机规则与刻意移除度较高节点的规则会产生不同结果。</PanelNote>
+
+<Day12StaticFigure kind="robustness" locale="zh" />
+
+<SimpleTable
+  headers={["移除规则","早期击中的节点","典型结构效应","玩具模型无法证明什么"]}
+  rows={[["均匀随机失效","多为低度节点，因为这类节点数量众多","在枢纽丰富的模型中，最大连通部分往往逐渐缩小。","互联网、细胞或其他真实系统的韧性阈值。"],["枢纽优先移除","按定义先移除度较高的节点","许多关联边同时消失，碎裂因而可能加速。","度就是正确的操作目标，或度是功能的唯一来源。"],["考虑功能的失效","按负荷、依赖关系、地理位置或角色选择节点","结果可能不同于上述两种拓扑排序。","仅凭连通性就能衡量服务连续性。"]]}/>
+</FormatOnly>
+
+<ContentSection>
+一项生物学结果说明了为何必须区分拓扑与功能。Jeong 等人报告，在一张早期酵母蛋白质相互作用图中，连接较多的蛋白质更可能是必需蛋白。这证明的是该数据集中中心性与致死性之间存在关联，不能据此把度在所有情境下都等同于生物学重要性。测量偏差、相互作用类型、冗余和细胞环境都很重要。同理，互联网图经过工程设计，具有容量、路由和修复机制；连通性下降并不等于服务失效。
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="深掘 V">耦合失效</SectionEyebrow>
+
+## 当网络彼此倚靠
+
+现实基础设施分成多层。电力支撑通信设备，通信支撑监测与修复，而两者还可能依赖交通、燃料、定位和云服务。一次失效可能跨越网络层，再沿另一条依赖关系返回，形成[第 9 日](/zh/days/009-systems-thinking-and-feedback/)所说的增强回路。
+
+Buldyrev 等人于 2010 年将其中一种情形形式化。他们的模型以硬依赖关系配对两个网络中的节点，只有同时属于彼此连通的巨型连通分量的节点才算仍具功能。在这些假设下，一层中的失效会使配对节点失效，令另一层碎裂，再把影响反馈回来。模型可以出现突变式渗流相变；在他们研究的配置中，更宽的度分布反而会增加网络面对随机失效时的脆弱性，与上文单一网络的模式相反。
+
+2003 年意大利停电常被用来说明这项研究的动机，却不能视为该模型在现实中的直接复现。级联起于树木引发闪络、使瑞士的一条输电线路跳闸，随后电网事件继续扩散停电。通信故障阻碍了修复；后来的基础设施研究把这种恢复阶段的耦合，与「电信故障扩大了最初停电的地理级联」这一主张区分开来。当通信能够提供有效控制时，细致模型甚至会发现耦合带来的好处。相依关系会增加失效路径，但其作用取决于耦合具体做了什么。
+
+<Claim>
+<ClaimHeader label="前沿 02">
+<StatusChip status="ok" label="模型中的突变式崩解" />
+<StatusChip status="bad" label="普遍脆弱性" />
+</ClaimHeader>
+
+### 耦合本身也决定韧性
+
+这一理论改变了分析单位。分别测试电力层与通信层，可能会漏掉由二者依赖关系产生的反馈路径。不过，稳妥的结论必须带上条件：有些耦合架构会放大失效，有些会拖慢修复，也有些通过提供控制而降低风险。韧性属于组件、网络层之间的连接，以及支配这些连接的运行规则。这正是[第 8 日](/zh/days/008-complexity-and-emergence/)所说的「多则异」在工程中的形态。
+</Claim>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="深掘 VI">中心性</SectionEyebrow>
+
+## PageRank 背后的特征向量
+
+「枢纽」通常指度较高的节点，但<Term>中心性</Term>并不是单一属性。度中心性奖励直接连接多的节点。<Term>介数中心性</Term><TipNote text={"介数中心性衡量其他节点之间的最短路径有多大比例经过某个节点。"} />奖励中介作用：一座低度桥梁也可能位于两个社区之间的许多最短路径上。<Term>特征向量中心性</Term><TipNote text={"特征向量中心性会让与高分邻居相连的节点获得更高权重。"} />奖励与本身得分也很高的节点相连。
+
+对于邻接矩阵 <MathInline latex={String.raw`A`} />，最后一种思想可写为
+
+<MathInline latex={String.raw`x_i=\frac{1}{\lambda}\sum_j A_{ij}x_j`} />。
+
+「重要节点连接着重要节点」看似循环，却可以转化为一个特征向量问题。不同定义回答不同过程中的问题，所以若不说明用途，排序就是不完整的。
+
+Larry Page 与 Sergey Brin 把递归式连接重要性用于网页搜索。PageRank 模拟随机浏览者沿有向链接移动，并加入阻尼或随机跳转项，以避免陷入汇点并使平稳排序具有良好性质。它与特征向量中心性有关，但不等同于把未经修正的特征向量中心性直接用于无向图。链接分析是 Google 早期搜索引擎的组成部分之一；搜索质量、基础设施、数据以及后来众多排序系统，不能被压缩成一个向量。
+</ContentSection>
+
+<Day12Interactive kind="centrality" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 「重要」的三种答案</PanelTitle>
+
+<PanelNote>在同一张双社区图上，如果重要性分别指直接触达、最短路径上的中介作用，或连接到已居于中心的邻居，夺得首位的会是不同节点。</PanelNote>
+
+<Day12StaticFigure kind="centrality" locale="zh" />
+
+<SimpleTable
+  headers={["度量","奖励什么","适合回答的问题","主要局限"]}
+  rows={[["度中心性","直接连接多","谁能立即联系许多邻居？","忽略这些邻居在网络中的位置。"],["介数中心性","位于最短路径上","在最短路径路由下，谁在群体之间充当流量中介？","会随路径模型变化，且计算成本可能很高。"],["特征向量中心性","连接高分邻居","谁嵌入在已经显著的节点之间？","可能集中在一个稠密区域，且需要满足谱条件。"],["PageRank","有向随机浏览者模型中的平稳访问量","哪些网页获得递归加权的链接？","取决于阻尼、方向和所选转移模型。"]]}/>
+</FormatOnly>
+
+<ContentSection>
+交互展项刻意只用一张图，再从三个视角观察它。疾病控制问题、通信瓶颈问题与搜索排序问题未必会选中同一个节点。不说明过程便声称某节点「最居中」，就像不说明单位便声称某种测量「最好」一样不完整。
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="深掘 VII">社区结构</SectionEyebrow>
+
+## 找到群体，也检查接缝
+
+许多图的某些节点集合内部，比集合之间更为稠密：朋友圈、研究专业、蛋白质复合物或政治阵营。<Term>社区发现</Term><TipNote text={"社区发现会在事先没有标签的情况下，寻找组内连接模式相对于明确的零模型或流模型有所不同的节点群体。"} />方法试图推断这类集合。
+
+Girvan 与 Newman 提议移除边介数高的边：稠密群体之间的桥梁承载大量最短路径，因此反复移除这些边可以显露接缝。Newman 与 Girvan 随后将<Term>模块度</Term><TipNote text={"模块度把观测到的组内边数，与保留节点度的指定随机零模型所给出的期望作比较。"} />形式化，用来相对于保留度的零模型为划分评分。Louvain 是优化模块度的一种快速启发式。Infomap 采取不同路径：它寻找能够压缩随机游走轨迹的划分。这些方法可能得出不同答案，因为它们对「群体」作了不同的操作化定义。
+
+<Claim>
+<ClaimHeader label="前沿 03">
+<StatusChip status="hint" label="有用的划分" />
+<StatusChip status="bad" label="唯一真实划分" />
+</ClaimHeader>
+
+### 检测器也会制造确定感
+
+模块度存在<Term>分辨率极限</Term><TipNote text={"当界定清晰的小型社区嵌在足够大的图中时，分辨率极限会使模块度优化把它们合并起来。"} />：真正存在的小群体可能被合并，因为全局得分无法分辨它们。其优化景观还具有简并性；结构不同的划分可能得到几乎相同的分数。Louvain 甚至可能返回连接很差或彼此不连通的社区。Leiden 修复了这一连通性缺陷，并改进了局部优化保证。然而，当 Leiden 用于优化模块度时，它并不会消除模块度的分辨率极限，也不会把多尺度图变成只有一种正确划分的图。提出社区主张时，应报告目标函数、分辨率、不同运行与不同方法之间的稳定性，以及是否有外部证据支持该分组。
+</Claim>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>未决问题</SectionEyebrow>
+
+## 边缘地带仍无定论
+
+- 观测到的社会网络究竟有多强的可导航性？Kleinberg 在一个模型中找到了明确条件；估计真实且不断变化的社会所对应的几何与搜索规则，则是另一项任务。
+- 能否在耦合系统失效前预测级联风险？脆弱性模型可以识别机制和阈值，却未必能说出哪一次起始事件会越过阈值，或它何时发生。
+- 是否存在正确的社区尺度？群体可能嵌套且相互重叠，因此多个分辨率或许能同时提供信息。
+- 哪一种中心性能够预测哪一种过程？度中心性、介数中心性、特征向量度量、流度量与控制度量对结构的排序各不相同。让指标与扩散、路由、干预或影响过程相匹配，本身就是科学问题的一部分。
+- 如果边具有时间性，且相互作用以群体为单位，还会保留什么？静态成对图忽略了顺序、持续时间、同步群体相互作用、自适应重连，以及行为与拓扑之间的反馈。
+</ContentSection>
+
+<Recap>
+<RecapList>
+<RecapItem term="核心观点">对网络进行抽样、搜索、破坏和排序，是四种不同操作。每一种都会揭示同一连接结构的不同后果，也各自需要不同假设。</RecapItem>
+<RecapItem term="最佳类比">Kleinberg 的信使每次只按一个尺度读取地址：只有网络能在尚待跨越的距离上提供有用跳跃，局部知识才可能拼成一条短的全局路线。</RecapItem>
+<RecapItem term="仍在争论">观测到的群体与排序，一部分取决于观察所用的透镜。只有明确过程、零模型、分辨率与稳定性后，一项中心性或社区划分才能成为科学主张。</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads>本篇线索 › 涌现（局部连接产生全局可达性、碎裂与群体） · 信息（弱关系携带非冗余信号；PageRank 与 Infomap 把路径转化为排序或编码） · 计算（去中心化搜索与社区优化） · 演化（可导航结构与鲁棒结构可能如何起源） · 能量（基础设施层既交换电力，也交换控制信息）。</Threads>
+
+<ContinueNote label="下一篇附录 · 活跃前沿">
+结构层面的深掘到此为止，第 12 日还留有一翼面向前沿。请继续阅读[「活跃前沿」](/zh/days/012-networks/#live-wires)，探索高阶相互作用、变化中的网络与耦合临界转变过程。
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>来源与延伸阅读</SourcesTitle>
+
+1. Feld, S. L. (1991). "Why Your Friends Have More Friends Than You Do." *American Journal of Sociology*, 96(6), 1464–1477. <Meta>友谊悖论与沿边加权抽样。</Meta> [doi:10.1086/229693](https://doi.org/10.1086/229693)
+2. Christakis, N. A. &amp; Fowler, J. H. (2010). "Social Network Sensors for Early Detection of Contagious Outbreaks." *PLoS ONE*, 5(9), e12948. <Meta>哈佛 H1N1 研究中，临床确诊提前 13.9 天，自报症状提前 3.2 天。</Meta> [doi:10.1371/journal.pone.0012948](https://doi.org/10.1371/journal.pone.0012948)
+3. Cohen, R., Havlin, S. &amp; ben-Avraham, D. (2003). "Efficient Immunization Strategies for Computer Networks and Populations." *Physical Review Letters*, 91, 247901. <Meta>网络模型中的熟人免疫。</Meta> [doi:10.1103/PhysRevLett.91.247901](https://doi.org/10.1103/PhysRevLett.91.247901)
+4. Kleinberg, J. M. (2000). "The Small-World Phenomenon: An Algorithmic Perspective." *Proceedings of STOC 2000*, 163–170; and "Navigation in a Small World." *Nature*, 406, 845. <Meta>去中心化路由与匹配维数的长程指数。</Meta> [doi:10.1145/335305.335325](https://doi.org/10.1145/335305.335325) · [doi:10.1038/35022643](https://doi.org/10.1038/35022643)
+5. Dodds, P. S., Muhamad, R. &amp; Watts, D. J. (2003). "An Experimental Study of Search in Global Social Networks." *Science*, 301(5634), 827–829. <Meta>超过 60,000 名电子邮件用户；计入样本流失后，估计路线中位数为五至七步。</Meta> [doi:10.1126/science.1081058](https://doi.org/10.1126/science.1081058)
+6. Malkov, Y. A. &amp; Yashunin, D. A. (2020). "Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs." *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 42(4), 824–836. <Meta>HNSW；2018 年在线发表。</Meta> [doi:10.1109/TPAMI.2018.2889473](https://doi.org/10.1109/TPAMI.2018.2889473)
+7. Granovetter, M. S. (1973). "The Strength of Weak Ties." *American Journal of Sociology*, 78(6), 1360–1380. <Meta>作为社会集群之间桥梁的弱关系。</Meta> [doi:10.1086/225469](https://doi.org/10.1086/225469)
+8. Rajkumar, K., Saint-Jacques, G., Bojinov, I., Brynjolfsson, E. &amp; Aral, S. (2022). "A Causal Test of the Strength of Weak Ties." *Science*, 377(6612), 1304–1310. <Meta>LinkedIn 随机化推荐实验；效应呈非线性且因行业而异。</Meta> [doi:10.1126/science.abl4476](https://doi.org/10.1126/science.abl4476)
+9. Albert, R., Jeong, H. &amp; Barabási, A.-L. (2000). "Error and Attack Tolerance of Complex Networks." *Nature*, 406, 378–382. <Meta>随机失效与定向移除；2001 年在 *Nature* 409, 542 刊登更正。</Meta> [doi:10.1038/35019019](https://doi.org/10.1038/35019019)
+10. Jeong, H., Mason, S. P., Barabási, A.-L. &amp; Oltvai, Z. N. (2001). "Lethality and Centrality in Protein Networks." *Nature*, 411, 41–42. <Meta>早期酵母蛋白质相互作用网络中的度与必需性。</Meta> [doi:10.1038/35075138](https://doi.org/10.1038/35075138)
+11. Buldyrev, S. V., Parshani, R., Paul, G., Stanley, H. E. &amp; Havlin, S. (2010). "Catastrophic Cascade of Failures in Interdependent Networks." *Nature*, 464, 1025–1028. <Meta>硬依赖渗流模型与突变式相互碎裂。</Meta> [doi:10.1038/nature08932](https://doi.org/10.1038/nature08932)
+12. Korkali, M., Veneman, J. G., Tivnan, B. F., Bagrow, J. P. &amp; Hines, P. D. H. (2017). "Reducing Cascading Failure Risk by Increasing Infrastructure Network Interdependence." *Scientific Reports*, 7, 44499. <Meta>细致基础设施模型可能逆转简单依赖渗流模型的结论；并区分意大利停电的传播效应与恢复效应。</Meta> [doi:10.1038/srep44499](https://doi.org/10.1038/srep44499)
+13. Brin, S. &amp; Page, L. (1998). "The Anatomy of a Large-Scale Hypertextual Web Search Engine." *Computer Networks and ISDN Systems*, 30(1–7), 107–117; Page, L., Brin, S., Motwani, R. &amp; Winograd, T. (1999). "The PageRank Citation Ranking: Bringing Order to the Web." Stanford technical report. <Meta>具有随机浏览者解释的有向递归链接排序。</Meta> [doi:10.1016/S0169-7552(98)00110-X](https://doi.org/10.1016/S0169-7552(98)00110-X)
+14. Bonacich, P. (1972). "Factoring and Weighting Approaches to Status Scores and Clique Identification." *Journal of Mathematical Sociology*, 2(1), 113–120. <Meta>基于特征向量的地位得分。</Meta> [doi:10.1080/0022250X.1972.9989806](https://doi.org/10.1080/0022250X.1972.9989806)
+15. Freeman, L. C. (1977). "A Set of Measures of Centrality Based on Betweenness." *Sociometry*, 40(1), 35–41; Brandes, U. (2001). "A Faster Algorithm for Betweenness Centrality." *Journal of Mathematical Sociology*, 25(2), 163–177. <Meta>介数的定义与高效计算。</Meta> [Freeman DOI](https://doi.org/10.2307/3033543) · [Brandes DOI](https://doi.org/10.1080/0022250X.2001.9990249)
+16. Girvan, M. &amp; Newman, M. E. J. (2002). "Community Structure in Social and Biological Networks." *Proceedings of the National Academy of Sciences*, 99(12), 7821–7826; Newman, M. E. J. &amp; Girvan, M. (2004). "Finding and Evaluating Community Structure in Networks." *Physical Review E*, 69, 026113. <Meta>基于边介数的检测与模块度。</Meta> [doi:10.1073/pnas.122653799](https://doi.org/10.1073/pnas.122653799) · [doi:10.1103/PhysRevE.69.026113](https://doi.org/10.1103/PhysRevE.69.026113)
+17. Blondel, V. D., Guillaume, J.-L., Lambiotte, R. &amp; Lefebvre, E. (2008). "Fast Unfolding of Communities in Large Networks." *Journal of Statistical Mechanics*, P10008; Rosvall, M. &amp; Bergstrom, C. T. (2008). "Maps of Random Walks on Complex Networks Reveal Community Structure." *Proceedings of the National Academy of Sciences*, 105(4), 1118–1123. <Meta>Louvain 模块度优化与 Infomap 的流压缩替代方案。</Meta> [Louvain DOI](https://doi.org/10.1088/1742-5468/2008/10/P10008) · [Infomap DOI](https://doi.org/10.1073/pnas.0706851105)
+18. Fortunato, S. &amp; Barthélemy, M. (2007). "Resolution Limit in Community Detection." *Proceedings of the National Academy of Sciences*, 104(1), 36–41. <Meta>模块度可能合并小型社区。</Meta> [doi:10.1073/pnas.0605965104](https://doi.org/10.1073/pnas.0605965104)
+19. Good, B. H., de Montjoye, Y.-A. &amp; Clauset, A. (2010). "Performance of Modularity Maximization in Practical Contexts." *Physical Review E*, 81, 046106. <Meta>简并的高模块度划分。</Meta> [doi:10.1103/PhysRevE.81.046106](https://doi.org/10.1103/PhysRevE.81.046106)
+20. Traag, V. A., Waltman, L. &amp; van Eck, N. J. (2019). "From Louvain to Leiden: Guaranteeing Well-Connected Communities." *Scientific Reports*, 9, 5233. <Meta>Louvain 的连通性缺陷与 Leiden 的修复方案。</Meta> [doi:10.1038/s41598-019-41695-z](https://doi.org/10.1038/s41598-019-41695-z)
+</Sources>

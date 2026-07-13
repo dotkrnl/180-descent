@@ -318,6 +318,8 @@ async function pageToXhtml(
   } else {
     $("details.deep-dive").each((_, details) => {
       const el = $(details);
+      const id = el.attr("id");
+      const idAttribute = id ? ` id="${escapeXml(id)}"` : "";
       const labels = appendixLabels(config.meta.language);
       const heading = el.find("> summary .deep-dive-title").text().trim();
       if (!heading) {
@@ -331,7 +333,7 @@ async function pageToXhtml(
 <p class="deep-dive-optional-note">${escapeXml(labels.note)}</p>
 ${subtitleMarkup}
 </header>`);
-      el.replaceWith(`<section class="deep-dive-epub">${el.html()}</section>`);
+      el.replaceWith(`<section class="deep-dive-epub"${idAttribute}>${el.html()}</section>`);
     });
   }
   $("script,.site-topbar,.site-footer,.download-strip,.web-only,.print-hide,.print-only:not(.epub-only)").remove();

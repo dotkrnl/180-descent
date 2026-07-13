@@ -55,7 +55,8 @@ describe("epub build helpers", () => {
     await writeBuiltPage(root, "zh/introduction", "导言");
     await writeBuiltPage(root, "days/001-fixture", "Fixture", [
       '<a href="/introduction/#start">Intro</a>',
-      '<a href="/days/001-fixture/#same">Same day</a>'
+      '<a href="/days/001-fixture/#same">Same day</a>',
+      '<details class="deep-dive" id="appendix-a"><summary><span class="deep-dive-title">Appendix A</span><span class="deep-dive-sub">Deep details.</span></summary><p>Appendix body.</p></details>'
     ].join("\n"));
     await writeBuiltPage(root, "zh/days/001-fixture", "夹具");
     await writeScssEntry(root);
@@ -68,6 +69,7 @@ describe("epub build helpers", () => {
 
     expect(dayXhtml).toContain('href="https://180d.io/introduction/#start"');
     expect(dayXhtml).toContain('href="day-001.xhtml#same"');
+    expect(dayXhtml).toContain('<section class="deep-dive-epub" id="appendix-a">');
   }, 15_000);
 });
 
@@ -81,7 +83,7 @@ async function writeScssEntry(root: string): Promise<void> {
   ].join("\n"));
 }
 
-async function writeBuiltPage(root: string, route: string, title: string, body = "Fixture body."): Promise<void> {
+async function writeBuiltPage(root: string, route: string, title: string, body = "<p>Fixture body.</p>"): Promise<void> {
   const file = path.join(root, "_site", route, "index.html");
   await mkdir(path.dirname(file), { recursive: true });
   await writeFile(file, [
@@ -91,7 +93,7 @@ async function writeBuiltPage(root: string, route: string, title: string, body =
     `<title>${title}</title>`,
     "</head>",
     "<body>",
-    `<main id="content"><h1>${title}</h1><p>${body}</p></main>`,
+    `<main id="content"><h1>${title}</h1>${body}</main>`,
     "</body>",
     "</html>"
   ].join("\n"));

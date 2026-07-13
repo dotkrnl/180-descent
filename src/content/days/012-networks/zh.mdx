@@ -1,0 +1,317 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+import Day12StaticFigure from "@app/components/lesson/figures/Day12StaticFigure.astro";
+import Day12Interactive from "@app/components/lesson/interactives/Day12Interactive.astro";
+
+<Hero>
+<HeroEyebrow dayMark="第 012 日 / 180">模块一 · 知识与推理的根基 ·</HeroEyebrow>
+
+# 网络
+
+<HeroSubhead>地球另一端的陌生人，离你比想象中更近。问题是：为什么？</HeroSubhead>
+
+<Day12StaticFigure kind="hero-small-world" locale="zh" />
+
+<Lead>1967 年冬，内布拉斯加州奥马哈市的几百人打开信箱，发现了一封古怪的邀请。信封里装着一本小册子和一个人的姓名：一位住在约 1,800 千米外、马萨诸塞州沙伦镇的股票经纪人。规则奇特却简单：把小册子送到他手中。你不能直接寄给他，只能交给一位彼此直呼其名的熟人，而且你认为此人更可能认识目标，或认识某位认识目标的人。</Lead>
+
+面对一个与自己毫无瓜葛的陌生人姓名，多数人想必觉得这项任务毫无希望：要靠朋友把东西从内布拉斯加送到波士顿？然而，小册子开始抵达股票经纪人的办公室。其中一条完成的链只经过两位中间人；所有完成的链平均经过约五位中间人。社会心理学家斯坦利·米尔格拉姆就此完成了二十世纪最著名的实验之一，也让一句话深入大众文化：「六度分隔」。这个数字为何如此之小、那项著名估计为何必须附上一项重要限定，以及相关数学能揭示哪些关于大脑与流行病的规律，正是今天的问题。
+</Hero>
+
+<Wrap>
+
+<WhereBlock>
+<Label>当前位置</Label>
+
+我们用一种把其余工具连接起来的结构，为模块一收尾。[第 8 日](/zh/days/008-complexity-and-emergence/)介绍了自组织临界性，以及行为横跨多个尺度的系统；[第 9 日](/zh/days/009-systems-thinking-and-feedback/)展示了反馈回路如何把微小推动放大成失控变化。网络为这些观念画出接线图：有关标度的主张描述连接如何分布，传染则是在这些连接上运行的增强过程。还要带上[第 5 日](/zh/days/005-causation/)对相关关系的警惕、[第 7 日](/zh/days/007-information-theory/)的比特，以及昨日[第 11 日](/zh/days/011-heuristics-biases-and-rationality/)的提醒：面对整齐的模式，心智可能过于急切地去匹配。四样工具，今天都用得上。
+</WhereBlock>
+
+<ContentSection>
+<SectionEyebrow>细看开场故事</SectionEyebrow>
+
+## 那个名声大噪的数字
+
+先理清算术，因为它关系到后文的一切。在完成的链中，米尔格拉姆的小册子平均经过 5.2 位中间人。这里说的是目标与起始者之间的人，而不是转手次数。中间有五个人，就意味着链上大约有六条连接，故而称为「六度」。区分「中间有几人」与「经过几条连接」，在此后的每项研究中都会再次出现，先牢牢记住。
+
+米尔格拉姆 1967 年在 *Psychology Today* 发表了通俗报道，完整研究则于 1969 年刊登在 *Sociometry*。著名的 5.2 必须附上一项重要限定：研究招募了 296 名起始者，但只有 217 人把小册子继续传出，最终仅 64 条链抵达目标。也就是说，实际启动的链中约 29% 完成；若以全部招募者为分母，则约为 22%。报告的均值只描述了最终完成的少数链。有人拒绝转交时便中断的链，或许本来会更长、更曲折。心理学家朱迪思·克莱因费尔德 2002 年重新分析数据时还强调了选择问题：许多起始者之所以入选，是因为自称人脉广；另一些人持有股票，因而格外可能找到通往股票经纪人的路径。更准确的标题应是：「在经过筛选且最终完成传递链的参与者中，世界显得很小。」不那么上口，却仍然令人惊叹。
+
+<Aside>
+<BlockTitle>这究竟是谁的想法？</BlockTitle>
+
+这句话不是米尔格拉姆首创，观念也并非由他最先提出。1929 年，匈牙利作家弗里杰什·考林蒂在短篇小说 *Láncszemek*（《链环》）中，让一个人物打赌：地球上的任何两个人，最多通过五位熟人就能连接起来。「六度分隔」一语则晚得多，来自约翰·瓜尔 1990 年的同名戏剧，继而进入更广泛的大众文化。一位作家的赌约、一位剧作家的标题，中间夹着一项心理学实验：在人们有能力大规模检验之前，这个数字便已声名远扬。
+</Aside>
+
+<FormatOnly as="div" media="print" class="pdf-page-break" />
+
+那么，它是真的吗？后来的大型数字图确实发现了短路径，尽管这些研究测量的是特定服务上的成员关系与通信，而不是全体人际关系的随机样本。2008 年，尤雷·莱斯科韦茨与埃里克·霍维茨分析了 Microsoft Messenger 图：1.8 亿人、13 亿条连接，一个月内产生 300 亿次对话。连通节点对之间的平均距离为 6.6 跳，众数为 6，中位数为 7。2012 年，Facebook 与米兰大学团队分析了 7.21 亿名用户和 690 亿条好友连接。该服务上的平均距离为 4.74 条连接，即约 3.74 位中间人。他们把论文命名为 *Four Degrees of Separation*。这些规模庞大的观察性图支持小世界模式；但它们本身既不能确立一个适用于所有人的永恒数字，也不能证明某个平台真的让整个人类世界变小了。
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>模型</SectionEyebrow>
+
+## 两者兼得：既聚集，又很短
+
+小世界真正奇特的地方，远不止讨喜，而在于下面这个难题。你的朋友并不是随机散落在全人类中。他们会聚集：你的朋友往往彼此也认识。真正能收到你小册子的人，多半住在附近、与你共事，或生活在相同的圈子里。这称为<Term>聚集性</Term><TipNote text={"聚集性衡量一个节点的邻居彼此相连的频繁程度。"} />。高聚集性理应把人困在狭小的本地口袋里，像一个村庄。为什么世界没有成为一片片彼此隔绝的村落，任何两个村落之间都要转手上百次？
+
+邓肯·瓦茨与史蒂文·斯特罗加茨在 1998 年发表于 *Nature* 的里程碑论文中给出的答案，漂亮得近乎出奇简单。先从一个村落世界开始：所有人排列成环，只与近邻相连。它聚集性很高，路径却极长；若要横穿整个环，只能沿着连接一步步爬过去。现在，把极少数本地关系随机重连为跨越结构的长程捷径。聚集性几乎不受损，因为绝大多数人的朋友仍彼此相识；捷径却像虫洞一样，使网络的平均距离骤降。大学室友移居海外、表亲身处三个时区之外，这样少数几条远距离关系，就足以把数十亿「村民」缝合成一个小世界。瓦茨与斯特罗加茨把这类结构称为小世界网络：它兼具村庄式的小圈子与随机图的广阔通达性。
+
+下方展项展示瓦茨—斯特罗加茨模型。移动滑块，可以看到平均路径长度的下降远快于聚集性的消退。
+</ContentSection>
+
+<Day12Interactive kind="small-world" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 重连一个小世界</PanelTitle>
+
+<PanelNote>少数长程捷径便能显著减少横穿环形网络所需的跳数，同时保留大多数本地三角形。局部聚集性尚未消失，短路径便已经出现。</PanelNote>
+
+<Day12StaticFigure kind="small-world" locale="zh" />
+
+<SimpleTable
+  headers={["网络状态","平均路径长度","聚集性","解读"]}
+  rows={[["局部环","高","高","村落关系保留本地三角形，但横穿网络需要许多跳。"],["少数连接重连","急剧下降","仍高","小世界区域兼具局部凝聚力与全局通达性。"],["多数连接随机","低","低","路径依然很短，但村落结构已基本消散。"]]}/>
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow>深入模型</SectionEyebrow>
+
+## 连接的民主制与贵族制
+
+短路径只是现实网络运转方式的一半；另一半在于连接分布并不均等。数一数每个节点有多少条边，也就是它的度，再把答案绘成分布，就会出现两种截然不同的政治体制。
+
+第一种是保罗·埃尔德什与阿尔弗雷德·雷尼在 1960 年前后研究的随机图：在节点间随机抛出边，仿佛醉汉在串节日彩灯。这里的度分布很民主。在 <MathInline latex={String.raw`G(n,p)`} /> 模型中，每个节点的度都服从二项分布；当网络趋于大规模、稀疏，且平均度保持不变时，该分布趋近<Term>泊松分布</Term><TipNote text={"泊松分布描述以固定平均速率独立发生的事件所产生的计数。它可近似大规模稀疏的埃尔德什—雷尼图中的度：大多数节点的度位于均值附近，极端枢纽极其罕见。"} />。因此，大多数节点的度都位于均值附近，极端枢纽极其罕见，而且这种分布有明确的特征尺度，可以指出一个典型节点。如果人类社会是这样的埃尔德什—雷尼图，几乎每个人的朋友数量都大致相同，只有少许浮动，也不会有名流。
+
+第二种体制是贵族制，正是它使网络科学声名鹊起。1999 年，阿尔伯特-拉斯洛·巴拉巴西与雷卡·阿尔伯特指出，包括早期万维网、引文图和航空路线在内的许多现实网络，与节日彩灯截然不同。少数枢纽节点占据远超比例的连接，而多数节点只有很少的连接。它们的度分布看似按<Term>幂律</Term><TipNote text={"在幂律分布中，取值 k 的概率按 k 的某个固定幂次下降，因此会出现大量小值，以及由少数大值构成的长尾。"} /> <MathInline latex={String.raw`P(k)\propto k^{-\gamma}`} /> 衰减，这正是第 8 日也曾出现的尺度形状。此时没有唯一的典型节点或特征尺度，故称无标度。
+
+巴拉巴西与阿尔伯特还提出了一种形成这种贵族制的机制：优先连接。让网络逐个增加节点，每个新来者都优先选择已经连接良好的节点。强者愈强；早期枢纽滚雪球般壮大。这就是马太效应——「凡有的，还要加给他」——化成了一张图。德里克·德·索拉·普赖斯在 1960 年代就从引文网络中发现了相关的「累积优势」过程；这种机制一再出现，因为相同的模式也一再出现。
+
+下方展项把两种体制并列呈现。在线性坐标上，差异可能并不显眼；换成双对数图，差别便十分鲜明。图中还叠加了<Term>对数正态分布</Term><TipNote text={"如果一个量的对数服从正态分布，这个量便服从对数正态分布；在有限范围内，其长尾可能很像幂律。"} />。它是重要的相似候选：在现实数据覆盖的有限区间内，曲线可能只呈现轻微弯折。
+</ContentSection>
+
+<Day12Interactive kind="degree-distribution" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 度分布</PanelTitle>
+
+<PanelNote>线性视图与双对数视图会揭示同一数据的不同部分。理想幂律在双对数坐标上是一条直线，但对数正态分布的尾部也可能在有限观测范围内显得相似。</PanelNote>
+
+<Day12StaticFigure kind="degree-distribution" locale="zh" />
+
+<SimpleTable
+  headers={["候选模型","度的模式","双对数视图","推断限制"]}
+  rows={[["泊松随机图","大多数节点都位于某一特征度附近。","尾部迅速弯离。","大型枢纽极其罕见。"],["幂律","大量低度节点与很长的尾部并存。","理想幂律呈直线。","看似笔直的片段只是必要证据，并不充分。"],["对数正态","多数取值不大，但尾部看似很重。","在有限范围内可以模仿直线。","在称其为幂律之前，必须比较模型。"]]}/>
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow>争论</SectionEyebrow>
+
+## 网络真的无标度吗？一场大争论
+
+进入 2000 年代后，「无标度」从一项有趣发现逐渐固化成近似自然定律的说法。教科书、演讲与数千篇论文描述万维网、细胞、大脑和社会时，仿佛一条幂律与一种优先连接叙事就能支配一切。这种统一令人振奋，却往往建立在一种薄弱习惯上：把度分布画在双对数坐标中，看见大致笔直，就宣称它是幂律。近似笔直不等于直线。数学形式与成因可能完全不同的对数正态分布，也能在多数数据集覆盖的范围里伪装成近似直线。
+
+2019 年，这场争论在 *Nature Communications* 达到高潮。安娜·布罗伊多与阿龙·克劳塞特检验了社会、生物、技术和信息等领域的 928 个网络。他们采用了克劳塞特、科斯马·沙利兹和马克·纽曼十年前提出的统计程序：先用最大似然法拟合候选幂律，检验拟合是否可信，再与对数正态等其他候选模型比较。只有 4% 的网络达到了最强的无标度证据类别。对大多数网络而言，对数正态的拟合不逊于甚至优于幂律；作为典型范例的社会网络，按其判据充其量只有很弱的无标度证据。
+
+<BlockQuote>
+「强无标度结构在经验上十分罕见。」
+<Meta>Broido &amp; Clauset, *Nature Communications* 10:1017，2019 年 3 月。</Meta>
+</BlockQuote>
+
+反驳很快出现，而且毫不让步。伊万·沃伊塔洛夫、德米特里·克里乌科夫等人在 *Physical Review Research* 发表 *Scale-free networks well done* 作为回应。他们认为，布罗伊多与克劳塞特要求的是纯粹的教科书式幂律，其判据对现实网络过于严格。按照他们的论证，无标度行为只需以正则变化这一数学性质渐近地出现在尾部。采用这种基于尾部的定义，他们发现无标度结构十分普遍。物理学家佩特·霍尔姆把同期综述命名为 *Rare and everywhere*：两派采用不同定义，因此回答的其实是不同问题。
+
+争论并未止于 2019 年。2021 年一项 *PNAS* 分析指出，有限尺寸效应可能让真正无标度的网络无法通过标准分类检验。2024 年一篇 *PNAS Nexus* 论文则提出了另一种机制，以数学方式展示一个并不增长的网络如何仅凭重连产生幂律尾部，并将模型与若干现实网络比较。两篇论文都不能证明所有网络都是无标度的；合起来看，它们说明必须把普遍程度、形成机制与统计定义分开讨论。
+
+因此，截至 2026 年 7 月，合理结论不是某个单一且已定案的百分比。许多现实度分布确实是重尾的：枢纽存在，节点的度也比埃尔德什—雷尼图的预测悬殊得多。尚未确立的是：是否有一条指数介于 2 与 3 的普遍纯幂律支配所有这类网络，以及它们是否全由优先连接生成。更强的主张仍有争议，而结论部分取决于哪一种尾部行为有资格称为「无标度」。这正是第 8 日的模式在另一领域重现：一种有用的测量被扩张为普适叙事，又被更严格的统计比较拉回。它也与第 11 日遥相呼应：科学共同体一旦预期看到直线，暗示性的线条就很容易被看成直线。
+
+<Aside>
+<BlockTitle>这场争论为何值得进行</BlockTitle>
+
+它并非单纯的用词之争。网络是否真正无标度，会改变人们对随机失效下的网络鲁棒性、枢纽定向攻击的破坏力，以及流行阈值位置的预测。这个标签承载着关键假设，因此必须凭明确的定义及与其他模型的比较来赢得。
+</Aside>
+</ContentSection>
+
+<ContentSection class="frontier">
+<SectionEyebrow>前沿 · 2026</SectionEyebrow>
+
+## 传染：枢纽为何能点燃世界
+
+现在来看它的实际意义，也就能明白这个主题为何绝非博物馆里的旧展品。病毒、谣言、模因、银行挤兑和停电等一切传播过程，都沿着网络前进。网络的形状会与传播对象自身的生物学、行为或工程性质一道，支配整个过程。
+
+经典流行病学有一个核心量 <MathInline latex={String.raw`R_0`} />：在特定条件下，一位典型感染者在完全易感人群中造成的预期二代病例数。以 <MathInline latex={String.raw`R_0=1`} /> 为界，低于此值时疫情通常会消退，高于此值时则可能增长。简单的阈值论证往往假定个体混合得相对均匀。现在，把<Term>易感—感染—易感模型</Term><TipNote text={"在 SIS 模型中，感染节点康复后重新变为易感，而非获得持久免疫，因此感染可以无限期循环。"} />放到一种理想化、无相关、规模无限增长且度方差发散的无标度网络上，就会出现惊人结果。2001 年，罗穆阿尔多·帕斯托-萨托拉斯与亚历山德罗·韦斯皮尼亚尼证明，在这个极限中，流行阈值趋于消失：不存在一个严格为正、足以保护该模型网络的传播阈值。枢纽如同储存库，会不断重新播种感染。有限的现实网络中，阈值并不真的为零；后续研究也把有限尺寸行为与最大枢纽及模型细节联系起来。经得住检验的结论更窄：接触异质性可以大幅降低阈值。
+
+<Claim>
+<ClaimHeader label="前沿 01">
+<StatusChip status="ok" label="度的方差" printLabel="度方差效应已确立" />
+</ClaimHeader>
+
+### 超级传播是网络的性质，不只取决于病原体
+
+在上述 SIS 模型的异质平均场近似中，阈值随 <MathInline latex={String.raw`\langle k\rangle/\langle k^2\rangle`} /> 缩放，即平均度除以度平方的均值。大型枢纽会抬高 <MathInline latex={String.raw`\langle k^2\rangle`} />，从而压低阈值。换句话说，只知道平均接触数还不够；方差，尤其是连接极多的个人或事件所构成的分布远尾，可能主导传播。
+
+这一结构有助于解释 COVID-19 疫情期间十分重要的超级传播现象：传播呈高度过度离散，少数病例与场所造成了很大一部分后续感染。网络位置不是唯一原因；传染性、时机、场所、行为和偶然性也都很重要。不过，即使平均再生数相同，如果一场疫情反复触达枢纽，另一场只在较均匀的接触模式中传播，二者的表现仍可能截然不同。分布的离散程度与中心位置同样重要，这直接呼应[第 6 日](/zh/days/006-statistics-and-the-art-of-not-fooling-yourself/)。
+</Claim>
+
+反过来看，这项结果便成为一种干预思路。如果枢纽对维持传播贡献格外大，那么保护或移除这些节点，可能比随机选择相同数量的节点有效得多。在下方的风格化网络中，随机免疫 12% 的节点，会留下许多经过度较高节点的路线；优先免疫度最高的 12%，则移除了网络的主要通道。这是模型结果，并非普遍的疫苗政策。现实中的定向策略涉及测量、公平、隐私与可行性难题，而且生物风险也不等同于节点的度。
+</ContentSection>
+
+<Day12Interactive kind="contagion" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 传染与枢纽定向干预</PanelTitle>
+
+<PanelNote>保护相同数量的节点，效果会因其所处位置而异。移除度较高的枢纽会同时切断许多传播路径；随机保护则往往让这些路径继续开放。</PanelNote>
+
+<Day12StaticFigure kind="contagion" locale="zh" />
+
+<SimpleTable
+  headers={["策略","受保护节点","结构效应","模型结果"]}
+  rows={[["无","0%","所有枢纽路线保持开放。","不高的传播概率也可能触达网络的大部分。"],["随机","12%","部分路线消失，但主要枢纽往往仍在。","不同随机抽样下，传播缩小的程度不一。"],["度最高","12%","最繁忙的通道最先被移除。","在这个枢纽主导的模型中，传播范围急剧下降。"]]}/>
+</FormatOnly>
+
+<ContentSection class="frontier">
+<SectionEyebrow>前沿 · 续</SectionEyebrow>
+
+## 从病毒到行为，再越过成对关系
+
+并非所有事物都像病毒一样传播，这也引出了该领域最鲜明的发现之一。病原体属于简单传染：一次充分暴露就可能完成传播，因此长程捷径能够把它播撒到网络的遥远区域。许多社会变化，例如采纳代价高昂的行为、参加风险很高的抗议，或改变根深蒂固的习惯，则更像复杂传染：一个人可能需要从多个来源获得强化，才会采取行动。
+
+达蒙·森托拉与迈克尔·梅西 2007 年提出，对于复杂传染而言，能加快病毒传播的长程捷径反而可能妨碍扩散，因为一个遥远联系人不足以提供充分的社会佐证。森托拉随后在 2010 年发表于 *Science* 的实验中检验了这一预测：他在结构受控的人造在线网络中播种一种健康行为。该行为在聚集且冗余的网络中传播得更远、更快，与简单传染的预期恰好相反。同一套接线方式既可能加快谣言，也可能阻碍高风险的集体转变，关键取决于采纳需要多少强化。
+
+<Claim>
+<ClaimHeader label="前沿 02">
+<StatusChip status="hint" label="群体传染" printLabel="高阶群体传染有前景" />
+</ClaimHeader>
+
+### 也许连接并不是恰当的基本单位
+
+传统网络以两个节点之间的成对连接为基本单位；社会影响却常发生在群体中，例如整桌人的一致意见所带来的压力、三人小团体，或一个委员会。一个不断发展的研究方向开始使用高阶网络，其中一项关系可以同时连接两个以上的节点；也使用<Term>单纯复形</Term><TipNote text={"单纯复形以点、边、填充三角形、四面体及其更高维对应物表示群体关系。"} />，用填充的几何单元而非仅用成对关系编码群体相互作用。
+
+2019 年，亚科波·亚科皮尼等人在 *Nature Communications* 证明，传染模型中的群体效应可以产生突变式转变与双稳态：低采纳状态和高采纳状态都能持续，微小变化便可能推动系统在两者之间跃迁。这项数学结果十分扎实，经验适用范围却仍待确定：多数证据来自理论或模拟，研究者仍在检验何时必须用高阶机制描述现实社会系统，何时由动力学更丰富的成对网络就足以解释。有前景，但尚未确立为普适解释。
+</Claim>
+</ContentSection>
+
+<ContentSection class="frontier">
+<SectionEyebrow>前沿 · 续</SectionEyebrow>
+
+## 心智的接线图
+
+第一条前沿把网络当作传播的舞台，第二条则把网络本身当作研究对象：大脑的物理接线。2005 年，奥拉夫·斯波恩斯、朱利奥·托诺尼与罗尔夫·克特尔提出了一个词和一项使命：绘制大脑中全部神经连接，并仿照「基因组」称之为<Term>连接组</Term><TipNote text={"连接组是在特定尺度上绘制的神经连接图谱，既可以描述脑区之间的连接，也可以细至单个神经元之间的突触。"} />。这一设想认为，枢纽、聚集与捷径等网络结构有助于解释计算。埃德·布尔莫尔与斯波恩斯 2009 年的综述，又推动「复杂脑网络」成为一个研究领域。
+
+脑图呈现今天介绍的多种特征：既有紧密相连的局部系统，也有长程连接。它们呈现富人俱乐部：度较高的枢纽脑区彼此稠密相连，构成代价高昂的整合骨架。马丁·范登赫维尔与斯波恩斯 2011 年在人脑连接组中绘出了富人俱乐部组织。长程连接要消耗能量、空间和生物材料；这种架构在接线成本与高效整合之间权衡。不过，「小世界」或「无标度」等熟悉标签是否适用，取决于测量尺度、节点定义、阈值处理和零模型；下文还会回到这些限定。
+
+2024 年的 FlyWire 与 2025 年的 MICrONS 发布跨越了明确的里程碑：前者给出成年果蝇大脑完整的突触级接线图，后者则为一立方毫米小鼠视觉皮层建立了极为稠密的结构—活动图谱。
+
+<Claim>
+<ClaimHeader label="前沿 03">
+<StatusChip status="ok" label="连接组图谱" printLabel="连接组绘制里程碑已确立" />
+</ClaimHeader>
+
+### 一整个果蝇脑，与一粒沙大小的小鼠皮层
+
+2024 年 10 月，FlyWire 联盟在 *Nature* 发表一只成年雌果蝇大脑的完整接线图：139,255 个神经元、约 5,450 万个突触；多肯瓦尔德、施莱格尔等人的两篇配套论文还为 8,400 多种细胞类型提供了注释。
+
+2025 年 4 月，MICrONS 联盟发布了约一粒沙大小的一立方毫米小鼠视觉皮层图谱：超过 200,000 个细胞、约 5.23 亿个突触，以及约 4 千米长的轴突接线。项目还把结构与功能记录联系起来；这些记录来自小鼠观看视觉刺激时约 75,000 个神经元的活动。它们是已经发布且数据公开的成果，却不是对脑功能的完整解释。研究范围至关重要：果蝇大脑不是哺乳动物大脑；一立方毫米也只是小鼠大脑的一小部分，而小鼠大脑本身又远小于人脑。完整到突触尺度的人脑连接组，距离当前已经完成的图谱仍极为遥远。
+</Claim>
+
+<Aside>
+<BlockTitle>果蝇脑中的「六度」</BlockTitle>
+
+FlyWire 网络连接得十分紧密。在包含 93.3% 已分析神经元的巨型强连通分量中，最短有向路径的平均长度为 4.42 跳；该分量内任一神经元都能在 13 跳之内到达其他任一神经元。米尔格拉姆的小册子通过约五位中间人横跨一片大陆，而穿越果蝇脑大部分区域的路径平均也同样浅短。两者共享的小世界模式只是一项结构比较，并不意味着社会熟人与突触会以相同方式运作，也不意味着解剖上的可达性就证明了功能性信号流。
+</Aside>
+
+<Claim>
+<ClaimHeader label="前沿 04">
+<StatusChip status="bad" label="脑网络标签" printLabel="无标度与小世界脑网络标签仍有争议" />
+</ClaimHeader>
+
+### 神经科学的夸大解读止于何处
+
+两句流行口号值得警惕。第一句是「大脑是无标度的」。脑网络的度分布可能很宽，也可能有丰富的枢纽；但许多数据更适合以带<Term>指数截断</Term><TipNote text={"指数截断会使重尾在超过某一尺度后下降得快得多，反映有限尺寸或枢纽大小受到的物理限制。"} />的幂律拟合，而不是无界的纯幂律。生物学与代谢都会设置上限；没有任何脑区能获得无限多条连接。因此，简单宣称大脑「无标度」，可能把 928 网络之争已经揭示的夸大主张重新带进来。
+
+第二句甚至是「大脑是小世界网络」，同样会受研究者如何构造图的影响。在 2015 年在线发表、2016 年印刷出版的论文 *Is the brain really a small-world network?* 中，克劳斯·希尔盖塔格与亚历山德罗斯·古拉斯提出，有时「大世界」描述反而更合适。其中一位作者还明确重新审视了自己早先持有的相反立场。神经成像的图指标会随阈值处理、归一化、空间尺度和节点定义而变化；换一套处理方法，小世界系数就可能摇摆。连接组测量是真实的，整齐的形容词却取决于建模选择，至今仍有争议。
+</Claim>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>未决问题</SectionEyebrow>
+
+## 哪些问题确实尚无定论
+
+- 枢纽究竟如何形成？优先连接只是一种机制；适应度、优化、复制和物理约束也可能产生宽广的度分布。仅凭分布往往无法确定成因。
+- 「无标度」真的是恰当问题吗？执着于某一种分布，可能让人忽视对行为更重要的社区、模体、层级与几何。
+- 我们是否需要高阶模型？动力学足够丰富的成对网络，能否解释看似由群体传染造成的现象？经验检验仍处于早期。
+- 是<Term>同质性</Term><TipNote text={"同质性是指相似的人倾向彼此建立关系；即使某项特征并未传播，这也会使它看起来仿佛发生了传播。"} />，还是影响？当一种行为看似沿社会网络传播时，究竟是一个人改变了另一个人，还是相似的人聚在一起并各自采纳？观察数据一向难以区分二者。森托拉的受控实验正是为了打破这种混杂，这直接呼应第 5 日：网络中的相关关系仍然不等于因果。
+- 连接组能把我们带多远？接线图日益完整之后，结构图谱能否预测功能与行为？还是说，接线只搭好了舞台，动力学、化学与活动中仍含有关键的信息？这个问题将在人工智能与意识模块的第 123–126 日和第 138–145 日再度出现。
+</ContentSection>
+
+<Recap>
+<BlockTitle>今日三句话</BlockTitle>
+<RecapList>
+<RecapItem term="核心观点">网络可以保持局部聚集，又因少数远跳连接而在全局上变短；度的不均等则让枢纽对网络鲁棒性、传染与信息流产生格外强大的影响。</RecapItem>
+<RecapItem term="最佳类比">若每趟旅程都只能沿本地前进，环形村落世界便辽阔无边；加入少数虫洞般的捷径，同一群村落便化为一个小世界。</RecapItem>
+<RecapItem term="仍在争论">许多现实网络具有重尾，但它们是否真正无标度，取决于定义、统计比较与物理截断。</RecapItem>
+</RecapList>
+<Threads label="今日脉络 ›">小世界与枢纽中的涌现 · 脑接线中的计算 · 沿连接流动的信息 · 通过累积优势实现的演化 · 富人俱乐部接线成本中的能量。</Threads>
+</Recap>
+
+<ContinueNote label="明日 → 第 13 日">
+### 测量与单位
+
+今天从头到尾都在使用数字：5.2 位中间人、5,450 万个突触，以及常被宣称介于 2 与 3 之间的度指数。明天要追问它们之下的问题：测量究竟是什么？一米有多长？为什么自 2019 年起，它由一项固定的自然常数定义，而不再取决于巴黎的一根铂金棒？我们暂且放下推理工具，拿起量的工具；这是进入数学模块前的最后一项基础。
+</ContinueNote>
+
+<Sources>
+<SectionEyebrow>资料来源</SectionEyebrow>
+
+<SourcesTitle>资料来源与延伸阅读</SourcesTitle>
+
+1. Travers, J. & Milgram, S. (1969). "An Experimental Study of the Small World Problem." *Sociometry* 32(4): 425–443. <Meta>— 招募 296 名起始者，217 人把链继续传出，64 条链完成；完成链平均经过 5.2 位中间人。</Meta> [doi.org/10.2307/2786545](https://doi.org/10.2307/2786545)
+2. Milgram, S. (1967). "The Small-World Problem." *Psychology Today* 1(1): 61–67. <Meta>— 最初的通俗报道。</Meta>
+3. Kleinfeld, J. S. (2002). "Could It Be a Big World After All? The 'Six Degrees of Separation' Myth." *Society* 39: 61–66. <Meta>— 讨论中途退出、选择偏差，以及持怀疑态度的理由。</Meta>
+4. Karinthy, F. (1929). "Láncszemek" ("Chains"), in *Minden másképpen van*. <Meta>— 早期的「五位熟人」设想。</Meta> Guare, J. (1990). *Six Degrees of Separation*. <Meta>— 提供了如今熟知短语的戏剧。</Meta>
+5. Watts, D. J. & Strogatz, S. H. (1998). "Collective dynamics of 'small-world' networks." *Nature* 393: 440–442. [doi.org/10.1038/30918](https://doi.org/10.1038/30918)
+6. Leskovec, J. & Horvitz, E. (2008). "Planetary-Scale Views on a Large Instant-Messaging Network." *Proceedings of WWW '08*: 915–924. <Meta>— Microsoft Messenger：约 1.8 亿用户；平均路径 6.6，中位数 7，最长路径 29。</Meta> [doi.org/10.1145/1367497.1367620](https://doi.org/10.1145/1367497.1367620)
+7. Backstrom, L., Boldi, P., Rosa, M., Ugander, J. & Vigna, S. (2012). "Four Degrees of Separation." *Proceedings of ACM Web Science '12*: 33–42. <Meta>— Facebook：7.21 亿用户、690 亿条连接，平均距离 4.74。</Meta> [arXiv:1111.4570](https://arxiv.org/abs/1111.4570)
+8. Barabási, A.-L. & Albert, R. (1999). "Emergence of Scaling in Random Networks." *Science* 286(5439): 509–512. <Meta>— 优先连接与 <MathInline latex={String.raw`P(k)\propto k^{-\gamma}`} />。</Meta> [doi.org/10.1126/science.286.5439.509](https://doi.org/10.1126/science.286.5439.509)
+9. Clauset, A., Shalizi, C. R. & Newman, M. E. J. (2009). "Power-Law Distributions in Empirical Data." *SIAM Review* 51(4): 661–703. <Meta>— 最大似然拟合与似然比模型比较。</Meta> [doi.org/10.1137/070710111](https://doi.org/10.1137/070710111)
+10. Broido, A. D. & Clauset, A. (2019). "Scale-free networks are rare." *Nature Communications* 10: 1017. <Meta>— 928 个网络；4% 达到最强证据类别；对数正态候选往往拟合得同样好或更好。</Meta> [doi.org/10.1038/s41467-019-08746-5](https://doi.org/10.1038/s41467-019-08746-5)
+11. Voitalov, I., van der Hoorn, P., van der Hofstad, R. & Krioukov, D. (2019). "Scale-free networks well done." *Physical Review Research* 1: 033034. <Meta>— 基于正则变化的反驳与尾部定义。</Meta> [doi.org/10.1103/PhysRevResearch.1.033034](https://doi.org/10.1103/PhysRevResearch.1.033034)
+12. Holme, P. (2019). "Rare and everywhere: Perspectives on scale-free networks." *Nature Communications* 10: 1016. <Meta>— 对定义之争的综合评述。</Meta> [doi.org/10.1038/s41467-019-09038-8](https://doi.org/10.1038/s41467-019-09038-8)
+13. Pastor-Satorras, R. & Vespignani, A. (2001). "Epidemic Spreading in Scale-Free Networks." *Physical Review Letters* 86(14): 3200–3203. [doi.org/10.1103/PhysRevLett.86.3200](https://doi.org/10.1103/PhysRevLett.86.3200) 另见 Pastor-Satorras, R., Castellano, C., Van Mieghem, P. & Vespignani, A. (2015). "Epidemic processes in complex networks." *Reviews of Modern Physics* 87: 925.
+14. Chinazzi, M. et al. (2020). "The effect of travel restrictions on the spread of the 2019 novel coronavirus (COVID-19) outbreak." *Science* 368(6489): 395–400. <Meta>— 对 COVID-19 传播进行网络—元种群建模。</Meta> [doi.org/10.1126/science.aba9757](https://doi.org/10.1126/science.aba9757)
+15. Centola, D. & Macy, M. (2007). "Complex Contagions and the Weakness of Long Ties." *American Journal of Sociology* 113(3): 702–734. Centola, D. (2010). "The Spread of Behavior in an Online Social Network Experiment." *Science* 329(5996): 1194–1197. [doi.org/10.1126/science.1185231](https://doi.org/10.1126/science.1185231)
+16. Iacopini, I., Petri, G., Barrat, A. & Latora, V. (2019). "Simplicial models of social contagion." *Nature Communications* 10: 2485. <Meta>— 群体传染、非连续转变与双稳态；理论结果已经成立，经验研究仍在发展。</Meta> [doi.org/10.1038/s41467-019-10431-6](https://doi.org/10.1038/s41467-019-10431-6)
+17. Sporns, O., Tononi, G. & Kötter, R. (2005). "The Human Connectome: A Structural Description of the Human Brain." *PLoS Computational Biology* 1(4): e42. [doi.org/10.1371/journal.pcbi.0010042](https://doi.org/10.1371/journal.pcbi.0010042)
+18. Bullmore, E. & Sporns, O. (2009). "Complex brain networks: graph theoretical analysis of structural and functional systems." *Nature Reviews Neuroscience* 10: 186–198. van den Heuvel, M. P. & Sporns, O. (2011). "Rich-Club Organization of the Human Connectome." *Journal of Neuroscience* 31(44): 15775–15786.
+19. Dorkenwald, S. et al. (FlyWire Consortium) (2024). "Neuronal wiring diagram of an adult brain." *Nature* 634: 124–138. Schlegel, P. et al. (2024). "Whole-brain annotation and multi-connectome cell typing of *Drosophila*." *Nature* 634: 139–152. Lin, A. et al. (2024). "Network statistics of the whole-brain connectome of *Drosophila*." *Nature* 634: 153–165. <Meta>— 139,255 个神经元与约 5,450 万个突触；网络分析论文报告了上文使用的连通分量与路径长度统计。</Meta> [connectome DOI](https://doi.org/10.1038/s41586-024-07558-y) · [network-statistics DOI](https://doi.org/10.1038/s41586-024-07968-y)
+20. MICrONS Consortium et al. (2025). "Functional connectomics spanning multiple areas of mouse visual cortex." *Nature* 640(8058): 435–447. <Meta>— 一立方毫米；超过 200,000 个细胞；约 5.23 亿个突触；约 4 千米轴突；约 75,000 个神经元接受功能成像。</Meta> [doi.org/10.1038/s41586-025-08790-w](https://doi.org/10.1038/s41586-025-08790-w)
+21. Hilgetag, C. C. & Goulas, A. (2016). "Is the brain really a small-world network?" *Brain Structure and Function* 221(4): 2361–2366. <Meta>— 对「大世界」的挑战，以及图指标对建模选择的敏感性。</Meta> [doi.org/10.1007/s00429-015-1035-6](https://doi.org/10.1007/s00429-015-1035-6)
+22. Serafino, M., Cimini, G., Maritan, A., Rinaldo, A., Suweis, S., Banavar, J. R. & Caldarelli, G. (2021). "True scale-free networks hidden by finite size effects." *PNAS* 118(2): e2013825118. <Meta>— 有限尺寸缩放对直接分布拟合分类方法提出挑战。</Meta> [doi.org/10.1073/pnas.2013825118](https://doi.org/10.1073/pnas.2013825118)
+23. Lynn, C. W., Holmes, C. M. & Palmer, S. E. (2024). "Emergent scale-free networks." *PNAS Nexus* 3(7): pgae236. <Meta>— 无须网络净增长，仅凭重连便可产生无标度尾部的模型。</Meta> [doi.org/10.1093/pnasnexus/pgae236](https://doi.org/10.1093/pnasnexus/pgae236)
+24. Endo, A., Centre for the Mathematical Modelling of Infectious Diseases COVID-19 Working Group, Abbott, S., Kucharski, A. J. & Funk, S. (2020). "Estimating the overdispersion in COVID-19 transmission using outbreak sizes outside China." *Wellcome Open Research* 5: 67, version 3. <Meta>— SARS-CoV-2 传播存在显著个体差异与超级传播的证据。</Meta> [doi.org/10.12688/wellcomeopenres.15842.3](https://doi.org/10.12688/wellcomeopenres.15842.3)
+</Sources>
+
+</Wrap>
