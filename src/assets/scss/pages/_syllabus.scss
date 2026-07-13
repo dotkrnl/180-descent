@@ -119,7 +119,6 @@
 .atlas-page--syllabus .syllabus-map .map-block:last-child{
   border-bottom:0;
 }
-.atlas-page--syllabus .syllabus-map .map-block:hover,
 .atlas-page--syllabus .syllabus-map .map-block:focus-visible,
 .atlas-page--syllabus .syllabus-map .map-block[aria-pressed="true"]{
   background:color-mix(in srgb,var(--block-accent,var(--accent)) 10%,var(--raised));
@@ -260,8 +259,8 @@
   font-size:1rem;
   line-height:1.45;
 }
-// De-boxed block strip: plain mono labels resting on a single hairline, each
-// underlined in its own block hue on hover. Sticky offset matches the topbar
+// De-boxed block strip: plain mono labels resting on a single hairline. Sticky
+// offset matches the topbar
 // height exactly so no content peeks through the seam while scrolling.
 .atlas-page--syllabus .syllabus-block-nav{
   position:sticky;
@@ -298,7 +297,6 @@
   white-space:nowrap;
   transition:border-color var(--duration-fast) var(--ease-out-atlas),color var(--duration-fast) var(--ease-out-atlas);
 }
-.atlas-page--syllabus .syllabus-block-nav a:hover,
 .atlas-page--syllabus .syllabus-block-nav a:focus-visible{
   border-bottom-color:var(--block-accent,var(--accent));
   background:transparent;
@@ -375,10 +373,6 @@
   margin:0;
   padding:.65rem 0 .72rem;
   border-top:1px solid var(--line);
-  transition:background var(--duration-fast) var(--ease-out-atlas);
-}
-.atlas-page--syllabus .depth-day:hover{
-  background:color-mix(in srgb,var(--block-accent,var(--accent)) 4%,transparent);
 }
 .atlas-page--syllabus .depth-day:first-child{
   border-top:0;
@@ -415,6 +409,10 @@
 .atlas-page--syllabus .depth-status{
   margin:.2rem 0 0;
   font-size:.66rem;
+}
+.atlas-page--syllabus .depth-day a{
+  color:var(--accent-deep);
+  border-bottom-color:color-mix(in srgb,var(--accent) 30%,transparent);
 }
 // On wide rows the planned/next tag sits quietly on the title line instead of
 // stacking under every unpublished day.

@@ -104,6 +104,7 @@ const years = [
 ];
 ---
 <figure class={`day9-static-figure day9-static-figure-${kind}`}>
+  <div class="day9-figure-scroll">
   {kind === "thermostat" && (
     <svg viewBox="0 0 300 330" role="img" aria-label={copy.title}>
       <defs>
@@ -545,6 +546,7 @@ const years = [
     </svg>
   )}
 
+  </div>
   <figcaption>{copy.cap}</figcaption>
 </figure>
 
@@ -674,15 +676,19 @@ const years = [
     letter-spacing: .02em;
   }
 
+  .day9-figure-scroll {
+    min-width: 0;
+  }
+
   /* Wide, label-dense figures keep a readable coordinate system on phones.
-     The figure remains in flow while its SVG becomes an internal scroll area. */
+     The caption stays in flow while the diagram gets its own scroll area. */
   @media (max-width: 40rem) {
-    .day9-static-figure-loops,
-    .day9-static-figure-bullwhip,
-    .day9-static-figure-thresholds,
-    .day9-static-figure-cybersyn,
-    .day9-static-figure-resilience,
-    .day9-static-figure-timeline {
+    .day9-static-figure-loops .day9-figure-scroll,
+    .day9-static-figure-bullwhip .day9-figure-scroll,
+    .day9-static-figure-thresholds .day9-figure-scroll,
+    .day9-static-figure-cybersyn .day9-figure-scroll,
+    .day9-static-figure-resilience .day9-figure-scroll,
+    .day9-static-figure-timeline .day9-figure-scroll {
       overflow-x: auto;
       overscroll-behavior-inline: contain;
     }

@@ -317,6 +317,7 @@ const ariaByKind: Record<Props["kind"], string> = {
 <figure class={`figbox day11-static-figure day11-static-figure-${kind}`} aria-label={ariaByKind[kind]}>
   {kind === "linda-sets" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 520 300" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="24" y="20" width="472" height="238" rx="14" fill={raised} stroke={line}></rect>
         <text x="260" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-weight="600" fill={ink}>{copy.linda.title}</text>
@@ -330,12 +331,14 @@ const ariaByKind: Record<Props["kind"], string> = {
         <circle cx="266" cy="154" r="6" fill={contested}></circle>
         <text x="124" y="252" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.linda.fit}</text>
       </svg>
+      </div>
       <figcaption>{copy.linda.caption}</figcaption>
     </>
   )}
 
   {kind === "frequency-grid" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 540 310" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="24" y="18" width="492" height="248" rx="14" fill={raised} stroke={line}></rect>
         <text x="270" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-weight="600" fill={ink}>{copy.frequency.title}</text>
@@ -356,12 +359,14 @@ const ariaByKind: Record<Props["kind"], string> = {
           <text x="394" y="244" text-anchor="middle" font-family="Fraunces, serif" font-size="17" font-weight="600" fill={accent}>{copy.frequency.result}</text>
         </g>
       </svg>
+      </div>
       <figcaption>{copy.frequency.caption}</figcaption>
     </>
   )}
 
   {kind === "scissors" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 560 330" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="22" y="18" width="516" height="260" rx="14" fill={raised} stroke={line}></rect>
         <text x="280" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill={ink}>{copy.scissors.title}</text>
@@ -375,12 +380,14 @@ const ariaByKind: Record<Props["kind"], string> = {
         <text x="76" y="296" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.scissors.one}</text>
         <text x="76" y="314" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ok}>{copy.scissors.both}</text>
       </svg>
+      </div>
       <figcaption>{copy.scissors.caption}</figcaption>
     </>
   )}
 
   {kind === "resource-curve" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 620 350" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="22" y="18" width="576" height="282" rx="14" fill={raised} stroke={line}></rect>
         <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.resource.title}</text>
@@ -388,24 +395,26 @@ const ariaByKind: Record<Props["kind"], string> = {
         <line x1="84" y1="244" x2="84" y2="78" stroke={lineStrong} stroke-width="1.5"></line>
         <text x="318" y="278" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.resource.x}</text>
         <text x="48" y="164" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint} transform="rotate(-90 48 164)">{copy.resource.y}</text>
-        <path d="M84,232 C184,150 284,104 550,86" fill="none" stroke={accent} stroke-width="3" stroke-linecap="round"></path>
-        <path d="M84,244 L550,132" fill="none" stroke={contested} stroke-width="2.4" stroke-dasharray="6 5"></path>
-        <path d="M84,232 C156,176 194,164 230,164 C324,162 426,204 550,254" fill="none" stroke={brass} stroke-width="4" stroke-linecap="round"></path>
-        <line x1="230" y1="164" x2="230" y2="244" stroke={ink} stroke-width="1.3" stroke-dasharray="4 5" opacity=".55"></line>
-        <circle cx="230" cy="164" r="7" fill={brass} stroke={paper} stroke-width="2"></circle>
-        <text x="230" y="151" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{copy.resource.stop}</text>
+        <path d="M84,232 C150,210 230,180 300,163 C390,138 478,108 550,96" fill="none" stroke={accent} stroke-width="3" stroke-linecap="round"></path>
+        <path d="M84,244 L550,69" fill="none" stroke={contested} stroke-width="2.4" stroke-dasharray="6 5"></path>
+        <path d="M84,232 C170,204 240,170 300,163 C370,162 432,196 550,254" fill="none" stroke={brass} stroke-width="4" stroke-linecap="round"></path>
+        <line x1="300" y1="163" x2="300" y2="244" stroke={ink} stroke-width="1.3" stroke-dasharray="4 5" opacity=".55"></line>
+        <circle cx="300" cy="163" r="7" fill={brass} stroke={paper} stroke-width="2"></circle>
+        <text x="300" y="150" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{copy.resource.stop}</text>
         <text x="430" y="82" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{copy.resource.accuracy}</text>
         <text x="430" y="128" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.resource.cost}</text>
         <text x="342" y="221" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.resource.net}</text>
         <text x="392" y="164" font-family="Fraunces, serif" font-size="13" font-style="italic" fill={soft}>{copy.resource.gap1}</text>
         <text x="392" y="181" font-family="Fraunces, serif" font-size="13" font-style="italic" fill={soft}>{copy.resource.gap2}</text>
       </svg>
+      </div>
       <figcaption>{copy.resource.caption}</figcaption>
     </>
   )}
 
   {kind === "prospect-value" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 620 360" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="22" y="18" width="576" height="286" rx="14" fill={raised} stroke={line}></rect>
         <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.prospect.title}</text>
@@ -427,12 +436,14 @@ const ariaByKind: Record<Props["kind"], string> = {
         <rect x="430" y="84" width="112" height="28" rx="8" fill={paper} stroke={lineStrong}></rect>
         <text x="486" y="103" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill={ink}>{copy.prospect.lambda}</text>
       </svg>
+      </div>
       <figcaption>{copy.prospect.caption}</figcaption>
     </>
   )}
 
   {kind === "bias-noise-darts" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 680 340" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="20" y="18" width="640" height="268" rx="14" fill={raised} stroke={line}></rect>
         <text x="340" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.darts.title}</text>
@@ -452,12 +463,14 @@ const ariaByKind: Record<Props["kind"], string> = {
         ))}
         <text x="340" y="258" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{copy.darts.target}</text>
       </svg>
+      </div>
       <figcaption>{copy.darts.caption}</figcaption>
     </>
   )}
 
   {kind === "clockwork" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 680 340" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="22" y="18" width="636" height="276" rx="14" fill={raised} stroke={line}></rect>
         <text x="340" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.clockwork.title}</text>
@@ -492,12 +505,14 @@ const ariaByKind: Record<Props["kind"], string> = {
         <text x="340" y="224" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={soft}>{copy.clockwork.same}</text>
         <text x="340" y="242" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill={soft}>{copy.clockwork.question}</text>
       </svg>
+      </div>
       <figcaption>{copy.clockwork.caption}</figcaption>
     </>
   )}
 
   {kind === "sampling-curve" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 680 360" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="22" y="18" width="636" height="286" rx="14" fill={raised} stroke={line}></rect>
         <text x="340" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.sampling.title}</text>
@@ -528,6 +543,7 @@ const ariaByKind: Record<Props["kind"], string> = {
           );
         })}
       </svg>
+      </div>
       <figcaption>{copy.sampling.caption}</figcaption>
     </>
   )}

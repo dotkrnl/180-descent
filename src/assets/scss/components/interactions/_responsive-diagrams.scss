@@ -1,6 +1,7 @@
 // Wide diagrams retain their coordinate scale on narrow screens. These are
 // intentionally scrollable inside their own frame: shrinking a 600–700 unit
 // diagram to a phone-width strip makes axis labels and annotations unusable.
+.figbox-scroll{min-width:0;}
 @media screen and (max-width:40rem){
   .grue-stage svg,
   .statistics-appendix-lab :is(canvas,.canvas),
@@ -49,12 +50,12 @@
   .panel.landauer-ladder,
   .panel.ladder,
   .panel.landscape,
-  .figbox.day10-static-figure-weather-chart,
-  .figbox.day10-static-figure-extrapolation-cliff,
-  .figbox.day11-static-figure-resource-curve,
-  .figbox.day11-static-figure-bias-noise-darts,
-  .figbox.day11-static-figure-clockwork,
-  .figbox.day11-static-figure-sampling-curve{
+  .figbox.day10-static-figure-weather-chart .figbox-scroll,
+  .figbox.day10-static-figure-extrapolation-cliff .figbox-scroll,
+  .figbox.day11-static-figure-resource-curve .figbox-scroll,
+  .figbox.day11-static-figure-bias-noise-darts .figbox-scroll,
+  .figbox.day11-static-figure-clockwork .figbox-scroll,
+  .figbox.day11-static-figure-sampling-curve .figbox-scroll{
     overflow-x:auto;
     overscroll-behavior-inline:contain;
   }

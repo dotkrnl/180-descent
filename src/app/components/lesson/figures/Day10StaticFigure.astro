@@ -228,6 +228,7 @@ const figureAria = kind === "hero-map"
 <figure class={`figbox day10-static-figure day10-static-figure-${kind}`} aria-label={figureAria}>
   {kind === "hero-map" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 360 240" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <defs>
           <linearGradient id="day10-land" x1="0" y1="0" x2="0" y2="1">
@@ -253,12 +254,14 @@ const figureAria = kind === "hero-map"
         <text x="300" y="206" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "残破边角" : "tattered ruins"}</text>
         <text x="180" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing=".8" fill={contested}>{copy.hero.tag}</text>
       </svg>
+      </div>
       <figcaption>{copy.hero.caption}</figcaption>
     </>
   )}
 
   {kind === "dial-curve" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 520 250" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="18" y="14" width="484" height="206" rx="14" fill={raised} stroke={line}></rect>
         <text x="260" y="42" text-anchor="middle" font-family="Fraunces, serif" font-size="19" font-weight="600" fill={ink}>{copy.dial.title}</text>
@@ -279,12 +282,14 @@ const figureAria = kind === "hero-map"
         <text x="173" y="202" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{copy.dial.useful}</text>
         <text x="374" y="202" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{copy.dial.tooMuch}</text>
       </svg>
+      </div>
       <figcaption>{copy.dial.caption}</figcaption>
     </>
   )}
 
   {kind === "weather-chart" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 620 330" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="18" y="18" width="584" height="282" rx="14" fill={raised} stroke={line}></rect>
         <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.weather.title}</text>
@@ -318,12 +323,14 @@ const figureAria = kind === "hero-map"
           <text x="510" y="264" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill={ok}>{copy.weather.rows[2][1]}</text>
         </g>
       </svg>
+      </div>
       <figcaption>{copy.weather.caption}</figcaption>
     </>
   )}
 
   {kind === "levins-triangle" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 660 430" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="18" y="18" width="624" height="382" rx="14" fill={raised} stroke={line}></rect>
         <text x="330" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill={ink}>{copy.levins.title}</text>
@@ -369,12 +376,14 @@ const figureAria = kind === "hero-map"
           ))}
         </g>
       </svg>
+      </div>
       <figcaption>{copy.levins.caption}</figcaption>
     </>
   )}
 
   {kind === "frontier-map" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 690 410" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="18" y="18" width="654" height="370" rx="14" fill={raised} stroke={line}></rect>
         <text x="345" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.frontier.title}</text>
@@ -419,12 +428,14 @@ const figureAria = kind === "hero-map"
           ))}
         </g>
       </svg>
+      </div>
       <figcaption>{copy.frontier.caption}</figcaption>
     </>
   )}
 
   {kind === "extrapolation-cliff" && (
     <>
+      <div class="figbox-scroll">
       <svg viewBox="0 0 620 330" aria-hidden="true" focusable="false" data-pagefind-ignore="all">
         <rect x="18" y="18" width="584" height="282" rx="14" fill={raised} stroke={line}></rect>
         <text x="310" y="52" text-anchor="middle" font-family="Fraunces, serif" font-size="21" font-weight="600" fill={ink}>{copy.cliff.title}</text>
@@ -445,6 +456,7 @@ const figureAria = kind === "hero-map"
         <path d="M423,160 C452,170 474,184 496,205" fill="none" stroke={brass} stroke-width="1.4"></path>
         <text x="383" y="213" font-family="Fraunces, serif" font-size="15" font-style="italic" fill={brass}>{copy.cliff.drift}</text>
       </svg>
+      </div>
       <figcaption>{copy.cliff.caption}</figcaption>
     </>
   )}

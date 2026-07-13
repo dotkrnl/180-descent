@@ -3,9 +3,36 @@ interface Props {
   headers: string[];
   rows: string[][];
   class?: string;
+  statusColumn?: number;
 }
 
 const className = Astro.props.class ?? "alt-table";
+const statusColumn = Astro.props.statusColumn;
+
+function statusTone(value: string): string | undefined {
+  const normalized = value.toLowerCase();
+
+  if (/(contested|unsupported|hype|unsettled|open|争议|夸大|未决|存疑|缺乏支持)/.test(normalized)) {
+    return "bad";
+  }
+  if (/(promising|hint|有前景|早期)/.test(normalized)) {
+    return "hint";
+  }
+  if (/(established|robust|solid|works|已确立|稳健|有效|结果扎实|真实结果)/.test(normalized)) {
+    return "ok";
+  }
+
+  return undefined;
+}
+
+function cellClasses(cell: string, columnIndex: number): string[] {
+  if (statusColumn !== columnIndex) {
+    return [];
+  }
+
+  const tone = statusTone(cell);
+  return ["status-table-label", ...(tone ? [`status-${tone}`] : [])];
+}
 ---
 <table class={className}>
   <thead>
@@ -13,7 +40,7 @@ const className = Astro.props.class ?? "alt-table";
   </thead>
   <tbody>
     {Astro.props.rows.map((row) => (
-      <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+      <tr>{row.map((cell, columnIndex) => <td class:list={cellClasses(cell, columnIndex)}>{cell}</td>)}</tr>
     ))}
   </tbody>
 </table>

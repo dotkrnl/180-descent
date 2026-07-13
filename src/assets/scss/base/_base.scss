@@ -336,21 +336,26 @@ a:hover {
     transition: transform var(--duration-fast) var(--ease-atlas);
   }
 
-  // Calm scroll arrivals never gate opacity: restored positions and hash
-  // targets remain immediately legible even before their observer fires.
+  // Sections below the first viewport stay quiet until the observer can place
+  // their arrival at the reading edge. The explicit end state prevents a
+  // late flash after a section has already been visible.
   .rv {
-    opacity: 1;
-    transform: none;
+    opacity: 0;
+    transform: translateY(14px);
   }
 
   .rv.rv-in {
-    animation: atlas-section-arrival .6s var(--ease-atlas);
+    animation: atlas-section-arrival .6s var(--ease-atlas) both;
   }
 
   @keyframes atlas-section-arrival {
     from {
       opacity: .7;
       transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
     }
   }
 }
