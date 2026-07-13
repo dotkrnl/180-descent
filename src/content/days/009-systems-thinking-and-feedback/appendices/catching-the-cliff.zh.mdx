@@ -14,6 +14,8 @@ import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import StatusChip from "@app/components/lesson/StatusChip.astro";
 import StatusChipRow from "@app/components/lesson/StatusChipRow.astro";
+import Term from "@app/components/lesson/Term.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
 import Day9StaticFigure from "@app/components/lesson/figures/Day9StaticFigure.astro";
 import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive.astro";
 
@@ -36,7 +38,7 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 
 从经典预警信号最深的问题开始：它们<Highlight>通用到近乎缺陷</Highlight>。方差和自相关上升几乎出现在任何临界之前，这是它们的力量——放之四海而皆准——但也是弱点：它们无法告诉你将要来临的是<Highlight>哪一种</Highlight>临界，因此无法告诉你新世界会是什么样。系统会突然跳到一个遥远状态？开始剧烈振荡？还是温柔地滑入新<Highlight>状态</Highlight>？通用信号对三者都耸耸肩。
 
-2021 年，托马斯·伯里领衔的团队——成员包括克里斯·鲍奇、玛杜尔·阿南德，还有——注意名字——<Highlight>马滕·舍费尔和蒂姆·伦顿</Highlight>本人（经典方法的创始人，如今却帮助超越它）——在《美国科学院院刊》（PNAS）发表了一个<Highlight>引人注目</Highlight>的结果。他们的洞见建立在第 9 日世界里一块美丽的数学上：当<Highlight>任何</Highlight>系统接近临界点时，其动力学都会坍缩到少数几个通用模板之一，叫做<Highlight>标准型</Highlight>（折叠、霍普夫、跨临界——稳定状态失去稳定性的基本方式）。只有少数几种。于是伯里的团队训练了一个深度神经网络——<Highlight>卷积加循环</Highlight>的混合架构——用从这几类标准型中抽取的数十万个模拟时间序列训练它，教会它识别<Highlight>每一条</Highlight>崩溃路径的微妙指纹。
+2021 年，托马斯·伯里领衔的团队——成员包括克里斯·鲍奇、玛杜尔·阿南德，还有——注意名字——<Highlight>马滕·舍费尔和蒂姆·伦顿</Highlight>本人（经典方法的创始人，如今却帮助超越它）——在《美国科学院院刊》（PNAS）发表了一个<Highlight>引人注目</Highlight>的结果。他们的洞见建立在第 9 日世界里一块美丽的数学上：当<Highlight>任何</Highlight>系统接近临界点时，其动力学都会坍缩到少数几个通用模板之一，叫做<Highlight>标准型</Highlight>（折叠、霍普夫、跨临界——稳定状态失去稳定性的基本方式）。只有少数几种。于是伯里的团队训练了一个深度神经网络——<Term>卷积加循环的混合架构</Term><TipNote text={"卷积加循环神经网络结合局部模式识别与序列记忆。"}/>——用从这几类标准型中抽取的数十万个模拟时间序列训练它，教会它识别<Highlight>每一条</Highlight>崩溃路径的微妙指纹。
 
 回报是：他们的网络能在<Highlight>从未训练过</Highlight>的系统中发现临界点——包括真实气候与生态数据，以及一项热声实验——比经典指标更敏感、误报更少。关键且重要的是，它做了旧信号做不到的事：它说出<Highlight>分岔的类型</Highlight>，告诉你新状态将是突然跳跃、振荡，还是温和转变。鲍奇称这可能「改变我们预见重大转变的能力」。2025 年的一篇后续（诸葛、李、陈，《皇家学会开放科学》）把该方法推向现实的混乱，设计了一个网络来预测<Highlight>不规则采样</Highlight>时间序列中的临界发生——而真实世界监测恰恰产生这种数据，这也是原方法最尖锐的局限之一。
 
@@ -59,7 +61,7 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 
 ## 储备池计算与临界转变预测
 
-检测到临界转变临近是一回事。一个更大胆的 2020–2021 项目问：一台机器，如果只见过系统<Highlight>正常</Highlight>时的行为，能否预测它将在什么条件下崩溃，并描述转变后的状态？工具是<Highlight>储备池计算</Highlight>，一种效率很高的循环神经网络，它可以从原始数据中学习混沌系统的统计规律，而无需底层物理模型。
+检测到临界转变临近是一回事。一个更大胆的 2020–2021 项目问：一台机器，如果只见过系统<Highlight>正常</Highlight>时的行为，能否预测它将在什么条件下崩溃，并描述转变后的状态？工具是<Term>储备池计算</Term><TipNote text={"储备池计算利用固定的循环动力系统转换输入序列，再训练简单的读出层进行预测。"}/>，一种效率很高的循环神经网络，它可以从原始数据中学习混沌系统的统计规律，而无需底层物理模型。
 
 2021 年《物理评论研究》的一篇论文中，孔令伟、赖英成和同事采用了一个关键设计。他们输入给储备池计算机的不只是系统的行为，还有使系统逐渐接近临界状态的缓慢变化<Highlight>参数</Highlight>值，即增加了一条「参数输入通道」。仅在安全区域的数据上训练后，机器就能<Highlight>外推</Highlight>到从未见过的参数值，既预测临界转变位于<Highlight>何处</Highlight>，又——<Highlight>令人瞩目地</Highlight>——预测最终崩溃前那段<Highlight>短暂瞬态</Highlight>的统计特性。后续工作（Dhruvit Patel 与 Edward Ott，《混沌》，2023）明确用机器学习来「预测临界点并外推到崩溃后的动力学」，而孔的团队进一步把这些训练好的储备池用于构建非线性系统的<Highlight>数字孪生</Highlight>——一种快速、数据驱动的替代模型，可以在软件中研究越过临界值后的行为，而不必改变真实系统。
 
@@ -67,7 +69,7 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 理想的模型应当能够反复模拟系统接近并越过临界状态的过程，从而研究真实系统无法承受的情形。
 </BlockQuote>
 
-这是一个很有价值的思路，并且已在基准混沌系统上取得效果。但这里尤其需要校准证据范围：这些成功案例都来自相对低维、采样充分、测量清晰的数学系统。真实气候系统具有高维、观测稀疏和非平稳等特征，这些因素都可能破坏该方法的核心假设，即未来状态与训练数据具有足够相似性。同一研究领域也发表了关于储备池计算局限的分析。混沌模型中的数字孪生已经得到验证；可信赖的 AMOC 数字孪生尚不存在。该方法在简化系统中有前景，在真实地球系统中的应用仍有争议且未获证实。
+这是一个很有价值的思路，并且已在基准混沌系统上取得效果。但这里尤其需要校准证据范围：这些成功案例都来自相对低维、采样充分、测量清晰的数学系统。真实气候系统具有高维、观测稀疏和<Term>非平稳</Term><TipNote text={"非平稳数据的统计性质会随时间改变，而不是保持稳定。"}/>等特征，这些因素都可能破坏该方法的核心假设，即未来状态与训练数据具有足够相似性。同一研究领域也发表了关于储备池计算局限的分析。混沌模型中的数字孪生已经得到验证；可信赖的 AMOC 数字孪生尚不存在。该方法在简化系统中有前景，在真实地球系统中的应用仍有争议且未获证实。
 </ContentSection>
 
 <ContentSection>
@@ -77,7 +79,7 @@ import Day9Interactive from "@app/components/lesson/interactives/Day9Interactive
 
 现在讨论的是一项不以预测临界点为主、反而<Highlight>检验</Highlight>临界点假设的成果。传统图景认为，把生态系统推过阈值后，它会突然而整体地崩溃，植被覆盖迅速消失。2021 年，马克斯·里特克尔克和同事在《科学》提出，对于<Highlight>空间上延展</Highlight>的系统，这一图景可能并不普遍成立，而且实际变化可能更为缓慢。
 
-他们的主张是：受压力的空间延展系统不会一次性崩溃，而是可以<Highlight>重组为一种斑图</Highlight>——形成世界各地干旱区常见的植被斑点、条纹和迷宫。这些是<Highlight>图灵斑图</Highlight>，即艾伦·图灵在 1952 年预言的自组织结构。生态学家长期把这些斑图视为崩溃即将来临的<Highlight>警告信号</Highlight>，里特克尔克的分析却表明，它们也可能是<Highlight>韧性的标志</Highlight>。系统通过分散成斑块，可以在均匀状态已经失效的更高压力下继续存在；与整体崩溃相比，这是一种渐进且往往可逆的退化过程。
+他们的主张是：受压力的空间延展系统不会一次性崩溃，而是可以<Highlight>重组为一种斑图</Highlight>——形成世界各地干旱区常见的植被斑点、条纹和迷宫。这些是<Term>图灵斑图</Term><TipNote text={"图灵斑图是相互作用的过程放大某些空间尺度、抑制其他尺度后形成的自组织空间图案。"}/>，即艾伦·图灵在 1952 年预言的自组织结构。生态学家长期把这些斑图视为崩溃即将来临的<Highlight>警告信号</Highlight>，里特克尔克的分析却表明，它们也可能是<Highlight>韧性的标志</Highlight>。系统通过分散成斑块，可以在均匀状态已经失效的更高压力下继续存在；与整体崩溃相比，这是一种渐进且往往可逆的退化过程。
 
 <Day9Interactive kind="evasion" locale="zh" />
 
@@ -118,7 +120,7 @@ AMOC 的研究同时提供了相反证据，这正是健康科学应有的状态
 
 到目前为止，课程里的临界点主要是需要防范或预测的风险。最后一个研究方向则关注如何有意利用临界转变。其基本思路是：如果增强回路能够把系统推向不利状态，也可以有意<Highlight>触发</Highlight>增强回路，使系统快速转向有利状态。这就是<Highlight>正向临界点</Highlight>科学；自 2020 年以来，它成为系统思维中十分活跃的研究方向，原因在于脱碳需要足够快的变化：要把升温控制在 1.5°C 附近，排放下降速度必须超过渐进的线性政策所能提供的速度。
 
-奠定议程的论文是伊洛娜·奥托、乔纳森·东格斯等人在 PNAS（2020）的工作，他们召集专家识别「<Highlight>社会临界要素</Highlight>」——具有较大杠杆作用的子系统，在那里一次适度而精准的推动可能触发向碳中和的快速变化。他们提出的候选包括能源市场、金融撤资、碳中和城市、规范与价值观、教育，以及——与附录一的杠杆层级相呼应——<Highlight>信息披露</Highlight>。蒂姆·伦顿的团队随后提出了将这些要素「<Highlight>操作化</Highlight>」的框架（2022）以及相应识别方法，并特别强调避免预设它们必然存在。最清晰的现实例子是太阳能和电池成本下降：清洁能源在一个又一个行业达到成本优势，推动采用进一步扩大，形成自我强化的 <Highlight>S 曲线</Highlight>。增强反馈不一定只会造成不利结果。
+奠定议程的论文是伊洛娜·奥托、乔纳森·东格斯等人在 PNAS（2020）的工作，他们召集专家识别「<Highlight>社会临界要素</Highlight>」——具有较大杠杆作用的子系统，在那里一次适度而精准的推动可能触发向碳中和的快速变化。他们提出的候选包括能源市场、金融撤资、碳中和城市、规范与价值观、教育，以及——与附录一的杠杆层级相呼应——<Highlight>信息披露</Highlight>。蒂姆·伦顿的团队随后提出了将这些要素「<Highlight>操作化</Highlight>」的框架（2022）以及相应识别方法，并特别强调避免预设它们必然存在。最清晰的现实例子是太阳能和电池成本下降：清洁能源在一个又一个行业达到成本优势，推动采用进一步扩大，形成自我强化的 <Term>S 曲线</Term><TipNote text={"S 曲线描述缓慢起步、快速增长、最终饱和的采用过程。"}/>。增强反馈不一定只会造成不利结果。
 
 这里的前沿校准比较特殊，因为对象部分地是<Highlight>规范性的</Highlight>——既是目标，也是事实。一些正向临界点<Highlight>确实</Highlight>真实且已成过去（英国退出煤炭；太阳能成本<Highlight>交叉点</Highlight>）。另一些则是关于社会系统的充满希望猜想，我们对它们<Highlight>传播</Highlight>动力学的理解远不如对融化冰盖的理解——批评者（在对奥托等的回复中）警告，把社会当作物理系统会忽略冲突、政治和「变化实际如何发生」。部分案例已确立；整个项目仍有前景，但也部分只是愿望。
 </ContentSection>

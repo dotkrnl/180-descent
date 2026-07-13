@@ -31,6 +31,7 @@ import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import SourceNote from "@app/components/lesson/SourceNote.astro";
 import Term from "@app/components/lesson/Term.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/ComputationalCapacityLadderFigure.astro";
 
@@ -177,9 +178,9 @@ But the man himself is one of science's great delights, and worth a paragraph of
 
 ## The bit's stranger sibling
 
-Everything so far assumed a bit is a definite 0 or 1. Quantum mechanics offers a richer carrier — the <Term as="em">qubit</Term> — and the information theory built on it is so different it deserves its own block (**Day 47**). Here is just enough to feel the strangeness.
+Everything so far assumed a bit is a definite 0 or 1. Quantum mechanics offers a richer carrier — the <Term as="em">qubit</Term><TipNote text={String.raw`A qubit is a quantum information carrier whose state can be a superposition of two basis states.`} /> — and the information theory built on it is so different it deserves its own block (**Day 47**). Here is just enough to feel the strangeness.
 
-A qubit can hold a *superposition* of 0 and 1, a point on a whole sphere of possibilities rather than two poles. You might think it therefore carries infinitely more information. It doesn't — and the reason is one of the deepest facts in the subject. **Holevo's bound** (1973) limits the accessible classical information from a quantum ensemble; in the ordinary unassisted setting, one transmitted qubit cannot reveal an arbitrary continuum of classical data. Entanglement-assisted protocols such as superdense coding change the resources being counted. Quantum measurement can also have more than two outcomes, so "yes/no" is a simplification. The continuum is real but coy: it shapes how the qubit *evolves and interferes*, yet cannot be fully read out as ordinary classical information.
+A qubit can hold a *superposition* of 0 and 1, a point on a whole sphere of possibilities rather than two poles. You might think it therefore carries infinitely more information. It doesn't — and the reason is one of the deepest facts in the subject. <Term as="em">Holevo's bound</Term> (1973) limits the accessible classical information from a quantum ensemble; in the ordinary unassisted setting, one transmitted qubit cannot reveal an arbitrary continuum of classical data. Entanglement-assisted protocols such as superdense coding change the resources being counted. Quantum measurement can also have more than two outcomes, so "yes/no" is a simplification. The continuum is real but coy: it shapes how the qubit *evolves and interferes*, yet cannot be fully read out as ordinary classical information.
 
 Two more jewels, both forward-pointers. The **no-cloning theorem** (Wootters &amp; Zurek; Dieks, 1982) <StatusChip status={"ok"} label={"established"} /> says an unknown quantum state cannot be copied — there is no quantum photocopier — which helps explain why eavesdropping can disturb quantum-cryptographic protocols, though security requires a full protocol proof, not no-cloning alone. And the quantum analogue of Shannon entropy, the **von Neumann entropy** <MathInline latex={String.raw`S=-\operatorname{Tr}(\rho \log \rho)`} />, measures uncertainty in a quantum state and equals entanglement entropy for a pure bipartite state. Mixed-state entanglement needs other measures. The bit, it turns out, was only the first draft.
 

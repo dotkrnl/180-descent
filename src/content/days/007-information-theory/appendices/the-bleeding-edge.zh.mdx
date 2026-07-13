@@ -29,6 +29,7 @@ import RecapList from "@app/components/lesson/RecapList.astro";
 import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
 import Sources from "@app/components/lesson/Sources.astro";
 import Term from "@app/components/lesson/Term.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import InformationPhysicsFrontierMap from "@app/components/lesson/figures/InformationPhysicsFrontierMap.astro";
 
@@ -89,7 +90,7 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 <AppendixTimelineItem status="ok">
 <AppendixTimelineYear>2023</AppendixTimelineYear>
 <AppendixTimelineTitle>速度极限、耗散与最优输运的统一</AppendixTimelineTitle>
-<AppendixTimelineBody>Van Vu 与 Saito 证明，TUR、最小耗散协议以及「热力学速度极限」实际上是建立在 Wasserstein 距离最优输运理论之上的单一结构的各个侧面（PRX 13, 011013, 2023）。另外，Lee、Lee、Kwon 与 Park 推导出了一个紧的有限时间兰道尔下界：即在固定时间内擦除一个比特所需的最小耗散，在速度与热能之间进行了权衡（PRL 129, 120603, 2022）。</AppendixTimelineBody>
+<AppendixTimelineBody>Van Vu 与 Saito 证明，TUR 与最小耗散协议可以纳入建立在<Term>Wasserstein 距离最优输运</Term><TipNote text={String.raw`Wasserstein 距离衡量把一个概率分布变为另一个分布所需的最小输运代价。`} />理论之上的单一结构；他们的论述也连接到<Term>热力学速度极限</Term><TipNote text={String.raw`热力学速度极限约束系统在给定耗散或其他物理资源下能够多快地发生变化。`} />（PRX 13, 011013, 2023）。另外，Lee、Lee、Kwon 与 Park 推导出了一个紧的有限时间兰道尔下界：即在固定时间内擦除一个比特所需的最小耗散，在速度与热能之间进行了权衡（PRL 129, 120603, 2022）。</AppendixTimelineBody>
 <AppendixTimelineCitation>Van Vu & Saito, PRX 2023 · Lee et al., PRL 2022</AppendixTimelineCitation>
 </AppendixTimelineItem>
 <AppendixTimelineItem status="ok">
@@ -137,7 +138,7 @@ import InformationPhysicsFrontierMap from "@app/components/lesson/figures/Inform
 </ClaimHeader>
 ### Normal Computing 的随机计算单元
 
-梅兰森、阿布·哈特尔、艾弗、多纳泰拉、戈登（Melanson, Abu Khater, Aifer, Donatella, Gordon）及其同事在《自然·通讯》（Nature Communications，16: 3757，2025 年 4 月）上发表了《用于人工智能应用的热力学计算系统》。它描述了一个随机处理单元（SPU）的原型：一块印制电路板上集成了八个完全耦合的模拟 RLC 振荡器节点，通过让该耦合系统达到热平衡，来进行高斯采样和矩阵求逆。一篇配套的理论论文（npj Unconventional Computing，2024 年）将线性代数原语映射到了热力学平衡采样上，并声称渐进加速比与矩阵维度呈线性比例关系。
+梅兰森、阿布·哈特尔、艾弗、多纳泰拉、戈登（Melanson, Abu Khater, Aifer, Donatella, Gordon）及其同事在《自然·通讯》（Nature Communications，16: 3757，2025 年 4 月）上发表了《用于人工智能应用的热力学计算系统》。它描述了一个<Term>随机处理单元</Term><TipNote text={String.raw`随机处理单元利用耦合物理元件中的噪声和热化过程执行计算，而不是依靠完全确定的数字门。`} />（SPU）的原型：一块印制电路板上集成了八个完全耦合的模拟 RLC 振荡器节点，通过让该耦合系统达到热平衡，来进行高斯采样和矩阵求逆。一篇配套的理论论文（npj Unconventional Computing，2024 年）将线性代数原语映射到了热力学平衡采样上，并声称渐进加速比与矩阵维度呈线性比例关系。
 
 注意事项：这只是一个「八节点原型」。在实际工作负载中，相比于现代 GPU，它在端到端耗时或能耗上的优势「尚未得到证实」。理论虽然优雅且通过了同行评审，硬件也切实存在，但其性能宣称仍有待大规模验证。<StatusChip status={"hint"} label={"有前景"} />
 </Claim>
@@ -171,11 +172,11 @@ Chor 等人（2023）将西拉德引擎从单粒子系统扩展到多体胶体�
 
 ### 量子引擎为量子电池充电
 
-清华大学金奇奂团队的 Zhang 等人（2025）利用单个镱-171 离子构建了一个循环运行的量子信息引擎，通过快速的量子电路中的中途测量（mid-circuit measurement）来抑制测量干扰。每个循环得到的能量被用来为一个「量子电池」充电。他们报告的信息到最大可用功（ergotropy）的转化效率达到了理论上限的 67%，而信息到功的整体效率达到了 70%。<StatusChip status={"ok"} label={"已确立"} />
+清华大学金奇奂团队的 Zhang 等人（2025）利用单个镱-171 离子构建了一个循环运行的量子信息引擎，通过快速的量子电路中的中途测量（mid-circuit measurement）来抑制测量干扰。每个循环得到的能量被用来为一个<Term>量子电池</Term><TipNote text={String.raw`量子电池是用于储存并释放能量的量子系统。`} />充电。他们报告的信息到<Term>最大可用功</Term><TipNote text={String.raw`最大可用功是量子态在允许操作下能够提取的最大功。`} />（ergotropy）的转化效率达到了理论上限的 67%，而信息到功的整体效率达到了 70%。<StatusChip status={"ok"} label={"已确立"} />
 
 ### 自主麦克斯韦妖
 
-至少从 Koski 及其同事 2015 年的单电子实验开始，自主麦克斯韦妖就已经被实验展示。在这类系统中，测量和反馈由器件内部实现，而不是由外部定时控制器执行。但这并不意味着器件不使用非平衡资源，也不意味着它不产生熵；完整分析仍必须包含其能量与熵资源。较新的量子点整流器（PRR，2019 年）、随机重置麦克斯韦妖（PRR，2023 年）以及基于晶体管的麦克斯韦妖（PRB，2025 年）则把这种设计模式继续推向纳米尺度能量收集。<StatusChip status={"hint"} label={"有前景——单体实现已确立"} printLabel={"有前景"} />
+至少从 Koski 及其同事 2015 年的单电子实验开始，自主麦克斯韦妖就已经被实验展示。在这类系统中，测量和反馈由器件内部实现，而不是由外部定时控制器执行。但这并不意味着器件不使用非平衡资源，也不意味着它不产生熵；完整分析仍必须包含其能量与熵资源。较新的<Term>量子点整流器</Term><TipNote text={String.raw`量子点整流器利用纳米尺度量子点，使电荷或能量更倾向于单向传输。`} />（PRR，2019 年）、<Term>随机重置麦克斯韦妖</Term><TipNote text={String.raw`随机重置麦克斯韦妖把信息反馈与随机发生的记忆重置结合起来。`} />（PRR，2023 年）以及基于晶体管的麦克斯韦妖（PRB，2025 年）则把这种设计模式继续推向纳米尺度能量收集。<StatusChip status={"hint"} label={"有前景——单体实现已确立"} printLabel={"有前景"} />
 
 ### 将真实的分子马达作为麦克斯韦妖
 
@@ -188,7 +189,7 @@ Chor 等人（2023）将西拉德引擎从单粒子系统扩展到多体胶体�
 
 ## 协同擦除与局部热耗散降低
 
-Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自发对称性破缺，在 D-Wave Advantage 量子退火器上同时擦除了 256 个量子比特。这一集体翻转实现了接近 <MathInline latex={String.raw`k_B T \ln 2`} /> 的单比特擦除耗散，成功率达 ~99.9%，而单比特作用量（能量 × 时间）低至 <MathInline latex={String.raw`10^{-22}`} /> erg·s——其速度和能效都极其惊人。其关键在于：协同效应使系统能够集体越过势垒，而不是逐个比特地跨越。<StatusChip status={"ok"} label={"已确立"} />
+Buffoni 与 Campisi（Quantum，2023 年）利用<Term>量子隧穿</Term><TipNote text={String.raw`量子隧穿使量子态能够以经典力学不允许的方式穿过能垒。`} />效应放大的<Term>自发对称性破缺</Term><TipNote text={String.raw`自发对称性破缺指规律本身具有对称性，但实际状态从多个不对称可能中选择一个。`} />，在 D-Wave Advantage 量子退火器上同时擦除了 256 个量子比特。这一集体翻转实现了接近 <MathInline latex={String.raw`k_B T \ln 2`} /> 的单比特擦除耗散，成功率达 ~99.9%，而单比特作用量（能量 × 时间）低至 <MathInline latex={String.raw`10^{-22}`} /> erg·s——其速度和能效都极其惊人。其关键在于：协同效应使系统能够集体越过势垒，而不是逐个比特地跨越。<StatusChip status={"ok"} label={"已确立"} />
 
 另一个独立的理论项目则探索了<Term>辅助系统协助擦除</Term>（ancilla-assisted erasure，arXiv:2402.15812，2024 年），即通过引入一个辅助量子系统来转移存储器中的熵，从而在特定的运行状态下，向局部热浴中释放「少于」 <MathInline latex={String.raw`k_B T \ln 2`} /> 的热量。作者强调，这并没有违反第二定律——包括辅助系统在内的总熵依然增加——但局部发热量确实能降到教科书上的经典下限之下。这为超低耗散量子计算的研究指引了方向，而非所谓的免费午餐。<StatusChip status={"hint"} label={"有前景——特定机制下适用，预印本"} printLabel={"有前景"} />
 
@@ -201,7 +202,7 @@ Buffoni 与 Campisi（Quantum，2023 年）利用量子隧穿效应放大的自�
 
 量子引力领域悬而未决最久的一个难题便是<Term>黑洞信息悖论</Term>：被黑洞吞噬的信息，在黑洞蒸发后还能留存下来吗？霍金 1975 年的计算认为信息被彻底毁灭了；而量子理论的幺正演化要求信息不被永久销毁。整整四十五年来，无人能给出一个令人满意的解释。
 
-在 2019–2020 年，一系列研究彻底改变了这一对话。佩宁顿（Penington，JHEP，2020 年），阿尔姆海里、恩格尔哈特、马罗夫与麦克斯菲尔德（Almheiri, Engelhardt, Marolf &amp; Maxfield，JHEP，2019 年），以及阿尔姆海里、哈特曼、马尔达西那、沙古里安与塔吉迪尼（Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini，JHEP，2020 年）发现，如果使用引力路径积分方法中的<Term>副本虫洞</Term>来计算霍金辐射的熵，计算结果会把黑洞内部被称为<Term>孤岛</Term>的非连通时空区域的贡献包含在内。当这些「孤岛」开始发挥作用时，辐射的熵就会迎来拐点并开始减少，从而绘制出一条<Term>佩奇曲线</Term>——这恰恰是在这些受控模型中幺正理论所预测的形状。
+在 2019–2020 年，一系列研究彻底改变了这一对话。佩宁顿（Penington，JHEP，2020 年），阿尔姆海里、恩格尔哈特、马罗夫与麦克斯菲尔德（Almheiri, Engelhardt, Marolf &amp; Maxfield，JHEP，2019 年），以及阿尔姆海里、哈特曼、马尔达西那、沙古里安与塔吉迪尼（Almheiri, Hartman, Maldacena, Shaghoulian &amp; Tajdini，JHEP，2020 年）发现，如果使用引力路径积分方法中的<Term>副本虫洞</Term><TipNote text={String.raw`副本虫洞是在引力复制计算中出现的鞍点几何，将原本分离的时空副本连接起来。`} />来计算霍金辐射的熵，计算结果会把黑洞内部被称为<Term>孤岛</Term>的非连通时空区域的贡献包含在内。当这些「孤岛」开始发挥作用时，辐射的熵就会迎来拐点并开始减少，从而绘制出一条<Term>佩奇曲线</Term><TipNote text={String.raw`佩奇曲线追踪黑洞蒸发过程中辐射熵的变化；在幺正模型中，信息开始返回时曲线会转折下降。`} />——这恰恰是在这些受控模型中幺正理论所预测的形状。
 
 <BlockQuote>
 孤岛计算是在受控半经典引力模型中的领先理论方案。它们强力支持这些模型中的幺正蒸发；但还不是现实黑洞信息恢复的完整微观解释。

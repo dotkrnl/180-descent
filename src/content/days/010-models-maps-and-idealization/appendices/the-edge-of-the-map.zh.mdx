@@ -97,7 +97,7 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 
 ## 机器学习模型控制机器系统
 
-有些前沿模型已经在最字面的意义上承受负荷：被委以昂贵的硬件和不稳定的等离子体。2022 年，DeepMind 与 EPFL 发表了一个强化学习控制器，它塑造了一台真实托卡马克聚变反应堆的磁场，在 TCV 装置上将等离子体维持在目标构型。2024 年，后续研究用深度强化学习降低 DIII-D 托卡马克上撕裂不稳定性的风险。当一个学习模型被允许实时引导聚变等离子体时，「只是个模型」就不再是有用的搪塞。<StatusChip status="ok" label="硬件" printLabel="硬件验证" />
+有些前沿模型已经在最字面的意义上承受负荷：被委以昂贵的硬件和不稳定的等离子体。2022 年，DeepMind 与 EPFL 发表了一个<Term>强化学习</Term><TipNote text={"强化学习通过奖励能够改善未来结果的行动来训练智能体。"}/>控制器，它塑造了一台真实<Term>托卡马克聚变反应堆</Term><TipNote text={"托卡马克聚变反应堆用环形磁场约束极高温等离子体，以尝试维持聚变条件。"}/>的磁场，在 TCV 装置上将等离子体维持在目标构型。2024 年，后续研究用深度强化学习降低 DIII-D 托卡马克上撕裂不稳定性的风险。当一个学习模型被允许实时引导聚变等离子体时，「只是个模型」就不再是有用的搪塞。<StatusChip status="ok" label="硬件" printLabel="硬件验证" />
 
 同一急件也带来一个警告。<Term>物理信息神经网络</Term><TipNote text={"物理信息神经网络在训练神经模型时，会对已知方程或边界条件的违反施加惩罚。"} />曾被宣传为显式方程与学习模型之间的桥梁：把微分方程写进损失函数，再让网络学习一个解。失效模式文献揭示了陷阱。PINN 可以一边把残差损失压得很低，一边让真实解严重偏离。模型可以满足你写下的每一条约束，却仍错过世界，因为你并没有写下所有重要的约束。<StatusChip status="ok" label="失效模式" printLabel="失效模式已确立" /> <StatusChip status="hint" label="修复早期" printLabel="修复方案有前景" />
 </ContentSection>
@@ -111,7 +111,7 @@ import Day10PaperPressToggle from "@app/components/lesson/interactives/Day10Pape
 
 三个标本值得关注。AI-Descartes 将符号回归与对背景公理的逻辑推理相结合，从数据加理论中重新推导出诸如开普勒第三定律这样的定律。AI-Hilbert 通过多项式优化与形式化证书推进这一思想。FunSearch 将语言模型与自动评估器及进化搜索配对；在 *Nature* 上，它发现了 cap-set 问题的新构造以及新的装箱启发式。最后一个案例在哲学上重要，因为它的输出不是权重向量，而是人类可以检查、检验并证明的对象。<StatusChip status="ok" label="FunSearch" printLabel="FunSearch 已确立" />
 
-这个保留意见让它无法变成实在论的庆功巡游。许多系统仍然主要是在重新发现我们已经知道的定律，这是有力的验证，却是单薄的发现。KAN 系列同样前景可期但尚未定论：2024 年的 Kolmogorov-Arnold Networks 预印本提出将可学习函数放在网络边上，作为多层感知器更具可解释性的替代方案；2025 年 *Physical Review X* 的后续研究则论证其在科学发现中的应用。这是真正的势头。但它仍不能证明 KAN 通常能胜过调优良好的普通网络。<StatusChip status="hint" label="有前景" /> <StatusChip status="hint" label="KAN 存疑" printLabel="KAN 角色仍在争论" />
+这个保留意见让它无法变成实在论的庆功巡游。许多系统仍然主要是在重新发现我们已经知道的定律，这是有力的验证，却是单薄的发现。KAN 系列同样前景可期但尚未定论：2024 年的 <Term>Kolmogorov-Arnold Networks</Term>预印本提出将可学习函数放在网络边上，作为多层感知器更具可解释性的替代方案；2025 年 *Physical Review X* 的后续研究则论证其在科学发现中的应用。这是真正的势头。但它仍不能证明 KAN 通常能胜过调优良好的普通网络。<StatusChip status="hint" label="有前景" /> <StatusChip status="hint" label="KAN 存疑" printLabel="KAN 角色仍在争论" />
 </ContentSection>
 
 <Day10PaperPressToggle locale="zh" />

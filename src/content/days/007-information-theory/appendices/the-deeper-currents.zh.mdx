@@ -31,6 +31,7 @@ import Sources from "@app/components/lesson/Sources.astro";
 import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
 import SourceNote from "@app/components/lesson/SourceNote.astro";
 import Term from "@app/components/lesson/Term.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
 import Threads from "@app/components/lesson/Threads.astro";
 import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/ComputationalCapacityLadderFigure.astro";
 
@@ -177,9 +178,9 @@ import ComputationalCapacityLadderFigure from "@app/components/lesson/figures/Co
 
 ## 量子比特及其性质
 
-到目前为止，所有内容都假设比特是确定的 0 或 1。量子力学提供了一种更丰富的载体——<Term>量子比特 (qubit)</Term>，而建立在其上的信息论是如此不同，以至于值得专门为其留出一个单元（第 47 日）。此处只介绍足以让你感受到其奇妙的知识。
+到目前为止，所有内容都假设比特是确定的 0 或 1。量子力学提供了一种更丰富的载体——<Term>量子比特 (qubit)</Term><TipNote text={String.raw`量子比特是量子信息载体，其状态可以是两个基态的叠加。`} />，而建立在其上的信息论是如此不同，以至于值得专门为其留出一个单元（第 47 日）。此处只介绍足以让你感受到其奇妙的知识。
 
-一个量子比特可以处于 0 和 1 的叠加态，对应整个布洛赫球面上的一点，而非只限于两极。你可能会因此认为它携带了无限量的信息。但它没有——其原因正是该学科中最深奥的事实之一。霍莱沃界 (Holevo's bound)（1973 年）限制的是从量子系综中可提取的经典信息；在普通的无辅助通信设定下，一个传输的量子比特不能传递任意多的经典信息。若事先共享纠缠，超密编码等协议会改变可用资源的清单。量子测量也可以有两个以上结果，所以「是/否坍缩」只是简化说法。布洛赫球上的连续状态是真实的，但不能被一次性完整读成普通经典信息。
+一个量子比特可以处于 0 和 1 的叠加态，对应整个布洛赫球面上的一点，而非只限于两极。你可能会因此认为它携带了无限量的信息。但它没有——其原因正是该学科中最深奥的事实之一。<Term>霍莱沃界</Term> (Holevo's bound)（1973 年）限制的是从量子系综中可提取的经典信息；在普通的无辅助通信设定下，一个传输的量子比特不能传递任意多的经典信息。若事先共享纠缠，超密编码等协议会改变可用资源的清单。量子测量也可以有两个以上结果，所以「是/否坍缩」只是简化说法。布洛赫球上的连续状态是真实的，但不能被一次性完整读成普通经典信息。
 
 还有两个前瞻性的亮点。不可克隆定理 (no-cloning theorem)（Wootters 与 Zurek; Dieks, 1982 年） <StatusChip status={"ok"} label={"已确立"} /> 指出，一个未知的量子态无法被复制——并不存在量子复印机——它有助于解释为什么窃听会扰动量子密码协议，但安全性还需要完整的协议证明，而不只是不可克隆定理。香农熵的量子对应物——冯·诺伊曼熵 <MathInline latex={String.raw`S=-\operatorname{Tr}(\rho \log \rho)`} />——用于度量量子态中的不确定性，并且对于纯的二分系统等于纠缠熵；混合态纠缠则需要其他度量。到了量子世界，比特只是故事的第一章。
 
