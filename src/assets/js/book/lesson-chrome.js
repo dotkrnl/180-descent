@@ -65,7 +65,7 @@
     }
     nav.hidden = false;
 
-    var fab = lesson.querySelector("[data-rail-fab]");
+    var fab = document.querySelector("[data-rail-fab]");
     if(fab){
       fab.hidden = false;
     }
@@ -200,6 +200,12 @@
       fab.setAttribute("aria-expanded", "true");
       if(backdrop){
         backdrop.hidden = false;
+      }
+      var firstLink = rail.querySelector("[data-rail-link]");
+      if(firstLink){
+        window.setTimeout(function(){
+          firstLink.focus();
+        }, 0);
       }
     });
 

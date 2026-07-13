@@ -53,6 +53,21 @@ const scripts = entry.day.manifest.interactionScripts.map((entryName) => {
 });
 ---
 <BookShell title={entry.title} description={entry.summary} locale={entry.locale} pageKind="lesson" canonicalPath={canonicalPath} alternatePath={alternatePath} socialImagePath={socialImagePath} scripts={scripts}>
+  <button
+    slot="top-actions"
+    class="toggle toc-toggle toc-fab"
+    type="button"
+    data-rail-fab
+    aria-controls="lessonRail"
+    aria-expanded="false"
+    aria-label={isZh ? "打开本页目录" : "Open contents"}
+    title={isZh ? "打开本页目录" : "Open contents"}
+    hidden
+  >
+    <svg class="toc-toggle-icon" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+      <path d="M3 4.5h12M3 9h8.5M3 13.5h12"></path>
+    </svg>
+  </button>
   <article
     class="lesson block-scope"
     style={`--block-hue:${blockHue}`}

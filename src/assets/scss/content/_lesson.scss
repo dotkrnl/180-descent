@@ -125,13 +125,6 @@ article.lesson > .lesson-nav-top{
   margin-bottom:0;
   border-bottom:1px solid var(--line);
 }
-article.lesson > .lesson-nav-top .lesson-nav-contents{
-  appearance:none;
-  display:none;
-  color:inherit;
-  font:inherit;
-  cursor:pointer;
-}
 article.lesson > .lesson-nav-top .lesson-nav-card{
   display:flex;
   min-width:0;
@@ -173,25 +166,8 @@ article.lesson > .lesson-nav-top .lesson-nav-card:focus-visible{
 article.lesson > .lesson-nav-top .lesson-nav-card.is-disabled{cursor:default;}
 
 @media screen and (max-width:74.99rem){
+  article.lesson > .lesson-nav-top{grid-template-columns:repeat(2,minmax(0,1fr));}
   article.lesson > .lesson-nav-top .lesson-nav-syllabus{display:none;}
-  article.lesson > .lesson-nav-top .lesson-nav-contents:not([hidden]){
-    display:flex;
-    flex-direction:row;
-    gap:.45rem;
-  }
-  article.lesson > .lesson-nav-top .lesson-nav-contents .fab-glyph{
-    display:inline-flex;
-    width:.85rem;
-    flex:0 0 .85rem;
-    flex-direction:column;
-    gap:3px;
-  }
-  article.lesson > .lesson-nav-top .lesson-nav-contents .fab-glyph i{
-    display:block;
-    height:1px;
-    background:currentColor;
-  }
-  article.lesson > .lesson-nav-top .lesson-nav-contents .fab-glyph i:nth-child(2){width:72%;}
 }
 
 article.lesson > .lesson-nav-bottom{
@@ -221,10 +197,6 @@ article.lesson > .lesson-nav-bottom .lesson-nav-title{line-height:1.22;}
     min-height:2.75rem;
     gap:.3rem;
     padding:.4rem .35rem;
-  }
-  article.lesson > .lesson-nav-top .lesson-nav-contents{
-    min-width:clamp(8rem,36vw,10rem);
-    padding-inline:1rem;
   }
   article.lesson > .lesson-nav-top .lesson-nav-title{font-size:.74rem;}
   article.lesson > .lesson-nav-top .lesson-nav-name,
