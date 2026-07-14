@@ -550,6 +550,7 @@ describe("target content registry", () => {
     const day010 = daysByPath.get("010-models-maps-and-idealization");
     const day011 = daysByPath.get("011-heuristics-biases-and-rationality");
     const day012 = daysByPath.get("012-networks");
+    const day013 = daysByPath.get("013-measurement-and-units");
 
     expect([...daysByPath.keys()]).toEqual([
       "001-what-is-knowledge",
@@ -563,7 +564,8 @@ describe("target content registry", () => {
       "009-systems-thinking-and-feedback",
       "010-models-maps-and-idealization",
       "011-heuristics-biases-and-rationality",
-      "012-networks"
+      "012-networks",
+      "013-measurement-and-units"
     ]);
 
     for (const day of registry.days) {
@@ -740,6 +742,26 @@ describe("target content registry", () => {
     const day012LiveWires = day012?.appendixBodies.find((body) => body.appendixId === "live-wires" && body.locale === "en");
     expect(day012LiveWires?.source).toContain('Day12Interactive kind="synchronization"');
     expect(day012LiveWires?.source).toContain('Day12Interactive kind="tipping-cascade"');
+
+    expect(day013?.manifest.day).toBe(13);
+    expect(day013?.manifest.path).toBe("013-measurement-and-units");
+    expect(day013?.appendixBodies.map((body) => `${body.appendixId}:${body.locale}`).sort()).toEqual([
+      "fossils-in-the-machine:en",
+      "fossils-in-the-machine:zh",
+      "the-bleeding-edge:en",
+      "the-bleeding-edge:zh"
+    ]);
+    expect(day013?.manifest.interactionScripts).toEqual([
+      "measurement-units"
+    ]);
+    expect(day013?.bodies.en.source).toContain("Day13Interactive");
+    expect(day013?.bodies.en.source).toContain("Day13StaticFigure");
+    const day013Fossils = day013?.appendixBodies.find((body) => body.appendixId === "fossils-in-the-machine" && body.locale === "en");
+    expect(day013Fossils?.source).toContain('Day13Interactive kind="lineage"');
+    expect(day013Fossils?.source).toContain('Day13StaticFigure kind="clock-tower"');
+    const day013BleedingEdge = day013?.appendixBodies.find((body) => body.appendixId === "the-bleeding-edge" && body.locale === "en");
+    expect(day013BleedingEdge?.source).toContain('Day13Interactive kind="readiness-ladder"');
+    expect(day013BleedingEdge?.source).toContain('Day13Interactive kind="dark-matter-wave"');
   });
 });
 

@@ -1,0 +1,423 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+import Day13StaticFigure from "@app/components/lesson/figures/Day13StaticFigure.astro";
+import Day13Interactive from "@app/components/lesson/interactives/Day13Interactive.astro";
+
+<Hero>
+<HeroEyebrow dayMark="Day 013 / 180">Block I · Foundations of Knowledge &amp; Reasoning ·</HeroEyebrow>
+
+# Measurement &amp; Units
+
+<HeroSubhead>How long is a metre, *really*? The answer has changed four times — and the last change was the strangest.</HeroSubhead>
+
+<Day13StaticFigure kind="hero-meridian" locale="en" />
+
+<Lead drop="I">n the winter of 1794, in a rented room in Barcelona, the French astronomer Pierre Méchain discovered that two of his latitude readings disagreed, and it broke him. The Revolution had sent him south on one of history's most romantic bureaucratic errands: measure the size of Earth so humanity could own a unit of length that belonged to nobody — *à tous les temps, à tous les peuples*, for all times, for all peoples. No king's forearm. No guild's yardstick. A metre drawn from the planet itself: one ten-millionth of the distance from the North Pole to the Equator.</Lead>
+
+Méchain had the southern half of the surveyed arc; Jean-Baptiste Delambre had the north. Readings taken from two spots in Barcelona differed by about three seconds of arc, corresponding to roughly a hundred metres on the ground. Without a developed account of random observational error, Méchain treated the discrepancy as personal failure. He concealed and adjusted data, returned to the problem for years, and died of yellow fever in 1804 while trying to measure the arc again. Delambre later found the concealed discrepancy among his papers.
+
+The error did not mean Méchain's instruments were useless. Earth is irregular, and the surveyed arc could not make the intended quarter-meridian exactly 10,000,000 metres. Modern geodesy puts the pole-to-equator meridian distance near 10,002,290 metres, making the historical metre about 0.2 millimetres shorter than the original ideal. We kept it anyway. A unit's job is not to reveal a uniquely true length. Its job is to be **shared**.
+</Hero>
+
+<Wrap>
+
+<WhereBlock>
+<Label>Where we are</Label>
+
+Twelve days built an epistemic toolkit; today it has to touch the world. A measurement is the handshake between a number and a thing. **[Day 1](/days/001-what-is-knowledge/)** returns in the form of a standard defined to be right, **[Day 10](/days/010-models-maps-and-idealization/)** returns through the difference between a convention on the map and a property of the territory, and **[Day 12](/days/012-networks/)** returns through a calibration network that once terminated at one cylinder in a French vault. **[Day 7](/days/007-information-theory/)** taught that information is physical; a unit is the mirror image, where an abstraction must become hardware.
+</WhereBlock>
+
+<ContentSection>
+<SectionEyebrow>The model</SectionEyebrow>
+
+## Three ways to pin down a metre
+
+Strip away the romance and every unit answers one problem: **how do you make two strangers agree?** Modern measurement inherited three broad strategies.
+
+**Strategy one: point at a thing.** An *artefact definition* makes a particular object the standard. The meridian survey was embodied in the platinum *Mètre des Archives* in 1799; that end standard was replaced in 1889 by the International Prototype Metre, a line standard made from 90% platinum and 10% iridium with an X-shaped cross-section for rigidity, specified at 0 °C. The distance between its two fine lines did not merely measure the metre. That marked interval *was* the metre. The lineage resolves the count: after the original meridian definition came four formal successors — the 1799 archive metre, the 1889 prototype, the 1960 krypton wavelength, and the 1983 light-speed definition.
+
+**Strategy two: point at a phenomenon.** Artefacts are vulnerable to fire, theft, thermal expansion, contamination, and damage. In 1960 the metre was redefined as 1,650,763.73 wavelengths of the orange-red radiation from a specified transition in krypton-86. Atoms of the same isotope are reproducible: a suitably equipped laboratory no longer had to compare its ruler with a unique bar in Paris.
+
+**Strategy three: point at a number.** In 1983 the 17th General Conference on Weights and Measures fixed the speed of light in vacuum exactly:
+
+<BlockQuote>
+*c* = 299,792,458 metres per second.
+</BlockQuote>
+
+That value is no longer an experimental estimate with an uncertainty. The metre is instead derived from it: the distance light travels in vacuum during 1/299,792,458 of a second.
+
+This is the day's hinge. A laboratory cannot improve the numerical value of *c* in metres per second; it can improve its realization of the metre and second. The constant acts as an exact conversion factor between them. This *great inversion* — fix a constant, then derive the unit — is the central idea of modern metrology, the science of measurement.
+
+<Aside>
+<BlockTitle>Bridgman's ghost</BlockTitle>
+
+Percy Bridgman named the broader philosophical idea an **operational definition** in *The Logic of Modern Physics* (1927): a concept is tied to the operations used to measure it. Bridgman won the 1946 Nobel Prize for high-pressure physics, and operationalism spread through 1930s psychology. As a general theory of meaning it was too strict; measuring length with a laser rather than a ruler should not create a different concept of length. In metrology, however, a more modest version survives as the *mise en pratique*: the practical instructions for realizing an SI definition. The decree sits on one shelf; the workshop manual sits on the bench.
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>The scandal</SectionEyebrow>
+
+## Le Grand K, the stopped clock of Sèvres
+
+While the metre moved from object to radiation to fixed constant, one base unit remained in the vault. For 130 years, until 2019, the kilogram was a physical object.
+
+The International Prototype of the Kilogram was a platinum-iridium cylinder 39 millimetres high and 39 millimetres across, made in 1889 and stored beneath three nested bell jars in a climate-controlled vault at the Bureau International des Poids et Mesures in Sèvres, outside Paris. Three independently held keys controlled access. It was formally compared with its official copies in 1889, 1946, and during a campaign around 1989–91. Its nickname was **Le Grand K**.
+
+Le Grand K had a mass of exactly one kilogram with zero definitional uncertainty, because the kilogram *was defined as its mass*. That is where Day 1's stopped-clock warning returns.
+
+Comparisons with its six official copies, the *témoins* or witnesses, and national prototypes showed that the family had diverged by tens of micrograms over a century. The United States prototype K4, for example, was 75 micrograms below the IPK in 1889 and 106 micrograms below it in 1984 — a 31-microgram change in its offset. In 1999 it was 116 micrograms below the IPK, a 41-microgram change from 1889.
+
+Which object changed? The system could not tell us. By construction Le Grand K remained one kilogram; every divergence was assigned to the other objects. A standard defined to be right could never be caught changing. That circularity made it a poor instrument for detecting drift.
+
+<Aside>
+<BlockTitle>The familiar drift story is only half right</BlockTitle>
+
+Popular accounts often say that Le Grand K mysteriously lost 50 micrograms. The figure actually describes divergence across the prototype family. A 2015 BIPM comparison found that the IPK and its six official copies had behaved as a consistent set since 1991, with an average change of roughly one microgram. No experiment demonstrated that Le Grand K itself was drifting. The deeper problem was that the definition made such a test impossible. The scandal was circularity, not a proven loss of mass.
+</Aside>
+
+The network problem was equally severe. Pharmacy scales, semiconductor mass standards, and drug-dose calibrations traced through national standards and official copies toward one cylinder in one vault. The world's mass system had a single root that was vulnerable to contamination, scratching, theft, fire, or damage.
+
+On **16 November 2018**, at Versailles, the 26th CGPM voted to remove that root.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>The reform</SectionEyebrow>
+
+## 20 May 2019: the world stopped weighing itself against a lump
+
+The revised SI took effect on World Metrology Day in 2019. It applied the 1983 inversion across all seven base units by fixing seven constants exactly:
+
+- **ΔνCs = 9,192,631,770 Hz** — the caesium-133 hyperfine transition, which defines the **second**.
+- **c = 299,792,458 m/s** — the speed of light in vacuum, which defines the **metre**.
+- **h = 6.626 070 15 × 10⁻³⁴ J·s** — the Planck constant, which defines the **kilogram**.
+- **e = 1.602 176 634 × 10⁻¹⁹ C** — the elementary charge, which defines the **ampere**.
+- **k = 1.380 649 × 10⁻²³ J/K** — the Boltzmann constant, which defines the **kelvin**.
+- **NA = 6.022 140 76 × 10²³ mol⁻¹** — the Avogadro constant, which defines the **mole**.
+- **Kcd = 683 lm/W** for monochromatic radiation of frequency 540 × 10¹² Hz — luminous efficacy, which helps define the **candela**.
+
+All SI units now follow from those exact values and the physical procedures that realize them. In principle, a sufficiently equipped laboratory on Mars could realize a kilogram without comparing it with an object on Earth.
+
+The reform did not make nature more certain. It **relocated uncertainty**. Before 2019, Le Grand K's mass was exact while the Planck constant was measured with uncertainty. After 2019, *h* is exact while Le Grand K's mass is measured with an uncertainty of roughly 10 micrograms and is finally free to change. Four redefined units made the same kind of trade.
+</ContentSection>
+
+<Day13Interactive kind="uncertainty-ledger" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · The ledger of uncertainty</PanelTitle>
+
+<PanelNote>Before and after 20 May 2019, seven quantities were exact by definition and four carried measurement uncertainty. Four natural constants crossed into the exact column while four former anchors crossed out. Exactness was exchanged, not created. Pre-reform measured values below use the CODATA 2014 adjustment; post-reform measured values use CODATA 2022.</PanelNote>
+
+<Day13StaticFigure kind="uncertainty-ledger" locale="en" />
+
+<SimpleTable
+  headers={["Quantity","Before 20 May 2019","After 20 May 2019"]}
+  rows={[
+    ["Speed of light, c","299,792,458 m/s; exact since 1983","299,792,458 m/s; exact"],
+    ["Caesium frequency, ΔνCs","9,192,631,770 Hz; exact since 1967","9,192,631,770 Hz; exact"],
+    ["Luminous efficacy, Kcd","683 lm/W; exact since 1979","683 lm/W; exact"],
+    ["Planck constant, h","6.626 070 040(81) × 10⁻³⁴ J·s; relative uncertainty 1.2 × 10⁻⁸","6.626 070 15 × 10⁻³⁴ J·s; exact"],
+    ["Mass of Le Grand K","1 kg; exact by definition","Approximately 1 kg ± 10 µg; relative uncertainty about 1 × 10⁻⁸"],
+    ["Elementary charge, e","1.602 176 6208(98) × 10⁻¹⁹ C; relative uncertainty 6.1 × 10⁻⁹","1.602 176 634 × 10⁻¹⁹ C; exact"],
+    ["Vacuum permeability, μ₀","4π × 10⁻⁷ N/A²; exact under the former ampere","1.256 637 061 27(20) × 10⁻⁶ N/A²; relative uncertainty 1.6 × 10⁻¹⁰"],
+    ["Boltzmann constant, k","1.380 648 52(79) × 10⁻²³ J/K; relative uncertainty 5.7 × 10⁻⁷","1.380 649 × 10⁻²³ J/K; exact"],
+    ["Triple point of water","273.16 K; exact under the former kelvin","Approximately 273.1600 K ± 0.0001 K"],
+    ["Avogadro constant, NA","6.022 140 857(74) × 10²³ mol⁻¹; relative uncertainty 1.2 × 10⁻⁸","6.022 140 76 × 10²³ mol⁻¹; exact"],
+    ["Molar mass of carbon-12","12 g/mol; exact under the former mole","12.000 000 0126(37) g/mol; relative uncertainty 3.1 × 10⁻¹⁰"]
+  ]}
+/>
+
+The four direct trades were kilogram: Le Grand K → *h*; ampere: fixed μ₀ → *e*; kelvin: water's triple point → *k*; and mole: 12 grams of carbon-12 → *NA*. The 7-and-4 count is a feature of this reform, not a law of nature. Four units each exchanged one exact anchor for another.
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow>The machine</SectionEyebrow>
+
+## How to weigh a kilogram with Planck's constant
+
+The Planck constant belongs to quantum mechanics. How can it weigh a bag of sugar?
+
+Bryan Kibble answered at Britain's National Physical Laboratory in 1975. A **Kibble balance** compares a mass with an electromagnetic force, then ties the electrical measurements to quantum standards. It operates in two modes, and the same hard-to-measure geometry appears in both.
+</ContentSection>
+
+<Day13Interactive kind="kibble-balance" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · Two modes of a Kibble balance</PanelTitle>
+
+<PanelNote>Weighing mode balances the mass against an electromagnetic force. Velocity mode moves the same coil through the same magnetic field. Combining the equations cancels both the magnetic field strength and the effective wire length.</PanelNote>
+
+<Day13StaticFigure kind="kibble-balance" locale="en" />
+
+<SimpleTable
+  headers={["Mode","Relation","What is observed"]}
+  rows={[
+    ["Weighing","m g = B L I","Current I produces an upward force BLI that balances weight mg."],
+    ["Velocity","U = B L v","Moving the coil at velocity v through the field produces voltage U."],
+    ["Combined","m g v = U I, so m = U I / (g v)","The difficult quantities B and L cancel."]
+  ]}
+/>
+
+Voltage is realized with Josephson junctions, whose quantized steps relate voltage to frequency through *h* and *e*. Resistance is realized through quantum Hall plateaux proportional to *h/e²*. Current can then be obtained from voltage and resistance. In the product *U × I*, the elementary charge cancels while *h* remains. Gravimetry supplies *g*; laser interferometry supplies *v*. The traceability chain ends at exact *h*, *c*, and ΔνCs rather than a metal cylinder.
+</FormatOnly>
+
+<ContentSection>
+Redundancy makes the result credible. The kilogram has a second, largely independent realization: the **silicon sphere**. A near-perfect crystal of isotopically enriched silicon-28 is ground into an extraordinarily round sphere. Measuring its volume, lattice spacing by X-ray interferometry, and isotopic composition determines the number of atoms and connects the result to the Avogadro constant and *h*. Before the redefinition, CODATA's 2017 special adjustment required the silicon-sphere and Kibble-balance experiment families to agree at the 10⁻⁸ level. They did.
+
+Two routes, using substantially different experimental physics, converged on one value. That is the kind of risky agreement **[Day 2](/days/002-scientific-method-and-demarcation/)** taught us to value.
+
+<Aside>
+<BlockTitle>The most expensive unit conversion in history</BlockTitle>
+
+On **23 September 1999**, NASA's Mars Climate Orbiter was lost during orbital insertion. Lockheed Martin ground software reported thruster impulse in pound-force seconds while JPL navigation software expected newton seconds, a factor of about 4.45. The mismatch persisted for months. The spacecraft was intended to approach Mars safely but passed at an estimated altitude near 57 kilometres, where it was destroyed or escaped after atmospheric passage. The reported mission cost was **$327.6 million**. The investigation board emphasized a systems failure, not one person's arithmetic: checks that should have exposed the incompatible interface did not do so. Units are a treaty, and a treaty works only when interfaces enforce it.
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>The debate</SectionEyebrow>
+
+## “Is the speed of light changing?” is an incomplete question
+
+The SI is anchored to constants, so are the constants really constant? Since Dirac's Large Numbers Hypothesis in 1937, physicists have explored whether *c*, *G*, or the electron's charge could drift over cosmic time. Varying-speed-of-light cosmologies make the question sound straightforward. It is not.
+
+Michael Duff made the sharpest version of the objection in a three-way exchange with Lev Okun and Gabriele Veneziano, published as *Trialogue on the Number of Fundamental Constants* in 2002. Okun counted three fundamental dimensional constants, *c*, ℏ, and *G*. Veneziano counted two. Duff counted zero.
+
+A **dimensional constant** such as *c* carries units and therefore partly records our choice of coordinates and conversion conventions. Saying only that the numerical value of *c* changed does not yet specify a unit-invariant physical observation. Since 1983, its SI value is fixed by definition. A physical varying-constant theory must say which observable, dimensionless ratio changes and how.
+
+Dimensionless numbers cannot be altered by changing metres into feet or seconds into years. Two central examples are:
+
+- the **fine-structure constant, α ≈ 1/137.035 999**, which characterizes electromagnetic coupling and helps set atomic spectra and chemistry;
+- the **proton-to-electron mass ratio, μ = mp/me ≈ 1836.15**.
+
+<BlockQuote>
+If a claimed variation can be made to vanish by changing units, it is not yet a claim about the world.
+</BlockQuote>
+
+This is Day 10's map and territory in physical form. Dimensional constants encode part of the grid; dimensionless ratios express relations that every unit system must preserve. It is also Day 2's testability rule: “the speed of light varies,” without a unit-invariant prediction, forbids no observation. Specify a changing ratio and the claim becomes testable.
+
+So: has α moved?
+</ContentSection>
+
+<Day13Interactive kind="alpha-drift" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · Limits on drift of the fine-structure constant</PanelTitle>
+
+<PanelNote>Laboratory clocks, geological evidence, quasar spectra, and the cosmic microwave background probe different epochs. Each calibrated result is compatible with no variation. The 2011 quasar dipole is shown separately because a later instrument audit found distortions comparable to the claimed signal.</PanelNote>
+
+<Day13StaticFigure kind="alpha-drift" locale="en" />
+
+<SimpleTable
+  headers={["Probe","Time baseline","Reported constraint or result","Interpretation"]}
+  rows={[
+    ["Yb⁺ optical clocks at PTB","26 months","(1/α)(dα/dt) = 1.8 ± 2.5 × 10⁻¹⁹ per year","Compatible with zero; the tightest direct laboratory drift limit in this lesson."],
+    ["Oklo natural reactors","1.8 billion years","|Δα/α| below roughly 10⁻⁷ under nuclear-model assumptions","Strong but model-dependent; simultaneous quark-mass variation would change the inference."],
+    ["Modern calibrated quasar spectra","Lookback of roughly 10 billion years","Example: Δα/α = 0.30 ± 1.44 ppm","Compatible with zero."],
+    ["2011 Keck and VLT dipole claim","Roughly 300 quasar absorption systems; lookback of roughly 10 billion years","Amplitude about 0.97 × 10⁻⁵, approximately 4σ","A 2015 audit found wavelength distortions around 0.2 m/s per Å, comparable to the signal and absent from its error budget."],
+    ["Planck cosmic microwave background","13.8 billion years","Δα/α = (3.6 ± 3.7) × 10⁻³ at recombination","Much looser, but compatible with zero at the earliest epoch shown."]
+  ]}
+/>
+
+The astronomical entries constrain Δα/α, not a constant drift rate. Dividing by lookback time to put them on one rate axis assumes linear drift, so the visual comparison is an order-of-magnitude guide rather than a model-free ranking. The Oklo inference is also conditional on assumptions about other nuclear parameters.
+</FormatOnly>
+
+<ContentSection class="frontier">
+<SectionEyebrow>The frontier · July 2026</SectionEyebrow>
+
+## Where the evidence reaches
+
+<Claim>
+<ClaimHeader label="Edge 01">
+<StatusChip status="ok" label="Clock performance" printLabel="optical-clock performance established" />
+<StatusChip status="hint" label="2030 redefinition" printLabel="second redefinition proposed for 2030, not completed" />
+</ClaimHeader>
+
+### The second may be redefined in 2030 — the clocks already outran it
+
+Since 1967 the second has been the duration of 9,192,631,770 periods of the caesium-133 hyperfine transition. NIST-F2, a leading caesium fountain, reported systematic uncertainty of **1.1 × 10⁻¹⁶** in 2014, corresponding to roughly one second in 300 million years. Optical clocks tick at much higher frequencies and now report uncertainties more than 100 times smaller.
+
+NIST's aluminium-ion quantum-logic clock reported **5.5 × 10⁻¹⁹ systematic uncertainty** in *Physical Review Letters* on 14 July 2025. It interrogates a single ²⁷Al⁺ ion sympathetically cooled by a co-trapped ²⁵Mg⁺ ion and uses a cryogenic silicon reference cavity linked over 3.6 kilometres of fibre. JILA's strontium lattice clock reported **8.1 × 10⁻¹⁹** in 2024. Press descriptions called the aluminium device the “world's most accurate clock” and spoke of 19 decimal places; the peer-reviewed result is the stated uncertainty and a threefold stability improvement.
+
+The definition has become a bottleneck. The CGPM roadmap asks the metrology community to be ready to propose a redefinition at the 29th CGPM in **2030**, contingent on reliable optical standards, ultra-stable links, reproducibility across laboratories, and agreement among clocks based on different transitions. A BIPM draft resolution dated 30 June 2026 says there is still no consensus on a single species versus an ensemble. The performance milestone is established; the choice and redefinition are not.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge 02">
+<StatusChip status="ok" label="Th-229 ratio" printLabel="ratio measured" />
+<StatusChip status="hint" label="Alpha sensitivity" printLabel="sensitivity projected" />
+<StatusChip status="bad" label="Dark-matter detection" printLabel="no detection" />
+</ClaimHeader>
+
+### A clock transition inside a nucleus
+
+Precision atomic clocks normally use electronic transitions. Thorium-229 has an unusually low nuclear excited state, near 8.4 eV, accessible to lasers. In 2024 a rapid sequence of results reached it: Tiedau and colleagues reported laser excitation of the isomer at PTB; Elwell and colleagues reported solid-state excitation; and Zhang, Ooi, Higgins and collaborators used a vacuum-ultraviolet frequency comb to compare the nuclear transition directly with JILA's strontium atomic clock. The 4 September 2024 *Nature* result improved precision on the nuclear frequency by roughly a million-fold.
+
+A nucleus is about 10,000 times smaller than an atom and is shielded from many external fields by its electron cloud, allowing dense solid-state samples. The transition energy also arises from a near-cancellation of large nuclear contributions, which may amplify sensitivity to changes in α. Claims of exactly 10,000-fold sensitivity are too sharp: Beeks and colleagues estimated an enhancement factor **K = 5900 ± 2300** in 2025, with roughly 40% uncertainty and dependence on a semi-classical nuclear model. The transition is a genuine new measurement platform. Detection of dark matter or varying α remains a research goal.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge 03">
+<StatusChip status="ok" label="Null drift result" printLabel="null fine-structure drift result established" />
+</ClaimHeader>
+
+### The tightest direct answer is consistent with zero
+
+Two transitions in the same ytterbium ion respond differently to α. PTB compared the E3 octupole and E2 quadrupole transitions for 26 months:
+
+<BlockQuote>
+(1/α)(dα/dt) = **1.8 ± 2.5 × 10⁻¹⁹ per year**
+
+<Meta>Filzinger et al., *Physical Review Letters* 130:253001, 22 June 2023.</Meta>
+</BlockQuote>
+
+The estimate is centered near zero. It improved on a 2021 comparison that reported 1.0(1.1) × 10⁻¹⁸ per year for α and −8(36) × 10⁻¹⁸ per year for μ. If the quoted 2.5 × 10⁻¹⁹-per-year one-sigma sensitivity scale persisted linearly over 13.8 billion years, it would accumulate to about 3.5 parts per billion — a deliberately model-dependent extrapolation, not a cosmological bound. Oklo's 1.8-billion-year-old natural reactors constrain |Δα/α| to roughly 10⁻⁷ under nuclear-model assumptions. Planck's cosmic-microwave-background analysis gave Δα/α = (3.6 ± 3.7) × 10⁻³ at recombination, 13.8 billion years ago. Across these different assumptions and epochs, every result shown here is compatible with zero.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge 04">
+<StatusChip status="bad" label="Alpha dipole" printLabel="quasar alpha dipole contested by instrument systematics" />
+</ClaimHeader>
+
+### A beautiful claim undermined by its instrument
+
+Using the many-multiplet method on roughly 300 quasar absorption systems, Webb, King, Murphy, Flambaum and colleagues reported in 2011 that α appeared smaller in one direction of the sky and larger in the other: a spatial dipole at about 4σ. The result combined observations from Keck's HIRES spectrograph in Hawaii and the VLT's UVES spectrograph in Chile.
+
+Whitmore and Murphy — Murphy was also an author of the original report — audited the instruments in 2015 by supercalibrating them against asteroid and solar-twin spectra. They found long-range wavelength distortions around **0.2 m/s per Å** in both instruments. Those distortions were absent from the original error budget and large enough to imitate a signal of the reported size. Better-calibrated instruments such as HARPS and ESPRESSO have returned null results in high-precision single systems, including Δα/α = 0.30 ± 1.44 ppm. The dipole is therefore not established evidence for spatial variation; instrument systematics provide a sufficient competing explanation.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge 05">
+<StatusChip status="bad" label="5.4σ discrepancy" printLabel="fine-structure measurement discrepancy unresolved" />
+</ClaimHeader>
+
+### α is stable, yet our best measurements disagree
+
+The irony is sharp: α shows no detected drift, yet its two most precise atom-recoil determinations do not agree. Berkeley's caesium measurement gave α⁻¹ = 137.035 999 **046**(27) in 2018. The Paris rubidium result gave α⁻¹ = 137.035 999 **206**(11) on 2 December 2020, with an uncertainty of 81 parts per trillion. The values differ by about **5.4σ**.
+
+CODATA 2022 expanded the input uncertainties by a factor of 2.5 to accommodate the inconsistency and recommended α⁻¹ = 137.035 999 177(21). A 2023 Harvard electron-*g*-factor determination gives 137.035 999 166(15), nearer the Paris value but not enough to settle the recoil discrepancy. The leading expectation is an unidentified systematic in at least one measurement, not new physics, but no accepted cause has been found. The value of α returns on **Day 46**, where it enters the Standard Model prediction for the muon's magnetic moment.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge 06">
+<StatusChip status="ok" label="G measurement gap" printLabel="gravitational-constant measurement problem established" />
+</ClaimHeader>
+
+### G remains extraordinarily difficult to measure
+
+The recommended value of α has relative uncertainty around 1.5 parts in 10 billion. Newton's gravitational constant **G** has relative uncertainty about **2.2 parts in 100,000** in CODATA 2018: 6.674 30(15) × 10⁻¹¹. The best experiments disagree by more than their stated errors. Li, Xue, Luo and collaborators measured *G* by two independent methods in one laboratory in 2018, each with uncertainty near 11.6 ppm, yet the two results still differed.
+
+Why not fix *G* by decree, as the SI fixed *h*? A useful defining constant must support a practical realization of the unit. No apparatus can disseminate a kilogram through the attraction between laboratory masses at the 10⁻⁸ level. Quantum electrical effects are controllable enough for a Kibble balance; laboratory gravity is not. *G* therefore remains measured and uncertain.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge 07">
+<StatusChip status="ok" label="Millimetre redshift" printLabel="millimetre-scale gravitational redshift established" />
+<StatusChip status="hint" label="Clock dark-matter tests" printLabel="clock-network dark-matter searches promising" />
+</ClaimHeader>
+
+### A clock can detect a one-millimetre height difference
+
+General relativity predicts that a clock deeper in a gravitational field runs more slowly. In 2022, Bothwell, Kennedy, Aeppli, Ye and collaborators resolved the gravitational redshift across **one millimetre** of a strontium cloud. They measured a frequency gradient of [−12.4 ± 0.7(stat) ± 2.5(sys)] × 10⁻¹⁹ per centimetre, consistent with the predicted −10.9 × 10⁻¹⁹/cm.
+
+At this sensitivity a clock becomes an altimeter. **Chronometric levelling** measures differences in Earth's gravitational potential by comparing clocks at different heights. ESA's **ACES** package launched on 21 April 2025, was installed on the International Space Station, and began activation on 28 April. Commissioning remained ongoing in 2026 rather than having completed a science campaign. Its PHARAO caesium clock was reported within specification while work continued on the space hydrogen maser. ACES is intended to test gravitational redshift and constant variation from orbit.
+
+Networks of separated clocks also search for ultralight scalar dark matter. Such a field could modulate dimensionless constants and create correlated or differential frequency signals as Earth moves through it. No detection has been made; the established result is the increasingly sensitive measurement method and the limits it sets.
+</Claim>
+</ContentSection>
+
+<Aside>
+<BlockTitle>A shadow over measurement — for Day 134</BlockTitle>
+
+Lengths, masses, and frequencies have well-tested quantitative structure. We also assign numbers to intelligence, pain, happiness, and job satisfaction. In 1940 the British Association's **Ferguson Committee** concluded that sensation intensity had not been shown to be measurable in the required sense. S. S. Stevens replied in 1946 by defining measurement as “the assignment of numerals to objects according to rules” and popularizing nominal, ordinal, interval, and ratio scales. That framework has dominated statistics teaching. Joel Michell argues that psychometrics too often assumes that an attribute has quantitative structure instead of demonstrating it. Hold the dispute for **Day 134**. Whenever a number appears, ask whether the attribute has been shown to possess magnitude or has merely been assigned a score.
+</Aside>
+
+<ContentSection>
+<SectionEyebrow>Open questions</SectionEyebrow>
+
+## What's genuinely unsettled
+
+- **Which optical transition should define the second?** Strontium, ytterbium, aluminium, or a weighted ensemble? The infrastructure consequences are long-lived, and no choice has consensus.
+- **Why do the Berkeley and Paris measurements of α differ by 5.4σ?** At least one unrecognized systematic is likely; none has been accepted.
+- **Why is G still so hard to measure?** After two centuries, leading error bars remain mutually inconsistent. The unresolved issue may be technique, underestimated systematics, or physics absent from the models.
+- **Do dimensionless constants drift below today's limits?** Many theories beyond the Standard Model permit tiny variations. Null results near 10⁻¹⁹ per year constrain couplings; they do not prove exact constancy.
+- **Is any natural unit system privileged?** Planck units combine *c*, ℏ, and *G*. If dimensional constants partly encode conventions, do Planck units reveal deep structure or simply provide an especially useful grid?
+- **What information can fixed definitions hide?** Exact SI values cannot register drift, but comparisons of dimensionless ratios remain sensitive. That is why experiments watch α, μ, and other invariant combinations.
+</ContentSection>
+
+<Recap>
+<RecapList>
+<RecapItem term="Big idea">A unit is a treaty. Modern metrology fixes a constant and derives the unit from it: the metre followed this inversion in 1983, and four more base units changed anchors on 20 May 2019.</RecapItem>
+<RecapItem term="Best analogy">Le Grand K was Day 1's stopped clock cast in platinum. Because it was defined as exactly one kilogram, the system could never detect whether it had changed; the 2019 uncertainty ledger moved exactness to constants that laboratories can realize independently.</RecapItem>
+<RecapItem term="Live controversy">Every dimensionless probe shown here is compatible with no drift in α, and instrument distortions undermine the famous quasar dipole. Yet the two leading atom-recoil measurements of α disagree by 5.4σ, while G remains far less precisely known.</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads label="Threads today ›">information (a unit as shared code; uncertainty as a budget that can be moved) · energy (h, k, Josephson junctions, and the quantum Hall effect) · computation (traceability as a rooted network, with 2019 removing the unique root) · light emergence — with Day 7's “information is physical” meeting its mirror: a unit is where abstraction becomes hardware.</Threads>
+
+<ContinueNote label="Tomorrow → Day 14">
+### Synthesis: How We Know
+
+Block I closes. Thirteen days supplied tools: Gettier's luck, Popper's swans, Bayes's dial, Pearl's scissors, Shannon's bit, Anderson's “more is different,” Meadows's loops, Box's useful lies, Simon's scissors, Barabási's hubs, and today's uncertainty ledger. Tomorrow we turn them on ourselves and build a personal confidence-calibration framework for the remaining 166 days. The epistemology block ends with another measurement problem: how do you put a calibrated number on how sure you are?
+</ContinueNote>
+
+<Sources>
+<SectionEyebrow>Sources</SectionEyebrow>
+
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. BIPM. *The International System of Units (SI Brochure), 9th edition* (2019, updated 2024). [bipm.org/en/publications/si-brochure](https://www.bipm.org/en/publications/si-brochure) <Meta>Seven defining constants and their exact values; adopted by the 26th CGPM on 16 November 2018 and effective 20 May 2019.</Meta>
+2. Alder, K. (2002). *The Measure of All Things: The Seven-Year Odyssey and Hidden Error That Transformed the World.* Free Press. <Meta>Delambre and Méchain, 1792–1799; the Barcelona latitude discrepancy and its concealment.</Meta>
+3. Newell, D. B. et al. (2018). “The CODATA 2017 values of h, e, k, and NA for the revision of the SI.” *Metrologia* 55(1): L13–L16. <Meta>Special adjustment fixing h = 6.626 070 15 × 10⁻³⁴ J·s; doi:10.1088/1681-7575/aa950a.</Meta>
+4. Mohr, P. J., Newell, D. B., Taylor, B. N. &amp; Tiesinga, E. (2024). “CODATA Recommended Values of the Fundamental Physical Constants: 2022.” arXiv:2409.03787. <Meta>α⁻¹ = 137.035 999 177(21), with a 2.5 expansion factor for the recoil-measurement inconsistency; CODATA 2018 G = 6.674 30(15) × 10⁻¹¹.</Meta>
+5. Marshall, M. et al. (2025). “High-Stability Single-Ion Clock with 5.5 × 10⁻¹⁹ Systematic Uncertainty.” *Physical Review Letters* 135:033201. <Meta>Published 14 July 2025; NIST ²⁷Al⁺ quantum-logic clock.</Meta>
+6. Aeppli, A., Kim, K., Warfield, W., Safronova, M. S. &amp; Ye, J. (2024). “Clock with 8 × 10⁻¹⁹ Systematic Uncertainty.” *Physical Review Letters* 133:023401. <Meta>JILA strontium optical-lattice clock; reported 8.1 × 10⁻¹⁹.</Meta>
+7. Bothwell, T., Kennedy, C. J., Aeppli, A. et al. (2022). “Resolving the gravitational redshift across a millimetre-scale atomic sample.” *Nature* 602:420–424. <Meta>Published 17 February 2022; doi:10.1038/s41586-021-04349-7.</Meta>
+8. Zhang, C., Ooi, T., Higgins, J. S. et al. (2024). “Frequency ratio of the ²²⁹ᵐTh nuclear isomeric transition and the ⁸⁷Sr atomic clock.” *Nature* 633:63–70. <Meta>Published 4 September 2024; first nuclear-to-atomic frequency comparison.</Meta>
+9. Tiedau, J. et al. (2024). “Laser Excitation of the Th-229 Nucleus.” *Physical Review Letters* 132:182501. <Meta>PTB laser excitation; see also Elwell et al., *Physical Review Letters* 133:013201 (2024), on solid-state excitation.</Meta>
+10. Beeks, K. et al. (2025). “Fine-structure constant sensitivity of the Th-229 nuclear clock transition.” *Nature Communications* 16:9147. <Meta>Enhancement factor K = 5900(2300), with substantial uncertainty and model dependence.</Meta>
+11. Filzinger, M. et al. (2023). “Improved limits on the coupling of ultralight bosonic dark matter to photons from optical atomic clock comparisons.” *Physical Review Letters* 130:253001. <Meta>Published 22 June 2023; (1/α)(dα/dt) = 1.8(2.5) × 10⁻¹⁹ yr⁻¹ from ¹⁷¹Yb⁺ E3/E2 comparisons over 26 months.</Meta>
+12. Lange, R. et al. (2021). “Improved Limits for Violations of Local Position Invariance from Atomic Clock Comparisons.” *Physical Review Letters* 126:011102. <Meta>Published 8 January 2021; α and μ drift constraints.</Meta>
+13. Duff, M. J., Okun, L. B. &amp; Veneziano, G. (2002). “Trialogue on the number of fundamental constants.” *JHEP* 03:023. <Meta>Published 8 April 2002; dimensional constants as unit conventions and the observable role of dimensionless ratios.</Meta>
+14. Damour, T. &amp; Dyson, F. (1996). “The Oklo bound on the time variation of the fine-structure constant revisited.” *Nuclear Physics B* 480:37–54. <Meta>|Δα/α| of order 10⁻⁷ over 1.8 billion years under model assumptions; see Flambaum and Wiringa (2009) for quark-mass sensitivity.</Meta>
+15. Webb, J. K., King, J. A., Murphy, M. T. et al. (2011). “Indications of a spatial variation of the fine structure constant.” *Physical Review Letters* 107:191101. <Meta>Approximately 4σ Australian-dipole claim, amplitude near 0.97 × 10⁻⁵.</Meta>
+16. Whitmore, J. B. &amp; Murphy, M. T. (2015). “Impact of instrumental systematic errors on fine-structure constant measurements with quasar spectra.” *MNRAS* 447:446–462. <Meta>Long-range wavelength distortions around 0.2 m/s per Å in HIRES and UVES, comparable to the claimed dipole.</Meta>
+17. Parker, R. H., Yu, C., Zhong, W., Estey, B. &amp; Müller, H. (2018). “Measurement of the fine-structure constant as a test of the Standard Model.” *Science* 360:191–195. <Meta>Berkeley caesium recoil, α⁻¹ = 137.035 999 046(27).</Meta>
+18. Morel, L., Yao, Z., Cladé, P. &amp; Guellati-Khélifa, S. (2020). “Determination of the fine-structure constant with an accuracy of 81 parts per trillion.” *Nature* 588:61–65. <Meta>Published 2 December 2020; Paris rubidium recoil, α⁻¹ = 137.035 999 206(11).</Meta>
+19. Li, Q., Xue, C., Luo, J. et al. (2018). “Measurements of the gravitational constant using two independent methods.” *Nature* 560:582–588. <Meta>Two HUST methods at roughly 11.6 ppm, with mutually different results.</Meta>
+20. Dimarcq, N. et al. (2024). “Roadmap towards the redefinition of the second.” *Metrologia* 61:012001. <Meta>CCTF/CGPM plan aiming for a possible proposal at the 29th CGPM in 2030; endorsed by CGPM Resolution 5 in November 2022.</Meta>
+21. Heavner, T. P. et al. (2014). “First accuracy evaluation of NIST-F2.” *Metrologia* 51:174. <Meta>Caesium fountain systematic uncertainty of 1.1 × 10⁻¹⁶.</Meta>
+22. Boulder Atomic Clock Optical Network Collaboration (2021). “Frequency ratio measurements at 18-digit accuracy using an optical clock network.” *Nature* 591:564–569.
+23. Planck Collaboration (2015). “Planck intermediate results. XXIV. Constraints on variation of fundamental constants.” *Astronomy &amp; Astrophysics* 580:A22. <Meta>Δα/α = (3.6 ± 3.7) × 10⁻³ at recombination; arXiv:1406.7482.</Meta>
+24. Bridgman, P. W. (1927). *The Logic of Modern Physics.* Macmillan. <Meta>Operational definitions; see the [Stanford Encyclopedia of Philosophy, “Operationalism”](https://plato.stanford.edu/entries/operationalism/).</Meta>
+25. Stevens, S. S. (1946). “On the theory of scales of measurement.” *Science* 103:677–680. <Meta>Nominal, ordinal, interval, and ratio scales; written after the Ferguson Committee report. For the dissent, see Michell, J., *Measurement in Psychology* (Cambridge University Press, 1999).</Meta>
+26. NASA/JPL (1999). *Mars Climate Orbiter Mishap Investigation Board — Phase I Report.* <Meta>Published 10 November 1999; pound-force seconds versus newton seconds and the loss of the mission.</Meta>
+27. BIPM. “The Metre Convention.” [bipm.org/en/metre-convention](https://www.bipm.org/en/metre-convention) <Meta>Signed on 20 May 1875 by 17 states; 150th anniversary in 2025. See also CGPM Resolution 3 (November 2022), adopting the prefixes ronna, quetta, ronto, and quecto.</Meta>
+28. BIPM (30 June 2026). *Draft Resolutions — 28th meeting of the CGPM*, version 4. [CGPM/2026-Draft Resolutions](https://www.bipm.org/documents/20126/284836054/CGPM-2026-Draft-Resolutions.pdf/2c60f609-b7ba-75b2-5ad4-94b526d182ac?download=true&t=1775114821967&version=4.0) <Meta>Draft Resolution B records that no consensus has been reached on a single species versus an ensemble for a new definition of the second, and asks for a proposal at the 29th CGPM in 2030.</Meta>
+29. ESA (25 April 2025). “ACES finds its home in orbit.” [esa.int](https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/ACES_finds_its_home_in_orbit) <Meta>Launch on 21 April 2025, installation on the International Space Station on 25 April, and the commissioning plan.</Meta>
+30. CNES (Winter 2026). “PHARAO putting clocks right.” *CNESMAG* 99. [English edition (PDF)](https://cnes.fr/sites/default/files/2026-01/cnesmag-99-en_0.pdf) <Meta>PHARAO was delivering its expected in-space performance while the space hydrogen maser remained non-operational and a workaround was under study.</Meta>
+31. NIST (1985, 2001). Measurements of United States prototype kilogram K4. [1985 comparison](https://nvlpubs.nist.gov/nistpubs/jres/090/4/V90-4.pdf); [1999 recalibration report](https://nvlpubs.nist.gov/nistpubs/jres/106/1/j61jab.pdf). <Meta>K4 was 75 µg below the IPK in 1889, 106 µg below in 1984, and 116 µg below in 1999.</Meta>
+</Sources>
+
+</Wrap>

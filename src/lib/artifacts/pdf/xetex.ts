@@ -1089,7 +1089,8 @@ const SVG_COMPONENTS = new Map<string, SvgComponentSpec>([
   ["Day10ParadigmLadder", { selector: ".day10-paradigm-ladder-pdf", width: "0.96\\linewidth", height: "0.34\\textheight" }],
   ["Day10StaticFigure", { selector: ".day10-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }],
   ["Day11StaticFigure", { selector: ".day11-static-figure", width: "0.86\\linewidth", height: "0.26\\textheight" }],
-  ["Day12StaticFigure", { selector: ".day12-static-figure", width: "0.92\\linewidth", height: "0.3\\textheight" }]
+  ["Day12StaticFigure", { selector: ".day12-static-figure", width: "0.92\\linewidth", height: "0.3\\textheight" }],
+  ["Day13StaticFigure", { selector: ".day13-static-figure", width: "0.94\\linewidth", height: "0.32\\textheight" }]
 ]);
 
 function renderRenderedSvgComponent(name: string, attrs: Map<string, string | null>, state: MdxRenderState): string {
@@ -1190,6 +1191,33 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
         selector: ".day12-static-figure-" + kind,
         width: wideKinds.has(kind) ? "0.98\\linewidth" : "0.9\\linewidth",
         height: tallKinds.has(kind) ? "0.38\\textheight" : "0.32\\textheight"
+      };
+    }
+  }
+  if (name === "Day13StaticFigure") {
+    const kind = resolveExpression(attrs.get("kind"), state).trim();
+    if (kind) {
+      const wideKinds = new Set([
+        "uncertainty-ledger",
+        "kibble-balance",
+        "alpha-drift",
+        "quantum-hall",
+        "accuracy-target",
+        "readiness-ladder",
+        "dark-matter-wave"
+      ]);
+      const tallKinds = new Set([
+        "hero-meridian",
+        "hero-fossils",
+        "lineage",
+        "clock-tower",
+        "hero-readiness",
+        "readiness-ladder"
+      ]);
+      spec = {
+        selector: ".day13-static-figure-" + kind,
+        width: wideKinds.has(kind) ? "0.98\\linewidth" : "0.9\\linewidth",
+        height: tallKinds.has(kind) ? "0.39\\textheight" : "0.34\\textheight"
       };
     }
   }

@@ -37,7 +37,8 @@ describe("artifact book model", () => {
       "009-systems-thinking-and-feedback",
       "010-models-maps-and-idealization",
       "011-heuristics-biases-and-rationality",
-      "012-networks"
+      "012-networks",
+      "013-measurement-and-units"
     ]);
     expect(dayOne.title).toBe("What Is Knowledge?");
     expect(dayOne.bodyPath).toBe("en.mdx");

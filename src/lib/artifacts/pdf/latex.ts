@@ -12,6 +12,9 @@ export function latexEscape(value: string): string {
     .replaceAll("^", "\\textasciicircum{}");
   return escaped
     .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+/g, (match) => `\\textsuperscript{${superScriptCharacters(match)}}`)
+    .replaceAll("ₐ", "\\textsubscript{a}")
+    .replaceAll("ᵐ", "\\textsuperscript{m}")
+    .replace(/√([A-Za-z0-9])/g, (_, radicand: string) => `\\ensuremath{\\sqrt{${radicand}}}`)
     .replace(/”\s*(?=[A-Za-z\\])/g, "”\\ ")
     .replaceAll("≠", "\\ensuremath{\\neq}")
     .replaceAll("≈", "\\ensuremath{\\approx}")

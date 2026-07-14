@@ -66,8 +66,15 @@ export function latexPreamble(config: PdfTemplateConfig): string {
 \newunicodechar{ś}{{\symbolfallback ś}}
 \newunicodechar{ş}{{\symbolfallback ş}}
 \newunicodechar{ṅ}{{\symbolfallback ṅ}}
+\newunicodechar{Δ}{{\symbolfallback Δ}}
 \newunicodechar{ε}{{\symbolfallback ε}}
+\newunicodechar{η}{{\symbolfallback η}}
 \newunicodechar{μ}{{\symbolfallback μ}}
+\newunicodechar{λ}{{\symbolfallback λ}}
+\newunicodechar{ν}{{\symbolfallback ν}}
+\newunicodechar{σ}{{\symbolfallback σ}}
+\newunicodechar{ħ}{{\symbolfallback ħ}}
+\newunicodechar{ℏ}{{\symbolfallback ℏ}}
 \newunicodechar{Ω}{{\symbolfallback Ω}}
 \newunicodechar{₀}{{\symbolfallback ₀}}
 \newunicodechar{₁}{{\symbolfallback ₁}}

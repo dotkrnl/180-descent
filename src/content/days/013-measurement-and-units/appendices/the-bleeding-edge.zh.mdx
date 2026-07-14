@@ -1,0 +1,342 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import SourceNote from "@app/components/lesson/SourceNote.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day13StaticFigure from "@app/components/lesson/figures/Day13StaticFigure.astro";
+import Day13Interactive from "@app/components/lesson/interactives/Day13Interactive.astro";
+
+<Lead>2025 年 10 月 22 日，*Nature* 发表了 Joseph Aziz 与 Richard Howl 的一篇论文。论文题为 *Classical theories of gravity produce entanglement*；如果结论成立，它将推翻一项旗舰级拟议量子引力实验的推理逻辑。该实验会让两个质量体处于叠加态，仅通过引力相互作用，再检验它们最终是否纠缠。局域经典信道不应产生纠缠，因此，阳性结果一直被视为引力本身必定量子化的证据。</Lead>
+
+Aziz 与 Howl 认为，在完整量子场论中，这一推论会发生变化：经典引力场同样可以使两个质量体纠缠。不到三周，Marletto、Oppenheim、Vedral、Wilson、Diósi 与 Di Biagio 就发布了首批技术回应；Xue 团队与 Gundhi 团队在 2026 年 4 月跟进。其中数篇回应指出，一旦把被舍弃的跃迁振幅补回，相关效应便会相互抵消。这场争论仍在进行且存在分歧；关键反驳仍是预印本，尚未形成经同行评议的定论。
+
+这就是从内部看到的研究前沿。下文多数条目是 2020 年以后经同行评议的结果。其中一个核心条目——钍-229 反馈回路时钟及其暗物质约束——是 2026 年 6 月 3 日发布的预印本，全文均明确标注。论文发表只说明一项主张已可供检验，并不说明其结论已经盖棺定论。
+
+<Panel>
+<PanelTitle>图 · 研究前沿的证据集中在低就绪度一端</PanelTitle>
+<PanelNote>已确立的测量、现场部署、实验室演示、预印本、理论方案与进行中的争论，代表不同种类的证据。研究前沿的证据集中在低就绪度一端，但这些类别回答的是不同问题，并不构成一套普适的总排序。</PanelNote>
+
+<Day13StaticFigure kind="hero-readiness" locale="zh" />
+</Panel>
+
+<ContinueNote label="如何阅读本附录">
+主线下潜介绍了已经稳定下来的计量学；附录一则揭示其中继承下来的历史。本附录有意保留其暂定性质：它把实验或计算已经演示的内容，与由此向外推得的更强结论区分开来。请始终记住第 2 日的问题：「什么结果能够证明这项主张为假？」无论发表平台多有声望，无法回答这个问题的主张都尚未就绪。
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow number="第一部分">时钟物种大爆发</SectionEyebrow>
+
+## 如今，人人都在造不一样的时钟
+
+二十年来，光学原子钟领域基本是两条路线的竞赛：一边是晶格中的中性原子，尤其是锶或镱；另一边是单个囚禁离子，尤其是铝或镱。2020 年以来，这一领域开始分化，因为目标已不只是计时。不同的时钟对不同的潜在新物理响应不同；当一整套时钟彼此不一致时，变化的常数或暗物质场就可能显露踪迹。
+
+### 用剥去电子的原子造钟
+
+从氩原子的十八个电子中剥去十三个，剩下的就是 Ar¹³⁺：一种高电荷态离子（HCI），其电子深处于原子核场中。它对困扰其他时钟的杂散场相对不敏感，而<Term>高电荷态离子</Term>中的某些跃迁对 α 异常敏感。
+
+障碍在于如何冷却并读出一种没有可用冷却跃迁的离子。2022 年，PTB 的 Steven King、Lukas Spieß、Piet Schmidt 及同事把 Ar¹³⁺ 与一个铍离子共同囚禁，通过协同冷却为其降温，并借助量子逻辑读出。首台 HCI 光学原子钟在首次演示中便达到 2.2 × 10⁻¹⁷ 的系统不确定度（King 等，*Nature* 611：43–47，2022 年 11 月 2 日）。对 ³⁶Ar¹³⁺ 与 ⁴⁰Ar¹³⁺ 的比较还首次分辨出多电子体系中核反冲的 QED 贡献。
+
+<StatusChip status="ok" label="HCI 时钟已建成" printLabel="已确立的演示" /> <StatusChip status="hint" label="α 搜索潜力" printLabel="尚属外推" /> 这项时钟演示已经确立。目前它的不确定度约为最佳 Al⁺ 时钟结果的二十多倍，而且尚无 HCI 时钟给出有竞争力的新物理约束。它的吸引力在于可能达到更高上限、具备更强敏感度，而不是已经交付了这样的结果。
+
+### 用分子造钟
+
+原子钟对 α 高度敏感。质子—电子质量比 <MathInline latex={String.raw`\mu=m_p/m_e\approx1836`} /> 则不那么容易显现，因为原子对核质量的响应很弱。分子会振动，而它的振动频率直接取决于核质量。
+
+最简单的分子 HD⁺ 含有一个质子、一个氘核与一个电子。2020 年，两个团队推进了它的精密光谱学：Alighanbari、Giri、Constantin、Korobov 与 Schiller（*Nature* 581：152–158），以及 Patra、Germann、Karr、Koelemeij 等人（*Science* 369：1238）。他们在检验三体 QED 的同时，把 μ 测定到万亿分之一量级。Kortunov 等人实现了约 3 × 10¹¹ 的分辨本领，对应约 3.3 × 10⁻¹² 的跃迁频率相对不确定度（*Nature Physics* 17：569，2021）。
+
+因此，氢分子离子正从单纯的检验对象，转变为基本常数的一条独立测定途径。当两项领先的 α 测量已经存在 5.4σ 的分歧时，独立路径尤为重要。
+
+### 能够出海的时钟
+
+2022 年，Vector Atomic 制造的三台光学钟随一艘海军舰艇绕夏威夷群岛航行了二十天。每套 35 升的设备都包含碘光谱仪、光纤频率梳与控制装置。这些时钟连续运行，累计计时误差低于每天 300 皮秒（Roslund 等，*Nature* 628：736–740，2024 年 4 月 24 日）。
+
+这并不是精密度纪录。论文把海上时钟与相对不准确度低于 10⁻¹⁸ 的实验室光学钟作对照，但海上数据衡量的是计时误差和不稳定度，不能视为口径一致的准确度比较。这个结果之所以重要，是因为领先的实验室时钟并不容易部署：时钟大地测量、暗物质网络与不依赖 GPS 的导航，不仅受精密度限制，也受设备的坚固耐用程度限制。<StatusChip status="ok" label="海上部署" printLabel="已确立" />
+</ContentSection>
+
+<Day13Interactive kind="readiness-ladder" locale="zh" />
+<FormatOnly as="div" media="web">
+<Aside>
+<BlockTitle>准确理解 2,220 km 这一阶</BlockTitle>
+
+光纤连接的这一对传感器是光学腔稳频激光器，并非两台原子钟。另一组独立数据使用了 GPS 卫星上的原子钟。两者结合，演示了时空分离传感器方法。
+</Aside>
+</FormatOnly>
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 就绪度阶梯</PanelTitle>
+
+<PanelNote>下表按实际演示内容比较 2020 年后的八项主张，而不是按标题有多吸睛来排序。可靠测量、现场部署、方法演示、预印本结果与理论方案是不同的证据类别，并非一套普适排名。</PanelNote>
+
+<Day13StaticFigure kind="readiness-ladder" locale="zh" />
+
+<SimpleTable
+  headers={["主张","已演示","尚未演示或仍存的限定条件","状态"]}
+  statusColumn={3}
+  rows={[
+    ["反氢向下坠落","ALPHA-g 测得 gH̄ = 0.75 ± 0.13(stat+sys) ± 0.16(sim)，单位为 g。","是否与普通物质的引力相等；该检验的相对不确定度约为 25%。","已确立，粗略检验"],
+    ["在 10⁻¹⁵ 量级检验弱等效原理","MICROSCOPE 在轨运行 2.5 年后发现 Eötvös 比与零相容，并设置了一对同成分对照质量体。","未探测到等效原理违背。","已确立的零结果"],
+    ["电子电偶极矩（eEDM）低于 4.1 × 10⁻³⁰ e·cm","HfF⁺ 实验以约三秒的相干时间给出 90% 置信水平上限。","声称它直接排除 10 TeV 以上的所有物理，取决于耦合与抵消。","已确立，范围受模型约束"],
+    ["用 Ar¹³⁺ 制成的时钟","首台 HCI 光学原子钟达到 2.2 × 10⁻¹⁷ 的系统不确定度，并分辨出 QED 核反冲。","尚无 HCI 时钟给出有竞争力的 α 变化约束。","已确立的演示"],
+    ["出海的光学钟","三台 35 升碘钟运行 20 天，计时误差低于 300 ps/天。","实验室光学钟更准确，但计时误差数据并非口径一致的准确度指标；该结果考察的是设备能否在复杂环境中可靠部署。","已确立的部署"],
+    ["2,220 km 光学腔链路协助搜寻暗物质","相隔 2,220 km 的光学腔稳频激光器频率比较，加上 GPS 原子钟，首次约束了仅与电子耦合的标量暗物质。","未探测到暗物质；这是使用已确立方法得到的零结果。","已确立的方法"],
+    ["核钟约束强相互作用","2026 年 6 月 3 日的一篇预印本报告闭合反馈回路，并在 20 秒至一天的时间尺度上给出暗物质约束。","仍需同行评议和独立确认；α 敏感度因子 K = 5900 ± 2300 带来很大的理论不确定度。","有前景的预印本"],
+    ["探测单个引力子","2024 年的一篇论文为大质量谐振器中的声子分辨吸收提出理论可行性论证。","尚未建成探测器，也未探测到引力子；即使观察到量子化吸收，也未必能证明场已量子化。","理论方案"]
+  ]}/>
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow number="第二部分">核钟长大了</SectionEyebrow>
+
+## 从「我们激发了它」到「我们用它约束暗物质」
+
+主线下潜把钍-229 核钟作为一项引人注目的演示来介绍：2024 年 4 月，PTB 用激光激发原子核；同年 9 月，它又与锶钟直接比较。当时，暗物质应用是理由充分的愿景，尚不是已经取得的结果。
+
+如今，由维也纳工业大学牵头的合作团队报告称，他们闭合了反馈回路——这一步把光谱测量与真正运行的时钟区分开来。连续吸收光谱提供快速反馈，将一台连续波激光器稳定到嵌入毫米尺度氟化钙晶体中的 ²²⁹Th 原子核 148 nm 跃迁；实验在室温下完成。随后，团队在 20 秒到一天的时间尺度上搜寻该跃迁的周期变化与缓慢漂移。
+
+报告给出的光子耦合约束可与原子钟界限竞争。报告对强相互作用与夸克质量的敏感度触及电子跃迁时钟无法进入的参数空间，因为钍同质异能态的能量来自电磁相互作用与强相互作用贡献的近乎抵消。
+
+<StatusChip status="hint" label="2026 年 6 月预印本" printLabel="预印本；未经同行评议" /> 该结果见 arXiv:2606.04997，提交于 2026 年 6 月 3 日，在本文所述时间点尚未经过同行评议。如果它经得住审视，便确立了一种新方法。推得的约束范围还依赖一个相对不确定度约为 40% 的 α 敏感度因子 <MathInline latex={String.raw`K=5900\pm2300`} />（Beeks 等，*Nature Communications* 16：9147，2025）。此外，强相互作用与夸克耦合的精确核敏感度因子目前尚无法计算，因此预印本以 10⁴ 和 10⁵ 展示示意性的基准带。这个相差十倍的跨度是一段基准范围，而不是经统计量化的不确定度分布。这恰好重现了第 6 日的模式：严密的实验乘上宽松的系数。
+
+<Aside>
+<BlockTitle>为什么这项结果可能重要</BlockTitle>
+
+按照预印本的报告，核钟跨过了一道意义重大的门槛：它不再只是跃迁可以被激发的对象，而成了用来约束另一种现象的仪器。基布尔天平与光学频率梳也是在完成这种从对象到仪器的转变时，才产生了变革性的科学影响。本附录原稿预测，这种时钟会在 2040 年前进入教科书；这只是编辑层面的预测，核钟是否真正跨过门槛，仍要由同行评议与独立使用来决定。
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="第三部分">把时钟用作暗物质探测器</SectionEyebrow>
+
+## 相隔遥远的传感器，看见同一道波的不同部分
+
+假设暗物质是一种<Term>超轻标量场</Term><TipNote text={"超轻标量暗物质模型把暗物质视为相干振荡的场；其巨大波长可使它在天文尺度上表现得像一道波。"} />，而不是撞击探测器的粒子。如果这种场与普通物质耦合，常数就可能振荡：电子质量会轻微变化，时钟频率也会随之摆动。
+
+对最轻的候选者而言，波长可能超过一间实验室，甚至超过整个太阳系。于是，同一地点的每台仪器在同一时刻采样到的场几乎完全相同。有些耦合会让同地且响应相同的参考频率一起移动，从而在比较中抵消。对这样的参考对而言，该耦合在结构上不可见，并非只是约束得不够强。
+
+2025 年的解决方案，是不再只做局域比较。Filzinger、Caddell、Jani、Steinel、Giani、Huntemann 与 Roberts 比较了在时间和空间上分离的传感器，使它们采样不同的场相位。现有数据包括相隔 2,220 km、由光纤连接的两个光学腔之间的频率比较，以及 GPS 卫星上的原子钟。该分析针对 10⁻¹⁹ 至 2 × 10⁻¹⁵ eV/c² 的质量范围，首次约束了仅与电子耦合的标量暗物质（*Physical Review Letters* 134：031001，2025 年 1 月 23 日）。
+
+<StatusChip status="ok" label="分离传感器方法" printLabel="已确立；零结果" /> 实验没有探测到暗物质。进展在于，无需建造新探测器就打开了一扇新窗口：地理基线本身成了实验装置。
+</ContentSection>
+
+<Day13Interactive kind="dark-matter-wave" locale="zh" />
+<FormatOnly as="div" media="web">
+<Aside>
+<BlockTitle>波形示意图省略了什么</BlockTitle>
+
+图示通过改变空间相位来呈现打破抵消的思路。但在 Filzinger 等人的分析中，对可探测的质量范围而言，主导效应其实是分离传感器采样该场时的时间延迟。波形图只是原理示意，并非数据分析的逐项复原。
+</Aside>
+</FormatOnly>
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 分离打破盲区</PanelTitle>
+
+<PanelNote>当两个响应相同的参考源采样完全共同的场偏移时，不会产生差分信号。把传感器在时间和空间上分离，可以让它们采样不同相位或到达时刻，从而使基线成为探测器的一部分。</PanelNote>
+
+<Day13StaticFigure kind="dark-matter-wave" locale="zh" />
+
+<SimpleTable
+  headers={["传感器几何布局","差分信号","解释"]}
+  rows={[
+    ["地点、相位与响应都相同","对于完全共同的偏移，即使场效应很大，差分也为零。","响应相同的参考源存在结构性盲区：共模运动在比较中抵消。"],
+    ["由长基线分隔","采样到不同相位或到达时刻，可以产生非零差值。","抵消可以被打破；传感器间距成为实验装置的一部分。"],
+    ["场的波长更短","较小的间距也能产生较大的相位差。","质量更大的候选场可以在较短基线上发生变化。"],
+    ["Filzinger 等人的分析","2,220 km 光学腔链路加 GPS 时钟。","对相关质量范围，传感器采样时刻之间的时间延迟才是主导的实际效应；波形几何图表达的是同一种打破抵消原理。"]
+  ]}/>
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow number="第四部分">用量子物体称量引力</SectionEyebrow>
+
+## 小到一枚跳蚤卵——然后有趣的部分才开始
+
+引力测量通常使用很大的源质量——Cavendish 用铅球，现代的 *G* 测量则使用数千克钨——因为让等密度球体变小，会迅速削弱信号。在几何布局相近时，源质量按 R³ 缩放，因此半径减半，可用的引力效应就会缩小到八分之一。
+
+2021 年，Tobias Westphal、Hans Hepach、Jeremias Pfaff 与 Markus Aspelmeyer 测量了两个半径 1 mm、质量 90 mg 的金球之间的引力耦合；这个质量约相当于四只家蝇。微型扭秤经过 350 小时积分，达到 4 × 10⁻¹¹ m/s² 的系统准确度（*Nature* 591：225–228，2021 年 3 月 11 日）。当时，这是引力场被直接测量过的最小源质量。
+
+普朗克质量约为 22 微克；在一些量子引力方案中，它是一个目标尺度，而不是硬性的实验阈值。若能把源质量降至这一尺度附近或以下，使源质量进入量子叠加态就可能成为现实目标，进而提出一个问题：它的引力场是否也必须是量子的？
+
+从另一个方向出发，Holger Müller 团队把原子束缚在光晶格中，取代自由落体原子仅有的数秒测量时间。他们让干涉仪保持开启长达一分钟，测得微型源质量产生的引力为 33.3 ± 5.6(stat) ± 2.7(syst) nm/s²，总体准确度为 6.2 nm/s²——比同一源质量的自由落体测量好四倍以上。结果与牛顿引力一致，并在所分析的自然参数区域内排除了具有屏蔽机制的第五力变色龙模型与对称子模型（Panda 等，*Nature* 631：515–520，2024 年 7 月 18 日）。
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="前沿 B1">
+<StatusChip status="ok" label="反氢向下坠落" printLabel="已确立" />
+<StatusChip status="hint" label="25% 检验" printLabel="粗略精密度" />
+</ClaimHeader>
+
+### 反物质向下坠落；确切速率仍是未决问题
+
+几十年来，一种边缘但可检验的可能性始终存在：反物质也许会向上坠落。广义相对论的预测相反，但此前尚未直接检验这一预测。
+
+2023 年，欧洲核子研究中心（CERN）的 ALPHA 合作组把反氢囚禁在竖直的 ALPHA-g 磁瓶中，降低顶部与底部的势垒，并在一个月内记录约 2,000 个反原子的湮灭位置（*Nature*，2023 年 9 月 28 日）。
+
+反氢会向下坠落。以 *g* 为单位，其加速度为 <MathInline latex={String.raw`g_{\bar H}=0.75\pm0.13\,(\mathrm{stat+sys})\pm0.16\,(\mathrm{sim})`} />，与吸引性引力一致，相对不确定度约为 25%。方向已经确立；是否与普通物质完全相等则尚未确立。普通物质的等效原理已经检验到约 10¹⁵ 分之一，两类检验之间相差十四个数量级。哪怕要达到 1%，也需要把磁场梯度与初始条件带来的系统效应降低一个数量级；AEgIS 与 GBAR 正采用不同方法，因此也面对不同的失效模式。
+</Claim>
+
+<Claim>
+<ClaimHeader label="前沿 B2">
+<StatusChip status="ok" label="MICROSCOPE 最终结果" printLabel="已确立" />
+</ClaimHeader>
+
+### 在轨道上把伽利略实验做到小数点后十五位
+
+弱等效原理认为，物体成分不会改变自由落体加速度。MICROSCOPE 卫星在轨道上用彼此嵌套的钛合金与铂质量体检验这一原理，测量维持它们对齐所需的静电力。在 2.5 年任务期间，它获得五个月的干净科学数据，其中三分之一的数据还包含一对同成分对照质量体（Touboul 等，*Physical Review Letters* 129：121102，2022 年 9 月 14 日）。
+
+Eötvös 比 η 在 10⁻¹⁵ 量级上与零相容，没有发现违背。因此，普通物质已经检验到小数点后十五位，而反物质直接检验的相对不确定度仍约为四分之一。
+</Claim>
+
+<Claim>
+<ClaimHeader label="前沿 B3">
+<StatusChip status="ok" label="eEDM 上限" printLabel="已确立" />
+<StatusChip status="hint" label="10 TeV 表述" printLabel="依赖模型" />
+</ClaimHeader>
+
+### 电子的偶极矩——以及桌面实验为何能触及对撞机之外
+
+电子电偶极矩（eEDM）并不是对几何圆度的字面测量。它是一个与自旋对齐的电偶极；若其值非零，就会违背宇称与时间反演对称性。标准模型的预测远低于当前实验能力，而许多扩展理论预言的数值在 10⁻²⁷ 至 10⁻³⁰ e·cm 范围内。因此，非零的 eEDM 将成为新物理的证据。
+
+JILA 囚禁 HfF⁺ 分子离子，让其中的电子感受到巨大的内部电场，并使其相干进动长达三秒。Roussy 等人报告（*Science* 381：46–50，2023 年 7 月）：
+
+<BlockQuote>在 90% 置信水平下，<MathInline latex={String.raw`|d_e|<4.1\times10^{-30}\ e\!\cdot\!\mathrm{cm}`} />。</BlockQuote>
+
+结果与零相容，把此前的上限改进了约 2.4 倍。原始资料用一个类比描述允许的不对称程度：如果把电子放大到地球大小，凸起也比几个原子还小。这只是尺度类比，并非电子形状的字面图像。
+
+常见的「这项实验探测了 10 TeV 以上」之说，只有在对耦合强度作出假设并假定不存在抵消时才成立。这是依赖模型的触及范围，不是对能量前沿的直接排除结论。桌面实验与周长 27 km 的大型强子对撞机（LHC）测量的是不同对象；上限已经确立，但吸睛的比较仍有条件。
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="第五部分">通向安培的两条路线</SectionEyebrow>
+
+## 两种安培复现——以及一个尚未闭合的三角形
+
+2019 年的安培通过元电荷 *e* 定义：电流就是每秒计数的电荷量。最直观的复现方式是<Term>单电子泵</Term><TipNote text={"单电子泵在每个周期传输一个受控的整数电子数；理想情况下，驱动频率为 f 时产生电流 I = ef。"} />：一种纳米尺度的栅极以已知频率 *f* 每次移动一个电子，因此 <MathInline latex={String.raw`I=e f`} />。在 1 GHz 下，电流约为 160 pA——定义得极为精确，却很难测量。
+
+实用的直接电子计数标准所追求的相对不确定度约为 10⁸ 分之一。泵得太慢，产生的电流太小，难以用足够低的不确定度作比较；泵得太快，又会漏掉或多送电子。因此，固定 *e* 的定义先于足够准确的直接计数复现问世，不过安培仍可通过其他电学标准复现。
+
+时间顺序很重要。2017 年，一个硅单陷阱泵在 7.4 GHz 下超过 1 nA，但电流偏离理想值约百万分之 20，测量不确定度约为百万分之一——远未达到 10⁻⁸ 目标。2025 年，一项可扩展的硅器件演示让四台泵在 200 MHz 下并联运行，并用三台泵在 2.1 GHz 下产生了超过 2 nA 的平台。这确立了通向更高电流的路线，而不是已经达到 10⁻⁸ 的相对不确定度目标。
+
+另一条路线通过欧姆定律把约瑟夫森电压标准与量子霍尔电阻标准结合起来，并使用超导低温电流比较仪进行量程转换。2025 年的一项 *Nature Communications* 实验产生了微安电流，相对不确定度低于 10⁻⁸。这是一种已经确立的安培复现，但它从约瑟夫森效应与量子霍尔效应推导电流，而不是独立计数电子。
+
+量子计量三角形（QMT）是一项独立比较：单电子泵产生的电流，是否与通过 <MathInline latex={String.raw`V=IR`} /> 从约瑟夫森电压和量子霍尔电阻推导出的电流一致？仅使用约瑟夫森效应与量子霍尔效应的发生器会重复利用其中两条边，因此无法闭合这项三边检验。
+
+<BlockQuote>如果反复进行的独立三角形检验在排除系统效应后仍然失败，就需要重新审视三种量子电学效应之间的一致性——或它们复现方式之间的一致性。</BlockQuote>
+
+在 10⁻⁸ 量级闭合三角形所需的独立电子泵比较仍未完成。<StatusChip status="ok" label="PQCG 安培" printLabel="已确立，低于 10⁻⁸" /> <StatusChip status="hint" label="三角形闭合" printLabel="有前景；尚未完成" />
+
+<Aside>
+<BlockTitle>一场更安静的革命：欧姆走出地下室</BlockTitle>
+
+传统量子霍尔电阻标准需要低于 1 K 的温度和约十特斯拉的磁场，因此只能留在国家级实验室。如今，外延石墨烯标准在 4.2 K、4.5 T 和高电流条件下，测量结果与理想值的一致程度优于 2 nΩ/Ω。2025 年的一篇 *Physical Review Applied* 报告发现，设备在研究机构之间经过 800 km 公路运输后仍保持这一表现。低温制冷机系统还可免去液氦。<StatusChip status="ok" label="运输检验" printLabel="已确立" /> 性能与公路运输检验已经确立。<StatusChip status="hint" label="工业部署" printLabel="尚属预测" /> 从国家级实验室向校准实验室与工业工作台更广泛迁移，目前仍只是预测；如果实现，它将使第 12 日的计量溯源网络趋于扁平。
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="第六部分">最大胆的理论方案</SectionEyebrow>
+
+## 能探测到单个引力子吗？
+
+Freeman Dyson 曾论证，探测单个引力子实际上几乎无望：引力耦合太弱，足以补偿这种弱耦合的探测器可能会在自身引力下坍缩，或需要具有木星般的尺度。
+
+2024 年，Germain Tobar、Sreenath Manikandan、Thomas Beitel 与 Igor Pikovski 提出另一条路线（*Nature Communications* 15：7229）。它借鉴光电效应：光的量子化并不是通过亲眼抓住一个光子来推断，而是通过离散的能量吸收来推断。
+
+该方案并没有指定一种通用的数吨级铌探测器。所需质量与材料取决于目标源：论文估算，针对 GW170817 调谐的铍谐振器约需 15 kg，同时也分析了吨级棒状谐振器。谐振器将在毫开尔文温度下冷却到运动基态。当天体物理引力波经过时，量子化相互作用可能驱动单声子跃迁，其吸收能量为 <MathInline latex={String.raw`E=\hbar\nu`} />。持续的量子态监测将分辨这些跃迁，并把它们与 LIGO 对同一事件的观测关联起来：这就是引力—声子光电效应。
+
+<StatusChip status="bad" label="单引力子主张" printLabel="理论方案；尚无探测" /> 目前什么也没有探测到。论文确立的是理论可行性论证，而不是实验结果。尚无设备同时具备所需的谐振器质量、品质因数、毫开尔文温度与无损单声子读出能力。即使观察到离散吸收，解释上仍有一项限定条件：量子化吸收体可以从相干经典波中一份一份地接收能量，因此，量子化能量传递并不自动等同于证明引力场本身已经量子化。这个方案在概念上引人注目，但离实现还很遥远。
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="第七部分">同行评议还不够的时候</SectionEyebrow>
+
+## Aziz–Howl 之争，以及它带来的启示
+
+这套装置就是拟议的量子引力见证实验：仅通过引力使两个质量体纠缠，再根据局域经典信道不能产生纠缠，推断引力必定是量子的。
+
+Aziz 与 Howl 经同行评议的 *Nature* 论文（646：813–817，2025 年 10 月 22 日）认为，在量子场论中，经典引力可以传递量子信息并产生纠缠。如果结论成立，这项见证实验便无法再区分经典引力与量子引力。
+
+技术回应迅速出现。Marletto、Oppenheim、Vedral 与 Wilson 认为，该模型不会产生声称的纠缠，任何残余效应也将由量子化物质介导。Diósi 的回应题为 *No, classical gravity does not entangle quantized matter fields*；Di Biagio 则为一种可能成立的路径辩护。Gundhi 等人在 2026 年 4 月指出，被舍弃的跃迁振幅造成了表观效应；将其补回后，初始的直积态仍会保持。Xue 等人也发布了预印本回应。这里引用的反驳仍然都是预印本，这场争论仍在持续且存在分歧，不能靠数论文篇数来裁定。
+
+<Claim>
+<ClaimHeader label="前沿 B4">
+<StatusChip status="bad" label="经典引力产生纠缠" printLabel="争议仍在持续" />
+</ClaimHeader>
+
+### 发表只是检验的开始
+
+教训并不是同行评议毫无用处，也不是 *Nature* 不可信。同行评议筛选的是专家判断为合格、新颖且值得审视的工作；它不是真理神谕。这里，一项严肃主张发表后，专家立即针对一个可判定计算中的具体项提出质疑。回应的速度与针对性，说明科学纠错正在进行，而不说明裁决已经出炉。
+
+<BlockQuote>发表是一项主张生命的开始，而不是终点。应把「经同行评议」视为发令枪，而不是终点线。</BlockQuote>
+
+最有用的状态既不是「真」，也不是「假」，而是尚无定论。
+</Claim>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>未决问题</SectionEyebrow>
+
+## 什么能够解决这些问题
+
+- 经典引力会产生纠缠吗？争论围绕计算中的具体项。经同行评议的综合分析、趋于一致的计算，或对被舍弃振幅达成共识，都可能解决问题。
+- HCI 时钟能否突破 10⁻¹⁸？成功将提供一种对 α 敏感得多的仪器；无法消除的运动系统效应则可能让整个研究计划停留在演示阶段。
+- 独立电子泵支路能否在 10⁻⁸ 量级闭合量子计量三角形？如果独立检验后仍然失败，将有力表明某种复现方式并不完整；只有排除系统效应后，才可能说明底层物理并不完整。
+- 钍的敏感度因子能否进一步收窄？实测的 α 敏感度因子 *K* 带有约 40% 的不确定度，而强相互作用与夸克敏感度目前用示意性基准表示；核钟界限会继承这种理论依赖。
+- 反物质是否恰好以 *g* 坠落？方向已经知道；其当前相对不确定度与普通物质等效原理检验之间相差十四个数量级。
+- 时钟网络有朝一日能探测到发生振荡的常数吗？如果在多台时钟中复现彼此匹配的 α 振荡，并推得一致的暗物质频率，就会推翻今天的零结果图景。目前不存在这种信号。
+</ContentSection>
+
+<Recap>
+<RecapList>
+<RecapItem term="核心观点">精密测量已经成为前沿工具：时钟搜寻暗物质，分子测定质量比，桌面实验约束新物理，毫克级球体则逼近量子引力研究的尺度。关键能力是区分演示、推论与外推。</RecapItem>
+<RecapItem term="最佳类比">引力—声子光电效应试图从离散吸收的能量中寻找量子化，而时空分离的暗物质搜寻则把 2,220 km 光学腔链路变成探测器的一部分，并把 GPS 时钟作为第二组数据。前者是尚未建成的理论方案，后者是已经确立的零结果方法。</RecapItem>
+<RecapItem term="仍在争论">Aziz 与 Howl 关于经典引力能够产生纠缠的主张经过同行评议，却遭到多篇技术预印本反驳，争论仍在继续。发表平台与评议状态标示的是审视所处的阶段，而不是最终答案。</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads label="本节线索 ›">信息（把纠缠视为信道）· 计算（电子泵计数电流，量子计量三角形检验自然的算术）· 能量（作为量子的引力子，以及作为真空探针的 eEDM）· 涌现（可运输石墨烯标准中的拓扑保护）。回扣：第 2 日的可证伪性与同行纠错，第 6 日的严密测量乘上宽松系数，第 12 日的计量溯源网络扁平化，以及第 43 日作为潜在见证的纠缠。</Threads>
+
+<ContinueNote label="返回主线 · 第 14 日">
+### 综合：如何阅读前沿
+
+第 13 日现在有三层内容：已经稳定的 SI 与零结果、从早期标准继承而来的化石数字，以及尚属暂定的研究前沿。作为校准练习，请从本附录中选出三项主张，估计每项到 2035 年仍会被接受的概率。这个练习会迫使你在同一项判断中同时权衡演示、外推与证据状态。
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>资料来源与延伸阅读</SourcesTitle>
+
+1. Aziz, J. & Howl, R. (2025). 「Classical theories of gravity produce entanglement.」 *Nature* **646**: 813–817. <Meta>发表于 2025 年 10 月 22 日；doi:10.1038/s41586-025-09595-7。状态：争议仍在持续。预印本回应包括 Marletto、Oppenheim、Vedral 与 Wilson 的 「Classical gravity cannot mediate entanglement」（arXiv:2511.07348）；Diósi 的 「No, classical gravity does not entangle quantized matter fields」（arXiv:2511.00852）；Di Biagio 的 「The simple reason why classical gravity can entangle」（arXiv:2511.02683）；Xue 等（arXiv:2604.16276）；以及 Gundhi 等的 「Can classical theories of gravity produce entanglement?」（arXiv:2604.19696）。Diósi、Di Biagio 与 Marletto 等人在 2025 年 11 月提交回应；Xue 等人与 Gundhi 等人于 2026 年 4 月跟进。这些回应都是预印本，本身不能终结争论。</Meta>
+2. King, S. A., Spieß, L. J., Micke, P., Wilzewski, A., Leopold, T., Benkler, E., Lange, R., Huntemann, N., Surzhykov, A., Yerokhin, V. A. et al. (2022). 「An optical atomic clock based on a highly charged ion.」 *Nature* **611**: 43–47. <Meta>2022 年 11 月 2 日；doi:10.1038/s41586-022-05245-4——Ar¹³⁺ 的系统不确定度为 2.2 × 10⁻¹⁷，并首次分辨多电子体系中的 QED 核反冲。比较对象是 Brewer 等人的 「²⁷Al⁺ Quantum-Logic Clock with a Systematic Uncertainty below 10⁻¹⁸」，*Physical Review Letters* **123**: 033201 (2019)，doi:10.1103/PhysRevLett.123.033201；该文报告 9.4 × 10⁻¹⁹ 的系统不确定度。另见 Kozlov 等人的 「Highly charged ions: optical clocks and applications in fundamental physics」，*Reviews of Modern Physics* **90**: 045005 (2018)。</Meta>
+3. Alighanbari, S., Giri, G. S., Constantin, F. L., Korobov, V. I. & Schiller, S. (2020). 「Precise test of quantum electrodynamics and determination of fundamental constants with HD⁺ ions.」 *Nature* **581**: 152–158. <Meta>参见 Patra 等人的 「Proton–electron mass ratio from laser spectroscopy of HD⁺ at the part-per-trillion level」，*Science* **369**: 1238–1241 (2020)，以及 Kortunov 等，*Nature Physics* **17**: 569–573 (2021)。Kortunov 论文 2024 年的作者更正更新了推导出的质量比数值，但不改变论文结论：*Nature Physics* **20**: 1034；doi:10.1038/s41567-024-02557-2。</Meta>
+4. Roslund, J. D., Cingöz, A., Lunden, W. D., Partridge, G. B., Kowligy, A. S., Roller, F., Sheredy, D. B., Skulason, G. E., Song, J. P., Abo-Shaeer, J. R. & Boyd, M. M. (2024). 「Optical clocks at sea.」 *Nature* **628**: 736–740. <Meta>2024 年 4 月 24 日；doi:10.1038/s41586-024-07225-2——三台 35 升碘钟在太平洋海军舰艇上运行 20 天，计时误差低于 300 ps/天。论文另行指出，实验室光学钟的相对不准确度低于 10⁻¹⁸；这个准确度数据与海上时钟的计时误差或不稳定度数据，不能支持口径一致的倍数比较。另见 Hilton 等人的 「Demonstration of a mobile optical clock ensemble at sea」，*Nature Communications* **16**: 6063 (2025)。</Meta>
+5. Toscani De Col, L. et al. (2026). 「A thorium-229 optical nuclear clock with feedback loop.」 <Meta>arXiv:2606.04997，提交于 2026 年 6 月 3 日；**预印本，在本文所述时间点未经同行评议**。报告称，在室温 CaF₂ 晶体中的 148 nm 跃迁上闭合反馈回路，并给出 20 s 至一天时间尺度上的暗物质约束。推得的约束范围依赖 Beeks 等，*Nature Communications* **16**: 9147 (2025)，K = 5900(2300)。预印本指出，目前无法计算精确的核敏感度因子，并以 10⁴ 和 10⁵ 作为示意性基准带，而非经量化的不确定度分布。参见 Higgins 等，*Physical Review Letters* **134**: 113801 (2025)；Caputo 等，*Physical Review C* **112**: L031302 (2025)；以及 Fuchs 等，*Physical Review X* **15**: 021055 (2025)。</Meta>
+6. Filzinger, M., Caddell, A. R., Jani, D., Steinel, M., Giani, L., Huntemann, N. & Roberts, B. M. (2025). 「Ultralight Dark Matter Search with Space-Time Separated Atomic Clocks and Cavities.」 *Physical Review Letters* **134**: 031001. <Meta>2025 年 1 月 23 日——使用 2,220 km 光纤连接的光学腔比较与 GPS 卫星时钟，针对质量 10⁻¹⁹ 至 2 × 10⁻¹⁵ eV/c² 的范围，首次约束仅与电子耦合的标量暗物质。参见 Schioppo 等，*Nature Communications* **13**: 212 (2022)，以及 Kennedy 等，*Physical Review Letters* **125**: 201302 (2020)。</Meta>
+7. Westphal, T., Hepach, H., Pfaff, J. & Aspelmeyer, M. (2021). 「Measurement of gravitational coupling between millimetre-sized masses.」 *Nature* **591**: 225–228. <Meta>2021 年 3 月 11 日；doi:10.1038/s41586-021-03250-7——两个约 90 mg 的金球，源以 12.7 mHz 调制，积分 350 h，系统准确度为 4 × 10⁻¹¹ m/s²，统计精密度为 4 × 10⁻¹² m/s²。</Meta>
+8. Panda, C. D., Tao, M. J., Ceja, M., Khoury, J., Tino, G. M. & Müller, H. (2024). 「Measuring gravitational attraction with a lattice atom interferometer.」 *Nature* **631**: 515–520. <Meta>2024 年 7 月 18 日；doi:10.1038/s41586-024-07561-3——33.3 ± 5.6(stat) ± 2.7(syst) nm s⁻²，总体准确度 6.2 nm s⁻²；对具有屏蔽机制的第五力变色龙模型与对称子模型给出约束。参见 Panda 等人的 「Coherence limits in lattice atom interferometry at the one-minute scale」，*Nature Physics* **20**: 1234 (2024)。</Meta>
+9. ALPHA Collaboration (Anderson, E. K. et al.) (2023). 「Observation of the effect of gravity on the motion of antimatter.」 *Nature* **621**: 716–722. <Meta>2023 年 9 月 28 日——约 2,000 个 ALPHA-g 事件；以 g 为单位，最佳拟合为 gH̄ = 0.75 ± 0.13(stat+sys) ± 0.16(sim)。吸引性方向已经确立；加速度是否与普通物质相等则尚未确立。</Meta>
+10. Touboul, P., Métris, G., Rodrigues, M., Bergé, J., Robert, A. et al. (MICROSCOPE Collaboration) (2022). 「MICROSCOPE Mission: Final Results of the Test of the Equivalence Principle.」 *Physical Review Letters* **129**: 121102. <Meta>2022 年 9 月 14 日——使用钛与铂测试质量体以及一对同成分对照质量体，发现 Eötvös 比在 10⁻¹⁵ 量级上与零相容。参见 *Classical and Quantum Gravity* **39**: 204009 (2022)。</Meta>
+11. Roussy, T. S., Caldwell, L., Wright, T., Cairncross, W. B., Shagam, Y., Ng, K. B., Schlossberger, N., Park, S. Y., Wang, A., Ye, J. & Cornell, E. A. (2023). 「An improved bound on the electron's electric dipole moment.」 *Science* **381**: 46–50. <Meta>2023 年 7 月——囚禁 ¹⁸⁰Hf¹⁹F⁺，取得约三秒的相干时间，并在 90% 置信水平下得到 |de| &lt; 4.1 × 10⁻³⁰ e·cm。「above 10 TeV」 的解释依赖模型。参见 Caldwell 等，*Physical Review A* **108**: 012804 (2023)。</Meta>
+12. Tobar, G., Manikandan, S. K., Beitel, T. & Pikovski, I. (2024). 「Detecting single gravitons with quantum sensing.」 *Nature Communications* **15**: 7229. <Meta>doi:10.1038/s41467-024-51420-8——理论方案，不是探测结果。论文考虑随目标源而变的声学谐振器设计，包括一个针对 GW170817、质量约 15 kg 的铍谐振器，以及示意性的吨级棒状谐振器；设备需冷却到量子基态，并把受激吸收分辨为量子跃迁。关于场量子化的限定条件，参见 Manikandan 与 Wilczek，*Physical Review A* **112**: 043716 (2025)。</Meta>
+13. Djordjevic, S., Behr, R. & Poirier, W. (2025). 「A primary quantum current standard based on the Josephson and the quantum Hall effects.」 *Nature Communications* **16**: 1447. <Meta>2025 年 2 月 10 日；doi:10.1038/s41467-025-56413-9——结合约瑟夫森效应与量子霍尔效应，在微安范围内产生可编程电流，相对不确定度低于 10⁻⁸；这是一种安培复现，而不是独立的三支路三角形闭合。关于直接电子计数，参见 Yamahata, G., Giblin, S. P., Kataoka, M., Karasawa, T. & Fujiwara, A.，「High-accuracy current generation in the nanoampere regime from a silicon single-trap electron pump」，*Scientific Reports* **7**: 45137 (2017)，doi:10.1038/srep45137——在 7.4 GHz 下超过 1 nA，偏差约 20 ppm，测量不确定度约 1 ppm。关于并联扩展，参见 Yamahata, G., Shimizu, T., Nishiguchi, K. & Fujiwara, A.，「Scalable Parallel Single-Electron Pumps in Silicon with Split-Source Control in the Nanoampere Regime」，*Nano Letters* **25**: 10202–10208 (2025)，doi:10.1021/acs.nanolett.5c02327——四台泵并联，平台超过 2 nA，但并未达到 10⁻⁸ 的相对不确定度目标。另见 Scherer 与 Camarota 的 「Quantum metrology triangle experiments: a status review」，*Measurement Science and Technology* **23**: 124010 (2012)。</Meta>
+14. 「Graphene quantum Hall resistance standard for realizing the unit of electrical resistance under relaxed experimental conditions.」 *Physical Review Applied* **23**: 014025 (2025). <Meta>在 B = 4.5 T、I = 232.5 µA、T = 4.2 K 条件下，测量结果与理想值的一致程度优于 2 nΩ/Ω；历时 2.5 年以及经过 800 km 公路运输后，稳定性均得以保持。运输检验已经确立；更广泛的工业部署尚属预测。</Meta>
+15. 长基线原子干涉测量：**MAGIS-100**（Abe 等，*Quantum Science and Technology* **6**: 044003, 2021）与 **AION**（Badurina 等，*JCAP* **05**: 011, 2020）。<Meta>两个设施都以超轻暗物质和约 0.1–10 Hz 的中频段引力波为目标。一篇 AION 原型论文，*Nature* **654**: 622–628（2026 年 6 月 17 日），doi:10.1038/s41586-026-10617-1，通过实验验证了两个长基线干涉仪之间的共模噪声抑制。这是一项使后续研究成为可能的演示，不是暗物质或引力波探测。</Meta>
+16. Schulte, M., Lisdat, C., Schmidt, P. O., Sterr, U. & Hammerer, K. (2020). 「Prospects and challenges for squeezing-enhanced optical atomic clocks.」 *Nature Communications* **11**: 5955. <Meta>关于纠缠增强计量学究竟何时能改善真实时钟，这篇论文提供了始终需要记住的限定条件。</Meta>
+
+<SourceNote>钍反馈回路结果是 2026 年 6 月的预印本，文中已明确标注。Aziz–Howl 之争中的技术回应同样是预印本；它们表明争论正在进行，而不是给出最终裁决。</SourceNote>
+</Sources>

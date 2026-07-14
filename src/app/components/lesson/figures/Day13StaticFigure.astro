@@ -1,0 +1,288 @@
+---
+interface Props {
+  kind:
+    | "hero-meridian"
+    | "uncertainty-ledger"
+    | "kibble-balance"
+    | "alpha-drift"
+    | "hero-fossils"
+    | "lineage"
+    | "quantum-hall"
+    | "accuracy-target"
+    | "clock-tower"
+    | "hero-readiness"
+    | "readiness-ladder"
+    | "dark-matter-wave";
+  locale?: "en" | "zh";
+}
+
+const kind = Astro.props.kind;
+const zh = Astro.props.locale === "zh";
+const ink = "var(--ink, #172530)";
+const soft = "var(--ink-soft, #41545d)";
+const faint = "var(--ink-faint, #5d6c72)";
+const line = "var(--line-strong, #cabfa8)";
+const lightLine = "var(--line, #ded6c6)";
+const paper = "var(--paper, #f5f3ec)";
+const raised = "var(--raised, #fbfaf5)";
+const accent = "var(--accent, #1d6f78)";
+const brass = "var(--brass, #93651f)";
+const ok = "var(--ok, #2a704a)";
+const contested = "var(--contested, #a23c34)";
+
+const info = {
+  "hero-meridian": zh
+    ? ["共享的一米", "从北极到赤道的地球四分之一子午线，其中敦刻尔克至巴塞罗那的短测量弧被突出显示。", "最初的米试图取地球子午线四分之一的一千万分之一。德朗布尔与梅尚只测量了其中一小段，再用大地模型推及全弧；定义虽有偏差，单位仍因共同使用而成立。"]
+    : ["A metre held in common", "A quarter meridian from the North Pole to the Equator, with the short Dunkirk-to-Barcelona survey arc highlighted.", "The first metre aimed to be one ten-millionth of Earth's quarter meridian. Delambre and Méchain measured only a short arc and inferred the rest; the result was imperfect, but a unit succeeds by being shared."],
+  "uncertainty-ledger": zh
+    ? ["不确定度只是搬了家", "四个单位在 2019 年改革中把精确性从旧锚点交换给自然常数。", "2019 年，h、e、k 与 Nₐ 成为按定义精确的常数；国际千克原器、μ₀、水的三相点与碳-12 摩尔质量开始带有测量不确定度。改革前后都是七项精确、四项不确定。"]
+    : ["The uncertainty moved", "Four units trade exactness from their former anchors to constants of nature in the 2019 SI reform.", "In 2019, h, e, k, and Nₐ became exact by definition, while Le Grand K, μ₀, water's triple point, and carbon-12 molar mass became measured and uncertain. The ledger remains seven exact and four uncertain."],
+  "kibble-balance": zh
+    ? ["两种模式消去 BL", "基布尔天平的横梁、质量、磁体与线圈，以及称量模式和速度模式的两个方程。", "称量模式给出 mg = BLI，速度模式给出 U = BLv。联立方程后，难以独立测准的磁场 B 与导线长度 L 同时消去，得到 mgv = UI。"]
+    : ["Two modes cancel BL", "A Kibble balance beam, mass, magnet, and coil alongside its weighing- and velocity-mode equations.", "Weighing mode gives mg = BLI and velocity mode gives U = BLv. Combining them cancels the hard-to-measure magnetic field B and wire length L, leaving mgv = UI."],
+  "alpha-drift": zh
+    ? ["信号与系统误差同量级", "五类精细结构常数变化探针的对数尺度约束，以及经系统误差审计后淡出的 2011 年类星体偶极信号。", "2011 年约 4σ 的类星体偶极信号，与后来在光谱仪中发现的长程波长畸变同量级。校准更充分的仪器得到与零漂移相容的结果。"]
+    : ["The signal matched the systematic", "Log-scale constraints from five probes of fine-structure-constant variation, with the 2011 quasar dipole fading after an instrument audit.", "The roughly four-sigma quasar dipole reported in 2011 was comparable in size to long-range spectrograph distortions found later. Better-calibrated instruments return results consistent with zero drift."],
+  "hero-fossils": zh
+    ? ["精确数值也有谱系", "一根穿过国际单位制历史层级的地层岩芯，现代定义在顶部，实物、实验与天文测量在下方。", "现代国际单位制的精确数字并非从零开始选择；每一层都必须保持单位大小连续，因此继承了旧定义、原器与历史测量的痕迹。"]
+    : ["Exact numbers have a lineage", "A stratigraphic core through SI history, with modern definitions at the top and artefacts, experiments, and astronomical observations below.", "The exact digits of the modern SI were not chosen from scratch. Each layer preserves continuity of unit size and therefore inherits traces of earlier definitions, artefacts, and measurements."],
+  lineage: zh
+    ? ["精确值继承了过去", "米的定义从固定光速逐层追溯到氪波长、米原器、档案米与十八世纪子午线测量。", "固定 c 时采用的数字来自旧米下的最佳测量值；旧米又逐层继承更早的标准。现代精确值因此保存了历史测量的谱系。"]
+    : ["An exact value inherits its past", "The metre's lineage descends from fixed light speed through krypton wavelengths and prototype bars to the eighteenth-century meridian survey.", "The number fixed for c came from the best measurement in the previous metre, which inherited earlier standards in turn. A modern exact value therefore preserves a historical measurement lineage."],
+  "quantum-hall": zh
+    ? ["无序把平台拓宽", "量子霍尔电阻随磁场呈阶梯状变化，量子化平台位于 Rₖ/i；经典预测则是平滑斜线。", "样品无序把量子化点拓宽成可供测量的平坦平台，却不改变平台高度。杂质不是被容忍的缺陷，而是量子霍尔电阻标准的工作条件。"]
+    : ["Disorder widens the shelves", "Hall resistance forms a staircase of plateaux at Rₖ/i as magnetic field rises, while the classical prediction is a smooth ramp.", "Sample disorder broadens exact quantization into flat plateaux a measurement can occupy without moving their heights. The imperfection is a working condition of the quantum Hall resistance standard."],
+  "accuracy-target": zh
+    ? ["精密度不等于测量正确度", "两个靶面比较围绕参考值的紧密测量簇与偏离参考值却同样紧密的测量簇。", "精密度描述重复测量的聚集程度，测量正确度描述均值与参考值的接近程度。紧密但有偏的结果最危险：增加重复次数只会让有偏答案显得更确定。"]
+    : ["Precision is not trueness", "Two targets compare a tight measurement cluster centered on the reference value with an equally tight but biased cluster.", "Precision describes repeatability; trueness describes proximity of the mean to a reference value. A tight biased cluster is dangerous because more repetitions only make the biased answer look more certain."],
+  "clock-tower": zh
+    ? ["时钟也能测量高度", "塔中两台相差 450 米高度的时钟以略微不同的速率走时。", "广义相对论使高处的钟走得稍快。现代光学钟比较可以把频率差转换为重力势差，并由此测量厘米乃至更小尺度的高程变化。"]
+    : ["Clocks can measure height", "Two clocks separated by 450 metres in a tower tick at slightly different rates.", "General relativity makes the higher clock tick slightly faster. Modern optical-clock comparisons can convert a frequency difference into gravitational potential and therefore measure centimetre-scale, and potentially smaller, height changes."],
+  "hero-readiness": zh
+    ? ["证据状态各有类别", "一架把提案、原型、预印本、测量与现场部署分开标示的证据阶梯；它是示意分类，而非普适排名。", "前沿研究不能只按标题排序。可行性提案、实验室演示、同行评议测量与现场部署回答的是不同问题，需要分别标示，不能简单排成同一条高低轴。"]
+    : ["Evidence comes in categories", "A ladder separates proposals, prototypes, preprints, measurements, and field deployments; it is a schematic classification, not a universal ranking.", "Frontier work cannot be ranked by headline excitement alone. Feasibility proposals, laboratory demonstrations, peer-reviewed measurements, and field deployments answer different questions and cannot be reduced to one universal axis."],
+  "readiness-ladder": zh
+    ? ["先分清演示与外推", "八项 2020 年后的计量前沿结果按证据状态排列，从已测量和已部署到预印本与提案。", "反氢下落、轨道等效原理检验、电子电偶极矩上限、特种光学钟和远距离暗物质检验都已有测量；钍核钟约束仍是预印本，单引力子探测仍是提案。"]
+    : ["Demonstration before projection", "Eight post-2020 measurement-frontier results arranged by evidence status, from measured and deployed work to a preprint and a proposal.", "Antihydrogen fall, orbital equivalence tests, the electron-EDM bound, unusual optical clocks, and separated dark-matter sensors have measurements behind them. Thorium constraints remain a preprint and single-graviton detection remains a proposal."],
+  "dark-matter-wave": zh
+    ? ["时空分离可以打破共同抵消", "两个相距 2,220 千米的频率参考在示意标量场波的不同相位取样，并可能产生非零差分信号。", "示意图展示共同响应怎样因时空分离而不再抵消；实际研究比较的是腔稳激光并另行分析 GPS 钟，而且在可探测质量范围内主要依靠采样时间延迟，而非图中的空间相位。"]
+    : ["Space-time separation can break common cancellation", "Two frequency references 2,220 kilometres apart sample different phases of a schematic scalar-field wave and can produce a nonzero differential signal.", "The schematic shows how separation can prevent a common response from cancelling. The real study compared cavity-stabilized lasers and separately analyzed GPS clocks; in its accessible mass range, sample timing rather than the spatial phase drawn here dominated."],
+}[kind];
+
+function wavePath(wavelength: number, phase = 0.6) {
+  return Array.from({ length: 149 }, (_, index) => {
+    const x = 42 + index * 4;
+    const y = 190 - 66 * Math.sin(2 * Math.PI / wavelength * (x - 42) + phase);
+    return `${index ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+}
+
+const wave = wavePath(620);
+const targetShots = [[-16,-9],[-8,6],[3,-7],[10,9],[-4,15],[16,-2],[-12,12],[6,1],[-1,-15],[13,15],[-18,3],[1,10]];
+const readiness = zh
+  ? [["01","反氢向下坠落","已测量","ok"],["02","弱等效原理 10⁻¹⁵","已测量","ok"],["03","电子电偶极矩上限","已测量","ok"],["04","Ar¹³⁺ 光学钟","已建成","ok"],["05","海上光学钟","已部署","ok"],["06","远距离暗物质检验","已测量","ok"],["07","钍核钟约束","预印本","hint"],["08","单引力子探测","提案","bad"]]
+  : [["01","Antihydrogen falls down","measured","ok"],["02","Equivalence to 10⁻¹⁵","measured","ok"],["03","Electron EDM bound","measured","ok"],["04","Ar¹³⁺ optical clock","built","ok"],["05","Optical clocks at sea","deployed","ok"],["06","Separated DM sensors","measured","ok"],["07","Thorium-clock bound","preprint","hint"],["08","Single-graviton detection","proposal","bad"]];
+const fossilLayers: Array<[number, string, string, string]> = [
+  [82, accent, "2019", "h · e · k · Nₐ"],
+  [134, accent, "1983", "c = 299 792 458"],
+  [186, brass, "1967", "ΔνCs = 9 192 631 770"],
+  [238, faint, "1889", "prototype artefacts"],
+  [290, contested, "1790s", "survey · water · astronomy"]
+];
+const lineageLayers: Array<[number, string, string, string]> = [
+  [58, "1983", zh ? "c ≡ 299 792 458 m/s，精确值" : "c ≡ 299 792 458 m/s, exactly", accent],
+  [122, "1960", zh ? "1 650 763.73 个氪-86 波长" : "1 650 763.73 krypton-86 wavelengths", accent],
+  [186, "1889", zh ? "国际米原器" : "International Prototype Metre", brass],
+  [250, "1799", zh ? "档案米" : "Mètre des Archives", brass],
+  [314, "1792–1798", zh ? "敦刻尔克—巴塞罗那子午线测量" : "Dunkirk–Barcelona meridian survey", contested]
+];
+const readinessCategories: Array<[number, string, string]> = [
+  [90, "01", ok],
+  [130, "02", ok],
+  [170, "03", accent],
+  [210, "04", accent],
+  [250, "05", accent],
+  [290, "06", accent],
+  [330, "07", brass],
+  [370, "08", contested]
+];
+---
+
+<figure class={`day13-static-figure day13-static-figure-${kind}`}>
+  <svg viewBox="0 0 680 410" role="img" aria-label={info[1]}>
+    <defs>
+      <marker id={`day13-${kind}-arrow-accent`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill={accent} /></marker>
+      <marker id={`day13-${kind}-arrow-brass`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill={brass} /></marker>
+      <marker id={`day13-${kind}-arrow-red`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill={contested} /></marker>
+    </defs>
+    <rect x="1" y="1" width="678" height="408" rx="14" fill={paper} stroke={line} stroke-width="2" />
+    <text x="340" y="32" text-anchor="middle" font-family="Fraunces, serif" font-size="19" font-weight="600" fill={ink}>{info[0]}</text>
+
+    {kind === "hero-meridian" && (
+      <g>
+        <path d="M108 326 A250 250 0 0 1 358 76" fill="none" stroke={line} stroke-width="3" />
+        <path d="M108 326 A250 250 0 0 1 358 76 L358 326 Z" fill={raised} stroke={lightLine} stroke-width="1.5" />
+        {[0,1,2,3,4].map((index) => <path d={`M${108 + index * 62.5} 326 A${250 - index * 62.5} ${250 - index * 62.5} 0 0 1 358 ${76 + index * 62.5}`} fill="none" stroke={lightLine} stroke-width="1" />)}
+        <path d="M211 145 A250 250 0 0 1 278 96" fill="none" stroke={contested} stroke-width="7" stroke-linecap="round" />
+        <circle cx="211" cy="145" r="6" fill={contested} /><circle cx="278" cy="96" r="6" fill={contested} />
+        <text x="194" y="135" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{zh ? "巴塞罗那" : "Barcelona"}</text>
+        <text x="291" y="91" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{zh ? "敦刻尔克" : "Dunkirk"}</text>
+        <text x="358" y="62" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "北极" : "North Pole"}</text>
+        <text x="84" y="344" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "赤道" : "Equator"}</text>
+        <line x1="392" y1="80" x2="392" y2="326" stroke={brass} stroke-width="2" marker-end={`url(#day13-${kind}-arrow-brass)`} />
+        <text x="410" y="205" font-family="IBM Plex Mono, monospace" font-size="11" fill={brass}>{zh ? "四分之一子午线" : "quarter meridian"}</text>
+        <text x="410" y="225" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="700" fill={ink}>10 000 000 m</text>
+        <path d="M435 275 h160" stroke={accent} stroke-width="3" />
+        <path d="M435 267 v16 M595 267 v16" stroke={accent} stroke-width="2" />
+        <text x="515" y="306" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={accent}>{zh ? "一千万分之一 = 1 m" : "one ten-millionth = 1 m"}</text>
+      </g>
+    )}
+
+    {kind === "uncertainty-ledger" && (
+      <g>
+        <rect x="38" y="58" width="275" height="285" rx="12" fill={raised} stroke={brass} stroke-width="2" />
+        <rect x="367" y="58" width="275" height="285" rx="12" fill={raised} stroke={accent} stroke-width="2" />
+        <text x="175" y="84" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="700" fill={brass}>{zh ? "改革后 · 测得且不确定" : "AFTER · MEASURED & UNCERTAIN"}</text>
+        <text x="504" y="84" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="700" fill={accent}>{zh ? "改革后 · 按定义精确" : "AFTER · EXACT BY DEFINITION"}</text>
+        {[["kg","h","国际千克原器","Le Grand K"],["A","e","真空磁导率 μ₀","μ₀"],["K","k","水的三相点","water triple point"],["mol","Nₐ","碳-12 摩尔质量","carbon-12 molar mass"]].map((row, index) => {
+          const y = 118 + index * 53;
+          return <g>
+            <rect x="58" y={y - 17} width="234" height="39" rx="7" fill={paper} stroke={lightLine} />
+            <text x="72" y={y + 5} font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{zh ? row[2] : row[3]}</text>
+            <path d={`M300 ${y + 2} H358`} fill="none" stroke={line} stroke-width="2" marker-end={`url(#day13-${kind}-arrow-accent)`} />
+            <rect x="388" y={y - 17} width="234" height="39" rx="7" fill={paper} stroke={lightLine} />
+            <text x="401" y={y + 7} font-family="IBM Plex Mono, monospace" font-size="11" font-weight="700" fill={accent}>{row[0]}</text>
+            <text x="487" y={y + 7} font-family="Fraunces, serif" font-size="18" font-weight="700" fill={ink}>{row[1]}</text>
+          </g>;
+        })}
+        <text x="175" y="324" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={brass}>{zh ? "4 项带有不确定度" : "4 uncertain"}</text>
+        <text x="504" y="324" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill={accent}>{zh ? "7 项精确" : "7 exact"}</text>
+        <text x="340" y="382" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "精确性没有增加 · 系统风险降低" : "no exactness was created · systemic risk fell"}</text>
+      </g>
+    )}
+
+    {kind === "kibble-balance" && (
+      <g>
+        <line x1="92" y1="102" x2="444" y2="102" stroke={ink} stroke-width="4" stroke-linecap="round" />
+        <polygon points="268,110 252,139 284,139" fill={faint} /><circle cx="268" cy="102" r="6" fill={ink} />
+        <line x1="130" y1="102" x2="130" y2="220" stroke={soft} stroke-width="2" />
+        <rect x="76" y="205" width="31" height="111" rx="3" fill={raised} stroke={line} /><rect x="153" y="205" width="31" height="111" rx="3" fill={raised} stroke={line} /><rect x="76" y="305" width="108" height="18" rx="3" fill={raised} stroke={line} />
+        <rect x="111" y="234" width="38" height="26" rx="4" fill={raised} stroke={accent} stroke-width="3" />
+        <text x="130" y="280" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{zh ? "线圈 L" : "coil L"}</text>
+        <text x="91" y="198" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>N</text><text x="169" y="198" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>S</text>
+        <line x1="444" y1="102" x2="444" y2="195" stroke={soft} stroke-width="2" /><rect x="402" y="195" width="84" height="66" rx="8" fill={raised} stroke={line} stroke-width="2" /><text x="444" y="225" text-anchor="middle" font-family="Fraunces, serif" font-size="19" font-weight="700" fill={ink}>1 kg</text><text x="444" y="247" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "待测质量" : "test mass"}</text>
+        <line x1="195" y1="260" x2="195" y2="205" stroke={accent} stroke-width="3" marker-end={`url(#day13-${kind}-arrow-accent)`} /><text x="210" y="217" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="700" fill={accent}>BLI</text>
+        <line x1="510" y1="194" x2="510" y2="252" stroke={contested} stroke-width="3" marker-end={`url(#day13-${kind}-arrow-red)`} /><text x="526" y="239" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="700" fill={contested}>mg</text>
+        <rect x="526" y="68" width="126" height="256" rx="11" fill={raised} stroke={lightLine} />
+        <text x="589" y="99" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "称量模式" : "WEIGHING"}</text><text x="589" y="124" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="700" fill={ink}>mg = BLI</text>
+        <line x1="545" y1="145" x2="633" y2="145" stroke={lightLine} />
+        <text x="589" y="174" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "速度模式" : "VELOCITY"}</text><text x="589" y="199" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="700" fill={ink}>U = BLv</text>
+        <line x1="545" y1="220" x2="633" y2="220" stroke={lightLine} />
+        <text x="589" y="251" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{zh ? "消去 BL" : "CANCEL BL"}</text><text x="589" y="280" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-weight="700" fill={accent}>mgv = UI</text>
+        <text x="340" y="374" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill={soft}>{zh ? "机械功率 = 电功率" : "mechanical power = electrical power"}</text>
+      </g>
+    )}
+
+    {kind === "alpha-drift" && (
+      <g>
+        <line x1="221" y1="346" x2="646" y2="346" stroke={faint} stroke-width="1.4" />
+        {["10⁻²⁰","10⁻¹⁹","10⁻¹⁸","10⁻¹⁷","10⁻¹⁶","10⁻¹⁵","10⁻¹⁴","10⁻¹³","10⁻¹²"].map((power,index) => { const x = 221 + index * 52.5; return <g><line x1={x} y1="346" x2={x} y2="351" stroke={faint} /><text x={x} y="365" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{power}</text></g>; })}
+        {[["Optical clocks","光学钟",295],["Oklo","奥克洛",408],["Quasar null","类星体零结果",433],["2011 dipole","2011 年偶极",466],["CMB","宇宙微波背景",612]].map((row,index) => { const y=76+index*55; return <g>
+          <text x="18" y={y+5} font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{zh?row[1]:row[0]}</text>
+          {index !== 3 && <><rect x="221" y={y-5} width={Number(row[2])-221} height="10" rx="3" fill={accent} opacity=".32" stroke={accent}/><line x1={row[2]} y1={y-12} x2={row[2]} y2={y+12} stroke={accent} stroke-width="2"/></>}
+          {index === 3 && <><rect x="441" y={y-14} width="39" height="29" rx="3" fill={faint} opacity=".12" stroke={faint} stroke-dasharray="3 3"/><polygon points={`${row[2]},${y-8} ${Number(row[2])+8},${y} ${row[2]},${y+8} ${Number(row[2])-8},${y}`} fill={contested} opacity=".28"/></>}
+        </g>; })}
+        <text x="646" y="225" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh ? "未校准的光谱仪畸变" : "uncalibrated spectrograph distortion"}</text>
+        <text x="466" y="249" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>≈4σ</text>
+        <text x="433" y="249" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{zh ? "审计：主张未获确立" : "audit: claim not established"}</text>
+        <text x="433" y="393" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{zh ? "允许的 |α̇/α| 年漂移率 · 对数尺度" : "allowed |α̇/α| per year · logarithmic scale"}</text>
+      </g>
+    )}
+
+    {kind === "hero-fossils" && (
+      <g>
+        <path d="M246 62 C222 86 222 315 246 342 C273 370 407 370 434 342 C458 315 458 86 434 62 Z" fill={raised} stroke={line} stroke-width="2" />
+        {fossilLayers.map((layer,index) => <g>
+          <path d={`M238 ${layer[0]} Q340 ${Number(layer[0])+18} 442 ${layer[0]} L442 ${Number(layer[0])+40} Q340 ${Number(layer[0])+58} 238 ${Number(layer[0])+40} Z`} fill={layer[1]} opacity={index<2?".22":".14"} stroke={layer[1]} stroke-width="1.5" />
+          <text x="340" y={Number(layer[0])+20} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill={ink}>{layer[2]}</text>
+          <text x="340" y={Number(layer[0])+34} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{zh ? (["常数定义","光速固定值","铯频率固定值","国际原器","测量基岩"] as string[])[index] : layer[3]}</text>
+        </g>)}
+        <text x="92" y="112" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{zh ? "现代定义" : "modern definitions"}</text><line x1="175" y1="108" x2="232" y2="108" stroke={accent} stroke-width="2" marker-end={`url(#day13-${kind}-arrow-accent)`}/>
+        <text x="92" y="321" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{zh ? "历史测量" : "historical measurements"}</text><line x1="175" y1="317" x2="232" y2="317" stroke={contested} stroke-width="2" marker-end={`url(#day13-${kind}-arrow-red)`}/>
+        <text x="495" y="184" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{zh ? "每一层继承" : "each layer inherits"}</text><text x="495" y="200" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{zh ? "下层的数值" : "the value below"}</text>
+      </g>
+    )}
+
+    {kind === "lineage" && (
+      <g>
+        {lineageLayers.map((layer,index) => <g>
+          <rect x={66+index*14} y={layer[0]} width={548-index*28} height="45" rx="8" fill={raised} stroke={layer[3]} stroke-width={index===0||index===4?"2":"1.5"}/>
+          <text x={88+index*14} y={Number(layer[0])+18} font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill={layer[3]}>{layer[1]}</text>
+          <text x="340" y={Number(layer[0])+31} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{layer[2]}</text>
+          {index<4 && <text x="340" y={Number(layer[0])+60} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>↓</text>}
+        </g>)}
+        <text x="340" y="389" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{zh ? "基岩：现代数字中的历史测量" : "BEDROCK · a historical measurement inside modern digits"}</text>
+      </g>
+    )}
+
+    {kind === "quantum-hall" && (
+      <g>
+        <line x1="72" y1="338" x2="625" y2="338" stroke={faint} stroke-width="1.4"/><line x1="72" y1="58" x2="72" y2="338" stroke={faint} stroke-width="1.4"/>
+        {[92,136,180,224,268].map((y,index) => <g><line x1="72" y1={y} x2="625" y2={y} stroke={lightLine} stroke-dasharray="3 4"/><text x="632" y={y+3} font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>i={index+1}</text></g>)}
+        <line x1="78" y1="315" x2="615" y2="72" stroke={faint} stroke-width="1.4" stroke-dasharray="6 5"/><text x="542" y="87" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh?"经典预测":"classical"}</text>
+        <path d="M78 314 L120 314 Q132 314 140 300 L170 268 L237 268 Q249 268 258 250 L286 224 L356 224 Q368 224 376 207 L403 180 L474 180 Q486 180 495 162 L521 136 L582 136 Q595 136 605 115 L620 92" fill="none" stroke={accent} stroke-width="3.2" stroke-linejoin="round"/>
+        <text x="350" y="376" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{zh?"磁场 B →":"magnetic field B →"}</text><text x="26" y="200" text-anchor="middle" transform="rotate(-90 26 200)" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{zh?"霍尔电阻 R":"Hall resistance R"}</text>
+        <path d="M300 118 h154" stroke={brass} stroke-width="2" marker-end={`url(#day13-${kind}-arrow-brass)`}/><text x="297" y="113" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{zh?"无序拓宽平台":"disorder widens plateau"}</text>
+      </g>
+    )}
+
+    {kind === "accuracy-target" && (
+      <g>
+        {[190,490].map((cx,panel) => <g>
+          {[116,86,56,28].map((r,index) => <circle cx={cx} cy="205" r={r} fill={index===3?ok:"none"} opacity={index===3?".10":"1"} stroke={index>1?line:lightLine} stroke-width="1.5"/>)}
+          <line x1={cx} y1="79" x2={cx} y2="331" stroke={lightLine} stroke-dasharray="3 5"/><line x1={cx-126} y1="205" x2={cx+126} y2="205" stroke={lightLine} stroke-dasharray="3 5"/><circle cx={cx} cy="205" r="4" fill={ok}/>
+          {targetShots.map((shot) => <circle cx={cx + shot[0] + (panel ? -62 : 0)} cy={205 + shot[1] + (panel ? -38 : 0)} r="4.5" fill={accent} opacity=".75" stroke={accent}/>)}
+          {panel===1 && <g><circle cx={cx-62} cy="167" r="8" fill="none" stroke={contested} stroke-width="2"/><line x1={cx-70} y1="167" x2={cx-54} y2="167" stroke={contested}/><line x1={cx-62} y1="159" x2={cx-62} y2="175" stroke={contested}/></g>}
+          <text x={cx} y="353" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="700" fill={panel?contested:ok}>{panel?(zh?"精密度高、测量正确度低":"high precision · low trueness"):(zh?"准确：测量正确度、精密度都高":"accurate · high trueness + precision")}</text>
+        </g>)}
+        <text x="340" y="389" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>{zh?"绿点 = 参考值 · 红十字 = 测量均值":"green dot = reference value · red cross = measurement mean"}</text>
+      </g>
+    )}
+
+    {kind === "clock-tower" && (
+      <g>
+        <path d="M218 344 L246 78 H434 L462 344 Z" fill={raised} stroke={line} stroke-width="2"/><path d="M232 222 H448 M240 150 H440 M224 294 H456" stroke={lightLine} stroke-width="2"/>
+        {[142,282].map((y,index) => <g><circle cx="340" cy={y} r="42" fill={paper} stroke={index?accent:brass} stroke-width="3"/><circle cx="340" cy={y} r="3.5" fill={ink}/><line x1="340" y1={y} x2={index?326:330} y2={y-24} stroke={ink} stroke-width="2.5"/><line x1="340" y1={y} x2={index?360:358} y2={y+7} stroke={ink} stroke-width="2"/><text x="340" y={y+61} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={index?accent:brass}>{index?(zh?"较低 · 稍慢":"lower · slightly slower"):(zh?"较高 · 稍快":"higher · slightly faster")}</text></g>)}
+        <line x1="500" y1="142" x2="500" y2="282" stroke={contested} stroke-width="2" marker-end={`url(#day13-${kind}-arrow-red)`}/><text x="518" y="207" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="700" fill={contested}>450 m</text>
+        <text x="340" y="385" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>Δf/f ≈ ΔU/c²</text>
+      </g>
+    )}
+
+    {kind === "hero-readiness" && (
+      <g>
+        {readinessCategories.map((rung,index)=><g><rect x={90+index*25} y={rung[0]-28} width={500-index*50} height="34" rx="6" fill={raised} stroke={rung[2]} stroke-width="1.5"/><text x="340" y={rung[0]-7} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill={rung[2]}>{rung[1]} · {zh?(["已确立","重复检验","已测量","已部署","已建成","实验原型","预印本","提案"] as string[])[index]:(["established","repeated","measured","deployed","built","prototype","preprint","proposal"] as string[])[index]}</text></g>)}
+        <path d="M50 364 V70" stroke={brass} stroke-width="3" marker-end={`url(#day13-${kind}-arrow-brass)`}/><text x="34" y="222" text-anchor="middle" transform="rotate(-90 34 222)" font-family="IBM Plex Mono, monospace" font-size="11" fill={brass}>{zh?"示意分类":"schematic categories"}</text>
+      </g>
+    )}
+
+    {kind === "readiness-ladder" && (
+      <g>
+        {readiness.map((rung,index)=>{const y=56+index*40;const color=rung[3]==="ok"?ok:rung[3]==="hint"?brass:contested;return <g><rect x={56+index*5} y={y} width={568-index*10} height="32" rx="6" fill={raised} stroke={color}/><text x={74+index*5} y={y+21} font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill={color}>{rung[0]}</text><text x={112+index*5} y={y+21} font-family="IBM Plex Mono, monospace" font-size="10.5" fill={ink}>{rung[1]}</text><rect x={520-index*5} y={y+7} width="86" height="18" rx="9" fill={color} opacity=".16"/><text x={563-index*5} y={y+20} text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill={color}>{rung[2]}</text></g>;})}
+        <text x="340" y="392" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{zh?"标题的兴奋程度 ≠ 证据状态":"headline excitement ≠ evidence status"}</text>
+      </g>
+    )}
+
+    {kind === "dark-matter-wave" && (
+      <g>
+        <line x1="42" y1="190" x2="638" y2="190" stroke={lightLine} stroke-dasharray="3 5"/><path d={wave} fill="none" stroke={brass} stroke-width="2.8"/>
+        <text x="48" y="70" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={brass}>{zh?"标量场 φ(x,t)":"scalar field φ(x,t)"}</text>
+        <line x1="152" y1="330" x2="152" y2="127" stroke={accent} stroke-dasharray="3 3"/><circle cx="152" cy="127" r="8" fill={accent}/><text x="152" y="351" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={accent}>{zh?"参考 A":"reference A"}</text>
+        <line x1="477" y1="330" x2="477" y2="251" stroke={contested} stroke-dasharray="3 3"/><circle cx="477" cy="251" r="8" fill={contested}/><text x="477" y="351" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={contested}>{zh?"参考 B":"reference B"}</text>
+        <line x1="152" y1="127" x2="477" y2="251" stroke={ok} stroke-width="3"/><text x="323" y="174" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="700" fill={ok}>Δφ ≠ 0</text>
+        <line x1="152" y1="300" x2="477" y2="300" stroke={faint} stroke-width="1.5"/><line x1="152" y1="294" x2="152" y2="306" stroke={faint}/><line x1="477" y1="294" x2="477" y2="306" stroke={faint}/><text x="314" y="321" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={faint}>2,220 km</text>
+        <text x="340" y="386" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill={soft}>{zh?"不同相位 → 共同抵消可能被打破":"different phases → cancellation can break"}</text>
+      </g>
+    )}
+  </svg>
+  <figcaption>{info[2]}</figcaption>
+</figure>

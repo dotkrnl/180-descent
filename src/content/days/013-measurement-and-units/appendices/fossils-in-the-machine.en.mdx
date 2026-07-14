@@ -1,0 +1,420 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day13StaticFigure from "@app/components/lesson/figures/Day13StaticFigure.astro";
+import Day13Interactive from "@app/components/lesson/interactives/Day13Interactive.astro";
+
+<Lead drop="H">ere is a question that ought to nag at you after the main descent. The 2019 SI is built on seven defining constants, assigned exact numerical values by international agreement. Fine. But look at the numbers: *c* = 299 792 458 m/s; *h* = 6.626 070 15 × 10⁻³⁴ J·s; and Δν<sub>Cs</sub> = 9 192 631 770 Hz. If the CGPM had the power to write the numbers, why not round *c* to 300 000 000 and shave the metre by about 0.07%? Almost nobody outside a laboratory would notice.</Lead>
+
+The answer is not a technicality. **Every one of those numbers was reverse-engineered to preserve continuity with the thing it replaced.** Continuity outranks elegance and convenience because a unit that quietly changes size has broken its one promise. The digits were inherited, not chosen. Follow them down, layer by layer, and the most modern definitions in science turn out to be carrying fossils.
+
+<Panel>
+<PanelTitle>Figure · A core sample through the SI</PanelTitle>
+<PanelNote>The seven defining constants sit above standards inherited from 1983, 1967, 1889, and 1799. At bedrock lie a French meridian survey, Revolutionary water, and observations of the Moon.</PanelNote>
+
+<Day13StaticFigure kind="hero-fossils" locale="en" />
+</Panel>
+
+<ContinueNote label="Continued from the main descent">
+We left off with **Duff's razor**—if a claimed variation vanishes when you change units, it was never a claim about the world—and with a ledger showing that the 2019 reform *moved* uncertainty rather than abolishing it. Now we open the machine and inspect six things: the fossils buried in the exact numbers; the unit laboratories worked around; the reason a dirty semiconductor can supply a reproducible standard to ten digits; the models and judgments inside an uncertainty budget; the human eye hiding among cosmic invariants; and the collision between the definition of the second, the shape of Earth, and the melting of Greenland.
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow number="Part I">the lineage</SectionEyebrow>
+
+## Follow the digits down
+
+Take *c* first. In 1983 the CGPM fixed the speed of light at 299 792 458 m/s. That was the best measured value at the time—measured, of course, *in metres*. The metre of 1983 was the krypton metre of 1960, built to match the platinum-iridium bar of 1889, made as faithfully as possible from the *Mètre des Archives* of 1799, cut from the survey that Delambre and Méchain dragged across France between 1792 and 1798—the survey with a concealed discrepancy in it.
+
+The numerical value 299 792 458 is therefore not a unit-free fingerprint of light. It preserves the best measured value of *c* in the inherited metre and second, whose lineages reach through the krypton bar and astronomical time to a French survey and observations of the Moon. The physics is light; the digits also record Méchain and the clocks that followed him.
+
+The kilogram's ancestry is wetter. The second's is stranger: its last digits encode the motion of the Moon, photographed between 1954 and 1958. Pick a unit and drill.
+</ContentSection>
+
+<Day13Interactive kind="lineage" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · The lineage of an exact number</PanelTitle>
+
+<PanelNote>Each layer inherits its value from the layer beneath it. The decisive move is where a measured number with an uncertainty becomes an exact definition.</PanelNote>
+
+<Day13StaticFigure kind="lineage" locale="en" />
+
+<SimpleTable
+  headers={["Unit and layer","Definition or realization","What the value inherits"]}
+  rows={[
+    ["Metre · 2019–today","The metre through the seven defining constants","Unchanged in substance since 1983."],
+    ["Metre · 1983","c = 299 792 458 m/s exactly; one metre is the distance light travels in 1/299 792 458 s","The best measured value was frozen so the light-defined metre matched the krypton metre."],
+    ["Metre · 1960","1 650 763.73 wavelengths of krypton-86's orange-red 2p₁₀–5d₅ line","The irregular count was chosen to match the 1889 bar."],
+    ["Metre · 1889","International Prototype Metre, 90% Pt / 10% Ir, X-shaped cross-section, read between two scratches at 0 °C","Made to copy the Mètre des Archives."],
+    ["Metre · 1799","The platinum end-bar Mètre des Archives, deposited in Paris","Cut from the Delambre–Méchain survey."],
+    ["Metre · 1792–1798","Dunkirk–Barcelona meridian survey","Méchain's concealed three-arcsecond discrepancy and an overestimated flattening of Earth left the metre about 0.2 mm short of its intended definition; the quadrant is about 10 002 290 m."],
+    ["Kilogram · 2019","h = 6.626 070 15 × 10⁻³⁴ J·s exactly; realized with a Kibble balance or silicon sphere","CODATA's 2017 special adjustment kept the new kilogram continuous with Le Grand K."],
+    ["Kilogram · 1889","Le Grand K, a 90% Pt / 10% Ir cylinder, 39 mm × 39 mm, kept under three keys at Sèvres","Made to match the Kilogramme des Archives."],
+    ["Kilogram · 1799","The platinum Kilogramme des Archives, accepted by the Commission des Poids et Mesures","Intended to equal one cubic decimetre of water at maximum density."],
+    ["Kilogram · 1793–1799","Lefèvre-Gineau and Fabbroni weigh pure water near 4 °C, because the freezing point was difficult to reproduce","The bucket of water made Le Grand K about 28 ppm heavier than a true litre of water."],
+    ["Second · 2019–today","The second through ΔνCs","Unchanged in substance since 1967."],
+    ["Second · 1967","ΔνCs = 9 192 631 770 Hz exactly for the caesium-133 ground-state hyperfine transition","The 1958 measured frequency was adopted and its ±20 Hz uncertainty on the Ephemeris Time scale was discarded."],
+    ["Second · 1958","9 192 631 770 ± 20 cycles per ephemeris second, Physical Review Letters 1:105","Caesium comparisons against Ephemeris Time over 1954.0–1958.5, read from Moon-camera photographs."],
+    ["Second · 1960","1/31 556 925.9747 of the tropical year 1900","The year was computed from Newcomb's solar tables rather than observed."],
+    ["Second · bedrock","Lunar-occultation photography of the Moon in 1954–1958 and Newcomb's nineteenth-century solar ephemeris","Beneath them, the second had been 1/86 400 of an irregular rotating day."]
+  ]}/>
+</FormatOnly>
+
+<ContentSection>
+<Aside>
+<BlockTitle>The sixty-three years when a litre was not a litre</BlockTitle>
+
+The kilogram was *supposed* to be the mass of one cubic decimetre of water. It was not quite. When the physicists of 1889 cast Le Grand K to match the *Kilogramme des Archives*, they inherited a small error: the cylinder came out roughly **28 parts per million heavier** than a true litre of water. In 1901 the 3rd CGPM then defined the litre as the volume of one kilogram of water at maximum density, hanging a unit of volume from a standard of mass. From 1901 to 1964, **one litre was officially 1.000 028 cubic decimetres**. The 12th CGPM abrogated that definition in 1964 and returned the litre to the metre. The artefact had contaminated everything it touched.
+</Aside>
+
+The second's lineage contains the appendix's most important move. In 1958, Markowitz, Hall, Essen, and Parry reported the caesium frequency against Ephemeris Time as **9 192 631 770 ± 20 cycles per ephemeris second**. It was a frequency measurement with an uncertainty.
+
+In 1967, the 13th CGPM took the measured number, discarded the ±20, and declared the remainder exact. That was the 2019 reform fifty-two years early. The uncertainty did not evaporate; it was absorbed into the definition, just as the uncertainty in *h* was absorbed in 2019 and the uncertainty in *c* in 1983. Every time we make a constant exact, we repeat the same rite: freeze the final measured value and move its uncertainty elsewhere.
+
+<BlockQuote>A defining constant freezes a measured numerical value so the unit remains continuous. The physics—and every dimensionless comparison—remains open to test.</BlockQuote>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Part II">the unit laboratories worked around</SectionEyebrow>
+
+## The ampere's twenty-nine-year secret
+
+Here is the pre-2019 definition of the ampere:
+
+<BlockQuote>The ampere is that constant current which, if maintained in two straight parallel conductors of *infinite length*, of negligible circular cross-section, and placed 1 metre apart in vacuum, would produce between these conductors a force equal to 2 × 10⁻⁷ newton per metre of length.</BlockQuote>
+
+*Infinite length.* *Negligible cross-section.* *Vacuum.* No apparatus could instantiate those idealizations literally. Finite current balances could approximate them with calculated corrections, but the definition was extraordinarily difficult to realize accurately. It remained in international measurement law for **seventy-one years**, from 1948 until 2019.
+
+Electrical metrologists therefore seceded. On **1 January 1990**, following a CIPM recommendation, they adopted <Term as="em">conventional values</Term><TipNote text={"Conventional electrical values were exact agreed values used outside the SI so laboratories could realize volts and ohms reproducibly with quantum effects."} />—deliberately and explicitly *not the SI*—for the two quantum constants they actually used:
+
+- <MathInline latex={String.raw`K_{J-90}=483\,597.9\ \mathrm{GHz/V}`} />, the Josephson constant;
+- <MathInline latex={String.raw`R_{K-90}=25\,812.807\ \Omega`} />, the von Klitzing constant.
+
+Both were assigned zero uncertainty, creating a parallel system of the conventional volt V₉₀, conventional ohm Ω₉₀, and conventional ampere A₉₀. For twenty-nine years, every precision voltmeter was calibrated in a currency close to SI legal tender but not technically legal tender. Precision electrical measurements had lost formal traceability to the fundamental physical constants.
+
+The 2019 reform ended the secession. The **26th CGPM** abrogated the conventional values, defined the ampere through *e*, and legalized what electrical laboratories had been doing all along.
+
+The reform was designed so that units would not visibly change. That promise held everywhere except the domain that had gone outside the old system. On 20 May 2019, **voltage-related quantities became 1.067 × 10⁻⁷ larger** and **resistance-related quantities 1.779 × 10⁻⁸ larger**. The step was invisible in ordinary life and seismic to anyone calibrating voltage references. The reform's one visible disruption fell precisely where the old definition had been least usable.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Part III">why any of this works</SectionEyebrow>
+
+## The metrologist's best friend is an integer
+
+In the Kibble-balance route, the kilogram is realized through electrical standards based on the **Josephson effect** and the **quantum Hall effect**. The independent silicon-sphere route uses different experimental physics. Why can a superconducting junction or a semiconductor sample—imperfect objects made from different materials in different laboratories—nevertheless reproduce *h/2e* and *h/e²* to ten significant figures?
+
+**Their outputs are counted, not measured.**
+
+Brian Josephson predicted the first effect in **1962**, as a 22-year-old graduate student, and received the 1973 Nobel Prize. Shine microwaves of frequency *f* at a superconducting junction and its voltage locks onto steps,
+
+<MathInline latex={String.raw`U=n f\frac{h}{2e}`} />,
+
+where *n* is an integer. Within a valid Josephson operating step, its nominal voltage depends on the microwave frequency and two defining constants rather than on material or geometry. A real realization still carries uncertainty from frequency, wiring, step identification, and whether the junction remains in the required operating regime.
+
+Klaus von Klitzing found the same pattern in **1980** and received the 1985 Nobel Prize. Put a two-dimensional electron gas in a strong magnetic field and the Hall resistance climbs a staircase,
+
+<MathInline latex={String.raw`R=\frac{R_K}{i}=\frac{h}{i e^2}`} />,
+
+with *i* an integer. Silicon, gallium arsenide, and graphene give the same plateaux and the same heights to parts in 10¹⁰.
+
+The quantization is <Term as="em">topological</Term><TipNote text={"Topological protection ties the Hall plateau to an integer invariant that cannot change continuously under small deformations or imperfections."} />. Within the appropriate low-temperature, high-field, non-dissipative regime, the integer invariant cannot drift by 0.1%; it can only change by leaving that regime or moving to another plateau. Real standards therefore verify plateau selection, contact resistance, current limits, and the absence of breakdown.
+
+The useful twist is that a cleaner sample does not give better plateaux. **Without disorder, there would be no broad plateaux at all.** Disorder localizes electronic states between Landau levels and gives each plateau a finite width—a flat shelf on which a measurement can sit. A perfectly pure crystal would supply exact quantization only at isolated field values: correct and useless. The imperfection is load-bearing.
+</ContentSection>
+
+<Day13Interactive kind="quantum-hall" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · The quantum Hall staircase</PanelTitle>
+
+<PanelNote>Schematic model: disorder widens the field range over which Hall resistance remains pinned to an integer plateau without moving its ideal height. The slider illustrates the qualitative mechanism, not a literal material-response calculation.</PanelNote>
+
+<Day13StaticFigure kind="quantum-hall" locale="en" />
+
+<SimpleTable
+  headers={["Disorder regime","Shape of the curve","Metrological consequence"]}
+  rows={[
+    ["Almost none · schematic","The illustrative response approaches a classical ramp; quantized values occupy vanishingly narrow ranges.","No stable shelf on which to park a measurement."],
+    ["Modest · schematic","Plateaux appear in the model, but remain narrow and fragile against field drift.","Quantized in principle, practically difficult to use."],
+    ["Substantial · schematic","Plateaux become wide and flat while their ideal heights remain RK/i.","Within its validated operating regime, i = 2 realizes the exact defining relation RK/2 = 12 906.403 729 652… Ω with a finite realization uncertainty."]
+  ]}/>
+</FormatOnly>
+
+<ContentSection>
+The result supplies the hidden spine of the 2019 reform: **build standards whose ideal outputs are discrete and protected.** An artefact can shed a fingerprint's worth of platinum; a lamp can run slightly warm. A quantum standard can still be misidentified, miscounted, or driven outside its operating regime, but those failure modes can be tested rather than silently redefining the unit.
+
+The SI has run relentlessly toward counting. The 1960 metre counted wavelengths. The 2019 mole counts entities. The silicon-sphere kilogram counts atoms. The Josephson volt identifies steps; the quantum Hall ohm identifies plateaux; the second counts oscillations. Every escape from the artefact has leaned harder on discrete structure plus checks that the apparatus is realizing the intended state.
+
+This is Day 7 returning from an unexpected direction. Shannon taught that information is discrete and physical. Metrology adds the corollary: *discreteness can make a standard robust*, because a validated integer step is less vulnerable to small material drift than an artefact's continuously changing surface.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Part IV">the calibrated arithmetic of error</SectionEyebrow>
+
+## Precise, true, or accurate? They are three different things
+
+The familiar archery-target picture is often taught backwards. The distinction matters:
+
+- **Precision** is the tightness of the grouping: how much repeated answers scatter.
+- **Trueness** asks whether the centre of the grouping sits on the bullseye: it concerns bias.
+- **Accuracy** requires both.
+
+The asymmetry is uncomfortable: **precision is visible from inside your laboratory; trueness is not.** Repeat a measurement a thousand times and you learn how well the apparatus agrees with itself. Those repetitions alone say nothing about whether it agrees with the world. The most dangerous quadrant is therefore not a messy cloud but a tight cluster confidently displaced from the bullseye. It looks publishable.
+
+The main descent's α dipole illustrates the danger without supplying a clean textbook verdict. Its published error budget omitted long-range wavelength distortions comparable to the claimed signal. The 2015 audit did not prove that every possible dipole is false; it removed the basis for treating this one as established. More observations with the same uncorrected instruments could have narrowed an interval around an artefact, while an external calibration audit exposed the missing systematic.
+</ContentSection>
+
+<Day13Interactive kind="accuracy-target" locale="en" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · Precision, trueness, and accuracy</PanelTitle>
+
+<PanelNote>Bias moves the mean away from a reference quantity value; scatter spreads repeated measurements around their mean. The four combinations require different remedies.</PanelNote>
+
+<Day13StaticFigure kind="accuracy-target" locale="en" />
+
+<SimpleTable
+  headers={["Bias","Scatter","Diagnosis","What helps"]}
+  rows={[
+    ["Low","Low","Accurate: high trueness and high precision.","Maintain calibration and independent checks."],
+    ["Low","High","High trueness on average, but low precision.","More independent measurements reduce scatter as 1/√N."],
+    ["High","Low","Precise but wrong—the dangerous quadrant.","More repeats make the wrong answer look more certain; only calibration or an external audit can expose the bias."],
+    ["High","High","Low trueness and low precision; the visible mess can be safer than a tight biased cluster because it does not masquerade as certainty.","Reduce both the systematic bias and the random scatter."]
+  ]}/>
+</FormatOnly>
+
+<ContentSection>
+### The judgment inside every uncertainty budget
+
+The <Term as="em">GUM</Term><TipNote text={"The Guide to the Expression of Uncertainty in Measurement sets the international framework used to report and combine measurement uncertainty."} />—the *Guide to the Expression of Uncertainty in Measurement*—governs how calibration certificates are written. It did not abolish **error**. It distinguishes the unknowable error of a particular result from the uncertainty used to characterize the values reasonably attributable to the measurand.
+
+“Error” is the difference between a measured value and a reference quantity value, but the actual error normally remains unknown. <Term as="em">Uncertainty</Term><TipNote text={"Measurement uncertainty characterizes the dispersion of values that could reasonably be attributed to the quantity being measured; it is not a known distance from truth."} /> instead characterizes the dispersion of values that could reasonably be attributed to the measurand. A report may give a standard uncertainty or an expanded interval with stated coverage assumptions. Neither is direct access to truth, and not every reported uncertainty is a frequentist confidence interval.
+
+It then divides evaluation into two kinds:
+
+- **Type A** uncertainty is evaluated statistically from repeated observations. It describes countable variation and precision.
+- **Type B** uncertainty is evaluated by other information: a calibration certificate, manufacturer's data sheet, handbook value, physical model, prior experience, and ultimately the considered judgment of an expert.
+
+Type B is a route of **evaluation**, not a declaration that every input is a subjective Bayesian prior. Its probability distributions can come from calibration data, physical models, published specifications, or expert judgment, depending on the case. Once expressed as standard uncertainties, Type A and Type B contributions are propagated through the same uncertainty budget. The important epistemic point is narrower and more durable: even a reported **5.4-sigma** discrepancy can fail when the uncertainty model omits an instrumental bias, and a reported “±” can depend on judgments about models, calibrations, and possible systematics as well as on repeatability statistics. That is why the Berkeley–Paris α tension remains unresolved and why an unidentified systematic can hide inside a beautiful error bar for years.
+
+<Aside>
+<BlockTitle>And before precision, definition</BlockTitle>
+
+Before either Type A or Type B evaluation, the GUM recognizes <Term as="em">definitional uncertainty</Term><TipNote text={"Definitional uncertainty is the component left because the quantity being measured cannot be specified with unlimited detail."} /> as a component caused by finite detail in the measurand's definition. What is “the temperature of this room”—at the ceiling or floor, averaged in what way, over which interval? No thermometer can rescue a vague question because the vagueness belongs to the measurand. Sharpen the measurand and much of the uncertainty budget may disappear; leave it vague and precision cannot save it. Hold that for Day 134, when someone tries to measure “intelligence.”
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Part V">the other four</SectionEyebrow>
+
+## Listening to a gas, counting a dozen, and the human eye hiding in the SI
+
+### The kelvin: determine Boltzmann's constant by listening
+
+The leading route to *k* was <Term as="em">acoustic gas thermometry</Term><TipNote text={"Acoustic gas thermometry infers thermodynamic temperature or the Boltzmann constant from resonant sound frequencies in a gas whose properties and cavity geometry are known."} />. Fill a precisely machined resonant cavity with argon, ring it, and measure the speed of sound *u*. Because an ideal gas obeys <MathInline latex={String.raw`u^2=\gamma kT/m`} />, the pitch of the gas reveals Boltzmann's constant. Independent checks came from dielectric-constant gas thermometry, which reached about 1.9 × 10⁻⁶, and Johnson-noise thermometry, which extracts *k* from the thermal hiss across a resistor. Three unrelated physical routes converged on one number.
+
+The new kelvin's real payoff appears at the extremes. The old definition anchored thermodynamic temperature to the triple point of water, 273.16 K; primary thermometry and practical scales then disseminated temperature through multiple methods and fixed points, with the traceability chain becoming less direct far from the anchor. The new kelvin permits primary realization at the temperature of interest. **The reform changed nothing in a kitchen and opened better routes at the extremes.**
+
+<Aside>
+<BlockTitle>The official practical temperature scale</BlockTitle>
+
+Most laboratories do not use thermodynamic temperature directly. They use **ITS-90**, the International Temperature Scale of 1990, a practical scale built from fixed points and interpolation formulae. ITS-90 is known to differ from thermodynamic temperature; the differences <MathInline latex={String.raw`T-T_{90}`} /> are measured, tabulated, and published. The working scale is a documented approximation to thermodynamic temperature. It is Day 10's “all models are wrong, some are useful” with the discrepancy domesticated into a lookup table.
+</Aside>
+
+### The mole: a dozen, writ large—and chemists objected
+
+Since 2019, a mole is exactly **6.022 140 76 × 10²³ entities**. It is a count, decoupled from the kilogram. Some chemists raised a sharp objection: if the mole is only a number, is “amount of substance” really a base quantity, or a dimensionless count wearing a costume? A dozen is not a base unit. Why is a mole? The dispute reaches beyond pedantry to whether the seven-base-unit SI reflects nature or the history of its committees.
+
+### The candela: an alien could never derive it
+
+The candela fixes <MathInline latex={String.raw`K_{\mathrm{cd}}=683\ \mathrm{lm/W}`} /> for monochromatic radiation at **540 × 10¹² Hz**, green light near 555 nm. The frequency is the peak of **V(λ)**, the photopic luminosity function: the standard human eye-response curve adopted by the CIE in **1924** from a modest set of observers. Photometry weights every other wavelength by V(λ).
+
+Among the speed of light, quantum of action, and elementary charge, the seventh defining slot therefore canonizes **the average sensitivity of a human retina**. Even 683 was reverse-engineered for continuity with candle-based standards. An alien civilization given our seven defining numbers could reproduce all seven SI units, but it could derive none of their historical scale choices from physics alone. The candela is distinctive because its definition adds a human visual-response function, not because the other six numerical scales are inevitable.
+
+### So why seven? The careful answer might be zero
+
+History supplied the count. Maxwell proposed length, mass, and time; Giorgi argued in 1901 that electromagnetism needed a fourth unit; the mole and candela accreted for chemistry and lighting. The base/derived split is a bookkeeping convention rather than a discovery.
+
+Planck units push in the other direction by setting *c*, *ħ*, *G*, and often *k* to one: a length near 1.62 × 10⁻³⁵ m, time near 5.39 × 10⁻⁴⁴ s, and temperature near 1.42 × 10³² K. Yet the **Planck mass is about 22 micrograms**, roughly a flea's egg—strangely human-scale beside an unimaginably small length and enormous temperature. That juxtaposition is not itself the hierarchy problem; the physics problem concerns the enormous gap between the electroweak and Planck scales, which Day 45 will revisit. Duff's question remains: are Planck units nature's units or simply a cleaner arbitrary grid?
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Part VI">time's messy edges</SectionEyebrow>
+
+## The second collides with the shape of Earth
+
+Earth is a poor clock. Lunar tides slow rotation by roughly 1.7 milliseconds per century. Core and mantle exchange angular momentum; the crust still rebounds from ice ages that ended about ten thousand years ago; the atmosphere moves with El Niño; earthquakes alter the moment of inertia. The wobble is irregular.
+
+Timekeepers therefore maintain three times. **TAI** counts caesium ticks without consulting the sky. **UT1** measures Earth's actual rotation angle, which determines astronomical noon. **UTC** runs on atomic seconds but inserts a <Term as="em">leap second</Term><TipNote text={"A leap second is an occasional one-second adjustment to UTC that keeps civil atomic time close to Earth's irregular rotation time, UT1."} /> whenever needed to stay within 0.9 seconds of UT1. Twenty-seven leap seconds have been inserted since 1972; the latest was on 31 December 2016.
+
+Leap seconds cannot be scheduled far ahead—notice arrives only about six months in advance because Earth does not rotate predictably—and they have disrupted computer systems. In November 2022 the CGPM resolved to increase the permitted difference between UT1 and UTC by or before 2035, with the intended consequence that leap seconds cease for an extended period. “Abolish leap seconds” is useful shorthand, not the resolution's literal wording.
+
+Then Earth sped up. The years 2020–2024 included exceptionally short days, raising an unprecedented possibility: a **negative leap second**, a minute containing 59 seconds. Most leap-second software assumes the adjustment will be positive; the opposite direction has never been deployed.
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="Edge A1">
+<StatusChip status="ok" label="polar-ice slowdown" printLabel="established" />
+<StatusChip status="hint" label="2029 timing" printLabel="extrapolation" />
+</ClaimHeader>
+
+### Global warming is postponing the first negative leap second
+
+Duncan Agnew published the analysis in *Nature* **628**: 333–336 on **27 March 2024**. Two changes in Earth's spin are opposing one another.
+
+First, since 1972 the liquid core has steadily slowed. Conservation of angular momentum makes the rest of the planet speed up; a day is now about **0.0025 seconds shorter** than fifty years ago.
+
+Second, melting in Greenland and Antarctica redistributes mass from the poles toward the equator, a change measured by satellite gravimetry. Earth becomes slightly more oblate and slows, like a spinning skater extending her arms.
+
+The ice is opposing the core. Agnew's extrapolation indicates that without polar ice loss UTC would have needed its first negative leap second around **2026**. With the ice-melt effect, the date moves to roughly **2029**.
+
+The evidence labels matter. Polar ice loss has measurably slowed Earth's rotation: that measurement is established and rests on satellite gravimetry. **Agnew's paper** extrapolated a date near 2029 from the trends then available; it is not a settled current forecast. Nor is the effect a climate “silver lining”: warming is only delaying a software problem.
+
+The epistemic payoff is striking. Clocks have become precise enough to detect another planetary process. **The melting ice sheets are audible in the timing of a caesium atom.** Day 9's coupled systems, Day 177's climate, and Day 13's metrology meet in a second that may or may not exist in 2029.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge A2">
+<StatusChip status="ok" label="Tokyo Skytree clocks" printLabel="established" />
+</ClaimHeader>
+
+### Sea level is where the clocks agree
+
+At the 10⁻¹⁸ level, a clock's rate depends on where it is. Raise a clock by one centimetre and general relativity shifts its tick rate by about 1.1 × 10⁻¹⁸, now a measurable amount. Comparing two frontier clocks therefore requires their heights above the geoid to roughly a centimetre—and the global geoid is not known that well.
+
+The definition of the second has run into geodesy. Arne Bjerhammar proposed in 1985 that the relativistic geoid be defined as *the surface closest to mean sea level on which clocks run at the same rate*. Sea level is where the clocks agree.
+
+Run the idea backwards and <Term as="em">chronometric levelling</Term><TipNote text={"Chronometric levelling compares clock rates to infer differences in gravitational potential and therefore height."} /> uses a clock as an altimeter. Hidetoshi Katori's group carried two transportable strontium lattice clocks into the **Tokyo Skytree**, placed one at the base and one **450 m** higher on the observation deck, and connected them with 700 m of fibre. The upper clock ran faster by about **21.18 Hz** out of roughly 429 trillion, testing gravitational redshift to (1.4 ± 9.1) × 10⁻⁵ (Takamoto et al., *Nature Photonics* **14**: 411–415, 6 April 2020).
+
+Clock networks could monitor volcanic inflation, crustal deformation, and thinning ice by their gravitational effect on time. We set out to measure time and built an altimeter for the planet.
+</Claim>
+
+<Panel>
+<PanelTitle>Figure · A clock as an altimeter</PanelTitle>
+<PanelNote>Two strontium clocks separated vertically by 450 metres in Tokyo Skytree measured the relativistic difference in their tick rates.</PanelNote>
+
+<Day13StaticFigure kind="clock-tower" locale="en" />
+</Panel>
+
+<ContentSection>
+<SectionEyebrow number="Part VII">spending entanglement</SectionEyebrow>
+
+## The floor beneath the floor—and why squeezing is not free
+
+Quantum mechanics now changes from the thing being measured into the thing being spent.
+
+Interrogate *N* independent atoms and each readout collapses to “excited” or “not excited.” Independent quantum outcomes make frequency uncertainty fall only as <MathInline latex={String.raw`1/\sqrt{N}`} />. This <Term as="em">quantum projection noise</Term><TipNote text={"Quantum projection noise is the statistical fluctuation produced when independent quantum two-level systems are measured."} /> establishes the <Term as="em">standard quantum limit</Term><TipNote text={"The standard quantum limit gives the 1/√N precision scaling for N independent, uncorrelated probes."} />. It is a limit on uncorrelated particles, not on lasers, vacuum systems, or budgets.
+
+The escape is to correlate the atoms. A <Term as="em">spin-squeezed state</Term><TipNote text={"Spin squeezing entangles an ensemble so quantum uncertainty is reduced in the measurement direction at the cost of greater uncertainty in a conjugate direction."} /> makes one collective component quieter by making another noisier. In principle, the limiting scaling improves from <MathInline latex={String.raw`1/\sqrt{N}`} /> toward <MathInline latex={String.raw`1/N`} />, the Heisenberg limit. Entanglement becomes a resource.
+
+It works. Eckner and colleagues used Rydberg interactions to squeeze a programmable strontium clock array, obtaining about four decibels of metrological gain, stability **1.087(1) × 10⁻¹⁵ at 1 s**, and performance **1.94(1) dB below the SQL** (*Nature* **621**: 734–739, 30 August 2023). In 2025, two spin-squeezed ensembles of about **30 000 strontium atoms** in a two-dimensional lattice, read through cavity-QED quantum non-demolition measurements, reached fractional frequency precision of **1.1 × 10⁻¹⁸** with a **2.0(2) dB** gain over the SQL (*Physical Review Letters* **135**: 193202, 7 November 2025), the most precise entanglement-enhanced clock reported in the source material.
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="Edge A3">
+<StatusChip status="ok" label="SQL beaten" printLabel="established" />
+<StatusChip status="bad" label="universal clock gain" printLabel="oversold" />
+</ClaimHeader>
+
+### The caveat the headlines leave out
+
+Squeezing helps only when quantum projection noise is the limiting noise. In a large optical lattice clock, it usually is not. Interrogation-laser noise, aliased by dead time between measurement cycles through the Dick effect, can dominate once the ensemble contains more than a modest number of atoms.
+
+Schulte, Lisdat, Schmidt, Sterr, and Hammerer quantified the restriction (*Nature Communications* **11**: 5955, 2020). For conventional cyclic Ramsey interrogation of one ensemble with then-leading clock lasers, squeezing improves a strontium lattice clock only below a **critical atom number of about one thousand**. Even a tenfold laser improvement leaves the critical number below roughly 100 000. Small multi-ion traps and tweezer arrays can benefit in regimes different from large lattice ensembles; a single ion, by itself, offers no ensemble to squeeze.
+
+The demonstrations and gains are real. Their payoff is conditional on a noise regime that many flagship clocks do not occupy. “Entanglement will make clocks arbitrarily good” is true only in a limit and misleading in a working laboratory.
+</Claim>
+
+<ContentSection>
+<SectionEyebrow>Open questions</SectionEyebrow>
+
+## Still unsettled
+
+- Is “amount of substance” a genuine base quantity, or is the mole a dozen with a Nobel Prize?
+- Should the candela remain a base unit when its weighting rests on a 1924 average retina?
+- Can the global geoid ever be known to a centimetre? If not, maps rather than clocks may limit the redefined second.
+- Should the new second rest on one optical transition—simple but brittle—or a weighted ensemble—robust, inelegant, and more future-proof? A BIPM draft resolution dated 30 June 2026 records that no consensus has been reached and asks the community to submit a redefinition proposal to the 29th CGPM in 2030.
+- Does fixing a constant stop us from discovering variation? No: only dimensionless ratios carry unit-independent claims, and those remain measurable. The important task is understanding why.
+- If exact numerical values are fossils of our history, an alien civilization would use different digits for the same physics. Which parts of science describe the world, and which record that *we* were the measurers?
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>Closing</SectionEyebrow>
+
+## The ghost in the machine
+
+The 2019 SI is a cathedral of invariants. Nothing in it can rust, be stolen, gather fingerprints, or be dropped by a nervous technician. It is among the most durable things bureaucracy has built.
+
+Yet at the bottom of its core sample lie:
+
+- a **mis-surveyed meridian** through Revolutionary France, including a discrepancy that Méchain concealed and that consumed him;
+- a **cubic decimetre of water**, weighed in 1799 and off by 28 parts per million;
+- four years of **photographs of the Moon**, taken between 1954 and 1958 and checked against a table of the Sun computed before the electron was known.
+
+We did not escape history. We encoded it. The constants are exact now, but they are exactly *our* numbers: values chosen to preserve continuity with prior standards and measurements within the transition uncertainties. That is not a defect. It is the system.
+
+A unit is therefore a treaty across space and time. The refusal to round *c* promises everyone who measured before us that the meaning of their numbers will not silently change. Méchain hid a discrepancy and it broke him. Two centuries later, metrology understood it and, rather than changing the size of the metre, preserved the continuity of everything built above it.
+</ContentSection>
+
+<Recap>
+<RecapList>
+<RecapItem term="Big idea">The SI's exact numbers are fossils reverse-engineered to preserve continuity with what they replaced. A unit is a treaty not only across space but across time, and modern metrology repeatedly converts a measured value into an exact definition while moving its uncertainty elsewhere.</RecapItem>
+<RecapItem term="Best analogy">Drill through the definitions and find a French meridian, Revolutionary water, and Moon photographs at bedrock. The quantum Hall staircase adds a second image: disorder makes an exact integer standard usable without changing its value.</RecapItem>
+<RecapItem term="Live controversy">Entanglement beats the standard quantum limit, but laser noise can erase the practical gain; the negative-leap-second date is extrapolated even though polar ice loss measurably slows Earth; and geodesy may limit the next definition of the second.</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads label="Threads here ›">information (discreteness as the root of trust) · computation (traceability chains and leap-second software) · energy (Josephson junctions, quantum Hall standards, and acoustic thermometry) · emergence (topological protection surviving disorder). A callback to **Day 4** remains useful but bounded: some Type B evaluations include expert judgment about models and systematics, while the category itself is not synonymous with a Bayesian prior.</Threads>
+
+<ContinueNote label="Back to the main line · Day 14">
+### Synthesis: What the Fossils Preserve
+
+Carry two ideas onward. First, precision can be measured from inside a system while trueness requires an external reference. Second, an uncertainty budget can combine repeated-observation statistics with calibration data, models, specifications, and considered expert judgment. The calibrated response is to identify those inputs and state their scope.
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. Markowitz, W., Hall, R. G., Essen, L. & Parry, J. V. L. (1958). “Frequency of Cesium in Terms of Ephemeris Time.” *Physical Review Letters* **1**(3): 105–107. <Meta>doi:10.1103/PhysRevLett.1.105—the origin of 9 192 631 770, measured with an uncertainty of ±20 cycles per ephemeris second from Moon-camera observations over 1954.0–1958.5. The 13th CGPM adopted the value in 1967 and discarded the uncertainty.</Meta>
+2. 11th CGPM (1960), Resolution 9: the second as 1/31 556 925.9747 of the tropical year for 1900 January 0 at 12 h Ephemeris Time. <Meta>The year was computed from Newcomb's tables of the Sun rather than observed. See Dimarcq et al., *Metrologia* 61:012001 (2024), §2, for the official history.</Meta>
+3. 3rd CGPM (1901), Declaration 1—the litre as the volume of 1 kg of water at maximum density; abrogated by the 12th CGPM (1964), Resolution 6. [BIPM resolution](https://www.bipm.org/en/committees/cg/cgpm/3-1901/resolution-1). <Meta>During those 63 years, 1 litre = 1.000 028 dm³.</Meta>
+4. “The Millilitre.” *Nature* **124**: 622 (1929). [nature.com/articles/124622a0](https://www.nature.com/articles/124622a0). <Meta>Lavoisier and Haüy's provisional standard; Lefèvre-Gineau and Fabbroni's 1799 determination of the mass of a cubic decimetre of water—the ancestor of Le Grand K and therefore of *h*.</Meta>
+5. Stock, M., Davis, R., de Mirandés, E. & Milton, M. J. T. (2019). “The revision of the SI—the result of three decades of progress in metrology.” *Metrologia* **56**: 022001. <Meta>doi:10.1088/1681-7575/ab0013—the electrical step change on 20 May 2019: voltage-related quantities 1.067 × 10⁻⁷ larger and resistance-related quantities 1.779 × 10⁻⁸ larger.</Meta>
+6. BIPM, *SI Brochure, 9th ed., Appendix 2: Practical realization of the ampere* (20 May 2019). [BIPM PDF](https://www.bipm.org/documents/20126/41489676/SI-App2-ampere.pdf). <Meta>KJ = 483 597.848 416 984 GHz/V and RK = 25 812.807 459 3045 Ω exactly; RK exceeds RK-90 by 17.793 × 10⁻⁹.</Meta>
+7. Taylor, B. N. & Witt, T. J. (1989); CIPM recommendation adopting **KJ-90 = 483 597.9 GHz/V** and **RK-90 = 25 812.807 Ω**, effective 1 January 1990. <Meta>See Kaneko, N. (2017), “Review of quantum electrical standards…,” *IEEJ Transactions on Electrical and Electronic Engineering* **12**: 1–13, on the loss of formal SI traceability.</Meta>
+8. Josephson, B. D. (1962). “Possible new effects in superconductive tunnelling.” *Physics Letters* **1**: 251–253. <Meta>Nobel Prize in Physics, 1973.</Meta>
+9. von Klitzing, K., Dorda, G. & Pepper, M. (1980). “New Method for High-Accuracy Determination of the Fine-Structure Constant Based on Quantized Hall Resistance.” *Physical Review Letters* **45**: 494. <Meta>Nobel Prize in Physics, 1985. For the topological origin, see Thouless, Kohmoto, Nightingale & den Nijs, *Physical Review Letters* **49**: 405 (1982).</Meta>
+10. JCGM 100:2008, *Evaluation of measurement data—Guide to the expression of uncertainty in measurement (GUM)*. [BIPM JCGM publications](https://www.bipm.org/en/committees/jc/jcgm/publications). <Meta>The distinction between error and uncertainty, Type A and Type B evaluation, and definitional uncertainty.</Meta>
+11. Agnew, D. C. (2024). “A global timekeeping problem postponed by global warming.” *Nature* **628**: 333–336. <Meta>Published 27 March 2024; doi:10.1038/s41586-024-07170-0—polar ice loss slowed Earth's rotation; the paper's extrapolation moved a possible first negative leap second from about 2026 to about 2029. That date is not presented here as a settled current forecast.</Meta>
+12. 27th CGPM (November 2022), Resolution 4, *On the use and future development of UTC*—the permitted maximum value of |UT1 − UTC| is to increase by or before 2035 so that leap-second adjustments cease for an extended period. <Meta>The same meeting's Resolution 3 adopted the prefixes ronna, quetta, ronto, and quecto.</Meta>
+13. Takamoto, M., Ushijima, I., Ohmae, N., Yahagi, T., Kokado, K., Shinkai, H. & Katori, H. (2020). “Test of general relativity by a pair of transportable optical lattice clocks.” *Nature Photonics* **14**: 411–415. <Meta>6 April 2020; doi:10.1038/s41566-020-0619-8—Tokyo Skytree, 450 m height difference, redshift tested to (1.4 ± 9.1) × 10⁻⁵.</Meta>
+14. Mehlstäubler, T. E., Grosche, G., Lisdat, C., Schmidt, P. O. & Denker, H. (2018). “Atomic clocks for geodesy.” *Reports on Progress in Physics* **81**: 064401. <Meta>Chronometric levelling and the correspondence between 10⁻¹⁸ clock performance and 1 cm height. See Denker et al., *Journal of Geodesy* **92**: 487–516 (2018); Bjerhammar (1985) on the relativistic geoid; and Vermeer (1983) on “chronometric levelling.”</Meta>
+15. Eckner, W. J., Darkwah Oppong, N., Cao, A., Young, A. W., Milner, W. R., Robinson, J. M., Ye, J. & Kaufman, A. M. (2023). “Realizing spin squeezing with Rydberg interactions in an optical clock.” *Nature* **621**: 734–739. <Meta>30 August 2023—about 4 dB metrological gain, stability 1.087(1) × 10⁻¹⁵ at 1 s, and performance 1.94(1) dB below the standard quantum limit.</Meta>
+16. “Clock Precision beyond the Standard Quantum Limit at the 10⁻¹⁸ Level.” *Physical Review Letters* **135**: 193202 (7 November 2025). <Meta>arXiv:2505.04538—two spin-squeezed ensembles of about 30 000 ⁸⁷Sr atoms; 1.1 × 10⁻¹⁸ fractional precision and 2.0(2) dB gain over the SQL after SPAM correction.</Meta>
+17. Schulte, M., Lisdat, C., Schmidt, P. O., Sterr, U. & Hammerer, K. (2020). “Prospects and challenges for squeezing-enhanced optical atomic clocks.” *Nature Communications* **11**: 5955. <Meta>With then-leading clock lasers, squeezing helps a Sr lattice clock only below a critical atom number near 1000, and below about 10⁵ even with a tenfold better laser.</Meta>
+18. Itano, W. M. et al. (1993). “Quantum projection noise: Population fluctuations in two-level systems.” *Physical Review A* **47**: 3554. <Meta>See Wineland et al. (1992), *Physical Review A* **46**: R6797, and Kitagawa & Ueda (1993), *Physical Review A* **47**: 5138, the founding spin-squeezing papers.</Meta>
+19. Dimarcq, N. et al. (2024). “Roadmap towards the redefinition of the second.” *Metrologia* **61**: 012001. <Meta>The mandatory criteria and published fulfilment levels; the ⁸⁷Sr 698 nm transition became a secondary representation in October 2006. See [NIST's public summary](https://www.nist.gov/si-redefinition/second-future) of the single-transition-versus-ensemble choice and the [BIPM's 30 June 2026 draft resolutions](https://www.bipm.org/en/cgpm-2026/documents), which record no consensus and request a proposal for 2030.</Meta>
+20. 16th CGPM (1979), Resolution 3: the candela, defined through 540 × 10¹² Hz and 1/683 W/sr. <Meta>The frequency is the peak of the CIE 1924 photopic luminosity function V(λ); 683 preserved continuity with candle standards.</Meta>
+21. Fischer, J. et al. (2018). “The Boltzmann project.” *Metrologia* **55**: R1–R20. <Meta>Acoustic gas thermometry, dielectric-constant gas thermometry, and Johnson-noise thermometry as independent routes to *k*. For the practical scale, see BIPM's *Supplementary Information for the ITS-90* and published T − T90 differences.</Meta>
+</Sources>

@@ -1,0 +1,342 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import SourceNote from "@app/components/lesson/SourceNote.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day13StaticFigure from "@app/components/lesson/figures/Day13StaticFigure.astro";
+import Day13Interactive from "@app/components/lesson/interactives/Day13Interactive.astro";
+
+<Lead drop="O">n **22 October 2025**, *Nature* published a paper by Joseph Aziz and Richard Howl with a title that, if correct, would overturn the logic of a flagship proposed quantum-gravity experiment: “Classical theories of gravity produce entanglement.” The experiment would place two masses in superposition, let them interact only through gravity, and ask whether they emerge entangled. A local classical channel should not create entanglement, so a positive result had been treated as evidence that gravity itself must be quantum.</Lead>
+
+Aziz and Howl argued that the inference changes in full quantum field theory: a classical gravitational field can entangle the masses too. Within three weeks, Marletto, Oppenheim, Vedral, Wilson, Diósi, and Di Biagio circulated the first technical replies. Xue and collaborators and Gundhi and collaborators followed in April 2026. Several argued that discarded transition amplitudes cancel the effect when restored. The dispute remains active and contested; key rebuttals are preprints rather than settled peer-reviewed conclusions.
+
+This is the frontier from the inside. Most items below are peer-reviewed post-2020 results. One central item—the thorium-229 feedback-loop clock and its dark-matter constraints—is a **3 June 2026 preprint**, and it is labeled as such throughout. Publication establishes that a claim is ready for scrutiny, not that its conclusion is final.
+
+<Panel>
+<PanelTitle>Figure · The frontier is bottom-heavy</PanelTitle>
+<PanelNote>Established measurements, field deployments, laboratory demonstrations, preprints, proposals, and active disputes represent different kinds of evidence. The frontier is bottom-heavy, but these categories answer different questions rather than forming a universal total order.</PanelNote>
+
+<Day13StaticFigure kind="hero-readiness" locale="en" />
+</Panel>
+
+<ContinueNote label="How to read this appendix">
+The main descent supplied settled metrology; Appendix I exposed the inherited history inside it. This appendix is deliberately provisional. It separates what an experiment or calculation has demonstrated from the stronger conclusion projected from it. Keep Day 2's question in hand: *what result would show this claim false?* A claim that cannot answer is not ready, however prestigious the venue.
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow number="Part I">the clock species explosion</SectionEyebrow>
+
+## Everyone is building a different clock now
+
+For two decades, optical clocks were largely a two-horse race: neutral atoms in a lattice, especially strontium or ytterbium, versus one trapped ion, especially aluminium or ytterbium. Since 2020 the field has diversified because the aim is no longer only timekeeping. Different clocks respond to different possible new physics, so a varying constant or dark-matter field may reveal itself when a menagerie of clocks disagrees.
+
+### Clocks made of stripped atoms
+
+Remove thirteen of argon's eighteen electrons and **Ar¹³⁺** remains: a highly charged ion whose electrons sit deep in the nuclear field. It is comparatively insensitive to stray fields that trouble other clocks, while some transitions in <Term as="em">highly charged ions</Term> are exceptionally sensitive to α.
+
+The obstacle was cooling and reading an ion with no accessible cooling transition. In 2022, Steven King, Lukas Spieß, Piet Schmidt, and colleagues at PTB co-trapped Ar¹³⁺ with a beryllium ion, sympathetically cooled it, and read it through quantum logic. The first HCI optical clock achieved systematic uncertainty of **2.2 × 10⁻¹⁷** on its first demonstration (King et al., *Nature* **611**: 43–47, 2 November 2022). Comparing ³⁶Ar¹³⁺ and ⁴⁰Ar¹³⁺ also resolved the QED contribution to nuclear recoil in a many-electron system for the first time.
+
+<StatusChip status="ok" label="HCI clock built" printLabel="established demonstration" /> <StatusChip status="hint" label="α-search payoff" printLabel="projected" /> The clock demonstration is established. Its present uncertainty is roughly two dozen times worse than the best Al⁺ clock result, and no HCI clock has yet set a competitive new-physics bound. The attraction is a higher possible ceiling and stronger sensitivity, not a result already delivered.
+
+### Clocks made of molecules
+
+Atomic clocks are highly sensitive to α. The proton-to-electron mass ratio <MathInline latex={String.raw`\mu=m_p/m_e\approx1836`} /> is less visible because an atom responds only weakly to nuclear mass. Molecules vibrate, and their vibrational frequencies depend directly on nuclear masses.
+
+The simplest molecule, **HD⁺**, contains one proton, one deuteron, and one electron. Two groups advanced its precision spectroscopy in 2020: Alighanbari, Giri, Constantin, Korobov, and Schiller (*Nature* **581**: 152–158), and Patra, Germann, Karr, Koelemeij, and colleagues (*Science* **369**: 1238). They determined μ at the **part-per-trillion** level while testing three-body QED. Kortunov and colleagues reached a resolving power of about 3 × 10¹¹, corresponding to a fractional transition-frequency uncertainty near 3.3 × 10⁻¹² (*Nature Physics* **17**: 569, 2021).
+
+Molecular hydrogen ions are therefore becoming an independent source of fundamental constants rather than only a test object. When two leading measurements of α already disagree at 5.4σ, independent routes matter.
+
+### Clocks that go to sea
+
+In 2022, three optical clocks made by Vector Atomic sailed around the Hawaiian islands aboard a naval ship for **twenty days**. Each 35-litre package contained an iodine spectrometer, fibre-frequency comb, and controls. The clocks ran continuously and accumulated timing errors below **300 picoseconds per day** (Roslund et al., *Nature* **628**: 736–740, 24 April 2024).
+
+This was not a precision record. The paper contrasts the sea clocks with laboratory optical clocks below 10⁻¹⁸ fractional inaccuracy, but the at-sea figure is a timing-error and instability result rather than a like-for-like accuracy comparison. The result mattered because leading laboratory clocks are not readily deployable: clock geodesy, dark-matter networks, and GPS-independent navigation are constrained by ruggedness as well as precision. <StatusChip status="ok" label="sea deployment" printLabel="established" />
+</ContentSection>
+
+<Day13Interactive kind="readiness-ladder" locale="en" />
+<FormatOnly as="div" media="web">
+<Aside>
+<BlockTitle>Read the 2,220 km rung precisely</BlockTitle>
+
+The fibre-linked pair were cavity-stabilized lasers, not two atomic clocks. A separate dataset used atomic clocks aboard GPS satellites. Together they demonstrated the space-time-separated-sensor method.
+</Aside>
+</FormatOnly>
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · The readiness ladder</PanelTitle>
+
+<PanelNote>Eight post-2020 claims are compared by what was demonstrated rather than by headline excitement. A firm measurement, a field deployment, a method demonstration, a preprint result, and a theoretical proposal are distinct evidential categories, not a universal ranking.</PanelNote>
+
+<Day13StaticFigure kind="readiness-ladder" locale="en" />
+
+<SimpleTable
+  headers={["Claim","Demonstrated","Not demonstrated or remaining caveat","Status"]}
+  statusColumn={3}
+  rows={[
+    ["Antihydrogen falls down","ALPHA-g measured gH̄ = 0.75 ± 0.13(stat+sys) ± 0.16(sim) in units of g.","Equality with ordinary-matter gravity; the test is only about 25% precise.","Established, coarse test"],
+    ["Weak equivalence principle at 10⁻¹⁵","MICROSCOPE found the Eötvös ratio consistent with zero after 2.5 years in orbit and included a same-composition control pair.","No equivalence-principle violation was detected.","Established null"],
+    ["Electron EDM below 4.1 × 10⁻³⁰ e·cm","The HfF⁺ experiment set the 90% confidence bound with roughly three-second coherence.","The claim that this directly excludes all physics above 10 TeV depends on couplings and cancellations.","Established, model-bound reach"],
+    ["A clock made from Ar¹³⁺","The first HCI optical clock reached 2.2 × 10⁻¹⁷ systematic uncertainty and resolved QED nuclear recoil.","No HCI clock has yet produced a competitive α-variation bound.","Established demonstration"],
+    ["Optical clocks at sea","Three 35-litre iodine clocks ran for 20 days with less than 300 ps/day timing error.","Laboratory optical clocks are more accurate, but the timing-error figure is not a like-for-like accuracy metric; this result addresses rugged deployment.","Established deployment"],
+    ["A 2,220 km cavity link helps hunt dark matter","A frequency comparison of cavity-stabilized lasers over 2,220 km, together with GPS atomic clocks, opened the first constraints on scalar dark matter coupling to electrons alone.","No dark matter was detected; the result is a null using an established method.","Established method"],
+    ["A nuclear clock constrains the strong force","A 3 June 2026 preprint reports a closed feedback loop and dark-matter constraints over 20 s to one day.","Peer review and independent confirmation remain; the α-sensitivity factor K = 5900 ± 2300 leaves large theory uncertainty.","Promising preprint"],
+    ["Detect a single graviton","A 2024 paper presents a theoretical feasibility argument for phonon-resolved absorption in a massive resonator.","No detector has been built and no graviton detected; even quantized absorption may not prove a quantized field.","Proposal"]
+  ]}/>
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow number="Part II">the nuclear clock grows up</SectionEyebrow>
+
+## From “we excited it” to “we constrained dark matter with it”
+
+The main descent treated the thorium-229 nuclear clock as a striking demonstration: laser excitation of the nucleus at PTB in April 2024, then a direct comparison with a strontium clock in September 2024. The dark-matter application was a well-motivated hope, not yet a result.
+
+A TU Wien-led collaboration now reports closing the **feedback loop**, the step that distinguishes spectroscopy from an operating clock. Continuous absorption spectroscopy supplied rapid feedback that stabilized a continuous-wave laser to the 148 nm transition of ²²⁹Th nuclei embedded in a millimetre-scale calcium fluoride crystal at room temperature. The group then searched the transition for periodic changes and slow drift over timescales from **20 seconds to one day**.
+
+The reported photon-coupling constraints are competitive with atomic-clock bounds. The reported sensitivity to the **strong force** and **quark masses** reaches parameter space electronic clocks cannot access because the thorium isomer energy is a near-cancellation of electromagnetic and strong-interaction contributions.
+
+<StatusChip status="hint" label="June 2026 preprint" printLabel="preprint; not peer reviewed" /> The result is arXiv:2606.04997, submitted **3 June 2026**, and was not peer reviewed at the time represented here. If the result survives scrutiny, it establishes a new method. Its inferred reach also depends on an α-sensitivity factor known only to about 40%, <MathInline latex={String.raw`K=5900\pm2300`} /> (Beeks et al., *Nature Communications* **16**: 9147, 2025). Separately, precise nuclear sensitivity factors for the strong-force and quark couplings cannot yet be calculated, so the preprint shows illustrative benchmark bands at 10⁴ and 10⁵. That factor-of-ten span is a benchmark range, not a statistically quantified uncertainty distribution. This is precisely the Day 6 pattern: a tight experiment multiplied by a loose coefficient.
+
+<Aside>
+<BlockTitle>Why this item may matter</BlockTitle>
+
+The nuclear clock has crossed a consequential threshold in the preprint's report: it is no longer only an object whose transition can be excited, but an instrument used to constrain another phenomenon. The Kibble balance and optical frequency comb became scientifically transformative at the same object-to-instrument transition. The supplied appendix predicts that this clock will be in textbooks by **2040**; that is an editorial forecast, while peer review and independent use will determine whether the nuclear clock has fully crossed the threshold.
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Part III">the clock as dark-matter detector</SectionEyebrow>
+
+## Sensors far apart, seeing different parts of the same wave
+
+Suppose dark matter is an <Term as="em">ultralight scalar field</Term><TipNote text={"An ultralight scalar dark-matter model treats dark matter as a coherently oscillating field whose enormous wavelength can make it behave like a wave across astronomical distances."} /> rather than particles striking a detector. If such a field couples to ordinary matter, constants could oscillate: electron mass would change slightly and clock frequencies would wobble.
+
+For the lightest candidates, the wavelength can exceed a laboratory or even the solar system. Every local instrument then samples almost the same field at the same instant. Some couplings shift co-located references with the same response together and cancel from their comparison. For those reference pairs, the coupling is structurally invisible, not merely weakly constrained.
+
+The 2025 solution was to stop making only local comparisons. Filzinger, Caddell, Jani, Steinel, Giani, Huntemann, and Roberts compared sensors separated in space and time so they sampled different field phases. Existing data supplied a frequency comparison between two optical cavities linked over **2,220 km**, plus atomic clocks aboard **GPS satellites**. The analysis set the **first constraints on scalar dark matter coupling to electrons alone**, for masses from 10⁻¹⁹ to 2 × 10⁻¹⁵ eV/c² (*Physical Review Letters* **134**: 031001, 23 January 2025).
+
+<StatusChip status="ok" label="separated-sensor method" printLabel="established; null result" /> No dark matter was detected. The advance was a new window opened without a new detector: the geographical baseline became the apparatus.
+</ContentSection>
+
+<Day13Interactive kind="dark-matter-wave" locale="en" />
+<FormatOnly as="div" media="web">
+<Aside>
+<BlockTitle>What the wave schematic leaves out</BlockTitle>
+
+The display varies spatial phase to expose the cancellation-breaking idea. In the Filzinger et al. analysis, for the accessible mass range, the dominant effect was instead the time delay between when separated sensors sampled the field. The wave picture is a schematic of the principle, not a literal reconstruction of the data analysis.
+</Aside>
+</FormatOnly>
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>Figure · Separation breaks the blind spot</PanelTitle>
+
+<PanelNote>Two references with the same response produce no differential signal when they sample an exactly common field shift. Separation in space and time can let sensors sample different phases or arrival times, turning the baseline into part of the detector.</PanelNote>
+
+<Day13StaticFigure kind="dark-matter-wave" locale="en" />
+
+<SimpleTable
+  headers={["Sensor geometry","Differential signal","Interpretation"]}
+  rows={[
+    ["Same place, phase, and response","Zero for an exactly common shift, even if the field effect is large.","A structural blind spot for equally sensitive references: common-mode motion cancels from the comparison."],
+    ["Separated by a long baseline","Different sampled phases or arrival times can produce a nonzero difference.","The cancellation can break; the separation becomes part of the apparatus."],
+    ["Shorter field wavelength","A smaller separation can reach a large phase difference.","Heavier candidate fields can vary over a shorter baseline."],
+    ["Filzinger et al. analysis","2,220 km cavity link plus GPS clocks.","For the relevant masses, time delay between sensor samples is the dominant real effect; the wave geometry expresses the same cancellation-breaking principle."]
+  ]}/>
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow number="Part IV">gravity weighed by quantum things</SectionEyebrow>
+
+## Down to a flea's egg—and then the interesting part starts
+
+Gravity measurements usually use large source masses—Cavendish used lead balls, and modern measurements of *G* use kilograms of tungsten—because shrinking a same-density sphere rapidly weakens its signal. At comparable geometry the source mass scales as R³, so halving its radius costs a factor of eight in the available gravitational effect.
+
+In 2021, Tobias Westphal, Hans Hepach, Jeremias Pfaff, and Markus Aspelmeyer measured gravitational coupling between two gold spheres of **1 mm radius and 90 mg mass**, roughly four houseflies. A miniature torsion balance and 350 hours of integration reached systematic accuracy of 4 × 10⁻¹¹ m/s² (*Nature* **591**: 225–228, 11 March 2021). It was the smallest source mass whose gravitational field had then been directly measured.
+
+The **Planck mass, about 22 micrograms**, is a target scale in some quantum-gravity proposals rather than a hard experimental threshold. Reaching source masses around or below that scale could make quantum superposition of the source a plausible ambition, opening the question of whether its gravitational field must also be quantum.
+
+From another direction, Holger Müller's group replaced the couple of seconds available to free-falling atoms by holding them in an optical lattice. With an interferometer open for up to a minute, they measured a miniature source mass's attraction as **33.3 ± 5.6(stat) ± 2.7(syst) nm/s²**, overall accuracy 6.2 nm/s²—more than four times better than the source's free-fall comparison. The result agreed with Newtonian gravity and excluded screened-fifth-force chameleon and symmetron models over the natural parameter region analyzed (Panda et al., *Nature* **631**: 515–520, 18 July 2024).
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="Edge B1">
+<StatusChip status="ok" label="antihydrogen falls down" printLabel="established" />
+<StatusChip status="hint" label="25% test" printLabel="coarse precision" />
+</ClaimHeader>
+
+### Antimatter falls down; its exact rate remains open
+
+For decades, a fringe but testable possibility persisted: antimatter might fall upward. General relativity predicts otherwise, but the prediction had not been tested directly.
+
+In 2023, CERN's ALPHA collaboration trapped antihydrogen in the vertical ALPHA-g magnetic bottle, lowered barriers at the top and bottom, and recorded where about 2,000 anti-atoms annihilated over a month (*Nature*, 28 September 2023).
+
+Antihydrogen falls **down**. The acceleration was <MathInline latex={String.raw`g_{\bar H}=0.75\pm0.13\,(\mathrm{stat+sys})\pm0.16\,(\mathrm{sim})`} /> in units of *g*, consistent with attractive gravity at roughly **25% precision**. The direction is established; equality with ordinary matter is not. Ordinary matter's equivalence principle is tested to about one part in 10¹⁵, leaving fourteen orders of magnitude between the tests. Reaching even **1%** requires order-of-magnitude reductions in magnetic-gradient and initial-condition systematics; AEgIS and GBAR pursue different methods and therefore different failure modes.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge B2">
+<StatusChip status="ok" label="MICROSCOPE final" printLabel="established" />
+</ClaimHeader>
+
+### Galileo's experiment in orbit, to fifteen decimal places
+
+The weak equivalence principle says composition does not change free-fall acceleration. The MICROSCOPE satellite tested it with nested titanium-alloy and platinum masses in orbit, measuring the electrostatic forces needed to keep them aligned. Its 2.5-year mission included five months of clean science data and a same-composition control pair for one third of the data (Touboul et al., *Physical Review Letters* **129**: 121102, 14 September 2022).
+
+The Eötvös ratio η was consistent with zero at **10⁻¹⁵**. No violation appeared. Ordinary matter is therefore tested to fifteen decimal places while antimatter is directly tested only to roughly one part in four.
+</Claim>
+
+<Claim>
+<ClaimHeader label="Edge B3">
+<StatusChip status="ok" label="electron EDM bound" printLabel="established" />
+<StatusChip status="hint" label="10 TeV framing" printLabel="model-dependent" />
+</ClaimHeader>
+
+### The electron's dipole moment—and why a tabletop can reach beyond a collider
+
+The electron's electric dipole moment is not a literal measure of geometric roundness. It is a spin-aligned electric dipole whose nonzero value would violate parity and time-reversal symmetries. The Standard Model prediction is far below present experimental reach, while many extensions predict values in the 10⁻²⁷ to 10⁻³⁰ e·cm range. A nonzero electron EDM would therefore be evidence of new physics.
+
+JILA traps **HfF⁺** molecular ions, where electrons experience enormous internal electric fields, and lets them precess coherently for up to **three seconds**. Roussy and colleagues reported (*Science* **381**: 46–50, July 2023):
+
+<BlockQuote><MathInline latex={String.raw`|d_e|<4.1\times10^{-30}\ e\!\cdot\!\mathrm{cm}`} /> at 90% confidence.</BlockQuote>
+
+The result is consistent with zero and improves the prior bound by about 2.4. The supplied source compares the allowed asymmetry to a bump smaller than a few atoms if an electron were enlarged to Earth's size; that is a scale analogy, not a literal picture of electron shape.
+
+The frequent claim that this “probes above 10 TeV” is true only under assumptions about coupling strength and the absence of cancellations. It is a model-dependent reach, not a direct energy-frontier exclusion. The tabletop experiment and the **27 km** LHC measure different things; the bound is established while the headline comparison is conditional.
+</Claim>
+
+<ContentSection>
+<SectionEyebrow number="Part V">two routes to the ampere</SectionEyebrow>
+
+## Two ampere realizations—and an open triangle
+
+The 2019 ampere is defined through elementary charge *e*: current is charge counted per second. The most literal realization is a <Term as="em">single-electron pump</Term><TipNote text={"A single-electron pump transfers a controlled integer number of electrons per cycle, ideally producing current I = ef at drive frequency f."} />, a nanoscale gate moving one electron at a time at known frequency *f*, so <MathInline latex={String.raw`I=e f`} />. At one gigahertz the current is about 160 picoamps—precisely defined but difficult to measure.
+
+The target relative uncertainty for a practical **direct electron-counting** standard is roughly **one part in 10⁸**. Slow pumps produce currents too small to compare accurately; fast pumps miss or add electrons. The fixed-*e* definition therefore preceded a sufficiently accurate direct-counting realization, although the ampere could still be realized through other electrical standards.
+
+The chronology matters. In 2017, a silicon single-trap pump exceeded **1 nanoampere** at 7.4 GHz, but its current deviated from the ideal value by about 20 parts per million and was measured with about one-part-per-million uncertainty—well short of the 10⁻⁸ target. In 2025, a scalable silicon demonstration parallelized four pumps at 200 MHz and produced a plateau above **2 nanoamperes** with three pumps at 2.1 GHz. That established a route to higher current, not 10⁻⁸ accuracy.
+
+A separate route combines the Josephson voltage and quantum Hall resistance standards through Ohm's law, using a superconducting cryogenic current comparator for scaling. A 2025 *Nature Communications* experiment generated microampere currents with relative uncertainties below **10⁻⁸**. That is an established ampere realization, but it derives current from the Josephson and quantum Hall effects rather than independently counting electrons.
+
+The **quantum metrology triangle** is the independent comparison: does current from a single-electron pump agree with current derived from Josephson volts and quantum Hall ohms through <MathInline latex={String.raw`V=IR`} />? A Josephson-plus-quantum-Hall generator alone reuses two sides and therefore cannot close the three-sided test.
+
+<BlockQuote>If repeated independent triangle tests failed after their systematics were excluded, the consistency of the three quantum electrical effects—or of their realizations—would need revision.</BlockQuote>
+
+The independent electron-pump comparison needed to close the triangle at 10⁻⁸ remains unfinished. <StatusChip status="ok" label="PQCG ampere" printLabel="established below 10⁻⁸" /> <StatusChip status="hint" label="triangle closure" printLabel="promising; unfinished" />
+
+<Aside>
+<BlockTitle>A quieter revolution: the ohm leaves the basement</BlockTitle>
+
+Traditional quantum Hall resistance standards required temperatures below **1 K** and roughly ten-tesla magnets, restricting them to national laboratories. **Epitaxial graphene** standards now reach better than **2 nΩ/Ω** accuracy at 4.2 K, 4.5 T, and high current. A 2025 *Physical Review Applied* report found the accuracy remained after **800 km of road transport** between institutes. Cryocooler systems can avoid liquid helium. <StatusChip status="ok" label="transport test" printLabel="established" /> The performance and road test are established. <StatusChip status="hint" label="industrial deployment" printLabel="projected" /> Wider migration from national laboratories toward calibration laboratories and industrial benches remains a projection; if realized, it would flatten the Day 12 traceability network.
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Part VI">the wildest proposal</SectionEyebrow>
+
+## Can you detect a single graviton?
+
+Freeman Dyson argued that detecting one graviton was effectively hopeless: gravity couples too weakly, and a detector large enough to compensate might collapse under its own gravity or need to be the size of Jupiter.
+
+In 2024, Germain Tobar, Sreenath Manikandan, Thomas Beitel, and Igor Pikovski proposed a different route (*Nature Communications* **15**: 7229). The analogy is the photoelectric effect. Light's quantization was inferred from discrete energy absorption rather than from visually catching a photon.
+
+The proposal does not specify one universal multi-tonne niobium detector. The required mass and material depend on the target source: the paper estimates about **15 kg** for a beryllium resonator tuned to GW170817 and also analyzes tonne-scale bars. The resonator would be cooled to its motional ground state at millikelvin temperature. When an astrophysical gravitational wave passes, a quantized interaction could drive **one-phonon jumps** corresponding to absorbed energy <MathInline latex={String.raw`E=\hbar\nu`} />. Continuous quantum-state monitoring would resolve the jumps and correlate them with LIGO's observation of the same event: a gravito-phononic photoelectric effect.
+
+<StatusChip status="bad" label="single-graviton claim" printLabel="proposal; no detection" /> Nothing has been detected. The paper establishes a theoretical feasibility argument, not an experiment. No device combines the required resonator mass, quality factor, millikelvin temperature, and nondestructive single-phonon readout. An interpretive caveat remains even if discrete absorption were observed: a quantized absorber can receive energy in lumps from a coherent classical wave, so quantized transfer is not automatically identical to proving that the gravitational field itself is quantized. The proposal is conceptually striking and far from realization.
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="Part VII">when peer review is not enough</SectionEyebrow>
+
+## The Aziz–Howl dispute, and what it teaches
+
+The setup was the proposed quantum-gravity witness: entangle two masses through gravity alone, and infer that gravity must be quantum because a local classical channel cannot create entanglement.
+
+Aziz and Howl's peer-reviewed *Nature* paper (**646**: 813–817, 22 October 2025) argued that in quantum field theory classical gravity can transmit quantum information and generate entanglement. If correct, the witness would no longer distinguish classical from quantum gravity.
+
+Technical replies followed rapidly. Marletto, Oppenheim, Vedral, and Wilson argued that the model does not produce the claimed entanglement and that any remaining effect would be mediated by quantized matter. Diósi's response was titled “No, classical gravity does not entangle quantized matter fields.” Di Biagio defended a route by which it might. Gundhi and colleagues argued in April 2026 that discarded transition amplitudes generate the apparent effect and that restoring them preserves an initially factorized state. Xue and colleagues also posted a preprint response. The rebuttals cited here remain preprints, and the dispute is **active and contested**, not resolved by counting papers.
+
+<Claim>
+<ClaimHeader label="Edge B4">
+<StatusChip status="bad" label="classical entanglement" printLabel="actively contested" />
+</ClaimHeader>
+
+### Publication begins the test
+
+The lesson is not that peer review is useless or that *Nature* cannot be trusted. Peer review filters for work that specialists judge competent, novel, and worth scrutiny; it is not a truth oracle. Here a serious claim was published and specialists immediately attacked precise terms in a decidable calculation. The speed and specificity of the response are evidence of scientific correction in progress, not evidence that a verdict already exists.
+
+<BlockQuote>Publication is the beginning of a claim's life, not the end of it. Treat “peer-reviewed” as a starting gun, not a finish line.</BlockQuote>
+
+The most useful status is neither “true” nor “false” but **not yet settled**.
+</Claim>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>Open questions</SectionEyebrow>
+
+## What would settle these
+
+- **Does classical gravity entangle?** The dispute is over specific terms in a calculation. A peer-reviewed synthesis, convergent calculations, or agreement about the discarded amplitudes could resolve it.
+- **Can an HCI clock beat 10⁻¹⁸?** Success would provide a much stronger α-sensitive instrument; irreducible motional systematics could stall the programme at the demonstration stage.
+- **Will an independent electron-pump leg close the quantum metrology triangle at 10⁻⁸?** Failure after independent checks would be major evidence that a realization—or, only after systematics were excluded, the underlying physics—is incomplete.
+- **Can the thorium sensitivity factors be narrowed?** The measured α-sensitivity factor *K* carries about 40% uncertainty, while strong-force and quark sensitivities are currently represented by illustrative benchmarks; nuclear-clock bounds inherit that theory dependence.
+- **Does antimatter fall at exactly *g*?** The direction is known; fourteen orders of magnitude separate its present precision from ordinary-matter equivalence tests.
+- **Could a clock network ever detect an oscillating constant?** A reproducible α oscillation matched across clocks and an inferred dark-matter frequency would overturn today's null picture. No such signal exists.
+</ContentSection>
+
+<Recap>
+<RecapList>
+<RecapItem term="Big idea">Precision measurement has become a frontier tool: clocks search for dark matter, molecules determine mass ratios, tabletop experiments constrain new physics, and milligram spheres approach quantum-gravity regimes. The essential skill is separating demonstration, inference, and projection.</RecapItem>
+<RecapItem term="Best analogy">The gravito-phononic photoelectric effect seeks quantization in discrete absorbed energy, while the space-time-separated dark-matter search turns a 2,220 km cavity link into part of the detector and adds GPS clocks as a second dataset. One is an unbuilt proposal; the other is an established null method.</RecapItem>
+<RecapItem term="Live controversy">Aziz and Howl's peer-reviewed claim that classical gravity can produce entanglement has drawn multiple technical preprint rebuttals and remains active. Venue and review status identify the stage of scrutiny, not the final answer.</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads label="Threads here ›">information (entanglement as a channel) · computation (electron pumps count current and the metrology triangle checks nature's arithmetic) · energy (gravitons as quanta and the eEDM as a vacuum probe) · emergence (topological protection in transportable graphene standards). Callbacks: **Day 2** on falsifiability and peer correction, **Day 6** on tight measurements multiplied by loose coefficients, **Day 12** on flattening traceability networks, and **Day 43** on entanglement as a possible witness.</Threads>
+
+<ContinueNote label="Back to the main line · Day 14">
+### Synthesis: Reading the Frontier
+
+Day 13 now has three layers: the settled SI and null results, the fossilized numbers inherited from earlier standards, and the provisional frontier. For calibration practice, choose three claims from this appendix and estimate the probability that each will still be accepted in 2035. The exercise forces demonstration, projection, and evidence status into the same judgment.
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>Sources &amp; further reading</SourcesTitle>
+
+1. Aziz, J. & Howl, R. (2025). “Classical theories of gravity produce entanglement.” *Nature* **646**: 813–817. <Meta>Published 22 October 2025; doi:10.1038/s41586-025-09595-7. Status: actively contested. Preprint responses include Marletto, Oppenheim, Vedral & Wilson, “Classical gravity cannot mediate entanglement” (arXiv:2511.07348); Diósi, “No, classical gravity does not entangle quantized matter fields” (arXiv:2511.00852); Di Biagio, “The simple reason why classical gravity can entangle” (arXiv:2511.02683); Xue et al. (arXiv:2604.16276); and Gundhi et al., “Can classical theories of gravity produce entanglement?” (arXiv:2604.19696). Diósi, Di Biagio, and Marletto et al. submitted their replies in November 2025; Xue et al. and Gundhi et al. followed in April 2026. The replies are preprints and do not themselves settle the dispute.</Meta>
+2. King, S. A., Spieß, L. J., Micke, P., Wilzewski, A., Leopold, T., Benkler, E., Lange, R., Huntemann, N., Surzhykov, A., Yerokhin, V. A. et al. (2022). “An optical atomic clock based on a highly charged ion.” *Nature* **611**: 43–47. <Meta>2 November 2022; doi:10.1038/s41586-022-05245-4—Ar¹³⁺ systematic uncertainty 2.2 × 10⁻¹⁷ and first resolution of QED nuclear recoil in a many-electron system. The comparison is to Brewer et al., “²⁷Al⁺ Quantum-Logic Clock with a Systematic Uncertainty below 10⁻¹⁸,” *Physical Review Letters* **123**: 033201 (2019), doi:10.1103/PhysRevLett.123.033201, which reported 9.4 × 10⁻¹⁹ systematic uncertainty. See also Kozlov et al., “Highly charged ions: optical clocks and applications in fundamental physics,” *Reviews of Modern Physics* **90**: 045005 (2018).</Meta>
+3. Alighanbari, S., Giri, G. S., Constantin, F. L., Korobov, V. I. & Schiller, S. (2020). “Precise test of quantum electrodynamics and determination of fundamental constants with HD⁺ ions.” *Nature* **581**: 152–158. <Meta>See Patra et al., “Proton–electron mass ratio from laser spectroscopy of HD⁺ at the part-per-trillion level,” *Science* **369**: 1238–1241 (2020), and Kortunov et al., *Nature Physics* **17**: 569–573 (2021). The Kortunov paper's 2024 author correction updates derived mass-ratio values without changing its conclusions: *Nature Physics* **20**: 1034; doi:10.1038/s41567-024-02557-2.</Meta>
+4. Roslund, J. D., Cingöz, A., Lunden, W. D., Partridge, G. B., Kowligy, A. S., Roller, F., Sheredy, D. B., Skulason, G. E., Song, J. P., Abo-Shaeer, J. R. & Boyd, M. M. (2024). “Optical clocks at sea.” *Nature* **628**: 736–740. <Meta>24 April 2024; doi:10.1038/s41586-024-07225-2—three 35-litre iodine clocks, 20 days aboard a Pacific naval vessel, timing errors below 300 ps/day. The paper separately notes laboratory optical clocks below 10⁻¹⁸ fractional inaccuracy; that accuracy figure and the sea clocks' timing-error or instability figures do not support one like-for-like multiplier. See Hilton et al., “Demonstration of a mobile optical clock ensemble at sea,” *Nature Communications* **16**: 6063 (2025).</Meta>
+5. Toscani De Col, L. et al. (2026). “A thorium-229 optical nuclear clock with feedback loop.” <Meta>arXiv:2606.04997, submitted 3 June 2026; **preprint, not peer reviewed at the time represented here**. Reports a closed feedback loop on the 148 nm transition in a room-temperature CaF₂ crystal and dark-matter constraints over 20 s to one day. The inferred reach depends on Beeks et al., *Nature Communications* **16**: 9147 (2025), K = 5900(2300). The preprint says precise nuclear sensitivity factors cannot currently be calculated and presents 10⁴ and 10⁵ as illustrative benchmark bands rather than a quantified uncertainty distribution. See Higgins et al., *Physical Review Letters* **134**: 113801 (2025); Caputo et al., *Physical Review C* **112**: L031302 (2025); and Fuchs et al., *Physical Review X* **15**: 021055 (2025).</Meta>
+6. Filzinger, M., Caddell, A. R., Jani, D., Steinel, M., Giani, L., Huntemann, N. & Roberts, B. M. (2025). “Ultralight Dark Matter Search with Space-Time Separated Atomic Clocks and Cavities.” *Physical Review Letters* **134**: 031001. <Meta>23 January 2025—first constraints on scalar-dark-matter coupling to electrons alone for masses 10⁻¹⁹ to 2 × 10⁻¹⁵ eV/c², using a 2,220 km fibre-linked cavity comparison and GPS satellite clocks. See Schioppo et al., *Nature Communications* **13**: 212 (2022), and Kennedy et al., *Physical Review Letters* **125**: 201302 (2020).</Meta>
+7. Westphal, T., Hepach, H., Pfaff, J. & Aspelmeyer, M. (2021). “Measurement of gravitational coupling between millimetre-sized masses.” *Nature* **591**: 225–228. <Meta>11 March 2021; doi:10.1038/s41586-021-03250-7—two approximately 90 mg gold spheres, source modulated at 12.7 mHz, 350 h integration, systematic accuracy 4 × 10⁻¹¹ m/s² and statistical precision 4 × 10⁻¹² m/s².</Meta>
+8. Panda, C. D., Tao, M. J., Ceja, M., Khoury, J., Tino, G. M. & Müller, H. (2024). “Measuring gravitational attraction with a lattice atom interferometer.” *Nature* **631**: 515–520. <Meta>18 July 2024; doi:10.1038/s41586-024-07561-3—33.3 ± 5.6(stat) ± 2.7(syst) nm s⁻² and overall accuracy 6.2 nm s⁻²; constraints on chameleon and symmetron screened-fifth-force models. See Panda et al., “Coherence limits in lattice atom interferometry at the one-minute scale,” *Nature Physics* **20**: 1234 (2024).</Meta>
+9. ALPHA Collaboration (Anderson, E. K. et al.) (2023). “Observation of the effect of gravity on the motion of antimatter.” *Nature* **621**: 716–722. <Meta>28 September 2023—about 2,000 ALPHA-g events; best fit gH̄ = 0.75 ± 0.13(stat+sys) ± 0.16(sim) in units of g. Attractive direction is established; equality with ordinary-matter acceleration is not.</Meta>
+10. Touboul, P., Métris, G., Rodrigues, M., Bergé, J., Robert, A. et al. (MICROSCOPE Collaboration) (2022). “MICROSCOPE Mission: Final Results of the Test of the Equivalence Principle.” *Physical Review Letters* **129**: 121102. <Meta>14 September 2022—Eötvös ratio consistent with zero at 10⁻¹⁵ using titanium and platinum test masses and a same-composition control pair. See *Classical and Quantum Gravity* **39**: 204009 (2022).</Meta>
+11. Roussy, T. S., Caldwell, L., Wright, T., Cairncross, W. B., Shagam, Y., Ng, K. B., Schlossberger, N., Park, S. Y., Wang, A., Ye, J. & Cornell, E. A. (2023). “An improved bound on the electron's electric dipole moment.” *Science* **381**: 46–50. <Meta>July 2023—|de| &lt; 4.1 × 10⁻³⁰ e·cm at 90% confidence from trapped ¹⁸⁰Hf¹⁹F⁺ with about three-second coherence. The “above 10 TeV” interpretation is model-dependent. See Caldwell et al., *Physical Review A* **108**: 012804 (2023).</Meta>
+12. Tobar, G., Manikandan, S. K., Beitel, T. & Pikovski, I. (2024). “Detecting single gravitons with quantum sensing.” *Nature Communications* **15**: 7229. <Meta>doi:10.1038/s41467-024-51420-8—a proposal, not a detection. It considers source-dependent acoustic-resonator designs, including an approximately 15 kg beryllium resonator for GW170817 and illustrative tonne-scale bars, cooled to the quantum ground state with stimulated absorption resolved as quantum jumps. On the field-quantization caveat, see Manikandan & Wilczek, *Physical Review A* **112**: 043716 (2025).</Meta>
+13. Djordjevic, S., Behr, R. & Poirier, W. (2025). “A primary quantum current standard based on the Josephson and the quantum Hall effects.” *Nature Communications* **16**: 1447. <Meta>10 February 2025; doi:10.1038/s41467-025-56413-9—Josephson-plus-quantum-Hall programmable current generation in the microampere range at relative uncertainties below 10⁻⁸; an ampere realization, not an independent three-leg triangle closure. For direct electron counting, see Yamahata, G., Giblin, S. P., Kataoka, M., Karasawa, T. & Fujiwara, A., “High-accuracy current generation in the nanoampere regime from a silicon single-trap electron pump,” *Scientific Reports* **7**: 45137 (2017), doi:10.1038/srep45137—more than 1 nA at 7.4 GHz, about 20 ppm deviation and about 1 ppm measurement uncertainty. For parallel scaling, see Yamahata, G., Shimizu, T., Nishiguchi, K. & Fujiwara, A., “Scalable Parallel Single-Electron Pumps in Silicon with Split-Source Control in the Nanoampere Regime,” *Nano Letters* **25**: 10202–10208 (2025), doi:10.1021/acs.nanolett.5c02327—four pumps in parallel and a plateau above 2 nA, but not a 10⁻⁸ accuracy result. See Scherer & Camarota, “Quantum metrology triangle experiments: a status review,” *Measurement Science and Technology* **23**: 124010 (2012).</Meta>
+14. “Graphene quantum Hall resistance standard for realizing the unit of electrical resistance under relaxed experimental conditions.” *Physical Review Applied* **23**: 014025 (2025). <Meta>Accuracy better than 2 nΩ/Ω at B = 4.5 T, I = 232.5 µA, and T = 4.2 K; stability maintained over 2.5 years and after 800 km road transport. The transport test is established; wider industrial deployment is projected.</Meta>
+15. Long-baseline atom interferometry: **MAGIS-100** (Abe et al., *Quantum Science and Technology* **6**: 044003, 2021) and **AION** (Badurina et al., *JCAP* **05**: 011, 2020). <Meta>Both facilities target ultralight dark matter and mid-band gravitational waves around 0.1–10 Hz. An AION prototype paper, *Nature* **654**: 622–628 (17 June 2026), doi:10.1038/s41586-026-10617-1, experimentally validates common-mode noise rejection between two long-baseline interferometers. It is an enabling demonstration, not a dark-matter or gravitational-wave detection.</Meta>
+16. Schulte, M., Lisdat, C., Schmidt, P. O., Sterr, U. & Hammerer, K. (2020). “Prospects and challenges for squeezing-enhanced optical atomic clocks.” *Nature Communications* **11**: 5955. <Meta>The standing caveat on when entanglement-enhanced metrology improves a real clock.</Meta>
+
+<SourceNote>The thorium feedback-loop result is a June 2026 preprint and is identified as such. The technical replies in the Aziz–Howl dispute are also preprints; they establish an active disagreement, not a final verdict.</SourceNote>
+</Sources>

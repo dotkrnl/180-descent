@@ -66,10 +66,12 @@ describe("epub build helpers", () => {
     const epubPath = downloadArtifactPath(dayArtifactName("epub", "en", "001-fixture"));
     const zip = await JSZip.loadAsync(await readFile(path.join(root, epubPath)));
     const dayXhtml = await zip.file("OEBPS/day-001.xhtml")?.async("string");
+    const bookCss = await zip.file("OEBPS/styles/book.css")?.async("string");
 
     expect(dayXhtml).toContain('href="https://180d.io/introduction/#start"');
     expect(dayXhtml).toContain('href="day-001.xhtml#same"');
     expect(dayXhtml).toContain('<section class="deep-dive-epub" id="appendix-a">');
+    expect(bookCss).toContain(".day13-static-figure svg{width:100%!important;max-width:100%!important;");
   }, 15_000);
 });
 

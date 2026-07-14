@@ -1,0 +1,420 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import MathInline from "@app/components/lesson/MathInline.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Term from "@app/components/lesson/Term.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import TipNote from "@app/components/lesson/TipNote.astro";
+import Day13StaticFigure from "@app/components/lesson/figures/Day13StaticFigure.astro";
+import Day13Interactive from "@app/components/lesson/interactives/Day13Interactive.astro";
+
+<Lead>主线下潜结束后，有一个问题应当一直萦绕在你心头。2019 年的国际单位制（SI）建立在七个定义常数之上，其精确数值由国际协定赋予。很好。但看看这些数：*c* = 299 792 458 m/s；*h* = 6.626 070 15 × 10⁻³⁴ J·s；Δν<sub>Cs</sub> = 9 192 631 770 Hz。既然国际计量大会（CGPM）有权写下这些数，为什么不把 *c* 取整为 300 000 000，再把米缩短约 0.07%？实验室之外几乎无人会察觉。</Lead>
+
+答案并非一个技术细节。每一个这样的数，都是为了与它所取代的标准保持连续而反向确定的。连续性高于优雅和方便，因为单位一旦悄然改变大小，就违背了它唯一的承诺。这些数字是继承来的，并非随意选定。逐层向下追索，你会发现科学中最现代的定义竟携带着化石。
+
+<Panel>
+<PanelTitle>图 · 国际单位制的岩芯剖面</PanelTitle>
+<PanelNote>七个定义常数之下，是从 1983、1967、1889 和 1799 年层层继承的标准。最底层埋着法国子午线测量、法国大革命时期的水，以及对月球的观测。</PanelNote>
+
+<Day13StaticFigure kind="hero-fossils" locale="zh" />
+</Panel>
+
+<ContinueNote label="接续主线下潜">
+上一节结束在达夫剃刀：如果一个所谓的变化会在更换单位后消失，那么它从来就不是关于世界的主张。我们还看到一份账本，说明 2019 年改革只是转移了不确定度，并未将其消灭。现在，让我们拆开这台机器，检查六件事：埋在精确数值里的化石；实验室不得不绕开的单位；为什么一块有缺陷的半导体能提供可复现到十位数字的标准；不确定度预算中的模型与判断；藏在宇宙不变量之间的人眼；以及秒的定义、地球形状与格陵兰冰盖融化之间的碰撞。
+</ContinueNote>
+
+<ContentSection>
+<SectionEyebrow number="第一部分">谱系</SectionEyebrow>
+
+## 沿着数字向下追索
+
+先看 *c*。1983 年，CGPM 将光速固定为 299 792 458 m/s。这是当时最佳的测量值——当然，是用米测出来的。1983 年的米沿用的是 1960 年的氪波长定义；这一标准被设计成与 1889 年的铂铱合金米原器吻合；后者又尽可能忠实地复制了 1799 年的档案米原器（*Mètre des Archives*）。而档案米原器的长度来自德朗布尔与梅尚在 1792 至 1798 年间横贯法国完成的测量——那次测量中藏着一处未公开的偏差。
+
+因此，299 792 458 这个数并非光的某种无单位指纹。它保存了用继承而来的米和秒测得的 *c* 的最佳数值；这两种单位的谱系穿过氪光谱线和天文时，一直抵达法国的一次测量与对月球的观测。物理对象是光，数字中却也记录着梅尚，以及后来的那些钟。
+
+千克的祖先更湿润。秒的祖先则更奇异：它末尾的数字编码了 1954 至 1958 年间拍摄到的月球运动。随便挑一个单位，向下钻探吧。
+</ContentSection>
+
+<Day13Interactive kind="lineage" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 一个精确数值的谱系</PanelTitle>
+
+<PanelNote>每一层都从下方一层继承数值。关键转折发生在带有不确定度的测量值变成精确定义之处。</PanelNote>
+
+<Day13StaticFigure kind="lineage" locale="zh" />
+
+<SimpleTable
+  headers={["单位与层次","定义或复现方式","该数值继承了什么"]}
+  rows={[
+    ["米 · 2019 年至今","通过七个定义常数定义米","实质上自 1983 年起未变。"],
+    ["米 · 1983 年","c = 299 792 458 m/s，精确值；一米是光在 1/299 792 458 s 内传播的距离","冻结当时的最佳测量值，使光定义的米与氪波长定义的米吻合。"],
+    ["米 · 1960 年","氪-86 橙红色 2p₁₀–5d₅ 谱线的 1 650 763.73 个波长","这个不规整的计数是为了与 1889 年米原器吻合。"],
+    ["米 · 1889 年","国际米原器，90% Pt / 10% Ir，X 形截面；在 0 °C 时读取两条刻线之间的距离","为复制档案米原器（Mètre des Archives）而制。"],
+    ["米 · 1799 年","铂制端面米原器 Mètre des Archives，存放于巴黎","依据德朗布尔—梅尚测量结果制成。"],
+    ["米 · 1792–1798 年","敦刻尔克—巴塞罗那子午线测量","梅尚隐瞒的三角秒偏差，加上对地球扁率的高估，使米比原定义意图短约 0.2 mm；子午线象限长约 10 002 290 m。"],
+    ["千克 · 2019 年","h = 6.626 070 15 × 10⁻³⁴ J·s，精确值；用基布尔天平或硅球复现","CODATA 2017 年特别调整使新千克与 Le Grand K 保持连续。"],
+    ["千克 · 1889 年","Le Grand K，90% Pt / 10% Ir 圆柱，39 mm × 39 mm，在塞夫尔由三把钥匙共同保管","为与档案千克原器（Kilogramme des Archives）吻合而制。"],
+    ["千克 · 1799 年","铂制 Kilogramme des Archives，由度量衡委员会接纳","原意是等于最大密度时一立方分米水的质量。"],
+    ["千克 · 1793–1799 年","由于冰点难以复现，勒费弗尔-吉诺与法布罗尼称量接近 4 °C 的纯水","这桶水使 Le Grand K 比真正一升水的质量重约 28 ppm。"],
+    ["秒 · 2019 年至今","通过 ΔνCs 定义秒","实质上自 1967 年起未变。"],
+    ["秒 · 1967 年","铯-133 基态超精细跃迁的 ΔνCs = 9 192 631 770 Hz，精确值","采纳 1958 年测得的频率，并舍弃其在历书时标度上的 ±20 Hz 不确定度。"],
+    ["秒 · 1958 年","每历书秒 9 192 631 770 ± 20 个周期，Physical Review Letters 1:105","把铯频率与 1954.0–1958.5 年间的历书时比较；历书时由月球相机照片读取。"],
+    ["秒 · 1960 年","1900 回归年的 1/31 556 925.9747","这个年份由纽康的太阳表计算得出，并非观测所得。"],
+    ["秒 · 基岩层","1954–1958 年的月掩星摄影，以及纽康 19 世纪的太阳星历表","在更下方，秒曾是并不规则的地球自转日的 1/86 400。"]
+  ]}/>
+</FormatOnly>
+
+<ContentSection>
+<Aside>
+<BlockTitle>升不等于升的六十三年</BlockTitle>
+
+千克原本应当是一立方分米水的质量，但事实并不完全如此。1889 年，物理学家铸造 Le Grand K 以匹配档案千克原器（*Kilogramme des Archives*）时，继承了一处小误差：这个圆柱比真正一升水的质量重约百万分之 28。1901 年，第 3 届 CGPM 又把升定义为最大密度时一千克水所占的体积，让一个体积单位悬挂在质量标准之下。从 1901 到 1964 年，一升的官方定义是 1.000 028 立方分米。第 12 届 CGPM 于 1964 年废止该定义，让升重新归属于米。这个实物原器污染了它所触及的一切。
+</Aside>
+
+秒的谱系包含本附录最重要的一步。1958 年，马科维茨、霍尔、埃森和帕里报告了相对于历书时的铯频率：每历书秒 9 192 631 770 ± 20 个周期。这是一个带有不确定度的频率测量值。
+
+1967 年，第 13 届 CGPM 取来这个测量值，舍弃 ±20，并宣布剩下的数为精确值。这等于把 2019 年改革提前了五十二年。不确定度并未蒸发，而是被吸收到定义之中；2019 年 *h* 的不确定度与 1983 年 *c* 的不确定度也经历了同样的过程。每当我们把一个常数变成精确值，都在重复同一种仪式：冻结最后的测量值，把它的不确定度移到别处。
+
+<BlockQuote>定义常数冻结一个测得的数值，使单位保持连续。物理本身以及每一种无量纲比较，仍然可以接受检验。</BlockQuote>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="第二部分">实验室不得不绕开的单位</SectionEyebrow>
+
+## 安培长达二十九年的秘密
+
+下面是 2019 年之前的安培定义：
+
+<BlockQuote>安培是一恒定电流；若保持在真空中相距 1 米、长度无限、圆形截面可忽略不计的两根平行直导线内，则这两根导线每米长度之间产生的力等于 2 × 10⁻⁷ 牛顿。</BlockQuote>
+
+无限长。截面可忽略。真空。没有任何装置能完全实现这些理想化条件。有限尺寸的电流天平可以近似满足它们，再加入计算得到的修正，但这个定义极难准确复现。它从 1948 年一直留在国际计量法规中，直到 2019 年，前后长达七十一年。
+
+因此，电学计量学家另起炉灶。1990 年 1 月 1 日，依照国际计量委员会（CIPM）的建议，他们为实际使用的两个量子常数采用了<Term>协定值</Term><TipNote text={"电学协定值是在国际单位制之外使用的精确约定值，使实验室能够借助量子效应以可复现的方式得到伏特和欧姆。"} />——有意而明确地不属于 SI：
+
+- <MathInline latex={String.raw`K_{J-90}=483\,597.9\ \mathrm{GHz/V}`} />，约瑟夫森常数；
+- <MathInline latex={String.raw`R_{K-90}=25\,812.807\ \Omega`} />，冯·克利青常数。
+
+二者都被赋予零不确定度，由此形成一套平行体系：协定伏特 V₉₀、协定欧姆 Ω₉₀ 和协定安培 A₉₀。二十九年间，每一台精密电压表都是用一种与 SI 法定货币极其接近、但严格说来并非法定货币的币制来校准的。精密电学测量失去了对基本物理常数的正式计量溯源性。
+
+2019 年改革结束了这场分裂。第 26 届 CGPM 废止协定值，通过 *e* 定义安培，并将电学实验室一直在做的事纳入 SI。
+
+改革的设计目标是让单位大小不发生可见变化。这个承诺处处兑现，唯一的例外正是曾脱离旧体系的领域。2019 年 5 月 20 日，与电压有关的量增大了 1.067 × 10⁻⁷，与电阻有关的量增大了 1.779 × 10⁻⁸。这一阶跃在日常生活中无从察觉，对校准电压基准的人却如同地震。改革唯一可见的扰动，恰好落在旧定义最难使用的地方。
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="第三部分">这一切为何可行</SectionEyebrow>
+
+## 计量学家最好的朋友是整数
+
+在基布尔天平路线中，千克通过基于约瑟夫森效应和量子霍尔效应的电学标准来复现。另一条独立的硅球路线使用不同的实验物理。超导结或半导体样品明明是不完美的物体，由不同实验室用不同材料制成，为什么仍能把 *h/2e* 和 *h/e²* 复现到十位有效数字？
+
+因为它们的输出是数出来的，而不是量出来的。
+
+布赖恩·约瑟夫森在 1962 年预测了第一种效应；当时他是 22 岁的研究生，后来获得 1973 年诺贝尔物理学奖。用频率为 *f* 的微波照射超导结，其电压会锁定在离散台阶上：
+
+<MathInline latex={String.raw`U=n f\frac{h}{2e}`} />，
+
+其中 *n* 是整数。在有效的约瑟夫森工作台阶上，标称电压取决于微波频率和两个定义常数，而不取决于材料或几何形状。实际复现仍有不确定度，来源包括频率、接线、台阶识别，以及结是否始终处于所需工作区间。
+
+克劳斯·冯·克利青在 1980 年发现了同一种模式，并获得 1985 年诺贝尔物理学奖。把二维电子气置于强磁场中，霍尔电阻会沿台阶上升：
+
+<MathInline latex={String.raw`R=\frac{R_K}{i}=\frac{h}{i e^2}`} />，
+
+其中 *i* 是整数。硅、砷化镓和石墨烯给出的平台相同，平台高度在 10¹⁰ 分之一的量级上一致。
+
+这种量子化具有<Term>拓扑性</Term><TipNote text={"拓扑保护把霍尔平台与一个整数不变量绑定；小的形变或缺陷无法让该不变量连续改变。"} />。在适当的低温、强磁场、无耗散区间内，整数不变量不可能漂移 0.1%；它只能在系统离开该区间或跳到另一个平台时改变。因此，真实标准必须核验平台选择、接触电阻、电流上限，以及是否未发生击穿。
+
+有用的转折在于，样品越纯净，平台并不会越好。没有无序，宽平台根本不会出现。无序使朗道能级之间的电子态局域化，让每个平台获得有限宽度——成为一个可以安放测量的平坦搁板。完全纯净的晶体只会在孤立的磁场值上给出精确量子化：正确，却无用。缺陷在这里承担着关键功能。
+</ContentSection>
+
+<Day13Interactive kind="quantum-hall" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 量子霍尔阶梯</PanelTitle>
+
+<PanelNote>示意模型：无序拓宽了霍尔电阻锁定在整数平台上的磁场范围，却不改变平台的理想高度。滑块展示的是定性机制，并非对真实材料响应的计算。</PanelNote>
+
+<Day13StaticFigure kind="quantum-hall" locale="zh" />
+
+<SimpleTable
+  headers={["无序程度","曲线形状","计量学后果"]}
+  rows={[
+    ["几乎没有 · 示意","示意响应接近经典斜坡；量子化数值只占据趋近于零宽度的区间。","没有可供测量停驻的稳定平台。"],
+    ["适度 · 示意","模型中出现平台，但仍然狭窄，容易受磁场漂移影响。","原理上量子化，实践中难以使用。"],
+    ["显著 · 示意","平台变宽、变平，而理想高度仍为 RK/i。","在经过验证的工作区间内，i = 2 复现精确定义关系 RK/2 = 12 906.403 729 652… Ω，同时实际复现仍有有限不确定度。"]
+  ]}/>
+</FormatOnly>
+
+<ContentSection>
+这项结果构成 2019 年改革隐藏的脊梁：建立理想输出离散且受保护的标准。实物原器可能掉落一个指纹重量的铂；灯的温度可能略微偏高。量子标准仍可能被误认、误数，或被驱动到工作区间之外，但这些失效模式可以检验，不会悄然改写单位定义。
+
+SI 一直坚定地走向计数。1960 年的米以波长计数，2019 年的摩尔以实体计数，硅球千克以原子计数；约瑟夫森伏特识别台阶，量子霍尔欧姆识别平台，秒则对振荡计数。每一次摆脱实物原器，都更加依赖离散结构，并核查装置是否正在复现预期状态。
+
+这是第 7 日从一个意外方向返回。香农告诉我们，信息是离散且物理的。计量学补上一条推论：离散性可以让标准更鲁棒，因为经过验证的整数台阶，比实物原器持续变化的表面更不易受到微小材料漂移的影响。
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="第四部分">经过校准的误差算术</SectionEyebrow>
+
+## 精密、正确还是准确？三者并不相同
+
+人们常把熟悉的箭靶图讲反。区分三者很重要：
+
+- 测量精密度描述结果聚集得有多紧密：重复测量值的离散程度有多大。
+- 测量正确度追问结果群的中心是否落在靶心：它关乎偏倚。
+- 测量准确度要求二者兼备。
+
+这种不对称令人不安：从实验室内部就能看见测量精密度，却看不见测量正确度。重复测量一千次，你会知道装置与自身有多一致；但仅靠这些重复，无法知道它与世界是否一致。因此，最危险的象限并非凌乱的点云，而是一簇紧密、笃定，却偏离靶心的点。它看起来很适合发表。
+
+主线下潜中的 α 偶极展示了这种危险，却没有给出教科书式的干净裁决。已发表的误差预算漏掉了与所声称信号相当的长程波长畸变。2015 年的审计并未证明一切可能的偶极都不存在；它只是消除了把这一结果视为已确立的依据。继续使用同一批未经修正的仪器观测，可能只会让围绕伪迹的区间越来越窄；外部校准审计却揭出了遗漏的系统效应。
+</ContentSection>
+
+<Day13Interactive kind="accuracy-target" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 测量精密度、测量正确度与测量准确度</PanelTitle>
+
+<PanelNote>偏倚使均值偏离参考量值；离散则让重复测量值散布在其均值周围。四种组合需要不同的补救办法。</PanelNote>
+
+<Day13StaticFigure kind="accuracy-target" locale="zh" />
+
+<SimpleTable
+  headers={["偏倚","离散","诊断","有效做法"]}
+  rows={[
+    ["低","低","准确：测量正确度高，测量精密度也高。","保持校准和独立核查。"],
+    ["低","高","平均而言测量正确度高，但测量精密度低。","更多独立测量可按 1/√N 减小离散。"],
+    ["高","低","精密却错误——最危险的象限。","更多重复只会让错误答案显得更确定；只有校准或外部审计才能揭示偏倚。"],
+    ["高","高","测量正确度和测量精密度都低；看得见的混乱有时比紧密但有偏倚的点簇更安全，因为它不会冒充确定性。","同时减小系统偏倚和随机离散。"]
+  ]}/>
+</FormatOnly>
+
+<ContentSection>
+### 每份不确定度预算中的判断
+
+<Term>GUM</Term><TipNote text={"《测量不确定度表示指南》规定了报告和合成测量不确定度所采用的国际框架。"} />，即 *Guide to the Expression of Uncertainty in Measurement*，规范着校准证书的写法。它并未废除误差，而是把某个具体结果不可知的实际误差，与用来表征可合理归属于被测量之量值的测量不确定度区分开来。
+
+「误差」是测得值与参考量值之差，但实际误差通常仍然未知。<Term>测量不确定度</Term><TipNote text={"测量不确定度表征可合理归属于被测量之量值的离散程度；它不是与真值之间已知的距离。"} />表征的则是可合理归属于被测量之量值的离散程度。报告可以给出标准不确定度，也可以在注明覆盖假设的前提下给出扩展区间。二者都不是直达真值的通道，而且报告中的不确定度并不都等同于频率学派的置信区间。
+
+GUM 随后把评定方法分为两类：
+
+- 测量不确定度的 A 类评定用重复观测值的统计分析完成，描述可统计的变异与测量精密度。
+- 测量不确定度的 B 类评定使用其他可得信息：校准证书、制造商数据表、手册数值、物理模型、既往经验，以及最终由专家审慎作出的判断。
+
+B 类是一条评定路径，并不意味着每项输入都是主观贝叶斯先验。其概率分布可以视具体情况来自校准数据、物理模型、已发布的技术规格或专家判断。一旦表示为标准不确定度，A 类与 B 类贡献就通过同一份不确定度预算传播。这里更窄也更持久的认识论要点是：若不确定度模型遗漏了仪器偏倚，即使报告为 5.4σ 的差异也可能经不起检验；报告中的「±」不仅取决于重复性统计，也可能取决于对模型、校准和潜在系统效应的判断。这就是伯克利—巴黎 α 张力至今未决的原因，也是未经识别的系统效应为何能在漂亮的误差棒中潜伏多年。
+
+<Aside>
+<BlockTitle>在精密度之前，先有定义</BlockTitle>
+
+在 A 类或 B 类评定之前，GUM 还承认<Term>定义不确定度</Term><TipNote text={"定义不确定度是由于被测量无法被无限细致地说明而留下的不确定度分量。"} />：它来自被测量定义的细节有限。「这个房间的温度」究竟是什么——天花板处还是地板处，以何种方式平均，覆盖哪段时间？任何温度计都无法挽救一个含糊的问题，因为含糊属于被测量本身。把被测量界定清楚，不确定度预算中的很大一部分可能随之消失；任其含糊，再高的精密度也救不了它。请把这一点留到第 134 日，届时会有人试图测量「智能」。
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="第五部分">另外四个单位</SectionEyebrow>
+
+## 倾听气体、数一打实体，以及藏在 SI 里的人眼
+
+### 开尔文：用倾听确定玻尔兹曼常数
+
+确定 *k* 的主要路线是<Term>声学气体测温法</Term><TipNote text={"声学气体测温法利用性质与腔体几何均已知的气体共振频率，推断热力学温度或玻尔兹曼常数。"} />。在精密加工的共振腔中充入氩气，让它鸣响，再测量声速 *u*。由于理想气体满足 <MathInline latex={String.raw`u^2=\gamma kT/m`} />，气体的音高会揭示玻尔兹曼常数。独立核查来自介电常数气体测温法——达到约 1.9 × 10⁻⁶——以及约翰逊噪声测温法，后者从电阻两端的热噪声中提取 *k*。三条互不相关的物理路线汇聚到同一个数。
+
+新开尔文真正的回报出现在极端温度。旧定义把热力学温度锚定在水的三相点 273.16 K；随后，原级测温法与实用温标通过多种方法和固定点进行量值传递，离锚点越远，计量溯源链就越不直接。新开尔文允许在所关注的温度上直接进行原级复现。改革没有改变厨房里的任何事，却在极端温度开辟了更好的路线。
+
+<Aside>
+<BlockTitle>官方实用温标</BlockTitle>
+
+多数实验室并不直接使用热力学温度，而是使用 ITS-90，即 1990 年国际温标：一套由固定点和内插公式构成的实用温标。人们知道 ITS-90 与热力学温度存在差异；差值 <MathInline latex={String.raw`T-T_{90}`} /> 已被测量、制表并发布。这套工作温标是对热力学温度有据可查的近似。它就是第 10 日「所有模型都是错的，但有些很有用」的实例，只不过偏差已被驯服成一张查找表。
+</Aside>
+
+### 摩尔：放大的一打——化学家提出异议
+
+自 2019 年起，一摩尔精确等于 6.022 140 76 × 10²³ 个实体。它是一个计数，已与千克脱钩。一些化学家提出尖锐异议：如果摩尔只是一个数，「物质的量」真的是基本量吗，还是一个穿上单位外衣的无量纲计数？一打不是基本单位，摩尔为什么是？这场争论并非咬文嚼字，而是触及一个问题：拥有七个基本单位的 SI 反映的是自然，还是委员会的历史？
+
+### 坎德拉：外星文明永远无法从物理推导它
+
+坎德拉为频率 540 × 10¹² Hz 的单色辐射——约 555 nm 的绿光——固定了 <MathInline latex={String.raw`K_{\mathrm{cd}}=683\ \mathrm{lm/W}`} />。这个频率位于明视觉光谱光视效率函数 V(λ) 的峰值；V(λ) 是国际照明委员会（CIE）在 1924 年根据一组规模不大的观察者样本采纳的标准人眼响应曲线。光度学用 V(λ) 为其他所有波长加权。
+
+因此，在光速、作用量子和元电荷之间，第七个定义席位正式收录的竟是人类视网膜的平均敏感性。就连 683 也是为了与基于蜡烛的标准保持连续而反向确定的。把七个定义数值交给一个外星文明，它可以复现全部七个 SI 单位，却无法仅从物理学推导出其中任何一个单位的历史尺度选择。坎德拉的独特之处，在于其定义额外加入了人类视觉响应函数，而不是因为其余六个数值尺度是必然的。
+
+### 那么，为什么是七个？审慎的答案也许是零
+
+这个数目由历史造就。麦克斯韦提出长度、质量和时间；乔治在 1901 年主张电磁学需要第四个单位；摩尔与坎德拉又分别为化学和照明加入。基本单位与导出单位之分是一种记账约定，而不是一项自然发现。
+
+普朗克单位把 *c*、*ħ*、*G*，以及通常还有 *k*，设为一，向相反方向推进：长度约 1.62 × 10⁻³⁵ m，时间约 5.39 × 10⁻⁴⁴ s，温度约 1.42 × 10³² K。然而，普朗克质量约为 22 微克，大致相当于一枚蚤卵；与小得无法想象的长度和巨大温度并列时，它竟离奇地接近人类尺度。这种并置本身并不是层级问题；真正的物理问题是电弱尺度与普朗克尺度之间的巨大鸿沟，第 45 日将再次讨论。达夫的问题仍在：普朗克单位是自然的单位，还是一套更整洁的任意网格？
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow number="第六部分">时间凌乱的边界</SectionEyebrow>
+
+## 秒与地球形状相撞
+
+地球是一只糟糕的钟。月球潮汐使地球自转逐渐减慢，日长每世纪增加约 1.7 毫秒。地核与地幔交换角动量；地壳仍在从约一万年前结束的冰期中回弹；大气随厄尔尼诺而运动；地震会改变转动惯量。这种摆动并不规则。
+
+因此，计时人员同时维护三种时间。国际原子时 TAI 只数铯原子的节拍，不看天空。世界时 UT1 测量地球实际的自转角，它决定天文正午。协调世界时 UTC 以原子秒运行，但会在需要时插入<Term>闰秒</Term><TipNote text={"闰秒是偶尔对 UTC 作出的一秒调整，使民用原子时与地球并不规则的自转时间 UT1 保持接近。"} />，把它与 UT1 的差控制在 0.9 秒以内。自 1972 年以来共插入 27 个闰秒，最近一次是在 2016 年 12 月 31 日。
+
+闰秒无法提前很久安排——由于地球自转不可预测，通知通常只会提前约六个月发布——而且它们曾扰乱计算机系统。2022 年 11 月，CGPM 决议不晚于 2035 年增大 UT1 与 UTC 之间允许的差值，预期由此让闰秒调整长期停用。「废除闰秒」是一种方便的简称，并非决议的原文。
+
+随后，地球加速了。2020 至 2024 年间出现了一些异常短的日子，由此带来一个史无前例的可能性：负闰秒，也就是只有 59 秒的一分钟。多数闰秒软件都假定调整方向为正；反方向的调整从未实际部署。
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="前沿 A1">
+<StatusChip status="ok" label="极地融冰减慢自转" printLabel="已确立" />
+<StatusChip status="hint" label="2029 年时间点" printLabel="外推" />
+</ClaimHeader>
+
+### 全球变暖正在推迟第一个负闰秒
+
+邓肯·阿格纽于 2024 年 3 月 27 日在 *Nature* 628: 333–336 发表了这项分析。地球自转的两种变化正在相互抵消。
+
+第一，自 1972 年以来，液态地核一直在稳定减速。角动量守恒使地球其余部分加速；如今的一天比五十年前短约 0.0025 秒。
+
+第二，格陵兰与南极洲的冰融化后，质量从两极向赤道重新分布；这种变化已由卫星重力测量捕捉。地球变得稍微更扁，自转也随之减慢，如同旋转中的滑冰运动员伸展开双臂。
+
+融冰效应正在抵消地核效应。阿格纽的外推表明，如果没有极地冰损失，UTC 可能会在 2026 年前后首次需要负闰秒；计入融冰效应后，这个时间点推迟到约 2029 年。
+
+证据标签很重要。极地冰损失已可测量地减慢地球自转；这一测量已确立，以卫星重力测量为基础。阿格纽的论文依据当时可得的趋势外推出约 2029 年这个时间点；它并不是一项已经确定的当前预测。这一效应也不是气候变化的「一线好处」：变暖只是在推迟一个软件问题。
+
+认识论上的回报令人惊叹。钟已精密到足以探测另一种行星过程。我们能从铯原子的计时中听见冰盖融化。第 9 日的耦合系统、第 177 日的气候与第 13 日的计量学，在一个可能于 2029 年出现、也可能不会出现的秒上相遇。
+</Claim>
+
+<Claim>
+<ClaimHeader label="前沿 A2">
+<StatusChip status="ok" label="东京晴空塔时钟" printLabel="已确立" />
+</ClaimHeader>
+
+### 海平面是时钟彼此一致之处
+
+在 10⁻¹⁸ 量级，钟的速率取决于它所在的位置。把一只钟抬高一厘米，广义相对论会使其走时速率改变约 1.1 × 10⁻¹⁸；如今，这个量已经可以测量。因此，比较两台前沿时钟，需要把它们相对大地水准面的高度确定到约一厘米——而全球大地水准面还没有被了解得这么精确。
+
+秒的定义撞上了大地测量学。阿尔内·比耶哈马尔在 1985 年提出，可把相对论大地水准面定义为最接近平均海平面、且时钟以相同速率运行的曲面。海平面就是时钟彼此一致之处。
+
+把这个想法反过来，<Term>钟测水准</Term><TipNote text={"钟测水准通过比较时钟速率来推断引力势差，进而推断高度差。"} />就能把时钟当作高度计。香取秀俊的团队把两台可运输锶光晶格钟带进东京晴空塔，一台放在塔底，另一台放在高 450 m 的观景台上，并用 700 m 光纤连接。上方时钟在约 429 万亿赫兹的频率上快了约 21.18 Hz，以 (1.4 ± 9.1) × 10⁻⁵ 的水平检验了引力红移（Takamoto et al., *Nature Photonics* 14: 411–415, 2020 年 4 月 6 日）。
+
+时钟网络可以利用这些过程对时间的引力效应，监测火山膨胀、地壳形变与冰层变薄。我们原本打算测量时间，结果造出了一台测量整颗行星高度的仪器。
+</Claim>
+
+<Panel>
+<PanelTitle>图 · 作为高度计的时钟</PanelTitle>
+<PanelNote>东京晴空塔中垂直相隔 450 米的两台锶钟，测出了走时速率的相对论差异。</PanelNote>
+
+<Day13StaticFigure kind="clock-tower" locale="zh" />
+</Panel>
+
+<ContentSection>
+<SectionEyebrow number="第七部分">消耗纠缠</SectionEyebrow>
+
+## 底线之下的底线——以及为何压缩并非免费
+
+量子力学如今从被测量的对象，变成了被消耗的资源。
+
+探测 *N* 个相互独立的原子，每次读出都会坍缩为「激发」或「未激发」。独立的量子结果只会让频率不确定度按 <MathInline latex={String.raw`1/\sqrt{N}`} /> 下降。这种<Term>量子投影噪声</Term><TipNote text={"量子投影噪声是测量彼此独立的量子二能级系统时产生的统计涨落。"} />确立了<Term>标准量子极限</Term><TipNote text={"标准量子极限给出 N 个独立、无关联探针所能达到的 1/√N 精密度标度。"} />。它是无关联粒子的极限，不是激光器、真空系统或经费预算的极限。
+
+出路是让原子彼此关联。<Term>自旋压缩态</Term><TipNote text={"自旋压缩让一个系综发生纠缠，以共轭方向上更大的量子不确定度为代价，减小测量方向上的量子不确定度。"} />通过让一个集体分量更嘈杂，使另一个分量更安静。原则上，极限标度可以从 <MathInline latex={String.raw`1/\sqrt{N}`} /> 朝海森堡极限 <MathInline latex={String.raw`1/N`} /> 改善。纠缠由此成为资源。
+
+这种方法确实有效。埃克纳及其同事利用里德伯相互作用压缩一个可编程锶钟阵列，获得约 4 dB 的计量增益、1 s 时 1.087(1) × 10⁻¹⁵ 的稳定度，以及低于 SQL 1.94(1) dB 的性能（*Nature* 621: 734–739, 2023 年 8 月 30 日）。2025 年，二维晶格中两个各含约 30 000 个锶原子的自旋压缩系综，通过腔 QED 量子无损测量读出，达到 1.1 × 10⁻¹⁸ 的分数频率精密度，相对 SQL 获得 2.0(2) dB 增益（*Physical Review Letters* 135: 193202, 2025 年 11 月 7 日）；这是资料来源中报告的最精密纠缠增强时钟。
+</ContentSection>
+
+<Claim>
+<ClaimHeader label="前沿 A3">
+<StatusChip status="ok" label="突破 SQL" printLabel="已确立" />
+<StatusChip status="bad" label="普适时钟增益" printLabel="夸大解读" />
+</ClaimHeader>
+
+### 标题省略的限制条件
+
+只有当量子投影噪声是限制因素时，压缩才有帮助。在大型光晶格钟中，情况通常并非如此。一旦系综中的原子多于一个不大的数量，探测激光噪声就可能占据主导；测量周期之间的死时间还会通过迪克效应使这种噪声发生混叠。
+
+舒尔特、利斯达特、施密特、斯特尔和哈默勒量化了这一限制（*Nature Communications* 11: 5955, 2020）。若使用当时领先的时钟激光器，对单个系综进行传统周期性拉姆齐探测，只有在临界原子数约一千以下时，压缩才能改善锶光晶格钟。即使激光器性能提高十倍，临界数仍低于约 100 000。小型多离子阱与光镊阵列可以在不同于大型晶格系综的区间获益；单个离子本身则没有可供压缩的系综。
+
+这些演示与增益都是真实的，但其回报取决于特定噪声区间，而许多旗舰时钟并不处在该区间。「纠缠会让时钟无限趋近完美」只在某种极限下成立，放到实际实验室中则会误导。
+</Claim>
+
+<ContentSection>
+<SectionEyebrow>未决问题</SectionEyebrow>
+
+## 仍无定论
+
+- 「物质的量」是真正的基本量，还是说摩尔不过是获得诺贝尔奖的一打？
+- 当坎德拉的加权依据是 1924 年的平均视网膜时，它还应当保留为基本单位吗？
+- 全球大地水准面能否有朝一日被确定到一厘米？如果不能，限制重新定义秒的可能不是时钟，而是地图。
+- 新秒应当建立在单一光学跃迁上——简单却脆弱——还是建立在加权组合上——鲁棒、不够优雅，却更能适应未来？BIPM 一份日期为 2026 年 6 月 30 日的决议草案记载，目前尚未达成共识，并要求计量界向 2030 年第 29 届 CGPM 提交重新定义方案。
+- 固定一个常数会不会阻止我们发现它的变化？不会：只有无量纲比值承载不依赖单位的主张，而这些比值仍可测量。重要的是理解其中原因。
+- 如果精确数值是人类历史的化石，外星文明会为同一套物理使用不同数字。科学的哪些部分描述世界，哪些部分记录着测量者是我们？
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>结语</SectionEyebrow>
+
+## 机器中的幽灵
+
+2019 年的 SI 是一座由不变量建成的大教堂。其中没有任何东西会生锈、被盗、沾上指纹，或从紧张的技术员手中掉落。它是官僚机构建造过的最耐久之物之一。
+
+然而，在它的岩芯剖面底部，埋着：
+
+- 一条测量有误的子午线，穿过大革命时期的法国，其中包括梅尚隐瞒、并最终吞噬了他的偏差；
+- 一立方分米水，在 1799 年称量，偏差为百万分之 28；
+- 四年的月球照片，拍摄于 1954 至 1958 年，并与一份在人们发现电子之前就已算出的太阳表核对。
+
+我们没有逃离历史，而是把历史编码了进去。常数如今是精确的，但它们精确地是我们的数字：这些值是在标准过渡时的不确定度范围内，为保持与先前标准和测量的连续而选定的。这不是缺陷，而是整个体系的运作方式。
+
+因此，单位是一份横跨空间与时间的条约。拒绝把 *c* 取整，就是向所有先于我们完成测量的人承诺：他们数字的含义不会悄然改变。梅尚隐瞒了一处偏差，那处偏差也击垮了他。两个世纪后，计量学理解了它；它没有改变米的大小，而是维持了建于其上的一切的连续性。
+</ContentSection>
+
+<Recap>
+<RecapList>
+<RecapItem term="核心观点">SI 的精确数值是为保持与所取代标准的连续而反向确定的化石。单位不仅是跨越空间的条约，也是跨越时间的条约；现代计量学反复把测量值转化为精确定义，同时把不确定度移到别处。</RecapItem>
+<RecapItem term="最佳类比">钻穿一层层定义，你会在基岩处找到法国子午线、大革命时期的水和月球照片。量子霍尔阶梯又添了一幅图景：无序让精确的整数标准变得可用，却不改变其数值。</RecapItem>
+<RecapItem term="仍在争论">纠缠突破了标准量子极限，但激光噪声可能抹去实际增益；极地冰损失可测量地减慢地球自转，但负闰秒的日期仍是外推；大地测量还可能限制下一次秒的定义。</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads label="此处线索 ›">信息（离散性作为可信度的根基）· 计算（计量溯源链与闰秒软件）· 能量（约瑟夫森结、量子霍尔标准与声学气体测温法）· 涌现（在无序中存续的拓扑保护）。回望第 4 日仍有帮助，但范围必须明确：一些 B 类评定确实包含专家对模型与系统效应的判断，但这一类别本身并不等同于贝叶斯先验。</Threads>
+
+<ContinueNote label="返回主线 · 第 14 日">
+### 综合：化石保留了什么
+
+请带着两个想法继续前行。第一，测量精密度可以从系统内部测得，而测量正确度需要外部参考。第二，不确定度预算可以把重复观测统计与校准数据、模型、技术规格和专家的审慎判断结合起来。经过校准的回应，应当辨明这些输入，并说明其适用范围。
+</ContinueNote>
+
+<Sources>
+<SourcesTitle>资料来源与延伸阅读</SourcesTitle>
+
+1. Markowitz, W., Hall, R. G., Essen, L. & Parry, J. V. L. (1958). 「Frequency of Cesium in Terms of Ephemeris Time.」 *Physical Review Letters* **1**(3): 105–107. <Meta>doi:10.1103/PhysRevLett.1.105——9 192 631 770 的来源；该数依据 1954.0–1958.5 年月球相机观测测得，每历书秒的不确定度为 ±20 个周期。第 13 届 CGPM 于 1967 年采纳该值，并舍弃不确定度。</Meta>
+2. 第 11 届 CGPM（1960），第 9 号决议：秒等于历书时 1900 年 1 月 0 日 12 时所对应回归年的 1/31 556 925.9747。<Meta>该年份由纽康的太阳表计算得出，并非观测所得。官方历史见 Dimarcq et al., *Metrologia* 61:012001 (2024), §2。</Meta>
+3. 第 3 届 CGPM（1901），第 1 号声明——升等于最大密度时 1 kg 水的体积；第 12 届 CGPM（1964）第 6 号决议将其废止。[BIPM 决议](https://www.bipm.org/en/committees/cg/cgpm/3-1901/resolution-1)。<Meta>在这 63 年间，1 litre = 1.000 028 dm³。</Meta>
+4. 「The Millilitre.」 *Nature* **124**: 622 (1929). [nature.com/articles/124622a0](https://www.nature.com/articles/124622a0). <Meta>拉瓦锡与阿羽依的临时标准；勒费弗尔-吉诺与法布罗尼在 1799 年测定一立方分米水的质量——它是 Le Grand K 的祖先，因而也是 *h* 的祖先。</Meta>
+5. Stock, M., Davis, R., de Mirandés, E. & Milton, M. J. T. (2019). 「The revision of the SI—the result of three decades of progress in metrology.」 *Metrologia* **56**: 022001. <Meta>doi:10.1088/1681-7575/ab0013——2019 年 5 月 20 日的电学阶跃：与电压有关的量增大 1.067 × 10⁻⁷，与电阻有关的量增大 1.779 × 10⁻⁸。</Meta>
+6. BIPM, *SI Brochure, 9th ed., Appendix 2: Practical realization of the ampere*（2019 年 5 月 20 日）。[BIPM PDF](https://www.bipm.org/documents/20126/41489676/SI-App2-ampere.pdf)。<Meta>KJ = 483 597.848 416 984 GHz/V 和 RK = 25 812.807 459 3045 Ω 均为精确值；RK 比 RK-90 大 17.793 × 10⁻⁹。</Meta>
+7. Taylor, B. N. & Witt, T. J. (1989)；CIPM 建议采纳 **KJ-90 = 483 597.9 GHz/V** 和 **RK-90 = 25 812.807 Ω**，自 1990 年 1 月 1 日起生效。<Meta>关于正式 SI 计量溯源性的丧失，见 Kaneko, N. (2017), 「Review of quantum electrical standards…」，*IEEJ Transactions on Electrical and Electronic Engineering* **12**: 1–13。</Meta>
+8. Josephson, B. D. (1962). 「Possible new effects in superconductive tunnelling.」 *Physics Letters* **1**: 251–253. <Meta>1973 年诺贝尔物理学奖。</Meta>
+9. von Klitzing, K., Dorda, G. & Pepper, M. (1980). 「New Method for High-Accuracy Determination of the Fine-Structure Constant Based on Quantized Hall Resistance.」 *Physical Review Letters* **45**: 494. <Meta>1985 年诺贝尔物理学奖。关于拓扑起源，见 Thouless, Kohmoto, Nightingale & den Nijs, *Physical Review Letters* **49**: 405 (1982)。</Meta>
+10. JCGM 100:2008, *Evaluation of measurement data—Guide to the expression of uncertainty in measurement (GUM)*. [BIPM JCGM 出版物](https://www.bipm.org/en/committees/jc/jcgm/publications)。<Meta>误差与不确定度的区别，A 类评定与 B 类评定，以及定义不确定度。</Meta>
+11. Agnew, D. C. (2024). 「A global timekeeping problem postponed by global warming.」 *Nature* **628**: 333–336. <Meta>发表于 2024 年 3 月 27 日；doi:10.1038/s41586-024-07170-0——极地冰损失减慢了地球自转；论文的外推把可能首次出现的负闰秒从约 2026 年推迟到约 2029 年。本文并未把该日期写成已经确定的当前预测。</Meta>
+12. 第 27 届 CGPM（2022 年 11 月），第 4 号决议 *On the use and future development of UTC*——不晚于 2035 年增大 |UT1 − UTC| 所允许的最大值，使闰秒调整长期停用。<Meta>同次会议的第 3 号决议采纳了前缀 ronna、quetta、ronto 和 quecto。</Meta>
+13. Takamoto, M., Ushijima, I., Ohmae, N., Yahagi, T., Kokado, K., Shinkai, H. & Katori, H. (2020). 「Test of general relativity by a pair of transportable optical lattice clocks.」 *Nature Photonics* **14**: 411–415. <Meta>2020 年 4 月 6 日；doi:10.1038/s41566-020-0619-8——东京晴空塔，高差 450 m，以 (1.4 ± 9.1) × 10⁻⁵ 的水平检验红移。</Meta>
+14. Mehlstäubler, T. E., Grosche, G., Lisdat, C., Schmidt, P. O. & Denker, H. (2018). 「Atomic clocks for geodesy.」 *Reports on Progress in Physics* **81**: 064401. <Meta>钟测水准，以及 10⁻¹⁸ 时钟性能与 1 cm 高度之间的对应关系。另见 Denker et al., *Journal of Geodesy* **92**: 487–516 (2018)；Bjerhammar (1985) 关于相对论大地水准面的讨论；以及 Vermeer (1983) 关于「chronometric levelling」的讨论。</Meta>
+15. Eckner, W. J., Darkwah Oppong, N., Cao, A., Young, A. W., Milner, W. R., Robinson, J. M., Ye, J. & Kaufman, A. M. (2023). 「Realizing spin squeezing with Rydberg interactions in an optical clock.」 *Nature* **621**: 734–739. <Meta>2023 年 8 月 30 日——约 4 dB 计量增益，1 s 时稳定度为 1.087(1) × 10⁻¹⁵，性能低于标准量子极限 1.94(1) dB。</Meta>
+16. 「Clock Precision beyond the Standard Quantum Limit at the 10⁻¹⁸ Level.」 *Physical Review Letters* **135**: 193202（2025 年 11 月 7 日）。<Meta>arXiv:2505.04538——两个各含约 30 000 个 ⁸⁷Sr 原子的自旋压缩系综；经 SPAM 修正后，分数频率精密度为 1.1 × 10⁻¹⁸，相对 SQL 增益为 2.0(2) dB。</Meta>
+17. Schulte, M., Lisdat, C., Schmidt, P. O., Sterr, U. & Hammerer, K. (2020). 「Prospects and challenges for squeezing-enhanced optical atomic clocks.」 *Nature Communications* **11**: 5955. <Meta>使用当时领先的时钟激光器时，只有在临界原子数约 1000 以下，压缩才有助于 Sr 光晶格钟；即使激光器性能提高十倍，临界数仍低于约 10⁵。</Meta>
+18. Itano, W. M. et al. (1993). 「Quantum projection noise: Population fluctuations in two-level systems.」 *Physical Review A* **47**: 3554. <Meta>另见 Wineland et al. (1992), *Physical Review A* **46**: R6797，以及 Kitagawa & Ueda (1993), *Physical Review A* **47**: 5138；二者是自旋压缩的奠基论文。</Meta>
+19. Dimarcq, N. et al. (2024). 「Roadmap towards the redefinition of the second.」 *Metrologia* **61**: 012001. <Meta>强制性标准及已发布的达成程度；⁸⁷Sr 698 nm 跃迁于 2006 年 10 月成为秒的次级表示。关于单一跃迁与组合方案的选择，见 [NIST 的公众概要](https://www.nist.gov/si-redefinition/second-future)；另见 [BIPM 2026 年 6 月 30 日的决议草案](https://www.bipm.org/en/cgpm-2026/documents)，其中记载尚无共识，并要求在 2030 年提交方案。</Meta>
+20. 第 16 届 CGPM（1979），第 3 号决议：通过 540 × 10¹² Hz 和 1/683 W/sr 定义坎德拉。<Meta>该频率是 CIE 1924 明视觉光谱光视效率函数 V(λ) 的峰值；683 保持了与烛光标准的连续性。</Meta>
+21. Fischer, J. et al. (2018). 「The Boltzmann project.」 *Metrologia* **55**: R1–R20. <Meta>声学气体测温法、介电常数气体测温法与约翰逊噪声测温法，是确定 *k* 的三条独立路线。关于实用温标，见 BIPM 的 *Supplementary Information for the ITS-90* 以及已发布的 T − T90 差值。</Meta>
+</Sources>

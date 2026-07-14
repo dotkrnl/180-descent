@@ -1,0 +1,326 @@
+---
+import Panel from "@app/components/lesson/Panel.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+
+interface Props {
+  kind:
+    | "uncertainty-ledger"
+    | "kibble-balance"
+    | "alpha-drift"
+    | "lineage"
+    | "quantum-hall"
+    | "accuracy-target"
+    | "readiness-ladder"
+    | "dark-matter-wave";
+  locale?: "en" | "zh";
+}
+
+const kind = Astro.props.kind;
+const zh = Astro.props.locale === "zh";
+
+const copy = {
+  "uncertainty-ledger": zh
+    ? {
+        eyebrow: "交互 · 无知守恒",
+        title: "不确定度账本",
+        note: "拨动 2019 年 5 月 20 日这道开关，看看什么越过了分界线。四个曾经精确的定义锚点开始带上不确定度，四个曾经需要测量的自然常数则被定义为精确值。精确性没有凭空增加；不确定度只是搬了家。",
+        era: "选择时期",
+        before: "2019 年改革前",
+        after: "2019 年改革后",
+        exact: "按定义精确",
+        measured: "测得值——带有不确定度",
+        zero: "不确定度 = 0",
+        fuzzy: "不确定度 > 0",
+        quantities: "项",
+        trades: "四次交换——每个重定义单位一次",
+        unit: "单位",
+        old: "旧锚点",
+        next: "新锚点"
+      }
+    : {
+        eyebrow: "Interactive · the conservation of ignorance",
+        title: "The Ledger of Uncertainty",
+        note: "Flip the switch across 20 May 2019. Four formerly exact definitional anchors became measured and uncertain while four measured constants became exact by definition. Exactness was not created; uncertainty moved.",
+        era: "Choose the era",
+        before: "Before 20 May 2019",
+        after: "After 20 May 2019",
+        exact: "Exact by definition",
+        measured: "Measured — carries uncertainty",
+        zero: "uncertainty = 0",
+        fuzzy: "uncertainty > 0",
+        quantities: "quantities",
+        trades: "The four trades — one per redefined unit",
+        unit: "Unit",
+        old: "Old anchor",
+        next: "New anchor"
+      },
+  "kibble-balance": zh
+    ? {
+        eyebrow: "交互 · 两种模式，一台机器",
+        title: "基布尔天平",
+        note: "称量模式让线圈的电磁力托住质量；速度模式移动同一线圈并测量感应电压。把两个方程结合，难以直接测准的磁场 B 与导线长度 L 会同时消去。",
+        mode: "选择模式",
+        weighing: "称量模式",
+        velocity: "速度模式",
+        aria: "基布尔天平示意图：质量与磁场中的线圈分居横梁两端。",
+        combined: "合并两种模式"
+      }
+    : {
+        eyebrow: "Interactive · two modes, one machine",
+        title: "The Kibble Balance",
+        note: "Weighing mode balances a mass with the force on a current-carrying coil. Velocity mode moves that same coil and measures the induced voltage. Combine the equations and the hard-to-measure magnetic field B and wire length L both disappear.",
+        mode: "Choose the mode",
+        weighing: "Weighing mode",
+        velocity: "Velocity mode",
+        aria: "Schematic Kibble balance with a mass and a coil in a magnetic field on opposite arms.",
+        combined: "Combine both modes"
+      },
+  "alpha-drift": zh
+    ? {
+        eyebrow: "交互 · 把前沿校准器画出来",
+        title: "精细结构常数漂移了吗？",
+        note: "当前的四组约束都与零漂移相容；红色菱形则是 2011 年报告、后来受到质疑的约 4σ 类星体偶极信号。应用 2015 年的仪器系统误差审计，看看一个未进入误差预算的效应怎样改变结论。",
+        aria: "五种探针对精细结构常数漂移率的对数尺度约束图。",
+        audit: "应用 2015 年系统误差审计",
+        original: "恢复 2011 年原始发表状态"
+      }
+    : {
+        eyebrow: "Interactive · the hype filter, drawn",
+        title: "Has the Fine-Structure Constant Drifted?",
+        note: "Four current constraint rows are consistent with no drift; the red diamond is the contested, roughly four-sigma quasar dipole reported in 2011. Apply the 2015 instrument audit and see what an unbudgeted systematic does to the conclusion.",
+        aria: "Log-scale constraints on drift of the fine-structure constant from five probes.",
+        audit: "Apply the 2015 systematics audit",
+        original: "Show it as originally published"
+      },
+  lineage: zh
+    ? {
+        eyebrow: "交互 · 定义的岩芯",
+        title: "一个精确数值的谱系",
+        note: "每一层都从下层继承数值。一路向下读到基岩，并留意测量值连同误差条何时被宣布为精确值。",
+        unit: "选择单位",
+        metre: "米",
+        kilogram: "千克",
+        second: "秒",
+        fossil: "埋在数值里的化石"
+      }
+    : {
+        eyebrow: "Interactive · core sample",
+        title: "The Lineage of an Exact Number",
+        note: "Each layer inherits its numerical value from the layer below. Read down to bedrock and watch for the moment a measured number, complete with an error bar, was declared exact.",
+        unit: "Choose a unit",
+        metre: "The metre",
+        kilogram: "The kilogram",
+        second: "The second",
+        fossil: "The fossil inside the number"
+      },
+  "quantum-hall": zh
+    ? {
+        eyebrow: "交互 · 为什么需要杂质",
+        title: "量子霍尔阶梯",
+        note: "改变样品中的无序程度。无序把量子化平台拓宽成可以稳定测量的平坦台阶，却不会移动平台高度；高度由整数拓扑不变量保护。",
+        disorder: "样品中的无序",
+        aria: "霍尔电阻随磁场变化的量子化平台图。"
+      }
+    : {
+        eyebrow: "Interactive · why dirt is required",
+        title: "The Quantum Hall Staircase",
+        note: "Change the disorder in the sample. Disorder widens quantized plateaux into shelves a measurement can sit on, but it never moves their heights; those values are protected by an integer topological invariant.",
+        disorder: "Disorder in the sample",
+        aria: "Quantized Hall-resistance plateaux as magnetic field increases."
+      },
+  "accuracy-target": zh
+    ? {
+        eyebrow: "交互 · 两条出错轴",
+        title: "精密度、测量正确度与准确度",
+        note: "偏差控制测量均值离参考值多远，散布控制重复测量彼此多不一致。找到最危险的象限：结果紧密聚集，却整体偏离参考值。",
+        bias: "偏差——均值离参考值的距离",
+        scatter: "散布——重复测量的不一致程度",
+        aria: "带有测量落点、参考值与样本均值的靶面。"
+      }
+    : {
+        eyebrow: "Interactive · the two axes of being wrong",
+        title: "Precision, Trueness, Accuracy",
+        note: "Bias controls how far the mean sits from a reference value; scatter controls how much repeated measurements disagree. Find the dangerous quadrant: a tight, confident cluster with low trueness.",
+        bias: "Bias — distance of the mean from the reference",
+        scatter: "Scatter — disagreement among repeats",
+        aria: "Archery target with measurement shots, a reference value, and the sample mean."
+      },
+  "readiness-ladder": zh
+    ? {
+        eyebrow: "交互 · 按证据状态阅读研究前沿",
+        title: "就绪度阶梯",
+        note: "八项 2020 年后的结果按证据状态分组，而不是按标题有多令人兴奋。选择任一项，比较已证实的结果与尚未实现的外推；这些是不同类别，并非放之四海而皆准的高低排名。",
+        aria: "八项前沿测量结果组成的可选择就绪度阶梯。"
+      }
+    : {
+        eyebrow: "Interactive · read the frontier by evidence status",
+        title: "The Readiness Ladder",
+        note: "Eight post-2020 results are grouped by evidence status, not by how exciting the headline sounds. Select one and compare the result with the projection; these are distinct categories, not a universal ranking.",
+        aria: "Selectable readiness ladder of eight frontier measurement results."
+      },
+  "dark-matter-wave": zh
+    ? {
+        eyebrow: "交互 · 距离为何就是探测器",
+        title: "暗物质波",
+        note: "假想的超轻标量场掠过地球。把两个具有共同响应的频率参考分开，观察它们何时可能出现差分信号；同地、同相位且响应相同的比较会抵消共同频移。",
+        mass: "场的质量",
+        long: "极轻暗物质（长波）",
+        short: "较重暗物质（短波）",
+        separation: "两个频率参考之间的距离",
+        aria: "两个频率参考在标量暗物质波的不同相位取样。"
+      }
+    : {
+        eyebrow: "Interactive · why distance is the detector",
+        title: "The Dark-Matter Wave",
+        note: "A hypothetical ultralight scalar field washes across Earth. Separate two frequency references with a common response and see when a differential signal can appear; a co-located, same-phase comparison cancels that common shift.",
+        mass: "Field mass",
+        long: "Very light DM (long wave)",
+        short: "Heavier DM (short wave)",
+        separation: "Separation between the frequency references",
+        aria: "Two frequency references sampling different phases of a scalar dark-matter wave."
+      }
+}[kind];
+
+const swaps = zh
+  ? [["千克", "国际千克原器的质量", "h"], ["安培", "μ₀ = 4π×10⁻⁷", "e"], ["开尔文", "水的三相点", "k"], ["摩尔", "12 克碳-12", "Nₐ"]]
+  : [["kilogram", "mass of Le Grand K", "h"], ["ampere", "μ₀ = 4π×10⁻⁷", "e"], ["kelvin", "triple point of water", "k"], ["mole", "12 g of carbon-12", "Nₐ"]];
+---
+
+<Panel class={`web-only day13-interactive day13-${kind}`} data-day13-kind={kind} data-locale={zh ? "zh" : "en"}>
+  <PanelTitle>{copy.eyebrow}</PanelTitle>
+  <h3>{copy.title}</h3>
+  <PanelNote>{copy.note}</PanelNote>
+
+  {kind === "uncertainty-ledger" && (
+    <>
+      <div class="day13-toolbar">
+        <span>{copy.era}</span>
+        <div class="day13-segment" role="group" aria-label={copy.era}>
+          <button type="button" data-era="pre" aria-pressed="true">{copy.before}</button>
+          <button type="button" data-era="post" aria-pressed="false">{copy.after}</button>
+        </div>
+      </div>
+      <div class="day13-ledger-grid">
+        <section class="is-exact" aria-labelledby={`day13-${kind}-${zh ? "zh" : "en"}-exact`}>
+          <h4 id={`day13-${kind}-${zh ? "zh" : "en"}-exact`}>{copy.exact}</h4>
+          <p class="day13-column-summary">{copy.zero} · <strong data-out="exact-count">7</strong> {copy.quantities}</p>
+          <div class="day13-ledger-list" data-role="exact-list"></div>
+        </section>
+        <section class="is-measured" aria-labelledby={`day13-${kind}-${zh ? "zh" : "en"}-measured`}>
+          <h4 id={`day13-${kind}-${zh ? "zh" : "en"}-measured`}>{copy.measured}</h4>
+          <p class="day13-column-summary">{copy.fuzzy} · <strong data-out="measured-count">4</strong> {copy.quantities}</p>
+          <div class="day13-ledger-list" data-role="measured-list"></div>
+        </section>
+      </div>
+      <div class="day13-readout" data-role="verdict" role="status" aria-live="polite">
+        <h4 data-out="verdict-title"></h4><p data-out="verdict-text"></p>
+      </div>
+      <p class="day13-caveat">{zh
+        ? "数值溯源：改革前的测得值采用 CODATA 2014 调整值；改革后的测得值采用 CODATA 2022 调整值。"
+        : "Value provenance: pre-reform measured values use the CODATA 2014 adjustment; post-reform measured values use CODATA 2022."}</p>
+      <div class="day13-swaps">
+        <h4>{copy.trades}</h4>
+        <div class="day13-swap-head"><span>{copy.unit}</span><span>{copy.old}</span><span aria-hidden="true"></span><span>{copy.next}</span></div>
+        {swaps.map(([unit, oldAnchor, newAnchor]) => <div class="day13-swap-row"><strong>{unit}</strong><span>{oldAnchor}</span><span aria-hidden="true">→</span><strong>{newAnchor}</strong></div>)}
+      </div>
+    </>
+  )}
+
+  {kind === "kibble-balance" && (
+    <>
+      <div class="day13-toolbar">
+        <span>{copy.mode}</span>
+        <div class="day13-segment" role="group" aria-label={copy.mode}>
+          <button type="button" data-mode="weighing" aria-pressed="true">{copy.weighing}</button>
+          <button type="button" data-mode="velocity" aria-pressed="false">{copy.velocity}</button>
+        </div>
+      </div>
+      <div class="day13-stage"><svg data-role="diagram" viewBox="0 0 660 340" role="img" aria-label={copy.aria}></svg></div>
+      <div class="day13-equations" aria-live="polite">
+        <p data-role="equation-weigh"><span>{copy.weighing}</span><strong>mg = BLI</strong></p>
+        <p data-role="equation-velocity"><span>{copy.velocity}</span><strong>U = BLv</strong></p>
+        <p class="is-result"><span>{copy.combined}</span><strong>mgv = UI → m = UI / (gv)</strong></p>
+      </div>
+      <p class="day13-verdict" data-out="verdict" role="status" aria-live="polite"></p>
+      <p class="day13-caveat">{zh
+        ? "电压由约瑟夫森结以 h 和 e 溯源，电阻由量子霍尔平台以 h/e² 溯源；用 U/R 得到电流后，UI 中的 e 消去而 h 保留下来。重力测量给出 g，激光干涉测量给出 v，因此溯源链终止于精确的 h、c 与 ΔνCs，而不再终止于金属圆柱。"
+        : "Voltage is traced through Josephson junctions to h and e; resistance is traced through quantum Hall plateaux to h/e². Taking current as U/R makes e cancel in UI while h remains. Gravimetry supplies g and laser interferometry supplies v, so the chain ends at exact h, c, and ΔνCs rather than a metal cylinder."}</p>
+    </>
+  )}
+
+  {kind === "alpha-drift" && (
+    <>
+      <div class="day13-stage day13-alpha-stage"><svg data-role="plot" viewBox="0 0 660 410" role="img" aria-label={copy.aria}></svg></div>
+      <button class="day13-button" type="button" data-action="audit" aria-pressed="false">{copy.audit}</button>
+      <div class="day13-readout is-contested" data-role="verdict" role="status" aria-live="polite"><h4 data-out="verdict-title"></h4><p data-out="verdict-text"></p></div>
+      <p class="day13-caveat">{zh
+        ? "尺度说明：天文观测给出的是 Δα/α；图中除以回溯时间，把它们换算为年漂移率，因此假定了线性漂移。奥克洛约束还依赖其他基本参数不同时变化的模型假设。"
+        : "Scale note: astronomical probes constrain Δα/α. Dividing by lookback time to place them on a per-year axis assumes linear drift, and the Oklo bound is model-dependent because it assumes other fundamental parameters do not vary at the same time."}</p>
+    </>
+  )}
+
+  {kind === "lineage" && (
+    <>
+      <div class="day13-toolbar">
+        <span>{copy.unit}</span>
+        <div class="day13-segment" role="group" aria-label={copy.unit}>
+          <button type="button" data-unit="metre" aria-pressed="true">{copy.metre}</button>
+          <button type="button" data-unit="kilogram" aria-pressed="false">{copy.kilogram}</button>
+          <button type="button" data-unit="second" aria-pressed="false">{copy.second}</button>
+        </div>
+      </div>
+      <div class="day13-strata" data-role="strata" aria-live="polite"></div>
+      <div class="day13-readout"><h4>{copy.fossil}</h4><p data-out="verdict" role="status" aria-live="polite"></p></div>
+    </>
+  )}
+
+  {kind === "quantum-hall" && (
+    <>
+      <label class="day13-range"><span>{copy.disorder}</span><strong data-out="disorder">55%</strong><input data-role="disorder" type="range" min="0" max="100" value="55" /></label>
+      <div class="day13-stage"><svg data-role="plot" viewBox="0 0 660 400" role="img" aria-label={copy.aria}></svg></div>
+      <div class="day13-readout" data-role="verdict" role="status" aria-live="polite"><h4 data-out="verdict-title"></h4><p data-out="verdict-text"></p></div>
+      <p class="day13-caveat">{zh
+        ? "定性示意：曲线用于展示无序拓宽平台而不移动平台高度的机制；插值形状与滑块数值并非某种具体材料的拟合结果。"
+        : "Qualitative schematic: the curve shows disorder widening plateaux without moving their heights. Its interpolation and slider values are not fitted to a particular material."}</p>
+    </>
+  )}
+
+  {kind === "accuracy-target" && (
+    <>
+      <div class="day13-target-grid">
+        <div>
+          <label class="day13-range"><span>{copy.bias}</span><strong data-out="bias"></strong><input data-role="bias" type="range" min="0" max="100" value="12" /></label>
+          <label class="day13-range"><span>{copy.scatter}</span><strong data-out="scatter"></strong><input data-role="scatter" type="range" min="0" max="100" value="14" /></label>
+          <div class="day13-readout" data-role="verdict" role="status" aria-live="polite"><h4 data-out="verdict-title"></h4><p data-out="verdict-text"></p></div>
+        </div>
+        <div class="day13-stage"><svg data-role="target" viewBox="0 0 320 320" role="img" aria-label={copy.aria}></svg></div>
+      </div>
+    </>
+  )}
+
+  {kind === "readiness-ladder" && (
+    <>
+      <div class="day13-ladder" data-role="ladder" role="list" aria-label={copy.aria}></div>
+      <div class="day13-readout" data-role="detail" aria-live="polite"><h4 data-out="detail-title"></h4><div data-out="detail-body"></div></div>
+    </>
+  )}
+
+  {kind === "dark-matter-wave" && (
+    <>
+      <div class="day13-toolbar">
+        <span>{copy.mass}</span>
+        <div class="day13-segment" role="group" aria-label={copy.mass}>
+          <button type="button" data-wave="long" aria-pressed="true">{copy.long}</button>
+          <button type="button" data-wave="short" aria-pressed="false">{copy.short}</button>
+        </div>
+      </div>
+      <label class="day13-range"><span>{copy.separation}</span><strong data-out="separation">2,220 km</strong><input data-role="separation" type="range" min="0" max="100" value="45" /></label>
+      <div class="day13-stage"><svg data-role="wave" viewBox="0 0 660 310" role="img" aria-label={copy.aria}></svg></div>
+      <div class="day13-readout" data-role="verdict" role="status" aria-live="polite"><h4 data-out="verdict-title"></h4><p data-out="verdict-text"></p></div>
+      <p class="day13-caveat">{zh
+        ? "示意图说明：波形仅用来展示共同模式抵消怎样被时空分离打破。实际的 2025 年分析比较了相距 2,220 千米的两束腔稳激光，并另行分析 GPS 原子钟数据；在其可探测质量范围内，主要效应来自传感器采样的时间延迟，而不是图中画出的空间相位。"
+        : "Schematic note: the wave only illustrates how space-time separation can break common-mode cancellation. The 2025 analysis compared two cavity-stabilized lasers across a 2,220 km link and separately analyzed GPS atomic-clock data; over its accessible mass range, the dominant effect was the time delay between sensor samples, not the spatial phase drawn here."}</p>
+    </>
+  )}
+</Panel>

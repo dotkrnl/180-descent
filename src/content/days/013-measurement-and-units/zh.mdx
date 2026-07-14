@@ -1,0 +1,423 @@
+import Aside from "@app/components/lesson/Aside.astro";
+import BlockQuote from "@app/components/lesson/BlockQuote.astro";
+import BlockTitle from "@app/components/lesson/BlockTitle.astro";
+import Claim from "@app/components/lesson/Claim.astro";
+import ClaimHeader from "@app/components/lesson/ClaimHeader.astro";
+import ContentSection from "@app/components/lesson/ContentSection.astro";
+import ContinueNote from "@app/components/lesson/ContinueNote.astro";
+import FormatOnly from "@app/components/lesson/FormatOnly.astro";
+import Hero from "@app/components/lesson/Hero.astro";
+import HeroEyebrow from "@app/components/lesson/HeroEyebrow.astro";
+import HeroSubhead from "@app/components/lesson/HeroSubhead.astro";
+import Label from "@app/components/lesson/Label.astro";
+import Lead from "@app/components/lesson/Lead.astro";
+import Meta from "@app/components/lesson/Meta.astro";
+import PanelNote from "@app/components/lesson/PanelNote.astro";
+import PanelTitle from "@app/components/lesson/PanelTitle.astro";
+import Recap from "@app/components/lesson/Recap.astro";
+import RecapItem from "@app/components/lesson/RecapItem.astro";
+import RecapList from "@app/components/lesson/RecapList.astro";
+import SectionEyebrow from "@app/components/lesson/SectionEyebrow.astro";
+import SimpleTable from "@app/components/lesson/SimpleTable.astro";
+import Sources from "@app/components/lesson/Sources.astro";
+import SourcesTitle from "@app/components/lesson/SourcesTitle.astro";
+import StatusChip from "@app/components/lesson/StatusChip.astro";
+import Threads from "@app/components/lesson/Threads.astro";
+import WhereBlock from "@app/components/lesson/WhereBlock.astro";
+import Wrap from "@app/components/lesson/Wrap.astro";
+import Day13StaticFigure from "@app/components/lesson/figures/Day13StaticFigure.astro";
+import Day13Interactive from "@app/components/lesson/interactives/Day13Interactive.astro";
+
+<Hero>
+<HeroEyebrow dayMark="第 013 日 / 180">模块一 · 知识与推理的根基 ·</HeroEyebrow>
+
+# 测量与单位
+
+<HeroSubhead>一米究竟有多长？答案已经变过四次——而最后一次最为奇特。</HeroSubhead>
+
+<Day13StaticFigure kind="hero-meridian" locale="zh" />
+
+<Lead>1794 年冬，在巴塞罗那一间租来的房间里，法国天文学家皮埃尔·梅尚发现自己的两次纬度读数并不一致，这击垮了他。大革命把他派往南方，执行一项堪称史上最浪漫的官僚任务：测量地球的大小，让人类终于拥有一个不属于任何人的长度单位——*à tous les temps, à tous les peuples*，为一切时代，为一切人民。不是国王的前臂，也不是地方行会的码尺，而是从行星本身取出一米：北极到赤道距离的一千万分之一。</Lead>
+
+梅尚负责测量弧的南半段，让-巴蒂斯特·德朗布尔负责北半段。梅尚在巴塞罗那两处地点取得的读数相差约三角秒，对应地面上约一百米。当时还没有成熟的随机观测误差理论，梅尚便把这项差异视为个人失败。他隐瞒并调整了数据，多年间反复回到这个问题，最终于 1804 年在试图重新测量该弧时死于黄热病。德朗布尔后来在他的文稿中发现了那项被隐瞒的差异。
+
+这项误差并不意味着梅尚的仪器毫无用处。地球并不规则，测得的弧无法让预定的四分之一子午线恰好等于 10,000,000 米。现代大地测量给出的北极到赤道子午线距离约为 10,002,290 米，因此历史上的一米比最初理想短约 0.2 毫米。我们仍然沿用了它。单位的职责不是揭示某个唯一真实的长度，而是供大家共同使用。
+</Hero>
+
+<Wrap>
+
+<WhereBlock>
+<Label>当前位置</Label>
+
+十二天里，我们搭起了一套认识论工具；今天，这套工具终于要接触世界。测量是数字与事物之间的一次握手。[第 1 日](/zh/days/001-what-is-knowledge/)以一个「按定义永远正确」的标准回归，[第 10 日](/zh/days/010-models-maps-and-idealization/)则以地图上的约定与疆域中属性的差别回归，而[第 12 日](/zh/days/012-networks/)带回了一张校准网络：它曾经终止于法国一座地库中的一只圆柱。[第 7 日](/zh/days/007-information-theory/)告诉我们信息是物理的；单位则是它的镜像，是抽象不得不化为硬件的地方。
+</WhereBlock>
+
+<ContentSection>
+<SectionEyebrow>模型</SectionEyebrow>
+
+## 确定一米的三种办法
+
+剥去浪漫色彩，每个单位都在回答同一个问题：怎样让两个陌生人达成一致？现代测量继承了三种大体策略。
+
+策略一：指向一件东西。实物定义把某个特定物体定为标准。1799 年，子午线测量的结果被落实为铂制的 *Mètre des Archives*（档案米原器）；1889 年，这件端面标准又被国际米原器取代。后者是一件线纹标准，由 90% 的铂和 10% 的铱制成，采用 X 形截面以提高刚性，并规定在 0 °C 下使用。两条细刻线之间的距离并不只是测量一米；那段标记出的间隔就是一米。这条谱系也厘清了次数：最初的子午线定义之后，有四个正式继承者——1799 年的档案米原器、1889 年的国际米原器、1960 年的氪波长定义，以及 1983 年的光速定义。
+
+策略二：指向一种现象。实物会遭遇火灾、盗窃、热膨胀、污染和损坏。1960 年，一米被重新定义为氪-86 某一指定跃迁所发橙红色辐射在真空中波长的 1,650,763.73 倍。同一种同位素的原子具有可复现性：设备合适的实验室不再需要把自己的尺子与巴黎那根独一无二的金属棒比对。
+
+策略三：指向一个数字。1983 年，第 17 届国际计量大会把真空光速精确固定为：
+
+<BlockQuote>
+*c* = 299,792,458 米每秒。
+</BlockQuote>
+
+这个数值不再是一个带有不确定度的实验估计。相反，一米由它导出：光在真空中于 1/299,792,458 秒内行进的距离。
+
+这正是今天的关键转折。实验室无法改进 *c* 以米每秒表示时的数值；它能改进的是对米和秒的复现。这个常数成了两者之间精确的换算因子。先固定常数，再从中导出单位——这场大反转是现代计量学这门测量科学的核心思想。
+
+<Aside>
+<BlockTitle>布里奇曼的幽灵</BlockTitle>
+
+珀西·布里奇曼在 *The Logic of Modern Physics*（1927）中把这项更广泛的哲学思想称为操作定义：一个概念与用来测量它的操作相联系。布里奇曼因高压物理学获得 1946 年诺贝尔奖，操作主义也在 1930 年代的心理学中广为传播。但作为一般意义理论，它过于严格；改用激光而非尺子测量长度，不应因此产生一个不同的长度概念。不过在计量学中，一个更克制的版本以 *mise en pratique*（复现办法）的形式保留下来：它是实际复现某项 SI 定义的操作说明。定义的法令放在书架上，车间手册摆在工作台上。
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>困局</SectionEyebrow>
+
+## Le Grand K：塞夫尔的停摆时钟
+
+当米从物体走向辐射，再走向固定常数时，仍有一个基本单位留在保险库里。直到 2019 年为止的 130 年间，千克就是一个实物。
+
+国际千克原器是一只高 39 毫米、直径 39 毫米的铂铱圆柱，制成于 1889 年，存放在巴黎郊外塞夫尔的国际计量局一座环境受控的保险库内，罩在三层套叠的钟形罩之下。开启保险库需要三把分别保管的钥匙。1889 年、1946 年以及 1989—1991 年前后的一轮工作中，人们曾正式把它与官方复制品进行比对。它的昵称是 Le Grand K，也就是「大 K」。
+
+Le Grand K 的质量恰好是一千克，定义不确定度为零，因为千克就是按它的质量定义的。第 1 日关于停摆时钟的警告在这里回来了。
+
+把它与六件官方复制品——即 *témoins*（见证原器）——以及各国原器比对后发现，这一整族原器在一个世纪中已经相差数十微克。以美国原器 K4 为例，1889 年它比国际千克原器轻 75 微克，1984 年则轻 106 微克，其偏移量改变了 31 微克。到 1999 年，它比国际千克原器轻 116 微克，较 1889 年改变了 41 微克。
+
+究竟是哪件物体变了？这套体系无法告诉我们。按其构造，Le Grand K 始终是一千克；一切差异都被归到其他物体身上。一个按定义永远正确的标准，永远不可能被发现正在变化。这种循环性使它不适合用于检测漂移。
+
+<Aside>
+<BlockTitle>那个熟悉的漂移故事，只对了一半</BlockTitle>
+
+流行说法常称 Le Grand K 神秘地损失了 50 微克。这个数字实际描述的是整族原器之间的分化。国际计量局 2015 年的一次比对发现，自 1991 年以来，国际千克原器及其六件官方复制品作为一个整体保持一致，平均变化约为一微克。没有实验表明 Le Grand K 本身正在漂移。更深层的问题是，这项定义使这种检验根本无法进行。真正的问题是循环性，而不是已经证实的质量损失。
+</Aside>
+
+网络问题同样严重。药房里的秤、半导体质量标准和药物剂量校准，都要经过国家标准和官方复制品，沿计量溯源链追溯到一座保险库里的一只圆柱。全球质量体系只有一个根节点，可能遭遇污染、刮擦、盗窃、火灾或其他损坏。
+
+2018 年 11 月 16 日，第 26 届国际计量大会在凡尔赛投票决定移除这个根节点。
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>改革</SectionEyebrow>
+
+## 2019 年 5 月 20 日：世界不再拿一块金属衡量自身
+
+修订后的国际单位制于 2019 年世界计量日生效。它把 1983 年的反转推广到全部七个基本单位，精确固定了七个常数：
+
+- ΔνCs = 9,192,631,770 Hz——铯-133 超精细跃迁频率，用于定义秒。
+- c = 299,792,458 m/s——真空光速，用于定义米。
+- h = 6.626 070 15 × 10⁻³⁴ J·s——普朗克常数，用于定义千克。
+- e = 1.602 176 634 × 10⁻¹⁹ C——元电荷，用于定义安培。
+- k = 1.380 649 × 10⁻²³ J/K——玻尔兹曼常数，用于定义开尔文。
+- NA = 6.022 140 76 × 10²³ mol⁻¹——阿伏伽德罗常数，用于定义摩尔。
+- Kcd = 683 lm/W，适用于频率为 540 × 10¹² Hz 的单色辐射——发光效能，用于帮助定义坎德拉。
+
+如今，所有 SI 单位都由这些精确值及其物理复现程序导出。原则上，火星上一间设备充足的实验室无须与地球上的任何物体比对，就能复现一千克。
+
+这场改革并未让自然变得更确定，而是转移了不确定度。2019 年以前，Le Grand K 的质量是精确值，普朗克常数则是带有不确定度的测得值。2019 年以后，*h* 成为精确值，而 Le Grand K 的质量成了带有约 10 微克测量不确定度的测得值，终于可以自由变化。四个被重新定义的单位都进行了同一类交换。
+</ContentSection>
+
+<Day13Interactive kind="uncertainty-ledger" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 不确定度账本</PanelTitle>
+
+<PanelNote>2019 年 5 月 20 日前后，都是七项量按定义精确，四项量带有测量不确定度。四个自然常数进入精确一栏，四个旧锚点则离开。精确性被交换，而非凭空创造。下表改革前的测得值采用 CODATA 2014 调整值，改革后的测得值采用 CODATA 2022。</PanelNote>
+
+<Day13StaticFigure kind="uncertainty-ledger" locale="zh" />
+
+<SimpleTable
+  headers={["量","2019 年 5 月 20 日以前","2019 年 5 月 20 日以后"]}
+  rows={[
+    ["光速 c","299,792,458 m/s；自 1983 年起为精确值","299,792,458 m/s；精确值"],
+    ["铯频率 ΔνCs","9,192,631,770 Hz；自 1967 年起为精确值","9,192,631,770 Hz；精确值"],
+    ["发光效能 Kcd","683 lm/W；自 1979 年起为精确值","683 lm/W；精确值"],
+    ["普朗克常数 h","6.626 070 040(81) × 10⁻³⁴ J·s；相对不确定度 1.2 × 10⁻⁸","6.626 070 15 × 10⁻³⁴ J·s；精确值"],
+    ["Le Grand K 的质量","1 kg；按定义精确","约 1 kg ± 10 µg；相对不确定度约 1 × 10⁻⁸"],
+    ["元电荷 e","1.602 176 6208(98) × 10⁻¹⁹ C；相对不确定度 6.1 × 10⁻⁹","1.602 176 634 × 10⁻¹⁹ C；精确值"],
+    ["真空磁导率 μ₀","4π × 10⁻⁷ N/A²；按旧安培定义为精确值","1.256 637 061 27(20) × 10⁻⁶ N/A²；相对不确定度 1.6 × 10⁻¹⁰"],
+    ["玻尔兹曼常数 k","1.380 648 52(79) × 10⁻²³ J/K；相对不确定度 5.7 × 10⁻⁷","1.380 649 × 10⁻²³ J/K；精确值"],
+    ["水三相点","273.16 K；按旧开尔文定义为精确值","约 273.1600 K ± 0.0001 K"],
+    ["阿伏伽德罗常数 NA","6.022 140 857(74) × 10²³ mol⁻¹；相对不确定度 1.2 × 10⁻⁸","6.022 140 76 × 10²³ mol⁻¹；精确值"],
+    ["碳-12 的摩尔质量","12 g/mol；按旧摩尔定义为精确值","12.000 000 0126(37) g/mol；相对不确定度 3.1 × 10⁻¹⁰"]
+  ]}
+/>
+
+四次直接交换分别是：千克，Le Grand K → *h*；安培，固定 μ₀ → *e*；开尔文，水三相点 → *k*；摩尔，12 克碳-12 → *NA*。七项精确、四项不确定，是这场改革的结构特征，并非自然定律。四个单位各自用一个精确锚点换下了另一个。
+</FormatOnly>
+
+<ContentSection>
+<SectionEyebrow>机器</SectionEyebrow>
+
+## 怎样用普朗克常数称出一千克
+
+普朗克常数属于量子力学。它怎么能称一袋糖？
+
+1975 年，英国国家物理实验室的布赖恩·基布尔给出了答案。基布尔天平把一个质量与电磁力进行比较，再把电学测量连接到量子标准。它以两种模式运行，同一组难以测准的几何量会同时出现在两种模式中。
+</ContentSection>
+
+<Day13Interactive kind="kibble-balance" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 基布尔天平的两种模式</PanelTitle>
+
+<PanelNote>称量模式用电磁力平衡质量的重量。速度模式让同一线圈穿过同一磁场运动。联立两条方程后，磁场强度与有效导线长度都会消去。</PanelNote>
+
+<Day13StaticFigure kind="kibble-balance" locale="zh" />
+
+<SimpleTable
+  headers={["模式","关系式","观测量"]}
+  rows={[
+    ["称量","m g = B L I","电流 I 产生向上的力 BLI，与重量 mg 平衡。"],
+    ["速度","U = B L v","让线圈以速度 v 穿过磁场运动，产生电压 U。"],
+    ["联立","m g v = U I，因此 m = U I / (g v)","难以测准的量 B 和 L 相消。"]
+  ]}
+/>
+
+电压用约瑟夫森结复现，其量子化台阶通过 *h* 和 *e* 把电压与频率联系起来。电阻则通过与 *h/e²* 成正比的量子霍尔平台复现。随后可由电压与电阻求得电流。在乘积 *U × I* 中，元电荷相消，*h* 保留下来。重力测量给出 *g*，激光干涉测量给出 *v*。计量溯源链最终落在精确的 *h*、*c* 和 ΔνCs 上，而不是一只金属圆柱上。
+</FormatOnly>
+
+<ContentSection>
+冗余使结果更可信。千克还有第二条大体独立的复现路线：硅球。把近乎完美的同位素富集硅-28 晶体研磨成极为接近球形的球体，再测量其体积、用 X 射线干涉测量晶格间距，并测定同位素组成，就能确定其中的原子数，并把结果连接到阿伏伽德罗常数和 *h*。重新定义之前，CODATA 2017 特别调整要求硅球与基布尔天平两类实验在 10⁻⁸ 水平上一致。它们做到了。
+
+两条路线采用了大不相同的实验物理，却收敛到同一个值。这正是[第 2 日](/zh/days/002-scientific-method-and-demarcation/)教我们珍视的那种有风险的一致。
+
+<Aside>
+<BlockTitle>史上最昂贵的单位换算</BlockTitle>
+
+1999 年 9 月 23 日，NASA 的火星气候轨道器在入轨过程中失事。洛克希德·马丁的地面软件以磅力秒报告推进器冲量，而 JPL 的导航软件预期的是牛顿秒，两者相差约 4.45 倍。这项不匹配持续了数月。航天器原本应安全接近火星，却以估计约 57 千米的高度掠过，并在穿越大气后解体或逃逸。据报该任务耗资 3.276 亿美元。调查委员会强调，这是一场系统失效，而不是某个人的算术错误：本应暴露不兼容接口的检查并未做到。单位是一纸条约，只有接口强制执行它，条约才会生效。
+</Aside>
+</ContentSection>
+
+<ContentSection>
+<SectionEyebrow>争论</SectionEyebrow>
+
+## 「光速在变化吗？」是一个不完整的问题
+
+国际单位制以常数为锚，那么这些常数真的恒定吗？自狄拉克 1937 年提出大数假说以来，物理学家一直在探索 *c*、*G* 或电子电荷是否会随宇宙时间漂移。变光速宇宙学让这个问题听起来十分直接。其实并非如此。
+
+迈克尔·达夫在与列夫·奥昆和加布里埃莱·韦内齐亚诺的三方论辩中，给出了最尖锐的反对意见。这场论辩于 2002 年以 *Trialogue on the Number of Fundamental Constants* 为题发表。奥昆认为有三个基本有量纲常数：*c*、ℏ 和 *G*；韦内齐亚诺认为有两个；达夫认为一个也没有。
+
+像 *c* 这样的有量纲常数带有单位，因此部分记录了我们对坐标和换算约定的选择。仅仅说 *c* 的数值发生了变化，还没有指明一个不随单位改变的物理观测。自 1983 年起，它在国际单位制中的数值已按定义固定。一套具有物理内容的变常数理论，必须说明哪个可观测的无量纲比值发生变化，以及怎样变化。
+
+把米换成英尺，或把秒换成年，都无法改变无量纲数。两个核心例子是：
+
+- 精细结构常数 α ≈ 1/137.035 999，它表征电磁耦合，并参与决定原子光谱与化学性质；
+- 质子—电子质量比 μ = mp/me ≈ 1836.15。
+
+<BlockQuote>
+如果一项所谓的变化能够通过更换单位而消失，它就还不是一项关于世界的主张。
+</BlockQuote>
+
+这就是第 10 日「地图与疆域」的物理版本。有量纲常数编码了网格的一部分；无量纲比值则表达任何单位制都必须保留的关系。这也是第 2 日的可检验性规则：「光速在变化」若没有不随单位改变的预测，就不排除任何观测。明确指出哪个比值在变化，这项主张才变得可检验。
+
+那么，α 变过吗？
+</ContentSection>
+
+<Day13Interactive kind="alpha-drift" locale="zh" />
+<FormatOnly as="div" media="print-epub" variant="alternate">
+<PanelTitle>图 · 精细结构常数漂移的限值</PanelTitle>
+
+<PanelNote>实验室时钟、地质证据、类星体光谱和宇宙微波背景探测着不同的时代。每项经过校准的结果都与无变化相容。2011 年的类星体偶极主张单独列出，因为后来的仪器审计发现了与所称信号相当的畸变。</PanelNote>
+
+<Day13StaticFigure kind="alpha-drift" locale="zh" />
+
+<SimpleTable
+  headers={["探针","时间基线","报告的约束或结果","解读"]}
+  rows={[
+    ["PTB 的 Yb⁺ 光学原子钟","26 个月","(1/α)(dα/dt) = 1.8 ± 2.5 × 10⁻¹⁹ 每年","与零相容；本课中最严格的实验室直接漂移限值。"],
+    ["奥克洛天然反应堆","18 亿年","在核模型假设下，|Δα/α| 低于约 10⁻⁷","约束很强，但依赖模型；夸克质量若同时变化，会改变推断。"],
+    ["经过现代校准的类星体光谱","约 100 亿年的回溯时间","示例：Δα/α = 0.30 ± 1.44 ppm","与零相容。"],
+    ["2011 年 Keck 与 VLT 的偶极主张","约 300 个类星体吸收系统；约 100 亿年的回溯时间","振幅约 0.97 × 10⁻⁵，约为 4σ","2015 年的一次审计发现每 Å 约 0.2 m/s 的波长畸变，与信号相当，却未计入其误差预算。"],
+    ["普朗克宇宙微波背景","138 亿年","复合时期的 Δα/α = (3.6 ± 3.7) × 10⁻³","宽松得多，但在图中最早的时代仍与零相容。"]
+  ]}
+/>
+
+天文观测条目约束的是 Δα/α，而不是一个恒定漂移率。要把它们放到同一条速率轴上，必须除以回溯时间，这等于假定漂移是线性的。因此，这幅图只能提供数量级指引，而不是不依赖模型的排名。奥克洛推断同样以其他核参数的假设为条件。
+</FormatOnly>
+
+<ContentSection class="frontier">
+<SectionEyebrow>前沿 · 2026 年 7 月</SectionEyebrow>
+
+## 证据抵达何处
+
+<Claim>
+<ClaimHeader label="前沿 01">
+<StatusChip status="ok" label="时钟性能" printLabel="光学原子钟性能已确立" />
+<StatusChip status="hint" label="2030 年重定义" printLabel="秒的重定义拟于 2030 年提出，尚未完成" />
+</ClaimHeader>
+
+### 秒可能在 2030 年重新定义——时钟早已跑在定义前面
+
+自 1967 年以来，一秒就是铯-133 超精细跃迁 9,192,631,770 个周期所持续的时间。领先的铯原子喷泉钟 NIST-F2 于 2014 年报告了 1.1 × 10⁻¹⁶ 的系统不确定度，相当于约 3 亿年才偏差一秒。光学原子钟以高得多的频率振荡，如今报告的不确定度已经小了 100 倍以上。
+
+NIST 的铝离子量子逻辑钟于 2025 年 7 月 14 日在 *Physical Review Letters* 报告了 5.5 × 10⁻¹⁹ 的系统不确定度。它探测单个 ²⁷Al⁺ 离子，由一枚共俘获的 ²⁵Mg⁺ 离子对其进行交感冷却，并使用通过 3.6 千米光纤连接的低温硅参考腔。JILA 的锶光晶格钟于 2024 年报告了 8.1 × 10⁻¹⁹。媒体报道把铝离子装置称为「世界上最准确的时钟」，并宣称达到小数点后 19 位；同行评议论文确立的结果，是上述不确定度以及稳定性提升至原来的三倍。
+
+现有定义已经成为瓶颈。国际计量大会路线图要求计量学界做好准备，以便在 2030 年第 29 届国际计量大会上提出重定义方案，前提是具备可靠的光学标准、超稳定连接、跨实验室可复现性，以及基于不同跃迁的时钟之间达成一致。国际计量局一份日期为 2026 年 6 月 30 日的决议草案指出，对于采用单一原子种类还是一组跃迁，仍未形成共识。性能里程碑已经确立；具体选择与重定义尚未完成。
+</Claim>
+
+<Claim>
+<ClaimHeader label="前沿 02">
+<StatusChip status="ok" label="Th-229 频率比" printLabel="频率比已测得" />
+<StatusChip status="hint" label="α 敏感性" printLabel="敏感性尚属预测" />
+<StatusChip status="bad" label="暗物质探测" printLabel="未探测到暗物质" />
+</ClaimHeader>
+
+### 原子核内的一次时钟跃迁
+
+精密原子钟通常利用电子跃迁。钍-229 拥有一个异常低的核激发态，能量接近 8.4 eV，可以用激光触及。2024 年，一连串结果迅速抵达这一状态：Tiedau 及其同事报告在 PTB 以激光激发钍-229 同质异能态；Elwell 及其同事报告了固态激发；Zhang、Ooi、Higgins 及合作者则使用真空紫外频率梳，把核跃迁直接与 JILA 的锶原子钟比较。2024 年 9 月 4 日发表于 *Nature* 的结果，把核频率的精密度提高了约一百万倍。
+
+原子核比原子小约 10,000 倍，电子云又能屏蔽许多外场，因此可以制备高密度固态样品。该跃迁的能量还源于若干巨大核贡献之间的近乎相消，这可能放大它对 α 变化的敏感性。把敏感性断言为恰好提高 10,000 倍，显得过分确定：Beeks 及其同事在 2025 年估计增强因子为 K = 5900 ± 2300，不确定度约 40%，并且依赖半经典核模型。这项跃迁确实提供了新的测量平台；探测暗物质或 α 的变化仍然只是研究目标。
+</Claim>
+
+<Claim>
+<ClaimHeader label="前沿 03">
+<StatusChip status="ok" label="漂移零结果" printLabel="精细结构常数漂移零结果已确立" />
+</ClaimHeader>
+
+### 最严格的直接答案与零相容
+
+同一枚镱离子中的两种跃迁对 α 的响应不同。PTB 对 E3 八极跃迁与 E2 四极跃迁进行了 26 个月的比较：
+
+<BlockQuote>
+(1/α)(dα/dt) = 1.8 ± 2.5 × 10⁻¹⁹ 每年
+
+<Meta>Filzinger 等，*Physical Review Letters* 130:253001，2023 年 6 月 22 日。</Meta>
+</BlockQuote>
+
+这个估计以零附近为中心。它改进了 2021 年的一次比较；后者报告 α 的年变化率为 1.0(1.1) × 10⁻¹⁸，μ 的年变化率为 −8(36) × 10⁻¹⁸。如果所引 2.5 × 10⁻¹⁹ 每年的 1σ 敏感性尺度在 138 亿年间线性延续，累积变化约为十亿分之 3.5——这是有意采用线性模型的外推，并非宇宙学约束。在核模型假设下，奥克洛 18 亿年前的天然反应堆把 |Δα/α| 约束在 10⁻⁷ 左右。普朗克的宇宙微波背景分析则给出复合时期、即 138 亿年前的 Δα/α = (3.6 ± 3.7) × 10⁻³。尽管假设与时代各不相同，这里展示的每项结果都与零相容。
+</Claim>
+
+<Claim>
+<ClaimHeader label="前沿 04">
+<StatusChip status="bad" label="α 偶极" printLabel="类星体 α 偶极受到仪器系统效应质疑" />
+</ClaimHeader>
+
+### 一项被自身仪器削弱的漂亮主张
+
+Webb、King、Murphy、Flambaum 及其同事对约 300 个类星体吸收系统使用多重态组合法（many-multiplet method），于 2011 年报告：α 在天空一个方向上似乎更小，在相反方向上则更大，构成约 4σ 的空间偶极。该结果合并了夏威夷 Keck 天文台 HIRES 光谱仪与智利 VLT 的 UVES 光谱仪观测。
+
+Whitmore 与 Murphy——Murphy 也是原始报告的作者——于 2015 年用小行星和太阳孪生星光谱对两台仪器进行超校准审计。他们在两台仪器中都发现了每 Å 约 0.2 m/s 的长程波长畸变。这些畸变没有进入原始误差预算，而且足以模仿所报告量级的信号。HARPS 和 ESPRESSO 等校准更充分的仪器，在高精度单系统研究中给出了零结果，其中包括 Δα/α = 0.30 ± 1.44 ppm。因此，这个偶极尚不能算作空间变化已经确立的证据；仪器系统效应提供了足够有力的竞争性解释。
+</Claim>
+
+<Claim>
+<ClaimHeader label="前沿 05">
+<StatusChip status="bad" label="5.4σ 差异" printLabel="精细结构常数测量差异尚未解决" />
+</ClaimHeader>
+
+### α 很稳定，我们最好的测量却彼此冲突
+
+反差十分鲜明：我们没有检测到 α 漂移，但两项最精确的原子反冲测定却不一致。伯克利的铯测量于 2018 年给出 α⁻¹ = 137.035 999 046(27)。巴黎的铷结果于 2020 年 12 月 2 日给出 α⁻¹ = 137.035 999 206(11)，不确定度为万亿分之 81。两者相差约 5.4σ。
+
+CODATA 2022 把输入不确定度扩大了 2.5 倍，以处理这项不一致，并推荐 α⁻¹ = 137.035 999 177(21)。哈佛 2023 年通过电子 *g* 因子测定得到 137.035 999 166(15)，更接近巴黎结果，却仍不足以解决反冲测量的差异。主流预期是至少一项测量中存在尚未识别的系统效应，而不是出现了新物理；但目前还没有找到公认原因。α 的数值将在第 46 日再次出现，届时它会进入标准模型对 μ 子磁矩的预测。
+</Claim>
+
+<Claim>
+<ClaimHeader label="前沿 06">
+<StatusChip status="ok" label="G 测量差距" printLabel="万有引力常数的测量难题已确立" />
+</ClaimHeader>
+
+### G 依然极难测量
+
+α 推荐值的相对不确定度约为 100 亿分之 1.5。CODATA 2018 中，牛顿万有引力常数 G 的相对不确定度约为 10 万分之 2.2：6.674 30(15) × 10⁻¹¹。最好的实验彼此间的差异超过各自声明的误差。2018 年，Li、Xue、Luo 及合作者在同一间实验室用两种独立方法测量 *G*，每种方法的不确定度都接近 11.6 ppm，两项结果却依然不同。
+
+为什么不仿照国际单位制固定 *h* 的方式，直接固定 *G*？一个有用的定义常数必须支持单位的实际复现。没有任何装置能在 10⁻⁸ 水平上，通过实验室质量块之间的引力来传递千克量值。量子电学效应足够可控，可以用于基布尔天平；实验室引力却不行。因此，*G* 仍是一个带有不确定度的测得量。
+</Claim>
+
+<Claim>
+<ClaimHeader label="前沿 07">
+<StatusChip status="ok" label="毫米尺度红移" printLabel="毫米尺度引力红移已确立" />
+<StatusChip status="hint" label="时钟暗物质检验" printLabel="时钟网络暗物质搜寻有前景" />
+</ClaimHeader>
+
+### 时钟能检测一毫米的高度差
+
+广义相对论预言，引力场中位置更深的时钟走得更慢。2022 年，Bothwell、Kennedy、Aeppli、Ye 及合作者分辨出了横跨锶原子云一毫米范围的引力红移。他们测得每厘米 [−12.4 ± 0.7(stat) ± 2.5(sys)] × 10⁻¹⁹ 的频率梯度，与预言的 −10.9 × 10⁻¹⁹/cm 一致。
+
+达到这种敏感性后，时钟就成了高度计。钟测水准通过比较不同高度的时钟，测量地球引力势之差。ESA 的 ACES 载荷于 2025 年 4 月 21 日发射，随后安装到国际空间站，并于 4 月 28 日开始激活。到 2026 年，调试仍在进行，尚未完成科学观测任务。报道称其 PHARAO 铯钟性能符合指标，而空间氢脉泽的工作仍在继续。ACES 旨在从轨道上检验引力红移和常数变化。
+
+彼此分离的时钟网络也在搜寻超轻标量暗物质。当地球穿过这种场时，它可能调制无量纲常数，并产生相关或差分频率信号。目前尚无探测结果；已经确立的是越来越敏感的测量方法，以及它所给出的限值。
+</Claim>
+</ContentSection>
+
+<Aside>
+<BlockTitle>测量之上的一道阴影——留给第 134 日</BlockTitle>
+
+长度、质量和频率都拥有经过充分检验的定量结构。但我们也会给智力、疼痛、幸福和工作满意度赋予数字。1940 年，英国科学促进会的弗格森委员会得出结论：感觉强度尚未被证明能以所要求的意义加以测量。S. S. Stevens 于 1946 年回应，把测量定义为「依照规则把数字指派给对象」，并推广了名义、顺序、区间和比率量表。此后，这套框架主导了统计学教学。Joel Michell 认为，心理测量学往往没有证明某种属性具有定量结构，便直接假定它具有这种结构。把这场争论留到第 134 日。每当一个数字出现时，都要问：这种属性已被证明具有量值，还是仅仅被赋予了一个分数？
+</Aside>
+
+<ContentSection>
+<SectionEyebrow>未决问题</SectionEyebrow>
+
+## 真正仍无定论的事
+
+- 哪一种光学跃迁应当定义秒？锶、镱、铝，还是加权组合？基础设施影响会延续很久，而目前没有任何选择形成共识。
+- 为什么伯克利与巴黎对 α 的测量相差 5.4σ？至少一项测量很可能存在未识别的系统效应，但尚无公认解释。
+- 为什么 G 依然如此难测？两个世纪过去，领先结果的误差棒仍互不相容。尚未解决的原因可能是技术问题、被低估的系统效应，或模型未包含的物理。
+- 无量纲常数是否会在今日限值以下漂移？许多超越标准模型的理论允许极微小的变化。接近每年 10⁻¹⁹ 的零结果约束了耦合，却不能证明绝对恒定。
+- 是否存在某种具有特殊地位的自然单位制？普朗克单位由 *c*、ℏ 和 *G* 组合而成。如果有量纲常数部分编码的是约定，那么普朗克单位揭示了深层结构，还是只提供了一套格外好用的网格？
+- 固定定义会隐藏哪些信息？精确的 SI 数值无法记录漂移，但无量纲比值的比较仍然敏感。这正是实验监测 α、μ 及其他不变量组合的原因。
+</ContentSection>
+
+<Recap>
+<RecapList>
+<RecapItem term="核心观点">单位是一项共同条约。现代计量学固定一个常数，再从中导出单位：米在 1983 年完成了这场反转，另有四个基本单位于 2019 年 5 月 20 日更换了锚点。</RecapItem>
+<RecapItem term="最佳类比">Le Grand K 是用铂铸成的第 1 日停摆时钟。因为它按定义恰好是一千克，这套体系永远无法检测它是否发生变化；2019 年的不确定度账本把精确性转移给了各实验室能够独立复现的常数。</RecapItem>
+<RecapItem term="仍在争论">这里展示的每种无量纲探针都与 α 无漂移相容，仪器畸变也削弱了著名的类星体偶极。然而，两项领先的 α 原子反冲测量相差 5.4σ，而我们对 G 的认知仍远没有这么精确。</RecapItem>
+</RecapList>
+</Recap>
+
+<Threads label="今日脉络 ›">信息（单位是共享代码；不确定度是一项可以转移的预算）· 能量（h、k、约瑟夫森结与量子霍尔效应）· 计算（把计量溯源性视为有根网络，而 2019 年移除了唯一根节点）· 轻涌现——第 7 日的「信息是物理的」在这里遇见自己的镜像：单位是抽象化为硬件的地方。</Threads>
+
+<ContinueNote label="明日 → 第 14 日">
+### 综合：我们如何知道
+
+模块一就此收束。十三天为我们提供了各种工具：盖梯尔的运气、波普尔的天鹅、贝叶斯的刻度盘、珀尔的剪刀、香农的比特、安德森的「多者异也」、梅多斯的回路、博克斯有用的谎言、西蒙的剪刀、巴拉巴西的枢纽，以及今天的不确定度账本。明天，我们要把这些工具转向自己，为余下 166 天建立一套个人置信度校准框架。认识论模块以另一个测量问题结束：怎样用一个经过校准的数字，表示你有多确定？
+</ContinueNote>
+
+<Sources>
+<SectionEyebrow>资料来源</SectionEyebrow>
+
+<SourcesTitle>资料来源与延伸阅读</SourcesTitle>
+
+1. BIPM. *The International System of Units (SI Brochure), 9th edition* (2019, updated 2024). [bipm.org/en/publications/si-brochure](https://www.bipm.org/en/publications/si-brochure) <Meta>七个定义常数及其精确值；第 26 届国际计量大会于 2018 年 11 月 16 日通过，2019 年 5 月 20 日生效。</Meta>
+2. Alder, K. (2002). *The Measure of All Things: The Seven-Year Odyssey and Hidden Error That Transformed the World.* Free Press. <Meta>德朗布尔与梅尚，1792—1799 年；巴塞罗那纬度差异及其隐瞒经过。</Meta>
+3. Newell, D. B. et al. (2018). 「The CODATA 2017 values of h, e, k, and NA for the revision of the SI.」 *Metrologia* 55(1): L13–L16. <Meta>把 h 固定为 6.626 070 15 × 10⁻³⁴ J·s 的特别调整；doi:10.1088/1681-7575/aa950a。</Meta>
+4. Mohr, P. J., Newell, D. B., Taylor, B. N. &amp; Tiesinga, E. (2024). 「CODATA Recommended Values of the Fundamental Physical Constants: 2022.」 arXiv:2409.03787. <Meta>α⁻¹ = 137.035 999 177(21)；为容纳反冲测量的不一致，采用 2.5 的扩展因子；CODATA 2018 的 G = 6.674 30(15) × 10⁻¹¹。</Meta>
+5. Marshall, M. et al. (2025). 「High-Stability Single-Ion Clock with 5.5 × 10⁻¹⁹ Systematic Uncertainty.」 *Physical Review Letters* 135:033201. <Meta>发表于 2025 年 7 月 14 日；NIST ²⁷Al⁺ 量子逻辑钟。</Meta>
+6. Aeppli, A., Kim, K., Warfield, W., Safronova, M. S. &amp; Ye, J. (2024). 「Clock with 8 × 10⁻¹⁹ Systematic Uncertainty.」 *Physical Review Letters* 133:023401. <Meta>JILA 锶光晶格钟；报告值为 8.1 × 10⁻¹⁹。</Meta>
+7. Bothwell, T., Kennedy, C. J., Aeppli, A. et al. (2022). 「Resolving the gravitational redshift across a millimetre-scale atomic sample.」 *Nature* 602:420–424. <Meta>发表于 2022 年 2 月 17 日；doi:10.1038/s41586-021-04349-7。</Meta>
+8. Zhang, C., Ooi, T., Higgins, J. S. et al. (2024). 「Frequency ratio of the ²²⁹ᵐTh nuclear isomeric transition and the ⁸⁷Sr atomic clock.」 *Nature* 633:63–70. <Meta>发表于 2024 年 9 月 4 日；首次核跃迁—原子跃迁频率比较。</Meta>
+9. Tiedau, J. et al. (2024). 「Laser Excitation of the Th-229 Nucleus.」 *Physical Review Letters* 132:182501. <Meta>PTB 的激光激发实验；另见 Elwell 等发表于 *Physical Review Letters* 133:013201 (2024) 的固态激发研究。</Meta>
+10. Beeks, K. et al. (2025). 「Fine-structure constant sensitivity of the Th-229 nuclear clock transition.」 *Nature Communications* 16:9147. <Meta>增强因子 K = 5900(2300)，具有显著不确定度和模型依赖性。</Meta>
+11. Filzinger, M. et al. (2023). 「Improved limits on the coupling of ultralight bosonic dark matter to photons from optical atomic clock comparisons.」 *Physical Review Letters* 130:253001. <Meta>发表于 2023 年 6 月 22 日；根据历时 26 个月的 ¹⁷¹Yb⁺ E3/E2 比较得到 (1/α)(dα/dt) = 1.8(2.5) × 10⁻¹⁹ yr⁻¹。</Meta>
+12. Lange, R. et al. (2021). 「Improved Limits for Violations of Local Position Invariance from Atomic Clock Comparisons.」 *Physical Review Letters* 126:011102. <Meta>发表于 2021 年 1 月 8 日；α 与 μ 的漂移约束。</Meta>
+13. Duff, M. J., Okun, L. B. &amp; Veneziano, G. (2002). 「Trialogue on the number of fundamental constants.」 *JHEP* 03:023. <Meta>发表于 2002 年 4 月 8 日；有量纲常数作为单位约定，以及无量纲比值的可观测作用。</Meta>
+14. Damour, T. &amp; Dyson, F. (1996). 「The Oklo bound on the time variation of the fine-structure constant revisited.」 *Nuclear Physics B* 480:37–54. <Meta>在模型假设下，18 亿年间的 |Δα/α| 约为 10⁻⁷ 量级；夸克质量敏感性另见 Flambaum 与 Wiringa（2009）。</Meta>
+15. Webb, J. K., King, J. A., Murphy, M. T. et al. (2011). 「Indications of a spatial variation of the fine structure constant.」 *Physical Review Letters* 107:191101. <Meta>约 4σ 的「澳大利亚偶极」主张，振幅接近 0.97 × 10⁻⁵。</Meta>
+16. Whitmore, J. B. &amp; Murphy, M. T. (2015). 「Impact of instrumental systematic errors on fine-structure constant measurements with quasar spectra.」 *MNRAS* 447:446–462. <Meta>HIRES 与 UVES 中每 Å 约 0.2 m/s 的长程波长畸变，与所称偶极相当。</Meta>
+17. Parker, R. H., Yu, C., Zhong, W., Estey, B. &amp; Müller, H. (2018). 「Measurement of the fine-structure constant as a test of the Standard Model.」 *Science* 360:191–195. <Meta>伯克利铯原子反冲结果，α⁻¹ = 137.035 999 046(27)。</Meta>
+18. Morel, L., Yao, Z., Cladé, P. &amp; Guellati-Khélifa, S. (2020). 「Determination of the fine-structure constant with an accuracy of 81 parts per trillion.」 *Nature* 588:61–65. <Meta>发表于 2020 年 12 月 2 日；巴黎铷原子反冲结果，α⁻¹ = 137.035 999 206(11)。</Meta>
+19. Li, Q., Xue, C., Luo, J. et al. (2018). 「Measurements of the gravitational constant using two independent methods.」 *Nature* 560:582–588. <Meta>两种 HUST 方法的不确定度均约 11.6 ppm，但结果彼此不同。</Meta>
+20. Dimarcq, N. et al. (2024). 「Roadmap towards the redefinition of the second.」 *Metrologia* 61:012001. <Meta>CCTF/CGPM 路线图，目标是在 2030 年第 29 届国际计量大会上提出方案；2022 年 11 月由国际计量大会第 5 号决议认可。</Meta>
+21. Heavner, T. P. et al. (2014). 「First accuracy evaluation of NIST-F2.」 *Metrologia* 51:174. <Meta>铯原子喷泉钟的系统不确定度为 1.1 × 10⁻¹⁶。</Meta>
+22. Boulder Atomic Clock Optical Network Collaboration (2021). 「Frequency ratio measurements at 18-digit accuracy using an optical clock network.」 *Nature* 591:564–569.
+23. Planck Collaboration (2015). 「Planck intermediate results. XXIV. Constraints on variation of fundamental constants.」 *Astronomy &amp; Astrophysics* 580:A22. <Meta>复合时期的 Δα/α = (3.6 ± 3.7) × 10⁻³；arXiv:1406.7482。</Meta>
+24. Bridgman, P. W. (1927). *The Logic of Modern Physics.* Macmillan. <Meta>操作定义；另见 [Stanford Encyclopedia of Philosophy, 「Operationalism」](https://plato.stanford.edu/entries/operationalism/)。</Meta>
+25. Stevens, S. S. (1946). 「On the theory of scales of measurement.」 *Science* 103:677–680. <Meta>名义、顺序、区间与比率量表；写于弗格森委员会报告之后。反对意见见 Michell, J., *Measurement in Psychology*（Cambridge University Press, 1999）。</Meta>
+26. NASA/JPL (1999). *Mars Climate Orbiter Mishap Investigation Board — Phase I Report.* <Meta>发表于 1999 年 11 月 10 日；磅力秒与牛顿秒的不一致，以及任务损失。</Meta>
+27. BIPM. 「The Metre Convention.」 [bipm.org/en/metre-convention](https://www.bipm.org/en/metre-convention) <Meta>17 个国家于 1875 年 5 月 20 日签署；2025 年为 150 周年。另见国际计量大会第 3 号决议（2022 年 11 月），该决议采用了词头 ronna、quetta、ronto 和 quecto。</Meta>
+28. BIPM (30 June 2026). *Draft Resolutions — 28th meeting of the CGPM*, version 4. [CGPM/2026-Draft Resolutions](https://www.bipm.org/documents/20126/284836054/CGPM-2026-Draft-Resolutions.pdf/2c60f609-b7ba-75b2-5ad4-94b526d182ac?download=true&t=1775114821967&version=4.0) <Meta>决议草案 B 记载：关于秒的新定义应采用单一原子种类还是一组跃迁，尚未形成共识；并要求在 2030 年第 29 届国际计量大会上提出方案。</Meta>
+29. ESA (25 April 2025). 「ACES finds its home in orbit.」 [esa.int](https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/ACES_finds_its_home_in_orbit) <Meta>2025 年 4 月 21 日发射，4 月 25 日安装到国际空间站，以及后续调试计划。</Meta>
+30. CNES (Winter 2026). 「PHARAO putting clocks right.」 *CNESMAG* 99. [英文版（PDF）](https://cnes.fr/sites/default/files/2026-01/cnesmag-99-en_0.pdf) <Meta>PHARAO 在轨性能达到预期；空间氢脉泽仍未运行，团队正在研究替代方案。</Meta>
+31. NIST (1985, 2001). Measurements of United States prototype kilogram K4. [1985 年比对](https://nvlpubs.nist.gov/nistpubs/jres/090/4/V90-4.pdf)；[1999 年重新校准报告](https://nvlpubs.nist.gov/nistpubs/jres/106/1/j61jab.pdf). <Meta>1889 年 K4 比国际千克原器轻 75 µg，1984 年轻 106 µg，1999 年轻 116 µg。</Meta>
+</Sources>
+
+</Wrap>

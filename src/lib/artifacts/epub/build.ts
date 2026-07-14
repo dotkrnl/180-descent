@@ -416,6 +416,8 @@ body{font-size:1em;}
 .deep-dive-optional-note{font-style:italic;color:#555;margin:.2em 0 .65em;}
 .epub-alt{display:block!important;}
 .epub-alt>.ptitle{display:none!important;}
+.day13-static-figure{overflow-x:visible!important;overscroll-behavior-inline:auto!important;}
+.day13-static-figure svg{width:100%!important;max-width:100%!important;margin-left:auto!important;margin-right:auto!important;}
 .tip-note{display:inline!important;margin:0!important;vertical-align:baseline!important;}
 .tip-note-mark,.tip-note-box{display:none!important;}
 .tip-note-ref{display:inline!important;font-family:"IBM Plex Mono",monospace;font-size:.72em;font-weight:500;line-height:0;vertical-align:super;margin-left:.08em;color:#555;}
