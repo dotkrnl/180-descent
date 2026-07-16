@@ -621,6 +621,14 @@
     50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--signal) 6%,transparent);}
   }
 }
+// The featured card rides alongside the long recent stream on wide screens
+// so the left column never falls empty while the stream scrolls.
+@media screen and (min-width:$bp-aside){
+  .atlas-home .home-featured-day{
+    position:sticky;
+    top:calc(var(--topbar-h) + 1.5rem);
+  }
+}
 .atlas-home .home-featured-day .day-card{
   display:block;
   padding:0;
@@ -667,7 +675,10 @@
 }
 .atlas-home .recent-descent-stream .day-card a{
   color:var(--accent-deep);
-  border-bottom-color:color-mix(in srgb,var(--accent) 30%,transparent);
+  border-bottom-color:transparent;
+}
+.atlas-home .recent-descent-stream .day-card a:hover{
+  border-bottom-color:color-mix(in srgb,var(--accent) 45%,transparent);
 }
 .atlas-home .recent-descent-stream .day-card p:not(.card-kicker){
   font-size:1rem;
