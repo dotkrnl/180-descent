@@ -385,16 +385,17 @@
   border-top:1px solid var(--line);
 }
 // Planned rows sit quiet by default: the "PLANNED" chip repeated 160 times is
-// visual noise, so we dim the whole row and let published titles carry the ink.
-.atlas-page--syllabus .depth-day:not(.is-published):not(.is-here){
-  opacity:.62;
-}
+// visual noise, so we let published titles carry the ink and drop the chip
+// on unpublished non-next rows. We differentiate with font-weight and a
+// weaker dot marker instead of opacity, so WCAG contrast still passes.
 .atlas-page--syllabus .depth-day:not(.is-published):not(.is-here) .depth-title,
 .atlas-page--syllabus .depth-day:not(.is-published):not(.is-here) .depth-num{
-  color:var(--ink-faint);
+  color:var(--ink-soft);
   font-weight:400;
 }
-.atlas-page--syllabus .depth-day:not(.is-published):not(.is-here):hover{opacity:1;}
+.atlas-page--syllabus .depth-day:not(.is-published):not(.is-here) .depth-title a{
+  color:var(--ink-soft);
+}
 .atlas-page--syllabus .depth-day.is-here .depth-status{
   color:var(--brass);
   font-weight:500;
