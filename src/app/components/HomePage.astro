@@ -36,13 +36,12 @@ const readingDays = days.map((day) => ({
 }));
 const blockCount = syllabus.blocks.length;
 // The atlas legend strips the "+ DEEP DIVE …" tail from block titles so long
-// EN/ZH titles read cleanly at the 1-line cap; a small ◈ glyph flags the row.
+// EN/ZH titles read cleanly at the 1-line cap.
 const deepDiveTailRe = /\s+\+\s+(?:DEEP DIVE|专题深入)\s+\d+[:：].*$/i;
 const capstoneTailRe = /\s+\+\s+(?:Capstone|顶点)$/i;
 const strata = syllabus.blocks.map((block, index) => {
   const total = block.endDay - block.startDay + 1;
   const publishedInBlock = publishedDays.filter((day) => day.day >= block.startDay && day.day <= block.endDay).length;
-  const hasDeepDive = deepDiveTailRe.test(block.title) || capstoneTailRe.test(block.title);
   const isCurrent = currentFrontier
     ? currentFrontier.day >= block.startDay && currentFrontier.day <= block.endDay
     : false;
@@ -51,7 +50,6 @@ const strata = syllabus.blocks.map((block, index) => {
     id: block.id,
     title: compactTitle,
     fullTitle: block.title,
-    hasDeepDive,
     isCurrent,
     hue: Math.round(200 + (index * 100) / Math.max(1, blockCount - 1)),
     startDay: block.startDay,
@@ -133,9 +131,7 @@ const coverTitleParts = book.title.split(" ");
               >
                 <i class="stratum-fill"></i>
                 <span class="stratum-id">
-                  {stratum.isCurrent && <b class="stratum-glyph stratum-here" aria-hidden="true">▸</b>}
                   {stratum.id}
-                  {stratum.hasDeepDive && <b class="stratum-glyph stratum-deep" aria-hidden="true">◈</b>}
                 </span>
                 <span class="stratum-title">{stratum.title}</span>
                 <span class="stratum-count">{stratum.publishedInBlock}/{stratum.total}</span>
