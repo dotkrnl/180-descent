@@ -11,6 +11,15 @@ import brandDark from "../../assets/images/brand/180-descent-icon-dark-96.png";
 import faviconLight from "../../assets/images/brand/favicon-32.png";
 import faviconDark from "../../assets/images/brand/favicon-32-dark.png";
 import appleTouchIcon from "../../assets/images/brand/apple-touch-icon.png";
+import fontBodyUrl from "../../assets/fonts/newsreader-latin-400-normal.woff2?url";
+import fontBodyBoldUrl from "../../assets/fonts/newsreader-latin-700-normal.woff2?url";
+import fontBodyItalicUrl from "../../assets/fonts/newsreader-latin-400-italic.woff2?url";
+import fontDisplayMediumUrl from "../../assets/fonts/fraunces-latin-500-normal.woff2?url";
+import fontDisplaySemiboldUrl from "../../assets/fonts/fraunces-latin-600-normal.woff2?url";
+import fontDisplayItalicUrl from "../../assets/fonts/fraunces-latin-400-italic.woff2?url";
+import fontMonoUrl from "../../assets/fonts/ibm-plex-mono-latin-400-normal.woff2?url";
+import fontCjkRegularUrl from "../../assets/fonts/cjk/lxgwwenkai-regular-subset-119.woff2?url";
+import fontCjkBoldUrl from "../../assets/fonts/cjk/lxgwwenkai-bold-subset-119.woff2?url";
 import { bookSocialImagePath } from "@lib/assets/social-images";
 import { homeUrl, staticPageUrl } from "@lib/static-site/routes";
 import { SITE_THEME_COLORS } from "@app/theme-colors";
@@ -65,6 +74,13 @@ const creditsUrl = staticPageUrl(locale, "credits");
 const currentPath = Astro.url.pathname;
 const isLesson = pageKind === "lesson";
 const { light: lightThemeColor, dark: darkThemeColor } = SITE_THEME_COLORS;
+// Preload the faces that paint above the fold so first view never falls back:
+// Latin text faces everywhere; the core CJK shard (subset 119 covers ASCII,
+// punctuation, and the highest-frequency hanzi) plus body/mono for chrome
+// Latin on zh pages.
+const preloadFonts = isZh
+  ? [fontCjkRegularUrl, fontCjkBoldUrl, fontBodyUrl, fontMonoUrl]
+  : [fontBodyUrl, fontBodyBoldUrl, fontBodyItalicUrl, fontDisplayMediumUrl, fontDisplaySemiboldUrl, fontDisplayItalicUrl, fontMonoUrl];
 const structuredData = {
   "@context": "https://schema.org",
   "@type": pageKind === "home" ? "WebSite" : isLesson ? "Article" : "WebPage",
@@ -83,6 +99,7 @@ const structuredData = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {preloadFonts.map((href) => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />)}
     <meta id="colorScheme" name="color-scheme" content="light dark" />
     <meta id="themeColorLight" name="theme-color" content={lightThemeColor} media="(prefers-color-scheme: light)" data-theme-color={lightThemeColor} />
     <meta id="themeColorDark" name="theme-color" content={darkThemeColor} media="(prefers-color-scheme: dark)" data-theme-color={darkThemeColor} />

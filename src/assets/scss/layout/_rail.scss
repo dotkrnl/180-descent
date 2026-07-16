@@ -101,6 +101,7 @@
     position:sticky;
     z-index:var(--z-rail);
     top:calc(var(--topbar-h) + .7rem);
+    margin-top:1.25rem;
     grid-column:1;
     align-self:start;
     display:block;
@@ -149,13 +150,13 @@
     display:none;
     padding:0;
     border:0;
-    background:color-mix(in srgb,var(--ink) 32%,transparent);
+    background:var(--scrim);
     cursor:default;
   }
   article.lesson:has(.lesson-stage > .lesson-rail[data-open="true"]) > .rail-backdrop{display:block;}
   article.lesson .lesson-stage > .lesson-rail[data-open="true"]{
     position:fixed;
-    z-index:40;
+    z-index:var(--z-overlay);
     inset:auto max(0px,calc(50vw - 17rem)) 0;
     display:block;
     max-height:min(64dvh,34rem);
