@@ -226,6 +226,25 @@
     window.addEventListener("resize", function(){
       closeAll();
     });
+
+    // The opened box is viewport-fixed so it can escape scrolling panels;
+    // keep it glued to its anchor by recomputing the coordinates on scroll.
+    // Capture phase catches scrolls of inner overflow containers as well.
+    var scrollTicking = false;
+    document.addEventListener("scroll", function(){
+      if(scrollTicking){
+        return;
+      }
+      scrollTicking = true;
+      window.requestAnimationFrame(function(){
+        scrollTicking = false;
+        for(var i = 0; i < notes.length; i++){
+          if(notes[i].getAttribute("data-positioned") === "true"){
+            alignBox(notes[i]);
+          }
+        }
+      });
+    }, { capture: true, passive: true });
   }
 
 
