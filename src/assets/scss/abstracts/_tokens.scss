@@ -263,6 +263,17 @@ $dark-theme-tokens: (
   }
 }
 
+// On small static pages the topbar wraps to two rows (course + navigation),
+// making it taller than the desktop bar. Keep its height and every dependent
+// sticky offset on the single --topbar-h token. Emitted on both root scopes:
+// the plain :root rules above lose to the :root.atlas-root token emission.
+@media (max-width: 44.99rem) {
+  :root,
+  :root.atlas-root {
+    --topbar-h: 5.5rem;
+  }
+}
+
 // Per-block accent: the course descends from surface teal (Block I) toward
 // abyssal violet (Block XIII). OKLCH keeps every hue at the same perceived
 // lightness so contrast stays uniform; browsers without OKLCH fall back to

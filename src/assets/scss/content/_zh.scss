@@ -33,6 +33,13 @@ html[lang^="zh"] :is(h1,h2,h3,.deep-dive-title,.lesson-nav-card strong) {
   text-wrap:pretty;
 }
 
+// The lesson hero and home cover deliberately set lighter display weights
+// (500); the CJK faces ship no intermediate weights, so restore a true bold.
+html[lang^="zh"] article.lesson .lesson-reading>header.hero>h1,
+html[lang^="zh"] .atlas-home .cover-text h1 {
+  font-weight:700;
+}
+
 html[lang^="zh"] :is(.lede .drop,.lede.dropcap::first-letter) {
   font-family:"LXGW WenKai",serif;
   font-size:2.75em;
@@ -62,8 +69,8 @@ html[lang^="zh"] :is(
 
 @media(min-width:48rem) {
   html[lang^="zh"] :is(
-    .lesson-reading>section>p,.lesson-reading>section>ul,
-    .lesson-reading>section>ol,.page>p,.deep-dive-body>p
+    .lesson-reading>.wrap>section>p,.lesson-reading>.wrap>section>ul,
+    .lesson-reading>.wrap>section>ol,.page>p,.deep-dive-body>p
   ) {
     text-align:justify;
     text-justify:inter-ideograph;
