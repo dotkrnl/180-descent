@@ -222,6 +222,15 @@ Appendices are declared in `day.yaml` under `appendices`.
 - Add or adjust styles in SCSS modules imported by `book.scss`. Do not add
   component-local `.css`, duplicate `book.css`, browser-print PDF styles, or
   one-off generated CSS.
+- The cascade is a single layer with one scoping rule: unprefixed selectors
+  are shared with the EPUB build (its markup has no `.atlas-shell`/`.atlas-root`
+  classes), while anything web-only — topbar, footer, rails, drawers — carries
+  an `.atlas-shell` prefix. Never "clean up" an unprefixed rule without
+  checking whether the EPUB title page, introduction, or day content matches
+  it. Use the `var(--font-*)` stacks rather than literal font names so the zh
+  face swap keeps working, the `var(--step-*)` type scale and
+  `var(--space-*)` spacing scale rather than one-off values, and the
+  `abstracts/_media.scss` breakpoint variables in `@media` conditions.
 - Do not add parallel adapter layers, blind importers, or alternate source
   trees. `npm run check:clean` blocks committed
   generated output and any tracked file that matches `.gitignore`; `npm run
