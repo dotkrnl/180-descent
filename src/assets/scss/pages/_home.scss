@@ -1,3 +1,5 @@
+@use "../abstracts/media" as *;
+
 // ---- Immersive home expedition ---------------------------------------
 
 .atlas-home .cover{
@@ -142,6 +144,7 @@
   display:inline-flex;
   align-items:center;
   min-height:2.75rem;
+  max-width:100%;
   padding:.65rem 1rem;
   border:1px solid var(--ink);
   border-radius:var(--radius-1);
@@ -151,6 +154,7 @@
   font-size:.78rem;
   font-weight:600;
   letter-spacing:.09em;
+  line-height:1.4;
   transition:background var(--duration-fast) var(--ease-out-atlas),border-color var(--duration-fast) var(--ease-out-atlas),color var(--duration-fast) var(--ease-out-atlas);
 }
 .atlas-home .cover-cta::after{
@@ -162,6 +166,10 @@
   border-color:var(--accent-deep);
   background:var(--accent);
   color:var(--paper);
+}
+// Folded from _home-base.scss: press feedback on the reading CTA.
+.atlas-home .cover-cta:active{
+  transform:translateY(1px);
 }
 .atlas-home .cover-map-link{
   color:var(--accent-deep);
@@ -374,7 +382,7 @@
   letter-spacing:.04em;
 }
 // Narrow columns: drop the day-range so the fraction can stay legible.
-@media (max-width:60rem){
+@media (max-width:$bp-aside){
   .atlas-home .cover-chart .stratum{
     grid-template-columns:3.2rem minmax(0,1fr) auto;
   }
@@ -460,8 +468,11 @@
   font-size:.98rem;
   line-height:1.45;
 }
-.atlas-home .home-release-note{
-  padding-right:clamp(1.5rem,4vw,4rem)!important;
+// Selector is scoped to .home-project-strip so the rule beats the strip's
+// `>p` padding reset by specificity instead of !important; the matching
+// 44.99rem override in _responsive.scss then wins by source order alone.
+.atlas-home .home-project-strip .home-release-note{
+  padding-right:clamp(1.5rem,4vw,4rem);
 }
 .atlas-home .home-release-note strong,
 .atlas-home .home-project-strip .home-offline-lead strong{
@@ -474,6 +485,7 @@
   line-height:1.45;
 }
 .atlas-home .home-project-strip .home-offline-lead{
+  align-items:center;
   padding-left:clamp(1.25rem,3vw,3rem);
   border-top:0;
   border-bottom:0;
@@ -485,13 +497,16 @@
 }
 .atlas-home .home-project-strip .home-offline-sep{
   display:inline-block;
+  width:1px;
+  height:.95em;
   margin:0 .35rem;
+  background:var(--line-strong);
   color:var(--line-strong);
 }
 .atlas-home .home-project-strip .home-offline-sep::before{
   content:"·";
 }
-@media (max-width:45rem){
+@media (max-width:$bp-read){
   .atlas-home .home-project-strip{grid-template-columns:1fr;}
   .atlas-home .home-project-strip .home-offline-lead{
     padding-left:0;
@@ -636,8 +651,12 @@
   margin:0;
 }
 .atlas-home .recent-descent-stream .day-card{
+  display:grid;
   grid-template-columns:6.6rem minmax(0,1fr);
+  gap:.15rem 1.2rem;
+  align-items:start;
   padding:1rem 0 1.1rem;
+  border-top:1px solid var(--line);
 }
 .atlas-home .recent-descent-stream .day-card .card-kicker{
   font-size:.7rem;
@@ -653,13 +672,66 @@
 .atlas-home .recent-descent-stream .day-card p:not(.card-kicker){
   font-size:1rem;
 }
+
+// ---- Folded from the pre-atlas home layer (_home-base.scss) -----------
+// Card chrome that the atlas rules above never set. The unscoped
+// .card-kicker also serves the downloads cards; everything else stays
+// under .atlas-home so the stream/featured overrides above keep winning.
+.card-kicker{
+  margin:0;
+  color:var(--brass);
+  font-family:var(--font-mono);
+  font-size:.76rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.atlas-home .day-card .card-kicker{
+  grid-row:1 / span 2;
+  padding-top:.28rem;
+}
+@media (max-width:$bp-below-read){
+  .atlas-home .day-card .card-kicker{
+    padding-top:0;
+  }
+}
+.atlas-home .day-card h2,
+.atlas-home .day-card h3{
+  grid-column:2;
+  margin:0;
+  font-size:1.3rem;
+  line-height:1.16;
+  letter-spacing:-.005em;
+}
+.atlas-home .day-card p:not(.card-kicker){
+  grid-column:2;
+  margin:.4rem 0 0;
+  color:var(--ink-soft);
+  font-size:.95em;
+  line-height:1.5;
+}
+.atlas-home .toc-grid .day-card:last-child{
+  border-bottom:1px solid var(--line);
+}
 .atlas-home .all-days-link{
   margin:2rem 0 0;
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
   text-align:right;
 }
 .atlas-home .all-days-link a{
+  display:inline-flex;
+  align-items:center;
+  padding:.55rem .85rem;
   border:0;
   border-bottom:1px solid var(--line-strong);
   border-radius:0;
   background:transparent;
+  transition:border-color var(--duration-fast) var(--ease-out-atlas),background var(--duration-fast) var(--ease-out-atlas),color var(--duration-fast) var(--ease-out-atlas);
+}
+// Only the color was effective in the base hover rule; its border-color and
+// background already lost to the higher-specificity rule above.
+.atlas-home .all-days-link a:hover{
+  color:var(--accent-deep);
 }

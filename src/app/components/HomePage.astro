@@ -127,7 +127,7 @@ const coverTitleParts = book.title.split(" ");
             {strata.map((stratum) => (
               <span
                 class:list={["stratum", "block-scope", { "is-current": stratum.isCurrent }]}
-                style={`--block-hue:${stratum.hue};--stratum-size:${stratum.total};--stratum-fill:${stratum.fill.toFixed(3)}`}
+                style={`--block-hue:${stratum.hue};--stratum-fill:${stratum.fill.toFixed(3)}`}
                 title={stratum.fullTitle}
                 aria-hidden="true"
               >
@@ -183,12 +183,12 @@ const coverTitleParts = book.title.split(" ");
             style={`--block-hue:${featuredBlockHue}`}
           >
             <p class="featured-signal"><span aria-hidden="true"></span>{isZh ? "刚刚发布" : "Just published"}</p>
-            <DayCard day={featuredDay} locale={locale} totalDays={book.totalDays} headingLevel="h3" />
+            <DayCard day={featuredDay} locale={locale} totalDays={book.totalDays} />
           </div>
         )}
         <div class="toc-grid recent-descent-stream">
           {recentDays.map((day) => (
-            <DayCard day={day} locale={locale} totalDays={book.totalDays} headingLevel="h3" />
+            <DayCard day={day} locale={locale} totalDays={book.totalDays} />
           ))}
         </div>
       </div>

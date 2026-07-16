@@ -1,14 +1,10 @@
+@use "../abstracts/media" as *;
+
 // Compact atlas chrome: quiet book furniture that follows the reading surface.
-.site-topbar {
+.atlas-shell .site-topbar {
   position: sticky;
   top: 0;
-  z-index: 20;
-  border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--paper) 86%, transparent);
-  backdrop-filter: blur(8px);
-}
-
-.atlas-shell .site-topbar {
+  z-index: var(--z-topbar);
   border-bottom: 1px solid var(--chrome-line);
   background: var(--chrome-bg);
   background: color-mix(in srgb, var(--chrome-bg) 94%, transparent);
@@ -18,36 +14,26 @@
   -webkit-backdrop-filter: blur(12px);
 }
 
-.topbar-row {
+.atlas-shell .topbar-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  max-width: var(--shell);
-  margin: 0 auto;
-  padding: .6rem 1.35rem;
-  color: var(--ink-faint);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: .72rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-
-.atlas-shell .topbar-row {
   min-height: 3.35rem;
   max-width: var(--shell);
+  margin: 0 auto;
   padding: .5rem var(--page-pad);
   gap: clamp(.75rem, 2.2vw, 2rem);
   color: var(--chrome-muted);
   font-family: var(--font-mono);
   font-size: .74rem;
   letter-spacing: .06em;
+  text-transform: uppercase;
 }
 
 // Three explicit chrome zones: brand, center coordinate, actions. Equal
 // flexible side columns keep the center truly centered no matter how wide
 // the brand or actions run; the center swaps between topnav and running head.
-@media (min-width: 45rem) {
+@media (min-width: $bp-read) {
   .atlas-shell .topbar-row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr);
@@ -77,16 +63,9 @@
   }
 }
 
-.course {
+.atlas-shell .course {
   display: flex;
   align-items: center;
-  gap: .6rem;
-  color: var(--ink-soft);
-  border-bottom: 0;
-  white-space: nowrap;
-}
-
-.atlas-shell .course {
   flex: 0 1 auto;
   min-width: 0;
   gap: .65rem;
@@ -97,6 +76,7 @@
   font-weight: 600;
   letter-spacing: -.012em;
   text-transform: none;
+  white-space: nowrap;
   transition: color var(--duration-fast) var(--ease-out-atlas);
 }
 
@@ -122,17 +102,12 @@
   letter-spacing: .12em;
 }
 
-.brand-mark-shell {
+.atlas-shell .brand-mark-shell {
   position: relative;
   display: block;
-  width: 1.75rem;
-  height: 1.75rem;
-  flex: 0 0 auto;
-}
-
-.atlas-shell .brand-mark-shell {
   width: 1.625rem;
   height: 1.625rem;
+  flex: 0 0 auto;
 }
 
 .brand-mark {
@@ -146,17 +121,11 @@
   transition: opacity .2s ease;
 }
 
-.brand-mark-light {
-  padding: 2px;
-  background: #f7f6ef;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--line-strong) 58%, transparent);
+.atlas-shell .brand-mark-light {
   opacity: var(--brand-light-opacity);
 }
 
-.brand-mark-dark {
-  padding: 2px;
-  background: #0a131b;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--line-strong) 72%, transparent);
+.atlas-shell .brand-mark-dark {
   opacity: var(--brand-dark-opacity);
 }
 
@@ -167,26 +136,12 @@
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--chrome-fg) 22%, transparent);
 }
 
-.topnav {
+.atlas-shell .topnav {
   display: flex;
   align-items: center;
-  gap: .75rem;
-  flex-wrap: wrap;
-}
-
-.atlas-shell .topnav {
   gap: .2rem;
   margin-inline: auto;
   flex-wrap: nowrap;
-}
-
-.topnav a {
-  color: var(--ink-faint);
-  border-bottom: 0;
-}
-
-.topnav a:hover {
-  color: var(--ink);
 }
 
 .atlas-shell .topnav a {
@@ -233,45 +188,19 @@
   letter-spacing: .04em;
 }
 
-.top-actions {
+.atlas-shell .top-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: .4rem;
-  flex-wrap: wrap;
-}
-
-.atlas-shell .top-actions {
   gap: .38rem;
   flex-wrap: nowrap;
 }
 
-.toggle {
+.atlas-shell .toggle {
   appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 1.8rem;
-  padding: .34rem .6rem;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  background: var(--raised);
-  color: var(--ink-soft);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: .72rem;
-  letter-spacing: .14em;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.toggle:hover {
-  color: var(--ink);
-  border-color: var(--accent);
-}
-
-.atlas-shell .toggle {
   min-width: 2rem;
   min-height: 1.9rem;
   padding: .3rem .48rem;
@@ -279,9 +208,13 @@
   border-radius: var(--radius-1);
   background: transparent;
   color: var(--chrome-muted);
+  cursor: pointer;
   font-family: var(--font-mono);
   font-size: .72rem;
   letter-spacing: .06em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
   transition: border-color var(--duration-fast) var(--ease-out-atlas), background var(--duration-fast) var(--ease-out-atlas), color var(--duration-fast) var(--ease-out-atlas);
 }
 
@@ -289,12 +222,6 @@
   border-color: var(--teal-bright);
   background: var(--chrome-raised);
   color: var(--chrome-fg);
-}
-
-.theme-toggle {
-  gap: .18rem;
-  min-width: 2.7rem;
-  padding: .34rem .45rem;
 }
 
 .atlas-shell .theme-toggle {
@@ -329,7 +256,7 @@
   stroke-linecap: round;
 }
 
-@media screen and (max-width: 74.99rem) {
+@media screen and (max-width: $bp-below-wide) {
   .atlas-shell .toc-toggle:not([hidden]) {
     display: inline-flex;
   }
@@ -364,23 +291,19 @@
 
 // Once the reader clears the opener, the center becomes a compact running
 // coordinate: block, day, active section, and percent read. JS owns the data.
-.running-head {
+.atlas-shell .running-head {
   display: none;
   min-width: 0;
   flex: 1;
   align-items: baseline;
   justify-content: center;
-  gap: .6rem;
-  overflow: hidden;
-  text-align: center;
-}
-
-.atlas-shell .running-head {
   gap: .45rem;
+  overflow: hidden;
   color: var(--chrome-muted);
   font-family: var(--font-mono);
   font-size: .72rem;
   letter-spacing: .05em;
+  text-align: center;
   text-transform: uppercase;
 }
 
@@ -391,11 +314,6 @@
   white-space: nowrap;
 }
 
-.running-head .running-day {
-  flex: 0 0 auto;
-  color: var(--block-accent, var(--brass));
-}
-
 .atlas-shell .running-head .running-block {
   max-width: 13rem;
   color: var(--chrome-muted);
@@ -403,7 +321,7 @@
 
 // Below the full shell the block name is the least load-bearing coordinate:
 // drop it whole rather than truncating every element a little.
-@media (max-width: 74.99rem) {
+@media (max-width: $bp-below-wide) {
   .atlas-shell .running-head .running-block {
     display: none;
   }
@@ -414,25 +332,12 @@
   color: var(--signal);
 }
 
-.running-head .running-title {
-  min-width: 0;
-  overflow: hidden;
-  color: var(--ink-soft);
-  font-family: "Fraunces", serif;
-  font-size: .95rem;
-  font-weight: 500;
-  font-style: italic;
-  letter-spacing: 0;
-  text-overflow: ellipsis;
-  text-transform: none;
-  white-space: nowrap;
-}
-
 .atlas-shell .running-head .running-title {
   color: var(--chrome-fg);
   font-family: var(--font-display);
   font-size: .84rem;
   font-style: normal;
+  font-weight: 500;
   letter-spacing: -.005em;
   text-transform: none;
 }
@@ -443,11 +348,11 @@
   font-variant-numeric: tabular-nums;
 }
 
-.site-topbar.is-running .topnav {
+.atlas-shell .site-topbar.is-running .topnav {
   display: none;
 }
 
-.site-topbar.is-running .running-head {
+.atlas-shell .site-topbar.is-running .running-head {
   display: flex;
 }
 
@@ -455,7 +360,10 @@
   display: none;
 }
 
-// Editorial notices are annotations, not competing hero bands.
+// Editorial notices are annotations, not competing hero bands. The unprefixed
+// .latest-day-banner rules are load-bearing for the EPUB build: it keeps the
+// banner in day-page #content (stripping only .site-topbar, .site-footer and
+// .download-strip), and the EPUB body carries no .atlas-shell class.
 .latest-day-banner {
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--hint) 10%, var(--paper));
@@ -473,7 +381,7 @@
   padding-top: .55rem;
   padding-bottom: .55rem;
   color: var(--ink-soft);
-  font-family: "IBM Plex Mono", monospace;
+  font-family: var(--font-mono);
   font-size: .76rem;
   line-height: 1.45;
   letter-spacing: .05em;
@@ -509,30 +417,13 @@
   white-space: nowrap;
 }
 
-.download-strip {
-  border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--brass) 6%, transparent);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: .74rem;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
 .atlas-shell .download-strip {
   border-bottom: 1px solid var(--line);
   background: var(--paper);
   font-family: var(--font-mono);
   font-size: .74rem;
   letter-spacing: .06em;
-}
-
-.download-strip .wide {
-  display: flex;
-  align-items: center;
-  gap: .8rem;
-  padding-top: .45rem;
-  padding-bottom: .45rem;
-  color: var(--ink-soft);
+  text-transform: uppercase;
 }
 
 .atlas-shell .download-strip .wide {
@@ -575,14 +466,14 @@
   }
 }
 
-@media (max-width: 59.99rem) {
+@media (max-width: $bp-below-aside) {
   .atlas-shell .course-index,
   .atlas-shell .topnav-index {
     display: none;
   }
 }
 
-@media (max-width: 44.99rem) {
+@media (max-width: $bp-below-read) {
   .atlas-shell .topbar-row {
     display: grid;
     grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;

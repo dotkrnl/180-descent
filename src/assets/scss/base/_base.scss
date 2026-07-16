@@ -1,3 +1,7 @@
+// Base element styles. Unprefixed rules are the shared contract: the EPUB
+// build reuses this compiled stylesheet on unscoped markup (its <body> has no
+// .atlas-shell), so anything that must stay web-only carries an .atlas-shell
+// prefix, and anything the EPUB needs stays unprefixed.
 *,
 *::before,
 *::after {
@@ -14,14 +18,6 @@ html[lang^="zh"] {
 
 body {
   margin: 0;
-  background-color: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: clamp(1.06rem, 1rem + .2vw, 1.18rem);
-  line-height: 1.66;
-}
-
-.atlas-root body.atlas-shell {
   min-height: 100vh;
   background-color: var(--paper);
   color: var(--ink);
@@ -37,16 +33,13 @@ body {
   scrollbar-color: var(--line-strong) var(--paper);
 }
 
-// CJK body copy keeps a little more vertical air than the Latin measure.
+// CJK body copy keeps a little more vertical air than the Latin measure and
+// no negative tracking; the looser line-height itself is set in content/zh.
 html[lang^="zh"] body {
-  line-height: 1.72;
-}
-
-html[lang^="zh"] body.atlas-shell {
   letter-spacing: 0;
 }
 
-.atlas-shell > main {
+main {
   min-height: 45vh;
   background: var(--paper);
 }
@@ -72,37 +65,23 @@ body .katex:not(.katex-display > .katex) :is(.mathnormal, .mathrm, .textstyle, .
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 24%, transparent);
-}
-
-.atlas-shell ::selection {
   background: var(--selection-bg);
   color: var(--selection-fg);
   text-shadow: none;
 }
 
 a {
-  color: var(--accent);
-  text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-}
-
-a:hover {
-  border-bottom-color: var(--accent);
-}
-
-.atlas-shell a {
   color: var(--accent-deep);
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   transition: color var(--duration-fast) var(--ease-out-atlas), border-color var(--duration-fast) var(--ease-out-atlas);
 }
 
-.atlas-shell a:hover {
+a:hover {
   color: var(--accent);
   border-bottom-color: currentColor;
 }
 
-.atlas-shell :is(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+:is(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
   outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
   box-shadow: 0 0 0 7px var(--focus-halo);
@@ -129,24 +108,11 @@ a:hover {
   border: 0 !important;
 }
 
-.skip-link {
-  position: absolute;
-  left: -999px;
-  top: .5rem;
-  z-index: 50;
-  padding: .45rem .7rem;
-  background: var(--raised);
-}
-
-.skip-link:focus {
-  left: .5rem;
-}
-
 .atlas-shell .skip-link {
   position: fixed;
   top: .7rem;
   left: .7rem;
-  z-index: 100;
+  z-index: var(--z-skip);
   padding: .55rem .72rem;
   border: 1px solid var(--focus-ring);
   border-radius: var(--radius-1);
@@ -160,7 +126,6 @@ a:hover {
 }
 
 .atlas-shell .skip-link:focus {
-  left: .7rem;
   transform: translateY(0);
 }
 
@@ -174,36 +139,17 @@ a:hover {
   max-width: 54rem;
 }
 
-// Shared shell coordinates remain available to legacy layouts while the
-// atlas page families migrate to their own explicit grids.
+// Wide-viewport shell coordinates. The .wide rule below is the EPUB contract
+// (the EPUB <body> has no .atlas-shell); the web lays its own explicit grids
+// out under .atlas-shell.
 @media screen and (min-width: 75rem) {
   :root {
-    --shell-left: max(1.35rem, calc(50vw - var(--shell) / 2));
-    --col-left: calc(var(--shell-left) + var(--rail-w) + var(--rail-gap));
-    --col-wide: calc(var(--shell) - var(--rail-w) - var(--rail-gap));
-  }
-
-  :root.atlas-root {
     --shell-left: max(var(--page-pad), calc(50vw - var(--shell) / 2));
-    --col-left: calc(var(--shell-left) + var(--rail-w) + var(--rail-gap));
     --col-wide: calc(var(--shell) - var(--rail-w) - var(--rail-gap));
-  }
-
-  body:not(.atlas-shell) main .wrap,
-  body:not(.atlas-shell) .site-footer .wrap {
-    margin-left: var(--col-left);
-    margin-right: auto;
   }
 
   body:not(.atlas-shell) .wide {
     max-width: var(--col-wide);
-  }
-
-  body:not(.atlas-shell) main :is(.lesson-figure:not(.is-portrait), .table-wrap, .panel, .compare, .widepanel, .appendix-figure-wide, .depth-chart, .syllabus-progress, .download-grid) {
-    width: calc(var(--col-wide) - 2.7rem);
-    max-width: none;
-    margin-left: 0;
-    margin-right: 0;
   }
 }
 

@@ -5,18 +5,15 @@ interface Props {
   day: ContentDay;
   locale: "en" | "zh";
   totalDays: number;
-  headingLevel?: "h2" | "h3";
-  planned?: boolean;
 }
 
-const { day, locale, totalDays, headingLevel = "h2", planned = false } = Astro.props;
-const Heading = headingLevel;
+const { day, locale, totalDays } = Astro.props;
 const kicker = locale === "zh"
-  ? `第 ${padDay(day.day)} 日 / ${totalDays}${planned ? " · 计划中" : ""}`
-  : `Day ${padDay(day.day)} / ${totalDays}${planned ? " · Planned" : ""}`;
+  ? `第 ${padDay(day.day)} 日 / ${totalDays}`
+  : `Day ${padDay(day.day)} / ${totalDays}`;
 ---
-<article class:list={["day-card", { "syllabus-card": headingLevel === "h3", "is-published": !planned }]}>
+<article class="day-card">
   <p class="card-kicker">{kicker}</p>
-  <Heading><a href={day.url}>{day.title}</a></Heading>
+  <h3><a href={day.url}>{day.title}</a></h3>
   {day.summary && <p>{day.summary}</p>}
 </article>

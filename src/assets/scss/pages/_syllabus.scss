@@ -1,3 +1,5 @@
+@use "../abstracts/media" as *;
+
 // ---- Syllabus: route overview and dependable index -------------------
 
 .atlas-page--syllabus .syllabus-brief{
@@ -34,6 +36,26 @@
   padding-left:0;
   border-left:0;
 }
+
+// ---- Shared progress label/figure ------------------------------------
+// Folded from _syllabus-base.scss. Deliberately unscoped: .progress-label
+// is also used by the downloads and credits pages, .progress-number and
+// .progress-next by the syllabus.
+.progress-label{
+  margin:0 0 .25rem;
+  color:var(--ink-faint);
+  font-family:var(--font-mono);
+  font-size:.75rem;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.progress-number,.progress-next{
+  margin:0;
+  color:var(--ink);
+  font-family:var(--font-display);
+  font-size:1.22rem;
+  line-height:1.28;
+}
 .atlas-page--syllabus .syllabus-map{
   position:relative;
   display:grid;
@@ -57,7 +79,7 @@
 }
 // The overview brief follows the reader down the tall block list instead of
 // leaving the left column empty.
-@media (min-width:60rem){
+@media (min-width:$bp-aside){
   .atlas-page--syllabus .syllabus-map{
     grid-template-rows:1fr auto;
   }
@@ -277,6 +299,7 @@
   border-bottom:1px solid var(--line-strong);
   background:color-mix(in srgb,var(--paper) 96%,transparent);
   font-family:var(--font-mono);
+  text-transform:uppercase;
   scrollbar-width:thin;
   backdrop-filter:blur(12px);
 }
@@ -325,12 +348,13 @@
   grid-template-columns:6.5rem minmax(0,1fr);
   gap:1rem;
   align-content:start;
+  align-items:start;
   padding:0;
   border-top:0;
 }
 // The block head is a tall skinny column beside a long day list; on wide screens
 // stick it so the reader always sees which block they are inside.
-@media (min-width:60rem){
+@media (min-width:$bp-aside){
   .atlas-page--syllabus .stratum-head{
     position:sticky;
     top:calc(3.35rem + 2.6rem);
@@ -356,6 +380,10 @@
 .atlas-page--syllabus .stratum-range{
   margin:0 0 .4rem;
   color:var(--ink-faint);
+  font-family:var(--font-mono);
+  font-size:.73rem;
+  letter-spacing:.11em;
+  text-transform:uppercase;
 }
 .atlas-page--syllabus .stratum-head h2{
   margin:0;
@@ -364,6 +392,7 @@
   letter-spacing:-.015em;
 }
 .atlas-page--syllabus .stratum-summary{
+  max-width:40rem;
   margin:.75rem 0 0;
   color:var(--ink-soft);
   font-size:1rem;
@@ -374,6 +403,7 @@
   margin:0;
   padding:0 0 0 1.55rem;
   border-left:1px solid color-mix(in srgb,var(--block-accent,var(--accent)) 46%,var(--line));
+  list-style:none;
 }
 .atlas-page--syllabus .depth-day{
   position:relative;
@@ -405,12 +435,15 @@
   border-top:0;
 }
 .atlas-page--syllabus .depth-day::before{
+  position:absolute;
   left:calc(-1.55rem - 4px);
   top:1rem;
   width:7px;
   height:7px;
   border:1px solid var(--line-strong);
+  border-radius:50%;
   background:var(--paper);
+  content:"";
 }
 .atlas-page--syllabus .depth-day.is-published::before{
   border-color:var(--block-accent,var(--accent));
@@ -422,20 +455,45 @@
 }
 .atlas-page--syllabus .depth-num{
   padding-top:.06rem;
+  color:var(--block-accent,var(--accent));
+  font-family:var(--font-mono);
   font-size:.74rem;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.08em;
 }
 .atlas-page--syllabus .depth-title{
+  margin:0;
+  font-family:var(--font-display);
   font-size:1.05rem;
   line-height:1.22;
 }
+// Kept unscoped on purpose: the zh layer (html[lang^="zh"] :is(h1..h3))
+// bumps depth titles to font-weight:700 and must keep winning there.
+.depth-title{
+  font-weight:600;
+}
+// Folded from _syllabus-base.scss: unpublished rows that are "next up"
+// (.is-here) fall outside the quiet-rows rule above and still use these.
+.atlas-page--syllabus .depth-day:not(.is-published) .depth-num{
+  color:var(--ink-faint);
+}
+.atlas-page--syllabus .depth-day:not(.is-published) .depth-title{
+  color:var(--ink-faint);
+  font-weight:500;
+}
 .atlas-page--syllabus .depth-summary{
   margin:.26rem 0 0;
+  color:var(--ink-soft);
   font-size:.94rem;
   line-height:1.4;
 }
 .atlas-page--syllabus .depth-status{
   margin:.2rem 0 0;
+  color:var(--ink-faint);
+  font-family:var(--font-mono);
   font-size:.66rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
 }
 .atlas-page--syllabus .depth-day a{
   color:var(--accent-deep);
@@ -443,7 +501,7 @@
 }
 // On wide rows the planned/next tag sits quietly on the title line instead of
 // stacking under every unpublished day.
-@media (min-width:45rem){
+@media (min-width:$bp-read){
   .atlas-page--syllabus .depth-status{
     position:absolute;
     top:.92rem;
@@ -458,4 +516,28 @@
   max-width:var(--prose-max);
   margin:clamp(4rem,8vw,8rem) auto 0;
   padding-top:2rem;
+  border-top:2px solid var(--brass);
+}
+
+// ---- Folded from _syllabus-base.scss: upcoming-days list --------------
+.upcoming-list{
+  margin:1.2rem 0;
+  padding:0;
+  list-style:none;
+}
+.upcoming-list li{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:.75rem;
+  align-items:baseline;
+  margin:0;
+  padding:.6rem 0;
+  border-top:1px solid var(--line);
+}
+.upcoming-list li:last-child{
+  border-bottom:1px solid var(--line);
+}
+.upcoming-day{
+  color:var(--brass);
+  white-space:nowrap;
 }
