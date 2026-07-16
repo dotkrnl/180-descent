@@ -21,6 +21,12 @@ function isWebUrl(value: string): boolean {
     return false;
   }
 }
+
+// Split the flat images list into project marks (self-generated brand assets)
+// vs cited images (public-domain, CC-licensed diagrams and historical photos)
+// so brand items don't get typographically flattened with third-party sources.
+const projectImages = credits.images.filter((image) => /project[- ]owned/i.test(image.license));
+const citedImages = credits.images.filter((image) => !/project[- ]owned/i.test(image.license));
 ---
 <PageShell
   locale={locale}
@@ -51,22 +57,44 @@ function isWebUrl(value: string): boolean {
       </ol>
     </section>
 
-    <section class="credit-section" aria-labelledby="image-credits-title">
-      <header class="credit-section-head">
-        <p class="progress-label">{isZh ? "图像档案" : "Image archive"}</p>
-        <h2 id="image-credits-title">{isZh ? "图片" : "Images"}</h2>
-        <span>{String(credits.images.length).padStart(2, "0")}</span>
-      </header>
-      <ol class="credit-list credit-list--images">
-        {credits.images.map((image, index) => (
-          <li>
-            <span class="credit-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-            <strong>{image.title}</strong>
-            <span class="credit-detail">{isZh ? "作者：" : "By "}{image.creator}{isZh ? "；" : " · "}{image.license}{isZh ? "。" : ". "}{image.notes}</span>
-            <span class="credit-source">{isWebUrl(image.source) ? <a href={image.source}>{sourceLabel}</a> : image.source}</span>
-          </li>
-        ))}
-      </ol>
-    </section>
+    {projectImages.length > 0 && (
+      <section class="credit-section credit-section--project" aria-labelledby="project-marks-title">
+        <header class="credit-section-head">
+          <p class="progress-label">{isZh ? "项目自有素材" : "Project marks"}</p>
+          <h2 id="project-marks-title">{isZh ? "本站生成图像" : "In-house imagery"}</h2>
+          <span>{String(projectImages.length).padStart(2, "0")}</span>
+        </header>
+        <ol class="credit-list credit-list--images">
+          {projectImages.map((image, index) => (
+            <li>
+              <span class="credit-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <strong>{image.title}</strong>
+              <span class="credit-detail">{isZh ? "作者：" : "By "}{image.creator}{isZh ? "；" : " · "}{image.license}{isZh ? "。" : ". "}{image.notes}</span>
+              <span class="credit-source">{isWebUrl(image.source) ? <a href={image.source}>{sourceLabel}</a> : image.source}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    {citedImages.length > 0 && (
+      <section class="credit-section" aria-labelledby="image-credits-title">
+        <header class="credit-section-head">
+          <p class="progress-label">{isZh ? "引用图像" : "Cited images"}</p>
+          <h2 id="image-credits-title">{isZh ? "外部来源" : "Third-party sources"}</h2>
+          <span>{String(citedImages.length).padStart(2, "0")}</span>
+        </header>
+        <ol class="credit-list credit-list--images">
+          {citedImages.map((image, index) => (
+            <li>
+              <span class="credit-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <strong>{image.title}</strong>
+              <span class="credit-detail">{isZh ? "作者：" : "By "}{image.creator}{isZh ? "；" : " · "}{image.license}{isZh ? "。" : ". "}{image.notes}</span>
+              <span class="credit-source">{isWebUrl(image.source) ? <a href={image.source}>{sourceLabel}</a> : image.source}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
   </div>
 </PageShell>

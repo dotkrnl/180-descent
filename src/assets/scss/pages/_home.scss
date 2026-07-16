@@ -252,18 +252,35 @@
   flex-direction:column;
   min-height:21.25rem;
 }
+// Atlas rows carry a stronger per-block hue than the shared .block-scope tokens
+// use inside prose — the chart is a legend, not body copy, so it can hold more
+// chroma. Kept scoped so the print block and lesson hues stay untouched.
 .atlas-home .cover-chart .stratum{
+  --block-accent:oklch(46% 0.132 calc(var(--block-hue,200)*1deg));
+  --block-accent-soft:oklch(46% 0.132 calc(var(--block-hue,200)*1deg) / .18);
   position:relative;
   display:grid;
-  grid-template-columns:2.35rem minmax(0,1fr) auto;
+  grid-template-columns:2.55rem minmax(0,1fr) auto auto;
   flex:1 1 0;
-  gap:.65rem;
+  gap:.55rem .7rem;
   align-items:center;
-  min-height:1.45rem;
-  padding:0 1rem;
+  min-height:1.55rem;
+  padding:0 .95rem 0 .85rem;
   overflow:hidden;
   border-top:1px solid color-mix(in srgb,var(--abyss-fg) 13%,transparent);
   background:transparent;
+}
+:root[data-theme="dark"] .atlas-home .cover-chart .stratum,
+:root.atlas-root[data-theme="dark"] .atlas-home .cover-chart .stratum{
+  --block-accent:oklch(74% 0.135 calc(var(--block-hue,200)*1deg));
+  --block-accent-soft:oklch(74% 0.135 calc(var(--block-hue,200)*1deg) / .22);
+}
+@media (prefers-color-scheme:dark){
+  :root[data-theme="auto"] .atlas-home .cover-chart .stratum,
+  :root.atlas-root[data-theme="auto"] .atlas-home .cover-chart .stratum{
+    --block-accent:oklch(74% 0.135 calc(var(--block-hue,200)*1deg));
+    --block-accent-soft:oklch(74% 0.135 calc(var(--block-hue,200)*1deg) / .22);
+  }
 }
 .atlas-home .cover-chart .stratum:first-child{
   border-top:0;
@@ -272,30 +289,80 @@
   position:absolute;
   inset:0 auto 0 0;
   width:calc(var(--stratum-fill,0)*100%);
-  background:color-mix(in srgb,var(--block-accent,var(--recap-accent)) 20%,transparent);
-  border-right:1px solid color-mix(in srgb,var(--block-accent,var(--recap-accent)) 60%,transparent);
+  background:color-mix(in srgb,var(--block-accent) 44%,transparent);
+  border-right:2px solid var(--block-accent);
+}
+// Unfilled rows still show the block hue as a quiet right-edge gutter so the
+// map reads as thirteen distinct depths even before any lesson has published.
+.atlas-home .cover-chart .stratum::after{
+  position:absolute;
+  z-index:0;
+  top:0;
+  right:0;
+  bottom:0;
+  width:.28rem;
+  background:var(--block-accent-soft);
+  content:"";
+  pointer-events:none;
+}
+.atlas-home .cover-chart .stratum.is-current{
+  background:color-mix(in srgb,var(--signal) 8%,transparent);
+}
+.atlas-home .cover-chart .stratum.is-current::before{
+  position:absolute;
+  z-index:2;
+  top:0;
+  bottom:0;
+  left:0;
+  width:3px;
+  background:var(--signal);
+  content:"";
 }
 .atlas-home .cover-chart .stratum-id,
 .atlas-home .cover-chart .stratum-title,
+.atlas-home .cover-chart .stratum-count,
 .atlas-home .cover-chart .stratum-days{
   position:relative;
   z-index:1;
 }
 .atlas-home .cover-chart .stratum-id{
-  color:var(--block-accent,var(--recap-accent));
+  display:inline-flex;
+  gap:.32rem;
+  align-items:baseline;
+  color:var(--block-accent);
   font-family:var(--font-mono);
-  font-size:.69rem;
+  font-size:.72rem;
   font-weight:600;
   letter-spacing:.08em;
   white-space:nowrap;
 }
+.atlas-home .cover-chart .stratum-glyph{
+  display:inline-block;
+  font-size:.68rem;
+  font-weight:500;
+  line-height:1;
+}
+.atlas-home .cover-chart .stratum-here{color:var(--signal);}
+.atlas-home .cover-chart .stratum-deep{
+  color:color-mix(in srgb,var(--recap-gold) 78%,var(--abyss-fg));
+  font-size:.6rem;
+  letter-spacing:0;
+}
 .atlas-home .cover-chart .stratum-title{
   min-width:0;
   overflow:hidden;
-  color:color-mix(in srgb,var(--abyss-fg) 75%,transparent);
-  font-size:.73rem;
+  color:color-mix(in srgb,var(--abyss-fg) 82%,transparent);
+  font-size:.76rem;
   line-height:1.2;
   text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.atlas-home .cover-chart .stratum-count{
+  color:color-mix(in srgb,var(--abyss-fg) 68%,transparent);
+  font-family:var(--font-mono);
+  font-size:.66rem;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.03em;
   white-space:nowrap;
 }
 .atlas-home .cover-chart .stratum-days{
@@ -305,6 +372,13 @@
   font-size:.62rem;
   font-variant-numeric:tabular-nums;
   letter-spacing:.04em;
+}
+// Narrow columns: drop the day-range so the fraction can stay legible.
+@media (max-width:60rem){
+  .atlas-home .cover-chart .stratum{
+    grid-template-columns:2.35rem minmax(0,1fr) auto;
+  }
+  .atlas-home .cover-chart .stratum-days{display:none;}
 }
 .atlas-home .cover-chart-caption{
   display:flex;
@@ -345,8 +419,8 @@
   box-shadow:none;
 }
 :root[data-theme="light"] .atlas-home .cover-chart .stratum-fill{
-  background:color-mix(in srgb,var(--block-accent,var(--recap-accent)) 26%,transparent);
-  border-right:1px solid color-mix(in srgb,var(--block-accent,var(--recap-accent)) 65%,transparent);
+  background:color-mix(in srgb,var(--block-accent) 42%,transparent);
+  border-right:2px solid var(--block-accent);
 }
 @media (prefers-color-scheme:light){
   :root[data-theme="auto"] .atlas-home .cover-chart{
@@ -359,13 +433,13 @@
     box-shadow:none;
   }
   :root[data-theme="auto"] .atlas-home .cover-chart .stratum-fill{
-    background:color-mix(in srgb,var(--block-accent,var(--recap-accent)) 26%,transparent);
-    border-right:1px solid color-mix(in srgb,var(--block-accent,var(--recap-accent)) 65%,transparent);
+    background:color-mix(in srgb,var(--block-accent) 42%,transparent);
+    border-right:2px solid var(--block-accent);
   }
 }
 .atlas-home .home-project-strip{
   display:grid;
-  grid-template-columns:minmax(0,1.55fr) minmax(16rem,.75fr);
+  grid-template-columns:minmax(0,1.35fr) minmax(16rem,.85fr);
   gap:0;
   width:min(100%,var(--reading-field));
   max-width:var(--reading-field);
@@ -377,40 +451,54 @@
   margin:0;
   padding:1.2rem 0;
 }
-.atlas-home .home-release-note{
+.atlas-home .home-release-note,
+.atlas-home .home-project-strip .home-offline-lead{
   display:grid;
-  grid-template-columns:6rem minmax(0,1fr);
+  grid-template-columns:6.5rem minmax(0,1fr);
   gap:1.2rem;
-  padding-right:clamp(1.5rem,4vw,4rem)!important;
   color:var(--ink-soft);
   font-size:.98rem;
   line-height:1.45;
 }
-.atlas-home .home-release-note strong{
+.atlas-home .home-release-note{
+  padding-right:clamp(1.5rem,4vw,4rem)!important;
+}
+.atlas-home .home-release-note strong,
+.atlas-home .home-project-strip .home-offline-lead strong{
   color:var(--brass);
   font-family:var(--font-mono);
   font-size:.69rem;
   font-weight:500;
   letter-spacing:.1em;
   text-transform:uppercase;
+  line-height:1.45;
 }
 .atlas-home .home-project-strip .home-offline-lead{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.25rem .75rem;
-  align-content:center;
-  justify-content:flex-start;
   padding-left:clamp(1.25rem,3vw,3rem);
   border-top:0;
   border-bottom:0;
   border-left:1px solid var(--line);
-  color:var(--ink-soft);
-  font-size:.98rem;
-  line-height:1.45;
   text-align:left;
 }
+.atlas-home .home-project-strip .home-offline-lead>span{
+  display:inline;
+}
 .atlas-home .home-project-strip .home-offline-sep{
-  align-self:center;
+  display:inline-block;
+  margin:0 .35rem;
+  color:var(--line-strong);
+}
+.atlas-home .home-project-strip .home-offline-sep::before{
+  content:"·";
+}
+@media (max-width:45rem){
+  .atlas-home .home-project-strip{grid-template-columns:1fr;}
+  .atlas-home .home-project-strip .home-offline-lead{
+    padding-left:0;
+    padding-top:0;
+    border-left:0;
+    border-top:1px solid var(--line);
+  }
 }
 .atlas-home .home-latest{
   width:min(100%,var(--reading-field));
@@ -442,9 +530,9 @@
 }
 .atlas-home .home-section-head h2{
   margin:0;
-  font-size:clamp(2.3rem,1.4rem + 2.8vw,4.6rem);
-  line-height:.96;
-  letter-spacing:-.025em;
+  font-size:clamp(1.95rem,1.4rem + 1.7vw,3.15rem);
+  line-height:1;
+  letter-spacing:-.02em;
 }
 .atlas-home .home-section-head>p{
   max-width:31rem;
@@ -465,9 +553,9 @@
   min-width:0;
   padding:1.45rem 1.5rem 1.65rem;
   border:1px solid var(--line);
-  border-top:3px solid var(--accent);
+  border-top:3px solid var(--block-accent,var(--accent));
   border-radius:0 var(--radius-2) var(--radius-2) 0;
-  background:linear-gradient(145deg,color-mix(in srgb,var(--raised) 86%,var(--accent) 14%),var(--raised));
+  background:linear-gradient(145deg,color-mix(in srgb,var(--raised) 86%,var(--block-accent,var(--accent)) 14%),var(--raised));
   box-shadow:var(--shadow);
 }
 .atlas-home .home-featured-day::after{
@@ -493,14 +581,30 @@
   align-items:center;
   gap:.55rem;
   margin:0 0 1.55rem;
-  color:var(--accent);
+  color:var(--signal-ink);
   font-family:var(--font-mono);
   font-size:.7rem;
   letter-spacing:.12em;
   text-transform:uppercase;
 }
+// Live-signal pulse: the small coral dot that says "this is the current edge".
 .atlas-home .featured-signal span{
-  display:none;
+  display:inline-block;
+  flex:0 0 auto;
+  width:.55rem;
+  height:.55rem;
+  border-radius:50%;
+  background:var(--signal);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--signal) 30%,transparent);
+}
+@media (prefers-reduced-motion:no-preference){
+  .atlas-home .featured-signal span{
+    animation:atlas-featured-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes atlas-featured-pulse{
+    0%,100%{box-shadow:0 0 0 3px color-mix(in srgb,var(--signal) 32%,transparent);}
+    50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--signal) 6%,transparent);}
+  }
 }
 .atlas-home .home-featured-day .day-card{
   display:block;

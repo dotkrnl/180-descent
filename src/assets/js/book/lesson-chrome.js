@@ -101,6 +101,19 @@
       return;
     }
     var readout = rail.querySelector("[data-rail-read]");
+    // Course-depth read-out. Rendered like "34% READ · DAY 013/180" so the
+    // reader sees both scroll progress and their position on the whole course.
+    var dayNumber = parseInt(lesson.getAttribute("data-reading-day") || lesson.getAttribute("data-day") || "0", 10);
+    var totalDays = parseInt(lesson.getAttribute("data-total-days") || "0", 10);
+    var depthSuffix = "";
+    if(dayNumber && totalDays){
+      var padded = String(dayNumber).padStart(3, "0");
+      var totalPadded = String(totalDays).padStart(3, "0");
+      depthSuffix = " · Day " + padded + "/" + totalPadded;
+      if(document.documentElement.getAttribute("lang") === "zh-Hans" || document.documentElement.getAttribute("lang") === "zh"){
+        depthSuffix = " · 第 " + padded + " / " + totalPadded + " 日";
+      }
+    }
     var ticking = false;
 
     function update(){
@@ -108,7 +121,9 @@
       var progress = currentReadingProgress();
       rail.style.setProperty("--gauge", progress.toFixed(4));
       if(readout){
-        readout.textContent = Math.round(progress * 100) + "%";
+        var percent = Math.round(progress * 100);
+        var pctLabel = (document.documentElement.getAttribute("lang") === "zh-Hans" || document.documentElement.getAttribute("lang") === "zh") ? "已读" : "read";
+        readout.textContent = percent + "% " + pctLabel + depthSuffix;
       }
       syncActiveTocLink(rail, headings);
     }

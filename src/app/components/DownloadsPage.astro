@@ -1,7 +1,8 @@
 ---
 import PageShell from "@app/layouts/PageShell.astro";
-import { getBookData, getContentDays } from "@app/site-data";
+import { getBookData, getContentDays, padDay } from "@app/site-data";
 import type { Locale } from "@lib/schemas/day";
+import { dayArtifactDownloadUrl } from "@lib/artifacts/downloads";
 import { alternateLocale, staticPageUrl } from "@lib/static-site/routes";
 
 interface Props {
@@ -13,13 +14,22 @@ const [book, publishedDays] = await Promise.all([getBookData(), getContentDays(l
 const isZh = locale === "zh";
 const downloads = isZh ? book.zh.downloads : book.downloads;
 const publishedDayCount = publishedDays.length;
+const perDayArtifacts = [...publishedDays]
+  .sort((a, b) => a.day - b.day)
+  .map((day) => ({
+    day: day.day,
+    title: day.title,
+    url: day.url,
+    epub: dayArtifactDownloadUrl("epub", locale, day.path),
+    pdf: dayArtifactDownloadUrl("pdf", locale, day.path)
+  }));
 ---
 <PageShell
   locale={locale}
   pageKind="downloads"
   title={isZh ? "下载" : "Downloads"}
-  subtitle={isZh ? "同一部课程，按不同形式呈现。" : "One map, different forms."}
-  eyebrow={isZh ? "版本" : "Formats"}
+  subtitle={isZh ? "标准版适合连续阅读；深入版另附研究专题——两种形态皆提供 EPUB 与 PDF。" : "Standard for continuous reading, deep-dive for research appendices — in EPUB or PDF."}
+  eyebrow={isZh ? "版本" : "Editions"}
   description={isZh ? "选择精简的标准版，或收录专题附录的深入版；两者均提供 EPUB 与 PDF。" : "Choose a concise standard edition or the appendix-rich deep-dive edition in EPUB or PDF format."}
   canonicalPath={staticPageUrl(locale, "downloads")}
   alternatePath={staticPageUrl(alternateLocale(locale), "downloads")}
@@ -50,6 +60,7 @@ const publishedDayCount = publishedDays.length;
         <p class="progress-label">{isZh ? "研究附录 / 02" : "Research appendices / 02"}</p>
         <h2 id="deep-edition-title">{isZh ? "专题深入版" : "Deep-dive edition"}</h2>
         <p>{isZh ? "收录目前已发布的主线课程及全部可选专题附录，适合系统学习与长期查阅。" : "The published route plus all current optional research appendices for sustained study and reference."}</p>
+        <p class="edition-badge" aria-hidden="true">{isZh ? "＋ 全部专题附录" : "+ all appendices"}</p>
       </header>
       <div class="download-grid downloads-list">
         <article class="download-card">
@@ -65,4 +76,22 @@ const publishedDayCount = publishedDays.length;
       </div>
     </section>
   </div>
+
+  <section class="download-day-index" aria-labelledby="per-day-artifacts-title">
+    <header class="download-day-index-head">
+      <p class="progress-label">{isZh ? "逐日文件 / 03" : "Per-day files / 03"}</p>
+      <h2 id="per-day-artifacts-title">{isZh ? "单课下载" : "Single-day downloads"}</h2>
+      <p>{isZh ? "每一课都可作为独立的 EPUB 与 PDF 下载，便于分享或离线阅读。" : "Every published lesson is also available as a standalone EPUB and PDF for sharing or offline reading."}</p>
+    </header>
+    <ol class="download-day-list">
+      {perDayArtifacts.map((entry) => (
+        <li class="download-day-row">
+          <span class="download-day-num">{padDay(entry.day)}</span>
+          <a class="download-day-title" href={entry.url}>{entry.title}</a>
+          <a class="download-day-file" href={entry.epub}>EPUB</a>
+          <a class="download-day-file" href={entry.pdf}>PDF</a>
+        </li>
+      ))}
+    </ol>
+  </section>
 </PageShell>

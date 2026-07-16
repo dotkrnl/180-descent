@@ -1,6 +1,10 @@
 
 .gm-grid,.lab-grid{display:grid;grid-template-columns:1fr;gap:1.3rem;align-items:start;}
-@media(min-width:640px){.gm-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);}.lab-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);}}
+// The Venn column is capped by .venn-box svg{max-width:28rem}; giving it `auto`
+// stops it from claiming half the panel and leaving a dead right margin.
+@media(min-width:640px){.gm-grid{grid-template-columns:minmax(0,1.15fr) minmax(20rem,28rem);}.lab-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);}}
+.gm-grid>.venn-box{text-align:left;}
+.gm-grid>.venn-box svg{margin-inline:0;}
 .switches,.claimlist{display:flex;flex-direction:column;gap:.55rem;}
 .swbtn,.clbtn{display:flex;align-items:center;gap:.75rem;width:100%;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line-strong);border-radius:10px;padding:.6rem .7rem;font-family:inherit;color:var(--ink);transition:border-color .2s,background .2s;}
 .clbtn{align-items:flex-start;gap:.6rem;line-height:1.3;}

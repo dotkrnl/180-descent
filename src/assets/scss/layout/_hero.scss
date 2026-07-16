@@ -99,16 +99,21 @@ article.lesson .lesson-reading > header.hero > figure :is(.term,.hl,a){
   article.lesson .lesson-reading > header.hero:has(> figure){
     display:grid;
     grid-template-columns:minmax(0,1.3fr) minmax(14rem,.7fr);
-    align-items:center;
+    // Align to the bottom baseline instead of centering: the figure now
+    // lands beside the title/subhead stack rather than floating in the middle
+    // of an over-tall grid cell. This fixes the "orphan figure" beat visible
+    // on day 001 and day 013 heroes.
+    align-items:end;
     gap:1rem clamp(2rem,4vw,4rem);
   }
   article.lesson .lesson-reading > header.hero:has(> figure) > :is(.eyebrow,h1,.sub){grid-column:1;}
   article.lesson .lesson-reading > header.hero:has(> figure) > figure{
     grid-column:2;
     grid-row:1 / span 3;
+    align-self:end;
     width:100%;
     max-width:none;
-    margin:0;
+    margin:0 0 .35rem;
   }
   article.lesson .lesson-reading > header.hero:has(> figure) > :is(.lede,p:not(.eyebrow,.sub)){
     grid-column:1 / -1;

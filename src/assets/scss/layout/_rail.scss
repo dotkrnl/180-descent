@@ -14,10 +14,32 @@
 .rail-gauge{
   position:relative;
   grid-row:1 / span 3;
-  width:3px;
+  width:5px;
   height:6.75rem;
   overflow:hidden;
   background:color-mix(in srgb,var(--line-strong) 72%,transparent);
+}
+// Faint block ticks turn the flat stripe into a real depth-gauge: 13 evenly
+// spaced marks stand in for the 13 blocks of the course.
+.rail-gauge::before{
+  position:absolute;
+  z-index:1;
+  inset:0;
+  background:repeating-linear-gradient(to bottom,transparent 0 calc(6.75rem / 13 - 1px),color-mix(in srgb,var(--ink) 34%,transparent) calc(6.75rem / 13 - 1px) calc(6.75rem / 13));
+  content:"";
+  pointer-events:none;
+  mix-blend-mode:multiply;
+}
+:root[data-theme="dark"] .rail-gauge::before,
+:root.atlas-root[data-theme="dark"] .rail-gauge::before{
+  background:repeating-linear-gradient(to bottom,transparent 0 calc(6.75rem / 13 - 1px),color-mix(in srgb,var(--bone) 30%,transparent) calc(6.75rem / 13 - 1px) calc(6.75rem / 13));
+  mix-blend-mode:screen;
+}
+@media (prefers-color-scheme:dark){
+  :root[data-theme="auto"] .rail-gauge::before{
+    background:repeating-linear-gradient(to bottom,transparent 0 calc(6.75rem / 13 - 1px),color-mix(in srgb,var(--bone) 30%,transparent) calc(6.75rem / 13 - 1px) calc(6.75rem / 13));
+    mix-blend-mode:screen;
+  }
 }
 .rail-gauge-fill{
   position:absolute;

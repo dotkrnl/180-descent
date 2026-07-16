@@ -664,14 +664,26 @@
     display: none;
   }
 
+  // Mobile: keep the latest-day banner to a single truncated line so the day
+  // hero stays above the fold. Full caveat is still accessible on desktop and
+  // via long-tap or reader-mode.
   .atlas-shell .latest-day-banner .wide {
-    display: block;
-    padding-block: .48rem;
+    display: flex;
+    align-items: baseline;
+    gap: .55rem;
+    padding-block: .38rem;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .atlas-shell .latest-day-banner strong {
-    display: block;
-    margin-bottom: .14rem;
+    flex: 0 0 auto;
+  }
+
+  .atlas-shell .latest-day-banner span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .atlas-shell .download-strip .wide {

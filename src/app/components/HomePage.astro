@@ -35,20 +35,39 @@ const readingDays = days.map((day) => ({
   summary: day.summary
 }));
 const blockCount = syllabus.blocks.length;
+// The atlas legend strips the "+ DEEP DIVE …" tail from block titles so long
+// EN/ZH titles read cleanly at the 1-line cap; a small ◈ glyph flags the row.
+const deepDiveTailRe = /\s+\+\s+(?:DEEP DIVE|专题深入)\s+\d+[:：].*$/i;
+const capstoneTailRe = /\s+\+\s+(?:Capstone|顶点)$/i;
 const strata = syllabus.blocks.map((block, index) => {
   const total = block.endDay - block.startDay + 1;
-  const published = publishedDays.filter((day) => day.day >= block.startDay && day.day <= block.endDay).length;
+  const publishedInBlock = publishedDays.filter((day) => day.day >= block.startDay && day.day <= block.endDay).length;
+  const hasDeepDive = deepDiveTailRe.test(block.title) || capstoneTailRe.test(block.title);
+  const isCurrent = currentFrontier
+    ? currentFrontier.day >= block.startDay && currentFrontier.day <= block.endDay
+    : false;
+  const compactTitle = block.title.replace(deepDiveTailRe, "").replace(capstoneTailRe, "");
   return {
     id: block.id,
-    title: block.title,
+    title: compactTitle,
+    fullTitle: block.title,
+    hasDeepDive,
+    isCurrent,
     hue: Math.round(200 + (index * 100) / Math.max(1, blockCount - 1)),
     startDay: block.startDay,
     endDay: block.endDay,
     total,
-    fill: published / total
+    publishedInBlock,
+    fill: publishedInBlock / total
   };
 });
 const publishedPercent = Math.round((publishedDays.length / book.totalDays) * 100);
+// Featured-day block hue: keeps the "current frontier" card's top-rule
+// coloured to match the atlas row it stands in for.
+const featuredBlockIndex = featuredDay
+  ? Math.max(0, syllabus.blocks.findIndex((b) => featuredDay.day >= b.startDay && featuredDay.day <= b.endDay))
+  : 0;
+const featuredBlockHue = Math.round(200 + (featuredBlockIndex * 100) / Math.max(1, blockCount - 1));
 // Hyphenated compounds ("180-Day") must never break mid-word on the cover.
 const coverTitleParts = book.title.split(" ");
 ---
@@ -70,49 +89,63 @@ const coverTitleParts = book.title.split(" ");
           ))}</h1>
           {isZh ? (
             <p class="sub book-credit">
+              <span class="credit-line">一门按知识依赖关系编排的现代科学与思想入门课程。</span>
               <span class="credit-line">作者：{book.zh.authors}</span>
             </p>
           ) : (
-            <p class="sub">A 180-day map of knowledge by {book.authors}.</p>
+            <p class="sub book-credit">
+              <span class="credit-line">A dependency-ordered introduction to modern science and thought.</span>
+              <span class="credit-line">By {book.authors}.</span>
+            </p>
           )}
           <dl class="cover-metadata">
             <div>
-              <dt>{isZh ? "路线" : "Route"}</dt>
-              <dd>{isZh ? `${syllabus.blocks.length} 个模块` : `${syllabus.blocks.length} research blocks`}</dd>
+              <dt>{isZh ? "全书结构" : "Blocks"}</dt>
+              <dd>{isZh ? `${syllabus.blocks.length} 个模块 · 180 日` : `${syllabus.blocks.length} blocks · 180 days`}</dd>
             </div>
             <div>
-              <dt>{isZh ? "当前前沿" : "Current frontier"}</dt>
-              <dd>{currentFrontier ? (isZh ? `第 ${padDay(currentFrontier.day)} 日` : `Day ${padDay(currentFrontier.day)}`) : (isZh ? "等待首次下潜" : "Awaiting first descent")}</dd>
+              <dt>{isZh ? "最新一日" : "Latest lesson"}</dt>
+              <dd>{currentFrontier ? (isZh ? `第 ${padDay(currentFrontier.day)} 日` : `Day ${padDay(currentFrontier.day)}`) : (isZh ? "首日尚未发布" : "Publication begins Day 001")}</dd>
             </div>
           </dl>
-          <p class="cover-kicker" data-reading-kicker>{isZh ? "开始阅读" : "Read online"}</p>
+          <p class="cover-kicker" data-reading-kicker>{isZh ? "开始阅读" : "Start reading"}</p>
           <div class="cover-actions">
             <a class="cover-cta" href={readingStartUrl} data-reading-link>{readingStartLabel}</a>
-            <a class="cover-map-link" href={syllabusUrl}>{isZh ? "查看完整路线" : "Open the full route"}</a>
+            <a class="cover-map-link" href={syllabusUrl}>{isZh ? "查看完整课程表" : "See the syllabus"}</a>
           </div>
         </div>
-        <a class="cover-chart" href={syllabusUrl} data-map-label={isZh ? "课程总览 / 001—180" : "Descent route / 001—180"}>
-          <span class="sr-only">{isZh ? "十三个模块的课程总览，进入课程表" : "The thirteen-block descent map; opens the syllabus"}</span>
+        <a class="cover-chart" href={syllabusUrl} data-map-label={isZh ? "课程总览 / 001—180" : "Syllabus / 001—180"}>
+          <span class="sr-only">{isZh ? "十三个模块的课程总览，进入课程表" : "The thirteen-block syllabus; opens the full route"}</span>
           <span class="atlas-map-head" aria-hidden="true">
             <span>
-              <small>{isZh ? "课程路线" : "Research route"}</small>
+              <small>{isZh ? "课程总览" : "Progress"}</small>
               <strong>{isZh ? "从基础到前沿" : "Foundations to frontier"}</strong>
             </span>
             <b>{publishedPercent}%</b>
           </span>
           <span class="atlas-map-body">
             {strata.map((stratum) => (
-              <span class="stratum block-scope" style={`--block-hue:${stratum.hue};--stratum-size:${stratum.total};--stratum-fill:${stratum.fill.toFixed(3)}`} aria-hidden="true">
+              <span
+                class:list={["stratum", "block-scope", { "is-current": stratum.isCurrent }]}
+                style={`--block-hue:${stratum.hue};--stratum-size:${stratum.total};--stratum-fill:${stratum.fill.toFixed(3)}`}
+                title={stratum.fullTitle}
+                aria-hidden="true"
+              >
                 <i class="stratum-fill"></i>
-                <span class="stratum-id">{stratum.id}</span>
+                <span class="stratum-id">
+                  {stratum.isCurrent && <b class="stratum-glyph stratum-here" aria-hidden="true">▸</b>}
+                  {stratum.id}
+                  {stratum.hasDeepDive && <b class="stratum-glyph stratum-deep" aria-hidden="true">◈</b>}
+                </span>
                 <span class="stratum-title">{stratum.title}</span>
+                <span class="stratum-count">{stratum.publishedInBlock}/{stratum.total}</span>
                 <span class="stratum-days">{padDay(stratum.startDay)}—{padDay(stratum.endDay)}</span>
               </span>
             ))}
           </span>
           <span class="cover-chart-caption" aria-hidden="true">
             <span>{isZh ? `已发布 ${publishedDays.length} / ${book.totalDays} 日` : `${publishedDays.length} of ${book.totalDays} days published`}</span>
-            <span>{currentFrontier ? (isZh ? `前沿 ${padDay(currentFrontier.day)}` : `Frontier ${padDay(currentFrontier.day)}`) : "000"}</span>
+            <span>{currentFrontier ? (isZh ? `进度 ${padDay(currentFrontier.day)}` : `Latest Day ${padDay(currentFrontier.day)}`) : "000"}</span>
           </span>
         </a>
       </div>
@@ -121,28 +154,35 @@ const coverTitleParts = book.title.split(" ");
 
     <section class="wrap wide home-project-strip" aria-label={isZh ? "项目与下载信息" : "Project and download information"}>
       <p class="home-release-note">
-        <strong>{isZh ? "发布说明" : "Field note"}</strong>
-        <span>{isZh ? "新内容不一定每天更新。人工编辑有时会暂停发布，以便手动检查内容质量；最新发布版本也可能仍有尚未完成审阅的粗糙之处。" : "New content may not arrive every day. The human editor sometimes pauses publishing to manually check quality, and the latest release may still have sharp edges that the human has not finished reviewing yet."}</span>
+        <strong>{isZh ? "编辑札记" : "About this release"}</strong>
+        <span>{isZh ? "新内容不一定每天更新。人工编辑有时会暂停发布，以便手动核查质量；最新发布的几课可能仍有编辑尚未复读的粗糙之处。" : "New content doesn't arrive every day. The editor sometimes pauses publishing to check quality by hand, and the newest lessons may still have rough spots that haven't been re-read yet."}</span>
       </p>
-      <p class="home-offline-lead">{isZh ? "当前版本可离线携带：" : "Carry the current edition offline:"}{" "}
-        <a href={downloads.epub}>{isZh ? "下载 EPUB" : "EPUB"}</a>
-        <span class="home-offline-sep" aria-hidden="true"></span>
-        <a href={downloads.pdf}>{isZh ? "下载印刷版 PDF" : "Print PDF"}</a>
+      <p class="home-offline-lead">
+        <strong>{isZh ? "离线阅读" : "Offline editions"}</strong>
+        <span>{isZh ? "当前版本也可下载后离线阅读：" : "Download the current edition to read offline:"}{" "}
+          <a href={downloads.epub}>{isZh ? "EPUB" : "EPUB"}</a>
+          <span class="home-offline-sep" aria-hidden="true"></span>
+          <a href={downloads.pdf}>{isZh ? "印刷版 PDF" : "Print PDF"}</a>
+        </span>
       </p>
     </section>
 
     <section class="wrap wide home-latest" aria-labelledby="latest-descents-title">
       <header class="home-section-head">
         <div>
-          <p class="sec-eyebrow">{isZh ? "最新发布" : "Latest descents"}</p>
-          <h2 id="latest-descents-title">{isZh ? "前沿观测记录" : "Field notes from the frontier"}</h2>
+          <p class="sec-eyebrow">{isZh ? "最新发布" : "Recently published"}</p>
+          <h2 id="latest-descents-title">{isZh ? "最新几课" : "Recent lessons"}</h2>
         </div>
-        <p>{isZh ? "从最新一日向后浏览，或回到完整路线选择任意已发布课程。" : "Start at the current edge, then trace the expedition backward or return to the complete route."}</p>
+        <p>{isZh ? "从最新一日往回追溯，或回到课程表选读任意一课。" : "Browse the most recent lessons, or open the full syllabus for anything earlier."}</p>
       </header>
       <div class="home-latest-grid">
         {featuredDay && (
-          <div class="home-featured-day" data-folio={padDay(featuredDay.day)}>
-            <p class="featured-signal"><span aria-hidden="true"></span>{isZh ? "当前前沿" : "Current frontier"}</p>
+          <div
+            class="home-featured-day block-scope"
+            data-folio={padDay(featuredDay.day)}
+            style={`--block-hue:${featuredBlockHue}`}
+          >
+            <p class="featured-signal"><span aria-hidden="true"></span>{isZh ? "刚刚发布" : "Just published"}</p>
             <DayCard day={featuredDay} locale={locale} totalDays={book.totalDays} headingLevel="h3" />
           </div>
         )}
@@ -152,7 +192,7 @@ const coverTitleParts = book.title.split(" ");
           ))}
         </div>
       </div>
-      <p class="all-days-link"><a href={syllabusUrl}>{isZh ? "查看完整课程表" : "See every day on the route"}</a></p>
+      <p class="all-days-link"><a href={syllabusUrl}>{isZh ? "查看完整课程表" : "See every published lesson"}</a></p>
     </section>
   </div>
 </BookShell>

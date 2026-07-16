@@ -20,12 +20,13 @@
 html[lang^="zh"] .atlas-page>:is(p,ul,ol,blockquote,h2,h3,h4,figure,hr){
   max-width:var(--measure-cjk);
 }
+// Static-page hero: the folio sits as a full-width tick above the title so
+// the title and subtitle land on the SAME left axis as the body prose below.
+// The earlier .34fr / 1fr grid centered the title off the reading axis and
+// broke the vertical spine on desktop.
 .atlas-page .atlas-page-hero{
   position:relative;
-  display:grid;
-  grid-template-columns:minmax(10rem,.34fr) minmax(0,1fr);
-  gap:clamp(1.5rem,5vw,5rem);
-  align-items:end;
+  display:block;
   min-height:0;
   margin-bottom:clamp(2.25rem,4vw,4rem);
   padding:clamp(1.75rem,3vw,3rem) 0 clamp(1.35rem,2.5vw,2.25rem);
@@ -46,7 +47,7 @@ html[lang^="zh"] .atlas-page>:is(p,ul,ol,blockquote,h2,h3,h4,figure,hr){
   grid-template-columns:auto minmax(2rem,1fr);
   gap:.8rem;
   align-items:center;
-  margin:0 0 .38rem;
+  margin:0 0 clamp(1.75rem,3.5vw,3rem);
   color:var(--ink-faint);
   font-family:var(--font-mono);
   font-size:.72rem;
@@ -69,17 +70,20 @@ html[lang^="zh"] .atlas-page>:is(p,ul,ol,blockquote,h2,h3,h4,figure,hr){
   display:none;
 }
 .atlas-page .atlas-page-title h1{
-  max-width:14ch;
+  max-width:16ch;
   margin:0;
-  font-size:clamp(3rem,1.7rem + 4.2vw,6rem);
-  line-height:.92;
+  font-size:clamp(3rem,1.7rem + 4.2vw,5.6rem);
+  line-height:.94;
   letter-spacing:-.03em;
 }
 .atlas-page .atlas-page-title .sub{
-  max-width:42rem;
+  max-width:var(--prose-max);
   margin:1.1rem 0 0;
   color:var(--ink-soft);
   font-size:clamp(1.08rem,.98rem + .35vw,1.3rem);
   line-height:1.45;
   letter-spacing:-.003em;
+}
+html[lang^="zh"] .atlas-page .atlas-page-title .sub{
+  max-width:var(--measure-cjk);
 }
