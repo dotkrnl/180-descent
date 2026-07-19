@@ -21,7 +21,7 @@ export function latexPreamble(config: PdfTemplateConfig): string {
   const keywords = pdfKeywords(config);
   return String.raw`\documentclass[10pt,openany,oneside]{book}
 \let\cleardoublepage\clearpage
-\usepackage[paperwidth=6in,paperheight=9in,top=0.72in,bottom=0.78in,inner=0.55in,outer=0.55in,headheight=14pt,headsep=11pt,footskip=26pt]{geometry}
+\usepackage[paperwidth=6in,paperheight=9in,top=0.66in,bottom=0.72in,inner=0.5in,outer=0.5in,headheight=14pt,headsep=11pt,footskip=26pt]{geometry}
 \usepackage{fix-cm}
 \usepackage{fontspec}
 \usepackage{xeCJK}
@@ -34,7 +34,7 @@ export function latexPreamble(config: PdfTemplateConfig): string {
   BoldFont=newsreader-latin-700-normal.otf,
   BoldItalicFont=newsreader-latin-700-italic.otf
 ]{Newsreader}
-\newfontfamily\displayfont[
+\newfontfamily\displayfontlatin[
   Path=${fontPath},
   UprightFont=fraunces-latin-600-normal.otf,
   ItalicFont=fraunces-latin-400-italic.otf,
@@ -93,6 +93,22 @@ export function latexPreamble(config: PdfTemplateConfig): string {
 \IfFontExistsTF{${cjkMain}}{\setCJKmainfont[AutoFakeSlant=true,SlantFactor=0.2]{${cjkMain}}}{\setCJKmainfont[AutoFakeSlant=true,SlantFactor=0.2]{Songti SC}}
 \setCJKsansfont{Hiragino Sans GB}
 \IfFontExistsTF{${cjkMain}}{\setCJKmonofont[AutoFakeSlant=true,SlantFactor=0.2]{${cjkMain}}}{\setCJKmonofont[AutoFakeSlant=true,SlantFactor=0.2]{Songti SC}}
+% Display headings pair Fraunces (Latin) with a real CJK bold serif; the
+% kai-style body face has no bold cut, and fake bold smears at title sizes.
+\IfFontExistsTF{Songti SC}{%
+  \newCJKfontfamily\cjkdisplayfont[BoldFont={Songti SC Bold},AutoFakeSlant=true,SlantFactor=0.2]{Songti SC}%
+}{%
+  \newCJKfontfamily\cjkdisplayfont[AutoFakeSlant=true,SlantFactor=0.2,AutoFakeBold=true]{${cjkMain}}%
+}
+% Display-size type (headings, dividers, quotes) must never hyphenate, and
+% it sets flush-left so a long heading can never overstretch into an
+% overfull line now that body text justifies.
+\newcommand{\displayfont}{\displayfontlatin\cjkdisplayfont\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}
+\usepackage{silence}
+% Microtype falls back to zero protrusion for glyphs outside its tables
+% (Greek, subscripts, CJK); that is fine, so keep the log free of it.
+\WarningFilter{microtype}{Unknown slot number}
+\usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{colortbl}
 \usepackage{graphicx}
@@ -150,13 +166,20 @@ export function latexPreamble(config: PdfTemplateConfig): string {
 \setlength{\parskip}{0.5em}
 % Ragged table cells intentionally end short; keep that harmless hbox noise
 % out of the log while leaving overfull and vertical boxes fatal below.
+% Sub-point vertical overshoot (a footnote block landing a hair low) is
+% absorbed by \vfuzz; anything larger still fails the build.
 \hbadness=10000
+\vfuzz=1pt
+% Never strand a single line of a paragraph at a page boundary; the
+% ragged-bottom glue absorbs the resulting short pages.
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
 \tolerance=1800
-\pretolerance=10000
-\hyphenpenalty=10000
 \emergencystretch=3em
-${config.locale === "zh" ? "" : "\\RaggedRight"}
-\exhyphenpenalty=10000
+${config.locale === "zh"
+  ? "\\hyphenpenalty=10000\n\\pretolerance=10000\n\\exhyphenpenalty=10000"
+  : "\\hyphenpenalty=50\n\\pretolerance=300\n\\exhyphenpenalty=50\n\\finalhyphendemerits=8000"}
 \setlist{itemsep=0.18em,topsep=0.32em,leftmargin=1.25em}
 \setcounter{tocdepth}{0}
 \setcounter{secnumdepth}{0}
@@ -172,15 +195,17 @@ ${config.locale === "zh" ? "" : "\\RaggedRight"}
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[R]{\ttfamily\scriptsize\color{descentMuted}\thepage}
-\fancyhead[L]{\ttfamily\scriptsize\color{descentMuted}${latexEscape(config.title)}}
+\fancyhead[L]{\ttfamily\scriptsize\color{descentMuted}\leftmark}
 \renewcommand{\headrulewidth}{0pt}
+% Keep the running-head casing exactly as authored (the class uppercases).
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \titleformat{\chapter}[display]{\displayfont\bfseries\color{descentTeal}}{}{0pt}{\Huge}
 \titlespacing*{\chapter}{0pt}{0pt}{0.22in}
 \titleformat{\section}{\displayfont\Large\bfseries\color{descentTeal}}{\thesection}{0.55em}{}
 \titleformat{\subsection}{\displayfont\large\bfseries\color{descentInk}}{\thesubsection}{0.5em}{}
 \newcommand{\pdfdaytitle}[1]{{\displayfont\bfseries\fontsize{23}{25}\selectfont #1\par}\vspace{0.04in}}
 \renewcommand*{\LettrineTextFont}{\normalfont}
-\newcommand{\eyebrow}[1]{\Needspace{4\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}}\par\smallskip}
+\newcommand{\eyebrow}[1]{\Needspace{5\baselineskip}\par\smallskip{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nopagebreak\smallskip\noindent}
 \newcommand{\sectioneyebrow}[1]{\Needspace{10\baselineskip}\par\vspace{3.5ex plus 1ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\endgroup\nobreak\vspace{0.02in}}
 \newcommand{\sectionwithlabel}[2]{\Needspace{10\baselineskip}\par\vspace{3.5ex plus 1ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.015in}{\displayfont\Large\bfseries\color{descentTeal}#2\par}\endgroup\nobreak\vspace{0.08in}}
 \newcommand{\subsectionwithlabel}[2]{\Needspace{8\baselineskip}\par\vspace{2.2ex plus .7ex minus .2ex}\begingroup\setlength{\parskip}{0pt}{\ttfamily\footnotesize\color{descentTeal}\MakeUppercase{#1}\par}\nobreak\vspace{-0.012in}{\displayfont\large\bfseries\color{descentInk}#2\par}\endgroup\nobreak\vspace{0.06in}}
@@ -190,12 +215,12 @@ ${config.locale === "zh" ? "" : "\\RaggedRight"}
 \newcommand{\statuschiphint}[1]{\statuschipbase{descentHint}{descentHintBg}{descentHintLine}{#1}}
 \newcommand{\statuschipbad}[1]{\statuschipbase{descentBad}{descentBadBg}{descentBadLine}{#1}}
 \newcommand{\claimtop}[2]{\Needspace{5\baselineskip}\par\vspace{0.10in}\noindent{\ttfamily\small\color{descentTeal}\MakeUppercase{#1}}\if\relax\detokenize{#2}\relax\else\enspace #2\fi\par\nobreak\vspace{-0.05in}}
-\newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=3em\lettrine[lines=2,loversize=0.08,lhang=0.02,nindent=0pt,findent=0.08em]{#1}{#2}\par\endgroup\medskip}
+\newcommand{\leadpara}[2]{\Needspace{7\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=3em\lettrine[lines=2,loversize=0.04,lhang=0.02,nindent=0pt,findent=0pt]{#1}{#2}\par\endgroup\medskip}
 \newcommand{\leadparanodrop}[1]{\Needspace{6\baselineskip}\par\begingroup\large\color{descentTeal}\setlength{\parindent}{0pt}\sloppy\emergencystretch=3em#1\par\endgroup\medskip}
 \newenvironment{lessonbox}{\begin{tcolorbox}[enhanced,breakable,colback=descentRaised,colframe=descentLine,boxrule=0.4pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]}{\end{tcolorbox}}
 \newenvironment{codebox}{\Needspace{5\baselineskip}\par\vspace{0.08in}\begin{tcolorbox}[enhanced,breakable,colback=descentCream,colframe=descentLine,boxrule=0.35pt,arc=1mm,left=8pt,right=8pt,top=7pt,bottom=7pt]\ttfamily\footnotesize\color{descentInk}\RaggedRight\setlength{\parskip}{0pt}\setlength{\baselineskip}{1.22\baselineskip}}{\end{tcolorbox}\vspace{0.08in}}
 \newenvironment{comparebox}{\Needspace{12\baselineskip}\par\vspace{0.08in}\begin{tcolorbox}[enhanced,breakable,colback=descentCream,colframe=descentLine,boxrule=0.35pt,arc=1mm,left=8pt,right=8pt,top=8pt,bottom=8pt]\footnotesize\color{descentInk}\setlength{\parskip}{0pt}}{\end{tcolorbox}\vspace{0.06in}}
-\newcommand{\tablehead}[1]{{\ttfamily\fontsize{6.4}{7.4}\selectfont\color{descentMuted}\MakeUppercase{#1}}}
+\newcommand{\tablehead}[1]{{\ttfamily\fontsize{6.8}{7.8}\selectfont\color{descentMuted}\MakeUppercase{#1}}}
 \newenvironment{sourcesbox}{\Needspace{8\baselineskip}\par\vspace{0.16in}\begingroup\footnotesize\color{descentMuted}\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\emergencystretch=2em\setlength{\parskip}{0.32em}\noindent{\color{descentLine}\rule{\linewidth}{0.35pt}}\par\vspace{0.05in}}{\par\endgroup}
 \newenvironment{quotebox}{\Needspace{4\baselineskip}\par\vspace{0.12in}\begin{tcolorbox}[enhanced,breakable,blanker,borderline west={1.2pt}{0pt}{descentLine},left=10pt,right=0pt,top=2pt,bottom=2pt]\displayfont\itshape\large\color{descentInk}}{\end{tcolorbox}\vspace{0.08in}}
 \newenvironment{notepara}{\par\small\color{descentMuted}\RaggedRight\emergencystretch=1em}{\par}

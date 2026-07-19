@@ -302,7 +302,8 @@ async function buildLatexDocument(config: PdfEdition & { root: string }, workDir
           siteUrl: config.siteUrl
         }));
         chunks.push("\\end{appendixbody}\n\\clearpage");
-        chunks.push("\\pagecolor{descentWhite}\n\\color{descentInk}\n\\fancyhead[L]{\\ttfamily\\scriptsize\\color{descentMuted}" + latexEscape(config.title) + "}");
+        const dayMark = `${pdfDayLabel(day.day, config.locale)}: ${day.title}`;
+        chunks.push("\\pagecolor{descentWhite}\n\\color{descentInk}\n\\chaptermark{" + latexEscape(dayMark) + "}");
       }
     }
   }
@@ -455,7 +456,7 @@ ${pdfBookmarkLatex(1, appendixTitle, `appendix-${day.path}-${title}`)}
 \clearpage
 \pagecolor{descentCream}
 \color{descentInk}
-\fancyhead[L]{\ttfamily\scriptsize\color{descentTeal}${latexEscape(label)}}`;
+\chaptermark{${latexEscape(appendixTitle)}}`;
 }
 
 async function localizedBlockTitles(root: string, locale: Locale): Promise<Map<string, string>> {
@@ -1247,6 +1248,25 @@ function renderRenderedSvgComponent(name: string, attrs: Map<string, string | nu
   return renderSvgAsset(svg, caption, state, name, spec);
 }
 
+const FIGURE_SCALE = 1.14;
+const FIGURE_WIDTH_CAP = 0.98;
+const FIGURE_HEIGHT_CAP = 0.5;
+
+function scaleFigureDimension(value: string | undefined, fallback: string): string {
+  const raw = value ?? fallback;
+  const match = raw.match(/^([0-9.]+)\\(linewidth|textheight)$/);
+  if (!match) return raw;
+  const cap = match[2] === "linewidth" ? FIGURE_WIDTH_CAP : FIGURE_HEIGHT_CAP;
+  const scaled = Math.min(cap, Number(match[1]) * FIGURE_SCALE);
+  return `${scaled.toFixed(3)}\\${match[2]}`;
+}
+
+function figureNeedspace(height: string): string {
+  const match = height.match(/^([0-9.]+)\\textheight$/);
+  if (!match) return "0.42\\textheight";
+  return `${Math.min(0.62, Number(match[1]) + 0.1).toFixed(3)}\\textheight`;
+}
+
 function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, name: string, spec: SvgAssetSpec): string {
   if (!svg.trim()) throw new Error(`PDF SVG asset is empty for ${name} in ${sourceLabel(state)}`);
   const sourceSlug = sanitizeAssetName(path.relative(contentDaysDir(state.root), state.sourceFile));
@@ -1257,11 +1277,13 @@ function renderSvgAsset(svg: string, caption: string, state: MdxRenderState, nam
   writeFileSync(svgPath, prepareSvgForRsvg(svg), "utf8");
   execFileSyncish("rsvg-convert", ["-f", "pdf", "-o", pdfPath, svgPath]);
 
+  const width = scaleFigureDimension(spec.width, "0.78\\linewidth");
+  const height = scaleFigureDimension(spec.height, "0.28\\textheight");
   return [
-    "\\Needspace{0.4\\textheight}",
+    `\\Needspace{${figureNeedspace(height)}}`,
     "\\vspace{0.12in}",
     "\\begin{center}",
-    `\\includegraphics[width=${spec.width ?? "0.78\\linewidth"},height=${spec.height ?? "0.28\\textheight"},keepaspectratio]{${latexPath(pdfPath)}}`,
+    `\\includegraphics[width=${width},height=${height},keepaspectratio]{${latexPath(pdfPath)}}`,
     caption ? `\\\\[0.06in]{\\small\\color{descentMuted}${cleanFigureCaption(caption)}}` : "",
     "\\end{center}",
     "\\vspace{0.1in}"
@@ -1399,27 +1421,40 @@ function latexTable(table: LatexTable, options: { roomy?: boolean } = {}): strin
   const columns = Array.from({ length: columnCount }, () => `>{\\raggedright\\arraybackslash}p{${width}\\linewidth}`).join("");
   const lines = [
     "\\Needspace{12\\baselineskip}",
+    "\\vspace{0.05in}",
     "\\begingroup",
     size,
     `\\setlength{\\tabcolsep}{${options.roomy ? "4pt" : "3pt"}}`,
     `\\renewcommand{\\arraystretch}{${options.roomy ? "1.34" : "1.22"}}`,
     "\\arrayrulecolor{descentLine}",
+    "\\setlength{\\heavyrulewidth}{0.9pt}",
+    "\\setlength{\\lightrulewidth}{0.4pt}",
     "\\sloppy",
     `\\begin{longtable}{@{}${columns}@{}}`,
   ];
   let startIndex = 0;
   if (table.headerRows.has(0)) {
     const header = latexTableRow(table.rows[0], true);
-    lines.push(header, "\\hline", "\\endfirsthead", header, "\\hline", "\\endhead");
+    lines.push(
+      "\\toprule", header, "\\midrule", "\\endfirsthead",
+      "\\toprule", header, "\\midrule", "\\endhead"
+    );
     startIndex = 1;
+  } else {
+    lines.push("\\toprule");
   }
+  const lastRow = table.rows.length - 1;
   for (const [offset, row] of table.rows.slice(startIndex).entries()) {
     const index = offset + startIndex;
     const isHeader = table.headerRows.has(index);
     lines.push(latexTableRow(row, isHeader));
-    lines.push("\\hline");
+    if (isHeader) {
+      lines.push("\\midrule");
+    } else if (index !== lastRow) {
+      lines.push("\\addlinespace[0.42em]");
+    }
   }
-  lines.push("\\end{longtable}", "\\endgroup");
+  lines.push("\\bottomrule", "\\end{longtable}", "\\endgroup", "\\vspace{0.05in}");
   return lines.join("\n");
 }
 
@@ -1466,11 +1501,13 @@ function renderImage(src: string, caption: string, state: MdxRenderState): strin
   const filePath = prepareImagePath(src, state);
   const safePath = latexPath(filePath);
   const safeCaption = caption || "";
+  const width = scaleFigureDimension(undefined, "0.86\\linewidth");
+  const height = scaleFigureDimension(undefined, "0.3\\textheight");
   return [
-    "\\Needspace{0.42\\textheight}",
+    `\\Needspace{${figureNeedspace(height)}}`,
     "\\vspace{0.14in}",
     "\\begin{center}",
-    `\\includegraphics[width=0.86\\linewidth,height=0.3\\textheight,keepaspectratio]{${safePath}}`,
+    `\\includegraphics[width=${width},height=${height},keepaspectratio]{${safePath}}`,
     safeCaption ? `\\\\[0.06in]{\\small\\color{descentMuted}${safeCaption}}` : "",
     "\\end{center}",
     "\\vspace{0.12in}"
